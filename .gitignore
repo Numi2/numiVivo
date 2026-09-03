@@ -1,0 +1,58 @@
+# Apple / Swift
+.DS_Store
+.build/
+.swiftpm/
+Package.resolved
+DerivedData/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# C / C++ / Metal
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+*.o
+*.obj
+*.a
+*.dylib
+*.so
+*.metallib
+*.air
+*.dSYM/
+
+# Generated NumiVivo artifacts
+*.vivopack
+*.mechanismpack
+*.hostpack
+*.experimentpack
+*.couplingpack
+*.vivocert
+*.combine.omex
+Artifacts/
+Runs/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+.local/
+
+# Python tooling is optional and non-authoritative
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
