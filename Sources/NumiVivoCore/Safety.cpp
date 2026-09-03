@@ -75,6 +75,11 @@ const SpeciesDefinition* findSpecies(const Program& program, std::string_view id
     return iterator == program.species.end() ? nullptr : &*iterator;
 }
 
+bool isIrreversibleAction(ActionKind kind) {
+    return kind == ActionKind::permanentShutdown ||
+           kind == ActionKind::requestDifferentiation;
+}
+
 } // namespace
 
 SafetyReport SafetyAnalyzer::analyze(const Program& program,
@@ -82,7 +87,6 @@ SafetyReport SafetyAnalyzer::analyze(const Program& program,
                                      Diagnostics& diagnostics) const {
     SafetyReport report;
     std::set<std::string, std::less<>> monitoredReferences;
-    std::set<std::string, std::less<>> unusedInputs;
 
     for (const auto& constraint : program.constraints) {
         std::set<std::string, std::less<>> inputs;
@@ -113,13 +117,10 @@ SafetyReport SafetyAnalyzer::analyze(const Program& program,
             }
             if (action.kind == ActionKind::permanentShutdown) {
                 hasPermanentShutdown = true;
-                ++report.irreversibleActionCount;
-            }
-            if (action.kind == ActionKind::reversibleShutdown) {
+            } else if (action.kind == ActionKind::reversibleShutdown) {
                 hasReversibleShutdown = true;
             }
-            if (action.kind == ActionKind::requestDifferentiation ||
-                action.kind == ActionKind::permanentShutdown) {
+            if (isIrreversibleAction(action.kind)) {
                 ++report.irreversibleActionCount;
             }
 
@@ -172,11 +173,10 @@ SafetyReport SafetyAnalyzer::analyze(const Program& program,
         }
     }
 
-    for (std::size_t terminationIndex = 0; terminationIndex < program.termination.size(); ++terminationIndex) {
-        const auto action = program.termination[terminationIndex].action;
-        if (action == ActionKind::permanentShutdown) {
+    for (const auto& termination : program.termination) {
+        if (termination.action == ActionKind::permanentShutdown) {
             hasPermanentShutdown = true;
-        } else if (action == ActionKind::reversibleShutdown) {
+        } else if (termination.action == ActionKind::reversibleShutdown) {
             hasReversibleShutdown = true;
         }
     }
