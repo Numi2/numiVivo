@@ -1,0 +1,185 @@
+{
+  "apiVersion": "numivivo.org/v1alpha1",
+  "kind": "VivoProgram",
+  "metadata": {
+    "name": "digital-tissue-homeostasis",
+    "version": "0.1.0",
+    "description": "Sequence-free computational controller for two-signal tissue-state studies.",
+    "namespace": "https://numivivo.org/examples/digital-tissue-homeostasis",
+    "labels": {
+      "scope": "computational-reference",
+      "physical-implementation": "not-specified"
+    }
+  },
+  "spec": {
+    "target": {
+      "cellType": "abstract-sentinel-cell",
+      "tissue": "digital-soft-tissue",
+      "species": "computational-host",
+      "developmentalStage": "not-applicable",
+      "diseaseState": "abstract-inflammatory-state",
+      "deliveryMode": "retrievable-digital-implant"
+    },
+    "minimumFidelity": "F2",
+    "inputs": [
+      {
+        "id": "damage-signal-a",
+        "source": "host",
+        "unit": "nM",
+        "default": 0,
+        "bounds": { "min": 0, "max": 20 },
+        "evidence": {
+          "class": "hypothetical",
+          "context": "digital reference signal"
+        }
+      },
+      {
+        "id": "danger-signal-b",
+        "source": "host",
+        "unit": "nM",
+        "default": 0,
+        "bounds": { "min": 0, "max": 20 },
+        "evidence": {
+          "class": "hypothetical",
+          "context": "digital reference signal"
+        }
+      },
+      {
+        "id": "cell-stress",
+        "source": "intracellular",
+        "unit": "normalized",
+        "default": 0,
+        "bounds": { "min": 0, "max": 1 },
+        "evidence": {
+          "class": "hypothetical",
+          "context": "digital reference state"
+        }
+      }
+    ],
+    "species": [
+      {
+        "id": "response-output",
+        "kind": "output",
+        "compartment": "cell",
+        "unit": "nM",
+        "initial": 0,
+        "bounds": { "min": 0, "max": 1 },
+        "conserved": false,
+        "externallyOwned": false,
+        "evidence": {
+          "class": "hypothetical",
+          "context": "abstract model output"
+        }
+      }
+    ],
+    "state": [
+      {
+        "id": "activation-memory",
+        "type": "leaky-integrator",
+        "unit": "normalized",
+        "initial": 0,
+        "halfLife": "30 min",
+        "bounds": { "min": 0, "max": 1 }
+      }
+    ],
+    "rules": [
+      {
+        "id": "bounded-response",
+        "when": {
+          "sustained": {
+            "condition": {
+              "all": [
+                {
+                  "gte": [
+                    { "input": "damage-signal-a" },
+                    { "literal": { "value": 0.8, "unit": "nM" } }
+                  ]
+                },
+                {
+                  "gte": [
+                    { "input": "danger-signal-b" },
+                    { "literal": { "value": 0.6, "unit": "nM" } }
+                  ]
+                },
+                {
+                  "lt": [
+                    { "input": "cell-stress" },
+                    { "literal": { "value": 0.7, "unit": "normalized" } }
+                  ]
+                }
+              ]
+            },
+            "for": "20 min"
+          }
+        },
+        "actions": [
+          {
+            "kind": "add-output",
+            "target": "response-output",
+            "value": { "literal": { "value": 0.005, "unit": "nM" } },
+            "unit": "nM",
+            "maximumRate": 0.02
+          },
+          {
+            "kind": "set-state",
+            "target": "activation-memory",
+            "value": { "literal": { "value": 1, "unit": "normalized" } },
+            "unit": "normalized"
+          }
+        ],
+        "priority": 100,
+        "refractory": "1 min"
+      }
+    ],
+    "constraints": [
+      {
+        "id": "response-output-limit",
+        "expression": {
+          "gt": [
+            { "species": "response-output" },
+            { "literal": { "value": 1, "unit": "nM" } }
+          ]
+        },
+        "severity": "error",
+        "response": "reject-step",
+        "message": "The abstract response output exceeded its declared model bound."
+      },
+      {
+        "id": "early-stress-stop",
+        "expression": {
+          "gte": [
+            { "input": "cell-stress" },
+            { "literal": { "value": 0.85, "unit": "normalized" } }
+          ]
+        },
+        "severity": "fatal",
+        "response": "permanent-shutdown",
+        "message": "The abstract cell-stress state crossed the terminal model threshold."
+      }
+    ],
+    "termination": [
+      {
+        "id": "terminal-cell-stress",
+        "when": {
+          "gte": [
+            { "input": "cell-stress" },
+            { "literal": { "value": 0.85, "unit": "normalized" } }
+          ]
+        },
+        "action": "permanent-shutdown",
+        "reason": "Terminal abstract stress threshold reached."
+      },
+      {
+        "id": "maximum-logical-duration",
+        "when": {
+          "gte": [
+            { "time": true },
+            { "literal": { "value": 86400, "unit": "s" } }
+          ]
+        },
+        "action": "permanent-shutdown",
+        "reason": "The bounded digital study duration ended."
+      }
+    ]
+  }
+}
