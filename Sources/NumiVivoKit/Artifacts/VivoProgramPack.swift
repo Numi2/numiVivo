@@ -37,10 +37,21 @@ public struct VivoFingerprint: Hashable, Codable, Sendable, CustomStringConverti
     private enum CodingKeys: String, CodingKey { case bytes }
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let value = try container.decode([UInt8].self, forKey: .bytes)
-        guard value.count == Self.byteCount else {
+        var array = try container.nestedUnkeyedContainer(forKey: .bytes)
+        if let count = array.count, count != Self.byteCount {
             throw DecodingError.dataCorruptedError(forKey: .bytes, in: container,
                                                    debugDescription: "SHA-256 fingerprints require exactly 32 bytes")
+        }
+        var value: [UInt8] = []
+        value.reserveCapacity(Self.byteCount)
+        for _ in 0..<Self.byteCount {
+            guard !array.isAtEnd else {
+                throw DecodingError.dataCorruptedError(forKey: .bytes, in: container, debugDescription: "Truncated fingerprint")
+            }
+            value.append(try array.decode(UInt8.self))
+        }
+        guard array.isAtEnd else {
+            throw DecodingError.dataCorruptedError(forKey: .bytes, in: container, debugDescription: "Oversized fingerprint")
         }
         bytes = value
     }
