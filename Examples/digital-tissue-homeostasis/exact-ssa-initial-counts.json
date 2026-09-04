@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "model": "exact-ssa-model.json",
+  "laneCount": 16,
+  "layout": "species-major",
+  "initialCounts": [
+    12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ],
+  "maximumEventsPerLanePerStep": 8192,
+  "notes": [
+    "Computational reference state only.",
+    "No physical abundance, dosing, or experimental interpretation is implied."
+  ]
+}
