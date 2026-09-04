@@ -1,8 +1,13 @@
 import Foundation
 
-// Async execution commands install their own dispatcher; artifact-only commands
-// remain synchronous and retain their existing exit-code contract.
-let status = VivoCLICommandRouter().run(
-    arguments: Array(CommandLine.arguments.dropFirst())
-)
+let arguments = Array(CommandLine.arguments.dropFirst())
+let status: Int32
+if VivoHybridCLICommands.handles(arguments.first) {
+    status = await VivoHybridCLICommands().run(arguments: arguments)
+} else {
+    status = VivoCLICommandRouter().run(arguments: arguments)
+    if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
+        FileHandle.standardOutput.write(Data("\nHybrid GPU execution: plan-hybrid, run-hybrid, hybrid-help.\n".utf8))
+    }
+}
 exit(status)

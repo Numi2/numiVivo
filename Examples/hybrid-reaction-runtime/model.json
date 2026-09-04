@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "species": ["slow_pool", "leap_pool", "bulk_pool", "constant_pool"],
+  "reactions": [
+    {"id":"slow_birth","law":0,"rate":2,"parameter1":0,"parameter2":0,"parameter3":0,"changes":[{"speciesIndex":0,"delta":1}],"critical":true},
+    {"id":"slow_death","law":1,"reactantA":0,"rate":0.1,"parameter1":0,"parameter2":0,"parameter3":0,"changes":[{"speciesIndex":0,"delta":-1}],"critical":true},
+    {"id":"leap_birth","law":0,"rate":2000,"parameter1":0,"parameter2":0,"parameter3":0,"changes":[{"speciesIndex":1,"delta":1}],"critical":false},
+    {"id":"leap_death","law":1,"reactantA":1,"rate":0.1,"parameter1":0,"parameter2":0,"parameter3":0,"changes":[{"speciesIndex":1,"delta":-1}],"critical":false},
+    {"id":"bulk_birth","law":0,"rate":1000,"parameter1":0,"parameter2":0,"parameter3":0,"changes":[{"speciesIndex":2,"delta":1}],"critical":false},
+    {"id":"bulk_death","law":1,"reactantA":2,"rate":0.01,"parameter1":0,"parameter2":0,"parameter3":0,"changes":[{"speciesIndex":2,"delta":-1}],"critical":false}
+  ]
+}
