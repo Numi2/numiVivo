@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/campaign-progress.schema.json",
+  "title": "NumiVivo Campaign Progress Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "campaignFingerprint",
+    "campaignLedgerHead",
+    "jobCount",
+    "events",
+    "journalHead",
+    "fingerprint"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "campaignFingerprint": { "$ref": "#/$defs/fingerprint" },
+    "campaignLedgerHead": { "$ref": "#/$defs/fingerprint" },
+    "jobCount": { "type": "integer", "minimum": 1 },
+    "events": {
+      "type": "array",
+      "maxItems": 4294967295,
+      "items": { "$ref": "#/$defs/event" }
+    },
+    "journalHead": { "$ref": "#/$defs/fingerprint" },
+    "fingerprint": { "$ref": "#/$defs/fingerprint" }
+  },
+  "$defs": {
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "optionalFingerprint": {
+      "oneOf": [{ "$ref": "#/$defs/fingerprint" }, { "type": "null" }]
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "index",
+        "kind",
+        "jobIndex",
+        "jobDigest",
+        "workerID",
+        "claimID",
+        "attempt",
+        "wallClockUnixSeconds",
+        "previousDigest",
+        "digest"
+      ],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "kind": { "enum": ["claimed", "checkpointed", "committed", "rejected", "failed", "abandoned"] },
+        "jobIndex": { "type": "integer", "minimum": 0 },
+        "jobDigest": { "$ref": "#/$defs/fingerprint" },
+        "workerID": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "claimID": { "$ref": "#/$defs/fingerprint" },
+        "attempt": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "resultFingerprint": { "$ref": "#/$defs/optionalFingerprint" },
+        "certificateFingerprint": { "$ref": "#/$defs/optionalFingerprint" },
+        "checkpointFingerprint": { "$ref": "#/$defs/optionalFingerprint" },
+        "message": { "type": ["string", "null"], "maxLength": 4096 },
+        "wallClockUnixSeconds": { "type": "number" },
+        "previousDigest": { "$ref": "#/$defs/fingerprint" },
+        "digest": { "$ref": "#/$defs/fingerprint" }
+      }
+    }
+  }
+}
