@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "name": "digital-soft-tissue-populations",
+  "grid": {
+    "width": 32,
+    "height": 32,
+    "depth": 8,
+    "spacingXMetres": 0.00005,
+    "spacingYMetres": 0.00005,
+    "spacingZMetres": 0.00005,
+    "boundary": 0
+  },
+  "regulatorFields": [
+    {
+      "id": "damage-field",
+      "unit": "normalized",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "id": "repair-field",
+      "unit": "normalized",
+      "minimum": 0,
+      "maximum": 1
+    }
+  ],
+  "phenotypes": [
+    {
+      "id": "quiescent",
+      "birthRatePerSecond": 0.000001,
+      "deathRatePerSecond": 0.0000002,
+      "carryingCapacityPerVoxel": 2500,
+      "diffusionSquareMetresPerSecond": 0,
+      "minimumDensity": 0,
+      "maximumDensity": 2500,
+      "externallyMaintained": false
+    },
+    {
+      "id": "activated",
+      "birthRatePerSecond": 0.0000015,
+      "deathRatePerSecond": 0.0000005,
+      "carryingCapacityPerVoxel": 1800,
+      "diffusionSquareMetresPerSecond": 1e-12,
+      "minimumDensity": 0,
+      "maximumDensity": 1800,
+      "externallyMaintained": false
+    },
+    {
+      "id": "repairing",
+      "birthRatePerSecond": 0.0000008,
+      "deathRatePerSecond": 0.00000015,
+      "carryingCapacityPerVoxel": 2200,
+      "diffusionSquareMetresPerSecond": 5e-13,
+      "minimumDensity": 0,
+      "maximumDensity": 2200,
+      "externallyMaintained": false
+    }
+  ],
+  "transitions": [
+    {
+      "id": "quiescent-to-activated",
+      "sourcePhenotype": "quiescent",
+      "destinationPhenotype": "activated",
+      "mode": 1,
+      "regulatorField": "damage-field",
+      "baseRatePerSecond": 0,
+      "maximumRegulatedRatePerSecond": 0.0002,
+      "threshold": 0.35,
+      "hillCoefficient": 3
+    },
+    {
+      "id": "activated-to-repairing",
+      "sourcePhenotype": "activated",
+      "destinationPhenotype": "repairing",
+      "mode": 1,
+      "regulatorField": "repair-field",
+      "baseRatePerSecond": 0,
+      "maximumRegulatedRatePerSecond": 0.00012,
+      "threshold": 0.45,
+      "hillCoefficient": 2
+    },
+    {
+      "id": "repairing-to-quiescent",
+      "sourcePhenotype": "repairing",
+      "destinationPhenotype": "quiescent",
+      "mode": 2,
+      "regulatorField": "damage-field",
+      "baseRatePerSecond": 0.000001,
+      "maximumRegulatedRatePerSecond": 0.00008,
+      "threshold": 0.2,
+      "hillCoefficient": 2
+    }
+  ],
+  "interactions": [
+    {
+      "actorPhenotype": "activated",
+      "targetPhenotype": "quiescent",
+      "coefficientPerDensityPerSecond": -1e-9
+    },
+    {
+      "actorPhenotype": "repairing",
+      "targetPhenotype": "activated",
+      "coefficientPerDensityPerSecond": -2e-9
+    },
+    {
+      "actorPhenotype": "repairing",
+      "targetPhenotype": "quiescent",
+      "coefficientPerDensityPerSecond": 5e-10
+    }
+  ]
+}
