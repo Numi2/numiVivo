@@ -37,6 +37,12 @@ struct VivoCLICommandRouter {
                 return try compilePopulation(parsed)
             case "compile-surrogate":
                 return try compileSurrogate(parsed)
+            case "compile-physiology":
+                return try compilePhysiology(parsed)
+            case "compile-physiology-coupling":
+                return try compilePhysiologyCoupling(parsed)
+            case "plan-capacity":
+                return try planCapacity(parsed)
             case "inspect-checkpoint":
                 return try inspectCheckpoint(parsed)
             default:
@@ -262,6 +268,99 @@ struct VivoCLICommandRouter {
         return VivoCLIExit.success
     }
 
+    private func compilePhysiology(_ arguments: VivoCLIArguments) throws -> Int32 {
+        try arguments.requirePositionals(1, usage: "compile-physiology <source.json> --output <prepared.json>")
+        try arguments.requireOption("output")
+        try arguments.allowOptions(["output", "force"])
+        let compiled = try VivoSourceArtifactCompiler.physiologyModel(
+            from: try read(arguments.positionals[0])
+        )
+        try write(
+            try VivoSourceArtifactCompiler.canonicalJSON(compiled),
+            destination: arguments.requiredValue("output"),
+            force: arguments.flag("force"),
+            binary: false
+        )
+        writeStandardError("physiology model \(compiled.artifactFingerprint)\n")
+        return VivoCLIExit.success
+    }
+
+    private func compilePhysiologyCoupling(_ arguments: VivoCLIArguments) throws -> Int32 {
+        try arguments.requirePositionals(1, usage: "compile-physiology-coupling <source.json> --program <program.vivopack> --physiology <prepared.json> --lanes <count> --output <bridge.json>")
+        try arguments.requireOption("program")
+        try arguments.requireOption("physiology")
+        try arguments.requireOption("lanes")
+        try arguments.requireOption("output")
+        try arguments.allowOptions(["program", "physiology", "lanes", "output", "force"])
+
+        let programPack = try VivoProgramPack(data: read(arguments.requiredValue("program")))
+        let physiology: PreparedVivoPhysiologyModel = try decodeArtifact(
+            PreparedVivoPhysiologyModel.self,
+            path: arguments.requiredValue("physiology")
+        )
+        let compiled = try VivoSourceArtifactCompiler.molecularPhysiologyCoupling(
+            from: try read(arguments.positionals[0]),
+            programPack: programPack,
+            physiology: physiology,
+            molecularLaneCount: try arguments.uint32("lanes")
+        )
+        try write(
+            try VivoSourceArtifactCompiler.canonicalJSON(compiled),
+            destination: arguments.requiredValue("output"),
+            force: arguments.flag("force"),
+            binary: false
+        )
+        writeStandardError("molecular-physiology bridge \(compiled.artifactFingerprint)\n")
+        return VivoCLIExit.success
+    }
+
+    private func planCapacity(_ arguments: VivoCLIArguments) throws -> Int32 {
+        try arguments.requirePositionals(1, usage: "plan-capacity <program.vivopack> --lanes <count>")
+        try arguments.requireOption("lanes")
+        try arguments.allowOptions([
+            "lanes", "parameter-environments", "physiology", "event-capacity",
+            "coupling-capacity", "publication-capacity", "physiology-transform-capacity",
+            "physiology-publication-capacity", "working-set-fraction", "headroom",
+            "output", "force"
+        ])
+        let programPack = try VivoProgramPack(data: read(arguments.positionals[0]))
+        let physiology: PreparedVivoPhysiologyModel?
+        if let path = arguments.value("physiology") {
+            physiology = try decodeArtifact(PreparedVivoPhysiologyModel.self, path: path)
+        } else {
+            physiology = nil
+        }
+        let request = VivoCapacityRequest(
+            molecularLaneCount: try arguments.uint32("lanes"),
+            parameterEnvironmentCount: try arguments.uint32("parameter-environments", default: 1),
+            molecularEventCapacity: try arguments.uint32("event-capacity", default: 16_384),
+            molecularCouplingCapacity: try arguments.uint32("coupling-capacity", default: 65_536),
+            molecularPublicationCapacity: try arguments.uint32("publication-capacity", default: 65_536),
+            physiologyEnvironmentCount: physiology?.environmentCount ?? 0,
+            physiologyTransformCapacity: try arguments.uint32("physiology-transform-capacity", default: 262_144),
+            physiologyPublicationCapacity: try arguments.uint32("physiology-publication-capacity", default: 65_536),
+            workingSetFraction: try arguments.double("working-set-fraction", default: 0.80),
+            allocationHeadroom: try arguments.double("headroom", default: 1.15)
+        )
+        let device = try VivoMetalDeviceSelector.productionDevice()
+        let plan = try VivoAppleSiliconCapacityPlanner().plan(
+            programPack: programPack,
+            request: request,
+            physiology: physiology,
+            device: device
+        )
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+        try publishPrimary(
+            try encoder.encode(plan),
+            arguments: arguments,
+            force: arguments.flag("force")
+        )
+        return plan.fitsPlanningBudget && plan.fitsMaximumBufferLength
+            ? VivoCLIExit.success
+            : VivoCLIExit.temporaryFailure
+    }
+
     private func inspectCheckpoint(_ arguments: VivoCLIArguments) throws -> Int32 {
         try arguments.requirePositionals(1, usage: "inspect-checkpoint <checkpoint.vivocheckpoint>")
         try arguments.allowOptions(["require-signature", "output", "force"])
@@ -314,6 +413,16 @@ struct VivoCLICommandRouter {
             FileHandle.standardOutput.write(data)
             if data.last != 0x0a { FileHandle.standardOutput.write(Data("\n".utf8)) }
         }
+    }
+
+    private func decodeArtifact<T: Decodable & Sendable>(
+        _ type: T.Type,
+        path: String
+    ) throws -> T {
+        try VivoValidatedArtifactLoader.decode(
+            type,
+            from: read(path)
+        ).value
     }
 
     private func read(_ path: String) throws -> Data {
@@ -396,6 +505,9 @@ struct VivoCLICommandRouter {
       numivivo compile-partition <source.json> --output <model.json>
       numivivo compile-population <source.json> --output <model.json>
       numivivo compile-surrogate <source.json> --output <contract.json>
+      numivivo compile-physiology <source.json> --output <prepared.json>
+      numivivo compile-physiology-coupling <source.json> --program <program.vivopack> --physiology <prepared.json> --lanes <count> --output <bridge.json>
+      numivivo plan-capacity <program.vivopack> --lanes <count> [--physiology <prepared.json>]
       numivivo inspect-checkpoint <checkpoint.vivocheckpoint>
       numivivo version
 
@@ -516,6 +628,13 @@ private struct VivoCLIArguments {
             throw VivoCLIError.usage("--\(name) requires a positive UInt64")
         }
         return parsed
+    }
+
+    func uint32(_ name: String) throws -> UInt32 {
+        guard let value = try optionalUInt32(name) else {
+            throw VivoCLIError.usage("missing required option --\(name)")
+        }
+        return value
     }
 
     func uint32(_ name: String, default defaultValue: UInt32) throws -> UInt32 {
