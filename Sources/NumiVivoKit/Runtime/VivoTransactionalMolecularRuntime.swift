@@ -2,6 +2,8 @@ import Foundation
 import Metal
 import NumiVivoShaders
 
+/// ProgramPack transaction owner. GPU work, readback and checkpoint restoration
+/// reserve this actor across suspension points; candidate buffers never escape.
 public actor VivoTransactionalMolecularRuntime {
     public enum Lifecycle: Sendable, Codable, Equatable {
         case ready
@@ -9,985 +11,462 @@ public actor VivoTransactionalMolecularRuntime {
         case permanentlyStopped(reason: String)
         case failed(reason: String)
     }
-
     private struct AttemptResult {
         let status: VivoRuntimeStatus
         let events: [VivoEvent]
         let publications: [Float]
     }
-
-    private struct PendingStep {
-        let prepared: VivoPreparedMolecularStep
-        let requestedTimeStep: Float
-    }
-
     public nonisolated let pack: VivoProgramPack
     public nonisolated let configuration: VivoRuntimeConfiguration
     public nonisolated let capabilities: VivoMetalCapabilities
-
     private let commandQueue: MTLCommandQueue
-    private let arena: VivoMetalArena
-    private let pipelines: VivoTransactionalRuntimePipelines
+    private var arena: VivoMetalArena
+    private let pipelines: [NumiVivoKernel: NumiVivoPipeline]
+    private let species: [VivoProgramPack.SpeciesMetadata]
     private let containsCountValuedSpecies: Bool
-
     private var lifecycleState: Lifecycle = .ready
-    private var absoluteTime: Float = 0
+    private var absoluteTimeSeconds: Double = 0
     private var nextStepIndex: UInt32 = 0
-    private var pending: PendingStep?
+    private var pending: VivoPreparedMolecularStep?
+    private var inFlight = false
 
-    public static func make(
-        pack: VivoProgramPack,
-        configuration: VivoRuntimeConfiguration,
-        device requestedDevice: MTLDevice? = nil
-    ) async throws -> VivoTransactionalMolecularRuntime {
+    public static func make(pack: VivoProgramPack, configuration: VivoRuntimeConfiguration,
+                            device requestedDevice: MTLDevice? = nil) async throws -> VivoTransactionalMolecularRuntime {
+        try configuration.validate(for: pack)
         let device = try requestedDevice ?? VivoMetalDeviceSelector.productionDevice()
-        guard let queue = device.makeCommandQueue() else {
-            throw VivoRuntimeError.commandQueueUnavailable
-        }
+        guard let queue = device.makeCommandQueue() else { throw VivoRuntimeError.commandQueueUnavailable }
         queue.label = "NumiVivo.TransactionalMolecularQueue"
         let catalog = try NumiVivoPipelineCatalog(device: device)
-        let pipelines = try await VivoTransactionalRuntimePipelines.load(from: catalog)
-        let arena = try VivoMetalArena(
-            device: device,
-            commandQueue: queue,
-            pack: pack,
-            configuration: configuration
-        )
-        let countValued = try pack.speciesMetadata().contains(where: { $0.isCountValued })
-        return VivoTransactionalMolecularRuntime(
-            pack: pack,
-            configuration: configuration,
-            commandQueue: queue,
-            arena: arena,
-            pipelines: pipelines,
-            containsCountValuedSpecies: countValued
-        )
+        var pipelines: [NumiVivoKernel: NumiVivoPipeline] = [:]
+        for kernel in [NumiVivoKernel.clearStatus, .prepareTransaction, .applyCouplingUpdates,
+                       .f1HeunPredict, .f1HeunCorrect, .f2SampleReactions, .f2ApplyReactions,
+                       .f3Transport, .executeRules, .evaluateMonitors, .validateShadow, .publish] {
+            pipelines[kernel] = try await catalog.pipeline(kernel)
+        }
+        let arena = try VivoMetalArena(device: device, commandQueue: queue, pack: pack, configuration: configuration)
+        return try VivoTransactionalMolecularRuntime(pack: pack, configuration: configuration,
+                                                      queue: queue, arena: arena, pipelines: pipelines)
     }
-
-    private init(
-        pack: VivoProgramPack,
-        configuration: VivoRuntimeConfiguration,
-        commandQueue: MTLCommandQueue,
-        arena: VivoMetalArena,
-        pipelines: VivoTransactionalRuntimePipelines,
-        containsCountValuedSpecies: Bool
-    ) {
+    private init(pack: VivoProgramPack, configuration: VivoRuntimeConfiguration,
+                 queue: MTLCommandQueue, arena: VivoMetalArena,
+                 pipelines: [NumiVivoKernel: NumiVivoPipeline]) throws {
         self.pack = pack
         self.configuration = configuration
-        self.commandQueue = commandQueue
+        commandQueue = queue
         self.arena = arena
         self.pipelines = pipelines
-        self.capabilities = arena.capabilities
-        self.containsCountValuedSpecies = containsCountValuedSpecies
+        species = try pack.speciesMetadata()
+        containsCountValuedSpecies = species.contains { $0.isCountValued }
+        capabilities = arena.capabilities
     }
-
     public func lifecycle() -> Lifecycle { lifecycleState }
-    public func time() -> Float { absoluteTime }
+    public func time() -> Float { Float(absoluteTimeSeconds) }
+    public func timeSeconds() -> Double { absoluteTimeSeconds }
     public func stepIndex() -> UInt32 { nextStepIndex }
-    public func hasPendingTransaction() -> Bool { pending != nil }
+    public func hasPendingTransaction() -> Bool { inFlight || pending != nil }
 
     public func resume() throws {
-        guard pending == nil else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "cannot resume while a molecular transaction is pending"
-            )
-        }
+        try requireUnreserved()
         switch lifecycleState {
-        case .reversiblyStopped:
-            lifecycleState = .ready
-        case .ready:
-            return
-        case .permanentlyStopped(let reason):
-            throw VivoRuntimeError.runtimeStopped("permanent shutdown: \(reason)")
-        case .failed(let reason):
-            throw VivoRuntimeError.runtimeStopped("runtime failure: \(reason)")
+        case .reversiblyStopped: lifecycleState = .ready
+        case .ready: return
+        case .permanentlyStopped(let reason), .failed(let reason): throw VivoRuntimeError.runtimeStopped(reason)
         }
     }
-
     public func stopPermanently(reason: String) {
+        // In-flight GPU work is allowed to finish, but prepare checks this state
+        // again after its await and cannot publish the candidate it produced.
         pending = nil
         lifecycleState = .permanentlyStopped(reason: reason)
     }
-
     public func setTransport(_ values: [VivoSpeciesTransportABI]) throws {
-        try ensureReadyForMutation()
-        guard pending == nil else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "cannot change transport while a molecular transaction is pending"
-            )
+        try requireReadyAndUnreserved()
+        guard values.allSatisfy({ $0.diffusion.isFinite && $0.diffusion >= 0 &&
+                                   $0.membranePermeability.isFinite && $0.membranePermeability >= 0 &&
+                                   $0.decayRate.isFinite && $0.decayRate >= 0 }) else {
+            throw VivoRuntimeError.invalidConfiguration("transport coefficients must be finite and nonnegative")
         }
         try arena.replaceTransport(values, commandQueue: commandQueue)
     }
-
     public func setVelocity(_ values: [SIMD4<Float>]) throws {
-        try ensureReadyForMutation()
-        guard pending == nil else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "cannot change velocity while a molecular transaction is pending"
-            )
+        try requireReadyAndUnreserved()
+        guard values.allSatisfy({ $0.x.isFinite && $0.y.isFinite && $0.z.isFinite && $0.w.isFinite }) else {
+            throw VivoRuntimeError.invalidConfiguration("velocity field contains non-finite values")
         }
         try arena.replaceVelocity(values, commandQueue: commandQueue)
     }
-
     public func setVolumeFractions(_ values: [Float]) throws {
-        try ensureReadyForMutation()
-        guard pending == nil else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "cannot change volume fractions while a molecular transaction is pending"
-            )
-        }
+        try requireReadyAndUnreserved()
         try arena.replaceVolumeFraction(values, commandQueue: commandQueue)
     }
 
-    public func prepareStep(
-        _ request: VivoStepRequest = .init(),
-        transactionID: UUID = UUID()
-    ) async throws -> VivoPreparedMolecularStep {
-        try ensureReadyForMutation()
-        guard pending == nil else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "molecular runtime already has a prepared transaction"
-            )
+    public func prepareStep(_ request: VivoStepRequest = .init(), transactionID: UUID = UUID()) async throws -> VivoPreparedMolecularStep {
+        try requireReadyAndUnreserved()
+        try Task.checkCancellation()
+        let requested = request.timeStep ?? configuration.timeStep
+        guard requested.isFinite, requested >= configuration.minimumTimeStep,
+              requested <= configuration.maximumTimeStep, nextStepIndex < UInt32.max,
+              absoluteTimeSeconds + Double(requested) > absoluteTimeSeconds,
+              Float(absoluteTimeSeconds + Double(requested)).isFinite else {
+            throw VivoRuntimeError.invalidConfiguration("molecular time step, clock, or step index cannot advance")
         }
-
-        let requestedStep = request.timeStep ?? configuration.timeStep
-        guard requestedStep.isFinite,
-              requestedStep >= configuration.minimumTimeStep,
-              requestedStep <= configuration.maximumTimeStep else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "requested molecular time step is outside configured finite bounds"
-            )
-        }
-        try validate(request: request)
-
-        let coupling = request.coupling.map { $0.abi }
-        let publications = request.publications.enumerated().map { index, request in
-            VivoPublicationRequestABI(
-                speciesIndex: request.speciesIndex,
-                laneIndex: request.laneIndex,
-                outputIndex: UInt32(index),
-                flags: request.flags
-            )
-        }
-        try arena.write(couplingUpdates: coupling)
-        try arena.write(publicationRequests: publications)
-
-        var dt = requestedStep
-        var attempt: UInt32 = 0
-
-        while attempt < configuration.maximumSubsteps {
-            let result = try await executeAttempt(
-                dt: dt,
-                attemptIndex: attempt,
-                couplingCount: coupling.count,
-                publicationCount: publications.count
-            )
-            let status = result.status
-
+        try validate(request)
+        inFlight = true
+        defer { inFlight = false }
+        try arena.write(couplingUpdates: request.coupling.map(\.abi))
+        try arena.write(publicationRequests: request.publications.enumerated().map { index, value in
+            .init(speciesIndex: value.speciesIndex, laneIndex: value.laneIndex, outputIndex: UInt32(index), flags: value.flags)
+        })
+        var dt = requested
+        for attempt in 0..<configuration.maximumSubsteps {
+            // The legacy shader ABI exposes FP32 absolute time. Stop rather than
+            // silently issuing indistinguishable timestamps at large horizons.
+            guard Float(absoluteTimeSeconds + Double(dt)) > Float(absoluteTimeSeconds) else {
+                throw VivoRuntimeError.invalidConfiguration("time step is below the legacy FP32 absolute-clock resolution")
+            }
+            let output = try await executeAttempt(dt: dt, attempt: attempt,
+                                                  couplingCount: request.coupling.count,
+                                                  publicationCount: request.publications.count)
+            try ensureReadyForMutation()
+            try Task.checkCancellation()
+            let status = output.status
+            let disposition: VivoPreparedMolecularDisposition
             if status.flags.contains(.permanentShutdown) || status.requestedResponse == 5 {
-                lifecycleState = .permanentlyStopped(reason: shutdownReason(status: status))
-                return terminalPrepared(
-                    transactionID: transactionID,
-                    disposition: .permanentShutdown,
-                    requestedStep: requestedStep,
-                    candidateStep: dt,
-                    attemptCount: attempt + 1,
-                    result: result
-                )
+                lifecycleState = .permanentlyStopped(reason: shutdownReason(status))
+                disposition = .permanentShutdown
+            } else if status.flags.contains(.reversibleShutdown) || status.requestedResponse == 4 {
+                lifecycleState = .reversiblyStopped(reason: shutdownReason(status))
+                disposition = .reversibleShutdown
+            } else if !status.blocksCommit && !status.flags.contains(.invalidRate) &&
+                        !status.flags.contains(.eventOverflow) && !status.flags.contains(.randomSaturated) &&
+                        !status.flags.contains(.substep) && status.requestedResponse != 1 && status.requestedResponse != 3 {
+                disposition = .prepared
+            } else {
+                let reduced = dt * 0.5
+                if request.permitAdaptiveReduction, attempt + 1 < configuration.maximumSubsteps,
+                   reduced >= configuration.minimumTimeStep, reduced < dt {
+                    dt = reduced
+                    continue
+                }
+                disposition = .requiresSmallerStep
             }
-            if status.flags.contains(.reversibleShutdown) || status.requestedResponse == 4 {
-                lifecycleState = .reversiblyStopped(reason: shutdownReason(status: status))
-                return terminalPrepared(
-                    transactionID: transactionID,
-                    disposition: .reversibleShutdown,
-                    requestedStep: requestedStep,
-                    candidateStep: dt,
-                    attemptCount: attempt + 1,
-                    result: result
-                )
-            }
-
-            let unsupportedClamp = status.requestedResponse == 1
-            let hardFailure = status.blocksCommit ||
-                status.flags.contains(.invalidRate) ||
-                status.flags.contains(.eventOverflow) ||
-                unsupportedClamp
-            let asksForSubdivision = status.flags.contains(.substep) ||
-                status.requestedResponse == 3
-
-            if !hardFailure && !asksForSubdivision {
-                let prepared = VivoPreparedMolecularStep(
-                    transactionID: transactionID,
-                    disposition: .prepared,
-                    sourceFingerprint: pack.header.sourceFingerprint,
-                    programFingerprint: pack.header.contentFingerprint,
-                    fidelity: configuration.fidelity,
-                    stepIndex: nextStepIndex,
-                    timeBefore: absoluteTime,
-                    requestedTimeStep: requestedStep,
-                    candidateTimeStep: dt,
-                    attemptCount: attempt + 1,
-                    status: status,
-                    events: result.events,
-                    publications: result.publications
-                )
-                pending = PendingStep(
-                    prepared: prepared,
-                    requestedTimeStep: requestedStep
-                )
-                return prepared
-            }
-
-            let reduced = dt * 0.5
-            let mayRetry = request.permitAdaptiveReduction &&
-                attempt + 1 < configuration.maximumSubsteps &&
-                reduced >= configuration.minimumTimeStep &&
-                reduced < dt
-            guard mayRetry else {
-                return VivoPreparedMolecularStep(
-                    transactionID: transactionID,
-                    disposition: reduced < dt ? .requiresSmallerStep : .rejected,
-                    sourceFingerprint: pack.header.sourceFingerprint,
-                    programFingerprint: pack.header.contentFingerprint,
-                    fidelity: configuration.fidelity,
-                    stepIndex: nextStepIndex,
-                    timeBefore: absoluteTime,
-                    requestedTimeStep: requestedStep,
-                    candidateTimeStep: dt,
-                    attemptCount: attempt + 1,
-                    status: status,
-                    events: result.events,
-                    publications: []
-                )
-            }
-            dt = reduced
-            attempt &+= 1
+            let value = VivoPreparedMolecularStep(transactionID: transactionID, disposition: disposition,
+                                                   sourceFingerprint: pack.header.sourceFingerprint,
+                                                   programFingerprint: pack.header.contentFingerprint,
+                                                   fidelity: configuration.fidelity, stepIndex: nextStepIndex,
+                                                   timeBefore: Float(absoluteTimeSeconds), requestedTimeStep: requested,
+                                                   candidateTimeStep: dt, attemptCount: attempt + 1, status: status,
+                                                   events: output.events,
+                                                   publications: disposition == .prepared ? output.publications : [])
+            if value.canCommit { pending = value }
+            return value
         }
-
-        throw VivoRuntimeError.commandFailed(
-            "molecular prepare loop exhausted without producing a candidate"
-        )
+        throw VivoRuntimeError.commandFailed("molecular attempt budget exhausted")
     }
-
-    public func commitPreparedStep(
-        transactionID: UUID
-    ) throws -> VivoMolecularTransactionCertificate {
-        guard let pending,
-              pending.prepared.transactionID == transactionID else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "molecular transaction identifier does not match the prepared candidate"
-            )
+    public func commitPreparedStep(transactionID: UUID) throws -> VivoMolecularTransactionCertificate {
+        try ensureReadyForMutation()
+        guard !inFlight, let candidate = pending, candidate.transactionID == transactionID, candidate.canCommit else {
+            throw VivoRuntimeError.invalidConfiguration("molecular transaction does not match an eligible candidate")
         }
-        guard pending.prepared.canCommit else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "molecular candidate is not eligible for commit"
-            )
-        }
-
         arena.commit()
-        let before = absoluteTime
-        absoluteTime += pending.prepared.candidateTimeStep
-        nextStepIndex &+= 1
-        self.pending = nil
-
-        return VivoMolecularTransactionCertificate(
-            transactionID: transactionID,
-            disposition: pending.prepared.candidateTimeStep == pending.requestedTimeStep
-                ? .committed
-                : .committedWithReducedStep,
-            sourceFingerprint: pack.header.sourceFingerprint,
-            programFingerprint: pack.header.contentFingerprint,
-            fidelity: configuration.fidelity,
-            deviceName: capabilities.deviceName,
-            deviceRegistryID: capabilities.registryID,
-            stepIndex: pending.prepared.stepIndex,
-            timeBefore: before,
-            timeAfter: absoluteTime,
-            requestedTimeStep: pending.requestedTimeStep,
-            acceptedTimeStep: pending.prepared.candidateTimeStep,
-            attemptCount: pending.prepared.attemptCount,
-            status: pending.prepared.status
-        )
+        absoluteTimeSeconds += Double(candidate.candidateTimeStep)
+        nextStepIndex += 1
+        pending = nil
+        return certificate(candidate, disposition: candidate.candidateTimeStep == candidate.requestedTimeStep ? .committed : .committedWithReducedStep,
+                           accepted: candidate.candidateTimeStep, timeAfter: Float(absoluteTimeSeconds))
     }
-
     public func discardPreparedStep(transactionID: UUID) throws {
-        guard let pending,
-              pending.prepared.transactionID == transactionID else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "molecular transaction identifier does not match the prepared candidate"
-            )
+        guard !inFlight, pending?.transactionID == transactionID else {
+            throw VivoRuntimeError.invalidConfiguration("molecular transaction does not match the prepared candidate")
         }
-        self.pending = nil
+        pending = nil
     }
-
-    public func step(
-        _ request: VivoStepRequest = .init()
-    ) async throws -> VivoMolecularTransactionResult {
-        let transactionID = UUID()
-        let prepared = try await prepareStep(request, transactionID: transactionID)
-        guard prepared.canCommit else {
-            return VivoMolecularTransactionResult(
-                certificate: rejectedCertificate(for: prepared),
-                events: prepared.events,
-                publications: []
-            )
+    public func step(_ request: VivoStepRequest = .init()) async throws -> VivoMolecularTransactionResult {
+        let candidate = try await prepareStep(request)
+        if candidate.canCommit {
+            return .init(certificate: try commitPreparedStep(transactionID: candidate.transactionID),
+                          events: candidate.events, publications: candidate.publications)
         }
-        let certificate = try commitPreparedStep(transactionID: transactionID)
-        return VivoMolecularTransactionResult(
-            certificate: certificate,
-            events: prepared.events,
-            publications: prepared.publications
-        )
+        let disposition: VivoStepDisposition = candidate.disposition == .permanentShutdown ? .permanentShutdown :
+            (candidate.disposition == .reversibleShutdown ? .reversibleShutdown : .rejected)
+        return .init(certificate: certificate(candidate, disposition: disposition, accepted: nil, timeAfter: candidate.timeBefore),
+                      events: candidate.events, publications: [])
     }
-
     public func snapshot() async throws -> VivoStateSnapshot {
-        guard pending == nil else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "cannot snapshot molecular state while a candidate transaction is pending"
-            )
-        }
-        guard let command = commandQueue.makeCommandBuffer(),
-              let blit = command.makeBlitCommandEncoder() else {
+        try requireUnreserved()
+        inFlight = true
+        defer { inFlight = false }
+        guard let command = commandQueue.makeCommandBuffer(), let blit = command.makeBlitCommandEncoder() else {
             throw VivoRuntimeError.commandQueueUnavailable
         }
-        command.label = "NumiVivo.TransactionalMolecularSnapshot"
-        blit.copy(
-            from: arena.currentState,
-            sourceOffset: 0,
-            to: arena.stateReadbackBuffer,
-            destinationOffset: 0,
-            size: arena.stateReadbackBuffer.length
-        )
+        blit.copy(from: arena.currentState, sourceOffset: 0, to: arena.stateReadbackBuffer, destinationOffset: 0,
+                  size: arena.capacities.stateElements * 4)
         blit.endEncoding()
         try await complete(command)
-
-        let pointer = arena.stateReadbackBuffer.contents().assumingMemoryBound(to: Float.self)
-        let values = Array(
-            UnsafeBufferPointer(start: pointer, count: arena.capacities.stateElements)
-        )
-        return VivoStateSnapshot(
-            sourceFingerprint: pack.header.sourceFingerprint,
-            programFingerprint: pack.header.contentFingerprint,
-            stepIndex: nextStepIndex,
-            absoluteTime: absoluteTime,
-            speciesCount: pack.runtimeContract.speciesCount,
-            laneCount: configuration.laneCount,
-            values: values
-        )
+        let values = Array(UnsafeBufferPointer(start: arena.stateReadbackBuffer.contents().assumingMemoryBound(to: Float.self), count: arena.capacities.stateElements))
+        return .init(sourceFingerprint: pack.header.sourceFingerprint, programFingerprint: pack.header.contentFingerprint,
+                      stepIndex: nextStepIndex, absoluteTime: Float(absoluteTimeSeconds),
+                      speciesCount: pack.runtimeContract.speciesCount, laneCount: configuration.laneCount, values: values)
     }
 
-    private func executeAttempt(
-        dt: Float,
-        attemptIndex: UInt32,
-        couplingCount: Int,
-        publicationCount: Int
-    ) async throws -> AttemptResult {
-        guard let command = commandQueue.makeCommandBuffer() else {
-            throw VivoRuntimeError.commandQueueUnavailable
+    /// Legacy v2 payload, restricted to the state classes this arena actually
+    /// owns. Prefer resumeCheckpoint() for spatial layout/configuration binding.
+    public func checkpoint() throws -> VivoMolecularCheckpoint {
+        try requireReadyAndUnreserved()
+        try requireCheckpointableModel()
+        let data = try arena.captureCheckpoint(commandQueue: commandQueue)
+        let parameterScalars = Int(pack.runtimeContract.parameterCount) * Int(configuration.environmentCount)
+        let value = VivoMolecularCheckpoint(programFingerprint: pack.header.contentFingerprint,
+                                            sourceProgramFingerprint: pack.header.sourceFingerprint,
+                                            fidelity: configuration.fidelity, seed: configuration.seed,
+                                            stepIndex: nextStepIndex, absoluteTimeSeconds: absoluteTimeSeconds,
+                                            speciesCount: pack.runtimeContract.speciesCount, laneCount: configuration.laneCount,
+                                            parameterCount: pack.runtimeContract.parameterCount,
+                                            parameterEnvironmentCount: configuration.environmentCount,
+                                            temporalStateCount: pack.runtimeContract.temporalStateCount,
+                                            stateFP32LE: VivoLittleEndianFP32.encode(data.state),
+                                            parametersFP32LE: VivoLittleEndianFP32.encode(Array(data.parameters.prefix(parameterScalars))),
+                                            temporalStateFP32LE: VivoLittleEndianFP32.encode(data.temporalState),
+                                            transportRecordLE: VivoTransportRecordLE.encode(data.transport),
+                                            velocityFP32LE: VivoLittleEndianFP32.encode(data.velocity),
+                                            volumeFractionFP32LE: VivoLittleEndianFP32.encode(data.volumeFractions))
+        try value.validate()
+        return value
+    }
+    public func resumeCheckpoint() throws -> VivoMolecularResumeCheckpoint {
+        try VivoMolecularResumeCheckpoint(configuration: configuration, state: checkpoint())
+    }
+    public func restore(_ checkpoint: VivoMolecularCheckpoint) throws {
+        guard configuration.spatialGrid == nil else {
+            throw VivoRuntimeError.invalidConfiguration("raw v2 checkpoints omit spatial layout; restore the configuration-bound resume checkpoint")
         }
-        command.label = "NumiVivo.TransactionalMolecular.Step.\(nextStepIndex).Attempt.\(attemptIndex)"
+        try restoreState(checkpoint)
+    }
+    public func restore(_ checkpoint: VivoMolecularResumeCheckpoint) throws {
+        try checkpoint.validate()
+        guard checkpoint.configuration == configuration else {
+            throw VivoRuntimeError.invalidConfiguration("resume configuration differs, including spatial grid, seed or numerical settings")
+        }
+        try restoreState(checkpoint.state)
+    }
+    private func restoreState(_ checkpoint: VivoMolecularCheckpoint) throws {
+        try requireReadyAndUnreserved()
+        try requireCheckpointableModel()
+        try checkpoint.validate()
+        guard checkpoint.programFingerprint == pack.header.contentFingerprint,
+              checkpoint.sourceProgramFingerprint == pack.header.sourceFingerprint,
+              checkpoint.fidelity == configuration.fidelity, checkpoint.seed == configuration.seed,
+              checkpoint.speciesCount == pack.runtimeContract.speciesCount,
+              checkpoint.laneCount == configuration.laneCount,
+              checkpoint.parameterCount == pack.runtimeContract.parameterCount,
+              checkpoint.parameterEnvironmentCount == configuration.environmentCount,
+              checkpoint.temporalStateCount == pack.runtimeContract.temporalStateCount,
+              checkpoint.absoluteTimeSeconds <= Double(Float.greatestFiniteMagnitude) else {
+            throw VivoRuntimeError.invalidConfiguration("checkpoint identity, layout, seed, fidelity or clock mismatch")
+        }
+        let values = try VivoLittleEndianFP32.decode(checkpoint.stateFP32LE)
+        for (index, value) in values.enumerated() {
+            let metadata = species[index / Int(configuration.laneCount)]
+            guard value >= metadata.minimum, value <= metadata.maximum else {
+                throw VivoRuntimeError.invalidConfiguration("checkpoint violates species bounds")
+            }
+            if metadata.isCountValued, (value < 0 || value.rounded() != value || value > 16_777_216) {
+                throw VivoRuntimeError.invalidConfiguration("count state is not an exactly representable FP32 integer")
+            }
+        }
+        let parameters = try VivoLittleEndianFP32.decode(checkpoint.parametersFP32LE)
+        let metadata = try pack.parameterMetadata()
+        for (index, value) in parameters.enumerated() {
+            let bounds = metadata[index / Int(configuration.environmentCount)]
+            guard Double(value) >= bounds.minimum, Double(value) <= bounds.maximum else {
+                throw VivoRuntimeError.invalidConfiguration("checkpoint violates parameter bounds")
+            }
+        }
+        let transport = try VivoTransportRecordLE.decode(checkpoint.transportRecordLE)
+        guard transport.allSatisfy({ $0.diffusion >= 0 && $0.membranePermeability >= 0 && $0.decayRate >= 0 }) else {
+            throw VivoRuntimeError.invalidConfiguration("checkpoint contains a negative transport coefficient")
+        }
+        let decoded = VivoMolecularArenaCheckpointData(state: values,
+                                                       parameters: parameters.isEmpty ? [0] : parameters,
+                                                       temporalState: try VivoLittleEndianFP32.decode(checkpoint.temporalStateFP32LE),
+                                                       transport: transport,
+                                                       velocity: try VivoLittleEndianFP32.decode(checkpoint.velocityFP32LE),
+                                                       volumeFractions: try VivoLittleEndianFP32.decode(checkpoint.volumeFractionFP32LE))
+        // Never blit over accepted resources. Failed restore keeps the old arena.
+        let replacement = try VivoMetalArena(device: arena.device, commandQueue: commandQueue,
+                                              pack: pack, configuration: configuration)
+        try replacement.restoreCheckpoint(decoded, commandQueue: commandQueue)
+        arena = replacement
+        absoluteTimeSeconds = checkpoint.absoluteTimeSeconds
+        nextStepIndex = checkpoint.stepIndex
+    }
+    private func requireCheckpointableModel() throws {
+        let section = try pack.section(.reactions)
+        guard section.stride == 64 else { throw VivoRuntimeError.packError("reaction record stride mismatch") }
+        let records = try pack.sectionData(.reactions)
+        let delayed = records.withUnsafeBytes { raw in
+            (0..<Int(section.count)).contains { index in
+                let flags = UInt32(littleEndian: raw.loadUnaligned(fromByteOffset: index * 64 + 44, as: UInt32.self))
+                let delay = Float(bitPattern: UInt32(littleEndian: raw.loadUnaligned(fromByteOffset: index * 64 + 48, as: UInt32.self)))
+                return flags & (1 << 2) != 0 || delay != 0
+            }
+        }
+        guard !delayed else {
+            throw VivoRuntimeError.invalidConfiguration("this arena checkpoint has no delayed-event queue; delayed models cannot be exported as complete state")
+        }
+    }
 
-        let runtimeCommand = try VivoRuntimeCommandABI(
-            pack: pack,
-            configuration: configuration,
-            stepIndex: nextStepIndex,
-            substepIndex: attemptIndex,
-            dt: dt,
-            absoluteTime: absoluteTime + dt
-        )
-
-        try encodeClearStatus(command)
-        try encodePrepare(command, runtimeCommand: runtimeCommand)
+    private func executeAttempt(dt: Float, attempt: UInt32, couplingCount: Int, publicationCount: Int) async throws -> AttemptResult {
+        guard let command = commandQueue.makeCommandBuffer() else { throw VivoRuntimeError.commandQueueUnavailable }
+        command.label = "NumiVivo.Molecular.\(nextStepIndex).\(attempt)"
+        let uniforms = try VivoRuntimeCommandABI(pack: pack, configuration: configuration, stepIndex: nextStepIndex,
+                                                 substepIndex: attempt, dt: dt, absoluteTime: Float(absoluteTimeSeconds + Double(dt)))
+        try encode(.clearStatus, count: 1, command: command, buffers: [arena.statusBuffer])
+        try encode(.prepareTransaction, count: max(arena.capacities.stateElements, arena.capacities.temporalElements), command: command,
+                   buffers: [arena.currentState, arena.baseState, arena.candidateState, arena.temporalCurrent, arena.temporalCandidate, arena.statusBuffer], uniforms: uniforms)
         if couplingCount > 0 {
-            try encodeCoupling(
-                command,
-                runtimeCommand: runtimeCommand,
-                count: couplingCount
-            )
+            try encode(.applyCouplingUpdates, count: couplingCount, command: command,
+                       buffers: [arena.baseState, arena.couplingBuffer, arena.statusBuffer], uniforms: uniforms, extraCount: UInt32(couplingCount))
         }
-
         switch configuration.fidelity {
-        case .logic:
-            try encodeCopy(
-                command,
-                source: arena.baseState,
-                destination: arena.candidateState
-            )
+        case .logic: try copy(command, from: arena.baseState, to: arena.candidateState)
         case .deterministic:
-            try encodeDeterministicReaction(
-                command,
-                runtimeCommand: runtimeCommand,
-                source: arena.baseState,
-                predictor: arena.stageState,
-                destination: arena.candidateState
-            )
+            try deterministic(command, uniforms: uniforms, source: arena.baseState, predictor: arena.stageState, destination: arena.candidateState)
         case .stochastic:
-            try encodeStochasticReaction(
-                command,
-                runtimeCommand: runtimeCommand,
-                source: arena.baseState,
-                destination: arena.candidateState
-            )
+            try stochastic(command, uniforms: uniforms, source: arena.baseState, destination: arena.candidateState)
         case .spatial, .tissue:
-            try encodeSpatialSplit(command, runtimeCommand: runtimeCommand)
+            let doubled = attempt.multipliedReportingOverflow(by: 2)
+            guard !doubled.overflow, doubled.partialValue < UInt32.max else { throw VivoRuntimeError.invalidConfiguration("split-step random namespace overflow") }
+            var first = uniforms
+            first.dt *= 0.5
+            first.absoluteTime = Float(absoluteTimeSeconds + Double(first.dt))
+            first.substepIndex = doubled.partialValue
+            if containsCountValuedSpecies {
+                try stochastic(command, uniforms: first, source: arena.baseState, destination: arena.candidateState)
+            } else {
+                try deterministic(command, uniforms: first, source: arena.baseState, predictor: arena.stageState, destination: arena.candidateState)
+            }
+            try encode(.f3Transport, count: arena.capacities.stateElements, command: command,
+                       buffers: [arena.candidateState, arena.stageState, arena.transport, arena.velocity, arena.volumeFraction, arena.statusBuffer], uniforms: uniforms)
+            var second = first
+            second.absoluteTime = uniforms.absoluteTime
+            second.substepIndex += 1
+            if containsCountValuedSpecies {
+                try stochastic(command, uniforms: second, source: arena.stageState, destination: arena.candidateState)
+            } else {
+                try deterministic(command, uniforms: second, source: arena.stageState, predictor: arena.baseState, destination: arena.candidateState)
+            }
         }
-
-        try encodeRules(command, runtimeCommand: runtimeCommand)
-        try encodeMonitors(command, runtimeCommand: runtimeCommand)
-        try encodeValidation(command, runtimeCommand: runtimeCommand)
+        let controls = [arena.candidateState, arena.temporalCandidate, arena.parameterBuffer, arena.programBuffer, arena.eventBuffer, arena.statusBuffer]
+        try encode(.executeRules, count: try work(pack.runtimeContract.ruleCount), command: command, buffers: controls, uniforms: uniforms)
+        try encode(.evaluateMonitors, count: try work(pack.runtimeContract.monitorCount), command: command, buffers: controls, uniforms: uniforms)
+        try encode(.validateShadow, count: arena.capacities.stateElements, command: command,
+                   buffers: [arena.candidateState, arena.programBuffer, arena.statusBuffer], uniforms: uniforms)
         if publicationCount > 0 {
-            try encodePublications(
-                command,
-                runtimeCommand: runtimeCommand,
-                count: publicationCount
-            )
+            try encode(.publish, count: publicationCount, command: command,
+                       buffers: [arena.candidateState, arena.publicationRequestBuffer, arena.publicationOutputBuffer, arena.statusBuffer],
+                       uniforms: uniforms, extraCount: UInt32(publicationCount))
         }
-
         try await complete(command)
         let status = arena.status()
-        return AttemptResult(
-            status: status,
-            events: arena.events(status: status),
-            publications: try arena.publicationValues(count: publicationCount)
-        )
+        return .init(status: status, events: arena.events(status: status), publications: try arena.publicationValues(count: publicationCount))
     }
-
-    private func encodeSpatialSplit(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI
-    ) throws {
-        var firstHalf = runtimeCommand
-        firstHalf.dt = runtimeCommand.dt * 0.5
-        firstHalf.absoluteTime = absoluteTime + firstHalf.dt
-
-        if containsCountValuedSpecies {
-            try encodeStochasticReaction(
-                commandBuffer,
-                runtimeCommand: firstHalf,
-                source: arena.baseState,
-                destination: arena.candidateState
-            )
-        } else {
-            try encodeDeterministicReaction(
-                commandBuffer,
-                runtimeCommand: firstHalf,
-                source: arena.baseState,
-                predictor: arena.stageState,
-                destination: arena.candidateState
-            )
-        }
-
-        try encodeTransport(
-            commandBuffer,
-            runtimeCommand: runtimeCommand,
-            source: arena.candidateState,
-            destination: arena.stageState
-        )
-
-        var secondHalf = firstHalf
-        secondHalf.absoluteTime = absoluteTime + runtimeCommand.dt
-        if containsCountValuedSpecies {
-            try encodeStochasticReaction(
-                commandBuffer,
-                runtimeCommand: secondHalf,
-                source: arena.stageState,
-                destination: arena.candidateState
-            )
-        } else {
-            try encodeDeterministicReaction(
-                commandBuffer,
-                runtimeCommand: secondHalf,
-                source: arena.stageState,
-                predictor: arena.baseState,
-                destination: arena.candidateState
-            )
-        }
+    private func deterministic(_ command: MTLCommandBuffer, uniforms: VivoRuntimeCommandABI,
+                               source: MTLBuffer, predictor: MTLBuffer, destination: MTLBuffer) throws {
+        try encode(.f1HeunPredict, count: arena.capacities.stateElements, command: command,
+                   buffers: [source, predictor, arena.derivativeK1, arena.parameterBuffer, arena.programBuffer, arena.statusBuffer], uniforms: uniforms)
+        try encode(.f1HeunCorrect, count: arena.capacities.stateElements, command: command,
+                   buffers: [source, predictor, arena.derivativeK1, destination, arena.parameterBuffer, arena.programBuffer, arena.statusBuffer], uniforms: uniforms)
     }
-
-    private func encodeClearStatus(_ commandBuffer: MTLCommandBuffer) throws {
-        try encode(
-            pipelines.clearStatus,
-            count: 1,
-            label: "NumiVivo.Transactional.ClearStatus",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 0)
-        }
+    private func stochastic(_ command: MTLCommandBuffer, uniforms: VivoRuntimeCommandABI,
+                            source: MTLBuffer, destination: MTLBuffer) throws {
+        try encode(.f2SampleReactions, count: try work(pack.runtimeContract.reactionCount), command: command,
+                   buffers: [source, arena.parameterBuffer, arena.reactionEvents, arena.programBuffer, arena.statusBuffer], uniforms: uniforms)
+        try encode(.f2ApplyReactions, count: arena.capacities.stateElements, command: command,
+                   buffers: [source, destination, arena.reactionEvents, arena.programBuffer, arena.statusBuffer], uniforms: uniforms)
     }
-
-    private func encodePrepare(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI
-    ) throws {
-        arena.write(command: runtimeCommand)
-        try encode(
-            pipelines.prepare,
-            count: arena.capacities.stateElements,
-            label: "NumiVivo.Transactional.Prepare",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(arena.currentState, offset: 0, index: 0)
-            encoder.setBuffer(arena.baseState, offset: 0, index: 1)
-            encoder.setBuffer(arena.candidateState, offset: 0, index: 2)
-            encoder.setBuffer(arena.temporalCurrent, offset: 0, index: 3)
-            encoder.setBuffer(arena.temporalCandidate, offset: 0, index: 4)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 5)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 6)
+    private func encode(_ kernel: NumiVivoKernel, count: Int, command: MTLCommandBuffer,
+                        buffers: [MTLBuffer], uniforms: VivoRuntimeCommandABI? = nil, extraCount: UInt32? = nil) throws {
+        guard count > 0 else { return }
+        guard let pipeline = pipelines[kernel], let encoder = command.makeComputeCommandEncoder() else {
+            throw VivoRuntimeError.pipelineEncodingFailed(kernel.rawValue)
         }
+        defer { encoder.endEncoding() }
+        encoder.label = kernel.rawValue
+        encoder.setComputePipelineState(pipeline.state)
+        for (index, buffer) in buffers.enumerated() { encoder.setBuffer(buffer, offset: 0, index: index) }
+        if var uniforms {
+            encoder.setBytes(&uniforms, length: MemoryLayout<VivoRuntimeCommandABI>.stride, index: buffers.count)
+        }
+        if var extraCount {
+            encoder.setBytes(&extraCount, length: 4, index: buffers.count + 1)
+        }
+        encoder.dispatchThreads(pipeline.gridSize(for: count), threadsPerThreadgroup: pipeline.threadgroupSize(for: count, preferred: capabilities.recommendedThreadsPerThreadgroup))
     }
-
-    private func encodeCoupling(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI,
-        count: Int
-    ) throws {
-        arena.write(command: runtimeCommand)
-        try encode(
-            pipelines.applyCoupling,
-            count: count,
-            label: "NumiVivo.Transactional.Coupling",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(arena.baseState, offset: 0, index: 0)
-            encoder.setBuffer(arena.couplingBuffer, offset: 0, index: 1)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 2)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 3)
-            var count32 = UInt32(count)
-            encoder.setBytes(&count32, length: MemoryLayout<UInt32>.stride, index: 4)
-        }
-    }
-
-    private func encodeDeterministicReaction(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI,
-        source: MTLBuffer,
-        predictor: MTLBuffer,
-        destination: MTLBuffer
-    ) throws {
-        arena.write(command: runtimeCommand)
-        try encode(
-            pipelines.heunPredict,
-            count: arena.capacities.stateElements,
-            label: "NumiVivo.Transactional.HeunPredict",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(source, offset: 0, index: 0)
-            encoder.setBuffer(predictor, offset: 0, index: 1)
-            encoder.setBuffer(arena.derivativeK1, offset: 0, index: 2)
-            encoder.setBuffer(arena.parameterBuffer, offset: 0, index: 3)
-            encoder.setBuffer(arena.programBuffer, offset: 0, index: 4)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 5)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 6)
-        }
-        try encode(
-            pipelines.heunCorrect,
-            count: arena.capacities.stateElements,
-            label: "NumiVivo.Transactional.HeunCorrect",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(source, offset: 0, index: 0)
-            encoder.setBuffer(predictor, offset: 0, index: 1)
-            encoder.setBuffer(arena.derivativeK1, offset: 0, index: 2)
-            encoder.setBuffer(destination, offset: 0, index: 3)
-            encoder.setBuffer(arena.parameterBuffer, offset: 0, index: 4)
-            encoder.setBuffer(arena.programBuffer, offset: 0, index: 5)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 6)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 7)
-        }
-    }
-
-    private func encodeStochasticReaction(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI,
-        source: MTLBuffer,
-        destination: MTLBuffer
-    ) throws {
-        arena.write(command: runtimeCommand)
-        let reactionWork = try checkedWorkItems(
-            UInt64(pack.runtimeContract.reactionCount),
-            UInt64(configuration.laneCount),
-            label: "stochastic reaction"
-        )
-        try encode(
-            pipelines.sampleReactions,
-            count: reactionWork,
-            label: "NumiVivo.Transactional.SampleReactions",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(source, offset: 0, index: 0)
-            encoder.setBuffer(arena.parameterBuffer, offset: 0, index: 1)
-            encoder.setBuffer(arena.reactionEvents, offset: 0, index: 2)
-            encoder.setBuffer(arena.programBuffer, offset: 0, index: 3)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 4)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 5)
-        }
-        try encode(
-            pipelines.applyReactions,
-            count: arena.capacities.stateElements,
-            label: "NumiVivo.Transactional.ApplyReactions",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(source, offset: 0, index: 0)
-            encoder.setBuffer(destination, offset: 0, index: 1)
-            encoder.setBuffer(arena.reactionEvents, offset: 0, index: 2)
-            encoder.setBuffer(arena.programBuffer, offset: 0, index: 3)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 4)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 5)
-        }
-    }
-
-    private func encodeTransport(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI,
-        source: MTLBuffer,
-        destination: MTLBuffer
-    ) throws {
-        arena.write(command: runtimeCommand)
-        try encode(
-            pipelines.transport,
-            count: arena.capacities.stateElements,
-            label: "NumiVivo.Transactional.Transport",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(source, offset: 0, index: 0)
-            encoder.setBuffer(destination, offset: 0, index: 1)
-            encoder.setBuffer(arena.transport, offset: 0, index: 2)
-            encoder.setBuffer(arena.velocity, offset: 0, index: 3)
-            encoder.setBuffer(arena.volumeFraction, offset: 0, index: 4)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 5)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 6)
-        }
-    }
-
-    private func encodeRules(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI
-    ) throws {
-        guard pack.runtimeContract.ruleCount > 0 else { return }
-        arena.write(command: runtimeCommand)
-        let work = try checkedWorkItems(
-            UInt64(pack.runtimeContract.ruleCount),
-            UInt64(configuration.laneCount),
-            label: "rule"
-        )
-        try encode(
-            pipelines.rules,
-            count: work,
-            label: "NumiVivo.Transactional.Rules",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(arena.candidateState, offset: 0, index: 0)
-            encoder.setBuffer(arena.temporalCandidate, offset: 0, index: 1)
-            encoder.setBuffer(arena.parameterBuffer, offset: 0, index: 2)
-            encoder.setBuffer(arena.programBuffer, offset: 0, index: 3)
-            encoder.setBuffer(arena.eventBuffer, offset: 0, index: 4)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 5)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 6)
-        }
-    }
-
-    private func encodeMonitors(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI
-    ) throws {
-        guard pack.runtimeContract.monitorCount > 0 else { return }
-        arena.write(command: runtimeCommand)
-        let work = try checkedWorkItems(
-            UInt64(pack.runtimeContract.monitorCount),
-            UInt64(configuration.laneCount),
-            label: "monitor"
-        )
-        try encode(
-            pipelines.monitors,
-            count: work,
-            label: "NumiVivo.Transactional.Monitors",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(arena.candidateState, offset: 0, index: 0)
-            encoder.setBuffer(arena.temporalCandidate, offset: 0, index: 1)
-            encoder.setBuffer(arena.parameterBuffer, offset: 0, index: 2)
-            encoder.setBuffer(arena.programBuffer, offset: 0, index: 3)
-            encoder.setBuffer(arena.eventBuffer, offset: 0, index: 4)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 5)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 6)
-        }
-    }
-
-    private func encodeValidation(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI
-    ) throws {
-        arena.write(command: runtimeCommand)
-        try encode(
-            pipelines.validate,
-            count: arena.capacities.stateElements,
-            label: "NumiVivo.Transactional.Validate",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(arena.candidateState, offset: 0, index: 0)
-            encoder.setBuffer(arena.programBuffer, offset: 0, index: 1)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 2)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 3)
-        }
-    }
-
-    private func encodePublications(
-        _ commandBuffer: MTLCommandBuffer,
-        runtimeCommand: VivoRuntimeCommandABI,
-        count: Int
-    ) throws {
-        arena.write(command: runtimeCommand)
-        try encode(
-            pipelines.publish,
-            count: count,
-            label: "NumiVivo.Transactional.Publish",
-            commandBuffer: commandBuffer
-        ) { encoder in
-            encoder.setBuffer(arena.candidateState, offset: 0, index: 0)
-            encoder.setBuffer(arena.publicationRequestBuffer, offset: 0, index: 1)
-            encoder.setBuffer(arena.publicationOutputBuffer, offset: 0, index: 2)
-            encoder.setBuffer(arena.statusBuffer, offset: 0, index: 3)
-            encoder.setBuffer(arena.commandBuffer, offset: 0, index: 4)
-            var count32 = UInt32(count)
-            encoder.setBytes(&count32, length: MemoryLayout<UInt32>.stride, index: 5)
-        }
-    }
-
-    private func encodeCopy(
-        _ commandBuffer: MTLCommandBuffer,
-        source: MTLBuffer,
-        destination: MTLBuffer
-    ) throws {
-        guard let blit = commandBuffer.makeBlitCommandEncoder() else {
-            throw VivoRuntimeError.commandFailed("could not create blit encoder")
-        }
-        blit.label = "NumiVivo.Transactional.CopyState"
-        blit.copy(
-            from: source,
-            sourceOffset: 0,
-            to: destination,
-            destinationOffset: 0,
-            size: arena.capacities.stateElements * MemoryLayout<Float>.stride
-        )
+    private func copy(_ command: MTLCommandBuffer, from source: MTLBuffer, to destination: MTLBuffer) throws {
+        guard let blit = command.makeBlitCommandEncoder() else { throw VivoRuntimeError.commandQueueUnavailable }
+        blit.copy(from: source, sourceOffset: 0, to: destination, destinationOffset: 0, size: arena.capacities.stateElements * 4)
         blit.endEncoding()
     }
-
-    private func encode(
-        _ pipeline: NumiVivoPipeline,
-        count: Int,
-        label: String,
-        commandBuffer: MTLCommandBuffer,
-        bindings: (MTLComputeCommandEncoder) throws -> Void
-    ) throws {
-        guard count > 0 else { return }
-        guard let encoder = commandBuffer.makeComputeCommandEncoder() else {
-            throw VivoRuntimeError.commandFailed(
-                "could not create compute encoder for \(label)"
-            )
-        }
-        encoder.label = label
-        encoder.setComputePipelineState(pipeline.state)
-        try bindings(encoder)
-        encoder.dispatchThreads(
-            pipeline.gridSize(for: count),
-            threadsPerThreadgroup: pipeline.threadgroupSize(
-                for: count,
-                preferred: capabilities.recommendedThreadsPerThreadgroup
-            )
-        )
-        encoder.endEncoding()
-    }
-
     private func complete(_ command: MTLCommandBuffer) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            command.addCompletedHandler { completed in
-                if let error = completed.error {
-                    continuation.resume(
-                        throwing: VivoRuntimeError.commandFailed(String(describing: error))
-                    )
-                } else {
-                    continuation.resume(returning: ())
+        do {
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                command.addCompletedHandler { completed in
+                    if let error = completed.error { continuation.resume(throwing: VivoRuntimeError.commandFailed(String(describing: error))) }
+                    else { continuation.resume(returning: ()) }
                 }
+                command.commit()
             }
-            command.commit()
+        } catch {
+            if case .permanentlyStopped = lifecycleState {} else { lifecycleState = .failed(reason: String(describing: error)) }
+            throw error
         }
     }
-
-    private func validate(request: VivoStepRequest) throws {
-        guard request.coupling.count <= arena.capacities.couplingUpdates else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "coupling request exceeds the allocated capacity"
-            )
-        }
-        guard request.publications.count <= arena.capacities.publicationRequests else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "publication request exceeds the allocated capacity"
-            )
-        }
+    private func validate(_ request: VivoStepRequest) throws {
+        guard request.coupling.count <= arena.capacities.couplingUpdates,
+              request.publications.count <= arena.capacities.publicationRequests else { throw VivoRuntimeError.invalidConfiguration("transaction boundary exceeds capacity") }
+        var destinations = Set<UInt64>()
         for update in request.coupling {
-            guard update.speciesIndex < pack.runtimeContract.speciesCount else {
-                throw VivoRuntimeError.invalidConfiguration(
-                    "coupling species index is outside the ProgramPack"
-                )
+            guard Int(update.speciesIndex) < species.count, update.laneIndex < configuration.laneCount, update.value.isFinite else {
+                throw VivoRuntimeError.invalidConfiguration("invalid coupling update")
             }
-            guard update.laneIndex < configuration.laneCount else {
-                throw VivoRuntimeError.invalidConfiguration(
-                    "coupling lane index is outside the runtime"
-                )
-            }
-            guard update.value.isFinite else {
-                throw VivoRuntimeError.invalidConfiguration(
-                    "coupling value must be finite"
-                )
+            let metadata = species[Int(update.speciesIndex)]
+            guard metadata.isExternallyOwned || metadata.isInput,
+                  destinations.insert(UInt64(update.speciesIndex) << 32 | UInt64(update.laneIndex)).inserted else {
+                throw VivoRuntimeError.invalidConfiguration("internally owned or multiply-written coupling destination")
             }
         }
-        for publication in request.publications {
-            guard publication.speciesIndex < pack.runtimeContract.speciesCount else {
-                throw VivoRuntimeError.invalidConfiguration(
-                    "publication species index is outside the ProgramPack"
-                )
-            }
-            guard publication.laneIndex < configuration.laneCount else {
-                throw VivoRuntimeError.invalidConfiguration(
-                    "publication lane index is outside the runtime"
-                )
+        for value in request.publications {
+            guard Int(value.speciesIndex) < species.count, value.laneIndex < configuration.laneCount else {
+                throw VivoRuntimeError.invalidConfiguration("invalid publication index")
             }
         }
     }
-
+    private func requireUnreserved() throws {
+        guard !inFlight, pending == nil else { throw VivoRuntimeError.invalidConfiguration("molecular operation or prepared transaction is already active") }
+    }
+    private func requireReadyAndUnreserved() throws { try ensureReadyForMutation(); try requireUnreserved() }
     private func ensureReadyForMutation() throws {
         switch lifecycleState {
-        case .ready:
-            return
-        case .reversiblyStopped(let reason):
-            throw VivoRuntimeError.runtimeStopped("reversible shutdown: \(reason)")
-        case .permanentlyStopped(let reason):
-            throw VivoRuntimeError.runtimeStopped("permanent shutdown: \(reason)")
-        case .failed(let reason):
-            throw VivoRuntimeError.runtimeStopped("runtime failure: \(reason)")
+        case .ready: return
+        case .reversiblyStopped(let reason), .permanentlyStopped(let reason), .failed(let reason): throw VivoRuntimeError.runtimeStopped(reason)
         }
     }
-
-    private func terminalPrepared(
-        transactionID: UUID,
-        disposition: VivoPreparedMolecularDisposition,
-        requestedStep: Float,
-        candidateStep: Float,
-        attemptCount: UInt32,
-        result: AttemptResult
-    ) -> VivoPreparedMolecularStep {
-        VivoPreparedMolecularStep(
-            transactionID: transactionID,
-            disposition: disposition,
-            sourceFingerprint: pack.header.sourceFingerprint,
-            programFingerprint: pack.header.contentFingerprint,
-            fidelity: configuration.fidelity,
-            stepIndex: nextStepIndex,
-            timeBefore: absoluteTime,
-            requestedTimeStep: requestedStep,
-            candidateTimeStep: candidateStep,
-            attemptCount: attemptCount,
-            status: result.status,
-            events: result.events,
-            publications: []
-        )
+    private func work(_ count: UInt32) throws -> Int {
+        let value = UInt64(count) * UInt64(configuration.laneCount)
+        guard value <= UInt64(UInt32.max), value <= UInt64(Int.max) else { throw VivoRuntimeError.invalidConfiguration("dispatch grid exceeds UInt32") }
+        return Int(value)
     }
-
-    private func rejectedCertificate(
-        for prepared: VivoPreparedMolecularStep
-    ) -> VivoMolecularTransactionCertificate {
-        let disposition: VivoStepDisposition
-        switch prepared.disposition {
-        case .permanentShutdown:
-            disposition = .permanentShutdown
-        case .reversibleShutdown:
-            disposition = .reversibleShutdown
-        case .prepared, .requiresSmallerStep, .rejected:
-            disposition = .rejected
-        }
-        return VivoMolecularTransactionCertificate(
-            transactionID: prepared.transactionID,
-            disposition: disposition,
-            sourceFingerprint: pack.header.sourceFingerprint,
-            programFingerprint: pack.header.contentFingerprint,
-            fidelity: configuration.fidelity,
-            deviceName: capabilities.deviceName,
-            deviceRegistryID: capabilities.registryID,
-            stepIndex: prepared.stepIndex,
-            timeBefore: prepared.timeBefore,
-            timeAfter: prepared.timeBefore,
-            requestedTimeStep: prepared.requestedTimeStep,
-            acceptedTimeStep: nil,
-            attemptCount: prepared.attemptCount,
-            status: prepared.status
-        )
+    private func shutdownReason(_ status: VivoRuntimeStatus) -> String {
+        "monitor \(status.firstMonitor.map(String.init) ?? "unknown") requested response \(status.requestedResponse)"
     }
-
-    private func shutdownReason(status: VivoRuntimeStatus) -> String {
-        if let monitor = status.firstFailingMonitor {
-            return "monitor \(monitor) requested response \(status.requestedResponse)"
-        }
-        return "runtime requested response \(status.requestedResponse)"
-    }
-
-    private func checkedWorkItems(
-        _ left: UInt64,
-        _ right: UInt64,
-        label: String
-    ) throws -> Int {
-        let result = left.multipliedReportingOverflow(by: right)
-        guard !result.overflow,
-              result.partialValue <= UInt64(Int.max) else {
-            throw VivoRuntimeError.invalidConfiguration(
-                "\(label) work-item count overflow"
-            )
-        }
-        return Int(result.partialValue)
-    }
-}
-
-private struct VivoTransactionalRuntimePipelines: Sendable {
-    let clearStatus: NumiVivoPipeline
-    let prepare: NumiVivoPipeline
-    let applyCoupling: NumiVivoPipeline
-    let heunPredict: NumiVivoPipeline
-    let heunCorrect: NumiVivoPipeline
-    let sampleReactions: NumiVivoPipeline
-    let applyReactions: NumiVivoPipeline
-    let transport: NumiVivoPipeline
-    let rules: NumiVivoPipeline
-    let monitors: NumiVivoPipeline
-    let validate: NumiVivoPipeline
-    let publish: NumiVivoPipeline
-
-    static func load(
-        from catalog: NumiVivoPipelineCatalog
-    ) async throws -> VivoTransactionalRuntimePipelines {
-        async let clearStatus = catalog.pipeline(.clearStatus)
-        async let prepare = catalog.pipeline(.prepareTransaction)
-        async let applyCoupling = catalog.pipeline(.applyCouplingUpdates)
-        async let heunPredict = catalog.pipeline(.f1HeunPredict)
-        async let heunCorrect = catalog.pipeline(.f1HeunCorrect)
-        async let sampleReactions = catalog.pipeline(.f2SampleReactions)
-        async let applyReactions = catalog.pipeline(.f2ApplyReactions)
-        async let transport = catalog.pipeline(.f3Transport)
-        async let rules = catalog.pipeline(.executeRules)
-        async let monitors = catalog.pipeline(.evaluateMonitors)
-        async let validate = catalog.pipeline(.validateShadow)
-        async let publish = catalog.pipeline(.publish)
-        return try await VivoTransactionalRuntimePipelines(
-            clearStatus: clearStatus,
-            prepare: prepare,
-            applyCoupling: applyCoupling,
-            heunPredict: heunPredict,
-            heunCorrect: heunCorrect,
-            sampleReactions: sampleReactions,
-            applyReactions: applyReactions,
-            transport: transport,
-            rules: rules,
-            monitors: monitors,
-            validate: validate,
-            publish: publish
-        )
+    private func certificate(_ value: VivoPreparedMolecularStep, disposition: VivoStepDisposition,
+                             accepted: Float?, timeAfter: Float) -> VivoMolecularTransactionCertificate {
+        .init(transactionID: value.transactionID, disposition: disposition, sourceFingerprint: value.sourceFingerprint,
+              programFingerprint: value.programFingerprint, fidelity: value.fidelity,
+              deviceName: capabilities.deviceName, deviceRegistryID: capabilities.registryID,
+              stepIndex: value.stepIndex, timeBefore: value.timeBefore, timeAfter: timeAfter,
+              requestedTimeStep: value.requestedTimeStep, acceptedTimeStep: accepted,
+              attemptCount: value.attemptCount, status: value.status)
     }
 }
