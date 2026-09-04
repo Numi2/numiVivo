@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/hybrid-stochastic-plan.schema.json",
+  "title": "NumiVivo Hybrid Stochastic Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "speciesCount", "cohorts", "uncoupledSpecies", "fingerprint"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "speciesCount": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+    "cohorts": {
+      "type": "array",
+      "maxItems": 4294967295,
+      "items": { "$ref": "#/$defs/cohort" }
+    },
+    "uncoupledSpecies": {
+      "type": "array",
+      "uniqueItems": true,
+      "maxItems": 4294967295,
+      "items": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+    },
+    "fingerprint": { "$ref": "#/$defs/fingerprint" }
+  },
+  "$defs": {
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "mode": { "enum": ["exactSSA", "tauLeap", "deterministicRK2", "spatialSplit"] },
+    "cohort": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cohortID",
+        "mode",
+        "reactionIndices",
+        "speciesIndices",
+        "recommendedMaximumStep",
+        "requiresStateMigration",
+        "rationale"
+      ],
+      "properties": {
+        "cohortID": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "mode": { "$ref": "#/$defs/mode" },
+        "reactionIndices": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+        },
+        "speciesIndices": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+        },
+        "recommendedMaximumStep": { "type": "number", "exclusiveMinimum": 0 },
+        "tauRelativeErrorTarget": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+        "maximumExactEventsPerStep": { "type": ["integer", "null"], "minimum": 1, "maximum": 4294967295 },
+        "requiresStateMigration": { "type": "boolean" },
+        "previousMode": {
+          "oneOf": [{ "$ref": "#/$defs/mode" }, { "type": "null" }]
+        },
+        "rationale": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "type": "string", "minLength": 1, "maxLength": 4096 }
+        }
+      }
+    }
+  }
+}
