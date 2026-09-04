@@ -1,9 +1,11 @@
 #include "PackValidation.hpp"
+#include "SourceSemantics.hpp"
 
 #include <algorithm>
 #include <cmath>
 #include <cstring>
 #include <limits>
+#include <iterator>
 #include <map>
 #include <set>
 #include <stdexcept>
@@ -95,13 +97,14 @@ public:
     }
 };
 
-struct ExpressionSlice { std::uint32_t count; std::uint32_t maximumStack; };
+struct ExpressionSlice { std::uint32_t count; std::uint32_t maximumStack; bool temporal; std::uint32_t references = 0; };
 using Expressions = std::map<std::uint32_t, ExpressionSlice>;
 
 Expressions validateExpressions(const Tables& t, const RuntimeContractRecord& contract) {
     Expressions result;
     std::set<std::uint32_t> temporalSlots;
     std::uint32_t start = 0, depth = 0, maximum = 0, globalMaximum = 0;
+    bool hasTemporal = false;
     const auto size = t.count(PackSectionType::expressions);
     for (std::uint32_t i = 0; i < size; ++i) {
         const auto instruction = t.read<ExpressionInstruction>(PackSectionType::expressions, i);
@@ -118,12 +121,13 @@ Expressions validateExpressions(const Tables& t, const RuntimeContractRecord& co
             maximum = std::max(maximum, ++depth);
         } else if (opcode == 255) {
             require(depth == 1, "Expression must terminate with exactly one value.", "expressions");
-            result.emplace(start, ExpressionSlice{i - start + 1, maximum});
+            result.emplace(start, ExpressionSlice{i - start + 1, maximum, hasTemporal});
             globalMaximum = std::max(globalMaximum, maximum);
-            start = i + 1; depth = 0; maximum = 0;
+            start = i + 1; depth = 0; maximum = 0; hasTemporal = false;
         } else if (opcode == 3 || (opcode >= 19 && opcode <= 22)) {
             require(depth >= 1, "Unary expression stack underflow.", "expressions");
             if (opcode >= 19) {
+                hasTemporal = true;
                 require(instruction.auxiliary < contract.temporalStateCount, "Temporal slot is out of bounds.", "expressions");
                 require(temporalSlots.insert(instruction.auxiliary).second, "Temporal instructions alias mutable state.", "expressions");
                 if (opcode <= 20) require(instruction.immediate > 0, "Temporal duration must be positive.", "expressions");
@@ -141,15 +145,18 @@ Expressions validateExpressions(const Tables& t, const RuntimeContractRecord& co
     require(temporalSlots.size() == contract.temporalStateCount, "Temporal-state count differs from bytecode ownership.", "runtimeContract");
     return result;
 }
-void expressionReference(const Expressions& expressions, std::uint32_t start, std::uint32_t count,
+void expressionReference(Expressions& expressions, std::uint32_t start, std::uint32_t count,
                          std::string_view path, bool gate = false) {
     const auto found = expressions.find(start);
     require(found != expressions.end(), "Expression reference is not a program boundary.", path);
+    ++found->second.references;
+    require(!found->second.temporal || found->second.references == 1,
+            "Mutable temporal expression is referenced by multiple controls.", path);
     require(gate ? (found->second.count <= 4096) : (count == found->second.count),
             "Expression length disagrees with its program boundary or gate budget.", path);
 }
 
-void validateTables(const Tables& t, const PackHeader& header) {
+void validateTables(const Tables& t, const PackHeader& header, Diagnostics& diagnostics) {
     using S = PackSectionType;
     require(t.count(S::runtimeContract) == 1, "Runtime contract must have one record.", "runtimeContract");
     const auto c = t.read<RuntimeContractRecord>(S::runtimeContract, 0);
@@ -206,8 +213,9 @@ void validateTables(const Tables& t, const PackHeader& header) {
         require(term.speciesIndex < c.speciesCount && term.coefficient > 0 && term.role <= 1,
                 "Invalid stoichiometry species, coefficient or role.", "stoichiometry");
     }
-    const auto expressions = validateExpressions(t, c);
+    auto expressions = validateExpressions(t, c);
     std::map<std::uint64_t, std::int64_t> expectedIncidence;
+    std::uint64_t referencedStoichiometry = 0;
     std::vector<bool> reactionCovered(c.reactionCount, false);
     std::set<std::string_view> reactionNames;
     for (std::uint32_t i = 0; i < c.reactionCount; ++i) {
@@ -228,6 +236,8 @@ void validateTables(const Tables& t, const PackHeader& header) {
         if ((r.flags & reactionHasGate) != 0) expressionReference(expressions, r.reserved, 0, "reactions.gate", true);
         else require(r.reserved == invalid, "Ungated reaction has a gate offset.", "reactions");
         require(r.reactantCount > 0 || r.productCount > 0, "Reaction has no stoichiometry.", "reactions");
+        referencedStoichiometry += std::uint64_t(r.reactantCount) + r.productCount;
+        require(referencedStoichiometry <= maximumRecords, "Stoichiometry reference work budget exceeded.", "reactions");
         auto accumulate = [&](std::uint32_t offset, std::uint32_t count, std::uint16_t role, int sign) {
             t.range(S::stoichiometry, offset, count, "reactions.stoichiometry");
             for (std::uint32_t j = 0; j < count; ++j) {
@@ -297,12 +307,21 @@ void validateTables(const Tables& t, const PackHeader& header) {
                     "Action writes externally owned state.", "actions");
         }
     }
+    std::vector<bool> actionCovered(t.count(S::actions), false);
+    std::uint64_t referencedActions = 0;
     for (std::uint32_t i = 0; i < c.ruleCount; ++i) {
         const auto r = t.read<RuleRecord>(S::rules, i);
         t.string(r.nameOffset, "rules.name");
         require(std::isfinite(r.refractorySeconds) && r.refractorySeconds >= 0 && r.temporalStateOffset <= c.temporalStateCount,
                 "Invalid rule timing or temporal offset.", "rules");
         t.range(S::actions, r.actionOffset, r.actionCount, "rules.actions");
+        referencedActions += r.actionCount;
+        require(referencedActions <= maximumRecords, "Action reference work budget exceeded.", "rules");
+        for (std::uint32_t j = 0; j < r.actionCount; ++j) {
+            const auto index = r.actionOffset + j;
+            require(!actionCovered[index], "Rules alias an action record.", "rules.actions");
+            actionCovered[index] = true;
+        }
         expressionReference(expressions, r.conditionOffset, r.conditionCount, "rules.condition");
     }
     for (std::uint32_t i = 0; i < c.monitorCount; ++i) {
@@ -313,6 +332,61 @@ void validateTables(const Tables& t, const PackHeader& header) {
         if (m.flags == 1) require(m.response == 4 || m.response == 5, "Termination monitor does not terminate.", "monitors");
         expressionReference(expressions, m.expressionOffset, m.expressionCount, "monitors.expression");
     }
+    require(std::all_of(actionCovered.begin(), actionCovered.end(), [](bool v) { return v; }),
+            "Unreferenced action table records.", "actions");
+    std::uint64_t instructionWork = 0;
+    for (const auto& [offset, slice] : expressions) {
+        (void)offset;
+        require(!slice.temporal || slice.references == 1, "Temporal bytecode has no unique control owner.", "expressions");
+        instructionWork += std::uint64_t(slice.count) * slice.references;
+        require(instructionWork <= 16'777'216, "Expression reference work budget exceeded.", "expressions");
+    }
+    // Cached/imported packs must satisfy built-in kinetic units too; source-only
+    // validation would leave pre-audit binaries able to bypass the correction.
+    Program kinetics;
+    for (std::uint32_t i = 0; i < c.speciesCount; ++i) {
+        const auto s = t.read<SpeciesRecord>(S::species, i);
+        SpeciesDefinition item;
+        item.id = t.string(s.nameOffset, "species.name");
+        item.unit = t.string(s.unitOffset, "species.unit");
+        item.initialValue = s.initialValue;
+        item.externallyOwned = (s.flags & speciesExternallyOwned) != 0;
+        item.kind = (s.flags & speciesCountValued) != 0 ? SpeciesKind::molecularCount : SpeciesKind::concentration;
+        item.bounds = {s.minimum,s.maximum};
+        kinetics.species.push_back(std::move(item));
+    }
+    for (std::uint32_t i = 0; i < c.parameterCount; ++i) {
+        const auto p = t.read<ParameterRecord>(S::parameters, i);
+        ParameterDefinition item;
+        item.id = t.string(p.nameOffset, "parameters.name");
+        item.unit = t.string(p.unitOffset, "parameters.unit");
+        item.value = p.value;
+        item.bounds = {p.minimum,p.maximum};
+        kinetics.parameters.push_back(std::move(item));
+    }
+    for (std::uint32_t i = 0; i < c.reactionCount; ++i) {
+        const auto r = t.read<ReactionRecord>(S::reactions, i);
+        // Literal unit annotations are absent from v1 bytecode. They cannot be
+        // reconstructed for custom kinetics; see the audit's typed-IR boundary.
+        if (r.rateLaw == 255) continue;
+        ReactionDefinition item;
+        item.id = t.string(r.nameOffset, "reactions.name");
+        item.rate.law = static_cast<RateLawKind>(r.rateLaw);
+        for (std::uint32_t j = 0; j < r.parameterCount; ++j) {
+            const auto index = t.read<std::uint32_t>(S::reactionParameterIndices, r.parameterOffset + j);
+            item.rate.parameters.push_back(kinetics.parameters[index].id);
+        }
+        for (std::uint32_t j = 0; j < r.reactantCount; ++j) {
+            const auto term = t.read<StoichiometryRecord>(S::stoichiometry, r.reactantOffset + j);
+            item.reactants.push_back({kinetics.species[term.speciesIndex].id,term.coefficient});
+        }
+        for (std::uint32_t j = 0; j < r.productCount; ++j) {
+            const auto term = t.read<StoichiometryRecord>(S::stoichiometry, r.productOffset + j);
+            item.products.push_back({kinetics.species[term.speciesIndex].id,term.coefficient});
+        }
+        kinetics.reactions.push_back(std::move(item));
+    }
+    validateExecutableSource(kinetics, diagnostics);
     // v1 hashes exclude the header. Bind its scientific identity to the hashed
     // manifest and contract; integrity hashing is still not a digital signature.
     require(c.reserved[0] <= UINT32_MAX, "Manifest offset exceeds the string ABI.", "manifest");
@@ -332,7 +406,7 @@ void validateProgramPackTables(std::span<const std::byte> bytes, const PackHeade
                                const std::vector<PackSectionDescriptor>& sections, Diagnostics& diagnostics) {
     try {
         const Tables tables(bytes, sections);
-        validateTables(tables, header);
+        validateTables(tables, header, diagnostics);
     } catch (const InvalidPack& error) {
         diagnostics.error("NVK100", error.what(), error.path);
     }

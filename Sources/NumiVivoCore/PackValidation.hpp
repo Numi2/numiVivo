@@ -1,5 +1,6 @@
 #pragma once
 #include "NumiVivoCore/Core.hpp"
+#include <iterator>
 
 namespace nvivo {
 // Called only after the directory and hashes have passed structural inspection.
