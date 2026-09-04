@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/exact-ssa-model.schema.json",
+  "title": "NumiVivo Exact SSA Model",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "species", "reactions"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "species": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4294967295,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 256 }
+    },
+    "reactions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4294967295,
+      "items": { "$ref": "#/$defs/reaction" }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "$defs": {
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["speciesIndex", "delta"],
+      "properties": {
+        "speciesIndex": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "delta": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647,
+          "not": { "const": 0 }
+        }
+      }
+    },
+    "reaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "law", "rate", "parameter1", "parameter2", "parameter3", "changes", "critical"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "law": {
+          "oneOf": [
+            { "type": "integer", "minimum": 0, "maximum": 5 },
+            { "enum": ["zeroOrder", "firstOrder", "secondOrderDistinct", "secondOrderSame", "hillActivation", "hillRepression"] }
+          ]
+        },
+        "reactantA": { "type": ["integer", "null"], "minimum": 0, "maximum": 4294967295 },
+        "reactantB": { "type": ["integer", "null"], "minimum": 0, "maximum": 4294967295 },
+        "rate": { "type": "number", "minimum": 0 },
+        "parameter1": { "type": "number" },
+        "parameter2": { "type": "number" },
+        "parameter3": { "type": "number" },
+        "changes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 65536,
+          "items": { "$ref": "#/$defs/change" }
+        },
+        "critical": { "type": "boolean" }
+      }
+    }
+  }
+}
