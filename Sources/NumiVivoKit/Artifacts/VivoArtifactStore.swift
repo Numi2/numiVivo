@@ -8,335 +8,244 @@ public struct VivoStoredArtifact: Codable, Sendable, Equatable, Hashable {
     public let objectPath: String
     public let createdAt: Date
     public let attributes: [String: String]
-
-    public init(
-        fingerprint: VivoFingerprint,
-        kind: String,
-        mediaType: String,
-        byteCount: UInt64,
-        objectPath: String,
-        createdAt: Date,
-        attributes: [String: String]
-    ) {
-        self.fingerprint = fingerprint
-        self.kind = kind
-        self.mediaType = mediaType
-        self.byteCount = byteCount
-        self.objectPath = objectPath
-        self.createdAt = createdAt
-        self.attributes = attributes
+    public init(fingerprint: VivoFingerprint, kind: String, mediaType: String, byteCount: UInt64,
+                objectPath: String, createdAt: Date, attributes: [String: String]) {
+        self.fingerprint = fingerprint; self.kind = kind; self.mediaType = mediaType
+        self.byteCount = byteCount; self.objectPath = objectPath; self.createdAt = createdAt; self.attributes = attributes
     }
 }
-
 public struct VivoArtifactReference: Codable, Sendable, Equatable, Hashable {
     public let name: String
     public let artifact: VivoStoredArtifact
     public let updatedAt: Date
-
     public init(name: String, artifact: VivoStoredArtifact, updatedAt: Date = Date()) {
-        self.name = name
-        self.artifact = artifact
-        self.updatedAt = updatedAt
+        self.name = name; self.artifact = artifact; self.updatedAt = updatedAt
     }
 }
-
 public enum VivoArtifactStoreError: Error, Sendable, CustomStringConvertible {
-    case invalidRoot(String)
-    case invalidDescriptor(String)
-    case objectMissing(VivoFingerprint)
-    case integrityFailure(VivoFingerprint)
-    case referenceMissing(String)
-    case io(String)
-
+    case invalidRoot(String), invalidDescriptor(String)
+    case objectMissing(VivoFingerprint), integrityFailure(VivoFingerprint)
+    case referenceMissing(String), io(String)
     public var description: String {
         switch self {
-        case .invalidRoot(let message): "Invalid artifact store root: \(message)"
-        case .invalidDescriptor(let message): "Invalid artifact descriptor: \(message)"
-        case .objectMissing(let fingerprint): "Artifact object \(fingerprint.hex) is missing."
-        case .integrityFailure(let fingerprint): "Artifact object \(fingerprint.hex) failed integrity verification."
-        case .referenceMissing(let name): "Artifact reference '\(name)' does not exist."
-        case .io(let message): "Artifact store I/O failed: \(message)"
+        case .invalidRoot(let value): return "Invalid artifact root: \(value)"
+        case .invalidDescriptor(let value): return "Invalid artifact descriptor: \(value)"
+        case .objectMissing(let value): return "Artifact object \(value.hex) is missing."
+        case .integrityFailure(let value): return "Artifact \(value.hex) failed integrity verification."
+        case .referenceMissing(let value): return "Artifact reference '\(value)' does not exist."
+        case .io(let value): return "Artifact I/O failed: \(value)"
         }
     }
 }
+public struct VivoArtifactStoreLimits: Sendable {
+    public let maximumObjectBytes: Int
+    public let maximumMetadataBytes: Int
+    public let maximumListEntries: Int
+    public init(maximumObjectBytes: Int = 512 * 1024 * 1024, maximumMetadataBytes: Int = 1024 * 1024,
+                maximumListEntries: Int = 100_000) {
+        self.maximumObjectBytes = maximumObjectBytes
+        self.maximumMetadataBytes = maximumMetadataBytes
+        self.maximumListEntries = maximumListEntries
+    }
+}
 
+private struct VivoReferenceDeletion: Codable {
+    let schema: String
+    let name: String
+    let deletedAt: Date
+}
+
+/// Objects and descriptors are immutable, no-clobber entries. Named references
+/// are mutable pointers. A digest establishes integrity, not authorship or trust.
 public actor VivoArtifactStore {
     public let rootURL: URL
-    private let fileManager: FileManager
-
-    public init(rootURL: URL, createIfNeeded: Bool = true) throws {
-        guard rootURL.isFileURL else {
-            throw VivoArtifactStoreError.invalidRoot("root must be a file URL")
+    private let files: VivoRootedFileStore
+    private let limits: VivoArtifactStoreLimits
+    public init(rootURL: URL, createIfNeeded: Bool = true, limits: VivoArtifactStoreLimits = .init()) throws {
+        guard limits.maximumObjectBytes > 0, limits.maximumMetadataBytes > 0, limits.maximumListEntries > 0 else {
+            throw VivoArtifactStoreError.invalidRoot("I/O limits must be positive")
         }
-        self.rootURL = rootURL.standardizedFileURL
-        self.fileManager = .default
+        files = try VivoRootedFileStore(rootURL: rootURL, createIfNeeded: createIfNeeded)
+        self.rootURL = files.rootURL
+        self.limits = limits
         if createIfNeeded {
-            try Self.createLayout(at: self.rootURL, fileManager: self.fileManager)
-        } else {
-            var isDirectory: ObjCBool = false
-            guard self.fileManager.fileExists(atPath: self.rootURL.path, isDirectory: &isDirectory),
-                  isDirectory.boolValue else {
-                throw VivoArtifactStoreError.invalidRoot("directory does not exist")
-            }
+            for path in ["objects/sha256", "descriptors/sha256", "refs/v2", "bundles"] { try files.createDirectory(path) }
         }
     }
-
     @discardableResult
-    public func put(
-        data: Data,
-        kind: String,
-        mediaType: String,
-        attributes: [String: String] = [:]
-    ) throws -> VivoStoredArtifact {
-        guard !kind.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-              !mediaType.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            throw VivoArtifactStoreError.invalidDescriptor("kind and mediaType are required")
-        }
+    public func put(data: Data, kind: String, mediaType: String, attributes: [String: String] = [:]) throws -> VivoStoredArtifact {
+        try validateMetadata(kind: kind, mediaType: mediaType, attributes: attributes)
+        guard data.count <= limits.maximumObjectBytes else { throw VivoArtifactStoreError.invalidDescriptor("object exceeds configured size limit") }
         let fingerprint = try VivoCanonicalJSON.fingerprint(data)
-        let relativeObjectPath = objectRelativePath(fingerprint)
-        let objectURL = rootURL.appendingPathComponent(relativeObjectPath)
-        try fileManager.createDirectory(
-            at: objectURL.deletingLastPathComponent(),
-            withIntermediateDirectories: true
-        )
-
-        if fileManager.fileExists(atPath: objectURL.path) {
-            let existing = try Data(contentsOf: objectURL, options: [.mappedIfSafe])
-            guard try VivoCanonicalJSON.fingerprint(existing) == fingerprint else {
-                throw VivoArtifactStoreError.integrityFailure(fingerprint)
-            }
-        } else {
-            try atomicWrite(data, to: objectURL)
+        let relative = objectRelativePath(fingerprint)
+        if try !files.writeFile(data, relative: relative, immutable: true) {
+            let existing = try self.data(for: fingerprint)
+            guard existing.count == data.count else { throw VivoArtifactStoreError.integrityFailure(fingerprint) }
         }
-
-        let descriptorURL = descriptorURL(for: fingerprint)
-        if fileManager.fileExists(atPath: descriptorURL.path) {
-            let descriptor = try decodeDescriptor(at: descriptorURL)
-            guard descriptor.fingerprint == fingerprint,
-                  descriptor.byteCount == UInt64(data.count),
-                  descriptor.objectPath == relativeObjectPath else {
-                throw VivoArtifactStoreError.invalidDescriptor("persisted descriptor disagrees with its object")
-            }
-            return descriptor
+        let descriptor = VivoStoredArtifact(fingerprint: fingerprint, kind: kind, mediaType: mediaType,
+                                             byteCount: UInt64(data.count), objectPath: relative, createdAt: Date(), attributes: attributes)
+        let encoded = try VivoCanonicalJSON.encode(descriptor)
+        guard encoded.count <= limits.maximumMetadataBytes else { throw VivoArtifactStoreError.invalidDescriptor("metadata exceeds size limit") }
+        if try files.writeFile(encoded, relative: descriptorPath(fingerprint), immutable: true) {
+            // Canonical JSON encodes dates at second precision. Return exactly
+            // the persisted metadata, not an in-memory subsecond variant.
+            return try VivoCanonicalJSON.decode(VivoStoredArtifact.self, from: encoded)
         }
-
-        let descriptor = VivoStoredArtifact(
-            fingerprint: fingerprint,
-            kind: kind,
-            mediaType: mediaType,
-            byteCount: UInt64(data.count),
-            objectPath: relativeObjectPath,
-            createdAt: Date(),
-            attributes: attributes
-        )
-        let descriptorData = try VivoCanonicalJSON.encode(descriptor)
-        try fileManager.createDirectory(
-            at: descriptorURL.deletingLastPathComponent(),
-            withIntermediateDirectories: true
-        )
-        try atomicWrite(descriptorData, to: descriptorURL)
-        return descriptor
+        let existing = try self.descriptor(for: fingerprint)
+        guard existing.byteCount == UInt64(data.count), existing.kind == kind,
+              existing.mediaType == mediaType, existing.attributes == attributes else {
+            throw VivoArtifactStoreError.invalidDescriptor("immutable content already has different metadata; encode a new provenance envelope")
+        }
+        return existing
     }
-
     @discardableResult
-    public func put<Payload: Codable & Sendable>(
-        envelope: VivoArtifactEnvelope<Payload>,
-        mediaType: String = "application/vnd.numivivo.artifact+json",
-        attributes: [String: String] = [:]
-    ) throws -> VivoStoredArtifact {
-        try put(
-            data: envelope.canonicalData(),
-            kind: envelope.kind.rawValue,
-            mediaType: mediaType,
-            attributes: attributes.merging([
-                "identifier": envelope.metadata.identifier,
-                "version": envelope.metadata.version
-            ], uniquingKeysWith: { current, _ in current })
-        )
+    public func put<Payload: Codable & Sendable>(envelope: VivoArtifactEnvelope<Payload>,
+                                                 mediaType: String = "application/vnd.numivivo.artifact+json",
+                                                 attributes: [String: String] = [:]) throws -> VivoStoredArtifact {
+        try put(data: envelope.canonicalData(), kind: envelope.kind.rawValue, mediaType: mediaType,
+                attributes: attributes.merging(["identifier": envelope.metadata.identifier, "version": envelope.metadata.version],
+                                               uniquingKeysWith: { current, _ in current }))
     }
-
     public func contains(_ fingerprint: VivoFingerprint) -> Bool {
-        fileManager.fileExists(atPath: objectURL(for: fingerprint).path)
+        (try? files.isRegularFile(objectRelativePath(fingerprint))) == true
     }
-
     public func descriptor(for fingerprint: VivoFingerprint) throws -> VivoStoredArtifact {
-        let url = descriptorURL(for: fingerprint)
-        guard fileManager.fileExists(atPath: url.path) else {
-            throw VivoArtifactStoreError.objectMissing(fingerprint)
-        }
-        return try decodeDescriptor(at: url)
+        do {
+            let bytes = try files.readFile(descriptorPath(fingerprint), maximumBytes: limits.maximumMetadataBytes)
+            let value = try VivoCanonicalJSON.decode(VivoStoredArtifact.self, from: bytes)
+            try validateMetadata(kind: value.kind, mediaType: value.mediaType, attributes: value.attributes)
+            guard value.fingerprint == fingerprint, value.objectPath == objectRelativePath(fingerprint),
+                  value.byteCount <= UInt64(limits.maximumObjectBytes), value.createdAt.timeIntervalSince1970.isFinite else {
+                throw VivoArtifactStoreError.invalidDescriptor("descriptor does not match its content-addressed path")
+            }
+            return value
+        } catch VivoRootedFileStore.Failure.missing(_) { throw VivoArtifactStoreError.objectMissing(fingerprint) }
     }
-
     public func data(for fingerprint: VivoFingerprint, verify: Bool = true) throws -> Data {
-        let url = objectURL(for: fingerprint)
-        guard fileManager.fileExists(atPath: url.path) else {
-            throw VivoArtifactStoreError.objectMissing(fingerprint)
-        }
-        let data = try Data(contentsOf: url, options: [.mappedIfSafe])
-        if verify, try VivoCanonicalJSON.fingerprint(data) != fingerprint {
-            throw VivoArtifactStoreError.integrityFailure(fingerprint)
-        }
-        return data
+        do {
+            let data = try files.readFile(objectRelativePath(fingerprint), maximumBytes: limits.maximumObjectBytes)
+            if verify, try VivoCanonicalJSON.fingerprint(data) != fingerprint { throw VivoArtifactStoreError.integrityFailure(fingerprint) }
+            return data
+        } catch VivoRootedFileStore.Failure.missing(_) { throw VivoArtifactStoreError.objectMissing(fingerprint) }
     }
-
     public func verify(_ fingerprint: VivoFingerprint) throws -> Bool {
         let descriptor = try descriptor(for: fingerprint)
-        let data = try self.data(for: fingerprint, verify: true)
-        return descriptor.byteCount == UInt64(data.count) &&
-               descriptor.objectPath == objectRelativePath(fingerprint)
+        return try descriptor.byteCount == UInt64(data(for: fingerprint, verify: true).count)
     }
-
     public func list(kind: String? = nil) throws -> [VivoStoredArtifact] {
-        let directory = rootURL.appendingPathComponent("descriptors/sha256", isDirectory: true)
-        guard fileManager.fileExists(atPath: directory.path) else { return [] }
-        guard let enumerator = fileManager.enumerator(
-            at: directory,
-            includingPropertiesForKeys: [.isRegularFileKey],
-            options: [.skipsHiddenFiles]
-        ) else { return [] }
-        var artifacts: [VivoStoredArtifact] = []
-        for case let url as URL in enumerator where url.pathExtension == "json" {
-            let value = try decodeDescriptor(at: url)
-            if kind == nil || value.kind == kind { artifacts.append(value) }
+        var values: [VivoStoredArtifact] = []
+        let base = "descriptors/sha256"
+        let first: [String]
+        do { first = try files.children(base, maximumCount: 256) }
+        catch VivoRootedFileStore.Failure.missing(_) { return [] }
+        for prefix in first {
+            guard hex(prefix, count: 2) else { throw VivoArtifactStoreError.invalidDescriptor("unexpected descriptor shard") }
+            for second in try files.children(base + "/" + prefix, maximumCount: 256) {
+                guard hex(second, count: 2) else { throw VivoArtifactStoreError.invalidDescriptor("unexpected descriptor shard") }
+                let directory = base + "/" + prefix + "/" + second
+                let names = try files.children(directory, maximumCount: limits.maximumListEntries - values.count)
+                for name in names {
+                    guard name.hasSuffix(".json") else { throw VivoArtifactStoreError.invalidDescriptor("unexpected descriptor filename") }
+                    let digest = String(name.dropLast(5))
+                    guard hex(digest, count: 64), digest.hasPrefix(prefix + second) else {
+                        throw VivoArtifactStoreError.invalidDescriptor("descriptor filename does not match its shard")
+                    }
+                    let fingerprint = try fingerprintFromHex(digest)
+                    values.append(try descriptor(for: fingerprint))
+                }
+            }
         }
-        return artifacts.sorted {
-            if $0.createdAt != $1.createdAt { return $0.createdAt < $1.createdAt }
-            return $0.fingerprint.hex < $1.fingerprint.hex
+        return values.filter { kind == nil || $0.kind == kind }.sorted {
+            $0.createdAt == $1.createdAt ? $0.fingerprint.hex < $1.fingerprint.hex : $0.createdAt < $1.createdAt
         }
     }
-
-    public func materialize(
-        _ fingerprint: VivoFingerprint,
-        to destination: URL,
-        verify: Bool = true
-    ) throws {
-        guard destination.isFileURL else {
-            throw VivoArtifactStoreError.io("materialization destination must be a file URL")
-        }
+    public func materialize(_ fingerprint: VivoFingerprint, to destination: URL, verify: Bool = true) throws {
+        guard destination.isFileURL else { throw VivoArtifactStoreError.io("destination must be a file URL") }
         let data = try self.data(for: fingerprint, verify: verify)
-        try fileManager.createDirectory(
-            at: destination.deletingLastPathComponent(),
-            withIntermediateDirectories: true
-        )
-        try atomicWrite(data, to: destination)
+        let output = try VivoRootedFileStore(rootURL: destination.deletingLastPathComponent(), createIfNeeded: true)
+        try output.writeFile(data, relative: destination.lastPathComponent, immutable: false)
     }
-
     @discardableResult
-    public func setReference(
-        _ name: String,
-        to artifact: VivoStoredArtifact
-    ) throws -> VivoArtifactReference {
-        let component = try safeReferenceComponent(name)
-        guard try verify(artifact.fingerprint) else {
-            throw VivoArtifactStoreError.integrityFailure(artifact.fingerprint)
-        }
-        let reference = VivoArtifactReference(name: name, artifact: artifact)
+    public func setReference(_ name: String, to artifact: VivoStoredArtifact) throws -> VivoArtifactReference {
+        let path = try referencePath(name)
+        let persisted = try descriptor(for: artifact.fingerprint)
+        guard persisted == artifact else { throw VivoArtifactStoreError.invalidDescriptor("reference supplied forged or stale object metadata") }
+        guard try verify(persisted.fingerprint) else { throw VivoArtifactStoreError.integrityFailure(persisted.fingerprint) }
+        let reference = VivoArtifactReference(name: name, artifact: persisted)
         let data = try VivoCanonicalJSON.encode(reference)
-        let url = rootURL.appendingPathComponent("refs/\(component).json")
-        try fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-        try atomicWrite(data, to: url)
-        return reference
+        guard data.count <= limits.maximumMetadataBytes else { throw VivoArtifactStoreError.invalidDescriptor("reference exceeds size limit") }
+        try files.writeFile(data, relative: path, immutable: false)
+        return try VivoCanonicalJSON.decode(VivoArtifactReference.self, from: data)
     }
-
     public func reference(_ name: String) throws -> VivoArtifactReference {
-        let component = try safeReferenceComponent(name)
-        let url = rootURL.appendingPathComponent("refs/\(component).json")
-        guard fileManager.fileExists(atPath: url.path) else {
+        let path = try referencePath(name)
+        let bytes: Data
+        do { bytes = try files.readFile(path, maximumBytes: limits.maximumMetadataBytes) }
+        catch VivoRootedFileStore.Failure.missing(_) {
+            // Read-only compatibility with v1 filenames. A subsequent set writes
+            // the unambiguous hashed v2 filename; no implicit data mutation here.
+            do { bytes = try files.readFile(legacyReferencePath(name), maximumBytes: limits.maximumMetadataBytes) }
+            catch VivoRootedFileStore.Failure.missing(_) { throw VivoArtifactStoreError.referenceMissing(name) }
+        }
+        if let deleted = try? VivoCanonicalJSON.decode(VivoReferenceDeletion.self, from: bytes) {
+            guard deleted.schema == "numivivo.org/reference-deletion/v1",
+                  Array(deleted.name.utf8) == Array(name.utf8) else {
+                throw VivoArtifactStoreError.invalidDescriptor("invalid reference tombstone")
+            }
             throw VivoArtifactStoreError.referenceMissing(name)
         }
-        do {
-            let reference = try VivoCanonicalJSON.decode(
-                VivoArtifactReference.self,
-                from: Data(contentsOf: url)
-            )
-            guard reference.name == name else {
-                throw VivoArtifactStoreError.invalidDescriptor("reference name does not match its path")
-            }
-            return reference
-        } catch let error as VivoArtifactStoreError {
-            throw error
-        } catch {
-            throw VivoArtifactStoreError.io(String(describing: error))
+        let value = try VivoCanonicalJSON.decode(VivoArtifactReference.self, from: bytes)
+        let persisted = try descriptor(for: value.artifact.fingerprint)
+        guard Array(value.name.utf8) == Array(name.utf8), value.artifact == persisted,
+              value.updatedAt.timeIntervalSince1970.isFinite, try verify(persisted.fingerprint) else {
+            throw VivoArtifactStoreError.invalidDescriptor("reference name, persisted descriptor or object integrity mismatch")
         }
+        return value
     }
-
     public func removeReference(_ name: String) throws {
-        let component = try safeReferenceComponent(name)
-        let url = rootURL.appendingPathComponent("refs/\(component).json")
-        guard fileManager.fileExists(atPath: url.path) else {
-            throw VivoArtifactStoreError.referenceMissing(name)
-        }
-        try fileManager.removeItem(at: url)
+        _ = try reference(name)
+        // A v2 tombstone prevents a still-present v1 filename from resurrecting
+        // a deleted reference. setReference atomically replaces the tombstone.
+        let deletion = VivoReferenceDeletion(schema: "numivivo.org/reference-deletion/v1", name: name, deletedAt: Date())
+        try files.writeFile(VivoCanonicalJSON.encode(deletion), relative: referencePath(name), immutable: false)
     }
-
-    private static func createLayout(at root: URL, fileManager: FileManager) throws {
-        do {
-            try fileManager.createDirectory(at: root, withIntermediateDirectories: true)
-            for path in ["objects/sha256", "descriptors/sha256", "refs", "bundles"] {
-                try fileManager.createDirectory(
-                    at: root.appendingPathComponent(path, isDirectory: true),
-                    withIntermediateDirectories: true
-                )
-            }
-        } catch {
-            throw VivoArtifactStoreError.io(String(describing: error))
+    private func validateMetadata(kind: String, mediaType: String, attributes: [String: String]) throws {
+        guard !kind.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, kind.utf8.count <= 256,
+              !mediaType.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, mediaType.utf8.count <= 256,
+              attributes.count <= 128, attributes.allSatisfy({ $0.key.utf8.count <= 128 && $0.value.utf8.count <= 4096 }) else {
+            throw VivoArtifactStoreError.invalidDescriptor("empty or oversized object metadata")
         }
     }
-
     private func objectRelativePath(_ fingerprint: VivoFingerprint) -> String {
         let hex = fingerprint.hex
         return "objects/sha256/\(hex.prefix(2))/\(hex.dropFirst(2).prefix(2))/\(hex)"
     }
-
-    private func objectURL(for fingerprint: VivoFingerprint) -> URL {
-        rootURL.appendingPathComponent(objectRelativePath(fingerprint))
-    }
-
-    private func descriptorURL(for fingerprint: VivoFingerprint) -> URL {
+    private func descriptorPath(_ fingerprint: VivoFingerprint) -> String {
         let hex = fingerprint.hex
-        return rootURL.appendingPathComponent(
-            "descriptors/sha256/\(hex.prefix(2))/\(hex.dropFirst(2).prefix(2))/\(hex).json"
-        )
+        return "descriptors/sha256/\(hex.prefix(2))/\(hex.dropFirst(2).prefix(2))/\(hex).json"
     }
-
-    private func decodeDescriptor(at url: URL) throws -> VivoStoredArtifact {
-        do {
-            return try VivoCanonicalJSON.decode(
-                VivoStoredArtifact.self,
-                from: Data(contentsOf: url, options: [.mappedIfSafe])
-            )
-        } catch {
-            throw VivoArtifactStoreError.invalidDescriptor(String(describing: error))
+    private func referencePath(_ name: String) throws -> String {
+        guard !name.isEmpty, name == name.trimmingCharacters(in: .whitespacesAndNewlines), name.utf8.count <= 240,
+              !name.contains("/"), !name.contains("\\"), !name.contains("\0"), name != ".", name != ".." else {
+            throw VivoArtifactStoreError.invalidDescriptor("reference name is unsafe or noncanonical")
         }
+        // Hash exact UTF-8 bytes: case-insensitive and Unicode-normalizing file
+        // systems cannot alias two distinct logical names into one directory entry.
+        return try "refs/v2/" + VivoCanonicalJSON.fingerprint(Data(name.utf8)).hex + ".json"
     }
-
-    private func safeReferenceComponent(_ name: String) throws -> String {
-        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty,
-              trimmed.utf8.count <= 240,
-              !trimmed.contains("/"),
-              !trimmed.contains("\\"),
-              trimmed != ".",
-              trimmed != ".." else {
-            throw VivoArtifactStoreError.invalidDescriptor("reference name is unsafe")
+    private func legacyReferencePath(_ name: String) throws -> String {
+        _ = try referencePath(name)
+        guard let encoded = name.addingPercentEncoding(withAllowedCharacters: .alphanumerics), encoded.utf8.count <= 230 else {
+            throw VivoArtifactStoreError.referenceMissing(name)
         }
-        return trimmed.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? UUID().uuidString
+        return "refs/" + encoded + ".json"
     }
-
-    private func atomicWrite(_ data: Data, to destination: URL) throws {
-        let temporary = destination.deletingLastPathComponent().appendingPathComponent(
-            ".\(destination.lastPathComponent).\(UUID().uuidString).tmp"
-        )
-        do {
-            try data.write(to: temporary, options: [.atomic])
-            if fileManager.fileExists(atPath: destination.path) {
-                _ = try fileManager.replaceItemAt(destination, withItemAt: temporary)
-            } else {
-                try fileManager.moveItem(at: temporary, to: destination)
-            }
-        } catch {
-            try? fileManager.removeItem(at: temporary)
-            throw VivoArtifactStoreError.io(String(describing: error))
-        }
+    private func hex(_ value: String, count: Int) -> Bool {
+        value.utf8.count == count && value.utf8.allSatisfy { (48...57).contains($0) || (97...102).contains($0) }
+    }
+    private func fingerprintFromHex(_ value: String) throws -> VivoFingerprint {
+        let bytes = Array(value.utf8)
+        func digit(_ byte: UInt8) -> UInt8 { byte <= 57 ? byte - 48 : byte - 97 + 10 }
+        return try VivoFingerprint(bytes: stride(from: 0, to: bytes.count, by: 2).map { digit(bytes[$0]) * 16 + digit(bytes[$0 + 1]) })
     }
 }
