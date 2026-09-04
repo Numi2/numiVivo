@@ -1,6 +1,7 @@
 #include "NumiVivoCore/NumiVivoNetworkAnalysis.h"
 #include "NumiVivoCore/Core.hpp"
 #include "NumiVivoCore/ReactionNetworkAnalysis.hpp"
+#include "NumiVivoCore/ScalableReactionNetworkAnalysis.hpp"
 
 #include <cmath>
 #include <cstdlib>
@@ -204,7 +205,7 @@ NVivoStatus nvivo_analyze_program_json(
             return publishDiagnostics(diagnostics, diagnosticsJson, status);
         }
 
-        auto analysis = network::Analyzer().analyze(
+        auto analysis = network::ScalableAnalyzer().analyze(
             *compiled.ir,
             analysisConfiguration
         );
