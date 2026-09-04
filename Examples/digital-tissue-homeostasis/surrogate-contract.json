@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "homeostasis-response-surrogate",
+  "modelFingerprint": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+  "trainingDataFingerprint": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+  "mechanismPackFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "hostContextFingerprint": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+  "inputs": [
+    {
+      "id": "damage-signal-a",
+      "unit": "nM",
+      "minimum": 0,
+      "maximum": 20,
+      "normalizationOffset": 0,
+      "normalizationScale": 0.05
+    },
+    {
+      "id": "danger-signal-b",
+      "unit": "nM",
+      "minimum": 0,
+      "maximum": 20,
+      "normalizationOffset": 0,
+      "normalizationScale": 0.05
+    },
+    {
+      "id": "cell-stress",
+      "unit": "normalized",
+      "minimum": 0,
+      "maximum": 1,
+      "normalizationOffset": 0,
+      "normalizationScale": 1
+    }
+  ],
+  "outputs": [
+    {
+      "id": "response-output-rate",
+      "unit": "nM/s",
+      "minimum": 0,
+      "maximum": 0.02,
+      "normalizationOffset": 0,
+      "normalizationScale": 50
+    }
+  ],
+  "uncertaintyKind": "conformalRadius",
+  "maximumNormalizedUncertainty": 0.05,
+  "maximumNormalizedExtrapolation": 0,
+  "maximumConsecutiveAcceptedSteps": 16,
+  "mandatoryAuthorityInterval": 8
+}
