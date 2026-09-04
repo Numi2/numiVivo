@@ -117,6 +117,12 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
         let length: UInt64
     }
 
+    private struct Estimate {
+        let bytes: UInt64
+        let largestBuffer: UInt64
+        let components: [VivoCapacityComponent]
+    }
+
     public init() {}
 
     public func plan(
@@ -126,7 +132,6 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
         device: MTLDevice
     ) throws -> VivoCapacityPlan {
         try request.validate(physiology: physiology)
-        let capabilities = VivoMetalCapabilities(device: device)
         let estimate = try estimate(
             programPack: programPack,
             request: request,
@@ -134,32 +139,34 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
             device: device
         )
 
-        let recommended = device.recommendedMaxWorkingSetSize
+        let recommended = UInt64(device.recommendedMaxWorkingSetSize)
         let selectedBudget = try scaled(
             recommended,
             by: request.workingSetFraction,
             label: "working-set fraction"
         )
-        let currentAllocated = device.currentAllocatedSize
+        let currentAllocated = UInt64(max(device.currentAllocatedSize, 0))
         let planningBudget = selectedBudget > currentAllocated
             ? selectedBudget - currentAllocated
             : 0
-        let fitsBudget = estimate.withHeadroom <= planningBudget
-        let fitsBuffer = estimate.largestBuffer <= UInt64(device.maxBufferLength)
+        let maximumBufferLength = UInt64(device.maxBufferLength)
+        let fitsBudget = estimate.bytes <= planningBudget
+        let fitsBuffer = estimate.largestBuffer <= maximumBufferLength
         let utilization = planningBudget == 0
             ? Double.greatestFiniteMagnitude
-            : Double(estimate.withHeadroom) / Double(planningBudget)
+            : Double(estimate.bytes) / Double(planningBudget)
 
         let limits = try solveLimits(
             programPack: programPack,
             request: request,
             physiology: physiology,
             device: device,
-            budget: planningBudget
+            budget: planningBudget,
+            maximumBufferLength: maximumBufferLength
         )
 
         var warnings: [String] = []
-        if !capabilities.hasUnifiedMemory {
+        if !device.hasUnifiedMemory {
             warnings.append(
                 "Selected Metal device does not expose unified memory; production NumiVivo targets Apple silicon unified memory."
             )
@@ -198,8 +205,8 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
             recommendedWorkingSetBytes: recommended,
             currentAllocatedBytes: currentAllocated,
             planningBudgetBytes: planningBudget,
-            requestedBytesBeforeHeadroom: estimate.raw,
-            requestedBytesWithHeadroom: estimate.withHeadroom,
+            requestedBytesBeforeHeadroom: estimate.bytes,
+            requestedBytesWithHeadroom: estimate.bytes,
             largestSingleBufferBytes: estimate.largestBuffer,
             utilizationOfPlanningBudget: utilization,
             fitsPlanningBudget: fitsBudget,
@@ -215,12 +222,7 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
         request: VivoCapacityRequest,
         physiology: PreparedVivoPhysiologyModel?,
         device: MTLDevice
-    ) throws -> (
-        raw: UInt64,
-        withHeadroom: UInt64,
-        largestBuffer: UInt64,
-        components: [VivoCapacityComponent]
-    ) {
+    ) throws -> Estimate {
         let contract = programPack.runtimeContract
         let lanes = UInt64(request.molecularLaneCount)
         let species = UInt64(contract.speciesCount)
@@ -229,29 +231,28 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
         let parameters = UInt64(contract.parameterCount)
         let parameterEnvironments = UInt64(request.parameterEnvironmentCount)
 
-        let stateElements = try product(species, lanes, label: "molecular state elements")
-        let stateBytes = try product(stateElements, 4, label: "molecular state bytes")
-        let temporalElements = max(
-            try product(temporal, lanes, label: "molecular temporal elements"),
-            1
+        let stateBytes = try bytes(
+            count: try product(species, lanes, label: "molecular state elements"),
+            stride: 4,
+            label: "molecular state"
         )
-        let temporalBytes = try product(temporalElements, 8, label: "molecular temporal bytes")
-        let reactionElements = max(
-            try product(reactions, lanes, label: "molecular reaction elements"),
-            1
+        let temporalBytes = try bytes(
+            count: max(try product(temporal, lanes, label: "temporal elements"), 1),
+            stride: 8,
+            label: "temporal state"
         )
-        let reactionBytes = try product(reactionElements, 4, label: "molecular reaction bytes")
-        let parameterElements = max(
-            try product(parameters, parameterEnvironments, label: "molecular parameter elements"),
-            1
+        let reactionBytes = try bytes(
+            count: max(try product(reactions, lanes, label: "reaction elements"), 1),
+            stride: 4,
+            label: "reaction events"
         )
-        let parameterBytes = try product(parameterElements, 4, label: "molecular parameter bytes")
-        let transportBytes = try product(max(species, 1), 16, label: "transport bytes")
-        let velocityBytes = try product(max(lanes, 1), 16, label: "velocity bytes")
-        let volumeBytes = try product(max(lanes, 1), 4, label: "volume-fraction bytes")
+        let parameterBytes = try bytes(
+            count: max(try product(parameters, parameterEnvironments, label: "parameter elements"), 1),
+            stride: 4,
+            label: "parameters"
+        )
         let programBytes = UInt64(max(programPack.data.count, 1))
-
-        var molecularPrivate = [
+        let molecularPrivate = [
             PrivateBufferSpec(name: "ProgramPack", length: programBytes),
             PrivateBufferSpec(name: "parameters", length: parameterBytes),
             PrivateBufferSpec(name: "current-state", length: stateBytes),
@@ -262,37 +263,32 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
             PrivateBufferSpec(name: "temporal-current", length: temporalBytes),
             PrivateBufferSpec(name: "temporal-candidate", length: temporalBytes),
             PrivateBufferSpec(name: "reaction-events", length: reactionBytes),
-            PrivateBufferSpec(name: "species-transport", length: transportBytes),
-            PrivateBufferSpec(name: "velocity", length: velocityBytes),
-            PrivateBufferSpec(name: "volume-fraction", length: volumeBytes)
+            PrivateBufferSpec(name: "species-transport", length: try bytes(count: max(species, 1), stride: 16, label: "transport")),
+            PrivateBufferSpec(name: "velocity", length: try bytes(count: max(lanes, 1), stride: 16, label: "velocity")),
+            PrivateBufferSpec(name: "volume-fraction", length: try bytes(count: max(lanes, 1), stride: 4, label: "volume fractions"))
         ]
-        let molecularPrivateHeap = try heapBytes(
+        let molecularHeap = try heapBytes(
             device: device,
             buffers: molecularPrivate,
             headroom: request.allocationHeadroom
         )
-
-        let couplingCapacity = max(
-            UInt64(request.molecularCouplingCapacity),
-            lanes,
-            1
-        )
+        let couplingCapacity = max(UInt64(request.molecularCouplingCapacity), lanes, 1)
         let molecularShared = try sum([
             UInt64(MemoryLayout<VivoRuntimeCommandABI>.stride),
             UInt64(MemoryLayout<VivoRuntimeStatusABI>.stride),
-            try product(UInt64(request.molecularEventCapacity), UInt64(MemoryLayout<VivoEventABI>.stride), label: "event buffer"),
-            try product(couplingCapacity, UInt64(MemoryLayout<VivoCouplingUpdateABI>.stride), label: "coupling buffer"),
-            try product(UInt64(request.molecularPublicationCapacity), UInt64(MemoryLayout<VivoPublicationRequestABI>.stride), label: "publication request buffer"),
-            try product(UInt64(request.molecularPublicationCapacity), 4, label: "publication output buffer"),
+            try bytes(count: UInt64(request.molecularEventCapacity), stride: UInt64(MemoryLayout<VivoEventABI>.stride), label: "events"),
+            try bytes(count: couplingCapacity, stride: UInt64(MemoryLayout<VivoCouplingUpdateABI>.stride), label: "coupling"),
+            try bytes(count: UInt64(request.molecularPublicationCapacity), stride: UInt64(MemoryLayout<VivoPublicationRequestABI>.stride), label: "publication requests"),
+            try bytes(count: UInt64(request.molecularPublicationCapacity), stride: 4, label: "publication output"),
             stateBytes
-        ], label: "molecular shared buffers")
+        ], label: "molecular shared boundary")
 
-        var components: [VivoCapacityComponent] = [
+        var components = [
             VivoCapacityComponent(
                 name: "Molecular private heap",
                 memoryClass: .privateGPU,
-                bytes: molecularPrivateHeap,
-                explanation: "Heap-aligned ProgramPack, parameters, authoritative/candidate state, temporal state, reaction events, and spatial fields."
+                bytes: molecularHeap,
+                explanation: "Metal heap-aligned ProgramPack, parameters, authoritative/candidate state, temporal state, reaction events, and spatial fields including requested headroom."
             ),
             VivoCapacityComponent(
                 name: "Molecular shared boundary",
@@ -301,50 +297,41 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
                 explanation: "Commands, status, events, coupling updates, publications, and explicit state readback."
             )
         ]
-        var raw = try sum([molecularPrivateHeap, molecularShared], label: "molecular runtime")
+        var total = try sum([molecularHeap, molecularShared], label: "molecular runtime")
         var largest = molecularPrivate.map(\.length).max() ?? 0
         largest = max(
             largest,
-            try product(UInt64(request.molecularEventCapacity), UInt64(MemoryLayout<VivoEventABI>.stride), label: "event buffer")
+            try bytes(count: UInt64(request.molecularEventCapacity), stride: UInt64(MemoryLayout<VivoEventABI>.stride), label: "event buffer")
         )
         largest = max(largest, stateBytes)
 
         if let physiology {
-            let environments = UInt64(request.physiologyEnvironmentCount)
             let pairCount = UInt64(physiology.pairCount)
-            let stateElements = try product(pairCount, environments, label: "physiology state elements")
-            let physiologyStateBytes = try product(stateElements, 4, label: "physiology state bytes")
-            let offsetsBytes = try product(UInt64(physiology.incidenceOffsets.count), 4, label: "physiology incidence offsets")
-            let incidenceBytes = try product(
-                UInt64(max(physiology.incidence.count, 1)),
-                UInt64(MemoryLayout<VivoPhysiologyIncidenceABI>.stride),
-                label: "physiology incidence"
+            let environments = UInt64(request.physiologyEnvironmentCount)
+            let physiologyStateBytes = try bytes(
+                count: try product(pairCount, environments, label: "physiology state elements"),
+                stride: 4,
+                label: "physiology state"
             )
-            let clearanceBytes = try product(
-                UInt64(physiology.clearances.count),
-                UInt64(MemoryLayout<VivoPhysiologyClearanceABI>.stride),
-                label: "physiology clearance"
-            )
-            let boundsBytes = try product(pairCount, UInt64(MemoryLayout<SIMD2<Float>>.stride), label: "physiology bounds")
             let physiologyPrivate = [
                 PrivateBufferSpec(name: "current-state", length: physiologyStateBytes),
                 PrivateBufferSpec(name: "base-state", length: physiologyStateBytes),
                 PrivateBufferSpec(name: "stage-state", length: physiologyStateBytes),
                 PrivateBufferSpec(name: "candidate-state", length: physiologyStateBytes),
                 PrivateBufferSpec(name: "derivative-k1", length: physiologyStateBytes),
-                PrivateBufferSpec(name: "incidence-offsets", length: offsetsBytes),
-                PrivateBufferSpec(name: "incidence", length: incidenceBytes),
-                PrivateBufferSpec(name: "clearances", length: clearanceBytes),
-                PrivateBufferSpec(name: "bounds", length: boundsBytes)
+                PrivateBufferSpec(name: "incidence-offsets", length: try bytes(count: UInt64(physiology.incidenceOffsets.count), stride: 4, label: "physiology offsets")),
+                PrivateBufferSpec(name: "incidence", length: try bytes(count: UInt64(max(physiology.incidence.count, 1)), stride: UInt64(MemoryLayout<VivoPhysiologyIncidenceABI>.stride), label: "physiology incidence")),
+                PrivateBufferSpec(name: "clearances", length: try bytes(count: UInt64(physiology.clearances.count), stride: UInt64(MemoryLayout<VivoPhysiologyClearanceABI>.stride), label: "physiology clearances")),
+                PrivateBufferSpec(name: "bounds", length: try bytes(count: pairCount, stride: UInt64(MemoryLayout<SIMD2<Float>>.stride), label: "physiology bounds"))
             ]
             let physiologyHeap = try heapBytes(
                 device: device,
                 buffers: physiologyPrivate,
                 headroom: request.allocationHeadroom
             )
-            let transformBytes = try product(
-                UInt64(request.physiologyTransformCapacity),
-                UInt64(MemoryLayout<VivoPhysiologyStateTransformABI>.stride),
+            let transformBytes = try bytes(
+                count: UInt64(request.physiologyTransformCapacity),
+                stride: UInt64(MemoryLayout<VivoPhysiologyStateTransformABI>.stride),
                 label: "physiology transforms"
             )
             let physiologyShared = try sum([
@@ -352,18 +339,19 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
                 UInt64(MemoryLayout<VivoPhysiologyRuntimeStatusABI>.stride),
                 transformBytes,
                 transformBytes,
-                try product(UInt64(request.physiologyPublicationCapacity), UInt64(MemoryLayout<VivoPhysiologyPublicationRequestABI>.stride), label: "physiology publication requests"),
-                try product(UInt64(request.physiologyPublicationCapacity), 4, label: "physiology publication output"),
+                try bytes(count: UInt64(request.physiologyPublicationCapacity), stride: UInt64(MemoryLayout<VivoPhysiologyPublicationRequestABI>.stride), label: "physiology publication requests"),
+                try bytes(count: UInt64(request.physiologyPublicationCapacity), stride: 4, label: "physiology publication output"),
                 physiologyStateBytes
-            ], label: "physiology shared buffers")
-            raw = try sum([raw, physiologyHeap, physiologyShared], label: "coupled runtime")
-            largest = max(largest, physiologyPrivate.map(\.length).max() ?? 0, transformBytes)
+            ], label: "physiology shared boundary")
+            total = try sum([total, physiologyHeap, physiologyShared], label: "coupled runtime")
+            largest = max(largest, physiologyPrivate.map(\.length).max() ?? 0)
+            largest = max(largest, transformBytes)
             components.append(
                 VivoCapacityComponent(
                     name: "Physiology private heap",
                     memoryClass: .privateGPU,
                     bytes: physiologyHeap,
-                    explanation: "Heap-aligned compartment state, RK2 staging, sparse incidence, clearance, and bound tables."
+                    explanation: "Heap-aligned compartment state, RK2 staging, sparse incidence, clearance, and bounds including requested headroom."
                 )
             )
             components.append(
@@ -376,12 +364,7 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
             )
         }
 
-        return (
-            raw: raw,
-            withHeadroom: raw,
-            largestBuffer: largest,
-            components: components
-        )
+        return Estimate(bytes: total, largestBuffer: largest, components: components)
     }
 
     private func solveLimits(
@@ -389,7 +372,8 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
         request: VivoCapacityRequest,
         physiology: PreparedVivoPhysiologyModel?,
         device: MTLDevice,
-        budget: UInt64
+        budget: UInt64,
+        maximumBufferLength: UInt64
     ) throws -> VivoCapacityLimits {
         let maximumMolecular = try maximumCount { count in
             var candidate = request
@@ -402,7 +386,8 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
                 request: candidate,
                 physiology: physiology,
                 device: device,
-                budget: budget
+                budget: budget,
+                maximumBufferLength: maximumBufferLength
             )
         }
 
@@ -417,27 +402,22 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
                     physiology: physiology,
                     device: device,
                     budget: budget,
-                    skipModelEnvironmentValidation: true
+                    maximumBufferLength: maximumBufferLength,
+                    validateRequest: false
                 )
             }
         } else {
             maximumPhysiology = 0
         }
 
-        let lockstep = try maximumCount { scale in
+        let maximumLockstepScale = try maximumCount { scale in
             var candidate = request
-            candidate.molecularLaneCount = saturatedMultiply(
-                request.molecularLaneCount,
-                scale
-            )
+            candidate.molecularLaneCount = saturatedMultiply(request.molecularLaneCount, scale)
             if request.parameterEnvironmentCount == request.molecularLaneCount {
                 candidate.parameterEnvironmentCount = candidate.molecularLaneCount
             }
             if physiology != nil {
-                candidate.physiologyEnvironmentCount = saturatedMultiply(
-                    request.physiologyEnvironmentCount,
-                    scale
-                )
+                candidate.physiologyEnvironmentCount = saturatedMultiply(request.physiologyEnvironmentCount, scale)
             }
             return try fits(
                 programPack: programPack,
@@ -445,21 +425,19 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
                 physiology: physiology,
                 device: device,
                 budget: budget,
-                skipModelEnvironmentValidation: physiology != nil && scale != 1
+                maximumBufferLength: maximumBufferLength,
+                validateRequest: scale == 1
             )
         }
 
         return VivoCapacityLimits(
             maximumMolecularLaneCountKeepingPhysiologyFixed: maximumMolecular,
             maximumPhysiologyEnvironmentCountKeepingMolecularFixed: maximumPhysiology,
-            maximumLockstepScale: lockstep,
-            maximumLockstepMolecularLaneCount: saturatedMultiply(
-                request.molecularLaneCount,
-                lockstep
-            ),
+            maximumLockstepScale: maximumLockstepScale,
+            maximumLockstepMolecularLaneCount: saturatedMultiply(request.molecularLaneCount, maximumLockstepScale),
             maximumLockstepPhysiologyEnvironmentCount: physiology == nil
                 ? 0
-                : saturatedMultiply(request.physiologyEnvironmentCount, lockstep)
+                : saturatedMultiply(request.physiologyEnvironmentCount, maximumLockstepScale)
         )
     }
 
@@ -469,21 +447,24 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
         physiology: PreparedVivoPhysiologyModel?,
         device: MTLDevice,
         budget: UInt64,
-        skipModelEnvironmentValidation: Bool = false
+        maximumBufferLength: UInt64,
+        validateRequest: Bool = true
     ) throws -> Bool {
-        if !skipModelEnvironmentValidation {
+        if validateRequest {
             try request.validate(physiology: physiology)
+        } else {
+            guard request.molecularLaneCount > 0,
+                  request.parameterEnvironmentCount > 0,
+                  request.workingSetFraction.isFinite,
+                  request.allocationHeadroom.isFinite else { return false }
         }
-        guard request.molecularLaneCount > 0,
-              request.parameterEnvironmentCount > 0 else { return false }
-        let result = try estimate(
+        let estimate = try estimate(
             programPack: programPack,
             request: request,
             physiology: physiology,
             device: device
         )
-        return result.raw <= budget &&
-            result.largestBuffer <= UInt64(device.maxBufferLength)
+        return estimate.bytes <= budget && estimate.largestBuffer <= maximumBufferLength
     }
 
     private func maximumCount(
@@ -522,13 +503,16 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
                     "private buffer \(buffer.name) has an invalid length"
                 )
             }
-            let alignment = device.heapBufferSizeAndAlign(
+            let sizeAndAlign = device.heapBufferSizeAndAlign(
                 length: Int(buffer.length),
                 options: .storageModePrivate
             )
-            let align = UInt64(max(alignment.align, 1))
-            cursor = try alignUp(cursor, alignment: align, label: buffer.name)
-            let addition = cursor.addingReportingOverflow(UInt64(alignment.size))
+            cursor = try alignUp(
+                cursor,
+                alignment: UInt64(max(sizeAndAlign.align, 1)),
+                label: buffer.name
+            )
+            let addition = cursor.addingReportingOverflow(UInt64(sizeAndAlign.size))
             guard !addition.overflow else {
                 throw VivoArtifactValidationError.invalid(
                     "private heap sizing overflow for \(buffer.name)"
@@ -536,7 +520,9 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
             }
             cursor = addition.partialValue
         }
-        return try scaled(cursor, by: headroom, label: "private heap headroom")
+        cursor = try alignUp(cursor, alignment: 4_096, label: "heap final alignment")
+        let expanded = try scaled(cursor, by: headroom, label: "private heap headroom")
+        return try alignUp(expanded, alignment: 4_096, label: "heap headroom alignment")
     }
 
     private func alignUp(
@@ -544,27 +530,23 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
         alignment: UInt64,
         label: String
     ) throws -> UInt64 {
-        guard alignment > 0,
-              alignment & (alignment - 1) == 0 else {
-            throw VivoArtifactValidationError.invalid(
-                "Metal returned a non-power-of-two heap alignment for \(label)"
-            )
+        guard alignment > 0 else {
+            throw VivoArtifactValidationError.invalid("invalid heap alignment for \(label)")
         }
-        let mask = alignment - 1
-        let addition = value.addingReportingOverflow(mask)
-        guard !addition.overflow else {
-            throw VivoArtifactValidationError.invalid(
-                "heap alignment overflow for \(label)"
-            )
+        let remainder = value % alignment
+        if remainder == 0 { return value }
+        let result = value.addingReportingOverflow(alignment - remainder)
+        guard !result.overflow else {
+            throw VivoArtifactValidationError.invalid("heap alignment overflow for \(label)")
         }
-        return addition.partialValue & ~mask
+        return result.partialValue
     }
 
-    private func product(
-        _ left: UInt64,
-        _ right: UInt64,
-        label: String
-    ) throws -> UInt64 {
+    private func bytes(count: UInt64, stride: UInt64, label: String) throws -> UInt64 {
+        try product(count, stride, label: "\(label) bytes")
+    }
+
+    private func product(_ left: UInt64, _ right: UInt64, label: String) throws -> UInt64 {
         let result = left.multipliedReportingOverflow(by: right)
         guard !result.overflow else {
             throw VivoArtifactValidationError.invalid("\(label) overflow")
@@ -584,11 +566,7 @@ public struct VivoAppleSiliconCapacityPlanner: Sendable {
         return total
     }
 
-    private func scaled(
-        _ value: UInt64,
-        by factor: Double,
-        label: String
-    ) throws -> UInt64 {
+    private func scaled(_ value: UInt64, by factor: Double, label: String) throws -> UInt64 {
         let result = Double(value) * factor
         guard result.isFinite,
               result >= 0,
