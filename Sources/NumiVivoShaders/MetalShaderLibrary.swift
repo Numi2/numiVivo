@@ -9,14 +9,10 @@ public enum NumiVivoShaderError: Error, Sendable, CustomStringConvertible {
 
     public var description: String {
         switch self {
-        case .sourceResourceMissing:
-            return "No NumiVivo .metal source resources are present in the NumiVivoShaders bundle."
-        case .functionMissing(let name):
-            return "Metal function '\(name)' is missing from the NumiVivo shader library."
-        case .compilationFailed(let message):
-            return "NumiVivo Metal compilation failed: \(message)"
-        case .pipelineFailed(let name, let message):
-            return "NumiVivo pipeline '\(name)' could not be created: \(message)"
+        case .sourceResourceMissing: return "The selected NumiVivo shader source resource is missing."
+        case .functionMissing(let name): return "Metal function '\(name)' is missing from its selected module."
+        case .compilationFailed(let message): return "NumiVivo Metal compilation failed: \(message)"
+        case .pipelineFailed(let name, let message): return "NumiVivo pipeline '\(name)' could not be created: \(message)"
         }
     }
 }
@@ -34,7 +30,6 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case evaluateMonitors = "nvivo_evaluate_monitors"
     case validateShadow = "nvivo_validate_shadow"
     case publish = "nvivo_publish"
-
     case physiologyClearStatus = "nvivo_phys_clear_status"
     case physiologyPrepareTransaction = "nvivo_phys_prepare_transaction"
     case physiologyApplyTransforms = "nvivo_phys_apply_transforms"
@@ -42,6 +37,16 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case physiologyHeunCorrect = "nvivo_phys_heun_correct"
     case physiologyValidateCandidate = "nvivo_phys_validate_candidate"
     case physiologyPublish = "nvivo_phys_publish"
+
+    fileprivate var sourceModule: String {
+        switch self {
+        case .physiologyClearStatus, .physiologyPrepareTransaction, .physiologyApplyTransforms,
+             .physiologyHeunPredict, .physiologyHeunCorrect, .physiologyValidateCandidate, .physiologyPublish:
+            return "NumiVivoPhysiologyKernels"
+        default:
+            return "NumiVivoProgramPackRuntime"
+        }
+    }
 }
 
 public struct NumiVivoPipeline: @unchecked Sendable {
@@ -51,34 +56,58 @@ public struct NumiVivoPipeline: @unchecked Sendable {
 
     public init(state: MTLComputePipelineState) {
         self.state = state
-        self.executionWidth = state.threadExecutionWidth
-        self.maximumThreadsPerThreadgroup = state.maxTotalThreadsPerThreadgroup
+        executionWidth = state.threadExecutionWidth
+        maximumThreadsPerThreadgroup = state.maxTotalThreadsPerThreadgroup
     }
-
     public func threadgroupSize(for elementCount: Int, preferred: Int? = nil) -> MTLSize {
-        guard elementCount > 0 else { return MTLSize(width: 1, height: 1, depth: 1) }
-        let requested = preferred ?? max(executionWidth, min(maximumThreadsPerThreadgroup, executionWidth * 4))
-        let aligned = max(executionWidth, (requested / executionWidth) * executionWidth)
-        return MTLSize(width: min(aligned, maximumThreadsPerThreadgroup), height: 1, depth: 1)
+        let width = max(executionWidth, 1)
+        let requested = max(width, preferred ?? width * 4)
+        let capped = min(requested, maximumThreadsPerThreadgroup)
+        let aligned = max(1, capped >= width ? (capped / width) * width : capped)
+        return MTLSize(width: aligned, height: 1, depth: 1)
     }
-
     public func gridSize(for elementCount: Int) -> MTLSize {
         MTLSize(width: max(elementCount, 1), height: 1, depth: 1)
     }
 }
 
+/// Resource module and device identity are part of the cache key. The old
+/// concatenate-every-metal-file fallback combined unrelated incompatible ABIs.
+private final class NumiVivoRuntimeLibraryCache: @unchecked Sendable {
+    static let shared = NumiVivoRuntimeLibraryCache()
+    private let lock = NSLock()
+    private var libraries: [String: MTLLibrary] = [:]
+
+    func library(device: MTLDevice, module: String) throws -> MTLLibrary {
+        lock.lock()
+        defer { lock.unlock() }
+        let key = "\(device.registryID)/\(module)/v1"
+        if let existing = libraries[key] { return existing }
+        let url = Bundle.module.url(forResource: module, withExtension: "metal")
+            ?? Bundle.module.url(forResource: module, withExtension: "metal", subdirectory: "Resources")
+        guard let url else { throw NumiVivoShaderError.sourceResourceMissing }
+        do {
+            let source = try String(contentsOf: url, encoding: .utf8)
+            let options = MTLCompileOptions()
+            options.fastMathEnabled = false
+            let library = try device.makeLibrary(source: source, options: options)
+            libraries[key] = library
+            return library
+        } catch {
+            throw NumiVivoShaderError.compilationFailed(String(describing: error))
+        }
+    }
+}
+
 public actor NumiVivoPipelineCatalog {
     private let device: MTLDevice
-    private let library: MTLLibrary
     private var cache: [NumiVivoKernel: NumiVivoPipeline] = [:]
 
-    public init(device: MTLDevice) throws {
-        self.device = device
-        self.library = try Self.loadLibrary(device: device)
-    }
+    public init(device: MTLDevice) throws { self.device = device }
 
     public func pipeline(_ kernel: NumiVivoKernel) throws -> NumiVivoPipeline {
-        if let cached = cache[kernel] { return cached }
+        if let existing = cache[kernel] { return existing }
+        let library = try NumiVivoRuntimeLibraryCache.shared.library(device: device, module: kernel.sourceModule)
         guard let function = library.makeFunction(name: kernel.rawValue) else {
             throw NumiVivoShaderError.functionMissing(kernel.rawValue)
         }
@@ -86,7 +115,9 @@ public actor NumiVivoPipelineCatalog {
             let descriptor = MTLComputePipelineDescriptor()
             descriptor.label = "NumiVivo.\(kernel.rawValue)"
             descriptor.computeFunction = function
-            descriptor.threadGroupSizeIsMultipleOfThreadExecutionWidth = true
+            // dispatchThreads permits a partial final group. Do not promise
+            // full SIMD-group multiples to the compiler for one-element passes.
+            descriptor.threadGroupSizeIsMultipleOfThreadExecutionWidth = false
             let state = try device.makeComputePipelineState(descriptor: descriptor, options: [], reflection: nil)
             let pipeline = NumiVivoPipeline(state: state)
             cache[kernel] = pipeline
@@ -95,35 +126,7 @@ public actor NumiVivoPipelineCatalog {
             throw NumiVivoShaderError.pipelineFailed(kernel.rawValue, String(describing: error))
         }
     }
-
     public func preloadAll() throws {
-        for kernel in NumiVivoKernel.allCases {
-            _ = try pipeline(kernel)
-        }
-    }
-
-    private static func loadLibrary(device: MTLDevice) throws -> MTLLibrary {
-        if let library = try? device.makeDefaultLibrary(bundle: .module) {
-            return library
-        }
-        let urls = Bundle.module
-            .urls(forResourcesWithExtension: "metal", subdirectory: nil)?
-            .sorted(by: { $0.lastPathComponent < $1.lastPathComponent }) ?? []
-        guard !urls.isEmpty else {
-            throw NumiVivoShaderError.sourceResourceMissing
-        }
-        do {
-            let source = try urls.map { url in
-                "// MARK: - \(url.lastPathComponent)\n" +
-                String(contentsOf: url, encoding: .utf8)
-            }.joined(separator: "\n\n")
-            let options = MTLCompileOptions()
-            options.fastMathEnabled = false
-            return try device.makeLibrary(source: source, options: options)
-        } catch let error as NumiVivoShaderError {
-            throw error
-        } catch {
-            throw NumiVivoShaderError.compilationFailed(String(describing: error))
-        }
+        for kernel in NumiVivoKernel.allCases { _ = try pipeline(kernel) }
     }
 }

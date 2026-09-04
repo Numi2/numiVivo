@@ -2,8 +2,8 @@ import Foundation
 import Metal
 import NumiVivoShaders
 
-/// ProgramPack transaction owner. GPU work, readback and checkpoint restoration
-/// reserve this actor across suspension points; candidate buffers never escape.
+/// ProgramPack transaction owner. Every operation that suspends while using GPU
+/// resources holds an explicit reservation; committed readers never see a candidate.
 public actor VivoTransactionalMolecularRuntime {
     public enum Lifecycle: Sendable, Codable, Equatable {
         case ready
@@ -32,7 +32,7 @@ public actor VivoTransactionalMolecularRuntime {
 
     public static func make(pack: VivoProgramPack, configuration: VivoRuntimeConfiguration,
                             device requestedDevice: MTLDevice? = nil) async throws -> VivoTransactionalMolecularRuntime {
-        try configuration.validate(for: pack)
+        try VivoProgramExecutionContract.validate(pack: pack, configuration: configuration)
         let device = try requestedDevice ?? VivoMetalDeviceSelector.productionDevice()
         guard let queue = device.makeCommandQueue() else { throw VivoRuntimeError.commandQueueUnavailable }
         queue.label = "NumiVivo.TransactionalMolecularQueue"
@@ -74,19 +74,27 @@ public actor VivoTransactionalMolecularRuntime {
         }
     }
     public func stopPermanently(reason: String) {
-        // In-flight GPU work is allowed to finish, but prepare checks this state
-        // again after its await and cannot publish the candidate it produced.
+        // Already-submitted GPU work may finish, but cannot become publishable.
         pending = nil
         lifecycleState = .permanentlyStopped(reason: reason)
     }
     public func setTransport(_ values: [VivoSpeciesTransportABI]) throws {
         try requireReadyAndUnreserved()
-        guard values.allSatisfy({ $0.diffusion.isFinite && $0.diffusion >= 0 &&
-                                   $0.membranePermeability.isFinite && $0.membranePermeability >= 0 &&
-                                   $0.decayRate.isFinite && $0.decayRate >= 0 }) else {
-            throw VivoRuntimeError.invalidConfiguration("transport coefficients must be finite and nonnegative")
-        }
+        try validateTransport(values)
         try arena.replaceTransport(values, commandQueue: commandQueue)
+    }
+    private func validateTransport(_ values: [VivoSpeciesTransportABI]) throws {
+        guard values.count == species.count else { throw VivoRuntimeError.invalidConfiguration("transport/species count mismatch") }
+        for (index, value) in values.enumerated() {
+            guard value.diffusion.isFinite, value.diffusion >= 0,
+                  value.membranePermeability == 0,
+                  value.decayRate.isFinite, value.decayRate >= 0 else {
+                throw VivoRuntimeError.invalidConfiguration("diffusion/decay must be finite and nonnegative; nonzero membrane permeability requires a membrane-interface backend")
+            }
+            if species[index].isExternallyOwned, value.diffusion != 0 || value.decayRate != 0 {
+                throw VivoRuntimeError.invalidConfiguration("transport cannot mutate externally owned species")
+            }
+        }
     }
     public func setVelocity(_ values: [SIMD4<Float>]) throws {
         try requireReadyAndUnreserved()
@@ -119,10 +127,8 @@ public actor VivoTransactionalMolecularRuntime {
         })
         var dt = requested
         for attempt in 0..<configuration.maximumSubsteps {
-            // The legacy shader ABI exposes FP32 absolute time. Stop rather than
-            // silently issuing indistinguishable timestamps at large horizons.
             guard Float(absoluteTimeSeconds + Double(dt)) > Float(absoluteTimeSeconds) else {
-                throw VivoRuntimeError.invalidConfiguration("time step is below the legacy FP32 absolute-clock resolution")
+                throw VivoRuntimeError.invalidConfiguration("time step is below the ProgramPack FP32 absolute-clock resolution")
             }
             let output = try await executeAttempt(dt: dt, attempt: attempt,
                                                   couplingCount: request.coupling.count,
@@ -209,11 +215,8 @@ public actor VivoTransactionalMolecularRuntime {
                       speciesCount: pack.runtimeContract.speciesCount, laneCount: configuration.laneCount, values: values)
     }
 
-    /// Legacy v2 payload, restricted to the state classes this arena actually
-    /// owns. Prefer resumeCheckpoint() for spatial layout/configuration binding.
     public func checkpoint() throws -> VivoMolecularCheckpoint {
         try requireReadyAndUnreserved()
-        try requireCheckpointableModel()
         let data = try arena.captureCheckpoint(commandQueue: commandQueue)
         let parameterScalars = Int(pack.runtimeContract.parameterCount) * Int(configuration.environmentCount)
         let value = VivoMolecularCheckpoint(programFingerprint: pack.header.contentFingerprint,
@@ -251,7 +254,6 @@ public actor VivoTransactionalMolecularRuntime {
     }
     private func restoreState(_ checkpoint: VivoMolecularCheckpoint) throws {
         try requireReadyAndUnreserved()
-        try requireCheckpointableModel()
         try checkpoint.validate()
         guard checkpoint.programFingerprint == pack.header.contentFingerprint,
               checkpoint.sourceProgramFingerprint == pack.header.sourceFingerprint,
@@ -283,37 +285,19 @@ public actor VivoTransactionalMolecularRuntime {
             }
         }
         let transport = try VivoTransportRecordLE.decode(checkpoint.transportRecordLE)
-        guard transport.allSatisfy({ $0.diffusion >= 0 && $0.membranePermeability >= 0 && $0.decayRate >= 0 }) else {
-            throw VivoRuntimeError.invalidConfiguration("checkpoint contains a negative transport coefficient")
-        }
+        try validateTransport(transport)
         let decoded = VivoMolecularArenaCheckpointData(state: values,
                                                        parameters: parameters.isEmpty ? [0] : parameters,
                                                        temporalState: try VivoLittleEndianFP32.decode(checkpoint.temporalStateFP32LE),
                                                        transport: transport,
                                                        velocity: try VivoLittleEndianFP32.decode(checkpoint.velocityFP32LE),
                                                        volumeFractions: try VivoLittleEndianFP32.decode(checkpoint.volumeFractionFP32LE))
-        // Never blit over accepted resources. Failed restore keeps the old arena.
         let replacement = try VivoMetalArena(device: arena.device, commandQueue: commandQueue,
                                               pack: pack, configuration: configuration)
         try replacement.restoreCheckpoint(decoded, commandQueue: commandQueue)
         arena = replacement
         absoluteTimeSeconds = checkpoint.absoluteTimeSeconds
         nextStepIndex = checkpoint.stepIndex
-    }
-    private func requireCheckpointableModel() throws {
-        let section = try pack.section(.reactions)
-        guard section.stride == 64 else { throw VivoRuntimeError.packError("reaction record stride mismatch") }
-        let records = try pack.sectionData(.reactions)
-        let delayed = records.withUnsafeBytes { raw in
-            (0..<Int(section.count)).contains { index in
-                let flags = UInt32(littleEndian: raw.loadUnaligned(fromByteOffset: index * 64 + 44, as: UInt32.self))
-                let delay = Float(bitPattern: UInt32(littleEndian: raw.loadUnaligned(fromByteOffset: index * 64 + 48, as: UInt32.self)))
-                return flags & (1 << 2) != 0 || delay != 0
-            }
-        }
-        guard !delayed else {
-            throw VivoRuntimeError.invalidConfiguration("this arena checkpoint has no delayed-event queue; delayed models cannot be exported as complete state")
-        }
     }
 
     private func executeAttempt(dt: Float, attempt: UInt32, couplingCount: Int, publicationCount: Int) async throws -> AttemptResult {
@@ -358,8 +342,12 @@ public actor VivoTransactionalMolecularRuntime {
             }
         }
         let controls = [arena.candidateState, arena.temporalCandidate, arena.parameterBuffer, arena.programBuffer, arena.eventBuffer, arena.statusBuffer]
-        try encode(.executeRules, count: try work(pack.runtimeContract.ruleCount), command: command, buffers: controls, uniforms: uniforms)
-        try encode(.evaluateMonitors, count: try work(pack.runtimeContract.monitorCount), command: command, buffers: controls, uniforms: uniforms)
+        if pack.runtimeContract.ruleCount > 0 {
+            try encode(.executeRules, count: Int(configuration.laneCount), command: command, buffers: controls, uniforms: uniforms)
+        }
+        if pack.runtimeContract.monitorCount > 0 {
+            try encode(.evaluateMonitors, count: Int(configuration.laneCount), command: command, buffers: controls, uniforms: uniforms)
+        }
         try encode(.validateShadow, count: arena.capacities.stateElements, command: command,
                    buffers: [arena.candidateState, arena.programBuffer, arena.statusBuffer], uniforms: uniforms)
         if publicationCount > 0 {
@@ -398,8 +386,11 @@ public actor VivoTransactionalMolecularRuntime {
         if var uniforms {
             encoder.setBytes(&uniforms, length: MemoryLayout<VivoRuntimeCommandABI>.stride, index: buffers.count)
         }
-        if var extraCount {
-            encoder.setBytes(&extraCount, length: 4, index: buffers.count + 1)
+        if var extraCount { encoder.setBytes(&extraCount, length: 4, index: buffers.count + 1) }
+        if kernel == .f3Transport {
+            // Species ownership is consulted by the finite-volume pass as well
+            // as reactions. Externally-owned fields cannot be advected locally.
+            encoder.setBuffer(arena.programBuffer, offset: 0, index: 8)
         }
         encoder.dispatchThreads(pipeline.gridSize(for: count), threadsPerThreadgroup: pipeline.threadgroupSize(for: count, preferred: capabilities.recommendedThreadsPerThreadgroup))
     }
