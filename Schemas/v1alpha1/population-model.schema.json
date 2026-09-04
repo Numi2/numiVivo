@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/population-model.schema.json",
+  "title": "NumiVivo Population Model",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "name", "grid", "phenotypes"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "grid": { "$ref": "#/$defs/grid" },
+    "regulatorFields": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": { "$ref": "#/$defs/regulatorField" }
+    },
+    "phenotypes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": { "$ref": "#/$defs/phenotype" }
+    },
+    "transitions": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/$defs/transition" }
+    },
+    "interactions": {
+      "type": "array",
+      "maxItems": 16777216,
+      "items": { "$ref": "#/$defs/interaction" }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "$defs": {
+    "grid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "depth", "spacingXMetres", "spacingYMetres", "spacingZMetres", "boundary"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "height": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "depth": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "spacingXMetres": { "type": "number", "exclusiveMinimum": 0 },
+        "spacingYMetres": { "type": "number", "exclusiveMinimum": 0 },
+        "spacingZMetres": { "type": "number", "exclusiveMinimum": 0 },
+        "boundary": { "enum": [0, 1, 2, "noFlux", "periodic", "absorbing"] }
+      }
+    },
+    "regulatorField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "unit", "minimum", "maximum"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "unit": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "minimum": { "type": "number" },
+        "maximum": { "type": "number" }
+      }
+    },
+    "phenotype": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "birthRatePerSecond", "deathRatePerSecond", "carryingCapacityPerVoxel", "diffusionSquareMetresPerSecond", "minimumDensity", "maximumDensity", "externallyMaintained"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "birthRatePerSecond": { "type": "number", "minimum": 0 },
+        "deathRatePerSecond": { "type": "number", "minimum": 0 },
+        "carryingCapacityPerVoxel": { "type": "number", "exclusiveMinimum": 0 },
+        "diffusionSquareMetresPerSecond": { "type": "number", "minimum": 0 },
+        "minimumDensity": { "type": "number", "minimum": 0 },
+        "maximumDensity": { "type": "number", "minimum": 0 },
+        "externallyMaintained": { "type": "boolean" }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourcePhenotype", "destinationPhenotype", "mode", "baseRatePerSecond", "maximumRegulatedRatePerSecond", "threshold", "hillCoefficient"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "sourcePhenotype": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "destinationPhenotype": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "mode": { "enum": [0, 1, 2, "constitutive", "activated", "repressed"] },
+        "regulatorField": { "type": ["string", "null"], "maxLength": 256 },
+        "baseRatePerSecond": { "type": "number", "minimum": 0 },
+        "maximumRegulatedRatePerSecond": { "type": "number", "minimum": 0 },
+        "threshold": { "type": "number", "exclusiveMinimum": 0 },
+        "hillCoefficient": { "type": "number", "minimum": 1 }
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actorPhenotype", "targetPhenotype", "coefficientPerDensityPerSecond"],
+      "properties": {
+        "actorPhenotype": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "targetPhenotype": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "coefficientPerDensityPerSecond": { "type": "number" }
+      }
+    }
+  }
+}
