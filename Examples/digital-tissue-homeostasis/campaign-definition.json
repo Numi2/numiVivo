@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "name": "digital-homeostasis-screen",
+  "artifacts": {
+    "programPackFingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mechanismPackFingerprint": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+    "hostContextFingerprint": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+    "experimentDefinitionFingerprint": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+    "couplingPackFingerprint": null
+  },
+  "sampling": "halton",
+  "axes": [
+    {
+      "parameterID": "response-gain",
+      "unit": "1",
+      "transform": "linear",
+      "explicitValues": null,
+      "lowerBound": 0.25,
+      "upperBound": 2.0,
+      "sampleCount": 32
+    },
+    {
+      "parameterID": "clearance-rate",
+      "unit": "1/s",
+      "transform": "logarithmic10",
+      "explicitValues": null,
+      "lowerBound": 0.00001,
+      "upperBound": 0.01,
+      "sampleCount": 32
+    },
+    {
+      "parameterID": "stress-threshold",
+      "unit": "normalized",
+      "transform": "linear",
+      "explicitValues": [0.55, 0.65, 0.75, 0.85],
+      "lowerBound": null,
+      "upperBound": null,
+      "sampleCount": 4
+    }
+  ],
+  "candidateCount": 32,
+  "replicateCount": 8,
+  "baseSeed": 336001875535,
+  "maximumJobs": 10000,
+  "tags": {
+    "scope": "sequence-free-computational-reference",
+    "artifact-note": "fingerprints are placeholders for compiler-produced example artifacts",
+    "numerical-authority": "NumiVivo"
+  }
+}
