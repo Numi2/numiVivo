@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/campaign.schema.json",
+  "title": "NumiVivo Campaign Documents",
+  "oneOf": [
+    { "$ref": "#/$defs/definition" },
+    { "$ref": "#/$defs/manifest" }
+  ],
+  "$defs": {
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["programPackFingerprint", "mechanismPackFingerprint", "hostContextFingerprint"],
+      "properties": {
+        "programPackFingerprint": { "$ref": "#/$defs/fingerprint" },
+        "mechanismPackFingerprint": { "$ref": "#/$defs/fingerprint" },
+        "hostContextFingerprint": { "$ref": "#/$defs/fingerprint" },
+        "experimentDefinitionFingerprint": {
+          "oneOf": [{ "$ref": "#/$defs/fingerprint" }, { "type": "null" }]
+        },
+        "couplingPackFingerprint": {
+          "oneOf": [{ "$ref": "#/$defs/fingerprint" }, { "type": "null" }]
+        }
+      }
+    },
+    "axis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parameterID", "unit", "transform"],
+      "properties": {
+        "parameterID": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "unit": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "transform": { "enum": ["linear", "logarithmic10"] },
+        "explicitValues": {
+          "type": ["array", "null"],
+          "minItems": 1,
+          "maxItems": 4294967295,
+          "uniqueItems": true,
+          "items": { "type": "number" }
+        },
+        "lowerBound": { "type": ["number", "null"] },
+        "upperBound": { "type": ["number", "null"] },
+        "sampleCount": { "type": ["integer", "null"], "minimum": 1, "maximum": 4294967295 }
+      },
+      "oneOf": [
+        {
+          "required": ["explicitValues"],
+          "properties": {
+            "explicitValues": { "type": "array" },
+            "lowerBound": { "type": "null" },
+            "upperBound": { "type": "null" }
+          }
+        },
+        {
+          "required": ["lowerBound", "upperBound", "sampleCount"],
+          "properties": {
+            "explicitValues": { "type": "null" },
+            "lowerBound": { "type": "number" },
+            "upperBound": { "type": "number" },
+            "sampleCount": { "type": "integer", "minimum": 1 }
+          }
+        }
+      ]
+    },
+    "definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "name", "artifacts", "sampling", "axes", "replicateCount", "baseSeed", "maximumJobs", "tags"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "artifacts": { "$ref": "#/$defs/artifacts" },
+        "sampling": { "enum": ["cartesian", "latinHypercube", "halton"] },
+        "axes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": { "$ref": "#/$defs/axis" }
+        },
+        "candidateCount": { "type": ["integer", "null"], "minimum": 1, "maximum": 4294967295 },
+        "replicateCount": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "baseSeed": { "type": "integer", "minimum": 0 },
+        "maximumJobs": { "type": "integer", "minimum": 1 },
+        "tags": {
+          "type": "object",
+          "maxProperties": 4096,
+          "additionalProperties": { "type": "string", "maxLength": 4096 }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "sampling": { "const": "cartesian" } } },
+          "then": { "properties": { "candidateCount": { "type": "null" } } },
+          "else": { "required": ["candidateCount"], "properties": { "candidateCount": { "type": "integer", "minimum": 1 } } }
+        }
+      ]
+    },
+    "assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parameterID", "unit", "value"],
+      "properties": {
+        "parameterID": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "unit": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "value": { "type": "number" }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["index", "assignments", "fingerprint"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "assignments": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": { "$ref": "#/$defs/assignment" }
+        },
+        "fingerprint": { "$ref": "#/$defs/fingerprint" }
+      }
+    },
+    "job": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["index", "candidateIndex", "replicateIndex", "seed", "candidateFingerprint", "previousJobDigest", "digest"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "candidateIndex": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "replicateIndex": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "seed": { "type": "integer", "minimum": 0 },
+        "candidateFingerprint": { "$ref": "#/$defs/fingerprint" },
+        "previousJobDigest": { "$ref": "#/$defs/fingerprint" },
+        "digest": { "$ref": "#/$defs/fingerprint" }
+      }
+    },
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "definitionFingerprint", "name", "artifacts", "sampling", "candidates", "jobs", "tags", "ledgerHead", "fingerprint"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "definitionFingerprint": { "$ref": "#/$defs/fingerprint" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "artifacts": { "$ref": "#/$defs/artifacts" },
+        "sampling": { "enum": ["cartesian", "latinHypercube", "halton"] },
+        "candidates": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4294967295,
+          "items": { "$ref": "#/$defs/candidate" }
+        },
+        "jobs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4294967295,
+          "items": { "$ref": "#/$defs/job" }
+        },
+        "tags": {
+          "type": "object",
+          "maxProperties": 4096,
+          "additionalProperties": { "type": "string", "maxLength": 4096 }
+        },
+        "ledgerHead": { "$ref": "#/$defs/fingerprint" },
+        "fingerprint": { "$ref": "#/$defs/fingerprint" }
+      }
+    }
+  }
+}
