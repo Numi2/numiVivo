@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "species": [
+    "signal-count",
+    "message-count",
+    "response-count"
+  ],
+  "reactions": [
+    {
+      "id": "signal-source",
+      "law": 0,
+      "reactantA": null,
+      "reactantB": null,
+      "rate": 0.05,
+      "parameter1": 0,
+      "parameter2": 0,
+      "parameter3": 0,
+      "changes": [
+        { "speciesIndex": 0, "delta": 1 }
+      ],
+      "critical": false
+    },
+    {
+      "id": "signal-loss",
+      "law": 1,
+      "reactantA": 0,
+      "reactantB": null,
+      "rate": 0.01,
+      "parameter1": 0,
+      "parameter2": 0,
+      "parameter3": 0,
+      "changes": [
+        { "speciesIndex": 0, "delta": -1 }
+      ],
+      "critical": true
+    },
+    {
+      "id": "message-production",
+      "law": 1,
+      "reactantA": 0,
+      "reactantB": null,
+      "rate": 0.02,
+      "parameter1": 0,
+      "parameter2": 0,
+      "parameter3": 0,
+      "changes": [
+        { "speciesIndex": 1, "delta": 1 }
+      ],
+      "critical": false
+    },
+    {
+      "id": "message-loss",
+      "law": 1,
+      "reactantA": 1,
+      "reactantB": null,
+      "rate": 0.015,
+      "parameter1": 0,
+      "parameter2": 0,
+      "parameter3": 0,
+      "changes": [
+        { "speciesIndex": 1, "delta": -1 }
+      ],
+      "critical": true
+    },
+    {
+      "id": "response-production",
+      "law": 1,
+      "reactantA": 1,
+      "reactantB": null,
+      "rate": 0.03,
+      "parameter1": 0,
+      "parameter2": 0,
+      "parameter3": 0,
+      "changes": [
+        { "speciesIndex": 2, "delta": 1 }
+      ],
+      "critical": false
+    },
+    {
+      "id": "response-loss",
+      "law": 1,
+      "reactantA": 2,
+      "reactantB": null,
+      "rate": 0.008,
+      "parameter1": 0,
+      "parameter2": 0,
+      "parameter3": 0,
+      "changes": [
+        { "speciesIndex": 2, "delta": -1 }
+      ],
+      "critical": true
+    }
+  ]
+}
