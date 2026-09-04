@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/sbml-import.schema.json",
+  "title": "NumiVivo Normalized SBML Import",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["model", "issues", "sourceFingerprint", "sourceBytes"],
+  "properties": {
+    "model": {
+      "oneOf": [{ "$ref": "#/$defs/model" }, { "type": "null" }]
+    },
+    "issues": {
+      "type": "array",
+      "maxItems": 2000000,
+      "items": { "$ref": "#/$defs/issue" }
+    },
+    "sourceFingerprint": { "$ref": "#/$defs/fingerprint" },
+    "sourceBytes": { "type": "integer", "minimum": 0 }
+  },
+  "$defs": {
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["severity", "code", "path", "message"],
+      "properties": {
+        "severity": { "enum": ["note", "warning", "error"] },
+        "code": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "path": { "type": "string", "maxLength": 4096 },
+        "message": { "type": "string", "maxLength": 16384 }
+      }
+    },
+    "unitComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "exponent", "scale", "multiplier", "offset"],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "exponent": { "type": "number" },
+        "scale": { "type": "integer", "minimum": -2147483648, "maximum": 2147483647 },
+        "multiplier": { "type": "number" },
+        "offset": { "type": "number" }
+      }
+    },
+    "unitDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "units"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "name": { "type": ["string", "null"], "maxLength": 4096 },
+        "units": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/$defs/unitComponent" }
+        }
+      }
+    },
+    "compartment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "spatialDimensions", "constant"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "name": { "type": ["string", "null"], "maxLength": 4096 },
+        "spatialDimensions": { "type": "number", "minimum": 0 },
+        "size": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+        "units": { "type": ["string", "null"], "maxLength": 1024 },
+        "constant": { "type": "boolean" },
+        "outside": { "type": ["string", "null"], "maxLength": 1024 },
+        "sboTerm": { "type": ["string", "null"], "maxLength": 1024 }
+      }
+    },
+    "species": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "compartment", "hasOnlySubstanceUnits", "boundaryCondition", "constant"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "name": { "type": ["string", "null"], "maxLength": 4096 },
+        "compartment": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "initialAmount": { "type": ["number", "null"], "minimum": 0 },
+        "initialConcentration": { "type": ["number", "null"], "minimum": 0 },
+        "substanceUnits": { "type": ["string", "null"], "maxLength": 1024 },
+        "hasOnlySubstanceUnits": { "type": "boolean" },
+        "boundaryCondition": { "type": "boolean" },
+        "constant": { "type": "boolean" },
+        "conversionFactor": { "type": ["string", "null"], "maxLength": 1024 },
+        "sboTerm": { "type": ["string", "null"], "maxLength": 1024 }
+      }
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "constant"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "name": { "type": ["string", "null"], "maxLength": 4096 },
+        "value": { "type": ["number", "null"] },
+        "units": { "type": ["string", "null"], "maxLength": 1024 },
+        "constant": { "type": "boolean" },
+        "sboTerm": { "type": ["string", "null"], "maxLength": 1024 }
+      }
+    },
+    "speciesReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["species", "stoichiometry", "constant"],
+      "properties": {
+        "species": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "stoichiometry": { "type": "number", "exclusiveMinimum": 0 },
+        "constant": { "type": "boolean" },
+        "id": { "type": ["string", "null"], "maxLength": 1024 },
+        "sboTerm": { "type": ["string", "null"], "maxLength": 1024 }
+      }
+    },
+    "modifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["species"],
+      "properties": {
+        "species": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "id": { "type": ["string", "null"], "maxLength": 1024 },
+        "sboTerm": { "type": ["string", "null"], "maxLength": 1024 }
+      }
+    },
+    "kineticLaw": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["localParameters"],
+      "properties": {
+        "formula": { "type": ["string", "null"], "maxLength": 4194304 },
+        "mathML": { "type": ["string", "null"], "maxLength": 4194304 },
+        "substanceUnits": { "type": ["string", "null"], "maxLength": 1024 },
+        "timeUnits": { "type": ["string", "null"], "maxLength": 1024 },
+        "localParameters": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/$defs/parameter" }
+        }
+      }
+    },
+    "reaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "reversible", "reactants", "products", "modifiers"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "name": { "type": ["string", "null"], "maxLength": 4096 },
+        "reversible": { "type": "boolean" },
+        "fast": { "type": ["boolean", "null"] },
+        "compartment": { "type": ["string", "null"], "maxLength": 1024 },
+        "reactants": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/$defs/speciesReference" }
+        },
+        "products": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/$defs/speciesReference" }
+        },
+        "modifiers": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/$defs/modifier" }
+        },
+        "kineticLaw": {
+          "oneOf": [{ "$ref": "#/$defs/kineticLaw" }, { "type": "null" }]
+        },
+        "sboTerm": { "type": ["string", "null"], "maxLength": 1024 }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion", "level", "version", "unitDefinitions", "compartments",
+        "species", "parameters", "reactions", "sourceFingerprint", "fingerprint"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "level": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "version": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "id": { "type": ["string", "null"], "maxLength": 1024 },
+        "name": { "type": ["string", "null"], "maxLength": 4096 },
+        "substanceUnits": { "type": ["string", "null"], "maxLength": 1024 },
+        "timeUnits": { "type": ["string", "null"], "maxLength": 1024 },
+        "extentUnits": { "type": ["string", "null"], "maxLength": 1024 },
+        "volumeUnits": { "type": ["string", "null"], "maxLength": 1024 },
+        "areaUnits": { "type": ["string", "null"], "maxLength": 1024 },
+        "lengthUnits": { "type": ["string", "null"], "maxLength": 1024 },
+        "conversionFactor": { "type": ["string", "null"], "maxLength": 1024 },
+        "unitDefinitions": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/$defs/unitDefinition" }
+        },
+        "compartments": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/$defs/compartment" }
+        },
+        "species": {
+          "type": "array",
+          "maxItems": 1000000,
+          "items": { "$ref": "#/$defs/species" }
+        },
+        "parameters": {
+          "type": "array",
+          "maxItems": 1000000,
+          "items": { "$ref": "#/$defs/parameter" }
+        },
+        "reactions": {
+          "type": "array",
+          "maxItems": 1000000,
+          "items": { "$ref": "#/$defs/reaction" }
+        },
+        "sourceFingerprint": { "$ref": "#/$defs/fingerprint" },
+        "fingerprint": { "$ref": "#/$defs/fingerprint" }
+      }
+    }
+  }
+}
