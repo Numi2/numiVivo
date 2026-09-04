@@ -10,6 +10,7 @@ public enum VivoArtifactKind: String, Codable, Sendable, CaseIterable {
     case result
     case safetyCase
     case checkpoint
+    case evidenceSnapshot
 }
 
 public enum VivoEvidenceClass: String, Codable, Sendable, CaseIterable {
@@ -28,6 +29,8 @@ public struct VivoEvidenceReference: Codable, Sendable, Equatable, Hashable {
     public var citation: String?
     public var context: String?
     public var note: String?
+    public var snapshotFingerprint: VivoFingerprint?
+    public var snapshotEntryIdentifier: String?
 
     public init(
         classification: VivoEvidenceClass,
@@ -35,7 +38,9 @@ public struct VivoEvidenceReference: Codable, Sendable, Equatable, Hashable {
         datasetIdentifier: String? = nil,
         citation: String? = nil,
         context: String? = nil,
-        note: String? = nil
+        note: String? = nil,
+        snapshotFingerprint: VivoFingerprint? = nil,
+        snapshotEntryIdentifier: String? = nil
     ) {
         self.classification = classification
         self.sourceURI = sourceURI
@@ -43,6 +48,8 @@ public struct VivoEvidenceReference: Codable, Sendable, Equatable, Hashable {
         self.citation = citation
         self.context = context
         self.note = note
+        self.snapshotFingerprint = snapshotFingerprint
+        self.snapshotEntryIdentifier = snapshotEntryIdentifier
     }
 }
 
