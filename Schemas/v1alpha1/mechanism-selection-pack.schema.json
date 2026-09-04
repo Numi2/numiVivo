@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/mechanism-selection-pack.schema.json",
+  "title": "NumiVivo Mechanism Selection Pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "problemSourceFingerprint",
+    "librarySourceFingerprint",
+    "diagnosticsFingerprint",
+    "problem",
+    "candidate",
+    "selectedParts",
+    "visitedNodes",
+    "completedAssignments",
+    "searchBudgetExhausted",
+    "rejectionCounts",
+    "sequenceFree",
+    "fingerprint"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "problemSourceFingerprint": { "$ref": "#/$defs/fingerprint" },
+    "librarySourceFingerprint": { "$ref": "#/$defs/fingerprint" },
+    "diagnosticsFingerprint": { "$ref": "#/$defs/fingerprint" },
+    "problem": { "$ref": "#/$defs/problem" },
+    "candidate": { "$ref": "#/$defs/candidate" },
+    "selectedParts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 65536,
+      "items": { "$ref": "mechanism-synthesis.schema.json#/$defs/part" }
+    },
+    "visitedNodes": { "type": "integer", "minimum": 0 },
+    "completedAssignments": { "type": "integer", "minimum": 0 },
+    "searchBudgetExhausted": { "type": "boolean" },
+    "rejectionCounts": {
+      "type": "array",
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/rejection" }
+    },
+    "sequenceFree": { "const": true },
+    "fingerprint": { "$ref": "#/$defs/fingerprint" }
+  },
+  "$defs": {
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "problem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "host", "deliveryMode", "requireIndependentShutdown",
+        "requireMonitor", "requireContextInsulation", "requireResourceBuffering",
+        "requireDistinctOrthogonalityGroups"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "host": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "deliveryMode": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "requireIndependentShutdown": { "type": "boolean" },
+        "requireMonitor": { "type": "boolean" },
+        "requireContextInsulation": { "type": "boolean" },
+        "requireResourceBuffering": { "type": "boolean" },
+        "requireDistinctOrthogonalityGroups": { "type": "boolean" }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payloadBytes", "cellularBurden", "latencySeconds", "leakProbability",
+        "dynamicRange", "specificity", "robustness", "relativeUncertainty"
+      ],
+      "properties": {
+        "payloadBytes": { "type": "number", "minimum": 0 },
+        "cellularBurden": { "type": "number", "minimum": 0 },
+        "latencySeconds": { "type": "number", "minimum": 0 },
+        "leakProbability": { "type": "number", "minimum": 0, "maximum": 1 },
+        "dynamicRange": { "type": "number", "minimum": 1 },
+        "specificity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "robustness": { "type": "number", "minimum": 0, "maximum": 1 },
+        "relativeUncertainty": { "type": "number", "minimum": 0 }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fingerprint", "objective", "weakestEvidence", "worstReversibility",
+        "metrics", "selectedPartIDs", "slotAssignments"
+      ],
+      "properties": {
+        "fingerprint": { "$ref": "#/$defs/fingerprint" },
+        "objective": { "type": "number" },
+        "weakestEvidence": {
+          "enum": ["observed-target-context", "observed-related-context", "calibrated", "inferred", "assumed", "hypothetical"]
+        },
+        "worstReversibility": {
+          "enum": ["reversible", "resettable", "conditionally-irreversible", "irreversible"]
+        },
+        "metrics": { "$ref": "#/$defs/metrics" },
+        "selectedPartIDs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 128 }
+        },
+        "slotAssignments": {
+          "type": "object",
+          "maxProperties": 65536,
+          "additionalProperties": {
+            "type": ["string", "null"],
+            "maxLength": 128
+          }
+        }
+      }
+    },
+    "rejection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason", "count"],
+      "properties": {
+        "reason": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "count": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}
