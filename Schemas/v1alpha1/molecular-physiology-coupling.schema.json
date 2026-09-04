@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/molecular-physiology-coupling.schema.json",
+  "title": "NumiVivo Molecular Physiology Coupling Pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "programFingerprint",
+    "physiologyFingerprint",
+    "physiologyToMolecular",
+    "molecularToPhysiology",
+    "policy",
+    "labels"
+  ],
+  "properties": {
+    "schema": {
+      "const": "numivivo.org/molecular-physiology-coupling/v1"
+    },
+    "programFingerprint": { "$ref": "#/$defs/fingerprint" },
+    "physiologyFingerprint": { "$ref": "#/$defs/fingerprint" },
+    "physiologyToMolecular": {
+      "type": "array",
+      "maxItems": 1048576,
+      "items": { "$ref": "#/$defs/physiologyToMolecular" }
+    },
+    "molecularToPhysiology": {
+      "type": "array",
+      "maxItems": 1048576,
+      "items": { "$ref": "#/$defs/molecularToPhysiology" }
+    },
+    "policy": { "$ref": "#/$defs/policy" },
+    "labels": {
+      "type": "object",
+      "maxProperties": 4096,
+      "additionalProperties": {
+        "type": "string",
+        "maxLength": 4096
+      }
+    }
+  },
+  "$defs": {
+    "fingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "uint32": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4294967295
+    },
+    "indices": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1048576,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/uint32" }
+    },
+    "quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": { "type": "number" },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      }
+    },
+    "mapping": {
+      "type": "string",
+      "enum": [
+        "oneToOne",
+        "broadcastSource",
+        "broadcastDestination",
+        "cartesian"
+      ]
+    },
+    "transfer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gain", "boundPolicy"],
+      "properties": {
+        "gain": { "type": "number" },
+        "offset": { "$ref": "#/$defs/quantity" },
+        "minimum": { "$ref": "#/$defs/quantity" },
+        "maximum": { "$ref": "#/$defs/quantity" },
+        "boundPolicy": {
+          "type": "string",
+          "enum": ["reject", "clamp"]
+        }
+      }
+    },
+    "physiologyToMolecular": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identifier",
+        "analyte",
+        "compartment",
+        "molecularSpecies",
+        "mapping",
+        "molecularMode",
+        "transfer",
+        "required"
+      ],
+      "properties": {
+        "identifier": { "$ref": "#/$defs/identifier" },
+        "analyte": { "$ref": "#/$defs/identifier" },
+        "compartment": { "$ref": "#/$defs/identifier" },
+        "physiologyEnvironments": { "$ref": "#/$defs/indices" },
+        "molecularSpecies": { "$ref": "#/$defs/identifier" },
+        "molecularLanes": { "$ref": "#/$defs/indices" },
+        "mapping": { "$ref": "#/$defs/mapping" },
+        "molecularMode": {
+          "type": "integer",
+          "enum": [0, 1, 2],
+          "description": "VivoCouplingMode raw value: replace=0, add=1, relaxHalfway=2."
+        },
+        "transfer": { "$ref": "#/$defs/transfer" },
+        "required": { "type": "boolean" }
+      }
+    },
+    "molecularToPhysiology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identifier",
+        "molecularSpecies",
+        "analyte",
+        "compartment",
+        "mapping",
+        "physiologyMode",
+        "transfer",
+        "required"
+      ],
+      "properties": {
+        "identifier": { "$ref": "#/$defs/identifier" },
+        "molecularSpecies": { "$ref": "#/$defs/identifier" },
+        "molecularLanes": { "$ref": "#/$defs/indices" },
+        "analyte": { "$ref": "#/$defs/identifier" },
+        "compartment": { "$ref": "#/$defs/identifier" },
+        "physiologyEnvironments": { "$ref": "#/$defs/indices" },
+        "mapping": { "$ref": "#/$defs/mapping" },
+        "physiologyMode": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4],
+          "description": "VivoPhysiologyUpdateMode raw value: replace=0, add=1, rate=2, minimum=3, maximum=4."
+        },
+        "transfer": { "$ref": "#/$defs/transfer" },
+        "required": { "type": "boolean" }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maximumStepNegotiations",
+        "maximumFixedPointIterations",
+        "convergenceTolerance",
+        "relaxation",
+        "requireConvergence",
+        "timeSynchronizationTolerance"
+      ],
+      "properties": {
+        "maximumStepNegotiations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "maximumFixedPointIterations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "convergenceTolerance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "relaxation": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        },
+        "requireConvergence": { "type": "boolean" },
+        "timeSynchronizationTolerance": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}
