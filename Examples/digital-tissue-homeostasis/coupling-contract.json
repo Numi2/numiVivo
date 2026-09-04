@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "channels": [
+    {
+      "id": "numanx.tissue.oxygen",
+      "producer": "numanx",
+      "consumer": "numivivo",
+      "unit": "mol/m3",
+      "semantics": "replace",
+      "shape": [8192],
+      "lowerBound": 0,
+      "upperBound": null,
+      "required": true,
+      "schemaVersion": 1
+    },
+    {
+      "id": "numanx.tissue.temperature",
+      "producer": "numanx",
+      "consumer": "numivivo",
+      "unit": "K",
+      "semantics": "replace",
+      "shape": [8192],
+      "lowerBound": 0,
+      "upperBound": null,
+      "required": true,
+      "schemaVersion": 1
+    },
+    {
+      "id": "numitissue.cell.phenotype-distribution",
+      "producer": "numitissue",
+      "consumer": "numivivo",
+      "unit": "1",
+      "semantics": "replace",
+      "shape": [3, 8192],
+      "lowerBound": 0,
+      "upperBound": 1,
+      "required": true,
+      "schemaVersion": 1
+    },
+    {
+      "id": "numivivo.cell.proliferation-drive",
+      "producer": "numivivo",
+      "consumer": "numitissue",
+      "unit": "1/s",
+      "semantics": "rate",
+      "shape": [3, 8192],
+      "lowerBound": null,
+      "upperBound": null,
+      "required": true,
+      "schemaVersion": 1
+    },
+    {
+      "id": "numibrain.autonomic.sympathetic-tone",
+      "producer": "numibrain",
+      "consumer": "numivivo",
+      "unit": "1",
+      "semantics": "replace",
+      "shape": [8192],
+      "lowerBound": 0,
+      "upperBound": 1,
+      "required": false,
+      "schemaVersion": 1
+    },
+    {
+      "id": "numivivo.neural.inflammatory-drive",
+      "producer": "numivivo",
+      "consumer": "numibrain",
+      "unit": "1",
+      "semantics": "replace",
+      "shape": [8, 8192],
+      "lowerBound": 0,
+      "upperBound": 1,
+      "required": false,
+      "schemaVersion": 1
+    }
+  ],
+  "metadata": {
+    "scope": "sequence-free-computational-reference",
+    "transaction": "prepare-stage-release-or-rollback",
+    "publication": "candidate values are not visible before joint commit"
+  }
+}
