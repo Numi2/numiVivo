@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "id": "digital-homeostasis-mechanism-search",
+  "slots": [
+    {
+      "id": "damage-sensor",
+      "role": "sensor",
+      "requiredInput": "damage-signal-a",
+      "requiredOutput": "encoded-damage",
+      "maximumReversibility": "resettable",
+      "requiredTags": ["context-insulated"]
+    },
+    {
+      "id": "danger-sensor",
+      "role": "sensor",
+      "requiredInput": "danger-signal-b",
+      "requiredOutput": "encoded-danger",
+      "maximumReversibility": "resettable",
+      "requiredTags": ["context-insulated"]
+    },
+    {
+      "id": "decision-logic",
+      "role": "logic",
+      "requiredInput": "encoded-damage+encoded-danger",
+      "requiredOutput": "activation-decision",
+      "maximumReversibility": "resettable"
+    },
+    {
+      "id": "duration-filter",
+      "role": "temporal",
+      "requiredInput": "activation-decision",
+      "requiredOutput": "sustained-activation",
+      "maximumReversibility": "resettable"
+    },
+    {
+      "id": "bounded-effector",
+      "role": "effector",
+      "requiredInput": "sustained-activation",
+      "requiredOutput": "response-output",
+      "maximumReversibility": "resettable"
+    },
+    {
+      "id": "output-monitor",
+      "role": "monitor",
+      "requiredInput": "response-output",
+      "requiredOutput": "monitor-event",
+      "maximumReversibility": "reversible"
+    },
+    {
+      "id": "independent-shutdown",
+      "role": "shutdown",
+      "requiredInput": "external-stop",
+      "requiredOutput": "terminal-state",
+      "requireIndependentControl": true,
+      "maximumReversibility": "resettable",
+      "requiredTags": ["independently-controlled"]
+    },
+    {
+      "id": "local-containment",
+      "role": "containment",
+      "requiredInput": "boundary-state",
+      "requiredOutput": "contained-state",
+      "optional": true,
+      "maximumReversibility": "resettable"
+    }
+  ],
+  "constraints": {
+    "host": "computational-host",
+    "deliveryMode": "digital-model",
+    "maximumPayloadBytes": 18000,
+    "maximumCellularBurden": 1.4,
+    "maximumLatencySeconds": 2400,
+    "maximumLeakProbability": 0.08,
+    "minimumDynamicRange": 5,
+    "minimumSpecificity": 0.9,
+    "minimumRobustness": 0.75,
+    "maximumRelativeUncertainty": 0.4,
+    "weakestPermittedEvidence": "assumed",
+    "requireIndependentShutdown": true,
+    "requireMonitor": true,
+    "requireContextInsulation": true,
+    "requireResourceBuffering": false,
+    "requireDistinctOrthogonalityGroups": true,
+    "maximumSolutions": 16,
+    "maximumVisitedNodes": 1000000,
+    "weights": {
+      "payloadBytes": 0.0001,
+      "cellularBurden": 20,
+      "latencySeconds": 0.001,
+      "leakProbability": 100,
+      "uncertainty": 20,
+      "specificityPenalty": 50,
+      "robustnessPenalty": 50,
+      "weakEvidencePenalty": 5,
+      "irreversiblePenalty": 100
+    }
+  }
+}
