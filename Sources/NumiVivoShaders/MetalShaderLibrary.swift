@@ -10,7 +10,7 @@ public enum NumiVivoShaderError: Error, Sendable, CustomStringConvertible {
     public var description: String {
         switch self {
         case .sourceResourceMissing:
-            return "NumiVivoKernels.metal is missing from the NumiVivoShaders resource bundle."
+            return "No NumiVivo .metal source resources are present in the NumiVivoShaders bundle."
         case .functionMissing(let name):
             return "Metal function '\(name)' is missing from the NumiVivo shader library."
         case .compilationFailed(let message):
@@ -34,6 +34,14 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case evaluateMonitors = "nvivo_evaluate_monitors"
     case validateShadow = "nvivo_validate_shadow"
     case publish = "nvivo_publish"
+
+    case physiologyClearStatus = "nvivo_phys_clear_status"
+    case physiologyPrepareTransaction = "nvivo_phys_prepare_transaction"
+    case physiologyApplyTransforms = "nvivo_phys_apply_transforms"
+    case physiologyHeunPredict = "nvivo_phys_heun_predict"
+    case physiologyHeunCorrect = "nvivo_phys_heun_correct"
+    case physiologyValidateCandidate = "nvivo_phys_validate_candidate"
+    case physiologyPublish = "nvivo_phys_publish"
 }
 
 public struct NumiVivoPipeline: @unchecked Sendable {
@@ -98,11 +106,17 @@ public actor NumiVivoPipelineCatalog {
         if let library = try? device.makeDefaultLibrary(bundle: .module) {
             return library
         }
-        guard let url = Bundle.module.url(forResource: "NumiVivoKernels", withExtension: "metal") else {
+        let urls = Bundle.module
+            .urls(forResourcesWithExtension: "metal", subdirectory: nil)?
+            .sorted(by: { $0.lastPathComponent < $1.lastPathComponent }) ?? []
+        guard !urls.isEmpty else {
             throw NumiVivoShaderError.sourceResourceMissing
         }
         do {
-            let source = try String(contentsOf: url, encoding: .utf8)
+            let source = try urls.map { url in
+                "// MARK: - \(url.lastPathComponent)\n" +
+                String(contentsOf: url, encoding: .utf8)
+            }.joined(separator: "\n\n")
             let options = MTLCompileOptions()
             options.fastMathEnabled = false
             return try device.makeLibrary(source: source, options: options)
