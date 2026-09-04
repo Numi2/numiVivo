@@ -196,6 +196,10 @@ int main() {
         sourceCheck("reference category mismatch",[](Program& p){ RuleDefinition r;r.id="r";r.condition.kind=ExpressionKind::reference;r.condition.reference="X";r.condition.referenceKind=ReferenceKind::parameter;p.rules.push_back(r); },false);
         sourceCheck("ignored built-in custom expression",[](Program& p){p.reactions[0].rate.expression=Expression{};},false);
         sourceCheck("negative kinetic parameter",[](Program& p){p.parameters[0].value=-1;},false);
+        sourceCheck("source fractional count before narrowing",[](Program& p){p.species[0].initialValue=0.5;},false);
+        sourceCheck("source count rounding above 2^24",[](Program& p){p.species[0].initialValue=16777217;p.species[0].bounds.maximum=20000000;},false);
+        sourceCheck("source fractional counter",[](Program& p){StateDefinition s;s.id="counter";s.kind=StateKind::counter;s.initialValue=1e-6;p.state.push_back(s);},false);
+        sourceCheck("source fractional count input",[](Program& p){InputDefinition s;s.id="sensor";s.unit="count";s.defaultValue=1e-7;p.inputs.push_back(s);},false);
         expect(inspectProgramPack(baseline).valid,"baseline preserved after mutations");
         std::cout << "Native pack/semantic checks passed: " << checks << "\n";
         return 0;

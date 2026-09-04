@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-04",
+  "baseline_commit": "a392672481c9f60b112b5b6f291bf684c0690623",
+  "exhaustive": false,
+  "findings": [
+    {
+      "id": "A01",
+      "priority": "critical",
+      "finding": "executable pack references were not validated",
+      "status": "implemented",
+      "repair": "Pack.cpp and PackValidation.cpp; rehashed mutation checks",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A02",
+      "priority": "high",
+      "finding": "direct Swift pack construction bypassed the native trust boundary",
+      "status": "implemented",
+      "repair": "VivoProgramPack initializer and bounded fingerprint decoder",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A03",
+      "priority": "high",
+      "finding": "source narrowing and ignored state semantics changed the model",
+      "status": "implemented",
+      "repair": "SourceSemantics representability and supported-state preflight",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A04",
+      "priority": "high",
+      "finding": "kinetic parameters could use the wrong numeric time/state basis",
+      "status": "implemented",
+      "repair": "source and cached built-in kinetic unit checks",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A05",
+      "priority": "critical",
+      "finding": "physiology actor shared GPU buffers across reentrant preparation",
+      "status": "implemented",
+      "repair": "in-flight reservation and command failure lifecycle",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A06",
+      "priority": "high",
+      "finding": "checkpoint generations and dose boundaries were inconsistent",
+      "status": "implemented",
+      "repair": "single-generation capture; replacement restore; boundary-safe stepping",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A07",
+      "priority": "high",
+      "finding": "bridge rate bounds had concentration rather than rate dimensions",
+      "status": "implemented",
+      "repair": "dimension-aware transfers; index resolution; bounded expansion",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A08",
+      "priority": "medium",
+      "finding": "fixed-point residual changed with units",
+      "status": "implemented",
+      "repair": "relative residual and bounded Aitken helper",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A09",
+      "priority": "critical",
+      "finding": "joint release could expose partial state and imply rollback",
+      "status": "implemented",
+      "repair": "exclusive coordinator; observation isolation; poisoned failure state",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A10",
+      "priority": "high",
+      "finding": "source fingerprints did not identify the prepared executable",
+      "status": "implemented",
+      "repair": "full execution identities and preferred resume envelopes",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A11",
+      "priority": "high",
+      "finding": "artifact metadata and descendant filesystem paths were insufficiently bound",
+      "status": "implemented",
+      "repair": "persisted descriptor verification and rooted descriptor I/O",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "A12",
+      "priority": "medium",
+      "finding": "safety heuristics overstated independence and shutdown guarantees",
+      "status": "implemented",
+      "repair": "correct counting and qualified diagnostics",
+      "remaining_gate": "see audit report for scoped portable coverage and Apple verification"
+    },
+    {
+      "id": "R01",
+      "priority": "high",
+      "status": "open_source",
+      "finding": "custom v1 bytecode loses unit annotations; strict source decoder and integer edges need review",
+      "acceptance": "versioned typed IR; strict operator/field validation; parser mutation/fuzz tests"
+    },
+    {
+      "id": "R02",
+      "priority": "high",
+      "status": "open_source_and_numerical",
+      "finding": "legacy standalone stochastic adaptive rejection may bias sampling",
+      "acceptance": "explicit fixed-step rejection policy or a statistically correct adaptive algorithm; qualified distribution tests"
+    },
+    {
+      "id": "R03",
+      "priority": "high",
+      "status": "open_source",
+      "finding": "no process-wide resource reservation across all arenas and checkpoint staging",
+      "acceptance": "shared allocation authority and bounded streaming persistence"
+    },
+    {
+      "id": "R04",
+      "priority": "high",
+      "status": "unsupported_rejected",
+      "finding": "delay/refractory/membrane/count-spatial/richer-state/live-migration contracts remain incomplete",
+      "acceptance": "authoritative state, numerical semantics, checkpoint coverage and focused validation before enabling"
+    },
+    {
+      "id": "R05",
+      "priority": "medium",
+      "status": "not_audited_completely",
+      "finding": "calibration, tissue/population, standards, trust anchors and cross-repository adapters",
+      "acceptance": "dedicated source audits and executable compatibility/numerical gates"
+    },
+    {
+      "id": "G01",
+      "priority": "blocking",
+      "status": "requires_apple_environment",
+      "finding": "whole package compilation and Metal ABI acceptance unverified",
+      "acceptance": "debug build, all selected shader pipelines, reflected ABI and Metal validation"
+    },
+    {
+      "id": "G02",
+      "priority": "blocking",
+      "status": "requires_apple_environment",
+      "finding": "GPU transaction/restore/failure behavior unverified",
+      "acceptance": "reentrant and failure-injection transaction/checkpoint checks"
+    },
+    {
+      "id": "G03",
+      "priority": "blocking",
+      "status": "requires_numerical_qualification",
+      "finding": "scientific accuracy and stochastic distributions unverified",
+      "acceptance": "analytic convergence, conservation, moment/distribution and resume comparisons"
+    }
+  ]
+}

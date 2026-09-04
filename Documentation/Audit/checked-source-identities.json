@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "a392672481c9f60b112b5b6f291bf684c0690623",
+  "scope": "partial local workspace; not a complete repository inventory",
+  "files": [
+    {
+      "path": "Sources/NumiVivoCore/Diagnostics.cpp",
+      "bytes": 5920,
+      "sha256": "fe25ec144de620b993433a2d56083fe98cd7af903f879db92ba36e223ceaac79",
+      "git_blob_sha1": "5c3550efc1e7f0eb57e9adc89c7c4cde219d6746"
+    },
+    {
+      "path": "Sources/NumiVivoCore/Hash.cpp",
+      "bytes": 5525,
+      "sha256": "8029e2d98db10b7646d6e002f9e231c03a9ee276473bf0ca503015ea10eb8f48",
+      "git_blob_sha1": "67150bb989c9f160dc118a07310e372db8fb7a18"
+    },
+    {
+      "path": "Sources/NumiVivoCore/Json.cpp",
+      "bytes": 18826,
+      "sha256": "504dbcc8a0991d9ab4049a1bf960887284f721227936740de8ba79bc48a79d6b",
+      "git_blob_sha1": "e2f379ea0e703c22e565f7eae392d86403b19e51"
+    },
+    {
+      "path": "Sources/NumiVivoCore/Pack.cpp",
+      "bytes": 12285,
+      "sha256": "ad5ac8c822f5ee0a9d70610d749aafd10d74cd0d8fa5f1a261836882163e0d5a",
+      "git_blob_sha1": "4b0413b3c29a14ea392385aa877f5accc915fed7"
+    },
+    {
+      "path": "Sources/NumiVivoCore/PackValidation.cpp",
+      "bytes": 26763,
+      "sha256": "93aefe4446437e4dec1ca58d7bbac98d4a0517cde984a5608c02b09f0a21ae09",
+      "git_blob_sha1": "aa38496daf27a54493363119fc4c6836b9d44180"
+    },
+    {
+      "path": "Sources/NumiVivoCore/PackValidation.hpp",
+      "bytes": 504,
+      "sha256": "4e2a8df68cc674d4eb32c3c73dafeac2a1dadae9ea3bb48404c9098aac2199dd",
+      "git_blob_sha1": "d8230867c708a8b61112f18972adebee59cf7c94"
+    },
+    {
+      "path": "Sources/NumiVivoCore/Safety.cpp",
+      "bytes": 7424,
+      "sha256": "37ddff538d09e5b457c3ce1d295d8eed50ecad07cc02ecf3d205e28c1a8c5e97",
+      "git_blob_sha1": "1d84b1a43aca9928eb33c5e8de445330fe9adc26"
+    },
+    {
+      "path": "Sources/NumiVivoCore/SourceSemantics.cpp",
+      "bytes": 13631,
+      "sha256": "a11cca3fc04f881d677ac482e0f8138b47fdf15fd44fe9ff85fea506110e93e5",
+      "git_blob_sha1": "86154bc7d34b3f10c1ba5fdd377140de61a86181"
+    },
+    {
+      "path": "Sources/NumiVivoCore/SourceSemantics.hpp",
+      "bytes": 288,
+      "sha256": "ce5fa99edbf94a869f4910a61f0fc1bb84ecbd85b03f5aceefd2474257746d87",
+      "git_blob_sha1": "a03e09d97c9361197aed093077f91612f37c2f7e"
+    },
+    {
+      "path": "Sources/NumiVivoCore/Units.cpp",
+      "bytes": 6948,
+      "sha256": "d0243b431437c0f2b3c908ce850b39b1dc8a867d0f00d82f321d1cd047d05672",
+      "git_blob_sha1": "360c7f7aa31022eb66328bd86d2a074659f8b176"
+    },
+    {
+      "path": "Sources/NumiVivoCore/include/NumiVivoCore/Core.hpp",
+      "bytes": 20954,
+      "sha256": "0e8d8cf5651bd432299097c6172f9426e0b11b226f8fcff246f1fb924a249864",
+      "git_blob_sha1": "5c67d6f147e4261cf8cb14799c2edfa047e2c099"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Artifacts/VivoArtifactStore.swift",
+      "bytes": 15861,
+      "sha256": "a2fd87f201568819eb5164c9e04ac3fcc02b85eff911bf4dc37ebdd74a28566e",
+      "git_blob_sha1": "90f12b5906175b59d8e2245c7ec1f813715517ff"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Artifacts/VivoProgramPack.swift",
+      "bytes": 15239,
+      "sha256": "c46320fa9793d5515ab6f269ce893f8ca218daef682139847d7de7711d175e92",
+      "git_blob_sha1": "ad8409b31b7724bb9d149b5bd017bae6c5396243"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Artifacts/VivoRootedFileStore.swift",
+      "bytes": 9407,
+      "sha256": "ab76207f5f3901419881df32f22d98f3f09e87ae7cc19a4ce6b9d4e92dc4c59c",
+      "git_blob_sha1": "442a8a246b46e39a37eb5d0057cc4fdc7569ee97"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Coupling/VivoCouplingIterationController.swift",
+      "bytes": 3041,
+      "sha256": "7b95e8cbdbcf1c562df64451d3128dbb02a3a2ec79712d86b99fb7ba0f1f85b0",
+      "git_blob_sha1": "2e556bd774b6405c489029b64603c81300bcdcca"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Physiology/VivoMolecularPhysiologyBridge.swift",
+      "bytes": 22402,
+      "sha256": "00d0eb6b7515fbe228d725b951dfcdc2413d56a957e3f930dd69aaf00669f054",
+      "git_blob_sha1": "0a34f37679746b48fdef35f63aa3f75533980c5f"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Physiology/VivoMolecularPhysiologyCoordinator.swift",
+      "bytes": 25899,
+      "sha256": "ab90d581bbad543e789c3b5756fcf8660eafd29537bd9ced29aa30876ccd9b78",
+      "git_blob_sha1": "684156c896506f9d184d1bc9c6ffeb97147fd099"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Physiology/VivoPhysiologyModelValidator.swift",
+      "bytes": 6275,
+      "sha256": "8782a5c4635b4d363aacf2544c7cb8ba64a9bdabdd5b5dcbc1e3ab44fe889f34",
+      "git_blob_sha1": "de48340266f5aac5d7aab7c15de624f07bf2380b"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Physiology/VivoPhysiologyResumeCheckpoint.swift",
+      "bytes": 2886,
+      "sha256": "b50d3a400a3d01d2b216b2576b6162f56fedf79eee180974adc93472ab1f8da8",
+      "git_blob_sha1": "e3d94141ccbf6a403d47f4f40a8bf23f63b5acf9"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Physiology/VivoPhysiologyRuntime.swift",
+      "bytes": 26991,
+      "sha256": "ec6b4cc6d983432704bfeb623b40cd283c1b78e9d638b982333fb73625cf8b69",
+      "git_blob_sha1": "98774026f43f619160cfa24103f59ca7a72bd135"
+    },
+    {
+      "path": "Tools/Audit/CouplingIterationChecks.swift",
+      "bytes": 2179,
+      "sha256": "aef783c9b905b56ff069672b2300de1a1fb4c8717a68bc7af8ae4de21319244f",
+      "git_blob_sha1": "a7565228144980fe6a713666e1a82e70c3c39bdd"
+    },
+    {
+      "path": "Tools/Audit/PackMutationChecks.cpp",
+      "bytes": 12799,
+      "sha256": "20debfb2f52b89bc4a28de5b617d2f181bf13e698c434f0ba01517f93b46c414",
+      "git_blob_sha1": "390267a37407edd41a8e7f55ad12975bf9679100"
+    },
+    {
+      "path": "Tools/Audit/RootedFileStoreChecks.swift",
+      "bytes": 3848,
+      "sha256": "d4620acac644fe3d666024ebbf5887cb43dc7a80e17f117d236f72bd5222cc1f",
+      "git_blob_sha1": "e90f129160af4e3174414f64ac2e3e948086603d"
+    },
+    {
+      "path": "Tools/Audit/run_portable_checks.sh",
+      "bytes": 2298,
+      "sha256": "869aa04ec847a39d75d574d513ff6bc6ddfbb433cdd1334fc5dee12ea9b56bb7",
+      "git_blob_sha1": "4aa0db10f0a8fc82ca889b9ba0753b640944d58f"
+    }
+  ]
+}

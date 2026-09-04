@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-04",
+  "platform": "x86_64-unknown-linux-gnu",
+  "toolchains": {
+    "clang": "17.0.0",
+    "swift": "6.2.1"
+  },
+  "results": [
+    {
+      "check": "native_pack_and_source_semantics",
+      "assertions": 55,
+      "status": "passed",
+      "sanitizers": [
+        "address",
+        "undefined"
+      ]
+    },
+    {
+      "check": "rooted_file_store",
+      "assertions": 20,
+      "status": "passed"
+    },
+    {
+      "check": "coupling_iteration_controller",
+      "assertions": 12,
+      "status": "passed"
+    },
+    {
+      "check": "selected_swift_syntax",
+      "files": 7,
+      "status": "passed",
+      "not": "Apple SDK typechecking"
+    },
+    {
+      "check": "targeted_cpp_syntax_types",
+      "translation_units": 4,
+      "status": "passed",
+      "not": "complete package linking"
+    }
+  ],
+  "not_run": [
+    "full Swift package build",
+    "Metal compilation",
+    "GPU execution",
+    "numerical qualification",
+    "APFS validation",
+    "CI",
+    "performance benchmark"
+  ]
+}

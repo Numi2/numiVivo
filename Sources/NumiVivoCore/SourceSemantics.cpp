@@ -38,6 +38,10 @@ void representable(double value, const std::string& subject) {
     check(std::isfinite(value) && std::abs(value) <= std::numeric_limits<float>::max(), subject + " exceeds finite FP32 range.");
     check(value == 0 || static_cast<float>(value) != 0, subject + " underflows FP32; no implicit zero substitution is permitted.");
 }
+void countValue(double value, const std::string& subject) {
+    check(std::isfinite(value) && value >= 0 && value <= 16'777'216 && std::trunc(value) == value,
+          subject + " is not an exactly representable nonnegative FP32 count; use the UInt32 hybrid runtime for larger populations.");
+}
 void bounds(const Bounds& value, const std::string& subject, bool runtimeFP32) {
     if (value.minimum) { check(std::isfinite(*value.minimum), subject + " has a nonfinite lower bound."); if(runtimeFP32) representable(*value.minimum,subject); }
     if (value.maximum) { check(std::isfinite(*value.maximum), subject + " has a nonfinite upper bound."); if(runtimeFP32) representable(*value.maximum,subject); }
@@ -159,10 +163,12 @@ public:
     void run() {
         for (const auto& s : program.inputs) {
             representable(s.defaultValue,s.id); bounds(s.bounds,s.id,true);
+            if (unit(registry,s.unit).powers == unit(registry,"count").powers) countValue(s.defaultValue,s.id);
             add(s.id,ReferenceKind::input,s.unit,true,s.defaultValue);
         }
         for (const auto& s : program.species) {
             representable(s.initialValue,s.id); bounds(s.bounds,s.id,true);
+            if (s.kind == SpeciesKind::molecularCount) countValue(s.initialValue,s.id);
             add(s.id,ReferenceKind::species,s.unit,s.externallyOwned,s.initialValue);
         }
         for (const auto& s : program.state) {
@@ -170,6 +176,7 @@ public:
                   "State '" + s.id + "' has a behavior not lowered by ProgramPack v1; express it explicitly with reactions/rules instead of losing its semantics.");
             check(s.halfLifeSeconds == 0 && s.states.empty(), "Scalar/counter state has ignored half-life or finite-state labels.");
             representable(s.initialValue,s.id); bounds(s.bounds,s.id,true);
+            if (s.kind == StateKind::counter) countValue(s.initialValue,s.id);
             add(s.id,ReferenceKind::state,s.unit,false,s.initialValue);
         }
         for (const auto& p : program.parameters) {
