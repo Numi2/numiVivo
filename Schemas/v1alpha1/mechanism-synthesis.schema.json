@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/mechanism-synthesis.schema.json",
+  "title": "NumiVivo Mechanism Synthesis Documents",
+  "oneOf": [
+    { "$ref": "#/$defs/problem" },
+    { "$ref": "#/$defs/library" }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$"
+    },
+    "role": {
+      "enum": ["sensor", "transducer", "logic", "temporal", "memory", "effector", "communication", "containment", "shutdown", "monitor"]
+    },
+    "evidence": {
+      "enum": ["observed-target-context", "observed-related-context", "calibrated", "inferred", "assumed", "hypothetical"]
+    },
+    "reversibility": {
+      "enum": ["reversible", "resettable", "conditionally-irreversible", "irreversible"]
+    },
+    "stringSet": {
+      "type": "array",
+      "maxItems": 65536,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 1024 }
+    },
+    "performance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["payloadBytes", "cellularBurden", "latencySeconds", "leakProbability", "dynamicRange", "specificity", "robustness", "relativeUncertainty"],
+      "properties": {
+        "payloadBytes": { "type": "number", "minimum": 0 },
+        "cellularBurden": { "type": "number", "minimum": 0 },
+        "latencySeconds": { "type": "number", "minimum": 0 },
+        "leakProbability": { "type": "number", "minimum": 0, "maximum": 1 },
+        "dynamicRange": { "type": "number", "minimum": 1 },
+        "specificity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "robustness": { "type": "number", "minimum": 0, "maximum": 1 },
+        "relativeUncertainty": { "type": "number", "minimum": 0 }
+      }
+    },
+    "part": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role", "performance"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "role": { "$ref": "#/$defs/role" },
+        "acceptedInputs": { "$ref": "#/$defs/stringSet" },
+        "producedOutputs": { "$ref": "#/$defs/stringSet" },
+        "supportedHosts": { "$ref": "#/$defs/stringSet" },
+        "supportedDeliveryModes": { "$ref": "#/$defs/stringSet" },
+        "dependencies": { "$ref": "#/$defs/stringSet" },
+        "incompatibilities": { "$ref": "#/$defs/stringSet" },
+        "orthogonalityGroup": { "type": "string", "maxLength": 1024 },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "reversibility": { "$ref": "#/$defs/reversibility" },
+        "independentlyControlled": { "type": "boolean" },
+        "contextInsulated": { "type": "boolean" },
+        "resourceBuffered": { "type": "boolean" },
+        "performance": { "$ref": "#/$defs/performance" }
+      }
+    },
+    "library": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "parts"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "parts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1000000,
+          "items": { "$ref": "#/$defs/part" }
+        }
+      }
+    },
+    "slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "role": { "$ref": "#/$defs/role" },
+        "requiredInput": { "type": "string", "maxLength": 1024 },
+        "requiredOutput": { "type": "string", "maxLength": 1024 },
+        "optional": { "type": "boolean" },
+        "requireIndependentControl": { "type": "boolean" },
+        "maximumReversibility": { "$ref": "#/$defs/reversibility" },
+        "requiredTags": {
+          "type": "array",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": { "enum": ["independently-controlled", "context-insulated", "resource-buffered", "reversible", "resettable"] }
+        }
+      }
+    },
+    "weights": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "payloadBytes": { "type": "number", "minimum": 0 },
+        "cellularBurden": { "type": "number", "minimum": 0 },
+        "latencySeconds": { "type": "number", "minimum": 0 },
+        "leakProbability": { "type": "number", "minimum": 0 },
+        "uncertainty": { "type": "number", "minimum": 0 },
+        "specificityPenalty": { "type": "number", "minimum": 0 },
+        "robustnessPenalty": { "type": "number", "minimum": 0 },
+        "weakEvidencePenalty": { "type": "number", "minimum": 0 },
+        "irreversiblePenalty": { "type": "number", "minimum": 0 }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["host", "deliveryMode"],
+      "properties": {
+        "host": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "deliveryMode": { "type": "string", "minLength": 1, "maxLength": 1024 },
+        "maximumPayloadBytes": { "type": "number", "minimum": 0 },
+        "maximumCellularBurden": { "type": "number", "minimum": 0 },
+        "maximumLatencySeconds": { "type": "number", "minimum": 0 },
+        "maximumLeakProbability": { "type": "number", "minimum": 0, "maximum": 1 },
+        "minimumDynamicRange": { "type": "number", "minimum": 1 },
+        "minimumSpecificity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "minimumRobustness": { "type": "number", "minimum": 0, "maximum": 1 },
+        "maximumRelativeUncertainty": { "type": "number", "minimum": 0 },
+        "weakestPermittedEvidence": { "$ref": "#/$defs/evidence" },
+        "requireIndependentShutdown": { "type": "boolean" },
+        "requireMonitor": { "type": "boolean" },
+        "requireContextInsulation": { "type": "boolean" },
+        "requireResourceBuffering": { "type": "boolean" },
+        "requireDistinctOrthogonalityGroups": { "type": "boolean" },
+        "maximumSolutions": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "maximumVisitedNodes": { "type": "integer", "minimum": 1 },
+        "weights": { "$ref": "#/$defs/weights" }
+      }
+    },
+    "problem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "id", "slots", "constraints"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "id": { "$ref": "#/$defs/identifier" },
+        "slots": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 65536,
+          "items": { "$ref": "#/$defs/slot" }
+        },
+        "constraints": { "$ref": "#/$defs/constraints" }
+      }
+    }
+  }
+}
