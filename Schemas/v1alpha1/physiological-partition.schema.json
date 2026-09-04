@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://numivivo.org/schemas/v1alpha1/physiological-partition.schema.json",
+  "title": "NumiVivo Physiological Partition Model",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "name", "compartments", "analytes", "edges"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "compartments": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 65536,
+      "items": { "$ref": "#/$defs/compartment" }
+    },
+    "analytes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 65536,
+      "items": { "$ref": "#/$defs/analyte" }
+    },
+    "edges": {
+      "type": "array",
+      "maxItems": 4294967295,
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "$defs": {
+    "compartment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "volumeCubicMetres"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "volumeCubicMetres": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "analyte": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "unit", "minimumConcentration", "maximumConcentration"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "unit": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "minimumConcentration": { "type": "number", "minimum": 0 },
+        "maximumConcentration": { "type": "number", "minimum": 0 }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "analyte", "sourceCompartment", "targetCompartment", "partitionCoefficient", "clearanceCubicMetresPerSecond", "sourceUnboundFraction", "targetUnboundFraction", "evidenceClass"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "analyte": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "sourceCompartment": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "targetCompartment": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "partitionCoefficient": { "type": "number", "exclusiveMinimum": 0 },
+        "clearanceCubicMetresPerSecond": { "type": "number", "minimum": 0 },
+        "sourceUnboundFraction": { "type": "number", "minimum": 0, "maximum": 1 },
+        "targetUnboundFraction": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidenceClass": { "enum": ["observed", "derived", "calibrated", "inferred", "assumed", "hypothetical"] },
+        "evidenceReference": { "type": ["string", "null"], "maxLength": 4096 }
+      }
+    }
+  }
+}
