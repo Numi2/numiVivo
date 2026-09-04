@@ -2,6 +2,8 @@
 
 #include "NumiVivoCore/ReactionNetworkAnalysis.hpp"
 
+#include <iterator>
+
 namespace nvivo::network {
 
 class ScalableAnalyzer {
