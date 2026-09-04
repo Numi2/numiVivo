@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "name": "abstract-mediator-distribution",
+  "compartments": [
+    {
+      "id": "central",
+      "volumeCubicMetres": 0.003
+    },
+    {
+      "id": "interstitial",
+      "volumeCubicMetres": 0.009
+    },
+    {
+      "id": "local-tissue",
+      "volumeCubicMetres": 0.0002
+    }
+  ],
+  "analytes": [
+    {
+      "id": "repair-mediator",
+      "unit": "normalized",
+      "minimumConcentration": 0,
+      "maximumConcentration": 10
+    }
+  ],
+  "edges": [
+    {
+      "id": "central-to-interstitial",
+      "analyte": "repair-mediator",
+      "sourceCompartment": "central",
+      "targetCompartment": "interstitial",
+      "partitionCoefficient": 0.8,
+      "clearanceCubicMetresPerSecond": 0.00001,
+      "sourceUnboundFraction": 1,
+      "targetUnboundFraction": 1,
+      "evidenceClass": "hypothetical",
+      "evidenceReference": "sequence-free computational reference"
+    },
+    {
+      "id": "interstitial-to-local",
+      "analyte": "repair-mediator",
+      "sourceCompartment": "interstitial",
+      "targetCompartment": "local-tissue",
+      "partitionCoefficient": 1.4,
+      "clearanceCubicMetresPerSecond": 0.000002,
+      "sourceUnboundFraction": 1,
+      "targetUnboundFraction": 1,
+      "evidenceClass": "hypothetical",
+      "evidenceReference": "sequence-free computational reference"
+    }
+  ]
+}
