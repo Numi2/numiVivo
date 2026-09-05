@@ -1,181 +1,162 @@
 # NumiVivo
 
-**Apple-native software for specifying, compiling, simulating, verifying, and operating molecular programs in living systems.**
+**From atoms to biological behavior. Built for Apple silicon.**
 
-NumiVivo treats engineered biological behavior as an executable, versioned program. A program describes what a cell or tissue observes, how it combines signals over time, what state it retains, what molecular actions it may take, and the constraints under which it must stop.
+NumiVivo is a research platform for molecular simulation and programmable biology. It brings molecular structures, GPU molecular dynamics, native electronic structure, reaction networks, and reproducible experiments into one Swift, C++ and Metal codebase.
+
+The ambition is to follow a molecular change across scales: how a structure moves, where electrons interact, which reactions become possible, and how those reactions affect a cell or physiological model. Every transition should preserve the quantities, assumptions and evidence needed to understand the result.
+
+[Get started](#get-started) · [Explore the capabilities](#explore-the-capabilities) · [Examples](#choose-an-experiment) · [Documentation](Documentation/README.md) · [Implementation status](Documentation/CAPABILITIES.md)
+
+> **Research software, under active development.** The capabilities below describe source implementations and their intended workflows—not a fully qualified release. Apple package integration, GPU numerical behavior and performance require qualification. The [capability map](Documentation/CAPABILITIES.md) separates implemented methods, current restrictions and planned work.
+
+## One scientific question, several scales
+
+NumiVivo is being developed to connect a molecular hypothesis to a dynamic biological model:
 
 ```text
-molecular inputs
-    ↓
-sensing → state → decision → biological action
-    ↑                            ↓
-    └──── feedback, limits, and verification
+Structures and force fields
+        ↓
+Molecular dynamics and sampled configurations
+        ↓
+Electronic structure, QM/MM and orbital embedding
+        ↓
+Reaction energetics and explicitly qualified kinetic evidence
+        ↓
+Reaction networks, target engagement and physiological dynamics
+        ↓
+Versioned experiments, observations and reproducible results
 ```
 
-NumiVivo is being built as the molecular-programming layer of NumiLab:
+This is the integration direction, not a claim that every arrow is already an automated, validated calculation. In particular, an electronic-energy difference is not automatically an activation free energy, reaction rate, binding affinity or biological outcome.
 
-```text
-NumiLab
-├── NumanX      transport, mechanics, fluids, contact, and mechanotransduction
-├── NumiTissue  cells, development, differentiation, and tissue organization
-├── NumiBrain   neural, autonomic, and organism-level control
-└── NumiVivo    intracellular reactions, synthetic circuits, molecular memory,
-                biological control programs, and experimental execution
-```
+## Explore the capabilities
 
-## Core objective
-
-A researcher should be able to state a desired biological behavior, compile it into explicit molecular mechanisms, simulate it across cell and tissue contexts, inspect uncertainty and failure modes, and export a reproducible design for controlled experimental validation.
-
-NumiVivo is not a sequence editor wrapped around a simulator. It is an integrated system with five authoritative stages:
-
-1. **Specify** — a typed language for inputs, logic, state, timing, actions, constraints, monitoring, and termination.
-2. **Compile** — lower behavior into receptors, promoters, RNA regulators, protein switches, enzymes, transport processes, and reaction networks.
-3. **Simulate** — execute deterministic, stochastic, spatial, multicellular, and coupled-physics models at explicit fidelity levels.
-4. **Verify** — evaluate reachability, limits, hazards, context sensitivity, uncertainty, and bounded shutdown behavior.
-5. **Operate** — run versioned experiments, interventions, measurements, replay, provenance, and transactional coupling to NumiLab.
-
-## Apple-silicon execution model
-
-NumiVivo is designed around Apple silicon rather than ported from a CPU-first or CUDA-first runtime.
-
-- Swift coordinates experiments, artifacts, command submission, and structured concurrency.
-- C++23 owns compilation, graph analysis, immutable contracts, and portable reference numerics.
-- Metal owns production reaction, regulation, stochastic, diffusion, transport, reduction, and verification kernels.
-- Persistent simulation state remains GPU-resident across steps.
-- Private heaps hold authoritative hot state; shared memory is limited to compact commands and diagnostics.
-- Programs are compiled into fixed tables, offsets, capacities, execution cohorts, and fingerprints before dispatch.
-- Structure-of-arrays layouts provide coalesced access across large populations of cells.
-- Sparse active sets and event queues avoid work on biologically inactive mechanisms.
-- Counter-based random streams make stochastic execution reproducible across dispatch order changes.
-- Each step runs against shadow state and is committed only after numerical and safety checks pass.
-- Learned surrogates may run through MLX or Metal 4 tensor operations, but never replace authoritative constraints or state transitions.
-
-## Fidelity contract
-
-Every result declares the model class that produced it.
-
-| Level | Scope | Primary use |
+| Area | What the source provides | Explore |
 |---|---|---|
-| **F0** | Boolean, threshold, temporal, and finite-state molecular logic | architecture search and static verification |
-| **F1** | Deterministic well-mixed reaction networks | calibrated dynamics and parameter screening |
-| **F2** | Stochastic kinetics with discrete molecular counts | noise, switching, rare-event, and population distributions |
-| **F3** | Spatial reaction–diffusion with membranes and compartments | gradients, localization, transport, and morphology |
-| **F4** | Multicellular tissue programs coupled to mechanics, perfusion, immunity, and organism state | integrated in-vivo hypotheses |
+| **Molecular foundations** | Canonical atoms, bonds, residues, conformers and periodic cells; selections and atom mapping; PDB, mmCIF, SDF/MOL V2000, MOL2 and a strict SMILES subset; topology preparation and unit-explicit force-field records. | [Structure and force-field foundation](Documentation/Design/MOLECULAR_FOUNDATION_WAVE_A.md) |
+| **Apple-native molecular dynamics** | Metal force kernels, neighbor construction, minimization, NVE and Langevin NVT, molecular-center Monte Carlo NPT, PME electrostatics, distance constraints and linear virtual sites. Preparation protocols retain stage identity, restart state and bounded trajectory output. | [MD protocols](Documentation/Design/MD_PROTOCOL_WORKFLOW.md) |
+| **Native electronic structure** | FP64 Cartesian Gaussian integrals, restricted/unrestricted Hartree–Fock, restricted LDA, embedded Hamiltonians, MP2 and small-system configuration interaction. The chemistry path runs without Python callbacks or a CUDA runtime. | [Native chemistry example](Examples/native-chemistry/README.md) |
+| **Embedding and reaction research** | QM/MM electrostatic and boundary-link machinery, C-PCM reaction-field work, correlated orbital information, orbital-subspace alignment and a bounded path-consistent QIO optimizer. These are experimental methods, not a reproduced protein-reaction result. | [Embedding source](Sources/NumiVivoKit/Embedding) · [QM environment source](Sources/NumiVivoKit/QMEnv) |
+| **Programmable reaction dynamics** | Typed molecular programs and compiled ProgramPacks; deterministic kinetics; discrete stochastic simulation; exact-SSA/tau-leap/RK2 execution across dependency-separated components; temporal rules, monitors and concentration transport within declared backend limits. | [Hybrid runtime](Examples/hybrid-reaction-runtime/README.md) · [ProgramPack backend](Documentation/Design/PROGRAM_PACK_METAL_BACKEND.md) |
+| **Target engagement and physiology** | Exposure-driven reversible binding, covalent conversion, competition and turnover; a native FP64 reference and an existing-runtime Metal path; physiological exchange and molecular–physiology coupling contracts. | [Target-engagement example](Examples/target-engagement/README.md) |
+| **Reproducible experiments** | Content-addressed artifacts and tasks, evidence references, configuration-bound checkpoints, staged protocols, compact trajectory chunks, observation records and explicit failure results. | [Artifacts and provenance](Documentation/Design/ARTIFACTS_AND_PROVENANCE.md) · [Trajectory storage](Documentation/Design/MD_TRAJECTORY_ARCHIVE.md) |
 
-Promotion between levels is error-controlled and recorded. Agreement with a lower-fidelity model is not treated as biological validation.
+The repository also contains experimental quantum-algorithm, reaction-path, reaction-network, population, calibration and surrogate components. Their presence is not a claim of complete Qiskit, ORCA, GROMACS or physiological-modeling equivalence. See the [source-backed capability map](Documentation/CAPABILITIES.md) before choosing a backend.
 
-## Program example
+## Built around Apple silicon
 
-```yaml
-apiVersion: numivivo.org/v1alpha1
-kind: VivoProgram
-metadata:
-  name: local-inflammatory-controller
-spec:
-  target:
-    cellType: engineered-chondrocyte
+**Native execution rather than a Python simulation loop.** Swift manages scientific objects, experiments and concurrent operations. C++23 implements compilation, validation and portable reference components. Metal executes molecular-dynamics and kinetic kernels. Precision-sensitive chemistry retains FP64 native CPU calculations rather than forcing every calculation onto the GPU.
 
-  inputs:
-    - id: il1b
-      source: extracellular
-      unit: nM
-    - id: tissue-damage
-      source: host
-      unit: normalized
-    - id: cell-stress
-      source: intracellular
-      unit: normalized
+**State stays where the calculation needs it.** The GPU runtimes use persistent buffers, compiled tables and explicit capacities. Private simulation state is separated from host-visible commands, diagnostics and requested observations. Full coordinate readback is an explicit sampling or checkpoint operation.
 
-  state:
-    - id: inflammatory-memory
-      type: leaky-integrator
-      halfLife: 6 h
+**A failed candidate must not become accepted state.** Runtime transactions distinguish proposed and accepted evolution. Checkpoints bind the represented state to its model and numerical configuration. The MD numerical profile is versioned separately so a restart cannot silently substitute a different algorithm.
 
-  rules:
-    - id: activate-therapy
-      when: sustained(il1b > 0.8 nM and tissue-damage > 0.55, for: 20 min)
-      then:
-        express: il1ra
-        rate: proportional(il1b, min: 0, max: 1)
+**Reproducibility has a defined scope.** Counter-based random namespaces retain seeds and accepted-step identity. They do not guarantee bitwise-identical trajectories across devices or compiler versions; PME accumulation and floating-point execution have additional reproducibility limits. Integrity hashes establish which bytes were used, not whether the scientific model is correct.
 
-  constraints:
-    - output(il1ra) <= 12 ng/hour
-    - cumulative(il1ra, window: 24 h) <= 160 ng
-    - cell-stress < 0.75
+## Get started
 
-  termination:
-    - when: cell-stress >= 0.75
-      action: permanent-shutdown
-    - after: 21 d
-      action: permanent-shutdown
+The primary development target is an **Apple-silicon Mac with macOS 15 or newer**, Swift 6 and an Apple SDK providing Metal and a C++23-capable toolchain. The package also declares iOS 18 support; it is not a released iOS application. The native package has no Python or CUDA runtime dependency.
+
+Run from a terminal on the Apple machine:
+
+```sh
+git clone https://github.com/Numi2/numiVivo.git
+cd numiVivo
+swift build -c debug
+.build/debug/numivivo --help
 ```
 
-The compiler lowers this specification into a typed intermediate representation, candidate molecular implementations, a chemical reaction network, a schedule, bounded resource requirements, monitoring channels, and a cryptographic `VivoProgramPack`.
+These are build and execution instructions, not a recorded successful build of the current revision. Keep the commit SHA with compiler diagnostics and numerical results. Portable checks do not qualify the complete Apple package.
 
-## Immutable artifacts
+### First experiment: exposure and target occupancy
 
-NumiVivo uses explicit, fingerprinted artifacts:
+Use a supplied synthetic fixture—no downloaded dataset or prepared protein is required:
 
-- `VivoProgramPack` — compiled molecular behavior and reaction topology.
-- `MechanismPack` — characterized biological parts, parameters, priors, and compatibility rules.
-- `HostContextPack` — cell, tissue, species, disease, immune, metabolic, and delivery context.
-- `ExperimentPack` — phases, interventions, measurements, cohorts, random streams, and acceptance criteria.
-- `CouplingPack` — stable exchange contracts for NumanX, NumiTissue, and NumiBrain.
-- `VivoCertificate` — fidelity, provenance, numerical quality, uncertainty, safety findings, and failure status.
+```sh
+RUN_DIR="$(mktemp -d "${TMPDIR:-/tmp}/numivivo.XXXXXX")"
 
-No production kernel resolves names, parses text, grows containers, or discovers topology during a simulation step.
+.build/debug/numivivo engagement-validate \
+  Examples/target-engagement/synthetic-pulse.json
 
-## Initial implementation scope
+.build/debug/numivivo engagement-run \
+  Examples/target-engagement/synthetic-pulse.json \
+  --backend reference \
+  --output "$RUN_DIR/engagement.json"
+```
 
-The first implementation establishes:
+Inspect target-state fractions over the supplied exposure schedule. The inputs and observations are **synthetic mathematical fixtures**, not measured pharmacology or treatment recommendations. The [example guide](Examples/target-engagement/README.md) adds the Metal backend, compiled kinetic source, conditional free-energy conversion and held-out observation evaluation.
 
-- typed domain models and JSON/YAML schemas;
-- the NumiVivo program language and parser;
-- semantic validation and dimensional checks;
-- reaction-network and regulation IR;
-- deterministic F1 and stochastic F2 GPU kernels;
-- spatial F3 diffusion and membrane transport kernels;
-- transactional command scheduling and state publication;
-- static safety analysis and runtime monitors;
-- SBOL 3 and SBML Level 3 export boundaries;
-- NumiLab coupling contracts;
-- a command-line compiler and experiment runner;
-- reference programs for inflammatory control, hypoxia memory, and multi-marker cellular targeting.
+## Choose an experiment
 
-## Repository layout
+| Start with | What it exercises | Input |
+|---|---|---|
+| [Native chemistry](Examples/native-chemistry/README.md) | Gaussian integrals → Hartree–Fock → embedded Hamiltonian → MP2/FCI → orbital information. | Included H₂/STO-3G example. |
+| [Hybrid reactions](Examples/hybrid-reaction-runtime/README.md) | Exact SSA, tau-leaping and RK2 on separate reaction components; checkpoint and resume. | Included synthetic model and counts. |
+| [Target engagement](Examples/target-engagement/README.md) | Exposure, binding, covalent conversion, competition and turnover. | Included synthetic experiments. |
+| [Prepared-system MD](Examples/md-preparation/README.md) | AMBER import → minimization → NVT → NPT → production samples. | Your prepared topology and restart. |
+| [Digital tissue homeostasis](Examples/digital-tissue-homeostasis/README.md) | Molecular-control, host-context and coupling concepts. | Included research fixtures; check the declared runtime support. |
+
+### A prepared molecular system, one MD protocol
+
+For an appropriately prepared **orthogonal periodic system**, the existing AMBER bridge provides the starting point. Once `system.json` and `initial.json` have been imported:
+
+```sh
+.build/debug/numivivo md-protocol-template system.json > protocol.json
+
+# Review the durations, temperature, pressure and minimization gate first.
+.build/debug/numivivo md-protocol-validate protocol.json \
+  --system system.json --state initial.json
+
+.build/debug/numivivo md-protocol-run protocol.json \
+  --system system.json --state initial.json \
+  --store ./md-artifacts > receipt.json
+```
+
+The receipt identifies durable restart state. Coordinate samples are stored as bounded binary chunks, not an ever-growing in-memory JSON trajectory. Later stages preserve state unless their velocity initialization is explicitly changed. A failed required minimization or rejected dynamics candidate blocks the protocol rather than silently changing the experiment.
+
+The template is illustrative: its duration does not establish equilibration. [Import, sampling and resume details →](Documentation/Design/MD_PROTOCOL_WORKFLOW.md)
+
+## Molecular biology inside NumiLab
+
+The wider goal is a coupled experimental environment in which molecular reactions respond to cell state, tissue organization, physical transport and nervous-system activity.
+
+| System | Intended responsibility |
+|---|---|
+| **NumiVivo** | Molecular representations, chemistry, reaction dynamics and molecular experiments. |
+| **NumiTissue** | Cell populations, development and tissue organization. |
+| **NumanX** | Geometry, mechanics, fluids and physical coupling. |
+| **NumiBrain** | Neural, autonomic and embodied control. |
+
+NumiVivo contains coupling contracts and participant infrastructure. Fully qualified cross-repository biological simulations remain an integration objective, not something established by this table.
+
+## Development direction
+
+The next milestone is **an integrated, numerically qualified research workflow**, not simply more named solvers.
+
+The priorities are to consolidate model semantics and execution ownership; qualify the Apple MD and kinetic backends; expand electronic-structure and embedding methods against independent references; and connect reaction energetics to observations and kinetics without losing thermodynamic meaning. Membrane interfaces, general triclinic dynamics, delayed/refractory state, live fidelity migration and larger correlated calculations require additional work.
+
+The chemistry program is informed by [CovAngelo, arXiv:2604.10487](https://arxiv.org/abs/2604.10487). Its methods motivate native QM/MM, compact embedding and consistent reaction-path treatment. This repository does not claim to reproduce that paper's results or contain its authors' unpublished implementation.
+
+## Documentation and contribution
+
+[Documentation index](Documentation/README.md) · [Capability map and limits](Documentation/CAPABILITIES.md) · [Execution audit](AUDIT.md) · [Contribution guide](CONTRIBUTING.md) · [Security policy](SECURITY.md)
 
 ```text
-Sources/
-  NumiVivoCore/       C++23 compiler, IR, validation, pack format, reference numerics
-  NumiVivoKit/        Swift orchestration, artifacts, runtime, Metal ownership
-  NumiVivoCLI/        `numivivo` command-line interface
-  NumiVivoShaders/    Metal production kernels
-Schemas/              machine-readable program and artifact schemas
-Examples/             complete reproducible programs and experiments
-Documentation/        architecture, language, fidelity, safety, and integration specs
+Sources/NumiVivoCore/      C++ compiler, validation, pack format and reference logic
+Sources/NumiVivoKit/       Swift scientific modules, runtimes, artifacts and workflows
+Sources/NumiVivoShaders/   Metal kernels and explicit shader-module loading
+Sources/NumiVivoCLI/       numivivo command-line interface
+Examples/                 Model fixtures and executable examples
+Schemas/                  Versioned data contracts
+Documentation/            Methods, architecture, audits and implementation limits
+Tools/                    Development tools and portable qualification harnesses
 ```
 
-## Scientific and safety boundary
+Report reproducible bugs through the repository's Issues tab, including the commit, command, platform and relevant diagnostics. Keep confidential research data out of public reports. Contributions should include the affected contract, an example and an explicit validation boundary; see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-NumiVivo is research software. A successful simulation is evidence about a model, not evidence of safety or efficacy in a living organism. Generated constructs, delivery plans, and intervention specifications require independent biological review, appropriate containment, ethics oversight, and applicable regulatory authorization before physical use.
+## Scientific boundary and license
 
-The software is designed to make assumptions and failure conditions explicit. It must not hide uncertainty behind a single score or convert an unverified simulation into an experimental instruction.
+NumiVivo models biological systems; it does not validate a therapy, authorize an experiment or establish safety in a living organism. An executable model is not proof of a realizable biological construct. Numerical checks, calibration evidence and biological validation are distinct.
 
-## Standards
-
-NumiVivo is designed to interoperate with:
-
-- SBOL 3 for machine-readable synthetic biological designs;
-- SBML Level 3 for reaction-network exchange;
-- SED-ML and COMBINE archives for simulation experiments;
-- ontology-backed identifiers for molecular entities, processes, units, and evidence;
-- FAIR provenance and content-addressed artifacts.
-
-## Status
-
-Active foundational development. The public interfaces and artifact formats will remain versioned while the implementation matures.
-
-## License
-
-Apache License 2.0. See `LICENSE`.
+Licensed under [Apache License 2.0](LICENSE). See [NOTICE](NOTICE). External datasets, force-field parameters, model weights and third-party materials retain their own terms. For research use, cite the exact repository revision and the methods and source data used by the calculation.
