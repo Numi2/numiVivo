@@ -39,6 +39,11 @@ public enum VivoTargetEngagementMetalRunner {
     public static func run(_ experiments: [VivoTargetEngagementExperiment],
                            policy: VivoTargetEngagementMetalPolicy = .init(),
                            device: MTLDevice? = nil) async throws -> VivoTargetEngagementMetalBatchResult {
+        let tracing = ProcessInfo.processInfo.environment["NUMIVIVO_TRACE_TARGET"] == "1"
+        func trace(_ message: String) {
+            if tracing { FileHandle.standardError.write(Data("numivivo target trace: \(message)\n".utf8)) }
+        }
+        trace("validating cohort")
         guard (1...4096).contains(experiments.count), let first = experiments.first,
               policy.maximumTimeStepSeconds.isFinite, policy.maximumTimeStepSeconds > 0,
               (1...1_000_000).contains(policy.maximumSteps),
@@ -85,12 +90,15 @@ public enum VivoTargetEngagementMetalRunner {
               endTime / step + Double(boundaries.count) <= Double(policy.maximumSteps) else {
             throw VivoKineticsError.capacity("explicit F1 step budget; use the FP64 reference for stiff/small systems")
         }
+        trace("compiling ProgramPack")
         let compiled = try VivoTargetEngagementCompiler.compile(first)
         guard let fidelity = VivoFidelity(rawValue: 1) else { throw VivoKineticsError.unsupported("F1 unavailable") }
         let configuration = VivoRuntimeConfiguration(fidelity: fidelity, environmentCount: UInt32(experiments.count),
             timeStep: Float(step), minimumTimeStep: Float.leastNormalMagnitude, maximumTimeStep: Float(step),
             maximumSubsteps: 1, eventCapacity: UInt32(max(1024, experiments.count * 4)))
+        trace("creating transactional runtime")
         let runtime = try await VivoTransactionalMolecularRuntime.make(pack: compiled.pack, configuration: configuration, device: device)
+        trace("runtime ready")
         let identity = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Identity(version: 1,
             experiments: experiments, policy: policy, configuration: configuration,
             programFingerprint: compiled.pack.header.contentFingerprint)))
@@ -123,8 +131,11 @@ public enum VivoTargetEngagementMetalRunner {
                                  mode: .replace, value: Float(knots[cursors[lane]].unboundDrugM))
                 }
                 let publish = time + dt == boundary && observationTimes.contains(boundary)
+                let logStep = steps == 0 || (steps & (steps - 1)) == 0 || publish
+                if logStep { trace("prepare step \(steps), publications=\(publish)") }
                 let candidate = try await runtime.prepareStep(.init(timeStep: Float(dt), coupling: updates,
                     publications: publish ? requests : [], permitAdaptiveReduction: false))
+                if logStep { trace("prepared step \(steps), eligible=\(candidate.canCommit)") }
                 guard candidate.canCommit, Double(candidate.candidateTimeStep) == dt else {
                     if candidate.canCommit { try await runtime.discardPreparedStep(transactionID: candidate.transactionID) }
                     throw VivoKineticsError.numerical("Metal candidate rejected; no failed run is discarded from an inferred ensemble")
@@ -148,6 +159,7 @@ public enum VivoTargetEngagementMetalRunner {
                     }
                 }
                 _ = try await runtime.commitPreparedStep(transactionID: candidate.transactionID)
+                if logStep { trace("committed step \(steps)") }
                 let after = await runtime.timeSeconds()
                 guard after == time + dt else { throw VivoKineticsError.numerical("Metal accepted clock mismatch") }
                 time = after; steps += 1
@@ -165,6 +177,7 @@ public enum VivoTargetEngagementMetalRunner {
                 }
             }
         }
+        trace("assembling output after \(steps) commits")
         let results = experiments.indices.map { lane in
             VivoTargetEngagementResult(schemaVersion: 1, backend: "numivivo.programpack.f1-metal.v1", samples: samples[lane],
                 propagationCount: steps, maximumScalingDepth: 0, maximumFractionMassError: maximumErrors[lane],
@@ -174,6 +187,7 @@ public enum VivoTargetEngagementMetalRunner {
                     "Externally maintained free drug; finite ligand depletion and downstream biological efficacy are not represented.",
                     "This result is not a predictive uncertainty interval or clinical recommendation."])
         }
+        trace("returning output")
         return .init(executionFingerprint: identity, programFingerprint: compiled.pack.header.contentFingerprint,
                      deviceName: runtime.capabilities.deviceName, experiments: experiments, policy: policy,
                      timeStepSeconds: step, committedSteps: steps, results: results)
