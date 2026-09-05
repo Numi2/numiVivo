@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public struct VivoMolecularCheckpoint: Codable, Sendable, Equatable {
     public static let schema = "numivivo.org/molecular-checkpoint/v2"

@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 /// A run owns its runtime exclusively; callers receive immutable artifact
 /// identities rather than an arena they can mutate between protocol stages.

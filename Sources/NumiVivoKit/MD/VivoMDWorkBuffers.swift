@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 /// Reused for scalar reductions, constrained descent and drift corrections.
 /// Scratch allocation is outside the microstep and is covered by one local

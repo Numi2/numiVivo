@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public struct VivoMetalCapabilities: Sendable, Codable, Equatable {
     public enum Family: String, Sendable, Codable {

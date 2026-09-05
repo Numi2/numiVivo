@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public struct VivoSpatialGrid: Sendable, Codable, Equatable {
     public enum Boundary: UInt32, Sendable, Codable {

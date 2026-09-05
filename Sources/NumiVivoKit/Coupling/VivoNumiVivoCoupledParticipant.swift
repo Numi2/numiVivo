@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public struct VivoNumiVivoChannelTransform: Codable, Sendable, Equatable {
     public var scale: Float

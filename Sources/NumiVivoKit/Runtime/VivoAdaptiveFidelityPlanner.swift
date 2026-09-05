@@ -1,7 +1,7 @@
 import CryptoKit
 import Foundation
 #if canImport(Metal)
-import Metal
+@preconcurrency import Metal
 #endif
 
 public enum VivoAdaptiveFidelityMode: String, Codable, CaseIterable, Sendable {

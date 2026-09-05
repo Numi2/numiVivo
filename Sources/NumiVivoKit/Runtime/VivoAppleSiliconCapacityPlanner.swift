@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public enum VivoCapacityMemoryClass: String, Codable, Sendable {
     case privateGPU

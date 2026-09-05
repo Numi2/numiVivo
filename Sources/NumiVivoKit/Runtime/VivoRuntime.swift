@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public enum VivoCouplingMode: UInt32, Sendable, Codable {
     case replace = 0

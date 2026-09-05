@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 import NumiVivoShaders
 
 /// Executes disjoint exact-SSA, tau-leap and RK2 cohorts on one Metal timeline.

@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public struct VivoTargetEngagementMetalPolicy: Codable, Equatable, Sendable {
     public let maximumTimeStepSeconds: Double

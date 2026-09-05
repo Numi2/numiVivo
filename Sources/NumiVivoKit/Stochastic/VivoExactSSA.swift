@@ -1,6 +1,6 @@
 import CryptoKit
 import Foundation
-import Metal
+@preconcurrency import Metal
 import NumiVivoShaders
 
 public enum VivoSSAPropensityLaw: UInt32, Codable, CaseIterable, Sendable {

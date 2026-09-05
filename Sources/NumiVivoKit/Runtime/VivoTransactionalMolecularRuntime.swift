@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 import NumiVivoShaders
 
 /// ProgramPack transaction owner. Every operation that suspends while using GPU

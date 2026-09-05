@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 import NumiVivoShaders
 
 public enum VivoMDRuntimeError: Error, Sendable, CustomStringConvertible {

@@ -1,6 +1,6 @@
 import CryptoKit
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public struct VivoAdaptiveCohortRuntimeLayout: Codable, Equatable, Sendable {
     public let cohortID: UInt32

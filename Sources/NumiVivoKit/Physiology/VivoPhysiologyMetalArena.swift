@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 final class VivoPhysiologyMetalArena: @unchecked Sendable {
     struct Capacities: Sendable {

@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 final class VivoMDGPUArena:@unchecked Sendable{
     let particleCount:Int;let neighborCapacity:UInt32

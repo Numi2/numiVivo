@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 /// Independent source loading prevents legacy ProgramPack argument-buffer
 /// declarations from being concatenated into the executable hybrid library.

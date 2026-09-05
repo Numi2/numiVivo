@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 /// Swift 6 imports several Metal creation APIs as async-only even though the
 /// underlying completion-handler operations remain appropriate for one-time

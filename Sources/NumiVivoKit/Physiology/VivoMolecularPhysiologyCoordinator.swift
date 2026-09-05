@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public struct VivoMolecularPhysiologyStepRequest: Codable, Sendable, Equatable {
     public var timeStepSeconds: Double?

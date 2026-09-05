@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 import NumiVivoShaders
 
 extension VivoPopulationPhenotypeABI: @unchecked Sendable {}
