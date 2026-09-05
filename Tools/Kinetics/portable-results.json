@@ -1,0 +1,52 @@
+{
+  "scope": "targeted portable Swift checks; not package, Apple SDK, GPU or biological qualification",
+  "toolchain": "Swift 6.2.1 (swift-6.2.1-RELEASE)",
+  "target": "x86_64-unknown-linux-gnu",
+  "command": "bash Tools/Kinetics/run_reference_checks.sh",
+  "flags": [
+    "-O",
+    "-swift-version",
+    "6",
+    "-warnings-as-errors"
+  ],
+  "assertionsPassed": 44,
+  "appleIntegrationExecuted": false,
+  "metalExecuted": false,
+  "sources": [
+    {
+      "path": "Sources/NumiVivoKit/Kinetics/VivoCovalentKinetics.swift",
+      "gitBlobSHA1": "510e754f4be3c325535d8939b93eeed6651e91f0",
+      "sha256": "1016993225e91eb3b6fe94835361f02d755398b3c82ba7a05aa6112f2a3597ea"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Kinetics/VivoTargetEngagementProgramSource.swift",
+      "gitBlobSHA1": "10c89fcdb4accbf9eadf5ca38095e586651b857e",
+      "sha256": "748bdababa560d6b48144413f40b03502868949882ef445fd26014966b7bc8f8"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Pharmacology/VivoTargetEngagementReference.swift",
+      "gitBlobSHA1": "91c2d408bf45e4792d9b1d4dbd101b8dd8f9b465",
+      "sha256": "eebc5f23df4bf586f3a28be1d0356a328617c4d3a2e04a82aaf4e1387fa2f90b"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Chemistry/VivoTransitionStateRate.swift",
+      "gitBlobSHA1": "78acc50da35d44693b8f7881c95799edc19b9a83",
+      "sha256": "ec2973855d8e762550255caabebca43f0baf6f016057e63f9c974098b13a8084"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoTargetEngagementStudy.swift",
+      "gitBlobSHA1": "9326439bcdcd1f09408f2503b8743f4828656206",
+      "sha256": "05b31c6e69e72191db7eafc4874999326487cfa9a3b65212ed2902b347faad0f"
+    },
+    {
+      "path": "Tools/Kinetics/ReferenceChecks.swift",
+      "gitBlobSHA1": "3d88dc1f2754ce52c212b92fa7078c5c1e15eca0",
+      "sha256": "3ed43a817c272d15834e5969bcbcb9849d1499edb0308a1eecebb60755c0d4ea"
+    },
+    {
+      "path": "Tools/Kinetics/run_reference_checks.sh",
+      "gitBlobSHA1": "d9ed499b68abf04118034a0e29aa4cb48db54422",
+      "sha256": "8c82880a8bd31ca748b98760b541dc7b144a1190940cebf7853dd7879700490d"
+    }
+  ]
+}
