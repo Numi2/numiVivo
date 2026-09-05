@@ -124,14 +124,14 @@ public enum VivoGaussianIntegralEngine {
         }
         cache[key] = value; return value
     }
-    private static func primitiveOverlap(_ a: Double, _ la: [Int], _ ra: SIMD3<Double>,
+    static func primitiveOverlap(_ a: Double, _ la: [Int], _ ra: SIMD3<Double>,
                                          _ b: Double, _ lb: [Int], _ rb: SIMD3<Double>) -> Double {
         if la.contains(where: {$0 < 0}) || lb.contains(where: {$0 < 0}) { return 0 }
         var result = pow(Double.pi/(a+b),1.5)
         for axis in 0..<3 { result *= coefficients(la[axis],lb[axis],ra[axis]-rb[axis],a,b)[0] }
         return result
     }
-    private static func primitiveKinetic(_ a: Double, _ la: [Int], _ ra: SIMD3<Double>,
+    static func primitiveKinetic(_ a: Double, _ la: [Int], _ ra: SIMD3<Double>,
                                          _ b: Double, _ lb: [Int], _ rb: SIMD3<Double>) -> Double {
         var result = b*Double(2*lb.reduce(0,+)+3)*primitiveOverlap(a,la,ra,b,lb,rb)
         for axis in 0..<3 {
@@ -144,7 +144,7 @@ public enum VivoGaussianIntegralEngine {
         }
         return result
     }
-    private static func primitivePotential(_ a: Double, _ la: [Int], _ ra: SIMD3<Double>,
+    static func primitivePotential(_ a: Double, _ la: [Int], _ ra: SIMD3<Double>,
                                            _ b: Double, _ lb: [Int], _ rb: SIMD3<Double>,
                                            _ rc: SIMD3<Double>) -> Double {
         let p = a+b, pc = (a*ra+b*rb)/p-rc
@@ -155,7 +155,7 @@ public enum VivoGaussianIntegralEngine {
         } } }
         return 2*Double.pi/p*value
     }
-    private static func primitiveERI(_ a: Double, _ la: [Int], _ ra: SIMD3<Double>,
+    static func primitiveERI(_ a: Double, _ la: [Int], _ ra: SIMD3<Double>,
                                      _ b: Double, _ lb: [Int], _ rb: SIMD3<Double>,
                                      _ c: Double, _ lc: [Int], _ rc: SIMD3<Double>,
                                      _ d: Double, _ ld: [Int], _ rd: SIMD3<Double>) -> Double {
