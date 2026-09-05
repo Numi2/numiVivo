@@ -21,11 +21,10 @@ let package = Package(
             path: "Sources/NumiVivoShaders",
             resources: [
                 // Runtime loaders compile one explicit ABI module at a time.
-                // Copy individual files to the bundle root; do not let platform
-                // resource processing replace source with an unrelated metallib.
                 .copy("Resources/NumiVivoProgramPackRuntime.metal"),
                 .copy("Resources/NumiVivoHybridExecution.metal"),
                 .copy("Resources/NumiVivoPhysiologyKernels.metal"),
+                .copy("Resources/NumiVivoMDKernels.metal"),
                 .copy("Resources/NumiVivoExactSSAKernels.metal"),
                 .copy("Resources/NumiVivoMigrationKernels.metal"),
                 .copy("Resources/NumiVivoPartitionKernels.metal"),
