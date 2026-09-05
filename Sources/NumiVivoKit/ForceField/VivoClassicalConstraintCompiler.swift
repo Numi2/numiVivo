@@ -24,9 +24,7 @@ public enum VivoClassicalConstraintCompiler {
     -> (system: VivoClassicalSystem, report: VivoClassicalConstraintReport) {
         try VivoStructureValidator.validate(structure)
         try VivoClassicalSystemValidator.validate(source, atomCount: UInt32(structure.atoms.count))
-        guard source.structureFingerprint == (try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(structure))) else {
-            // Structure documents fingerprint the canonical structure payload. Refuse
-            // constraint derivation against another molecular identity.
+        guard source.structureFingerprint == (try VivoStructureCodec.fingerprint(structure)) else {
             throw VivoArtifactValidationError.incompatible("constraint compilation structure does not match classical-system structure fingerprint")
         }
         let existingCount = source.constraints.count
@@ -47,9 +45,7 @@ public enum VivoClassicalConstraintCompiler {
             }
         }
 
-        func key(_ a: UInt32, _ b: UInt32) -> UInt64 {
-            UInt64(min(a,b)) << 32 | UInt64(max(a,b))
-        }
+        func key(_ a: UInt32, _ b: UInt32) -> UInt64 { UInt64(min(a,b)) << 32 | UInt64(max(a,b)) }
         var constraints: [UInt64: VivoDistanceConstraint] = [:]
         for value in source.constraints {
             let k = key(value.a, value.b)
