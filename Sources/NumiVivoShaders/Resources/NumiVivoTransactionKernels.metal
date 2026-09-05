@@ -23,7 +23,7 @@ inline ulong transaction_refractory_count(constant NVivoStepUniforms& uniforms) 
     return ulong(uniforms.ruleCount) * ulong(uniforms.cellCapacity);
 }
 
-kernel void nvivo_finalize_prepare(
+[[host_name("nvivo_finalize_prepare")]] kernel void nvivo_finalize_prepare(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint gid [[thread_position_in_grid]]) {
@@ -55,7 +55,7 @@ kernel void nvivo_finalize_prepare(
         : 0u;
 }
 
-kernel void nvivo_commit_prepared(
+[[host_name("nvivo_commit_prepared")]] kernel void nvivo_commit_prepared(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint gid [[thread_position_in_grid]]) {
@@ -85,7 +85,7 @@ kernel void nvivo_commit_prepared(
     }
 }
 
-kernel void nvivo_rollback_prepared(
+[[host_name("nvivo_rollback_prepared")]] kernel void nvivo_rollback_prepared(
     constant NVivoProgramArguments& program [[buffer(0)]],
     uint gid [[thread_position_in_grid]]) {
 
@@ -239,7 +239,7 @@ inline void nvivo_sha256_finalize(thread NVivoSHA256Context& context,
     for (uint index = 0u; index < 8u; ++index) output[index] = context.state[index];
 }
 
-kernel void nvivo_sha256_state_chunks(
+[[host_name("nvivo_sha256_state_chunks")]] kernel void nvivo_sha256_state_chunks(
     device const uchar* bytes [[buffer(0)]],
     device uint* outputWords [[buffer(1)]],
     constant NVivoHashUniforms& uniforms [[buffer(2)]],

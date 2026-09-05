@@ -569,7 +569,7 @@ inline void schedule_delay(constant NVivoProgramArguments& program,
     extent = due;
 }
 
-kernel void nvivo_initialize_program(
+[[host_name("nvivo_initialize_program")]] kernel void nvivo_initialize_program(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint gid [[thread_position_in_grid]]) {
@@ -614,7 +614,7 @@ kernel void nvivo_initialize_program(
     }
 }
 
-kernel void nvivo_prepare_step(
+[[host_name("nvivo_prepare_step")]] kernel void nvivo_prepare_step(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint gid [[thread_position_in_grid]]) {
@@ -657,7 +657,7 @@ struct NVivoInputUpdate {
     uint mode;
 };
 
-kernel void nvivo_stage_input_updates(
+[[host_name("nvivo_stage_input_updates")]] kernel void nvivo_stage_input_updates(
     constant NVivoProgramArguments& program [[buffer(0)]],
     device const NVivoInputUpdate* updates [[buffer(1)]],
     constant uint& updateCount [[buffer(2)]],
@@ -680,7 +680,7 @@ kernel void nvivo_stage_input_updates(
     program.shadowState[index] = next;
 }
 
-kernel void nvivo_evaluate_reaction_cohort(
+[[host_name("nvivo_evaluate_reaction_cohort")]] kernel void nvivo_evaluate_reaction_cohort(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     constant NVivoCohortUniforms& cohort [[buffer(2)]],
@@ -746,7 +746,7 @@ kernel void nvivo_evaluate_reaction_cohort(
     program.reactionFlux[outputIndex] = extent;
 }
 
-kernel void nvivo_apply_incidence(
+[[host_name("nvivo_apply_incidence")]] kernel void nvivo_apply_incidence(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint gid [[thread_position_in_grid]]) {
@@ -830,7 +830,7 @@ inline float action_value(constant NVivoProgramArguments& program,
     return result.value;
 }
 
-kernel void nvivo_apply_rules(
+[[host_name("nvivo_apply_rules")]] kernel void nvivo_apply_rules(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint cell [[thread_position_in_grid]]) {
@@ -925,7 +925,7 @@ kernel void nvivo_apply_rules(
     }
 }
 
-kernel void nvivo_validate_state(
+[[host_name("nvivo_validate_state")]] kernel void nvivo_validate_state(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint gid [[thread_position_in_grid]]) {
@@ -965,7 +965,7 @@ kernel void nvivo_validate_state(
     }
 }
 
-kernel void nvivo_evaluate_monitors(
+[[host_name("nvivo_evaluate_monitors")]] kernel void nvivo_evaluate_monitors(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint cell [[thread_position_in_grid]]) {
@@ -1016,7 +1016,7 @@ kernel void nvivo_evaluate_monitors(
     }
 }
 
-kernel void nvivo_commit_if_valid(
+[[host_name("nvivo_commit_if_valid")]] kernel void nvivo_commit_if_valid(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint gid [[thread_position_in_grid]]) {
@@ -1076,7 +1076,7 @@ kernel void nvivo_commit_if_valid(
     }
 }
 
-kernel void nvivo_diffuse_csr(
+[[host_name("nvivo_diffuse_csr")]] kernel void nvivo_diffuse_csr(
     device const uint* neighborOffsets [[buffer(0)]],
     device const NVivoSpatialNeighbor* neighbors [[buffer(1)]],
     device const float* inputState [[buffer(2)]],
@@ -1104,7 +1104,7 @@ kernel void nvivo_diffuse_csr(
     outputState[index] = max(uniforms.minimumValue, current + uniforms.deltaTime * derivative);
 }
 
-kernel void nvivo_reduce_sum_stage1(
+[[host_name("nvivo_reduce_sum_stage1")]] kernel void nvivo_reduce_sum_stage1(
     device const float* values [[buffer(0)]],
     device float* partials [[buffer(1)]],
     constant NVivoReductionUniforms& uniforms [[buffer(2)]],

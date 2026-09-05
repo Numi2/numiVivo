@@ -4,7 +4,7 @@
 
 namespace numivivo {
 
-kernel void nvivo_commit_prepared_authoritative(
+[[host_name("nvivo_commit_prepared_authoritative")]] kernel void nvivo_commit_prepared_authoritative(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint gid [[thread_position_in_grid]]) {

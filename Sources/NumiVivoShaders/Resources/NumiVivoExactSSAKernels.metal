@@ -181,7 +181,7 @@ inline void apply_reaction(
     }
 }
 
-kernel void nvivo_exact_ssa_clear_status(
+[[host_name("nvivo_exact_ssa_clear_status")]] kernel void nvivo_exact_ssa_clear_status(
     device RuntimeStatus* status [[buffer(0)]],
     uint index [[thread_position_in_grid]]
 ) {
@@ -196,7 +196,7 @@ kernel void nvivo_exact_ssa_clear_status(
     atomic_store_explicit(&status->reserved, 0u, memory_order_relaxed);
 }
 
-kernel void nvivo_exact_ssa_advance(
+[[host_name("nvivo_exact_ssa_advance")]] kernel void nvivo_exact_ssa_advance(
     device uint* counts [[buffer(0)]],
     const device ReactionRecord* reactions [[buffer(1)]],
     const device StoichiometryRecord* stoichiometry [[buffer(2)]],
@@ -303,7 +303,7 @@ kernel void nvivo_exact_ssa_advance(
     }
 }
 
-kernel void nvivo_exact_ssa_validate_counts(
+[[host_name("nvivo_exact_ssa_validate_counts")]] kernel void nvivo_exact_ssa_validate_counts(
     const device uint* counts [[buffer(0)]],
     constant RuntimeCommand& command [[buffer(1)]],
     device RuntimeStatus* status [[buffer(2)]],

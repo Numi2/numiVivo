@@ -12,7 +12,7 @@ inline void fail(device Status&s,uint flag,uint p){atomic_fetch_or_explicit(&s.f
 inline float3 image(float3 d,constant Command&c){if(c.periodic==0)return d;float3 f=float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));f-=rint(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;}
 inline float3 wrap(float3 p,constant Command&c){if(c.periodic==0)return p;float3 f=float3(dot(c.reciprocalA.xyz,p),dot(c.reciprocalB.xyz,p),dot(c.reciprocalC.xyz,p));f-=floor(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;}
 
-kernel void nvivo_md_update_virtual_position(device float4*position[[buffer(0)]],device const LinearVirtualSite*sites[[buffer(1)]],device const uint*siteIndexByParticle[[buffer(2)]],device Status&s[[buffer(3)]],constant Command&c[[buffer(4)]],uint gid[[thread_position_in_grid]]){
+[[host_name("nvivo_md_update_virtual_position")]] kernel void nvivo_md_update_virtual_position(device float4*position[[buffer(0)]],device const LinearVirtualSite*sites[[buffer(1)]],device const uint*siteIndexByParticle[[buffer(2)]],device Status&s[[buffer(3)]],constant Command&c[[buffer(4)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.particleCount)return;uint index=siteIndexByParticle[gid];if(index==0xffffffffu)return;
     LinearVirtualSite site=sites[index];uint count=site.siteAndCount.y;
     if(site.siteAndCount.x!=gid||count<2||count>4){fail(s,4u,gid);return;}
@@ -22,13 +22,13 @@ kernel void nvivo_md_update_virtual_position(device float4*position[[buffer(0)]]
     if(!all(isfinite(result))){fail(s,1u,gid);return;}
     position[gid]=float4(wrap(result,c),0);
 }
-kernel void nvivo_md_update_virtual_velocity(device float4*velocity[[buffer(0)]],device const LinearVirtualSite*sites[[buffer(1)]],device const uint*siteIndexByParticle[[buffer(2)]],constant Command&c[[buffer(3)]],uint gid[[thread_position_in_grid]]){
+[[host_name("nvivo_md_update_virtual_velocity")]] kernel void nvivo_md_update_virtual_velocity(device float4*velocity[[buffer(0)]],device const LinearVirtualSite*sites[[buffer(1)]],device const uint*siteIndexByParticle[[buffer(2)]],constant Command&c[[buffer(3)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.particleCount)return;uint index=siteIndexByParticle[gid];if(index==0xffffffffu)return;
     LinearVirtualSite site=sites[index];float3 value=0;
     for(uint i=0;i<site.siteAndCount.y;++i)value+=site.weights[i]*velocity[site.parents[i]].xyz;
     velocity[gid]=float4(value,0);
 }
-kernel void nvivo_md_redistribute_virtual_force(device float4*forceEnergy[[buffer(0)]],device const LinearVirtualSite*sites[[buffer(1)]],device const uint*parentOffsets[[buffer(2)]],device const ParentIncidence*incidence[[buffer(3)]],device Status&s[[buffer(4)]],constant Command&c[[buffer(5)]],uint gid[[thread_position_in_grid]]){
+[[host_name("nvivo_md_redistribute_virtual_force")]] kernel void nvivo_md_redistribute_virtual_force(device float4*forceEnergy[[buffer(0)]],device const LinearVirtualSite*sites[[buffer(1)]],device const uint*parentOffsets[[buffer(2)]],device const ParentIncidence*incidence[[buffer(3)]],device Status&s[[buffer(4)]],constant Command&c[[buffer(5)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.particleCount)return;
     uint begin=parentOffsets[gid],end=parentOffsets[gid+1];
     // A virtual site is never a physical parent. Do not issue even an add-zero

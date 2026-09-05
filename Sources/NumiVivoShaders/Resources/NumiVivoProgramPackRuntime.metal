@@ -238,14 +238,14 @@ inline float2 hazards(Tables t, Reaction r, uint lane, device const float* state
     float a = state[ix(aIndex, lane, cmd)];
     if (!isfinite(a) || a < 0) { valid = false; return 0; }
     if (r.law >= 2 && r.law <= 4) {
-        float half = kineticParameter(t, r, 1, lane, parameters, cmd, valid);
-        if (!(half > 0)) { valid = false; return 0; }
-        if (r.law == 4) return float2(k * (a / (half + a)), 0);
+        float halfSaturation = kineticParameter(t, r, 1, lane, parameters, cmd, valid);
+        if (!(halfSaturation > 0)) { valid = false; return 0; }
+        if (r.law == 4) return float2(k * (a / (halfSaturation + a)), 0);
         float exponent = kineticParameter(t, r, 2, lane, parameters, cmd, valid);
         if (!(exponent > 0)) { valid = false; return 0; }
         float activation = 0;
         if (a > 0) {
-            float logit = exponent * (log(a) - log(half));
+            float logit = exponent * (log(a) - log(halfSaturation));
             activation = logit >= 0 ? 1 / (1 + exp(-logit)) : exp(logit) / (1 + exp(logit));
         }
         return float2(k * (r.law == 2 ? activation : 1 - activation), 0);
@@ -255,9 +255,9 @@ inline float2 hazards(Tables t, Reaction r, uint lane, device const float* state
     if (!isfinite(b) || b < 0) { valid = false; return 0; }
     if (r.law == 6) return float2(k * a, k * b);
     if (r.law == 7) {
-        float half = kineticParameter(t, r, 1, lane, parameters, cmd, valid);
-        if (!(half > 0)) { valid = false; return 0; }
-        return float2(k * (a / (half + a)), k * (b / (half + b)));
+        float halfSaturation = kineticParameter(t, r, 1, lane, parameters, cmd, valid);
+        if (!(halfSaturation > 0)) { valid = false; return 0; }
+        return float2(k * (a / (halfSaturation + a)), k * (b / (halfSaturation + b)));
     }
     valid = false;
     return 0;
@@ -279,7 +279,7 @@ inline float derivative(Tables t, uint species, uint lane, device const float* s
     return sum;
 }
 
-kernel void nvivo_clear_status(device Status& s [[buffer(0)]], uint gid [[thread_position_in_grid]]) {
+[[host_name("nvivo_clear_status")]] kernel void nvivo_clear_status(device Status& s [[buffer(0)]], uint gid [[thread_position_in_grid]]) {
     if (gid != 0) return;
     atomic_store_explicit(&s.flags, 0, memory_order_relaxed);
     atomic_store_explicit(&s.violationCount, 0, memory_order_relaxed);
@@ -295,7 +295,7 @@ kernel void nvivo_clear_status(device Status& s [[buffer(0)]], uint gid [[thread
     atomic_store_explicit(&s.reservedAtomic, 0, memory_order_relaxed);
     s.reserved0 = s.reserved1 = s.reserved2 = s.reserved3 = 0;
 }
-kernel void nvivo_prepare_transaction(
+[[host_name("nvivo_prepare_transaction")]] kernel void nvivo_prepare_transaction(
     device const float* current [[buffer(0)]], device float* base [[buffer(1)]],
     device float* candidate [[buffer(2)]], device const float2* temporalCurrent [[buffer(3)]],
     device float2* temporalCandidate [[buffer(4)]], device Status& status [[buffer(5)]],
@@ -304,7 +304,7 @@ kernel void nvivo_prepare_transaction(
     if (ulong(gid) < ulong(cmd.speciesCount) * cmd.laneCount) base[gid] = candidate[gid] = current[gid];
     if (ulong(gid) < ulong(cmd.temporalStateCount) * cmd.laneCount) temporalCandidate[gid] = temporalCurrent[gid];
 }
-kernel void nvivo_apply_coupling_updates(
+[[host_name("nvivo_apply_coupling_updates")]] kernel void nvivo_apply_coupling_updates(
     device float* state [[buffer(0)]], device const Update* updates [[buffer(1)]],
     device Status& status [[buffer(2)]], constant Command& cmd [[buffer(3)]],
     constant uint& count [[buffer(4)]], uint gid [[thread_position_in_grid]]) {
@@ -316,7 +316,7 @@ kernel void nvivo_apply_coupling_updates(
     ulong index = ix(u.species, u.lane, cmd);
     state[index] = u.mode == 0 ? u.value : (u.mode == 1 ? state[index] + u.value : 0.5f * state[index] + 0.5f * u.value);
 }
-kernel void nvivo_f1_heun_predict(
+[[host_name("nvivo_f1_heun_predict")]] kernel void nvivo_f1_heun_predict(
     device const float* state [[buffer(0)]], device float* stage [[buffer(1)]], device float* k1 [[buffer(2)]],
     device const float* parameters [[buffer(3)]], device const uchar* pack [[buffer(4)]],
     device Status& status [[buffer(5)]], constant Command& cmd [[buffer(6)]], uint gid [[thread_position_in_grid]]) {
@@ -328,7 +328,7 @@ kernel void nvivo_f1_heun_predict(
     k1[gid] = d; stage[gid] = state[gid] + cmd.dt * d;
     if (!isfinite(stage[gid])) fault(status, nonfinite | reject, lane, species);
 }
-kernel void nvivo_f1_heun_correct(
+[[host_name("nvivo_f1_heun_correct")]] kernel void nvivo_f1_heun_correct(
     device const float* state [[buffer(0)]], device const float* stage [[buffer(1)]], device const float* k1 [[buffer(2)]],
     device float* candidate [[buffer(3)]], device const float* parameters [[buffer(4)]],
     device const uchar* pack [[buffer(5)]], device Status& status [[buffer(6)]],
@@ -372,7 +372,7 @@ inline uint poisson(float lambda, uint lane, uint reaction, thread uint& draw,
     }
     return result;
 }
-kernel void nvivo_f2_sample_reactions(
+[[host_name("nvivo_f2_sample_reactions")]] kernel void nvivo_f2_sample_reactions(
     device const float* state [[buffer(0)]], device const float* parameters [[buffer(1)]],
     device int* events [[buffer(2)]], device const uchar* pack [[buffer(3)]],
     device Status& status [[buffer(4)]], constant Command& cmd [[buffer(5)]], uint gid [[thread_position_in_grid]]) {
@@ -392,7 +392,7 @@ kernel void nvivo_f2_sample_reactions(
     events[gid] = int(forward) - int(backward);
     atomic_fetch_max_explicit(&status.maximumRate, as_type<uint>(max(pair.x, pair.y)), memory_order_relaxed);
 }
-kernel void nvivo_f2_apply_reactions(
+[[host_name("nvivo_f2_apply_reactions")]] kernel void nvivo_f2_apply_reactions(
     device const float* state [[buffer(0)]], device float* candidate [[buffer(1)]],
     device const int* events [[buffer(2)]], device const uchar* pack [[buffer(3)]],
     device Status& status [[buffer(4)]], constant Command& cmd [[buffer(5)]], uint gid [[thread_position_in_grid]]) {
@@ -413,7 +413,7 @@ kernel void nvivo_f2_apply_reactions(
     candidate[gid] = float(value);
 }
 
-kernel void nvivo_f3_transport(
+[[host_name("nvivo_f3_transport")]] kernel void nvivo_f3_transport(
     device const float* source [[buffer(0)]], device float* destination [[buffer(1)]],
     device const Transport* transports [[buffer(2)]], device const float4* velocities [[buffer(3)]],
     device const float* fractions [[buffer(4)]], device Status& status [[buffer(5)]],
@@ -478,7 +478,7 @@ inline void event(device Event* events, device Status& status, uint lane, uint k
     }
     events[slot] = {lane, cmd.stepIndex, kind, subject, value, cmd.absoluteTime, flags, 0};
 }
-kernel void nvivo_execute_rules(
+[[host_name("nvivo_execute_rules")]] kernel void nvivo_execute_rules(
     device float* state [[buffer(0)]], device float2* temporal [[buffer(1)]],
     device const float* parameters [[buffer(2)]], device const uchar* pack [[buffer(3)]],
     device Event* events [[buffer(4)]], device Status& status [[buffer(5)]],
@@ -524,7 +524,7 @@ kernel void nvivo_execute_rules(
         }
     }
 }
-kernel void nvivo_evaluate_monitors(
+[[host_name("nvivo_evaluate_monitors")]] kernel void nvivo_evaluate_monitors(
     device const float* state [[buffer(0)]], device float2* temporal [[buffer(1)]],
     device const float* parameters [[buffer(2)]], device const uchar* pack [[buffer(3)]],
     device Event* events [[buffer(4)]], device Status& status [[buffer(5)]],
@@ -549,7 +549,7 @@ kernel void nvivo_evaluate_monitors(
         event(events, status, lane, 0x100u, i, value, monitor.flags, cmd);
     }
 }
-kernel void nvivo_validate_shadow(
+[[host_name("nvivo_validate_shadow")]] kernel void nvivo_validate_shadow(
     device const float* state [[buffer(0)]], device const uchar* pack [[buffer(1)]],
     device Status& status [[buffer(2)]], constant Command& cmd [[buffer(3)]], uint gid [[thread_position_in_grid]]) {
     uint species = gid / cmd.laneCount, lane = gid % cmd.laneCount;
@@ -564,7 +564,7 @@ kernel void nvivo_validate_shadow(
         fault(status, bounds | reject, lane, species);
     }
 }
-kernel void nvivo_publish(
+[[host_name("nvivo_publish")]] kernel void nvivo_publish(
     device const float* state [[buffer(0)]], device const Publication* requests [[buffer(1)]],
     device float* output [[buffer(2)]], device Status& status [[buffer(3)]],
     constant Command& cmd [[buffer(4)]], constant uint& count [[buffer(5)]], uint gid [[thread_position_in_grid]]) {

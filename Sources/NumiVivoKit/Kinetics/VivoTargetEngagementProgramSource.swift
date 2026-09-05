@@ -55,7 +55,7 @@ public enum VivoTargetEngagementProgramSource {
         var parameters = [parameter("kon", m.association), parameter("koff", m.dissociation),
                           parameter("kinact", m.inactivation), parameter("kturnover", m.targetTurnover)]
         var reactions = [reaction("association", [drugInput, targetSpecies[0]], [targetSpecies[1]], "kon"),
-                         reaction("dissociation", [targetSpecies[1]], [targetSpecies[0], drugInput], "koff"),
+                         reaction("dissociation", [targetSpecies[1]], [targetSpecies[0]], "koff"),
                          reaction("inactivation", [targetSpecies[1]], [targetSpecies[2]], "kinact"),
                          reaction("target-synthesis", [], [targetSpecies[0]], "kturnover", law: "zero-order")]
         for speciesID in targetSpecies { reactions.append(reaction("loss-" + speciesID, [speciesID], [], "kturnover")) }
@@ -65,7 +65,7 @@ public enum VivoTargetEngagementProgramSource {
                            "bounds": ["min": competitor.unboundConcentration.value, "max": competitor.unboundConcentration.value]])
             parameters += [parameter("competitor-kon", competitor.association), parameter("competitor-koff", competitor.dissociation)]
             reactions += [reaction("competitor-association", [competitorInput, targetSpecies[0]], [targetSpecies[3]], "competitor-kon"),
-                          reaction("competitor-dissociation", [targetSpecies[3]], [targetSpecies[0], competitorInput], "competitor-koff")]
+                          reaction("competitor-dissociation", [targetSpecies[3]], [targetSpecies[0]], "competitor-koff")]
         }
         var total: [String: Any] = ["species": targetSpecies[0]]
         for id in targetSpecies.dropFirst() { total = ["add": [total, ["species": id]]] }

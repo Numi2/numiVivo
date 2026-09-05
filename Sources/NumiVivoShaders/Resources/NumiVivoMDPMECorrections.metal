@@ -17,7 +17,7 @@ constant uint statusNonFinite=1u,statusInvalidGeometry=4u;
 inline void fail(device Status&s,uint flag,uint particle){atomic_fetch_or_explicit(&s.flags,flag,memory_order_relaxed);atomic_fetch_min_explicit(&s.firstParticle,particle,memory_order_relaxed);atomic_fetch_add_explicit(&s.violationCount,1u,memory_order_relaxed);}
 inline float3 minimumImage(float3 d,constant MDCommand&c){float3 f=float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));f-=rint(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;}
 
-kernel void nvivo_pme_exception_correction(device const float4*positions[[buffer(0)]],
+[[host_name("nvivo_pme_exception_correction")]] kernel void nvivo_pme_exception_correction(device const float4*positions[[buffer(0)]],
                                             device const float4*dynamics[[buffer(1)]],
                                             device float4*forceEnergy[[buffer(2)]],
                                             device const PairException*exceptions[[buffer(3)]],
@@ -34,7 +34,7 @@ kernel void nvivo_pme_exception_correction(device const float4*positions[[buffer
 
 /// Tin-foil Ewald with a uniform neutralizing background for a non-neutral cell.
 /// The correction is a scalar energy and therefore does not alter particle forces.
-kernel void nvivo_pme_background_energy(device float4*forceEnergy[[buffer(0)]],
+[[host_name("nvivo_pme_background_energy")]] kernel void nvivo_pme_background_energy(device float4*forceEnergy[[buffer(0)]],
                                          constant float&energy[[buffer(1)]],
                                          uint gid[[thread_position_in_grid]]){
     if(gid==0) forceEnergy[0].w += energy;

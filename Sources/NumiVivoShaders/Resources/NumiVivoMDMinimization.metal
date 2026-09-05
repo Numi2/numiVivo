@@ -21,7 +21,7 @@ inline float3 wrap(float3 p,constant Command&c){
 
 // Energy is counted on every particle, including virtual sites. The stationarity
 // residual is a projected force on independent massive particles only.
-kernel void nvivo_md_minimize_terms(
+[[host_name("nvivo_md_minimize_terms")]] kernel void nvivo_md_minimize_terms(
     device const float4*forceEnergy[[buffer(0)]],device const float4*direction[[buffer(1)]],
     device const float4*dynamics[[buffer(2)]],device float2*terms[[buffer(3)]],
     constant Command&c[[buffer(4)]],uint g[[thread_position_in_grid]]){
@@ -29,14 +29,14 @@ kernel void nvivo_md_minimize_terms(
     float residual=dynamics[g].y>0?length(direction[g].xyz):0.0f;
     terms[g]=float2(forceEnergy[g].w,residual);
 }
-kernel void nvivo_md_minimize_reduce_stage(
+[[host_name("nvivo_md_minimize_reduce_stage")]] kernel void nvivo_md_minimize_reduce_stage(
     device const float2*source[[buffer(0)]],device float2*destination[[buffer(1)]],
     constant ReduceCommand&c[[buffer(2)]],uint g[[thread_position_in_grid]]){
     uint first=2u*g;if(first>=c.sourceCount)return;
     float2 a=source[first],b=first+1u<c.sourceCount?source[first+1u]:float2(0);
     destination[g]=float2(a.x+b.x,max(a.y,b.y));
 }
-kernel void nvivo_md_minimize_position(
+[[host_name("nvivo_md_minimize_position")]] kernel void nvivo_md_minimize_position(
     device float4*position[[buffer(0)]],device const float4*direction[[buffer(1)]],
     device const float4*dynamics[[buffer(2)]],constant Command&md[[buffer(3)]],
     constant MinCommand&c[[buffer(4)]],uint g[[thread_position_in_grid]]){
@@ -46,7 +46,7 @@ kernel void nvivo_md_minimize_position(
     if(norm>c.maxDisplacementNM)delta*=c.maxDisplacementNM/norm;
     position[g]=float4(wrap(position[g].xyz+delta,md),0);
 }
-kernel void nvivo_md_zero_velocity(device float4*velocity[[buffer(0)]],
+[[host_name("nvivo_md_zero_velocity")]] kernel void nvivo_md_zero_velocity(device float4*velocity[[buffer(0)]],
     constant Command&c[[buffer(1)]],uint g[[thread_position_in_grid]]){
     if(g<c.particleCount)velocity[g]=0;
 }

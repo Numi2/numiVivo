@@ -79,7 +79,7 @@ inline float propensity(Reaction r, device const uint* counts, device const Chan
     return law(r, a, b, true);
 }
 
-kernel void nvivo_hybrid_clear(device Status& status [[buffer(17)]], uint gid [[thread_position_in_grid]]) {
+[[host_name("nvivo_hybrid_clear")]] kernel void nvivo_hybrid_clear(device Status& status [[buffer(17)]], uint gid [[thread_position_in_grid]]) {
     if (gid != 0) return;
     atomic_store_explicit(&status.flags, 0u, memory_order_relaxed);
     atomic_store_explicit(&status.firstLane, 0xffffffffu, memory_order_relaxed);
@@ -90,11 +90,11 @@ kernel void nvivo_hybrid_clear(device Status& status [[buffer(17)]], uint gid [[
     atomic_store_explicit(&status.reserved1, 0u, memory_order_relaxed);
     atomic_store_explicit(&status.reserved2, 0u, memory_order_relaxed);
 }
-kernel void nvivo_hybrid_reset_continuation(device Status& status [[buffer(17)]], uint gid [[thread_position_in_grid]]) {
+[[host_name("nvivo_hybrid_reset_continuation")]] kernel void nvivo_hybrid_reset_continuation(device Status& status [[buffer(17)]], uint gid [[thread_position_in_grid]]) {
     if (gid == 0) atomic_store_explicit(&status.unfinishedExactLanes, 0u, memory_order_relaxed);
 }
 
-kernel void nvivo_hybrid_rk_rates(
+[[host_name("nvivo_hybrid_rk_rates")]] kernel void nvivo_hybrid_rk_rates(
     device const float* current [[buffer(0)]], device const float* stage [[buffer(1)]],
     device const Reaction* reactions [[buffer(6)]], device const uint* modes [[buffer(11)]],
     device float* flux [[buffer(12)]], device Status& status [[buffer(17)]],
@@ -124,7 +124,7 @@ inline float derivative(uint species, uint lane, device const uint* offsets,
     }
     return sum;
 }
-kernel void nvivo_hybrid_rk_predict(
+[[host_name("nvivo_hybrid_rk_predict")]] kernel void nvivo_hybrid_rk_predict(
     device const float* current [[buffer(0)]], device float* stage [[buffer(1)]],
     device float* k1 [[buffer(3)]], device const uint* offsets [[buffer(8)]],
     device const Change* incidence [[buffer(9)]], device const uint* modes [[buffer(10)]],
@@ -137,7 +137,7 @@ kernel void nvivo_hybrid_rk_predict(
     k1[gid] = d; stage[gid] = value;
     if (!isfinite(value) || value < 0) fail(status, 8u, lane);
 }
-kernel void nvivo_hybrid_rk_correct(
+[[host_name("nvivo_hybrid_rk_correct")]] kernel void nvivo_hybrid_rk_correct(
     device const float* current [[buffer(0)]], device float* candidate [[buffer(2)]],
     device const float* k1 [[buffer(3)]], device const uint* offsets [[buffer(8)]],
     device const Change* incidence [[buffer(9)]], device const uint* modes [[buffer(10)]],
@@ -205,7 +205,7 @@ inline uint poisson(float lambda, uint lane, uint reaction, thread uint& draw,
     }
     valid = false; return 0;
 }
-kernel void nvivo_hybrid_tau_sample(
+[[host_name("nvivo_hybrid_tau_sample")]] kernel void nvivo_hybrid_tau_sample(
     device const uint* counts [[buffer(4)]], device const Reaction* reactions [[buffer(6)]],
     device const Change* changes [[buffer(7)]], device const uint* modes [[buffer(11)]],
     device uint* firings [[buffer(13)]], device Status& status [[buffer(17)]],
@@ -218,7 +218,7 @@ kernel void nvivo_hybrid_tau_sample(
     firings[gid] = poisson(rate * cmd.dt, lane, reaction, draw, cmd, valid);
     if (!valid) fail(status, 16u, lane, reaction);
 }
-kernel void nvivo_hybrid_tau_apply(
+[[host_name("nvivo_hybrid_tau_apply")]] kernel void nvivo_hybrid_tau_apply(
     device const uint* current [[buffer(4)]], device uint* candidate [[buffer(5)]],
     device const uint* offsets [[buffer(8)]], device const Change* incidence [[buffer(9)]],
     device const uint* modes [[buffer(10)]], device const uint* firings [[buffer(13)]],
@@ -241,7 +241,7 @@ kernel void nvivo_hybrid_tau_apply(
     candidate[gid] = uint(value);
 }
 
-kernel void nvivo_hybrid_exact_advance(
+[[host_name("nvivo_hybrid_exact_advance")]] kernel void nvivo_hybrid_exact_advance(
     device uint* counts [[buffer(5)]], device const Reaction* reactions [[buffer(6)]],
     device const Change* changes [[buffer(7)]], device const Cohort* cohorts [[buffer(14)]],
     device const uint* indices [[buffer(15)]], device Progress* progress [[buffer(16)]],
@@ -303,7 +303,7 @@ kernel void nvivo_hybrid_exact_advance(
     if (p.done == 0) atomic_fetch_add_explicit(&status.unfinishedExactLanes, 1u, memory_order_relaxed);
 }
 
-kernel void nvivo_hybrid_validate(
+[[host_name("nvivo_hybrid_validate")]] kernel void nvivo_hybrid_validate(
     device const float* values [[buffer(2)]], device const uint* modes [[buffer(10)]],
     device Status& status [[buffer(17)]], constant Command& cmd [[buffer(18)]],
     uint gid [[thread_position_in_grid]]) {
@@ -311,7 +311,7 @@ kernel void nvivo_hybrid_validate(
     if (species >= cmd.speciesCount) return;
     if (modes[species] == 3u && (!isfinite(values[gid]) || values[gid] < 0)) fail(status, 8u, gid % cmd.laneCount);
 }
-kernel void nvivo_hybrid_publish(
+[[host_name("nvivo_hybrid_publish")]] kernel void nvivo_hybrid_publish(
     device const float* values [[buffer(2)]], device const uint* counts [[buffer(5)]],
     device const uint* modes [[buffer(10)]], constant Command& cmd [[buffer(18)]],
     device const uint* requests [[buffer(19)]], device Publication* output [[buffer(20)]],

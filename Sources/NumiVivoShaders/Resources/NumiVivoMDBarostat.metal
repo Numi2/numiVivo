@@ -20,7 +20,7 @@ inline void fail(device Status&s,uint p){
 // One owner per molecule walks a breadth-first spanning tree. Unwrapping every
 // atom independently against the first atom fails for molecules larger than
 // half the box; every tree edge here is an explicit local topology relation.
-kernel void nvivo_md_barostat_centers(
+[[host_name("nvivo_md_barostat_centers")]] kernel void nvivo_md_barostat_centers(
     device const float4*positions[[buffer(0)]],device const float4*dynamics[[buffer(1)]],
     device const uint*offsets[[buffer(2)]],device const uint*members[[buffer(3)]],
     device const uint*parents[[buffer(4)]],device const uint*edgeOffsets[[buffer(5)]],
@@ -51,7 +51,7 @@ kernel void nvivo_md_barostat_centers(
     centers[component]=float4(sum/mass,mass);
 }
 
-kernel void nvivo_md_barostat_scale(
+[[host_name("nvivo_md_barostat_scale")]] kernel void nvivo_md_barostat_scale(
     device float4*positions[[buffer(0)]],device const float4*dynamics[[buffer(1)]],
     device const uint*componentIndices[[buffer(2)]],device const float4*centers[[buffer(3)]],
     device const float4*unwrapped[[buffer(4)]],device Status&status[[buffer(5)]],

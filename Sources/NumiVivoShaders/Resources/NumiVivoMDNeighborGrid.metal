@@ -54,14 +54,14 @@ inline float3 minimumImage(float3 d, constant Command& c) {
     return c.cellA.xyz*f.x + c.cellB.xyz*f.y + c.cellC.xyz*f.z;
 }
 
-kernel void nvivo_md_grid_clear(device atomic_uint* counts [[buffer(0)]],
+[[host_name("nvivo_md_grid_clear")]] kernel void nvivo_md_grid_clear(device atomic_uint* counts [[buffer(0)]],
                                 device Status& status [[buffer(1)]],
                                 constant Command& c [[buffer(2)]],
                                 uint gid [[thread_position_in_grid]]) {
     if (gid < c.cellCount) atomic_store_explicit(&counts[gid], 0u, memory_order_relaxed);
 }
 
-kernel void nvivo_md_grid_bin(device const float4* positions [[buffer(0)]],
+[[host_name("nvivo_md_grid_bin")]] kernel void nvivo_md_grid_bin(device const float4* positions [[buffer(0)]],
                               device atomic_uint* counts [[buffer(1)]],
                               device uint* particles [[buffer(2)]],
                               device Status& status [[buffer(3)]],
@@ -77,7 +77,7 @@ kernel void nvivo_md_grid_bin(device const float4* positions [[buffer(0)]],
     particles[ulong(cell)*ulong(c.cellCapacity)+slot] = gid;
 }
 
-kernel void nvivo_md_grid_build_neighbors(device const float4* positions [[buffer(0)]],
+[[host_name("nvivo_md_grid_build_neighbors")]] kernel void nvivo_md_grid_build_neighbors(device const float4* positions [[buffer(0)]],
                                            device const atomic_uint* counts [[buffer(1)]],
                                            device const uint* particles [[buffer(2)]],
                                            device uint* neighborCounts [[buffer(3)]],

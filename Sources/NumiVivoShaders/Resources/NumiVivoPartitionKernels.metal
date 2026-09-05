@@ -94,7 +94,7 @@ inline float derivative(
     return rate;
 }
 
-kernel void nvivo_partition_clear_status(
+[[host_name("nvivo_partition_clear_status")]] kernel void nvivo_partition_clear_status(
     device RuntimeStatus* status [[buffer(0)]],
     uint index [[thread_position_in_grid]]
 ) {
@@ -109,7 +109,7 @@ kernel void nvivo_partition_clear_status(
     atomic_store_explicit(&status->reserved2, 0u, memory_order_relaxed);
 }
 
-kernel void nvivo_partition_stage(
+[[host_name("nvivo_partition_stage")]] kernel void nvivo_partition_stage(
     const device float* baseState [[buffer(0)]],
     device float* stageState [[buffer(1)]],
     device float* firstDerivative [[buffer(2)]],
@@ -127,7 +127,7 @@ kernel void nvivo_partition_stage(
     stageState[element] = baseState[element] + command.deltaTime * rate;
 }
 
-kernel void nvivo_partition_finalize(
+[[host_name("nvivo_partition_finalize")]] kernel void nvivo_partition_finalize(
     const device float* baseState [[buffer(0)]],
     const device float* stageState [[buffer(1)]],
     const device float* firstDerivative [[buffer(2)]],
@@ -146,7 +146,7 @@ kernel void nvivo_partition_finalize(
         0.5f * command.deltaTime * (firstDerivative[element] + secondDerivative);
 }
 
-kernel void nvivo_partition_validate(
+[[host_name("nvivo_partition_validate")]] kernel void nvivo_partition_validate(
     device float* candidateState [[buffer(0)]],
     const device AnalyteRecord* analytes [[buffer(1)]],
     constant RuntimeCommand& command [[buffer(2)]],

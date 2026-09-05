@@ -53,7 +53,7 @@ inline float2 ljCoefficients(uint owner,uint other,device const uint*types,devic
 }
 
 // Real-space half of Ewald. The reciprocal engine supplies the complementary erf term.
-kernel void nvivo_pme_realspace_neighbor(device const float4*p[[buffer(0)]],
+[[host_name("nvivo_pme_realspace_neighbor")]] kernel void nvivo_pme_realspace_neighbor(device const float4*p[[buffer(0)]],
                                          device float4*fe[[buffer(1)]],
                                          device const float4*dyn[[buffer(2)]],
                                          device const uint*types[[buffer(3)]],
@@ -99,9 +99,9 @@ inline void bspline4(float t,thread float w[4],thread float dw[4]){
 }
 inline float3 fractional(float3 p,constant PMECommand&c){float3 f=float3(dot(c.reciprocalA.xyz,p),dot(c.reciprocalB.xyz,p),dot(c.reciprocalC.xyz,p));return f-floor(f);}
 
-kernel void nvivo_pme_clear_grid(device float2*grid[[buffer(0)]],constant PMECommand&c[[buffer(1)]],uint gid[[thread_position_in_grid]]){if(gid<c.gridPointCount)grid[gid]=0;}
+[[host_name("nvivo_pme_clear_grid")]] kernel void nvivo_pme_clear_grid(device float2*grid[[buffer(0)]],constant PMECommand&c[[buffer(1)]],uint gid[[thread_position_in_grid]]){if(gid<c.gridPointCount)grid[gid]=0;}
 
-kernel void nvivo_pme_spread(device const float4*positions[[buffer(0)]],device const float4*dynamics[[buffer(1)]],device atomic_uint*gridRealBits[[buffer(2)]],device Status&s[[buffer(3)]],constant PMECommand&c[[buffer(4)]],uint gid[[thread_position_in_grid]]){
+[[host_name("nvivo_pme_spread")]] kernel void nvivo_pme_spread(device const float4*positions[[buffer(0)]],device const float4*dynamics[[buffer(1)]],device atomic_uint*gridRealBits[[buffer(2)]],device Status&s[[buffer(3)]],constant PMECommand&c[[buffer(4)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.particleCount)return;float q=dynamics[gid].z;if(q==0)return;float3 f=fractional(positions[gid].xyz,c);
     float3 u=f*float3(c.gridX,c.gridY,c.gridZ);int3 base=int3(floor(u))-1;float3 t=u-floor(u);
     float wx[4],wy[4],wz[4],d[4];bspline4(t.x,wx,d);bspline4(t.y,wy,d);bspline4(t.z,wz,d);
@@ -112,11 +112,11 @@ inline uint reverseBitsN(uint v,uint bits){uint r=0;for(uint i=0;i<bits;++i){r=(
 inline uint log2Exact(uint n){return 31u-clz(n);}
 inline uint3 decodeGrid(uint index,constant PMECommand&c){uint x=index%c.gridX;uint q=index/c.gridX;uint y=q%c.gridY;uint z=q/c.gridY;return uint3(x,y,z);}
 
-kernel void nvivo_pme_bit_reverse(device const float2*src[[buffer(0)]],device float2*dst[[buffer(1)]],constant PMECommand&c[[buffer(2)]],uint gid[[thread_position_in_grid]]){
+[[host_name("nvivo_pme_bit_reverse")]] kernel void nvivo_pme_bit_reverse(device const float2*src[[buffer(0)]],device float2*dst[[buffer(1)]],constant PMECommand&c[[buffer(2)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.gridPointCount)return;uint3 q=decodeGrid(gid,c);uint n=c.axis==0?c.gridX:(c.axis==1?c.gridY:c.gridZ);uint bits=log2Exact(n);uint coordinate=c.axis==0?q.x:(c.axis==1?q.y:q.z);uint r=reverseBitsN(coordinate,bits);if(c.axis==0)q.x=r;else if(c.axis==1)q.y=r;else q.z=r;dst[gridIndex(q.x,q.y,q.z,c)]=src[gid];
 }
 
-kernel void nvivo_pme_fft_stage(device const float2*src[[buffer(0)]],device float2*dst[[buffer(1)]],constant PMECommand&c[[buffer(2)]],uint gid[[thread_position_in_grid]]){
+[[host_name("nvivo_pme_fft_stage")]] kernel void nvivo_pme_fft_stage(device const float2*src[[buffer(0)]],device float2*dst[[buffer(1)]],constant PMECommand&c[[buffer(2)]],uint gid[[thread_position_in_grid]]){
     uint n=c.axis==0?c.gridX:(c.axis==1?c.gridY:c.gridZ);uint lineCount=c.gridPointCount/n;uint butterflies=lineCount*(n>>1);if(gid>=butterflies)return;
     uint line=gid/(n>>1),b=gid%(n>>1);uint span=1u<<(c.stage+1u),half=span>>1u,group=b/half,j=b%half;uint i0=group*span+j,i1=i0+half;
     uint3 q;if(c.axis==0){uint y=line%c.gridY,z=line/c.gridY;q=uint3(i0,y,z);}else if(c.axis==1){uint x=line%c.gridX,z=line/c.gridX;q=uint3(x,i0,z);}else{uint x=line%c.gridX,y=line/c.gridX;q=uint3(x,y,i0);}
@@ -126,16 +126,16 @@ kernel void nvivo_pme_fft_stage(device const float2*src[[buffer(0)]],device floa
 
 inline int signedMode(uint index,uint n){return index<=n/2?int(index):int(index)-int(n);}
 inline float sincPi(float x){if(abs(x)<1e-7f)return 1.0f;float p=3.141592653589793f*x;return sin(p)/p;}
-kernel void nvivo_pme_influence(device const float2*chargeK[[buffer(0)]],device float2*potentialK[[buffer(1)]],constant PMECommand&c[[buffer(2)]],uint gid[[thread_position_in_grid]]){
+[[host_name("nvivo_pme_influence")]] kernel void nvivo_pme_influence(device const float2*chargeK[[buffer(0)]],device float2*potentialK[[buffer(1)]],constant PMECommand&c[[buffer(2)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.gridPointCount)return;uint3 q=decodeGrid(gid,c);int mx=signedMode(q.x,c.gridX),my=signedMode(q.y,c.gridY),mz=signedMode(q.z,c.gridZ);if(mx==0&&my==0&&mz==0){potentialK[gid]=0;return;}
     float3 k=6.283185307179586f*(float(mx)*c.reciprocalA.xyz+float(my)*c.reciprocalB.xyz+float(mz)*c.reciprocalC.xyz);float k2=dot(k,k);float beta=c.betaPerNM;
     float sx=sincPi(float(mx)/float(c.gridX)),sy=sincPi(float(my)/float(c.gridY)),sz=sincPi(float(mz)/float(c.gridZ));float b=sx*sx*sx*sx*sy*sy*sy*sy*sz*sz*sz*sz;float deconv=max(b*b,1e-12f);
     float influence=float(c.gridPointCount)*(c.coulombPrefactor/c.volumeNM3)*12.566370614359172f*exp(-k2/(4.0f*beta*beta))/(k2*deconv);potentialK[gid]=chargeK[gid]*influence;
 }
 
-kernel void nvivo_pme_scale_inverse(device float2*grid[[buffer(0)]],constant PMECommand&c[[buffer(1)]],uint gid[[thread_position_in_grid]]){if(gid<c.gridPointCount)grid[gid]*=c.inverseGridCount;}
+[[host_name("nvivo_pme_scale_inverse")]] kernel void nvivo_pme_scale_inverse(device float2*grid[[buffer(0)]],constant PMECommand&c[[buffer(1)]],uint gid[[thread_position_in_grid]]){if(gid<c.gridPointCount)grid[gid]*=c.inverseGridCount;}
 
-kernel void nvivo_pme_gather(device const float4*positions[[buffer(0)]],device const float4*dynamics[[buffer(1)]],device const float2*potential[[buffer(2)]],device float4*forceEnergy[[buffer(3)]],device Status&s[[buffer(4)]],constant PMECommand&c[[buffer(5)]],uint gid[[thread_position_in_grid]]){
+[[host_name("nvivo_pme_gather")]] kernel void nvivo_pme_gather(device const float4*positions[[buffer(0)]],device const float4*dynamics[[buffer(1)]],device const float2*potential[[buffer(2)]],device float4*forceEnergy[[buffer(3)]],device Status&s[[buffer(4)]],constant PMECommand&c[[buffer(5)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.particleCount)return;float qcharge=dynamics[gid].z;if(qcharge==0)return;float3 f=fractional(positions[gid].xyz,c),u=f*float3(c.gridX,c.gridY,c.gridZ);int3 base=int3(floor(u))-1;float3 t=u-floor(u);
     float wx[4],wy[4],wz[4],dx[4],dy[4],dz[4];bspline4(t.x,wx,dx);bspline4(t.y,wy,dy);bspline4(t.z,wz,dz);float phi=0,dux=0,duy=0,duz=0;
     for(uint iz=0;iz<4;++iz)for(uint iy=0;iy<4;++iy)for(uint ix=0;ix<4;++ix){uint x=wrapIndex(base.x+int(ix),c.gridX),y=wrapIndex(base.y+int(iy),c.gridY),z=wrapIndex(base.z+int(iz),c.gridZ);float v=potential[gridIndex(x,y,z,c)].x;phi+=wx[ix]*wy[iy]*wz[iz]*v;dux+=dx[ix]*wy[iy]*wz[iz]*v;duy+=wx[ix]*dy[iy]*wz[iz]*v;duz+=wx[ix]*wy[iy]*dz[iz]*v;}
