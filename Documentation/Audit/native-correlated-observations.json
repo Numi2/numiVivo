@@ -1,0 +1,139 @@
+{
+  "artifactStoreAndCLIExecuted": false,
+  "backend": "CPU FP64; portable matrix multiplication",
+  "checksPassed": 29,
+  "compiler": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "fullRepositoryCommitBuilt": false,
+  "inputSourceSHA256": {
+    "Sources/NumiVivoKit/Embedding/VivoFragmentNumberMatching.swift": "ebe3fc5d87dc5e3b98db25ccb212179bfe6b07fd016622b39d60ae6c36067d11",
+    "Sources/NumiVivoKit/ManyBody/VivoCASSCF.swift": "e2f118db0dfe9b9c197738c5bea0fb13439497a259b6c75de3a0c483149ee018",
+    "Sources/NumiVivoKit/ManyBody/VivoConfigurationInteraction.swift": "f47a44742b71e350afaa6327680e16ebfe266b58db63177b8ddc986bddf256a1",
+    "Sources/NumiVivoKit/ManyBody/VivoCoupledCluster.swift": "a9b9449509079b75c680a2939452a98e6bef099ec44bcba2bbf415af0878aac8",
+    "Sources/NumiVivoKit/ManyBody/VivoEmbeddedHamiltonian.swift": "2406777893f3ffccbc26343088fb16330eacbe1ef15bcca7a1633e6e05225a26",
+    "Sources/NumiVivoKit/ManyBody/VivoManyBodySolver.swift": "28f37f8590a5a4aa86642f8b791df2f90a4a7233d810f19fd3d6f1c0d3cdf902",
+    "Sources/NumiVivoKit/QM/VivoElectronicTypes.swift": "bb6181373dc13855711601150f6778807f7308cd7ef165f373d3e9189576f18a",
+    "Sources/NumiVivoKit/QM/VivoGaussianElectrostaticPotential.swift": "db45fb34134215ff686eec5faa47f2ca1b16c34e97fbea2de80dea6536eb520c",
+    "Sources/NumiVivoKit/QM/VivoGaussianIntegrals.swift": "c032ed5605a3123f4fd0b1a70cd9a692da3a818f3dde15d49e4d1cd43d838b38",
+    "Sources/NumiVivoKit/QM/VivoHartreeFock.swift": "915a5621e0ec88f7d6b115b8666db8f407524d4691de06ddb120c4aed4b14ca8",
+    "Sources/NumiVivoKit/QM/VivoLDAFunctional.swift": "5b1c6b87209b337df3bb2685f3a7d9ca202f8b95872bd48e5b112703f3282d56",
+    "Sources/NumiVivoKit/QM/VivoQMDenseAlgebra.swift": "4bd3c4d4efb11d6186f1433fe3a3c6001a5727024f3c26a18facb2f2fd5e39ae",
+    "Sources/NumiVivoKit/QM/VivoRestrictedLDA.swift": "324a37c046606f42224e951d5c6a19cef62e958d33834a02687e81fda0395f62",
+    "Sources/NumiVivoKit/QMEnv/VivoCPCM.swift": "d4ca154abda0a1198d1cb0825037b16daa2d692c894298555214e93e5e17b524",
+    "Sources/NumiVivoKit/QMEnv/VivoCPCMOperator.swift": "939888972f19937ba3fe35cef07b1772b3c92a0c01c19f214a26e369a6e6d5fe",
+    "Sources/NumiVivoKit/QMEnv/VivoCPCMRHF.swift": "ca17c8ea9908154ab65c7de3289c501cf7721fe7a6f8421938c58231ed3add7e",
+    "Tools/NativeChemistry/CorrelatedChemistryChecks.swift": "49a8b46584792d1833bc9600e1943b1b1e6d3014d2ab477ffaca8731d18ee598"
+  },
+  "limitations": [
+    "H2/STO-3G and explicitly synthetic Hamiltonians only; no paper reaction or BTK calculation.",
+    "Internal numerical/derivative consistency checks, not an independent PySCF/ORCA conformance suite.",
+    "This executable excludes the artifact store, CLI integration and Metal; it does not qualify the full package.",
+    "CCSD uses a bounded determinant evaluation sector; CASSCF uses small active-space FCI.",
+    "Continuum-solvent output is electrostatic polarization, not a complete Gibbs free energy."
+  ],
+  "observations": [
+    {
+      "label": "h2CCSDEnergy",
+      "unit": "Hartree",
+      "value": -1.1372759437827185
+    },
+    {
+      "label": "h2FCIEnergy",
+      "unit": "Hartree",
+      "value": -1.1372759437827167
+    },
+    {
+      "label": "h2CCSDResidual",
+      "unit": "Hartree",
+      "value": 1.0880185641326534e-14
+    },
+    {
+      "label": "casMaximumGradientError",
+      "unit": "Hartree/radian",
+      "value": 1.3204924653731354e-10
+    },
+    {
+      "label": "initialCASCI",
+      "unit": "Hartree",
+      "value": -5.493681281824157
+    },
+    {
+      "label": "optimizedCASSCF",
+      "unit": "Hartree",
+      "value": -5.496431495531005
+    },
+    {
+      "label": "casscfGradientNorm",
+      "unit": "Hartree/radian",
+      "value": 1.3225166558974113e-08
+    },
+    {
+      "label": "fourElectronCCSD",
+      "unit": "Hartree",
+      "value": -5.498080338933264
+    },
+    {
+      "label": "fourElectronFCI",
+      "unit": "Hartree",
+      "value": -5.498080961367335
+    },
+    {
+      "label": "fourElectronCCSDResidual",
+      "unit": "Hartree",
+      "value": 1.439958376442167e-16
+    },
+    {
+      "label": "ccResponseDerivativeError",
+      "unit": "dimensionless",
+      "value": 7.723344316520886e-12
+    },
+    {
+      "label": "matchedChemicalPotential",
+      "unit": "Hartree",
+      "value": -1.3
+    },
+    {
+      "label": "matchedPopulationResidual",
+      "unit": "electrons",
+      "value": -1.1102230246251565e-16
+    },
+    {
+      "label": "gasLDA",
+      "unit": "Hartree",
+      "value": -1.1213321542263532
+    },
+    {
+      "label": "integratedLDAElectrons",
+      "unit": "electrons",
+      "value": 2.0000110623585297
+    },
+    {
+      "label": "solvatedLDA",
+      "unit": "Hartree",
+      "value": -1.1214642808666824
+    },
+    {
+      "label": "solvatedLDAPolarization",
+      "unit": "Hartree",
+      "value": -0.00013212664032908488
+    },
+    {
+      "label": "solvatedLDASCFResidual",
+      "unit": "Hartree",
+      "value": 1.1725623064768283e-13
+    },
+    {
+      "label": "cpcmTrueRelativeResidual",
+      "unit": "dimensionless",
+      "value": 7.636950469433846e-11
+    },
+    {
+      "label": "solvatedRHF",
+      "unit": "Hartree",
+      "value": -1.1168464518160985
+    }
+  ],
+  "platform": "Linux 6.18.35 x86_64",
+  "repositoryInspected": "Numi2/numiVivo at b927e56d12b017f32f41951c878c08af0a20b0f8",
+  "schema": "numivivo.org/correlated-regression/v1",
+  "scope": "Selected portable numerical source snapshots; source SHA-256 identifies exactly what ran. No full-tree or Apple execution qualification."
+}
