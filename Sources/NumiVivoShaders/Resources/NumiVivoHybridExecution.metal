@@ -52,9 +52,9 @@ inline float uniform(uint lane, uint stream, uint domain, thread uint& draw, con
     // FP32 midpoint grid strictly inside (0,1), even for the largest UInt32.
     return (float(bits >> 9) + 0.5f) * 0x1p-23f;
 }
-inline float hill(float a, float half, float exponent) {
+inline float hill(float a, float halfSaturation, float exponent) {
     if (a <= 0) return 0;
-    float z = exponent * (log(a) - log(half));
+    float z = exponent * (log(a) - log(halfSaturation));
     return z >= 0 ? 1.0f / (1.0f + exp(-z)) : exp(z) / (1.0f + exp(z));
 }
 inline float law(Reaction r, float a, float b, bool discrete) {

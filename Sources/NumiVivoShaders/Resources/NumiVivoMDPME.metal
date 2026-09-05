@@ -1,4 +1,5 @@
 #include <metal_stdlib>
+#include "NumiVivoErrorFunctions.metalh"
 using namespace metal;
 
 namespace nvivo_pme {
@@ -52,7 +53,7 @@ inline float2 ljCoefficients(uint owner,uint other,device const uint*types,devic
     int ex=findException(owner,other,eo,ep,ei);if(ex>=0){PairException v=exs[ex];cs=v.scales.x;ls=v.scales.y;if((v.flags&1u)!=0)coeff=v.overrideC12C6;}return coeff;
 }
 
-// Real-space half of Ewald. The reciprocal engine supplies the complementary erf term.
+// Real-space halfSpan of Ewald. The reciprocal engine supplies the complementary erf term.
 [[host_name("nvivo_pme_realspace_neighbor")]] kernel void nvivo_pme_realspace_neighbor(device const float4*p[[buffer(0)]],
                                          device float4*fe[[buffer(1)]],
                                          device const float4*dyn[[buffer(2)]],
@@ -76,7 +77,7 @@ inline float2 ljCoefficients(uint owner,uint other,device const uint*types,devic
         float ir6=ir2*ir2*ir2,ir12=ir6*ir6;float lj=ls*(coeff.x*ir12-coeff.y*ir6);
         float ljScale=ls*(12.0f*coeff.x*ir12-6.0f*coeff.y*ir6)*ir2;
         float qq=dyn[g].z*dyn[j].z;float ce=0,cf=0;
-        if(cs!=0&&qq!=0){float br=beta*r;float erfcv=erfc(br);float gaussian=exp(-br*br);
+        if(cs!=0&&qq!=0){float br=beta*r;float erfcv=nvivo_math::erfc(br);float gaussian=exp(-br*br);
             ce=c.coulombPrefactor*qq*erfcv*ir*cs;
             cf=c.coulombPrefactor*qq*cs*(erfcv*ir*ir2+(2.0f*beta*0.5641895835477563f)*gaussian*ir2);
         }
@@ -118,7 +119,7 @@ inline uint3 decodeGrid(uint index,constant PMECommand&c){uint x=index%c.gridX;u
 
 [[host_name("nvivo_pme_fft_stage")]] kernel void nvivo_pme_fft_stage(device const float2*src[[buffer(0)]],device float2*dst[[buffer(1)]],constant PMECommand&c[[buffer(2)]],uint gid[[thread_position_in_grid]]){
     uint n=c.axis==0?c.gridX:(c.axis==1?c.gridY:c.gridZ);uint lineCount=c.gridPointCount/n;uint butterflies=lineCount*(n>>1);if(gid>=butterflies)return;
-    uint line=gid/(n>>1),b=gid%(n>>1);uint span=1u<<(c.stage+1u),half=span>>1u,group=b/half,j=b%half;uint i0=group*span+j,i1=i0+half;
+    uint line=gid/(n>>1),b=gid%(n>>1);uint span=1u<<(c.stage+1u),halfSpan=span>>1u,group=b/halfSpan,j=b%halfSpan;uint i0=group*span+j,i1=i0+halfSpan;
     uint3 q;if(c.axis==0){uint y=line%c.gridY,z=line/c.gridY;q=uint3(i0,y,z);}else if(c.axis==1){uint x=line%c.gridX,z=line/c.gridX;q=uint3(x,i0,z);}else{uint x=line%c.gridX,y=line/c.gridX;q=uint3(x,y,i0);}
     uint idx0=gridIndex(q.x,q.y,q.z,c);if(c.axis==0)q.x=i1;else if(c.axis==1)q.y=i1;else q.z=i1;uint idx1=gridIndex(q.x,q.y,q.z,c);
     float sign=c.inverse!=0?1.0f:-1.0f;float angle=sign*6.283185307179586f*float(j)/float(span);float2 tw=float2(cos(angle),sin(angle));float2 v=src[idx1];float2 t=float2(tw.x*v.x-tw.y*v.y,tw.x*v.y+tw.y*v.x),u=src[idx0];dst[idx0]=u+t;dst[idx1]=u-t;

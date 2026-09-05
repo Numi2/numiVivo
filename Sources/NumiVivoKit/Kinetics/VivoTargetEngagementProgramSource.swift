@@ -81,9 +81,9 @@ public enum VivoTargetEngagementProgramSource {
             "spec": ["minimumFidelity": "F1", "target": ["cellType": "declared-kinetic-context"],
                 "inputs": inputs, "species": species, "parameters": parameters, "reactions": reactions,
                 "constraints": [["id": "normalized-target-balance", "severity": "error", "response": "reject-step",
-                    "expression": ["any": [
-                        ["gt": [total, ["literal": ["value": 1.0001, "unit": "fraction"]]]],
-                        ["lt": [total, ["literal": ["value": 0.9999, "unit": "fraction"]]]]
+                    "expression": ["all": [
+                        ["lte": [total, ["literal": ["value": 1.0001, "unit": "fraction"]]]],
+                        ["gte": [total, ["literal": ["value": 0.9999, "unit": "fraction"]]]]
                     ]], "message": "Target fraction balance exceeded the declared numerical tolerance."]],
                 "termination": [["id": "bounded-computational-horizon", "when": ["gt": [
                     ["time": true], ["literal": ["value": stopTime, "unit": "s"]]]],

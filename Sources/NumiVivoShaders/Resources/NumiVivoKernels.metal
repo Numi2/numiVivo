@@ -453,19 +453,19 @@ inline float reaction_rate(constant NVivoProgramArguments& program,
             const auto inputTerm = program.stoichiometry[reaction.reactantOffset];
             const float input = species_value(program, uniforms, inputTerm.speciesIndex, cell, fault);
             const float maximum = parameter_value(program, uniforms, reaction, 0u, fault);
-            const float half = max(parameter_value(program, uniforms, reaction, 1u, fault), kSmallValue);
+            const float halfSaturation = max(parameter_value(program, uniforms, reaction, 1u, fault), kSmallValue);
             const float exponent = max(parameter_value(program, uniforms, reaction, 2u, fault), kSmallValue);
             const float numerator = pow(input, exponent);
-            return maximum * numerator / (pow(half, exponent) + numerator + kSmallValue);
+            return maximum * numerator / (pow(halfSaturation, exponent) + numerator + kSmallValue);
         }
         case 3u: {
             if (reaction.reactantCount == 0u) { fault = true; return 0.0f; }
             const auto inputTerm = program.stoichiometry[reaction.reactantOffset];
             const float input = species_value(program, uniforms, inputTerm.speciesIndex, cell, fault);
             const float maximum = parameter_value(program, uniforms, reaction, 0u, fault);
-            const float half = max(parameter_value(program, uniforms, reaction, 1u, fault), kSmallValue);
+            const float halfSaturation = max(parameter_value(program, uniforms, reaction, 1u, fault), kSmallValue);
             const float exponent = max(parameter_value(program, uniforms, reaction, 2u, fault), kSmallValue);
-            const float halfPower = pow(half, exponent);
+            const float halfPower = pow(halfSaturation, exponent);
             return maximum * halfPower / (halfPower + pow(input, exponent) + kSmallValue);
         }
         case 4u: {
@@ -473,8 +473,8 @@ inline float reaction_rate(constant NVivoProgramArguments& program,
             const auto inputTerm = program.stoichiometry[reaction.reactantOffset];
             const float input = species_value(program, uniforms, inputTerm.speciesIndex, cell, fault);
             const float maximum = parameter_value(program, uniforms, reaction, 0u, fault);
-            const float half = max(parameter_value(program, uniforms, reaction, 1u, fault), kSmallValue);
-            return maximum * input / (half + input);
+            const float halfSaturation = max(parameter_value(program, uniforms, reaction, 1u, fault), kSmallValue);
+            return maximum * input / (halfSaturation + input);
         }
         case 5u: {
             const float forward = parameter_value(program, uniforms, reaction, 0u, fault) * reactants;
@@ -504,8 +504,8 @@ inline float reaction_rate(constant NVivoProgramArguments& program,
             const float sourceValue = species_value(program, uniforms, source, cell, fault);
             const float destinationValue = species_value(program, uniforms, destination, cell, fault);
             const float maximum = parameter_value(program, uniforms, reaction, 0u, fault);
-            const float half = max(parameter_value(program, uniforms, reaction, 1u, fault), kSmallValue);
-            return maximum * (sourceValue / (half + sourceValue) - destinationValue / (half + destinationValue));
+            const float halfSaturation = max(parameter_value(program, uniforms, reaction, 1u, fault), kSmallValue);
+            return maximum * (sourceValue / (halfSaturation + sourceValue) - destinationValue / (halfSaturation + destinationValue));
         }
         case 8u:
             return parameter_value(program, uniforms, reaction, 0u, fault) * reactants;

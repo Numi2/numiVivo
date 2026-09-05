@@ -1,4 +1,5 @@
 #include <metal_stdlib>
+#include "NumiVivoErrorFunctions.metalh"
 using namespace metal;
 
 namespace nvivo_pme_correction {
@@ -28,7 +29,7 @@ inline float3 minimumImage(float3 d,constant MDCommand&c){float3 f=float3(dot(c.
                                             constant MDCommand&c[[buffer(8)]],
                                             uint gid[[thread_position_in_grid]]){
     if(gid>=c.particleCount)return;float3 force=0;float energy=0;float beta=c.reactionFieldK;
-    for(uint k=offsets[gid];k<offsets[gid+1];++k){uint other=partners[k];PairException ex=exceptions[indices[k]];float deltaScale=ex.scales.x-1.0f;if(deltaScale==0.0f)continue;float3 d=minimumImage(positions[gid].xyz-positions[other].xyz,c);float r2=dot(d,d);if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)||!isfinite(r2)){fail(status,statusInvalidGeometry,gid);continue;}float ir=rsqrt(r2),r=r2*ir,ir2=ir*ir,br=beta*r;float erfv=erf(br),gaussian=exp(-br*br);float qq=dynamics[gid].z*dynamics[other].z;if(qq==0)continue;float pref=c.coulombPrefactor*qq*deltaScale;energy+=0.5f*pref*erfv*ir;float scale=pref*(erfv*ir*ir2-(2.0f*beta*0.5641895835477563f)*gaussian*ir2);force+=scale*d;}
+    for(uint k=offsets[gid];k<offsets[gid+1];++k){uint other=partners[k];PairException ex=exceptions[indices[k]];float deltaScale=ex.scales.x-1.0f;if(deltaScale==0.0f)continue;float3 d=minimumImage(positions[gid].xyz-positions[other].xyz,c);float r2=dot(d,d);if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)||!isfinite(r2)){fail(status,statusInvalidGeometry,gid);continue;}float ir=rsqrt(r2),r=r2*ir,ir2=ir*ir,br=beta*r;float erfv=nvivo_math::erf(br),gaussian=exp(-br*br);float qq=dynamics[gid].z*dynamics[other].z;if(qq==0)continue;float pref=c.coulombPrefactor*qq*deltaScale;energy+=0.5f*pref*erfv*ir;float scale=pref*(nvivo_math::erfMinusGaussian(br)*ir*ir2);force+=scale*d;}
     float4 value=forceEnergy[gid]+float4(force,energy);if(!all(isfinite(value))){fail(status,statusNonFinite,gid);return;}forceEnergy[gid]=value;
 }
 

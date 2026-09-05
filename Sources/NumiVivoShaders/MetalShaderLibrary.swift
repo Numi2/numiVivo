@@ -145,7 +145,15 @@ private final class NumiVivoRuntimeLibraryCache: @unchecked Sendable {
             ?? Bundle.module.url(forResource: module, withExtension: "metal", subdirectory: "Resources")
         guard let url else { throw NumiVivoShaderError.sourceResourceMissing }
         do {
-            let source = try String(contentsOf: url, encoding: .utf8)
+            var source = try String(contentsOf: url, encoding: .utf8)
+            let mathInclude = "#include \"NumiVivoErrorFunctions.metalh\""
+            if source.contains(mathInclude) {
+                guard let header = Bundle.module.url(forResource: "NumiVivoErrorFunctions", withExtension: "metalh")
+                    ?? Bundle.module.url(forResource: "NumiVivoErrorFunctions", withExtension: "metalh", subdirectory: "Resources") else {
+                    throw NumiVivoShaderError.sourceResourceMissing
+                }
+                source = source.replacingOccurrences(of: mathInclude, with: try String(contentsOf: header, encoding: .utf8))
+            }
             let options = MTLCompileOptions()
             options.fastMathEnabled = false
             let library = try device.makeLibrary(source: source, options: options)

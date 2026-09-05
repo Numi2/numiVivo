@@ -52,7 +52,7 @@ import NumiVivoShaders
             .init(speciesIndex: compiled.targetSpeciesIndices[0], laneIndex: 0, value: 0)])) }
         #expect(try await runtime.snapshot() == changed)
         let pending = try await runtime.prepareStep(.init(timeStep: 0.001, permitAdaptiveReduction: false))
-        #expect(pending.canCommit)
+        try #require(pending.canCommit)
         await rejects { _ = try await runtime.snapshot() }
         await rejects { try await runtime.apply(intervention: .coupling([
             .init(speciesIndex: compiled.drugSpeciesIndex, laneIndex: 0, value: 0)])) }
