@@ -88,7 +88,11 @@ public indirect enum VivoJSONValue: Codable, Sendable, Hashable {
     public func canonicalData() throws -> Data {
         guard JSONSerialization.isValidJSONObject(foundationValue) else {
             if case .null = self { return Data("null".utf8) }
-            throw VivoRuntimeError.invalidConfiguration("Value is not valid JSON.")
+            // JSON serialization is a Foundation concern, independent of Metal
+            // runtime construction. Preserve the existing permitted root shapes.
+            throw EncodingError.invalidValue(
+                self, .init(codingPath: [], debugDescription: "Value is not valid JSON.")
+            )
         }
         return try JSONSerialization.data(
             withJSONObject: foundationValue,

@@ -163,17 +163,32 @@ public enum VivoECCClusterConstruction {
         } }
         let environment=(0..<n).filter{!f.orbitals.contains($0)}
         let info=try VivoCIDensityMatrices.orbitalInformation(reference,budget:budget)
-        let ranked=environment.map { j -> VivoECCBathCandidate in
-            var score=selection.mutualInformationWeight*f.orbitals.reduce(0.0){$0+info.mutualInformation[$1,j]}
-            score+=selection.entropyWeight*info.entropy[j]
-            if selection.cumulantWeight>0 {
-                for i in f.orbitals { for k in f.orbitals { for spin in 0..<2 { for tau in 0..<2 {
-                    score+=selection.cumulantWeight*abs(rdm.cumulant(2*i+spin,2*j+tau,2*k+spin,2*j+tau))
-                } } } }
+        // Explicit loop types avoid an expensive map/sort inference chain in
+        // the Apple Swift compiler. Accumulation and ordering stay unchanged.
+        var ranked: [VivoECCBathCandidate] = []
+        ranked.reserveCapacity(environment.count)
+        for j in environment {
+            var information = 0.0
+            for i in f.orbitals { information += info.mutualInformation[i,j] }
+            var score = selection.mutualInformationWeight * information
+            score += selection.entropyWeight * info.entropy[j]
+            if selection.cumulantWeight > 0 {
+                for i in f.orbitals { for k in f.orbitals {
+                    for spin in 0..<2 { for tau in 0..<2 {
+                        let cumulant = rdm.cumulant(2*i+spin,2*j+tau,2*k+spin,2*j+tau)
+                        score += selection.cumulantWeight * abs(cumulant)
+                    } }
+                } }
             }
-            return .init(orbital:j,score:score)
-        }.sorted { $0.score==$1.score ? $0.orbital<$1.orbital:$0.score>$1.score }
-        let candidates=Array(ranked.prefix(selection.maximumCandidates ?? ranked.count)).map(\.orbital)
+            guard score.isFinite else { throw VivoChemistryError.invalid("ECC bath score overflow") }
+            ranked.append(VivoECCBathCandidate(orbital: j, score: score))
+        }
+        ranked.sort { left, right in
+            if left.score == right.score { return left.orbital < right.orbital }
+            return left.score > right.score
+        }
+        let maximumCandidates = selection.maximumCandidates ?? ranked.count
+        let candidates: [Int] = ranked.prefix(maximumCandidates).map { $0.orbital }
         var omitted=0.0
         for e in environment where !candidates.contains(e) { for p in f.orbitals { omitted+=density[e,p]*density[e,p] } }
         guard omitted<=selection.maximumOmittedCouplingSquared else { throw VivoChemistryError.convergence("ECC candidate truncation exceeds omitted 1-RDM coupling bound") }
