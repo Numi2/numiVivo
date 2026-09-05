@@ -38,11 +38,22 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case physiologyValidateCandidate = "nvivo_phys_validate_candidate"
     case physiologyPublish = "nvivo_phys_publish"
 
+    // Wave B molecular dynamics. This module intentionally has a standalone ABI.
+    case mdClear = "nvivo_md_clear"
+    case mdBonded = "nvivo_md_bonded"
+    case mdNonbondedDirect = "nvivo_md_nonbonded_direct"
+    case mdHalfKick = "nvivo_md_half_kick"
+    case mdDrift = "nvivo_md_drift"
+    case mdKinetic = "nvivo_md_kinetic"
+    case mdValidate = "nvivo_md_validate"
+
     fileprivate var sourceModule: String {
         switch self {
         case .physiologyClearStatus, .physiologyPrepareTransaction, .physiologyApplyTransforms,
              .physiologyHeunPredict, .physiologyHeunCorrect, .physiologyValidateCandidate, .physiologyPublish:
             return "NumiVivoPhysiologyKernels"
+        case .mdClear, .mdBonded, .mdNonbondedDirect, .mdHalfKick, .mdDrift, .mdKinetic, .mdValidate:
+            return "NumiVivoMDKernels"
         default:
             return "NumiVivoProgramPackRuntime"
         }
@@ -115,8 +126,6 @@ public actor NumiVivoPipelineCatalog {
             let descriptor = MTLComputePipelineDescriptor()
             descriptor.label = "NumiVivo.\(kernel.rawValue)"
             descriptor.computeFunction = function
-            // dispatchThreads permits a partial final group. Do not promise
-            // full SIMD-group multiples to the compiler for one-element passes.
             descriptor.threadGroupSizeIsMultipleOfThreadExecutionWidth = false
             let state = try device.makeComputePipelineState(descriptor: descriptor, options: [], reflection: nil)
             let pipeline = NumiVivoPipeline(state: state)
