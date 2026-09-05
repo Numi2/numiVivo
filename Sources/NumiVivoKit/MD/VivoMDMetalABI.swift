@@ -19,8 +19,8 @@ struct VivoMDMetalCommand {
     var langevinA: Float
     var targetTemperatureK: Float
     var boltzmannKJPerMolK: Float
-    var reserved0: Float = 0
-    var reserved1: Float = 0
+    var neighborCapacity: UInt32
+    var neighborRadiusNM: Float
     var cellA: SIMD4<Float>
     var cellB: SIMD4<Float>
     var cellC: SIMD4<Float>
@@ -67,6 +67,13 @@ enum VivoMDMetalABI {
         }
         let a: Float = configuration.thermostat == .langevinMiddle
             ? Float(exp(-(configuration.frictionPerPS ?? 0)*configuration.timeStepPS)) : 1
+        let maximumPossible = packed.particleCount > 0 ? packed.particleCount - 1 : 0
+        let requested = configuration.resolvedMaximumNeighborsPerParticle
+        let capacity = max(1, min(requested, max(maximumPossible, 1)))
+        let radius = cutoff + configuration.neighborSkinNM
+        guard radius.isFinite, radius > cutoff, radius <= Double(Float.greatestFiniteMagnitude) else {
+            throw VivoMDRuntimeError.metal("neighbor-list radius is invalid")
+        }
         let reciprocal=try cell.map(reciprocalCell)
         func f4(_ value:VivoVector3D?)->SIMD4<Float>{guard let value else{return .zero};return .init(Float(value.x),Float(value.y),Float(value.z),0)}
         return .init(particleCount:packed.particleCount,typeCount:packed.typeCount,electrostatics:mode,periodic:cell==nil ? 0:1,
@@ -75,12 +82,17 @@ enum VivoMDMetalABI {
                      dtPS:Float(configuration.timeStepPS),cutoffNM:Float(cutoff),coulombPrefactor:Float(138.935456/eps),reactionFieldK:krf,
                      reactionFieldC:crf,minimumDistanceNM:1e-5,constraintTolerance:Float(configuration.constraintTolerance),langevinA:a,
                      targetTemperatureK:Float(configuration.targetTemperatureK ?? 0),boltzmannKJPerMolK:0.00831446261815324,
+                     neighborCapacity:capacity,neighborRadiusNM:Float(radius),
                      cellA:f4(cell?.a),cellB:f4(cell?.b),cellC:f4(cell?.c),reciprocalA:f4(reciprocal?.0),reciprocalB:f4(reciprocal?.1),reciprocalC:f4(reciprocal?.2))
     }
 
     static func validateMinimumImageCutoff(_ cutoff:Double,cell:VivoPeriodicCell)throws{
         let d=cell.a.dot(cell.b.cross(cell.c));let h=[abs(d)/cell.b.cross(cell.c).norm,abs(d)/cell.c.cross(cell.a).norm,abs(d)/cell.a.cross(cell.b).norm]
         guard h.allSatisfy({$0.isFinite&&$0>0}),cutoff<0.5*(h.min() ?? 0) else{throw VivoMDRuntimeError.unsupported(["cutoff must be less than half the shortest periodic face height for minimum-image execution"])}
+    }
+    static func validateNeighborRadius(_ radius:Double,cell:VivoPeriodicCell)throws{
+        let d=cell.a.dot(cell.b.cross(cell.c));let h=[abs(d)/cell.b.cross(cell.c).norm,abs(d)/cell.c.cross(cell.a).norm,abs(d)/cell.a.cross(cell.b).norm]
+        guard h.allSatisfy({$0.isFinite&&$0>0}),radius<0.5*(h.min() ?? 0) else{throw VivoMDRuntimeError.unsupported(["cutoff + neighbor skin must be less than half the shortest periodic face height"])}
     }
     private static func reciprocalCell(_ c:VivoPeriodicCell)throws->(VivoVector3D,VivoVector3D,VivoVector3D){let d=c.a.dot(c.b.cross(c.c));guard d.isFinite,abs(d)>1e-18 else{throw VivoMDRuntimeError.metal("singular periodic cell")};return(c.b.cross(c.c)/d,c.c.cross(c.a)/d,c.a.cross(c.b)/d)}
 }
