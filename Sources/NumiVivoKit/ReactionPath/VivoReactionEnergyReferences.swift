@@ -58,40 +58,54 @@ public struct VivoReactionBarrier: Codable, Sendable, Equatable {
               transitionState.role == .transitionState,precomplex.imaginaryModeCount==0,transitionState.imaginaryModeCount==1,
               precomplex.stationaryPointEvidence != nil,transitionState.stationaryPointEvidence != nil,
               !precomplex.identifier.isEmpty,!transitionState.identifier.isEmpty,precomplex.identifier != transitionState.identifier,
-              precomplex.energyHartree.isFinite,transitionState.energyHartree.isFinite,deltaHartree.isFinite,
+              precomplex.energyHartree.isFinite,transitionState.energyHartree.isFinite,deltaHartree.isFinite,deltaHartree>=0,
               abs(deltaHartree-(transitionState.energyHartree-precomplex.energyHartree))<1e-12 else {
-            throw VivoChemistryError.invalid("barrier mixes contexts/references or lacks characterized stationary points")
+            throw VivoChemistryError.invalid("barrier mixes contexts/references, is negative, or lacks characterized stationary points")
         }
     }
 }
-public struct VivoUnimolecularRateEstimate: Codable, Sendable, Equatable {
-    public let temperatureK: Double
-    public let activationGibbsKJPerMol: Double
-    public let logRatePerSecond: Double
-    public let ratePerSecond: Double
-    public let transmissionCoefficient: Double
-    public let underflowed: Bool
-    public let sourceBarrier: VivoReactionBarrier
-    public let status: String
-}
 public enum VivoReactionEnergies {
+    public static let boundComplexStandardState = "pre-reactive-bound-complex"
+
     public static func barrier(precomplex: VivoReactionEnergyPoint, transitionState: VivoReactionEnergyPoint) throws -> VivoReactionBarrier {
         let result=VivoReactionBarrier(precomplex:precomplex,transitionState:transitionState,
                                        deltaHartree:transitionState.energyHartree-precomplex.energyHartree)
         try result.validate();return result
     }
-    public static func unimolecularRate(_ barrier: VivoReactionBarrier, transmissionCoefficient: Double = 1) throws -> VivoUnimolecularRateEstimate {
-        try barrier.validate()
-        guard barrier.precomplex.context.energyKind == .gibbs,let temperature=barrier.precomplex.context.temperatureK,
-              transmissionCoefficient.isFinite,transmissionCoefficient>0,transmissionCoefficient<=1 else {
-            throw VivoChemistryError.invalid("rate conversion requires Gibbs barrier and explicit transmission coefficient in (0,1]")
+
+    /// Adapts a characterized NumiVivo Gibbs barrier into the repository's single
+    /// kinetic barrier authority. Electronic barriers cannot enter kinetics here.
+    public static func activationBarrier(_ barrier: VivoReactionBarrier, kineticContext: VivoKineticContext,
+                                         evidence: VivoKineticEvidence,
+                                         conditionalStandardDeviationKJPerMol: Double? = nil) throws -> VivoActivationBarrier {
+        try barrier.validate();try kineticContext.validate();try evidence.validate(origin:.calculated)
+        let context=barrier.precomplex.context
+        guard context.energyKind == .gibbs,let temperature=context.temperatureK,
+              abs(temperature-kineticContext.temperatureK)<=1e-9*max(1,temperature),
+              context.standardState == boundComplexStandardState else {
+            throw VivoChemistryError.invalid("kinetics requires a Gibbs barrier at the identical temperature and pre-reactive-bound-complex standard state")
         }
-        let logRate=try VivoUnimolecularEyring.logRatePerSecond(activationGibbsHartree:barrier.deltaHartree,
-            temperatureK:temperature,transmissionCoefficient:transmissionCoefficient)
-        guard logRate.isFinite,logRate<log(Double.greatestFiniteMagnitude) else { throw VivoChemistryError.invalid("rate overflow") }
-        let value=exp(logRate)
-        return .init(temperatureK:temperature,activationGibbsKJPerMol:barrier.deltaKJPerMol,logRatePerSecond:logRate,
-                     ratePerSecond:value,transmissionCoefficient:transmissionCoefficient,underflowed:value==0,
-                     sourceBarrier:barrier,status:"derived-rate-proposal; not automatically installed in a NumiVivo kinetic model")
+        if let sd=conditionalStandardDeviationKJPerMol {
+            guard sd.isFinite,sd>=0 else { throw VivoChemistryError.invalid("barrier conditional standard deviation") }
+        }
+        return .init(context:kineticContext,quantity:.activationGibbsFreeEnergy,referenceState:.preReactiveBoundComplex,
+                     value:barrier.deltaKJPerMol,unit:.kilojoulesPerMol,
+                     conditionalStandardDeviation:conditionalStandardDeviationKJPerMol,
+                     method:context.method,
+                     samplingDescription:"NumiVivo characterized precomplex-to-transition-state Gibbs barrier; source geometries \(barrier.precomplex.geometryFingerprint.hex), \(barrier.transitionState.geometryFingerprint.hex)",
+                     origin:.calculated,evidence:evidence)
+    }
+
+    public static func unimolecularRate(_ barrier: VivoReactionBarrier, kineticContext: VivoKineticContext,
+                                        barrierEvidence: VivoKineticEvidence,
+                                        conditionalBarrierStandardDeviationKJPerMol: Double? = nil,
+                                        transmissionProbability: Double = 1,
+                                        transmissionOrigin: VivoKineticOrigin,
+                                        transmissionEvidence: VivoKineticEvidence) throws -> VivoTransitionStateRateEstimate {
+        let activation=try activationBarrier(barrier,kineticContext:kineticContext,evidence:barrierEvidence,
+                                             conditionalStandardDeviationKJPerMol:conditionalBarrierStandardDeviationKJPerMol)
+        let request=VivoTransitionStateRateRequest(barrier:activation,transmissionProbability:transmissionProbability,
+                                                   transmissionOrigin:transmissionOrigin,transmissionEvidence:transmissionEvidence)
+        return try VivoTransitionStateRateEstimator.estimate(request)
     }
 }
