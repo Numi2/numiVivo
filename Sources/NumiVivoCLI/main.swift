@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoResearchCLICommands.handles(arguments.first) {
+if VivoScreenedInferenceCLICommands.handles(arguments.first) {
+    status = await VivoScreenedInferenceCLICommands().run(arguments: arguments)
+} else if VivoResearchCLICommands.handles(arguments.first) {
     status = await VivoResearchCLICommands().run(arguments: arguments)
 } else if VivoElectronicCLICommands.handles(arguments.first) {
     status = await VivoElectronicCLICommands().run(arguments: arguments)
@@ -29,7 +31,8 @@ if VivoResearchCLICommands.handles(arguments.first) {
 } else {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
-        FileHandle.standardOutput.write(Data("\nResearch workflows: finite-drug-run, engagement-design, occupancy-benchmark-inspect, occupancy-benchmark-compare, research-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("\nMetal-screened inference: engagement-screen-check, engagement-fit-screened, screening-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("Research workflows: finite-drug-run, engagement-design, occupancy-benchmark-inspect, occupancy-benchmark-compare, research-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nElectronic chemistry: chemistry-template, chemistry-run, chemistry-solve, chemistry-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nKinetic inference: engagement-fit, engagement-predict, engagement-sensitivity, posterior-help.\n".utf8))
         FileHandle.standardOutput.write(Data("Target engagement: engagement-validate, engagement-source, engagement-compile, engagement-run, engagement-batch, engagement-study, engagement-rate, engagement-apply-rate, engagement-help.\n".utf8))
