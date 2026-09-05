@@ -84,11 +84,27 @@ public enum VivoHartreeFock {
     public static func solve(system: VivoElectronicSystem, integrals ao: VivoAOIntegrals,
                              configuration cfg: VivoSCFConfiguration = .init(),
                              budget: VivoChemistryBudget = .init()) throws -> VivoHartreeFockResult {
-        try system.validate(); try ao.validate(budget:budget); try cfg.validate()
-        let n=ao.count,na=system.alphaElectrons,nb=system.betaElectrons
-        guard system==ao.sourceSystem,na<=n,nb<=n, cfg.reference != .restricted || na==nb else { throw VivoChemistryError.invalid("HF occupations or restricted spin sector") }
+        try ao.validate(budget:budget)
+        guard system==ao.sourceSystem else { throw VivoChemistryError.invalid("HF integral/source binding") }
+        return try solveWithFockBuilder(system:system,overlap:ao.overlap,core:ao.coreHamiltonian,
+            constant:ao.constantEnergyHartree,configuration:cfg,budget:budget) { da,db in focks(ao,da,db) }
+    }
+    /// Shared FP64 SCF iteration authority for dense and factorized integrals.
+    static func solveWithFockBuilder(system:VivoElectronicSystem,overlap:VivoQMMatrix,core:VivoQMMatrix,
+                                    constant:Double,configuration cfg:VivoSCFConfiguration,
+                                    budget:VivoChemistryBudget,
+                                    energyFunctional:((VivoQMMatrix,VivoQMMatrix,VivoQMMatrix,VivoQMMatrix) throws -> Double)? = nil,
+                                    buildFocks:(VivoQMMatrix,VivoQMMatrix) throws -> (VivoQMMatrix,VivoQMMatrix)) throws -> VivoHartreeFockResult {
+        guard constant.isFinite,overlap.values.allSatisfy(\.isFinite),core.values.allSatisfy(\.isFinite) else { throw VivoChemistryError.invalid("HF finite input") }
+        func energy(_ da:VivoQMMatrix,_ db:VivoQMMatrix,_ fa:VivoQMMatrix,_ fb:VivoQMMatrix) throws -> Double {
+            if let energyFunctional { return try energyFunctional(da,db,fa,fb) }
+            return constant+0.5*core.values.indices.reduce(0.0) { $0+(da.values[$1]+db.values[$1])*core.values[$1]+da.values[$1]*fa.values[$1]+db.values[$1]*fb.values[$1] }
+        }
+        try system.validate(); try cfg.validate(); try budget.validate()
+        let n=overlap.rows,na=system.alphaElectrons,nb=system.betaElectrons
+        guard overlap.columns==n, core.rows==n, core.columns==n,na<=n,nb<=n, cfg.reference != .restricted || na==nb else { throw VivoChemistryError.invalid("HF occupations or restricted spin sector") }
         _ = try budget.elements([n,n],simultaneousArrays:30+4*cfg.diisHistory)
-        let overlapEigen = try VivoQMDenseAlgebra.symmetricEigen(ao.overlap)
+        let overlapEigen = try VivoQMDenseAlgebra.symmetricEigen(overlap)
         guard let smallest=overlapEigen.values.first,smallest>=cfg.minimumOverlapEigenvalue else {
             throw VivoChemistryError.invalid("linearly dependent AO basis; no silent rank deletion")
         }
@@ -98,13 +114,13 @@ public enum VivoHartreeFock {
             let e=try VivoQMDenseAlgebra.symmetricEigen(f.congruence(x))
             return (try x.multiplied(by:e.vectors),e.values)
         }
-        let (c0,_) = try canonical(ao.coreHamiltonian)
+        let (c0,_) = try canonical(core)
         var da=density(c0,occupied:na),db=density(c0,occupied:nb)
         var previousEnergy:Double?,densityChange=0.0,history:[VivoDIISRecord]=[],trace:[VivoSCFIteration]=[]
         for iteration in 1...cfg.maximumIterations {
-            let (fa,fb)=focks(ao,da,db)
-            let e=energy(ao,da,db,fa,fb)
-            let ea=try error(fa,da,ao.overlap,x),eb=try error(fb,db,ao.overlap,x),combined=ea+eb
+            let (fa,fb)=try buildFocks(da,db)
+            let e=try energy(da,db,fa,fb)
+            let ea=try error(fa,da,overlap,x),eb=try error(fb,db,overlap,x),combined=ea+eb
             let residual=sqrt(combined.reduce(0){$0+$1*$1})
             guard e.isFinite,residual.isFinite else { throw VivoChemistryError.convergence("nonfinite HF state") }
             trace.append(.init(iteration:iteration,energyHartree:e,commutatorNorm:residual,densityChange:densityChange))
@@ -113,13 +129,13 @@ public enum VivoHartreeFock {
                 let (ca,epsa)=try canonical(fa),(cb,epsb)=try canonical(fb)
                 let finalDA=density(ca,occupied:na),finalDB=density(cb,occupied:nb)
                 let change=try finalDA.adding(da,scale:-1).frobeniusNorm + finalDB.adding(db,scale:-1).frobeniusNorm
-                let (finalFA,finalFB)=focks(ao,finalDA,finalDB)
-                let finalErrors=try error(finalFA,finalDA,ao.overlap,x)+error(finalFB,finalDB,ao.overlap,x)
+                let (finalFA,finalFB)=try buildFocks(finalDA,finalDB)
+                let finalErrors=try error(finalFA,finalDA,overlap,x)+error(finalFB,finalDB,overlap,x)
                 let finalResidual=sqrt(finalErrors.reduce(0){$0+$1*$1})
-                let finalEnergy=energy(ao,finalDA,finalDB,finalFA,finalFB)
+                let finalEnergy=try energy(finalDA,finalDB,finalFA,finalFB)
                 if change<=cfg.densityTolerance,finalResidual<=cfg.commutatorTolerance,
                    abs(finalEnergy-e)<=cfg.energyToleranceHartree {
-                    let ab=try ca.transposed.multiplied(by:ao.overlap).multiplied(by:cb)
+                    let ab=try ca.transposed.multiplied(by:overlap).multiplied(by:cb)
                     var occupiedOverlap=0.0
                     for i in 0..<na { for j in 0..<nb { occupiedOverlap += ab[i,j]*ab[i,j] } }
                     let sz=0.5*Double(na-nb)
