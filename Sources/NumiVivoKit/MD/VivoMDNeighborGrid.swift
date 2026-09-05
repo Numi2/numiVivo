@@ -23,9 +23,7 @@ public struct VivoMDNeighborGridPlan: Sendable, Equatable, Codable {
                        abs(volume) / cell.c.cross(cell.a).norm,
                        abs(volume) / cell.a.cross(cell.b).norm]
         guard heights.allSatisfy({ $0.isFinite && $0 > 2 * neighborRadiusNM }) else {
-            throw VivoMDRuntimeError.unsupported([
-                "periodic cell is too narrow for the requested Verlet radius"
-            ])
+            throw VivoMDRuntimeError.unsupported(["periodic cell is too narrow for the requested Verlet radius"])
         }
         let raw = heights.map { max(2, Int(floor($0 / neighborRadiusNM))) }
         guard raw.allSatisfy({ $0 <= Int(UInt32.max) }) else {
@@ -39,8 +37,6 @@ public struct VivoMDNeighborGridPlan: Sendable, Equatable, Codable {
         }
         let cells = UInt32(cells64)
         let mean = max(1, (UInt64(particleCount) + cells64 - 1) / cells64)
-        // Deliberately generous bounded occupancy. Overflow is certified on GPU,
-        // so this affects memory/performance but never silently affects physics.
         let proposed = max(UInt64(64), mean * 8)
         let capacity = UInt32(min(UInt64(particleCount), min(proposed, UInt64(UInt32.max))))
         return .init(dimensions: dims, cellCount: cells,
@@ -71,8 +67,6 @@ struct VivoMDNeighborGridCommand {
     var reciprocalC: SIMD4<Float>
 }
 
-/// GPU spatial binning backend for the existing bounded Verlet-list buffers.
-/// The force kernel remains unchanged: this module only replaces list construction.
 final class VivoMDNeighborGrid: @unchecked Sendable {
     let plan: VivoMDNeighborGridPlan
     let cellCounts: MTLBuffer
@@ -122,11 +116,12 @@ final class VivoMDNeighborGrid: @unchecked Sendable {
         guard MemoryLayout<VivoMDNeighborGridCommand>.stride == 144 else {
             throw VivoMDRuntimeError.metal("Swift spatial-grid ABI stride is not 144 bytes")
         }
-        return try await .init(plan: plan, cellCounts: counts, cellParticles: particles,
-                               command: abi,
-                               clearPipeline: catalog.pipeline(.mdGridClear),
-                               binPipeline: catalog.pipeline(.mdGridBin),
-                               buildPipeline: catalog.pipeline(.mdGridBuildNeighbors))
+        let clear = try await catalog.pipeline(.mdGridClear)
+        let bin = try await catalog.pipeline(.mdGridBin)
+        let build = try await catalog.pipeline(.mdGridBuildNeighbors)
+        return .init(plan: plan, cellCounts: counts, cellParticles: particles,
+                     command: abi, clearPipeline: clear,
+                     binPipeline: bin, buildPipeline: build)
     }
 
     private init(plan: VivoMDNeighborGridPlan,
