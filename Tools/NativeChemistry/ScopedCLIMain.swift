@@ -5,6 +5,9 @@ import Foundation
 @main struct ScopedChemistryCLI {
     static func main() async {
         let arguments=Array(CommandLine.arguments.dropFirst())
+        if VivoReactionCLICommands.handles(arguments.first) {
+            exit(await VivoReactionCLICommands().run(arguments:arguments))
+        }
         if VivoECCPathCLICommands.handles(arguments.first) {
             exit(await VivoECCPathCLICommands().run(arguments:arguments))
         }
