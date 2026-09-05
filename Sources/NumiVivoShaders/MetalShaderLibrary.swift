@@ -23,6 +23,7 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case mdGridClear="nvivo_md_grid_clear",mdGridBin="nvivo_md_grid_bin",mdGridBuildNeighbors="nvivo_md_grid_build_neighbors"
     case mdPMERealSpaceNeighbor="nvivo_pme_realspace_neighbor",mdPMEClearGrid="nvivo_pme_clear_grid",mdPMESpread="nvivo_pme_spread",mdPMEBitReverse="nvivo_pme_bit_reverse",mdPMEFFTStage="nvivo_pme_fft_stage",mdPMEInfluence="nvivo_pme_influence",mdPMEScaleInverse="nvivo_pme_scale_inverse",mdPMEGather="nvivo_pme_gather",mdPMEExceptionCorrection="nvivo_pme_exception_correction",mdPMEBackgroundEnergy="nvivo_pme_background_energy"
     case mdMinimizeTerms="nvivo_md_minimize_terms",mdMinimizeReduceStage="nvivo_md_minimize_reduce_stage",mdMinimizePosition="nvivo_md_minimize_position",mdZeroVelocity="nvivo_md_zero_velocity"
+    case mdBarostatCenters="nvivo_md_barostat_centers",mdBarostatScale="nvivo_md_barostat_scale"
     case mdHalfKick="nvivo_md_half_kick",mdDrift="nvivo_md_drift",mdLangevin="nvivo_md_langevin",mdConstraintPosition="nvivo_md_constraint_position",mdConstraintVelocity="nvivo_md_constraint_velocity",mdValidateConstraints="nvivo_md_validate_constraints",mdKinetic="nvivo_md_kinetic",mdValidate="nvivo_md_validate"
 
     fileprivate var sourceModule:String {
@@ -33,6 +34,7 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
         case .mdPMERealSpaceNeighbor,.mdPMEClearGrid,.mdPMESpread,.mdPMEBitReverse,.mdPMEFFTStage,.mdPMEInfluence,.mdPMEScaleInverse,.mdPMEGather:return "NumiVivoMDPME"
         case .mdPMEExceptionCorrection,.mdPMEBackgroundEnergy:return "NumiVivoMDPMECorrections"
         case .mdMinimizeTerms,.mdMinimizeReduceStage,.mdMinimizePosition,.mdZeroVelocity:return "NumiVivoMDMinimization"
+        case .mdBarostatCenters,.mdBarostatScale:return "NumiVivoMDBarostat"
         case .mdClearForce,.mdClearStatus,.mdBonded,.mdBuildNeighborList,.mdValidateNeighborDisplacement,.mdNonbondedNeighbor,.mdNonbondedDirect,.mdHalfKick,.mdDrift,.mdLangevin,.mdConstraintPosition,.mdConstraintVelocity,.mdValidateConstraints,.mdKinetic,.mdValidate:return "NumiVivoMDKernels"
         default:return "NumiVivoProgramPackRuntime"
         }
