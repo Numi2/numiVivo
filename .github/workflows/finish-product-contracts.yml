@@ -19,18 +19,18 @@ jobs:
       sha: ${{ steps.commit.outputs.sha }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Publish explicit shader entry-point and reservoir contracts
+      - name: Publish reviewed math and constraint corrections
         id: commit
         shell: bash
         run: |
           set -euo pipefail
           python3 Tools/Build/apply_shader_contracts.py
-          git add Sources/NumiVivoShaders/Resources Sources/NumiVivoKit/Kinetics/VivoTargetEngagementProgramSource.swift
+          git add Package.swift Sources/NumiVivoShaders Sources/NumiVivoKit/Kinetics/VivoTargetEngagementProgramSource.swift Tests/NumiVivoIntegrationTests/AppleExecutionTests.swift
           git diff --cached --check
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'fix(gpu): publish stable kernel host names and preserve external exposure ownership'
+            git commit -m 'fix(gpu): implement Ewald math and correct normalized-target invariant'
             git push origin HEAD:main
           fi
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -62,6 +62,7 @@ jobs:
       - name: Compile actual pipelines and execute molecular and MD GPU transactions
         env:
           NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/full-product/metal-tests
+          MTL_DEBUG_LAYER: '1'
         shell: bash
         run: |
           set -euo pipefail

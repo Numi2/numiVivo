@@ -1,0 +1,19 @@
+// FP32 mathematical approximants for Metal, which has no erf/erfc builtins.
+// Chebyshev interpolation of erfcx on declared intervals, not molecular fitting.
+#ifndef NUMIVIVO_ERROR_FUNCTIONS
+#define NUMIVIVO_ERROR_FUNCTIONS
+#include <metal_stdlib>
+using namespace metal;
+namespace nvivo_math {
+constant float erfcx0[13]={4.006822407e-01f,-1.739558727e-01f,3.383702412e-02f,-6.032263394e-03f,1.000274089e-03f,-1.558965305e-04f,2.301444329e-05f,-3.237542160e-06f,4.360702519e-07f,-5.645684809e-08f,7.048609252e-09f,-8.508265203e-10f,9.832459152e-11f};
+constant float erfcx1[11]={1.874295622e-01f,-5.794652924e-02f,8.595247753e-03f,-1.228461391e-03f,1.697436674e-04f,-2.273832979e-05f,2.959844323e-06f,-3.751357553e-07f,4.637272255e-08f,-5.598491004e-09f,6.526451046e-10f};
+constant float erfcx2[13]={8.780243993e-02f,-3.854801506e-02f,8.368309587e-03f,-1.797235571e-03f,3.819915000e-04f,-8.037543739e-05f,1.674727719e-05f,-3.456514605e-06f,7.068387617e-07f,-1.432507588e-07f,2.877718686e-08f,-5.724124286e-09f,1.089246027e-09f};
+inline float chebyshev(float t,constant float* c,uint count){float b0=0,b1=0;for(int k=int(count)-1;k>0;--k){float next=fma(2*t,b0,c[k]-b1);b1=b0;b0=next;}return fma(t,b0,c[0]-b1);}
+inline float smallErf(float x){float q=x*x,p=fma(q,1.0f/9360,-1.0f/1320);p=fma(q,p,1.0f/216);p=fma(q,p,-1.0f/42);p=fma(q,p,1.0f/10);p=fma(q,p,-1.0f/3);return 1.1283791670955126f*x*fma(q,p,1.0f);}
+inline float erfcPositive(float x){if(x<=0.5f)return 1-smallErf(x);if(x>=10)return 0;float scaled=x<=2 ? chebyshev((2*x-2.5f)/1.5f,erfcx0,13u):(x<=4 ? chebyshev(x-3,erfcx1,11u):chebyshev((x-7)/3,erfcx2,13u));return exp(-x*x)*scaled;}
+inline float erfc(float x){float a=erfcPositive(abs(x));return x<0 ? 2-a:a;}
+inline float erf(float x){return abs(x)<=0.5f ? smallErf(x):copysign(1-erfcPositive(abs(x)),x);}
+// Avoid cancellation in Ewald exclusion-force numerator at small beta*r.
+inline float erfMinusGaussian(float x){if(abs(x)>=10)return copysign(1.0f,x);if(abs(x)>0.5f)return erf(x)-1.1283791670955126f*x*exp(-x*x);float q=x*x,p=fma(q,1.0f/5400,-1.0f/780);p=fma(q,p,1.0f/132);p=fma(q,p,-1.0f/27);p=fma(q,p,1.0f/7);p=fma(q,p,-2.0f/5);p=fma(q,p,2.0f/3);return 1.1283791670955126f*x*q*p;}
+}
+#endif
