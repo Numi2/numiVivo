@@ -2,6 +2,7 @@ import Foundation
 
 public enum VivoReactionCalculation:Codable,Sendable,Equatable {
     case qualify(request:VivoNuclearQualificationRequest)
+    case correlatedSolvent(request:VivoCorrelatedSolventRequest)
     case solvatedPath(request:VivoSolvatedECCPathRequest)
     case harmonicBarrier(saddle:VivoNuclearQualifiedPoint,reactants:[VivoNuclearQualifiedPoint])
     case descent(saddle:VivoNuclearQualifiedPoint,configuration:VivoNuclearDescentConfiguration)
@@ -14,6 +15,7 @@ public struct VivoReactionCalculationRequest:Codable,Sendable,Equatable {
     public var budget:VivoChemistryBudget {
         switch calculation {
         case .qualify(let r):return r.model.budget
+        case .correlatedSolvent(let r):return r.budget
         case .solvatedPath(let r):return r.path.budget
         case .harmonicBarrier(let saddle,_),.descent(let saddle,_):return saddle.request.model.budget
         }
@@ -23,6 +25,7 @@ public struct VivoReactionCalculationRequest:Codable,Sendable,Equatable {
         try budget.validate()
         switch calculation {
         case .qualify(let r):try r.validate()
+        case .correlatedSolvent(let r):try r.validate()
         case .solvatedPath(let r):try r.validate()
         case .harmonicBarrier(let saddle,let reactants):
             try saddle.request.validate()
@@ -35,6 +38,7 @@ public struct VivoReactionCalculationRequest:Codable,Sendable,Equatable {
 }
 public enum VivoReactionCalculationResult:Codable,Sendable,Equatable {
     case qualified(point:VivoNuclearQualifiedPoint)
+    case correlatedSolvent(result:VivoCorrelatedSolventResult)
     case solvatedPath(result:VivoSolvatedECCPathResult)
     case harmonicBarrier(result:VivoHarmonicBarrierEstimate)
     case descent(result:VivoNuclearDescentResult)
@@ -44,6 +48,7 @@ public enum VivoReactionQualificationWorkflow {
         try request.validate()
         switch request.calculation {
         case .qualify(let r):return .qualified(point:try VivoNuclearQualification.run(r))
+        case .correlatedSolvent(let r):return .correlatedSolvent(result:try VivoCorrelatedSolvation.solve(r))
         case .solvatedPath(let r):return .solvatedPath(result:try VivoSolvatedECCPath.solve(r))
         case .harmonicBarrier(let saddle,let reactants):return .harmonicBarrier(result:try VivoHarmonicBarrier.estimate(saddle:saddle,reactants:reactants))
         case .descent(let saddle,let cfg):return .descent(result:try VivoNuclearDescent.trace(saddle,configuration:cfg))
@@ -53,6 +58,7 @@ public enum VivoReactionQualificationWorkflow {
         try request.validate()
         switch (request.calculation,result) {
         case (.qualify(let r),.qualified(let point)):try VivoNuclearQualification.validate(point,request:r)
+        case (.correlatedSolvent(let r),.correlatedSolvent(let result)):try VivoCorrelatedSolvation.validate(result,request:r)
         case (.solvatedPath(let r),.solvatedPath(let path)):try VivoSolvatedECCPath.validate(path,request:r)
         case (.harmonicBarrier(let saddle,let reactants),.harmonicBarrier(let barrier)):
             let rebuilt=try VivoHarmonicBarrier.estimate(saddle:saddle,reactants:reactants)
@@ -82,6 +88,22 @@ public enum VivoReactionQualificationWorkflow {
     }
     public static func template(_ name:String) throws -> VivoReactionCalculationRequest {
         if name=="h2-solvated-path" {return .init(.solvatedPath(request:.init(path:try VivoMolecularECCPath.hydrogenStretchTemplate(),solvent:.init(dielectricConstant:4,angularPoints:50))))}
+        if name=="h2-equilibrium-cpcm" {
+            let system=VivoElectronicSystem(nuclei:[.init(atomicNumber:1,positionBohr:.init(0,0,-0.7)),
+                .init(atomicNumber:1,positionBohr:.init(0,0,0.7))],alphaElectrons:1,betaElectrons:1)
+            return .init(.correlatedSolvent(request:.init(system:system,basis:.hydrogenSTO3G(nucleusIndices:[0,1]),
+                solvent:.init(dielectricConstant:4,angularPoints:50))))
+        }
+        if name=="h2-equilibrium-minimum" {
+            guard case .qualify(var request)=try template("h2-minimum").calculation else {
+                throw VivoChemistryError.invalid("internal nuclear template binding")
+            }
+            request.model.solver = .equilibriumFullCI
+            request.model.solvent = .init(dielectricConstant:4,angularPoints:50)
+            request.model.correlatedSolventConfiguration = .init(densityTolerance:1e-10,
+                potentialToleranceHartree:1e-10,energyToleranceHartree:1e-12,ciResidualTolerance:1e-13)
+            return .init(.qualify(request:request))
+        }
         let n:Int,positions:[SIMD3<Double>],na:Int,nb:Int,operation:VivoNuclearOperation,kind:VivoStationaryKind,symmetry:Int,degeneracy:Int
         switch name {
         case "h2-minimum":n=2;positions=[.init(0,0,-0.75),.init(0,0,0.75)];na=1;nb=1;operation = .minimize;kind = .minimum;symmetry=2;degeneracy=1

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum VivoNuclearSolver: String, Codable, Sendable { case hartreeFock, fullCI, anchoredECC }
+public enum VivoNuclearSolver: String, Codable, Sendable { case hartreeFock, fullCI, anchoredECC, equilibriumFullCI }
 public struct VivoAnchoredECCFrame: Codable, Sendable, Equatable {
     public var anchorSystem: VivoElectronicSystem
     /// For a point from a shared path: transportRotations[i] * sharedRotation.
@@ -20,19 +20,33 @@ public struct VivoNuclearElectronicModel: Codable, Sendable, Equatable {
     public var basis: VivoGaussianBasis
     public var solver: VivoNuclearSolver
     public var scf: VivoSCFConfiguration
-    /// HF-equilibrated smooth polarization. For correlated solvers the field is
-    /// frozen at the reference density at each geometry, not at correlated D.
+    /// fullCI/anchoredECC retain the reference-frozen field convention.
+    /// equilibriumFullCI explicitly re-equilibrates the correlated density.
     public var solvent: VivoSmoothCPCMConfiguration?
     public var eccFrame: VivoAnchoredECCFrame?
+    /// Only equilibriumFullCI consumes this. Nil uses the documented full-CI
+    /// defaults; legacy fullCI keeps its reference-frozen solvent convention.
+    public var correlatedSolventConfiguration: VivoCorrelatedSolventConfiguration?
     public var budget: VivoChemistryBudget
     public init(system: VivoElectronicSystem, basis: VivoGaussianBasis, solver: VivoNuclearSolver,
                 scf: VivoSCFConfiguration = .init(), solvent: VivoSmoothCPCMConfiguration? = nil,
-                eccFrame: VivoAnchoredECCFrame? = nil, budget: VivoChemistryBudget = .init()) {
+                eccFrame: VivoAnchoredECCFrame? = nil, budget: VivoChemistryBudget = .init(),
+                correlatedSolventConfiguration: VivoCorrelatedSolventConfiguration? = nil) {
         self.system=system;self.basis=basis;self.solver=solver;self.scf=scf;self.solvent=solvent;self.eccFrame=eccFrame;self.budget=budget
+        self.correlatedSolventConfiguration=correlatedSolventConfiguration
     }
     public func validate() throws {
         try system.validate();try basis.validate(nucleusCount:system.nuclei.count);try budget.validate();try scf.validate()
         guard (solver == .anchoredECC)==(eccFrame != nil) else {throw VivoChemistryError.invalid("nuclear ECC frame/method mismatch")}
+        if solver == .equilibriumFullCI {
+            let cfg=correlatedSolventConfiguration ?? .init()
+            try cfg.validate()
+            guard solvent != nil, cfg.partition == nil else {
+                throw VivoChemistryError.invalid("equilibrium nuclear FCI requires solvent and the full orbital space; a moving truncated CAS requires a specified transported frame")
+            }
+        } else if correlatedSolventConfiguration != nil {
+            throw VivoChemistryError.invalid("correlated equilibrium settings do not apply to the requested nuclear solver")
+        }
         if let frame=eccFrame {
             try frame.anchorSystem.validate()
             guard frame.embedding.localityGroups.isEmpty,scf.reference == .restricted,
@@ -131,6 +145,17 @@ public final class VivoNuclearElectronicSurface {
         guard energyEvaluations<differences.maximumEnergyEvaluations else {throw VivoChemistryError.resourceLimit("aggregate nuclear electronic solve budget")};energyEvaluations+=1
         var system=model.system
         for i in positions.indices {system.nuclei[i].positionBohr=positions[i]}
+        if model.solver == .equilibriumFullCI {
+            // Re-equilibrate the correlated density at every displacement; this
+            // differentiates the complete selected equilibrium energy surface.
+            let request=VivoCorrelatedSolventRequest(system:system,basis:model.basis,solvent:model.solvent!,
+                configuration:model.correlatedSolventConfiguration ?? .init(),budget:model.budget)
+            let value=try VivoCorrelatedSolvation.solve(request).energyHartree
+            guard value.isFinite else {throw VivoChemistryError.convergence("nonfinite equilibrium nuclear energy")}
+            if cache.count>=8192 {cache.removeAll(keepingCapacity:true)}
+            cache[key]=value
+            return value
+        }
         let ao=try VivoGaussianIntegralEngine.compute(system:system,basis:model.basis,budget:model.budget)
         let value:Double
         if model.solver == .hartreeFock {
