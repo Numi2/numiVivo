@@ -2,7 +2,7 @@ import Foundation
 import NumiVivoKit
 
 struct VivoMDCLICommands {
-    static func handles(_ name:String?)->Bool{["md-capabilities","md-run","md-help"].contains(name ?? "")}
+    static func handles(_ name:String?)->Bool{["md-capabilities","md-minimize","md-run","md-help"].contains(name ?? "")}
 
     func run(arguments:[String])async->Int32{
         do{
@@ -11,6 +11,7 @@ struct VivoMDCLICommands {
             let parsed=try Arguments(Array(arguments.dropFirst()))
             switch command{
             case "md-capabilities":return try capabilities(parsed)
+            case "md-minimize":return try await minimize(parsed)
             case "md-run":return try await runMD(parsed)
             default:throw MDCLIError.usage("unknown MD command")
             }
@@ -26,6 +27,23 @@ struct VivoMDCLICommands {
         let report=try VivoMDCapabilityAnalyzer.analyze(system:system,initialState:state,configuration:config)
         try write(VivoCanonicalJSON.encode(report),to:a.options["output"] ?? "-",force:a.force)
         return report.executable ? 0:65
+    }
+
+    private func minimize(_ a:Arguments)async throws->Int32{
+        try a.requirePositionals(1,"md-minimize <system.json> --config <md-config.json> (--state <initial-state.json> | --restore <checkpoint.json>)")
+        try a.allow(["state","restore","config","min-config","output","checkpoint","force"])
+        let system:VivoClassicalSystem=try load(a.positionals[0]),config:VivoMDConfiguration=try load(a.required("config"))
+        let hasState=a.options["state"] != nil,hasRestore=a.options["restore"] != nil
+        guard hasState != hasRestore else{throw MDCLIError.usage("provide exactly one of --state or --restore")}
+        let runtime:VivoMDMetalRuntime
+        if let path=a.options["restore"]{let checkpoint:VivoMDCheckpoint=try load(path);runtime=try await VivoMDMetalRuntime.restore(system:system,configuration:config,checkpoint:checkpoint)}
+        else{let state:VivoClassicalInitialState=try load(a.required("state"));runtime=try await VivoMDMetalRuntime.make(system:system,initialState:state,configuration:config)}
+        let minConfig:VivoMDMinimizationConfiguration
+        if let path=a.options["min-config"]{minConfig=try load(path)}else{minConfig=.init()}
+        let certificate=try await runtime.minimize(minConfig)
+        if let destination=a.options["checkpoint"]{let checkpoint=try await runtime.checkpoint();try write(VivoCanonicalJSON.encode(checkpoint),to:destination,force:a.force)}
+        try write(VivoCanonicalJSON.encode(certificate),to:a.options["output"] ?? "-",force:a.force)
+        return certificate.converged ? 0:75
     }
 
     private func runMD(_ a:Arguments)async throws->Int32{
@@ -44,12 +62,12 @@ struct VivoMDCLICommands {
         if let path=a.options["restore"]{let checkpoint:VivoMDCheckpoint=try load(path);runtime=try await VivoMDMetalRuntime.restore(system:system,configuration:config,checkpoint:checkpoint)}
         else{let state:VivoClassicalInitialState=try load(a.required("state"));runtime=try await VivoMDMetalRuntime.make(system:system,initialState:state,configuration:config)}
         let start=try await runtime.checkpoint();var committed:UInt64=0,rejected:VivoMDStepCertificate?,samples:[VivoMDTrajectorySample]=[]
-        for ordinal in 1...requested{
+        if requested>0{for ordinal in 1...requested{
             try Task.checkCancellation();let certificate=try await runtime.step();if !certificate.committed{rejected=certificate;break};committed+=1
             let sampleDue=sampleEvery.map{ordinal % $0 == 0} ?? false,obsDue=observablesEvery.map{ordinal % $0 == 0} ?? false
             if sampleDue{let state=try await runtime.snapshot();let obs=obsDue ? try await runtime.observables():nil;samples.append(.init(stepIndex:state.stepIndex,timePS:state.timePS,positionsNM:state.positionsNM,periodicCell:state.periodicCell,observables:obs))}
             else if obsDue{_ = try await runtime.observables()}
-        }
+        }}
         let final=try await runtime.checkpoint()
         if let destination=a.options["checkpoint"]{try write(VivoCanonicalJSON.encode(final),to:destination,force:a.force)}
         let report=VivoMDRunReport(systemFingerprint:runtime.systemFingerprint,configurationFingerprint:runtime.configurationFingerprint,deviceName:runtime.deviceName,deviceRegistryID:runtime.deviceRegistryID,requestedSteps:requested,committedSteps:committed,startStep:start.acceptedStep,endStep:final.acceptedStep,startTimePS:start.timePS,endTimePS:final.timePS,rejected:rejected,samples:samples,finalCheckpoint:final)
@@ -71,6 +89,10 @@ struct VivoMDCLICommands {
       numivivo md-capabilities <system.json> --state <initial-state.json>
           --config <md-config.json> [--output report.json]
 
+      numivivo md-minimize <system.json> --state <initial-state.json>
+          --config <md-config.json> [--min-config minimization.json]
+          [--checkpoint minimized.json] [--output certificate.json] [--force]
+
       numivivo md-run <system.json> --state <initial-state.json>
           --config <md-config.json> --steps 10000
           [--sample-every 1000] [--observables-every 1000]
@@ -79,9 +101,9 @@ struct VivoMDCLICommands {
       numivivo md-run <system.json> --restore <checkpoint.json>
           --config <md-config.json> --steps 10000 [same output options]
 
-    Accepted state remains GPU-resident. Full positions are read only for requested
-    samples/checkpoints. A rejected candidate returns exit 75 without advancing
-    time, accepted step, or the counter-based Langevin random stream.
+    Minimization and MD share the same force authority, including PME, virtual
+    sites and force-field exceptions. Accepted dynamics remain GPU-resident; full
+    positions are read only for requested samples/checkpoints.
     """+"\n"
 }
 
