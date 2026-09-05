@@ -40,6 +40,9 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case mdClearForce = "nvivo_md_clear_force"
     case mdClearStatus = "nvivo_md_clear_status"
     case mdBonded = "nvivo_md_bonded"
+    case mdBuildNeighborList = "nvivo_md_build_neighbor_list"
+    case mdValidateNeighborDisplacement = "nvivo_md_validate_neighbor_displacement"
+    case mdNonbondedNeighbor = "nvivo_md_nonbonded_neighbor"
     case mdNonbondedDirect = "nvivo_md_nonbonded_direct"
     case mdHalfKick = "nvivo_md_half_kick"
     case mdDrift = "nvivo_md_drift"
@@ -55,8 +58,10 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
         case .physiologyClearStatus, .physiologyPrepareTransaction, .physiologyApplyTransforms,
              .physiologyHeunPredict, .physiologyHeunCorrect, .physiologyValidateCandidate, .physiologyPublish:
             return "NumiVivoPhysiologyKernels"
-        case .mdClearForce, .mdClearStatus, .mdBonded, .mdNonbondedDirect, .mdHalfKick, .mdDrift, .mdLangevin,
-             .mdConstraintPosition, .mdConstraintVelocity, .mdValidateConstraints, .mdKinetic, .mdValidate:
+        case .mdClearForce, .mdClearStatus, .mdBonded, .mdBuildNeighborList,
+             .mdValidateNeighborDisplacement, .mdNonbondedNeighbor, .mdNonbondedDirect,
+             .mdHalfKick, .mdDrift, .mdLangevin, .mdConstraintPosition, .mdConstraintVelocity,
+             .mdValidateConstraints, .mdKinetic, .mdValidate:
             return "NumiVivoMDKernels"
         default: return "NumiVivoProgramPackRuntime"
         }
