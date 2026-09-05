@@ -5,7 +5,8 @@ let package = Package(
     platforms: [.macOS(.v15)],
     products: [
         .executable(name: "target-engagement-checks", targets: ["TargetEngagementChecks"]),
-        .executable(name: "posterior-checks", targets: ["PosteriorChecks"])
+        .executable(name: "posterior-checks", targets: ["PosteriorChecks"]),
+        .executable(name: "screened-posterior-checks", targets: ["ScreenedPosteriorChecks"])
     ],
     dependencies: [.package(path: "../..")],
     targets: [
@@ -13,6 +14,9 @@ let package = Package(
             .product(name: "NumiVivoKit", package: "numivivo")
         ]),
         .executableTarget(name: "PosteriorChecks", dependencies: [
+            .product(name: "NumiVivoKit", package: "numivivo")
+        ]),
+        .executableTarget(name: "ScreenedPosteriorChecks", dependencies: [
             .product(name: "NumiVivoKit", package: "numivivo")
         ])
     ],
