@@ -1,9 +1,13 @@
 import Foundation
 
-/// Test executable entrypoint only. All dispatch, parsing, storage and numerical
-/// work is performed by the unchanged production electronic-command class.
+/// Test executable entrypoint only. Dispatch, parsing, storage and numerics use
+/// the real production electronic and shared-path command classes.
 @main struct ScopedChemistryCLI {
     static func main() async {
-        exit(await VivoElectronicCLICommands().run(arguments:Array(CommandLine.arguments.dropFirst())))
+        let arguments=Array(CommandLine.arguments.dropFirst())
+        if VivoECCPathCLICommands.handles(arguments.first) {
+            exit(await VivoECCPathCLICommands().run(arguments:arguments))
+        }
+        exit(await VivoElectronicCLICommands().run(arguments:arguments))
     }
 }

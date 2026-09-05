@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build a selected production-source module and the real electronic CLI router.
+# Build selected production sources and the real electronic/path command routers.
 # This is not the complete NumiVivo product. No stand-ins or generated interfaces.
 # Static linkage keeps the executing binary hash bound to the numerical code.
 set -euo pipefail
@@ -19,15 +19,16 @@ for name in VivoArtifactPrimitives CanonicalArtifact VivoArtifactStore VivoRoote
   FILES+=("$ROOT/Sources/NumiVivoKit/Artifacts/$name.swift")
 done
 FILES+=("$ROOT/Sources/NumiVivoKit/JSONValue.swift")
-for name in VivoChemistryWorkflow VivoElectronicWorkflow VivoElectronicWorkflowOperations VivoAdvancedElectronicWorkflow VivoAdvancedChemistryOperations VivoElectronicRequestDispatch VivoECCDMETOperation; do
+for name in VivoChemistryWorkflow VivoElectronicWorkflow VivoElectronicWorkflowOperations VivoAdvancedElectronicWorkflow VivoAdvancedChemistryOperations VivoElectronicRequestDispatch VivoECCDMETOperation VivoMolecularECCPathWorkflow; do
   FILES+=("$ROOT/Sources/NumiVivoKit/Workflow/$name.swift")
 done
-shasum -a 256 "${FILES[@]}" "$ROOT/Sources/NumiVivoCLI/VivoElectronicCLICommands.swift" "$ROOT/Tools/NativeChemistry/ScopedCLIMain.swift" > "$OUT/sources.sha256"
+CLI=("$ROOT/Sources/NumiVivoCLI/VivoElectronicCLICommands.swift" "$ROOT/Sources/NumiVivoCLI/VivoECCPathCLICommands.swift" "$ROOT/Tools/NativeChemistry/ScopedCLIMain.swift")
+shasum -a 256 "${FILES[@]}" "${CLI[@]}" > "$OUT/sources.sha256"
 swiftc --version > "$OUT/compiler.txt"; uname -srm > "$OUT/platform.txt"
 swiftc -swift-version 6 -O -whole-module-optimization -parse-as-library \
   -module-name NumiVivoKit -emit-module -emit-library -static -framework Accelerate \
   "${FILES[@]}" -emit-module-path "$OUT/NumiVivoKit.swiftmodule" -o "$OUT/libNumiVivoKit.a"
 swiftc -swift-version 6 -O -parse-as-library -I "$OUT" -L "$OUT" -lNumiVivoKit \
-  "$ROOT/Sources/NumiVivoCLI/VivoElectronicCLICommands.swift" \
-  "$ROOT/Tools/NativeChemistry/ScopedCLIMain.swift" -o "$OUT/numivivo-chemistry"
+  "${CLI[@]}" -o "$OUT/numivivo-chemistry"
 "$OUT/numivivo-chemistry" chemistry-help
+"$OUT/numivivo-chemistry" chemistry-path-help

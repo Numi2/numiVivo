@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoScreenedInferenceCLICommands.handles(arguments.first) {
+if VivoECCPathCLICommands.handles(arguments.first) {
+    status = await VivoECCPathCLICommands().run(arguments: arguments)
+} else if VivoScreenedInferenceCLICommands.handles(arguments.first) {
     status = await VivoScreenedInferenceCLICommands().run(arguments: arguments)
 } else if VivoResearchCLICommands.handles(arguments.first) {
     status = await VivoResearchCLICommands().run(arguments: arguments)
@@ -31,6 +33,7 @@ if VivoScreenedInferenceCLICommands.handles(arguments.first) {
 } else {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
+        FileHandle.standardOutput.write(Data("\nShared-orbital ECC paths: chemistry-path-template, chemistry-path-run, chemistry-path-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nMetal-screened inference: engagement-screen-check, engagement-fit-screened, screening-help.\n".utf8))
         FileHandle.standardOutput.write(Data("Research workflows: finite-drug-run, engagement-design, occupancy-benchmark-inspect, occupancy-benchmark-compare, research-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nElectronic chemistry: chemistry-template, chemistry-run, chemistry-solve, chemistry-help.\n".utf8))
