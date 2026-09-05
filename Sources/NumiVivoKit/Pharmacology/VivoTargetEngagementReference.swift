@@ -48,6 +48,8 @@ public enum VivoTargetEngagementReference {
     public static func run(_ experiment: VivoTargetEngagementExperiment,
                            numerics: VivoTargetEngagementNumerics = .init()) throws -> VivoTargetEngagementResult {
         try experiment.validate(); try numerics.validate()
+        try experiment.initial.validate(hasCompetitor: experiment.kinetics.competitor != nil,
+                                        tolerance: numerics.fractionConservationTolerance)
         let model = experiment.kinetics, knots = experiment.exposure.knots
         var state = experiment.initial.values + [1.0]
         var time = 0.0, knotIndex = 0, propagationCount = 0, maximumDepth = 0
