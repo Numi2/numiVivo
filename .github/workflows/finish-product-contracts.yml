@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['Tools/Build/full-product-contract-repair.patch', '.github/workflows/finish-product-contracts.yml']
+    paths: ['Tools/Build/apply_shader_contracts.py', '.github/workflows/finish-product-contracts.yml']
 permissions:
   contents: read
 concurrency:
@@ -19,21 +19,18 @@ jobs:
       sha: ${{ steps.commit.outputs.sha }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Apply reviewed source changes and publish without force
+      - name: Publish explicit shader entry-point and reservoir contracts
         id: commit
         shell: bash
         run: |
           set -euo pipefail
-          PATCH=Tools/Build/full-product-contract-repair.patch
-          if git apply --recount --reverse --check "$PATCH" 2>/dev/null; then
-            echo 'Patch already present; no source change.'
-          else
-            git apply --recount --index --check "$PATCH"
-            git apply --recount --index "$PATCH"
-            git diff --cached --check
+          python3 Tools/Build/apply_shader_contracts.py
+          git add Sources/NumiVivoShaders/Resources Sources/NumiVivoKit/Kinetics/VivoTargetEngagementProgramSource.swift
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'fix(cli): expose MD samples and exercise complete product on actual Metal'
+            git commit -m 'fix(gpu): publish stable kernel host names and preserve external exposure ownership'
             git push origin HEAD:main
           fi
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
