@@ -1,0 +1,120 @@
+name: Nuclear reaction qualification
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/reaction-qualification.yml'
+      - 'Sources/**'
+      - 'Package.swift'
+      - 'Tools/check_reaction_qualification.sh'
+      - 'Tools/NativeChemistry/ReactionQualificationChecks.swift'
+      - 'Tools/NativeChemistry/check_reaction_cli.py'
+      - 'Tools/NativeChemistry/build_scoped_cli.sh'
+      - 'Tools/NativeChemistry/ScopedCLIMain.swift'
+      - 'ReferenceAdapters/PySCF/reaction_qualification_oracle.py'
+permissions:
+  contents: read
+concurrency:
+  group: nuclear-reaction-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  oracle:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Independent PySCF stationary and thermochemical references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/oracle-python"
+          PYTHON="$RUNNER_TEMP/oracle-python/bin/python"
+          "$PYTHON" -m pip install 'numpy==1.26.4' 'scipy==1.13.1' 'h5py==3.11.0' 'pyscf==2.8.0'
+          "$PYTHON" ReferenceAdapters/PySCF/reaction_qualification_oracle.py export "$RUNNER_TEMP/reaction-oracle"
+          "$PYTHON" -m pip freeze > "$RUNNER_TEMP/reaction-oracle/python-lock.txt"
+          git rev-parse HEAD > "$RUNNER_TEMP/reaction-oracle/source-commit.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: reaction-oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/reaction-oracle/
+          if-no-files-found: error
+          retention-days: 14
+  apple:
+    needs: oracle
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: reaction-oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/reaction-oracle
+      - name: Execute real native nuclear solvent thermochemistry and CLI checks
+        shell: bash
+        env:
+          VIVO_REACTION_REFERENCE_DIR: ${{ runner.temp }}/reaction-oracle
+        run: |
+          set -euo pipefail
+          bash Tools/check_reaction_qualification.sh "$RUNNER_TEMP/reaction-run" 2>&1 | tee "$RUNNER_TEMP/reaction-conformance.log"
+      - name: Retain exact source and compiler identity
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/reaction-source"
+          git archive --format=tar.gz HEAD > "$RUNNER_TEMP/reaction-source/source.tar.gz"
+          git rev-parse HEAD > "$RUNNER_TEMP/reaction-source/commit.txt"
+          uname -srm > "$RUNNER_TEMP/reaction-source/platform.txt"
+          swiftc --version > "$RUNNER_TEMP/reaction-source/compiler.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: apple-reaction-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/reaction-run/native/
+            ${{ runner.temp }}/reaction-run/cli-checks/
+            ${{ runner.temp }}/reaction-run/*.log
+            ${{ runner.temp }}/reaction-run/*.json
+            ${{ runner.temp }}/reaction-run/*.sha256
+            ${{ runner.temp }}/reaction-run/scoped-cli/sources.sha256
+            ${{ runner.temp }}/reaction-run/scoped-cli/compiler.txt
+            ${{ runner.temp }}/reaction-run/scoped-cli/platform.txt
+            ${{ runner.temp }}/reaction-source/
+            ${{ runner.temp }}/reaction-conformance.log
+          if-no-files-found: error
+          retention-days: 14
+  full_product:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Build the complete product rather than the electronic subset
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/full-product"
+          git rev-parse HEAD > "$RUNNER_TEMP/full-product/commit.txt"
+          swift --version > "$RUNNER_TEMP/full-product/compiler.txt"
+          uname -srm > "$RUNNER_TEMP/full-product/platform.txt"
+          swift build -c release --jobs 3 2>&1 | tee "$RUNNER_TEMP/full-product/build.log"
+          .build/release/numivivo --help > "$RUNNER_TEMP/full-product/help.txt" 2>&1
+          .build/release/numivivo md-capabilities > "$RUNNER_TEMP/full-product/md-capabilities.txt" 2>&1
+          shasum -a 256 .build/release/numivivo > "$RUNNER_TEMP/full-product/binary.sha256"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: full-product-${{ github.sha }}
+          path: ${{ runner.temp }}/full-product/
+          if-no-files-found: error
+          retention-days: 14
