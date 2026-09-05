@@ -257,8 +257,9 @@ public struct VivoCalibrationStrategy: Codable, Sendable, Equatable {
     }
 
     public func validate(parameterCount: Int) throws {
-        guard parameterCount > 0,
-              populationSize >= max(parameterCount * 2, 8),
+        let doubled = parameterCount.multipliedReportingOverflow(by: 2)
+        guard parameterCount > 0, !doubled.overflow,
+              populationSize >= max(doubled.partialValue, 8),
               eliteFraction.isFinite, eliteFraction > 0, eliteFraction <= 0.5,
               smoothing.isFinite, smoothing > 0, smoothing <= 1,
               explorationFraction.isFinite, explorationFraction >= 0, explorationFraction <= 1,
@@ -380,7 +381,14 @@ public struct VivoCalibrationCompiler: Sendable {
         try calibration.strategy.validate(parameterCount: calibration.parameters.count)
 
         let metadata = try programPack.parameterMetadata()
-        let byIdentifier = Dictionary(uniqueKeysWithValues: metadata.map { ($0.identifier, $0) })
+        guard metadata.count <= Int(UInt32.max), Set(metadata.map(\.identifier)).count == metadata.count else {
+            throw VivoArtifactValidationError.invalid("parameter metadata has duplicate identifiers or exceeds UInt32 indexing")
+        }
+        // ParameterMetadata intentionally has no independent index authority.
+        // Its array order is the compiled parameter-table order.
+        let byIdentifier = Dictionary(uniqueKeysWithValues: metadata.enumerated().map {
+            ($0.element.identifier, (index: UInt32($0.offset), metadata: $0.element))
+        })
         var identifiers = Set<String>()
         var prepared: [PreparedVivoCalibrationParameter] = []
         prepared.reserveCapacity(calibration.parameters.count)
@@ -388,9 +396,10 @@ public struct VivoCalibrationCompiler: Sendable {
             guard !parameter.identifier.isEmpty, identifiers.insert(parameter.identifier).inserted else {
                 throw VivoArtifactValidationError.invalid("calibration parameter identifiers must be non-empty and unique")
             }
-            guard let target = byIdentifier[parameter.identifier] else {
+            guard let selected = byIdentifier[parameter.identifier] else {
                 throw VivoArtifactValidationError.unresolved("calibration parameter \(parameter.identifier) is absent from ProgramPack")
             }
+            let target = selected.metadata
             try parameter.lowerBound.validate(label: "calibration.parameters.\(parameter.identifier).lowerBound")
             try parameter.upperBound.validate(label: "calibration.parameters.\(parameter.identifier).upperBound")
             try parameter.initialValue?.validate(label: "calibration.parameters.\(parameter.identifier).initialValue")
@@ -416,7 +425,7 @@ public struct VivoCalibrationCompiler: Sendable {
             try parameter.prior.validate(lower: lower, upper: upper, label: "calibration.parameters.\(parameter.identifier).prior")
             prepared.append(.init(
                 identifier: parameter.identifier,
-                parameterIndex: target.index,
+                parameterIndex: selected.index,
                 unit: target.unit,
                 lowerBound: lower,
                 upperBound: upper,
