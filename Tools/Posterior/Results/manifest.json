@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-09-05T04:51:57.962514+00:00",
+  "scope": "Selected production Swift numeric sources with harness artifact-identity adapters; not a full package build",
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.41",
+  "toolchain": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "productionFlags": [
+    "-O",
+    "-whole-module-optimization",
+    "-swift-version",
+    "6",
+    "-warnings-as-errors",
+    "-enable-testing"
+  ],
+  "harnessFlags": [
+    "-Onone",
+    "-parse-as-library",
+    "-swift-version",
+    "6",
+    "-warnings-as-errors"
+  ],
+  "assertionsPassed": 94,
+  "fullApplePackageBuilt": false,
+  "metalExecuted": false,
+  "clinicalPredictionValidated": false,
+  "randomSourceMode": "provided verbatim production RNG excerpt; no claim to compiling its parent optimizer",
+  "randomSource": {
+    "path": "public-rng.swift",
+    "bytes": 1140,
+    "sha256": "471044c559f8cb3c3c5dba11cc29e2f02f5374d7cb70fa0d7f54fe7960dade50",
+    "gitBlobSHA1": "134438d51b3e4f893a8171d4c0f35eb03126a9ac"
+  },
+  "compiledRandomExcerpt": {
+    "path": "public-rng.swift",
+    "bytes": 1140,
+    "sha256": "471044c559f8cb3c3c5dba11cc29e2f02f5374d7cb70fa0d7f54fe7960dade50",
+    "gitBlobSHA1": "134438d51b3e4f893a8171d4c0f35eb03126a9ac"
+  },
+  "sources": [
+    {
+      "path": "Sources/NumiVivoKit/Kinetics/VivoCovalentKinetics.swift",
+      "bytes": 14766,
+      "sha256": "1016993225e91eb3b6fe94835361f02d755398b3c82ba7a05aa6112f2a3597ea",
+      "gitBlobSHA1": "510e754f4be3c325535d8939b93eeed6651e91f0"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Pharmacology/VivoTargetEngagementReference.swift",
+      "bytes": 10134,
+      "sha256": "eebc5f23df4bf586f3a28be1d0356a328617c4d3a2e04a82aaf4e1387fa2f90b",
+      "gitBlobSHA1": "91c2d408bf45e4792d9b1d4dbd101b8dd8f9b465"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Pharmacology/VivoFiniteDrugReactions.swift",
+      "bytes": 13638,
+      "sha256": "dc0e66f79d29a43757982395f7bfa7f89fb4a5f55c5689e64c04445e28b822fc",
+      "gitBlobSHA1": "c4ed837b3e4aaba67edfdc5b05c7fb6b3070f1cd"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Pharmacology/VivoFiniteDrugWorkflow.swift",
+      "bytes": 2530,
+      "sha256": "828b95e50c8fb7c92589323a4c159c54aceb8e98fdc1ae5bf943247f36e68f93",
+      "gitBlobSHA1": "33fa15dcdf2dc6fc8422bf2c20408d327eeb1730"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoPosteriorModel.swift",
+      "bytes": 12769,
+      "sha256": "8483b23ea4ab19185c21a12ae7d2b00ece989e6c715493df73c9ddd9c53320fb",
+      "gitBlobSHA1": "e2278d3fd6d440d4b0fa4c9122e3e534d22ba733"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoPosteriorNumerics.swift",
+      "bytes": 6733,
+      "sha256": "6c29ce03e65337bde8054b1e43c02ab21f961c2c5bcf216317f5c2123fba50aa",
+      "gitBlobSHA1": "6c6f52d9a40693ee46cdee17ca5be58bd6ec9d0f"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoTemperedPosteriorSampler.swift",
+      "bytes": 11875,
+      "sha256": "75c1dbee4c3272bfacdcfd4f0e26b1663dd571b0252d2f64a4394935e1f59c25",
+      "gitBlobSHA1": "8fceea2533717fe542b1bfce50b1940d0a07b9ac"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoTargetEngagementStudy.swift",
+      "bytes": 10802,
+      "sha256": "05b31c6e69e72191db7eafc4874999326487cfa9a3b65212ed2902b347faad0f",
+      "gitBlobSHA1": "9326439bcdcd1f09408f2503b8743f4828656206"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoGaussianAssay.swift",
+      "bytes": 11263,
+      "sha256": "468065f2a77b839a8df3c77deb3647099b18205cb9eb6fc10bbef29d006b61c5",
+      "gitBlobSHA1": "9810c6f8ee70bfce4fc725e986e838f2ede09933"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoTargetAssayModel.swift",
+      "bytes": 5216,
+      "sha256": "d2206e7e0eeb142c01cf16ad7282c3e4ddc8c0feaee1b47df145ed599da871ff",
+      "gitBlobSHA1": "d92afe32a1a23d55421ef3b8f6ccd162cd454976"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoTargetPosteriorProblem.swift",
+      "bytes": 18781,
+      "sha256": "4af46ec84dc9a8c37b504cd73f73396778b1704a891a012bbfab929566c0062b",
+      "gitBlobSHA1": "4a32a5b0b88db246ba62571d8010a97a16a1fd6b"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoTargetPosteriorPrediction.swift",
+      "bytes": 16147,
+      "sha256": "923c95de7e55addfb63eae9051ad702b16c1b39a5c73ab39954ae2a45f2d0ec9",
+      "gitBlobSHA1": "78b554b5d7a0fa7fe07ad75089bd9980ab4b0dbe"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoTargetPosteriorSensitivity.swift",
+      "bytes": 11016,
+      "sha256": "6287b0317da37cd912d6d9e177f7a84d282adc361b573f29e89b09f2bb0417aa",
+      "gitBlobSHA1": "4ebb9b619e49bad98bdc162d60d53a5a98c05e1d"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoTargetExperimentDesign.swift",
+      "bytes": 11437,
+      "sha256": "94b93c41b70afc726fe8e2d4214e5ad19ccda297d6d9a1732f4788b944226428",
+      "gitBlobSHA1": "58bec1af5374be2291789738c060080c18068cfa"
+    },
+    {
+      "path": "Sources/NumiVivoKit/Calibration/VivoAggregateOccupancyBenchmark.swift",
+      "bytes": 9497,
+      "sha256": "d72ec837f24cdd11ea27d91a2b94f2ec3169f9cd5fb8e8de81dc74aed47d8123",
+      "gitBlobSHA1": "e57c3eaf54db01eceb249040183e6e8c92ddd48e"
+    },
+    {
+      "path": "Tools/Posterior/PortableSupport.swift",
+      "bytes": 1602,
+      "sha256": "1a36f6b47b0f93b3a5f3b7be2c5d8b81a566dcbcd1d3fde5aa452eecb5cdcc26",
+      "gitBlobSHA1": "cebc251070a8b2e77bbbd70f9e87ff7207b6daac"
+    },
+    {
+      "path": "Tools/Posterior/PortableChecks.swift",
+      "bytes": 15051,
+      "sha256": "5038d9f2deb7b19772dcde39c267743a5f23f2cc81dd8e8fb4c17a042f1b6ef6",
+      "gitBlobSHA1": "2320d96bf03132f86dd0e3f9dcbf7dec8dc281e7"
+    },
+    {
+      "path": "Tools/Posterior/DomainChecks.swift",
+      "bytes": 9335,
+      "sha256": "d63b5af390be1206e0f93d7705bdae7f80dc4d41772d28c5f6c2cd3adc86bcb7",
+      "gitBlobSHA1": "49616ebe73819f902bc65d91f6f95e2b6cdeb471"
+    },
+    {
+      "path": "Tools/Posterior/run_portable_checks.sh",
+      "bytes": 3984,
+      "sha256": "6730aeb113d0f4088b4ac4abdd689435acfbb43f20828aabad604d8ae8472b92",
+      "gitBlobSHA1": "7713367b2c4d947ad5ae6875ca2b155a6b0c89ac"
+    },
+    {
+      "path": "Tools/Posterior/write_manifest.py",
+      "bytes": 2845,
+      "sha256": "f28a7820216874f177561214b28f47fd8688740284b007d0fa3c93c96eeda9e3",
+      "gitBlobSHA1": "f4308d2769d9c134d1a56da903d41d3a3f3970fe"
+    },
+    {
+      "path": "Tools/Posterior/reference-data.json",
+      "bytes": 1030,
+      "sha256": "1ab3fad4d6567e9d62f16937e6c46a59acb4b40151c0bef647593cf200f6e919",
+      "gitBlobSHA1": "61e839f80e487eb6dd245b45e1714ce0294c6ff3"
+    },
+    {
+      "path": "Tools/Posterior/domain-reference.json",
+      "bytes": 986,
+      "sha256": "ab5649776c268b003d919747e610d474cf096ef239a801907f249ebc18260506",
+      "gitBlobSHA1": "a6c75d44184e5dfbcbdb001847361b19b7407f40"
+    },
+    {
+      "path": "Examples/target-engagement/synthetic-assay-inference.json",
+      "bytes": 11606,
+      "sha256": "69b82985b323e8bb9586fc864661064d66cd29b1ac65414b9943b9b1250468c4",
+      "gitBlobSHA1": "56753e23c4d893b9be57fe7bd9fe64282df2abab"
+    },
+    {
+      "path": "Examples/btk-aggregate-benchmark/observations.json",
+      "bytes": 2164,
+      "sha256": "3d3f00d43ae4738e3fb20e05e48ac36cb3877e5862b7a247746fb50a70eb4cae",
+      "gitBlobSHA1": "68e439ee9ffc1e7cd6bf92e9a2872fbfa4fa3c8c"
+    },
+    {
+      "path": "Examples/target-engagement/finite-drug.json",
+      "bytes": 3297,
+      "sha256": "da4154099ccd6e32f569c2486997fccaff0de37eb4ccd7eff59ea5c5c8c7909e",
+      "gitBlobSHA1": "58c564924a40207830021f01edbee23f6dd1f03c"
+    },
+    {
+      "path": "Examples/target-engagement/design-candidates.json",
+      "bytes": 2199,
+      "sha256": "5ede6930f93e2f90132a51a3c6f3eccd7e8be5b76a14c8c0feb80d55a6d46b9c",
+      "gitBlobSHA1": "3da7242f0cf3499334409f4bce8f1169fa429480"
+    }
+  ],
+  "reports": {
+    "PortableChecks": {
+      "path": "PortableChecks.json",
+      "bytes": 8656,
+      "sha256": "ef1303dccb37a45bd83450456783f5fe949d11e690555d96b8d60dcbbb7fd058",
+      "gitBlobSHA1": "2a1307cb65e65aee37420bea4e861225fc3b2036"
+    },
+    "DomainChecks": {
+      "path": "DomainChecks.json",
+      "bytes": 1896,
+      "sha256": "9df7548b3a012c46034491afa2305a9ce13150c7730ab2e2897719703b196572",
+      "gitBlobSHA1": "6f1418ce041cf7b23f65e68aa6bd470e538fb67d"
+    }
+  },
+  "limitations": [
+    "Artifact identity is a harness adapter, not production CryptoKit/store validation.",
+    "SBC-style ranks are descriptive with dependent SMC particles; 24 trials do not establish universal calibration.",
+    "Finite-pool conformance is for declared analytic and one independent eight-state ODE fixture.",
+    "Published clinical cohort facts are inspected as aggregates; test cohort predictions are explicitly synthetic."
+  ],
+  "executionNote": "Final 72+22 check invocation reused the already successfully compiled optimized numerical library. All 15 production source files, RNG excerpt, and support adapter matched its compile-source manifest; changed test drivers were separately rebuilt. No fresh full repository or Apple build is claimed.",
+  "compiledLibrarySHA256": "ec623a43157c13c1456e9c9c76dd89891eda67edfe4cec4350a6bb3bd7a5bd1d",
+  "invocations": [
+    "NUMIVIVO_CHECK_OUTPUT=<output> posterior-checks <output>/PortableChecks.json",
+    "NUMIVIVO_CHECK_OUTPUT=<output> domain-checks <output>/DomainChecks.json"
+  ],
+  "referenceGenerators": [
+    {
+      "path": "Tools/Posterior/generate_reference_data.py",
+      "sha256": "89711561654b8953f698da1b28c7ca3b3c5dc77434e6a7e533b146c41ea6cd4c"
+    },
+    {
+      "path": "Tools/Posterior/generate_domain_references.py",
+      "sha256": "57a30fe67e516587e91170b1c6b5aef6d7e0eb48b684ebcf64b158445e21c4db"
+    }
+  ]
+}
