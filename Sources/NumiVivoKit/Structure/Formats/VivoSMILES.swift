@@ -35,8 +35,7 @@ public enum VivoSMILES {
             let index = try builder.appendAtom(name: "\(atom.element.symbol)\(builder.atoms.count + 1)",
                                                element: atom.element, positionNM: .zero,
                                                sourceSerial: Int32(exactly: builder.atoms.count + 1),
-                                               formalCharge: atom.charge, isHetero: true)
-            builder.atoms[Int(index)].isotopeMassNumber = atom.isotope
+                                               isotopeMassNumber: atom.isotope, formalCharge: atom.charge, isHetero: true)
             aromatic.append(atom.aromatic)
             if let previous = current {
                 let defaultOrder: VivoBondOrder = aromatic[Int(previous)] && atom.aromatic ? .aromatic : .single

@@ -23,7 +23,7 @@ final class VivoStructureAssemblyBuilder {
                     residueSequence: Int32? = nil, insertionCode: String? = nil,
                     sourceSerial: Int32? = nil, alternateLocation: String? = nil,
                     occupancy: Double? = nil, bFactor: Double? = nil,
-                    formalCharge: Int16 = 0, isHetero: Bool = false) throws -> UInt32 {
+                    isotopeMassNumber: UInt16? = nil, formalCharge: Int16 = 0, isHetero: Bool = false) throws -> UInt32 {
         guard atoms.count < Int(UInt32.max), positionNM.isFinite else {
             throw VivoArtifactValidationError.invalid("structure atom capacity exceeded or coordinate is nonfinite")
         }
@@ -53,7 +53,7 @@ final class VivoStructureAssemblyBuilder {
         }
         let index = UInt32(atoms.count)
         atoms.append(.init(index: index, name: name, element: element,
-                           formalCharge: formalCharge, residueIndex: residueIndex,
+                           isotopeMassNumber: isotopeMassNumber, formalCharge: formalCharge, residueIndex: residueIndex,
                            sourceSerial: sourceSerial, alternateLocation: normalized(alternateLocation),
                            occupancy: occupancy, bFactor: bFactor, isHetero: isHetero))
         positions.append(positionNM)
