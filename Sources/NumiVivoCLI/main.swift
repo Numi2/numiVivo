@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoMDProtocolCLICommands.handles(arguments.first) {
+if VivoTargetEngagementCLICommands.handles(arguments.first) {
+    status = await VivoTargetEngagementCLICommands().run(arguments: arguments)
+} else if VivoMDProtocolCLICommands.handles(arguments.first) {
     status = await VivoMDProtocolCLICommands().run(arguments: arguments)
 } else if VivoHybridCLICommands.handles(arguments.first) {
     status = await VivoHybridCLICommands().run(arguments: arguments)
@@ -21,6 +23,7 @@ if VivoMDProtocolCLICommands.handles(arguments.first) {
 } else {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
+        FileHandle.standardOutput.write(Data("\nTarget engagement: engagement-validate, engagement-source, engagement-compile, engagement-run, engagement-batch, engagement-study, engagement-rate, engagement-apply-rate, engagement-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nMD workflows: md-protocol-template, md-protocol-validate, md-protocol-run, md-protocol-resume, md-protocol-inspect, md-trajectory-inspect, md-protocol-help.\n".utf8))
         FileHandle.standardOutput.write(Data("Hybrid GPU execution: plan-hybrid, run-hybrid, hybrid-help.\n".utf8))
         FileHandle.standardOutput.write(Data("Apple-native MD: md-capabilities, md-run, md-minimize, md-help.\n".utf8))
