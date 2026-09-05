@@ -1,0 +1,217 @@
+diff --git a/Sources/NumiVivoKit/Artifacts/ResultPack.swift b/Sources/NumiVivoKit/Artifacts/ResultPack.swift
+index 927fa87..bd8d91e 100644
+--- a/Sources/NumiVivoKit/Artifacts/ResultPack.swift
++++ b/Sources/NumiVivoKit/Artifacts/ResultPack.swift
+@@ -186,6 +186,9 @@ public struct VivoResultPack: Codable, Sendable, Equatable {
+     public let replicates: [VivoReplicateResult]
+     public let measurements: [VivoMeasurementSample]
+     public let events: [VivoEvent]
++    /// Optional for decoding legacy result packs; new experiment runs always supply these.
++    public let recordedEvents: [VivoRecordedEvent]?
++    public let measurementSummaries: [VivoMeasurementSummary]?
+     public let ledgers: [VivoRunLedger]
+     public let limitations: [String]
+     public let annotations: [String: String]
+@@ -204,7 +207,9 @@ public struct VivoResultPack: Codable, Sendable, Equatable {
+         finishedAt: Date,
+         replicates: [VivoReplicateResult],
+         measurements: [VivoMeasurementSample],
++        measurementSummaries: [VivoMeasurementSummary]? = nil,
+         events: [VivoEvent],
++        recordedEvents: [VivoRecordedEvent]? = nil,
+         ledgers: [VivoRunLedger],
+         limitations: [String],
+         annotations: [String: String] = [:]
+@@ -223,6 +228,8 @@ public struct VivoResultPack: Codable, Sendable, Equatable {
+         self.replicates = replicates
+         self.measurements = measurements
+         self.events = events
++        self.recordedEvents = recordedEvents
++        self.measurementSummaries = measurementSummaries
+         self.ledgers = ledgers
+         self.limitations = limitations
+         self.annotations = annotations
+@@ -238,7 +245,20 @@ public struct VivoResultPack: Codable, Sendable, Equatable {
+         guard Set(replicates.map(\.replicateIndex)).count == replicates.count else {
+             throw VivoArtifactValidationError.invalid("result contains duplicate replicate indices")
+         }
+-        for sample in measurements { try sample.validate() }
++        let indices = Set(replicates.map(\.replicateIndex))
++        if let records = recordedEvents {
++            guard records.map(\.event) == events, records.allSatisfy({ indices.contains($0.replicateIndex) }) else {
++                throw VivoArtifactValidationError.invalid("replicate-tagged events differ from raw events or reference unknown replicates")
++            }
++        }
++        for summary in measurementSummaries ?? [] {
++            try summary.validate()
++            guard indices.contains(summary.replicateIndex) else { throw VivoArtifactValidationError.invalid("summary references an unknown replicate") }
++        }
++        for sample in measurements {
++            try sample.validate()
++            guard indices.contains(sample.replicateIndex) else { throw VivoArtifactValidationError.invalid("sample references an unknown replicate") }
++        }
+         for ledger in ledgers where try !ledger.verify() {
+             throw VivoArtifactValidationError.invalid("result contains an invalid step ledger chain")
+         }
+diff --git a/Sources/NumiVivoKit/Calibration/VivoMetalTargetLikelihoodScreen.swift b/Sources/NumiVivoKit/Calibration/VivoMetalTargetLikelihoodScreen.swift
+index 11f2df1..001c223 100644
+--- a/Sources/NumiVivoKit/Calibration/VivoMetalTargetLikelihoodScreen.swift
++++ b/Sources/NumiVivoKit/Calibration/VivoMetalTargetLikelihoodScreen.swift
+@@ -136,13 +136,13 @@ public actor VivoMetalTargetLikelihoodScreen {
+             if name == "NumiVivoTargetLikelihood" { scoringSource = text }
+         }
+         let options = MTLCompileOptions(); options.fastMathEnabled = false
+-        let library = try device.makeLibrary(source: scoringSource, options: options)
++        let library = try await device.makeLibrary(source: scoringSource, options: options)
+         guard let expose = library.makeFunction(name: "nvivo_target_likelihood_expose"),
+               let observe = library.makeFunction(name: "nvivo_target_likelihood_observe") else {
+             throw NumiVivoShaderError.functionMissing("target likelihood functions")
+         }
+-        let exposePipeline = try device.makeComputePipelineState(function: expose)
+-        let observePipeline = try device.makeComputePipelineState(function: observe)
++        let exposePipeline = try await device.makeComputePipelineState(function: expose)
++        let observePipeline = try await device.makeComputePipelineState(function: observe)
+         var storage: [CaseStorage] = [], bytes = 0
+         for plan in plans {
+             let item = try CaseStorage(plan: plan, device: device, queue: queue)
+diff --git a/Sources/NumiVivoKit/Experiments/VivoExperimentRunner.swift b/Sources/NumiVivoKit/Experiments/VivoExperimentRunner.swift
+index cf726be..01cca34 100644
+--- a/Sources/NumiVivoKit/Experiments/VivoExperimentRunner.swift
++++ b/Sources/NumiVivoKit/Experiments/VivoExperimentRunner.swift
+@@ -2,9 +2,9 @@ import Foundation
+ 
+ public struct VivoExperimentRunOutput: Sendable {
+     public let result: VivoResultPack
+-    public let checkpoints: [VivoCheckpointPack]
++    public let checkpoints: [VivoExperimentCheckpoint]
+ 
+-    public init(result: VivoResultPack, checkpoints: [VivoCheckpointPack]) {
++    public init(result: VivoResultPack, checkpoints: [VivoExperimentCheckpoint]) {
+         self.result = result
+         self.checkpoints = checkpoints
+     }
+@@ -98,7 +98,7 @@ public actor VivoExperimentRunner {
+         var allSamples: [VivoMeasurementSample] = []
+         var allSummaries: [VivoMeasurementSummary] = []
+         var allEvents: [VivoRecordedEvent] = []
+-        var allCheckpoints: [VivoCheckpointPack] = []
++        var allCheckpoints: [VivoExperimentCheckpoint] = []
+         var allLedgers: [VivoRunLedger] = []
+         var replicateResults: [VivoReplicateResult] = []
+         var limitations = Set<String>()
+@@ -272,8 +272,10 @@ public actor VivoExperimentRunner {
+                         guard allCheckpoints.count < options.maximumStoredCheckpoints else {
+                             throw VivoArtifactValidationError.invalid("stored checkpoint limit exceeded")
+                         }
+-                        let checkpoint = try await runtime.checkpoint(
++                        let checkpoint = try await VivoExperimentCheckpoint(
++                            state: runtime.resumeCheckpoint(), replicateIndex: replicateIndex,
+                             experimentFingerprint: experiment.fingerprint,
++                            hostContextFingerprint: hostContext.contextFingerprint,
+                             couplingFingerprint: coupling?.fingerprint,
+                             ledgerHead: ledger.head
+                         )
+@@ -333,7 +335,8 @@ public actor VivoExperimentRunner {
+             replicates: replicateResults,
+             measurements: allSamples,
+             measurementSummaries: allSummaries,
+-            events: allEvents,
++            events: allEvents.map(\.event),
++            recordedEvents: allEvents,
+             ledgers: allLedgers,
+             limitations: limitations.sorted(),
+             annotations: [:]
+diff --git a/Sources/NumiVivoKit/Physiology/VivoPhysiologicalPartitionRuntime.swift b/Sources/NumiVivoKit/Physiology/VivoPhysiologicalPartitionRuntime.swift
+index 3b13bdb..daa1fe5 100644
+--- a/Sources/NumiVivoKit/Physiology/VivoPhysiologicalPartitionRuntime.swift
++++ b/Sources/NumiVivoKit/Physiology/VivoPhysiologicalPartitionRuntime.swift
+@@ -239,7 +239,7 @@ public actor VivoPhysiologicalPartitionRuntime {
+         }
+         let source = String(decoding: try Data(contentsOf: sourceURL), as: UTF8.self)
+         let library: MTLLibrary
+-        do { library = try device.makeLibrary(source: source, options: nil) }
++        do { library = try await device.makeLibrary(source: source, options: nil) }
+         catch { throw VivoPartitionRuntimeError.shaderCompilation(error.localizedDescription) }
+ 
+         func pipeline(_ name: String) throws -> MTLComputePipelineState {
+diff --git a/Sources/NumiVivoKit/Population/VivoPopulationRuntime.swift b/Sources/NumiVivoKit/Population/VivoPopulationRuntime.swift
+index d2c6033..f74fff2 100644
+--- a/Sources/NumiVivoKit/Population/VivoPopulationRuntime.swift
++++ b/Sources/NumiVivoKit/Population/VivoPopulationRuntime.swift
+@@ -280,7 +280,7 @@ public actor VivoPopulationRuntime {
+         }
+         let source = String(decoding: try Data(contentsOf: sourceURL), as: UTF8.self)
+         let library: MTLLibrary
+-        do { library = try device.makeLibrary(source: source, options: nil) }
++        do { library = try await device.makeLibrary(source: source, options: nil) }
+         catch { throw VivoPopulationRuntimeError.shaderCompilation(error.localizedDescription) }
+ 
+         func pipeline(_ name: String) throws -> MTLComputePipelineState {
+diff --git a/Sources/NumiVivoKit/Runtime/VivoRuntime.swift b/Sources/NumiVivoKit/Runtime/VivoRuntime.swift
+index e81bd1f..bdede81 100644
+--- a/Sources/NumiVivoKit/Runtime/VivoRuntime.swift
++++ b/Sources/NumiVivoKit/Runtime/VivoRuntime.swift
+@@ -119,6 +119,10 @@ public actor VivoRuntime {
+     public func setTransport(_ values: [VivoSpeciesTransportABI]) async throws { try await engine.setTransport(values) }
+     public func setVelocity(_ values: [SIMD4<Float>]) async throws { try await engine.setVelocity(values) }
+     public func setVolumeFractions(_ values: [Float]) async throws { try await engine.setVolumeFractions(values) }
++    public func apply(_ context: PreparedVivoHostContext) async throws { try await engine.apply(context) }
++    public func apply(intervention: PreparedVivoIntervention.Operation) async throws { try await engine.apply(intervention: intervention) }
++    /// Initial coupling is applied atomically by apply; no uncommitted facade queue exists.
++    public func primePendingInputs() async throws { try await engine.requireAcceptedBoundary() }
+     public func snapshot() async throws -> VivoStateSnapshot { try await engine.snapshot() }
+     public func checkpoint() async throws -> VivoMolecularCheckpoint { try await engine.checkpoint() }
+     public func resumeCheckpoint() async throws -> VivoMolecularResumeCheckpoint { try await engine.resumeCheckpoint() }
+diff --git a/Sources/NumiVivoKit/Runtime/VivoTransactionalMolecularRuntime.swift b/Sources/NumiVivoKit/Runtime/VivoTransactionalMolecularRuntime.swift
+index 35f7383..1019a60 100644
+--- a/Sources/NumiVivoKit/Runtime/VivoTransactionalMolecularRuntime.swift
++++ b/Sources/NumiVivoKit/Runtime/VivoTransactionalMolecularRuntime.swift
+@@ -73,6 +73,12 @@ public actor VivoTransactionalMolecularRuntime {
+         case .permanentlyStopped(let reason), .failed(let reason): throw VivoRuntimeError.runtimeStopped(reason)
+         }
+     }
++    public func requireAcceptedBoundary() throws { try requireUnreserved() }
++    public func stopReversibly(reason: String) throws {
++        try requireReadyAndUnreserved()
++        guard !reason.isEmpty else { throw VivoRuntimeError.invalidConfiguration("empty reversible shutdown reason") }
++        lifecycleState = .reversiblyStopped(reason: reason)
++    }
+     public func stopPermanently(reason: String) {
+         // Already-submitted GPU work may finish, but cannot become publishable.
+         pending = nil
+diff --git a/Sources/NumiVivoKit/Standards/VivoSBMLProgramMapper.swift b/Sources/NumiVivoKit/Standards/VivoSBMLProgramMapper.swift
+index c73fe81..60fa897 100644
+--- a/Sources/NumiVivoKit/Standards/VivoSBMLProgramMapper.swift
++++ b/Sources/NumiVivoKit/Standards/VivoSBMLProgramMapper.swift
+@@ -100,7 +100,7 @@ public struct VivoSBMLProgramMappingOptions: Codable, Equatable, Sendable {
+               maximumDurationSeconds > 0 else {
+             throw VivoSBMLMappingError.invalidOptions
+         }
+-        for mapping in speciesMappings.values + parameterMappings.values {
++        for mapping in Array(speciesMappings.values) + Array(parameterMappings.values) {
+             _ = try mapping.transform(mapping.minimum)
+             _ = try mapping.transform(mapping.maximum)
+         }
+@@ -312,7 +312,8 @@ public struct VivoSBMLProgramMapper: Sendable {
+             }
+             let expression: RateExpression?
+             if let formula = law.formula, !formula.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+-                expression = FormulaParser(formula).parse()
++                var parser = FormulaParser(formula)
++                expression = parser.parse()
+             } else if let mathML = law.mathML {
+                 expression = MathMLExpressionParser.parse(mathML)
+             } else {
+diff --git a/Sources/NumiVivoKit/Stochastic/VivoExactSSA.swift b/Sources/NumiVivoKit/Stochastic/VivoExactSSA.swift
+index eedf968..493f564 100644
+--- a/Sources/NumiVivoKit/Stochastic/VivoExactSSA.swift
++++ b/Sources/NumiVivoKit/Stochastic/VivoExactSSA.swift
+@@ -436,7 +436,7 @@ public actor VivoExactSSARuntime {
+         let source = String(decoding: try Data(contentsOf: sourceURL), as: UTF8.self)
+         let library: MTLLibrary
+         do {
+-            library = try device.makeLibrary(source: source, options: nil)
++            library = try await device.makeLibrary(source: source, options: nil)
+         } catch {
+             throw VivoExactSSAError.shaderCompilation(error.localizedDescription)
+         }
