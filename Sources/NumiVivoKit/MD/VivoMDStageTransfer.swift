@@ -1,9 +1,8 @@
 import Foundation
 
-/// A protocol-stage change is not checkpoint restoration: changing thermostat,
-/// pressure, or numerical settings changes the configuration identity. Preserve
-/// positions, velocities and physical time explicitly, and start a new runtime
-/// whose configuration identity names the new stage.
+/// A stage-transfer description and its single preparation entry point. This
+/// consolidates the previous same-named struct/enum without dropping either the
+/// snapshot-description initializer or the checkpoint-based protocol API.
 public struct VivoMDStageTransfer: Codable, Sendable, Equatable {
     public static let schema = "numivivo.org/md-stage-transfer/v1"
     public let schema: String
@@ -19,23 +18,66 @@ public struct VivoMDStageTransfer: Codable, Sendable, Equatable {
     public init(sourceStage: String, destinationStage: String,
                 state: VivoMDStateSnapshot,
                 destinationConfiguration: VivoMDConfiguration) throws {
-        guard !sourceStage.isEmpty, !destinationStage.isEmpty,
-              sourceStage != destinationStage, !state.positionsNM.isEmpty else {
-            throw VivoArtifactValidationError.invalid("MD stage transfer requires distinct stage identifiers and nonempty state")
-        }
         try state.validate(particleCount: state.positionsNM.count)
-        self.schema = Self.schema
+        schema = Self.schema
         self.sourceStage = sourceStage
         self.destinationStage = destinationStage
-        self.systemFingerprint = state.systemFingerprint
-        self.sourceConfigurationFingerprint = state.configurationFingerprint
-        self.destinationConfigurationFingerprint = try destinationConfiguration.fingerprint()
-        self.sourceAcceptedStep = state.stepIndex
-        self.timePS = state.timePS
-        self.preservesVelocities = true
+        systemFingerprint = state.systemFingerprint
+        sourceConfigurationFingerprint = state.configurationFingerprint
+        destinationConfigurationFingerprint = try destinationConfiguration.fingerprint()
+        sourceAcceptedStep = state.stepIndex
+        timePS = state.timePS
+        preservesVelocities = true
+        try validate()
+    }
+
+    public func validate() throws {
+        guard schema == Self.schema, !sourceStage.isEmpty, !destinationStage.isEmpty,
+              sourceStage.utf8.count <= 128, destinationStage.utf8.count <= 128,
+              sourceStage != destinationStage, timePS.isFinite, timePS >= 0,
+              preservesVelocities else {
+            throw VivoArtifactValidationError.invalid("invalid velocity-preserving MD stage-transfer description")
+        }
     }
 
     public func fingerprint() throws -> VivoFingerprint {
-        try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(self))
+        try validate()
+        return try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(self))
+    }
+
+    /// Explicit reconfiguration rather than restore with an identity bypass.
+    /// Positions, periodic cell, physical time and accepted RNG step survive.
+    /// Only the declared velocity initialization may change velocity state.
+    public static func prepare(checkpoint: VivoMDCheckpoint,
+                               source: VivoMDConfiguration, destination: VivoMDConfiguration,
+                               particleCount: Int,
+                               velocityInitialization: VivoMDVelocityInitialization = .preserve,
+                               thermalizationSeed: UInt64? = nil) throws -> VivoMDStageTransition {
+        try checkpoint.validate(particleCount: particleCount)
+        let sourceFingerprint = try source.fingerprint()
+        let destinationFingerprint = try destination.fingerprint()
+        guard checkpoint.configurationFingerprint == sourceFingerprint else {
+            throw VivoArtifactValidationError.incompatible("MD stage source configuration does not identify the checkpoint")
+        }
+        if velocityInitialization == .maxwellBoltzmann {
+            guard thermalizationSeed != nil, destination.targetTemperatureK != nil else {
+                throw VivoArtifactValidationError.invalid("Maxwell-Boltzmann initialization requires an explicit seed and target temperature")
+            }
+        } else if thermalizationSeed != nil {
+            throw VivoArtifactValidationError.invalid("thermalization seed supplied without Maxwell-Boltzmann initialization")
+        }
+        var next = checkpoint
+        next.configurationFingerprint = destinationFingerprint
+        if velocityInitialization != .preserve {
+            next.velocitiesNMPerPS = [VivoVector3D](repeating: .zero, count: particleCount)
+        }
+        try next.validate(particleCount: particleCount)
+        return .init(schema: "numivivo.org/md-stage-transition/v1",
+                     sourceCheckpoint: try checkpoint.fingerprint(),
+                     sourceConfiguration: sourceFingerprint,
+                     destinationConfiguration: destinationFingerprint,
+                     velocityInitialization: velocityInitialization,
+                     thermalizationSeed: thermalizationSeed,
+                     destinationCheckpoint: next)
     }
 }
