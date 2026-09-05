@@ -1,0 +1,55 @@
+name: Mapped reaction connectivity
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/reaction-connectivity.yml'
+      - 'Sources/NumiVivoKit/ReactionQualification/**'
+      - 'Sources/NumiVivoKit/Workflow/VivoReactionConnectivityWorkflow.swift'
+      - 'Sources/NumiVivoKit/ManyBody/**'
+      - 'Sources/NumiVivoKit/QM/**'
+      - 'Tests/NumiVivoIntegrationTests/ReactionConnectivityTests.swift'
+      - 'Package.swift'
+permissions:
+  contents: read
+concurrency:
+  group: reaction-connectivity-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  apple:
+    runs-on: macos-15
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Capture exact numerical source and environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/reaction-connectivity"
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/source-commit.txt"
+          git archive --format=tar.gz HEAD > "$OUT/source.tar.gz"
+          swift --version > "$OUT/compiler.txt"
+          uname -srm > "$OUT/platform.txt"
+          shasum -a 256 Sources/NumiVivoKit/ReactionQualification/*.swift \
+            Sources/NumiVivoKit/Workflow/VivoReactionConnectivityWorkflow.swift \
+            Tests/NumiVivoIntegrationTests/ReactionConnectivityTests.swift > "$OUT/sources.sha256"
+      - name: Execute real nuclear paths and proper-rotation mapping checks
+        env:
+          NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/reaction-connectivity/results
+          SWIFT_BACKTRACE: 'enable=yes,interactive=no,color=no'
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test -c release --jobs 3 -Xswiftc -enable-testing --filter ReactionConnectivityTests \
+            2>&1 | tee "$RUNNER_TEMP/reaction-connectivity/tests.log"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: mapped-reaction-connectivity-${{ github.sha }}
+          path: ${{ runner.temp }}/reaction-connectivity/
+          if-no-files-found: error
+          retention-days: 14
