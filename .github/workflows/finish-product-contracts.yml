@@ -3,47 +3,25 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['Tools/Build/apply_shader_contracts.py', '.github/workflows/finish-product-contracts.yml']
+    paths:
+      - 'Sources/**'
+      - 'Tests/NumiVivoIntegrationTests/**'
+      - 'Package.swift'
+      - '.github/workflows/finish-product-contracts.yml'
 permissions:
   contents: read
 concurrency:
-  group: finish-product-contracts
+  group: native-product-${{ github.ref }}
   cancel-in-progress: false
 jobs:
-  repair:
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: write
-    outputs:
-      sha: ${{ steps.commit.outputs.sha }}
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Publish reviewed math and constraint corrections
-        id: commit
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 Tools/Build/apply_shader_contracts.py
-          git add Package.swift Sources/NumiVivoShaders Sources/NumiVivoKit/Kinetics/VivoTargetEngagementProgramSource.swift Tests/NumiVivoIntegrationTests/AppleExecutionTests.swift
-          git diff --cached --check
-          if ! git diff --cached --quiet; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'fix(gpu): implement Ewald math and correct normalized-target invariant'
-            git push origin HEAD:main
-          fi
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
   full_product:
-    needs: repair
     runs-on: macos-15
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          ref: ${{ needs.repair.outputs.sha }}
           persist-credentials: false
-      - name: Build and execute the complete product
+      - name: Build the exact committed product and tests without source rewriting
         shell: bash
         run: |
           set -euo pipefail
@@ -53,24 +31,40 @@ jobs:
           git archive --format=tar.gz HEAD > "$OUT/source.tar.gz"
           swift --version > "$OUT/compiler.txt"
           uname -srm > "$OUT/platform.txt"
-          swift build -c release --jobs 3 2>&1 | tee "$OUT/build.log"
+          swift build -c release --build-tests --jobs 3 2>&1 | tee "$OUT/build.log"
           .build/release/numivivo --help > "$OUT/help.txt" 2>&1
           .build/release/numivivo md-help > "$OUT/md-help.txt" 2>&1
           .build/release/numivivo reaction-template h3-saddle --output "$OUT/saddle-request.json"
           .build/release/numivivo reaction-run "$OUT/saddle-request.json" --store "$RUNNER_TEMP/reaction-store" --output "$OUT/saddle-result.json" 2>&1 | tee "$OUT/reaction.log"
           shasum -a 256 .build/release/numivivo > "$OUT/binary.sha256"
-      - name: Compile actual pipelines and execute molecular and MD GPU transactions
+      - name: Run each real GPU gate separately and retain every failure
         env:
           NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/full-product/metal-tests
           MTL_DEBUG_LAYER: '1'
+          SWIFT_BACKTRACE: 'enable=yes,interactive=no,color=no'
         shell: bash
         run: |
-          set -euo pipefail
-          swift test -c release --jobs 3 --filter AppleExecutionTests 2>&1 | tee "$RUNNER_TEMP/full-product/metal-tests.log"
+          set -uo pipefail
+          OUT="$RUNNER_TEMP/full-product"
+          failed=0
+          for test in completePipelineCompilation molecularTransactionsAndInterventions targetKineticsOnMetalAgainstFP64 harmonicMDOnMetalAndExactRestart; do
+            swift test -c release --skip-build --filter "$test" 2>&1 | tee "$OUT/$test.log"
+            status=${PIPESTATUS[0]}
+            printf '%s %s\n' "$test" "$status" >> "$OUT/test-exit-status.txt"
+            if [[ $status -ne 0 ]]; then failed=1; fi
+          done
+          exit "$failed"
+      - name: Retain process crash diagnostics and unchanged-source status
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/full-product/crashes"
+          find "$HOME/Library/Logs/DiagnosticReports" -maxdepth 1 -type f \( -iname '*swift*' -o -iname '*NumiVivo*' -o -iname '*numivivo*' \) -exec cp '{}' "$RUNNER_TEMP/full-product/crashes/" ';' 2>/dev/null || true
+          git status --porcelain > "$RUNNER_TEMP/full-product/git-status.txt"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: complete-product-${{ needs.repair.outputs.sha }}
+          name: complete-product-${{ github.sha }}
           path: ${{ runner.temp }}/full-product/
           retention-days: 14
           if-no-files-found: error
