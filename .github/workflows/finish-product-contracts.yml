@@ -19,7 +19,7 @@ jobs:
       sha: ${{ steps.commit.outputs.sha }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Apply the reviewed source patch atomically and publish without force
+      - name: Apply reviewed source changes and publish without force
         id: commit
         shell: bash
         run: |
@@ -33,7 +33,7 @@ jobs:
             git diff --cached --check
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'fix(metal): isolate unannotated SDK imports while preserving actor-owned state'
+            git commit -m 'fix(cli): expose MD samples and exercise complete product on actual Metal'
             git push origin HEAD:main
           fi
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -46,7 +46,7 @@ jobs:
         with:
           ref: ${{ needs.repair.outputs.sha }}
           persist-credentials: false
-      - name: Build and execute the complete product at the published code commit
+      - name: Build and execute the complete product
         shell: bash
         run: |
           set -euo pipefail
@@ -58,10 +58,17 @@ jobs:
           uname -srm > "$OUT/platform.txt"
           swift build -c release --jobs 3 2>&1 | tee "$OUT/build.log"
           .build/release/numivivo --help > "$OUT/help.txt" 2>&1
-          .build/release/numivivo md-capabilities > "$OUT/md-capabilities.txt" 2>&1
+          .build/release/numivivo md-help > "$OUT/md-help.txt" 2>&1
           .build/release/numivivo reaction-template h3-saddle --output "$OUT/saddle-request.json"
           .build/release/numivivo reaction-run "$OUT/saddle-request.json" --store "$RUNNER_TEMP/reaction-store" --output "$OUT/saddle-result.json" 2>&1 | tee "$OUT/reaction.log"
           shasum -a 256 .build/release/numivivo > "$OUT/binary.sha256"
+      - name: Compile actual pipelines and execute molecular and MD GPU transactions
+        env:
+          NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/full-product/metal-tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test -c release --jobs 3 --filter AppleExecutionTests 2>&1 | tee "$RUNNER_TEMP/full-product/metal-tests.log"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
