@@ -4,7 +4,8 @@ import Foundation
 /// screen changes proposal efficiency, not the authoritative target: stage-one
 /// acceptance uses beta*(s'-s); stage two uses beta*((l'-l)-(s'-s)). Weights,
 /// temperature selection and stored particle likelihoods always use l.
-/// Del Moral, Doucet & Jasra (2006); Christen & Fox (2005), Bayesian Analysis 1:795-804.
+/// Del Moral, Doucet & Jasra (2006), doi:10.1111/j.1467-9868.2006.00553.x;
+/// Christen & Fox (2005), JCGS 14(4):795-810, doi:10.1198/106186005X76983.
 public actor VivoTemperedPosteriorSampler {
     public nonisolated let plan: VivoPosteriorPlan
     private var committed: VivoPosteriorCheckpoint?
