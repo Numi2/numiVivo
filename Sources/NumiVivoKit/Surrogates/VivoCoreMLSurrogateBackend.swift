@@ -36,6 +36,12 @@ public actor VivoCoreMLSurrogateBackend: VivoSurrogateBackend {
               !outputFeatureName.isEmpty else {
             throw VivoSurrogateError.backendContractMismatch
         }
+        // Unknown uncertainty is not zero uncertainty. Exactly one source is
+        // required; choosing between two supplied sources would hide intent.
+        guard (uncertaintyFeatureName != nil) != (fixedUncertainty != nil),
+              uncertaintyFeatureName?.isEmpty != true else {
+            throw VivoSurrogateError.backendContractMismatch
+        }
         if let fixedUncertainty {
             guard fixedUncertainty.count == outputWidth,
                   fixedUncertainty.allSatisfy({ $0.isFinite && $0 >= 0 }) else {
@@ -95,10 +101,9 @@ public actor VivoCoreMLSurrogateBackend: VivoSurrogateBackend {
             throw VivoSurrogateError.modelFailure("missing output feature \(outputFeatureName)")
         }
         let expected = batch.batchSize.multipliedReportingOverflow(by: outputWidth)
-        guard !expected.overflow, output.count == expected.partialValue else {
-            throw VivoSurrogateError.modelFailure(
-                "output feature has \(output.count) elements; expected \(expected.partialValue)"
-            )
+        guard !expected.overflow, output.count == expected.partialValue,
+              output.shape.map(\.intValue) == [batch.batchSize, outputWidth] else {
+            throw VivoSurrogateError.modelFailure("output must have explicit [batch, output] shape")
         }
         var values = [Float](repeating: 0, count: output.count)
         for index in values.indices {
@@ -110,7 +115,9 @@ public actor VivoCoreMLSurrogateBackend: VivoSurrogateBackend {
             guard let array = result.featureValue(for: uncertaintyFeatureName)?.multiArrayValue else {
                 throw VivoSurrogateError.modelFailure("missing uncertainty feature \(uncertaintyFeatureName)")
             }
-            guard array.count == batch.batchSize || array.count == expected.partialValue else {
+            let shape = array.shape.map(\.intValue)
+            guard shape == [batch.batchSize] || shape == [batch.batchSize, 1]
+                    || shape == [batch.batchSize, outputWidth] else {
                 throw VivoSurrogateError.modelFailure("uncertainty output has an invalid shape")
             }
             uncertainty = (0..<array.count).map { array[$0].floatValue }
@@ -123,7 +130,8 @@ public actor VivoCoreMLSurrogateBackend: VivoSurrogateBackend {
             }
             uncertainty = expanded
         } else {
-            uncertainty = [Float](repeating: 0, count: batch.batchSize)
+            // Defensive even though construction rejects this configuration.
+            throw VivoSurrogateError.modelFailure("uncertainty is unavailable; authoritative evaluation required")
         }
 
         return try .init(
