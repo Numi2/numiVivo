@@ -78,6 +78,9 @@ public struct VivoProgramPack: Sendable {
         public let featureFlags: UInt32, authoritativeScalarBytes: UInt32, randomStreamVersion: UInt32
     }
     public struct SpeciesMetadata: Sendable, Codable, Equatable {
+        /// ABI row index. Keeping it in metadata prevents callers from
+        /// reconstructing an index through unordered lookup structures.
+        public let index: UInt32
         public let identifier: String, compartment: String, unit: String
         public let flags: UInt32
         public let initialValue: Float, minimum: Float, maximum: Float
@@ -118,13 +121,17 @@ public struct VivoProgramPack: Sendable {
         var sections: [SectionKind: Section] = [:]
         for index in 0..<Int(count) {
             let base = Self.fixedHeaderSize + index * Self.sectionDescriptorSize
-            guard let kind = SectionKind(rawValue: try reader.u32(base)) else { continue }
-            sections[kind] = try Section(kind: kind, flags: reader.u32(base + 4),
-                                         offset: reader.u64(base + 8), size: reader.u64(base + 16),
-                                         stride: reader.u32(base + 24), count: reader.u32(base + 28),
-                                         alignment: reader.u32(base + 32), fingerprint: reader.fingerprint(base + 40))
+            guard let kind = SectionKind(rawValue: try reader.u32(base)) else {
+                throw VivoProgramPackError.invalidSection("unknown section kind")
+            }
+            guard sections[kind] == nil else {
+                throw VivoProgramPackError.invalidSection("duplicate section \(kind)")
+            }
+            sections[kind] = try Section(kind: kind, flags: reader.u32(base + 4), offset: reader.u64(base + 8),
+                                         size: reader.u64(base + 16), stride: reader.u32(base + 24),
+                                         count: reader.u32(base + 28), alignment: reader.u32(base + 32),
+                                         fingerprint: reader.fingerprint(base + 40))
         }
-        for kind in SectionKind.allCases where sections[kind] == nil { throw VivoProgramPackError.missingSection(kind) }
         self.data = data
         self.sections = sections
         header = try Header(major: reader.u16(8), minor: reader.u16(10), headerBytes: reader.u32(12),
@@ -149,7 +156,10 @@ public struct VivoProgramPack: Sendable {
         let reader = PackReader(data: data)
         return try (0..<Int(records.count)).map { index in
             let base = Int(records.offset) + index * Int(records.stride)
-            return try SpeciesMetadata(identifier: string(reader.u32(base)), compartment: string(reader.u32(base + 4)),
+            guard let abiIndex = UInt32(exactly: index) else {
+                throw VivoProgramPackError.invalidSection("species index exceeds ABI")
+            }
+            return try SpeciesMetadata(index: abiIndex, identifier: string(reader.u32(base)), compartment: string(reader.u32(base + 4)),
                                         unit: string(reader.u32(base + 8)), flags: reader.u32(base + 12),
                                         initialValue: reader.f32(base + 16), minimum: reader.f32(base + 20), maximum: reader.f32(base + 24))
         }
@@ -188,7 +198,7 @@ public struct VivoProgramPack: Sendable {
         return values
     }
     public func speciesIndex(named identifier: String) throws -> UInt32? {
-        try speciesMetadata().firstIndex { $0.identifier == identifier }.map(UInt32.init)
+        try speciesMetadata().first { $0.identifier == identifier }?.index
     }
     private func string(_ offset: UInt32) throws -> String {
         let strings = try section(.strings)
