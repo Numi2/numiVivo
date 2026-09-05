@@ -1,0 +1,132 @@
+name: Native chemistry conformance
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/native-chemistry-conformance.yml'
+      - 'Sources/NumiVivoKit/QM/**'
+      - 'Sources/NumiVivoKit/ManyBody/**'
+      - 'Sources/NumiVivoKit/Embedding/**'
+      - 'Sources/NumiVivoKit/QMEnv/**'
+      - 'Sources/NumiVivoKit/Workflow/**'
+      - 'Sources/NumiVivoKit/Artifacts/**'
+      - 'Sources/NumiVivoCLI/VivoElectronicCLICommands.swift'
+      - 'ReferenceAdapters/PySCF/**'
+      - 'Tools/NativeChemistry/**'
+      - 'Tools/check_external_chemistry.sh'
+permissions:
+  contents: read
+concurrency:
+  group: native-chemistry-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  oracle:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Generate independent pinned molecular references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/oracle-env"
+          "$RUNNER_TEMP/oracle-env/bin/python" -m pip install numpy==1.26.4 scipy==1.13.1 h5py==3.11.0 pyscf==2.8.0
+          "$RUNNER_TEMP/oracle-env/bin/python" ReferenceAdapters/PySCF/export_native_reference.py "$RUNNER_TEMP/oracle"
+          "$RUNNER_TEMP/oracle-env/bin/python" ReferenceAdapters/PySCF/verify_reference_manifest.py "$RUNNER_TEMP/oracle"
+          "$RUNNER_TEMP/oracle-env/bin/python" -m pip freeze > "$RUNNER_TEMP/oracle/python-lock.txt"
+          git rev-parse HEAD > "$RUNNER_TEMP/oracle/source-commit.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/oracle/
+          if-no-files-found: error
+          retention-days: 14
+  apple:
+    needs: oracle
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/oracle
+      - name: Execute Apple FP64 numerical comparisons
+        env:
+          VIVO_REFERENCE_DIR: ${{ runner.temp }}/oracle
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash Tools/check_external_chemistry.sh "$RUNNER_TEMP/numerics" 2>&1 | tee "$RUNNER_TEMP/native-conformance.log"
+      - name: Build real production electronic CLI and artifact store
+        id: build_cli
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash Tools/NativeChemistry/build_scoped_cli.sh "$RUNNER_TEMP/scoped-cli" 2>&1 | tee "$RUNNER_TEMP/cli-build.log"
+      - name: Exercise schema dispatch cache reuse and integrity rejection
+        if: ${{ !cancelled() && steps.build_cli.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Tools/NativeChemistry/check_cli_integration.py "$RUNNER_TEMP/scoped-cli/numivivo-chemistry" "$RUNNER_TEMP/oracle" "$RUNNER_TEMP/cli-checks" 2>&1 | tee "$RUNNER_TEMP/cli-checks.log"
+      - name: Retain exact source identities and observations
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: apple-chemistry-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/numerics/
+            ${{ runner.temp }}/scoped-cli/compiler.txt
+            ${{ runner.temp }}/scoped-cli/platform.txt
+            ${{ runner.temp }}/scoped-cli/sources.sha256
+            ${{ runner.temp }}/cli-checks/
+            ${{ runner.temp }}/native-conformance.log
+            ${{ runner.temp }}/cli-build.log
+            ${{ runner.temp }}/cli-checks.log
+          if-no-files-found: error
+          retention-days: 14
+  independent_ecc:
+    needs: apple
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: apple-chemistry-${{ github.sha }}
+          path: ${{ runner.temp }}/apple
+      - name: Independently reconstruct ECC fixed points and physical energies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/oracle-env"
+          "$RUNNER_TEMP/oracle-env/bin/python" -m pip install numpy==1.26.4 scipy==1.13.1 h5py==3.11.0 pyscf==2.8.0
+          "$RUNNER_TEMP/oracle-env/bin/python" ReferenceAdapters/PySCF/compare_ecc_result.py "$RUNNER_TEMP/apple/numerics/ecc" | tee "$RUNNER_TEMP/ecc-oracle.log"
+          "$RUNNER_TEMP/oracle-env/bin/python" -m pip freeze > "$RUNNER_TEMP/python-lock.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: ${{ !cancelled() }}
+        with:
+          name: independent-ecc-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/apple/numerics/ecc/independent-results.json
+            ${{ runner.temp }}/ecc-oracle.log
+            ${{ runner.temp }}/python-lock.txt
+          if-no-files-found: error
+          retention-days: 14
