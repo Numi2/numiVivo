@@ -93,7 +93,7 @@ public actor VivoCoreMLSurrogateBackend: VivoSurrogateBackend {
 
         let result: MLFeatureProvider
         do {
-            result = try model.prediction(from: provider)
+            result = try await model.prediction(from: provider)
         } catch {
             throw VivoSurrogateError.modelFailure(error.localizedDescription)
         }

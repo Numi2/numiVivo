@@ -72,7 +72,7 @@ public enum VivoMDAtomicFileExport {
         return data
     }
 
-    private static func io(_ reason: String) -> VivoMDTrajectoryArchiveError {
-        .io("\(reason) (errno \(errno))")
+    private static func io(_ reason: String) -> VivoArtifactValidationError {
+        .invalid("\(reason) (errno \(errno))")
     }
 }

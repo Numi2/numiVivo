@@ -1,7 +1,7 @@
 import Foundation
 
 public struct VivoMDVelocityInitializationResult: Codable, Sendable, Equatable {
-    public let recipe: VivoMDVelocityInitialization
+    public let recipe: VivoMDThermalVelocityRecipe
     public let velocitiesNMPerPS: [VivoVector3D]
     public let projectionIterations: UInt32
     public let maximumNormalizedConstraintResidual: Double
@@ -15,7 +15,7 @@ public struct VivoMDVelocityInitializationResult: Codable, Sendable, Equatable {
 public enum VivoMDVelocityInitializer {
     public static func make(system: VivoClassicalSystem,
                             positionsNM: [VivoVector3D], periodicCell: VivoPeriodicCell?,
-                            recipe: VivoMDVelocityInitialization,
+                            recipe: VivoMDThermalVelocityRecipe,
                             tolerance: Double = 1e-8,
                             maximumProjectionIterations: UInt32 = 2048) throws -> VivoMDVelocityInitializationResult {
         try VivoClassicalSystemValidator.validate(system)
