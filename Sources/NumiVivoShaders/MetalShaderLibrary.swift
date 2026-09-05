@@ -51,6 +51,14 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case mdGridClear = "nvivo_md_grid_clear"
     case mdGridBin = "nvivo_md_grid_bin"
     case mdGridBuildNeighbors = "nvivo_md_grid_build_neighbors"
+    case mdPMERealSpaceNeighbor = "nvivo_pme_realspace_neighbor"
+    case mdPMEClearGrid = "nvivo_pme_clear_grid"
+    case mdPMESpread = "nvivo_pme_spread"
+    case mdPMEBitReverse = "nvivo_pme_bit_reverse"
+    case mdPMEFFTStage = "nvivo_pme_fft_stage"
+    case mdPMEInfluence = "nvivo_pme_influence"
+    case mdPMEScaleInverse = "nvivo_pme_scale_inverse"
+    case mdPMEGather = "nvivo_pme_gather"
     case mdHalfKick = "nvivo_md_half_kick"
     case mdDrift = "nvivo_md_drift"
     case mdLangevin = "nvivo_md_langevin"
@@ -70,6 +78,9 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
             return "NumiVivoMDVirtualSites"
         case .mdGridClear, .mdGridBin, .mdGridBuildNeighbors:
             return "NumiVivoMDNeighborGrid"
+        case .mdPMERealSpaceNeighbor, .mdPMEClearGrid, .mdPMESpread, .mdPMEBitReverse,
+             .mdPMEFFTStage, .mdPMEInfluence, .mdPMEScaleInverse, .mdPMEGather:
+            return "NumiVivoMDPME"
         case .mdClearForce, .mdClearStatus, .mdBonded, .mdBuildNeighborList,
              .mdValidateNeighborDisplacement, .mdNonbondedNeighbor, .mdNonbondedDirect,
              .mdHalfKick, .mdDrift, .mdLangevin, .mdConstraintPosition,
