@@ -14,6 +14,10 @@ public struct VivoMDConfiguration: Codable, Sendable, Equatable {
     public var electrostatics: VivoMDElectrostatics
     public var relativeDielectric: Double
     public var reactionFieldDielectric: Double
+    /// Optional for backward-compatible v1 decoding. Default 1e-5.
+    public var pmeTolerance: Double?
+    /// Maximum target mesh spacing in nm. Optional v1 field; default 0.12 nm.
+    public var pmeGridSpacingNM: Double?
     public var ensemble: VivoMDEnsemble
     public var thermostat: VivoMDThermostat
     public var targetTemperatureK: Double?
@@ -33,6 +37,8 @@ public struct VivoMDConfiguration: Codable, Sendable, Equatable {
                 electrostatics: VivoMDElectrostatics = .pme,
                 relativeDielectric: Double = 1,
                 reactionFieldDielectric: Double = 78.3,
+                pmeTolerance: Double? = 1e-5,
+                pmeGridSpacingNM: Double? = 0.12,
                 ensemble: VivoMDEnsemble = .nvt,
                 thermostat: VivoMDThermostat = .langevinMiddle,
                 targetTemperatureK: Double? = 300,
@@ -49,8 +55,9 @@ public struct VivoMDConfiguration: Codable, Sendable, Equatable {
         schema = Self.schema
         self.timeStepPS = timeStepPS; self.cutoffNM = cutoffNM; self.neighborSkinNM = neighborSkinNM
         self.electrostatics = electrostatics; self.relativeDielectric = relativeDielectric
-        self.reactionFieldDielectric = reactionFieldDielectric; self.ensemble = ensemble
-        self.thermostat = thermostat; self.targetTemperatureK = targetTemperatureK
+        self.reactionFieldDielectric = reactionFieldDielectric
+        self.pmeTolerance = pmeTolerance; self.pmeGridSpacingNM = pmeGridSpacingNM
+        self.ensemble = ensemble; self.thermostat = thermostat; self.targetTemperatureK = targetTemperatureK
         self.frictionPerPS = frictionPerPS; self.barostat = barostat
         self.targetPressureBar = targetPressureBar; self.barostatInterval = barostatInterval
         self.constraintTolerance = constraintTolerance
@@ -63,6 +70,8 @@ public struct VivoMDConfiguration: Codable, Sendable, Equatable {
 
     public var resolvedNeighborListEnabled: Bool { neighborListEnabled ?? true }
     public var resolvedMaximumNeighborsPerParticle: UInt32 { maximumNeighborsPerParticle ?? 512 }
+    public var resolvedPMETolerance: Double { pmeTolerance ?? 1e-5 }
+    public var resolvedPMEGridSpacingNM: Double { pmeGridSpacingNM ?? 0.12 }
 
     public func validate() throws {
         guard schema == Self.schema, timeStepPS.isFinite, timeStepPS > 0,
@@ -74,6 +83,12 @@ public struct VivoMDConfiguration: Codable, Sendable, Equatable {
               maximumConstraintIterations > 0, neighborRebuildInterval > 0,
               barostatInterval > 0, resolvedMaximumNeighborsPerParticle > 0 else {
             throw VivoArtifactValidationError.invalid("MD configuration contains invalid numerical settings")
+        }
+        if electrostatics == .pme {
+            guard resolvedPMETolerance.isFinite, resolvedPMETolerance > 0, resolvedPMETolerance < 0.1,
+                  resolvedPMEGridSpacingNM.isFinite, resolvedPMEGridSpacingNM > 0 else {
+                throw VivoArtifactValidationError.invalid("PME requires tolerance in (0,0.1) and positive grid spacing")
+            }
         }
         if resolvedNeighborListEnabled, neighborSkinNM <= 0 {
             throw VivoArtifactValidationError.invalid("Verlet neighbor-list execution requires a positive skin")
@@ -203,7 +218,7 @@ public enum VivoMDCapabilityAnalyzer {
             notes.append("neighbor capacity exceeds maximum possible neighbors; allocator may clamp it")
         }
         if configuration.electrostatics == .pme {
-            notes.append("PME requires reciprocal-space kernels in the execution backend")
+            notes.append("PME execution requires the reciprocal-space backend")
         }
         if configuration.barostat != .none {
             notes.append("barostat requires transactional cell scaling")
