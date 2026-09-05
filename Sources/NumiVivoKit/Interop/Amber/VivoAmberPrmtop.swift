@@ -32,6 +32,9 @@ public struct VivoAmberPrmtop: Sendable {
                 throw VivoArtifactValidationError.invalid("AMBER prmtop contains empty or duplicate %FLAG '\(name)'")
             }
             i += 1
+            // The AMBER specification permits any number of comments between
+            // %FLAG and %FORMAT. They are descriptive only and never data.
+            while i < lines.count, lines[i].hasPrefix("%COMMENT") { i += 1 }
             guard i < lines.count, lines[i].hasPrefix("%FORMAT") else {
                 throw VivoArtifactValidationError.invalid("AMBER prmtop section \(name) has no %FORMAT")
             }
@@ -40,11 +43,15 @@ public struct VivoAmberPrmtop: Sendable {
             var fields: [String] = []
             while i < lines.count, !lines[i].hasPrefix("%FLAG "), !lines[i].hasPrefix("%VERSION") {
                 let line = lines[i]
+                if line.hasPrefix("%COMMENT") { i += 1; continue }
+                if line.hasPrefix("%") {
+                    throw VivoArtifactValidationError.incompatible("unexpected AMBER directive inside section \(name): \(line)")
+                }
                 if !line.isEmpty {
                     let bytes = Array(line.utf8)
                     var offset = 0
                     while offset < bytes.count {
-                        let end = min(offset + format.width, bytes.count)
+                        let end = Swift.min(offset + format.width, bytes.count)
                         let raw = String(decoding: bytes[offset..<end], as: UTF8.self)
                         if format.kind == .character || !raw.trimmingCharacters(in: .whitespaces).isEmpty {
                             fields.append(raw)
@@ -145,8 +152,6 @@ public struct VivoAmberPrmtop: Sendable {
             }
             precision = Int(digits)
         }
-        // Scale factors such as `1P` are not needed for the canonical parm7
-        // sections NumiVivo imports. Reject unknown suffixes instead of guessing.
         guard cursor == body.endIndex else {
             throw VivoArtifactValidationError.incompatible("unsupported AMBER %FORMAT modifier '\(raw)'")
         }
