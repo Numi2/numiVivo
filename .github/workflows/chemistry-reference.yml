@@ -12,6 +12,27 @@ concurrency:
   group: chemistry-reference-${{ github.ref }}
   cancel-in-progress: false
 jobs:
+  source:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Preserve exact source independently of reference calculations
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p source-materials
+          git archive --format=tar.gz HEAD > source-materials/source-snapshot.tar.gz
+          git rev-parse HEAD > source-materials/source-commit.txt
+          (cd source-materials && sha256sum source-snapshot.tar.gz source-commit.txt) > source-materials/SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: chemistry-source-${{ github.sha }}
+          path: source-materials/
+          retention-days: 14
+          if-no-files-found: error
   reference:
     runs-on: ubuntu-22.04
     timeout-minutes: 15
