@@ -66,9 +66,10 @@ public struct VivoPosteriorPredictiveReport: Codable, Equatable, Sendable {
     public let posteriorFingerprint: VivoFingerprint
     public let policy: VivoPosteriorPredictivePolicy
     public let parameterSummaries: [VivoPosteriorParameterSummary]
-    /// Correlation of prior coordinates in parameter order. This is not an
-    /// independent-draw reconstruction: every forward run used a joint particle.
-    public let priorCoordinateCorrelationRowMajor: [Double]
+    /// Correlation of prior coordinates in parameter order. Nil means undefined
+    /// (a collapsed coordinate), never an invented zero correlation. Every
+    /// forward evaluation uses an intact joint particle, not marginal draws.
+    public let priorCoordinateCorrelationRowMajor: [Double?]
     public let cases: [VivoPosteriorPredictiveCase]
     public let limitations: [String]
 }
@@ -94,11 +95,9 @@ public enum VivoTargetPosteriorPredictor {
         let tail = (1 - policy.intervalProbability) * 0.5
         let summaries = try prepared.plan.parameters.indices.map { column -> VivoPosteriorParameterSummary in
             let values = physical.map { $0[column] }.sorted()
-            let mean = values.reduce(0) { $0 + $1 / Double(n) }
-            let variance = values.reduce(0) { $0 + (($1 - mean) * ($1 - mean)) / Double(n) }
-            guard mean.isFinite, variance.isFinite, variance >= 0 else { throw VivoPosteriorError.numerical("parameter summary overflow") }
+            let (mean, sd) = try moments(values)
             return .init(identifier: prepared.plan.parameters[column].identifier, unit: prepared.plan.parameters[column].unit,
-                mean: mean, standardDeviation: sqrt(variance), lower: VivoPosteriorNumerics.quantile(sorted: values, probability: tail),
+                mean: mean, standardDeviation: sd, lower: VivoPosteriorNumerics.quantile(sorted: values, probability: tail),
                 median: VivoPosteriorNumerics.quantile(sorted: values, probability: 0.5),
                 upper: VivoPosteriorNumerics.quantile(sorted: values, probability: 1 - tail))
         }
@@ -130,7 +129,6 @@ public enum VivoTargetPosteriorPredictor {
                     points = []
                 }
             }
-            // Do not condition intervals on surviving numerical runs.
             cases.append(.init(identifier: item.identifier, partition: item.partition, leakageGroup: item.leakageGroup,
                 evaluatedParticles: outputs.count, points: points, failures: failures))
         }
@@ -180,11 +178,23 @@ public enum VivoTargetPosteriorPredictor {
         }
     }
 
+    private static func moments(_ values: [Double]) throws -> (Double, Double) {
+        guard let anchor = values.first, values.allSatisfy(\.isFinite) else { throw VivoPosteriorError.invalid("empty/nonfinite posterior summary") }
+        let n = Double(values.count)
+        let mean = anchor + values.reduce(0) { $0 + ($1 - anchor) / n }
+        let scale = values.map { abs($0 - mean) }.max() ?? 0
+        let variance = scale > 0 ? values.reduce(0) { partial, value in
+            let normalized = (value - mean) / scale
+            return partial + normalized * normalized / n
+        } : 0
+        let sd = scale * sqrt(variance)
+        guard mean.isFinite, sd.isFinite else { throw VivoPosteriorError.numerical("posterior summary overflow") }
+        return (mean, sd)
+    }
+
     private static func summarize(_ sorted: [Double], observation: VivoOccupancyObservation,
                                   tail: Double) throws -> VivoPosteriorPredictivePoint {
-        let n = Double(sorted.count)
-        let mean = sorted.reduce(0) { $0 + $1 / n }
-        let variance = sorted.reduce(0) { $0 + ($1 - mean) * ($1 - mean) / n }
+        let n = Double(sorted.count), (mean, sdLatent) = try moments(sorted)
         var lower: Double?, upper: Double?, density: Double?, covered: Bool?
         if let sd = observation.standardDeviation {
             lower = try VivoPosteriorNumerics.gaussianMixtureQuantile(means: sorted, sd: sd, probability: tail)
@@ -202,7 +212,7 @@ public enum VivoTargetPosteriorPredictor {
             covered = observation.value >= lower! && observation.value <= upper!
         }
         return .init(observationIdentifier: observation.identifier, timeSeconds: observation.timeSeconds,
-            observable: observation.observable, mean: mean, latentStandardDeviation: sqrt(variance),
+            observable: observation.observable, mean: mean, latentStandardDeviation: sdLatent,
             credibleLower: VivoPosteriorNumerics.quantile(sorted: sorted, probability: tail),
             credibleMedian: VivoPosteriorNumerics.quantile(sorted: sorted, probability: 0.5),
             credibleUpper: VivoPosteriorNumerics.quantile(sorted: sorted, probability: 1 - tail),
@@ -211,21 +221,20 @@ public enum VivoTargetPosteriorPredictor {
             logPredictiveDensity: density, predictiveIntervalContainsObservation: covered)
     }
 
-    private static func correlations(_ particles: [VivoPosteriorParticle]) -> [Double] {
+    private static func correlations(_ particles: [VivoPosteriorParticle]) throws -> [Double?] {
         let d = particles[0].coordinates.count, n = Double(particles.count)
-        var means = [Double](repeating: 0, count: d), covariance = [Double](repeating: 0, count: d * d)
-        for p in particles { for j in 0..<d { means[j] += p.coordinates[j] / n } }
-        for p in particles {
-            for i in 0..<d { for j in 0..<d {
-                covariance[i * d + j] += (p.coordinates[i] - means[i]) * (p.coordinates[j] - means[j]) / n
-            } }
-        }
-        let sd = (0..<d).map { sqrt(covariance[$0 * d + $0]) }
+        let columns = (0..<d).map { j in particles.map { $0.coordinates[j] } }
+        let statistics = try columns.map(moments)
+        var result = [Double?](repeating: nil, count: d * d)
         for i in 0..<d { for j in 0..<d {
-            // A collapsed coordinate's correlation is undefined. Zero denotes
-            // unavailable correlation here; its summary SD makes collapse visible.
-            covariance[i * d + j] = sd[i] > 0 && sd[j] > 0 ? covariance[i * d + j] / sd[i] / sd[j] : 0
+            let (mi, si) = statistics[i], (mj, sj) = statistics[j]
+            if si == 0 || sj == 0 { continue }
+            let value = zip(columns[i], columns[j]).reduce(0) {
+                $0 + (($1.0 - mi) / si) * (($1.1 - mj) / sj) / n
+            }
+            guard value.isFinite else { throw VivoPosteriorError.numerical("posterior correlation overflow") }
+            result[i * d + j] = value
         } }
-        return covariance
+        return result
     }
 }
