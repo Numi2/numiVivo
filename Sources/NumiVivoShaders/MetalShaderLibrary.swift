@@ -59,6 +59,7 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case mdPMEInfluence = "nvivo_pme_influence"
     case mdPMEScaleInverse = "nvivo_pme_scale_inverse"
     case mdPMEGather = "nvivo_pme_gather"
+    case mdPMEExceptionCorrection = "nvivo_pme_exception_correction"
     case mdHalfKick = "nvivo_md_half_kick"
     case mdDrift = "nvivo_md_drift"
     case mdLangevin = "nvivo_md_langevin"
@@ -81,6 +82,8 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
         case .mdPMERealSpaceNeighbor, .mdPMEClearGrid, .mdPMESpread, .mdPMEBitReverse,
              .mdPMEFFTStage, .mdPMEInfluence, .mdPMEScaleInverse, .mdPMEGather:
             return "NumiVivoMDPME"
+        case .mdPMEExceptionCorrection:
+            return "NumiVivoMDPMECorrections"
         case .mdClearForce, .mdClearStatus, .mdBonded, .mdBuildNeighborList,
              .mdValidateNeighborDisplacement, .mdNonbondedNeighbor, .mdNonbondedDirect,
              .mdHalfKick, .mdDrift, .mdLangevin, .mdConstraintPosition,
