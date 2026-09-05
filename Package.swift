@@ -39,5 +39,6 @@ let package = Package(
         .executableTarget(name: "NumiVivoCLI", dependencies: ["NumiVivoKit"], path: "Sources/NumiVivoCLI")
     ],
     swiftLanguageModes: [.v6],
-    cxxLanguageStandard: .cxx23
+    // SwiftPM's manifest API calls its C++23 compiler mode cxx2b.
+    cxxLanguageStandard: .cxx2b
 )
