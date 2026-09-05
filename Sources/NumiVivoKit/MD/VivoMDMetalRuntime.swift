@@ -40,6 +40,7 @@ public actor VivoMDMetalRuntime {
     private let arena: VivoMDGPUArena
     private let pipelines: [NumiVivoKernel: NumiVivoPipeline]
     private let periodicCell: VivoPeriodicCell?
+    private let neighborGrid: VivoMDNeighborGrid?
     private var acceptedStep: UInt64
     private var acceptedTimePS: Double
     private var inFlight = false
@@ -149,9 +150,21 @@ public actor VivoMDMetalRuntime {
                                                   initial: initialState,
                                                   velocities: initialVelocities,
                                                   configuration: configuration)
+        let neighborGrid: VivoMDNeighborGrid?
+        if configuration.resolvedNeighborListEnabled, let cell = initialState.periodicCell {
+            neighborGrid = try await VivoMDNeighborGrid.make(
+                device: device, catalog: catalog,
+                particleCount: packed.particleCount, cell: cell,
+                neighborRadiusNM: configuration.cutoffNM + configuration.neighborSkinNM,
+                neighborCapacity: arena.neighborCapacity
+            )
+        } else {
+            neighborGrid = nil
+        }
         return try .init(system: system, configuration: configuration,
                          packed: packed, queue: queue, arena: arena,
                          pipelines: pipelines, periodicCell: initialState.periodicCell,
+                         neighborGrid: neighborGrid,
                          device: device, acceptedStep: startStep,
                          acceptedTimePS: startTimePS)
     }
@@ -163,6 +176,7 @@ public actor VivoMDMetalRuntime {
                  arena: VivoMDGPUArena,
                  pipelines: [NumiVivoKernel: NumiVivoPipeline],
                  periodicCell: VivoPeriodicCell?,
+                 neighborGrid: VivoMDNeighborGrid?,
                  device: MTLDevice,
                  acceptedStep: UInt64,
                  acceptedTimePS: Double) throws {
@@ -173,6 +187,7 @@ public actor VivoMDMetalRuntime {
         self.arena = arena
         self.pipelines = pipelines
         self.periodicCell = periodicCell
+        self.neighborGrid = neighborGrid
         self.acceptedStep = acceptedStep
         self.acceptedTimePS = acceptedTimePS
         systemFingerprint = packed.systemFingerprint
@@ -217,9 +232,7 @@ public actor VivoMDMetalRuntime {
         try encode(.mdHalfKick, command: command,
                    buffers: [arena.candidateVelocity, arena.forceEnergy, arena.dynamics],
                    abi: abi)
-        if !packed.constraints.isEmpty {
-            try encodeVelocityConstraints(command, abi: abi)
-        }
+        if !packed.constraints.isEmpty { try encodeVelocityConstraints(command, abi: abi) }
 
         if configuration.ensemble == .nvt {
             var half = abi
@@ -427,11 +440,23 @@ public actor VivoMDMetalRuntime {
                 "neighbor-list ABI capacity differs from arena allocation"
             )
         }
-        try encode(.mdBuildNeighborList, command: command,
-                   buffers: [position, arena.neighborCounts,
-                             arena.neighborIndices,
-                             arena.neighborReferencePosition,
-                             arena.status], abi: abi)
+        if let neighborGrid {
+            guard neighborGrid.plan.neighborCapacity == arena.neighborCapacity else {
+                throw VivoMDRuntimeError.metal("spatial-grid neighbor capacity differs from arena allocation")
+            }
+            try neighborGrid.encode(commandBuffer: command,
+                                    positions: position,
+                                    neighborCounts: arena.neighborCounts,
+                                    neighborIndices: arena.neighborIndices,
+                                    referencePositions: arena.neighborReferencePosition,
+                                    status: arena.status)
+        } else {
+            try encode(.mdBuildNeighborList, command: command,
+                       buffers: [position, arena.neighborCounts,
+                                 arena.neighborIndices,
+                                 arena.neighborReferencePosition,
+                                 arena.status], abi: abi)
+        }
     }
 
     private func encodePositionConstraints(_ command: MTLCommandBuffer,
@@ -447,9 +472,7 @@ public actor VivoMDMetalRuntime {
             swap(&source, &destination)
             sourceIsCandidate.toggle()
         }
-        if !sourceIsCandidate {
-            try copy(command, from: source, to: arena.candidatePosition)
-        }
+        if !sourceIsCandidate { try copy(command, from: source, to: arena.candidatePosition) }
     }
 
     private func encodeVelocityConstraints(_ command: MTLCommandBuffer,
@@ -466,9 +489,7 @@ public actor VivoMDMetalRuntime {
             swap(&source, &destination)
             sourceIsCandidate.toggle()
         }
-        if !sourceIsCandidate {
-            try copy(command, from: source, to: arena.candidateVelocity)
-        }
+        if !sourceIsCandidate { try copy(command, from: source, to: arena.candidateVelocity) }
     }
 
     private func encodeForces(_ command: MTLCommandBuffer,
@@ -574,9 +595,7 @@ public actor VivoMDMetalRuntime {
         }
         encoder.label = kernel.rawValue
         encoder.setComputePipelineState(pipeline.state)
-        for (index, buffer) in buffers.enumerated() {
-            encoder.setBuffer(buffer, offset: 0, index: index)
-        }
+        for (index, buffer) in buffers.enumerated() { encoder.setBuffer(buffer, offset: 0, index: index) }
         var value = abi
         encoder.setBytes(&value,
                          length: MemoryLayout<VivoMDMetalCommand>.stride,
@@ -599,9 +618,7 @@ public actor VivoMDMetalRuntime {
     }
 
     private func requireIdle() throws {
-        guard !inFlight else {
-            throw VivoMDRuntimeError.metal("MD operation already in flight")
-        }
+        guard !inFlight else { throw VivoMDRuntimeError.metal("MD operation already in flight") }
     }
 
     private func complete(_ command: MTLCommandBuffer) async throws {
