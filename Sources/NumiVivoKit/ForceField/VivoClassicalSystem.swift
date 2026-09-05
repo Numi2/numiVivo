@@ -3,6 +3,9 @@ import Foundation
 public enum VivoMixingRule: String, Codable, Sendable, CaseIterable {
     case lorentzBerthelot
     case geometric
+    /// Pair coefficients are authoritative. Particle sigma/epsilon remain useful
+    /// diagnostics, but execution must consult `nonbondedTypePairs`.
+    case explicitPairTable
 }
 
 public enum VivoParticleRole: String, Codable, Sendable, CaseIterable {
@@ -86,6 +89,24 @@ public struct VivoDistanceConstraint: Codable, Sendable, Equatable, Hashable {
     }
 }
 
+/// Direct 12-6 Lennard-Jones coefficients for a force-field type pair:
+/// E(r) = C12/r^12 - C6/r^6. Units are kJ mol^-1 nm^12 and kJ mol^-1 nm^6.
+/// This representation preserves precombined force-field tables such as AMBER's
+/// NONBONDED_PARM_INDEX/A/B arrays without inferring a mixing rule.
+public struct VivoNonbondedTypePair: Codable, Sendable, Equatable, Hashable {
+    public var typeA: String
+    public var typeB: String
+    public var c12KJNM12PerMol: Double
+    public var c6KJNM6PerMol: Double
+
+    public init(typeA: String, typeB: String,
+                c12KJNM12PerMol: Double, c6KJNM6PerMol: Double) {
+        self.typeA = typeA; self.typeB = typeB
+        self.c12KJNM12PerMol = c12KJNM12PerMol
+        self.c6KJNM6PerMol = c6KJNM6PerMol
+    }
+}
+
 /// Explicit pair policy after topology preprocessing. A scale of zero excludes
 /// the corresponding interaction; 1 means normal nonbonded interaction.
 public struct VivoNonbondedException: Codable, Sendable, Equatable, Hashable {
@@ -116,6 +137,9 @@ public struct VivoClassicalSystem: Codable, Sendable, Equatable {
     public var angles: [VivoHarmonicAngle]
     public var torsions: [VivoPeriodicTorsion]
     public var constraints: [VivoDistanceConstraint]
+    /// Optional because v1 documents created before explicit-pair preservation
+    /// decode with nil. Required when `mixingRule == .explicitPairTable`.
+    public var nonbondedTypePairs: [VivoNonbondedTypePair]?
     public var nonbondedExceptions: [VivoNonbondedException]
     public var metadata: [String: String]
 
@@ -125,6 +149,7 @@ public struct VivoClassicalSystem: Codable, Sendable, Equatable {
                 particles: [VivoClassicalParticle], bonds: [VivoHarmonicBond] = [],
                 angles: [VivoHarmonicAngle] = [], torsions: [VivoPeriodicTorsion] = [],
                 constraints: [VivoDistanceConstraint] = [],
+                nonbondedTypePairs: [VivoNonbondedTypePair]? = nil,
                 nonbondedExceptions: [VivoNonbondedException] = [],
                 metadata: [String: String] = [:]) {
         self.schema = Self.schema; self.identifier = identifier
@@ -132,6 +157,7 @@ public struct VivoClassicalSystem: Codable, Sendable, Equatable {
         self.parameterSourceFingerprints = parameterSourceFingerprints
         self.mixingRule = mixingRule; self.particles = particles; self.bonds = bonds
         self.angles = angles; self.torsions = torsions; self.constraints = constraints
+        self.nonbondedTypePairs = nonbondedTypePairs
         self.nonbondedExceptions = nonbondedExceptions; self.metadata = metadata
     }
 
@@ -148,6 +174,7 @@ public enum VivoClassicalSystemValidator {
               !system.particles.isEmpty, system.particles.count <= Int(UInt32.max) else {
             throw VivoArtifactValidationError.invalid("classical system schema, identifier or particle count is invalid")
         }
+        var particleTypes = Set<String>()
         for (index, particle) in system.particles.enumerated() {
             guard particle.index == UInt32(index), !particle.typeIdentifier.isEmpty,
                   particle.massDa.isFinite, particle.massDa >= 0,
@@ -155,6 +182,7 @@ public enum VivoClassicalSystemValidator {
                   particle.epsilonKJPerMol.isFinite, particle.epsilonKJPerMol >= 0 else {
                 throw VivoArtifactValidationError.invalid("classical particle \(index) has invalid index or parameters")
             }
+            particleTypes.insert(particle.typeIdentifier)
             if particle.role == .atom, particle.massDa <= 0 {
                 throw VivoArtifactValidationError.invalid("ordinary atom particle \(index) requires positive mass")
             }
@@ -199,6 +227,29 @@ public enum VivoClassicalSystemValidator {
                   constraintPairs.insert(key(constraint.a, constraint.b)).inserted else {
                 throw VivoArtifactValidationError.invalid("distance constraint is invalid or duplicated")
             }
+        }
+        if system.mixingRule == .explicitPairTable {
+            guard let pairs = system.nonbondedTypePairs, !pairs.isEmpty else {
+                throw VivoArtifactValidationError.invalid("explicitPairTable requires nonbonded type-pair coefficients")
+            }
+            var keys = Set<String>()
+            for value in pairs {
+                guard particleTypes.contains(value.typeA), particleTypes.contains(value.typeB),
+                      value.c12KJNM12PerMol.isFinite, value.c12KJNM12PerMol >= 0,
+                      value.c6KJNM6PerMol.isFinite, value.c6KJNM6PerMol >= 0 else {
+                    throw VivoArtifactValidationError.invalid("nonbonded type-pair coefficient is invalid or references an unused type")
+                }
+                let pairKey = value.typeA <= value.typeB ? "\(value.typeA)\u{0}\(value.typeB)" : "\(value.typeB)\u{0}\(value.typeA)"
+                guard keys.insert(pairKey).inserted else {
+                    throw VivoArtifactValidationError.invalid("duplicate nonbonded type-pair coefficient")
+                }
+            }
+            let required = particleTypes.count * (particleTypes.count + 1) / 2
+            guard pairs.count == required else {
+                throw VivoArtifactValidationError.invalid("explicit nonbonded table is incomplete: expected \(required) type pairs, found \(pairs.count)")
+            }
+        } else if let pairs = system.nonbondedTypePairs, !pairs.isEmpty {
+            throw VivoArtifactValidationError.invalid("nonbonded type-pair coefficients require explicitPairTable mixing rule")
         }
         var exceptionPairs = Set<UInt64>()
         for exception in system.nonbondedExceptions {
