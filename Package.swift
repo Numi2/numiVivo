@@ -26,6 +26,7 @@ let package = Package(
                 .copy("Resources/NumiVivoMDKernels.metal"),
                 .copy("Resources/NumiVivoMDVirtualSites.metal"),
                 .copy("Resources/NumiVivoMDNeighborGrid.metal"),
+                .copy("Resources/NumiVivoMDPME.metal"),
                 .copy("Resources/NumiVivoExactSSAKernels.metal"),
                 .copy("Resources/NumiVivoMigrationKernels.metal"),
                 .copy("Resources/NumiVivoPartitionKernels.metal"),
