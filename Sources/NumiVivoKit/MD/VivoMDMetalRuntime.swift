@@ -27,6 +27,19 @@ public struct VivoMDStepCertificate: Codable, Sendable, Equatable {
     public let violationCount: UInt32
 }
 
+private struct VivoMDMinPositionCommand {
+    var particleCount: UInt32
+    var stepScale: Float
+    var maxDisplacementNM: Float
+    var reserved: Float = 0
+}
+private struct VivoMDMinReduceCommand {
+    var sourceCount: UInt32
+    var reserved0: UInt32 = 0
+    var reserved1: UInt32 = 0
+    var reserved2: UInt32 = 0
+}
+
 public actor VivoMDMetalRuntime {
     public nonisolated let system: VivoClassicalSystem
     public nonisolated let configuration: VivoMDConfiguration
@@ -117,9 +130,7 @@ public actor VivoMDMetalRuntime {
                                                           cell: cell)
             }
         }
-        guard blockers.isEmpty else {
-            throw VivoMDRuntimeError.unsupported(Array(Set(blockers)).sorted())
-        }
+        guard blockers.isEmpty else { throw VivoMDRuntimeError.unsupported(Array(Set(blockers)).sorted()) }
         guard startTimePS.isFinite, startTimePS >= 0 else {
             throw VivoMDRuntimeError.metal("initial MD clock is invalid")
         }
@@ -136,6 +147,7 @@ public actor VivoMDMetalRuntime {
             .mdUpdateVirtualPosition, .mdUpdateVirtualVelocity, .mdRedistributeVirtualForce,
             .mdBonded, .mdBuildNeighborList, .mdValidateNeighborDisplacement,
             .mdNonbondedNeighbor, .mdNonbondedDirect,
+            .mdMinimizeTerms, .mdMinimizeReduceStage, .mdMinimizePosition, .mdZeroVelocity,
             .mdHalfKick, .mdDrift, .mdLangevin,
             .mdConstraintPosition, .mdConstraintVelocity, .mdValidateConstraints,
             .mdKinetic, .mdValidate
@@ -145,11 +157,9 @@ public actor VivoMDMetalRuntime {
         }
         var pipelines: [NumiVivoKernel: NumiVivoPipeline] = [:]
         for kernel in required { pipelines[kernel] = try await catalog.pipeline(kernel) }
-        let initialVelocities = velocities ?? [VivoVector3D](repeating: .zero,
-                                                             count: system.particles.count)
+        let initialVelocities = velocities ?? [VivoVector3D](repeating: .zero, count: system.particles.count)
         let arena = try await VivoMDGPUArena.make(device: device, queue: queue,
-                                                  packed: packed,
-                                                  initial: initialState,
+                                                  packed: packed, initial: initialState,
                                                   velocities: initialVelocities,
                                                   configuration: configuration)
         let neighborGrid: VivoMDNeighborGrid?
@@ -158,10 +168,8 @@ public actor VivoMDMetalRuntime {
                 device: device, catalog: catalog,
                 particleCount: packed.particleCount, cell: cell,
                 neighborRadiusNM: configuration.cutoffNM + configuration.neighborSkinNM,
-                neighborCapacity: arena.neighborCapacity
-            )
+                neighborCapacity: arena.neighborCapacity)
         } else { neighborGrid = nil }
-
         let pmeEngine: VivoPMEEngine?
         if configuration.electrostatics == .pme {
             guard let cell = initialState.periodicCell else {
@@ -170,11 +178,9 @@ public actor VivoMDMetalRuntime {
             let totalCharge = system.particles.reduce(0.0) { $0 + $1.chargeE }
             pmeEngine = try await VivoPMEEngine.make(device: device, catalog: catalog,
                                                      particleCount: packed.particleCount,
-                                                     totalChargeE: totalCharge,
-                                                     cell: cell,
+                                                     totalChargeE: totalCharge, cell: cell,
                                                      configuration: configuration)
         } else { pmeEngine = nil }
-
         return try .init(system: system, configuration: configuration,
                          packed: packed, queue: queue, arena: arena,
                          pipelines: pipelines, periodicCell: initialState.periodicCell,
@@ -221,7 +227,6 @@ public actor VivoMDMetalRuntime {
         blit.copy(from: arena.acceptedVelocity, sourceOffset: 0,
                   to: arena.candidateVelocity, destinationOffset: 0, size: bytes)
         blit.endEncoding()
-
         try encodeStatusClear(command)
         try normalizeVirtualSites(command, position: arena.candidatePosition,
                                   velocity: arena.candidateVelocity, abi: abi)
@@ -232,7 +237,6 @@ public actor VivoMDMetalRuntime {
         try encode(.mdHalfKick, command: command,
                    buffers: [arena.candidateVelocity, arena.forceEnergy, arena.dynamics], abi: abi)
         if !packed.constraints.isEmpty { try encodeVelocityConstraints(command, abi: abi) }
-
         if configuration.ensemble == .nvt {
             var half = abi; half.dtPS *= 0.5
             try encode(.mdDrift, command: command,
@@ -249,7 +253,6 @@ public actor VivoMDMetalRuntime {
                        buffers: [arena.candidatePosition, arena.candidateVelocity, arena.dynamics], abi: abi)
             if !packed.constraints.isEmpty { try encodePositionConstraints(command, abi: abi) }
         }
-
         try updateVirtualPosition(command, position: arena.candidatePosition, abi: abi)
         if configuration.resolvedNeighborListEnabled {
             try encode(.mdValidateNeighborDisplacement, command: command,
@@ -269,7 +272,6 @@ public actor VivoMDMetalRuntime {
         try encode(.mdValidate, command: command,
                    buffers: [arena.candidatePosition, arena.candidateVelocity, arena.forceEnergy, arena.status], abi: abi)
         try await complete(command)
-
         let status = arena.status.contents().assumingMemoryBound(to: VivoMDMetalStatus.self).pointee
         let first = status.firstParticle == UInt32.max ? nil : status.firstParticle
         guard status.flags == 0 else {
@@ -287,6 +289,113 @@ public actor VivoMDMetalRuntime {
                      stepIndex: acceptedStep - 1, timeBeforePS: before,
                      timeAfterPS: acceptedTimePS, committed: true,
                      statusFlags: 0, firstViolationParticle: nil, violationCount: 0)
+    }
+
+    /// Backtracking steepest-descent minimization on the same force authority used
+    /// by dynamics. Trial geometries are candidate transactions; rejected trials
+    /// never mutate accepted state, MD time, or the accepted RNG step index.
+    public func minimize(_ minimization: VivoMDMinimizationConfiguration = .init()) async throws
+    -> VivoMDMinimizationCertificate {
+        try minimization.validate(); try requireIdle()
+        inFlight = true; defer { inFlight = false }
+        let device = arena.status.device
+        let termBytes = max(arena.particleCount * MemoryLayout<SIMD2<Float>>.stride, 16)
+        guard let termsA = device.makeBuffer(length: termBytes, options: .storageModePrivate),
+              let termsB = device.makeBuffer(length: termBytes, options: .storageModePrivate),
+              let scalar = device.makeBuffer(length: 16, options: .storageModeShared) else {
+            throw VivoMDRuntimeError.metal("minimization reduction allocation failed")
+        }
+        termsA.label = "NumiVivo.MD.min.termsA"; termsB.label = "NumiVivo.MD.min.termsB"
+        scalar.label = "NumiVivo.MD.min.scalar"
+        var stepScale = minimization.initialStepScale
+        var attempted: UInt32 = 0, accepted: UInt32 = 0, rejected: UInt32 = 0
+        var firstEnergy: Double?
+        var baseline = try await evaluateMinimizationState(position: arena.acceptedPosition,
+                                                           velocity: arena.acceptedVelocity,
+                                                           termsA: termsA, termsB: termsB,
+                                                           scalar: scalar)
+        firstEnergy = baseline.energy
+        while attempted < minimization.maximumIterations,
+              baseline.maximumForce > minimization.forceToleranceKJPerMolNM,
+              stepScale >= minimization.minimumStepScale {
+            attempted += 1
+            let abi = try VivoMDMetalABI.command(packed: packed, configuration: configuration,
+                                                 cell: periodicCell, stepIndex: acceptedStep)
+            guard let proposal = queue.makeCommandBuffer(),
+                  let blit = proposal.makeBlitCommandEncoder() else {
+                throw VivoMDRuntimeError.metal("minimization proposal command unavailable")
+            }
+            let bytes = arena.particleCount * MemoryLayout<SIMD4<Float>>.stride
+            blit.copy(from: arena.acceptedPosition, sourceOffset: 0,
+                      to: arena.candidatePosition, destinationOffset: 0, size: bytes)
+            blit.endEncoding()
+            try encodeStatusClear(proposal)
+            try encode(.mdZeroVelocity, command: proposal,
+                       buffers: [arena.candidateVelocity], abi: abi)
+            try encodeMinimizationPosition(proposal, abi: abi,
+                                           stepScale: stepScale,
+                                           maximumDisplacementNM: minimization.maximumDisplacementNM)
+            if !packed.constraints.isEmpty {
+                try encodePositionConstraints(proposal, abi: abi)
+            }
+            try updateVirtualPosition(proposal, position: arena.candidatePosition, abi: abi)
+            if !packed.constraints.isEmpty {
+                try encode(.mdValidateConstraints, command: proposal,
+                           buffers: [arena.candidatePosition, arena.candidateVelocity,
+                                     arena.constraints, arena.constraintOffsets,
+                                     arena.constraintIncidence, arena.status], abi: abi)
+            }
+            try await complete(proposal)
+            let proposalStatus = arena.status.contents().assumingMemoryBound(to: VivoMDMetalStatus.self).pointee
+            if proposalStatus.flags != 0 {
+                rejected += 1
+                stepScale *= minimization.rejectedStepShrink
+                baseline = try await evaluateMinimizationState(position: arena.acceptedPosition,
+                                                               velocity: arena.acceptedVelocity,
+                                                               termsA: termsA, termsB: termsB,
+                                                               scalar: scalar)
+                continue
+            }
+            let candidate = try await evaluateMinimizationState(position: arena.candidatePosition,
+                                                                velocity: arena.candidateVelocity,
+                                                                termsA: termsA, termsB: termsB,
+                                                                scalar: scalar)
+            if candidate.energy < baseline.energy {
+                arena.commit(); accepted += 1
+                stepScale = min(minimization.maximumStepScale,
+                                stepScale * minimization.acceptedStepGrowth)
+                baseline = candidate
+            } else {
+                rejected += 1
+                stepScale *= minimization.rejectedStepShrink
+                baseline = try await evaluateMinimizationState(position: arena.acceptedPosition,
+                                                               velocity: arena.acceptedVelocity,
+                                                               termsA: termsA, termsB: termsB,
+                                                               scalar: scalar)
+            }
+        }
+        let final = try await evaluateMinimizationState(position: arena.acceptedPosition,
+                                                        velocity: arena.acceptedVelocity,
+                                                        termsA: termsA, termsB: termsB,
+                                                        scalar: scalar)
+        let abi = try VivoMDMetalABI.command(packed: packed, configuration: configuration,
+                                             cell: periodicCell, stepIndex: acceptedStep)
+        guard let zeroCommand = queue.makeCommandBuffer() else {
+            throw VivoMDRuntimeError.metal("minimization velocity-reset command unavailable")
+        }
+        try encode(.mdZeroVelocity, command: zeroCommand,
+                   buffers: [arena.acceptedVelocity], abi: abi)
+        try updateVirtualVelocity(zeroCommand, velocity: arena.acceptedVelocity, abi: abi)
+        try await complete(zeroCommand)
+        return .init(systemFingerprint: systemFingerprint,
+                     configurationFingerprint: configurationFingerprint,
+                     converged: final.maximumForce <= minimization.forceToleranceKJPerMolNM,
+                     attemptedIterations: attempted, acceptedIterations: accepted,
+                     rejectedIterations: rejected,
+                     initialPotentialEnergyKJPerMol: firstEnergy ?? final.energy,
+                     finalPotentialEnergyKJPerMol: final.energy,
+                     finalMaximumForceKJPerMolNM: final.maximumForce,
+                     finalStepScale: stepScale)
     }
 
     public func snapshot() async throws -> VivoMDStateSnapshot {
@@ -318,274 +427,184 @@ public actor VivoMDMetalRuntime {
         try requireIdle(); inFlight = true; defer { inFlight = false }
         let abi = try VivoMDMetalABI.command(packed: packed, configuration: configuration,
                                              cell: periodicCell, stepIndex: acceptedStep)
-        guard let command = queue.makeCommandBuffer() else {
-            throw VivoMDRuntimeError.metal("observables command unavailable")
-        }
+        guard let command = queue.makeCommandBuffer() else { throw VivoMDRuntimeError.metal("observables command unavailable") }
         try encodeStatusClear(command)
         try normalizeVirtualSites(command, position: arena.acceptedPosition,
                                   velocity: arena.acceptedVelocity, abi: abi)
-        if configuration.resolvedNeighborListEnabled {
-            try buildNeighborList(command, position: arena.acceptedPosition, abi: abi)
-        }
+        if configuration.resolvedNeighborListEnabled { try buildNeighborList(command, position: arena.acceptedPosition, abi: abi) }
         try encodeForces(command, position: arena.acceptedPosition, abi: abi)
         try encode(.mdKinetic, command: command,
                    buffers: [arena.acceptedVelocity, arena.dynamics, arena.kinetic], abi: abi)
-        guard let blit = command.makeBlitCommandEncoder() else {
-            throw VivoMDRuntimeError.metal("observables readback encoder unavailable")
-        }
+        guard let blit = command.makeBlitCommandEncoder() else { throw VivoMDRuntimeError.metal("observables readback encoder unavailable") }
         let vectorBytes = arena.particleCount * MemoryLayout<SIMD4<Float>>.stride
         let scalarBytes = arena.particleCount * MemoryLayout<Float>.stride
-        blit.copy(from: arena.forceEnergy, sourceOffset: 0,
-                  to: arena.forceEnergyReadback, destinationOffset: 0, size: vectorBytes)
-        blit.copy(from: arena.kinetic, sourceOffset: 0,
-                  to: arena.kineticReadback, destinationOffset: 0, size: scalarBytes)
+        blit.copy(from: arena.forceEnergy, sourceOffset: 0,to: arena.forceEnergyReadback, destinationOffset: 0,size: vectorBytes)
+        blit.copy(from: arena.kinetic, sourceOffset: 0,to: arena.kineticReadback, destinationOffset: 0,size: scalarBytes)
         blit.endEncoding(); try await complete(command)
         let status = arena.status.contents().assumingMemoryBound(to: VivoMDMetalStatus.self).pointee
-        guard status.flags == 0 else {
-            throw VivoMDRuntimeError.metal("accepted-state force evaluation failed with status \(status.flags)")
-        }
+        guard status.flags == 0 else { throw VivoMDRuntimeError.metal("accepted-state force evaluation failed with status \(status.flags)") }
         let energies = arena.forceEnergyReadback.contents().assumingMemoryBound(to: SIMD4<Float>.self)
         let kinetics = arena.kineticReadback.contents().assumingMemoryBound(to: Float.self)
         var potential = 0.0, kinetic = 0.0
-        for index in 0..<arena.particleCount {
-            potential += Double(energies[index].w); kinetic += Double(kinetics[index])
-        }
+        for index in 0..<arena.particleCount { potential += Double(energies[index].w); kinetic += Double(kinetics[index]) }
         let massive = UInt64(system.particles.lazy.filter { $0.massDa > 0 }.count)
         let multiplied = massive.multipliedReportingOverflow(by: 3)
         guard !multiplied.overflow else { throw VivoMDRuntimeError.metal("degrees-of-freedom count overflow") }
         let constraintCount = UInt64(system.constraints.count)
         let dof = multiplied.partialValue > constraintCount ? multiplied.partialValue - constraintCount : 0
         let temperature = dof > 0 ? 2 * kinetic / (Double(dof) * 0.00831446261815324) : nil
-        guard potential.isFinite, kinetic.isFinite, temperature?.isFinite != false else {
-            throw VivoMDRuntimeError.metal("accepted observables are non-finite")
-        }
-        return .init(systemFingerprint: systemFingerprint,
-                     configurationFingerprint: configurationFingerprint,
-                     stepIndex: acceptedStep, timePS: acceptedTimePS,
-                     potentialEnergyKJPerMol: potential, kineticEnergyKJPerMol: kinetic,
-                     temperatureK: temperature, degreesOfFreedom: dof)
+        guard potential.isFinite, kinetic.isFinite, temperature?.isFinite != false else { throw VivoMDRuntimeError.metal("accepted observables are non-finite") }
+        return .init(systemFingerprint: systemFingerprint,configurationFingerprint: configurationFingerprint,
+                     stepIndex: acceptedStep,timePS: acceptedTimePS,potentialEnergyKJPerMol: potential,
+                     kineticEnergyKJPerMol: kinetic,temperatureK: temperature,degreesOfFreedom: dof)
     }
 
-    private func normalizeVirtualSites(_ command: MTLCommandBuffer,
-                                       position: MTLBuffer, velocity: MTLBuffer,
-                                       abi: VivoMDMetalCommand) throws {
-        guard !packed.virtualSites.isEmpty else { return }
-        try updateVirtualPosition(command, position: position, abi: abi)
-        try updateVirtualVelocity(command, velocity: velocity, abi: abi)
-    }
-
-    private func updateVirtualPosition(_ command: MTLCommandBuffer,
-                                       position: MTLBuffer,
-                                       abi: VivoMDMetalCommand) throws {
-        guard !packed.virtualSites.isEmpty else { return }
-        try encode(.mdUpdateVirtualPosition, command: command,
-                   buffers: [position, arena.virtualSites,
-                             arena.virtualSiteIndexByParticle, arena.status], abi: abi)
-    }
-
-    private func updateVirtualVelocity(_ command: MTLCommandBuffer,
-                                       velocity: MTLBuffer,
-                                       abi: VivoMDMetalCommand) throws {
-        guard !packed.virtualSites.isEmpty else { return }
-        try encode(.mdUpdateVirtualVelocity, command: command,
-                   buffers: [velocity, arena.virtualSites,
-                             arena.virtualSiteIndexByParticle], abi: abi)
-    }
-
-    private func buildNeighborList(_ command: MTLCommandBuffer,
-                                   position: MTLBuffer,
-                                   abi: VivoMDMetalCommand) throws {
-        guard abi.neighborCapacity == arena.neighborCapacity else {
-            throw VivoMDRuntimeError.metal("neighbor-list ABI capacity differs from arena allocation")
-        }
-        if let neighborGrid {
-            guard neighborGrid.plan.neighborCapacity == arena.neighborCapacity else {
-                throw VivoMDRuntimeError.metal("spatial-grid neighbor capacity differs from arena allocation")
-            }
-            try neighborGrid.encode(commandBuffer: command, positions: position,
-                                    neighborCounts: arena.neighborCounts,
-                                    neighborIndices: arena.neighborIndices,
-                                    referencePositions: arena.neighborReferencePosition,
-                                    status: arena.status)
-        } else {
-            try encode(.mdBuildNeighborList, command: command,
-                       buffers: [position, arena.neighborCounts, arena.neighborIndices,
-                                 arena.neighborReferencePosition, arena.status], abi: abi)
-        }
-    }
-
-    private func encodePositionConstraints(_ command: MTLCommandBuffer,
-                                           abi: VivoMDMetalCommand) throws {
-        var source = arena.candidatePosition, destination = arena.positionScratch
-        var sourceIsCandidate = true
-        for _ in 0..<configuration.maximumConstraintIterations {
-            try encode(.mdConstraintPosition, command: command,
-                       buffers: [source, destination, arena.dynamics,
-                                 arena.constraints, arena.constraintOffsets,
-                                 arena.constraintIncidence, arena.status], abi: abi)
-            swap(&source, &destination); sourceIsCandidate.toggle()
-        }
-        if !sourceIsCandidate { try copy(command, from: source, to: arena.candidatePosition) }
-    }
-
-    private func encodeVelocityConstraints(_ command: MTLCommandBuffer,
-                                           abi: VivoMDMetalCommand) throws {
-        var source = arena.candidateVelocity, destination = arena.velocityScratch
-        var sourceIsCandidate = true
-        for _ in 0..<configuration.maximumConstraintIterations {
-            try encode(.mdConstraintVelocity, command: command,
-                       buffers: [arena.candidatePosition, source, destination,
-                                 arena.dynamics, arena.constraints,
-                                 arena.constraintOffsets, arena.constraintIncidence,
-                                 arena.status], abi: abi)
-            swap(&source, &destination); sourceIsCandidate.toggle()
-        }
-        if !sourceIsCandidate { try copy(command, from: source, to: arena.candidateVelocity) }
-    }
-
-    private func encodeForces(_ command: MTLCommandBuffer,
-                              position: MTLBuffer,
-                              abi: VivoMDMetalCommand) throws {
-        try encode(.mdClearForce, command: command, buffers: [arena.forceEnergy], abi: abi)
-        try encode(.mdBonded, command: command,
-                   buffers: [position, arena.forceEnergy,
-                             arena.bonds, arena.bondOffsets, arena.bondIncidence,
-                             arena.angles, arena.angleOffsets, arena.angleIncidence,
-                             arena.torsions, arena.torsionOffsets,
-                             arena.torsionIncidence, arena.status], abi: abi)
-
-        if configuration.electrostatics == .pme {
-            guard let pmeEngine else { throw VivoMDRuntimeError.metal("PME engine is absent") }
-            try encode(.mdPMERealSpaceNeighbor, command: command,
-                       buffers: [position, arena.forceEnergy, arena.dynamics,
-                                 arena.typeIndices, arena.pairMatrix,
-                                 arena.exceptions, arena.exceptionOffsets,
-                                 arena.exceptionPartners, arena.exceptionIndices,
-                                 arena.neighborCounts, arena.neighborIndices,
-                                 arena.status], abi: abi)
-            try pmeEngine.encodeReciprocal(commandBuffer: command,
-                                           positions: position,
-                                           dynamics: arena.dynamics,
-                                           forceEnergy: arena.forceEnergy,
-                                           status: arena.status)
-            if !packed.pairExceptions.isEmpty {
-                try encode(.mdPMEExceptionCorrection, command: command,
-                           buffers: [position, arena.dynamics, arena.forceEnergy,
-                                     arena.exceptions, arena.exceptionOffsets,
-                                     arena.exceptionPartners, arena.exceptionIndices,
-                                     arena.status], abi: abi)
-            }
-        } else if configuration.resolvedNeighborListEnabled {
-            try encode(.mdNonbondedNeighbor, command: command,
-                       buffers: [position, arena.forceEnergy, arena.dynamics,
-                                 arena.typeIndices, arena.pairMatrix,
-                                 arena.exceptions, arena.exceptionOffsets,
-                                 arena.exceptionPartners, arena.exceptionIndices,
-                                 arena.neighborCounts, arena.neighborIndices,
-                                 arena.status], abi: abi)
-        } else {
-            try encode(.mdNonbondedDirect, command: command,
-                       buffers: [position, arena.forceEnergy, arena.dynamics,
-                                 arena.typeIndices, arena.pairMatrix,
-                                 arena.exceptions, arena.exceptionOffsets,
-                                 arena.exceptionPartners, arena.exceptionIndices,
-                                 arena.status], abi: abi)
-        }
-        if !packed.virtualSites.isEmpty {
-            try encode(.mdRedistributeVirtualForce, command: command,
-                       buffers: [arena.forceEnergy, arena.virtualSites,
-                                 arena.virtualParentOffsets,
-                                 arena.virtualParentIncidence, arena.status], abi: abi)
-        }
-    }
-
-    private func readAcceptedState() async throws
-    -> (positions: [VivoVector3D], velocities: [VivoVector3D]) {
-        inFlight = true; defer { inFlight = false }
-        guard let command = queue.makeCommandBuffer() else {
-            throw VivoMDRuntimeError.metal("state readback command unavailable")
-        }
+    private func evaluateMinimizationState(position: MTLBuffer,
+                                           velocity: MTLBuffer,
+                                           termsA: MTLBuffer,
+                                           termsB: MTLBuffer,
+                                           scalar: MTLBuffer) async throws
+    -> (energy: Double, maximumForce: Double) {
         let abi = try VivoMDMetalABI.command(packed: packed, configuration: configuration,
                                              cell: periodicCell, stepIndex: acceptedStep)
+        guard let command = queue.makeCommandBuffer() else { throw VivoMDRuntimeError.metal("minimization evaluation command unavailable") }
         try encodeStatusClear(command)
-        try normalizeVirtualSites(command, position: arena.acceptedPosition,
-                                  velocity: arena.acceptedVelocity, abi: abi)
-        guard let blit = command.makeBlitCommandEncoder() else {
-            throw VivoMDRuntimeError.metal("state readback encoder unavailable")
+        try normalizeVirtualSites(command, position: position, velocity: velocity, abi: abi)
+        if configuration.resolvedNeighborListEnabled { try buildNeighborList(command, position: position, abi: abi) }
+        try encodeForces(command, position: position, abi: abi)
+        try encode(.mdValidate, command: command,
+                   buffers: [position, velocity, arena.forceEnergy, arena.status], abi: abi)
+        try encode(.mdMinimizeTerms, command: command,
+                   buffers: [arena.forceEnergy, termsA], abi: abi)
+        var current = termsA, scratch = termsB
+        var count = UInt32(arena.particleCount)
+        while count > 1 {
+            let outputCount = (count + 1) / 2
+            try encodeMinimizationReduce(command, source: current,
+                                         destination: scratch, sourceCount: count,
+                                         outputCount: outputCount)
+            swap(&current, &scratch); count = outputCount
         }
-        let bytes = arena.particleCount * MemoryLayout<SIMD4<Float>>.stride
-        blit.copy(from: arena.acceptedPosition, sourceOffset: 0,
-                  to: arena.positionReadback, destinationOffset: 0, size: bytes)
-        blit.copy(from: arena.acceptedVelocity, sourceOffset: 0,
-                  to: arena.velocityReadback, destinationOffset: 0, size: bytes)
+        guard let blit = command.makeBlitCommandEncoder() else { throw VivoMDRuntimeError.metal("minimization scalar readback encoder unavailable") }
+        blit.copy(from: current, sourceOffset: 0, to: scalar, destinationOffset: 0,
+                  size: MemoryLayout<SIMD2<Float>>.stride)
         blit.endEncoding(); try await complete(command)
         let status = arena.status.contents().assumingMemoryBound(to: VivoMDMetalStatus.self).pointee
-        guard status.flags == 0 else {
-            throw VivoMDRuntimeError.metal("derived-site normalization failed with status \(status.flags)")
+        guard status.flags == 0 else { throw VivoMDRuntimeError.metal("minimization force evaluation rejected with status \(status.flags)") }
+        let value = scalar.contents().assumingMemoryBound(to: SIMD2<Float>.self).pointee
+        guard value.x.isFinite, value.y.isFinite, value.y >= 0 else { throw VivoMDRuntimeError.metal("minimization reduction is non-finite") }
+        return (Double(value.x), Double(value.y))
+    }
+
+    private func encodeMinimizationPosition(_ command: MTLCommandBuffer,
+                                            abi: VivoMDMetalCommand,
+                                            stepScale: Double,
+                                            maximumDisplacementNM: Double) throws {
+        guard let pipeline = pipelines[.mdMinimizePosition],
+              let encoder = command.makeComputeCommandEncoder(),
+              stepScale <= Double(Float.greatestFiniteMagnitude),
+              maximumDisplacementNM <= Double(Float.greatestFiniteMagnitude) else {
+            throw VivoMDRuntimeError.metal("minimization position encoder or FP32 parameters unavailable")
         }
-        let p = arena.positionReadback.contents().assumingMemoryBound(to: SIMD4<Float>.self)
-        let v = arena.velocityReadback.contents().assumingMemoryBound(to: SIMD4<Float>.self)
-        var positions: [VivoVector3D] = [], velocities: [VivoVector3D] = []
-        positions.reserveCapacity(arena.particleCount); velocities.reserveCapacity(arena.particleCount)
-        for index in 0..<arena.particleCount {
-            positions.append(.init(Double(p[index].x), Double(p[index].y), Double(p[index].z)))
-            velocities.append(.init(Double(v[index].x), Double(v[index].y), Double(v[index].z)))
-        }
+        var md = abi
+        var min = VivoMDMinPositionCommand(particleCount: packed.particleCount,
+                                           stepScale: Float(stepScale),
+                                           maxDisplacementNM: Float(maximumDisplacementNM))
+        encoder.setComputePipelineState(pipeline.state)
+        encoder.setBuffer(arena.candidatePosition, offset: 0, index: 0)
+        encoder.setBuffer(arena.forceEnergy, offset: 0, index: 1)
+        encoder.setBuffer(arena.dynamics, offset: 0, index: 2)
+        encoder.setBytes(&md, length: MemoryLayout<VivoMDMetalCommand>.stride, index: 3)
+        encoder.setBytes(&min, length: MemoryLayout<VivoMDMinPositionCommand>.stride, index: 4)
+        encoder.dispatchThreads(pipeline.gridSize(for: arena.particleCount),threadsPerThreadgroup: pipeline.threadgroupSize(for: arena.particleCount))
+        encoder.endEncoding()
+    }
+
+    private func encodeMinimizationReduce(_ command: MTLCommandBuffer,
+                                          source: MTLBuffer,
+                                          destination: MTLBuffer,
+                                          sourceCount: UInt32,
+                                          outputCount: UInt32) throws {
+        guard let pipeline = pipelines[.mdMinimizeReduceStage],
+              let encoder = command.makeComputeCommandEncoder() else { throw VivoMDRuntimeError.metal("minimization reduction encoder unavailable") }
+        var reduce = VivoMDMinReduceCommand(sourceCount: sourceCount)
+        encoder.setComputePipelineState(pipeline.state)
+        encoder.setBuffer(source, offset: 0, index: 0); encoder.setBuffer(destination, offset: 0, index: 1)
+        encoder.setBytes(&reduce, length: MemoryLayout<VivoMDMinReduceCommand>.stride, index: 2)
+        encoder.dispatchThreads(pipeline.gridSize(for: Int(outputCount)),threadsPerThreadgroup: pipeline.threadgroupSize(for: Int(outputCount)))
+        encoder.endEncoding()
+    }
+
+    private func normalizeVirtualSites(_ command: MTLCommandBuffer,position: MTLBuffer,velocity: MTLBuffer,abi: VivoMDMetalCommand) throws {
+        guard !packed.virtualSites.isEmpty else { return }
+        try updateVirtualPosition(command, position: position, abi: abi); try updateVirtualVelocity(command, velocity: velocity, abi: abi)
+    }
+    private func updateVirtualPosition(_ command: MTLCommandBuffer,position: MTLBuffer,abi: VivoMDMetalCommand) throws {
+        guard !packed.virtualSites.isEmpty else { return }
+        try encode(.mdUpdateVirtualPosition, command: command,buffers: [position, arena.virtualSites,arena.virtualSiteIndexByParticle, arena.status], abi: abi)
+    }
+    private func updateVirtualVelocity(_ command: MTLCommandBuffer,velocity: MTLBuffer,abi: VivoMDMetalCommand) throws {
+        guard !packed.virtualSites.isEmpty else { return }
+        try encode(.mdUpdateVirtualVelocity, command: command,buffers: [velocity, arena.virtualSites,arena.virtualSiteIndexByParticle], abi: abi)
+    }
+    private func buildNeighborList(_ command: MTLCommandBuffer,position: MTLBuffer,abi: VivoMDMetalCommand) throws {
+        guard abi.neighborCapacity == arena.neighborCapacity else { throw VivoMDRuntimeError.metal("neighbor-list ABI capacity differs from arena allocation") }
+        if let neighborGrid {
+            guard neighborGrid.plan.neighborCapacity == arena.neighborCapacity else { throw VivoMDRuntimeError.metal("spatial-grid neighbor capacity differs from arena allocation") }
+            try neighborGrid.encode(commandBuffer: command, positions: position,neighborCounts: arena.neighborCounts,neighborIndices: arena.neighborIndices,referencePositions: arena.neighborReferencePosition,status: arena.status)
+        } else { try encode(.mdBuildNeighborList, command: command,buffers: [position, arena.neighborCounts, arena.neighborIndices,arena.neighborReferencePosition, arena.status], abi: abi) }
+    }
+    private func encodePositionConstraints(_ command: MTLCommandBuffer,abi: VivoMDMetalCommand) throws {
+        var source = arena.candidatePosition, destination = arena.positionScratch; var sourceIsCandidate = true
+        for _ in 0..<configuration.maximumConstraintIterations { try encode(.mdConstraintPosition, command: command,buffers: [source, destination, arena.dynamics,arena.constraints, arena.constraintOffsets,arena.constraintIncidence, arena.status], abi: abi); swap(&source, &destination); sourceIsCandidate.toggle() }
+        if !sourceIsCandidate { try copy(command, from: source, to: arena.candidatePosition) }
+    }
+    private func encodeVelocityConstraints(_ command: MTLCommandBuffer,abi: VivoMDMetalCommand) throws {
+        var source = arena.candidateVelocity, destination = arena.velocityScratch; var sourceIsCandidate = true
+        for _ in 0..<configuration.maximumConstraintIterations { try encode(.mdConstraintVelocity, command: command,buffers: [arena.candidatePosition, source, destination,arena.dynamics, arena.constraints,arena.constraintOffsets, arena.constraintIncidence,arena.status], abi: abi); swap(&source, &destination); sourceIsCandidate.toggle() }
+        if !sourceIsCandidate { try copy(command, from: source, to: arena.candidateVelocity) }
+    }
+    private func encodeForces(_ command: MTLCommandBuffer,position: MTLBuffer,abi: VivoMDMetalCommand) throws {
+        try encode(.mdClearForce, command: command, buffers: [arena.forceEnergy], abi: abi)
+        try encode(.mdBonded, command: command,buffers: [position, arena.forceEnergy,arena.bonds, arena.bondOffsets, arena.bondIncidence,arena.angles, arena.angleOffsets, arena.angleIncidence,arena.torsions, arena.torsionOffsets,arena.torsionIncidence, arena.status], abi: abi)
+        if configuration.electrostatics == .pme {
+            guard let pmeEngine else { throw VivoMDRuntimeError.metal("PME engine is absent") }
+            try encode(.mdPMERealSpaceNeighbor, command: command,buffers: [position, arena.forceEnergy, arena.dynamics,arena.typeIndices, arena.pairMatrix,arena.exceptions, arena.exceptionOffsets,arena.exceptionPartners, arena.exceptionIndices,arena.neighborCounts, arena.neighborIndices,arena.status], abi: abi)
+            try pmeEngine.encodeReciprocal(commandBuffer: command,positions: position,dynamics: arena.dynamics,forceEnergy: arena.forceEnergy,status: arena.status)
+            if !packed.pairExceptions.isEmpty { try encode(.mdPMEExceptionCorrection, command: command,buffers: [position, arena.dynamics, arena.forceEnergy,arena.exceptions, arena.exceptionOffsets,arena.exceptionPartners, arena.exceptionIndices,arena.status], abi: abi) }
+        } else if configuration.resolvedNeighborListEnabled {
+            try encode(.mdNonbondedNeighbor, command: command,buffers: [position, arena.forceEnergy, arena.dynamics,arena.typeIndices, arena.pairMatrix,arena.exceptions, arena.exceptionOffsets,arena.exceptionPartners, arena.exceptionIndices,arena.neighborCounts, arena.neighborIndices,arena.status], abi: abi)
+        } else { try encode(.mdNonbondedDirect, command: command,buffers: [position, arena.forceEnergy, arena.dynamics,arena.typeIndices, arena.pairMatrix,arena.exceptions, arena.exceptionOffsets,arena.exceptionPartners, arena.exceptionIndices,arena.status], abi: abi) }
+        if !packed.virtualSites.isEmpty { try encode(.mdRedistributeVirtualForce, command: command,buffers: [arena.forceEnergy, arena.virtualSites,arena.virtualParentOffsets,arena.virtualParentIncidence, arena.status], abi: abi) }
+    }
+    private func readAcceptedState() async throws -> (positions: [VivoVector3D], velocities: [VivoVector3D]) {
+        inFlight = true; defer { inFlight = false }
+        guard let command = queue.makeCommandBuffer() else { throw VivoMDRuntimeError.metal("state readback command unavailable") }
+        let abi = try VivoMDMetalABI.command(packed: packed, configuration: configuration,cell: periodicCell, stepIndex: acceptedStep)
+        try encodeStatusClear(command); try normalizeVirtualSites(command, position: arena.acceptedPosition,velocity: arena.acceptedVelocity, abi: abi)
+        guard let blit = command.makeBlitCommandEncoder() else { throw VivoMDRuntimeError.metal("state readback encoder unavailable") }
+        let bytes = arena.particleCount * MemoryLayout<SIMD4<Float>>.stride
+        blit.copy(from: arena.acceptedPosition, sourceOffset: 0,to: arena.positionReadback, destinationOffset: 0, size: bytes); blit.copy(from: arena.acceptedVelocity, sourceOffset: 0,to: arena.velocityReadback, destinationOffset: 0, size: bytes); blit.endEncoding(); try await complete(command)
+        let status = arena.status.contents().assumingMemoryBound(to: VivoMDMetalStatus.self).pointee
+        guard status.flags == 0 else { throw VivoMDRuntimeError.metal("derived-site normalization failed with status \(status.flags)") }
+        let p = arena.positionReadback.contents().assumingMemoryBound(to: SIMD4<Float>.self),v = arena.velocityReadback.contents().assumingMemoryBound(to: SIMD4<Float>.self)
+        var positions: [VivoVector3D] = [], velocities: [VivoVector3D] = []; positions.reserveCapacity(arena.particleCount); velocities.reserveCapacity(arena.particleCount)
+        for index in 0..<arena.particleCount { positions.append(.init(Double(p[index].x), Double(p[index].y), Double(p[index].z))); velocities.append(.init(Double(v[index].x), Double(v[index].y), Double(v[index].z))) }
         return (positions, velocities)
     }
-
     private func encodeStatusClear(_ command: MTLCommandBuffer) throws {
-        guard let pipeline = pipelines[.mdClearStatus],
-              let encoder = command.makeComputeCommandEncoder() else {
-            throw VivoMDRuntimeError.metal("status-clear encoder unavailable")
-        }
-        encoder.setComputePipelineState(pipeline.state)
-        encoder.setBuffer(arena.status, offset: 0, index: 0)
-        encoder.dispatchThreads(.init(width: 1, height: 1, depth: 1),
-                                threadsPerThreadgroup: .init(width: 1, height: 1, depth: 1))
-        encoder.endEncoding()
+        guard let pipeline = pipelines[.mdClearStatus],let encoder = command.makeComputeCommandEncoder() else { throw VivoMDRuntimeError.metal("status-clear encoder unavailable") }
+        encoder.setComputePipelineState(pipeline.state); encoder.setBuffer(arena.status, offset: 0, index: 0); encoder.dispatchThreads(.init(width: 1, height: 1, depth: 1),threadsPerThreadgroup: .init(width: 1, height: 1, depth: 1)); encoder.endEncoding()
     }
-
-    private func encode(_ kernel: NumiVivoKernel,
-                        command: MTLCommandBuffer,
-                        buffers: [MTLBuffer],
-                        abi: VivoMDMetalCommand) throws {
-        guard let pipeline = pipelines[kernel],
-              let encoder = command.makeComputeCommandEncoder() else {
-            throw VivoMDRuntimeError.metal("encoder unavailable for \(kernel.rawValue)")
-        }
-        encoder.label = kernel.rawValue; encoder.setComputePipelineState(pipeline.state)
-        for (index, buffer) in buffers.enumerated() { encoder.setBuffer(buffer, offset: 0, index: index) }
-        var value = abi
-        encoder.setBytes(&value, length: MemoryLayout<VivoMDMetalCommand>.stride,
-                         index: buffers.count)
-        encoder.dispatchThreads(pipeline.gridSize(for: arena.particleCount),
-                                threadsPerThreadgroup: pipeline.threadgroupSize(for: arena.particleCount))
-        encoder.endEncoding()
+    private func encode(_ kernel: NumiVivoKernel,command: MTLCommandBuffer,buffers: [MTLBuffer],abi: VivoMDMetalCommand) throws {
+        guard let pipeline = pipelines[kernel],let encoder = command.makeComputeCommandEncoder() else { throw VivoMDRuntimeError.metal("encoder unavailable for \(kernel.rawValue)") }
+        encoder.label = kernel.rawValue; encoder.setComputePipelineState(pipeline.state); for (index, buffer) in buffers.enumerated() { encoder.setBuffer(buffer, offset: 0, index: index) }; var value = abi; encoder.setBytes(&value, length: MemoryLayout<VivoMDMetalCommand>.stride,index: buffers.count); encoder.dispatchThreads(pipeline.gridSize(for: arena.particleCount),threadsPerThreadgroup: pipeline.threadgroupSize(for: arena.particleCount)); encoder.endEncoding()
     }
-
     private func copy(_ command: MTLCommandBuffer, from: MTLBuffer, to: MTLBuffer) throws {
-        guard let blit = command.makeBlitCommandEncoder() else {
-            throw VivoMDRuntimeError.metal("copy encoder unavailable")
-        }
-        blit.copy(from: from, sourceOffset: 0, to: to, destinationOffset: 0,
-                  size: arena.particleCount * MemoryLayout<SIMD4<Float>>.stride)
-        blit.endEncoding()
+        guard let blit = command.makeBlitCommandEncoder() else { throw VivoMDRuntimeError.metal("copy encoder unavailable") }; blit.copy(from: from, sourceOffset: 0, to: to, destinationOffset: 0,size: arena.particleCount * MemoryLayout<SIMD4<Float>>.stride); blit.endEncoding()
     }
-
-    private func requireIdle() throws {
-        guard !inFlight else { throw VivoMDRuntimeError.metal("MD operation already in flight") }
-    }
-
+    private func requireIdle() throws { guard !inFlight else { throw VivoMDRuntimeError.metal("MD operation already in flight") } }
     private func complete(_ command: MTLCommandBuffer) async throws {
-        try await withCheckedThrowingContinuation {
-            (continuation: CheckedContinuation<Void, Error>) in
-            command.addCompletedHandler { value in
-                if let error = value.error {
-                    continuation.resume(throwing: VivoMDRuntimeError.metal(String(describing: error)))
-                } else { continuation.resume(returning: ()) }
-            }
-            command.commit()
-        }
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in command.addCompletedHandler { value in if let error = value.error { continuation.resume(throwing: VivoMDRuntimeError.metal(String(describing: error))) } else { continuation.resume(returning: ()) } }; command.commit() }
     }
 }
