@@ -104,11 +104,11 @@ public struct VivoGaussianBasis: Codable, Sendable, Equatable {
             throw VivoChemistryError.invalid("basis identity, source or representation")
         }
         for s in shells {
-            guard s.nucleusIndex >= 0, s.nucleusIndex < nucleusCount, (0...3).contains(s.angularMomentum),
+            guard s.nucleusIndex >= 0, s.nucleusIndex < nucleusCount, (0...4).contains(s.angularMomentum),
                   !s.primitives.isEmpty, s.primitives.count <= 128,
                   s.primitives.allSatisfy({ $0.exponent.isFinite && $0.exponent > 0 && $0.coefficient.isFinite }),
                   s.primitives.contains(where: { $0.coefficient != 0 }) else {
-                throw VivoChemistryError.invalid("basis shell; native Cartesian s/p/d/f only")
+                throw VivoChemistryError.invalid("basis shell; native Cartesian s/p/d/f/g only")
             }
         }
     }
