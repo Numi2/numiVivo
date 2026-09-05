@@ -145,7 +145,7 @@ public struct VivoStateVector: Codable, Sendable, Equatable {
         for i in amplitudes.indices { running += amplitudes[i].magnitudeSquared; cumulative[i] = running }
         guard abs(running - 1) <= 1e-10 else { throw VivoChemistryError.invalid("state norm before sampling") }
         cumulative[cumulative.count - 1] = 1
-        var random = VivoSplitMix64(seed: seed), counts: [UInt64:Int] = [:]
+        var random = VivoQuantumSplitMix64(seed: seed), counts: [UInt64:Int] = [:]
         for _ in 0..<shots {
             let u = random.nextUnit()
             var low = 0, high = cumulative.count - 1
@@ -159,7 +159,7 @@ public struct VivoStateVector: Codable, Sendable, Equatable {
     }
 }
 
-private struct VivoSplitMix64 {
+private struct VivoQuantumSplitMix64 {
     var state: UInt64
     init(seed: UInt64) { state = seed }
     mutating func next() -> UInt64 {
