@@ -1,8 +1,8 @@
 import Foundation
 
 /// Immutable reciprocal-space plan for particle-mesh Ewald electrostatics.
-/// Mesh dimensions are powers of two so the Metal backend can use an in-place
-/// radix-2 Stockham/Cooley-Tukey schedule without depending on platform FFT APIs.
+/// Mesh dimensions are powers of two so the Metal backend can use a radix-2
+/// transform schedule without depending on platform FFT APIs.
 public struct VivoPMEPlan: Codable, Sendable, Equatable {
     public var gridX: UInt32
     public var gridY: UInt32
@@ -36,7 +36,6 @@ public struct VivoPMEPlan: Codable, Sendable, Equatable {
         let reciprocalB = cell.c.cross(cell.a) / determinant
         let reciprocalC = cell.a.cross(cell.b) / determinant
         let beta = try solveBeta(cutoffNM: cutoffNM, tolerance: tolerance)
-
         let gx = try meshDimension(lengthNM: cell.a.norm, spacingNM: targetGridSpacingNM)
         let gy = try meshDimension(lengthNM: cell.b.norm, spacingNM: targetGridSpacingNM)
         let gz = try meshDimension(lengthNM: cell.c.norm, spacingNM: targetGridSpacingNM)
@@ -48,28 +47,20 @@ public struct VivoPMEPlan: Codable, Sendable, Equatable {
         return .init(gridX: gx, gridY: gy, gridZ: gz,
                      gridPointCount: count.partialValue,
                      interpolationOrder: interpolationOrder,
-                     ewaldBetaPerNM: beta,
-                     tolerance: tolerance,
+                     ewaldBetaPerNM: beta, tolerance: tolerance,
                      targetGridSpacingNM: targetGridSpacingNM,
                      cellVolumeNM3: abs(determinant),
-                     reciprocalA: reciprocalA,
-                     reciprocalB: reciprocalB,
+                     reciprocalA: reciprocalA, reciprocalB: reciprocalB,
                      reciprocalC: reciprocalC)
     }
 
     private static func solveBeta(cutoffNM: Double, tolerance: Double) throws -> Double {
-        // Real-space truncation criterion erfc(beta*r_c)/r_c <= tolerance.
-        // Solve monotonically by bisection rather than relying on a fragile closed
-        // approximation. This is planning-time work, not a per-step cost.
-        func residual(_ beta: Double) -> Double {
-            Foundation.erfc(beta * cutoffNM) / cutoffNM
-        }
+        func residual(_ beta: Double) -> Double { erfc(beta * cutoffNM) / cutoffNM }
         var low = 0.0
         var high = 1.0 / cutoffNM
         var guardIterations = 0
         while residual(high) > tolerance {
-            high *= 2
-            guardIterations += 1
+            high *= 2; guardIterations += 1
             guard high.isFinite, guardIterations < 128 else {
                 throw VivoMDRuntimeError.metal("PME Ewald-beta search failed to bracket the requested tolerance")
             }
