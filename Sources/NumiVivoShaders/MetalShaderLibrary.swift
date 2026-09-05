@@ -59,6 +59,10 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case mdPMEGather = "nvivo_pme_gather"
     case mdPMEExceptionCorrection = "nvivo_pme_exception_correction"
     case mdPMEBackgroundEnergy = "nvivo_pme_background_energy"
+    case mdMinimizeClear = "nvivo_md_minimize_clear"
+    case mdMinimizeReduce = "nvivo_md_minimize_reduce"
+    case mdMinimizePosition = "nvivo_md_minimize_position"
+    case mdZeroVelocity = "nvivo_md_zero_velocity"
     case mdHalfKick = "nvivo_md_half_kick"
     case mdDrift = "nvivo_md_drift"
     case mdLangevin = "nvivo_md_langevin"
@@ -83,6 +87,8 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
             return "NumiVivoMDPME"
         case .mdPMEExceptionCorrection, .mdPMEBackgroundEnergy:
             return "NumiVivoMDPMECorrections"
+        case .mdMinimizeClear, .mdMinimizeReduce, .mdMinimizePosition, .mdZeroVelocity:
+            return "NumiVivoMDMinimization"
         case .mdClearForce, .mdClearStatus, .mdBonded, .mdBuildNeighborList,
              .mdValidateNeighborDisplacement, .mdNonbondedNeighbor, .mdNonbondedDirect,
              .mdHalfKick, .mdDrift, .mdLangevin, .mdConstraintPosition,
@@ -102,7 +108,7 @@ public struct NumiVivoPipeline: @unchecked Sendable {
         maximumThreadsPerThreadgroup = state.maxTotalThreadsPerThreadgroup
     }
     public func threadgroupSize(for elementCount: Int, preferred: Int? = nil) -> MTLSize {
-        let width=max(executionWidth,1), requested=max(width,preferred ?? width*4), capped=min(requested,maximumThreadsPerThreadgroup)
+        let width=max(executionWidth,1),requested=max(width,preferred ?? width*4),capped=min(requested,maximumThreadsPerThreadgroup)
         let aligned=max(1,capped>=width ? (capped/width)*width:capped)
         return .init(width:aligned,height:1,depth:1)
     }
@@ -110,9 +116,9 @@ public struct NumiVivoPipeline: @unchecked Sendable {
 }
 
 private final class NumiVivoRuntimeLibraryCache: @unchecked Sendable {
-    static let shared=NumiVivoRuntimeLibraryCache(); private let lock=NSLock(); private var libraries:[String:MTLLibrary]=[:]
+    static let shared=NumiVivoRuntimeLibraryCache();private let lock=NSLock();private var libraries:[String:MTLLibrary]=[:]
     func library(device:MTLDevice,module:String)throws->MTLLibrary {
-        lock.lock(); defer{lock.unlock()}; let key="\(device.registryID)/\(module)/v1"; if let v=libraries[key]{return v}
+        lock.lock();defer{lock.unlock()};let key="\(device.registryID)/\(module)/v1";if let v=libraries[key]{return v}
         let url=Bundle.module.url(forResource:module,withExtension:"metal") ?? Bundle.module.url(forResource:module,withExtension:"metal",subdirectory:"Resources")
         guard let url else{throw NumiVivoShaderError.sourceResourceMissing}
         do{let source=try String(contentsOf:url,encoding:.utf8);let options=MTLCompileOptions();options.fastMathEnabled=false;let library=try device.makeLibrary(source:source,options:options);libraries[key]=library;return library}
@@ -121,7 +127,7 @@ private final class NumiVivoRuntimeLibraryCache: @unchecked Sendable {
 }
 
 public actor NumiVivoPipelineCatalog {
-    private let device:MTLDevice; private var cache:[NumiVivoKernel:NumiVivoPipeline]=[:]
+    private let device:MTLDevice;private var cache:[NumiVivoKernel:NumiVivoPipeline]=[:]
     public init(device:MTLDevice)throws{self.device=device}
     public func pipeline(_ kernel:NumiVivoKernel)throws->NumiVivoPipeline {
         if let value=cache[kernel]{return value};let library=try NumiVivoRuntimeLibraryCache.shared.library(device:device,module:kernel.sourceModule)
