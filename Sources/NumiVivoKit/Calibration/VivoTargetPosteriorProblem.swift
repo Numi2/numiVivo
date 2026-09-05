@@ -3,12 +3,15 @@ import Foundation
 public enum VivoKineticFitField: String, Codable, Sendable {
     case association, dissociation, inactivation, targetTurnover
     case competitorAssociation, competitorDissociation, competitorConcentration, exposureScale
+    case assayNoiseScale, assayNoiseFloor, assayBias, assayCorrelationFraction, assayCorrelationTime
     public var unit: String {
         switch self {
         case .association, .competitorAssociation: return "M^-1 s^-1"
         case .dissociation, .inactivation, .targetTurnover, .competitorDissociation: return "1/s"
         case .competitorConcentration: return "M"
-        case .exposureScale: return "1"
+        case .exposureScale, .assayNoiseScale: return "1"
+        case .assayNoiseFloor, .assayBias, .assayCorrelationFraction: return "fraction"
+        case .assayCorrelationTime: return "s"
         }
     }
 }
@@ -34,11 +37,12 @@ public struct VivoTargetPosteriorProblem: Codable, Equatable, Sendable {
     public let sampler: VivoSMCConfiguration
     public let numerics: VivoTargetEngagementNumerics
     public let parallelEvaluations: Int
+    public let assays: [VivoTargetAssayModel]?
     public init(study: VivoTargetEngagementStudy, bindings: [VivoTargetPosteriorBinding],
                 sampler: VivoSMCConfiguration = .init(), numerics: VivoTargetEngagementNumerics = .init(),
-                parallelEvaluations: Int = 4) {
+                parallelEvaluations: Int = 4, assays: [VivoTargetAssayModel]? = nil) {
         schemaVersion = 1; self.study = study; self.bindings = bindings; self.sampler = sampler
-        self.numerics = numerics; self.parallelEvaluations = parallelEvaluations
+        self.numerics = numerics; self.parallelEvaluations = parallelEvaluations; self.assays = assays
     }
     public func validate() throws {
         try study.validate(); try numerics.validate(); try sampler.validate(dimension: bindings.count)
@@ -51,10 +55,17 @@ public struct VivoTargetPosteriorProblem: Codable, Equatable, Sendable {
         var writers = Set<String>()
         for binding in bindings {
             try binding.parameter.validate(); try binding.priorEvidence.validate(origin: .assumed)
-            guard binding.parameter.unit == binding.field.unit, binding.parameter.lower >= 0,
+            guard binding.parameter.unit == binding.field.unit, binding.field == .assayBias || binding.parameter.lower >= 0,
                   !binding.caseIdentifiers.isEmpty, binding.caseIdentifiers.count <= study.cases.count,
                   Set(binding.caseIdentifiers).count == binding.caseIdentifiers.count else {
                 throw VivoPosteriorError.invalid("binding units, prior range or case set")
+            }
+            switch binding.field {
+            case .assayNoiseScale, .assayCorrelationTime:
+                guard binding.parameter.lower > 0 else { throw VivoPosteriorError.invalid("positive assay scale/time prior required") }
+            case .assayCorrelationFraction:
+                guard binding.parameter.upper < 1 else { throw VivoPosteriorError.invalid("correlation fraction prior must be below one") }
+            default: break
             }
             var contexts: [VivoKineticContext] = [], hasTrainingCase = false
             for id in binding.caseIdentifiers {
@@ -78,7 +89,8 @@ public struct VivoTargetPosteriorProblem: Codable, Equatable, Sendable {
                 default: break
                 }
             }
-            guard hasTrainingCase, let context = contexts.first, contexts.allSatisfy({ $0 == context }) else {
+            guard hasTrainingCase, let context = contexts.first,
+                  binding.field.isAssayParameter || contexts.allSatisfy({ $0 == context }) else {
                 throw VivoPosteriorError.invalid("parameter has no calibration use or crosses incompatible kinetic contexts")
             }
         }
@@ -86,12 +98,8 @@ public struct VivoTargetPosteriorProblem: Codable, Equatable, Sendable {
         for item in study.cases where item.partition == .calibration {
             observations += item.observations.count; sampleCount += item.experiment.sampleTimesSeconds.count
             knots += item.experiment.exposure.knots.count
-            for observation in item.observations {
-                guard let sd = observation.standardDeviation, sd.isFinite, sd > 0 else {
-                    throw VivoPosteriorError.invalid("calibration requires explicit measurement SD; unknown is not zero")
-                }
-            }
         }
+        try validateAssays()
         // Prevent a valid small parameter file from expanding into unbounded
         // per-likelihood time series. Sampler evaluation counts are a separate cap.
         guard observations <= 4096, sampleCount <= 8192, knots <= 8192 else {
@@ -100,9 +108,9 @@ public struct VivoTargetPosteriorProblem: Codable, Equatable, Sendable {
     }
 }
 
-/// Validated immutable study plus training-only likelihood identity. Independent
-/// Gaussian measurement errors with supplied SD are explicit modelling assumptions.
-/// No assay noise is inferred or silently assigned; fitting never reads held-out values.
+/// Validated immutable study with a calibration-only likelihood identity. The
+/// optional assay model enables explicitly fitted error scales, bias and serial
+/// covariance. Missing uncertainty is never silently assigned a value.
 public struct VivoPreparedTargetPosterior: Sendable {
     public let problem: VivoTargetPosteriorProblem
     public let plan: VivoPosteriorPlan
@@ -119,6 +127,7 @@ public struct VivoPreparedTargetPosterior: Sendable {
         let cases: [VivoTargetEngagementStudyCase]
         let bindings: [TrainingBinding]
         let numerics: VivoTargetEngagementNumerics
+        let assays: [VivoTargetAssayModel]?
     }
 
     public init(_ problem: VivoTargetPosteriorProblem) throws {
@@ -130,8 +139,10 @@ public struct VivoPreparedTargetPosterior: Sendable {
             TrainingBinding(parameter: $0.parameter, field: $0.field,
                 calibrationCaseIdentifiers: $0.caseIdentifiers.filter(ids.contains).sorted(), priorEvidence: $0.priorEvidence)
         }
-        let identity = TrainingIdentity(method: "numivivo.occupancy-independent-gaussian-fp64.v1",
-            cases: calibrationCases, bindings: bindings, numerics: problem.numerics)
+        let trainingAssays = (problem.assays ?? []).filter { ids.contains($0.caseIdentifier) }.sorted { $0.caseIdentifier < $1.caseIdentifier }
+        let method = problem.usesExtendedTrainingAssays ? "numivivo.occupancy-assay-gaussian-fp64.v2" : "numivivo.occupancy-independent-gaussian-fp64.v1"
+        let identity = TrainingIdentity(method: method, cases: calibrationCases, bindings: bindings,
+            numerics: problem.numerics, assays: trainingAssays.isEmpty ? nil : trainingAssays)
         plan = try .init(likelihoodFingerprint: VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(identity)),
                          parameters: problem.bindings.map(\.parameter), configuration: problem.sampler)
     }
@@ -170,6 +181,7 @@ public struct VivoPreparedTargetPosterior: Sendable {
             case .inactivation: inactivation = proposed(value, unit: .perSecond)
             case .targetTurnover: turnover = proposed(value, unit: .perSecond)
             case .exposureScale: exposureScale = value
+            case .assayNoiseScale, .assayNoiseFloor, .assayBias, .assayCorrelationFraction, .assayCorrelationTime: break
             case .competitorAssociation, .competitorDissociation, .competitorConcentration:
                 guard let old = competitor else { throw VivoPosteriorError.invalid("missing competitor") }
                 competitor = .init(identifier: old.identifier,
@@ -204,6 +216,23 @@ public struct VivoPreparedTargetPosterior: Sendable {
             let modified = try experiment(for: item, values: values)
             let result = try VivoTargetEngagementReference.run(modified, numerics: problem.numerics)
             let samples = Dictionary(uniqueKeysWithValues: result.samples.map { ($0.timeSeconds, $0) })
+            if problem.usesExtendedTrainingAssays {
+                let predictions = try item.observations.map { observation -> Double in
+                    guard let sample = samples[observation.timeSeconds] else { throw VivoPosteriorError.invalid("missing assay observation time") }
+                    return observation.observable.value(sample)
+                }
+                let data = item.observations.map { observation in
+                    VivoGaussianAssayDatum(timeSeconds: observation.timeSeconds, value: observation.value,
+                        reportedStandardDeviation: observation.standardDeviation,
+                        support: problem.assaySupport(caseIdentifier: item.identifier, observationIdentifier: observation.identifier))
+                }
+                let noise = try problem.assayNoise(caseIdentifier: item.identifier, values: values)
+                let contribution = try VivoGaussianAssay.logLikelihood(predictions: predictions, observations: data, noise: noise)
+                let adjusted = contribution - compensation, next = sum + adjusted
+                compensation = (next - sum) - adjusted; sum = next
+                continue
+            }
+            // Preserve the v1 independent likelihood's exact summation order.
             for observation in item.observations {
                 guard let sample = samples[observation.timeSeconds], let sd = observation.standardDeviation else {
                     throw VivoPosteriorError.invalid("missing calibration sample or measurement SD")

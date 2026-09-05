@@ -48,6 +48,9 @@ public enum VivoTargetPosteriorSensitivity {
     public static func evaluate(_ record: VivoTargetPosteriorRecord,
                                 policy: VivoPosteriorSensitivityPolicy = .init()) throws -> VivoTargetPosteriorSensitivityReport {
         try record.validate(requireComplete: true); try policy.validate()
+        guard !record.problem.usesExtendedTrainingAssays else {
+            throw VivoPosteriorError.invalid("mean-only J'J sensitivity does not represent fitted/correlated/censored assay information; covariance-aware information is required")
+        }
         let prepared = try VivoPreparedTargetPosterior(record.problem)
         guard let checkpoint = record.posterior.checkpoint else { throw VivoPosteriorError.invalid("missing posterior") }
         let d = prepared.plan.parameters.count, n = Double(checkpoint.particles.count)

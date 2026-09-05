@@ -36,15 +36,17 @@ public struct VivoPosteriorPredictivePoint: Codable, Equatable, Sendable {
     public let credibleLower: Double
     public let credibleMedian: Double
     public let credibleUpper: Double
-    /// Adds the explicitly supplied Gaussian assay SD to the latent-prediction
-    /// mixture. Nil means measurement uncertainty is unknown, not zero.
     public let predictiveLower: Double?
     public let predictiveUpper: Double?
     public let observation: Double
     public let observationOrigin: VivoKineticOrigin
+    /// Reported measurement SD only; inferred residual noise is in the joint
+    /// posterior. A null reported SD is never relabelled as a laboratory estimate.
     public let measurementSD: Double?
     public let logPredictiveDensity: Double?
     public let predictiveIntervalContainsObservation: Bool?
+    public let observationSupport: VivoAssaySupport?
+    public let logObservationProbability: Double?
 }
 
 public struct VivoPosteriorPredictiveFailure: Codable, Equatable, Sendable {
@@ -59,6 +61,9 @@ public struct VivoPosteriorPredictiveCase: Codable, Equatable, Sendable {
     public let evaluatedParticles: Int
     public let points: [VivoPosteriorPredictivePoint]
     public let failures: [VivoPosteriorPredictiveFailure]
+    /// Mixture of the complete case likelihood, including declared within-case
+    /// correlation. Not the sum of marginal pointwise log predictive densities.
+    public let jointLogObservationLikelihood: Double?
 }
 
 public struct VivoPosteriorPredictiveReport: Codable, Equatable, Sendable {
@@ -66,9 +71,6 @@ public struct VivoPosteriorPredictiveReport: Codable, Equatable, Sendable {
     public let posteriorFingerprint: VivoFingerprint
     public let policy: VivoPosteriorPredictivePolicy
     public let parameterSummaries: [VivoPosteriorParameterSummary]
-    /// Correlation of prior coordinates in parameter order. Nil means undefined
-    /// (a collapsed coordinate), never an invented zero correlation. Every
-    /// forward evaluation uses an intact joint particle, not marginal draws.
     public let priorCoordinateCorrelationRowMajor: [Double?]
     public let cases: [VivoPosteriorPredictiveCase]
     public let limitations: [String]
@@ -77,7 +79,10 @@ public struct VivoPosteriorPredictiveReport: Codable, Equatable, Sendable {
 public enum VivoTargetPosteriorPredictor {
     private struct ParticleOutput: Sendable {
         let index: Int
-        let values: [Double]?
+        let latent: [Double]?
+        let noise: VivoGaussianAssayNoise?
+        let standardDeviations: [Double?]?
+        let jointLogLikelihood: Double?
         let failure: String?
     }
 
@@ -94,10 +99,9 @@ public enum VivoTargetPosteriorPredictor {
         let physical = try particles.map { try prepared.physicalValues($0) }
         let tail = (1 - policy.intervalProbability) * 0.5
         let summaries = try prepared.plan.parameters.indices.map { column -> VivoPosteriorParameterSummary in
-            let values = physical.map { $0[column] }.sorted()
-            let (mean, sd) = try moments(values)
+            let values = physical.map { $0[column] }.sorted(), stats = try moments(values)
             return .init(identifier: prepared.plan.parameters[column].identifier, unit: prepared.plan.parameters[column].unit,
-                mean: mean, standardDeviation: sd, lower: VivoPosteriorNumerics.quantile(sorted: values, probability: tail),
+                mean: stats.0, standardDeviation: stats.1, lower: VivoPosteriorNumerics.quantile(sorted: values, probability: tail),
                 median: VivoPosteriorNumerics.quantile(sorted: values, probability: 0.5),
                 upper: VivoPosteriorNumerics.quantile(sorted: values, probability: 1 - tail))
         }
@@ -105,43 +109,40 @@ public enum VivoTargetPosteriorPredictor {
         for item in record.problem.study.cases {
             try Task.checkCancellation()
             let count = n.multipliedReportingOverflow(by: item.observations.count)
-            guard !count.overflow, count.partialValue <= policy.maximumBufferedValues else {
+            guard !count.overflow, count.partialValue <= policy.maximumBufferedValues / 4 else {
                 throw VivoPosteriorError.budget("posterior prediction buffering capacity")
             }
             let outputs = try await evaluate(item, values: physical, prepared: prepared)
-            var failures = outputs.compactMap { output -> VivoPosteriorPredictiveFailure? in
-                output.failure.map { .init(particleIndex: output.index, message: $0) }
+            var failures = outputs.compactMap { output in
+                output.failure.map { VivoPosteriorPredictiveFailure(particleIndex: output.index, message: $0) }
             }
-            var points: [VivoPosteriorPredictivePoint] = []
+            var points: [VivoPosteriorPredictivePoint] = [], joint: Double?
             if failures.isEmpty {
                 do {
                     for (column, observation) in item.observations.enumerated() {
-                        let values = try outputs.map { output -> Double in
-                            guard let row = output.values, row.count == item.observations.count else {
-                                throw VivoPosteriorError.numerical("missing predictive particle output")
-                            }
-                            return row[column]
-                        }.sorted()
-                        points.append(try summarize(values, observation: observation, tail: tail))
+                        let support = record.problem.assaySupport(caseIdentifier: item.identifier, observationIdentifier: observation.identifier)
+                        points.append(try summarize(outputs, column: column, observation: observation, support: support, tail: tail))
                     }
+                    let logs = outputs.compactMap(\.jointLogLikelihood)
+                    if logs.count == n { joint = try logMeanExp(logs) }
                 } catch {
-                    failures = [.init(particleIndex: -1, message: "Summary failure: " + String(error.localizedDescription.prefix(4096)))]
-                    points = []
+                    failures = [.init(particleIndex: -1, message: String(error.localizedDescription.prefix(4096)))]
+                    points = []; joint = nil
                 }
             }
             cases.append(.init(identifier: item.identifier, partition: item.partition, leakageGroup: item.leakageGroup,
-                evaluatedParticles: outputs.count, points: points, failures: failures))
+                evaluatedParticles: outputs.count, points: points, failures: failures, jointLogObservationLikelihood: joint))
         }
-        return try .init(schemaVersion: 1, posteriorFingerprint: VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(record)),
-            policy: policy, parameterSummaries: summaries,
-            priorCoordinateCorrelationRowMajor: correlations(particles), cases: cases, limitations: [
-                "Joint finite-particle posterior propagated without independently sampling parameter marginals.",
-                "Credible intervals describe latent occupancy conditional on model, priors, exposure representation and training data.",
-                "Predictive intervals additionally include declared independent Gaussian measurement noise; unmodelled biological discrepancy is not covered.",
-                "Intervals are pointwise, not simultaneous across times, targets or tissues. No clinical efficacy/safety inference is made.",
-                "Coverage on calibration cases is in-sample. Validation/test labels are retained and synthetic observations are not experimental evidence.",
-                "Any failed particle suppresses that case's intervals; particle filtering would change the posterior distribution.",
-                "All final SMC particles have equal weights, but may remain genealogically or statistically dependent. Repeated-run diagnostics remain necessary."
+        return try .init(schemaVersion: 2, posteriorFingerprint: VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(record)),
+            policy: policy, parameterSummaries: summaries, priorCoordinateCorrelationRowMajor: correlations(particles), cases: cases,
+            limitations: [
+                "Joint particles preserve associations between kinetic parameters, exposure, assay noise and bias.",
+                "Latent intervals describe occupancy; predictive intervals additionally include the declared Gaussian assay model and its parameter uncertainty.",
+                "Intervals are pointwise, not simultaneous. Joint case scoring includes declared serial correlation; marginal scores must not be added as a joint score.",
+                "Censored observations yield event probabilities, not density values or coverage tests on substituted measurements.",
+                "Unresolved measurement uncertainty leaves predictive fields null. Reported SD remains separate from inferred residual SD.",
+                "Any failed particle suppresses the affected case rather than conditioning predictions on successful simulations.",
+                "Model discrepancy is included only to the extent explicitly represented. No clinical efficacy, patient safety or universal uncertainty-coverage claim is made."
             ])
     }
 
@@ -155,17 +156,29 @@ public enum VivoTargetPosteriorPredictor {
                         let experiment = try prepared.experiment(for: item, values: values[index])
                         let result = try VivoTargetEngagementReference.run(experiment, numerics: prepared.problem.numerics)
                         let samples = Dictionary(uniqueKeysWithValues: result.samples.map { ($0.timeSeconds, $0) })
+                        let noise = try prepared.problem.assayNoise(caseIdentifier: item.identifier, values: values[index])
                         let predictions = try item.observations.map { observation -> Double in
-                            guard let sample = samples[observation.timeSeconds] else {
-                                throw VivoPosteriorError.numerical("missing predictive time")
-                            }
-                            let prediction = observation.observable.value(sample)
-                            guard prediction.isFinite else { throw VivoPosteriorError.numerical("nonfinite predictive observable") }
-                            return prediction
+                            guard let sample = samples[observation.timeSeconds] else { throw VivoPosteriorError.numerical("missing predictive time") }
+                            let value = observation.observable.value(sample)
+                            guard value.isFinite else { throw VivoPosteriorError.numerical("nonfinite predictive observable") }
+                            return value
                         }
-                        return ParticleOutput(index: index, values: predictions, failure: nil)
+                        let scales = try item.observations.map { observation -> Double? in
+                            if observation.standardDeviation == nil && noise.additionalStandardDeviation == 0 { return nil }
+                            return try noise.standardDeviation(reported: observation.standardDeviation)
+                        }
+                        var joint: Double?
+                        if scales.allSatisfy({ $0 != nil }) {
+                            let data = item.observations.map { observation in
+                                VivoGaussianAssayDatum(timeSeconds: observation.timeSeconds, value: observation.value,
+                                    reportedStandardDeviation: observation.standardDeviation,
+                                    support: prepared.problem.assaySupport(caseIdentifier: item.identifier, observationIdentifier: observation.identifier))
+                            }
+                            joint = try VivoGaussianAssay.logLikelihood(predictions: predictions, observations: data, noise: noise)
+                        }
+                        return ParticleOutput(index: index, latent: predictions, noise: noise, standardDeviations: scales, jointLogLikelihood: joint, failure: nil)
                     } catch is CancellationError { throw CancellationError() }
-                    catch { return ParticleOutput(index: index, values: nil, failure: String(error.localizedDescription.prefix(4096))) }
+                    catch { return ParticleOutput(index: index, latent: nil, noise: nil, standardDeviations: nil, jointLogLikelihood: nil, failure: String(error.localizedDescription.prefix(4096))) }
                 }
             }
             var next = 0, results: [ParticleOutput] = []
@@ -178,60 +191,57 @@ public enum VivoTargetPosteriorPredictor {
         }
     }
 
+    private static func summarize(_ outputs: [ParticleOutput], column: Int, observation: VivoOccupancyObservation,
+                                  support: VivoAssaySupport, tail: Double) throws -> VivoPosteriorPredictivePoint {
+        var latent: [Double] = [], means: [Double] = [], scales: [Double] = []
+        for output in outputs {
+            guard let values = output.latent, column < values.count, let noise = output.noise,
+                  let sd = output.standardDeviations, column < sd.count else { throw VivoPosteriorError.numerical("predictive particle shape") }
+            latent.append(values[column]); means.append(values[column] + noise.bias)
+            if let value = sd[column] { scales.append(value) }
+        }
+        latent.sort(); let stats = try moments(latent)
+        var lower: Double?, upper: Double?, density: Double?, probability: Double?, covered: Bool?
+        if scales.count == outputs.count {
+            lower = try VivoGaussianAssay.mixtureQuantile(means: means, standardDeviations: scales, probability: tail)
+            upper = try VivoGaussianAssay.mixtureQuantile(means: means, standardDeviations: scales, probability: 1 - tail)
+            let logs = try means.indices.map { try VivoGaussianAssay.logContribution(mean: means[$0], sd: scales[$0], value: observation.value, support: support) }
+            let score = try logMeanExp(logs)
+            if support == .exact { density = score; covered = observation.value >= lower! && observation.value <= upper! }
+            else { probability = score }
+        }
+        return .init(observationIdentifier: observation.identifier, timeSeconds: observation.timeSeconds, observable: observation.observable,
+            mean: stats.0, latentStandardDeviation: stats.1, credibleLower: VivoPosteriorNumerics.quantile(sorted: latent, probability: tail),
+            credibleMedian: VivoPosteriorNumerics.quantile(sorted: latent, probability: 0.5), credibleUpper: VivoPosteriorNumerics.quantile(sorted: latent, probability: 1 - tail),
+            predictiveLower: lower, predictiveUpper: upper, observation: observation.value, observationOrigin: observation.origin,
+            measurementSD: observation.standardDeviation, logPredictiveDensity: density, predictiveIntervalContainsObservation: covered,
+            observationSupport: support, logObservationProbability: probability)
+    }
+    private static func logMeanExp(_ values: [Double]) throws -> Double {
+        guard let maximum = values.max(), values.allSatisfy(\.isFinite) else { throw VivoPosteriorError.numerical("invalid predictive likelihood mixture") }
+        let result = maximum + log(values.reduce(0) { $0 + exp($1 - maximum) / Double(values.count) })
+        guard result.isFinite else { throw VivoPosteriorError.numerical("predictive mixture overflow") }
+        return result
+    }
     private static func moments(_ values: [Double]) throws -> (Double, Double) {
         guard let anchor = values.first, values.allSatisfy(\.isFinite) else { throw VivoPosteriorError.invalid("empty/nonfinite posterior summary") }
-        let n = Double(values.count)
-        let mean = anchor + values.reduce(0) { $0 + ($1 - anchor) / n }
+        let n = Double(values.count), mean = anchor + values.reduce(0) { $0 + ($1 - anchor) / n }
         let scale = values.map { abs($0 - mean) }.max() ?? 0
-        let variance = scale > 0 ? values.reduce(0) { partial, value in
-            let normalized = (value - mean) / scale
-            return partial + normalized * normalized / n
+        let variance = scale > 0 ? values.reduce(0) { sum, value in
+            let z = (value - mean) / scale; return sum + z * z / n
         } : 0
         let sd = scale * sqrt(variance)
         guard mean.isFinite, sd.isFinite else { throw VivoPosteriorError.numerical("posterior summary overflow") }
         return (mean, sd)
     }
-
-    private static func summarize(_ sorted: [Double], observation: VivoOccupancyObservation,
-                                  tail: Double) throws -> VivoPosteriorPredictivePoint {
-        let n = Double(sorted.count), (mean, sdLatent) = try moments(sorted)
-        var lower: Double?, upper: Double?, density: Double?, covered: Bool?
-        if let sd = observation.standardDeviation {
-            lower = try VivoPosteriorNumerics.gaussianMixtureQuantile(means: sorted, sd: sd, probability: tail)
-            upper = try VivoPosteriorNumerics.gaussianMixtureQuantile(means: sorted, sd: sd, probability: 1 - tail)
-            let logs = sorted.map { prediction -> Double in
-                let z = (observation.value - prediction) / sd
-                return -0.5 * z * z - log(sd) - 0.5 * log(2 * Double.pi)
-            }
-            guard let maximum = logs.max(), maximum.isFinite else {
-                throw VivoPosteriorError.numerical("predictive density outside finite numerical support")
-            }
-            let sum = logs.reduce(0) { $0 + exp($1 - maximum) / n }
-            density = maximum + log(sum)
-            guard density?.isFinite == true else { throw VivoPosteriorError.numerical("predictive density overflow") }
-            covered = observation.value >= lower! && observation.value <= upper!
-        }
-        return .init(observationIdentifier: observation.identifier, timeSeconds: observation.timeSeconds,
-            observable: observation.observable, mean: mean, latentStandardDeviation: sdLatent,
-            credibleLower: VivoPosteriorNumerics.quantile(sorted: sorted, probability: tail),
-            credibleMedian: VivoPosteriorNumerics.quantile(sorted: sorted, probability: 0.5),
-            credibleUpper: VivoPosteriorNumerics.quantile(sorted: sorted, probability: 1 - tail),
-            predictiveLower: lower, predictiveUpper: upper, observation: observation.value,
-            observationOrigin: observation.origin, measurementSD: observation.standardDeviation,
-            logPredictiveDensity: density, predictiveIntervalContainsObservation: covered)
-    }
-
     private static func correlations(_ particles: [VivoPosteriorParticle]) throws -> [Double?] {
         let d = particles[0].coordinates.count, n = Double(particles.count)
-        let columns = (0..<d).map { j in particles.map { $0.coordinates[j] } }
-        let statistics = try columns.map(moments)
+        let columns = (0..<d).map { j in particles.map { $0.coordinates[j] } }, statistics = try columns.map(moments)
         var result = [Double?](repeating: nil, count: d * d)
         for i in 0..<d { for j in 0..<d {
             let (mi, si) = statistics[i], (mj, sj) = statistics[j]
             if si == 0 || sj == 0 { continue }
-            let value = zip(columns[i], columns[j]).reduce(0) {
-                $0 + (($1.0 - mi) / si) * (($1.1 - mj) / sj) / n
-            }
+            let value = zip(columns[i], columns[j]).reduce(0) { $0 + (($1.0 - mi) / si) * (($1.1 - mj) / sj) / n }
             guard value.isFinite else { throw VivoPosteriorError.numerical("posterior correlation overflow") }
             result[i * d + j] = value
         } }
