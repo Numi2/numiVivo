@@ -25,15 +25,15 @@ jobs:
         run: |
           set -euo pipefail
           PATCH=Tools/Build/full-product-contract-repair.patch
-          if git apply --reverse --check "$PATCH" 2>/dev/null; then
+          if git apply --recount --reverse --check "$PATCH" 2>/dev/null; then
             echo 'Patch already present; no source change.'
           else
-            git apply --index --check "$PATCH"
-            git apply --index "$PATCH"
+            git apply --recount --index --check "$PATCH"
+            git apply --recount --index "$PATCH"
             git diff --cached --check
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'fix(runtime): complete atomic experiment contracts and Swift 6 Metal/SBML integration'
+            git commit -m 'fix(metal): isolate unannotated SDK imports while preserving actor-owned state'
             git push origin HEAD:main
           fi
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
