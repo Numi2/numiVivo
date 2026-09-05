@@ -162,7 +162,7 @@ public extension VivoProgramPack {
     }
 
     func stoichiometryMetadata() throws -> [StoichiometryMetadata] {
-        let section = try section(.stoichiometry)
+        let section = try self.section(.stoichiometry)
         guard section.stride == 8 else {
             throw VivoProgramPackError.invalidSection("stoichiometry stride must be 8 bytes")
         }
@@ -182,7 +182,7 @@ public extension VivoProgramPack {
             }
             result.append(.init(
                 speciesIndex: UInt32(speciesIndex),
-                speciesIdentifier: species[speciesIndex].identifier,
+                speciesIdentifier: species[Int(speciesIndex)].identifier,
                 coefficient: try reader.i16(base + 4),
                 isProduct: role == 1
             ))
@@ -191,7 +191,7 @@ public extension VivoProgramPack {
     }
 
     func reactionParameterIndexTable() throws -> [UInt32] {
-        let section = try section(.reactionParameterIndices)
+        let section = try self.section(.reactionParameterIndices)
         guard section.stride == 4 else {
             throw VivoProgramPackError.invalidSection("reaction parameter index stride must be 4 bytes")
         }
@@ -202,7 +202,7 @@ public extension VivoProgramPack {
     }
 
     func reactionMetadata() throws -> [ReactionMetadata] {
-        let section = try section(.reactions)
+        let section = try self.section(.reactions)
         guard section.stride == 64 else {
             throw VivoProgramPackError.invalidSection("reaction stride must be 64 bytes")
         }
@@ -210,7 +210,7 @@ public extension VivoProgramPack {
         let parameters = try parameterMetadata()
         let stoichiometry = try stoichiometryMetadata()
         let parameterIndices = try reactionParameterIndexTable()
-        let strings = try section(.strings)
+        let strings = try self.section(.strings)
         let reader = VivoPackRecordReader(data: data)
         var result: [ReactionMetadata] = []
         result.reserveCapacity(Int(section.count))
@@ -242,9 +242,9 @@ public extension VivoProgramPack {
             }
             let gateOffset: UInt32? = flags & (1 << 1) != 0 ? reserved : nil
             if expressionCount > 0 {
-                _ = try checkedRange(offset: expressionOffset, count: expressionCount, limit: Int(try section(.expressions).count), label: "reaction expression")
+                _ = try checkedRange(offset: expressionOffset, count: expressionCount, limit: Int(try self.section(.expressions).count), label: "reaction expression")
             }
-            if let gateOffset, gateOffset >= (try section(.expressions).count) {
+            if let gateOffset, gateOffset >= (try self.section(.expressions).count) {
                 throw VivoProgramPackError.invalidSection("reaction \(index) gate offset is out of bounds")
             }
 
@@ -255,7 +255,7 @@ public extension VivoProgramPack {
                 reactants: Array(stoichiometry[reactantRange]),
                 products: Array(stoichiometry[productRange]),
                 parameterIndices: reactionParameterIndices,
-                parameterIdentifiers: reactionParameterIndices.map { parameters[$0].identifier },
+                parameterIdentifiers: reactionParameterIndices.map { parameters[Int($0)].identifier },
                 rateLaw: rateLaw,
                 flags: flags,
                 expressionOffset: expressionOffset,
@@ -271,7 +271,7 @@ public extension VivoProgramPack {
     }
 
     func expressionInstructions() throws -> [ExpressionInstructionMetadata] {
-        let section = try section(.expressions)
+        let section = try self.section(.expressions)
         guard section.stride == 16 else {
             throw VivoProgramPackError.invalidSection("expression instruction stride must be 16 bytes")
         }
@@ -297,11 +297,11 @@ public extension VivoProgramPack {
     }
 
     func actionMetadata() throws -> [ActionMetadata] {
-        let section = try section(.actions)
+        let section = try self.section(.actions)
         guard section.stride == 32 else {
             throw VivoProgramPackError.invalidSection("action stride must be 32 bytes")
         }
-        let strings = try section(.strings)
+        let strings = try self.section(.strings)
         let reader = VivoPackRecordReader(data: data)
         var result: [ActionMetadata] = []
         result.reserveCapacity(Int(section.count))
@@ -327,11 +327,11 @@ public extension VivoProgramPack {
     }
 
     func ruleMetadata() throws -> [RuleMetadata] {
-        let section = try section(.rules)
+        let section = try self.section(.rules)
         guard section.stride == 32 else {
             throw VivoProgramPackError.invalidSection("rule stride must be 32 bytes")
         }
-        let strings = try section(.strings)
+        let strings = try self.section(.strings)
         let reader = VivoPackRecordReader(data: data)
         var result: [RuleMetadata] = []
         result.reserveCapacity(Int(section.count))
@@ -354,11 +354,11 @@ public extension VivoProgramPack {
     }
 
     func monitorMetadata() throws -> [MonitorMetadata] {
-        let section = try section(.monitors)
+        let section = try self.section(.monitors)
         guard section.stride == 32 else {
             throw VivoProgramPackError.invalidSection("monitor stride must be 32 bytes")
         }
-        let strings = try section(.strings)
+        let strings = try self.section(.strings)
         let reader = VivoPackRecordReader(data: data)
         var result: [MonitorMetadata] = []
         result.reserveCapacity(Int(section.count))
@@ -385,7 +385,7 @@ public extension VivoProgramPack {
     }
 
     func cohortMetadata() throws -> [CohortMetadata] {
-        let section = try section(.cohorts)
+        let section = try self.section(.cohorts)
         guard section.stride == 32 else {
             throw VivoProgramPackError.invalidSection("cohort stride must be 32 bytes")
         }
@@ -413,8 +413,8 @@ public extension VivoProgramPack {
     }
 
     func speciesIncidenceMetadata() throws -> [[SpeciesIncidenceMetadata]] {
-        let offsetsSection = try section(.speciesIncidenceOffsets)
-        let incidenceSection = try section(.speciesIncidence)
+        let offsetsSection = try self.section(.speciesIncidenceOffsets)
+        let incidenceSection = try self.section(.speciesIncidence)
         guard offsetsSection.stride == 4, incidenceSection.stride == 16 else {
             throw VivoProgramPackError.invalidSection("species incidence section strides are invalid")
         }

@@ -420,7 +420,7 @@ public actor VivoEvidenceSnapshotBuilder {
                 "payloadBytes": String(totalBytes)
             ]
         )
-        guard storedSnapshot.fingerprint == try VivoCanonicalJSON.fingerprint(snapshotData) else {
+        guard storedSnapshot.fingerprint == (try VivoCanonicalJSON.fingerprint(snapshotData)) else {
             throw VivoArtifactStoreError.integrityFailure(storedSnapshot.fingerprint)
         }
         return (snapshot, storedSnapshot)

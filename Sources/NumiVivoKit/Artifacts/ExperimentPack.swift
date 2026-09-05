@@ -650,7 +650,7 @@ public struct VivoExperimentCompiler: Sendable {
     }
 }
 
-public struct VivoCampaignAxis: Codable, Sendable, Equatable {
+public struct VivoExperimentCampaignAxis: Codable, Sendable, Equatable {
     public var identifier: String
     public var parameter: String
     public var values: [VivoQuantity]
@@ -662,12 +662,12 @@ public struct VivoCampaignAxis: Codable, Sendable, Equatable {
     }
 }
 
-public struct VivoCampaignManifest: Codable, Sendable, Equatable {
+public struct VivoExperimentCampaignManifest: Codable, Sendable, Equatable {
     public var baseExperiment: VivoExperimentPack
-    public var axes: [VivoCampaignAxis]
+    public var axes: [VivoExperimentCampaignAxis]
     public var maximumRuns: UInt64
 
-    public init(baseExperiment: VivoExperimentPack, axes: [VivoCampaignAxis], maximumRuns: UInt64) {
+    public init(baseExperiment: VivoExperimentPack, axes: [VivoExperimentCampaignAxis], maximumRuns: UInt64) {
         self.baseExperiment = baseExperiment
         self.axes = axes
         self.maximumRuns = maximumRuns
@@ -697,7 +697,7 @@ public struct VivoCampaignManifest: Codable, Sendable, Equatable {
 
         var results: [VivoExperimentPack] = []
         results.reserveCapacity(Int(total))
-        func expand(axisIndex: Int, selections: [(VivoCampaignAxis, VivoQuantity)]) {
+        func expand(axisIndex: Int, selections: [(VivoExperimentCampaignAxis, VivoQuantity)]) {
             if axisIndex == axes.count {
                 var experiment = baseExperiment
                 let suffix = selections.map { "\($0.0.identifier)=\($0.1.value)\($0.1.unit)" }.joined(separator: ",")

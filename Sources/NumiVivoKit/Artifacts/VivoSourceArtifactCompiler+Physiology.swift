@@ -18,7 +18,7 @@ public extension VivoSourceArtifactCompiler {
         return VivoCompiledSourceArtifact(
             value: prepared,
             sourceFingerprint: loaded.sourceFingerprint,
-            artifactFingerprint: prepared.fingerprint,
+            artifactFingerprint: prepared.fingerprint.hex,
             sourceBytes: loaded.sourceBytes
         )
     }
@@ -47,7 +47,7 @@ public extension VivoSourceArtifactCompiler {
         return VivoCompiledSourceArtifact(
             value: prepared,
             sourceFingerprint: loaded.sourceFingerprint,
-            artifactFingerprint: prepared.fingerprint,
+            artifactFingerprint: prepared.fingerprint.hex,
             sourceBytes: loaded.sourceBytes
         )
     }

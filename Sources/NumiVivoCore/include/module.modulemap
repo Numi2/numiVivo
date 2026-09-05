@@ -1,4 +1,9 @@
+// Swift imports the stable C interfaces; C++ implementation headers remain
+// available to the native target without being inferred as Swift submodules.
 module NumiVivoCore {
-    umbrella header "NumiVivoCore/NumiVivoCore.h"
+    header "NumiVivoCore/NumiVivoCore.h"
+    header "NumiVivoCore/NumiVivoPackAccess.h"
+    header "NumiVivoCore/NumiVivoMechanismSynthesis.h"
+    header "NumiVivoCore/NumiVivoNetworkAnalysis.h"
     export *
 }
