@@ -29,6 +29,7 @@ let package = Package(
                 .copy("Resources/NumiVivoMDPME.metal"),
                 .copy("Resources/NumiVivoMDPMECorrections.metal"),
                 .copy("Resources/NumiVivoMDMinimization.metal"),
+                .copy("Resources/NumiVivoMDBarostat.metal"),
                 .copy("Resources/NumiVivoExactSSAKernels.metal"),
                 .copy("Resources/NumiVivoMigrationKernels.metal"),
                 .copy("Resources/NumiVivoPartitionKernels.metal"),
