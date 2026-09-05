@@ -1,293 +1,37 @@
-diff --git a/Sources/NumiVivoKit/Coupling/VivoNumiVivoCoupledParticipant.swift b/Sources/NumiVivoKit/Coupling/VivoNumiVivoCoupledParticipant.swift
---- a/Sources/NumiVivoKit/Coupling/VivoNumiVivoCoupledParticipant.swift
-+++ b/Sources/NumiVivoKit/Coupling/VivoNumiVivoCoupledParticipant.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public struct VivoNumiVivoChannelTransform: Codable, Sendable, Equatable {
-     public var scale: Float
-diff --git a/Sources/NumiVivoKit/MD/VivoMDBarostat.swift b/Sources/NumiVivoKit/MD/VivoMDBarostat.swift
---- a/Sources/NumiVivoKit/MD/VivoMDBarostat.swift
-+++ b/Sources/NumiVivoKit/MD/VivoMDBarostat.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- public struct VivoMDBarostatMoveCertificate: Codable, Sendable, Equatable {
-diff --git a/Sources/NumiVivoKit/MD/VivoMDMetalArena.swift b/Sources/NumiVivoKit/MD/VivoMDMetalArena.swift
---- a/Sources/NumiVivoKit/MD/VivoMDMetalArena.swift
-+++ b/Sources/NumiVivoKit/MD/VivoMDMetalArena.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- final class VivoMDGPUArena:@unchecked Sendable{
-     let particleCount:Int;let neighborCapacity:UInt32
-diff --git a/Sources/NumiVivoKit/MD/VivoMDMetalRuntime.swift b/Sources/NumiVivoKit/MD/VivoMDMetalRuntime.swift
---- a/Sources/NumiVivoKit/MD/VivoMDMetalRuntime.swift
-+++ b/Sources/NumiVivoKit/MD/VivoMDMetalRuntime.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- public enum VivoMDRuntimeError: Error, Sendable, CustomStringConvertible {
-diff --git a/Sources/NumiVivoKit/MD/VivoMDNeighborGrid.swift b/Sources/NumiVivoKit/MD/VivoMDNeighborGrid.swift
---- a/Sources/NumiVivoKit/MD/VivoMDNeighborGrid.swift
-+++ b/Sources/NumiVivoKit/MD/VivoMDNeighborGrid.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- public struct VivoMDNeighborGridPlan: Sendable, Equatable, Codable {
 diff --git a/Sources/NumiVivoKit/MD/VivoMDProtocolRunner.swift b/Sources/NumiVivoKit/MD/VivoMDProtocolRunner.swift
 --- a/Sources/NumiVivoKit/MD/VivoMDProtocolRunner.swift
 +++ b/Sources/NumiVivoKit/MD/VivoMDProtocolRunner.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
+@@ -10,7 +10,7 @@ public actor VivoMDProtocolRunner {
+     public nonisolated let planFingerprint: VivoFingerprint
+     private let system: VivoClassicalSystem
+     private let store: VivoArtifactStore
+-    private let device: MTLDevice?
++    private let device: MTLDevice
+     private var cursor: VivoMDProtocolCheckpoint
+     private var runtime: VivoMDMetalRuntime?
+     private var trajectory: VivoMDTrajectoryArchiveWriter?
+@@ -20,6 +20,7 @@ public actor VivoMDProtocolRunner {
+     public static func start(system: VivoClassicalSystem, initialState: VivoClassicalInitialState,
+                              plan: VivoMDProtocolPlan, store: VivoArtifactStore,
+                              device: MTLDevice? = nil) async throws -> VivoMDProtocolRunner {
++        let device = try device ?? VivoMetalDeviceSelector.productionDevice()
+         let capabilities = try plan.validate(system: system, initialState: initialState)
+         let blockers = capabilities.flatMap(\.blockers)
+         guard blockers.isEmpty else { throw VivoMDRuntimeError.unsupported(Array(Set(blockers)).sorted()) }
+@@ -54,6 +55,7 @@ public actor VivoMDProtocolRunner {
+     public static func resume(system: VivoClassicalSystem, plan: VivoMDProtocolPlan,
+                               store: VivoArtifactStore, checkpoint: VivoFingerprint,
+                               device: MTLDevice? = nil) async throws -> VivoMDProtocolRunner {
++        let device = try device ?? VivoMetalDeviceSelector.productionDevice()
+         try plan.validate()
+         guard plan.systemFingerprint == (try system.fingerprint()) else {
+             throw VivoArtifactValidationError.incompatible("resume system differs from protocol")
+@@ -143,7 +145,7 @@ public actor VivoMDProtocolRunner {
+     }
  
- /// A run owns its runtime exclusively; callers receive immutable artifact
- /// identities rather than an arena they can mutate between protocol stages.
-diff --git a/Sources/NumiVivoKit/MD/VivoMDWorkBuffers.swift b/Sources/NumiVivoKit/MD/VivoMDWorkBuffers.swift
---- a/Sources/NumiVivoKit/MD/VivoMDWorkBuffers.swift
-+++ b/Sources/NumiVivoKit/MD/VivoMDWorkBuffers.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- /// Reused for scalar reductions, constrained descent and drift corrections.
- /// Scratch allocation is outside the microstep and is covered by one local
-diff --git a/Sources/NumiVivoKit/MD/VivoPMEEngine.swift b/Sources/NumiVivoKit/MD/VivoPMEEngine.swift
---- a/Sources/NumiVivoKit/MD/VivoPMEEngine.swift
-+++ b/Sources/NumiVivoKit/MD/VivoPMEEngine.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- private struct VivoPMEMetalCommand {
-diff --git a/Sources/NumiVivoKit/Pharmacology/VivoTargetEngagementMetalRunner.swift b/Sources/NumiVivoKit/Pharmacology/VivoTargetEngagementMetalRunner.swift
---- a/Sources/NumiVivoKit/Pharmacology/VivoTargetEngagementMetalRunner.swift
-+++ b/Sources/NumiVivoKit/Pharmacology/VivoTargetEngagementMetalRunner.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public struct VivoTargetEngagementMetalPolicy: Codable, Equatable, Sendable {
-     public let maximumTimeStepSeconds: Double
-diff --git a/Sources/NumiVivoKit/Physiology/VivoMolecularPhysiologyCoordinator.swift b/Sources/NumiVivoKit/Physiology/VivoMolecularPhysiologyCoordinator.swift
---- a/Sources/NumiVivoKit/Physiology/VivoMolecularPhysiologyCoordinator.swift
-+++ b/Sources/NumiVivoKit/Physiology/VivoMolecularPhysiologyCoordinator.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public struct VivoMolecularPhysiologyStepRequest: Codable, Sendable, Equatable {
-     public var timeStepSeconds: Double?
-diff --git a/Sources/NumiVivoKit/Physiology/VivoPhysiologicalPartitionRuntime.swift b/Sources/NumiVivoKit/Physiology/VivoPhysiologicalPartitionRuntime.swift
---- a/Sources/NumiVivoKit/Physiology/VivoPhysiologicalPartitionRuntime.swift
-+++ b/Sources/NumiVivoKit/Physiology/VivoPhysiologicalPartitionRuntime.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- public struct VivoPartitionRuntimeConfiguration: Codable, Equatable, Sendable {
-diff --git a/Sources/NumiVivoKit/Physiology/VivoPhysiologyMetalArena.swift b/Sources/NumiVivoKit/Physiology/VivoPhysiologyMetalArena.swift
---- a/Sources/NumiVivoKit/Physiology/VivoPhysiologyMetalArena.swift
-+++ b/Sources/NumiVivoKit/Physiology/VivoPhysiologyMetalArena.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- final class VivoPhysiologyMetalArena: @unchecked Sendable {
-     struct Capacities: Sendable {
-diff --git a/Sources/NumiVivoKit/Physiology/VivoPhysiologyRuntime.swift b/Sources/NumiVivoKit/Physiology/VivoPhysiologyRuntime.swift
---- a/Sources/NumiVivoKit/Physiology/VivoPhysiologyRuntime.swift
-+++ b/Sources/NumiVivoKit/Physiology/VivoPhysiologyRuntime.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- public actor VivoPhysiologyRuntime {
-diff --git a/Sources/NumiVivoKit/Population/VivoPopulationRuntime.swift b/Sources/NumiVivoKit/Population/VivoPopulationRuntime.swift
---- a/Sources/NumiVivoKit/Population/VivoPopulationRuntime.swift
-+++ b/Sources/NumiVivoKit/Population/VivoPopulationRuntime.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- extension VivoPopulationPhenotypeABI: @unchecked Sendable {}
-diff --git a/Sources/NumiVivoKit/Runtime/MetalArena.swift b/Sources/NumiVivoKit/Runtime/MetalArena.swift
---- a/Sources/NumiVivoKit/Runtime/MetalArena.swift
-+++ b/Sources/NumiVivoKit/Runtime/MetalArena.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- final class VivoMetalArena: @unchecked Sendable {
-     struct Capacities: Sendable {
-diff --git a/Sources/NumiVivoKit/Runtime/MetalCapabilities.swift b/Sources/NumiVivoKit/Runtime/MetalCapabilities.swift
---- a/Sources/NumiVivoKit/Runtime/MetalCapabilities.swift
-+++ b/Sources/NumiVivoKit/Runtime/MetalCapabilities.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public struct VivoMetalCapabilities: Sendable, Codable, Equatable {
-     public enum Family: String, Sendable, Codable {
-diff --git a/Sources/NumiVivoKit/Runtime/RuntimeABI.swift b/Sources/NumiVivoKit/Runtime/RuntimeABI.swift
---- a/Sources/NumiVivoKit/Runtime/RuntimeABI.swift
-+++ b/Sources/NumiVivoKit/Runtime/RuntimeABI.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public struct VivoSpatialGrid: Sendable, Codable, Equatable {
-     public enum Boundary: UInt32, Sendable, Codable {
-diff --git a/Sources/NumiVivoKit/Runtime/VivoAdaptiveFidelityPlanner.swift b/Sources/NumiVivoKit/Runtime/VivoAdaptiveFidelityPlanner.swift
---- a/Sources/NumiVivoKit/Runtime/VivoAdaptiveFidelityPlanner.swift
-+++ b/Sources/NumiVivoKit/Runtime/VivoAdaptiveFidelityPlanner.swift
-@@ -1,7 +1,7 @@
- import CryptoKit
- import Foundation
- #if canImport(Metal)
--import Metal
-+@preconcurrency import Metal
- #endif
- 
- public enum VivoAdaptiveFidelityMode: String, Codable, CaseIterable, Sendable {
-diff --git a/Sources/NumiVivoKit/Runtime/VivoAdaptiveStateArena.swift b/Sources/NumiVivoKit/Runtime/VivoAdaptiveStateArena.swift
---- a/Sources/NumiVivoKit/Runtime/VivoAdaptiveStateArena.swift
-+++ b/Sources/NumiVivoKit/Runtime/VivoAdaptiveStateArena.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- public enum VivoAdaptiveScratchRegion: String, Codable, Sendable {
-diff --git a/Sources/NumiVivoKit/Runtime/VivoAdaptiveStateArenaTypes.swift b/Sources/NumiVivoKit/Runtime/VivoAdaptiveStateArenaTypes.swift
---- a/Sources/NumiVivoKit/Runtime/VivoAdaptiveStateArenaTypes.swift
-+++ b/Sources/NumiVivoKit/Runtime/VivoAdaptiveStateArenaTypes.swift
-@@ -1,6 +1,6 @@
- import CryptoKit
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public struct VivoAdaptiveCohortRuntimeLayout: Codable, Equatable, Sendable {
-     public let cohortID: UInt32
-diff --git a/Sources/NumiVivoKit/Runtime/VivoAppleFrameworkCompatibility.swift b/Sources/NumiVivoKit/Runtime/VivoAppleFrameworkCompatibility.swift
---- a/Sources/NumiVivoKit/Runtime/VivoAppleFrameworkCompatibility.swift
-+++ b/Sources/NumiVivoKit/Runtime/VivoAppleFrameworkCompatibility.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- /// Swift 6 imports several Metal creation APIs as async-only even though the
- /// underlying completion-handler operations remain appropriate for one-time
-diff --git a/Sources/NumiVivoKit/Runtime/VivoAppleSiliconCapacityPlanner.swift b/Sources/NumiVivoKit/Runtime/VivoAppleSiliconCapacityPlanner.swift
---- a/Sources/NumiVivoKit/Runtime/VivoAppleSiliconCapacityPlanner.swift
-+++ b/Sources/NumiVivoKit/Runtime/VivoAppleSiliconCapacityPlanner.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public enum VivoCapacityMemoryClass: String, Codable, Sendable {
-     case privateGPU
-diff --git a/Sources/NumiVivoKit/Runtime/VivoMolecularCheckpoint.swift b/Sources/NumiVivoKit/Runtime/VivoMolecularCheckpoint.swift
---- a/Sources/NumiVivoKit/Runtime/VivoMolecularCheckpoint.swift
-+++ b/Sources/NumiVivoKit/Runtime/VivoMolecularCheckpoint.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public struct VivoMolecularCheckpoint: Codable, Sendable, Equatable {
-     public static let schema = "numivivo.org/molecular-checkpoint/v2"
-diff --git a/Sources/NumiVivoKit/Runtime/VivoRuntime.swift b/Sources/NumiVivoKit/Runtime/VivoRuntime.swift
---- a/Sources/NumiVivoKit/Runtime/VivoRuntime.swift
-+++ b/Sources/NumiVivoKit/Runtime/VivoRuntime.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public enum VivoCouplingMode: UInt32, Sendable, Codable {
-     case replace = 0
-diff --git a/Sources/NumiVivoKit/Runtime/VivoTransactionalMolecularRuntime.swift b/Sources/NumiVivoKit/Runtime/VivoTransactionalMolecularRuntime.swift
---- a/Sources/NumiVivoKit/Runtime/VivoTransactionalMolecularRuntime.swift
-+++ b/Sources/NumiVivoKit/Runtime/VivoTransactionalMolecularRuntime.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- /// ProgramPack transaction owner. Every operation that suspends while using GPU
-diff --git a/Sources/NumiVivoKit/Stochastic/VivoExactSSA.swift b/Sources/NumiVivoKit/Stochastic/VivoExactSSA.swift
---- a/Sources/NumiVivoKit/Stochastic/VivoExactSSA.swift
-+++ b/Sources/NumiVivoKit/Stochastic/VivoExactSSA.swift
-@@ -1,6 +1,6 @@
- import CryptoKit
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- public enum VivoSSAPropensityLaw: UInt32, Codable, CaseIterable, Sendable {
-diff --git a/Sources/NumiVivoKit/Stochastic/VivoHybridReactionRuntime.swift b/Sources/NumiVivoKit/Stochastic/VivoHybridReactionRuntime.swift
---- a/Sources/NumiVivoKit/Stochastic/VivoHybridReactionRuntime.swift
-+++ b/Sources/NumiVivoKit/Stochastic/VivoHybridReactionRuntime.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- import NumiVivoShaders
- 
- /// Executes disjoint exact-SSA, tau-leap and RK2 cohorts on one Metal timeline.
-diff --git a/Sources/NumiVivoShaders/MetalShaderLibrary.swift b/Sources/NumiVivoShaders/MetalShaderLibrary.swift
---- a/Sources/NumiVivoShaders/MetalShaderLibrary.swift
-+++ b/Sources/NumiVivoShaders/MetalShaderLibrary.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- public enum NumiVivoShaderError: Error, Sendable, CustomStringConvertible {
-diff --git a/Sources/NumiVivoShaders/NumiVivoHybridLibrary.swift b/Sources/NumiVivoShaders/NumiVivoHybridLibrary.swift
---- a/Sources/NumiVivoShaders/NumiVivoHybridLibrary.swift
-+++ b/Sources/NumiVivoShaders/NumiVivoHybridLibrary.swift
-@@ -1,5 +1,5 @@
- import Foundation
--import Metal
-+@preconcurrency import Metal
- 
- /// Independent source loading prevents legacy ProgramPack argument-buffer
- /// declarations from being concatenated into the executable hybrid library.
+     private init(system: VivoClassicalSystem, plan: VivoMDProtocolPlan, store: VivoArtifactStore,
+-                 device: MTLDevice?, cursor: VivoMDProtocolCheckpoint, runtime: VivoMDMetalRuntime?,
++                 device: MTLDevice, cursor: VivoMDProtocolCheckpoint, runtime: VivoMDMetalRuntime?,
+                  trajectory: VivoMDTrajectoryArchiveWriter?, latestDurable: VivoStoredArtifact?) {
+         self.system = system; self.plan = plan; self.store = store; self.device = device
+         self.cursor = cursor; self.runtime = runtime; self.trajectory = trajectory; self.latestDurable = latestDurable
