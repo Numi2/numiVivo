@@ -347,7 +347,11 @@ NVivoStatus validateSemantic(std::span<const std::byte> pack,
         requireString(context.strings, record.nameOffset, path + ".name", diagnostics);
         requireString(context.strings, record.unitOffset, path + ".unit", diagnostics);
         requireString(context.strings, record.evidenceSourceOffset, path + ".evidenceSource", diagnostics);
-        requireString(context.strings, record.evidenceDetailOffset, path + ".evidenceDetail", diagnostics);
+        // ABI v1 stores one evidence string plus a numeric class. There is no
+        // evidenceDetailOffset field; do not reinterpret the reserved word.
+        if (record.evidenceClass > 5U || (record.flags & ~3U) != 0U || record.reserved != 0U) {
+            diagnostics.error("NVP162", "Unknown parameter evidence class, flags or extension.", path);
+        }
         if (!finiteOrdered(record.minimum, record.value, record.maximum)) {
             diagnostics.error("NVP129", "Parameter value and bounds are invalid.", path);
         }
