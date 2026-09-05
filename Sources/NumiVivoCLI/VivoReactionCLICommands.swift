@@ -72,13 +72,16 @@ struct VivoReactionCLICommands {
     Native nuclear and harmonic reaction qualification
       numivivo reaction-template h3-saddle --output saddle.json
       numivivo reaction-run saddle.json --output saddle.result.json --store .numivivo/chemistry-artifacts
-    Templates: h2-minimum, h3-saddle, h-atom, h2-solvated-path.
-    Request calculations: qualify, solvatedPath, harmonicBarrier, descent.
+    Templates: h2-minimum, h3-saddle, h-atom, h2-solvated-path,
+               h2-equilibrium-cpcm, h2-equilibrium-minimum.
+    Request calculations: qualify, solvatedPath, correlatedSolvent, harmonicBarrier, descent.
     Coordinates: Bohr. Masses: explicit Da. Energies: Hartree. RRHO requires all
     free-molecule vibrational modes resolved and a stationary nuclear gradient.
     A local first-order saddle is not a demonstrated reaction connection. A
     harmonic Gibbs barrier estimate does not automatically become a kinetic rate.
-    Correlated smooth-CPCM coupling uses an explicitly frozen RHF-reference field.
+    solvatedPath preserves the frozen RHF-reference field convention. correlatedSolvent
+    instead equilibrates smooth C-PCM with the FCI/CASCI density. The equilibriumFullCI
+    nuclear solver re-equilibrates this field at every nuclear displacement.
     H3/H2/STO-3G templates check numerical execution; they are not the paper reaction.
 
     """

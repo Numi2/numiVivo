@@ -44,6 +44,7 @@ jobs:
           SWIFT_BACKTRACE: 'enable=yes,interactive=no,color=no'
         shell: bash
         run: |
+          set +e
           set -uo pipefail
           OUT="$RUNNER_TEMP/full-product"
           failed=0
@@ -53,6 +54,16 @@ jobs:
             printf '%s %s\n' "$test" "$status" >> "$OUT/test-exit-status.txt"
             if [[ $status -ne 0 ]]; then failed=1; fi
           done
+          # Reproduce any target error through the actual production executable,
+          # independently of Testing's async error-reporting machinery.
+          printf '%s\n' '{"maximumTimeStepSeconds":0.0078125,"maximumSteps":1000000,"fractionBalanceTolerance":0.0001}' > "$OUT/target-policy.json"
+          .build/release/numivivo engagement-run Examples/target-engagement/synthetic-pulse.json --backend metal --policy "$OUT/target-policy.json" --output "$OUT/target-cli-result.json" > "$OUT/target-cli.log" 2>&1
+          status=$?
+          printf 'production-target-cli %s\n' "$status" >> "$OUT/test-exit-status.txt"
+          if [[ $status -ne 0 ]]; then
+            failed=1
+            xcrun lldb --batch -o run -o 'thread backtrace all' -- .build/release/numivivo engagement-run Examples/target-engagement/synthetic-pulse.json --backend metal --policy "$OUT/target-policy.json" --output "$OUT/target-debug-result.json" > "$OUT/target-lldb.log" 2>&1
+          fi
           exit "$failed"
       - name: Retain process crash diagnostics and unchanged-source status
         if: always()

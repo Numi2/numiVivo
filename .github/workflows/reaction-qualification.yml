@@ -13,6 +13,7 @@ on:
       - 'Tools/NativeChemistry/build_scoped_cli.sh'
       - 'Tools/NativeChemistry/ScopedCLIMain.swift'
       - 'ReferenceAdapters/PySCF/reaction_qualification_oracle.py'
+      - 'ReferenceAdapters/PySCF/equilibrium_solvent_oracle.py'
 permissions:
   contents: read
 concurrency:
@@ -38,6 +39,7 @@ jobs:
           PYTHON="$RUNNER_TEMP/oracle-python/bin/python"
           "$PYTHON" -m pip install 'numpy==1.26.4' 'scipy==1.13.1' 'h5py==3.11.0' 'pyscf==2.8.0'
           "$PYTHON" ReferenceAdapters/PySCF/reaction_qualification_oracle.py export "$RUNNER_TEMP/reaction-oracle"
+          "$PYTHON" ReferenceAdapters/PySCF/equilibrium_solvent_oracle.py export "$RUNNER_TEMP/reaction-oracle/equilibrium"
           "$PYTHON" -m pip freeze > "$RUNNER_TEMP/reaction-oracle/python-lock.txt"
           git rev-parse HEAD > "$RUNNER_TEMP/reaction-oracle/source-commit.txt"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -82,6 +84,7 @@ jobs:
           path: |
             ${{ runner.temp }}/reaction-run/native/
             ${{ runner.temp }}/reaction-run/cli-checks/
+            ${{ runner.temp }}/reaction-run/equilibrium-cli/
             ${{ runner.temp }}/reaction-run/*.log
             ${{ runner.temp }}/reaction-run/*.json
             ${{ runner.temp }}/reaction-run/*.sha256
@@ -109,7 +112,7 @@ jobs:
           uname -srm > "$RUNNER_TEMP/full-product/platform.txt"
           swift build -c release --jobs 3 2>&1 | tee "$RUNNER_TEMP/full-product/build.log"
           .build/release/numivivo --help > "$RUNNER_TEMP/full-product/help.txt" 2>&1
-          .build/release/numivivo md-capabilities > "$RUNNER_TEMP/full-product/md-capabilities.txt" 2>&1
+          .build/release/numivivo md-help > "$RUNNER_TEMP/full-product/md-help.txt" 2>&1
           shasum -a 256 .build/release/numivivo > "$RUNNER_TEMP/full-product/binary.sha256"
           .build/release/numivivo reaction-template h3-saddle --output "$RUNNER_TEMP/full-product/saddle-request.json"
           .build/release/numivivo reaction-run "$RUNNER_TEMP/full-product/saddle-request.json" \

@@ -16,15 +16,20 @@ else
   fi
   OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
     "$PYTHON" "$ROOT/ReferenceAdapters/PySCF/reaction_qualification_oracle.py" export "$REFERENCE"
+  OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+    "$PYTHON" "$ROOT/ReferenceAdapters/PySCF/equilibrium_solvent_oracle.py" export "$REFERENCE/equilibrium"
   "$PYTHON" -m pip freeze > "$OUT/oracle-python-lock.txt"
 fi
 CLI="$OUT/scoped-cli"
 bash "$ROOT/Tools/NativeChemistry/build_scoped_cli.sh" "$CLI" 2>&1 | tee "$OUT/cli-build.log"
 shasum -a 256 "$ROOT/Tools/NativeChemistry/ReactionQualificationChecks.swift" \
- "$ROOT/Tools/NativeChemistry/check_reaction_cli.py" "$ROOT/ReferenceAdapters/PySCF/reaction_qualification_oracle.py" > "$OUT/test-sources.sha256"
+ "$ROOT/Tools/NativeChemistry/check_reaction_cli.py" "$ROOT/ReferenceAdapters/PySCF/reaction_qualification_oracle.py" \
+ "$ROOT/ReferenceAdapters/PySCF/equilibrium_solvent_oracle.py" > "$OUT/test-sources.sha256"
 swiftc -swift-version 6 -O -parse-as-library -I "$CLI" -L "$CLI" -lNumiVivoKit -framework Accelerate \
  "$ROOT/Tools/NativeChemistry/ReactionQualificationChecks.swift" -o "$OUT/reaction-checks" 2>&1 | tee "$OUT/test-build.log"
 "$OUT/reaction-checks" "$REFERENCE/reference.json" "$OUT/native" 2>&1 | tee "$OUT/native-checks.log"
 python3 "$ROOT/ReferenceAdapters/PySCF/reaction_qualification_oracle.py" compare "$OUT/native" "$REFERENCE" "$OUT/pyscf-comparison.json"
 python3 "$ROOT/Tools/NativeChemistry/check_reaction_cli.py" "$CLI/numivivo-chemistry" "$OUT/cli-checks" 2>&1 | tee "$OUT/cli-checks.log"
+python3 "$ROOT/ReferenceAdapters/PySCF/equilibrium_solvent_oracle.py" check "$CLI/numivivo-chemistry" \
+ "$REFERENCE/equilibrium" "$OUT/equilibrium-cli" 2>&1 | tee "$OUT/equilibrium-cli.log"
 echo "Reaction qualification observations: $OUT"
