@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoPosteriorCLICommands.handles(arguments.first) {
+if VivoElectronicCLICommands.handles(arguments.first) {
+    status = await VivoElectronicCLICommands().run(arguments: arguments)
+} else if VivoPosteriorCLICommands.handles(arguments.first) {
     status = await VivoPosteriorCLICommands().run(arguments: arguments)
 } else if VivoTargetEngagementCLICommands.handles(arguments.first) {
     status = await VivoTargetEngagementCLICommands().run(arguments: arguments)
@@ -25,6 +27,7 @@ if VivoPosteriorCLICommands.handles(arguments.first) {
 } else {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
+        FileHandle.standardOutput.write(Data("\nElectronic chemistry: chemistry-template, chemistry-run, chemistry-solve, chemistry-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nKinetic inference: engagement-fit, engagement-predict, engagement-sensitivity, posterior-help.\n".utf8))
         FileHandle.standardOutput.write(Data("Target engagement: engagement-validate, engagement-source, engagement-compile, engagement-run, engagement-batch, engagement-study, engagement-rate, engagement-apply-rate, engagement-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nMD workflows: md-protocol-template, md-protocol-validate, md-protocol-run, md-protocol-resume, md-protocol-inspect, md-trajectory-inspect, md-protocol-help.\n".utf8))

@@ -63,7 +63,7 @@ private struct VivoLDADIISRecord { let fock: VivoQMMatrix; let error: [Double] }
 
 /// Geometry-fixed AO grid values, reused across every density evaluation. The
 /// density projection and XC matrix contractions use FP64 GEMM/Accelerate.
-private struct VivoLDAWorkspace {
+struct VivoLDAWorkspace {
     let phi: VivoQMMatrix
     let weights: [Double]
     init(ao: VivoAOIntegrals, grid: [VivoDFTGridPoint], budget: VivoChemistryBudget) throws {
@@ -105,7 +105,7 @@ public enum VivoRestrictedLDA {
     private static func density(_ c:VivoQMMatrix, occupied:Int) -> VivoQMMatrix {
         VivoHartreeFock.density(c,occupied:occupied).scaled(2)
     }
-    private static func coulomb(_ ao:VivoAOIntegrals, density p:VivoQMMatrix) -> VivoQMMatrix {
+    static func coulomb(_ ao:VivoAOIntegrals, density p:VivoQMMatrix) -> VivoQMMatrix {
         let n=ao.count
         var j=VivoQMMatrix(n,n)
         for mu in 0..<n { for nu in 0..<n { for r in 0..<n { for s in 0..<n { j[mu,nu] += p[r,s]*ao.eri(mu,nu,r,s) } } } }
