@@ -37,12 +37,9 @@ public struct VivoMDBarostatPlan: Sendable, Equatable {
         }
         for bond in system.bonds {
             let a = Int(bond.a), b = Int(bond.b)
-            if system.particles[a].massDa > 0, system.particles[b].massDa > 0 {
-                unite(a, b, &parent)
-            }
+            if system.particles[a].massDa > 0, system.particles[b].massDa > 0 { unite(a, b, &parent) }
         }
         for i in 0..<n where system.particles[i].massDa > 0 { _ = root(i, &parent) }
-
         var virtualParent: [UInt32: UInt32] = [:]
         for site in system.linearVirtualSites ?? [] {
             guard let first = site.parentParticles.first else {
@@ -52,14 +49,9 @@ public struct VivoMDBarostatPlan: Sendable, Equatable {
         }
         var representative = [Int](repeating: -1, count: n)
         for i in 0..<n {
-            if system.particles[i].massDa > 0 {
-                representative[i] = root(i, &parent)
-            } else if system.particles[i].role == .virtualSite,
-                      let p = virtualParent[UInt32(i)] {
-                representative[i] = root(Int(p), &parent)
-            } else {
-                representative[i] = i
-            }
+            if system.particles[i].massDa > 0 { representative[i] = root(i, &parent) }
+            else if system.particles[i].role == .virtualSite, let p = virtualParent[UInt32(i)] { representative[i] = root(Int(p), &parent) }
+            else { representative[i] = i }
         }
         let roots = Array(Set(representative)).sorted()
         guard roots.count <= Int(UInt32.max) else {
@@ -140,15 +132,13 @@ final class VivoMDBarostatEngine: @unchecked Sendable {
             throw VivoMDRuntimeError.metal("barostat center buffer allocation failed")
         }
         centers.label = "NumiVivo.NPT.componentCenters"
-        return try await .init(
-            plan: plan,
-            componentOffsets: immutable(plan.componentOffsets, "NumiVivo.NPT.componentOffsets"),
-            componentParticles: immutable(plan.componentParticles, "NumiVivo.NPT.componentParticles"),
-            componentIndexByParticle: immutable(plan.componentIndexByParticle, "NumiVivo.NPT.componentIndexByParticle"),
-            centers: centers,
-            centerPipeline: catalog.pipeline(.mdBarostatCenters),
-            scalePipeline: catalog.pipeline(.mdBarostatScale)
-        )
+        let centerPipeline = try await catalog.pipeline(.mdBarostatCenters)
+        let scalePipeline = try await catalog.pipeline(.mdBarostatScale)
+        return .init(plan: plan,
+                     componentOffsets: try immutable(plan.componentOffsets, "NumiVivo.NPT.componentOffsets"),
+                     componentParticles: try immutable(plan.componentParticles, "NumiVivo.NPT.componentParticles"),
+                     componentIndexByParticle: try immutable(plan.componentIndexByParticle, "NumiVivo.NPT.componentIndexByParticle"),
+                     centers: centers, centerPipeline: centerPipeline, scalePipeline: scalePipeline)
     }
 
     private init(plan: VivoMDBarostatPlan,
@@ -159,10 +149,8 @@ final class VivoMDBarostatEngine: @unchecked Sendable {
                  centerPipeline: NumiVivoPipeline,
                  scalePipeline: NumiVivoPipeline) {
         self.plan = plan; self.componentOffsets = componentOffsets
-        self.componentParticles = componentParticles
-        self.componentIndexByParticle = componentIndexByParticle
-        self.centers = centers; self.centerPipeline = centerPipeline
-        self.scalePipeline = scalePipeline
+        self.componentParticles = componentParticles; self.componentIndexByParticle = componentIndexByParticle
+        self.centers = centers; self.centerPipeline = centerPipeline; self.scalePipeline = scalePipeline
     }
 
     func encodeProposal(commandBuffer: MTLCommandBuffer,
@@ -178,8 +166,7 @@ final class VivoMDBarostatEngine: @unchecked Sendable {
         let reciprocal = (cell.b.cross(cell.c)/d, cell.c.cross(cell.a)/d, cell.a.cross(cell.b)/d)
         func f4(_ v: VivoVector3D) -> SIMD4<Float> { .init(Float(v.x),Float(v.y),Float(v.z),0) }
         var abi = VivoMDBarostatMetalCommand(particleCount: UInt32(plan.componentIndexByParticle.count),
-                                             componentCount: plan.componentCount,
-                                             scale: Float(scale),
+                                             componentCount: plan.componentCount, scale: Float(scale),
                                              cellA: f4(cell.a), cellB: f4(cell.b), cellC: f4(cell.c),
                                              reciprocalA: f4(reciprocal.0), reciprocalB: f4(reciprocal.1), reciprocalC: f4(reciprocal.2))
         guard MemoryLayout<VivoMDBarostatMetalCommand>.stride == 112 else {
