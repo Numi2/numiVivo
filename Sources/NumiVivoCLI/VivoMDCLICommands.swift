@@ -39,7 +39,7 @@ struct VivoMDCLICommands {
         if let path=a.options["restore"]{let checkpoint:VivoMDCheckpoint=try load(path);runtime=try await VivoMDMetalRuntime.restore(system:system,configuration:config,checkpoint:checkpoint)}
         else{let state:VivoClassicalInitialState=try load(a.required("state"));runtime=try await VivoMDMetalRuntime.make(system:system,initialState:state,configuration:config)}
         let minConfig:VivoMDMinimizationConfiguration
-        if let path=a.options["min-config"]{minConfig=try load(path)}else{minConfig=.init()}
+        if let path=a.options["min-config"]{minConfig=try load(path)}else{minConfig = .init()}
         let certificate=try await runtime.minimize(minConfig)
         if let destination=a.options["checkpoint"]{let checkpoint=try await runtime.checkpoint();try write(VivoCanonicalJSON.encode(checkpoint),to:destination,force:a.force)}
         try write(VivoCanonicalJSON.encode(certificate),to:a.options["output"] ?? "-",force:a.force)

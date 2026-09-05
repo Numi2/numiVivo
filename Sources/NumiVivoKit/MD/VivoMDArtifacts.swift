@@ -68,6 +68,11 @@ public struct VivoMDTrajectorySample: Codable, Sendable, Equatable {
     public let positionsNM: [VivoVector3D]
     public let periodicCell: VivoPeriodicCell?
     public let observables: VivoMDObservables?
+    public init(stepIndex: UInt64, timePS: Double, positionsNM: [VivoVector3D],
+                periodicCell: VivoPeriodicCell?, observables: VivoMDObservables?) {
+        self.stepIndex = stepIndex; self.timePS = timePS; self.positionsNM = positionsNM
+        self.periodicCell = periodicCell; self.observables = observables
+    }
 }
 
 public struct VivoMDRunReport: Codable, Sendable, Equatable {

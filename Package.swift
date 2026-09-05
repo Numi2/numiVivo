@@ -36,7 +36,9 @@ let package = Package(
         ]),
         .target(name: "NumiVivoKit", dependencies: ["NumiVivoCore", "NumiVivoShaders"],
                 path: "Sources/NumiVivoKit", linkerSettings: [.linkedFramework("Metal"), .linkedFramework("Accelerate")]),
-        .executableTarget(name: "NumiVivoCLI", dependencies: ["NumiVivoKit"], path: "Sources/NumiVivoCLI")
+        .executableTarget(name: "NumiVivoCLI", dependencies: ["NumiVivoKit"], path: "Sources/NumiVivoCLI"),
+        .testTarget(name: "NumiVivoIntegrationTests", dependencies: ["NumiVivoKit", "NumiVivoShaders"],
+                    path: "Tests/NumiVivoIntegrationTests")
     ],
     swiftLanguageModes: [.v6],
     // SwiftPM's manifest API calls its C++23 compiler mode cxx2b.
