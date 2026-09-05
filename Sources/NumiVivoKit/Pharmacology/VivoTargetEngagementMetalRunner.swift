@@ -44,6 +44,11 @@ public enum VivoTargetEngagementMetalRunner {
               (1...1_000_000).contains(policy.maximumSteps),
               policy.fractionBalanceTolerance.isFinite, policy.fractionBalanceTolerance >= 1e-7,
               policy.fractionBalanceTolerance <= 1e-4 else { throw VivoKineticsError.invalid("Metal batch/policy") }
+        let sampleCount = first.sampleTimesSeconds.count.multipliedReportingOverflow(by: experiments.count)
+        guard !sampleCount.overflow, sampleCount.partialValue <= 262_144 else {
+            throw VivoKineticsError.capacity("Metal cohort output sample capacity")
+        }
+        var maximumScheduledDrugM = 0.0
         var totalKnots = 0
         var allBoundaries = Set(first.sampleTimesSeconds)
         for experiment in experiments {
@@ -60,6 +65,7 @@ public enum VivoTargetEngagementMetalRunner {
                       knot.unboundDrugM == 0 || Float(knot.unboundDrugM) != 0 else {
                     throw VivoKineticsError.unsupported("Metal cohort requires FP32-exact time boundaries and representable exposure")
                 }
+                maximumScheduledDrugM = max(maximumScheduledDrugM, knot.unboundDrugM)
                 allBoundaries.insert(knot.timeSeconds)
             }
         }
@@ -68,7 +74,9 @@ public enum VivoTargetEngagementMetalRunner {
         let boundaries = allBoundaries.filter { $0 > 0 && $0 <= endTime }.sorted()
         let m = first.kinetics, d = m.targetTurnover.value
         let competitorRate = (m.competitor?.association.value ?? 0) * (m.competitor?.unboundConcentration.value ?? 0)
-        let maxRate = max(m.association.value * m.maximumUnboundDrugM + competitorRate + d,
+        // The full immutable schedule is validated above. Use its actual maximum,
+        // not the looser applicability-domain ceiling, to size a common step.
+        let maxRate = max(m.association.value * maximumScheduledDrugM + competitorRate + d,
                           m.dissociation.value + m.inactivation.value + d, (m.competitor?.dissociation.value ?? 0) + d)
         let limit = min(policy.maximumTimeStepSeconds, maxRate > 0 ? 0.1 / maxRate : policy.maximumTimeStepSeconds)
         guard limit.isFinite, limit > 0 else { throw VivoKineticsError.numerical("Metal step bound underflow") }
