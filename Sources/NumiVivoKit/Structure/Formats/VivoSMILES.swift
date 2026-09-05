@@ -2,8 +2,8 @@ import Foundation
 
 /// Native graph-level SMILES ingestion for Wave A. It preserves atom identity,
 /// isotope/formal charge, branching, disconnected components, aromatic bonds and
-/// ring closures. It intentionally rejects stereochemical tokens until the
-/// structure IR has authoritative tetrahedral/double-bond stereo semantics.
+/// ring closures. It rejects semantic features that the current structure IR
+/// cannot represent exactly instead of silently flattening them.
 public enum VivoSMILES {
     private struct ParsedAtom {
         var element: VivoElement
@@ -13,7 +13,6 @@ public enum VivoSMILES {
     }
     private struct PendingBond {
         var order: VivoBondOrder?
-        var stereo: VivoBondStereo = .unspecified
     }
     private struct RingOpen {
         var atom: UInt32
@@ -42,7 +41,7 @@ public enum VivoSMILES {
             if let previous = current {
                 let defaultOrder: VivoBondOrder = aromatic[Int(previous)] && atom.aromatic ? .aromatic : .single
                 bonds.append(.init(atomA: previous, atomB: index,
-                                   order: pending.order ?? defaultOrder, stereo: pending.stereo))
+                                   order: pending.order ?? defaultOrder))
             }
             current = index
             pending = PendingBond()
@@ -60,20 +59,17 @@ public enum VivoSMILES {
                 current = resumed; pending = PendingBond(); i += 1
             case ".":
                 current = nil; pending = PendingBond(); i += 1
-            case "-", "=", "#", ":", "/", "\\":
-                guard pending.order == nil, pending.stereo == .unspecified else {
+            case "-", "=", "#", ":":
+                guard pending.order == nil else {
                     throw VivoArtifactValidationError.invalid("SMILES contains consecutive bond tokens")
                 }
                 if ch == "-" { pending.order = .single }
                 else if ch == "=" { pending.order = .double }
                 else if ch == "#" { pending.order = .triple }
-                else if ch == ":" { pending.order = .aromatic }
-                else {
-                    // Directional double-bond notation is retained only at bond level;
-                    // full E/Z assignment is deliberately deferred.
-                    pending.stereo = ch == "/" ? .up : .down
-                }
+                else { pending.order = .aromatic }
                 i += 1
+            case "/", "\\":
+                throw VivoArtifactValidationError.incompatible("SMILES directional double-bond stereochemistry is not yet represented; import is rejected rather than made non-stereospecific")
             case "@":
                 throw VivoArtifactValidationError.incompatible("SMILES tetrahedral stereochemistry requires the forthcoming stereo IR; import is rejected rather than made achiral")
             case "[":
@@ -125,9 +121,8 @@ public enum VivoSMILES {
                 throw VivoArtifactValidationError.invalid("SMILES ring closure specifies conflicting bond orders")
             }
             let defaultOrder: VivoBondOrder = aromatic[Int(open.atom)] && aromatic[Int(current)] ? .aromatic : .single
-            let stereo = pending.stereo != .unspecified ? pending.stereo : open.bond.stereo
             bonds.append(.init(atomA: open.atom, atomB: current,
-                               order: pending.order ?? open.bond.order ?? defaultOrder, stereo: stereo))
+                               order: pending.order ?? open.bond.order ?? defaultOrder))
         } else {
             rings[label] = .init(atom: current, bond: pending)
         }
@@ -184,9 +179,7 @@ public enum VivoSMILES {
                 throw VivoArtifactValidationError.incompatible("SMILES tetrahedral stereochemistry requires the forthcoming stereo IR")
             }
             if ch == "H" {
-                i += 1
-                while i < chars.count, chars[i].isNumber { i += 1 }
-                continue
+                throw VivoArtifactValidationError.incompatible("SMILES bracket hydrogen counts are chemically significant but not yet represented; provide explicit hydrogen atoms or a coordinate format")
             }
             if ch == "+" || ch == "-" {
                 let sign: Int16 = ch == "+" ? 1 : -1
@@ -204,8 +197,6 @@ public enum VivoSMILES {
             if ch == ":" {
                 throw VivoArtifactValidationError.incompatible("SMILES atom-map labels are not yet represented in VivoMolecularStructure")
             }
-            // Valence/class annotations not represented by the current structural IR
-            // are rejected rather than silently discarded.
             throw VivoArtifactValidationError.incompatible("unsupported bracket-atom annotation '\(ch)' in SMILES")
         }
         return .init(element: element, isotope: isotope, charge: charge, aromatic: aromatic)
