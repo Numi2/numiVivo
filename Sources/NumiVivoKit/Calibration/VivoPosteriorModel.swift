@@ -12,10 +12,8 @@ public enum VivoPosteriorError: Error, LocalizedError, Sendable {
     }
 }
 
-/// These are probability distributions, not optimization coordinate choices.
-/// Independent uniform prior coordinates u in (0,1) map either to uniform x or
-/// log-uniform x. Mutation targets likelihood(x(u))^beta in u coordinates, so no
-/// Jacobian is omitted: the physical prior is defined by this pushforward.
+/// Probability distributions, not merely optimization coordinate choices.
+/// Mutation targets likelihood(x(u))^beta in uniform prior coordinates u.
 public enum VivoBoundedPosteriorPrior: String, Codable, Sendable {
     case uniformPhysical, uniformLogPhysical
 }
@@ -97,23 +95,43 @@ public struct VivoSMCConfiguration: Codable, Equatable, Sendable {
     }
 }
 
+public struct VivoPosteriorScreeningPolicy: Codable, Equatable, Sendable {
+    /// Binds a deterministic approximation, its code, precision, settings and
+    /// device context. This is not the authoritative likelihood identity.
+    public let fingerprint: VivoFingerprint
+    public let maximumEvaluations: Int
+    public init(fingerprint: VivoFingerprint, maximumEvaluations: Int = 2_000_000) {
+        self.fingerprint = fingerprint; self.maximumEvaluations = maximumEvaluations
+    }
+    public func validate() throws {
+        guard (1...20_000_000).contains(maximumEvaluations) else {
+            throw VivoPosteriorError.invalid("screening evaluation budget")
+        }
+    }
+}
+
 public struct VivoPosteriorPlan: Codable, Equatable, Sendable {
     public let schemaVersion: UInt32
-    /// Must bind the actual training inputs, observation model, forward numerical
-    /// policy and backend version. Held-out observations do not belong here.
+    /// Training inputs, observation model and authoritative forward numerics.
     public let likelihoodFingerprint: VivoFingerprint
     public let parameters: [VivoPosteriorParameter]
     public let configuration: VivoSMCConfiguration
+    /// Omitted in legacy plans: their canonical bytes and hashes remain intact.
+    public let screening: VivoPosteriorScreeningPolicy?
     public init(likelihoodFingerprint: VivoFingerprint, parameters: [VivoPosteriorParameter],
-                configuration: VivoSMCConfiguration = .init()) {
+                configuration: VivoSMCConfiguration = .init(), screening: VivoPosteriorScreeningPolicy? = nil) {
         schemaVersion = 1; self.likelihoodFingerprint = likelihoodFingerprint
-        self.parameters = parameters; self.configuration = configuration
+        self.parameters = parameters; self.configuration = configuration; self.screening = screening
+    }
+    public func withScreening(_ value: VivoPosteriorScreeningPolicy?) -> Self {
+        .init(likelihoodFingerprint: likelihoodFingerprint, parameters: parameters,
+              configuration: configuration, screening: value)
     }
     public func validate() throws {
         guard schemaVersion == 1, Set(parameters.map(\.identifier)).count == parameters.count else {
             throw VivoPosteriorError.invalid("posterior schema or duplicate parameter")
         }
-        try configuration.validate(dimension: parameters.count)
+        try configuration.validate(dimension: parameters.count); try screening?.validate()
         for parameter in parameters { try parameter.validate() }
     }
     public func fingerprint() throws -> VivoFingerprint {
@@ -135,8 +153,8 @@ public struct VivoPosteriorCandidate: Codable, Equatable, Sendable {
 
 public struct VivoPosteriorEvaluation: Codable, Equatable, Sendable {
     public let candidate: VivoPosteriorCandidate
-    /// Nil is failure, never zero likelihood. This sampler's current contract is
-    /// finite deterministic log likelihood; stochastic estimates need pseudo-marginal semantics.
+    /// Nil is failure, never zero likelihood. Both exact and screening evaluators
+    /// must provide finite deterministic values; no stochastic estimate is assumed.
     public let logLikelihood: Double?
     public let failure: String?
     public init(candidate: VivoPosteriorCandidate, logLikelihood: Double) {
@@ -148,6 +166,16 @@ public struct VivoPosteriorEvaluation: Codable, Equatable, Sendable {
 }
 public typealias VivoPosteriorBatchEvaluator = @Sendable ([VivoPosteriorCandidate]) async throws -> [VivoPosteriorEvaluation]
 public typealias VivoPosteriorCheckpointSink = @Sendable (VivoPosteriorCheckpoint) async throws -> Void
+
+public struct VivoPosteriorScreen: Sendable {
+    public let policy: VivoPosteriorScreeningPolicy
+    /// Must depend only on coordinates/values and immutable context, not batch
+    /// companions, ordinal, call order or previous evaluations. No adaptive refits.
+    public let evaluate: VivoPosteriorBatchEvaluator
+    public init(policy: VivoPosteriorScreeningPolicy, evaluate: @escaping VivoPosteriorBatchEvaluator) {
+        self.policy = policy; self.evaluate = evaluate
+    }
+}
 
 public struct VivoPosteriorParticle: Codable, Equatable, Sendable {
     public let coordinates: [Double]
@@ -165,11 +193,21 @@ public struct VivoSMCStage: Codable, Equatable, Sendable {
     public let acceptedMoves: Int
     public let outOfPriorMoves: Int
     public let distinctInitialAncestors: Int
+    public let screenedOutMoves: Int?
+    public let screeningEvaluations: Int?
+    public init(index: Int, betaBefore: Double, betaAfter: Double, preResamplingESS: Double,
+                likelihoodEvaluations: Int, proposedMoves: Int, acceptedMoves: Int, outOfPriorMoves: Int,
+                distinctInitialAncestors: Int, screenedOutMoves: Int? = nil, screeningEvaluations: Int? = nil) {
+        self.index = index; self.betaBefore = betaBefore; self.betaAfter = betaAfter
+        self.preResamplingESS = preResamplingESS; self.likelihoodEvaluations = likelihoodEvaluations
+        self.proposedMoves = proposedMoves; self.acceptedMoves = acceptedMoves; self.outOfPriorMoves = outOfPriorMoves
+        self.distinctInitialAncestors = distinctInitialAncestors; self.screenedOutMoves = screenedOutMoves
+        self.screeningEvaluations = screeningEvaluations
+    }
 }
 
-/// A fully committed tempering boundary, never a partially mutated population.
-/// All particles have equal weight because each completed stage includes
-/// resampling followed by fixed-kernel invariant mutation.
+/// Fully committed tempering boundary. Screening values are recomputed for the
+/// resampled population at the next stage; no partially filled GPU cache is state.
 public struct VivoPosteriorCheckpoint: Codable, Equatable, Sendable {
     public let schemaVersion: UInt32
     public let planFingerprint: VivoFingerprint
@@ -189,7 +227,7 @@ public struct VivoPosteriorCheckpoint: Codable, Equatable, Sendable {
               nextCandidateOrdinal == UInt64(likelihoodEvaluationCount) else {
             throw VivoPosteriorError.invalid("checkpoint identity, population, clock or evaluation count")
         }
-        var previous = 0.0, evaluations = c.particleCount
+        var previous = 0.0, evaluations = c.particleCount, screens = 0
         for (index, stage) in stages.enumerated() {
             guard stage.index == index, stage.betaBefore == previous, stage.betaAfter.isFinite,
                   stage.betaAfter > previous, stage.betaAfter <= 1,
@@ -197,10 +235,22 @@ public struct VivoPosteriorCheckpoint: Codable, Equatable, Sendable {
                   stage.preResamplingESS <= Double(c.particleCount) + 1e-8,
                   stage.proposedMoves == c.particleCount * c.mutationSweeps,
                   stage.outOfPriorMoves >= 0, stage.outOfPriorMoves <= stage.proposedMoves,
-                  stage.likelihoodEvaluations == stage.proposedMoves - stage.outOfPriorMoves,
                   stage.acceptedMoves >= 0, stage.acceptedMoves <= stage.likelihoodEvaluations,
                   (1...c.particleCount).contains(stage.distinctInitialAncestors) else {
                 throw VivoPosteriorError.invalid("checkpoint stage ledger")
+            }
+            let valid = stage.proposedMoves - stage.outOfPriorMoves
+            if let policy = plan.screening {
+                guard let rejected = stage.screenedOutMoves, let count = stage.screeningEvaluations,
+                      rejected >= 0, rejected <= valid, count == c.particleCount + valid,
+                      stage.likelihoodEvaluations == valid - rejected else {
+                    throw VivoPosteriorError.invalid("delayed-acceptance evaluation ledger")
+                }
+                screens += count
+                guard screens <= policy.maximumEvaluations else { throw VivoPosteriorError.invalid("screening budget exceeded") }
+            } else {
+                guard stage.screenedOutMoves == nil, stage.screeningEvaluations == nil,
+                      stage.likelihoodEvaluations == valid else { throw VivoPosteriorError.invalid("unexpected screening ledger") }
             }
             evaluations += stage.likelihoodEvaluations; previous = stage.betaAfter
         }
