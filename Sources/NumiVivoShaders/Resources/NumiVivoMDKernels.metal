@@ -3,96 +3,49 @@ using namespace metal;
 
 namespace nvivo_md {
 struct Command {
-    uint particleCount, typeCount, electrostatics, periodic;
-    float dtPS, cutoffNM, coulombPrefactor, reactionFieldK;
-    float reactionFieldC, minimumDistanceNM, reserved0, reserved1;
-    float4 cellA, cellB, cellC, reciprocalA, reciprocalB, reciprocalC;
+    uint particleCount,typeCount,electrostatics,periodic;
+    float dtPS,cutoffNM,coulombPrefactor,reactionFieldK;
+    float reactionFieldC,minimumDistanceNM,constraintTolerance,reserved0;
+    float4 cellA,cellB,cellC,reciprocalA,reciprocalB,reciprocalC;
 };
-struct Status { atomic_uint flags, firstParticle, violationCount, reserved; };
+struct Status { atomic_uint flags,firstParticle,violationCount,reserved; };
 struct Bond { uint2 atoms; float2 parameters; };
 struct Angle { uint4 atoms; float2 parameters; };
 struct Torsion { uint4 atoms; float4 parameters; };
-struct Incidence { uint termIndex, localIndex; };
+struct Constraint { uint2 atoms; float distanceNM; uint pad; };
+struct Incidence { uint termIndex,localIndex; };
 struct PairException { uint2 atoms; float2 scales; float2 overrideC12C6; uint flags; };
-constant uint statusNonFinite=1u, statusOverlap=2u, statusInvalidGeometry=4u;
+constant uint statusNonFinite=1u,statusOverlap=2u,statusInvalidGeometry=4u,statusConstraint=8u;
 
-inline void fail(device Status& s,uint flag,uint particle){
-    atomic_fetch_or_explicit(&s.flags,flag,memory_order_relaxed);
-    atomic_fetch_min_explicit(&s.firstParticle,particle,memory_order_relaxed);
-    atomic_fetch_add_explicit(&s.violationCount,1u,memory_order_relaxed);
+inline void fail(device Status& s,uint flag,uint particle){atomic_fetch_or_explicit(&s.flags,flag,memory_order_relaxed);atomic_fetch_min_explicit(&s.firstParticle,particle,memory_order_relaxed);atomic_fetch_add_explicit(&s.violationCount,1u,memory_order_relaxed);}
+inline float3 minimumImage(float3 d,constant Command& c){if(c.periodic==0)return d;float3 f=float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));f-=rint(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;}
+inline float3 wrapPosition(float3 p,constant Command& c){if(c.periodic==0)return p;float3 f=float3(dot(c.reciprocalA.xyz,p),dot(c.reciprocalB.xyz,p),dot(c.reciprocalC.xyz,p));f-=floor(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;}
+inline float4 bondContribution(uint local,Bond t,device const float4* p,constant Command& c,device Status& s,uint owner){float3 d=minimumImage(p[t.atoms.x].xyz-p[t.atoms.y].xyz,c);float r2=dot(d,d);if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)||!isfinite(r2)){fail(s,statusInvalidGeometry,owner);return 0;}float r=sqrt(r2),dr=r-t.parameters.x,e=0.5f*t.parameters.y*dr*dr;float3 fa=-t.parameters.y*dr*d/r;return float4(local==0?fa:-fa,0.5f*e);}
+inline float4 angleContribution(uint local,Angle t,device const float4* p,constant Command& c,device Status& s,uint owner){float3 u=minimumImage(p[t.atoms.x].xyz-p[t.atoms.y].xyz,c),v=minimumImage(p[t.atoms.z].xyz-p[t.atoms.y].xyz,c);float u2=dot(u,u),v2=dot(v,v);if(!(u2>1e-16f&&v2>1e-16f)){fail(s,statusInvalidGeometry,owner);return 0;}float ru=sqrt(u2),rv=sqrt(v2),co=clamp(dot(u,v)/(ru*rv),-1.0f,1.0f),theta=acos(co),si=sqrt(max(1.0f-co*co,1e-12f));float dE=t.parameters.y*(theta-t.parameters.x);float3 ga=(co*u/u2-v/(ru*rv))/si,gc=(co*v/v2-u/(ru*rv))/si;float3 fa=-dE*ga,fc=-dE*gc,fb=-(fa+fc),f=local==0?fa:(local==1?fb:fc);float delta=theta-t.parameters.x;return float4(f,(0.5f*t.parameters.y*delta*delta)/3.0f);}
+inline float4 torsionContribution(uint local,Torsion t,device const float4* p,constant Command& c,device Status& s,uint owner){float3 d0=minimumImage(p[t.atoms.x].xyz-p[t.atoms.y].xyz,c),d1=minimumImage(p[t.atoms.z].xyz-p[t.atoms.y].xyz,c),d2=minimumImage(p[t.atoms.z].xyz-p[t.atoms.w].xyz,c);float3 c1=cross(d0,d1),c2=cross(d1,d2);float c1q=dot(c1,c1),c2q=dot(c2,c2),d1q=dot(d1,d1);if(!(c1q>1e-16f&&c2q>1e-16f&&d1q>1e-16f)){fail(s,statusInvalidGeometry,owner);return 0;}float l=sqrt(d1q),phi=atan2(dot(d1,cross(c1,c2))/l,dot(c1,c2));float n=t.parameters.x,phase=t.parameters.y,k=t.parameters.z,e=k*(1.0f+cos(n*phi-phase)),dE=-k*n*sin(n*phi-phase);float3 f0=c1*(dE*l/c1q),f3=c2*(-dE*l/c2q);float q0=dot(d0,d1)/d1q,q2=dot(d2,d1)/d1q;float3 f1=f0*(q0-1.0f)-f3*q2,f2=-f0*q0+f3*(q2-1.0f),f=local==0?f0:(local==1?f1:(local==2?f2:f3));return float4(f,e*0.25f);}
+
+kernel void nvivo_md_clear_force(device float4* fe[[buffer(0)]],constant Command& c[[buffer(1)]],uint gid[[thread_position_in_grid]]){if(gid<c.particleCount)fe[gid]=0;}
+kernel void nvivo_md_clear_status(device Status& s[[buffer(0)]],uint gid[[thread_position_in_grid]]){if(gid==0){atomic_store_explicit(&s.flags,0,memory_order_relaxed);atomic_store_explicit(&s.firstParticle,0xffffffffu,memory_order_relaxed);atomic_store_explicit(&s.violationCount,0,memory_order_relaxed);atomic_store_explicit(&s.reserved,0,memory_order_relaxed);}}
+kernel void nvivo_md_bonded(device const float4* p[[buffer(0)]],device float4* fe[[buffer(1)]],device const Bond* bonds[[buffer(2)]],device const uint* bo[[buffer(3)]],device const Incidence* bi[[buffer(4)]],device const Angle* angles[[buffer(5)]],device const uint* ao[[buffer(6)]],device const Incidence* ai[[buffer(7)]],device const Torsion* torsions[[buffer(8)]],device const uint* to[[buffer(9)]],device const Incidence* ti[[buffer(10)]],device Status& s[[buffer(11)]],constant Command& c[[buffer(12)]],uint gid[[thread_position_in_grid]]){if(gid>=c.particleCount)return;float4 sum=0;for(uint i=bo[gid];i<bo[gid+1];++i){Incidence e=bi[i];sum+=bondContribution(e.localIndex,bonds[e.termIndex],p,c,s,gid);}for(uint i=ao[gid];i<ao[gid+1];++i){Incidence e=ai[i];sum+=angleContribution(e.localIndex,angles[e.termIndex],p,c,s,gid);}for(uint i=to[gid];i<to[gid+1];++i){Incidence e=ti[i];sum+=torsionContribution(e.localIndex,torsions[e.termIndex],p,c,s,gid);}if(!all(isfinite(sum))){fail(s,statusNonFinite,gid);return;}fe[gid]+=sum;}
+inline int findException(uint owner,uint partner,device const uint* offsets,device const uint* partners,device const uint* indices){uint lo=offsets[owner],hi=offsets[owner+1];while(lo<hi){uint mid=lo+(hi-lo)/2,v=partners[mid];if(v<partner)lo=mid+1;else hi=mid;}return lo<offsets[owner+1]&&partners[lo]==partner?int(indices[lo]):-1;}
+kernel void nvivo_md_nonbonded_direct(device const float4* p[[buffer(0)]],device float4* fe[[buffer(1)]],device const float4* dyn[[buffer(2)]],device const uint* typeIndex[[buffer(3)]],device const float2* pair[[buffer(4)]],device const PairException* exs[[buffer(5)]],device const uint* eo[[buffer(6)]],device const uint* ep[[buffer(7)]],device const uint* ei[[buffer(8)]],device Status& s[[buffer(9)]],constant Command& c[[buffer(10)]],uint gid[[thread_position_in_grid]]){if(gid>=c.particleCount)return;float3 force=0;float energy=0,cut2=c.cutoffNM*c.cutoffNM;for(uint j=0;j<c.particleCount;++j){if(j==gid)continue;float3 d=minimumImage(p[gid].xyz-p[j].xyz,c);float r2=dot(d,d);if(r2>=cut2)continue;if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)||!isfinite(r2)){fail(s,statusOverlap,gid);continue;}float ir=rsqrt(r2),ir2=ir*ir,cs=1,ls=1;float2 coeff=pair[typeIndex[gid]*c.typeCount+typeIndex[j]];int ex=findException(gid,j,eo,ep,ei);if(ex>=0){PairException v=exs[ex];cs=v.scales.x;ls=v.scales.y;if((v.flags&1u)!=0)coeff=v.overrideC12C6;}float ir6=ir2*ir2*ir2,ir12=ir6*ir6,lj=ls*(coeff.x*ir12-coeff.y*ir6),lf=ls*(12.0f*coeff.x*ir12-6.0f*coeff.y*ir6)*ir2;float qq=dyn[gid].z*dyn[j].z,ce=0,cf=0;if(cs!=0&&qq!=0){if(c.electrostatics==0){ce=c.coulombPrefactor*qq*ir;cf=c.coulombPrefactor*qq*ir*ir2;}else{ce=c.coulombPrefactor*qq*(ir+c.reactionFieldK*r2-c.reactionFieldC);cf=c.coulombPrefactor*qq*(ir*ir2-2.0f*c.reactionFieldK);}ce*=cs;cf*=cs;}force+=(lf+cf)*d;energy+=0.5f*(lj+ce);}float4 v=fe[gid]+float4(force,energy);if(!all(isfinite(v))){fail(s,statusNonFinite,gid);return;}fe[gid]=v;}
+kernel void nvivo_md_half_kick(device float4* v[[buffer(0)]],device const float4* fe[[buffer(1)]],device const float4* dyn[[buffer(2)]],constant Command& c[[buffer(3)]],uint gid[[thread_position_in_grid]]){if(gid>=c.particleCount||dyn[gid].y==0)return;v[gid].xyz+=0.5f*c.dtPS*dyn[gid].y*fe[gid].xyz;}
+kernel void nvivo_md_drift(device float4* p[[buffer(0)]],device const float4* v[[buffer(1)]],device const float4* dyn[[buffer(2)]],constant Command& c[[buffer(3)]],uint gid[[thread_position_in_grid]]){if(gid>=c.particleCount||dyn[gid].y==0)return;p[gid].xyz=wrapPosition(p[gid].xyz+c.dtPS*v[gid].xyz,c);}
+
+kernel void nvivo_md_constraint_position(device const float4* source[[buffer(0)]],device float4* destination[[buffer(1)]],device const float4* dyn[[buffer(2)]],device const Constraint* constraints[[buffer(3)]],device const uint* offsets[[buffer(4)]],device const Incidence* incidence[[buffer(5)]],device Status& s[[buffer(6)]],constant Command& c[[buffer(7)]],uint gid[[thread_position_in_grid]]){
+    if(gid>=c.particleCount)return;float3 correction=0;float invSelf=dyn[gid].y;
+    for(uint i=offsets[gid];i<offsets[gid+1];++i){Incidence e=incidence[i];Constraint q=constraints[e.termIndex];uint other=e.localIndex==0?q.atoms.y:q.atoms.x;float invOther=dyn[other].y,invSum=invSelf+invOther;if(invSum<=0)continue;float3 d=minimumImage(source[q.atoms.x].xyz-source[q.atoms.y].xyz,c);float r2=dot(d,d);if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)){fail(s,statusInvalidGeometry,gid);continue;}float target2=q.distanceNM*q.distanceNM,C=r2-target2;float3 corrA=(-invSelf*C/(2.0f*invSum*r2))*d;correction+=e.localIndex==0?corrA:(invSelf*C/(2.0f*invSum*r2))*d;}
+    destination[gid]=float4(wrapPosition(source[gid].xyz+correction,c),0);
 }
-inline float3 minimumImage(float3 d,constant Command& c){
-    if(c.periodic==0)return d;
-    float3 f=float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));
-    f-=rint(f); return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;
+kernel void nvivo_md_constraint_velocity(device const float4* p[[buffer(0)]],device const float4* source[[buffer(1)]],device float4* destination[[buffer(2)]],device const float4* dyn[[buffer(3)]],device const Constraint* constraints[[buffer(4)]],device const uint* offsets[[buffer(5)]],device const Incidence* incidence[[buffer(6)]],device Status& s[[buffer(7)]],constant Command& c[[buffer(8)]],uint gid[[thread_position_in_grid]]){
+    if(gid>=c.particleCount)return;float3 correction=0;float invSelf=dyn[gid].y;
+    for(uint i=offsets[gid];i<offsets[gid+1];++i){Incidence e=incidence[i];Constraint q=constraints[e.termIndex];uint other=e.localIndex==0?q.atoms.y:q.atoms.x;float invOther=dyn[other].y,invSum=invSelf+invOther;if(invSum<=0)continue;float3 d=minimumImage(p[q.atoms.x].xyz-p[q.atoms.y].xyz,c);float r2=dot(d,d);if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)){fail(s,statusInvalidGeometry,gid);continue;}float rel=dot(d,source[q.atoms.x].xyz-source[q.atoms.y].xyz),lambda=rel/(invSum*r2);correction+=(e.localIndex==0?-invSelf:invSelf)*lambda*d;}
+    destination[gid]=float4(source[gid].xyz+correction,0);
 }
-inline float3 wrapPosition(float3 p,constant Command& c){
-    if(c.periodic==0)return p;
-    float3 f=float3(dot(c.reciprocalA.xyz,p),dot(c.reciprocalB.xyz,p),dot(c.reciprocalC.xyz,p));
-    f-=floor(f); return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;
-}
-inline float4 bondContribution(uint local,Bond t,device const float4* p,constant Command& c,device Status& s,uint owner){
-    float3 d=minimumImage(p[t.atoms.x].xyz-p[t.atoms.y].xyz,c); float r2=dot(d,d);
-    if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)||!isfinite(r2)){fail(s,statusInvalidGeometry,owner);return 0;}
-    float r=sqrt(r2),dr=r-t.parameters.x,e=0.5f*t.parameters.y*dr*dr;
-    float3 fa=-t.parameters.y*dr*d/r; return float4(local==0?fa:-fa,0.5f*e);
-}
-inline float4 angleContribution(uint local,Angle t,device const float4* p,constant Command& c,device Status& s,uint owner){
-    float3 u=minimumImage(p[t.atoms.x].xyz-p[t.atoms.y].xyz,c),v=minimumImage(p[t.atoms.z].xyz-p[t.atoms.y].xyz,c);
-    float u2=dot(u,u),v2=dot(v,v); if(!(u2>1e-16f&&v2>1e-16f)){fail(s,statusInvalidGeometry,owner);return 0;}
-    float ru=sqrt(u2),rv=sqrt(v2),co=clamp(dot(u,v)/(ru*rv),-1.0f,1.0f),theta=acos(co),si=sqrt(max(1.0f-co*co,1e-12f));
-    float dE=t.parameters.y*(theta-t.parameters.x);
-    float3 ga=(co*u/u2-v/(ru*rv))/si,gc=(co*v/v2-u/(ru*rv))/si;
-    float3 fa=-dE*ga,fc=-dE*gc,fb=-(fa+fc); float3 f=local==0?fa:(local==1?fb:fc);
-    float delta=theta-t.parameters.x; return float4(f,(0.5f*t.parameters.y*delta*delta)/3.0f);
-}
-inline float4 torsionContribution(uint local,Torsion t,device const float4* p,constant Command& c,device Status& s,uint owner){
-    float3 d0=minimumImage(p[t.atoms.x].xyz-p[t.atoms.y].xyz,c),d1=minimumImage(p[t.atoms.z].xyz-p[t.atoms.y].xyz,c),d2=minimumImage(p[t.atoms.z].xyz-p[t.atoms.w].xyz,c);
-    float3 c1=cross(d0,d1),c2=cross(d1,d2); float c1q=dot(c1,c1),c2q=dot(c2,c2),d1q=dot(d1,d1);
-    if(!(c1q>1e-16f&&c2q>1e-16f&&d1q>1e-16f)){fail(s,statusInvalidGeometry,owner);return 0;}
-    float l=sqrt(d1q),phi=atan2(dot(d1,cross(c1,c2))/l,dot(c1,c2));
-    float n=t.parameters.x,phase=t.parameters.y,k=t.parameters.z,e=k*(1.0f+cos(n*phi-phase)),dE=-k*n*sin(n*phi-phase);
-    float3 f0=c1*(dE*l/c1q),f3=c2*(-dE*l/c2q); float q0=dot(d0,d1)/d1q,q2=dot(d2,d1)/d1q;
-    float3 f1=f0*(q0-1.0f)-f3*q2,f2=-f0*q0+f3*(q2-1.0f); float3 f=local==0?f0:(local==1?f1:(local==2?f2:f3));
-    return float4(f,e*0.25f);
+kernel void nvivo_md_validate_constraints(device const float4* p[[buffer(0)]],device const float4* v[[buffer(1)]],device const Constraint* constraints[[buffer(2)]],device const uint* offsets[[buffer(3)]],device const Incidence* incidence[[buffer(4)]],device Status& s[[buffer(5)]],constant Command& c[[buffer(6)]],uint gid[[thread_position_in_grid]]){
+    if(gid>=c.particleCount)return;for(uint i=offsets[gid];i<offsets[gid+1];++i){Incidence e=incidence[i];if(e.localIndex!=0)continue;Constraint q=constraints[e.termIndex];float3 d=minimumImage(p[q.atoms.x].xyz-p[q.atoms.y].xyz,c);float length=sqrt(dot(d,d));float posError=fabs(length-q.distanceNM)/max(q.distanceNM,1e-8f);float velError=fabs(dot(d,v[q.atoms.x].xyz-v[q.atoms.y].xyz))/max(q.distanceNM,1e-8f);if(!isfinite(posError)||!isfinite(velError)||posError>c.constraintTolerance||velError>c.constraintTolerance/max(c.dtPS,1e-8f))fail(s,statusConstraint,gid);}
 }
 
-kernel void nvivo_md_clear_force(device float4* forceEnergy[[buffer(0)]],constant Command& c[[buffer(1)]],uint gid[[thread_position_in_grid]]){
-    if(gid<c.particleCount)forceEnergy[gid]=0;
-}
-kernel void nvivo_md_clear_status(device Status& s[[buffer(0)]],uint gid[[thread_position_in_grid]]){
-    if(gid==0){atomic_store_explicit(&s.flags,0,memory_order_relaxed);atomic_store_explicit(&s.firstParticle,0xffffffffu,memory_order_relaxed);atomic_store_explicit(&s.violationCount,0,memory_order_relaxed);atomic_store_explicit(&s.reserved,0,memory_order_relaxed);}
-}
-kernel void nvivo_md_bonded(device const float4* p[[buffer(0)]],device float4* fe[[buffer(1)]],device const Bond* bonds[[buffer(2)]],device const uint* bo[[buffer(3)]],device const Incidence* bi[[buffer(4)]],device const Angle* angles[[buffer(5)]],device const uint* ao[[buffer(6)]],device const Incidence* ai[[buffer(7)]],device const Torsion* torsions[[buffer(8)]],device const uint* to[[buffer(9)]],device const Incidence* ti[[buffer(10)]],device Status& s[[buffer(11)]],constant Command& c[[buffer(12)]],uint gid[[thread_position_in_grid]]){
-    if(gid>=c.particleCount)return; float4 sum=0;
-    for(uint i=bo[gid];i<bo[gid+1];++i){Incidence e=bi[i];sum+=bondContribution(e.localIndex,bonds[e.termIndex],p,c,s,gid);}
-    for(uint i=ao[gid];i<ao[gid+1];++i){Incidence e=ai[i];sum+=angleContribution(e.localIndex,angles[e.termIndex],p,c,s,gid);}
-    for(uint i=to[gid];i<to[gid+1];++i){Incidence e=ti[i];sum+=torsionContribution(e.localIndex,torsions[e.termIndex],p,c,s,gid);}
-    if(!all(isfinite(sum))){fail(s,statusNonFinite,gid);return;} fe[gid]+=sum;
-}
-inline int findException(uint owner,uint partner,device const uint* offsets,device const uint* partners,device const uint* indices){
-    uint lo=offsets[owner],hi=offsets[owner+1];while(lo<hi){uint mid=lo+(hi-lo)/2,v=partners[mid];if(v<partner)lo=mid+1;else hi=mid;}return lo<offsets[owner+1]&&partners[lo]==partner?int(indices[lo]):-1;
-}
-kernel void nvivo_md_nonbonded_direct(device const float4* p[[buffer(0)]],device float4* fe[[buffer(1)]],device const float4* dyn[[buffer(2)]],device const uint* typeIndex[[buffer(3)]],device const float2* pair[[buffer(4)]],device const PairException* exs[[buffer(5)]],device const uint* eo[[buffer(6)]],device const uint* ep[[buffer(7)]],device const uint* ei[[buffer(8)]],device Status& s[[buffer(9)]],constant Command& c[[buffer(10)]],uint gid[[thread_position_in_grid]]){
-    if(gid>=c.particleCount)return;float3 force=0;float energy=0,cut2=c.cutoffNM*c.cutoffNM;
-    for(uint j=0;j<c.particleCount;++j){if(j==gid)continue;float3 d=minimumImage(p[gid].xyz-p[j].xyz,c);float r2=dot(d,d);if(r2>=cut2)continue;
-        if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)||!isfinite(r2)){fail(s,statusOverlap,gid);continue;}float ir=rsqrt(r2),ir2=ir*ir,cs=1,ls=1;float2 coeff=pair[typeIndex[gid]*c.typeCount+typeIndex[j]];
-        int ex=findException(gid,j,eo,ep,ei);if(ex>=0){PairException v=exs[ex];cs=v.scales.x;ls=v.scales.y;if((v.flags&1u)!=0)coeff=v.overrideC12C6;}
-        float ir6=ir2*ir2*ir2,ir12=ir6*ir6,lj=ls*(coeff.x*ir12-coeff.y*ir6),lf=ls*(12.0f*coeff.x*ir12-6.0f*coeff.y*ir6)*ir2;
-        float qq=dyn[gid].z*dyn[j].z,ce=0,cf=0;if(cs!=0&&qq!=0){if(c.electrostatics==0){ce=c.coulombPrefactor*qq*ir;cf=c.coulombPrefactor*qq*ir*ir2;}else{ce=c.coulombPrefactor*qq*(ir+c.reactionFieldK*r2-c.reactionFieldC);cf=c.coulombPrefactor*qq*(ir*ir2-2.0f*c.reactionFieldK);}ce*=cs;cf*=cs;}
-        force+=(lf+cf)*d;energy+=0.5f*(lj+ce);
-    }float4 v=fe[gid]+float4(force,energy);if(!all(isfinite(v))){fail(s,statusNonFinite,gid);return;}fe[gid]=v;
-}
-kernel void nvivo_md_half_kick(device float4* v[[buffer(0)]],device const float4* fe[[buffer(1)]],device const float4* dyn[[buffer(2)]],constant Command& c[[buffer(3)]],uint gid[[thread_position_in_grid]]){
-    if(gid>=c.particleCount||dyn[gid].y==0)return;v[gid].xyz+=0.5f*c.dtPS*dyn[gid].y*fe[gid].xyz;
-}
-kernel void nvivo_md_drift(device float4* p[[buffer(0)]],device const float4* v[[buffer(1)]],device const float4* dyn[[buffer(2)]],constant Command& c[[buffer(3)]],uint gid[[thread_position_in_grid]]){
-    if(gid>=c.particleCount||dyn[gid].y==0)return;p[gid].xyz=wrapPosition(p[gid].xyz+c.dtPS*v[gid].xyz,c);
-}
-kernel void nvivo_md_kinetic(device const float4* v[[buffer(0)]],device const float4* dyn[[buffer(1)]],device float* ke[[buffer(2)]],constant Command& c[[buffer(3)]],uint gid[[thread_position_in_grid]]){
-    if(gid<c.particleCount)ke[gid]=0.5f*dyn[gid].x*dot(v[gid].xyz,v[gid].xyz);
-}
-kernel void nvivo_md_validate(device const float4* p[[buffer(0)]],device const float4* v[[buffer(1)]],device const float4* fe[[buffer(2)]],device Status& s[[buffer(3)]],constant Command& c[[buffer(4)]],uint gid[[thread_position_in_grid]]){
-    if(gid<c.particleCount&&(!all(isfinite(p[gid]))||!all(isfinite(v[gid]))||!all(isfinite(fe[gid]))))fail(s,statusNonFinite,gid);
-}
+kernel void nvivo_md_kinetic(device const float4* v[[buffer(0)]],device const float4* dyn[[buffer(1)]],device float* ke[[buffer(2)]],constant Command& c[[buffer(3)]],uint gid[[thread_position_in_grid]]){if(gid<c.particleCount)ke[gid]=0.5f*dyn[gid].x*dot(v[gid].xyz,v[gid].xyz);}
+kernel void nvivo_md_validate(device const float4* p[[buffer(0)]],device const float4* v[[buffer(1)]],device const float4* fe[[buffer(2)]],device Status& s[[buffer(3)]],constant Command& c[[buffer(4)]],uint gid[[thread_position_in_grid]]){if(gid<c.particleCount&&(!all(isfinite(p[gid]))||!all(isfinite(v[gid]))||!all(isfinite(fe[gid]))))fail(s,statusNonFinite,gid);}
 } // namespace nvivo_md
