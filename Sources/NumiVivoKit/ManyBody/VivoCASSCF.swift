@@ -62,7 +62,7 @@ public struct VivoCASSCFIteration: Codable, Sendable, Equatable {
     public let activeCIGapHartree: Double?
 }
 public enum VivoCASSCFTermination: String, Codable, Sendable { case converged, iterationLimit, lineSearchFailed, evaluationLimit }
-public struct VivoCASSCFResult: Codable, Sendable, Equable {
+public struct VivoCASSCFResult: Codable, Sendable, Equatable {
     public let partition: VivoActiveSpace
     /// Columns expressed in the original orthonormal spatial-orbital basis.
     public let orbitalRotation: VivoQMMatrix
