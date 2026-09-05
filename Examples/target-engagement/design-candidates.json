@@ -1,0 +1,102 @@
+[
+  {
+    "identifier": "sample-1",
+    "templateCaseIdentifier": "fit-low",
+    "exposureKnots": [
+      {
+        "timeSeconds": 0,
+        "unboundDrugM": 1e-06
+      },
+      {
+        "timeSeconds": 10,
+        "unboundDrugM": 0
+      },
+      {
+        "timeSeconds": 20,
+        "unboundDrugM": 0
+      }
+    ],
+    "sampleTimeSeconds": 1,
+    "observable": "drugOccupancy",
+    "relativeCost": 1,
+    "evidence": {
+      "source": "synthetic planned measurement",
+      "locator": "Examples/target-engagement/PORTABLE_RESEARCH.md"
+    }
+  },
+  {
+    "identifier": "sample-5",
+    "templateCaseIdentifier": "fit-low",
+    "exposureKnots": [
+      {
+        "timeSeconds": 0,
+        "unboundDrugM": 1e-06
+      },
+      {
+        "timeSeconds": 10,
+        "unboundDrugM": 0
+      },
+      {
+        "timeSeconds": 20,
+        "unboundDrugM": 0
+      }
+    ],
+    "sampleTimeSeconds": 5,
+    "observable": "drugOccupancy",
+    "relativeCost": 1,
+    "evidence": {
+      "source": "synthetic planned measurement",
+      "locator": "Examples/target-engagement/PORTABLE_RESEARCH.md"
+    }
+  },
+  {
+    "identifier": "sample-10",
+    "templateCaseIdentifier": "fit-low",
+    "exposureKnots": [
+      {
+        "timeSeconds": 0,
+        "unboundDrugM": 1e-06
+      },
+      {
+        "timeSeconds": 10,
+        "unboundDrugM": 0
+      },
+      {
+        "timeSeconds": 20,
+        "unboundDrugM": 0
+      }
+    ],
+    "sampleTimeSeconds": 10,
+    "observable": "drugOccupancy",
+    "relativeCost": 1,
+    "evidence": {
+      "source": "synthetic planned measurement",
+      "locator": "Examples/target-engagement/PORTABLE_RESEARCH.md"
+    }
+  },
+  {
+    "identifier": "sample-20",
+    "templateCaseIdentifier": "fit-low",
+    "exposureKnots": [
+      {
+        "timeSeconds": 0,
+        "unboundDrugM": 1e-06
+      },
+      {
+        "timeSeconds": 10,
+        "unboundDrugM": 0
+      },
+      {
+        "timeSeconds": 20,
+        "unboundDrugM": 0
+      }
+    ],
+    "sampleTimeSeconds": 20,
+    "observable": "drugOccupancy",
+    "relativeCost": 1,
+    "evidence": {
+      "source": "synthetic planned measurement",
+      "locator": "Examples/target-engagement/PORTABLE_RESEARCH.md"
+    }
+  }
+]
