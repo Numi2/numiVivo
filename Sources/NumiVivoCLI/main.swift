@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoHybridCLICommands.handles(arguments.first) {
+if VivoMDProtocolCLICommands.handles(arguments.first) {
+    status = await VivoMDProtocolCLICommands().run(arguments: arguments)
+} else if VivoHybridCLICommands.handles(arguments.first) {
     status = await VivoHybridCLICommands().run(arguments: arguments)
 } else if VivoMDCLICommands.handles(arguments.first) {
     status = await VivoMDCLICommands().run(arguments: arguments)
@@ -19,8 +21,9 @@ if VivoHybridCLICommands.handles(arguments.first) {
 } else {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
-        FileHandle.standardOutput.write(Data("\nHybrid GPU execution: plan-hybrid, run-hybrid, hybrid-help.\n".utf8))
-        FileHandle.standardOutput.write(Data("Apple-native MD: md-capabilities, md-run, md-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("\nMD workflows: md-protocol-template, md-protocol-validate, md-protocol-run, md-protocol-resume, md-protocol-inspect, md-trajectory-inspect, md-protocol-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("Hybrid GPU execution: plan-hybrid, run-hybrid, hybrid-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("Apple-native MD: md-capabilities, md-run, md-minimize, md-help.\n".utf8))
         FileHandle.standardOutput.write(Data("Molecular structures: structure-import, structure-export, structure-inspect, structure-select, structure-help.\n".utf8))
         FileHandle.standardOutput.write(Data("Structure preparation: structure-resolve-altloc, structure-build-topology, structure-slice, structure-prep-help.\n".utf8))
         FileHandle.standardOutput.write(Data("Force fields: forcefield-validate, forcefield-assign, forcefield-compile, forcefield-help.\n".utf8))
