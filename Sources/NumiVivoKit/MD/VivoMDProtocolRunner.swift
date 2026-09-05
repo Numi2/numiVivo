@@ -10,7 +10,7 @@ public actor VivoMDProtocolRunner {
     public nonisolated let planFingerprint: VivoFingerprint
     private let system: VivoClassicalSystem
     private let store: VivoArtifactStore
-    private let device: MTLDevice?
+    private let device: MTLDevice
     private var cursor: VivoMDProtocolCheckpoint
     private var runtime: VivoMDMetalRuntime?
     private var trajectory: VivoMDTrajectoryArchiveWriter?
@@ -20,6 +20,7 @@ public actor VivoMDProtocolRunner {
     public static func start(system: VivoClassicalSystem, initialState: VivoClassicalInitialState,
                              plan: VivoMDProtocolPlan, store: VivoArtifactStore,
                              device: MTLDevice? = nil) async throws -> VivoMDProtocolRunner {
+        let device = try device ?? VivoMetalDeviceSelector.productionDevice()
         let capabilities = try plan.validate(system: system, initialState: initialState)
         let blockers = capabilities.flatMap(\.blockers)
         guard blockers.isEmpty else { throw VivoMDRuntimeError.unsupported(Array(Set(blockers)).sorted()) }
@@ -54,6 +55,7 @@ public actor VivoMDProtocolRunner {
     public static func resume(system: VivoClassicalSystem, plan: VivoMDProtocolPlan,
                               store: VivoArtifactStore, checkpoint: VivoFingerprint,
                               device: MTLDevice? = nil) async throws -> VivoMDProtocolRunner {
+        let device = try device ?? VivoMetalDeviceSelector.productionDevice()
         try plan.validate()
         guard plan.systemFingerprint == (try system.fingerprint()) else {
             throw VivoArtifactValidationError.incompatible("resume system differs from protocol")
@@ -143,7 +145,7 @@ public actor VivoMDProtocolRunner {
     }
 
     private init(system: VivoClassicalSystem, plan: VivoMDProtocolPlan, store: VivoArtifactStore,
-                 device: MTLDevice?, cursor: VivoMDProtocolCheckpoint, runtime: VivoMDMetalRuntime?,
+                 device: MTLDevice, cursor: VivoMDProtocolCheckpoint, runtime: VivoMDMetalRuntime?,
                  trajectory: VivoMDTrajectoryArchiveWriter?, latestDurable: VivoStoredArtifact?) {
         self.system = system; self.plan = plan; self.store = store; self.device = device
         self.cursor = cursor; self.runtime = runtime; self.trajectory = trajectory; self.latestDurable = latestDurable
