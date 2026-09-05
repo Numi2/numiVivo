@@ -43,6 +43,7 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case mdNonbondedDirect = "nvivo_md_nonbonded_direct"
     case mdHalfKick = "nvivo_md_half_kick"
     case mdDrift = "nvivo_md_drift"
+    case mdLangevin = "nvivo_md_langevin"
     case mdConstraintPosition = "nvivo_md_constraint_position"
     case mdConstraintVelocity = "nvivo_md_constraint_velocity"
     case mdValidateConstraints = "nvivo_md_validate_constraints"
@@ -54,7 +55,7 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
         case .physiologyClearStatus, .physiologyPrepareTransaction, .physiologyApplyTransforms,
              .physiologyHeunPredict, .physiologyHeunCorrect, .physiologyValidateCandidate, .physiologyPublish:
             return "NumiVivoPhysiologyKernels"
-        case .mdClearForce, .mdClearStatus, .mdBonded, .mdNonbondedDirect, .mdHalfKick, .mdDrift,
+        case .mdClearForce, .mdClearStatus, .mdBonded, .mdNonbondedDirect, .mdHalfKick, .mdDrift, .mdLangevin,
              .mdConstraintPosition, .mdConstraintVelocity, .mdValidateConstraints, .mdKinetic, .mdValidate:
             return "NumiVivoMDKernels"
         default: return "NumiVivoProgramPackRuntime"
@@ -67,18 +68,17 @@ public struct NumiVivoPipeline: @unchecked Sendable {
     public let executionWidth: Int
     public let maximumThreadsPerThreadgroup: Int
     public init(state: MTLComputePipelineState) {
-        self.state = state; executionWidth = state.threadExecutionWidth
-        maximumThreadsPerThreadgroup = state.maxTotalThreadsPerThreadgroup
+        self.state=state; executionWidth=state.threadExecutionWidth; maximumThreadsPerThreadgroup=state.maxTotalThreadsPerThreadgroup
     }
-    public func threadgroupSize(for elementCount: Int, preferred: Int? = nil) -> MTLSize {
-        let width=max(executionWidth,1), requested=max(width,preferred ?? width*4), capped=min(requested,maximumThreadsPerThreadgroup)
-        let aligned=max(1,capped>=width ? (capped/width)*width:capped); return .init(width:aligned,height:1,depth:1)
+    public func threadgroupSize(for elementCount:Int,preferred:Int?=nil)->MTLSize{
+        let width=max(executionWidth,1),requested=max(width,preferred ?? width*4),capped=min(requested,maximumThreadsPerThreadgroup)
+        let aligned=max(1,capped>=width ? (capped/width)*width:capped);return .init(width:aligned,height:1,depth:1)
     }
-    public func gridSize(for elementCount: Int) -> MTLSize { .init(width:max(elementCount,1),height:1,depth:1) }
+    public func gridSize(for elementCount:Int)->MTLSize{.init(width:max(elementCount,1),height:1,depth:1)}
 }
 
-private final class NumiVivoRuntimeLibraryCache: @unchecked Sendable {
-    static let shared=NumiVivoRuntimeLibraryCache(); private let lock=NSLock(); private var libraries:[String:MTLLibrary]=[:]
+private final class NumiVivoRuntimeLibraryCache:@unchecked Sendable{
+    static let shared=NumiVivoRuntimeLibraryCache();private let lock=NSLock();private var libraries:[String:MTLLibrary]=[:]
     func library(device:MTLDevice,module:String)throws->MTLLibrary{
         lock.lock();defer{lock.unlock()};let key="\(device.registryID)/\(module)/v1";if let value=libraries[key]{return value}
         let url=Bundle.module.url(forResource:module,withExtension:"metal") ?? Bundle.module.url(forResource:module,withExtension:"metal",subdirectory:"Resources")
@@ -88,8 +88,8 @@ private final class NumiVivoRuntimeLibraryCache: @unchecked Sendable {
     }
 }
 
-public actor NumiVivoPipelineCatalog {
-    private let device:MTLDevice; private var cache:[NumiVivoKernel:NumiVivoPipeline]=[:]
+public actor NumiVivoPipelineCatalog{
+    private let device:MTLDevice;private var cache:[NumiVivoKernel:NumiVivoPipeline]=[:]
     public init(device:MTLDevice)throws{self.device=device}
     public func pipeline(_ kernel:NumiVivoKernel)throws->NumiVivoPipeline{
         if let value=cache[kernel]{return value};let library=try NumiVivoRuntimeLibraryCache.shared.library(device:device,module:kernel.sourceModule)
