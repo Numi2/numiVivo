@@ -49,43 +49,12 @@ public enum VivoDirectCI {
         let d=dets.count,roots=cfg.roots,capacity=min(d,cfg.maximumSubspace)
         guard roots<=d else { throw VivoChemistryError.invalid("more roots than determinants") }
         _ = try budget.elements([d,capacity],simultaneousArrays:8)
-        let index=Dictionary(uniqueKeysWithValues:dets.enumerated().map { ($0.element,$0.offset) })
-        let occupied=dets.map { det in (0..<(2*n)).filter { det & (UInt64(1)<<$0) != 0 } }
-        let virtual=dets.map { det in (0..<(2*n)).filter { det & (UInt64(1)<<$0) == 0 } }
-        func one(_ p:Int,_ q:Int)->Double { p%2==q%2 ? h.oneElectron[p/2,q/2]:0 }
-        func g(_ p:Int,_ q:Int,_ r:Int,_ s:Int)->Double {
-            var value=0.0
-            if p%2==r%2 && q%2==s%2 { value+=h.eri(p/2,r/2,q/2,s/2) }
-            if p%2==s%2 && q%2==r%2 { value-=h.eri(p/2,s/2,q/2,r/2) };return value
-        }
-        let diagonal=occupied.map { occ -> Double in
-            var value=0.0;for p in occ { value+=one(p,p);for q in occ { value+=0.5*g(p,q,p,q) } };return value
-        }
+        let action=try VivoDirectHamiltonian(h,determinants:dets,budget:budget)
+        let diagonal=action.diagonal
         var work=0,products=0
-        func charge() throws {
-            guard work<budget.maximumOperatorApplications else { throw VivoChemistryError.resourceLimit("direct CI aggregate work") };work+=1
-        }
         func apply(_ vector:[Double]) throws -> [Double] {
-            products+=1;var out=[Double](repeating:0,count:d)
-            for k in dets.indices where vector[k] != 0 {
-                let det=dets[k],occ=occupied[k],vir=virtual[k],coefficient=vector[k]
-                out[k]+=diagonal[k]*coefficient
-                for i in occ { for a in vir where i%2==a%2 {
-                    try charge()
-                    let action=vivoApplyFermions(det,[.init(mode:i,creation:false),.init(mode:a,creation:true)])!
-                    var value=one(a,i);for j in occ where j != i { value+=g(a,j,i,j) }
-                    out[index[action.0]!] += coefficient*action.1*value
-                } }
-                for ii in occ.indices { for jj in (ii+1)..<occ.count {
-                    let i=occ[ii],j=occ[jj]
-                    for aa in vir.indices { for bb in (aa+1)..<vir.count {
-                        let a=vir[aa],b=vir[bb];if i%2+j%2 != a%2+b%2 { continue };try charge()
-                        let action=vivoApplyFermions(det,[.init(mode:i,creation:false),.init(mode:j,creation:false),.init(mode:b,creation:true),.init(mode:a,creation:true)])!
-                        out[index[action.0]!] += coefficient*action.1*g(a,b,i,j)
-                    } }
-                } }
-            }
-            guard out.allSatisfy(\.isFinite) else { throw VivoChemistryError.convergence("CI action overflow") };return out
+            products+=1
+            return try action.apply(vector,work:&work)
         }
         func dot(_ a:[Double],_ b:[Double])->Double { zip(a,b).reduce(0.0) { $0+$1.0*$1.1 } }
         func orthogonal(_ a:[Double],_ space:[[Double]])->[Double]? {
