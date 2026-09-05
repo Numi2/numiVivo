@@ -20,11 +20,10 @@ private struct VivoPMEMetalCommand {
     var reciprocalC: SIMD4<Float>
 }
 
-/// Persistent GPU-resident particle-mesh Ewald reciprocal backend.
-/// Two complex grids are ping-ponged through a radix-2 3-D FFT. No host
-/// readback occurs in the force path.
 final class VivoPMEEngine: @unchecked Sendable {
     let plan: VivoPMEPlan
+    let totalChargeE: Double
+    let neutralizingBackgroundEnergyKJPerMol: Double
     private let gridA: MTLBuffer
     private let gridB: MTLBuffer
     private let pipelines: [NumiVivoKernel: NumiVivoPipeline]
@@ -33,10 +32,12 @@ final class VivoPMEEngine: @unchecked Sendable {
     static func make(device: MTLDevice,
                      catalog: NumiVivoPipelineCatalog,
                      particleCount: UInt32,
+                     totalChargeE: Double,
                      cell: VivoPeriodicCell,
                      configuration: VivoMDConfiguration) async throws -> VivoPMEEngine {
-        guard configuration.electrostatics == .pme else {
-            throw VivoMDRuntimeError.metal("PME engine requested for non-PME configuration")
+        guard configuration.electrostatics == .pme,
+              totalChargeE.isFinite else {
+            throw VivoMDRuntimeError.metal("invalid PME engine request")
         }
         let plan = try VivoPMEPlan.make(cell: cell,
                                         cutoffNM: configuration.cutoffNM,
@@ -54,45 +55,50 @@ final class VivoPMEEngine: @unchecked Sendable {
               let b = device.makeBuffer(length: Int(byteCount64), options: .storageModePrivate) else {
             throw VivoMDRuntimeError.metal("PME complex-grid allocation exceeds Metal limits")
         }
-        a.label = "NumiVivo.PME.gridA"
-        b.label = "NumiVivo.PME.gridB"
-        func f4(_ v: VivoVector3D) -> SIMD4<Float> {
-            .init(Float(v.x), Float(v.y), Float(v.z), 0)
-        }
+        a.label = "NumiVivo.PME.gridA"; b.label = "NumiVivo.PME.gridB"
+        func f4(_ v: VivoVector3D) -> SIMD4<Float> { .init(Float(v.x), Float(v.y), Float(v.z), 0) }
+        let prefactor = 138.935456 / configuration.relativeDielectric
         let command = VivoPMEMetalCommand(
             particleCount: particleCount,
             gridX: plan.gridX, gridY: plan.gridY, gridZ: plan.gridZ,
             gridPointCount: pointCount, axis: 0, stage: 0, inverse: 0,
             betaPerNM: Float(plan.ewaldBetaPerNM),
             volumeNM3: Float(plan.cellVolumeNM3),
-            coulombPrefactor: Float(138.935456 / configuration.relativeDielectric),
-            inverseGridCount: 1 / Float(pointCount),
-            reciprocalA: f4(plan.reciprocalA),
-            reciprocalB: f4(plan.reciprocalB),
+            coulombPrefactor: Float(prefactor), inverseGridCount: 1 / Float(pointCount),
+            reciprocalA: f4(plan.reciprocalA), reciprocalB: f4(plan.reciprocalB),
             reciprocalC: f4(plan.reciprocalC)
         )
         guard MemoryLayout<VivoPMEMetalCommand>.stride == 96 else {
             throw VivoMDRuntimeError.metal("Swift/Metal PME command ABI mismatch")
         }
+        let beta2 = plan.ewaldBetaPerNM * plan.ewaldBetaPerNM
+        let background = -Double.pi * prefactor * totalChargeE * totalChargeE
+            / (2 * beta2 * plan.cellVolumeNM3)
+        guard background.isFinite, abs(background) <= Double(Float.greatestFiniteMagnitude) else {
+            throw VivoMDRuntimeError.metal("PME neutralizing-background energy exceeds FP32 range")
+        }
         let names: [NumiVivoKernel] = [
             .mdPMEClearGrid, .mdPMESpread, .mdPMEBitReverse, .mdPMEFFTStage,
-            .mdPMEInfluence, .mdPMEScaleInverse, .mdPMEGather
+            .mdPMEInfluence, .mdPMEScaleInverse, .mdPMEGather, .mdPMEBackgroundEnergy
         ]
         var pipelines: [NumiVivoKernel: NumiVivoPipeline] = [:]
         for name in names { pipelines[name] = try await catalog.pipeline(name) }
-        return .init(plan: plan, gridA: a, gridB: b,
-                     pipelines: pipelines, baseCommand: command)
+        return .init(plan: plan, totalChargeE: totalChargeE,
+                     neutralizingBackgroundEnergyKJPerMol: background,
+                     gridA: a, gridB: b, pipelines: pipelines, baseCommand: command)
     }
 
-    private init(plan: VivoPMEPlan, gridA: MTLBuffer, gridB: MTLBuffer,
+    private init(plan: VivoPMEPlan, totalChargeE: Double,
+                 neutralizingBackgroundEnergyKJPerMol: Double,
+                 gridA: MTLBuffer, gridB: MTLBuffer,
                  pipelines: [NumiVivoKernel: NumiVivoPipeline],
                  baseCommand: VivoPMEMetalCommand) {
-        self.plan = plan; self.gridA = gridA; self.gridB = gridB
+        self.plan = plan; self.totalChargeE = totalChargeE
+        self.neutralizingBackgroundEnergyKJPerMol = neutralizingBackgroundEnergyKJPerMol
+        self.gridA = gridA; self.gridB = gridB
         self.pipelines = pipelines; self.baseCommand = baseCommand
     }
 
-    /// Adds reciprocal-space electrostatic force and energy into an already
-    /// populated per-particle force/energy buffer.
     func encodeReciprocal(commandBuffer: MTLCommandBuffer,
                           positions: MTLBuffer,
                           dynamics: MTLBuffer,
@@ -105,9 +111,7 @@ final class VivoPMEEngine: @unchecked Sendable {
         try dispatch(.mdPMESpread, commandBuffer: commandBuffer,
                      buffers: [positions, dynamics, gridA, status], command: &command,
                      elements: Int(command.particleCount))
-
-        var current = gridA
-        var scratch = gridB
+        var current = gridA, scratch = gridB
         try fft3D(commandBuffer: commandBuffer, current: &current, scratch: &scratch,
                   inverse: false, command: &command)
         try dispatch(.mdPMEInfluence, commandBuffer: commandBuffer,
@@ -122,6 +126,9 @@ final class VivoPMEEngine: @unchecked Sendable {
         try dispatch(.mdPMEGather, commandBuffer: commandBuffer,
                      buffers: [positions, dynamics, current, forceEnergy, status],
                      command: &command, elements: Int(command.particleCount))
+        if neutralizingBackgroundEnergyKJPerMol != 0 {
+            try encodeBackground(commandBuffer: commandBuffer, forceEnergy: forceEnergy)
+        }
     }
 
     private func fft3D(commandBuffer: MTLCommandBuffer,
@@ -130,9 +137,7 @@ final class VivoPMEEngine: @unchecked Sendable {
                        inverse: Bool,
                        command: inout VivoPMEMetalCommand) throws {
         for axis in UInt32(0)...UInt32(2) {
-            command.axis = axis
-            command.inverse = inverse ? 1 : 0
-            command.stage = 0
+            command.axis = axis; command.inverse = inverse ? 1 : 0; command.stage = 0
             try dispatch(.mdPMEBitReverse, commandBuffer: commandBuffer,
                          buffers: [current, scratch], command: &command,
                          elements: Int(command.gridPointCount))
@@ -149,6 +154,22 @@ final class VivoPMEEngine: @unchecked Sendable {
         }
     }
 
+    private func encodeBackground(commandBuffer: MTLCommandBuffer,
+                                  forceEnergy: MTLBuffer) throws {
+        guard let pipeline = pipelines[.mdPMEBackgroundEnergy],
+              let encoder = commandBuffer.makeComputeCommandEncoder() else {
+            throw VivoMDRuntimeError.metal("PME background-energy encoder unavailable")
+        }
+        var energy = Float(neutralizingBackgroundEnergyKJPerMol)
+        encoder.label = NumiVivoKernel.mdPMEBackgroundEnergy.rawValue
+        encoder.setComputePipelineState(pipeline.state)
+        encoder.setBuffer(forceEnergy, offset: 0, index: 0)
+        encoder.setBytes(&energy, length: MemoryLayout<Float>.stride, index: 1)
+        encoder.dispatchThreads(.init(width: 1, height: 1, depth: 1),
+                                threadsPerThreadgroup: .init(width: 1, height: 1, depth: 1))
+        encoder.endEncoding()
+    }
+
     private func dispatch(_ kernel: NumiVivoKernel,
                           commandBuffer: MTLCommandBuffer,
                           buffers: [MTLBuffer],
@@ -158,8 +179,7 @@ final class VivoPMEEngine: @unchecked Sendable {
               let encoder = commandBuffer.makeComputeCommandEncoder() else {
             throw VivoMDRuntimeError.metal("PME encoder unavailable for \(kernel.rawValue)")
         }
-        encoder.label = kernel.rawValue
-        encoder.setComputePipelineState(pipeline.state)
+        encoder.label = kernel.rawValue; encoder.setComputePipelineState(pipeline.state)
         for (index, buffer) in buffers.enumerated() { encoder.setBuffer(buffer, offset: 0, index: index) }
         encoder.setBytes(&command, length: MemoryLayout<VivoPMEMetalCommand>.stride,
                          index: buffers.count)
