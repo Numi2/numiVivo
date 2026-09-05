@@ -31,7 +31,7 @@ jobs:
           git archive --format=tar.gz HEAD > "$OUT/source.tar.gz"
           swift --version > "$OUT/compiler.txt"
           uname -srm > "$OUT/platform.txt"
-          swift build -c release --build-tests --jobs 3 2>&1 | tee "$OUT/build.log"
+          swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing 2>&1 | tee "$OUT/build.log"
           .build/release/numivivo --help > "$OUT/help.txt" 2>&1
           .build/release/numivivo md-help > "$OUT/md-help.txt" 2>&1
           .build/release/numivivo reaction-template h3-saddle --output "$OUT/saddle-request.json"
