@@ -3,10 +3,18 @@ import PackageDescription
 let package = Package(
     name: "NumiVivoTargetEngagementChecks",
     platforms: [.macOS(.v15)],
-    products: [.executable(name: "target-engagement-checks", targets: ["TargetEngagementChecks"])],
+    products: [
+        .executable(name: "target-engagement-checks", targets: ["TargetEngagementChecks"]),
+        .executable(name: "posterior-checks", targets: ["PosteriorChecks"])
+    ],
     dependencies: [.package(path: "../..")],
-    targets: [.executableTarget(name: "TargetEngagementChecks", dependencies: [
-        .product(name: "NumiVivoKit", package: "numivivo")
-    ])],
+    targets: [
+        .executableTarget(name: "TargetEngagementChecks", dependencies: [
+            .product(name: "NumiVivoKit", package: "numivivo")
+        ]),
+        .executableTarget(name: "PosteriorChecks", dependencies: [
+            .product(name: "NumiVivoKit", package: "numivivo")
+        ])
+    ],
     swiftLanguageModes: [.v6]
 )
