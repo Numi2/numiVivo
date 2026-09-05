@@ -218,11 +218,11 @@ public enum VivoNativeCompilerBridge {
             if value { options.flags |= flag }
             else { options.flags &= ~flag }
         }
-        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_INDEPENDENT_SHUTDOWN), value: requireIndependentShutdown)
-        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_MONITOR), value: requireMonitor)
-        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_CONTEXT_INSULATION), value: requireContextInsulation)
-        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_RESOURCE_BUFFERING), value: requireResourceBuffering)
-        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_DISTINCT_ORTHOGONALITY), value: requireDistinctOrthogonality)
+        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_INDEPENDENT_SHUTDOWN.rawValue), value: requireIndependentShutdown)
+        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_MONITOR.rawValue), value: requireMonitor)
+        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_CONTEXT_INSULATION.rawValue), value: requireContextInsulation)
+        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_RESOURCE_BUFFERING.rawValue), value: requireResourceBuffering)
+        setFlag(UInt32(NVIVO_SYNTHESIS_REQUIRE_DISTINCT_ORTHOGONALITY.rawValue), value: requireDistinctOrthogonality)
 
         var result = NVivoByteBuffer(data: nil, size: 0)
         var diagnostics = NVivoByteBuffer(data: nil, size: 0)
@@ -261,17 +261,17 @@ public enum VivoNativeCompilerBridge {
         options.requested_fidelity = fidelityValue
         setCompileFlag(
             &options,
-            flag: UInt32(NVIVO_COMPILE_STRICT_UNITS),
+            flag: UInt32(NVIVO_COMPILE_STRICT_UNITS.rawValue),
             enabled: strictUnits
         )
         setCompileFlag(
             &options,
-            flag: UInt32(NVIVO_COMPILE_STRICT_SAFETY),
+            flag: UInt32(NVIVO_COMPILE_STRICT_SAFETY.rawValue),
             enabled: strictSafety
         )
         setCompileFlag(
             &options,
-            flag: UInt32(NVIVO_COMPILE_REQUIRE_TERMINATION),
+            flag: UInt32(NVIVO_COMPILE_REQUIRE_TERMINATION.rawValue),
             enabled: requireTermination
         )
         return options
