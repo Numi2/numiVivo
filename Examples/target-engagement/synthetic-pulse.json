@@ -1,0 +1,141 @@
+{
+  "exposure" : {
+    "context" : {
+      "chemicalState" : "declared-synthetic-state",
+      "compound" : "synthetic-ligand",
+      "hostContext" : "well-mixed-fixture",
+      "ionicStrengthM" : 0.1,
+      "pH" : 7,
+      "site" : "one-site",
+      "target" : "synthetic-target",
+      "targetVariant" : "reference",
+      "temperatureK" : 300
+    },
+    "evidence" : {
+      "locator" : "ReferenceChecks.swift",
+      "source" : "synthetic mathematical fixture"
+    },
+    "interpolation" : "rightContinuousPiecewiseConstant",
+    "knots" : [
+      {
+        "timeSeconds" : 0,
+        "unboundDrugM" : 1e-06
+      },
+      {
+        "timeSeconds" : 10,
+        "unboundDrugM" : 0
+      },
+      {
+        "timeSeconds" : 100,
+        "unboundDrugM" : 0
+      }
+    ],
+    "origin" : "assumed",
+    "schemaVersion" : 1
+  },
+  "initial" : {
+    "competitor" : 0,
+    "covalent" : 0,
+    "free" : 1,
+    "reversible" : 0
+  },
+  "kinetics" : {
+    "association" : {
+      "evidence" : {
+        "locator" : "ReferenceChecks.swift",
+        "source" : "synthetic mathematical fixture"
+      },
+      "origin" : "assumed",
+      "uncertainty" : {
+        "unknown" : {
+
+        }
+      },
+      "unit" : "M^-1 s^-1",
+      "value" : 100000
+    },
+    "baselineTarget" : {
+      "evidence" : {
+        "locator" : "ReferenceChecks.swift",
+        "source" : "synthetic mathematical fixture"
+      },
+      "origin" : "assumed",
+      "uncertainty" : {
+        "unknown" : {
+
+        }
+      },
+      "unit" : "M",
+      "value" : 1e-07
+    },
+    "context" : {
+      "chemicalState" : "declared-synthetic-state",
+      "compound" : "synthetic-ligand",
+      "hostContext" : "well-mixed-fixture",
+      "ionicStrengthM" : 0.1,
+      "pH" : 7,
+      "site" : "one-site",
+      "target" : "synthetic-target",
+      "targetVariant" : "reference",
+      "temperatureK" : 300
+    },
+    "dissociation" : {
+      "evidence" : {
+        "locator" : "ReferenceChecks.swift",
+        "source" : "synthetic mathematical fixture"
+      },
+      "origin" : "assumed",
+      "uncertainty" : {
+        "unknown" : {
+
+        }
+      },
+      "unit" : "1/s",
+      "value" : 0.2
+    },
+    "exposureTreatment" : "externallyMaintainedUnbound",
+    "identifier" : "synthetic",
+    "inactivation" : {
+      "evidence" : {
+        "locator" : "ReferenceChecks.swift",
+        "source" : "synthetic mathematical fixture"
+      },
+      "origin" : "assumed",
+      "uncertainty" : {
+        "unknown" : {
+
+        }
+      },
+      "unit" : "1/s",
+      "value" : 0.02
+    },
+    "maximumUnboundDrugM" : 0.001,
+    "schemaVersion" : 1,
+    "targetTurnover" : {
+      "evidence" : {
+        "locator" : "ReferenceChecks.swift",
+        "source" : "synthetic mathematical fixture"
+      },
+      "origin" : "assumed",
+      "uncertainty" : {
+        "unknown" : {
+
+        }
+      },
+      "unit" : "1/s",
+      "value" : 0.001
+    },
+    "turnoverModel" : "equalStateLossAndConstantSynthesis"
+  },
+  "sampleTimesSeconds" : [
+    0,
+    1,
+    2,
+    5,
+    10,
+    20,
+    40,
+    100
+  ],
+  "schemaVersion" : 1
+}
