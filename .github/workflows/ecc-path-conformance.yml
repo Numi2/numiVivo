@@ -1,0 +1,99 @@
+name: Shared ECC path conformance
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ecc-path-conformance.yml'
+      - 'Sources/NumiVivoKit/Embedding/**'
+      - 'Sources/NumiVivoKit/QM/**'
+      - 'Sources/NumiVivoKit/ManyBody/**'
+      - 'Sources/NumiVivoKit/Workflow/**'
+      - 'Sources/NumiVivoKit/Artifacts/**'
+      - 'Sources/NumiVivoCLI/VivoECCPathCLICommands.swift'
+      - 'Sources/NumiVivoCLI/VivoElectronicCLICommands.swift'
+      - 'Tools/NativeChemistry/ECCPathChecks.swift'
+      - 'Tools/NativeChemistry/check_ecc_path_cli.py'
+      - 'Tools/NativeChemistry/build_scoped_cli.sh'
+      - 'Tools/NativeChemistry/ScopedCLIMain.swift'
+      - 'Tools/check_ecc_path.sh'
+      - 'ReferenceAdapters/PySCF/compare_ecc_path.py'
+permissions:
+  contents: read
+concurrency:
+  group: ecc-path-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  oracle:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Independently generate the five-geometry PySCF reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/oracle-python"
+          PYTHON="$RUNNER_TEMP/oracle-python/bin/python"
+          "$PYTHON" -m pip install 'numpy==1.26.4' 'scipy==1.13.1' 'h5py==3.11.0' 'pyscf==2.8.0'
+          "$PYTHON" ReferenceAdapters/PySCF/compare_ecc_path.py export "$RUNNER_TEMP/path-oracle"
+          "$PYTHON" -m pip freeze > "$RUNNER_TEMP/path-oracle/python-lock.txt"
+          git rev-parse HEAD > "$RUNNER_TEMP/path-oracle/source-commit.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ecc-path-oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/path-oracle/
+          if-no-files-found: error
+          retention-days: 14
+  apple:
+    needs: oracle
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: ecc-path-oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/path-oracle
+      - name: Execute real Apple numerics, production path CLI and artifact cache
+        shell: bash
+        env:
+          VIVO_PATH_REFERENCE_DIR: ${{ runner.temp }}/path-oracle
+        run: |
+          set -euo pipefail
+          bash Tools/check_ecc_path.sh "$RUNNER_TEMP/path-run" 2>&1 | tee "$RUNNER_TEMP/ecc-path-conformance.log"
+      - name: Retain exact source snapshot and runner identity
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/path-source"
+          git archive --format=tar.gz HEAD > "$RUNNER_TEMP/path-source/source.tar.gz"
+          git rev-parse HEAD > "$RUNNER_TEMP/path-source/commit.txt"
+          uname -srm > "$RUNNER_TEMP/path-source/platform.txt"
+          swiftc --version > "$RUNNER_TEMP/path-source/compiler.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: apple-ecc-path-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/path-run/native/
+            ${{ runner.temp }}/path-run/cli-checks/
+            ${{ runner.temp }}/path-run/*.log
+            ${{ runner.temp }}/path-run/*.json
+            ${{ runner.temp }}/path-run/*.txt
+            ${{ runner.temp }}/path-run/scoped-cli/sources.sha256
+            ${{ runner.temp }}/path-run/scoped-cli/platform.txt
+            ${{ runner.temp }}/path-run/scoped-cli/compiler.txt
+            ${{ runner.temp }}/path-source/
+            ${{ runner.temp }}/ecc-path-conformance.log
+          if-no-files-found: error
+          retention-days: 14
