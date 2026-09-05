@@ -73,6 +73,12 @@ public actor VivoTransactionalMolecularRuntime {
         case .permanentlyStopped(let reason), .failed(let reason): throw VivoRuntimeError.runtimeStopped(reason)
         }
     }
+    public func requireAcceptedBoundary() throws { try requireUnreserved() }
+    public func stopReversibly(reason: String) throws {
+        try requireReadyAndUnreserved()
+        guard !reason.isEmpty else { throw VivoRuntimeError.invalidConfiguration("empty reversible shutdown reason") }
+        lifecycleState = .reversiblyStopped(reason: reason)
+    }
     public func stopPermanently(reason: String) {
         // Already-submitted GPU work may finish, but cannot become publishable.
         pending = nil

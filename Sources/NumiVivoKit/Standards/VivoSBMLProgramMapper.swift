@@ -100,7 +100,7 @@ public struct VivoSBMLProgramMappingOptions: Codable, Equatable, Sendable {
               maximumDurationSeconds > 0 else {
             throw VivoSBMLMappingError.invalidOptions
         }
-        for mapping in speciesMappings.values + parameterMappings.values {
+        for mapping in Array(speciesMappings.values) + Array(parameterMappings.values) {
             _ = try mapping.transform(mapping.minimum)
             _ = try mapping.transform(mapping.maximum)
         }
@@ -312,7 +312,8 @@ public struct VivoSBMLProgramMapper: Sendable {
             }
             let expression: RateExpression?
             if let formula = law.formula, !formula.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                expression = FormulaParser(formula).parse()
+                var parser = FormulaParser(formula)
+                expression = parser.parse()
             } else if let mathML = law.mathML {
                 expression = MathMLExpressionParser.parse(mathML)
             } else {

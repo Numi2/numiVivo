@@ -186,6 +186,9 @@ public struct VivoResultPack: Codable, Sendable, Equatable {
     public let replicates: [VivoReplicateResult]
     public let measurements: [VivoMeasurementSample]
     public let events: [VivoEvent]
+    /// Optional for decoding legacy result packs; new experiment runs always supply these.
+    public let recordedEvents: [VivoRecordedEvent]?
+    public let measurementSummaries: [VivoMeasurementSummary]?
     public let ledgers: [VivoRunLedger]
     public let limitations: [String]
     public let annotations: [String: String]
@@ -204,7 +207,9 @@ public struct VivoResultPack: Codable, Sendable, Equatable {
         finishedAt: Date,
         replicates: [VivoReplicateResult],
         measurements: [VivoMeasurementSample],
+        measurementSummaries: [VivoMeasurementSummary]? = nil,
         events: [VivoEvent],
+        recordedEvents: [VivoRecordedEvent]? = nil,
         ledgers: [VivoRunLedger],
         limitations: [String],
         annotations: [String: String] = [:]
@@ -223,6 +228,8 @@ public struct VivoResultPack: Codable, Sendable, Equatable {
         self.replicates = replicates
         self.measurements = measurements
         self.events = events
+        self.recordedEvents = recordedEvents
+        self.measurementSummaries = measurementSummaries
         self.ledgers = ledgers
         self.limitations = limitations
         self.annotations = annotations
@@ -238,7 +245,20 @@ public struct VivoResultPack: Codable, Sendable, Equatable {
         guard Set(replicates.map(\.replicateIndex)).count == replicates.count else {
             throw VivoArtifactValidationError.invalid("result contains duplicate replicate indices")
         }
-        for sample in measurements { try sample.validate() }
+        let indices = Set(replicates.map(\.replicateIndex))
+        if let records = recordedEvents {
+            guard records.map(\.event) == events, records.allSatisfy({ indices.contains($0.replicateIndex) }) else {
+                throw VivoArtifactValidationError.invalid("replicate-tagged events differ from raw events or reference unknown replicates")
+            }
+        }
+        for summary in measurementSummaries ?? [] {
+            try summary.validate()
+            guard indices.contains(summary.replicateIndex) else { throw VivoArtifactValidationError.invalid("summary references an unknown replicate") }
+        }
+        for sample in measurements {
+            try sample.validate()
+            guard indices.contains(sample.replicateIndex) else { throw VivoArtifactValidationError.invalid("sample references an unknown replicate") }
+        }
         for ledger in ledgers where try !ledger.verify() {
             throw VivoArtifactValidationError.invalid("result contains an invalid step ledger chain")
         }

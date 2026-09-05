@@ -436,7 +436,7 @@ public actor VivoExactSSARuntime {
         let source = String(decoding: try Data(contentsOf: sourceURL), as: UTF8.self)
         let library: MTLLibrary
         do {
-            library = try device.makeLibrary(source: source, options: nil)
+            library = try await device.makeLibrary(source: source, options: nil)
         } catch {
             throw VivoExactSSAError.shaderCompilation(error.localizedDescription)
         }

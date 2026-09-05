@@ -136,13 +136,13 @@ public actor VivoMetalTargetLikelihoodScreen {
             if name == "NumiVivoTargetLikelihood" { scoringSource = text }
         }
         let options = MTLCompileOptions(); options.fastMathEnabled = false
-        let library = try device.makeLibrary(source: scoringSource, options: options)
+        let library = try await device.makeLibrary(source: scoringSource, options: options)
         guard let expose = library.makeFunction(name: "nvivo_target_likelihood_expose"),
               let observe = library.makeFunction(name: "nvivo_target_likelihood_observe") else {
             throw NumiVivoShaderError.functionMissing("target likelihood functions")
         }
-        let exposePipeline = try device.makeComputePipelineState(function: expose)
-        let observePipeline = try device.makeComputePipelineState(function: observe)
+        let exposePipeline = try await device.makeComputePipelineState(function: expose)
+        let observePipeline = try await device.makeComputePipelineState(function: observe)
         var storage: [CaseStorage] = [], bytes = 0
         for plan in plans {
             let item = try CaseStorage(plan: plan, device: device, queue: queue)

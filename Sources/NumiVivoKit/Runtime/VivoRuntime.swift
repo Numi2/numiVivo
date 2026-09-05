@@ -119,6 +119,10 @@ public actor VivoRuntime {
     public func setTransport(_ values: [VivoSpeciesTransportABI]) async throws { try await engine.setTransport(values) }
     public func setVelocity(_ values: [SIMD4<Float>]) async throws { try await engine.setVelocity(values) }
     public func setVolumeFractions(_ values: [Float]) async throws { try await engine.setVolumeFractions(values) }
+    public func apply(_ context: PreparedVivoHostContext) async throws { try await engine.apply(context) }
+    public func apply(intervention: PreparedVivoIntervention.Operation) async throws { try await engine.apply(intervention: intervention) }
+    /// Initial coupling is applied atomically by apply; no uncommitted facade queue exists.
+    public func primePendingInputs() async throws { try await engine.requireAcceptedBoundary() }
     public func snapshot() async throws -> VivoStateSnapshot { try await engine.snapshot() }
     public func checkpoint() async throws -> VivoMolecularCheckpoint { try await engine.checkpoint() }
     public func resumeCheckpoint() async throws -> VivoMolecularResumeCheckpoint { try await engine.resumeCheckpoint() }

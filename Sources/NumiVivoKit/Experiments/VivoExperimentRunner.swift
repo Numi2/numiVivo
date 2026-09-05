@@ -2,9 +2,9 @@ import Foundation
 
 public struct VivoExperimentRunOutput: Sendable {
     public let result: VivoResultPack
-    public let checkpoints: [VivoCheckpointPack]
+    public let checkpoints: [VivoExperimentCheckpoint]
 
-    public init(result: VivoResultPack, checkpoints: [VivoCheckpointPack]) {
+    public init(result: VivoResultPack, checkpoints: [VivoExperimentCheckpoint]) {
         self.result = result
         self.checkpoints = checkpoints
     }
@@ -98,7 +98,7 @@ public actor VivoExperimentRunner {
         var allSamples: [VivoMeasurementSample] = []
         var allSummaries: [VivoMeasurementSummary] = []
         var allEvents: [VivoRecordedEvent] = []
-        var allCheckpoints: [VivoCheckpointPack] = []
+        var allCheckpoints: [VivoExperimentCheckpoint] = []
         var allLedgers: [VivoRunLedger] = []
         var replicateResults: [VivoReplicateResult] = []
         var limitations = Set<String>()
@@ -272,8 +272,10 @@ public actor VivoExperimentRunner {
                         guard allCheckpoints.count < options.maximumStoredCheckpoints else {
                             throw VivoArtifactValidationError.invalid("stored checkpoint limit exceeded")
                         }
-                        let checkpoint = try await runtime.checkpoint(
+                        let checkpoint = try await VivoExperimentCheckpoint(
+                            state: runtime.resumeCheckpoint(), replicateIndex: replicateIndex,
                             experimentFingerprint: experiment.fingerprint,
+                            hostContextFingerprint: hostContext.contextFingerprint,
                             couplingFingerprint: coupling?.fingerprint,
                             ledgerHead: ledger.head
                         )
@@ -333,7 +335,8 @@ public actor VivoExperimentRunner {
             replicates: replicateResults,
             measurements: allSamples,
             measurementSummaries: allSummaries,
-            events: allEvents,
+            events: allEvents.map(\.event),
+            recordedEvents: allEvents,
             ledgers: allLedgers,
             limitations: limitations.sorted(),
             annotations: [:]
