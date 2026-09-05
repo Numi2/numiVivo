@@ -143,8 +143,8 @@ public struct VivoSpinRDMs: Codable, Sendable, Equatable {
         let n=spinOrbitalCount/2;var out=VivoQMMatrix(n,n)
         for p in 0..<n { for q in 0..<n { out[p,q]=one[2*p,2*q]+one[2*p+1,2*q+1] } };return out
     }
-    public func energy(of h: VivoEmbeddedHamiltonian) throws -> Double {
-        try h.validate()
+    public func energy(of h: VivoEmbeddedHamiltonian, budget: VivoChemistryBudget = .init()) throws -> Double {
+        try h.validate(budget: budget)
         guard spinOrbitalCount==2*h.orbitalCount,electronCount==h.alphaElectrons+h.betaElectrons else { throw VivoChemistryError.invalid("RDM/Hamiltonian mismatch") }
         let n=h.orbitalCount;var value=h.constantEnergyHartree
         for p in 0..<n { for q in 0..<n {

@@ -55,6 +55,8 @@ public struct VivoECCSelfConsistencyResult:Codable,Sendable,Equatable {
     public let iterations:[VivoECCSelfConsistencyIteration]
     public let evaluations:Int
     public let scope:String
+    /// Present for newly executed cycles; absent in older archival results.
+    public let frame:VivoECCFrameResult?
 }
 /// Selected-moment, multi-fragment correlated-reference self-consistency.
 /// Each trial recomputes the reference, correlated-density baths, environment
@@ -66,20 +68,23 @@ public enum VivoECCSelfConsistency {
     private struct Evaluation {
         let reference:[Double];let fragment:[Double];let residual:[Double]
         let number:VivoNumberMatchingResult;let coefficients:[VivoQMMatrix];let referenceEnergy:Double
+        let frame:VivoECCFrameResult
     }
     public static func solve(_ physical:VivoEmbeddedHamiltonian,fragments:[VivoECCFragment],
                              operators:[VivoECCCorrelationOperator],initialPotentialHartree:[Double]?=nil,
                              configuration cfg:VivoECCSelfConsistencyConfiguration = .init(),
+                             bathSelection:VivoECCBathSelection = .init(),qioWeights:VivoQIOWeights = .init(),
                              budget:VivoChemistryBudget = .init()) throws -> VivoECCSelfConsistencyResult {
-        try physical.validate(budget:budget);try cfg.numberMatching.validate()
+        try physical.validate(budget:budget);try cfg.numberMatching.validate();try bathSelection.validate();try qioWeights.validate()
         let n=physical.orbitalCount,m=operators.count
-        guard physical.alphaElectrons==physical.betaElectrons,(1...16).contains(fragments.count),(1...24).contains(m),
+        guard physical.alphaElectrons==physical.betaElectrons,(1...16).contains(fragments.count),(1...256).contains(m),
               Set(fragments.map(\.identifier)).count==fragments.count,Set(operators.map(\.identifier)).count==m,
               fragments.allSatisfy({!$0.identifier.isEmpty && !$0.orbitals.isEmpty && $0.maximumBathOrbitals>=0 && $0.maximumBathOrbitals<=n && $0.clusterAlphaElectrons>=0 && $0.clusterAlphaElectrons==$0.clusterBetaElectrons}),
               fragments.flatMap(\.orbitals).count==n,Set(fragments.flatMap(\.orbitals))==Set(0..<n),
               (1...500).contains(cfg.maximumIterations),(1...100000).contains(cfg.maximumEvaluations),
               [cfg.momentTolerance,cfg.differenceStepHartree,cfg.maximumPotentialHartree].allSatisfy({$0.isFinite && $0>0}),
               cfg.bathDiscardedWeight.isFinite,cfg.bathDiscardedWeight>=0 else { throw VivoChemistryError.invalid("ECC fragment partition, spin or iteration contract") }
+        _ = try budget.elements([m,m],simultaneousArrays:8)
         var owner=[Int](repeating:0,count:n)
         for (k,f) in fragments.enumerated() { for p in f.orbitals { owner[p]=k } }
         func operatorHamiltonian(_ op:VivoECCCorrelationOperator)->VivoEmbeddedHamiltonian {
@@ -113,60 +118,27 @@ public enum VivoECCSelfConsistency {
             let reference:VivoCIResult
             if cfg.referenceMethod == .fci { reference=try VivoDirectCI.solve(referenceHamiltonian,budget:budget).roots[0] }
             else { reference=try VivoConfigurationInteraction.solve(referenceHamiltonian,method:.cisd,budget:budget) }
-            let rdm=try VivoCIDensityMatrices.compute(reference.state,budget:budget),density=rdm.spatialOne
-            for p in 0..<n { for q in 0..<n where abs(rdm.one[2*p,2*q]-rdm.one[2*p+1,2*q+1])>1e-7 {
-                throw VivoChemistryError.unsupported("spin-polarized correlated environment requires spin-dependent cluster one-body operators")
-            } }
-            var clusterCoefficients:[VivoQMMatrix]=[],clusters:[VivoNumberMatchedFragment]=[]
-            for f in fragments {
-                let environment=(0..<n).filter { !f.orbitals.contains($0) }
-                var bath:VivoQMMatrix
-                if environment.isEmpty { bath=VivoQMMatrix(0,0) }
-                else {
-                    bath=try VivoBathBuilder.fromOneRDM(density,fragment:f.orbitals,candidateEnvironment:environment,
-                        maximumRank:f.maximumBathOrbitals,discardedSquaredWeight:cfg.bathDiscardedWeight,budget:budget).coefficients
-                }
-                let k=f.orbitals.count+bath.columns
-                guard f.clusterAlphaElectrons<=k,f.clusterBetaElectrons<=k else { throw VivoChemistryError.invalid("declared impurity electron sector exceeds retained bath") }
-                var c=VivoQMMatrix(n,k)
-                for (j,p) in f.orbitals.enumerated() { c[p,j]=1 }
-                for i in environment.indices { for j in 0..<bath.columns { c[environment[i],f.orbitals.count+j]=bath[i,j] } }
-                let projector=try c.multiplied(by:c.transposed),complement=try VivoQMMatrix.identity(n).adding(projector,scale:-1)
-                let env=try density.congruence(complement)
-                var effective=physical.oneElectron
-                for p in 0..<n { for q in 0..<n { for r in 0..<n { for s in 0..<n {
-                    effective[p,q]+=env[r,s]*(physical.eri(p,q,r,s)-0.5*physical.eri(p,r,q,s))
-                } } } }
-                let cluster=VivoEmbeddedHamiltonian(orbitalIdentifiers:(0..<k).map { f.identifier+"-orbital-\($0)" },
-                    alphaElectrons:f.clusterAlphaElectrons,betaElectrons:f.clusterBetaElectrons,oneElectron:try effective.congruence(c),
-                    twoElectron:try VivoOrbitalTransform.transformERI(physical.twoElectron,inputCount:n,coefficients:c,budget:budget),
-                    constantEnergyHartree:0,energyReference:"impurity electronic operator; correlated-density environment mean field; not a partition total energy")
-                var fragmentProjector=VivoQMMatrix(k,k)
-                for p in f.orbitals.indices { fragmentProjector[p,p]=1 }
-                clusters.append(.init(identifier:f.identifier,hamiltonian:cluster,fragmentProjector:fragmentProjector));clusterCoefficients.append(c)
-            }
-            let number=try VivoFragmentNumberMatcher.solve(fragments:clusters,targetPopulation:Double(physical.alphaElectrons+physical.betaElectrons),configuration:cfg.numberMatching,budget:budget)
-            guard number.converged else { throw VivoChemistryError.convergence("ECC impurity electron-number matching did not converge") }
-            let referenceMoments=try operators.map { try rdm.energy(of:operatorHamiltonian($0)) }
+            let rdm=try VivoCIDensityMatrices.compute(reference.state,budget:budget)
+            let frame=try VivoECCClusterConstruction.evaluate(physical,reference:reference,fragments:fragments,
+                partitionMatching:cfg.numberMatching,selection:bathSelection,discardedWeight:cfg.bathDiscardedWeight,
+                qioWeights:qioWeights,budget:budget)
+            guard let number=frame.numberMatching else { throw VivoChemistryError.invalid("partition cycle omitted particle matching") }
+            let referenceMoments=try operators.map { try rdm.energy(of:operatorHamiltonian($0),budget:budget) }
             var fragmentMoments=[Double](repeating:0,count:m)
-            for (f,definition) in fragments.enumerated() {
-                let ci=number.states[f].biasedCI,c=clusterCoefficients[f],k=c.columns
-                let localRDM=try VivoCIDensityMatrices.compute(ci.state,budget:budget)
+            for (index,cluster) in frame.clusters.enumerated() {
+                let f=cluster.fragment.orbitals,k=cluster.coefficients.columns
+                let localRDM=try VivoCIDensityMatrices.compute(frame.states[index].biasedCI.state,budget:budget)
                 for (i,op) in operators.enumerated() {
-                    var h=VivoQMMatrix(n,n),g=[Double](repeating:0,count:op.two.count)
-                    for p in definition.orbitals { for q in definition.orbitals {
-                        h[p,q]=op.one[p,q]
-                        for r in definition.orbitals { for s in definition.orbitals { let index=((p*n+q)*n+r)*n+s;g[index]=op.two[index] } }
+                    var one=VivoQMMatrix(k,k),two=[Double](repeating:0,count:try budget.elements([k,k,k,k],simultaneousArrays:3))
+                    for p in f.indices { for q in f.indices {
+                        one[p,q]=op.one[f[p],f[q]]
+                        for r in f.indices { for s in f.indices { two[((p*k+q)*k+r)*k+s]=op.two[((f[p]*n+f[q])*n+f[r])*n+f[s]] } }
                     } }
-                    let observable=VivoEmbeddedHamiltonian(orbitalIdentifiers:(0..<k).map { "moment-\($0)" },
-                        alphaElectrons:ci.state.alphaElectrons,betaElectrons:ci.state.betaElectrons,
-                        oneElectron:try h.congruence(c),twoElectron:try VivoOrbitalTransform.transformERI(g,inputCount:n,coefficients:c,budget:budget),
-                        constantEnergyHartree:0,energyReference:"dimensionless fragment-local moment")
-                    fragmentMoments[i]+=try localRDM.energy(of:observable)
+                    fragmentMoments[i]+=VivoECCClusterConstruction.expectation(one:one,two:two,rdm:localRDM)
                 }
             }
             return .init(reference:referenceMoments,fragment:fragmentMoments,residual:zip(referenceMoments,fragmentMoments).map { $0-$1 },
-                number:number,coefficients:clusterCoefficients,referenceEnergy:reference.energyHartree)
+                number:number,coefficients:frame.clusters.map(\.coefficients),referenceEnergy:reference.energyHartree,frame:frame)
         }
         func norm(_ x:[Double])->Double { x.reduce(0.0) { hypot($0,$1) } }
         var current=try evaluate(potential),history:[VivoECCSelfConsistencyIteration]=[],converged=false,termination="iterationLimit"
@@ -205,6 +177,6 @@ public enum VivoECCSelfConsistency {
         return .init(converged:converged,termination:termination,correlationPotentialHartree:potential,momentResiduals:current.residual,
             referenceMoments:current.reference,fragmentMoments:current.fragment,numberMatching:current.number,clusterCoefficients:current.coefficients,
             iterations:history,evaluations:evaluations,
-            scope:"fixed orbital frame; correlated-density baths rebuilt each trial; selected fragment-local one/two-body matching; no claim of complete interfragment 2-RDM reconstruction or total reaction energy")
+            scope:"correlated-reference and impurity feedback; selected fragment-local one/two-body matching; reference-restored democratic energy; no claim of a globally N-representable reconstructed 2-RDM",frame:current.frame)
     }
 }

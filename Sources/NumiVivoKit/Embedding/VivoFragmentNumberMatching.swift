@@ -114,7 +114,7 @@ public enum VivoFragmentNumberMatcher {
                     oneElectron:try h.oneElectron.adding(fragment.fragmentProjector,scale:-mu),
                     twoElectron:h.twoElectron,constantEnergyHartree:h.constantEnergyHartree,
                     energyReference:h.energyReference+"; auxiliary fragment chemical potential",provenance:h.provenance)
-                let ci = try VivoConfigurationInteraction.solve(shifted,budget:budget)
+                let ci = try VivoDirectCI.solve(shifted,budget:budget).roots[0]
                 let state = ci.state
                 let index = Dictionary(uniqueKeysWithValues:state.determinants.enumerated().map { ($0.element,$0.offset) })
                 let (work,overflow) = (2*n*n).multipliedReportingOverflow(by:state.determinants.count)
