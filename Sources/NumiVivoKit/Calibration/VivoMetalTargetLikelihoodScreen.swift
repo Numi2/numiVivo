@@ -1,6 +1,6 @@
 import CryptoKit
 import Foundation
-import Metal
+@preconcurrency import Metal
 import NumiVivoShaders
 
 public struct VivoMetalTargetScreenDescription: Codable, Equatable, Sendable {
@@ -32,10 +32,9 @@ private struct VivoScreenObservationCommand {
     var shape: SIMD4<UInt32>
 }
 
-/// A reusable OFFLINE likelihood workspace over existing ProgramPack F1 kernels.
-/// No generic simulation state is committed here, and no second reaction law is
-/// implemented. One arena per calibration case, not per particle. All parameter,
-/// input, assay and score buffers persist across SMC proposal batches.
+/// Reusable offline likelihood workspace over existing ProgramPack F1 kernels.
+/// No generic simulation state is committed here; reaction laws are not copied.
+/// One arena per calibration case, with persistent parameter/input/score buffers.
 public actor VivoMetalTargetLikelihoodScreen {
     public nonisolated let description: VivoMetalTargetScreenDescription
     public nonisolated let screeningPolicy: VivoPosteriorScreeningPolicy
@@ -60,9 +59,10 @@ public actor VivoMetalTargetLikelihoodScreen {
         let failures: MTLBuffer
         let retainedBytes: Int
         init(plan: VivoMetalTargetCasePlan, device: MTLDevice, queue: MTLCommandQueue) throws {
-            self.plan = plan
             let n = plan.description.capacity
-            arena = try VivoMetalArena(device: device, commandQueue: queue, pack: plan.pack,
+            // Use local handles during initialization: a copying closure must not
+            // capture a partially initialized CaseStorage instance.
+            let arena = try VivoMetalArena(device: device, commandQueue: queue, pack: plan.pack,
                 configuration: plan.configuration, couplingCapacity: n, publicationCapacity: 1)
             func shared(_ length: Int, _ label: String) throws -> MTLBuffer {
                 guard let buffer = device.makeBuffer(length: max(length, 4), options: .storageModeShared) else {
@@ -71,14 +71,16 @@ public actor VivoMetalTargetLikelihoodScreen {
                 buffer.label = "NumiVivo.TargetScreen." + label
                 return buffer
             }
-            initial = try shared(arena.capacities.stateElements * 4, "Initial")
-            parameters = try shared(plan.parameterNames.count * n * 4, "Parameters")
-            inputs = try shared(n * MemoryLayout<SIMD2<Float>>.stride, "Inputs")
-            noise = try shared(n * MemoryLayout<SIMD4<Float>>.stride, "Noise")
-            scores = try shared(n * MemoryLayout<SIMD2<Float>>.stride, "Scores")
-            failures = try shared(n * 4, "Failures")
+            let initial = try shared(arena.capacities.stateElements * 4, "Initial")
+            let parameters = try shared(plan.parameterNames.count * n * 4, "Parameters")
+            let inputs = try shared(n * MemoryLayout<SIMD2<Float>>.stride, "Inputs")
+            let noise = try shared(n * MemoryLayout<SIMD4<Float>>.stride, "Noise")
+            let scores = try shared(n * MemoryLayout<SIMD2<Float>>.stride, "Scores")
+            let failures = try shared(n * 4, "Failures")
             let values = try plan.pack.initialState(laneCount: n)
             values.withUnsafeBytes { raw in initial.contents().copyMemory(from: raw.baseAddress!, byteCount: raw.count) }
+            self.plan = plan; self.arena = arena; self.initial = initial; self.parameters = parameters
+            self.inputs = inputs; self.noise = noise; self.scores = scores; self.failures = failures
             retainedBytes = arena.heap.size + [arena.commandBuffer, arena.statusBuffer, arena.eventBuffer,
                 arena.couplingBuffer, arena.publicationRequestBuffer, arena.publicationOutputBuffer,
                 arena.stateReadbackBuffer, initial, parameters, inputs, noise, scores, failures].reduce(0) { $0 + $1.length }
@@ -100,7 +102,7 @@ public actor VivoMetalTargetLikelihoodScreen {
             throw VivoPosteriorError.budget("aggregate fixed-step screen budget")
         }
         // Conservative preallocation allowance for the fixed small target graph.
-        // Driver/pipeline allocation is not included in the retained-buffer cap.
+        // Driver/pipeline memory is not included in the retained-buffer cap.
         let estimated = plans.reduce(0) { total, plan in
             total + 8 * plan.pack.data.count + 2_097_152
                 + plan.description.capacity * (Int(plan.pack.runtimeContract.speciesCount) * 64
@@ -237,8 +239,7 @@ public actor VivoMetalTargetLikelihoodScreen {
                 try vivoScreenFloat(assay.additionalStandardDeviation, label: "extra SD"),
                 try vivoScreenFloat(assay.bias, label: "assay bias"), 0)
         }
-        // Padding is computational only, never extra statistical particles.
-        // Duplicate lane zero so inactive capacity cannot introduce new failures.
+        // Padding is computational only, never additional statistical particles.
         for lane in candidates.count..<n {
             for column in plan.parameterNames.indices { parameters[column * n + lane] = parameters[column * n] }
             inputs[lane] = inputs[0]; noise[lane] = noise[0]
@@ -347,12 +348,13 @@ public actor VivoMetalTargetLikelihoodScreen {
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
                 command.addCompletedHandler { finished in
                     if let error = finished.error { continuation.resume(throwing: VivoRuntimeError.commandFailed(String(describing: error))) }
+                    else if finished.status != .completed { continuation.resume(throwing: VivoRuntimeError.commandFailed("Metal command did not complete")) }
                     else { continuation.resume(returning: ()) }
                 }
                 command.commit()
             }
         } catch { poisoned = true; throw error }
-        // Cancellation never releases shared CPU buffers before GPU completion.
+        // Never release CPU access to shared buffers before GPU completion.
         try Task.checkCancellation()
     }
 
