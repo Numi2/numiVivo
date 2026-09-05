@@ -1,0 +1,34 @@
+{
+  "barrier" : {
+    "conditionalStandardDeviation" : 2,
+    "context" : {
+      "chemicalState" : "declared-synthetic-state",
+      "compound" : "synthetic-ligand",
+      "hostContext" : "well-mixed-fixture",
+      "ionicStrengthM" : 0.1,
+      "pH" : 7,
+      "site" : "one-site",
+      "target" : "synthetic-target",
+      "targetVariant" : "reference",
+      "temperatureK" : 300
+    },
+    "evidence" : {
+      "locator" : "ReferenceChecks.swift",
+      "source" : "synthetic mathematical fixture"
+    },
+    "method" : "synthetic analytic fixture",
+    "origin" : "assumed",
+    "quantity" : "activationGibbsFreeEnergy",
+    "referenceState" : "preReactiveBoundComplex",
+    "samplingDescription" : "no molecular sampling; synthetic test value",
+    "unit" : "kJ/mol",
+    "value" : 80
+  },
+  "schemaVersion" : 1,
+  "transmissionEvidence" : {
+    "locator" : "ReferenceChecks.swift",
+    "source" : "synthetic mathematical fixture"
+  },
+  "transmissionOrigin" : "assumed",
+  "transmissionProbability" : 0.5
+}
