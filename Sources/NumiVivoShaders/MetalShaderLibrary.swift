@@ -38,8 +38,8 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case physiologyValidateCandidate = "nvivo_phys_validate_candidate"
     case physiologyPublish = "nvivo_phys_publish"
 
-    // Wave B molecular dynamics. This module intentionally has a standalone ABI.
-    case mdClear = "nvivo_md_clear"
+    case mdClearForce = "nvivo_md_clear_force"
+    case mdClearStatus = "nvivo_md_clear_status"
     case mdBonded = "nvivo_md_bonded"
     case mdNonbondedDirect = "nvivo_md_nonbonded_direct"
     case mdHalfKick = "nvivo_md_half_kick"
@@ -52,7 +52,8 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
         case .physiologyClearStatus, .physiologyPrepareTransaction, .physiologyApplyTransforms,
              .physiologyHeunPredict, .physiologyHeunCorrect, .physiologyValidateCandidate, .physiologyPublish:
             return "NumiVivoPhysiologyKernels"
-        case .mdClear, .mdBonded, .mdNonbondedDirect, .mdHalfKick, .mdDrift, .mdKinetic, .mdValidate:
+        case .mdClearForce, .mdClearStatus, .mdBonded, .mdNonbondedDirect,
+             .mdHalfKick, .mdDrift, .mdKinetic, .mdValidate:
             return "NumiVivoMDKernels"
         default:
             return "NumiVivoProgramPackRuntime"
@@ -77,21 +78,16 @@ public struct NumiVivoPipeline: @unchecked Sendable {
         let aligned = max(1, capped >= width ? (capped / width) * width : capped)
         return MTLSize(width: aligned, height: 1, depth: 1)
     }
-    public func gridSize(for elementCount: Int) -> MTLSize {
-        MTLSize(width: max(elementCount, 1), height: 1, depth: 1)
-    }
+    public func gridSize(for elementCount: Int) -> MTLSize { MTLSize(width: max(elementCount, 1), height: 1, depth: 1) }
 }
 
-/// Resource module and device identity are part of the cache key. The old
-/// concatenate-every-metal-file fallback combined unrelated incompatible ABIs.
 private final class NumiVivoRuntimeLibraryCache: @unchecked Sendable {
     static let shared = NumiVivoRuntimeLibraryCache()
     private let lock = NSLock()
     private var libraries: [String: MTLLibrary] = [:]
 
     func library(device: MTLDevice, module: String) throws -> MTLLibrary {
-        lock.lock()
-        defer { lock.unlock() }
+        lock.lock(); defer { lock.unlock() }
         let key = "\(device.registryID)/\(module)/v1"
         if let existing = libraries[key] { return existing }
         let url = Bundle.module.url(forResource: module, withExtension: "metal")
@@ -99,43 +95,29 @@ private final class NumiVivoRuntimeLibraryCache: @unchecked Sendable {
         guard let url else { throw NumiVivoShaderError.sourceResourceMissing }
         do {
             let source = try String(contentsOf: url, encoding: .utf8)
-            let options = MTLCompileOptions()
-            options.fastMathEnabled = false
+            let options = MTLCompileOptions(); options.fastMathEnabled = false
             let library = try device.makeLibrary(source: source, options: options)
-            libraries[key] = library
-            return library
-        } catch {
-            throw NumiVivoShaderError.compilationFailed(String(describing: error))
-        }
+            libraries[key] = library; return library
+        } catch { throw NumiVivoShaderError.compilationFailed(String(describing: error)) }
     }
 }
 
 public actor NumiVivoPipelineCatalog {
     private let device: MTLDevice
     private var cache: [NumiVivoKernel: NumiVivoPipeline] = [:]
-
     public init(device: MTLDevice) throws { self.device = device }
 
     public func pipeline(_ kernel: NumiVivoKernel) throws -> NumiVivoPipeline {
         if let existing = cache[kernel] { return existing }
         let library = try NumiVivoRuntimeLibraryCache.shared.library(device: device, module: kernel.sourceModule)
-        guard let function = library.makeFunction(name: kernel.rawValue) else {
-            throw NumiVivoShaderError.functionMissing(kernel.rawValue)
-        }
+        guard let function = library.makeFunction(name: kernel.rawValue) else { throw NumiVivoShaderError.functionMissing(kernel.rawValue) }
         do {
             let descriptor = MTLComputePipelineDescriptor()
-            descriptor.label = "NumiVivo.\(kernel.rawValue)"
-            descriptor.computeFunction = function
+            descriptor.label = "NumiVivo.\(kernel.rawValue)"; descriptor.computeFunction = function
             descriptor.threadGroupSizeIsMultipleOfThreadExecutionWidth = false
             let state = try device.makeComputePipelineState(descriptor: descriptor, options: [], reflection: nil)
-            let pipeline = NumiVivoPipeline(state: state)
-            cache[kernel] = pipeline
-            return pipeline
-        } catch {
-            throw NumiVivoShaderError.pipelineFailed(kernel.rawValue, String(describing: error))
-        }
+            let pipeline = NumiVivoPipeline(state: state); cache[kernel] = pipeline; return pipeline
+        } catch { throw NumiVivoShaderError.pipelineFailed(kernel.rawValue, String(describing: error)) }
     }
-    public func preloadAll() throws {
-        for kernel in NumiVivoKernel.allCases { _ = try pipeline(kernel) }
-    }
+    public func preloadAll() throws { for kernel in NumiVivoKernel.allCases { _ = try pipeline(kernel) } }
 }
