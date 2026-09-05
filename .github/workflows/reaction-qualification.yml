@@ -111,6 +111,10 @@ jobs:
           .build/release/numivivo --help > "$RUNNER_TEMP/full-product/help.txt" 2>&1
           .build/release/numivivo md-capabilities > "$RUNNER_TEMP/full-product/md-capabilities.txt" 2>&1
           shasum -a 256 .build/release/numivivo > "$RUNNER_TEMP/full-product/binary.sha256"
+          .build/release/numivivo reaction-template h3-saddle --output "$RUNNER_TEMP/full-product/saddle-request.json"
+          .build/release/numivivo reaction-run "$RUNNER_TEMP/full-product/saddle-request.json" \
+            --store "$RUNNER_TEMP/full-product-store" --output "$RUNNER_TEMP/full-product/saddle-result.json" \
+            2>&1 | tee "$RUNNER_TEMP/full-product/reaction-smoke.log"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
