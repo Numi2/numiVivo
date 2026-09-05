@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "identifier": "zanubrutinib-btk-nodal-tam2019-aggregates-v1",
+  "sourceDOI": "10.1182/blood.2019001160",
+  "sourceURI": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6742923/",
+  "transcriptionMethod": "Manual numeric transcription of the indexed primary article Pharmacodynamics paragraph; percentage values divided by 100. No figure digitization, patient reconstruction, or measurement-noise imputation.",
+  "sourceAvailability": "Primary text indexed in public search. The direct PMC page presented a browser challenge during this pass. Only factual numerical summaries are retained; this is not a redistributed article or a hash of the publisher PDF.",
+  "observations": [
+    {
+      "identifier": "qd320",
+      "compound": "zanubrutinib",
+      "target": "BTK",
+      "tissue": "lymph node biopsy",
+      "visit": "week 1 day 3, predose",
+      "regimenLabel": "320 mg once daily",
+      "patientCount": 12,
+      "medianFraction": 0.94,
+      "minimumFraction": 0.824,
+      "maximumFraction": 1,
+      "strictThreshold": 0.95,
+      "reportedFractionAboveThreshold": 0.5,
+      "sourceLocator": "Pharmacodynamics paragraph, nodal tissue paired biopsy summary; Figure 2B is referenced by authors but not digitized here."
+    },
+    {
+      "identifier": "bid160",
+      "compound": "zanubrutinib",
+      "target": "BTK",
+      "tissue": "lymph node biopsy",
+      "visit": "week 1 day 3, predose",
+      "regimenLabel": "160 mg twice daily",
+      "patientCount": 18,
+      "medianFraction": 1,
+      "minimumFraction": 0.863,
+      "maximumFraction": 1,
+      "strictThreshold": 0.95,
+      "reportedFractionAboveThreshold": 0.89,
+      "sourceLocator": "Pharmacodynamics paragraph, nodal tissue paired biopsy summary; Figure 2B is referenced by authors but not digitized here."
+    }
+  ],
+  "missingInputs": [
+    "Individual patient occupancy values with identifiers and assay precision",
+    "Patient-level unbound intracellular exposure histories",
+    "A validated mapping from W1D3 predose to simulated dosing/exposure clocks",
+    "Kinetic parameter measurements and population distributions appropriate to this cohort"
+  ]
+}
