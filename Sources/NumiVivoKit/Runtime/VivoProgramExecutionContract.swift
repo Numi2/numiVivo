@@ -5,6 +5,16 @@ import Foundation
 public enum VivoProgramExecutionContract {
     public static func validate(pack: VivoProgramPack, configuration: VivoRuntimeConfiguration) throws {
         try configuration.validate(for: pack)
+        // The legacy F2 attempt loop changes dt and draws after a realized
+        // rejection. That is not a distribution-preserving adaptive algorithm.
+        // Require one attempt; retain failed runs in any subsequent inference.
+        // This does not certify caller-driven retries or replace the dedicated
+        // exact/hybrid continuation backend with a stochastic-bridge method.
+        if configuration.fidelity == .stochastic, configuration.maximumSubsteps != 1 {
+            throw VivoRuntimeError.invalidConfiguration(
+                "legacy ProgramPack F2 requires maximumSubsteps=1; adaptive rejection/resampling is not statistically qualified"
+            )
+        }
         let inspection = VivoNativeCompilerBridge.inspectProgramPack(pack.data, verifySectionHashes: true)
         guard inspection.invocation.succeeded else {
             throw VivoRuntimeError.packError("ProgramPack failed native integrity/semantic inspection")
