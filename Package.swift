@@ -13,6 +13,7 @@ let package = Package(
                 cxxSettings: [.headerSearchPath("include"), .define("NVIVO_BUILDING_CORE")]),
         .target(name: "NumiVivoShaders", path: "Sources/NumiVivoShaders", resources: [
             .copy("Resources/NumiVivoProgramPackRuntime.metal"),
+            .copy("Resources/NumiVivoTargetLikelihood.metal"),
             .copy("Resources/NumiVivoHybridExecution.metal"),
             .copy("Resources/NumiVivoPhysiologyKernels.metal"),
             .copy("Resources/NumiVivoMDKernels.metal"),
