@@ -1,11 +1,10 @@
 import Foundation
 
-/// Adaptive tempered sequential Monte Carlo, not an elite optimizer. Targets
-/// p_beta(u) proportional to L(x(u))^beta for uniform prior coordinates. Each
-/// stage weights, resamples and applies invariant Metropolis kernels. The full
-/// proposal covariance is frozen before that stage's mutations; proposals outside
-/// prior support are rejected, never reflected with an invalid correlated kernel.
-/// Method family: Del Moral, Doucet & Jasra (2006), doi:10.1111/j.1467-9868.2006.00553.x.
+/// Adaptive tempered SMC in uniform prior coordinates. An optional deterministic
+/// screen changes proposal efficiency, not the authoritative target: stage-one
+/// acceptance uses beta*(s'-s); stage two uses beta*((l'-l)-(s'-s)). Weights,
+/// temperature selection and stored particle likelihoods always use l.
+/// Del Moral, Doucet & Jasra (2006); Christen & Fox (2005), Bayesian Analysis 1:795-804.
 public actor VivoTemperedPosteriorSampler {
     public nonisolated let plan: VivoPosteriorPlan
     private var committed: VivoPosteriorCheckpoint?
@@ -20,14 +19,15 @@ public actor VivoTemperedPosteriorSampler {
         try plan.validate(); try checkpoint?.validate(for: plan)
         self.plan = plan; committed = checkpoint
     }
-
-    /// May be read during a run: this is always the last COMPLETED stage, not the
-    /// scratch RNG state or a partial population. The returned value is immutable.
     public func checkpoint() -> VivoPosteriorCheckpoint? { committed }
 
     public func run(evaluate: VivoPosteriorBatchEvaluator,
-                    progress: VivoPosteriorCheckpointSink? = nil) async throws -> VivoPosteriorRun {
+                    progress: VivoPosteriorCheckpointSink? = nil,
+                    screen: VivoPosteriorScreen? = nil) async throws -> VivoPosteriorRun {
         guard !inFlight else { throw VivoPosteriorError.busy }
+        guard screen?.policy == plan.screening else {
+            throw VivoPosteriorError.invalid("screen implementation/budget differs from the checkpoint-bound plan")
+        }
         inFlight = true
         defer { inFlight = false }
         var attemptedBeta: Double?
@@ -48,7 +48,7 @@ public actor VivoTemperedPosteriorSampler {
                     logLikelihoods: current.particles.map(\.logLikelihood), beta: current.beta,
                     configuration: plan.configuration)
                 attemptedBeta = nextBeta
-                let next = try await advance(current, beta: nextBeta, evaluate: evaluate)
+                let next = try await advance(current, beta: nextBeta, evaluate: evaluate, screen: screen)
                 try Task.checkCancellation()
                 try next.validate(for: plan)
                 committed = next
@@ -56,7 +56,6 @@ public actor VivoTemperedPosteriorSampler {
             }
             return result(failure: nil)
         } catch is CancellationError {
-            // Caller can persist checkpoint(); no partial stage is published.
             throw CancellationError()
         } catch let failure as EvaluationFailure {
             return result(failure: .init(message: failure.message, attemptedBeta: attemptedBeta,
@@ -74,7 +73,7 @@ public actor VivoTemperedPosteriorSampler {
             try VivoPosteriorCandidate(ordinal: UInt64(index),
                 coordinates: (0..<d).map { _ in VivoPosteriorNumerics.openUnit(&random) }, parameters: plan.parameters)
         }
-        let likelihoods = try await checkedEvaluation(candidates, evaluate: evaluate)
+        let likelihoods = try await checkedEvaluation(candidates, evaluate: evaluate, label: "authoritative")
         let particles = candidates.indices.map {
             VivoPosteriorParticle(coordinates: candidates[$0].coordinates, logLikelihood: likelihoods[$0], initialAncestor: $0)
         }
@@ -84,7 +83,7 @@ public actor VivoTemperedPosteriorSampler {
     }
 
     private func advance(_ current: VivoPosteriorCheckpoint, beta: Double,
-                         evaluate: VivoPosteriorBatchEvaluator) async throws -> VivoPosteriorCheckpoint {
+                         evaluate: VivoPosteriorBatchEvaluator, screen: VivoPosteriorScreen?) async throws -> VivoPosteriorCheckpoint {
         let c = plan.configuration, n = c.particleCount, d = plan.parameters.count
         var random = VivoSplitMix64(state: current.randomState)
         let (weights, ess) = try VivoPosteriorNumerics.normalizedWeights(
@@ -93,10 +92,23 @@ public actor VivoTemperedPosteriorSampler {
                                                                weights: weights, configuration: c)
         var particles = VivoPosteriorNumerics.resample(current.particles, weights: weights, random: &random)
         var ordinal = current.nextCandidateOrdinal, evaluations = 0, accepted = 0, outside = 0
+        var screenValues = [Double](repeating: 0, count: n), screens = 0, screenedOut = 0
+        let pastScreens = current.stages.reduce(0) { $0 + ($1.screeningEvaluations ?? 0) }
+        if let screen {
+            guard pastScreens + n <= screen.policy.maximumEvaluations else {
+                throw VivoPosteriorError.budget("screening budget before stage initialization")
+            }
+            let initial = try particles.enumerated().map {
+                try VivoPosteriorCandidate(ordinal: UInt64(pastScreens + $0.offset),
+                    coordinates: $0.element.coordinates, parameters: plan.parameters)
+            }
+            screenValues = try await checkedEvaluation(initial, evaluate: screen.evaluate, label: "screening")
+            screens = n
+        }
         for _ in 0..<c.mutationSweeps {
             try Task.checkCancellation()
-            var candidates: [VivoPosteriorCandidate] = [], destinations: [Int] = [], logUniforms: [Double] = []
-            candidates.reserveCapacity(n); destinations.reserveCapacity(n); logUniforms.reserveCapacity(n)
+            var proposals: [VivoPosteriorCandidate] = [], destinations: [Int] = []
+            var firstUniforms: [Double] = [], secondUniforms: [Double] = []
             for index in 0..<n {
                 let coordinates: [Double]
                 if VivoPosteriorNumerics.openUnit(&random) < c.independentPriorProposalProbability {
@@ -110,23 +122,49 @@ public actor VivoTemperedPosteriorSampler {
                     }
                 }
                 guard coordinates.allSatisfy({ $0.isFinite && (0...1).contains($0) }) else { outside += 1; continue }
-                guard ordinal < UInt64.max else { throw VivoPosteriorError.budget("candidate ordinal overflow") }
-                candidates.append(try .init(ordinal: ordinal, coordinates: coordinates, parameters: plan.parameters))
-                destinations.append(index); logUniforms.append(log(VivoPosteriorNumerics.openUnit(&random)))
-                ordinal += 1
+                // Screening ordinals have their own monotonically increasing
+                // namespace. They are never cache keys without input values.
+                let proposalOrdinal = screen == nil ? ordinal + UInt64(proposals.count)
+                    : UInt64(pastScreens + screens + proposals.count)
+                proposals.append(try .init(ordinal: proposalOrdinal, coordinates: coordinates, parameters: plan.parameters))
+                destinations.append(index)
+                firstUniforms.append(log(VivoPosteriorNumerics.openUnit(&random)))
+                if screen != nil { secondUniforms.append(log(VivoPosteriorNumerics.openUnit(&random))) }
             }
-            guard current.likelihoodEvaluationCount + evaluations + candidates.count <= c.maximumLikelihoodEvaluations else {
-                throw VivoPosteriorError.budget("likelihood budget would be exceeded; last completed stage retained")
+            if proposals.isEmpty { continue }
+            var proposedScreens = [Double](repeating: 0, count: proposals.count)
+            var eligible = Array(proposals.indices)
+            if let screen {
+                guard pastScreens + screens + proposals.count <= screen.policy.maximumEvaluations else {
+                    throw VivoPosteriorError.budget("screening proposal budget; last completed stage retained")
+                }
+                proposedScreens = try await checkedEvaluation(proposals, evaluate: screen.evaluate, label: "screening")
+                screens += proposals.count
+                eligible = proposals.indices.filter { i in
+                    firstUniforms[i] < min(0, beta * (proposedScreens[i] - screenValues[destinations[i]]))
+                }
+                screenedOut += proposals.count - eligible.count
             }
-            if candidates.isEmpty { continue }
-            let likelihoods = try await checkedEvaluation(candidates, evaluate: evaluate)
-            evaluations += candidates.count
-            for index in candidates.indices {
-                let destination = destinations[index]
-                let logRatio = beta * (likelihoods[index] - particles[destination].logLikelihood)
-                if logUniforms[index] < min(0, logRatio) {
-                    particles[destination] = .init(coordinates: candidates[index].coordinates,
+            guard current.likelihoodEvaluationCount + evaluations + eligible.count <= c.maximumLikelihoodEvaluations else {
+                throw VivoPosteriorError.budget("authoritative likelihood budget; last completed stage retained")
+            }
+            if eligible.isEmpty { continue }
+            let exact = try eligible.enumerated().map { offset, source in
+                try VivoPosteriorCandidate(ordinal: ordinal + UInt64(offset),
+                    coordinates: proposals[source].coordinates, parameters: plan.parameters)
+            }
+            let likelihoods = try await checkedEvaluation(exact, evaluate: evaluate, label: "authoritative")
+            ordinal += UInt64(exact.count); evaluations += exact.count
+            for (index, source) in eligible.enumerated() {
+                let destination = destinations[source]
+                let exactDifference = likelihoods[index] - particles[destination].logLikelihood
+                let correction = screen == nil ? exactDifference
+                    : exactDifference - (proposedScreens[source] - screenValues[destination])
+                let logUniform = screen == nil ? firstUniforms[source] : secondUniforms[source]
+                if logUniform < min(0, beta * correction) {
+                    particles[destination] = .init(coordinates: exact[index].coordinates,
                         logLikelihood: likelihoods[index], initialAncestor: particles[destination].initialAncestor)
+                    screenValues[destination] = proposedScreens[source]
                     accepted += 1
                 }
             }
@@ -134,31 +172,32 @@ public actor VivoTemperedPosteriorSampler {
         let stage = VivoSMCStage(index: current.stages.count, betaBefore: current.beta, betaAfter: beta,
             preResamplingESS: ess, likelihoodEvaluations: evaluations, proposedMoves: n * c.mutationSweeps,
             acceptedMoves: accepted, outOfPriorMoves: outside,
-            distinctInitialAncestors: Set(particles.map(\.initialAncestor)).count)
+            distinctInitialAncestors: Set(particles.map(\.initialAncestor)).count,
+            screenedOutMoves: screen == nil ? nil : screenedOut, screeningEvaluations: screen == nil ? nil : screens)
         return .init(schemaVersion: 1, planFingerprint: current.planFingerprint, beta: beta, particles: particles,
             randomState: random.state, nextCandidateOrdinal: ordinal,
             likelihoodEvaluationCount: current.likelihoodEvaluationCount + evaluations, stages: current.stages + [stage])
     }
 
-    private func checkedEvaluation(_ candidates: [VivoPosteriorCandidate],
-                                   evaluate: VivoPosteriorBatchEvaluator) async throws -> [Double] {
+    private func checkedEvaluation(_ candidates: [VivoPosteriorCandidate], evaluate: VivoPosteriorBatchEvaluator,
+                                   label: String) async throws -> [Double] {
         let returned: [VivoPosteriorEvaluation]
         do { returned = try await evaluate(candidates) }
         catch is CancellationError { throw CancellationError() }
         catch {
             let message = String(error.localizedDescription.prefix(4096))
-            throw EvaluationFailure(message: "Batch evaluator failed; no support truncation or redraw was applied.",
+            throw EvaluationFailure(message: "\(label) batch failed; no support truncation or redraw applied.",
                                     evaluations: candidates.map { .init(candidate: $0, failure: message) })
         }
         guard returned.count == candidates.count,
               Set(returned.map { $0.candidate.ordinal }).count == candidates.count else {
-            throw EvaluationFailure(message: "Evaluator omitted or duplicated candidate identities.", evaluations: [])
+            throw EvaluationFailure(message: "\(label) evaluator omitted or duplicated identities.", evaluations: [])
         }
         let byOrdinal = Dictionary(uniqueKeysWithValues: returned.map { ($0.candidate.ordinal, $0) })
         var ordered: [Double] = [], failures: [VivoPosteriorEvaluation] = []
         for candidate in candidates {
             guard let result = byOrdinal[candidate.ordinal], result.candidate == candidate else {
-                failures.append(.init(candidate: candidate, failure: "candidate values/identity were substituted")); continue
+                failures.append(.init(candidate: candidate, failure: "candidate values/identity substituted")); continue
             }
             guard result.failure == nil, let logLikelihood = result.logLikelihood,
                   logLikelihood.isFinite, abs(logLikelihood) <= 1e250 else {
@@ -168,22 +207,23 @@ public actor VivoTemperedPosteriorSampler {
             ordered.append(logLikelihood)
         }
         guard failures.isEmpty else {
-            throw EvaluationFailure(message: "Likelihood failure stops inference; failed parameter regions were not discarded.",
-                                    evaluations: failures)
+            throw EvaluationFailure(message: "\(label) failure stops inference; failed parameter regions were not discarded.", evaluations: failures)
         }
         return ordered
     }
 
     private func result(failure: VivoPosteriorFailure?) -> VivoPosteriorRun {
         .init(schemaVersion: 1, plan: plan, checkpoint: committed, failure: failure, limitations: [
-            "Finite-particle approximation conditional on declared independent bounded priors and a deterministic likelihood.",
-            "Uniform physical and uniform log-physical priors are different distributions; mutation uses their uniform prior coordinates.",
-            "All completed-stage particles have equal weights after resampling and mutation; particle count is not an independent-sample ESS.",
-            "Pre-resampling ESS measures weight concentration, not posterior convergence or interval coverage.",
-            "A completed beta=1 schedule is not proof of adequate exploration; use repeated seeds, particle/sweep sensitivity and independent validation.",
-            "Numerical, batch-contract and resource failures stop the run. An incomplete tempered population must not be published as a posterior.",
-            "Checkpoints preserve completed stages, RNG state and candidate order. External progress writes are not process-crash-atomic with evaluator side effects.",
-            "No marginal-likelihood estimate, clinical validity or global identifiability claim is produced."
+            "Finite-particle approximation conditional on declared independent bounded priors and a deterministic authoritative likelihood.",
+            "Uniform physical and uniform log-physical priors are different distributions; mutation uses uniform prior coordinates.",
+            "Completed-stage particles have equal weights; particle count and incremental-weight ESS are not independent-sample ESS or convergence certificates.",
+            "When screening is present, weights and stored likelihoods remain authoritative. Two independent accept/reject draws correct the deterministic approximation.",
+            "A screen must be an immutable function of a single candidate and context, independent of batch companions; identity alone cannot prove that property.",
+            "Screening and authoritative failures stop the run. No fallback, support filtering or approximation-only acceptance is performed.",
+            "Screen values are recomputed at completed-stage restart. Screening identity, evaluation budget and RNG continuation are bound by the plan.",
+            "Completed beta=1 does not prove adequate exploration. Use repeated seeds, particle/sweep sensitivity and independent validation.",
+            "Checkpoints preserve completed work, not evaluator side effects or cross-filesystem crash atomicity.",
+            "No marginal-likelihood estimate, clinical validity, measured acceleration or global identifiability claim is produced."
         ])
     }
 }
