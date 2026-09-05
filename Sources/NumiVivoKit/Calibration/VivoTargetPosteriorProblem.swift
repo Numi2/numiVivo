@@ -19,8 +19,7 @@ public enum VivoKineticFitField: String, Codable, Sendable {
 public struct VivoTargetPosteriorBinding: Codable, Equatable, Sendable {
     public let parameter: VivoPosteriorParameter
     public let field: VivoKineticFitField
-    /// Explicit sharing. Disjoint sets can have separate parameters; overlapping
-    /// writers for the same field are rejected. No context transfer is implicit.
+    /// Explicit sharing. Overlapping writers for the same field are rejected.
     public let caseIdentifiers: [String]
     public let priorEvidence: VivoKineticEvidence
     public init(parameter: VivoPosteriorParameter, field: VivoKineticFitField,
@@ -100,17 +99,14 @@ public struct VivoTargetPosteriorProblem: Codable, Equatable, Sendable {
             knots += item.experiment.exposure.knots.count
         }
         try validateAssays()
-        // Prevent a valid small parameter file from expanding into unbounded
-        // per-likelihood time series. Sampler evaluation counts are a separate cap.
         guard observations <= 4096, sampleCount <= 8192, knots <= 8192 else {
             throw VivoPosteriorError.budget("per-likelihood calibration observation or boundary capacity")
         }
     }
 }
 
-/// Validated immutable study with a calibration-only likelihood identity. The
-/// optional assay model enables explicitly fitted error scales, bias and serial
-/// covariance. Missing uncertainty is never silently assigned a value.
+/// Calibration-only authoritative likelihood. Optional screening changes the
+/// mutation mechanism, never this target, assay model, or training-data identity.
 public struct VivoPreparedTargetPosterior: Sendable {
     public let problem: VivoTargetPosteriorProblem
     public let plan: VivoPosteriorPlan
@@ -152,9 +148,7 @@ public struct VivoPreparedTargetPosterior: Sendable {
         return try zip(plan.parameters, particle.coordinates).map { try $0.value(at: $1) }
     }
 
-    /// Applies shared parameters without altering the original experiment or
-    /// claiming a proposal is a measured rate. The run record retains original
-    /// evidence, priors and fitted joint particle coordinates.
+    /// Proposal values never overwrite original evidence or become measurements.
     public func experiment(for item: VivoTargetEngagementStudyCase, values: [Double]) throws -> VivoTargetEngagementExperiment {
         guard values.count == problem.bindings.count,
               problem.study.cases.contains(where: { $0 == item }) else {
@@ -232,7 +226,7 @@ public struct VivoPreparedTargetPosterior: Sendable {
                 compensation = (next - sum) - adjusted; sum = next
                 continue
             }
-            // Preserve the v1 independent likelihood's exact summation order.
+            // Preserve v1 independent-likelihood accumulation order.
             for observation in item.observations {
                 guard let sample = samples[observation.timeSeconds], let sd = observation.standardDeviation else {
                     throw VivoPosteriorError.invalid("missing calibration sample or measurement SD")
@@ -282,7 +276,10 @@ public struct VivoTargetPosteriorRecord: Codable, Equatable, Sendable {
     public let posterior: VivoPosteriorRun
     public func validate(requireComplete: Bool = false) throws {
         let prepared = try VivoPreparedTargetPosterior(problem)
-        guard schemaVersion == 1, posterior.plan == prepared.plan else {
+        // Delayed acceptance still targets the exact same FP64 likelihood. Keep
+        // the screen identity and evaluation ledger in the record/checkpoint,
+        // while comparing the authoritative statistical problem independently.
+        guard schemaVersion == 1, posterior.plan.withScreening(nil) == prepared.plan else {
             throw VivoPosteriorError.invalid("inference result does not bind its declared calibration problem")
         }
         try posterior.validate(requireComplete: requireComplete)
@@ -291,10 +288,12 @@ public struct VivoTargetPosteriorRecord: Codable, Equatable, Sendable {
 
 public enum VivoTargetPosteriorFitter {
     public static func run(_ problem: VivoTargetPosteriorProblem, checkpoint: VivoPosteriorCheckpoint? = nil,
-                           progress: VivoPosteriorCheckpointSink? = nil) async throws -> VivoTargetPosteriorRecord {
+                           progress: VivoPosteriorCheckpointSink? = nil,
+                           screen: VivoPosteriorScreen? = nil) async throws -> VivoTargetPosteriorRecord {
         let prepared = try VivoPreparedTargetPosterior(problem)
-        let sampler = try VivoTemperedPosteriorSampler(plan: prepared.plan, checkpoint: checkpoint)
-        let result = try await sampler.run(evaluate: { try await prepared.evaluate($0) }, progress: progress)
+        let plan = prepared.plan.withScreening(screen?.policy)
+        let sampler = try VivoTemperedPosteriorSampler(plan: plan, checkpoint: checkpoint)
+        let result = try await sampler.run(evaluate: { try await prepared.evaluate($0) }, progress: progress, screen: screen)
         return .init(schemaVersion: 1, problem: problem, posterior: result)
     }
 }
