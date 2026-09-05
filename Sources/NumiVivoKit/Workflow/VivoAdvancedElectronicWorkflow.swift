@@ -5,6 +5,7 @@ public enum VivoAdvancedElectronicCalculation:Codable,Sendable,Equatable {
     case smoothCPCM(configuration:VivoSmoothSCFWorkflowConfiguration)
     case correlated(reference:VivoSCFConfiguration,solver:VivoAdvancedManyBodyRequest)
     case correlatedEmbedding(configuration:VivoECCWorkflowConfiguration)
+    case eccDMET(configuration:VivoECCDMETConfiguration)
 }
 /// A new schema preserves decoding of earlier electronic-workflow requests.
 /// Both schemas use the same artifact store, DAG scheduler and CLI commands.
@@ -29,7 +30,7 @@ public struct VivoAdvancedElectronicWorkflowRequest:Codable,Sendable,Equatable {
         case .correlated(let reference,_):
             try reference.validate()
             guard reference.reference == .restricted,system.alphaElectrons==system.betaElectrons else { throw VivoChemistryError.unsupported("correlated molecular preparation uses RHF; direct Hamiltonian solvers preserve their own spin contract") }
-        case .correlatedEmbedding:
+        case .correlatedEmbedding, .eccDMET:
             guard system.alphaElectrons==system.betaElectrons else { throw VivoChemistryError.unsupported("correlated moment matching currently requires a non-spin-polarized reference") }
         }
     }
@@ -71,6 +72,9 @@ public enum VivoAdvancedElectronicWorkflowPlanner {
         case .correlatedEmbedding(let c):
             nodes.append(.init(identifier:"result",operation:ops.ecc(implementationFingerprint:id),inputs:[h],configuration:try json(c),resources:resources))
             return .init(nodes:nodes,resultNode:"result",resultOutput:"embedding",resultKind:"vivo.ecc-selected-moment-result")
+        case .eccDMET(let c):
+            nodes.append(.init(identifier:"result",operation:ops.eccDMET(implementationFingerprint:id),inputs:[h],configuration:try json(c),resources:resources))
+            return .init(nodes:nodes,resultNode:"result",resultOutput:"embedding",resultKind:"vivo.ecc-dmet-result")
         default:throw VivoChemistryError.invalid("unresolved advanced calculation")
         }
     }

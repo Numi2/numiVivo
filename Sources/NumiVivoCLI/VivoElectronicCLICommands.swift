@@ -142,12 +142,12 @@ struct VivoElectronicCLICommands {
             switch args.command {
             case "chemistry-run":
                 try args.allow(["--output","--store"])
-                let request=try VivoCanonicalJSON.decode(VivoElectronicWorkflowRequest.self,from:read(source))
-                try request.validate()
-                let requestID=try await put(request,kind:"vivo.electronic-workflow-request",store:store)
+                let request=try VivoElectronicRequestDocument.decode(read(source))
+                let stored=try await store.put(data:request.canonicalData(),kind:request.artifactKind,mediaType:"application/json")
+                let requestID=stored.fingerprint
                 let system=try await put(request.system,kind:"vivo.electronic-system",store:store)
                 let basis=try await put(request.basis,kind:"vivo.gaussian-basis",store:store)
-                let plan=try VivoElectronicWorkflowPlanner.plan(request,systemArtifact:system,basisArtifact:basis,implementationFingerprint:identity)
+                let plan=try request.plan(systemArtifact:system,basisArtifact:basis,implementationFingerprint:identity)
                 let results=try await workflow.runDAG(plan.nodes)
                 guard let result=results[plan.resultNode]?.outputs.first(where:{$0.name==plan.resultOutput}) else { throw VivoChemistryError.invalid("workflow omitted the requested result") }
                 let payload=try await workflow.payload(artifact:result.artifact,expectedKind:plan.resultKind)
@@ -164,11 +164,11 @@ struct VivoElectronicCLICommands {
                 else { budget = .init() }
                 try budget.validate()
                 let h=try VivoCanonicalJSON.decode(VivoEmbeddedHamiltonian.self,from:read(source,maximumBytes:budget.maximumBytes))
-                let solver=try VivoCanonicalJSON.decode(VivoManyBodySolverRequest.self,from:read(solverPath))
+                let solver=try VivoNativeSolverDispatch.decode(read(solverPath),implementationFingerprint:identity)
                 try h.validate(budget:budget)
                 let inputID=try await put(h,kind:"vivo.embedded-hamiltonian",store:store)
-                let operation=VivoElectronicWorkflowOperations.manyBody(implementationFingerprint:identity)
-                let config=try VivoCanonicalJSON.decode(VivoJSONValue.self,from:VivoCanonicalJSON.encode(solver))
+                let operation=solver.operation
+                let config=solver.configuration
                 let task=VivoChemistryTask(operation:operation.identifier,version:operation.version,implementationFingerprint:identity,
                     inputs:[.init(name:"hamiltonian",artifact:inputID,kind:"vivo.embedded-hamiltonian")],configuration:config,
                     outputs:operation.outputs,resources:.init(budget:budget,maximumInputBytes:budget.maximumBytes,maximumOutputBytes:budget.maximumBytes))
@@ -187,9 +187,26 @@ struct VivoElectronicCLICommands {
     }
     private func template(_ name:String) throws -> Data {
         if name == "solver-ccsd" { return try VivoCanonicalJSON.encode(VivoManyBodySolverRequest.ccsd(configuration:.init())) }
+        if name == "solver-lih-sa-casscf" {
+            return try VivoCanonicalJSON.encode(VivoAdvancedManyBodyRequest.multistateCASSCF(partition:.init(doublyOccupiedCore:[0],active:[1,2]),
+                configuration:.init(weights:[0.5,0.5],rootLabels:["ground","excited"],optimization:.init(maximumMacroIterations:200,maximumEnergyEvaluations:4000,gradientTolerance:1e-6),followRoots:true)))
+        }
+        if name == "solver-tensor-ccsd" {return try VivoCanonicalJSON.encode(VivoAdvancedManyBodyRequest.tensorCCSD(configuration:.init()))}
+        if name == "solver-direct-fci" {return try VivoCanonicalJSON.encode(VivoAdvancedManyBodyRequest.directCI(configuration:.init()))}
         if name == "solver-fci" { return try VivoCanonicalJSON.encode(VivoManyBodySolverRequest.configurationInteraction(method:.fci)) }
         let system=VivoElectronicSystem(nuclei:[.init(atomicNumber:1,positionBohr:.init(0,0,-0.7)),
             .init(atomicNumber:1,positionBohr:.init(0,0,0.7))],alphaElectrons:1,betaElectrons:1)
+        let ecc=VivoECCDMETConfiguration(mode:.singleFragment,fragments:[.init(identifier:"hydrogen-fragment",orbitals:[0],maximumBathOrbitals:1,clusterAlphaElectrons:1,clusterBetaElectrons:1)],bathSelection:.init(minimumBathOrbitals:1))
+        if name == "solver-ecc-dmet" {return try VivoCanonicalJSON.encode(VivoECCDMETSolverRequest(configuration:ecc))}
+        let advanced:VivoAdvancedElectronicCalculation?
+        switch name {
+        case "h2-direct-fci":advanced = .correlated(reference:.init(),solver:.directCI(configuration:.init()))
+        case "h2-tensor-ccsd":advanced = .correlated(reference:.init(),solver:.tensorCCSD(configuration:.init()))
+        case "h2-smooth-cpcm":advanced = .smoothCPCM(configuration:.init())
+        case "h2-ecc-dmet":advanced = .eccDMET(configuration:ecc)
+        default:advanced=nil
+        }
+        if let advanced{return try VivoCanonicalJSON.encode(VivoAdvancedElectronicWorkflowRequest(system:system,basis:.hydrogenSTO3G(nucleusIndices:[0,1]),calculation:advanced))}
         let calculation:VivoElectronicWorkflowCalculation
         switch name {
         case "h2-ccsd": calculation = .correlated(reference:.init(),solver:.ccsd(configuration:.init()))
@@ -212,7 +229,12 @@ struct VivoElectronicCLICommands {
       numivivo chemistry-solve hamiltonian.json --solver solver.json --output result.json
 
     Templates: h2-ccsd, h2-casci, h2-casscf, h2-lda, h2-lda-cpcm,
-               h2-cpcm-rhf, solver-ccsd, solver-fci.
+               h2-cpcm-rhf, h2-direct-fci, h2-tensor-ccsd, h2-smooth-cpcm,
+               h2-ecc-dmet, solver-ccsd, solver-fci, solver-direct-fci,
+               solver-tensor-ccsd, solver-ecc-dmet, solver-lih-sa-casscf.
+    chemistry-run explicitly dispatches original and advanced request schemas.
+    Advanced JSON supports densityFittedMP2 (with an explicit auxiliary basis),
+    multistateCASSCF, smoothCPCM and integrated eccDMET. No method fallback.
     chemistry-solve accepts an optional --budget budget.json.
     With --output, a sibling <output>.receipt.json records input/result hashes,
     implementation identity and reused stages. Nonconverged solvers fail and

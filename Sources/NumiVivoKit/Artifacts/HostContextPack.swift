@@ -49,20 +49,6 @@ public struct VivoQuantity: Codable, Sendable, Equatable, Hashable {
     }
 }
 
-public enum VivoArtifactValidationError: Error, Sendable, CustomStringConvertible {
-    case invalid(String)
-    case unresolved(String)
-    case incompatible(String)
-
-    public var description: String {
-        switch self {
-        case .invalid(let message): "Invalid artifact: \(message)"
-        case .unresolved(let message): "Unresolved artifact reference: \(message)"
-        case .incompatible(let message): "Incompatible artifact: \(message)"
-        }
-    }
-}
-
 public struct VivoOrganismContext: Codable, Sendable, Equatable {
     public var taxonomyIdentifier: String
     public var speciesName: String
