@@ -65,25 +65,26 @@ public enum VivoAdvancedChemistryOperations {
             })
     }
     public static func riHF(implementationFingerprint id:VivoFingerprint)->VivoChemistryOperation {
-        .init(identifier:"vivo.native.ri-hf",version:"1",implementationFingerprint:id,
+        .init(identifier:"vivo.native.ri-hf",version:"2",implementationFingerprint:id,
             outputs:[.init(name:"reference",kind:"vivo.ri-hf")],execute:{ cfg,inputs,budget in
                 try slots(inputs,["integrals"])
                 let ri=try input(VivoRIIntegrals.self,"integrals",inputs),settings=try decode(VivoSCFConfiguration.self,cfg)
+                guard settings.reference == .restricted else { throw VivoChemistryError.unsupported("RI workflow reference is restricted") }
                 return ["reference":try VivoCanonicalJSON.encode(VivoFactorizedHartreeFock.solve(ri,configuration:settings,budget:budget))]
             },validateOutputs:{ cfg,inputs,outputs,budget in
                 try slots(inputs,["integrals"]);try slots(outputs,["reference"])
                 let r=try input(VivoRIHartreeFockResult.self,"reference",outputs),settings=try decode(VivoSCFConfiguration.self,cfg)
-                guard r.source == (try input(VivoRIIntegrals.self,"integrals",inputs)),r.configuration==settings,
-                      r.scf.finalCommutatorNorm.isFinite,r.scf.finalCommutatorNorm<=settings.commutatorTolerance else {
-                    throw VivoChemistryError.invalid("RI-HF result binding")
+                guard r.source == (try input(VivoRIIntegrals.self,"integrals",inputs)),r.configuration==settings else {
+                    throw VivoChemistryError.invalid("RI-HF result source/settings binding")
                 }
-                // This operation is the closed-shell RI-MP2 preparation path.
-                // Rebuilding its RI Fock in MP2 also verifies reference binding.
-                _ = try VivoFactorizedMP2.solve(r,budget:budget)
+                // Density, metric, canonicality, physical energy and commutator
+                // are reconstructed directly. No MP2 contraction or MP2 gap
+                // assumption is imposed on an ECC/DMET/CI preparation request.
+                _ = try VivoFactorizedHartreeFock.validateRestricted(r,budget:budget)
             })
     }
     public static func riMP2(implementationFingerprint id:VivoFingerprint)->VivoChemistryOperation {
-        .init(identifier:"vivo.native.ri-mp2",version:"1",implementationFingerprint:id,
+        .init(identifier:"vivo.native.ri-mp2",version:"2",implementationFingerprint:id,
             outputs:[.init(name:"mp2",kind:"vivo.ri-mp2")],execute:{ cfg,inputs,budget in
                 try slots(inputs,["reference"])
                 guard cfg == .object([:]) else { throw VivoChemistryError.invalid("RI-MP2 configuration") }
