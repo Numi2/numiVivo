@@ -1,20 +1,28 @@
 import Foundation
 
+public enum VivoQMMMFreeEnergyEnvironment: String, Codable, Sendable {
+    case explicitSolution
+    case proteinEnvironment
+}
+
 public struct VivoQMMMFreeEnergyProvenance: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-free-energy-provenance/v1"
+    public static let schema="numivivo.org/qmmm-free-energy-provenance/v2"
     public var schema:String
     public var structureFingerprint:VivoFingerprint
     public var systemFingerprint:VivoFingerprint
     public var baseProviderFingerprint:VivoFingerprint
     public var dynamicsFingerprint:VivoFingerprint
     public var chemicalState:String
+    public var environment:VivoQMMMFreeEnergyEnvironment
     public var environmentIdentifier:String
     public var methodDescription:String
     public init(structureFingerprint:VivoFingerprint,systemFingerprint:VivoFingerprint,baseProviderFingerprint:VivoFingerprint,
-                dynamicsFingerprint:VivoFingerprint,chemicalState:String,environmentIdentifier:String,methodDescription:String) {
+                dynamicsFingerprint:VivoFingerprint,chemicalState:String,environment:VivoQMMMFreeEnergyEnvironment,
+                environmentIdentifier:String,methodDescription:String) {
         schema=Self.schema;self.structureFingerprint=structureFingerprint;self.systemFingerprint=systemFingerprint
         self.baseProviderFingerprint=baseProviderFingerprint;self.dynamicsFingerprint=dynamicsFingerprint
-        self.chemicalState=chemicalState;self.environmentIdentifier=environmentIdentifier;self.methodDescription=methodDescription
+        self.chemicalState=chemicalState;self.environment=environment;self.environmentIdentifier=environmentIdentifier
+        self.methodDescription=methodDescription
     }
     public func validate() throws {
         guard schema==Self.schema,
@@ -27,7 +35,7 @@ public struct VivoQMMMFreeEnergyProvenance: Codable, Sendable, Equatable {
 }
 
 public struct VivoQMMMQualifiedActivationFreeEnergy: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-qualified-activation-free-energy/v1"
+    public static let schema="numivivo.org/qmmm-qualified-activation-free-energy/v2"
     public let schema:String
     public let analysis:VivoQMMMActivationFreeEnergyResult
     public let provenance:VivoQMMMFreeEnergyProvenance
@@ -58,6 +66,7 @@ public enum VivoQMMMFreeEnergyQualification {
                                system:VivoClassicalSystem,
                                baseProvider:VivoMDCandidateForceProvider,
                                chemicalState:String,
+                               environment:VivoQMMMFreeEnergyEnvironment,
                                environmentIdentifier:String,
                                methodDescription:String) throws -> VivoQMMMQualifiedActivationFreeEnergy {
         let systemID=try system.fingerprint()
@@ -70,7 +79,7 @@ public enum VivoQMMMFreeEnergyQualification {
         let dynamicsID=try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(sampling.dynamics))
         let provenance=VivoQMMMFreeEnergyProvenance(structureFingerprint:system.structureFingerprint,systemFingerprint:systemID,
             baseProviderFingerprint:baseProvider.fingerprint,dynamicsFingerprint:dynamicsID,chemicalState:chemicalState,
-            environmentIdentifier:environmentIdentifier,methodDescription:methodDescription)
+            environment:environment,environmentIdentifier:environmentIdentifier,methodDescription:methodDescription)
         return try .init(analysis:result,provenance:provenance)
     }
 }
