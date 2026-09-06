@@ -93,7 +93,7 @@ public extension VivoAdvancedChemistryOperations {
     /// system and explicit active-space configuration. Existing many-body and
     /// ECC/DMET operations consume this output without a new solver interface.
     static func riHamiltonian(implementationFingerprint id: VivoFingerprint) -> VivoChemistryOperation {
-        func read<T: Decodable>(_ type: T.Type, _ name: String, _ inputs: [String:Data]) throws -> T {
+        @Sendable func read<T: Decodable>(_ type: T.Type, _ name: String, _ inputs: [String:Data]) throws -> T {
             guard let data = inputs[name] else { throw VivoChemistryError.invalid("missing RI Hamiltonian slot \(name)") }
             return try VivoCanonicalJSON.decode(type,from:data)
         }
