@@ -131,10 +131,10 @@
     }
   },
   "githubActions": [
-    { "name": "Native chemistry conformance", "runID": 34017723597, "conclusion": "success" },
-    { "name": "Barrier convergence conformance", "runID": 34017723536, "conclusion": "success" },
-    { "name": "Scientific closure conformance", "runID": 34017723523, "conclusion": "success" },
-    { "name": "Complete native product contracts", "runID": 34017723548, "conclusion": "success" }
+    { "name": "Native chemistry conformance", "runID": 34017723597, "headCommit": "24e803001214f6a1d03b3a0469b6bc61cded00c5", "conclusion": "success" },
+    { "name": "Barrier convergence conformance", "runID": 34045438757, "headCommit": "b9870f705a80296adf13adeff19b782e3f2277c8", "conclusion": "success" },
+    { "name": "Scientific closure conformance", "runID": 34045438791, "headCommit": "b9870f705a80296adf13adeff19b782e3f2277c8", "conclusion": "success" },
+    { "name": "Complete native product contracts", "runID": 34045438774, "headCommit": "b9870f705a80296adf13adeff19b782e3f2277c8", "conclusion": "success" }
   ],
   "limitations": [
     "The residual campaign reduces the projected eigenproblem but retains all declared orbital modes and determinant-sector vectors.",

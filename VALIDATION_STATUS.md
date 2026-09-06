@@ -91,12 +91,14 @@ The previous M4 Pro Metal target/MD/mapped-connectivity repairs remain covered
 by the 23-test suite. The target simulation remains synthetic and retains its
 assumed-parameter and uncertainty flags.
 
-Successful workflows for the implementation predecessor `24e8030` were:
+Successful workflows for the published acceptance-guard revision `b9870f7` were:
 
-- Native chemistry conformance: run `34017723597`;
-- Barrier convergence conformance: run `34017723536`;
-- Scientific closure conformance: run `34017723523`;
-- Complete native product contracts: run `34017723548`.
+- Barrier convergence conformance: run `34045438757`;
+- Scientific closure conformance, including Apple and ASAN jobs: run `34045438791`;
+- Complete native product contracts: run `34045438774`.
+
+The unchanged native-chemistry workflow also passed on the product implementation
+at `24e8030` in run `34017723597`.
 
 The local measured audit is
 `Documentation/Audit/scientific-closure-observations.json`.
