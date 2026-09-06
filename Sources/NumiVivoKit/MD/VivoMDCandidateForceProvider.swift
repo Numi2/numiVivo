@@ -65,6 +65,7 @@ public struct VivoMDCandidateForceProvider: Sendable {
     public let retainedSystemFingerprint: VivoFingerprint
     public let boundary: VivoQMMMEmbeddingBoundary
     public let supportsCellMoves: Bool
+    public let polarizationModelFingerprint: VivoFingerprint?
     public let maximumAcceptedResidual: Double
     /// Original molecular connectivity for molecular-center NPT proposals. Removing
     /// QM bonded energies must not split the barostat's molecular components.
@@ -72,11 +73,13 @@ public struct VivoMDCandidateForceProvider: Sendable {
     public let evaluate: @Sendable (VivoMDCandidateGeometry) async throws -> VivoMDCandidateForceEvaluation
     public init(fingerprint: VivoFingerprint,retainedSystemFingerprint: VivoFingerprint,boundary: VivoQMMMEmbeddingBoundary,
                 supportsCellMoves: Bool,maximumAcceptedResidual: Double,molecularConnectivitySystem: VivoClassicalSystem,
+                polarizationModelFingerprint: VivoFingerprint? = nil,
                 evaluate: @escaping @Sendable (VivoMDCandidateGeometry) async throws -> VivoMDCandidateForceEvaluation) throws {
         try VivoClassicalSystemValidator.validate(molecularConnectivitySystem)
         guard maximumAcceptedResidual.isFinite,maximumAcceptedResidual > 0 else { throw VivoChemistryError.invalid("candidate provider convergence tolerance") }
         self.fingerprint = fingerprint;self.retainedSystemFingerprint = retainedSystemFingerprint;self.boundary = boundary
         self.supportsCellMoves = supportsCellMoves;self.maximumAcceptedResidual = maximumAcceptedResidual
+        self.polarizationModelFingerprint=polarizationModelFingerprint
         self.molecularConnectivitySystem = molecularConnectivitySystem;self.evaluate = evaluate
     }
     public func validate(system: VivoClassicalSystem,configuration: VivoMDConfiguration,cell: VivoPeriodicCell?) throws {
@@ -87,6 +90,10 @@ public struct VivoMDCandidateForceProvider: Sendable {
               molecularConnectivitySystem.virtualSiteDefinitions == system.virtualSiteDefinitions,
               boundary == .finiteCluster ? cell == nil : cell != nil else {
             throw VivoChemistryError.invalid("candidate provider retained system, molecular manifold or boundary mismatch")
+        }
+        let polarizationID = try system.polarization.map { try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode($0)) }
+        guard polarizationModelFingerprint == polarizationID else {
+            throw VivoChemistryError.invalid("force provider does not own the canonical induced-dipole model")
         }
         for (source,retained) in zip(molecularConnectivitySystem.particles,system.particles) {
             guard source.index == retained.index,source.atomIndex == retained.atomIndex,source.role == retained.role,
@@ -116,4 +123,15 @@ public struct VivoMDCandidateForceProvider: Sendable {
         return try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Identity(configuration: configuration.fingerprint(),
             hamiltonian: provider.fingerprint,numericalProfile: "numivivo.org/md-bo-force-provider/v1")))
     }
+}
+
+/// Complete potential, not an electronic correction; virtual-site forces already
+/// map to physical particles. Used by workflows and adaptive partition evaluation.
+public struct VivoMDHamiltonianEvaluation: Codable, Sendable, Equatable {
+    public let systemFingerprint: VivoFingerprint
+    public let configurationFingerprint: VivoFingerprint
+    public let evaluatedGeometry: VivoMDCandidateGeometry
+    public let energyKJPerMol: Double
+    public let physicalParticleForcesKJPerMolNM: [VivoVector3D]
+    public var normalizedForceResidual: Double? = nil
 }

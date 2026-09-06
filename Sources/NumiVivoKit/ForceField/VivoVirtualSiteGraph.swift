@@ -143,6 +143,42 @@ public struct VivoVirtualSiteGraph: Codable, Sendable, Equatable {
         guard forces.allSatisfy(\.isFinite) else { throw VivoChemistryError.invalid("dependent-site force overflow") }
         return forces
     }
+    /// Extra dE/d(strain) from nonlinear/nested construction, relative to
+    /// independently affine-moving site centers. Fixed lattice image coefficients
+    /// are differentiated with the cell; wrapped parent coordinates are not used
+    /// as substitutes for their coherent local images.
+    public func affineStrainCorrection(rawForces: [VivoVector3D],state: VivoDependentSiteState,
+                                       periodicCell: VivoPeriodicCell? = nil,
+                                       positionUnitScale: Double = 1) throws -> VivoQMMatrix {
+        try validateState(state,values:rawForces)
+        guard positionUnitScale.isFinite,positionUnitScale>0,periodicCell?.isValid != false else {
+            throw VivoChemistryError.invalid("site strain units or cell")
+        }
+        var result=VivoQMMatrix(3,3)
+        func affine(_ v: VivoVector3D,_ a: Int,_ b: Int) -> VivoVector3D {
+            let x=[v.x,v.y,v.z][b]
+            return a==0 ? .init(x,0,0):(a==1 ? .init(0,x,0):.init(0,0,x))
+        }
+        for a in 0..<3 { for b in 0..<3 {
+            var tangent=state.positionsNM.map { affine($0,a,b) }
+            for (i,site) in sites.enumerated() {
+                let origin=state.positionsNM[Int(site.parentParticles[0])]
+                var velocity=VivoVector3D.zero
+                for (parent,jacobian) in zip(site.parentParticles,state.jacobians[i]) {
+                    let p=state.positionsNM[Int(parent)]
+                    let coherent=try periodicCell.map { origin+(try $0.minimumImage(p-origin)) } ?? p
+                    velocity=velocity+jacobian.apply(tangent[Int(parent)]+affine(coherent-p,a,b))
+                }
+                tangent[Int(site.siteParticle)]=velocity
+            }
+            for site in sites {
+                let i=Int(site.siteParticle),nonAffine=tangent[i]-affine(state.positionsNM[i],a,b)
+                result[a,b]-=rawForces[i].dot(nonAffine)*positionUnitScale
+            }
+        } }
+        guard result.values.allSatisfy(\.isFinite) else { throw VivoChemistryError.invalid("site strain derivative overflow") }
+        return result
+    }
     private func validateState(_ state: VivoDependentSiteState, values: [VivoVector3D]) throws {
         guard state.positionsNM.count == particleCount, values.count == particleCount, values.allSatisfy(\.isFinite),
               state.jacobians.count == sites.count,

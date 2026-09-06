@@ -43,6 +43,23 @@ enum VivoGaussianDerivative {
         } }
         return value
     }
+    /// Potential of a point source with charge and Cartesian dipole. Source
+    /// derivatives follow translation invariance: d/dC = -(d/dA+d/dB).
+    /// The raised primitives retain the ORIGINAL contracted normalization.
+    static func multipolarPotential(_ ea: Double,_ la: [Int],_ ra: SIMD3<Double>,
+                                    _ eb: Double,_ lb: [Int],_ rb: SIMD3<Double>,
+                                    center: SIMD3<Double>,moments: [Double]) -> Double {
+        var result = moments[0]*VivoGaussianIntegralEngine.primitivePotential(ea,la,ra,eb,lb,rb,center)
+        for axis in 0..<3 where moments[axis+1] != 0 {
+            var aa=la,bb=lb;aa[axis]+=1;bb[axis]+=1
+            var derivative = -2*ea*VivoGaussianIntegralEngine.primitivePotential(ea,aa,ra,eb,lb,rb,center)
+                - 2*eb*VivoGaussianIntegralEngine.primitivePotential(ea,la,ra,eb,bb,rb,center)
+            if la[axis]>0 { aa[axis]-=2;derivative+=Double(la[axis])*VivoGaussianIntegralEngine.primitivePotential(ea,aa,ra,eb,lb,rb,center) }
+            if lb[axis]>0 { bb[axis]-=2;derivative+=Double(lb[axis])*VivoGaussianIntegralEngine.primitivePotential(ea,la,ra,eb,bb,rb,center) }
+            result += moments[axis+1]*derivative
+        }
+        return result
+    }
     static func add(_ values: inout [VivoVector3D], center: Int, axis: Int, value: Double) {
         switch axis { case 0: values[center].x += value; case 1: values[center].y += value; default: values[center].z += value }
     }

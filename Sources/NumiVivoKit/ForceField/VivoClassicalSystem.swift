@@ -19,8 +19,10 @@ public struct VivoClassicalSystem:Codable,Sendable,Equatable{
     public var linearVirtualSites:[VivoLinearVirtualSite]?
     /// Additional differentiable site definitions; nil preserves legacy v1 decoding.
     public var virtualSiteDefinitions:[VivoDependentSite]?
+    /// Optional permanent-charge/induced-dipole model; executable only with a matching force provider.
+    public var polarization:VivoInducedDipoleConfiguration?
     public var nonbondedTypePairs:[VivoNonbondedTypePair]?;public var nonbondedExceptions:[VivoNonbondedException];public var metadata:[String:String]
-    public init(identifier:String,structureFingerprint:VivoFingerprint,parameterSourceFingerprints:[VivoFingerprint]=[],mixingRule:VivoMixingRule = .lorentzBerthelot,particles:[VivoClassicalParticle],bonds:[VivoHarmonicBond]=[],angles:[VivoHarmonicAngle]=[],torsions:[VivoPeriodicTorsion]=[],constraints:[VivoDistanceConstraint]=[],linearVirtualSites:[VivoLinearVirtualSite]?=nil,virtualSiteDefinitions:[VivoDependentSite]?=nil,nonbondedTypePairs:[VivoNonbondedTypePair]?=nil,nonbondedExceptions:[VivoNonbondedException]=[],metadata:[String:String]=[:]){schema=Self.schema;self.identifier=identifier;self.structureFingerprint=structureFingerprint;self.parameterSourceFingerprints=parameterSourceFingerprints;self.mixingRule=mixingRule;self.particles=particles;self.bonds=bonds;self.angles=angles;self.torsions=torsions;self.constraints=constraints;self.linearVirtualSites=linearVirtualSites;self.virtualSiteDefinitions=virtualSiteDefinitions;self.nonbondedTypePairs=nonbondedTypePairs;self.nonbondedExceptions=nonbondedExceptions;self.metadata=metadata}
+    public init(identifier:String,structureFingerprint:VivoFingerprint,parameterSourceFingerprints:[VivoFingerprint]=[],mixingRule:VivoMixingRule = .lorentzBerthelot,particles:[VivoClassicalParticle],bonds:[VivoHarmonicBond]=[],angles:[VivoHarmonicAngle]=[],torsions:[VivoPeriodicTorsion]=[],constraints:[VivoDistanceConstraint]=[],linearVirtualSites:[VivoLinearVirtualSite]?=nil,virtualSiteDefinitions:[VivoDependentSite]?=nil,nonbondedTypePairs:[VivoNonbondedTypePair]?=nil,nonbondedExceptions:[VivoNonbondedException]=[],metadata:[String:String]=[:],polarization:VivoInducedDipoleConfiguration?=nil){schema=Self.schema;self.identifier=identifier;self.structureFingerprint=structureFingerprint;self.parameterSourceFingerprints=parameterSourceFingerprints;self.mixingRule=mixingRule;self.particles=particles;self.bonds=bonds;self.angles=angles;self.torsions=torsions;self.constraints=constraints;self.linearVirtualSites=linearVirtualSites;self.virtualSiteDefinitions=virtualSiteDefinitions;self.nonbondedTypePairs=nonbondedTypePairs;self.nonbondedExceptions=nonbondedExceptions;self.metadata=metadata;self.polarization=polarization}
     public func fingerprint()throws->VivoFingerprint{try VivoClassicalSystemValidator.validate(self);return try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(self))}
 }
 
@@ -34,6 +36,12 @@ public enum VivoClassicalSystemValidator{
         if let additional=s.virtualSiteDefinitions,!additional.isEmpty {
             let graph=try s.resolvedVirtualSiteGraph()
             guard Set(graph.sites.map(\.siteParticle))==virtualParticles else{throw VivoArtifactValidationError.invalid("dependent-site graph must resolve every massless site")}
+        }
+        if let polarization=s.polarization {
+            try polarization.validate(particleCount:s.particles.count)
+            guard !s.particles.contains(where:{$0.role == .drude}) else {
+                throw VivoArtifactValidationError.invalid("induced-dipole and explicit Drude degrees of freedom cannot be conflated")
+            }
         }
         func pair(_ a:UInt32,_ b:UInt32,_ label:String)throws{guard a != b,a<count,b<count else{throw VivoArtifactValidationError.invalid("\(label) particle pair is invalid")}}
         var bondPairs=Set<UInt64>();func key(_ a:UInt32,_ b:UInt32)->UInt64{UInt64(min(a,b))<<32|UInt64(max(a,b))}

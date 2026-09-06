@@ -149,3 +149,35 @@ public enum VivoQMDenseAlgebra {
         guard defect < 1e-9 else { throw VivoChemistryError.convergence("orbital rotation lost orthogonality") }; return sum
     }
 }
+
+/// Reusable SPD factorization for stationary response variables. Nonpositive
+/// pivots are model/convergence failures, never regularized without a new model.
+struct VivoQMPositiveDefiniteFactor {
+    let lower: VivoQMMatrix
+    let minimumPivot: Double
+    init(_ matrix: VivoQMMatrix,pivotFloor: Double,symmetryTolerance: Double = 1e-9) throws {
+        guard matrix.rows==matrix.columns,matrix.rows>0,matrix.values.allSatisfy(\.isFinite),
+              pivotFloor.isFinite,pivotFloor>0 else { throw VivoChemistryError.invalid("positive-definite response matrix") }
+        let n=matrix.rows
+        var l=VivoQMMatrix(n,n),minimum=Double.infinity
+        for i in 0..<n { for j in 0...i {
+            guard abs(matrix[i,j]-matrix[j,i])<=symmetryTolerance else { throw VivoChemistryError.convergence("response operator is not numerically symmetric") }
+            var value=0.5*(matrix[i,j]+matrix[j,i])
+            for k in 0..<j { value-=l[i,k]*l[j,k] }
+            if i==j {
+                guard value.isFinite,value>pivotFloor else { throw VivoChemistryError.convergence("unstable or singular polarization response; positive-definite factorization failed") }
+                minimum=min(minimum,value);l[i,j]=sqrt(value)
+            } else { l[i,j]=value/l[j,j] }
+        } }
+        lower=l;minimumPivot=minimum
+    }
+    func solve(_ rhs: [Double]) throws -> [Double] {
+        let n=lower.rows
+        guard rhs.count==n,rhs.allSatisfy(\.isFinite) else { throw VivoChemistryError.invalid("response right-hand side") }
+        var x=rhs
+        for i in 0..<n { for j in 0..<i { x[i]-=lower[i,j]*x[j] };x[i]/=lower[i,i] }
+        for i in stride(from:n-1,through:0,by:-1) { for j in (i+1)..<n { x[i]-=lower[j,i]*x[j] };x[i]/=lower[i,i] }
+        guard x.allSatisfy(\.isFinite) else { throw VivoChemistryError.convergence("response solve overflow") }
+        return x
+    }
+}

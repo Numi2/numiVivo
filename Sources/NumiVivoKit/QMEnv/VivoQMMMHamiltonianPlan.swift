@@ -139,6 +139,16 @@ public struct VivoQMMMHamiltonianPlan: Codable, Sendable, Equatable {
         retained.angles = zip(system.angles,angles).filter { $0.1 == .retainedClassical }.map(\.0)
         retained.torsions = zip(system.torsions,torsions).filter { $0.1 == .retainedClassical }.map(\.0)
         for index in qm { retained.particles[Int(index)].chargeE = 0 }
+        if var polarization=system.polarization {
+            polarization.sites.removeAll { qm.contains($0.particleIndex) }
+            polarization.pairs.removeAll { qm.contains($0.firstParticle) || qm.contains($0.secondParticle) }
+            for site in polarization.sites {
+                guard ![site.zParticle,site.xParticle].compactMap({$0}).contains(where:{qm.contains($0)}) else {
+                    throw VivoChemistryError.unsupported("MM polarizability frame crosses the electronic partition")
+                }
+            }
+            retained.polarization=polarization.sites.isEmpty ? nil:polarization
+        }
         // Preserve original physical charges on the MM side. Embedding transforms
         // are a distinct channel and must not change retained MM self interactions.
         var embedding = retained.particles.map(\.chargeE), donors = Set<UInt32>()

@@ -96,7 +96,7 @@ public actor VivoMDMetalRuntime {
                                      configuration: VivoMDConfiguration, velocities: [VivoVector3D]?,
                                      step: UInt64, time: Double, device requested: MTLDevice?, forceProvider: VivoMDCandidateForceProvider?) async throws -> VivoMDMetalRuntime {
         try forceProvider?.validate(system: system,configuration: configuration,cell: initial.periodicCell)
-        let report = try VivoMDCapabilityAnalyzer.analyze(system: system, initialState: initial, configuration: configuration)
+        let report = try VivoMDCapabilityAnalyzer.analyze(system: system, initialState: initial, configuration: configuration, forceProvider: forceProvider)
         guard report.executable else { throw VivoMDRuntimeError.unsupported(report.blockers) }
         guard time.isFinite, time >= 0 else { throw VivoMDRuntimeError.metal("invalid MD clock") }
         let packed = try VivoMDSystemPacker.pack(system)
@@ -282,7 +282,7 @@ public actor VivoMDMetalRuntime {
             try normalize(trial, position: arena.candidatePosition, velocity: arena.candidateVelocity, abi: abi)
             try validateCandidate(trial, abi: abi)
             try await complete(trial)
-            var candidate: (energy: Double, maximumForce: Double)?
+            var candidate: (energy: Double, maximumForce: Double, normalizedResidual: Double)?
             if readStatus().flags == 0 {
                 do {
                     candidate = try await evaluate(position: arena.candidatePosition, velocity: arena.candidateVelocity,
@@ -381,8 +381,54 @@ public actor VivoMDMetalRuntime {
         return (phase, result)
     }
 
+    /// Read-only candidate evaluation through exactly the same force kernels and
+    /// optional BO provider as dynamics. No accepted state, clock or cell changes.
+    /// Physical coordinates must be exact FP32 state; no hidden rounding is used
+    /// when this method is composed into an adaptive Hamiltonian.
+    public func evaluateHamiltonian(at geometry: VivoMDCandidateGeometry) async throws -> VivoMDHamiltonianEvaluation {
+        try reserve();defer { inFlight=false }
+        guard geometry.particlePositionsNM.count==system.particles.count else {
+            throw VivoChemistryError.invalid("Hamiltonian probe particle shape")
+        }
+        for p in system.particles where p.role != .virtualSite {
+            let v=geometry.particlePositionsNM[Int(p.index)]
+            guard [v.x,v.y,v.z].allSatisfy({Double(Float($0))==$0}) else {
+                throw VivoChemistryError.invalid("Hamiltonian probe requires explicit FP32 physical coordinates")
+            }
+        }
+        try forceProvider?.validate(system:system,configuration:configuration,cell:geometry.periodicCell)
+        let phase: VivoMDCellResources
+        if geometry.periodicCell==cellResources.cell { phase=cellResources }
+        else {
+            phase=try await Self.makeCellResources(device:device,catalog:catalog,packed:packed,arena:arena,
+                configuration:configuration,totalCharge:totalChargeE,cell:geometry.periodicCell)
+        }
+        let pointer=arena.positionReadback.contents().assumingMemoryBound(to:SIMD4<Float>.self)
+        for (i,p) in geometry.particlePositionsNM.enumerated() { pointer[i] = .init(Float(p.x),Float(p.y),Float(p.z),0) }
+        let setup=try makeCommand("hamiltonian-probe"),abi=command(for:phase)
+        try clear(setup)
+        try copy(setup,arena.positionReadback,arena.candidatePosition)
+        try copy(setup,arena.acceptedVelocity,arena.candidateVelocity)
+        try normalize(setup,position:arena.candidatePosition,velocity:arena.candidateVelocity,abi:abi)
+        try await complete(setup);try ensureNumericalSuccess()
+        let evaluation=try await evaluate(position:arena.candidatePosition,velocity:arena.candidateVelocity,phase:phase)
+        let read=try makeCommand("hamiltonian-probe-readback")
+        try copy(read,arena.candidatePosition,arena.positionReadback)
+        try copy(read,arena.forceEnergy,arena.forceEnergyReadback)
+        try await complete(read);try Task.checkCancellation()
+        let forces=arena.forceEnergyReadback.contents().assumingMemoryBound(to:SIMD4<Float>.self)
+        let positions=arena.positionReadback.contents().assumingMemoryBound(to:SIMD4<Float>.self)
+        let output=try VivoMDCandidateGeometry(particlePositionsNM:(0..<arena.particleCount).map {
+            .init(Double(positions[$0].x),Double(positions[$0].y),Double(positions[$0].z))
+        },periodicCell:phase.cell)
+        let physical=(0..<arena.particleCount).map { VivoVector3D(Double(forces[$0].x),Double(forces[$0].y),Double(forces[$0].z)) }
+        guard evaluation.energy.isFinite,physical.allSatisfy(\.isFinite) else { throw VivoChemistryError.convergence("nonfinite Hamiltonian probe") }
+        return .init(systemFingerprint:systemFingerprint,configurationFingerprint:configurationFingerprint,
+            evaluatedGeometry:output,energyKJPerMol:evaluation.energy,physicalParticleForcesKJPerMolNM:physical,normalizedForceResidual:evaluation.normalizedResidual)
+    }
+
     private func evaluate(position: MTLBuffer, velocity: MTLBuffer, phase: VivoMDCellResources, gradient: Bool = false) async throws
-    -> (energy: Double, maximumForce: Double) {
+    -> (energy: Double, maximumForce: Double, normalizedResidual: Double) {
         let abi = command(for: phase)
         var buffer = try makeCommand("evaluate")
         try clear(buffer); try neighbors(buffer, position: position, phase: phase, abi: abi)
@@ -405,7 +451,7 @@ public actor VivoMDMetalRuntime {
         try await complete(buffer); try ensureNumericalSuccess()
         let value = work.scalar.contents().assumingMemoryBound(to: SIMD2<Float>.self).pointee
         guard value.x.isFinite, value.y.isFinite, value.y >= 0 else { throw VivoMDRuntimeError.candidateRejected(1) }
-        return (Double(value.x)+forceEvaluation.additionalEnergyKJPerMol, Double(value.y))
+        return (Double(value.x)+forceEvaluation.additionalEnergyKJPerMol, Double(value.y),forceEvaluation.normalizedResidual)
     }
     private func observationsReserved() async throws -> VivoMDObservables {
         let abi = command(for: cellResources)
@@ -505,7 +551,7 @@ public actor VivoMDMetalRuntime {
         }
     }
     private func forces(_ buffer: MTLCommandBuffer, position: MTLBuffer, phase: VivoMDCellResources, abi: VivoMDMetalCommand) async throws
-    -> (buffer: MTLCommandBuffer,additionalEnergyKJPerMol: Double) {
+    -> (buffer: MTLCommandBuffer,additionalEnergyKJPerMol: Double,normalizedResidual: Double) {
         // Derivatives must match THIS geometry, including accepted-state observations
         // after a rejected trial changed the reusable Jacobian scratch buffer.
         try dependentSites?.construct(buffer,positions: position,status: arena.status,command: abi)
@@ -534,7 +580,7 @@ public actor VivoMDMetalRuntime {
             try encode(.mdRedistributeVirtualForce, buffer, [arena.forceEnergy, arena.virtualSites,
                 arena.virtualParentOffsets, arena.virtualParentIncidence, arena.status], abi)
         }
-        guard let forceProvider,let transfer = additionalForceTransfer else { return (buffer,0) }
+        guard let forceProvider,let transfer = additionalForceTransfer else { return (buffer,0,0) }
         try copy(buffer,position,arena.positionReadback)
         try copy(buffer,arena.forceEnergy,transfer)
         try await complete(buffer);try ensureNumericalSuccess();try Task.checkCancellation()
@@ -558,7 +604,7 @@ public actor VivoMDMetalRuntime {
         }
         let continued = try makeCommand("bo-force-ready")
         try copy(continued,transfer,arena.forceEnergy)
-        return (continued,electronic.additionalEnergyKJPerMol)
+        return (continued,electronic.additionalEnergyKJPerMol,electronic.convergenceResidual/min(electronic.requiredResidual,forceProvider.maximumAcceptedResidual))
     }
     private func minimizePosition(_ buffer: MTLCommandBuffer, abi: VivoMDMetalCommand, scale: Double, maximum: Double) throws {
         guard Float(scale).isFinite, Float(scale) > 0, Float(maximum).isFinite, Float(maximum) > 0,

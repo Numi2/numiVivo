@@ -154,7 +154,7 @@ public struct VivoMDCapabilityReport:Codable,Sendable,Equatable {
 }
 public enum VivoMDCapabilityAnalyzer {
     public static func analyze(system:VivoClassicalSystem,initialState:VivoClassicalInitialState,
-                               configuration:VivoMDConfiguration)throws->VivoMDCapabilityReport {
+                               configuration:VivoMDConfiguration,forceProvider:VivoMDCandidateForceProvider? = nil)throws->VivoMDCapabilityReport {
         try configuration.validate();try VivoClassicalSystemValidator.validate(system)
         try initialState.validate(particleCount:system.particles.count)
         guard initialState.systemFingerprint == (try system.fingerprint()) else {
@@ -165,6 +165,11 @@ public enum VivoMDCapabilityAnalyzer {
         let unresolved=virtual.map(\.index).filter{!resolved.contains($0)}
         var blockers=VivoMDExecutionPreflight.blockers(system:system,initial:initialState,configuration:configuration)
         var notes:[String]=[]
+        if system.polarization != nil && forceProvider == nil { blockers.append("induced-dipole model requires its explicit variational force provider") }
+        if let forceProvider {
+            do { try forceProvider.validate(system:system,configuration:configuration,cell:initialState.periodicCell) }
+            catch { blockers.append(String(describing:error)) }
+        }
         if !unresolved.isEmpty {blockers.append("unresolved virtual-site rules: \(unresolved)")}
         if system.particles.contains(where:{$0.role == .drude}) {blockers.append("Drude polarization is not implemented")}
         if !virtual.isEmpty {notes.append("virtual forces redistribute to physical parents; virtual slots are not minimization degrees of freedom")}

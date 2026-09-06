@@ -44,6 +44,12 @@ public extension VivoMDCandidateForceProvider {
                                       reciprocalOperator: VivoReciprocalElectrostaticOperator?) throws -> Self {
         try plan.validate(document: document,source: sourceSystem,budget: cfg.budget)
         try cfg.periodic.validate();try cfg.cluster.validate();try cfg.budget.validate()
+        guard cfg.periodic.polarization == plan.retainedSystem.polarization else {
+            throw VivoChemistryError.invalid("electronic polarization configuration must equal the retained canonical model")
+        }
+        if cfg.periodic.polarization != nil,plan.configuration.boundary != .periodicElectrostatic {
+            throw VivoChemistryError.unsupported("mutual polarizable HF currently requires periodic electrostatics")
+        }
         guard !plan.configuration.region.qmAtomIndices.isEmpty else { throw VivoChemistryError.invalid("all-MM plans use the ordinary classical runtime") }
         struct Identity: Encodable {
             let implementation: String;let plan: VivoFingerprint;let electronic: VivoQMMMDynamicsElectronicConfiguration
@@ -52,9 +58,12 @@ public extension VivoMDCandidateForceProvider {
             implementation: "numivivo.org/analytic-periodic-hf-md/v1",plan: plan.fingerprint(),electronic: cfg)))
         let retainedID = try plan.retainedSystem.fingerprint()
         let topology = try VivoQMMMTopology(document: document,system: sourceSystem)
+        let polarizationID = try plan.retainedSystem.polarization.map { try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode($0)) }
+        let allowedResidual = cfg.periodic.polarization == nil ? cfg.periodic.scf.commutatorTolerance:1
+        let qmParticles=Set(plan.qmParticles)
         return try .init(fingerprint: id,retainedSystemFingerprint: retainedID,boundary: plan.configuration.boundary,
-            supportsCellMoves: true,maximumAcceptedResidual: cfg.periodic.scf.commutatorTolerance,
-            molecularConnectivitySystem: sourceSystem,evaluate: { geometry in
+            supportsCellMoves: true,maximumAcceptedResidual: allowedResidual,
+            molecularConnectivitySystem: sourceSystem,polarizationModelFingerprint: polarizationID,evaluate: { geometry in
                 try Task.checkCancellation()
                 let cluster = try VivoQMMMClusterBuilder.reconstruct(document: document,system: sourceSystem,
                     particlePositionsNM: geometry.particlePositionsNM,periodicCell: geometry.periodicCell,
@@ -66,7 +75,7 @@ public extension VivoMDCandidateForceProvider {
                 var electronic = region.electronicSystem
                 electronic.pointCharges = sourceSystem.particles.compactMap { particle in
                     let q = plan.embeddingChargesE[Int(particle.index)]
-                    guard q != 0 else { return nil }
+                    guard !qmParticles.contains(particle.index),(q != 0 || cfg.periodic.polarization != nil) else { return nil }
                     let p = cluster.particlePositionsNM[Int(particle.index)]/VivoAtomicUnits.bohrInNM
                     return .init(chargeE: q,positionBohr: .init(p.x,p.y,p.z),classicalParticleIndex: particle.index)
                 }
@@ -77,11 +86,18 @@ public extension VivoMDCandidateForceProvider {
                 case .periodicElectrostatic:
                     guard let cell = geometry.periodicCell else { throw VivoChemistryError.invalid("periodic BO candidate has no cell") }
                     let result = try VivoPeriodicHartreeFock.evaluate(system: electronic,basis: cfg.basis,cell: cell,
-                        configuration: cfg.periodic,budget: cfg.budget,reciprocalOperator: reciprocalOperator)
+                        configuration: cfg.periodic,budget: cfg.budget,reciprocalOperator: reciprocalOperator,
+                        physicalPermanentChargesE: cfg.periodic.polarization == nil ? nil:electronic.pointCharges.map {
+                            plan.retainedSystem.particles[Int($0.classicalParticleIndex!)].chargeE
+                        })
                     energy = result.reference.energyHartree;nuclearForces = result.nucleusForcesHartreePerBohr
-                    chargeForces = result.pointChargeForcesHartreePerBohr;residual = result.reference.finalCommutatorNorm
+                    chargeForces = result.pointChargeForcesHartreePerBohr
+                    if let state=result.polarization,let polarization=cfg.periodic.polarization {
+                        residual=max(result.reference.finalCommutatorNorm/cfg.periodic.scf.commutatorTolerance,
+                            state.maximumResponseResidual/polarization.residualToleranceHartreePerEBohr)
+                    } else { residual=result.reference.finalCommutatorNorm }
                     affine = result.affineStrainDerivativeHartree
-                    derivativeMethod = "analytic-gaussian-HF-Pulay+variational-quadrupolar-Ewald+exact-near-C2; " + (reciprocalOperator == nil ? "direct-fp64" : "metal-fp32-sixth-order-reciprocal-mesh")
+                    derivativeMethod = "analytic-gaussian-HF-Pulay+variational-quadrupolar-Ewald+exact-near-C2; " + (reciprocalOperator == nil ? "direct-fp64" : "metal-fp32-sixth-order-reciprocal-mesh") + (cfg.periodic.polarization == nil ? "" : "; mutual-stationary-induced-dipoles; residual-normalized-per-channel")
                 case .finiteCluster:
                     guard geometry.periodicCell == nil else { throw VivoChemistryError.invalid("finite BO candidate unexpectedly has a cell") }
                     let ao = try VivoGaussianIntegralEngine.compute(system: electronic,basis: cfg.basis,budget: cfg.budget)
@@ -115,7 +131,7 @@ public extension VivoMDCandidateForceProvider {
                 try Task.checkCancellation()
                 return try .init(providerFingerprint: id,geometry: geometry,additionalEnergyKJPerMol: energy*VivoAtomicUnits.hartreeInKJPerMol,
                     physicalParticleForcesKJPerMolNM: physical.map { $0*factor },derivativeMethod: derivativeMethod,
-                    convergenceResidual: residual,requiredResidual: cfg.periodic.scf.commutatorTolerance,
+                    convergenceResidual: residual,requiredResidual: allowedResidual,
                     additionalAffineStrainDerivativeKJPerMol: affine)
             })
     }

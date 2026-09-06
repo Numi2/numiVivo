@@ -6,16 +6,17 @@ public struct VivoPeriodicQMMMConfiguration: Codable, Sendable, Equatable {
     public var exactNearSwitchOffBohr: Double
     /// A model-admission center-separation bound, NOT a proof of negligible exchange.
     public var minimumQMImageSeparationBohr: Double
+    public var polarization: VivoInducedDipoleConfiguration?
     public var reciprocalMesh: VivoMultipoleMeshConfiguration?
     public var scf: VivoSCFConfiguration
     public init(ewald: VivoPeriodicElectrostaticConfiguration = .init(), exactNearRadiusBohr: Double = 8,
                 exactNearSwitchOffBohr: Double = 12,minimumQMImageSeparationBohr: Double = 8,
-                scf: VivoSCFConfiguration = .init(), reciprocalMesh: VivoMultipoleMeshConfiguration? = nil) {
+                scf: VivoSCFConfiguration = .init(), reciprocalMesh: VivoMultipoleMeshConfiguration? = nil,polarization: VivoInducedDipoleConfiguration? = nil) {
         self.ewald = ewald; self.exactNearRadiusBohr = exactNearRadiusBohr; self.exactNearSwitchOffBohr = exactNearSwitchOffBohr
-        self.minimumQMImageSeparationBohr = minimumQMImageSeparationBohr; self.scf = scf; self.reciprocalMesh = reciprocalMesh
+        self.minimumQMImageSeparationBohr = minimumQMImageSeparationBohr; self.scf = scf; self.reciprocalMesh = reciprocalMesh; self.polarization = polarization
     }
     public func validate() throws {
-        try ewald.validate(); try scf.validate(); try reciprocalMesh?.validate()
+        try ewald.validate(); try scf.validate(); try reciprocalMesh?.validate();try polarization?.validate()
         if reciprocalMesh != nil,scf.commutatorTolerance < 1e-6 {
             throw VivoChemistryError.unsupported("FP32 multipolar PME requires an explicit SCF commutator tolerance >=1e-6; use FP64 Ewald for tighter qualification")
         }
@@ -32,6 +33,9 @@ struct VivoPeriodicEmbeddingEvaluation {
     let nuclearGradients: [VivoVector3D]
     let chargeGradients: [VivoVector3D]
     let affineStrain: VivoQMMatrix
+    /// Derivative with respect to an induced dipole added at each MM center.
+    let inducedDipoleDerivatives: [VivoVector3D]
+    var polarization: VivoInducedDipoleResult? = nil
 }
 
 /// Exact Gaussian near-field / distributed quadrupolar far-field Hamiltonian.
@@ -46,8 +50,8 @@ struct VivoPeriodicQMMMContext {
         let delta: VivoVector3D
         let switching: Double
         let switchDerivative: Double
-        let exactNuclearEnergy: Double
-        let exactAO: VivoQMMatrix
+        let exactNuclearCoefficients: [Double]
+        let exactAO: [VivoQMMatrix]
     }
     let integrals: VivoAOIntegrals
     let source: VivoElectronicSystem
@@ -57,7 +61,6 @@ struct VivoPeriodicQMMMContext {
     let mmSources: [VivoCartesianMultipole]
     let mmEwald: VivoPeriodicElectrostaticResult
     let nearPairs: [NearPair]
-    let exactNearAO: VivoQMMatrix
     let reciprocalOperator: VivoReciprocalElectrostaticOperator?
     let budget: VivoChemistryBudget
 
@@ -89,8 +92,9 @@ struct VivoPeriodicQMMMContext {
         var mmConfiguration = cfg.ewald;mmConfiguration.chargeConvention = .uniformNeutralizingBackground
         let mmValue = try VivoPeriodicElectrostatics.evaluate(sources: mm,cell: cell,configuration: mmConfiguration,reciprocalOperator: reciprocalOperator,budget: budget)
         let n = integrals.count
-        var near: [NearPair] = [],summed = VivoQMMatrix(n,n),work = 0
-        for nucleus in source.nuclei.indices { for charge in source.pointCharges.indices where source.pointCharges[charge].chargeE != 0 {
+        var near: [NearPair] = [],work = 0
+        let componentCount = cfg.polarization == nil ? 1 : 4
+        for nucleus in source.nuclei.indices { for charge in source.pointCharges.indices where source.pointCharges[charge].chargeE != 0 || componentCount > 1 {
             let rn = source.nuclei[nucleus].positionBohr,rq = source.pointCharges[charge].positionBohr
             let raw = VivoVector3D(rn.x-rq.x,rn.y-rq.y,rn.z-rq.z)
             var reduced = raw
@@ -111,40 +115,53 @@ struct VivoPeriodicQMMMContext {
                 let delta = reduced-lattice[0]*Double(x)-lattice[1]*Double(y)-lattice[2]*Double(z),r = delta.norm
                 if r >= cfg.exactNearSwitchOffBohr { continue }
                 guard r > 1e-8 else { throw VivoChemistryError.invalid("embedding charge overlaps QM center") }
-                let image = rn-SIMD3<Double>(delta.x,delta.y,delta.z),qMM = source.pointCharges[charge].chargeE
+                let image = rn-SIMD3<Double>(delta.x,delta.y,delta.z)
                 let blend = Self.switching(r,on: cfg.exactNearRadiusBohr,off: cfg.exactNearSwitchOffBohr)
-                var ao = VivoQMMatrix(n,n)
-                for p in 0..<n { for q in 0...p {
-                    let a = integrals.orbitals[p],b = integrals.orbitals[q],ownership = VivoQMMultipoleOperators.ownership(nucleus,a,b)
-                    if ownership == 0 { continue }
-                    let ra = source.nuclei[a.nucleusIndex].positionBohr,rb = source.nuclei[b.nucleusIndex].positionBohr
-                    let value = -qMM*ownership*VivoGaussianDerivative.contracted(a,b,ra: ra,rb: rb) { ea,la,aa,eb,lb,bb in
-                        VivoGaussianIntegralEngine.primitivePotential(ea,la,aa,eb,lb,bb,image)
-                    }
-                    ao[p,q] = value;ao[q,p] = value
-                } }
-                let bytes = (near.count+1).multipliedReportingOverflow(by: n*n)
+                var operators: [VivoQMMatrix] = []
+                for component in 0..<componentCount {
+                    var moment = [Double](repeating:0,count:4);moment[component]=1
+                    var ao = VivoQMMatrix(n,n)
+                    for p in 0..<n { for q in 0...p {
+                        let a = integrals.orbitals[p],b = integrals.orbitals[q],ownership = VivoQMMultipoleOperators.ownership(nucleus,a,b)
+                        if ownership == 0 { continue }
+                        let ra = source.nuclei[a.nucleusIndex].positionBohr,rb = source.nuclei[b.nucleusIndex].positionBohr
+                        let value = -ownership*VivoGaussianDerivative.contracted(a,b,ra: ra,rb: rb) { ea,la,aa,eb,lb,bb in
+                            VivoGaussianDerivative.multipolarPotential(ea,la,aa,eb,lb,bb,center:image,moments:moment)
+                        }
+                        ao[p,q]=value;ao[q,p]=value
+                    } }
+                    operators.append(ao)
+                }
+                let bytes = (near.count+1).multipliedReportingOverflow(by: componentCount*n*n)
                 guard !bytes.overflow else { throw VivoChemistryError.resourceLimit("near-field operator count") }
                 _ = try budget.elements([bytes.partialValue],simultaneousArrays: 2)
-                for i in summed.values.indices { summed.values[i] += blend.value*ao.values[i] }
-                near.append(.init(nucleus: nucleus,charge: charge,imagePosition: image,delta: delta,switching: blend.value,
-                    switchDerivative: blend.derivative,exactNuclearEnergy: qMM*Double(source.nuclei[nucleus].atomicNumber)/r,exactAO: ao))
+                var nucleusMoment = [Double](repeating:0,count:10);nucleusMoment[0]=Double(source.nuclei[nucleus].atomicNumber)
+                let nuclear = VivoPeriodicElectrostatics.pair(nucleusMoment,Array(repeating:0,count:10),tensor:try .screened(delta,alpha:0))
+                near.append(.init(nucleus:nucleus,charge:charge,imagePosition:image,delta:delta,switching:blend.value,
+                    switchDerivative:blend.derivative,exactNuclearCoefficients:Array(nuclear.right.prefix(componentCount)),exactAO:operators))
             } } }
         } }
         self.integrals = integrals;self.source = source;self.cell = cell;configuration = cfg;momentOperators = operators
-        mmSources = mm;mmEwald = mmValue;nearPairs = near;exactNearAO = summed;self.budget = budget; self.reciprocalOperator = reciprocalOperator
+        mmSources = mm;mmEwald = mmValue;nearPairs = near;self.budget = budget; self.reciprocalOperator = reciprocalOperator
     }
     static func switching(_ r: Double,on: Double,off: Double) -> (value: Double,derivative: Double) {
         if r <= on { return (1,0) };if r >= off { return (0,0) }
         let x = (r-on)/(off-on),x2 = x*x,x3 = x2*x
         return (1-10*x3+15*x3*x-6*x3*x2,(-30*x2+60*x3-30*x3*x)/(off-on))
     }
-    func evaluate(density: VivoQMMatrix,derivatives: Bool) throws -> VivoPeriodicEmbeddingEvaluation {
+    func evaluate(density: VivoQMMatrix,derivatives: Bool,inducedDipoles: [VivoVector3D]? = nil) throws -> VivoPeriodicEmbeddingEvaluation {
+        guard inducedDipoles == nil || (configuration.polarization != nil && inducedDipoles!.count == mmSources.count
+            && inducedDipoles!.allSatisfy(\.isFinite)) else { throw VivoChemistryError.invalid("induced dipole source shape or missing near operators") }
+        var activeMM = mmSources
+        if let inducedDipoles { for i in activeMM.indices { activeMM[i].dipoleEBohr = inducedDipoles[i] } }
+
         let qm = try momentOperators.sources(density: density),nq = qm.count
-        let periodic = try VivoPeriodicElectrostatics.evaluate(sources: qm+mmSources,cell: cell,configuration: configuration.ewald,reciprocalOperator: reciprocalOperator,budget: budget)
+        let periodic = try VivoPeriodicElectrostatics.evaluate(sources: qm+activeMM,cell: cell,configuration: configuration.ewald,reciprocalOperator: reciprocalOperator,budget: budget)
         var energy = periodic.energyHartree-mmEwald.energyHartree
         var lambda = Array(periodic.momentDerivatives.prefix(nq)),gn = periodic.forcesHartreePerBohr.prefix(nq).map { $0 * -1 }
         var gm = (0..<mmSources.count).map { periodic.forcesHartreePerBohr[nq+$0] * -1+mmEwald.forcesHartreePerBohr[$0] }
+        var dipoleDerivatives = Array(periodic.momentDerivatives.dropFirst(nq)).map { VivoVector3D($0[1],$0[2],$0[3]) }
+        var exactNearAO = VivoQMMatrix(integrals.count,integrals.count)
         var strain = try periodic.affineStrainDerivativeHartree.adding(mmEwald.affineStrainDerivativeHartree,scale: -1)
         func addStrain(_ gradient: VivoVector3D,_ displacement: VivoVector3D,scale: Double) {
             let g = [gradient.x,gradient.y,gradient.z],r = [displacement.x,displacement.y,displacement.z]
@@ -162,8 +179,17 @@ struct VivoPeriodicQMMMContext {
         } }
         for item in nearPairs {
             let i = item.nucleus,j = item.charge
-            let pair = VivoPeriodicElectrostatics.pair(qm[i].moments,mmSources[j].moments,tensor: try .screened(item.delta,alpha: 0))
-            let exact = item.exactNuclearEnergy+zip(density.values,item.exactAO.values).reduce(0.0) { $0+$1.0*$1.1 }
+            let pair = VivoPeriodicElectrostatics.pair(qm[i].moments,activeMM[j].moments,tensor: try .screened(item.delta,alpha: 0))
+            let exactCoefficients = item.exactAO.indices.map { c in
+                item.exactNuclearCoefficients[c]+zip(density.values,item.exactAO[c].values).reduce(0.0) { $0+$1.0*$1.1 }
+            }
+            let exact = zip(exactCoefficients,activeMM[j].moments).reduce(0) { $0+$1.0*$1.1 }
+            for c in item.exactAO.indices { for slot in exactNearAO.values.indices {
+                exactNearAO.values[slot] += item.switching*activeMM[j].moments[c]*item.exactAO[c].values[slot]
+            } }
+            if exactCoefficients.count == 4 {
+                dipoleDerivatives[j] = dipoleDerivatives[j]+VivoVector3D(exactCoefficients[1]-pair.right[1],exactCoefficients[2]-pair.right[2],exactCoefficients[3]-pair.right[3])*item.switching
+            }
             energy += item.switching*(exact-pair.energy)
             for c in 0..<10 { lambda[i][c] -= item.switching*pair.left[c] }
             if derivatives {
@@ -172,16 +198,17 @@ struct VivoPeriodicQMMMContext {
                 let multipoleGradient = pair.gradient * -item.switching+switchGradient
                 gn[i] = gn[i]+multipoleGradient;gm[j] = gm[j]-multipoleGradient
                 addStrain(multipoleGradient,item.delta,scale: 1)
-                let nuclear = item.delta*(-item.switching*item.exactNuclearEnergy/(r*r))
+                var nuclearMoment = [Double](repeating:0,count:10);nuclearMoment[0]=Double(source.nuclei[i].atomicNumber)
+                let nuclear = try VivoPeriodicElectrostatics.pair(nuclearMoment,activeMM[j].moments,tensor: .screened(item.delta,alpha:0)).gradient*item.switching
                 gn[i] = gn[i]+nuclear;gm[j] = gm[j]-nuclear
                 addStrain(nuclear,item.delta,scale: 1)
                 for p in 0..<integrals.count { for q in 0..<integrals.count {
                     let a = integrals.orbitals[p],b = integrals.orbitals[q],ia = a.nucleusIndex,ib = b.nucleusIndex
-                    let weight = -item.switching*source.pointCharges[j].chargeE*density[p,q]*VivoQMMultipoleOperators.ownership(i,a,b)
+                    let weight = -item.switching*density[p,q]*VivoQMMultipoleOperators.ownership(i,a,b)
                     if weight == 0 { continue }
                     let ra = source.nuclei[ia].positionBohr,rb = source.nuclei[ib].positionBohr
                     let integral: VivoGaussianDerivative.PrimitivePair = { ea,la,aa,eb,lb,bb in
-                        VivoGaussianIntegralEngine.primitivePotential(ea,la,aa,eb,lb,bb,item.imagePosition)
+                        VivoGaussianDerivative.multipolarPotential(ea,la,aa,eb,lb,bb,center:item.imagePosition,moments:Array(activeMM[j].moments.prefix(4)))
                     }
                     for axis in 0..<3 {
                         let ga = weight*VivoGaussianDerivative.pair(a,b,ra: ra,rb: rb,axis: axis,onFirst: true,operator: integral)
@@ -204,6 +231,6 @@ struct VivoPeriodicQMMMContext {
         guard energy.isFinite,potential.values.allSatisfy(\.isFinite),gn.allSatisfy(\.isFinite),gm.allSatisfy(\.isFinite),strain.values.allSatisfy(\.isFinite) else {
             throw VivoChemistryError.convergence("nonfinite periodic electronic embedding")
         }
-        return .init(energy: energy,fock: potential,nuclearGradients: gn,chargeGradients: gm,affineStrain: strain)
+        return .init(energy: energy,fock: potential,nuclearGradients: gn,chargeGradients: gm,affineStrain: strain,inducedDipoleDerivatives: dipoleDerivatives)
     }
 }
