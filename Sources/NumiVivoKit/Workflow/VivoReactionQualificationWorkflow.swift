@@ -2,6 +2,10 @@ import Foundation
 
 public enum VivoReactionCalculation:Codable,Sendable,Equatable {
     case qualify(request:VivoNuclearQualificationRequest)
+    case residualBarrier(request:VivoResidualBarrierRequest)
+    case globalEmbedding(request:VivoVariationalEmbeddingRequest)
+    case connectivity(request:VivoReactionConnectivityRequest)
+    case reproductionPreflight(package:VivoReproductionPackage)
     case barrierConvergence(request:VivoBarrierConvergenceRequest)
     case correlatedSolvent(request:VivoCorrelatedSolventRequest)
     case solvatedPath(request:VivoSolvatedECCPathRequest)
@@ -16,6 +20,10 @@ public struct VivoReactionCalculationRequest:Codable,Sendable,Equatable {
     public var budget:VivoChemistryBudget {
         switch calculation {
         case .qualify(let r):return r.model.budget
+        case .residualBarrier(let r):return r.baseline.budget
+        case .globalEmbedding(let r):return r.molecule.budget
+        case .connectivity(let r):return r.saddle.request.model.budget
+        case .reproductionPreflight(let r):return r.budget
         case .barrierConvergence(let r):return r.budget
         case .correlatedSolvent(let r):return r.budget
         case .solvatedPath(let r):return r.path.budget
@@ -27,6 +35,14 @@ public struct VivoReactionCalculationRequest:Codable,Sendable,Equatable {
         try budget.validate()
         switch calculation {
         case .qualify(let r):try r.validate()
+        case .residualBarrier(let r):try r.validate()
+        case .globalEmbedding(let r):try r.validate()
+        case .connectivity(let r):
+            try VivoReactionConnectivity.validateRequest(r)
+            guard r.endpoints.allSatisfy({ $0.components.allSatisfy { $0.point.request.model.budget==budget } }) else {
+                throw VivoChemistryError.invalid("connectivity endpoint resource contracts differ from the task")
+            }
+        case .reproductionPreflight(let r):_ = try VivoReproductionPreflight.inspect(r)
         case .barrierConvergence(let r):try r.validate()
         case .correlatedSolvent(let r):try r.validate()
         case .solvatedPath(let r):try r.validate()
@@ -41,6 +57,10 @@ public struct VivoReactionCalculationRequest:Codable,Sendable,Equatable {
 }
 public enum VivoReactionCalculationResult:Codable,Sendable,Equatable {
     case qualified(point:VivoNuclearQualifiedPoint)
+    case residualBarrier(result:VivoResidualBarrierResult)
+    case globalEmbedding(result:VivoVariationalEmbeddingResult)
+    case connectivity(result:VivoReactionConnectivityResult)
+    case reproductionPreflight(result:VivoReproductionReadiness)
     case barrierConvergence(result:VivoBarrierConvergenceResult)
     case correlatedSolvent(result:VivoCorrelatedSolventResult)
     case solvatedPath(result:VivoSolvatedECCPathResult)
@@ -52,6 +72,13 @@ public enum VivoReactionQualificationWorkflow {
         try request.validate()
         switch request.calculation {
         case .qualify(let r):return .qualified(point:try VivoNuclearQualification.run(r))
+        case .residualBarrier(let r):return .residualBarrier(result:try VivoResidualBarrierCampaign.run(r))
+        case .globalEmbedding(let r):return .globalEmbedding(result:try VivoVariationalEmbedding.run(r))
+        case .connectivity(let r):
+            let result=try VivoReactionConnectivity.run(r)
+            guard result.converged else { throw VivoChemistryError.convergence("mapped connection did not pass independent refinement") }
+            return .connectivity(result:result)
+        case .reproductionPreflight(let r):return .reproductionPreflight(result:try VivoReproductionPreflight.inspect(r))
         case .barrierConvergence(let r):return .barrierConvergence(result:try VivoBarrierConvergence.run(r))
         case .correlatedSolvent(let r):return .correlatedSolvent(result:try VivoCorrelatedSolvation.solve(r))
         case .solvatedPath(let r):return .solvatedPath(result:try VivoSolvatedECCPath.solve(r))
@@ -63,6 +90,11 @@ public enum VivoReactionQualificationWorkflow {
         try request.validate()
         switch (request.calculation,result) {
         case (.qualify(let r),.qualified(let point)):try VivoNuclearQualification.validate(point,request:r)
+        case (.residualBarrier(let r),.residualBarrier(let result)):try VivoResidualBarrierCampaign.validate(result,request:r)
+        case (.globalEmbedding(let r),.globalEmbedding(let result)):try VivoVariationalEmbedding.validate(result,request:r)
+        case (.connectivity(let r),.connectivity(let result)):try VivoReactionConnectivity.validate(result,request:r)
+        case (.reproductionPreflight(let r),.reproductionPreflight(let result)):
+            guard result == (try VivoReproductionPreflight.inspect(r)) else { throw VivoChemistryError.invalid("reproduction preflight result binding") }
         case (.barrierConvergence(let r),.barrierConvergence(let report)):try VivoBarrierConvergence.validate(report,request:r)
         case (.correlatedSolvent(let r),.correlatedSolvent(let result)):try VivoCorrelatedSolvation.validate(result,request:r)
         case (.solvatedPath(let r),.solvatedPath(let path)):try VivoSolvatedECCPath.validate(path,request:r)
@@ -93,6 +125,10 @@ public enum VivoReactionQualificationWorkflow {
             })
     }
     public static func template(_ name:String) throws -> VivoReactionCalculationRequest {
+        if name=="h3-residual-barrier" { return .init(.residualBarrier(request:VivoResidualBarrierCampaign.template())) }
+        if name=="h2-global-embedding" { return .init(.globalEmbedding(request:VivoVariationalEmbedding.template())) }
+        if name=="paper-michael-inputs" { return .init(.reproductionPreflight(package:.init(target:.acrylamideMethanethiolate,resultIdentifier:"supply-exact-paper-figure-table-method"))) }
+        if name=="paper-btk-inputs" { return .init(.reproductionPreflight(package:.init(target:.btkSnapshot,resultIdentifier:"supply-exact-snapshot-method-result"))) }
         if name=="h3-barrier-convergence" {return .init(.barrierConvergence(request:VivoBarrierBenchmarks.hydrogenExchange631G()))}
         if name=="h3-barrier-convergence-ensemble" {return .init(.barrierConvergence(request:VivoBarrierBenchmarks.hydrogenExchange631G(ensemble:true)))}
         if name=="h2-solvated-path" {return .init(.solvatedPath(request:.init(path:try VivoMolecularECCPath.hydrogenStretchTemplate(),solvent:.init(dielectricConstant:4,angularPoints:50))))}

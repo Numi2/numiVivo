@@ -86,8 +86,13 @@ struct VivoReactionCLICommands {
       numivivo reaction-run saddle.json --output saddle.result.json --store .numivivo/chemistry-artifacts
     Templates: h2-minimum, h3-saddle, h-atom, h2-solvated-path,
                h2-equilibrium-cpcm, h2-equilibrium-minimum, h3-barrier-convergence,
-               h3-barrier-convergence-ensemble.
+               h3-barrier-convergence-ensemble, h3-residual-barrier, h2-global-embedding,
+               paper-michael-inputs, paper-btk-inputs.
     Request calculations: qualify, solvatedPath, correlatedSolvent, harmonicBarrier, descent, barrierConvergence.
+    Further calculations: residualBarrier, globalEmbedding, connectivity, reproductionPreflight.
+    residualBarrier measures the actual global variational dimension; all orbital modes
+    and complete determinant-sector vectors remain allocated. globalEmbedding closes
+    overlapping subspaces with one normalized CI density, not the democratic DMET energy.
     A completed barrierConvergence report may reject reduced-space accuracy. Inspect its
     assessment and acceptedReducedLevelIdentifier; a stored report is not a certified rate.
     Coordinates: Bohr. Masses: explicit Da. Energies: Hartree. RRHO requires all
