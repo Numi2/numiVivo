@@ -64,15 +64,30 @@ import Testing
         #expect(result.activationFreeEnergyKJPerMol>15 && result.activationFreeEnergyKJPerMol<25)
         #expect(result.conditionalStandardDeviationKJPerMol.isFinite)
         try VivoQMMMFreeEnergy.validate(result)
+        let provenance=VivoQMMMFreeEnergyProvenance(
+            structureFingerprint:try VivoCanonicalJSON.fingerprint(Data("structure".utf8)),
+            systemFingerprint:try VivoCanonicalJSON.fingerprint(Data("system".utf8)),
+            baseProviderFingerprint:try VivoCanonicalJSON.fingerprint(Data("provider".utf8)),
+            dynamicsFingerprint:try VivoCanonicalJSON.fingerprint(Data("dynamics".utf8)),
+            chemicalState:"prepared-reactive-state",environment:.proteinEnvironment,
+            environmentIdentifier:"protein-pocket",methodDescription:"synthetic protein-environment PMF fixture")
+        let qualified=try VivoQMMMQualifiedActivationFreeEnergy(analysis:result,provenance:provenance)
         let context=VivoKineticContext(compound:"synthetic",target:"protein",targetVariant:"reference",site:"reactive-site",
             chemicalState:"prepared-reactive-state",hostContext:"protein-pocket",temperatureK:temperature,pH:7.4,ionicStrengthM:0.15)
         let transmission=VivoKineticEvidence(source:"assumption",locator:"unit test")
-        let request=VivoQMMMFreeEnergyRateRequest(context:context,environment:.proteinEnvironment,freeEnergy:result,
+        let request=VivoQMMMFreeEnergyRateRequest(context:context,environment:.proteinEnvironment,freeEnergy:qualified,
             transmissionProbability:1,transmissionOrigin:.assumed,transmissionEvidence:transmission,
             samplingDescription:"synthetic converged protein-environment PMF fixture")
         let rate=try VivoQMMMFreeEnergyRate.calculate(request)
         #expect(rate.estimate.ratePerSecond.isFinite && rate.estimate.ratePerSecond>0)
         #expect(rate.barrier.origin == .calculated)
         #expect(rate.parameter.origin == .assumed)
+        var wrongProvenance=provenance
+        wrongProvenance.environment = .explicitSolution
+        let wrong=try VivoQMMMQualifiedActivationFreeEnergy(analysis:result,provenance:wrongProvenance)
+        let rejected=VivoQMMMFreeEnergyRateRequest(context:context,environment:.proteinEnvironment,freeEnergy:wrong,
+            transmissionProbability:1,transmissionOrigin:.assumed,transmissionEvidence:transmission,
+            samplingDescription:"must reject relabeled environment")
+        #expect(throws:(any Error).self) { _ = try VivoQMMMFreeEnergyRate.calculate(rejected) }
     }
 }
