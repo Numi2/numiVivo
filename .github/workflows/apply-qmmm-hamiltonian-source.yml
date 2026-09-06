@@ -1,4 +1,4 @@
-name: Integrate periodic QM-MM Hamiltonian source
+name: Integrate shared multipolar PME source
 on:
   push:
     branches: [main]
@@ -19,34 +19,29 @@ jobs:
         with:
           persist-credentials: false
       - id: apply
-        name: Verify and commit the exact prepared source patch
+        name: Verify and integrate the source increment without rewriting concurrent work
         env:
           GH_WRITE_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
-          import hashlib, lzma, os, pathlib
-          root = pathlib.Path('Tools/Development/QMMMIntegration')
-          data = lzma.decompress(b''.join((root / f'part-{i}.xz').read_bytes() for i in range(6)))
-          assert hashlib.sha256(data).hexdigest() == '02cb47c9d2b808066b13f1d2c9698b404fa1ebc72687f905b1ab7ca21c53fc7e'
-          assert len(data) == 184812
-          pathlib.Path(os.environ['RUNNER_TEMP'], 'qmmm-integration.patch').write_bytes(data)
+          import hashlib,lzma,os,pathlib
+          data=lzma.decompress(pathlib.Path('Tools/Development/QMMMIntegration/mesh.patch.xz').read_bytes())
+          assert len(data)==56357 and hashlib.sha256(data).hexdigest()=='9eb91f3dc3e8bc99f8b97d0286cb1478b7bb4e50805a994f376388299ddb3c36'
+          pathlib.Path(os.environ['RUNNER_TEMP'],'mesh.patch').write_bytes(data)
           PY
           git fetch --depth=1 origin main
           git checkout -B qmmm-integration FETCH_HEAD
-          git apply --check "$RUNNER_TEMP/qmmm-integration.patch"
-          git apply "$RUNNER_TEMP/qmmm-integration.patch"
-          python3 - <<'PY'
-          import pathlib
-          p = pathlib.Path('Sources/NumiVivoKit/MD/VivoMDVelocityInitializer.swift')
-          p.write_text(p.read_text().rstrip() + '\n')
-          PY
+          git apply --check "$RUNNER_TEMP/mesh.patch"
+          git apply "$RUNNER_TEMP/mesh.patch"
           git diff --check
           git config user.name 'NumiVivo development'
           git config user.email '33553832+Numi2@users.noreply.github.com'
           git add Sources Tests
-          git commit -m 'feat(qmmm): integrate variational periodic HF and retained-force dynamics' -m 'Add analytic Gaussian/Pulay nuclear derivatives, self-consistent quadrupolar Ewald with exact-near correction and strain, generalized site Jacobians, smooth LJ switching and a geometry-bound stateless force provider inside the existing Metal transaction. Includes numerical and native integration regressions. Direct Ewald is the reference path; accelerated multipolar PME and polarizable/adaptive extensions remain separate work.'
+          git rm -r Tools/Development/QMMMIntegration
+          git rm .github/workflows/apply-qmmm-hamiltonian-source.yml
+          git commit -m 'feat(pme): share FFT execution with variational quadrupolar mesh and fixed-grid BO dynamics' -m 'Add sixth-order assignment and derivative-consistent source/force/strain gathering, explicit FP32 reciprocal capability, immutable cell-moving mesh dimensions and focused native regressions. Preserve the FP64 Ewald reference and existing classical kernels. Remove one-time integration payloads after publication.'
           AUTH="$(printf 'x-access-token:%s' "$GH_WRITE_TOKEN" | base64 -w0)"
           git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $AUTH" push origin HEAD:main
           echo "source=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -59,7 +54,7 @@ jobs:
         with:
           ref: ${{ needs.integrate.outputs.source }}
           persist-credentials: false
-      - name: Build the exact full Apple product
+      - name: Build the exact full Apple product and test targets
         shell: bash
         run: |
           set -euo pipefail
@@ -69,19 +64,19 @@ jobs:
           swift --version > "$RUNNER_TEMP/qmmm-results/compiler.txt"
           uname -srm > "$RUNNER_TEMP/qmmm-results/platform.txt"
           swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing 2>&1 | tee "$RUNNER_TEMP/qmmm-results/build.log"
-      - name: Run Hamiltonian and retained platform regression suites
+      - name: Run real Metal mesh, Hamiltonian and interface regression suites
         env:
           NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/qmmm-results/native
           MTL_DEBUG_LAYER: '1'
         shell: bash
         run: |
           set -euo pipefail
-          swift test -c release --skip-build --filter 'PeriodicQMMMHamiltonianTests|MDQMMMInterfaceTests|SolventPromotionTests|PlatformQMMMWorkflowTests|AppleExecutionTests' 2>&1 | tee "$RUNNER_TEMP/qmmm-results/tests.log"
+          swift test -c release --skip-build --filter 'MultipolePMETests|PeriodicQMMMHamiltonianTests|MDQMMMInterfaceTests|SolventPromotionTests|PlatformQMMMWorkflowTests|AppleExecutionTests' 2>&1 | tee "$RUNNER_TEMP/qmmm-results/tests.log"
           python3 - <<'PY'
-          import os, pathlib
-          text = pathlib.Path(os.environ['RUNNER_TEMP'], 'qmmm-results/tests.log').read_text()
-          for suite in ['PeriodicQMMMHamiltonianTests', 'MDQMMMInterfaceTests', 'SolventPromotionTests', 'PlatformQMMMWorkflowTests', 'AppleExecutionTests']:
-              assert f'Suite {suite} passed' in text, f'Missing executed suite: {suite}'
+          import os,pathlib
+          text=pathlib.Path(os.environ['RUNNER_TEMP'],'qmmm-results/tests.log').read_text()
+          for suite in ['MultipolePMETests','PeriodicQMMMHamiltonianTests','MDQMMMInterfaceTests','SolventPromotionTests','PlatformQMMMWorkflowTests','AppleExecutionTests']:
+              assert f'Suite {suite} passed' in text,f'Missing executed suite: {suite}'
           PY
       - name: Preserve source cleanliness
         if: always()
@@ -93,7 +88,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: qmmm-hamiltonian-${{ needs.integrate.outputs.source }}
+          name: qmmm-mesh-${{ needs.integrate.outputs.source }}
           path: ${{ runner.temp }}/qmmm-results/
           retention-days: 14
           if-no-files-found: error
