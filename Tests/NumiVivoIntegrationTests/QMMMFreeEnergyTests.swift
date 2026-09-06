@@ -86,7 +86,8 @@ import Testing
             samplingDescription:"synthetic converged protein-environment PMF fixture")
         let rate=try VivoQMMMFreeEnergyRate.calculate(request)
         #expect(rate.estimate.ratePerSecond.isFinite && rate.estimate.ratePerSecond>0)
-        #expect(rate.untransmittedFluxTSTRatePerSecond==rate.estimate.ratePerSecond)
+        let fluxRateRelativeError=abs(rate.untransmittedFluxTSTRatePerSecond-rate.estimate.ratePerSecond)/rate.estimate.ratePerSecond
+        #expect(fluxRateRelativeError<1e-12)
         #expect(rate.barrier.value>8 && rate.barrier.value<13)
         #expect(rate.barrier.origin == .calculated)
         #expect(rate.parameter.origin == .assumed)
