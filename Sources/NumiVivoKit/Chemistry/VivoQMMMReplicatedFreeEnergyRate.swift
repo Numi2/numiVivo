@@ -65,6 +65,7 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
         let combinedConditionalLogRateStandardDeviation:Double
         let issues:[String]
     }
+    private enum SelfEvidence { static let schema="numivivo.org/qmmm-replicated-free-energy-rate-evidence/v1" }
 
     private static func environment(_ request:VivoQMMMFreeEnergyRateRequest)->VivoQMMMFreeEnergyEnvironment {
         switch request.environment { case .explicitSolution:return .explicitSolution;case .proteinEnvironment:return .proteinEnvironment }
@@ -103,21 +104,22 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
         }
         let logs=results.map{ $0.estimate.naturalLogRatePerSecond },mean=logs.reduce(0,+)/Double(logs.count)
         let range=(logs.max() ?? mean)-(logs.min() ?? mean)
-        let variance:Double
-        if logs.count>1 { variance=logs.reduce(0){$0+pow($1-mean,2)}/Double(logs.count-1) } else { variance=0 }
+        let variance=logs.count>1 ? logs.reduce(0){$0+pow($1-mean,2)}/Double(logs.count-1):0
         let between=sqrt(max(0,variance))
         let withinVariance=results.reduce(0.0) { partial,result in
             let sd=result.estimate.conditionalLogRateStandardDeviation ?? 0
             return partial+sd*sd
         }/Double(results.count)
         let combined=sqrt(max(0,variance+withinVariance))
-        let barriers=results.map{ $0.freeEnergyProfileBarrierKJPerMol }
+        let barriers=request.replicas.map{ $0.freeEnergy.analysis.activationFreeEnergyKJPerMol }
         let barrierRange=(barriers.max() ?? 0)-(barriers.min() ?? 0)
         var issues:[String]=[]
         if range>request.agreement.maximumLogRateRange { issues.append("independent replica log-rate range exceeds tolerance") }
-        if barrierRange>request.agreement.maximumProfileBarrierRangeKJPerMol { issues.append("independent replica PMF profile-barrier range exceeds diagnostic tolerance") }
+        if barrierRange>request.agreement.maximumProfileBarrierRangeKJPerMol {
+            issues.append("independent replica PMF profile-barrier range exceeds diagnostic tolerance")
+        }
         let rate=exp(mean)
-        guard rate.isFinite,rate>0,between.isFinite,combined.isFinite else {
+        guard rate.isFinite,rate>0,between.isFinite,combined.isFinite,barrierRange.isFinite else {
             throw VivoKineticsError.numerical("QM/MM replicated log-rate aggregation")
         }
         let evidenceData=try VivoCanonicalJSON.encode(Evidence(schema:SelfEvidence.schema,request:request,replicaResults:results,
@@ -138,8 +140,6 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
             converged:issues.isEmpty,issues:issues,parameter:parameter,evidenceFingerprint:evidenceID,evidenceData:evidenceData)
     }
 
-    private enum SelfEvidence { static let schema="numivivo.org/qmmm-replicated-free-energy-rate-evidence/v1" }
-
     public static func validate(_ result:VivoQMMMReplicatedFreeEnergyRateResult,
                                 request:VivoQMMMReplicatedFreeEnergyRateRequest)throws {
         guard result == (try calculate(request)) else { throw VivoKineticsError.invalid("replicated QM/MM rate does not reconstruct") }
@@ -157,20 +157,5 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
             targetTurnover:model.targetTurnover,baselineTarget:model.baselineTarget,
             competitor:model.competitor,maximumUnboundDrugM:model.maximumUnboundDrugM)
         try output.validate();return output
-    }
-}
-
-private extension VivoQMMMFreeEnergyRateResult {
-    var freeEnergyProfileBarrierKJPerMol:Double { barrierProfileDiagnostic }
-    var barrierProfileDiagnostic:Double {
-        // The stored kinetic barrier is Eyring-equivalent. Replica profile
-        // agreement is intentionally scored on the underlying configurational PMF.
-        replicaProfileBarrierFromRequest
-    }
-    var replicaProfileBarrierFromRequest:Double {
-        // The request itself is not stored, but the Eyring-equivalent result keeps
-        // no PMF diagnostic. This accessor is replaced by request-side collection
-        // during aggregation; it must never be used as a scientific conversion.
-        .nan
     }
 }
