@@ -1,0 +1,120 @@
+name: ECC solvent closure conformance
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/NumiVivoKit/Embedding/**'
+      - 'Sources/NumiVivoKit/ManyBody/**'
+      - 'Sources/NumiVivoKit/ReactionQualification/VivoECCSolventClosure.swift'
+      - 'Sources/NumiVivoKit/ReactionQualification/VivoVariationalEmbedding.swift'
+      - 'Sources/NumiVivoKit/Workflow/VivoReactionQualificationWorkflow.swift'
+      - 'Sources/NumiVivoCLI/VivoReactionCLICommands.swift'
+      - 'Tests/NumiVivoIntegrationTests/ECCSolventClosureTests.swift'
+      - '.github/workflows/ecc-solvent-closure.yml'
+      - 'Package.swift'
+permissions:
+  contents: read
+concurrency:
+  group: ecc-solvent-closure-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  apple:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Build exact complete product and test targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/ecc-solvent"
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/commit.txt"
+          git archive --format=tar.gz HEAD > "$OUT/source.tar.gz"
+          swift --version > "$OUT/compiler.txt"
+          uname -srm > "$OUT/platform.txt"
+          swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing 2>&1 | tee "$OUT/build.log"
+          shasum -a 256 .build/release/numivivo > "$OUT/binary.sha256"
+      - name: Execute direct ECC/global-density/PCM regression tests
+        env:
+          NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/ecc-solvent/tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test -c release --skip-build --filter ECCSolventClosureTests 2>&1 | tee "$RUNNER_TEMP/ecc-solvent/tests.log"
+      - name: Execute production workflow and compare the full-bath control
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/ecc-solvent"
+          STORE="$OUT/store"
+          .build/release/numivivo reaction-template h2-ecc-solvent-closure --output "$OUT/ecc.json"
+          .build/release/numivivo reaction-run "$OUT/ecc.json" --store "$STORE" --output "$OUT/ecc.result.json" 2>&1 | tee "$OUT/ecc-first.log"
+          .build/release/numivivo reaction-run "$OUT/ecc.json" --store "$STORE" --output "$OUT/ecc.cached.json" 2>&1 | tee "$OUT/ecc-cached.log"
+          .build/release/numivivo reaction-template h2-equilibrium-cpcm --output "$OUT/fci.json"
+          .build/release/numivivo reaction-run "$OUT/fci.json" --store "$STORE" --output "$OUT/fci.result.json" 2>&1 | tee "$OUT/fci.log"
+          python3 - "$OUT" <<'PY'
+          import json, pathlib, sys, math
+          root=pathlib.Path(sys.argv[1])
+          ecc=json.loads((root/'ecc.result.json').read_text())['eccSolventClosure']['result']
+          cached=json.loads((root/'ecc.cached.json').read_text())['eccSolventClosure']['result']
+          fci=json.loads((root/'fci.result.json').read_text())['correlatedSolvent']['result']
+          first_receipt=json.loads((root/'ecc.result.json.receipt.json').read_text())
+          cached_receipt=json.loads((root/'ecc.cached.json.receipt.json').read_text())
+          checks={
+            'first execution is fresh': not first_receipt['reused'],
+            'second execution reuses verified artifact': cached_receipt['reused'],
+            'cached physical result is identical': cached==ecc,
+            'full-bath energy agrees with full CI CPCM': abs(ecc['energyHartree']-fci['energyHartree'])<1e-8,
+            'full-bath density agrees with full CI CPCM': math.sqrt(sum((a-b)**2 for a,b in zip(ecc['densityAO']['values'],fci['totalDensityAO']['values'])))<1e-7,
+            'density closure': ecc['densityResidual']<=ecc['request']['molecule']['configuration']['densityTolerance'],
+            'potential closure': ecc['potentialResidualHartree']<=ecc['request']['molecule']['configuration']['potentialToleranceHartree'],
+            'projector closure': ecc['projectorResidual']<=ecc['request']['configuration']['projectorTolerance'],
+            'democratic ECC energy is diagnostic only': 'democratic ECC energy retained only as a diagnostic' in ecc['method'],
+            'global N representable authority is explicit': 'one N-representable solvent density' in ecc['method'],
+          }
+          (root/'workflow-checks.json').write_text(json.dumps({'checks':checks,'passed':all(checks.values()),'energyDifferenceHartree':abs(ecc['energyHartree']-fci['energyHartree'])},indent=2,sort_keys=True)+'\n')
+          failed=[k for k,v in checks.items() if not v]
+          if failed: raise SystemExit('FAILED: '+', '.join(failed))
+          print('PASS',len(checks),'ECC/solvent production checks')
+          PY
+      - name: Verify immutable tracked source
+        if: always()
+        shell: bash
+        run: |
+          git status --porcelain > "$RUNNER_TEMP/ecc-solvent/git-status.txt"
+          git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: ecc-solvent-${{ github.sha }}
+          path: ${{ runner.temp }}/ecc-solvent/
+          if-no-files-found: error
+          retention-days: 14
+  address_sanitizer:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Run ECC/solvent host-side tests with SwiftPM AddressSanitizer
+        env:
+          NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/ecc-solvent-asan/results
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ecc-solvent-asan"
+          git rev-parse HEAD > "$RUNNER_TEMP/ecc-solvent-asan/commit.txt"
+          swift --version > "$RUNNER_TEMP/ecc-solvent-asan/compiler.txt"
+          swift test -c debug --jobs 3 --sanitize=address --filter ECCSolventClosureTests 2>&1 | tee "$RUNNER_TEMP/ecc-solvent-asan/address-sanitizer.log"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: ecc-solvent-asan-${{ github.sha }}
+          path: ${{ runner.temp }}/ecc-solvent-asan/
+          if-no-files-found: error
+          retention-days: 14
