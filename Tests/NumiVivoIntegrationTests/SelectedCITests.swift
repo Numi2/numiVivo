@@ -10,7 +10,7 @@ import Testing
         let system=VivoElectronicSystem(nuclei:[.init(atomicNumber:1,positionBohr:.init(0,0,-0.7)),
             .init(atomicNumber:1,positionBohr:.init(0,0,0.7))],alphaElectrons:1,betaElectrons:1)
         let ao=try VivoGaussianIntegralEngine.compute(system:system,basis:basis)
-        let hf=try VivoHartreeFock.solve(system:system,integrals:ao,configuration:.init(reference:.restricted,energyTolerance:1e-12,densityTolerance:1e-10))
+        let hf=try VivoHartreeFock.solve(system:system,integrals:ao,configuration:.init(reference:.restricted,energyToleranceHartree:1e-12,densityTolerance:1e-10))
         return try VivoEmbeddedHamiltonian.fromAO(ao,coefficients:hf.alphaCoefficients,
             alphaElectrons:1,betaElectrons:1,orbitalIdentifiers:(0..<ao.count).map{"h2-mo-\($0)"},
             energyReference:"H2/6-31G RHF orbital frame for selected-CI regression")
