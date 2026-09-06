@@ -1,0 +1,123 @@
+name: Scientific closure conformance
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/**'
+      - 'Tests/NumiVivoIntegrationTests/**'
+      - 'Examples/reaction/*overlap.json'
+      - 'Examples/reaction/residual-*.json'
+      - 'ReferenceAdapters/PySCF/scientific_closure_oracle.py'
+      - '.github/workflows/scientific-closure.yml'
+      - 'Package.swift'
+permissions:
+  contents: read
+concurrency:
+  group: scientific-closure-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  oracle:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Independently build physical subspace and solvent references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/oracle-python"
+          PYTHON="$RUNNER_TEMP/oracle-python/bin/python"
+          "$PYTHON" -m pip install 'numpy==1.26.4' 'scipy==1.13.1' 'h5py==3.11.0' 'pyscf==2.8.0'
+          "$PYTHON" ReferenceAdapters/PySCF/scientific_closure_oracle.py export Examples/reaction "$RUNNER_TEMP/closure-oracle"
+          "$PYTHON" -m pip freeze > "$RUNNER_TEMP/closure-oracle/python-lock.txt"
+          git rev-parse HEAD > "$RUNNER_TEMP/closure-oracle/commit.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: closure-oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/closure-oracle/
+          if-no-files-found: error
+          retention-days: 14
+  apple:
+    needs: oracle
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: closure-oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/closure-oracle
+      - name: Build exact complete product and tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/closure-run"
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/commit.txt"
+          git archive --format=tar.gz HEAD > "$OUT/source.tar.gz"
+          swift --version > "$OUT/compiler.txt"
+          uname -srm > "$OUT/platform.txt"
+          swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing 2>&1 | tee "$OUT/build.log"
+          shasum -a 256 .build/release/numivivo > "$OUT/binary.sha256"
+      - name: Run scientific closure with the complete existing Metal and connectivity suite
+        env:
+          NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/closure-run/tests
+          MTL_DEBUG_LAYER: '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test -c release --skip-build 2>&1 | tee "$RUNNER_TEMP/closure-run/tests.log"
+      - name: Compare real production commands and verified cache reuse
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 ReferenceAdapters/PySCF/scientific_closure_oracle.py check .build/release/numivivo Examples/reaction "$RUNNER_TEMP/closure-oracle" "$RUNNER_TEMP/closure-run/cli" 2>&1 | tee "$RUNNER_TEMP/closure-run/cli.log"
+      - name: Verify immutable source state
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/closure-run"
+          git status --porcelain > "$RUNNER_TEMP/closure-run/git-status.txt"
+          git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: apple-closure-${{ github.sha }}
+          path: ${{ runner.temp }}/closure-run/
+          if-no-files-found: error
+          retention-days: 14
+  address_sanitizer:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Run corrected SwiftPM AddressSanitizer invocation without linker-flag forwarding
+        env:
+          NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/sanitizer-run/results
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/sanitizer-run"
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/commit.txt"
+          swift --version > "$OUT/compiler.txt"
+          uname -srm > "$OUT/platform.txt"
+          swift test -c debug --jobs 3 --sanitize=address --filter ScientificClosureTests 2>&1 | tee "$OUT/address-sanitizer.log"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: address-sanitizer-${{ github.sha }}
+          path: ${{ runner.temp }}/sanitizer-run/
+          if-no-files-found: error
+          retention-days: 14
