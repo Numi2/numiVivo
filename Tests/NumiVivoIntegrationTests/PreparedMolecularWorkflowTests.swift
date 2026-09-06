@@ -47,15 +47,18 @@ import Testing
     @Test func invertedTetrahedralConformerDoesNotPassPreparation() throws {
         let vectors:[VivoVector3D]=[.init(0.1,0.1,0.1),.init(-0.1,-0.1,0.1),.init(-0.1,0.1,-0.1),.init(0.1,-0.1,-0.1)]
         let positive=(vectors[0]-vectors[3]).dot((vectors[1]-vectors[3]).cross(vectors[2]-vectors[3]))>0
-        let atoms=(0..<5).map { i in VivoMolecularAtom(index:UInt32(i),name:"atom-\(i)",
-            element:.init(atomicNumber:i==0 ? 6:1,symbol:i==0 ? "C":"H")) }
+        let atoms: [VivoMolecularAtom] = (0..<5).map { i in
+            let element = VivoElement(atomicNumber: i == 0 ? UInt16(6) : UInt16(1), symbol: i == 0 ? "C" : "H")
+            return VivoMolecularAtom(index: UInt32(i), name: "atom-\(i)", element: element)
+        }
         let structure=VivoMolecularStructure(identifier:"ordered-neighbor-fixture",atoms:atoms,
             bonds:(1..<5).map{.init(atomA:0,atomB:UInt32($0))},conformers:[.init(positionsNM:[.zero]+vectors)])
         var request=VivoMolecularPreparationRequest(structure:structure,microstateIdentifier:"explicit",
             protonationSourceIdentifier:"synthetic tetrahedron",pH:7,expectedFormalCharge:0,
             stereochemistry:[.tetrahedral(center:.source(0),orderedNeighbors:(1..<5).map{.source(UInt32($0))},positive:positive)])
         _ = try VivoMolecularPreparation.prepare(request)
-        request.structure.conformers.append(.init(identifier:"mirror",positionsNM:([VivoVector3D.zero]+vectors).map{.init(-$0.x,$0.y,$0.z)}))
+        let mirror = ([VivoVector3D.zero] + vectors).map { VivoVector3D(-$0.x, $0.y, $0.z) }
+        request.structure.conformers.append(VivoMolecularConformer(identifier: "mirror", positionsNM: mirror))
         rejects { _ = try VivoMolecularPreparation.prepare(request) }
     }
     @Test func triclinicMinimumImageAgreesWithExplicitLatticeEnumeration() throws {
@@ -87,7 +90,7 @@ import Testing
             atomTypes:[.init(identifier:"C",elementAtomicNumber:6,massDa:12,sigmaNM:0.3,epsilonKJPerMol:0.1),
                        .init(identifier:"H",elementAtomicNumber:1,massDa:1,sigmaNM:0.1,epsilonKJPerMol:0.01)],
             residueTemplates:[template],bondParameters:[.init(typeA:"C",typeB:"H",lengthNM:0.1,forceConstant:100)],
-            angleParameters:[.init(typeA:"H",typeB:"C",typeC:"H",angleRadians:2.0,forceConstant:20)],
+            angleParameters:[.init(typeA:"H",typeB:"C",typeC:"H",typeC:"H",angleRadians:2.0,forceConstant:20)],
             torsionParameters:[.init(typeA:"H",typeB:"C",typeC:"H",typeD:"H",periodicity:2,
                                     phaseRadians:Double.pi,barrierKJPerMol:0.5,improper:true)],
             provenance:["purpose":"synthetic contract fixture; not a physical force field"])
