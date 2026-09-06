@@ -1,0 +1,68 @@
+name: General platform workflows
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/**'
+      - 'Tests/NumiVivoIntegrationTests/**'
+      - 'Tools/Platform/**'
+      - 'Examples/workflows/**'
+      - 'Package.swift'
+      - '.github/workflows/platform-workflows.yml'
+permissions:
+  contents: read
+concurrency:
+  group: platform-workflows-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  apple:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Build the exact complete Apple product and test targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/platform-results"
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/source-commit.txt"
+          git archive --format=tar.gz HEAD > "$OUT/source.tar.gz"
+          swift --version > "$OUT/compiler.txt"
+          uname -srm > "$OUT/platform.txt"
+          swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing 2>&1 | tee "$OUT/build.log"
+          shasum -a 256 .build/release/numivivo > "$OUT/binary.sha256"
+      - name: Run complete tests including real Metal workflow segments
+        env:
+          NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/platform-results/native
+          MTL_DEBUG_LAYER: '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test -c release --skip-build 2>&1 | tee "$RUNNER_TEMP/platform-results/tests.log"
+      - name: Exercise real workflow CLI, partial failure, cache and safe export
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -x .build/release/numivivo
+          python3 Tools/Platform/check_workflow_cli.py .build/release/numivivo "$RUNNER_TEMP/platform-results/cli" 2>&1 | tee "$RUNNER_TEMP/platform-results/cli.log"
+          .build/release/numivivo workflow-plan Examples/workflows/target-panel.json > "$RUNNER_TEMP/platform-results/target-plan.json"
+          .build/release/numivivo workflow-run Examples/workflows/target-panel.json --store "$RUNNER_TEMP/platform-target-store" --output "$RUNNER_TEMP/platform-results/target-panel.json"
+      - name: Record immutable source state
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/platform-results"
+          git status --porcelain > "$RUNNER_TEMP/platform-results/git-status.txt"
+          git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: platform-workflows-${{ github.sha }}
+          path: ${{ runner.temp }}/platform-results/
+          retention-days: 14
+          if-no-files-found: error
