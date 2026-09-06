@@ -64,8 +64,9 @@ import Testing
         #expect(result.activationFreeEnergyKJPerMol>15 && result.activationFreeEnergyKJPerMol<25)
         #expect(result.conditionalStandardDeviationKJPerMol.isFinite)
         try VivoQMMMFreeEnergy.validate(result)
-        let context=VivoKineticContext(temperatureK:temperature,pH:7.4,chemicalState:"prepared-reactive-state",hostContext:"protein-pocket")
-        let transmission=VivoKineticEvidence(source:"assumption",locator:"unit test",sourceFingerprint:"synthetic")
+        let context=VivoKineticContext(compound:"synthetic",target:"protein",targetVariant:"reference",site:"reactive-site",
+            chemicalState:"prepared-reactive-state",hostContext:"protein-pocket",temperatureK:temperature,pH:7.4,ionicStrengthM:0.15)
+        let transmission=VivoKineticEvidence(source:"assumption",locator:"unit test")
         let request=VivoQMMMFreeEnergyRateRequest(context:context,environment:.proteinEnvironment,freeEnergy:result,
             transmissionProbability:1,transmissionOrigin:.assumed,transmissionEvidence:transmission,
             samplingDescription:"synthetic converged protein-environment PMF fixture")
