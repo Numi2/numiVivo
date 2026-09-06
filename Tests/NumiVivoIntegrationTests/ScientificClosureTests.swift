@@ -59,7 +59,20 @@ import Testing
         #expect(result.occupations.allSatisfy { $0 >= -1e-10 && $0 <= 2+1e-10 })
         #expect(abs(result.state.coefficients.reduce(0) { $0+$1*$1 }-1)<1e-10)
         #expect(result.selfConsistentProjectedResidualHartree<request.stationarityToleranceHartree)
-        #expect(result.externalResidualHartree>result.selfConsistentProjectedResidualHartree)
+        // This symmetric H2 projector can contain the exact ground state even
+        // while omitting two determinants. Roundoff residual components need
+        // not have a prescribed ordering; use a genuinely truncated polar case.
+        #expect(result.externalResidualHartree.isFinite && result.externalResidualHartree>=0)
+        #expect(result.externalResidualHartree<1e-8)
+        let root=URL(fileURLWithPath:#filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        let input=try VivoCanonicalJSON.decode(VivoReactionCalculationRequest.self,
+            from:Data(contentsOf:root.appendingPathComponent("Examples/reaction/global-lih-overlap.json")))
+        guard case .globalEmbedding(let polarRequest)=input.calculation else {throw VivoChemistryError.invalid("polar test fixture method")}
+        let polar=try VivoVariationalEmbedding.run(polarRequest)
+        #expect(polar.variationalDimension==14 && polar.fullSectorDimension==225)
+        #expect(polar.externalResidualHartree>1e-4)
+        #expect(polar.selfConsistentProjectedResidualHartree<=polarRequest.stationarityToleranceHartree)
+        try record(polar,"global-polar-overlap-solvent")
         var fragments=request.fragments
         fragments.append(.init(identifier:"duplicate-projector",partition:fragments[0].partition))
         let duplicate=try VivoVariationalEmbedding.run(.init(molecule:request.molecule,fragments:fragments,space:request.space))
@@ -95,6 +108,18 @@ import Testing
         let wrongCore=VivoVariationalEmbeddingRequest(molecule:request.molecule,
             fragments:[.init(identifier:"bad-core",partition:.init(doublyOccupiedCore:[0],active:[0,1]))])
         rejects { _=try VivoVariationalEmbedding.run(wrongCore) }
+        let partial=try VivoVariationalEmbedding.run(request)
+        var generator=VivoQMMatrix(4,4)
+        generator[0,3]=0.27;generator[3,0] = -0.27;generator[1,2]=0.19;generator[2,1] = -0.19
+        let rotation=try VivoQMDenseAlgebra.orbitalRotation(generator:generator)
+        let rotatedMolecule=VivoCorrelatedSolventRequest(system:request.molecule.system,basis:request.molecule.basis,
+            solvent:request.molecule.solvent,configuration:request.molecule.configuration,
+            coefficients:try partial.coefficients.multiplied(by:rotation),budget:request.molecule.budget)
+        let transformed=request.fragments.map {VivoFockFragment(identifier:$0.identifier,partition:$0.partition,orbitalRotation:rotation.transposed)}
+        let covariant=try VivoVariationalEmbedding.run(.init(molecule:rotatedMolecule,fragments:transformed,space:request.space))
+        #expect(covariant.variationalDimension==partial.variationalDimension)
+        #expect(abs(covariant.energyHartree-partial.energyHartree)<1e-9)
+        #expect(try covariant.densityAO.adding(partial.densityAO,scale:-1).frobeniusNorm<1e-8)
         try record(result,"global-full-space-control")
     }
     @Test func validatedECCFramesCanEnterGlobalFunctional() throws {

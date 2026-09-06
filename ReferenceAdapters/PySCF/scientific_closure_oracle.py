@@ -335,7 +335,10 @@ def check(binary,examples,oracle,out):
             require(len(actual['occupations'])==len(reference['occupations']),name+' occupation cardinality')
             for i,(a,b) in enumerate(zip(actual['occupations'],reference['occupations'])): compare(a,b,name+f' occupation {i}',2e-7)
             require(actual['selfConsistentProjectedResidualHartree']<=request['calculation'][case]['request']['stationarityToleranceHartree'],name+' actual returned-field stationarity')
-            require(actual['externalResidualHartree']>actual['selfConsistentProjectedResidualHartree'],name+' omitted correlation is not hidden in a projected residual')
+            if name=='lih':
+                require(actual['externalResidualHartree']>1e-4 and actual['externalResidualHartree']>actual['selfConsistentProjectedResidualHartree'],name+' omitted correlation is not hidden in a projected residual')
+            else:
+                require(actual['externalResidualHartree']<1e-8,name+' symmetric reduced subspace contains the full ground state')
             if name=='lih': require(reference['densityChangeFromGas']>1e-4,'polar global density has nontrivial equilibrium solvent feedback')
             require('not democratic ECC-DMET' in actual['method'],'global closure keeps its distinct energy-functional meaning '+name)
     residual=saved['residual'][0]
