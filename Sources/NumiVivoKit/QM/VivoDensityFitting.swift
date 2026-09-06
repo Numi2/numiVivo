@@ -71,6 +71,27 @@ public struct VivoGaussianIntegralContext: Sendable {
     }
 }
 
+public extension VivoChemistryBudget {
+    /// Work counts are not allocation sizes. In particular an O(o^2 v^2 R)
+    /// contraction must not be rejected as though that many doubles were stored.
+    func operatorApplications(_ dimensions: [Int], label: String) throws -> Int {
+        try validate()
+        guard !dimensions.isEmpty else { throw VivoChemistryError.invalid("empty work dimensions") }
+        var count = 1
+        for dimension in dimensions {
+            let product = count.multipliedReportingOverflow(by: dimension)
+            guard dimension >= 0, !product.overflow else {
+                throw VivoChemistryError.resourceLimit("\(label) work overflow")
+            }
+            count = product.partialValue
+        }
+        guard count <= maximumOperatorApplications else {
+            throw VivoChemistryError.resourceLimit("\(label) exceeds operator-application budget")
+        }
+        return count
+    }
+}
+
 /// Unweighted packed triangular pairs p>=q. B[pq,L] B[rs,L] represents (pq|rs).
 public struct VivoCoulombFactors: Codable, Sendable, Equatable {
     public let orbitalCount:Int
@@ -98,6 +119,31 @@ public struct VivoCoulombFactors: Codable, Sendable, Equatable {
         for k in 0..<rank { let b=try matrix(k).congruence(c)
             for p in 0..<m { for q in 0...p { output[Self.pair(p,q),k]=b[p,q] } }
         };return .init(orbitalCount:m,values:output,method:method+"; orbital transformed")
+    }
+    /// Rectangular L' B R panel, row i*right.columns+j. Transform the smaller
+    /// orbital side first; no unused occupied/occupied or virtual/virtual block.
+    public func orbitalPairPanel(left: VivoQMMatrix, right: VivoQMMatrix,
+                                 budget: VivoChemistryBudget = .init()) throws -> VivoQMMatrix {
+        try validate(budget: budget)
+        let n = orbitalCount, l = left.columns, r = right.columns
+        guard left.rows == n, right.rows == n, l > 0, r > 0, l <= n, r <= n,
+              left.values.allSatisfy(\.isFinite), right.values.allSatisfy(\.isFinite) else {
+            throw VivoChemistryError.invalid("rectangular Coulomb-factor transform")
+        }
+        _ = try budget.elements([l,r,rank], simultaneousArrays: 3)
+        _ = try budget.elements([n,n], simultaneousArrays: 6)
+        _ = try budget.operatorApplications([rank,n,n,min(l,r)], label: "RI rectangular transform")
+        var output = VivoQMMatrix(l*r,rank)
+        let lt = left.transposed
+        for k in 0..<rank {
+            let b = matrix(k)
+            let block: VivoQMMatrix
+            if l <= r { block = try lt.multiplied(by:b).multiplied(by:right) }
+            else { block = try lt.multiplied(by:b.multiplied(by:right)) }
+            for i in 0..<l { for j in 0..<r { output[i*r+j,k] = block[i,j] } }
+        }
+        guard output.values.allSatisfy(\.isFinite) else { throw VivoChemistryError.convergence("RI panel overflow") }
+        return output
     }
     public func coulombExchange(density d:VivoQMMatrix,budget:VivoChemistryBudget = .init()) throws -> (coulomb:VivoQMMatrix,exchange:VivoQMMatrix) {
         try validate(budget:budget);let n=orbitalCount
@@ -177,49 +223,108 @@ public enum VivoFactorizedHartreeFock {
         guard ri.factors.orbitalCount==one.count else { throw VivoChemistryError.invalid("RI source dimension") }
         let result=try VivoHartreeFock.solveWithFockBuilder(system:one.system,overlap:one.overlap,core:one.coreHamiltonian,
             constant:one.constantEnergyHartree,configuration:configuration,budget:budget) { da,db in
-            let a=try ri.factors.coulombExchange(density:da,budget:budget),b=try ri.factors.coulombExchange(density:db,budget:budget)
+            let a=try ri.factors.coulombExchange(density:da,budget:budget)
+            // The shared RHF iteration constructs identical spin densities.
+            // Reuse the contraction rather than recomputing it for beta.
+            if configuration.reference == .restricted {
+                let common=try one.coreHamiltonian.adding(a.coulomb,scale:2).adding(a.exchange,scale:-1)
+                return (common,common)
+            }
+            let b=try ri.factors.coulombExchange(density:db,budget:budget)
             let common=try one.coreHamiltonian.adding(a.coulomb).adding(b.coulomb)
             return (try common.adding(a.exchange,scale:-1),try common.adding(b.exchange,scale:-1))
         };return .init(source:ri,configuration:configuration,scf:result)
     }
+
+    /// Reconstruct the physical RHF reference without running any correlated
+    /// solver. Shared by MP2, active-space preparation and artifact validation.
+    @discardableResult
+    public static func validateRestricted(_ ref: VivoRIHartreeFockResult,
+                                          budget: VivoChemistryBudget = .init()) throws -> Double {
+        let one = ref.source.oneElectron, factors = ref.source.factors, hf = ref.scf
+        try one.validate(budget:budget); try factors.validate(budget:budget); try ref.configuration.validate()
+        let n = one.count, o = hf.alphaElectrons, cfg = ref.configuration
+        guard factors.orbitalCount == n, cfg.reference == .restricted, hf.reference == .restricted,
+              o == hf.betaElectrons, o == one.system.alphaElectrons, o == one.system.betaElectrons,
+              o >= 0, o <= n, hf.finalCommutatorNorm.isFinite, hf.finalCommutatorNorm >= 0,
+              hf.finalCommutatorNorm <= cfg.commutatorTolerance else {
+            throw VivoChemistryError.invalid("RI-RHF source, sector or convergence")
+        }
+        for (c, energies, stored) in [(hf.alphaCoefficients,hf.alphaOrbitalEnergies,hf.alphaDensity),
+                                       (hf.betaCoefficients,hf.betaOrbitalEnergies,hf.betaDensity)] {
+            guard c.rows == n, c.columns == n, energies.count == n,
+                  c.values.allSatisfy(\.isFinite), energies.allSatisfy(\.isFinite),
+                  stored.rows == n, stored.columns == n, stored.values.allSatisfy(\.isFinite),
+                  try one.overlap.congruence(c).adding(.identity(n),scale:-1).frobeniusNorm < 1e-8 else {
+                throw VivoChemistryError.invalid("RI-RHF orbital metric or density shape")
+            }
+            let rebuilt = VivoHartreeFock.density(c,occupied:o)
+            guard try rebuilt.adding(stored,scale:-1).frobeniusNorm <= cfg.densityTolerance else {
+                throw VivoChemistryError.invalid("RI-RHF stored density does not match orbitals")
+            }
+        }
+        let d = VivoHartreeFock.density(hf.alphaCoefficients,occupied:o)
+        let db = VivoHartreeFock.density(hf.betaCoefficients,occupied:o)
+        guard try d.adding(db,scale:-1).frobeniusNorm <= cfg.densityTolerance else {
+            throw VivoChemistryError.invalid("RI-RHF unequal spin densities")
+        }
+        let jk = try factors.coulombExchange(density:d,budget:budget)
+        let f = try one.coreHamiltonian.adding(jk.coulomb,scale:2).adding(jk.exchange,scale:-1)
+        for (c, energies) in [(hf.alphaCoefficients,hf.alphaOrbitalEnergies),(hf.betaCoefficients,hf.betaOrbitalEnergies)] {
+            let fmo = try f.congruence(c)
+            for i in 0..<n { for j in 0..<n {
+                guard abs(fmo[i,j] - (i == j ? energies[i] : 0)) < 1e-7 else {
+                    throw VivoChemistryError.invalid("RI-RHF noncanonical orbitals")
+                }
+            } }
+        }
+        let errors = try VivoHartreeFock.error(f,d,one.overlap,hf.alphaCoefficients)
+            + VivoHartreeFock.error(f,db,one.overlap,hf.betaCoefficients)
+        let residual = errors.reduce(0.0) { hypot($0,$1) }
+        guard residual.isFinite, residual <= 1.01 * cfg.commutatorTolerance else {
+            throw VivoChemistryError.invalid("RI-RHF reconstructed commutator exceeds tolerance")
+        }
+        let energy = one.constantEnergyHartree + zip(d.values,try one.coreHamiltonian.adding(f).values).reduce(0.0) { $0+$1.0*$1.1 }
+        guard hf.energyHartree.isFinite, energy.isFinite, abs(energy-hf.energyHartree) < 1e-7 else {
+            throw VivoChemistryError.invalid("RI-RHF physical reference energy")
+        }
+        return energy
+    }
 }
 public enum VivoFactorizedMP2 {
-    /// Occupied-virtual factor panels and a single virtual-pair contraction;
-    /// neither an MO n^4 ERI nor a complete t2 tensor is allocated.
+    /// Only occupied-virtual factor panels and one virtual-pair matrix. Each
+    /// unordered occupied pair is contracted once; off-diagonal pairs count twice.
     public static func solve(_ ref:VivoRIHartreeFockResult,minimumGapHartree:Double=1e-8,budget:VivoChemistryBudget = .init()) throws -> VivoMP2Result {
+        guard minimumGapHartree.isFinite, minimumGapHartree > 0 else { throw VivoChemistryError.invalid("DF-MP2 gap threshold") }
+        let energy = try VivoFactorizedHartreeFock.validateRestricted(ref,budget:budget)
         let hf=ref.scf,one=ref.source.oneElectron,factors=ref.source.factors
-        try one.validate(budget:budget);try factors.validate(budget:budget)
         let n=one.count,o=hf.alphaElectrons,v=n-o,r=factors.rank,c=hf.alphaCoefficients
-        guard hf.reference == .restricted,o==hf.betaElectrons,o>=0,o<=n,o==one.system.alphaElectrons,
-              hf.betaElectrons==one.system.betaElectrons,c.rows==n,c.columns==n,hf.alphaOrbitalEnergies.count==n,
-              hf.alphaOrbitalEnergies.allSatisfy(\.isFinite),minimumGapHartree.isFinite,minimumGapHartree>0,
-              try one.overlap.congruence(c).adding(.identity(n),scale:-1).frobeniusNorm<1e-8 else { throw VivoChemistryError.invalid("DF-MP2 reference") }
-        let d=VivoHartreeFock.density(c,occupied:o),jk=try factors.coulombExchange(density:d,budget:budget)
-        let f=try one.coreHamiltonian.adding(jk.coulomb,scale:2).adding(jk.exchange,scale:-1),fmo=try f.congruence(c)
-        for i in 0..<n { for j in 0..<n {
-            guard abs(fmo[i,j]-(i==j ? hf.alphaOrbitalEnergies[i]:0))<1e-7 else { throw VivoChemistryError.invalid("DF-MP2 canonicality") }
-        } }
-        let energy=one.constantEnergyHartree+zip(d.values,try one.coreHamiltonian.adding(f).values).reduce(0.0) { $0+$1.0*$1.1 }
-        guard hf.energyHartree.isFinite,abs(energy-hf.energyHartree)<1e-7 else { throw VivoChemistryError.invalid("DF-MP2 reference energy") }
-        _ = try budget.elements([max(1,o*v),r],simultaneousArrays:3)
-        _ = try budget.elements([max(1,v),max(1,v)],simultaneousArrays:4)
-        let work=try budget.elements([o,o,v,v,max(1,r)])
-        guard work<=budget.maximumOperatorApplications else { throw VivoChemistryError.resourceLimit("DF-MP2 contraction work") }
-        var ia=VivoQMMatrix(o*v,r)
-        for k in 0..<r { let b=try factors.matrix(k).congruence(c)
-            for i in 0..<o { for a in 0..<v { ia[i*v+a,k]=b[i,o+a] } }
+        if o == 0 || v == 0 { return .init(referenceEnergyHartree:energy,correlationEnergyHartree:0,minimumDenominatorMagnitude:nil) }
+        _ = try budget.elements([o,v,r],simultaneousArrays:3)
+        _ = try budget.elements([v,v],simultaneousArrays:4)
+        _ = try budget.operatorApplications([o,o,v,v,r],label:"DF-MP2 contraction")
+        var occupied=VivoQMMatrix(n,o),virtual=VivoQMMatrix(n,v)
+        for p in 0..<n {
+            for i in 0..<o { occupied[p,i]=c[p,i] }
+            for a in 0..<v { virtual[p,a]=c[p,o+a] }
         }
-        var correlation=0.0,minimum:Double?
-        for i in 0..<o { for j in 0..<o {
+        let ia=try factors.orbitalPairPanel(left:occupied,right:virtual,budget:budget)
+        var correlation=0.0,compensation=0.0,minimum:Double?
+        for i in 0..<o {
             let bi=try VivoQMMatrix(rows:v,columns:r,values:Array(ia.values[(i*v*r)..<((i+1)*v*r)]))
-            let bj=try VivoQMMatrix(rows:v,columns:r,values:Array(ia.values[(j*v*r)..<((j+1)*v*r)]))
-            let pair=try bi.multiplied(by:bj.transposed)
-            for a in 0..<v { for b in 0..<v {
-                let denominator=hf.alphaOrbitalEnergies[i]+hf.alphaOrbitalEnergies[j]-hf.alphaOrbitalEnergies[o+a]-hf.alphaOrbitalEnergies[o+b]
-                guard denominator < -minimumGapHartree else { throw VivoChemistryError.convergence("DF-MP2 small/inverted gap") }
-                minimum=min(minimum ?? .infinity,abs(denominator));correlation+=pair[a,b]*(2*pair[a,b]-pair[b,a])/denominator
-            } }
-        } }
+            for j in 0...i {
+                let bj=try VivoQMMatrix(rows:v,columns:r,values:Array(ia.values[(j*v*r)..<((j+1)*v*r)]))
+                let pair=try bi.multiplied(by:bj.transposed),weight=(i == j ? 1.0 : 2.0)
+                for a in 0..<v { for b in 0..<v {
+                    let denominator=hf.alphaOrbitalEnergies[i]+hf.alphaOrbitalEnergies[j]-hf.alphaOrbitalEnergies[o+a]-hf.alphaOrbitalEnergies[o+b]
+                    guard denominator.isFinite,denominator < -minimumGapHartree else { throw VivoChemistryError.convergence("DF-MP2 small/inverted gap") }
+                    minimum=min(minimum ?? .infinity,abs(denominator))
+                    let term=weight*pair[a,b]*(2*pair[a,b]-pair[b,a])/denominator
+                    let corrected=term-compensation,next=correlation+corrected
+                    compensation=(next-correlation)-corrected;correlation=next
+                } }
+            }
+        }
         guard correlation.isFinite else { throw VivoChemistryError.convergence("DF-MP2 overflow") }
         return .init(referenceEnergyHartree:energy,correlationEnergyHartree:correlation,minimumDenominatorMagnitude:minimum)
     }
