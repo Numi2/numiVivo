@@ -27,6 +27,54 @@ import NumiVivoShaders
         do { try await operation(); Issue.record("Expected an explicit operation rejection") }
         catch { }
     }
+    private func populatedMDSystem() throws -> VivoClassicalSystem {
+        let identity = try VivoCanonicalJSON.fingerprint(Data("populated MD ABI regression".utf8))
+        let particles = (0..<5).map { index in
+            VivoClassicalParticle(index: UInt32(index), atomIndex: UInt32(index),
+                typeIdentifier: "MD-H", massDa: 1, chargeE: 0, sigmaNM: 0.08, epsilonKJPerMol: 0.001)
+        } + [VivoClassicalParticle(index: 5, atomIndex: nil, typeIdentifier: "MD-VS",
+            role: .virtualSite, massDa: 0, chargeE: 0, sigmaNM: 0, epsilonKJPerMol: 0)]
+        return .init(identifier: "populated-md-abi", structureFingerprint: identity, particles: particles,
+            bonds: [
+                .init(a: 0, b: 1, lengthNM: 0.1, forceConstant: 100),
+                .init(a: 1, b: 2, lengthNM: 0.1, forceConstant: 100),
+                .init(a: 2, b: 3, lengthNM: 0.1, forceConstant: 100),
+                .init(a: 3, b: 4, lengthNM: 0.1, forceConstant: 100)
+            ], angles: [
+                .init(a: 0, b: 1, c: 2, angleRadians: .pi / 2, forceConstant: 1),
+                .init(a: 1, b: 2, c: 3, angleRadians: .pi / 2, forceConstant: 1),
+                .init(a: 2, b: 3, c: 4, angleRadians: .pi / 2, forceConstant: 1)
+            ], torsions: [
+                .init(a: 0, b: 1, c: 2, d: 3, periodicity: 1, phaseRadians: 0, barrierKJPerMol: 0.01),
+                .init(a: 1, b: 2, c: 3, d: 4, periodicity: 2, phaseRadians: .pi / 2, barrierKJPerMol: 0.01)
+            ], constraints: [
+                .init(a: 0, b: 1, distanceNM: 0.1),
+                .init(a: 2, b: 3, distanceNM: 0.1)
+            ], linearVirtualSites: [
+                .init(siteParticle: 5, parentParticles: [0, 1], weights: [0.5, 0.5])
+            ], nonbondedExceptions: [
+                .init(a: 0, b: 2, coulombScale: 0.5, lennardJonesScale: 0.5,
+                    sigmaOverrideNM: 0.05, epsilonOverrideKJPerMol: 0.001)
+            ])
+    }
+    private func populatedMDInitial(_ system: VivoClassicalSystem, cell: VivoPeriodicCell? = nil) throws -> VivoClassicalInitialState {
+        .init(systemFingerprint: try system.fingerprint(), positionsNM: [
+            .init(0.10, 0.10, 0.10), .init(0.20, 0.10, 0.10), .init(0.20, 0.20, 0.10),
+            .init(0.20, 0.20, 0.20), .init(0.10, 0.20, 0.20), .init(0.15, 0.10, 0.10)
+        ], periodicCell: cell)
+    }
+    private func mdConfiguration(electrostatics: VivoMDElectrostatics, ensemble: VivoMDEnsemble,
+                                 thermostat: VivoMDThermostat, neighborListEnabled: Bool,
+                                 cell: VivoPeriodicCell? = nil) -> VivoMDConfiguration {
+        .init(timeStepPS: 0.00001, cutoffNM: 0.5, neighborSkinNM: 0.1,
+            electrostatics: electrostatics, pmeTolerance: electrostatics == .pme ? 1e-3 : nil,
+            pmeGridSpacingNM: electrostatics == .pme ? 0.25 : nil, ensemble: ensemble,
+            thermostat: thermostat, targetTemperatureK: thermostat == .none ? nil : 300,
+            frictionPerPS: thermostat == .langevinMiddle ? 1 : nil, barostat: ensemble == .npt ? .monteCarloIsotropic : .none,
+            targetPressureBar: ensemble == .npt ? 1 : nil, barostatInterval: 1,
+            barostatMaximumLogVolumeStep: ensemble == .npt ? 0.001 : nil,
+            neighborListEnabled: neighborListEnabled)
+    }
     @Test func completePipelineCompilation() async throws {
         let device = try device(), catalog = try NumiVivoPipelineCatalog(device: device)
         try await catalog.preloadAll()
@@ -134,5 +182,59 @@ import NumiVivoShaders
         try record(before, "md-harmonic-initial")
         try record(after, "md-harmonic-after100")
         try record(checkpoint, "md-harmonic-checkpoint")
+    }
+    @Test func populatedMDABITablesAndNeighborModesExecuteOnMetal() async throws {
+        let system = try populatedMDSystem(), initial = try populatedMDInitial(system)
+        let directConfiguration = mdConfiguration(electrostatics: .cutoff, ensemble: .nve,
+            thermostat: .none, neighborListEnabled: false)
+        let direct = try await VivoMDMetalRuntime.make(system: system, initialState: initial,
+            configuration: directConfiguration, device: device())
+        #expect(try await direct.step().committed)
+        let directCheckpoint = try await direct.checkpoint()
+        #expect(directCheckpoint.positionsNM.allSatisfy { $0.isFinite })
+
+        let neighborConfiguration = mdConfiguration(electrostatics: .cutoff, ensemble: .nve,
+            thermostat: .none, neighborListEnabled: true)
+        let neighbor = try await VivoMDMetalRuntime.make(system: system, initialState: initial,
+            configuration: neighborConfiguration, device: device())
+        #expect(try await neighbor.step().committed)
+        let neighborCheckpoint = try await neighbor.checkpoint()
+        #expect(neighborCheckpoint.positionsNM.allSatisfy { $0.isFinite })
+    }
+    @Test func NVTAndPMEExecuteOnMetal() async throws {
+        let system = try populatedMDSystem()
+        let nvtConfiguration = mdConfiguration(electrostatics: .reactionField, ensemble: .nvt,
+            thermostat: .langevinMiddle, neighborListEnabled: true)
+        let nvt = try await VivoMDMetalRuntime.make(system: system, initialState: try populatedMDInitial(system),
+            configuration: nvtConfiguration, device: device())
+        let thermalized = try await nvt.thermalize(temperatureK: 300, seed: 0x4e5654)
+        #expect(thermalized.velocitiesNMPerPS.allSatisfy { $0.isFinite })
+        #expect(try await nvt.step().committed)
+
+        let cell = VivoPeriodicCell(a: .init(2, 0, 0), b: .init(0, 2, 0), c: .init(0, 0, 2))
+        let pmeConfiguration = mdConfiguration(electrostatics: .pme, ensemble: .nve,
+            thermostat: .none, neighborListEnabled: true, cell: cell)
+        let pme = try await VivoMDMetalRuntime.make(system: system, initialState: try populatedMDInitial(system, cell: cell),
+            configuration: pmeConfiguration, device: device())
+        #expect(try await pme.step().committed)
+    }
+    @Test func NPTAndMinimizationExecuteOnMetal() async throws {
+        let system = try populatedMDSystem()
+        let cell = VivoPeriodicCell(a: .init(2, 0, 0), b: .init(0, 2, 0), c: .init(0, 0, 2))
+        let nptConfiguration = mdConfiguration(electrostatics: .pme, ensemble: .npt,
+            thermostat: .langevinMiddle, neighborListEnabled: true, cell: cell)
+        let npt = try await VivoMDMetalRuntime.make(system: system, initialState: try populatedMDInitial(system, cell: cell),
+            configuration: nptConfiguration, device: device())
+        let nptStep = try await npt.step()
+        #expect(nptStep.committed)
+        #expect(nptStep.barostat != nil)
+
+        let minimizationConfiguration = mdConfiguration(electrostatics: .cutoff, ensemble: .nve,
+            thermostat: .none, neighborListEnabled: false)
+        let minimization = try await VivoMDMetalRuntime.make(system: system, initialState: try populatedMDInitial(system),
+            configuration: minimizationConfiguration, device: device())
+        let result = try await minimization.minimize(.init(maximumIterations: 8, forceToleranceKJPerMolNM: 1e-4))
+        #expect(result.attemptedIterations > 0)
+        #expect(result.finalPotentialEnergyKJPerMol <= result.initialPotentialEnergyKJPerMol + 1e-8)
     }
 }
