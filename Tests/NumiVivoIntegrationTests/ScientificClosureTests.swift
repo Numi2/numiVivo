@@ -24,8 +24,14 @@ import Testing
         #expect(result.levels.map(\.variationalDimension)==[9,18,27,36,45,54,63])
         #expect(result.levels.allSatisfy { $0.fullSectorDimension==90 && $0.stateSpaceIsReduced })
         #expect(result.levels.suffix(2).allSatisfy { $0.meetsReferenceAccuracy })
+        let successiveTolerance=request.baseline.acceptance.maximumSuccessiveChangeHartree
+        #expect(result.levels.suffix(2).map(\.variationalDimension)==[54,63])
+        #expect(result.levels[2].meetsReferenceAccuracy)
+        #expect(result.levels[3].meetsReferenceAccuracy)
+        #expect((result.levels[2].maximumSuccessiveChangeHartree ?? .infinity)>successiveTolerance)
+        #expect((result.levels[3].maximumSuccessiveChangeHartree ?? .infinity)<=successiveTolerance)
         #expect(result.levels.last!.maximumProfileErrorHartree<1e-7)
-        #expect(result.levels.last!.maximumSuccessiveChangeHartree!<request.baseline.acceptance.maximumSuccessiveChangeHartree)
+        #expect((result.levels.last!.maximumSuccessiveChangeHartree ?? .infinity)<successiveTolerance)
         #expect(result.levels.allSatisfy { $0.points.allSatisfy { $0.state.orbitalCount==6 } })
         #expect(result.hamiltonianOperatorApplications<=request.baseline.budget.maximumOperatorApplications)
         for (a,b) in zip(result.levels,result.levels.dropFirst()) {
