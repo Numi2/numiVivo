@@ -133,8 +133,8 @@ public enum VivoQMMMFreeEnergyArchiveRunner {
                 }
             }
         } else {
-            cursor=.init(schema:VivoQMMMFreeEnergyExecutionCursor.schema,requestFingerprint:requestID,completedWindows:0,
-                         currentWindowProductionSteps:0,currentMDCheckpoint:nil,traces:[],currentCoordinates:[],currentEnergies:[])
+            cursor = .init(schema:VivoQMMMFreeEnergyExecutionCursor.schema,requestFingerprint:requestID,completedWindows:0,
+                           currentWindowProductionSteps:0,currentMDCheckpoint:nil,traces:[],currentCoordinates:[],currentEnergies:[])
         }
         var durable=try await put(cursor,kind:"qmmm-free-energy-execution-checkpoint",store:store)
         func receipt(_ status:VivoQMMMFreeEnergyExecutionStatus,_ result:VivoQMMMActivationFreeEnergyResult?=nil,_ diagnostic:String?=nil)->VivoQMMMFreeEnergyExecutionReceipt {
