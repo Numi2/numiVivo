@@ -19,9 +19,9 @@ struct VivoReactionCLICommands {
     }
     private func read(_ url:URL,limit:Int) throws -> Data {
         let m=try url.resourceValues(forKeys:[.isRegularFileKey,.fileSizeKey])
-        guard m.isRegularFile==true,let size=m.fileSize,size>=0,size<=limit else {throw VivoChemistryError.resourceLimit("reaction input file bound")}
+        guard m.isRegularFile==true,let size=m.fileSize,size>=0,size<=limit else{throw VivoChemistryError.resourceLimit("reaction input file bound")}
         let data=try Data(contentsOf:url,options:.mappedIfSafe)
-        guard data.count<=limit else {throw VivoChemistryError.resourceLimit("reaction input grew past limit")};return data
+        guard data.count<=limit else{throw VivoChemistryError.resourceLimit("reaction input grew past limit")};return data
     }
     private func write(_ data:Data,to url:URL?) throws {
         if let url {try FileManager.default.createDirectory(at:url.deletingLastPathComponent(),withIntermediateDirectories:true);try data.write(to:url,options:.atomic)}
@@ -29,35 +29,35 @@ struct VivoReactionCLICommands {
     }
     func run(arguments:[String]) async -> Int32 {
         do {
-            guard let command=arguments.first,Self.handles(command) else {throw VivoChemistryError.invalid("reaction command")}
+            guard let command=arguments.first,Self.handles(command) else{throw VivoChemistryError.invalid("reaction command")}
             if command=="reaction-help" {
-                guard arguments.count==1 else {throw VivoChemistryError.invalid("reaction-help has no options")}
+                guard arguments.count==1 else{throw VivoChemistryError.invalid("reaction-help has no options")}
                 FileHandle.standardOutput.write(Data(Self.help.utf8));return 0
             }
-            guard arguments.count>=2,!arguments[1].hasPrefix("--") else {throw VivoChemistryError.invalid("reaction template name or request path required")}
+            guard arguments.count>=2,!arguments[1].hasPrefix("--") else{throw VivoChemistryError.invalid("reaction template name or request path required")}
             var options:[String:String]=[:],i=2
             while i<arguments.count {
                 let key=arguments[i]
-                guard ["--output","--store"].contains(key),options[key]==nil,i+1<arguments.count,!arguments[i+1].hasPrefix("--") else {throw VivoChemistryError.invalid("unknown or duplicate reaction option")}
+                guard ["--output","--store"].contains(key),options[key]==nil,i+1<arguments.count,!arguments[i+1].hasPrefix("--") else{throw VivoChemistryError.invalid("unknown or duplicate reaction option")}
                 options[key]=arguments[i+1];i+=2
             }
             let output=options["--output"].map{URL(fileURLWithPath:$0)}
             if command=="reaction-template" {
-                guard options["--store"]==nil else {throw VivoChemistryError.invalid("template does not use an artifact store")}
+                guard options["--store"]==nil else{throw VivoChemistryError.invalid("template does not use an artifact store")}
                 try write(VivoCanonicalJSON.encode(VivoReactionQualificationWorkflow.template(arguments[1])),to:output);return 0
             }
             let source=canonicalPath(URL(fileURLWithPath:arguments[1]))
             let root=canonicalPath(URL(fileURLWithPath:options["--store"] ?? ".numivivo/chemistry-artifacts"))
             if let output {for url in [output,URL(fileURLWithPath:output.path+".receipt.json")] {
                 let target=canonicalPath(url)
-                guard target != source,target != root,!target.path.hasPrefix(root.path+"/") else {throw VivoChemistryError.invalid("reaction output aliases source or artifact store")}
+                guard target != source,target != root,!target.path.hasPrefix(root.path+"/") else{throw VivoChemistryError.invalid("reaction output aliases source or artifact store")}
                 if let a=try? FileManager.default.attributesOfItem(atPath:source.path),let b=try? FileManager.default.attributesOfItem(atPath:target.path),
                    let x=a[.systemFileNumber] as? NSNumber,let y=b[.systemFileNumber] as? NSNumber,
                    let dx=a[.systemNumber] as? NSNumber,let dy=b[.systemNumber] as? NSNumber,x==y,dx==dy {throw VivoChemistryError.invalid("hard-link reaction output alias")}
             }}
             let request=try VivoCanonicalJSON.decode(VivoReactionCalculationRequest.self,from:read(source,limit:256*1024*1024))
             try request.validate()
-            guard let executable=Bundle.main.executableURL else {throw VivoChemistryError.invalid("executing binary identity unavailable")}
+            guard let executable=Bundle.main.executableURL else{throw VivoChemistryError.invalid("executing binary identity unavailable")}
             #if arch(arm64)
             let arch="arm64"
             #elseif arch(x86_64)
@@ -73,32 +73,40 @@ struct VivoReactionCLICommands {
                 inputs:[.init(name:"request",artifact:input.fingerprint,kind:input.kind)],configuration:.object([:]),outputs:operation.outputs,
                 resources:.init(budget:request.budget,maximumInputBytes:request.budget.maximumBytes,maximumOutputBytes:request.budget.maximumBytes))
             let workflow=VivoChemistryWorkflow(store:store),result=try await workflow.run(task,using:operation)
-            guard let artifact=result.outputs.first else {throw VivoChemistryError.invalid("reaction workflow omitted its result")}
+            guard let artifact=result.outputs.first else{throw VivoChemistryError.invalid("reaction workflow omitted its result")}
             try write(await workflow.payload(artifact:artifact.artifact,expectedKind:artifact.kind),to:output)
             if let output {try write(VivoCanonicalJSON.encode(Receipt(request:input.fingerprint,task:result.taskFingerprint,receipt:result.receiptFingerprint,result:artifact.artifact,reused:result.reused)),to:URL(fileURLWithPath:output.path+".receipt.json"))}
-            FileHandle.standardError.write(Data("Reaction calculation stored: \(artifact.artifact.hex), reused=\(result.reused). No kinetic parameter installed.\n".utf8))
+            FileHandle.standardError.write(Data("Reaction calculation stored: \(artifact.artifact.hex), reused=\(result.reused). Rate outputs, when requested, retain their explicit connectivity/thermochemistry/transmission assumptions.\n".utf8))
             return 0
         } catch {FileHandle.standardError.write(Data("Reaction calculation failed: \(error)\n".utf8));return 1}
     }
     private static let help="""
-    Native nuclear and harmonic reaction qualification
+    Native nuclear, embedding and reaction qualification
       numivivo reaction-template h3-saddle --output saddle.json
       numivivo reaction-run saddle.json --output saddle.result.json --store .numivivo/chemistry-artifacts
     Templates: h2-minimum, h3-saddle, h-atom, h2-solvated-path,
                h2-equilibrium-cpcm, h2-equilibrium-minimum, h3-barrier-convergence,
                h3-barrier-convergence-ensemble, h3-residual-barrier, h2-global-embedding,
-               paper-michael-inputs, paper-btk-inputs.
-    Request calculations: qualify, solvatedPath, correlatedSolvent, harmonicBarrier, descent, barrierConvergence.
-    Further calculations: residualBarrier, globalEmbedding, connectivity, reproductionPreflight.
+               h2-ecc-solvent-closure, paper-michael-inputs, paper-btk-inputs.
+    Request calculations: qualify, solvatedPath, correlatedSolvent, harmonicBarrier,
+                          descent, barrierConvergence, residualBarrier, globalEmbedding,
+                          eccSolventClosure, connectivity, transitionStateTheory,
+                          reproductionPreflight.
     residualBarrier measures the actual global variational dimension; all orbital modes
     and complete determinant-sector vectors remain allocated. globalEmbedding closes
     overlapping subspaces with one normalized CI density, not the democratic DMET energy.
+    eccSolventClosure alternates the existing ECC-DMET projector/moment cycle with one
+    N-representable global CI density and smooth C-PCM; the democratic ECC energy remains
+    diagnostic and is not relabeled as the solvent energy functional.
+    transitionStateTheory requires a previously converged mapped connectivity result,
+    reconstructs the RRHO activation Gibbs barrier and records an explicit transmission
+    coefficient/evidence source. An assumed coefficient remains an assumption.
     A completed barrierConvergence report may reject reduced-space accuracy. Inspect its
     assessment and acceptedReducedLevelIdentifier; a stored report is not a certified rate.
     Coordinates: Bohr. Masses: explicit Da. Energies: Hartree. RRHO requires all
     free-molecule vibrational modes resolved and a stationary nuclear gradient.
-    A local first-order saddle is not a demonstrated reaction connection. A
-    harmonic Gibbs barrier estimate does not automatically become a kinetic rate.
+    A local first-order saddle is not a demonstrated reaction connection. A harmonic
+    Eyring/TST rate does not establish tunneling, recrossing or experimental validity.
     solvatedPath preserves the frozen RHF-reference field convention. correlatedSolvent
     instead equilibrates smooth C-PCM with the FCI/CASCI density. The equilibriumFullCI
     nuclear solver re-equilibrates this field at every nuclear displacement.
