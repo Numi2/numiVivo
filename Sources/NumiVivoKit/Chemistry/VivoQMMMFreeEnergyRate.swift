@@ -6,16 +6,16 @@ public enum VivoQMMMRateEnvironment: String, Codable, Sendable {
 }
 
 public struct VivoQMMMFreeEnergyRateRequest: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-free-energy-rate/v1"
+    public static let schema="numivivo.org/qmmm-free-energy-rate/v2"
     public var schema:String
     public var context:VivoKineticContext
     public var environment:VivoQMMMRateEnvironment
-    public var freeEnergy:VivoQMMMActivationFreeEnergyResult
+    public var freeEnergy:VivoQMMMQualifiedActivationFreeEnergy
     public var transmissionProbability:Double
     public var transmissionOrigin:VivoKineticOrigin
     public var transmissionEvidence:VivoKineticEvidence
     public var samplingDescription:String
-    public init(context:VivoKineticContext,environment:VivoQMMMRateEnvironment,freeEnergy:VivoQMMMActivationFreeEnergyResult,
+    public init(context:VivoKineticContext,environment:VivoQMMMRateEnvironment,freeEnergy:VivoQMMMQualifiedActivationFreeEnergy,
                 transmissionProbability:Double=1,transmissionOrigin:VivoKineticOrigin = .assumed,
                 transmissionEvidence:VivoKineticEvidence,samplingDescription:String) {
         schema=Self.schema;self.context=context;self.environment=environment;self.freeEnergy=freeEnergy
@@ -25,7 +25,7 @@ public struct VivoQMMMFreeEnergyRateRequest: Codable, Sendable, Equatable {
 }
 
 public struct VivoQMMMFreeEnergyRateResult: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-free-energy-rate-result/v1"
+    public static let schema="numivivo.org/qmmm-free-energy-rate-result/v2"
     public let schema:String
     public let requestFingerprint:VivoFingerprint
     public let barrier:VivoActivationBarrier
@@ -37,29 +37,33 @@ public struct VivoQMMMFreeEnergyRateResult: Codable, Sendable, Equatable {
     public let limitations:[String]
 }
 
-/// This is the protein/explicit-solution bridge that the local-RRHO prepared-rate
-/// adapter intentionally could not provide. The activation Gibbs free energy is
-/// taken from a converged environment-consistent PMF, not from electrostatic
-/// solvent convergence or an isolated stationary-point difference.
+/// Protein/explicit-solution bridge. The barrier must be a converged PMF bound
+/// to the exact sampled structure, classical system, BO provider and MD profile;
+/// a bare PMF or local stationary-point result is not sufficient.
 public enum VivoQMMMFreeEnergyRate {
     public static func calculate(_ request:VivoQMMMFreeEnergyRateRequest)throws->VivoQMMMFreeEnergyRateResult {
         try request.context.validate();try request.transmissionEvidence.validate(origin:request.transmissionOrigin)
-        try VivoQMMMFreeEnergy.validate(request.freeEnergy)
-        guard request.schema==VivoQMMMFreeEnergyRateRequest.schema,request.freeEnergy.converged,
-              request.context.temperatureK==request.freeEnergy.temperatureK,
+        try request.freeEnergy.validate()
+        let pmf=request.freeEnergy.analysis,provenance=request.freeEnergy.provenance
+        guard request.schema==VivoQMMMFreeEnergyRateRequest.schema,pmf.converged,
+              request.context.temperatureK==pmf.temperatureK,
+              request.context.chemicalState==provenance.chemicalState,
+              request.context.hostContext==provenance.environmentIdentifier,
               request.transmissionProbability.isFinite,request.transmissionProbability>0,request.transmissionProbability<=1,
               !request.samplingDescription.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty,
               request.samplingDescription.utf8.count<=16384 else {
-            throw VivoKineticsError.invalid("QM/MM free-energy rate context, convergence or transmission")
+            throw VivoKineticsError.invalid("QM/MM rate context differs from the qualified PMF or transmission is invalid")
         }
-        let data=try VivoCanonicalJSON.encode(request.freeEnergy),source=try VivoCanonicalJSON.fingerprint(data)
         let environment=request.environment == .proteinEnvironment ? "protein" : "explicit solution"
-        let evidence=VivoKineticEvidence(source:"NumiVivo QM/MM umbrella/MBAR activation free energy",
-            locator:"\(environment) PMF; retained window traces and reconstructible MBAR analysis",
-            sourceFingerprint:source.hex)
+        guard provenance.methodDescription.localizedCaseInsensitiveContains(environment) else {
+            throw VivoKineticsError.invalid("qualified PMF provenance does not identify the requested rate environment")
+        }
+        let evidence=VivoKineticEvidence(source:"NumiVivo qualified QM/MM activation free energy",
+            locator:"\(environment) PMF; exact system/provider/dynamics provenance + retained MBAR traces",
+            sourceFingerprint:request.freeEnergy.evidenceFingerprint.hex)
         let barrier=VivoActivationBarrier(context:request.context,quantity:.activationGibbsFreeEnergy,
-            referenceState:.preReactiveBoundComplex,value:request.freeEnergy.activationFreeEnergyKJPerMol,
-            unit:.kilojoulesPerMol,conditionalStandardDeviation:request.freeEnergy.conditionalStandardDeviationKJPerMol,
+            referenceState:.preReactiveBoundComplex,value:pmf.activationFreeEnergyKJPerMol,
+            unit:.kilojoulesPerMol,conditionalStandardDeviation:pmf.conditionalStandardDeviationKJPerMol,
             method:"periodic QM/MM conservative umbrella sampling + unbinned MBAR",
             samplingDescription:request.samplingDescription,origin:.calculated,evidence:evidence)
         let rateRequest=VivoTransitionStateRateRequest(barrier:barrier,transmissionProbability:request.transmissionProbability,
