@@ -68,7 +68,7 @@ import Testing
         try #require(result.converged)
         #expect(result.trials.count == 4)
         #expect(result.comparisons.count == 12)
-        #expect(result.comparisons.allSatisfy(\.passed))
+        #expect(result.comparisons.allSatisfy { $0.passed })
         #expect(result.trials.allSatisfy {
             $0.reverseAssignment.endpointIdentifier != $0.forwardAssignment.endpointIdentifier
         })

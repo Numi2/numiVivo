@@ -31,11 +31,22 @@ public enum VivoNuclearDescent {
     /// gradient at separated fragments is not a single-molecule minimum.
     public static func trace(_ saddle:VivoNuclearQualifiedPoint,configuration cfg:VivoNuclearDescentConfiguration = .init()) throws -> VivoNuclearDescentResult {
         try VivoNuclearQualification.validate(saddle,request:saddle.request)
+        return try traceValidated(saddle, configuration: cfg,
+                                  maximumEnergyEvaluations: saddle.request.differences.maximumEnergyEvaluations)
+    }
+    static func traceValidated(_ saddle:VivoNuclearQualifiedPoint, configuration cfg:VivoNuclearDescentConfiguration,
+                               maximumEnergyEvaluations: Int) throws -> VivoNuclearDescentResult {
         guard saddle.request.kind == .firstOrderSaddle,
               [cfg.initialDisplacementMassWeighted,cfg.stepMassWeighted,cfg.endpointMaximumGradient].allSatisfy({$0.isFinite && $0>0}),
-              cfg.stepMassWeighted<=1,(1...10000).contains(cfg.maximumStepsPerDirection) else {throw VivoChemistryError.invalid("nuclear descent contract")}
+              cfg.stepMassWeighted<=1,(1...10000).contains(cfg.maximumStepsPerDirection),
+              (1...40000000).contains(maximumEnergyEvaluations) else {throw VivoChemistryError.invalid("nuclear descent contract")}
         let mass=saddle.request.massesDa,n=3*mass.count
-        let surface=try VivoNuclearElectronicSurface(model:saddle.request.model,differences:saddle.request.differences)
+        // Nuclear difference configuration caps one surface at ten million
+        // evaluations. Connectivity supplies the remaining aggregate budget;
+        // the surface cap remains an independent guard for one descent.
+        var differences=saddle.request.differences
+        differences.maximumEnergyEvaluations=min(maximumEnergyEvaluations,10_000_000)
+        let surface=try VivoNuclearElectronicSurface(model:saddle.request.model,differences:differences)
         // Reconstruct eigenvectors; a decoded vector/sign is not numerical authority.
         let center=try surface.gradient(saddle.finalPositionsBohr)
         let modes=try VivoNormalModes.analyze(positions:saddle.finalPositionsBohr,masses:mass,evaluation:center,
@@ -52,22 +63,50 @@ public enum VivoNuclearDescent {
             var x=positions
             for i in 0..<n {x[i/3][i%3]+=scale*vector[i]/sqrt(mass[i/3])};return x
         }
+        func massDistance(_ first:[SIMD3<Double>],_ second:[SIMD3<Double>])->Double {
+            sqrt(zip(first,second).enumerated().reduce(0.0) { total,pair in
+                let delta=pair.1.1-pair.1.0
+                return total+mass[pair.0]*vivoQMDot(delta,delta)
+            })
+        }
         func branch(_ sign:Double) throws -> ([VivoNuclearDescentPoint],Bool) {
             let mode=(0..<n).map{modes.massWeightedModes[$0,negative]}
             var positions=shifted(saddle.finalPositionsBohr,mode,sign*cfg.initialDisplacementMassWeighted)
             var value=try surface.gradient(positions),arc=cfg.initialDisplacementMassWeighted,history:[VivoNuclearDescentPoint]=[]
+            var integrationStep=cfg.stepMassWeighted
             guard value.energyHartree<saddle.thermochemistry.electronicEnergyHartree else {throw VivoChemistryError.convergence("initial unstable-mode displacement is not downhill")}
             for _ in 0..<cfg.maximumStepsPerDirection {
                 let maximum=value.gradientHartreePerBohr.flatMap{[$0.x,$0.y,$0.z]}.map(abs).max()!
                 history.append(.init(positionsBohr:positions,energyHartree:value.energyHartree,maximumGradient:maximum,arcMassWeighted:sign*arc))
                 if maximum<=cfg.endpointMaximumGradient {return (history,true)}
                 let tangent=try direction(value)
-                var step=cfg.stepMassWeighted,accepted=false
+                var step=integrationStep,accepted=false
                 for _ in 0..<20 {
-                    let midpoint=try surface.gradient(shifted(positions,tangent,step/2)),middle=try direction(midpoint)
-                    let next=shifted(positions,middle,step),trial=try surface.gradient(next)
+                    // Heun's explicit trapezoidal update uses the current
+                    // mass-weighted tangent and a predictor tangent.  It keeps
+                    // the real electronic gradient at the accepted point while
+                    // reducing path error for the independent step-size trial.
+                    let predictor=try surface.gradient(shifted(positions,tangent,step))
+                    let predictedTangent=try direction(predictor)
+                    var correctedTangent=[Double](repeating: 0, count: n)
+                    for index in 0..<n {
+                        correctedTangent[index]=0.5 * (tangent[index] + predictedTangent[index])
+                    }
+                    let next=shifted(positions,correctedTangent,step)
+                    // Heun predictor/corrector separation is a local path
+                    // error estimate.  Reject a requested step when its
+                    // physical mass-weighted error exceeds 1e-4 bohr and
+                    // retry at half the step; this makes the two declared
+                    // step-size trials genuinely adaptive rather than merely
+                    // changing the output sampling.
+                    guard massDistance(shifted(positions,tangent,step),next) <= 1e-4 else {
+                        step*=0.5
+                        continue
+                    }
+                    let trial=try surface.gradient(next)
                     if trial.energyHartree<value.energyHartree {
-                        positions=next;value=trial;arc+=step;accepted=true;break
+                        let actualStep=massDistance(positions,next)
+                        positions=next;value=trial;arc+=actualStep;integrationStep=step;accepted=true;break
                     }
                     step*=0.5
                 }

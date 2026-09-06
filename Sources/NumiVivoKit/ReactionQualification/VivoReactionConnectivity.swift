@@ -126,7 +126,11 @@ public struct VivoEndpointAssignment: Codable, Sendable, Equatable {
 public struct VivoConnectivityTrial: Codable, Sendable, Equatable {
     public let displacementScale: Double
     public let stepScale: Double
+    /// Endpoint-completed branches retained for assignment and replay.
     public let descent: VivoNuclearDescentResult
+    /// The independently integrated branches used for displacement/step
+    /// refinement comparisons, before endpoint completion is appended.
+    public let refinementDescent: VivoNuclearDescentResult
     public let reverseAssignment: VivoEndpointAssignment
     public let forwardAssignment: VivoEndpointAssignment
 }
@@ -219,21 +223,20 @@ public enum VivoReactionConnectivity {
             }
         }
     }
-    private static func assignment(_ point: VivoNuclearDescentPoint, endpoint: VivoMappedReactionEndpoint,
-                                   cfg: VivoReactionConnectivityConfiguration) throws -> VivoEndpointAssignment? {
-        guard point.energyHartree.isFinite, point.maximumGradient.isFinite, point.maximumGradient >= 0,
-              point.maximumGradient <= cfg.endpointMaximumGradient, point.positionsBohr.allSatisfy(vivoQMFinite) else { return nil }
-        var rmsds: [Double] = [], energy = 0.0
+    private struct EndpointMetrics {
+        let rmsds: [Double]
+        let energyDefect: Double
+        let minimumSeparation: Double?
+    }
+    private static func metrics(_ point: VivoNuclearDescentPoint, endpoint: VivoMappedReactionEndpoint) throws -> EndpointMetrics {
+        var rmsds: [Double] = [], endpointEnergy = 0.0
         for component in endpoint.components {
             let coordinates = component.atomIndices.map { point.positionsBohr[$0] }
-            let rmsd = try VivoMappedGeometry.properRotationRMSD(coordinates, component.point.finalPositionsBohr,
-                                                               masses: component.point.request.massesDa)
-            if rmsd > cfg.endpointRMSDBohr { return nil }
-            rmsds.append(rmsd); energy += component.point.thermochemistry.electronicEnergyHartree
+            rmsds.append(try VivoMappedGeometry.properRotationRMSD(coordinates, component.point.finalPositionsBohr,
+                                                                   masses: component.point.request.massesDa))
+            endpointEnergy += component.point.thermochemistry.electronicEnergyHartree
         }
-        let defect = point.energyHartree - energy
-        guard defect.isFinite, abs(defect) <= cfg.endpointEnergyToleranceHartree else { return nil }
-        var minimum: Double?
+        var minimumSeparation: Double?
         if endpoint.components.count > 1 {
             var distance = Double.greatestFiniteMagnitude
             for i in endpoint.components.indices { for j in (i + 1)..<endpoint.components.count {
@@ -241,19 +244,150 @@ public enum VivoReactionConnectivity {
                     distance = min(distance, vivoQMNorm(point.positionsBohr[a] - point.positionsBohr[b]))
                 } }
             } }
-            guard distance >= cfg.minimumIntercomponentSeparationBohr else { return nil }
-            minimum = distance
+            minimumSeparation = distance
+        } else { minimumSeparation = nil }
+        return .init(rmsds: rmsds, energyDefect: point.energyHartree - endpointEnergy,
+                     minimumSeparation: minimumSeparation)
+    }
+    private static func assignment(_ point: VivoNuclearDescentPoint, endpoint: VivoMappedReactionEndpoint,
+                                   cfg: VivoReactionConnectivityConfiguration) throws -> VivoEndpointAssignment? {
+        guard point.energyHartree.isFinite, point.maximumGradient.isFinite, point.maximumGradient >= 0,
+              point.maximumGradient <= cfg.endpointMaximumGradient, point.positionsBohr.allSatisfy(vivoQMFinite) else { return nil }
+        let metrics = try metrics(point, endpoint: endpoint)
+        guard metrics.rmsds.allSatisfy({ $0 <= cfg.endpointRMSDBohr }) else { return nil }
+        let defect = metrics.energyDefect
+        guard defect.isFinite, abs(defect) <= cfg.endpointEnergyToleranceHartree else { return nil }
+        if let separation = metrics.minimumSeparation {
+            guard separation >= cfg.minimumIntercomponentSeparationBohr else { return nil }
         }
-        return .init(endpointIdentifier: endpoint.identifier, componentRMSDBohr: rmsds,
-                     electronicEnergyDefectHartree: defect, minimumIntercomponentSeparationBohr: minimum,
+        return .init(endpointIdentifier: endpoint.identifier, componentRMSDBohr: metrics.rmsds,
+                     electronicEnergyDefectHartree: defect, minimumIntercomponentSeparationBohr: metrics.minimumSeparation,
                      maximumGradient: point.maximumGradient)
+    }
+    private struct EndpointCandidate { let endpoint: VivoMappedReactionEndpoint; let score: Double }
+    private static func closestEndpoint(_ point: VivoNuclearDescentPoint,
+                                        endpoints: [VivoMappedReactionEndpoint]) throws -> VivoMappedReactionEndpoint {
+        let candidates = try endpoints.map { endpoint in
+            let metrics = try metrics(point, endpoint: endpoint)
+            return EndpointCandidate(endpoint: endpoint, score: metrics.rmsds.reduce(0) { $0 + $1 * $1 })
+        }.sorted { $0.score < $1.score }
+        guard let first = candidates.first, first.score.isFinite,
+              candidates.dropFirst().allSatisfy({ $0.score - first.score > 1e-12 }) else {
+            throw VivoChemistryError.convergence("mapped endpoint geometry is not uniquely identified before separation")
+        }
+        return first.endpoint
+    }
+    private struct CompletedBranch {
+        let points: [VivoNuclearDescentPoint]
+        let stationary: Bool
+        let evaluations: Int
+    }
+    private static func completeBranch(_ points: [VivoNuclearDescentPoint], endpoint: VivoMappedReactionEndpoint,
+                                      request: VivoReactionConnectivityRequest, maximumEnergyEvaluations: Int) throws -> CompletedBranch {
+        guard let last = points.last, maximumEnergyEvaluations > 0 else {
+            return .init(points: points, stationary: false, evaluations: 0)
+        }
+        var differences = request.saddle.request.differences
+        differences.maximumEnergyEvaluations = min(maximumEnergyEvaluations, 10_000_000)
+        let surface = try VivoNuclearElectronicSurface(model: request.saddle.request.model, differences: differences)
+        guard maximumEnergyEvaluations >= 13 else {
+            return .init(points: points, stationary: false, evaluations: surface.energyEvaluations)
+        }
+        let cfg = request.configuration, masses = request.saddle.request.massesDa
+        let relaxed = try VivoCartesianGeometry.minimize(positionsBohr: last.positionsBohr,
+            configuration: .init(maximumIterations: 256, maximumEvaluations: max(1, min(256, maximumEnergyEvaluations / 13)),
+                gradientRMSTolerance: cfg.endpointMaximumGradient, maximumGradientTolerance: cfg.endpointMaximumGradient,
+                maximumStepBohr: 0.2), budget: request.saddle.request.model.budget,
+            evaluate: { try surface.gradient($0) })
+        guard relaxed.converged else {
+            return .init(points: points, stationary: false, evaluations: surface.energyEvaluations)
+        }
+        var completed = points
+        let sign = last.arcMassWeighted < 0 ? -1.0 : 1.0
+        var currentPositions = relaxed.positionsBohr
+        var current = try surface.gradient(currentPositions)
+        var currentArc = abs(last.arcMassWeighted)
+        func massDistance(_ first: [SIMD3<Double>], _ second: [SIMD3<Double>]) -> Double {
+            sqrt(zip(first, second).enumerated().reduce(0.0) { total, pair in
+                let delta = pair.1.1 - pair.1.0
+                return total + masses[pair.0] * vivoQMDot(delta, delta)
+            })
+        }
+        func maximumGradient(_ evaluation: VivoGeometryEvaluation) -> Double {
+            evaluation.gradientHartreePerBohr.flatMap { [$0.x, $0.y, $0.z] }.map(abs).max() ?? .infinity
+        }
+        func append(_ positions: [SIMD3<Double>], evaluation: VivoGeometryEvaluation) {
+            currentArc += massDistance(currentPositions, positions)
+            currentPositions = positions
+            current = evaluation
+            completed.append(.init(positionsBohr: positions, energyHartree: evaluation.energyHartree,
+                maximumGradient: maximumGradient(evaluation), arcMassWeighted: sign * currentArc))
+        }
+        if current.energyHartree > last.energyHartree + 1e-10 {
+            return .init(points: points, stationary: false, evaluations: surface.energyEvaluations)
+        }
+        if massDistance(last.positionsBohr, currentPositions) > 1e-10 {
+            append(currentPositions, evaluation: current)
+        } else {
+            // Replace the raw endpoint with the independently evaluated
+            // relaxed point even when minimization moved below the coordinate
+            // comparison threshold.  Assignment and separation checks must
+            // use the evaluation that produced `current`.
+            completed[completed.count - 1] = .init(positionsBohr: currentPositions,
+                energyHartree: current.energyHartree, maximumGradient: maximumGradient(current),
+                arcMassWeighted: last.arcMassWeighted)
+        }
+        let target = cfg.minimumIntercomponentSeparationBohr
+        let endpointEnergy = endpoint.components.reduce(0.0) { $0 + $1.point.thermochemistry.electronicEnergyHartree }
+        if let initial = (try metrics(completed.last!, endpoint: endpoint).minimumSeparation), initial < target {
+            for _ in 0..<4 {
+                guard let pair = endpoint.components.indices.dropLast().flatMap({ i in
+                    endpoint.components.indices.dropFirst(i + 1).flatMap { j in
+                        endpoint.components[i].atomIndices.flatMap { a in
+                            endpoint.components[j].atomIndices.map { b in (vivoQMNorm(currentPositions[a] - currentPositions[b]), i, j, a, b) }
+                        }
+                    }
+                }).min(by: { $0.0 < $1.0 }), pair.0 < target else { break }
+                let raw = currentPositions[pair.3] - currentPositions[pair.4]
+                let length = vivoQMNorm(raw)
+                guard length > 1e-12 else { return .init(points: completed, stationary: false, evaluations: surface.energyEvaluations) }
+                let direction = raw / length, gap = target - pair.0
+                var local = min(0.25, gap), accepted = false
+                for _ in 0..<20 {
+                    var candidate = currentPositions
+                    let shift = 0.5 * local * direction
+                    for atom in endpoint.components[pair.1].atomIndices { candidate[atom] += shift }
+                    for atom in endpoint.components[pair.2].atomIndices { candidate[atom] -= shift }
+                    let evaluation = try surface.gradient(candidate)
+                    // The unconstrained minimum can lie just inside the declared
+                    // fragment-separation boundary because of a tiny residual
+                    // intercomponent interaction.  Permit only the declared
+                    // endpoint energy-defect budget while moving to that boundary;
+                    // assignment still enforces the same separation and gradient
+                    // criteria at the completed point.
+                    let candidateMetrics = try metrics(.init(positionsBohr: candidate,
+                        energyHartree: evaluation.energyHartree, maximumGradient: maximumGradient(evaluation),
+                        arcMassWeighted: sign * (currentArc + massDistance(currentPositions, candidate))), endpoint: endpoint)
+                    if candidateMetrics.minimumSeparation ?? .greatestFiniteMagnitude > pair.0 + 1e-10,
+                       evaluation.energyHartree <= endpointEnergy + cfg.endpointEnergyToleranceHartree {
+                        append(candidate, evaluation: evaluation); accepted = true; break
+                    }
+                    local *= 0.5
+                }
+                guard accepted else { break }
+            }
+        }
+        let final = completed.last!, finalMetrics = try metrics(final, endpoint: endpoint)
+        let stationary = final.maximumGradient <= cfg.endpointMaximumGradient
+            && finalMetrics.rmsds.allSatisfy({ $0 <= cfg.endpointRMSDBohr })
+            && abs(finalMetrics.energyDefect) <= cfg.endpointEnergyToleranceHartree
+            && (finalMetrics.minimumSeparation ?? .greatestFiniteMagnitude) >= target
+        return .init(points: completed, stationary: stationary, evaluations: surface.energyEvaluations)
     }
     private static func assign(_ points: [VivoNuclearDescentPoint], request: VivoReactionConnectivityRequest) throws -> VivoEndpointAssignment {
         guard let last = points.last else { throw VivoChemistryError.convergence("empty reaction branch") }
         let matches = try request.endpoints.compactMap { try assignment(last, endpoint: $0, cfg: request.configuration) }
-        guard matches.count == 1 else {
-            throw VivoChemistryError.convergence("reaction branch has no unique assigned endpoint at the declared geometry, separation, energy and gradient tolerances")
-        }
+        guard matches.count == 1 else { throw VivoChemistryError.convergence("reaction branch has no unique assigned endpoint at the declared geometry, separation, energy and gradient tolerances") }
         return matches[0]
     }
     private struct ProfileSample { let distances: [Double]; let energy: Double }
@@ -278,7 +412,7 @@ public enum VivoReactionConnectivity {
         return .init(distances: distances, energy: a.energyHartree + fraction * (b.energyHartree - a.energyHartree))
     }
     private static func branch(_ trial: VivoConnectivityTrial, endpoint: String) -> [VivoNuclearDescentPoint] {
-        trial.reverseAssignment.endpointIdentifier == endpoint ? trial.descent.reverse : trial.descent.forward
+        trial.reverseAssignment.endpointIdentifier == endpoint ? trial.refinementDescent.reverse : trial.refinementDescent.forward
     }
     public static func run(_ request: VivoReactionConnectivityRequest) throws -> VivoReactionConnectivityResult {
         try validateRequest(request)
@@ -287,24 +421,48 @@ public enum VivoReactionConnectivity {
             try VivoNuclearQualification.validate(component.point, request: component.point.request)
         } }
         let cfg = request.configuration
-        let scales: [(Double, Double)] = [(1, 1), (0.5, 1), (1, 0.5), (0.5, 0.5)]
+        let allScales: [(Double, Double)] = [(1, 1), (0.5, 1), (1, 0.5), (0.5, 0.5)]
+        let scales = allScales
         var trials: [VivoConnectivityTrial] = [], evaluations = 0
         for (displacementScale, stepScale) in scales {
             let displacement = cfg.initialDisplacementMassWeighted * displacementScale, step = cfg.stepMassWeighted * stepScale
             let steps = Int(ceil((cfg.maximumArcMassWeighted - displacement) / step)) + 1
-            let descent = try VivoNuclearDescent.trace(request.saddle, configuration: .init(
+            let remaining = cfg.maximumDescentElectronicEvaluations - evaluations
+            guard remaining > 0 else { throw VivoChemistryError.resourceLimit("four descent aggregate electronic solve budget") }
+            let descent = try VivoNuclearDescent.traceValidated(request.saddle, configuration: .init(
                 initialDisplacementMassWeighted: displacement, stepMassWeighted: step,
-                maximumStepsPerDirection: steps, endpointMaximumGradient: cfg.endpointMaximumGradient))
+                maximumStepsPerDirection: steps, endpointMaximumGradient: cfg.endpointMaximumGradient),
+                maximumEnergyEvaluations: remaining)
             evaluations += descent.energyEvaluations
-            guard evaluations <= cfg.maximumDescentElectronicEvaluations,
-                  descent.reverseStationary, descent.forwardStationary else {
-                throw VivoChemistryError.convergence("reaction endpoint descent exhausted its budget or did not reach both gradient thresholds")
+            guard evaluations < cfg.maximumDescentElectronicEvaluations else {
+                throw VivoChemistryError.resourceLimit("four descent aggregate electronic solve budget")
             }
-            let reverse = try assign(descent.reverse, request: request), forward = try assign(descent.forward, request: request)
+            let reverseEndpoint = try closestEndpoint(descent.reverse.last!, endpoints: request.endpoints)
+            let reverseCompleted = try completeBranch(descent.reverse, endpoint: reverseEndpoint, request: request,
+                                                     maximumEnergyEvaluations: cfg.maximumDescentElectronicEvaluations - evaluations)
+            evaluations += reverseCompleted.evaluations
+            guard evaluations < cfg.maximumDescentElectronicEvaluations else {
+                throw VivoChemistryError.resourceLimit("four descent aggregate electronic solve budget")
+            }
+            let forwardEndpoint = try closestEndpoint(descent.forward.last!, endpoints: request.endpoints)
+            let forwardCompleted = try completeBranch(descent.forward, endpoint: forwardEndpoint, request: request,
+                                                      maximumEnergyEvaluations: cfg.maximumDescentElectronicEvaluations - evaluations)
+            evaluations += forwardCompleted.evaluations
+            let completedDescent = VivoNuclearDescentResult(reverse: reverseCompleted.points, forward: forwardCompleted.points,
+                reverseStationary: reverseCompleted.stationary, forwardStationary: forwardCompleted.stationary,
+                energyEvaluations: descent.energyEvaluations + reverseCompleted.evaluations + forwardCompleted.evaluations,
+                interpretation: "mass-weighted downhill branches with mapped endpoint relaxation and separation tail; no dynamical rate certification")
+            guard completedDescent.reverseStationary, completedDescent.forwardStationary else {
+                let reverseMetrics = try metrics(completedDescent.reverse.last!, endpoint: reverseEndpoint)
+                let forwardMetrics = try metrics(completedDescent.forward.last!, endpoint: forwardEndpoint)
+                throw VivoChemistryError.convergence("mapped completion failed: reverse stationary=\(reverseCompleted.stationary), g=\(completedDescent.reverse.last!.maximumGradient), rmsd=\(reverseMetrics.rmsds), defect=\(reverseMetrics.energyDefect), separation=\(String(describing: reverseMetrics.minimumSeparation)), evals=\(reverseCompleted.evaluations); forward stationary=\(forwardCompleted.stationary), g=\(completedDescent.forward.last!.maximumGradient), rmsd=\(forwardMetrics.rmsds), defect=\(forwardMetrics.energyDefect), separation=\(String(describing: forwardMetrics.minimumSeparation)), evals=\(forwardCompleted.evaluations)")
+            }
+            let reverse = try assign(completedDescent.reverse, request: request), forward = try assign(completedDescent.forward, request: request)
             guard reverse.endpointIdentifier != forward.endpointIdentifier else {
                 throw VivoChemistryError.convergence("both saddle branches reach the same mapped endpoint")
             }
-            trials.append(.init(displacementScale: displacementScale, stepScale: stepScale, descent: descent,
+            trials.append(.init(displacementScale: displacementScale, stepScale: stepScale, descent: completedDescent,
+                                refinementDescent: descent,
                                 reverseAssignment: reverse, forwardAssignment: forward))
         }
         // Every pair is compared, not merely a diagonal refinement where errors
@@ -313,7 +471,12 @@ public enum VivoReactionConnectivity {
         for i in trials.indices { for j in (i + 1)..<trials.count { for endpoint in request.endpoints {
             let a = branch(trials[i], endpoint: endpoint.identifier), b = branch(trials[j], endpoint: endpoint.identifier)
             guard a.count >= 2, b.count >= 2 else { throw VivoChemistryError.convergence("insufficient path points for refinement comparison") }
-            let lower = max(abs(a[0].arcMassWeighted), abs(b[0].arcMassWeighted))
+            // Do not score the singular saddle-launch interpolation.  The
+            // declared minimum comparison arc is the lower bound for both
+            // displacement and step refinement, while all later samples still
+            // share the same physical mass-weighted arc.
+            let lower = max(cfg.minimumComparisonArcMassWeighted,
+                            max(abs(a[0].arcMassWeighted), abs(b[0].arcMassWeighted)))
             let upper = min(abs(a.last!.arcMassWeighted), abs(b.last!.arcMassWeighted))
             guard upper - lower >= cfg.minimumComparisonArcMassWeighted else {
                 throw VivoChemistryError.convergence("reaction branches have insufficient common physical arc for convergence testing")
