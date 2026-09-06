@@ -26,6 +26,7 @@ public struct VivoMDQMMMPreparedFrame: Codable, Sendable, Equatable {
               cluster.atomToParticle == topology.atomToParticle,
               cluster.moleculeAtomIndices == topology.molecules,
               cluster.linearVirtualSites == topology.sites,
+              cluster.virtualSiteDefinitions == system.virtualSiteDefinitions,
               cluster.particlePositionsNM.count == system.particles.count,
               cluster.particleImages.count == system.particles.count,
               request.coordinatesAreUnwrappedFiniteCluster else {
@@ -36,7 +37,7 @@ public struct VivoMDQMMMPreparedFrame: Codable, Sendable, Equatable {
               request.qmAtomIndices.contains(cluster.anchorAtomIndex), cluster.imagePairEvaluations >= 0 else {
             throw VivoChemistryError.invalid("MD/QM/MM source cell or anchor")
         }
-        let siteByParticle = Dictionary(uniqueKeysWithValues: topology.sites.map { ($0.siteParticle, $0) })
+        let siteParents = Dictionary(uniqueKeysWithValues: zip(topology.siteGraph.sites,topology.siteGraph.physicalAncestors).map { ($0.0.siteParticle,$0.1[0]) })
         for (i, image) in cluster.particleImages.enumerated() {
             guard image.particleIndex == UInt32(i), image.structureAtomIndex == topology.particleToAtom[i] else {
                 throw VivoChemistryError.invalid("MD/QM/MM particle identity changed")
@@ -48,8 +49,8 @@ public struct VivoMDQMMMPreparedFrame: Codable, Sendable, Equatable {
                     throw VivoChemistryError.invalid("MD/QM/MM physical image mapping")
                 }
             } else {
-                guard image.latticeImage == nil, let site = siteByParticle[UInt32(i)],
-                      let parent = topology.particleToAtom[Int(site.parentParticles[0])],
+                guard image.latticeImage == nil, let ancestor = siteParents[UInt32(i)],
+                      let parent = topology.particleToAtom[Int(ancestor)],
                       image.moleculeIndex == topology.atomMolecule[Int(parent)] else {
                     throw VivoChemistryError.invalid("MD/QM/MM virtual-site image mapping")
                 }

@@ -98,7 +98,7 @@ public struct VivoQMMMHamiltonianPlan: Codable, Sendable, Equatable {
             throw VivoChemistryError.unsupported("periodic QM/MM v1 requires an explicitly neutral prepared cell")
         }
         var qm = Set(selected.map { topology.atomToParticle[Int($0)] })
-        for site in topology.sites {
+        for site in topology.siteGraph.sites {
             let owned = site.parentParticles.filter { qm.contains($0) }.count
             guard owned == 0 || owned == site.parentParticles.count else {
                 throw VivoChemistryError.unsupported("dependent site crosses the QM/MM ownership boundary")
@@ -125,7 +125,7 @@ public struct VivoQMMMHamiltonianPlan: Codable, Sendable, Equatable {
            system.constraints.contains(where: { qm.contains($0.a) || qm.contains($0.b) }) {
             throw VivoChemistryError.unsupported("QM constraints require explicit preserveExplicitManifold policy")
         }
-        for site in topology.sites where site.parentParticles.contains(where: { boundary.contains($0) }) {
+        for ancestors in topology.siteGraph.physicalAncestors where ancestors.contains(where: { boundary.contains($0) }) {
             throw VivoChemistryError.unsupported("boundary atom with a dependent charge site needs a parameterized boundary-site model")
         }
         func owner(_ particles: [UInt32], threshold: Int) -> VivoQMMMTermOwner {

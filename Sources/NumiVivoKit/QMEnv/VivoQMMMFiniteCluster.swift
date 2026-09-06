@@ -45,6 +45,7 @@ public struct VivoQMMMFiniteCluster: Codable, Sendable, Equatable {
     public let particleImages: [VivoQMMMParticleImage]
     public let moleculeAtomIndices: [[UInt32]]
     public let linearVirtualSites: [VivoLinearVirtualSite]
+    public let virtualSiteDefinitions: [VivoDependentSite]?
     public let imagePairEvaluations: Int
 
     public func fingerprint() throws -> VivoFingerprint {
@@ -61,6 +62,7 @@ struct VivoQMMMTopology {
     let molecules: [[UInt32]]
     let atomMolecule: [Int]
     let sites: [VivoLinearVirtualSite]
+    let siteGraph: VivoVirtualSiteGraph
 
     init(document: VivoMolecularStructureDocument, system: VivoClassicalSystem) throws {
         try document.validate()
@@ -85,9 +87,7 @@ struct VivoQMMMTopology {
         }
         guard map.allSatisfy({ $0 >= 0 }) else { throw VivoChemistryError.invalid("QM/MM unmapped physical atom") }
         let rules = (system.linearVirtualSites ?? []).sorted { $0.siteParticle < $1.siteParticle }
-        guard Set(rules.map(\.siteParticle)) == Set(system.particles.filter { $0.role == .virtualSite }.map(\.index)) else {
-            throw VivoChemistryError.invalid("QM/MM requires a construction rule for every virtual site")
-        }
+        let siteGraph = try system.resolvedVirtualSiteGraph()
         var edges = [Set<Int>](repeating: [], count: n)
         func joinAtoms(_ a: Int, _ b: Int) {
             edges[a].insert(b); edges[b].insert(a)
@@ -103,10 +103,8 @@ struct VivoQMMMTopology {
         for constraint in system.constraints { try joinParticles(constraint.a, constraint.b) }
         // Construction dependencies keep all parents and their site in one image.
         // They do not invent chemical bonds or authorize a link-atom cut.
-        for site in rules {
-            for parent in site.parentParticles.dropFirst() {
-                try joinParticles(site.parentParticles[0], parent)
-            }
+        for parents in siteGraph.physicalAncestors {
+            for parent in parents.dropFirst() { try joinParticles(parents[0], parent) }
         }
         let graph = edges.map { $0.sorted() }
         var membership = [Int](repeating: -1, count: n), groups: [[UInt32]] = []
@@ -123,18 +121,11 @@ struct VivoQMMMTopology {
             groups.append(queue.sorted().map(UInt32.init))
         }
         atomToParticle = map.map(UInt32.init); particleToAtom = reverse
-        adjacency = graph; molecules = groups; atomMolecule = membership; sites = rules
+        adjacency = graph; molecules = groups; atomMolecule = membership; sites = rules; self.siteGraph = siteGraph
     }
 
     func rebuildVirtualSites(_ positions: inout [VivoVector3D]) throws {
-        for site in sites {
-            var p = VivoVector3D.zero
-            for (parent, weight) in zip(site.parentParticles, site.weights) {
-                p = p + positions[Int(parent)] * weight
-            }
-            guard p.isFinite else { throw VivoChemistryError.invalid("virtual-site reconstruction overflow") }
-            positions[Int(site.siteParticle)] = p
-        }
+        positions = try siteGraph.construct(positionsNM: positions).positionsNM
     }
 }
 
@@ -192,12 +183,9 @@ public enum VivoQMMMClusterBuilder {
         }
         // Validate sampled virtual sites modulo the current cell, using unwrapped
         // parents. Wrapped-parent averaging is never used as a construction rule.
-        for site in topology.sites {
-            var expected = VivoVector3D.zero
-            for (parent, weight) in zip(site.parentParticles, site.weights) {
-                expected = expected + positions[Int(parent)] * weight
-            }
-            let residual = try image(source[Int(site.siteParticle)] - expected)
+        let siteState = try topology.siteGraph.construct(positionsNM: positions)
+        for site in topology.siteGraph.sites {
+            let residual = try image(source[Int(site.siteParticle)] - siteState.positionsNM[Int(site.siteParticle)])
             guard residual.norm <= cfg.virtualSiteToleranceNM else {
                 throw VivoChemistryError.invalid("stale or inconsistent sampled virtual site \(site.siteParticle)")
             }
@@ -259,14 +247,14 @@ public enum VivoQMMMClusterBuilder {
             }
             return integers
         }
-        let sites = Dictionary(uniqueKeysWithValues: topology.sites.map { ($0.siteParticle, $0) })
+        let siteParents = Dictionary(uniqueKeysWithValues: zip(topology.siteGraph.sites,topology.siteGraph.physicalAncestors).map { ($0.0.siteParticle,$0.1[0]) })
         let images = try system.particles.map { particle -> VivoQMMMParticleImage in
             if let atom = topology.particleToAtom[Int(particle.index)] {
                 return .init(particleIndex: particle.index, structureAtomIndex: atom,
                     moleculeIndex: topology.atomMolecule[Int(atom)],
                     latticeImage: try latticeImage(positions[Int(particle.index)] - source[Int(particle.index)]))
             }
-            guard let site = sites[particle.index], let parent = topology.particleToAtom[Int(site.parentParticles[0])] else {
+            guard let ancestor = siteParents[particle.index], let parent = topology.particleToAtom[Int(ancestor)] else {
                 throw VivoChemistryError.invalid("unowned virtual site in QM/MM image mapping")
             }
             return .init(particleIndex: particle.index, structureAtomIndex: nil,
@@ -276,6 +264,6 @@ public enum VivoQMMMClusterBuilder {
             classicalSystemFingerprint: try system.fingerprint(), sourceFrameFingerprint: sourceFrameFingerprint,
             sourcePeriodicCell: cell, configuration: cfg, anchorAtomIndex: anchor,
             atomToParticle: topology.atomToParticle, particlePositionsNM: positions, particleImages: images,
-            moleculeAtomIndices: topology.molecules, linearVirtualSites: topology.sites, imagePairEvaluations: work)
+            moleculeAtomIndices: topology.molecules, linearVirtualSites: topology.sites, virtualSiteDefinitions: system.virtualSiteDefinitions, imagePairEvaluations: work)
     }
 }

@@ -76,6 +76,7 @@ inline float2 ljCoefficients(uint owner,uint other,device const uint*types,devic
         float ir=rsqrt(r2),r=r2*ir,ir2=ir*ir,cs,ls;float2 coeff=ljCoefficients(g,j,types,pair,exs,eo,ep,ei,c,cs,ls);
         float ir6=ir2*ir2*ir2,ir12=ir6*ir6;float lj=ls*(coeff.x*ir12-coeff.y*ir6);
         float ljScale=ls*(12.0f*coeff.x*ir12-6.0f*coeff.y*ir6)*ir2;
+        if(c.cellA.w>0 && r>c.cellA.w){float t=(r-c.cellA.w)/(c.cutoffNM-c.cellA.w),t2=t*t,t3=t2*t;float sw=1-10*t3+15*t3*t-6*t3*t2,ds=(-30*t2+60*t3-30*t3*t)/(c.cutoffNM-c.cellA.w);ljScale=sw*ljScale-lj*ds*ir;lj*=sw;}
         float qq=dyn[g].z*dyn[j].z;float ce=0,cf=0;
         if(cs!=0&&qq!=0){float br=beta*r;float erfcv=nvivo_math::erfc(br);float gaussian=exp(-br*br);
             ce=c.coulombPrefactor*qq*erfcv*ir*cs;

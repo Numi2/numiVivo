@@ -41,9 +41,9 @@ public struct VivoMDBarostatPlan: Sendable, Equatable {
         for q in system.constraints { try connect(q.a,q.b) }
         for q in system.angles { try connect(q.a,q.b); try connect(q.b,q.c) }
         for q in system.torsions { try connect(q.a,q.b); try connect(q.b,q.c); try connect(q.c,q.d) }
-        for site in system.linearVirtualSites ?? [] {
-            guard let first = site.parentParticles.first else { throw VivoMDRuntimeError.metal("empty virtual-site parents") }
-            for parent in site.parentParticles.dropFirst() { try connect(first,parent) }
+        let graph = try system.resolvedVirtualSiteGraph()
+        for parents in graph.physicalAncestors {
+            for parent in parents.dropFirst() { try connect(parents[0],parent) }
         }
         guard pairKeys.count <= Int(UInt32.max) else { throw VivoMDRuntimeError.metal("NPT edge count exceeds UInt32") }
         let pairs = pairKeys.sorted().map { SIMD2<UInt32>(UInt32($0 >> 32),UInt32(truncatingIfNeeded:$0)) }
@@ -67,7 +67,7 @@ public struct VivoMDBarostatPlan: Sendable, Equatable {
             members.append(contentsOf: queue)
             offsets.append(UInt32(members.count)); count += 1
         }
-        for site in system.linearVirtualSites ?? [] {
+        for site in graph.sites {
             let component = components[Int(site.parentParticles[0])]
             guard component != .max, site.parentParticles.allSatisfy({ components[Int($0)] == component }) else {
                 throw VivoMDRuntimeError.metal("virtual-site parents have inconsistent molecular ownership")

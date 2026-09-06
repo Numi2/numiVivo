@@ -62,6 +62,9 @@ public actor VivoMDMetalRuntime {
     private let pipelines: [NumiVivoKernel: NumiVivoPipeline]
     private let totalChargeE: Double
     private let barostatEngine: VivoMDBarostatEngine?
+    private let dependentSites: VivoMDDependentSites?
+    private let forceProvider: VivoMDCandidateForceProvider?
+    private let additionalForceTransfer: MTLBuffer?
     private var cellResources: VivoMDCellResources
     private var acceptedStep: UInt64
     private var acceptedTimePS: Double
@@ -71,26 +74,28 @@ public actor VivoMDMetalRuntime {
     public static func make(system: VivoClassicalSystem, initialState: VivoClassicalInitialState,
                             configuration: VivoMDConfiguration,
                             initialVelocitiesNMPerPS: [VivoVector3D]? = nil,
-                            device: MTLDevice? = nil) async throws -> VivoMDMetalRuntime {
+                            device: MTLDevice? = nil,
+                            forceProvider: VivoMDCandidateForceProvider? = nil) async throws -> VivoMDMetalRuntime {
         try await makeInternal(system: system, initial: initialState, configuration: configuration,
-            velocities: initialVelocitiesNMPerPS, step: 0, time: initialState.sourceTimePS ?? 0, device: device)
+            velocities: initialVelocitiesNMPerPS, step: 0, time: initialState.sourceTimePS ?? 0, device: device, forceProvider: forceProvider)
     }
     public static func restore(system: VivoClassicalSystem, configuration: VivoMDConfiguration,
-                               checkpoint: VivoMDCheckpoint, device: MTLDevice? = nil) async throws -> VivoMDMetalRuntime {
+                               checkpoint: VivoMDCheckpoint, device: MTLDevice? = nil, forceProvider: VivoMDCandidateForceProvider? = nil) async throws -> VivoMDMetalRuntime {
         try checkpoint.validate(particleCount: system.particles.count)
         let systemID = try system.fingerprint()
-        let configurationID = try configuration.fingerprint()
+        let configurationID = try VivoMDCandidateForceProvider.executionFingerprint(configuration: configuration,provider: forceProvider)
         guard checkpoint.systemFingerprint == systemID, checkpoint.configurationFingerprint == configurationID else {
             throw VivoArtifactValidationError.incompatible("MD restore system/configuration identity mismatch")
         }
         let initial = VivoClassicalInitialState(systemFingerprint: systemID, positionsNM: checkpoint.positionsNM,
                                                 periodicCell: checkpoint.periodicCell, sourceTimePS: checkpoint.timePS)
         return try await makeInternal(system: system, initial: initial, configuration: configuration,
-            velocities: checkpoint.velocitiesNMPerPS, step: checkpoint.acceptedStep, time: checkpoint.timePS, device: device)
+            velocities: checkpoint.velocitiesNMPerPS, step: checkpoint.acceptedStep, time: checkpoint.timePS, device: device, forceProvider: forceProvider)
     }
     private static func makeInternal(system: VivoClassicalSystem, initial: VivoClassicalInitialState,
                                      configuration: VivoMDConfiguration, velocities: [VivoVector3D]?,
-                                     step: UInt64, time: Double, device requested: MTLDevice?) async throws -> VivoMDMetalRuntime {
+                                     step: UInt64, time: Double, device requested: MTLDevice?, forceProvider: VivoMDCandidateForceProvider?) async throws -> VivoMDMetalRuntime {
+        try forceProvider?.validate(system: system,configuration: configuration,cell: initial.periodicCell)
         let report = try VivoMDCapabilityAnalyzer.analyze(system: system, initialState: initial, configuration: configuration)
         guard report.executable else { throw VivoMDRuntimeError.unsupported(report.blockers) }
         guard time.isFinite, time >= 0 else { throw VivoMDRuntimeError.metal("invalid MD clock") }
@@ -119,11 +124,15 @@ public actor VivoMDMetalRuntime {
             configuration: configuration, totalCharge: totalCharge, cell: initial.periodicCell)
         let barostat: VivoMDBarostatEngine?
         if configuration.ensemble == .npt {
-            barostat = try await VivoMDBarostatEngine.make(device: device, catalog: catalog, system: system)
+            barostat = try await VivoMDBarostatEngine.make(device: device, catalog: catalog, system: forceProvider?.molecularConnectivitySystem ?? system)
         } else { barostat = nil }
+        let dependentSites: VivoMDDependentSites?
+        if !(system.virtualSiteDefinitions ?? []).isEmpty {
+            dependentSites = try await VivoMDDependentSites.make(device: device,catalog: catalog,system: system)
+        } else { dependentSites = nil }
         let runtime = try VivoMDMetalRuntime(system: system, configuration: configuration, device: device, catalog: catalog,
             queue: queue, packed: packed, arena: arena, work: work, pipelines: pipelines, totalCharge: totalCharge,
-            cell: cell, barostat: barostat, step: step, time: time)
+            cell: cell, barostat: barostat, dependentSites: dependentSites, forceProvider: forceProvider, step: step, time: time)
         try await runtime.establishDerivedState()
         return runtime
     }
@@ -150,12 +159,21 @@ public actor VivoMDMetalRuntime {
     private init(system: VivoClassicalSystem, configuration: VivoMDConfiguration, device: MTLDevice,
         catalog: NumiVivoPipelineCatalog, queue: MTLCommandQueue, packed: VivoMDPackedSystem, arena: VivoMDGPUArena,
         work: VivoMDWorkBuffers, pipelines: [NumiVivoKernel: NumiVivoPipeline], totalCharge: Double,
-        cell: VivoMDCellResources, barostat: VivoMDBarostatEngine?, step: UInt64, time: Double) throws {
+        cell: VivoMDCellResources, barostat: VivoMDBarostatEngine?, dependentSites: VivoMDDependentSites?, forceProvider: VivoMDCandidateForceProvider?, step: UInt64, time: Double) throws {
         self.system = system; self.configuration = configuration; self.device = device; self.catalog = catalog
         self.queue = queue; self.packed = packed; self.arena = arena; self.work = work; self.pipelines = pipelines
-        totalChargeE = totalCharge; cellResources = cell; barostatEngine = barostat
+        totalChargeE = totalCharge; cellResources = cell; barostatEngine = barostat; self.dependentSites = dependentSites
         acceptedStep = step; acceptedTimePS = time
-        systemFingerprint = packed.systemFingerprint; configurationFingerprint = try configuration.fingerprint()
+        systemFingerprint = packed.systemFingerprint
+        configurationFingerprint = try VivoMDCandidateForceProvider.executionFingerprint(configuration: configuration,provider: forceProvider)
+        self.forceProvider = forceProvider
+        if forceProvider != nil {
+            guard arena.particleCount <= device.maxBufferLength/16,
+                  let transfer = device.makeBuffer(length: arena.particleCount*16,options: .storageModeShared) else {
+                throw VivoMDRuntimeError.metal("BO candidate force transfer allocation")
+            }
+            transfer.label = "NumiVivo.MD.BOForceTransfer";additionalForceTransfer = transfer
+        } else { additionalForceTransfer = nil }
         deviceName = device.name; deviceRegistryID = device.registryID
     }
 
@@ -167,11 +185,11 @@ public actor VivoMDMetalRuntime {
             throw VivoMDRuntimeError.metal("MD clock/step cannot advance")
         }
         let phase = cellResources, abi = command(for: phase)
-        let buffer = try makeCommand("step")
+        var buffer = try makeCommand("step")
         try copyAccepted(into: buffer); try clear(buffer)
         try normalize(buffer, position: arena.candidatePosition, velocity: arena.candidateVelocity, abi: abi)
         try neighbors(buffer, position: arena.candidatePosition, phase: phase, abi: abi)
-        try forces(buffer, position: arena.candidatePosition, phase: phase, abi: abi)
+        buffer = try await forces(buffer, position: arena.candidatePosition, phase: phase, abi: abi).buffer
         try encode(.mdHalfKick, buffer, [arena.candidateVelocity, arena.forceEnergy, arena.dynamics], abi)
         try projectVelocity(buffer, position: arena.candidatePosition, source: arena.candidateVelocity,
                             scratch: arena.velocityScratch, dynamics: arena.dynamics, abi: abi)
@@ -187,7 +205,7 @@ public actor VivoMDMetalRuntime {
         }
         try normalize(buffer, position: arena.candidatePosition, velocity: arena.candidateVelocity, abi: abi)
         try neighbors(buffer, position: arena.candidatePosition, phase: phase, abi: abi)
-        try forces(buffer, position: arena.candidatePosition, phase: phase, abi: abi)
+        buffer = try await forces(buffer, position: arena.candidatePosition, phase: phase, abi: abi).buffer
         try encode(.mdHalfKick, buffer, [arena.candidateVelocity, arena.forceEnergy, arena.dynamics], abi)
         try projectVelocity(buffer, position: arena.candidatePosition, source: arena.candidateVelocity,
                             scratch: arena.velocityScratch, dynamics: arena.dynamics, abi: abi)
@@ -365,9 +383,11 @@ public actor VivoMDMetalRuntime {
 
     private func evaluate(position: MTLBuffer, velocity: MTLBuffer, phase: VivoMDCellResources, gradient: Bool = false) async throws
     -> (energy: Double, maximumForce: Double) {
-        let abi = command(for: phase), buffer = try makeCommand("evaluate")
+        let abi = command(for: phase)
+        var buffer = try makeCommand("evaluate")
         try clear(buffer); try neighbors(buffer, position: position, phase: phase, abi: abi)
-        try forces(buffer, position: position, phase: phase, abi: abi)
+        let forceEvaluation = try await forces(buffer, position: position, phase: phase, abi: abi)
+        buffer = forceEvaluation.buffer
         try encode(.mdValidate, buffer, [position, velocity, arena.forceEnergy, arena.status], abi)
         let direction: MTLBuffer
         if gradient {
@@ -385,17 +405,19 @@ public actor VivoMDMetalRuntime {
         try await complete(buffer); try ensureNumericalSuccess()
         let value = work.scalar.contents().assumingMemoryBound(to: SIMD2<Float>.self).pointee
         guard value.x.isFinite, value.y.isFinite, value.y >= 0 else { throw VivoMDRuntimeError.candidateRejected(1) }
-        return (Double(value.x), Double(value.y))
+        return (Double(value.x)+forceEvaluation.additionalEnergyKJPerMol, Double(value.y))
     }
     private func observationsReserved() async throws -> VivoMDObservables {
-        let abi = command(for: cellResources), buffer = try makeCommand("observables")
+        let abi = command(for: cellResources)
+        var buffer = try makeCommand("observables")
         try clear(buffer); try neighbors(buffer, position: arena.acceptedPosition, phase: cellResources, abi: abi)
-        try forces(buffer, position: arena.acceptedPosition, phase: cellResources, abi: abi)
+        let forceEvaluation = try await forces(buffer, position: arena.acceptedPosition, phase: cellResources, abi: abi)
+        buffer = forceEvaluation.buffer
         try encode(.mdValidate, buffer, [arena.acceptedPosition, arena.acceptedVelocity, arena.forceEnergy, arena.status], abi)
         try encode(.mdObservationTerms, buffer, [arena.forceEnergy, arena.acceptedVelocity, arena.dynamics, work.termsA], abi)
         try reduce(buffer, sumBoth: true); try await complete(buffer); try ensureNumericalSuccess()
         let value = work.scalar.contents().assumingMemoryBound(to: SIMD2<Float>.self).pointee
-        let potential = Double(value.x), kinetic = Double(value.y)
+        let potential = Double(value.x)+forceEvaluation.additionalEnergyKJPerMol, kinetic = Double(value.y)
         let massive = UInt64(system.particles.filter { $0.massDa > 0 }.count)
         let constraints = UInt64(system.constraints.count)
         guard massive * 3 > constraints else { throw VivoMDRuntimeError.metal("nonpositive constrained degrees of freedom") }
@@ -463,6 +485,10 @@ public actor VivoMDMetalRuntime {
         try encode(.mdValidate, buffer, [arena.candidatePosition, arena.candidateVelocity, arena.forceEnergy, arena.status], abi)
     }
     private func normalize(_ buffer: MTLCommandBuffer, position: MTLBuffer, velocity: MTLBuffer, abi: VivoMDMetalCommand) throws {
+        if let dependentSites {
+            try dependentSites.normalize(buffer,positions: position,velocity: velocity,status: arena.status,command: abi)
+            return
+        }
         guard !packed.virtualSites.isEmpty else { return }
         try encode(.mdUpdateVirtualPosition, buffer, [position, arena.virtualSites, arena.virtualSiteIndexByParticle, arena.status], abi)
         try encode(.mdUpdateVirtualVelocity, buffer, [velocity, arena.virtualSites, arena.virtualSiteIndexByParticle], abi)
@@ -478,7 +504,11 @@ public actor VivoMDMetalRuntime {
                 arena.neighborReferencePosition, arena.status], abi)
         }
     }
-    private func forces(_ buffer: MTLCommandBuffer, position: MTLBuffer, phase: VivoMDCellResources, abi: VivoMDMetalCommand) throws {
+    private func forces(_ buffer: MTLCommandBuffer, position: MTLBuffer, phase: VivoMDCellResources, abi: VivoMDMetalCommand) async throws
+    -> (buffer: MTLCommandBuffer,additionalEnergyKJPerMol: Double) {
+        // Derivatives must match THIS geometry, including accepted-state observations
+        // after a rejected trial changed the reusable Jacobian scratch buffer.
+        try dependentSites?.construct(buffer,positions: position,status: arena.status,command: abi)
         try encode(.mdClearForce, buffer, [arena.forceEnergy], abi)
         try encode(.mdBonded, buffer, [position, arena.forceEnergy, arena.bonds, arena.bondOffsets, arena.bondIncidence,
             arena.angles, arena.angleOffsets, arena.angleIncidence, arena.torsions, arena.torsionOffsets, arena.torsionIncidence, arena.status], abi)
@@ -498,10 +528,37 @@ public actor VivoMDMetalRuntime {
         } else {
             try encode(configuration.resolvedNeighborListEnabled ? .mdNonbondedNeighbor : .mdNonbondedDirect, buffer, pairBuffers, abi)
         }
-        if !packed.virtualSites.isEmpty {
+        if let dependentSites {
+            try dependentSites.redistribute(buffer,forceEnergy: arena.forceEnergy,status: arena.status)
+        } else if !packed.virtualSites.isEmpty {
             try encode(.mdRedistributeVirtualForce, buffer, [arena.forceEnergy, arena.virtualSites,
                 arena.virtualParentOffsets, arena.virtualParentIncidence, arena.status], abi)
         }
+        guard let forceProvider,let transfer = additionalForceTransfer else { return (buffer,0) }
+        try copy(buffer,position,arena.positionReadback)
+        try copy(buffer,arena.forceEnergy,transfer)
+        try await complete(buffer);try ensureNumericalSuccess();try Task.checkCancellation()
+        let pointer = arena.positionReadback.contents().assumingMemoryBound(to: SIMD4<Float>.self)
+        let positions = (0..<arena.particleCount).map { i in
+            VivoVector3D(Double(pointer[i].x),Double(pointer[i].y),Double(pointer[i].z))
+        }
+        let geometry = try VivoMDCandidateGeometry(particlePositionsNM: positions,periodicCell: phase.cell)
+        let electronic = try await forceProvider.evaluate(geometry)
+        try electronic.validate(geometry: geometry,provider: forceProvider,system: system)
+        try Task.checkCancellation()
+        let target = transfer.contents().assumingMemoryBound(to: SIMD4<Float>.self)
+        for i in 0..<arena.particleCount {
+            let f = electronic.physicalParticleForcesKJPerMolNM[i]
+            let sum = SIMD3<Double>(Double(target[i].x)+f.x,Double(target[i].y)+f.y,Double(target[i].z)+f.z)
+            guard sum.x.isFinite,sum.y.isFinite,sum.z.isFinite,
+                  Float(sum.x).isFinite,Float(sum.y).isFinite,Float(sum.z).isFinite else {
+                throw VivoChemistryError.convergence("BO force transfer exceeds MD numerical range")
+            }
+            target[i].x = Float(sum.x);target[i].y = Float(sum.y);target[i].z = Float(sum.z)
+        }
+        let continued = try makeCommand("bo-force-ready")
+        try copy(continued,transfer,arena.forceEnergy)
+        return (continued,electronic.additionalEnergyKJPerMol)
     }
     private func minimizePosition(_ buffer: MTLCommandBuffer, abi: VivoMDMetalCommand, scale: Double, maximum: Double) throws {
         guard Float(scale).isFinite, Float(scale) > 0, Float(maximum).isFinite, Float(maximum) > 0,

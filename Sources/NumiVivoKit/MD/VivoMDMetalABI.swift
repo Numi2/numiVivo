@@ -106,6 +106,9 @@ enum VivoMDMetalABI {
             guard let value else { return .zero }
             return .init(Float(value.x), Float(value.y), Float(value.z), 0)
         }
+        // cellA.w is an explicitly versioned optional LJ switch radius; all
+        // geometric lattice operations consume only the xyz components.
+        var cellA = f4(cell?.a);cellA.w = Float(configuration.lennardJonesSwitchOnNM ?? 0)
         return .init(
             particleCount: packed.particleCount, typeCount: packed.typeCount,
             electrostatics: mode, periodic: cell == nil ? 0 : 1,
@@ -122,7 +125,7 @@ enum VivoMDMetalABI {
             targetTemperatureK: Float(configuration.targetTemperatureK ?? 0),
             boltzmannKJPerMolK: 0.00831446261815324,
             neighborCapacity: capacity, neighborRadiusNM: Float(radius),
-            cellA: f4(cell?.a), cellB: f4(cell?.b), cellC: f4(cell?.c),
+            cellA: cellA, cellB: f4(cell?.b), cellC: f4(cell?.c),
             reciprocalA: f4(reciprocal?.0), reciprocalB: f4(reciprocal?.1),
             reciprocalC: f4(reciprocal?.2)
         )

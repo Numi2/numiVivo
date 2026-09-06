@@ -10,6 +10,7 @@ public struct VivoMDConfiguration:Codable,Sendable,Equatable {
     public var schema:String
     public var timeStepPS:Double
     public var cutoffNM:Double
+    public var lennardJonesSwitchOnNM:Double?
     public var neighborSkinNM:Double
     public var electrostatics:VivoMDElectrostatics
     public var relativeDielectric:Double
@@ -41,8 +42,8 @@ public struct VivoMDConfiguration:Codable,Sendable,Equatable {
                 barostatMaximumLogVolumeStep:Double?=0.01,
                 constraintTolerance:Double=1e-6,maximumConstraintIterations:UInt32=32,
                 neighborRebuildInterval:UInt32=10,neighborListEnabled:Bool?=true,
-                maximumNeighborsPerParticle:UInt32?=512,randomSeed:UInt64=0x4e554d495649564f) {
-        schema=Self.schema;self.timeStepPS=timeStepPS;self.cutoffNM=cutoffNM;self.neighborSkinNM=neighborSkinNM
+                maximumNeighborsPerParticle:UInt32?=512,randomSeed:UInt64=0x4e554d495649564f,lennardJonesSwitchOnNM:Double?=nil) {
+        schema=Self.schema;self.lennardJonesSwitchOnNM=lennardJonesSwitchOnNM;self.timeStepPS=timeStepPS;self.cutoffNM=cutoffNM;self.neighborSkinNM=neighborSkinNM
         self.electrostatics=electrostatics;self.relativeDielectric=relativeDielectric;self.reactionFieldDielectric=reactionFieldDielectric
         self.pmeTolerance=pmeTolerance;self.pmeGridSpacingNM=pmeGridSpacingNM;self.ensemble=ensemble;self.thermostat=thermostat
         self.targetTemperatureK=targetTemperatureK;self.frictionPerPS=frictionPerPS;self.barostat=barostat;self.targetPressureBar=targetPressureBar
@@ -65,6 +66,11 @@ public struct VivoMDConfiguration:Codable,Sendable,Equatable {
               maximumConstraintIterations>0,maximumConstraintIterations<=16_384,
               neighborRebuildInterval>0,barostatInterval>0,resolvedMaximumNeighborsPerParticle>0 else {
             throw VivoArtifactValidationError.invalid("MD configuration contains invalid/unsupported numerical settings")
+        }
+        if let switching=lennardJonesSwitchOnNM {
+            guard positiveFP32(switching),switching<cutoffNM,Float(switching)<Float(cutoffNM) else {
+                throw VivoArtifactValidationError.invalid("LJ switch must be positive and strictly inside the cutoff")
+            }
         }
         if electrostatics == .pme {
             guard resolvedPMETolerance.isFinite,resolvedPMETolerance>0,resolvedPMETolerance<0.1,
@@ -148,7 +154,7 @@ public enum VivoMDCapabilityAnalyzer {
             throw VivoArtifactValidationError.incompatible("MD initial state does not identify the supplied system")
         }
         let virtual=system.particles.filter{$0.role == .virtualSite}
-        let resolved=Set((system.linearVirtualSites ?? []).map(\.siteParticle))
+        let resolved=Set((system.linearVirtualSites ?? []).map(\.siteParticle)+(system.virtualSiteDefinitions ?? []).map(\.siteParticle))
         let unresolved=virtual.map(\.index).filter{!resolved.contains($0)}
         var blockers=VivoMDExecutionPreflight.blockers(system:system,initial:initialState,configuration:configuration)
         var notes:[String]=[]

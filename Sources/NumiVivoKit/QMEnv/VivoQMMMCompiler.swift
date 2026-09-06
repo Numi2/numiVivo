@@ -74,10 +74,9 @@ public enum VivoQMMMCompiler {
         if document.structure.periodicCell != nil && !request.coordinatesAreUnwrappedFiniteCluster {
             throw VivoChemistryError.unsupported("periodic QM/MM requires an explicitly unwrapped finite cluster; use prepareMD for periodic samples; Ewald QM/MM is not implemented")
         }
-        for rule in topology.sites {
-            var p = VivoVector3D.zero
-            for (parent, weight) in zip(rule.parentParticles, rule.weights) { p = p + positions[Int(parent)] * weight }
-            guard (p - positions[Int(rule.siteParticle)]).norm < 1e-8 else {
+        let constructed = try topology.siteGraph.construct(positionsNM: positions)
+        for site in topology.siteGraph.sites {
+            guard (constructed.positionsNM[Int(site.siteParticle)]-positions[Int(site.siteParticle)]).norm < 1e-8 else {
                 throw VivoChemistryError.invalid("stale virtual-site coordinates")
             }
         }
@@ -121,7 +120,7 @@ public enum VivoQMMMCompiler {
                                distanceBohr: distance / VivoAtomicUnits.bohrInNM))
             zeroed.insert(UInt32(map[Int(m)]))
         }
-        for rule in system.linearVirtualSites ?? [] {
+        for rule in try system.resolvedVirtualSiteGraph().sites {
             let parentQM = rule.parentParticles.filter { excluded.contains($0) }.count
             if parentQM == rule.parentParticles.count { excluded.insert(rule.siteParticle) }
             else if parentQM != 0 { throw VivoChemistryError.unsupported("virtual site spans QM/MM partition; promote its complete molecule") }
@@ -198,13 +197,8 @@ public enum VivoQMMMCompiler {
         guard energy.isFinite, forces.allSatisfy(\.isFinite) else { throw VivoChemistryError.convergence("nonfinite QM/MM LJ result") }
         let factor = VivoAtomicUnits.bohrInNM / VivoAtomicUnits.hartreeInKJPerMol
         let atomicForces = forces.map { $0 * factor }
-        var physical = atomicForces
-        for site in system.linearVirtualSites ?? [] {
-            for (parent, weight) in zip(site.parentParticles, site.weights) {
-                physical[Int(parent)] = physical[Int(parent)] + atomicForces[Int(site.siteParticle)] * weight
-            }
-            physical[Int(site.siteParticle)] = .zero
-        }
+        let graph = try system.resolvedVirtualSiteGraph()
+        let physical = try graph.redistribute(rawForces: atomicForces,state: graph.construct(positionsNM: positions))
         return .init(energyHartree: energy / VivoAtomicUnits.hartreeInKJPerMol,
             qmForcesHartreePerBohr: request.qmAtomIndices.map { physical[map[Int($0)]] }, qmAtomIndices: request.qmAtomIndices,
             particleForcesHartreePerBohr: atomicForces)

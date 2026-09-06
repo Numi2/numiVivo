@@ -41,3 +41,86 @@ inline float3 wrap(float3 p,constant Command&c){if(c.periodic==0)return p;float3
     forceEnergy[gid].xyz=value;
 }
 } // namespace nvivo_md_virtual
+
+// General dependent sites. Construction is forward by depth; force transport is
+// reverse by depth. A pass only writes parents of a selected higher-depth child,
+// so no force slot is read while that same slot is written in the same pass.
+namespace nvivo_md_dependent {
+using nvivo_md_virtual::Command;
+using nvivo_md_virtual::Status;
+using nvivo_md_virtual::image;
+using nvivo_md_virtual::wrap;
+using nvivo_md_virtual::fail;
+struct Site { uint4 identity; uint4 parents; float4 originWeights,xWeights,yWeights,local; };
+struct Pass { uint particleCount,siteCount,depth,reserved; };
+struct Jacobian { float4 x,y,z; };
+static_assert(sizeof(Site)==96,"dependent site ABI");
+static_assert(sizeof(Jacobian)==48,"dependent-site Jacobian ABI");
+inline float3 basis(uint i) { return i==0 ? float3(1,0,0) : (i==1 ? float3(0,1,0) : float3(0,0,1)); }
+[[host_name("nvivo_md_construct_dependent_sites")]] kernel void construct(
+    device float4* positions [[buffer(0)]],device const Site* sites [[buffer(1)]],device Jacobian* jacobians [[buffer(2)]],
+    device Status& status [[buffer(3)]],constant Command& md [[buffer(4)]],constant Pass& pass [[buffer(5)]],uint gid [[thread_position_in_grid]]) {
+    if(gid>=pass.siteCount) return;
+    Site s=sites[gid]; if(s.identity.z!=pass.depth) return;
+    uint count=s.identity.y,output=s.identity.x;
+    if(count==0||count>4||output>=pass.particleCount) {fail(status,4u,output);return;}
+    float3 p[4];
+    for(uint i=0;i<count;++i) { if(s.parents[i]>=pass.particleCount){fail(status,4u,output);return;} }
+    float3 base=positions[s.parents[0]].xyz;
+    for(uint i=0;i<count;++i) p[i]=base+image(positions[s.parents[i]].xyz-base,md);
+    float3 result=0,u=0,v=0,ex=0,ey=0,ez=0;float nx=0,nz=0;
+    if(s.identity.w==0) {
+        for(uint i=0;i<count;++i) result+=p[i]*s.originWeights[i];
+    } else if(s.identity.w==1) {
+        u=p[1]-p[0];v=p[2]-p[0];result=p[0]+s.local.x*u+s.local.y*v+s.local.z*cross(u,v);
+    } else if(s.identity.w==2) {
+        for(uint i=0;i<count;++i) {result+=p[i]*s.originWeights[i];u+=(p[i]-base)*s.xWeights[i];v+=(p[i]-base)*s.yWeights[i];}
+        float3 z=cross(u,v);nx=length(u);nz=length(z);
+        if(!(nx>1e-12f)||!(nz>1e-12f*max(1.0f,nx*length(v)))) {fail(status,1u,output);return;}
+        ex=u/nx;ez=z/nz;ey=cross(ez,ex);result+=ex*s.local.x+ey*s.local.y+ez*s.local.z;
+    } else {fail(status,4u,output);return;}
+    if(!all(isfinite(result))) {fail(status,1u,output);return;}
+    positions[output]=float4(wrap(result,md),0);
+    for(uint i=0;i<count;++i) {
+        float3 columns[3];
+        for(uint axis=0;axis<3;++axis) {
+            float3 e=basis(axis),column=0;
+            if(s.identity.w==0) column=e*s.originWeights[i];
+            else if(s.identity.w==1) {
+                float3 d0=i==0?e:float3(0),d1=i==1?e:float3(0),d2=i==2?e:float3(0),du=d1-d0,dv=d2-d0;
+                column=d0+s.local.x*du+s.local.y*dv+s.local.z*(cross(du,v)+cross(u,dv));
+            } else {
+                float3 dx=e*s.xWeights[i],dy=e*s.yWeights[i],dex=(dx-ex*dot(ex,dx))/nx;
+                float3 dz=cross(dx,v)+cross(u,dy),dez=(dz-ez*dot(ez,dz))/nz;
+                float3 dey=cross(dez,ex)+cross(ez,dex);
+                column=e*s.originWeights[i]+dex*s.local.x+dey*s.local.y+dez*s.local.z;
+            }
+            if(!all(isfinite(column))) {fail(status,1u,output);return;}
+            columns[axis]=column;
+        }
+        jacobians[gid*4+i]={float4(columns[0],0),float4(columns[1],0),float4(columns[2],0)};
+    }
+}
+[[host_name("nvivo_md_dependent_site_velocities")]] kernel void velocities(
+    device float4* velocity [[buffer(0)]],device const Site* sites [[buffer(1)]],device const Jacobian* jacobians [[buffer(2)]],
+    device Status& status [[buffer(3)]],constant Pass& pass [[buffer(4)]],uint gid [[thread_position_in_grid]]) {
+    if(gid>=pass.siteCount)return;Site s=sites[gid];if(s.identity.z!=pass.depth)return;
+    float3 value=0;
+    for(uint i=0;i<s.identity.y;++i){Jacobian j=jacobians[gid*4+i];float3 v=velocity[s.parents[i]].xyz;value+=j.x.xyz*v.x+j.y.xyz*v.y+j.z.xyz*v.z;}
+    if(!all(isfinite(value))){fail(status,1u,s.identity.x);return;}velocity[s.identity.x]=float4(value,0);
+}
+[[host_name("nvivo_md_dependent_site_forces")]] kernel void forces(
+    device float4* forceEnergy [[buffer(0)]],device const Site* sites [[buffer(1)]],device const Jacobian* jacobians [[buffer(2)]],
+    device const uint* offsets [[buffer(3)]],device const uint2* incidences [[buffer(4)]],device Status& status [[buffer(5)]],
+    constant Pass& pass [[buffer(6)]],uint gid [[thread_position_in_grid]]) {
+    if(gid>=pass.particleCount)return;float3 added=0;bool written=false;
+    for(uint edge=offsets[gid];edge<offsets[gid+1];++edge){uint2 relation=incidences[edge];Site s=sites[relation.x];if(s.identity.z!=pass.depth)continue;
+        Jacobian j=jacobians[relation.x*4+relation.y];float3 f=forceEnergy[s.identity.x].xyz;
+        added+=float3(dot(j.x.xyz,f),dot(j.y.xyz,f),dot(j.z.xyz,f));written=true;}
+    if(!written)return;float3 value=forceEnergy[gid].xyz+added;if(!all(isfinite(value))){fail(status,1u,gid);return;}forceEnergy[gid].xyz=value;
+}
+[[host_name("nvivo_md_zero_dependent_site_forces")]] kernel void zero(
+    device float4* forceEnergy [[buffer(0)]],device const Site* sites [[buffer(1)]],constant Pass& pass [[buffer(2)]],uint gid [[thread_position_in_grid]]) {
+    if(gid<pass.siteCount)forceEnergy[sites[gid].identity.x].xyz=0; // preserve energy component
+}
+} // namespace nvivo_md_dependent

@@ -94,35 +94,12 @@ public enum VivoQMMMForceMapper {
         guard var forces = lj.particleForcesHartreePerBohr, forces.count == system.particles.count else {
             throw VivoChemistryError.invalid("QM/MM force assembly requires a full-particle LJ result")
         }
-        let links = Dictionary(uniqueKeysWithValues: region.links.map { ($0.linkNucleusIndex, $0) })
-        for (index, nucleus) in region.electronicSystem.nuclei.enumerated() {
-            let f = electronic.nucleusForcesHartreePerBohr[index]
-            if let atom = nucleus.structureAtomIndex {
-                let slot = Int(map[Int(atom)])
-                forces[slot] = forces[slot] + f
-            } else {
-                guard let link = links[index] else { throw VivoChemistryError.invalid("unmapped artificial QM nucleus") }
-                let q = Int(map[Int(link.qmAtomIndex)]), m = Int(map[Int(link.mmAtomIndex)])
-                let projected = try VivoQMMMLinkForceProjection.project(
-                    qmPositionBohr: positions[q] / VivoAtomicUnits.bohrInNM,
-                    mmPositionBohr: positions[m] / VivoAtomicUnits.bohrInNM,
-                    linkDistanceBohr: link.distanceBohr, linkForceHartreePerBohr: f)
-                forces[q] = forces[q] + projected.qmForceHartreePerBohr
-                forces[m] = forces[m] + projected.mmForceHartreePerBohr
-            }
-        }
-        for (index, charge) in region.electronicSystem.pointCharges.enumerated() {
-            guard let particle = charge.classicalParticleIndex else { throw VivoChemistryError.invalid("unmapped QM/MM embedding charge") }
-            forces[Int(particle)] = forces[Int(particle)] + electronic.pointChargeForcesHartreePerBohr[index]
-        }
+        let projected = try projectCenters(electronicSystem: region.electronicSystem,links: region.links,
+            atomToParticle: map,particlePositionsNM: positions,nucleusForces: electronic.nucleusForcesHartreePerBohr,
+            pointChargeForces: electronic.pointChargeForcesHartreePerBohr)
+        for i in forces.indices { forces[i] = forces[i]+projected[i] }
         let topology = try VivoQMMMTopology(document: document, system: system)
-        for site in topology.sites {
-            let f = forces[Int(site.siteParticle)]
-            for (parent, weight) in zip(site.parentParticles, site.weights) {
-                forces[Int(parent)] = forces[Int(parent)] + f * weight
-            }
-            forces[Int(site.siteParticle)] = .zero
-        }
+        forces = try topology.siteGraph.redistribute(rawForces: forces,state: topology.siteGraph.construct(positionsNM: positions))
         let energy = electronic.energyHartree + lj.energyHartree
         guard energy.isFinite, forces.allSatisfy(\.isFinite) else { throw VivoChemistryError.convergence("nonfinite assembled QM/MM result") }
         let origin = map.reduce(VivoVector3D.zero) { $0 + positions[Int($1)] } / Double(map.count)
@@ -194,5 +171,51 @@ public enum VivoQMMMElectronicFiniteDifferences {
         }
         return try .init(system: system, energyHartree: baseline, nucleusForcesHartreePerBohr: nuclear,
             pointChargeForcesHartreePerBohr: charges, derivativeMethod: "central-difference-all-electronic-centers; step-Bohr=\(stepBohr)")
+    }
+}
+
+public extension VivoQMMMForceMapper {
+    /// Geometry-only projection shared by finite and periodic Hamiltonians. The
+    /// returned array contains RAW site forces; a caller combines other raw
+    /// contributions before applying the dependent-site graph exactly once.
+    static func projectCenters(electronicSystem: VivoElectronicSystem,links: [VivoQMMMLinkAtom],
+                               atomToParticle: [UInt32],particlePositionsNM: [VivoVector3D],
+                               nucleusForces: [VivoVector3D],pointChargeForces: [VivoVector3D]) throws -> [VivoVector3D] {
+        try electronicSystem.validate()
+        guard nucleusForces.count == electronicSystem.nuclei.count,pointChargeForces.count == electronicSystem.pointCharges.count,
+              nucleusForces.allSatisfy(\.isFinite),pointChargeForces.allSatisfy(\.isFinite),particlePositionsNM.allSatisfy(\.isFinite),
+              Set(atomToParticle).count == atomToParticle.count,atomToParticle.allSatisfy({ Int($0) < particlePositionsNM.count }),
+              Set(links.map(\.linkNucleusIndex)).count == links.count else { throw VivoChemistryError.invalid("electronic force projection shape or mapping") }
+        let linkMap = Dictionary(uniqueKeysWithValues: links.map { ($0.linkNucleusIndex,$0) })
+        var output = [VivoVector3D](repeating: .zero,count: particlePositionsNM.count)
+        for (index,nucleus) in electronicSystem.nuclei.enumerated() {
+            if let atom = nucleus.structureAtomIndex {
+                guard Int(atom) < atomToParticle.count else { throw VivoChemistryError.invalid("electronic nucleus has no physical source mapping") }
+                let slot = Int(atomToParticle[Int(atom)]),expected = particlePositionsNM[slot]/VivoAtomicUnits.bohrInNM
+                guard (expected-VivoVector3D(nucleus.positionBohr.x,nucleus.positionBohr.y,nucleus.positionBohr.z)).norm < 1e-8 else {
+                    throw VivoChemistryError.invalid("electronic physical-nucleus geometry does not match source")
+                }
+                output[slot] = output[slot]+nucleusForces[index]
+            } else {
+                guard let link = linkMap[index],Int(link.qmAtomIndex) < atomToParticle.count,Int(link.mmAtomIndex) < atomToParticle.count else {
+                    throw VivoChemistryError.invalid("unmapped artificial electronic nucleus")
+                }
+                let q = Int(atomToParticle[Int(link.qmAtomIndex)]),m = Int(atomToParticle[Int(link.mmAtomIndex)])
+                let rq = particlePositionsNM[q]/VivoAtomicUnits.bohrInNM,rm = particlePositionsNM[m]/VivoAtomicUnits.bohrInNM
+                let expected = rq+(rm-rq)*(link.distanceBohr/(rm-rq).norm)
+                guard (expected-VivoVector3D(nucleus.positionBohr.x,nucleus.positionBohr.y,nucleus.positionBohr.z)).norm < 1e-8 else {
+                    throw VivoChemistryError.invalid("link geometry differs from its fixed-distance construction")
+                }
+                let projected = try VivoQMMMLinkForceProjection.project(qmPositionBohr: rq,mmPositionBohr: rm,
+                    linkDistanceBohr: link.distanceBohr,linkForceHartreePerBohr: nucleusForces[index])
+                output[q] = output[q]+projected.qmForceHartreePerBohr;output[m] = output[m]+projected.mmForceHartreePerBohr
+            }
+        }
+        for (index,charge) in electronicSystem.pointCharges.enumerated() {
+            guard let particle = charge.classicalParticleIndex,Int(particle) < output.count else { throw VivoChemistryError.invalid("unmapped electronic charge center") }
+            output[Int(particle)] = output[Int(particle)]+pointChargeForces[index]
+        }
+        guard output.allSatisfy(\.isFinite) else { throw VivoChemistryError.convergence("electronic force projection overflow") }
+        return output
     }
 }

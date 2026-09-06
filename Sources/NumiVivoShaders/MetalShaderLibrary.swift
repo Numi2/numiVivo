@@ -41,6 +41,10 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case mdUpdateVirtualPosition = "nvivo_md_update_virtual_position"
     case mdUpdateVirtualVelocity = "nvivo_md_update_virtual_velocity"
     case mdRedistributeVirtualForce = "nvivo_md_redistribute_virtual_force"
+    case mdConstructDependentSites = "nvivo_md_construct_dependent_sites"
+    case mdDependentSiteVelocities = "nvivo_md_dependent_site_velocities"
+    case mdDependentSiteForces = "nvivo_md_dependent_site_forces"
+    case mdZeroDependentSiteForces = "nvivo_md_zero_dependent_site_forces"
     case mdBonded = "nvivo_md_bonded"
     case mdBuildNeighborList = "nvivo_md_build_neighbor_list"
     case mdValidateNeighborDisplacement = "nvivo_md_validate_neighbor_displacement"
@@ -86,7 +90,8 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
         case .physiologyClearStatus, .physiologyPrepareTransaction, .physiologyApplyTransforms,
              .physiologyHeunPredict, .physiologyHeunCorrect, .physiologyValidateCandidate, .physiologyPublish:
             return "NumiVivoPhysiologyKernels"
-        case .mdUpdateVirtualPosition, .mdUpdateVirtualVelocity, .mdRedistributeVirtualForce:
+        case .mdUpdateVirtualPosition, .mdUpdateVirtualVelocity, .mdRedistributeVirtualForce,
+             .mdConstructDependentSites, .mdDependentSiteVelocities, .mdDependentSiteForces, .mdZeroDependentSiteForces:
             return "NumiVivoMDVirtualSites"
         case .mdGridClear, .mdGridBin, .mdGridBuildNeighbors:
             return "NumiVivoMDNeighborGrid"
