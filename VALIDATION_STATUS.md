@@ -1,123 +1,120 @@
 # Validation status
 
-## Current verified implementation
+## Verified revision
 
-Code revision: `0a1cae6be73c7a6e12d01d9ba8bee5f2bb4eade9`.
-The subsequent audit/status commit changes documentation only.
+The verified product implementation is the `24e8030` tree plus the focused
+acceptance-boundary regression in commit
+`b9870f705a80296adf13adeff19b782e3f2277c8`. Documentation and audit files in
+this commit do not change product numerical behavior.
 
-The continuation preserves the Mac mini baseline at
-`a7f4017a5573d20b40b8be9738f4f8c26cd29801`. The typed Metal ABI writes,
-mapped-connectivity implementation, shared nuclear budget, populated MD tests
-and deepest-existing-parent output-alias checks have not been reverted.
-The preserved source files and exact new source hashes are recorded in
-`Documentation/Audit/barrier-convergence-observations.json`.
+The validation was run on the physical Apple M4 Pro Mac mini, not only on
+Apple's hosted virtual device. The checkout was clean after validation and
+generated artifact stores were kept outside the repository.
 
-PASS:
+## PASS
 
-- Complete release product and all test targets built from the exact committed
-  source with `swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing`.
-- Full Swift suite: **17/17 tests** in three suites. This includes the existing
-  eight Apple execution tests and four mapped-connectivity tests, plus five new
-  barrier-convergence tests containing 41 explicit checks.
-- New production barrier campaigns: **100/100 plain-frame** and **106/106
-  ensemble-frame** independent PySCF/CLI/cache checks. Both actual template
-  commands, input equality, all energies, physical overlaps, negative scientific
-  assessments and cache reconstruction were exercised.
-- Real Metal pipeline compilation and execution remain passing. The separate
-  product workflow passed all four isolated GPU gates and the production target
-  CLI. Target execution committed 12,800 steps; maximum published fraction
-  difference from FP64 was `2.0485708886353038e-5` and balance error was
-  `2.0734297468405494e-5`.
-- The existing nuclear reaction qualification workflow passed again on the same
-  code commit, including the complete-product build and native reaction,
-  thermochemistry, reference and correlated-equilibrium-solvent checks.
-- No tracked source was rewritten during validation. Binary, source archive,
-  input, reference, result and report SHA-256 identities were retained.
+- `swift build -c release --jobs 3`
+- `swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing`
+- `swift test -c release --jobs 3 -Xswiftc -enable-testing`: **23/23** tests in
+  four suites, including real Metal/MD execution and mapped connectivity.
+- `swift test -c debug --jobs 3 --sanitize=address --filter ScientificClosureTests`:
+  **6/6** host-side scientific-closure tests.
+- `Tools/check_reaction_qualification.sh`: **130/130** reported checks:
+  36 native, 36 independent PySCF, 21 production CLI/store and 37 equilibrium
+  solvent checks.
+- Production `h3-residual-barrier`, `h2-global-embedding` and committed polar
+  LiH global-embedding workflows executed and stored results successfully.
+- Production Metal `engagement-run` completed 12,800 commits on the Apple M4
+  Pro with maximum fraction-mass error `2.0734298688e-5` against the declared
+  `1e-4` tolerance. Its synthetic assumed-parameter and uncertainty flags
+  remain true.
+- Paper preflight workflows returned explicit negative readiness for both
+  acrylamide-methanethiolate and BTK; no missing input was fabricated.
 
-CI environment for this continuation: Apple Swift 6.1.2, arm64 macOS target,
-Darwin 24.6.0; Metal reports **Apple Paravirtual device**. This is actual Metal
-backend execution on the hosted runner, not a new run on the user's M4 Pro.
-The independent oracle uses pinned PySCF 2.8.0, NumPy 1.26.4, SciPy 1.13.1 and
-h5py 3.11.0. Production numerical execution does not depend on Python.
+The corrected sanitizer command is SwiftPM's supported `--sanitize=address`
+form. The earlier linker-only invocation is not used as evidence.
 
-Successful workflows at the code revision above:
+## Residual-enriched H3/6-31G campaign
 
-- Barrier convergence conformance: `34013510686`.
-- Complete native product contracts: `34013510672`.
-- Nuclear reaction qualification: `34013510661`.
+The legacy orbital-only campaign remains a separate negative assessment:
+`reducedAccuracyNotEstablished`. It has not been relabeled.
 
-## Scientific result of the new campaign
+The residual-enriched campaign uses nine explicitly mapped scan geometries, a
+90-determinant sector, all six spatial orbital modes and one nested common Fock
+space. Its dimensions are 9, 18, 27, 36, 45, 54 and 63. The unchanged targets
+are 0.001 Hartree for barrier error, relative-profile error and successive-level
+change, with two consecutive genuinely reduced levels required.
 
-Nine explicitly mapped H3/6-31G scan geometries were evaluated with complete FCI
-and nested three-, four-, five- and six-orbital CAS spaces. These are supplied
-scan geometries, not optimized stationary points or the paper's reaction.
+Measured levels:
 
-The default accuracy threshold is 0.001 Hartree for barrier/reaction differences,
-relative profile error and successive-level change. At least two consecutive
-**genuinely reduced** levels must satisfy it. Full-space agreement does not count
-as a second reduced level.
+| Dimension | Barrier error | Profile error | Successive change | Reference accuracy |
+| ---: | ---: | ---: | ---: | :--- |
+| 9 | 3.5685895224e-2 | 3.5685895224e-2 | — | no |
+| 18 | 5.5993135732e-3 | 5.5993135727e-3 | 3.0086581651e-2 | no |
+| 27 | 3.3185396865e-4 | 3.3185396861e-4 | 5.2674596045e-3 | yes |
+| 36 | 4.5776274848e-5 | 4.5776274848e-5 | 2.8607769381e-4 | yes |
+| 45 | 3.7354548068e-6 | 3.7354547939e-6 | 4.2040820054e-5 | yes |
+| 54 | 1.7522174556e-7 | 1.7522174556e-7 | 3.5602330710e-6 | yes |
+| 63 | 6.9341230535e-9 | 6.9341230535e-9 | 1.6828763405e-7 | yes |
 
-For the five-orbital model, the plain transported core-orbital frame gave maximum
-barrier error `0.1870260274894946` Hartree and relative-profile error
-`0.18702602748949015` Hartree. A single uniformly weighted path-density
-natural-orbital frame reduced those to `0.0008422109054371241` and
-`0.0009336877697174728` Hartree respectively, without changing the criteria or
-fitting the orbital frame to energy differences.
+The accepted window is dimensions **54 and 63**, with `acceptedRound: 6` and
+`reducedAccuracyEstablished: true`. Dimension 27 meets the reference-error
+criteria but its successive change from dimension 18 is above tolerance; the
+focused regression test preserves this distinction. This is a reduced
+projected eigenproblem, not fewer orbital modes, fewer determinant-vector
+storage requirements, a demonstrated speedup or a protein-scale result.
 
-However, the adjacent four-orbital ensemble model still failed the target and
-the four-to-five-orbital profile change was `0.020967628349120027` Hartree.
-Both campaigns therefore correctly return **`reducedAccuracyNotEstablished`**
-with no accepted reduced-level identifier. This is a successfully computed
-negative scientific assessment, not a software-test failure.
+## Coherent global density and solvent feedback
 
-Maximum native-versus-PySCF discrepancy across the tested CAS level energies was
-`1.9895196601282805e-13` Hartree; across the reported barrier/reaction differences
-it was `2.191580250610059e-13` Hartree. Agreement between implementations does
-not establish reduced-model accuracy outside the stated reference comparison.
+The global embedding forms one normalized CI state in the orthonormal union of
+overlapping fragment spaces, removes duplicate directions, includes cross-term
+density contributions and drives the smooth C-PCM feedback loop. Electron
+count, occupation bounds, energy reconstruction, density/potential/energy
+convergence and returned-field stationarity are checked.
 
-The ensemble policy requires full-reference CI density matrices. It is a
-reference-assisted development tool, not evidence of a production speedup or
-reference-free prediction. Separate ECC ladder checks retain reduced-bath
-particle-closure failures rather than substituting CAS results or removing
-unfavorable levels.
+The committed polar LiH example converged in eight solvent iterations with a
+14-dimensional union in a 225-determinant sector:
 
-## Previous Mac mini validation retained
+- final density residual: `8.6602955681e-9`;
+- returned-field projected residual: `1.8736287756e-10` Hartree;
+- external residual: `0.0353106565` Hartree.
 
-The user's Apple M4 Pro/macOS 26.6/Xcode 26.6 run at implementation revision
-`60e417b78544639b4803304d671fca439eacdb69` (documented by `a7f4017...`) passed
-12 tests, the real target GPU crash regression, populated/empty MD tables,
-neighbor-list modes, checkpoint/restart, minimization, NVE/NVT/NPT/PME smoke
-checks and production MD protocol commands. That run also reported 36 native
-reaction checks, 36 independent PySCF comparisons, 21 CLI/store checks and 37
-correlated-solvent checks. The new CI observations above are a separate record,
-not an assertion that the current commit was rerun on that same Mac mini.
+The nonzero external residual is retained evidence that selected-space
+stationarity is not full-sector convergence. This formulation is distinct from
+the original democratic ECC-DMET energy formula. ECC imports require explicit
+inactive occupied columns; fractional occupations are not rounded into invented
+determinants.
 
-## Outstanding scientific requirements
+## Production and CI evidence
 
-- A stable reduced-space reaction-barrier hierarchy is **not established by the
-  new H3/6-31G campaign**, despite the improved five-orbital result.
-- Acrylamide-methanethiolate exact reproduction still lacks mapped author-model
-  precomplex, transition-state/product structures and required numerical inputs.
-- BTK exact reproduction still lacks prepared mapped snapshots and associated
-  author-model settings. Independently generated examples must be labeled as
-  such, not represented as supplied paper data.
-- Fixed-orbital FCI/CASCI equilibrium C-PCM does not establish a global,
-  physically representable ECC-DMET/PCM density functional for overlapping
-  fragments.
-- No kinetic rate is scientifically qualified or exported by these campaigns.
-  Target simulations still retain assumed-parameter and uncertainty flags.
-  Fixed-geometry energy differences do not replace saddle characterization,
-  endpoint connectivity, thermal/standard-state and dynamical qualification.
+The previous M4 Pro Metal target/MD/mapped-connectivity repairs remain covered
+by the 23-test suite. The target simulation remains synthetic and retains its
+assumed-parameter and uncertainty flags.
 
-No exercised build/test/CLI/Metal path failed in the current verified workflows.
-This is not a claim that every possible workload, GPU kernel combination or
-chemical approximation is qualified.
+Successful workflows for the implementation predecessor `24e8030` were:
 
-## Sanitizer status
+- Native chemistry conformance: run `34017723597`;
+- Barrier convergence conformance: run `34017723536`;
+- Scientific closure conformance: run `34017723523`;
+- Complete native product contracts: run `34017723548`.
 
-The earlier explicit `-Xlinker -sanitize=address` invocation failed because that
-compiler-driver flag was sent to the linker. That failure does not establish
-lack of AddressSanitizer support. The corrected SwiftPM form is
-`swift test -c debug --sanitize=address`; release testing may add
-`--sanitize=address -Xswiftc -enable-testing`. These corrected sanitizer runs
-were not performed in this continuation and are not included in PASS above.
+The local measured audit is
+`Documentation/Audit/scientific-closure-observations.json`.
+
+## BLOCKED ON SCIENTIFIC INPUT
+
+- Acrylamide-methanethiolate: missing mapped precomplex, transition-state,
+  product, quantum protocol and reference-energy inputs.
+- BTK: missing prepared snapshot, topology, environment and associated mapped
+  author-model inputs.
+
+The preflight checker establishes declared content integrity and readiness only;
+it cannot authenticate authorship or perform a paper reproduction.
+
+## NOT SCIENTIFICALLY QUALIFIED
+
+- No exact acrylamide-methanethiolate or BTK author-model calculation was run.
+- No kinetic rate, transmission coefficient or rate export is qualified.
+- The H3 scan is not an optimized saddle, IRC, Gibbs barrier or endpoint study.
+- The global CI/C-PCM density is not a completed global ECC-DMET/PCM functional.
+- No large-system scaling or production speedup has been established.

@@ -1,0 +1,147 @@
+{
+  "schema": "numivivo.org/scientific-closure-audit/v1",
+  "repository": "Numi2/numiVivo",
+  "testedCodeCommit": "b9870f705a80296adf13adeff19b782e3f2277c8",
+  "validatedOn": "2026-09-06",
+  "machine": {
+    "hostAlias": "macmini",
+    "model": "Mac mini Mac16,11",
+    "chip": "Apple M4 Pro",
+    "gpuCores": 16,
+    "memoryGB": 24,
+    "macOS": "26.6 (25G72)",
+    "xcode": "Xcode 26.6 (17F113)",
+    "swift": "Apple Swift version 6.3.3",
+    "metalTool": "Apple metal version 32023.883",
+    "metalDevice": "Apple M4 Pro"
+  },
+  "builds": {
+    "release": {
+      "command": "swift build -c release --jobs 3",
+      "passed": true
+    },
+    "releaseTests": {
+      "command": "swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing",
+      "passed": true
+    },
+    "diffCheck": {
+      "command": "git diff --check",
+      "passed": true
+    }
+  },
+  "tests": {
+    "fullSwift": {
+      "command": "swift test -c release --jobs 3 -Xswiftc -enable-testing",
+      "passed": 23,
+      "total": 23,
+      "suites": [
+        "ScientificClosureTests",
+        "BarrierConvergenceTests",
+        "AppleExecutionTests",
+        "ReactionConnectivityTests"
+      ]
+    },
+    "addressSanitizer": {
+      "command": "swift test -c debug --jobs 3 --sanitize=address --filter ScientificClosureTests",
+      "passed": 6,
+      "total": 6,
+      "scope": "host-side scientific closure tests; not every GPU workload"
+    },
+    "independentQualification": {
+      "nativeChecks": 36,
+      "pyscfComparisons": 36,
+      "productionCLIAndStoreChecks": 21,
+      "equilibriumSolventChecks": 37,
+      "totalChecks": 130
+    }
+  },
+  "residualBarrier": {
+    "template": "h3-residual-barrier",
+    "geometryCount": 9,
+    "fullSectorDimension": 90,
+    "spatialOrbitalModes": 6,
+    "acceptance": {
+      "maximumBarrierErrorHartree": 0.001,
+      "maximumRelativeProfileErrorHartree": 0.001,
+      "maximumSuccessiveChangeHartree": 0.001,
+      "minimumStableReducedLevels": 2
+    },
+    "levels": [
+      { "dimension": 9, "maximumBarrierErrorHartree": 0.03568589522398957, "maximumProfileErrorHartree": 0.03568589522398957, "maximumSuccessiveChangeHartree": null, "meetsReferenceAccuracy": false },
+      { "dimension": 18, "maximumBarrierErrorHartree": 0.00559931357315735, "maximumProfileErrorHartree": 0.005599313572678621, "maximumSuccessiveChangeHartree": 0.03008658165131095, "meetsReferenceAccuracy": false },
+      { "dimension": 27, "maximumBarrierErrorHartree": 0.0003318539686478772, "maximumProfileErrorHartree": 0.00033185396860524463, "maximumSuccessiveChangeHartree": 0.005267459604509472, "meetsReferenceAccuracy": true },
+      { "dimension": 36, "maximumBarrierErrorHartree": 0.000045776274848030596, "maximumProfileErrorHartree": 0.000045776274848030596, "maximumSuccessiveChangeHartree": 0.00028607769380517567, "meetsReferenceAccuracy": true },
+      { "dimension": 45, "maximumBarrierErrorHartree": 0.000003735454806808036, "maximumProfileErrorHartree": 0.000003735454793929449, "maximumSuccessiveChangeHartree": 0.00004204082005410115, "meetsReferenceAccuracy": true },
+      { "dimension": 54, "maximumBarrierErrorHartree": 0.0000001752217455575078, "maximumProfileErrorHartree": 0.0000001752217455575078, "maximumSuccessiveChangeHartree": 0.000003560233071020491, "meetsReferenceAccuracy": true },
+      { "dimension": 63, "maximumBarrierErrorHartree": 0.000000006934123053525809, "maximumProfileErrorHartree": 0.000000006934123053525809, "maximumSuccessiveChangeHartree": 0.00000016828763405030145, "meetsReferenceAccuracy": true }
+    ],
+    "reducedAccuracyEstablished": true,
+    "acceptedRound": 6,
+    "acceptedReducedDimensions": [54, 63],
+    "baselineOrbitalOnlyAssessment": "reducedAccuracyNotEstablished",
+    "resultSHA256": "1d314730e3f41507d678a2cfea0ddeb534a35a86a8ab9df3b0bcace053487973"
+  },
+  "globalEmbedding": {
+    "h2Template": {
+      "template": "h2-global-embedding",
+      "variationalDimension": 14,
+      "fullSectorDimension": 16,
+      "iterations": 3,
+      "externalResidualHartree": 4.174045930677799e-15,
+      "selfConsistentProjectedResidualHartree": 6.058001075632864e-14,
+      "resultSHA256": "313b70b4b3976220be973a27014bbddc4e09ff4ee3604730aa8975a6c5e8bc8c"
+    },
+    "polarLiH": {
+      "input": "Examples/reaction/global-lih-overlap.json",
+      "variationalDimension": 14,
+      "fullSectorDimension": 225,
+      "iterations": 8,
+      "finalDensityResidual": 8.66029556813702e-09,
+      "selfConsistentProjectedResidualHartree": 1.873628775555644e-10,
+      "externalResidualHartree": 0.0353106565349926,
+      "redundantSeedColumns": 4,
+      "resultSHA256": "47dd6f3747a844b6bafa7ffa4bdfca46bdd50adc3ee98cac968bd5e71e1489b4"
+    }
+  },
+  "productionTargetMetal": {
+    "command": "numivivo engagement-run Examples/target-engagement/synthetic-pulse.json --backend metal --policy target-policy.json",
+    "passed": true,
+    "device": "Apple M4 Pro",
+    "committedSteps": 12800,
+    "timeStepSeconds": 0.0078125,
+    "maximumFractionMassError": 0.000020734298688355494,
+    "fractionBalanceTolerance": 0.0001,
+    "containsAssumedParameters": true,
+    "hasUnknownParameterUncertainty": true
+  },
+  "reproductionPreflight": {
+    "acrylamideMethanethiolate": {
+      "reproductionExecuted": false,
+      "suppliedInputPackageConsistent": false,
+      "sourceAuthenticityVerified": false,
+      "missingRoles": ["precomplex", "transitionState", "product", "quantumProtocol", "referenceEnergies"],
+      "resultSHA256": "1b0dc67c253aaef25376b99f83259b933f880d4e6db6e9d9457fd68cd237c2e0"
+    },
+    "btkSnapshot": {
+      "reproductionExecuted": false,
+      "suppliedInputPackageConsistent": false,
+      "sourceAuthenticityVerified": false,
+      "missingRoles": ["precomplex", "transitionState", "product", "quantumProtocol", "referenceEnergies", "preparedSnapshot", "topology", "environment"],
+      "resultSHA256": "0e2137ecb1771381eb2be54f8768a6d9bf5c55aa9ce4dc9346f47a1e2c8d1f88"
+    }
+  },
+  "githubActions": [
+    { "name": "Native chemistry conformance", "runID": 34017723597, "conclusion": "success" },
+    { "name": "Barrier convergence conformance", "runID": 34017723536, "conclusion": "success" },
+    { "name": "Scientific closure conformance", "runID": 34017723523, "conclusion": "success" },
+    { "name": "Complete native product contracts", "runID": 34017723548, "conclusion": "success" }
+  ],
+  "limitations": [
+    "The residual campaign reduces the projected eigenproblem but retains all declared orbital modes and determinant-sector vectors.",
+    "The H3 data are a fixed supplied scan, not an optimized saddle, IRC, Gibbs barrier or rate certificate.",
+    "The global density is a variational CI/C-PCM formulation and is not the original democratic ECC-DMET/PCM energy functional.",
+    "The LiH external residual remains nonzero, so selected-space stationarity is not full-sector convergence.",
+    "Acrylamide-methanethiolate and BTK author-input reproductions are blocked by missing declared inputs.",
+    "No kinetic rate is scientifically qualified or exported."
+  ]
+}
