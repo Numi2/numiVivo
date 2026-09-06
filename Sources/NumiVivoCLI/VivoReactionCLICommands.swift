@@ -5,6 +5,18 @@ struct VivoReactionCLICommands {
     static func handles(_ name:String?) -> Bool {["reaction-template","reaction-run","reaction-help"].contains(name ?? "")}
     private struct Receipt:Codable {let request:VivoFingerprint;let task:VivoFingerprint;let receipt:VivoFingerprint;let result:VivoFingerprint;let reused:Bool}
     private struct Implementation:Codable {let executable:VivoFingerprint;let platform:String;let architecture:String}
+    private func canonicalPath(_ url:URL) -> URL {
+        var unresolved=url.standardizedFileURL, suffix:[String]=[]
+        let fileManager=FileManager.default
+        while !fileManager.fileExists(atPath:unresolved.path) {
+            let component=unresolved.lastPathComponent
+            guard !component.isEmpty, component != unresolved.path else { return url.standardizedFileURL }
+            suffix.append(component); unresolved.deleteLastPathComponent()
+        }
+        var resolved=unresolved.resolvingSymlinksInPath().standardizedFileURL
+        for component in suffix.reversed() { resolved.appendPathComponent(component,isDirectory:false) }
+        return resolved.standardizedFileURL
+    }
     private func read(_ url:URL,limit:Int) throws -> Data {
         let m=try url.resourceValues(forKeys:[.isRegularFileKey,.fileSizeKey])
         guard m.isRegularFile==true,let size=m.fileSize,size>=0,size<=limit else {throw VivoChemistryError.resourceLimit("reaction input file bound")}
@@ -34,10 +46,10 @@ struct VivoReactionCLICommands {
                 guard options["--store"]==nil else {throw VivoChemistryError.invalid("template does not use an artifact store")}
                 try write(VivoCanonicalJSON.encode(VivoReactionQualificationWorkflow.template(arguments[1])),to:output);return 0
             }
-            let source=URL(fileURLWithPath:arguments[1]).resolvingSymlinksInPath().standardizedFileURL
-            let root=URL(fileURLWithPath:options["--store"] ?? ".numivivo/chemistry-artifacts").resolvingSymlinksInPath().standardizedFileURL
+            let source=canonicalPath(URL(fileURLWithPath:arguments[1]))
+            let root=canonicalPath(URL(fileURLWithPath:options["--store"] ?? ".numivivo/chemistry-artifacts"))
             if let output {for url in [output,URL(fileURLWithPath:output.path+".receipt.json")] {
-                let target=url.resolvingSymlinksInPath().standardizedFileURL
+                let target=canonicalPath(url)
                 guard target != source,target != root,!target.path.hasPrefix(root.path+"/") else {throw VivoChemistryError.invalid("reaction output aliases source or artifact store")}
                 if let a=try? FileManager.default.attributesOfItem(atPath:source.path),let b=try? FileManager.default.attributesOfItem(atPath:target.path),
                    let x=a[.systemFileNumber] as? NSNumber,let y=b[.systemFileNumber] as? NSNumber,
