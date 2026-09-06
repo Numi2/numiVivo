@@ -1,0 +1,40 @@
+name: Reproducible source snapshot
+
+# This workflow packages tracked source only. It does not build, test, benchmark
+# or claim numerical qualification. Manual dispatch captures any selected ref.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/source-snapshot.yml
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Archive the exact triggering revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir source snapshot
+          git -C source init --quiet
+          git -C source remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -C source -c protocol.version=2 fetch --quiet --depth=1 origin "${GITHUB_SHA}"
+          test "$(git -C source rev-parse FETCH_HEAD)" = "${GITHUB_SHA}"
+          git -C source archive --format=tar --prefix=numiVivo/ FETCH_HEAD | gzip -n > snapshot/numivivo-source.tar.gz
+          printf '%s\n' "${GITHUB_SHA}" > snapshot/SOURCE_COMMIT.txt
+          (cd snapshot && sha256sum numivivo-source.tar.gz SOURCE_COMMIT.txt > SHA256SUMS)
+      - name: Retain source and digest
+        # actions/upload-artifact v7, pinned to the inspected commit.
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: numivivo-source-${{ github.sha }}
+          path: snapshot/
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
