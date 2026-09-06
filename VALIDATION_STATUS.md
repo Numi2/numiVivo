@@ -25,7 +25,7 @@ generated artifact stores were kept outside the repository.
 - Production `h3-residual-barrier`, `h2-global-embedding` and committed polar
   LiH global-embedding workflows executed and stored results successfully.
 - Production Metal `engagement-run` completed 12,800 commits on the Apple M4
-  Pro with maximum fraction-mass error `2.0734298688e-5` against the declared
+  Pro with maximum fraction-mass error `2.0734297468e-5` against the declared
   `1e-4` tolerance. Its synthetic assumed-parameter and uncertainty flags
   remain true.
 - Paper preflight workflows returned explicit negative readiness for both
