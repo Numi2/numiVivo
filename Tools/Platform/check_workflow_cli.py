@@ -120,6 +120,18 @@ def main():
     finally:
         object_path.write_bytes(original)
     run('restored-cache', 'workflow-run', recipe_path, '--store', store, '--output', out / 'restored.json')
+    sampled = out / 'sampled-recipe.json'
+    run('sampled-template', 'workflow-template', 'md-electronic-analysis', '--output', sampled)
+    run('sampled-run', 'workflow-run', sampled, '--store', store, '--output', out / 'sampled.json')
+    report = read('sampled.json')
+    check(report['allTasksSucceeded'] and len(report['nodes']) == 9, 'Metal-to-electronic workflow executes all nine typed stages')
+    item = next(x['artifact'] for x in report['exports'] if x['name'] == 'snapshot-mapping')
+    run('sampled-mapping', 'workflow-export', digest(item['artifact']), '--kind', item['kind'], '--store', store, '--output', out / 'mapping.json')
+    mapping = read('mapping.json')
+    check(mapping['atomToParticle'] == [0, 1] and mapping['step'] == 20, 'production snapshot preserves particle mapping and accepted step')
+    check(mapping['sourceStructure'] != mapping['snapshotStructure'], 'new geometry has a distinct source-bound structure identity')
+    run('sampled-resume', 'workflow-run', sampled, '--store', store, '--output', out / 'sampled-cached.json')
+    check(all(x['outcome']['succeeded']['reused'] for x in read('sampled-cached.json')['nodes']), 'all MD and electronic stages resume from verified artifacts')
     print('PASS', len(checks), 'real CLI, planner, cache, export and failure-preservation checks')
 
 

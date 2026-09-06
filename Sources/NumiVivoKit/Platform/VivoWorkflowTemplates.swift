@@ -6,6 +6,7 @@ public enum VivoWorkflowTemplates {
         switch name {
         case "molecular-analysis": return try molecularAnalysis()
         case "md-segments": return try molecularDynamics()
+        case "md-electronic-analysis": return try mdElectronicAnalysis()
         default: throw VivoChemistryError.invalid("unknown workflow template: \(name)")
         }
     }
@@ -48,6 +49,7 @@ public enum VivoWorkflowTemplates {
             ensemble: .nve, thermostat: .none, targetTemperatureK: nil, frictionPerPS: nil, neighborListEnabled: false)
         let resources = VivoChemistryResourceContract(numericalBackend: "metal-fp32")
         return try .init(identifier: "md-segments", artifacts: [
+            .init(identifier: "structure", source: .json(kind: "vivo.molecular-structure-document", payload: VivoPlatformOperations.json(VivoMolecularStructureDocument(structure: structure)))),
             .init(identifier: "system", source: .json(kind: "vivo.classical-system", payload: VivoPlatformOperations.json(system))),
             .init(identifier: "initial", source: .json(kind: "vivo.classical-initial-state", payload: VivoPlatformOperations.json(state)))
         ], nodes: [
@@ -56,5 +58,21 @@ public enum VivoWorkflowTemplates {
             .init(identifier: "segment-2", operation: "vivo.platform.md-continue", inputs: ["system": .artifact(identifier: "system"), "checkpoint": .output(node: "segment-1", port: "checkpoint")],
                 configuration: VivoPlatformOperations.json(VivoWorkflowMDConfiguration(dynamics: dynamics, steps: 12)), resources: resources)
         ], outputs: [.init(name: "checkpoint", node: "segment-2", port: "checkpoint"), .init(name: "observables", node: "segment-2", port: "result")])
+    }
+    /// A finite-system trajectory snapshot feeds the standard molecular branch.
+    /// Periodic snapshots deliberately require a separately prepared QM/MM region.
+    public static func mdElectronicAnalysis() throws -> VivoWorkflowRecipe {
+        var recipe = try molecularDynamics()
+        var chemistry = try molecularAnalysis()
+        recipe.identifier = "md-electronic-analysis"
+        recipe.artifacts.append(contentsOf: chemistry.artifacts.filter { $0.identifier == "basis" })
+        recipe.nodes.append(.init(identifier: "snapshot", operation: "vivo.platform.md-snapshot", inputs: [
+            "structure": .artifact(identifier: "structure"), "system": .artifact(identifier: "system"),
+            "checkpoint": .output(node: "segment-2", port: "checkpoint")]))
+        chemistry.nodes[0].inputs["structure"] = .output(node: "snapshot", port: "structure")
+        recipe.nodes += chemistry.nodes
+        recipe.outputs += chemistry.outputs
+        recipe.outputs.append(.init(name: "snapshot-mapping", node: "snapshot", port: "mapping"))
+        return recipe
     }
 }

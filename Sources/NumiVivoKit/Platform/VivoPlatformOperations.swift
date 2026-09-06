@@ -106,6 +106,7 @@ public enum VivoPlatformOperations {
                 ["result": try VivoCanonicalJSON.encode(VivoFiniteDrugRunRecord.run(input(VivoFiniteDrugExperiment.self, "experiment", inputs)))]
             }))
         definitions += VivoPlatformMDOperations.definitions(implementationFingerprint: id)
+        definitions.append(VivoPlatformSnapshotOperations.definition(implementationFingerprint: id))
         return try .init(implementationFingerprint: id, definitions: definitions)
     }
     private static func foundations(_ id: VivoFingerprint) -> [VivoWorkflowDefinition] {
@@ -117,11 +118,14 @@ public enum VivoPlatformOperations {
                 guard !c.identifier.isEmpty, c.identifier.utf8.count <= 1024 else { throw VivoChemistryError.invalid("structure import identity") }
             }, calculate: { cfg, inputs, _ in
                 let c = try decode(VivoWorkflowStructureImport.self, cfg), text = try input(String.self, "source", inputs)
-                if c.format == .sdf, text.components(separatedBy: "$$$$").dropLast().count > 1 {
+                if c.format == .sdf, text.components(separatedBy: "$$$$").filter({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }).count > 1 {
                     throw VivoChemistryError.unsupported("multiple SDF records require separate workflow inputs; first-record truncation is not automatic")
                 }
                 if c.format == .smiles, text.split(whereSeparator: \.isNewline).filter({ !$0.trimmingCharacters(in: .whitespaces).isEmpty }).count != 1 {
                     throw VivoChemistryError.unsupported("multi-record SMILES requires separate workflow inputs")
+                }
+                if c.format == .mol2, text.split(whereSeparator: \.isNewline).filter({ $0.trimmingCharacters(in: .whitespaces) == "@<TRIPOS>MOLECULE" }).count > 1 {
+                    throw VivoChemistryError.unsupported("multi-record MOL2 requires separate workflow inputs")
                 }
                 let imported = try VivoStructureCodec.decode(Data(text.utf8), format: c.format, identifier: c.identifier)
                 let document = try VivoMolecularStructureDocument(structure: imported.structure,

@@ -50,7 +50,7 @@ policy. Inputs are either inline JSON or existing content fingerprints. No shell
 commands, arbitrary libraries, file-system discovery or automatic downloading are
 part of the recipe. Raw molecular text can be represented as a JSON string with
 kind `vivo.structure-source-text` and passed to `vivo.platform.structure-import`.
-Multi-record SMILES/SDF input is rejected rather than silently truncated.
+Multi-record SMILES/SDF/MOL2 input is rejected rather than silently truncated.
 
 Each node declares operation/version, input bindings, its existing native
 configuration payload, and `VivoChemistryResourceContract`. Input kinds are checked
@@ -83,6 +83,17 @@ accuracy. The fixed-size basis is not a recommendation for research energetics.
 second restores the first's checkpoint, including accepted-step and random
 namespace identity; it does not thermalize or reset the clock. A failed segment
 cannot publish a successful downstream checkpoint.
+
+`workflow-template md-electronic-analysis` connects those segments to a mapped
+snapshot, Gaussian integrals, RHF and independent FCI/MP2 calculations. The
+snapshot conversion checks the original structure/system/checkpoint identities,
+reconstructs atom-to-particle correspondence, excludes non-atomic virtual
+particles, retains nanometre coordinates and publishes the explicit mapping.
+It assigns a new conformer/structure fingerprint instead of reusing the starting
+geometry identity. Periodic cells remain periodic: the isolated electronic-system
+adapter rejects them rather than silently omitting periodic or MM interactions.
+This example is a finite harmonic-system integration test, not an equilibrium
+ensemble or validated MD force field for subsequent quantum energetics.
 
 `Examples/workflows/target-panel.json` runs the existing synthetic exposure
 fixture and a half-exposure variant using the FP64 target reference. Assumed
@@ -120,12 +131,19 @@ records this difference explicitly. No backend is silently changed.
 
 `PlatformWorkflowTests` covers planning, type errors, cycles, admission, actual
 parallelism, duplicate-task sharing, failures/blocked descendants, restart,
-corrupted inputs, and actual molecular and Metal engines. The production CLI check
-adds output aliasing, no-clobber, corrupt cached results, manifest tampering and
-verified export/resume. The dedicated read-only Apple workflow builds unchanged
-committed source, runs the complete suite and retains source/binary identities,
-reports and logs. Its outcomes must be read from the run; this specification does
-not imply a passing CI result.
+corrupted inputs, and actual molecular and Metal engines. `PlatformSnapshotTests`
+checks mapped MD-to-electronic execution, non-identity particle ordering,
+periodicity rejection and multi-record import protection. The production CLI
+check adds output aliasing, no-clobber, corrupt cached results, manifest tampering,
+verified export/resume and the complete nine-stage MD-to-electronic workflow.
+
+The dedicated read-only Apple workflow builds the complete unchanged product and
+all test targets. It executes the focused platform, snapshot, real-Metal and
+selected-CI suites before the actual CLI checks, and rejects a filter that did not
+execute each named suite. The existing domain conformance workflows separately
+retain the long full-suite chemistry/connectivity regressions. Logs and precise
+source/binary identities are retained for failures too. This specification does
+not itself establish a passing CI result; consult measured reports.
 
 General platform development continues with wider registered adapters, streamed
 ensemble reduction, improved long-workflow cancellation, resource measurements,
