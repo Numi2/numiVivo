@@ -37,6 +37,11 @@ jobs:
           git checkout -B qmmm-integration FETCH_HEAD
           git apply --check "$RUNNER_TEMP/qmmm-integration.patch"
           git apply "$RUNNER_TEMP/qmmm-integration.patch"
+          python3 - <<'PY'
+          import pathlib
+          p = pathlib.Path('Sources/NumiVivoKit/MD/VivoMDVelocityInitializer.swift')
+          p.write_text(p.read_text().rstrip() + '\n')
+          PY
           git diff --check
           git config user.name 'NumiVivo development'
           git config user.email '33553832+Numi2@users.noreply.github.com'
