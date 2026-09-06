@@ -2,7 +2,7 @@ import Foundation
 
 /// Transparent input fixtures, never a claim to reproduce author-supplied data.
 public enum VivoBarrierBenchmarks {
-    public static func hydrogenExchange631G() -> VivoBarrierConvergenceRequest {
+    public static func hydrogenExchange631G(ensemble: Bool = false) -> VivoBarrierConvergenceRequest {
         let coordinates: [Double] = [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1]
         let snapshots = coordinates.enumerated().map { i,u in
             // A declared collinear H + H2 bond-exchange scan. These geometries
@@ -23,12 +23,13 @@ public enum VivoBarrierBenchmarks {
             [VivoGaussianShell(nucleusIndex: i, angularMomentum: 0, primitives: inner),
              .init(nucleusIndex: i, angularMomentum: 0, primitives: [.init(exponent: 0.1612778, coefficient: 1)])]
         }, source: "Explicit hydrogen 6-31G coefficients; independently checked against PySCF 2.8.0 6-31G basis data")
-        return .init(identifier: "mapped-H3-6-31G-CAS-ladder", atomIdentifiers: ["H-left","H-center","H-right"],
+        return .init(identifier: ensemble ? "mapped-H3-6-31G-ensemble-CAS-ladder" : "mapped-H3-6-31G-CAS-ladder", atomIdentifiers: ["H-left","H-center","H-right"],
             coordinateUnit: "dimensionless declared scan parameter", snapshots: snapshots, basis: basis,
             anchorPointIdentifier: "h3-4", barrierPointIdentifier: "h3-4",
             transportGroups: [Array(0..<6)],
             levels: (3...6).map { count in .init(identifier: "CAS-3e-\(count)o",
                 method: .casci(partition: .init(active: Array(0..<count)))) },
-            acceptance: .init(), maximumPointEvaluations: 45)
+            acceptance: .init(), maximumPointEvaluations: 45,
+            ensembleOrbitals: ensemble ? .init(pointWeights: [Double](repeating: 1.0/9, count: 9)) : nil)
     }
 }

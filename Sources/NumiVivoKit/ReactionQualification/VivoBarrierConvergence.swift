@@ -1,249 +1,5 @@
 import Foundation
 
-/// Exactly one approximation family is used in a ladder. CAS and ECC results
-/// are not presented as successive refinements of the same approximation.
-public enum VivoBarrierLevelMethod: Codable, Sendable, Equatable {
-    case casci(partition: VivoActiveSpace)
-    case eccPath(configuration: VivoECCPathConfiguration)
-}
-public struct VivoBarrierLevel: Codable, Sendable, Equatable {
-    public let identifier: String
-    public let method: VivoBarrierLevelMethod
-    public init(identifier: String, method: VivoBarrierLevelMethod) {
-        self.identifier = identifier; self.method = method
-    }
-}
-public struct VivoBarrierAcceptance: Codable, Sendable, Equatable {
-    public var maximumBarrierErrorHartree: Double
-    public var maximumRelativeProfileErrorHartree: Double
-    public var maximumSuccessiveChangeHartree: Double
-    /// At least two genuinely reduced levels must agree with the reference and
-    /// one another. A full-space endpoint is never counted in this window.
-    public var minimumStableReducedLevels: Int
-    public init(maximumBarrierErrorHartree: Double = 1e-3,
-                maximumRelativeProfileErrorHartree: Double = 1e-3,
-                maximumSuccessiveChangeHartree: Double = 1e-3,
-                minimumStableReducedLevels: Int = 2) {
-        self.maximumBarrierErrorHartree = maximumBarrierErrorHartree
-        self.maximumRelativeProfileErrorHartree = maximumRelativeProfileErrorHartree
-        self.maximumSuccessiveChangeHartree = maximumSuccessiveChangeHartree
-        self.minimumStableReducedLevels = minimumStableReducedLevels
-    }
-    public func validate() throws {
-        guard [maximumBarrierErrorHartree, maximumRelativeProfileErrorHartree,
-               maximumSuccessiveChangeHartree].allSatisfy({ $0.isFinite && $0 > 0 }),
-              (2...16).contains(minimumStableReducedLevels) else {
-            throw VivoChemistryError.invalid("barrier accuracy tolerances or reduced-level stability window")
-        }
-    }
-}
-public struct VivoBarrierConvergenceRequest: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/barrier-convergence/v1"
-    public let schema: String
-    public let identifier: String
-    public let atomIdentifiers: [String]
-    public let coordinateUnit: String
-    public let snapshots: [VivoMolecularPathSnapshot]
-    public let basis: VivoGaussianBasis
-    public let anchorPointIdentifier: String
-    /// This is a declared evaluation point, NOT an assertion of a saddle.
-    public let barrierPointIdentifier: String
-    public let transportGroups: [[Int]]
-    public let anchorCoefficients: VivoQMMatrix?
-    public let minimumTransportSingularValue: Double
-    public let minimumReferenceOverlapSquared: Double
-    public let referenceResidualTolerance: Double
-    public let levels: [VivoBarrierLevel]
-    public let acceptance: VivoBarrierAcceptance
-    /// Bounds point solves plus reserved outer ECC point evaluations. Nested
-    /// ECC iterations keep their own explicit budgets; this is not a FLOP count.
-    public let maximumPointEvaluations: Int
-    public let budget: VivoChemistryBudget
-    public init(identifier: String, atomIdentifiers: [String], coordinateUnit: String,
-                snapshots: [VivoMolecularPathSnapshot], basis: VivoGaussianBasis,
-                anchorPointIdentifier: String, barrierPointIdentifier: String,
-                transportGroups: [[Int]], anchorCoefficients: VivoQMMatrix? = nil,
-                minimumTransportSingularValue: Double = 0.5,
-                minimumReferenceOverlapSquared: Double = 0.1,
-                referenceResidualTolerance: Double = 1e-11,
-                levels: [VivoBarrierLevel], acceptance: VivoBarrierAcceptance = .init(),
-                maximumPointEvaluations: Int = 10000, budget: VivoChemistryBudget = .init()) {
-        schema = Self.schema; self.identifier = identifier; self.atomIdentifiers = atomIdentifiers
-        self.coordinateUnit = coordinateUnit; self.snapshots = snapshots; self.basis = basis
-        self.anchorPointIdentifier = anchorPointIdentifier; self.barrierPointIdentifier = barrierPointIdentifier
-        self.transportGroups = transportGroups; self.anchorCoefficients = anchorCoefficients
-        self.minimumTransportSingularValue = minimumTransportSingularValue
-        self.minimumReferenceOverlapSquared = minimumReferenceOverlapSquared
-        self.referenceResidualTolerance = referenceResidualTolerance; self.levels = levels
-        self.acceptance = acceptance; self.maximumPointEvaluations = maximumPointEvaluations; self.budget = budget
-    }
-    public func validate() throws {
-        try budget.validate(); try acceptance.validate()
-        guard schema == Self.schema, !identifier.isEmpty, identifier.utf8.count <= 1024,
-              !coordinateUnit.isEmpty, coordinateUnit.utf8.count <= 128,
-              (3...64).contains(snapshots.count), (2...32).contains(levels.count),
-              Set(snapshots.map(\.identifier)).count == snapshots.count,
-              Set(levels.map(\.identifier)).count == levels.count,
-              levels.allSatisfy({ !$0.identifier.isEmpty && $0.identifier.utf8.count <= 1024 }),
-              snapshots.contains(where: { $0.identifier == anchorPointIdentifier }),
-              snapshots.dropFirst().dropLast().contains(where: { $0.identifier == barrierPointIdentifier }),
-              (1...1000000).contains(maximumPointEvaluations),
-              [minimumTransportSingularValue, minimumReferenceOverlapSquared].allSatisfy({ $0.isFinite && $0 > 0 && $0 <= 1 }),
-              referenceResidualTolerance.isFinite, referenceResidualTolerance > 0,
-              referenceResidualTolerance <= min(1e-8, acceptance.maximumBarrierErrorHartree / 100) else {
-            throw VivoChemistryError.invalid("barrier campaign identities, points, reference or work contract")
-        }
-        let first = snapshots[0].system
-        guard atomIdentifiers.count == first.nuclei.count, Set(atomIdentifiers).count == atomIdentifiers.count,
-              atomIdentifiers.allSatisfy({ !$0.isEmpty && $0.utf8.count <= 1024 }) else {
-            throw VivoChemistryError.invalid("barrier campaign requires explicit unique mapped atoms")
-        }
-        try basis.validate(nucleusCount: first.nuclei.count)
-        var coordinate = -Double.infinity
-        for point in snapshots {
-            try point.system.validate()
-            guard !point.identifier.isEmpty, point.identifier.utf8.count <= 1024,
-                  point.coordinate.isFinite, point.coordinate > coordinate,
-                  point.system.nuclei.map(\.atomicNumber) == first.nuclei.map(\.atomicNumber),
-                  point.system.nuclei.map(\.structureAtomIndex) == first.nuclei.map(\.structureAtomIndex),
-                  point.system.alphaElectrons == first.alphaElectrons, point.system.betaElectrons == first.betaElectrons,
-                  point.system.pointCharges == first.pointCharges else {
-                throw VivoChemistryError.invalid("campaign changes atom mapping, charge/spin, frozen environment or coordinate order")
-            }
-            coordinate = point.coordinate
-        }
-        let n = try VivoGaussianIntegralEngine.expanded(system: first, basis: basis, budget: budget).count
-        let groups = transportGroups.flatMap { $0 }
-        guard n <= 31, n <= budget.maximumBasisFunctions, groups.count == n, Set(groups) == Set(0..<n),
-              transportGroups.allSatisfy({ !$0.isEmpty }), first.alphaElectrons <= n, first.betaElectrons <= n else {
-            throw VivoChemistryError.invalid("campaign basis capacity, orbital transport groups or populations")
-        }
-        // Check complete reference-sector capacity before expensive integral work.
-        _ = try VivoDirectCI.determinants(n: n, na: first.alphaElectrons, nb: first.betaElectrons, budget: budget)
-        _ = try budget.elements([snapshots.count, n, n, n, n], simultaneousArrays: 8)
-        if let c = anchorCoefficients {
-            guard c.rows == n, c.columns == n, c.values.allSatisfy(\.isFinite) else {
-                throw VivoChemistryError.invalid("campaign anchor coefficient shape")
-            }
-        }
-        var previous: VivoBarrierLevelMethod?, reservation = snapshots.count
-        for level in levels {
-            switch level.method {
-            case .casci(let p):
-                let all = p.doublyOccupiedCore + p.active
-                guard !p.active.isEmpty, p.frozenOrbitals.isEmpty, Set(all).count == all.count,
-                      all.allSatisfy({ $0 >= 0 && $0 < n }), p.doublyOccupiedCore.count <= min(first.alphaElectrons, first.betaElectrons),
-                      first.alphaElectrons - p.doublyOccupiedCore.count <= p.active.count,
-                      first.betaElectrons - p.doublyOccupiedCore.count <= p.active.count else {
-                    throw VivoChemistryError.invalid("campaign CAS core, active, external or electron partition")
-                }
-                if let previous {
-                    guard case .casci(let old) = previous,
-                          Set(old.active).isStrictSubset(of: Set(p.active)),
-                          Set(p.doublyOccupiedCore).isSubset(of: Set(old.doublyOccupiedCore)),
-                          Set(old.doublyOccupiedCore).subtracting(p.doublyOccupiedCore).isSubset(of: Set(p.active)) else {
-                        throw VivoChemistryError.invalid("CAS ladder must enlarge a nested active space without changing families or demoting occupied core to empty external orbitals")
-                    }
-                }
-                reservation += snapshots.count
-            case .eccPath(let cfg):
-                guard first.alphaElectrons == first.betaElectrons,
-                      cfg.expectedBathOrbitals.count == cfg.embedding.fragments.count,
-                      cfg.maximumPointEvaluations >= snapshots.count, !cfg.embedding.fragments.isEmpty else { throw VivoChemistryError.invalid("ECC campaign spin or bath contract") }
-                // Structural preflight only: no model energies are inferred
-                // from this zero-valued shape carrier.
-                let shape = VivoEmbeddedHamiltonian(orbitalIdentifiers: (0..<n).map { "shape-\($0)" },
-                    alphaElectrons: first.alphaElectrons, betaElectrons: first.betaElectrons,
-                    oneElectron: VivoQMMatrix(n,n), twoElectron: [Double](repeating: 0, count: n*n*n*n),
-                    constantEnergyHartree: 0, energyReference: "shape-validation-only")
-                let shapePoints = try snapshots.indices.map { i in try VivoECCPathPoint(identifier: snapshots[i].identifier,
-                    hamiltonian: shape, overlapWithPrevious: i == 0 ? nil : VivoQMMatrix.identity(n)) }
-                try cfg.validate(points: shapePoints, budget: budget)
-                if let previous {
-                    guard case .eccPath(let old) = previous, old.embedding.mode == cfg.embedding.mode,
-                          old.embedding.matching == cfg.embedding.matching,
-                          old.embedding.qioWeights == cfg.embedding.qioWeights,
-                          old.embedding.localityGroups == cfg.embedding.localityGroups,
-                          old.pointWeights == cfg.pointWeights, old.transportGroups == cfg.transportGroups,
-                          old.embedding.fragments.map(\.identifier) == cfg.embedding.fragments.map(\.identifier) else {
-                        throw VivoChemistryError.invalid("ECC ladder changes solver family, reference, matching, objective or fragment identities")
-                    }
-                    var expanded = false
-                    for i in cfg.embedding.fragments.indices {
-                        let a = old.embedding.fragments[i], b = cfg.embedding.fragments[i]
-                        let oldSize = a.orbitals.count + old.expectedBathOrbitals[i]
-                        let newSize = b.orbitals.count + cfg.expectedBathOrbitals[i]
-                        guard Set(a.orbitals).isSubset(of: Set(b.orbitals)), newSize >= oldSize else {
-                            throw VivoChemistryError.invalid("ECC ladder shrinks a fragment or its declared cluster")
-                        }
-                        expanded = expanded || newSize > oldSize
-                    }
-                    guard expanded else { throw VivoChemistryError.invalid("duplicate-sized ECC level is not an enlargement") }
-                }
-                guard cfg.maximumPointEvaluations <= maximumPointEvaluations - reservation else {
-                    throw VivoChemistryError.resourceLimit("campaign ECC point-evaluation reservation")
-                }
-                reservation += cfg.maximumPointEvaluations
-            }
-            guard reservation <= maximumPointEvaluations else { throw VivoChemistryError.resourceLimit("campaign point-evaluation reservation") }
-            previous = level.method
-        }
-    }
-}
-
-public struct VivoBarrierDifferences: Codable, Sendable, Equatable {
-    public let forwardHartree: Double
-    public let reverseHartree: Double
-    public let reactionHartree: Double
-    public let relativeProfileHartree: [Double]
-}
-public struct VivoBarrierLevelEvaluation: Codable, Sendable, Equatable {
-    public let energiesHartree: [Double]
-    public let differences: VivoBarrierDifferences
-    public let maximumBarrierErrorHartree: Double
-    public let maximumRelativeProfileErrorHartree: Double
-    public let maximumAbsoluteEnergyErrorHartree: Double
-    /// Nil only for the first level or after a failed immediate predecessor.
-    public let maximumSuccessiveChangeHartree: Double?
-    public let maximumImpurityOrbitals: Int
-    public let isGenuinelyReduced: Bool
-    public let maximumSolverResidual: Double
-    public let chargedPointEvaluations: Int
-    /// Explicitly diagnoses incorrect error cancellation rather than concealing it.
-    public let meetsReferenceAccuracy: Bool
-}
-public enum VivoBarrierLevelOutcome: Codable, Sendable, Equatable {
-    case evaluated(result: VivoBarrierLevelEvaluation)
-    case failed(category: String, reason: String)
-    public var evaluation: VivoBarrierLevelEvaluation? {
-        if case .evaluated(let result) = self { return result }; return nil
-    }
-}
-public struct VivoBarrierLevelReport: Codable, Sendable, Equatable {
-    public let identifier: String
-    public let outcome: VivoBarrierLevelOutcome
-}
-public enum VivoBarrierAssessment: String, Codable, Sendable {
-    case reducedAccuracyEstablished, reducedAccuracyNotEstablished, incompleteLevelExecution
-}
-public struct VivoBarrierConvergenceResult: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/barrier-convergence-result/v1"
-    public let schema: String
-    public let request: VivoBarrierConvergenceRequest
-    /// The actual complete AO frames used for every level and reference.
-    public let orbitalCoefficients: [VivoQMMatrix]
-    public let transportMinimumSingularValues: [Double]
-    public let adjacentReferenceOverlapsSquared: [Double]
-    public let referenceEnergiesHartree: [Double]
-    public let referenceResiduals: [Double]
-    public let referenceDifferences: VivoBarrierDifferences
-    public let levels: [VivoBarrierLevelReport]
-    public let assessment: VivoBarrierAssessment
-    public let acceptedReducedLevelIdentifier: String?
-    public let chargedPointEvaluations: Int
-    public let meaning: String
-}
-
 /// Accuracy assessment at identical, explicitly declared geometries. No nuclear
 /// optimization, stationary-point, thermochemical or rate claim is made here.
 /// A failed approximation is retained, not filtered out of a favorable report.
@@ -306,10 +62,44 @@ public enum VivoBarrierConvergence {
         zip(a.relativeProfileHartree, b.relativeProfileHartree).map { abs($0-$1) }.max()!
     }
     public static func run(_ request: VivoBarrierConvergenceRequest) throws -> VivoBarrierConvergenceResult {
-        let p = try prepare(request), n = p.hamiltonians[0].orbitalCount
+        var p = try prepare(request)
+        let n = p.hamiltonians[0].orbitalCount
         let barrier = request.snapshots.firstIndex { $0.identifier == request.barrierPointIdentifier }!
-        let reference = try p.hamiltonians.map { try VivoDirectCI.solve($0,
+        var reference = try p.hamiltonians.map { try VivoDirectCI.solve($0,
             configuration: .init(residualTolerance: request.referenceResidualTolerance), budget: request.budget).roots[0] }
+        var occupations: [Double]?, ensembleRotation: VivoQMMatrix?
+        if let policy = request.ensembleOrbitals {
+            var density = VivoQMMatrix(n,n), work = 0
+            for (point,ci) in reference.enumerated() {
+                let index = Dictionary(uniqueKeysWithValues: ci.state.determinants.enumerated().map { ($0.element,$0.offset) })
+                let needed = 2*n*n*ci.state.determinants.count
+                guard needed <= request.budget.maximumOperatorApplications-work else {
+                    throw VivoChemistryError.resourceLimit("ensemble one-particle-density work")
+                }
+                work += needed
+                for a in 0..<n { for b in 0..<n { for spin in 0..<2 {
+                    let value = VivoCIDensityMatrices.expectation(ci.state, index,
+                        [.init(mode:2*b+spin,creation:false),.init(mode:2*a+spin,creation:true)])
+                    density[a,b] += policy.pointWeights[point]*value
+                } } }
+            }
+            let spectrum = try VivoQMDenseAlgebra.symmetricEigen(density, tolerance: 1e-13)
+            guard spectrum.values.allSatisfy({ $0 >= -1e-8 && $0 <= 2+1e-8 }),
+                  abs(spectrum.values.reduce(0,+)-Double(reference[0].state.alphaElectrons+reference[0].state.betaElectrons)) < 1e-8 else {
+                throw VivoChemistryError.convergence("ensemble density particle trace or representability")
+            }
+            var rotation = VivoQMMatrix(n,n)
+            for i in 0..<n { for j in 0..<n { rotation[i,j] = spectrum.vectors[i,n-1-j] } }
+            occupations = Array(spectrum.values.reversed()); ensembleRotation = rotation
+            p = .init(hamiltonians: try p.hamiltonians.map { try $0.rotated(by: rotation, budget: request.budget) },
+                coefficients: try p.coefficients.map { try $0.multiplied(by: rotation) }, minima: p.minima,
+                overlaps: try p.overlaps.map { try $0.congruence(rotation) })
+            reference = try reference.map { ci in
+                .init(method: ci.method, energyHartree: ci.energyHartree,
+                    state: try VivoCIOrbitalFrame.rotated(ci.state, by: rotation, budget: request.budget),
+                    eigenResidualNorm: ci.eigenResidualNorm, nextStateGapHartree: ci.nextStateGapHartree)
+            }
+        }
         // Physical CI residuals are measured again with the shared Hamiltonian
         // action, including all fixed-sector components, not a serialized flag.
         let residuals = try reference.indices.map { i in try VivoDirectCI.residualNorm(hamiltonian: p.hamiltonians[i],
@@ -334,6 +124,16 @@ public enum VivoBarrierConvergence {
                 let values: [Double], size: Int, solverResidual: Double, chargeForLevel: Int
                 switch level.method {
                 case .casci(let partition):
+                    if let occupations, let policy = request.ensembleOrbitals {
+                        var owner = [Int](repeating: 2, count: n)
+                        for p in partition.active { owner[p] = 1 }
+                        for p in partition.doublyOccupiedCore { owner[p] = 0 }
+                        for i in 0..<n { for j in (i+1)..<n where owner[i] != owner[j] {
+                            guard abs(occupations[i]-occupations[j]) >= policy.minimumOccupationBoundaryGap else {
+                                throw VivoChemistryError.convergence("CAS boundary splits a near-degenerate ensemble occupation subspace")
+                            }
+                        } }
+                    }
                     var states: [VivoCIResult] = []
                     for h in p.hamiltonians {
                         calls += 1
@@ -348,10 +148,10 @@ public enum VivoBarrierConvergence {
                     values = states.map(\.energyHartree); size = partition.active.count
                     solverResidual = states.map(\.eigenResidualNorm).max()!
                 case .eccPath(let cfg):
-                    // Reserve all work before entry, including a failing nested
-                    // solve whose partial count is intentionally not inferred.
-                    chargeForLevel = cfg.maximumPointEvaluations
-                    calls += cfg.maximumPointEvaluations
+                    // Reserve both execution and path reconstruction, including
+                    // a failing solve whose partial count cannot be inferred.
+                    chargeForLevel = 2*cfg.maximumPointEvaluations
+                    calls += chargeForLevel
                     guard calls <= request.maximumPointEvaluations else { throw VivoChemistryError.resourceLimit("campaign ECC reservation") }
                     let result = try VivoECCReactionPath.solve(points: eccPoints, configuration: cfg, budget: request.budget)
                     guard result.converged else { throw VivoChemistryError.convergence("campaign ECC path: \(result.termination)") }
@@ -359,6 +159,11 @@ public enum VivoBarrierConvergence {
                     values = result.pointResults.map(\.energyHartree)
                     size = result.pointResults.flatMap { $0.frame.clusters.map { $0.coefficients.columns } }.max()!
                     solverResidual = result.pointResults.flatMap { $0.frame.states.map { $0.biasedCI.eigenResidualNorm } }.max()!
+                }
+                guard solverResidual.isFinite, solverResidual >= 0,
+                      solverResidual <= min(1e-8, min(request.acceptance.maximumBarrierErrorHartree,
+                          request.acceptance.maximumRelativeProfileErrorHartree)/100) else {
+                    throw VivoChemistryError.convergence("level solver accuracy is insufficient for the declared barrier target")
                 }
                 let diff = differences(values, barrier: barrier), bError = barrierChange(diff, truth), pError = profileChange(diff, truth)
                 let previous = reports.last?.outcome.evaluation?.differences
@@ -384,6 +189,7 @@ public enum VivoBarrierConvergence {
         let decision = assessment(reports, acceptance: request.acceptance)
         return .init(schema: VivoBarrierConvergenceResult.schema, request: request, orbitalCoefficients: p.coefficients,
             transportMinimumSingularValues: p.minima, adjacentReferenceOverlapsSquared: overlaps,
+            ensembleOccupations: occupations, ensembleRotation: ensembleRotation,
             referenceEnergiesHartree: energies, referenceResiduals: residuals, referenceDifferences: truth, levels: reports,
             assessment: decision.0, acceptedReducedLevelIdentifier: decision.1, chargedPointEvaluations: calls, meaning: meaning)
     }
@@ -423,6 +229,16 @@ public enum VivoBarrierConvergence {
               close(result.referenceResiduals, rebuilt.referenceResiduals, tolerance: request.referenceResidualTolerance),
               differencesClose(result.referenceDifferences, rebuilt.referenceDifferences) else {
             throw VivoChemistryError.invalid("campaign reference, work or assessment differs on reconstruction")
+        }
+        guard (result.ensembleOccupations == nil) == (rebuilt.ensembleOccupations == nil),
+              (result.ensembleRotation == nil) == (rebuilt.ensembleRotation == nil),
+              close(result.ensembleOccupations ?? [], rebuilt.ensembleOccupations ?? []) else {
+            throw VivoChemistryError.invalid("campaign ensemble occupation or policy binding")
+        }
+        if let a = result.ensembleRotation, let b = rebuilt.ensembleRotation {
+            guard a.rows == b.rows, a.columns == b.columns, close(a.values,b.values) else {
+                throw VivoChemistryError.invalid("campaign ensemble orbital-frame reconstruction")
+            }
         }
         for (a,b) in zip(result.orbitalCoefficients, rebuilt.orbitalCoefficients) {
             guard a.rows == b.rows, a.columns == b.columns, close(a.values,b.values) else { throw VivoChemistryError.invalid("campaign orbital-frame reconstruction") }

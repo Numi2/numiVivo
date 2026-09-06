@@ -1,0 +1,100 @@
+name: Barrier convergence conformance
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/barrier-convergence.yml'
+      - 'Sources/**'
+      - 'Tests/NumiVivoIntegrationTests/**'
+      - 'Examples/reaction/barrier-*.json'
+      - 'ReferenceAdapters/PySCF/barrier_convergence_oracle.py'
+      - 'Package.swift'
+permissions:
+  contents: read
+concurrency:
+  group: barrier-convergence-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  oracle:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Reconstruct both orbital policies independently from committed inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/barrier-python"
+          PYTHON="$RUNNER_TEMP/barrier-python/bin/python"
+          "$PYTHON" -m pip install 'numpy==1.26.4' 'scipy==1.13.1' 'h5py==3.11.0' 'pyscf==2.8.0'
+          OUT="$RUNNER_TEMP/barrier-oracle"
+          "$PYTHON" ReferenceAdapters/PySCF/barrier_convergence_oracle.py export Examples/reaction/barrier-h3-631g.json "$OUT/plain"
+          "$PYTHON" ReferenceAdapters/PySCF/barrier_convergence_oracle.py export Examples/reaction/barrier-h3-631g-ensemble.json "$OUT/ensemble"
+          "$PYTHON" -m pip freeze > "$OUT/python-lock.txt"
+          git rev-parse HEAD > "$OUT/source-commit.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: barrier-oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/barrier-oracle/
+          if-no-files-found: error
+          retention-days: 14
+  apple:
+    needs: oracle
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: barrier-oracle-${{ github.sha }}
+          path: ${{ runner.temp }}/barrier-oracle
+      - name: Build the exact complete product and test targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/barrier-run"
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/source-commit.txt"
+          git archive --format=tar.gz HEAD > "$OUT/source.tar.gz"
+          swift --version > "$OUT/compiler.txt"
+          uname -srm > "$OUT/platform.txt"
+          swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing 2>&1 | tee "$OUT/build.log"
+          shasum -a 256 .build/release/numivivo > "$OUT/binary.sha256"
+      - name: Exercise full Swift suite including existing real Metal and mapped connectivity
+        env:
+          NUMIVIVO_TEST_ARTIFACTS: ${{ runner.temp }}/barrier-run/native-tests
+          MTL_DEBUG_LAYER: '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test -c release --skip-build 2>&1 | tee "$RUNNER_TEMP/barrier-run/tests.log"
+      - name: Compare both production campaigns to PySCF and test artifact reuse
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/barrier-run"
+          python3 ReferenceAdapters/PySCF/barrier_convergence_oracle.py check .build/release/numivivo Examples/reaction/barrier-h3-631g.json "$RUNNER_TEMP/barrier-oracle/plain" "$OUT/plain" 2>&1 | tee "$OUT/plain.log"
+          python3 ReferenceAdapters/PySCF/barrier_convergence_oracle.py check .build/release/numivivo Examples/reaction/barrier-h3-631g-ensemble.json "$RUNNER_TEMP/barrier-oracle/ensemble" "$OUT/ensemble" 2>&1 | tee "$OUT/ensemble.log"
+      - name: Record immutable source state
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/barrier-run"
+          git status --porcelain > "$RUNNER_TEMP/barrier-run/git-status.txt"
+          git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: apple-barrier-${{ github.sha }}
+          path: ${{ runner.temp }}/barrier-run/
+          if-no-files-found: error
+          retention-days: 14
