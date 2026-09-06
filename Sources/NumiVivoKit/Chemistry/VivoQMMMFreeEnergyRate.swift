@@ -3,6 +3,9 @@ import Foundation
 public enum VivoQMMMRateEnvironment: String, Codable, Sendable {
     case explicitSolution
     case proteinEnvironment
+    fileprivate var freeEnergyEnvironment: VivoQMMMFreeEnergyEnvironment {
+        switch self { case .explicitSolution:return .explicitSolution;case .proteinEnvironment:return .proteinEnvironment }
+    }
 }
 
 public struct VivoQMMMFreeEnergyRateRequest: Codable, Sendable, Equatable {
@@ -49,15 +52,13 @@ public enum VivoQMMMFreeEnergyRate {
               request.context.temperatureK==pmf.temperatureK,
               request.context.chemicalState==provenance.chemicalState,
               request.context.hostContext==provenance.environmentIdentifier,
+              request.environment.freeEnergyEnvironment==provenance.environment,
               request.transmissionProbability.isFinite,request.transmissionProbability>0,request.transmissionProbability<=1,
               !request.samplingDescription.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty,
               request.samplingDescription.utf8.count<=16384 else {
-            throw VivoKineticsError.invalid("QM/MM rate context differs from the qualified PMF or transmission is invalid")
+            throw VivoKineticsError.invalid("QM/MM rate context/environment differs from the qualified PMF or transmission is invalid")
         }
         let environment=request.environment == .proteinEnvironment ? "protein" : "explicit solution"
-        guard provenance.methodDescription.localizedCaseInsensitiveContains(environment) else {
-            throw VivoKineticsError.invalid("qualified PMF provenance does not identify the requested rate environment")
-        }
         let evidence=VivoKineticEvidence(source:"NumiVivo qualified QM/MM activation free energy",
             locator:"\(environment) PMF; exact system/provider/dynamics provenance + retained MBAR traces",
             sourceFingerprint:request.freeEnergy.evidenceFingerprint.hex)
