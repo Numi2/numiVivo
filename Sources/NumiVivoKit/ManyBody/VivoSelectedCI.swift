@@ -129,7 +129,7 @@ public enum VivoSelectedCI {
             var v=[Double](repeating:0,count:d),av=v
             for j in 0..<m {for i in 0..<d {v[i]+=eig.vectors[j,0]*basis[j][i];av[i]+=eig.vectors[j,0]*images[j][i]}}
             let r=(0..<d).map{av[$0]-eig.values[0]*v[$0]},rn=r.reduce(0){hypot($0,$1)}
-            if rn<=cfg.eigenResidualTolerance {if let k=v.indices.max(by:{abs(v[$0])<abs(v[$1])}),v[k]<0{v=v.map{- $0}};return(eig.values[0]+h.constantEnergyHartree,v,rn)}
+            if rn<=cfg.eigenResidualTolerance {if let k=v.indices.max(by:{abs(v[$0])<abs(v[$1])}),v[k]<0{v=v.map { -$0 }};return(eig.values[0]+h.constantEnergyHartree,v,rn)}
             let correction=(0..<d).map{i->Double in let gap=eig.values[0]-action.diagonal[i];return r[i]/((gap<0 ? -1.0:1.0)*max(abs(gap),cfg.minimumDenominatorHartree))}
             guard let next=orth(correction,basis) else{throw VivoChemistryError.convergence("selected-CI Davidson stagnation")}
             if basis.count>=capacity {basis=[v];images=[av]}
