@@ -157,7 +157,8 @@ public enum VivoQMMMFreeEnergyArchiveRunner {
                     for _ in 0..<sampling.equilibrationSteps {
                         try Task.checkCancellation();guard try await runtime.step().committed else { throw VivoChemistryError.convergence("umbrella equilibration candidate rejected") }
                     }
-                    cursor.currentMDCheckpoint=try await put(await runtime.checkpoint(),kind:"md-checkpoint",store:store)
+                    let exact=try await runtime.checkpoint()
+                    cursor.currentMDCheckpoint=try await put(exact,kind:"md-checkpoint",store:store)
                 }
                 let coordinate=try VivoQMMMResolvedCoordinate(source:sampling.coordinate,system:system)
                 let remaining=sampling.productionSteps-cursor.currentWindowProductionSteps
@@ -176,7 +177,8 @@ public enum VivoQMMMFreeEnergyArchiveRunner {
                     }
                 }
                 cursor.currentWindowProductionSteps+=block
-                cursor.currentMDCheckpoint=try await put(await runtime.checkpoint(),kind:"md-checkpoint",store:store)
+                let exact=try await runtime.checkpoint()
+                cursor.currentMDCheckpoint=try await put(exact,kind:"md-checkpoint",store:store)
                 if cursor.currentWindowProductionSteps==sampling.productionSteps {
                     cursor.traces.append(.init(window:window,randomSeed:sampling.randomSeeds[index],coordinateNM:cursor.currentCoordinates,
                                                potentialEnergyKJPerMol:cursor.currentEnergies))
