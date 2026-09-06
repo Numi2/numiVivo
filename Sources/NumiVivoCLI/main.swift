@@ -4,6 +4,8 @@ let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
 if VivoWorkflowCLICommands.handles(arguments.first) {
     status = await VivoWorkflowCLICommands().run(arguments: arguments)
+} else if VivoPreparedMolecularCLICommands.handles(arguments.first) {
+    status = await VivoPreparedMolecularCLICommands().run(arguments: arguments)
 } else if VivoReactionCLICommands.handles(arguments.first) {
     status = await VivoReactionCLICommands().run(arguments: arguments)
 } else if VivoECCPathCLICommands.handles(arguments.first) {
@@ -38,6 +40,7 @@ if VivoWorkflowCLICommands.handles(arguments.first) {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
         FileHandle.standardOutput.write(Data("\nGeneral workflows: workflow-catalog, workflow-template, workflow-plan, workflow-run, workflow-import, workflow-export, workflow-verify, workflow-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("\nPrepared molecular workflows: molecule-prepare-template, molecule-prepare, molecule-sampling-template, molecule-sampling-run, molecule-sampling-analyze, molecule-rate, molecule-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nReaction qualification: reaction-template, reaction-run, reaction-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nShared-orbital ECC paths: chemistry-path-template, chemistry-path-run, chemistry-path-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nMetal-screened inference: engagement-screen-check, engagement-fit-screened, screening-help.\n".utf8))

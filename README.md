@@ -44,6 +44,12 @@ This is the integration direction, not a claim that every arrow is already an au
 
 The repository also contains experimental quantum-algorithm, reaction-path, reaction-network, population, calibration and surrogate components. Their presence is not a claim of complete Qiskit, ORCA, GROMACS or physiological-modeling equivalence. See the [source-backed capability map](Documentation/CAPABILITIES.md) before choosing a backend.
 
+## Prepared systems and chemistry-to-rate workflows
+
+The [prepared molecular workflow guide](Documentation/PreparedMolecularWorkflows.md) connects explicit protonation/stereo preparation and native parameter assignment, checkpointed adaptive replica sampling, density-fitted active spaces, mapped reaction connectivity and context-bound conditional rates through the existing runtimes and artifact DAG. It includes the new `molecule-*` commands and `h3-connected-rate` workflow fixture.
+
+These integrations do not yet provide arbitrary-triclinic Metal MD, automatic pKa/CIP chemistry, a universal native force field or complete protein reaction free energies. The guide distinguishes implemented source paths from the remaining physical and execution qualification.
+
 ## Built around Apple silicon
 
 **Native execution rather than a Python simulation loop.** Swift manages scientific objects, experiments and concurrent operations. C++23 implements compilation, validation and portable reference components. Metal executes molecular-dynamics and kinetic kernels. Precision-sensitive chemistry retains FP64 native CPU calculations rather than forcing every calculation onto the GPU.

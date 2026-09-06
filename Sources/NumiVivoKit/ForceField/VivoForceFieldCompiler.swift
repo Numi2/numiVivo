@@ -4,13 +4,19 @@ public struct VivoForceFieldCompilationOptions: Codable, Sendable, Equatable {
     public var requireAllBondParameters: Bool
     public var requireAllAngleParameters: Bool
     public var requireAllProperTorsions: Bool
+    /// Ordered cross-residue impropers, or additions not encoded in a template.
+    /// Indices in the canonical structure passed to compile, after preparation
+    /// when applicable; never inferred by sorting neighbors.
+    public var additionalImproperTorsions: [VivoExplicitImproperTorsion]?
 
     public init(requireAllBondParameters: Bool = true,
                 requireAllAngleParameters: Bool = true,
-                requireAllProperTorsions: Bool = true) {
+                requireAllProperTorsions: Bool = true,
+                additionalImproperTorsions: [VivoExplicitImproperTorsion]? = nil) {
         self.requireAllBondParameters = requireAllBondParameters
         self.requireAllAngleParameters = requireAllAngleParameters
         self.requireAllProperTorsions = requireAllProperTorsions
+        self.additionalImproperTorsions = additionalImproperTorsions
     }
 }
 
@@ -61,6 +67,8 @@ public enum VivoForceFieldCompiler {
         }
 
         let topology = try VivoStructureIndex(validated: structure)
+        // Cache per type tuple, not per atom, for repeated protein/solvent motifs.
+        var properCache: [[String]: [VivoForceFieldTorsionParameter]] = [:]
         var bonds: [VivoHarmonicBond] = []
         bonds.reserveCapacity(structure.bonds.count)
         for edge in structure.bonds {
@@ -107,7 +115,13 @@ public enum VivoForceFieldCompiler {
                     guard seenProper.insert(canonical).inserted else { continue }
                     let types = [particles[Int(a)].typeIdentifier, particles[Int(b)].typeIdentifier,
                                  particles[Int(c)].typeIdentifier, particles[Int(d)].typeIdentifier]
-                    let parameters = properTorsions(types, library: library)
+                    let parameters: [VivoForceFieldTorsionParameter]
+                    if let cached = properCache[types] { parameters = cached }
+                    else {
+                        parameters = try selectedTorsions(types, improper: false, library: library)
+                        properCache[types] = parameters
+                        properCache[Array(types.reversed())] = parameters
+                    }
                     if parameters.isEmpty, options.requireAllProperTorsions {
                         throw VivoArtifactValidationError.unresolved("missing proper torsion parameters for \(types.joined(separator: "-")) at atoms \(canonical)")
                     }
@@ -121,6 +135,8 @@ public enum VivoForceFieldCompiler {
             }
         }
 
+        torsions += try compileImpropers(structure: structure, topology: topology, library: library,
+                                        particles: particles, additional: options.additionalImproperTorsions ?? [])
         let pairPolicy = pairExceptions(topology: topology, library: library)
         let structureFingerprint = try VivoStructureCodec.fingerprint(structure)
         let libraryFingerprint = try library.fingerprint()
@@ -150,25 +166,6 @@ public enum VivoForceFieldCompiler {
         library.angleParameters.first {
             ($0.typeA == a && $0.typeB == b && $0.typeC == c) ||
             ($0.typeA == c && $0.typeB == b && $0.typeC == a)
-        }
-    }
-
-    private static func properTorsions(_ types: [String],
-                                       library: VivoForceFieldLibrary) -> [VivoForceFieldTorsionParameter] {
-        let proper = library.torsionParameters.filter { !$0.improper }
-        let exact = proper.filter {
-            [$0.typeA,$0.typeB,$0.typeC,$0.typeD] == types ||
-            [$0.typeD,$0.typeC,$0.typeB,$0.typeA] == types
-        }
-        if !exact.isEmpty { return exact }
-        return proper.filter { parameter in
-            let forward = (parameter.typeA == "*" || parameter.typeA == types[0]) &&
-                          parameter.typeB == types[1] && parameter.typeC == types[2] &&
-                          (parameter.typeD == "*" || parameter.typeD == types[3])
-            let reverse = (parameter.typeD == "*" || parameter.typeD == types[0]) &&
-                          parameter.typeC == types[1] && parameter.typeB == types[2] &&
-                          (parameter.typeA == "*" || parameter.typeA == types[3])
-            return forward || reverse
         }
     }
 

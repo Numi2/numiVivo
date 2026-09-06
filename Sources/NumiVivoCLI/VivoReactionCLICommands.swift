@@ -84,11 +84,11 @@ struct VivoReactionCLICommands {
     Native nuclear, embedding and reaction qualification
       numivivo reaction-template h3-saddle --output saddle.json
       numivivo reaction-run saddle.json --output saddle.result.json --store .numivivo/chemistry-artifacts
-    Templates: h2-minimum, h3-saddle, h-atom, h2-solvated-path,
+    Templates: h2-minimum, h3-saddle, h3-connected-rate, h-atom, h2-solvated-path,
                h2-equilibrium-cpcm, h2-equilibrium-minimum, h3-barrier-convergence,
                h3-barrier-convergence-ensemble, h3-residual-barrier, h2-global-embedding,
                h2-ecc-solvent-closure, paper-michael-inputs, paper-btk-inputs.
-    Request calculations: qualify, solvatedPath, correlatedSolvent, harmonicBarrier,
+    Request calculations: qualify, connectedReaction, solvatedPath, correlatedSolvent, harmonicBarrier,
                           descent, barrierConvergence, residualBarrier, globalEmbedding,
                           eccSolventClosure, connectivity, transitionStateTheory,
                           reproductionPreflight.
@@ -98,6 +98,8 @@ struct VivoReactionCLICommands {
     eccSolventClosure alternates the existing ECC-DMET projector/moment cycle with one
     N-representable global CI density and smooth C-PCM; the democratic ECC energy remains
     diagnostic and is not relabeled as the solvent energy functional.
+    connectedReaction runs endpoint/saddle qualification, mapped connectivity and TST
+    from explicitly mapped seed requests. It does not invent a saddle guess or mechanism.
     transitionStateTheory requires a previously converged mapped connectivity result,
     reconstructs the RRHO activation Gibbs barrier and records an explicit transmission
     coefficient/evidence source. An assumed coefficient remains an assumption.

@@ -2,6 +2,7 @@ import Foundation
 
 public enum VivoReactionCalculation:Codable,Sendable,Equatable {
     case qualify(request:VivoNuclearQualificationRequest)
+    case connectedReaction(request:VivoConnectedReactionRequest)
     case residualBarrier(request:VivoResidualBarrierRequest)
     case globalEmbedding(request:VivoVariationalEmbeddingRequest)
     case eccSolventClosure(request:VivoECCSolventClosureRequest)
@@ -22,6 +23,7 @@ public struct VivoReactionCalculationRequest:Codable,Sendable,Equatable {
     public var budget:VivoChemistryBudget {
         switch calculation {
         case .qualify(let r):return r.model.budget
+        case .connectedReaction(let r):return r.saddle.model.budget
         case .residualBarrier(let r):return r.baseline.budget
         case .globalEmbedding(let r):return r.molecule.budget
         case .eccSolventClosure(let r):return r.molecule.budget
@@ -39,6 +41,7 @@ public struct VivoReactionCalculationRequest:Codable,Sendable,Equatable {
         try budget.validate()
         switch calculation {
         case .qualify(let r):try r.validate()
+        case .connectedReaction(let r):try r.validate()
         case .residualBarrier(let r):try r.validate()
         case .globalEmbedding(let r):try r.validate()
         case .eccSolventClosure(let r):try r.validate()
@@ -67,6 +70,7 @@ public struct VivoReactionCalculationRequest:Codable,Sendable,Equatable {
 }
 public enum VivoReactionCalculationResult:Codable,Sendable,Equatable {
     case qualified(point:VivoNuclearQualifiedPoint)
+    case connectedReaction(result:VivoTransitionStateTheoryResult)
     case residualBarrier(result:VivoResidualBarrierResult)
     case globalEmbedding(result:VivoVariationalEmbeddingResult)
     case eccSolventClosure(result:VivoECCSolventClosureResult)
@@ -84,6 +88,7 @@ public enum VivoReactionQualificationWorkflow {
         try request.validate()
         switch request.calculation {
         case .qualify(let r):return .qualified(point:try VivoNuclearQualification.run(r))
+        case .connectedReaction(let r):return .connectedReaction(result:try VivoConnectedReaction.run(r))
         case .residualBarrier(let r):return .residualBarrier(result:try VivoResidualBarrierCampaign.run(r))
         case .globalEmbedding(let r):return .globalEmbedding(result:try VivoVariationalEmbedding.run(r))
         case .eccSolventClosure(let r):return .eccSolventClosure(result:try VivoECCSolventClosure.run(r))
@@ -104,6 +109,7 @@ public enum VivoReactionQualificationWorkflow {
         try request.validate()
         switch (request.calculation,result) {
         case (.qualify(let r),.qualified(let point)):try VivoNuclearQualification.validate(point,request:r)
+        case (.connectedReaction(let r),.connectedReaction(let result)):try VivoConnectedReaction.validate(result,request:r)
         case (.residualBarrier(let r),.residualBarrier(let result)):try VivoResidualBarrierCampaign.validate(result,request:r)
         case (.globalEmbedding(let r),.globalEmbedding(let result)):try VivoVariationalEmbedding.validate(result,request:r)
         case (.eccSolventClosure(let r),.eccSolventClosure(let result)):try VivoECCSolventClosure.validate(result,request:r)
@@ -139,6 +145,19 @@ public enum VivoReactionQualificationWorkflow {
             })
     }
     public static func template(_ name:String) throws -> VivoReactionCalculationRequest {
+        if name=="h3-connected-rate" {
+            func seed(_ name:String) throws -> VivoNuclearQualificationRequest {
+                guard case .qualify(let request)=try template(name).calculation else { throw VivoChemistryError.invalid("nuclear seed template") }
+                return request
+            }
+            let saddle=try seed("h3-saddle"),h2=try seed("h2-minimum"),atom=try seed("h-atom")
+            return .init(.connectedReaction(request:.init(atomIdentifiers:["H0","H1","H2"],saddle:saddle,
+                endpoints:[.init(identifier:"H0-H1_plus_H2",components:[.init(atomIndices:[0,1],qualification:h2),.init(atomIndices:[2],qualification:atom)]),
+                           .init(identifier:"H0_plus_H1-H2",components:[.init(atomIndices:[0],qualification:atom),.init(atomIndices:[1,2],qualification:h2)])],
+                reactantEndpointIdentifier:"H0-H1_plus_H2",connectivity:.init(initialDisplacementMassWeighted:0.015,
+                    stepMassWeighted:0.04,endpointMaximumGradient:1e-7,comparisonSamples:128))))
+        }
+
         if name=="h3-residual-barrier" { return .init(.residualBarrier(request:VivoResidualBarrierCampaign.template())) }
         if name=="h2-global-embedding" { return .init(.globalEmbedding(request:VivoVariationalEmbedding.template())) }
         if name=="h2-ecc-solvent-closure" { return .init(.eccSolventClosure(request:VivoECCSolventClosure.hydrogenControl())) }

@@ -65,13 +65,16 @@ public struct VivoMolecularPreparationRequest: Codable, Sendable, Equatable {
     public var residueEdits: [VivoPreparationResidueEdit]
     public var stereochemistry: [VivoPreparedStereochemistry]
     public var forceField: VivoForceFieldLibrary?
+    /// Additional impropers use prepared atom indices after hydrogen edits.
+    public var compilationOptions: VivoForceFieldCompilationOptions?
     public init(structure: VivoMolecularStructure, microstateIdentifier: String,
                 protonationSourceIdentifier: String, pH: Double, expectedFormalCharge: Int,
                 removeHydrogens: [UInt32] = [], addHydrogens: [VivoHydrogenPlacement] = [],
                 chargeEdits: [VivoPreparationChargeEdit] = [],
                 residueEdits: [VivoPreparationResidueEdit] = [],
                 stereochemistry: [VivoPreparedStereochemistry] = [],
-                forceField: VivoForceFieldLibrary? = nil) {
+                forceField: VivoForceFieldLibrary? = nil,
+                compilationOptions: VivoForceFieldCompilationOptions? = nil) {
         schema = Self.schema; self.structure = structure
         self.microstateIdentifier = microstateIdentifier
         self.protonationSourceIdentifier = protonationSourceIdentifier; self.pH = pH
@@ -79,6 +82,7 @@ public struct VivoMolecularPreparationRequest: Codable, Sendable, Equatable {
         self.removeHydrogens = removeHydrogens; self.addHydrogens = addHydrogens
         self.chargeEdits = chargeEdits; self.residueEdits = residueEdits
         self.stereochemistry = stereochemistry; self.forceField = forceField
+        self.compilationOptions = compilationOptions
     }
 }
 
@@ -106,10 +110,18 @@ public enum VivoMolecularPreparation {
               request.pH.isFinite, !request.microstateIdentifier.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               !request.protonationSourceIdentifier.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               !source.conformers.isEmpty,
-              source.atoms.allSatisfy({ $0.alternateLocation == nil || $0.alternateLocation == "" }),
               request.addHydrogens.count <= 1_000_000,
               source.atoms.count + request.addHydrogens.count <= Int(UInt32.max) else {
             throw VivoArtifactValidationError.invalid("preparation schema, microstate, pH, conformers, alternate locations or capacity")
+        }
+        // The existing resolver preserves the selected alternate-location label.
+        // Reject duplicate sites, not a resolved A/B label on a unique site.
+        struct Site: Hashable { let residue: UInt32?; let name: String }
+        var sites = Set<Site>()
+        for atom in source.atoms {
+            guard sites.insert(.init(residue: atom.residueIndex, name: atom.name)).inserted else {
+                throw VivoArtifactValidationError.invalid("resolve duplicate atom sites before chemical preparation")
+            }
         }
         let removed = Set(request.removeHydrogens)
         guard removed.count == request.removeHydrogens.count else {
@@ -119,6 +131,7 @@ public enum VivoMolecularPreparation {
         for atom in removed {
             guard Int(atom) < source.atoms.count, source.atoms[Int(atom)].element.atomicNumber == 1,
                   index.bondedAtoms[Int(atom)].count == 1,
+                  source.atoms[Int(index.bondedAtoms[Int(atom)][0])].element.atomicNumber != 1,
                   !removed.contains(index.bondedAtoms[Int(atom)][0]) else {
                 throw VivoArtifactValidationError.invalid("protonation may remove only singly attached source hydrogens")
             }
@@ -265,13 +278,20 @@ public enum VivoMolecularPreparation {
         let compiled: VivoCompiledForceField?
         if let library = request.forceField {
             let assignment = try VivoResidueTemplateAssigner.assignPrepared(structure: output, library: library)
-            compiled = try VivoForceFieldCompiler.compile(structure: output, library: library, assignment: assignment)
-        } else { compiled = nil }
+            let options = request.compilationOptions ?? .init()
+            guard options.requireAllBondParameters, options.requireAllAngleParameters, options.requireAllProperTorsions else {
+                throw VivoArtifactValidationError.invalid("prepared native systems cannot omit required bonded parameters")
+            }
+            compiled = try VivoForceFieldCompiler.compile(structure: output, library: library, assignment: assignment, options: options)
+        } else {
+            guard request.compilationOptions == nil else { throw VivoArtifactValidationError.invalid("compilation options require a force-field library") }
+            compiled = nil
+        }
         return .init(requestFingerprint: try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(request)),
                      sourceFingerprint: try VivoStructureCodec.fingerprint(source), structure: output,
                      sourceToPrepared: rewrite.oldToNew, preparedToSource: reverse,
                      hydrogenIndices: hydrogenIndices, compiledForceField: compiled,
-                     requiresCoordinateRelaxation: !request.addHydrogens.isEmpty || !removed.isEmpty,
+                     requiresCoordinateRelaxation: !request.addHydrogens.isEmpty || !removed.isEmpty || !request.chargeEdits.isEmpty || !request.residueEdits.isEmpty,
                      interpretation: interpretation)
     }
 }
@@ -287,7 +307,7 @@ public extension VivoResidueTemplateAssigner {
             throw VivoArtifactValidationError.invalid("native assignment charge tolerance")
         }
         func edge(_ a: String, _ b: String, _ order: VivoBondOrder) -> String {
-            // Canonical JSON prevents atom-name delimiters from colliding.
+            // Length-prefixed names prevent atom-name delimiters from colliding.
             let names = [a,b].sorted()
             return "\(names[0].utf8.count):\(names[0])\(names[1].utf8.count):\(names[1]):\(order.rawValue)"
         }

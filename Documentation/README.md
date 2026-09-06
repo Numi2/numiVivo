@@ -40,3 +40,7 @@ A useful qualification record includes the exact commit, input/configuration fin
 ## Contribute or report a problem
 
 Use [CONTRIBUTING.md](../CONTRIBUTING.md) for source ownership and change requirements. Use [SECURITY.md](../SECURITY.md) for the security-reporting boundary. Include small nonconfidential inputs and reproducible commands when reporting a numerical or integration failure.
+
+## Prepared molecular integration
+
+[Prepared molecular workflows](PreparedMolecularWorkflows.md): explicit stereochemistry/protonation and native impropers, exact structural periodic geometry, optimized existing RI/correlated/embedding paths, adaptive molecular replicas, connected reaction qualification and conditional context-bound rates. Includes commands, schema migration and the unsupported protein-free-energy boundary.

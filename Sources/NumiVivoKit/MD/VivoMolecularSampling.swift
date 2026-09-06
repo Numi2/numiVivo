@@ -197,7 +197,8 @@ public enum VivoMolecularSampling {
         for observable in request.observables { try observable.validate() }
         let count=request.replicas[0].timesPS.count
         let total=count.multipliedReportingOverflow(by:request.replicas.count)
-        guard !total.overflow,total.partialValue<=cfg.maximumTotalSamples,count>=2 else {
+        let scalars=total.partialValue.multipliedReportingOverflow(by:request.observables.count)
+        guard !total.overflow,!scalars.overflow,scalars.partialValue<=cfg.maximumTotalSamples,count>=2 else {
             throw VivoArtifactValidationError.invalid("sampling frame count or capacity")
         }
         var referenceConfiguration=request.replicas[0].configuration
@@ -251,7 +252,10 @@ public enum VivoMolecularSampling {
             let tail:Double?
             if let l=lowESS.value,let h=highESS.value { tail=min(l,h) } else { tail=nil }
             let foldedRHat:Double? = folded.flatMap{$0}.allSatisfy({$0==folded[0][0]}) ? 1 : foldedStats.rHat
-            let standardError=rawESS.value.map{sqrt(max(0,raw.variance)/$0)}
+            let standardError=rawESS.value.flatMap { value -> Double? in
+                let error=sqrt(max(0,raw.variance)/value)
+                return error.isFinite ? error:nil
+            }
             let resolved=bulk.resolved && rawESS.resolved && lowESS.resolved && highESS.resolved
             let target=cfg.minimumEffectiveSamplesPerReplica*Double(request.replicas.count)
             var issues:[String]=[]
@@ -299,7 +303,8 @@ public enum VivoMolecularSampling {
         guard mean.isFinite,within.isFinite,variance.isFinite,within>=0,variance>=0 else {
             throw VivoArtifactValidationError.invalid("molecular sampling variance overflow")
         }
-        let rHat:Double? = within>0 ? max(1,sqrt(variance/within)):nil
+        let ratio = within>0 ? max(1,sqrt(variance/within)):Double.infinity
+        let rHat:Double? = ratio.isFinite ? ratio:nil
         return .init(mean:mean,means:means,within:within,variance:variance,rHat:rHat)
     }
     private static func effectiveSamples(_ chains:[[Double]],configuration cfg:VivoMolecularSamplingConfiguration,

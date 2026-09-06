@@ -35,8 +35,12 @@ public struct VivoForceFieldResidueTemplate: Codable, Sendable, Equatable {
     public var residueNames: [String]
     public var atoms: [VivoForceFieldTemplateAtom]
     public var bonds: [VivoForceFieldTemplateBond]
-    public init(residueNames: [String], atoms: [VivoForceFieldTemplateAtom], bonds: [VivoForceFieldTemplateBond] = []) {
-        self.residueNames = residueNames; self.atoms = atoms; self.bonds = bonds
+    /// Explicit ordered local improper topology. Nil in legacy decoded templates
+    /// means unspecified; [] explicitly declares that the residue has none.
+    public var impropers: [VivoForceFieldTemplateImproper]?
+    public init(residueNames: [String], atoms: [VivoForceFieldTemplateAtom],
+                bonds: [VivoForceFieldTemplateBond] = [], impropers: [VivoForceFieldTemplateImproper]? = nil) {
+        self.residueNames = residueNames; self.atoms = atoms; self.bonds = bonds; self.impropers = impropers
     }
 }
 
@@ -139,6 +143,17 @@ public struct VivoForceFieldLibrary: Codable, Sendable, Equatable {
             }
             for bond in template.bonds where !names.contains(bond.atomA) || !names.contains(bond.atomB) || bond.atomA == bond.atomB {
                 throw VivoArtifactValidationError.invalid("force-field template bond references absent/identical atoms")
+            }
+            for improper in template.impropers ?? [] {
+                guard improper.orderedAtoms.count == 4, Set(improper.orderedAtoms).count == 4,
+                      improper.orderedAtoms.allSatisfy(names.contains), improper.orderedAtoms.contains(improper.center) else {
+                    throw VivoArtifactValidationError.invalid("template improper requires four explicit ordered atoms and its center")
+                }
+                for name in improper.orderedAtoms where name != improper.center {
+                    guard template.bonds.contains(where: {
+                        ($0.atomA == name && $0.atomB == improper.center) || ($0.atomB == name && $0.atomA == improper.center)
+                    }) else { throw VivoArtifactValidationError.invalid("template improper center is not bonded to each peripheral atom") }
+                }
             }
         }
         for bond in bondParameters {

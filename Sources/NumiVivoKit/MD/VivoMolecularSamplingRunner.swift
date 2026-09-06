@@ -54,7 +54,8 @@ public struct VivoMolecularSamplingRunRequest: Codable, Sendable, Equatable {
             throw VivoArtifactValidationError.invalid("molecular sampling step budget overflow")
         }
         let frames=(blocks.partialValue/sampleEvery).multipliedReportingOverflow(by:UInt64(replicaSeeds.count))
-        guard !frames.overflow,frames.partialValue<=UInt64(convergence.maximumTotalSamples) else {
+        let scalars=frames.partialValue.multipliedReportingOverflow(by:UInt64(observables.count))
+        guard !frames.overflow,!scalars.overflow,scalars.partialValue<=UInt64(convergence.maximumTotalSamples) else {
             throw VivoArtifactValidationError.invalid("sampling schedule exceeds the scalar-observation capacity")
         }
         let id=try system.fingerprint(),map=try VivoMolecularSamplingRunner.atomMap(structure:structure,system:system)
@@ -110,6 +111,14 @@ private struct VivoMolecularSamplingCursor:Codable,Sendable,Equatable {
 /// GPU reuse, while coordinates stream through the existing trajectory archive.
 /// A complete cross-replica block is the durable publication boundary.
 public enum VivoMolecularSamplingRunner {
+    public static func checkpointReferenceName(requestFingerprint:VivoFingerprint) -> String {
+        "molecular-sampling/"+requestFingerprint.hex+"/checkpoint"
+    }
+    private static func publish(_ cursor:VivoMolecularSamplingCursor,store:VivoArtifactStore) async throws -> VivoFingerprint {
+        let artifact=try await store.put(data:VivoCanonicalJSON.encode(cursor),kind:"molecular-sampling-checkpoint",mediaType:"application/json")
+        _ = try await store.setReference(checkpointReferenceName(requestFingerprint:cursor.requestFingerprint),to:artifact)
+        return artifact.fingerprint
+    }
     static func atomMap(structure:VivoMolecularStructure,system:VivoClassicalSystem) throws -> [Int] {
         var map=[Int](repeating:-1,count:structure.atoms.count)
         for particle in system.particles where particle.role == .atom {
@@ -202,6 +211,7 @@ public enum VivoMolecularSamplingRunner {
             }
             guard passes==cursor.consecutivePasses else { throw VivoArtifactValidationError.invalid("sampling consecutive-pass history mismatch") }
         }
+        durable=try await publish(cursor,store:store)
         func receipt(_ status:VivoMolecularSamplingRunStatus,_ diagnostic:String? = nil)->VivoMolecularSamplingRunReceipt {
             .init(schema:VivoMolecularSamplingRunReceipt.schema,requestFingerprint:requestID,status:status,
                   completedBlocks:cursor.completedBlocks,consecutivePasses:cursor.consecutivePasses,checkpoint:durable,
@@ -223,7 +233,7 @@ public enum VivoMolecularSamplingRunner {
                 let result=try VivoMolecularSampling.analyze(analysis)
                 next.completedBlocks+=1;next.consecutivePasses=result.converged ? next.consecutivePasses+1:0
                 next.diagnostics.append(try await put(result,kind:"molecular-sampling-result",store:store))
-                let checkpoint=try await put(next,kind:"molecular-sampling-checkpoint",store:store)
+                let checkpoint=try await publish(next,store:store)
                 cursor=next;durable=checkpoint;latest=result
             }
             return receipt(cursor.consecutivePasses>=request.requiredConsecutivePasses ? .converged:.budgetExhausted)
