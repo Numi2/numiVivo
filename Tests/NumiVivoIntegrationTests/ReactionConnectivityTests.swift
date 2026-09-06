@@ -75,6 +75,27 @@ import Testing
         #expect(Set(result.trials.map(\.displacementScale)) == Set([1.0, 0.5]))
         #expect(Set(result.trials.map(\.stepScale)) == Set([1.0, 0.5]))
         #expect(result.descentElectronicEvaluations <= cfg.maximumDescentElectronicEvaluations)
+
+        // One extra replay exercises the actual scientific gate without making
+        // the test perform several redundant full connectivity reconstructions.
+        let tstRequest = VivoTransitionStateTheoryRequest(connectivity: result,
+            reactantEndpointIdentifier: left.identifier,
+            transmission: .init(coefficient: 1, kind: .assumed,
+                                sourceIdentifier: "classical no-recrossing integration test"))
+        let tst = try VivoTransitionStateTheory.estimate(tstRequest)
+        #expect(tst.rateConstant.isFinite && tst.rateConstant > 0)
+        #expect(tst.molecularity == 2)
+        #expect(tst.rateUnits == "Pa^-1 s^-1")
+        #expect(!tst.hasIndependentTransmissionEvidence)
+        #expect(tst.barrier.reactantMolecularity == 2)
+        #expect(abs(tst.activationExponent + tst.barrier.activationGibbsHartree /
+                    (VivoNuclearUnits.kHartree * tst.temperatureK)) < 1e-12)
+        try retain(tst, "mapped-h3-assumed-tst.json")
+        let dynamicEvidence = VivoTransmissionCoefficientEvidence(coefficient: 0.8, kind: .computedDynamics,
+            sourceIdentifier: "synthetic recrossing-control identifier")
+        try dynamicEvidence.validate()
+        #expect(dynamicEvidence.kind == .computedDynamics && dynamicEvidence.coefficient == 0.8)
+
         let invalidMap = VivoMappedReactionEndpoint(identifier: "duplicate_atom", components: [
             .init(atomIndices: [0,1], point: h2), .init(atomIndices: [1], point: atom)])
         rejects {
@@ -90,10 +111,15 @@ import Testing
             try VivoReactionConnectivity.validateRequest(.init(atomIdentifiers: ["H0","H1","H2"],
                 saddle: saddle, endpoints: [left, right], configuration: tooSmall))
         }
-        // A different user-declared identity is not authorized by a result
-        // calculated from the original atom mapping, even with equal counts.
         let different = VivoReactionConnectivityRequest(atomIdentifiers: ["A","B","C"],
             saddle: saddle, endpoints: [left, right], configuration: cfg)
         rejects { try VivoReactionConnectivity.validate(result, request: different) }
+        let forgedConnectivity = VivoReactionConnectivityResult(schema: result.schema, request: result.request,
+            trials: result.trials, comparisons: result.comparisons, descentElectronicEvaluations: result.descentElectronicEvaluations,
+            converged: false, interpretation: result.interpretation)
+        rejects { _ = try VivoTransitionStateTheory.estimate(.init(connectivity: forgedConnectivity,
+            reactantEndpointIdentifier: left.identifier)) }
+        rejects { _ = try VivoTransitionStateTheory.estimate(.init(connectivity: result,
+            reactantEndpointIdentifier: "unknown-endpoint")) }
     }
 }
