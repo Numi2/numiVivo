@@ -38,7 +38,7 @@ public struct VivoQMMMResolvedCoordinate: Sendable, Equatable {
         }
         var particles:[UInt32]=[]
         for atom in source.atomIndices {
-            guard let particle=byAtom[atom] else { throw VivoChemistryError.unresolved("reaction-coordinate atom \(atom) is not a physical particle") }
+            guard let particle=byAtom[atom] else { throw VivoChemistryError.invalid("reaction-coordinate atom \(atom) is not a physical particle") }
             particles.append(particle)
         }
         self.source=source;particleIndices=particles
@@ -180,6 +180,9 @@ public struct VivoQMMMActivationFreeEnergyResult: Codable, Sendable, Equatable {
     public let profile:[VivoQMMMFreeEnergyProfilePoint]
     public let reactantCoordinateNM:Double
     public let dividingSurfaceNM:Double
+    /// PMF profile height at the declared dividing surface relative to the
+    /// lowest PMF point in the declared reactant range. This is a diagnostic,
+    /// not by itself the flux-normalized kinetic activation free energy.
     public let activationFreeEnergyKJPerMol:Double
     /// Conditional sampling uncertainty from local reweighted effective counts.
     /// It excludes Hamiltonian/model/microstate/transmission uncertainty.
@@ -193,7 +196,7 @@ public struct VivoQMMMActivationFreeEnergyResult: Codable, Sendable, Equatable {
 }
 
 public enum VivoQMMMFreeEnergy {
-    public static let interpretation="Umbrella-sampled activation PMF under one fingerprinted QM/MM Born-Oppenheimer Hamiltonian, reconstructed by unbinned MBAR after conservative autocorrelation thinning. Conditional uncertainty covers finite reweighted samples only; protonation/conformer populations, Hamiltonian accuracy, tunnelling and dynamical recrossing remain separate."
+    public static let interpretation="Umbrella-sampled PMF under one fingerprinted QM/MM Born-Oppenheimer Hamiltonian, reconstructed by unbinned MBAR after conservative autocorrelation thinning. PMF profile height is diagnostic; kinetic conversion requires reactant-basin normalization and a coordinate mass metric. Conditional uncertainty covers finite reweighted samples only; protonation/conformer populations, Hamiltonian accuracy, tunnelling and dynamical recrossing remain separate."
     private static let gasConstantKJ=0.00831446261815324
 
     public static func analyze(coordinate:VivoQMMMReactionCoordinate,temperatureK:Double,traces:[VivoQMMMUmbrellaTrace],
@@ -282,8 +285,8 @@ public enum VivoQMMMFreeEnergy {
         guard barrier.isFinite,barrier>=0 else { issues.append("declared dividing surface is not above the reactant PMF basin")
             return .init(schema:VivoQMMMActivationFreeEnergyResult.schema,coordinate:coordinate,temperatureK:temperatureK,traces:traces,
                 configuration:cfg,profile:profile,reactantCoordinateNM:reactant.0,dividingSurfaceNM:cfg.dividingSurfaceNM,
-                activationFreeEnergyKJPerMol:max(0,barrier),conditionalStandardDeviationKJPerMol:.infinity,mbarIterations:iterations,
-                mbarResidual:residual,diagnostics:[],converged:false,issues:issues,interpretation:interpretation) }
+                activationFreeEnergyKJPerMol:max(0,barrier),conditionalStandardDeviationKJPerMol:Double.greatestFiniteMagnitude,
+                mbarIterations:iterations,mbarResidual:residual,diagnostics:[],converged:false,issues:issues,interpretation:interpretation) }
         if reactant.2<Double(cfg.minimumDecorrelatedSamplesPerWindow) { issues.append("reactant basin has low local effective sample count") }
         if ts.2<Double(cfg.minimumDecorrelatedSamplesPerWindow) { issues.append("dividing surface has low local effective sample count") }
         let sd=gasConstantKJ*temperatureK*sqrt(1/max(1,reactant.2)+1/max(1,ts.2))
