@@ -74,6 +74,19 @@ import NumiVivoShaders
         await rejects { try await runtime.restore(initial) }
         try record(accepted, "molecular-accepted-checkpoint")
     }
+    @Test func populatedMetalABITablesExecute() async throws {
+        let compiled = try VivoTargetEngagementCompiler.compile(experiment())
+        let configuration = VivoRuntimeConfiguration(fidelity: .init(rawValue: 1)!, environmentCount: 1,
+            timeStep: 0.001, minimumTimeStep: 0.0001, maximumTimeStep: 0.01)
+        let runtime = try await VivoTransactionalMolecularRuntime.make(pack: compiled.pack,
+            configuration: configuration, device: device())
+        let result = try await runtime.step(.init(timeStep: 0.001, coupling: [
+            .init(speciesIndex: compiled.drugSpeciesIndex, laneIndex: 0, value: 1e-6)], publications: [
+            .init(speciesIndex: compiled.targetSpeciesIndices[0], laneIndex: 0)], permitAdaptiveReduction: false))
+        #expect(result.certificate.committed)
+        #expect(result.publications.count == 1)
+        #expect(result.publications.first?.isFinite == true)
+    }
     @Test func targetKineticsOnMetalAgainstFP64() async throws {
         let input = try experiment()
         let reference = try VivoTargetEngagementReference.run(input)

@@ -210,8 +210,9 @@ final class VivoMetalArena: @unchecked Sendable {
             )
         }
         guard !couplingUpdates.isEmpty else { return }
-        couplingUpdates.withUnsafeBytes { bytes in
-            couplingBuffer.contents().copyMemory(from: bytes.baseAddress!, byteCount: bytes.count)
+        let destination = couplingBuffer.contents().assumingMemoryBound(to: VivoCouplingUpdateABI.self)
+        for (index, value) in couplingUpdates.enumerated() {
+            destination[index] = value
         }
     }
 
@@ -222,8 +223,9 @@ final class VivoMetalArena: @unchecked Sendable {
             )
         }
         guard !publicationRequests.isEmpty else { return }
-        publicationRequests.withUnsafeBytes { bytes in
-            publicationRequestBuffer.contents().copyMemory(from: bytes.baseAddress!, byteCount: bytes.count)
+        let destination = publicationRequestBuffer.contents().assumingMemoryBound(to: VivoPublicationRequestABI.self)
+        for (index, value) in publicationRequests.enumerated() {
+            destination[index] = value
         }
     }
 
