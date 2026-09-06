@@ -17,6 +17,8 @@ public struct VivoMDConfiguration:Codable,Sendable,Equatable {
     public var reactionFieldDielectric:Double
     public var pmeTolerance:Double?
     public var pmeGridSpacingNM:Double?
+    /// Fixed mesh dimensions for a cell-moving Hamiltonian; nil preserves legacy planning.
+    public var pmeGridDimensions:[UInt32]?
     public var ensemble:VivoMDEnsemble
     public var thermostat:VivoMDThermostat
     public var targetTemperatureK:Double?
@@ -42,10 +44,10 @@ public struct VivoMDConfiguration:Codable,Sendable,Equatable {
                 barostatMaximumLogVolumeStep:Double?=0.01,
                 constraintTolerance:Double=1e-6,maximumConstraintIterations:UInt32=32,
                 neighborRebuildInterval:UInt32=10,neighborListEnabled:Bool?=true,
-                maximumNeighborsPerParticle:UInt32?=512,randomSeed:UInt64=0x4e554d495649564f,lennardJonesSwitchOnNM:Double?=nil) {
+                maximumNeighborsPerParticle:UInt32?=512,randomSeed:UInt64=0x4e554d495649564f,lennardJonesSwitchOnNM:Double?=nil,pmeGridDimensions:[UInt32]?=nil) {
         schema=Self.schema;self.lennardJonesSwitchOnNM=lennardJonesSwitchOnNM;self.timeStepPS=timeStepPS;self.cutoffNM=cutoffNM;self.neighborSkinNM=neighborSkinNM
         self.electrostatics=electrostatics;self.relativeDielectric=relativeDielectric;self.reactionFieldDielectric=reactionFieldDielectric
-        self.pmeTolerance=pmeTolerance;self.pmeGridSpacingNM=pmeGridSpacingNM;self.ensemble=ensemble;self.thermostat=thermostat
+        self.pmeTolerance=pmeTolerance;self.pmeGridSpacingNM=pmeGridSpacingNM;self.pmeGridDimensions=pmeGridDimensions;self.ensemble=ensemble;self.thermostat=thermostat
         self.targetTemperatureK=targetTemperatureK;self.frictionPerPS=frictionPerPS;self.barostat=barostat;self.targetPressureBar=targetPressureBar
         self.barostatInterval=barostatInterval;self.barostatMaximumLogVolumeStep=barostatMaximumLogVolumeStep
         self.constraintTolerance=constraintTolerance;self.maximumConstraintIterations=maximumConstraintIterations
@@ -70,6 +72,11 @@ public struct VivoMDConfiguration:Codable,Sendable,Equatable {
         if let switching=lennardJonesSwitchOnNM {
             guard positiveFP32(switching),switching<cutoffNM,Float(switching)<Float(cutoffNM) else {
                 throw VivoArtifactValidationError.invalid("LJ switch must be positive and strictly inside the cutoff")
+            }
+        }
+        if let dimensions=pmeGridDimensions {
+            guard dimensions.count==3,dimensions.allSatisfy({$0>=4 && $0<=512 && ($0 & ($0-1))==0}),electrostatics == .pme else {
+                throw VivoArtifactValidationError.invalid("fixed PME grid requires three supported power-of-two dimensions and PME electrostatics")
             }
         }
         if electrostatics == .pme {

@@ -6,15 +6,19 @@ public struct VivoPeriodicQMMMConfiguration: Codable, Sendable, Equatable {
     public var exactNearSwitchOffBohr: Double
     /// A model-admission center-separation bound, NOT a proof of negligible exchange.
     public var minimumQMImageSeparationBohr: Double
+    public var reciprocalMesh: VivoMultipoleMeshConfiguration?
     public var scf: VivoSCFConfiguration
     public init(ewald: VivoPeriodicElectrostaticConfiguration = .init(), exactNearRadiusBohr: Double = 8,
                 exactNearSwitchOffBohr: Double = 12,minimumQMImageSeparationBohr: Double = 8,
-                scf: VivoSCFConfiguration = .init()) {
+                scf: VivoSCFConfiguration = .init(), reciprocalMesh: VivoMultipoleMeshConfiguration? = nil) {
         self.ewald = ewald; self.exactNearRadiusBohr = exactNearRadiusBohr; self.exactNearSwitchOffBohr = exactNearSwitchOffBohr
-        self.minimumQMImageSeparationBohr = minimumQMImageSeparationBohr; self.scf = scf
+        self.minimumQMImageSeparationBohr = minimumQMImageSeparationBohr; self.scf = scf; self.reciprocalMesh = reciprocalMesh
     }
     public func validate() throws {
-        try ewald.validate(); try scf.validate()
+        try ewald.validate(); try scf.validate(); try reciprocalMesh?.validate()
+        if reciprocalMesh != nil,scf.commutatorTolerance < 1e-6 {
+            throw VivoChemistryError.unsupported("FP32 multipolar PME requires an explicit SCF commutator tolerance >=1e-6; use FP64 Ewald for tighter qualification")
+        }
         guard exactNearRadiusBohr.isFinite,exactNearRadiusBohr > 0,exactNearSwitchOffBohr.isFinite,
               exactNearSwitchOffBohr > exactNearRadiusBohr,minimumQMImageSeparationBohr.isFinite,minimumQMImageSeparationBohr > 0,
               ewald.chargeConvention == .requireNeutral else {
@@ -54,11 +58,16 @@ struct VivoPeriodicQMMMContext {
     let mmEwald: VivoPeriodicElectrostaticResult
     let nearPairs: [NearPair]
     let exactNearAO: VivoQMMatrix
+    let reciprocalOperator: VivoReciprocalElectrostaticOperator?
     let budget: VivoChemistryBudget
 
     init(source: VivoElectronicSystem,integrals: VivoAOIntegrals,cell: VivoPeriodicCell,
-         configuration cfg: VivoPeriodicQMMMConfiguration,budget: VivoChemistryBudget) throws {
+         configuration cfg: VivoPeriodicQMMMConfiguration,budget: VivoChemistryBudget,
+         reciprocalOperator: VivoReciprocalElectrostaticOperator? = nil) throws {
         try cfg.validate();try source.validate();try budget.validate()
+        guard cfg.reciprocalMesh == reciprocalOperator?.configuration else {
+            throw VivoChemistryError.invalid("periodic reciprocal operator must match the fingerprinted mesh profile")
+        }
         guard cell.isValid,integrals.sourceSystem.nuclei == source.nuclei,integrals.sourceSystem.pointCharges.isEmpty,
               integrals.sourceSystem.alphaElectrons == source.alphaElectrons,integrals.sourceSystem.betaElectrons == source.betaElectrons else {
             throw VivoChemistryError.invalid("periodic QM/MM source, cell or isolated integral identity")
@@ -78,7 +87,7 @@ struct VivoPeriodicQMMMContext {
         let operators = try VivoQMMultipoleOperators(integrals: integrals,budget: budget)
         let mm = source.pointCharges.map { VivoCartesianMultipole(positionBohr: .init($0.positionBohr.x,$0.positionBohr.y,$0.positionBohr.z),chargeE: $0.chargeE) }
         var mmConfiguration = cfg.ewald;mmConfiguration.chargeConvention = .uniformNeutralizingBackground
-        let mmValue = try VivoPeriodicElectrostatics.evaluate(sources: mm,cell: cell,configuration: mmConfiguration,budget: budget)
+        let mmValue = try VivoPeriodicElectrostatics.evaluate(sources: mm,cell: cell,configuration: mmConfiguration,reciprocalOperator: reciprocalOperator,budget: budget)
         let n = integrals.count
         var near: [NearPair] = [],summed = VivoQMMatrix(n,n),work = 0
         for nucleus in source.nuclei.indices { for charge in source.pointCharges.indices where source.pointCharges[charge].chargeE != 0 {
@@ -123,7 +132,7 @@ struct VivoPeriodicQMMMContext {
             } } }
         } }
         self.integrals = integrals;self.source = source;self.cell = cell;configuration = cfg;momentOperators = operators
-        mmSources = mm;mmEwald = mmValue;nearPairs = near;exactNearAO = summed;self.budget = budget
+        mmSources = mm;mmEwald = mmValue;nearPairs = near;exactNearAO = summed;self.budget = budget; self.reciprocalOperator = reciprocalOperator
     }
     static func switching(_ r: Double,on: Double,off: Double) -> (value: Double,derivative: Double) {
         if r <= on { return (1,0) };if r >= off { return (0,0) }
@@ -132,7 +141,7 @@ struct VivoPeriodicQMMMContext {
     }
     func evaluate(density: VivoQMMatrix,derivatives: Bool) throws -> VivoPeriodicEmbeddingEvaluation {
         let qm = try momentOperators.sources(density: density),nq = qm.count
-        let periodic = try VivoPeriodicElectrostatics.evaluate(sources: qm+mmSources,cell: cell,configuration: configuration.ewald,budget: budget)
+        let periodic = try VivoPeriodicElectrostatics.evaluate(sources: qm+mmSources,cell: cell,configuration: configuration.ewald,reciprocalOperator: reciprocalOperator,budget: budget)
         var energy = periodic.energyHartree-mmEwald.energyHartree
         var lambda = Array(periodic.momentDerivatives.prefix(nq)),gn = periodic.forcesHartreePerBohr.prefix(nq).map { $0 * -1 }
         var gm = (0..<mmSources.count).map { periodic.forcesHartreePerBohr[nq+$0] * -1+mmEwald.forcesHartreePerBohr[$0] }

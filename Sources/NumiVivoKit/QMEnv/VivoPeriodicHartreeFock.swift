@@ -23,11 +23,12 @@ public enum VivoPeriodicHartreeFock {
     /// AO moment response and Pulay derivatives all differentiate the same energy.
     public static func evaluate(system: VivoElectronicSystem,basis: VivoGaussianBasis,cell: VivoPeriodicCell,
                                 configuration cfg: VivoPeriodicQMMMConfiguration = .init(),
-                                budget: VivoChemistryBudget = .init()) throws -> VivoPeriodicHartreeFockResult {
+                                budget: VivoChemistryBudget = .init(),
+                                reciprocalOperator: VivoReciprocalElectrostaticOperator? = nil) throws -> VivoPeriodicHartreeFockResult {
         try cfg.validate();try budget.validate()
         var isolated = system;isolated.pointCharges = []
         let ao = try VivoGaussianIntegralEngine.compute(system: isolated,basis: basis,budget: budget)
-        let context = try VivoPeriodicQMMMContext(source: system,integrals: ao,cell: cell,configuration: cfg,budget: budget)
+        let context = try VivoPeriodicQMMMContext(source: system,integrals: ao,cell: cell,configuration: cfg,budget: budget,reciprocalOperator: reciprocalOperator)
         var previousDensity: VivoQMMatrix?,previousEvaluation: VivoPeriodicEmbeddingEvaluation?
         func embedding(_ da: VivoQMMatrix,_ db: VivoQMMatrix) throws -> VivoPeriodicEmbeddingEvaluation {
             let density = try da.adding(db)

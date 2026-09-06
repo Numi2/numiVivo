@@ -73,6 +73,41 @@ public struct VivoPeriodicElectrostaticResult: Codable, Sendable, Equatable {
     public let reciprocalModeCount: Int
 }
 
+/// Immutable reciprocal profile. A fixed mesh and active Fourier mode set are
+/// retained during cell moves. Mesh errors are separate from electronic residuals.
+public struct VivoMultipoleMeshConfiguration: Codable, Sendable, Equatable {
+    public let gridDimensions: [Int]
+    public let interpolationOrder: Int
+    public let numericalPrecision: String
+    public init(gridDimensions: [Int] = [64,64,64]) {
+        self.gridDimensions = gridDimensions; interpolationOrder = 6
+        numericalPrecision = "metal-fp32-variational-mesh-v1"
+    }
+    public func validate() throws {
+        guard gridDimensions.count == 3,gridDimensions.allSatisfy({ $0 >= 16 && $0 <= 512 && ($0 & ($0-1)) == 0 }),
+              interpolationOrder == 6,numericalPrecision == "metal-fp32-variational-mesh-v1" else {
+            throw VivoChemistryError.invalid("multipolar mesh grid, assignment order or precision")
+        }
+    }
+}
+public struct VivoReciprocalElectrostaticResult: Sendable {
+    public let energyHartree: Double
+    public let forcesHartreePerBohr: [VivoVector3D]
+    public let momentDerivatives: [[Double]]
+    public let affineStrainDerivativeHartree: VivoQMMatrix
+    public let modeCount: Int
+}
+/// Geometry-local shared mesh resource. The implementation owns and synchronizes
+/// its buffers. It may not silently substitute a different reciprocal algorithm.
+public struct VivoReciprocalElectrostaticOperator: Sendable {
+    public let configuration: VivoMultipoleMeshConfiguration
+    let evaluate: @Sendable ([VivoCartesianMultipole],VivoPeriodicCell,VivoPeriodicElectrostaticConfiguration,VivoChemistryBudget) throws -> VivoReciprocalElectrostaticResult
+    init(configuration: VivoMultipoleMeshConfiguration,
+         evaluate: @escaping @Sendable ([VivoCartesianMultipole],VivoPeriodicCell,VivoPeriodicElectrostaticConfiguration,VivoChemistryBudget) throws -> VivoReciprocalElectrostaticResult) {
+        self.configuration = configuration;self.evaluate = evaluate
+    }
+}
+
 /// Complete bounded FP64 Ewald reference through raw Cartesian quadrupoles.
 /// Analytic spatial derivatives through rank five come from the same radial
 /// kernel as the energy. This is a numerical reference, not a PME performance claim.
@@ -104,6 +139,7 @@ public enum VivoPeriodicElectrostatics {
     public static func evaluate(sources: [VivoCartesianMultipole], cell: VivoPeriodicCell,
                                 configuration cfg: VivoPeriodicElectrostaticConfiguration = .init(),
                                 primaryPairScales: [VivoMultipolePairScale] = [],
+                                reciprocalOperator: VivoReciprocalElectrostaticOperator? = nil,
                                 budget: VivoChemistryBudget = .init()) throws -> VivoPeriodicElectrostaticResult {
         try cfg.validate(); try budget.validate()
         guard cell.isValid else { throw VivoChemistryError.invalid("Ewald periodic cell") }
@@ -174,6 +210,20 @@ public enum VivoPeriodicElectrostatics {
             throw VivoChemistryError.resourceLimit("Ewald reciprocal mode/source capacity")
         }
         let alpha2 = cfg.alphaPerBohr*cfg.alphaPerBohr
+        if let reciprocalOperator {
+            let result = try reciprocalOperator.evaluate(sources,cell,cfg,budget)
+            guard result.forcesHartreePerBohr.count == n,result.momentDerivatives.count == n,
+                  result.momentDerivatives.allSatisfy({ $0.count == 10 }),
+                  result.affineStrainDerivativeHartree.rows == 3,result.affineStrainDerivativeHartree.columns == 3 else {
+                throw VivoChemistryError.invalid("reciprocal operator result shape")
+            }
+            reciprocalEnergy = result.energyHartree;modes = result.modeCount
+            for i in 0..<n {
+                forces[i] = forces[i]+result.forcesHartreePerBohr[i]
+                for c in 0..<10 { derivatives[i][c] += result.momentDerivatives[i][c] }
+            }
+            strain = try strain.adding(result.affineStrainDerivativeHartree)
+        } else {
         for x in -widths[0]...widths[0] { for y in -widths[1]...widths[1] { for z in -widths[2]...widths[2] {
             if x == 0 && y == 0 && z == 0 { continue }; modes += 1
             let k = (reciprocal[0]*Double(x)+reciprocal[1]*Double(y)+reciprocal[2]*Double(z))*(2*Double.pi)
@@ -210,6 +260,7 @@ public enum VivoPeriodicElectrostatics {
                 } }
             }
         } } }
+        }
         let smooth = VivoEwaldRadialTensor.selfKernel(alpha: cfg.alphaPerBohr)
         for i in 0..<n {
             let correction = pair(moments[i],moments[i],tensor: smooth)

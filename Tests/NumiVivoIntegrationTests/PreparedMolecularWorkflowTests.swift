@@ -90,7 +90,7 @@ import Testing
             atomTypes:[.init(identifier:"C",elementAtomicNumber:6,massDa:12,sigmaNM:0.3,epsilonKJPerMol:0.1),
                        .init(identifier:"H",elementAtomicNumber:1,massDa:1,sigmaNM:0.1,epsilonKJPerMol:0.01)],
             residueTemplates:[template],bondParameters:[.init(typeA:"C",typeB:"H",lengthNM:0.1,forceConstant:100)],
-            angleParameters:[.init(typeA:"H",typeB:"C",typeC:"H",typeC:"H",angleRadians:2.0,forceConstant:20)],
+            angleParameters:[.init(typeA:"H",typeB:"C",typeC:"H",angleRadians:2.0,forceConstant:20)],
             torsionParameters:[.init(typeA:"H",typeB:"C",typeC:"H",typeD:"H",periodicity:2,
                                     phaseRadians:Double.pi,barrierKJPerMol:0.5,improper:true)],
             provenance:["purpose":"synthetic contract fixture; not a physical force field"])

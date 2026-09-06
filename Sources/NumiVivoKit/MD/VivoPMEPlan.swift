@@ -21,7 +21,7 @@ public struct VivoPMEPlan: Codable, Sendable, Equatable {
                             cutoffNM: Double,
                             tolerance: Double,
                             targetGridSpacingNM: Double,
-                            interpolationOrder: UInt32 = 4) throws -> Self {
+                            interpolationOrder: UInt32 = 4,fixedGridDimensions: [UInt32]? = nil) throws -> Self {
         guard cell.isValid, cutoffNM.isFinite, cutoffNM > 0,
               tolerance.isFinite, tolerance > 0, tolerance < 0.1,
               targetGridSpacingNM.isFinite, targetGridSpacingNM > 0,
@@ -36,9 +36,14 @@ public struct VivoPMEPlan: Codable, Sendable, Equatable {
         let reciprocalB = cell.c.cross(cell.a) / determinant
         let reciprocalC = cell.a.cross(cell.b) / determinant
         let beta = try solveBeta(cutoffNM: cutoffNM, tolerance: tolerance)
-        let gx = try meshDimension(lengthNM: cell.a.norm, spacingNM: targetGridSpacingNM)
-        let gy = try meshDimension(lengthNM: cell.b.norm, spacingNM: targetGridSpacingNM)
-        let gz = try meshDimension(lengthNM: cell.c.norm, spacingNM: targetGridSpacingNM)
+        if let fixed = fixedGridDimensions {
+            guard fixed.count == 3,fixed.allSatisfy({ $0 >= 4 && $0 <= 512 && ($0 & ($0-1)) == 0 }) else {
+                throw VivoMDRuntimeError.metal("invalid fixed PME mesh")
+            }
+        }
+        let gx = try fixedGridDimensions?[0] ?? meshDimension(lengthNM: cell.a.norm, spacingNM: targetGridSpacingNM)
+        let gy = try fixedGridDimensions?[1] ?? meshDimension(lengthNM: cell.b.norm, spacingNM: targetGridSpacingNM)
+        let gz = try fixedGridDimensions?[2] ?? meshDimension(lengthNM: cell.c.norm, spacingNM: targetGridSpacingNM)
         let xy = UInt64(gx) * UInt64(gy)
         let count = xy.multipliedReportingOverflow(by: UInt64(gz))
         guard !count.overflow, count.partialValue > 0 else {

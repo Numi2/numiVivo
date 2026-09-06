@@ -92,13 +92,19 @@ public struct VivoMDCandidateForceProvider: Sendable {
             guard source.index == retained.index,source.atomIndex == retained.atomIndex,source.role == retained.role,
                   source.massDa == retained.massDa else { throw VivoChemistryError.invalid("candidate provider changes particle or mass ownership") }
         }
-        if system.particles.contains(where: { $0.epsilonKJPerMol > 0 }),configuration.lennardJonesSwitchOnNM == nil {
+        let hasLJ = system.particles.contains(where: { $0.epsilonKJPerMol > 0 })
+            || (system.nonbondedTypePairs ?? []).contains(where: { $0.c6KJNM6PerMol > 0 || $0.c12KJNM12PerMol > 0 })
+            || system.nonbondedExceptions.contains(where: { ($0.epsilonOverrideKJPerMol ?? 0) > 0 })
+        if hasLJ,configuration.lennardJonesSwitchOnNM == nil {
             throw VivoChemistryError.unsupported("BO dynamics with LJ interactions requires an explicit smooth LJ switching radius")
         }
         if boundary == .periodicElectrostatic {
             guard configuration.electrostatics == .pme,configuration.relativeDielectric == 1 else {
                 throw VivoChemistryError.unsupported("periodic electronic embedding requires retained PME in vacuum atomic-unit dielectric convention")
             }
+        }
+        if configuration.ensemble == .npt,boundary == .periodicElectrostatic,configuration.pmeGridDimensions == nil {
+            throw VivoChemistryError.unsupported("periodic BO NPT requires fixed pmeGridDimensions; mesh replanning is a different numerical Hamiltonian")
         }
         if configuration.ensemble == .npt && !supportsCellMoves {
             throw VivoChemistryError.unsupported("candidate force provider has no full trial-cell energy support")

@@ -61,6 +61,9 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case mdPMEInfluence = "nvivo_pme_influence"
     case mdPMEScaleInverse = "nvivo_pme_scale_inverse"
     case mdPMEGather = "nvivo_pme_gather"
+    case mdPMEMultipoleSpread = "nvivo_pme_multipole_spread"
+    case mdPMEMultipoleInfluence = "nvivo_pme_multipole_influence"
+    case mdPMEMultipoleGather = "nvivo_pme_multipole_gather"
     case mdPMEExceptionCorrection = "nvivo_pme_exception_correction"
     case mdPMEBackgroundEnergy = "nvivo_pme_background_energy"
     case mdMinimizeTerms = "nvivo_md_minimize_terms"
@@ -96,7 +99,8 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
         case .mdGridClear, .mdGridBin, .mdGridBuildNeighbors:
             return "NumiVivoMDNeighborGrid"
         case .mdPMERealSpaceNeighbor, .mdPMEClearGrid, .mdPMESpread, .mdPMEBitReverse,
-             .mdPMEFFTStage, .mdPMEInfluence, .mdPMEScaleInverse, .mdPMEGather:
+             .mdPMEFFTStage, .mdPMEInfluence, .mdPMEScaleInverse, .mdPMEGather,
+             .mdPMEMultipoleSpread, .mdPMEMultipoleInfluence, .mdPMEMultipoleGather:
             return "NumiVivoMDPME"
         case .mdPMEExceptionCorrection, .mdPMEBackgroundEnergy:
             return "NumiVivoMDPMECorrections"

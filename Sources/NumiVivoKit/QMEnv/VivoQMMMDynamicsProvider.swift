@@ -1,4 +1,5 @@
 import Foundation
+@preconcurrency import Metal
 
 public struct VivoQMMMDynamicsElectronicConfiguration: Codable, Sendable, Equatable {
     public var basis: VivoGaussianBasis
@@ -18,6 +19,29 @@ public extension VivoMDCandidateForceProvider {
     /// by VivoMDMetalRuntime using plan.retainedSystem.
     static func hartreeFock(document: VivoMolecularStructureDocument,sourceSystem: VivoClassicalSystem,
                            plan: VivoQMMMHamiltonianPlan,configuration cfg: VivoQMMMDynamicsElectronicConfiguration) throws -> Self {
+        guard cfg.periodic.reciprocalMesh == nil else {
+            throw VivoChemistryError.invalid("a mesh Hamiltonian requires the explicit async hartreeFockPME factory")
+        }
+        return try makeHartreeFock(document: document,sourceSystem: sourceSystem,plan: plan,configuration: cfg,reciprocalOperator: nil)
+    }
+    /// Fixed-grid reciprocal resource is retained across candidate positions and
+    /// cell trials. Precision settings remain explicit in the electronic config.
+    static func hartreeFockPME(document: VivoMolecularStructureDocument,sourceSystem: VivoClassicalSystem,
+                              plan: VivoQMMMHamiltonianPlan,configuration cfg: VivoQMMMDynamicsElectronicConfiguration,
+                              device: MTLDevice? = nil) async throws -> Self {
+        try plan.validate(document: document,source: sourceSystem,budget: cfg.budget)
+        try cfg.periodic.validate()
+        guard plan.configuration.boundary == .periodicElectrostatic,let mesh = cfg.periodic.reciprocalMesh else {
+            throw VivoChemistryError.invalid("multipolar PME factory requires periodic boundary and a fixed mesh configuration")
+        }
+        let capacity = sourceSystem.particles.count + document.structure.bonds.count
+        let reciprocal = try await VivoReciprocalElectrostaticOperator.metalPME(configuration: mesh,
+            maximumSources: capacity,device: device,budget: cfg.budget)
+        return try makeHartreeFock(document: document,sourceSystem: sourceSystem,plan: plan,configuration: cfg,reciprocalOperator: reciprocal)
+    }
+    private static func makeHartreeFock(document: VivoMolecularStructureDocument,sourceSystem: VivoClassicalSystem,
+                                      plan: VivoQMMMHamiltonianPlan,configuration cfg: VivoQMMMDynamicsElectronicConfiguration,
+                                      reciprocalOperator: VivoReciprocalElectrostaticOperator?) throws -> Self {
         try plan.validate(document: document,source: sourceSystem,budget: cfg.budget)
         try cfg.periodic.validate();try cfg.cluster.validate();try cfg.budget.validate()
         guard !plan.configuration.region.qmAtomIndices.isEmpty else { throw VivoChemistryError.invalid("all-MM plans use the ordinary classical runtime") }
@@ -53,11 +77,11 @@ public extension VivoMDCandidateForceProvider {
                 case .periodicElectrostatic:
                     guard let cell = geometry.periodicCell else { throw VivoChemistryError.invalid("periodic BO candidate has no cell") }
                     let result = try VivoPeriodicHartreeFock.evaluate(system: electronic,basis: cfg.basis,cell: cell,
-                        configuration: cfg.periodic,budget: cfg.budget)
+                        configuration: cfg.periodic,budget: cfg.budget,reciprocalOperator: reciprocalOperator)
                     energy = result.reference.energyHartree;nuclearForces = result.nucleusForcesHartreePerBohr
                     chargeForces = result.pointChargeForcesHartreePerBohr;residual = result.reference.finalCommutatorNorm
                     affine = result.affineStrainDerivativeHartree
-                    derivativeMethod = "analytic-gaussian-HF-Pulay+variational-quadrupolar-Ewald+exact-near-C2; reference-backend"
+                    derivativeMethod = "analytic-gaussian-HF-Pulay+variational-quadrupolar-Ewald+exact-near-C2; " + (reciprocalOperator == nil ? "direct-fp64" : "metal-fp32-sixth-order-reciprocal-mesh")
                 case .finiteCluster:
                     guard geometry.periodicCell == nil else { throw VivoChemistryError.invalid("finite BO candidate unexpectedly has a cell") }
                     let ao = try VivoGaussianIntegralEngine.compute(system: electronic,basis: cfg.basis,budget: cfg.budget)

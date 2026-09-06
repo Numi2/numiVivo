@@ -2,7 +2,7 @@ import Foundation
 @preconcurrency import Metal
 import NumiVivoShaders
 
-private struct VivoPMEMetalCommand {
+struct VivoPMEMetalCommand {
     var particleCount: UInt32
     var gridX: UInt32
     var gridY: UInt32
@@ -42,7 +42,8 @@ final class VivoPMEEngine: @unchecked Sendable {
         let plan = try VivoPMEPlan.make(cell: cell,
                                         cutoffNM: configuration.cutoffNM,
                                         tolerance: configuration.resolvedPMETolerance,
-                                        targetGridSpacingNM: configuration.resolvedPMEGridSpacingNM)
+                                        targetGridSpacingNM: configuration.resolvedPMEGridSpacingNM,
+                                        fixedGridDimensions: configuration.pmeGridDimensions)
         guard plan.gridPointCount <= UInt64(UInt32.max),
               plan.cellVolumeNM3 <= Double(Float.greatestFiniteMagnitude),
               plan.ewaldBetaPerNM <= Double(Float.greatestFiniteMagnitude) else {
@@ -112,13 +113,13 @@ final class VivoPMEEngine: @unchecked Sendable {
                      buffers: [positions, dynamics, gridA, status], command: &command,
                      elements: Int(command.particleCount))
         var current = gridA, scratch = gridB
-        try fft3D(commandBuffer: commandBuffer, current: &current, scratch: &scratch,
+        try Self.fft3D(pipelines: pipelines, commandBuffer: commandBuffer, current: &current, scratch: &scratch,
                   inverse: false, command: &command)
         try dispatch(.mdPMEInfluence, commandBuffer: commandBuffer,
                      buffers: [current, scratch], command: &command,
                      elements: Int(command.gridPointCount))
         swap(&current, &scratch)
-        try fft3D(commandBuffer: commandBuffer, current: &current, scratch: &scratch,
+        try Self.fft3D(pipelines: pipelines, commandBuffer: commandBuffer, current: &current, scratch: &scratch,
                   inverse: true, command: &command)
         try dispatch(.mdPMEScaleInverse, commandBuffer: commandBuffer,
                      buffers: [current], command: &command,
@@ -131,22 +132,22 @@ final class VivoPMEEngine: @unchecked Sendable {
         }
     }
 
-    private func fft3D(commandBuffer: MTLCommandBuffer,
+    static func fft3D(pipelines: [NumiVivoKernel: NumiVivoPipeline], commandBuffer: MTLCommandBuffer,
                        current: inout MTLBuffer,
                        scratch: inout MTLBuffer,
                        inverse: Bool,
                        command: inout VivoPMEMetalCommand) throws {
         for axis in UInt32(0)...UInt32(2) {
             command.axis = axis; command.inverse = inverse ? 1 : 0; command.stage = 0
-            try dispatch(.mdPMEBitReverse, commandBuffer: commandBuffer,
+            try Self.dispatch(pipelines: pipelines, .mdPMEBitReverse, commandBuffer: commandBuffer,
                          buffers: [current, scratch], command: &command,
                          elements: Int(command.gridPointCount))
             swap(&current, &scratch)
             let length = axis == 0 ? command.gridX : (axis == 1 ? command.gridY : command.gridZ)
-            let stages = exactLog2(length)
+            let stages = UInt32(31 - length.leadingZeroBitCount)
             for stage in UInt32(0)..<stages {
                 command.stage = stage
-                try dispatch(.mdPMEFFTStage, commandBuffer: commandBuffer,
+                try Self.dispatch(pipelines: pipelines, .mdPMEFFTStage, commandBuffer: commandBuffer,
                              buffers: [current, scratch], command: &command,
                              elements: Int(command.gridPointCount / 2))
                 swap(&current, &scratch)
@@ -170,7 +171,11 @@ final class VivoPMEEngine: @unchecked Sendable {
         encoder.endEncoding()
     }
 
-    private func dispatch(_ kernel: NumiVivoKernel,
+    private func dispatch(_ kernel: NumiVivoKernel, commandBuffer: MTLCommandBuffer,
+                          buffers: [MTLBuffer], command: inout VivoPMEMetalCommand, elements: Int) throws {
+        try Self.dispatch(pipelines: pipelines,kernel,commandBuffer: commandBuffer,buffers: buffers,command: &command,elements: elements)
+    }
+    static func dispatch(pipelines: [NumiVivoKernel: NumiVivoPipeline], _ kernel: NumiVivoKernel,
                           commandBuffer: MTLCommandBuffer,
                           buffers: [MTLBuffer],
                           command: inout VivoPMEMetalCommand,

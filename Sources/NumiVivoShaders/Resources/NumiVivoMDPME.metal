@@ -144,3 +144,76 @@ inline float sincPi(float x){if(abs(x)<1e-7f)return 1.0f;float p=3.1415926535897
     float3 grad=float(c.gridX)*dux*c.reciprocalA.xyz+float(c.gridY)*duy*c.reciprocalB.xyz+float(c.gridZ)*duz*c.reciprocalC.xyz;float self=-c.coulombPrefactor*c.betaPerNM*0.5641895835477563f*qcharge*qcharge;float4 add=float4(-qcharge*grad,0.5f*qcharge*phi+self);float4 value=forceEnergy[gid]+add;if(!all(isfinite(value))){fail(s,statusNonFinite,gid);return;}forceEnergy[gid]=value;
 }
 } // namespace nvivo_pme
+
+
+// Sixth-order derivative-consistent multipolar assignment. Fourier transforms
+// remain the same mdPMEBitReverse/mdPMEFFTStage kernels used by charge PME.
+namespace nvivo_pme {
+struct MultipoleSource { float4 positionCharge,dipole,q0,q1; };
+struct MultipoleMeshExtra { uint4 halfWidths; };
+constant int m6coeff[6][6] = {{1,-5,10,-10,5,-1},{26,-50,20,20,-20,5},{66,0,-60,0,30,-10},{26,50,20,-20,-20,10},{1,5,10,10,5,-5},{0,0,0,0,0,1}};
+inline void bspline6(float t,thread float4 out[6]) {
+    for(uint j=0;j<6;++j){float v=float(m6coeff[j][5]),d=0,d2=0,d3=0;
+        for(int power=4;power>=0;--power){d3=d3*t+3*d2;d2=d2*t+2*d;d=d*t+v;v=v*t+float(m6coeff[j][power]);}
+        out[j]=float4(v,d,d2,d3)/120.0f;
+    }
+}
+inline float weightDerivative(uint3 order,float4 x,float4 y,float4 z){return x[order.x]*y[order.y]*z[order.z];}
+constant uint3 momentPowers[10]={uint3(0),uint3(1,0,0),uint3(0,1,0),uint3(0,0,1),uint3(2,0,0),uint3(1,1,0),uint3(1,0,1),uint3(0,2,0),uint3(0,1,1),uint3(0,0,2)};
+constant float momentWeights[10]={1,1,1,1,0.5f,1,1,0.5f,1,0.5f};
+inline void momentsOf(MultipoleSource s,thread float m[10]){
+    m[0]=s.positionCharge.w;m[1]=s.dipole.x;m[2]=s.dipole.y;m[3]=s.dipole.z;
+    m[4]=s.q0.x;m[5]=s.q0.y;m[6]=s.q0.z;m[7]=s.q0.w;m[8]=s.q1.x;m[9]=s.q1.y;
+}
+[[host_name("nvivo_pme_multipole_spread")]] kernel void multipoleSpread(
+    device const MultipoleSource*sources[[buffer(0)]],device atomic_uint*grid[[buffer(1)]],
+    constant PMECommand&c[[buffer(2)]],uint gid[[thread_position_in_grid]]){
+    if(gid>=c.particleCount)return;MultipoleSource s=sources[gid];float3 u=s.positionCharge.xyz;
+    int3 base=int3(floor(u))-2;float3 t=u-floor(u);float4 wx[6],wy[6],wz[6];
+    bspline6(t.x,wx);bspline6(t.y,wy);bspline6(t.z,wz);float m[10];momentsOf(s,m);
+    for(uint z=0;z<6;++z)for(uint y=0;y<6;++y)for(uint x=0;x<6;++x){float value=0;
+        for(uint a=0;a<10;++a)value+=m[a]*momentWeights[a]*weightDerivative(momentPowers[a],wx[x],wy[y],wz[z]);
+        uint index=gridIndex(wrapIndex(base.x+int(x),c.gridX),wrapIndex(base.y+int(y),c.gridY),wrapIndex(base.z+int(z),c.gridZ),c);
+        atomicAddFloat(&grid[2ul*index],value);
+    }
+}
+[[host_name("nvivo_pme_multipole_influence")]] kernel void multipoleInfluence(
+    device const float2*rho[[buffer(0)]],device float2*phi[[buffer(1)]],
+    device float4*energyStress[[buffer(2)]],constant MultipoleMeshExtra&e[[buffer(3)]],
+    constant PMECommand&c[[buffer(4)]],uint gid[[thread_position_in_grid]]){
+    if(gid>=c.gridPointCount)return;uint3 q=decodeGrid(gid,c);
+    int3 m=int3(signedMode(q.x,c.gridX),signedMode(q.y,c.gridY),signedMode(q.z,c.gridZ));
+    // Omit Nyquist planes; their signed representatives are not a conjugate pair
+    // on a skew cell. The declared active mode widths must lie below Nyquist.
+    if(all(m==int3(0))||any(abs(m)>int3(e.halfWidths.xyz))||q.x==c.gridX/2||q.y==c.gridY/2||q.z==c.gridZ/2){
+        phi[gid]=0;energyStress[2ul*gid]=0;energyStress[2ul*gid+1]=0;return;
+    }
+    float3 k=6.283185307179586f*(float(m.x)*c.reciprocalA.xyz+float(m.y)*c.reciprocalB.xyz+float(m.z)*c.reciprocalC.xyz);
+    float k2=dot(k,k),a2=c.betaPerNM*c.betaPerNM;
+    float b=sincPi(float(m.x)/float(c.gridX))*sincPi(float(m.y)/float(c.gridY))*sincPi(float(m.z)/float(c.gridZ));
+    float b2=b*b,b4=b2*b2,b12=b4*b4*b4;
+    float green=(12.566370614359172f/c.volumeNM3)*exp(-k2/(4*a2))/(k2*b12);
+    phi[gid]=rho[gid]*(float(c.gridPointCount)*green);
+    float energy=0.5f*green*dot(rho[gid],rho[gid]);float scale=2/k2+1/(2*a2);
+    energyStress[2ul*gid]=float4(energy,energy*(-1+scale*k.x*k.x),energy*scale*k.x*k.y,energy*scale*k.x*k.z);
+    energyStress[2ul*gid+1]=float4(energy*(-1+scale*k.y*k.y),energy*scale*k.y*k.z,energy*(-1+scale*k.z*k.z),0);
+}
+[[host_name("nvivo_pme_multipole_gather")]] kernel void multipoleGather(
+    device const MultipoleSource*sources[[buffer(0)]],device const float2*potential[[buffer(1)]],
+    device float4*out[[buffer(2)]],constant PMECommand&c[[buffer(3)]],uint gid[[thread_position_in_grid]]){
+    if(gid>=c.particleCount)return;MultipoleSource s=sources[gid];float3 u=s.positionCharge.xyz;
+    int3 base=int3(floor(u))-2;float3 t=u-floor(u);float4 wx[6],wy[6],wz[6];
+    bspline6(t.x,wx);bspline6(t.y,wy);bspline6(t.z,wz);float m[10],lambda[10];momentsOf(s,m);
+    for(uint a=0;a<10;++a)lambda[a]=0;float3 gradient=0;
+    for(uint z=0;z<6;++z)for(uint y=0;y<6;++y)for(uint x=0;x<6;++x){
+        uint index=gridIndex(wrapIndex(base.x+int(x),c.gridX),wrapIndex(base.y+int(y),c.gridY),wrapIndex(base.z+int(z),c.gridZ),c);
+        float value=potential[index].x;
+        for(uint a=0;a<10;++a){uint3 n=momentPowers[a];float f=momentWeights[a]*value;
+            lambda[a]+=f*weightDerivative(n,wx[x],wy[y],wz[z]);
+            for(uint b=0;b<3;++b){uint3 dn=n;dn[b]++;gradient[b]+=m[a]*f*weightDerivative(dn,wx[x],wy[y],wz[z]);}
+        }
+    }
+    out[4ul*gid]=float4(-gradient,lambda[0]);out[4ul*gid+1]=float4(lambda[1],lambda[2],lambda[3],lambda[4]);
+    out[4ul*gid+2]=float4(lambda[5],lambda[6],lambda[7],lambda[8]);out[4ul*gid+3]=float4(lambda[9],0,0,0);
+}
+} // namespace nvivo_pme
