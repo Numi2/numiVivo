@@ -49,8 +49,12 @@ def main():
     registered = {x['identifier'] for x in catalog}
     check(len(registered) == len(catalog), 'registered operation identifiers unique')
     check({'vivo.platform.md-start', 'vivo.platform.md-continue', 'vivo.platform.target-reference',
-           'vivo.platform.structure-electronic-system', 'vivo.native.advanced-many-body'}.issubset(registered),
-          'catalog exposes actual cross-domain operation families')
+           'vivo.platform.structure-electronic-system', 'vivo.native.advanced-many-body',
+           'vivo.platform.qmmm-transmission-analyze', 'vivo.platform.qmmm-apply-transmission'}.issubset(registered),
+          'catalog exposes actual cross-domain and computed-transmission operation families')
+    qmmm_help = run('qmmm-help', 'qmmm-free-energy-help').stdout
+    check('qmmm-transmission-analyze' in qmmm_help and 'qmmm-transmission-apply' in qmmm_help,
+          'real CLI routes computed transmission analysis and application commands')
     recipe_path = out / 'recipe.json'
     run('template', 'workflow-template', 'molecular-analysis', '--output', recipe_path)
     recipe = read('recipe.json')
