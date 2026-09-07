@@ -1,8 +1,9 @@
 import Foundation
 
-/// Deterministic artifact-DAG adapters for retained PMF analysis and rate
-/// qualification. Executable force providers remain Swift runtime resources and
-/// are intentionally not serialized through workflow artifacts.
+/// Deterministic artifact-DAG adapters for retained PMF analysis, kinetic
+/// qualification, sensitivity evidence and chemical-state integration.
+/// Executable force providers remain Swift runtime resources and are
+/// intentionally not serialized through workflow artifacts.
 public enum VivoPlatformQMMMFreeEnergyOperations {
     public static func definitions(implementationFingerprint id:VivoFingerprint)->[VivoWorkflowDefinition] {
         [VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-free-energy-analyze",id:id,
@@ -24,7 +25,7 @@ public enum VivoPlatformQMMMFreeEnergyOperations {
          VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-transmission-analyze",id:id,
             inputs:["request":"vivo.qmmm-dynamical-transmission-analysis-request"],
             outputs:[.init(name:"result",kind:"vivo.qmmm-dynamical-transmission-result")],
-            summary:"Reconstruct flux-weighted dividing-surface recrossing evidence already generated under the bound BO Hamiltonian.",
+            summary:"Reconstruct paired signed reactive-flux histories and require a stable late-time transmission plateau.",
             configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
                 let request=try VivoPlatformOperations.input(VivoQMMMDynamicalTransmissionAnalysisRequest.self,"request",inputs)
                 return ["result":try VivoCanonicalJSON.encode(request.calculate())]
@@ -32,7 +33,7 @@ public enum VivoPlatformQMMMFreeEnergyOperations {
          VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-apply-transmission",id:id,
             inputs:["request":"vivo.qmmm-computed-transmission-application-request"],
             outputs:[.init(name:"rateRequest",kind:"vivo.qmmm-free-energy-rate-request")],
-            summary:"Apply only a converged computed recrossing coefficient to its exact PMF rate request.",
+            summary:"Apply only a converged computed recrossing coefficient and sampled surface-flux normalization to their exact PMF rate request.",
             configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
                 let request=try VivoPlatformOperations.input(VivoQMMMComputedTransmissionApplicationRequest.self,"request",inputs)
                 return ["rateRequest":try VivoCanonicalJSON.encode(request.calculate())]
@@ -40,7 +41,7 @@ public enum VivoPlatformQMMMFreeEnergyOperations {
          VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-replicated-free-energy-rate",id:id,
             inputs:["request":"vivo.qmmm-replicated-free-energy-rate-request"],
             outputs:[.init(name:"result",kind:"vivo.qmmm-replicated-free-energy-rate-result")],
-            summary:"Independent disjoint-seed PMF replica agreement and replicated kinetic evidence.",
+            summary:"Independent disjoint-seed PMF replica agreement with unresolved within-replica uncertainty preserved as unknown.",
             configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
                 let request=try VivoPlatformOperations.input(VivoQMMMReplicatedFreeEnergyRateRequest.self,"request",inputs)
                 return ["result":try VivoCanonicalJSON.encode(VivoQMMMReplicatedFreeEnergyRate.calculate(request))]
@@ -56,6 +57,22 @@ public enum VivoPlatformQMMMFreeEnergyOperations {
                 let result=try VivoPlatformOperations.input(VivoQMMMReplicatedFreeEnergyRateResult.self,"result",inputs)
                 let kinetics=try VivoPlatformOperations.input(VivoCovalentKineticPack.self,"kinetics",inputs)
                 return ["kinetics":try VivoCanonicalJSON.encode(VivoQMMMReplicatedFreeEnergyRate.applying(result,request:request,to:kinetics))]
+            }),
+         VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-chemical-qualification",id:id,
+            inputs:["request":"vivo.qmmm-chemical-qualification-request"],
+            outputs:[.init(name:"result",kind:"vivo.qmmm-chemical-qualification-result")],
+            summary:"Predeclared protocol/electronic/QM-region sensitivity and condition-matched external validation for one replicated chemical-rate protocol.",
+            configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
+                let request=try VivoPlatformOperations.input(VivoQMMMChemicalQualificationRequest.self,"request",inputs)
+                return ["result":try VivoCanonicalJSON.encode(VivoQMMMChemicalQualification.calculate(request))]
+            }),
+         VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-chemical-state-network",id:id,
+            inputs:["request":"vivo.qmmm-chemical-state-network-request"],
+            outputs:[.init(name:"result",kind:"vivo.qmmm-chemical-state-network-result")],
+            summary:"Population-weight explicit rapid-pre-equilibrium chemical states and add parallel elementary pathway rates without averaging barriers.",
+            configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
+                let request=try VivoPlatformOperations.input(VivoQMMMChemicalStateNetworkRequest.self,"request",inputs)
+                return ["result":try VivoCanonicalJSON.encode(VivoQMMMChemicalStateNetwork.calculate(request))]
             })]
     }
 }
