@@ -42,7 +42,7 @@ if VivoWorkflowCLICommands.handles(arguments.first) {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
         FileHandle.standardOutput.write(Data("\nGeneral workflows: workflow-catalog, workflow-template, workflow-plan, workflow-run, workflow-import, workflow-export, workflow-verify, workflow-help.\n".utf8))
-        FileHandle.standardOutput.write(Data("\nQM/MM free energy and chemical qualification: qmmm-free-energy-analyze, qmmm-transmission-analyze, qmmm-transmission-apply, qmmm-free-energy-rate, qmmm-free-energy-replicated-rate, qmmm-chemical-qualify, qmmm-chemical-state-network, qmmm-free-energy-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("\nQM/MM free energy and chemical qualification: qmmm-free-energy-analyze, qmmm-transmission-analyze, qmmm-transmission-apply, qmmm-free-energy-rate, qmmm-free-energy-replicated-rate, qmmm-chemical-qualify, qmmm-chemical-state-network, qmmm-chemical-exchange-network, qmmm-chemical-exchange-validate, qmmm-free-energy-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nPrepared molecular workflows: molecule-prepare-template, molecule-prepare, molecule-sampling-template, molecule-sampling-run, molecule-sampling-analyze, molecule-rate, molecule-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nReaction qualification: reaction-template, reaction-run, reaction-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nShared-orbital ECC paths: chemistry-path-template, chemistry-path-run, chemistry-path-help.\n".utf8))
