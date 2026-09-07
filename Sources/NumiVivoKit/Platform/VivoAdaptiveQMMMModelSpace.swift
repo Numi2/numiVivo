@@ -120,7 +120,7 @@ public struct VivoAdaptiveQMMMModelSpaceFamily: Codable, Sendable, Equatable {
                 }
                 cursor=next
             }
-            if candidate.role==.confirmation {
+            if candidate.role == .confirmation {
                 guard !candidates.contains(where:{$0.parentIdentifier==candidate.identifier}) else {
                     throw VivoChemistryError.invalid("held-out model-space confirmation cannot be a refinement parent")
                 }
@@ -135,7 +135,7 @@ public struct VivoAdaptiveQMMMModelSpaceFamily: Codable, Sendable, Equatable {
         try validate()
         return candidates.map { candidate in
             VivoRefinementActionProposal(identifier:candidate.identifier,criterionIdentifier:criterionIdentifier,
-                role:candidate.role==.discovery ? .discovery:.confirmation,
+                role:candidate.role == .discovery ? .discovery:.confirmation,
                 prerequisites:candidate.parentIdentifier.map{[$0]} ?? [],costClass:candidate.costClass,
                 declaredWorkUnits:candidate.declaredWorkUnits,initialEstimatedSeconds:candidate.initialEstimatedSeconds,
                 expectedMetricReduction:candidate.expectedMetricReduction)
