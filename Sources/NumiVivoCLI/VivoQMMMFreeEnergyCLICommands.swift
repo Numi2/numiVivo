@@ -4,7 +4,8 @@ import NumiVivoKit
 struct VivoQMMMFreeEnergyCLICommands {
     static func handles(_ name:String?)->Bool {
         ["qmmm-free-energy-analyze","qmmm-free-energy-rate","qmmm-free-energy-replicated-rate",
-         "qmmm-transmission-analyze","qmmm-transmission-apply","qmmm-free-energy-help"].contains(name ?? "")
+         "qmmm-transmission-analyze","qmmm-transmission-apply","qmmm-chemical-qualify",
+         "qmmm-chemical-state-network","qmmm-free-energy-help"].contains(name ?? "")
     }
     private func load<T:Decodable & Sendable>(_ type:T.Type,_ path:String)throws->T {
         try VivoValidatedArtifactLoader.decode(type,at:URL(fileURLWithPath:path),limits:.init(
@@ -65,6 +66,15 @@ struct VivoQMMMFreeEnergyCLICommands {
                     try write(VivoQMMMReplicatedFreeEnergyRate.applying(result,request:request,to:pack),output+".kinetics.json")
                 }
                 return result.converged ? 0:75
+            case "qmmm-chemical-qualify":
+                guard kinetics==nil else { throw VivoChemistryError.invalid("--kinetics is not an external-validation operation") }
+                let request=try load(VivoQMMMChemicalQualificationRequest.self,arguments[1])
+                let result=try VivoQMMMChemicalQualification.calculate(request)
+                try write(result,output);return result.converged ? 0:75
+            case "qmmm-chemical-state-network":
+                guard kinetics==nil else { throw VivoChemistryError.invalid("--kinetics requires an explicit downstream kinetic model adapter") }
+                let request=try load(VivoQMMMChemicalStateNetworkRequest.self,arguments[1])
+                try write(VivoQMMMChemicalStateNetwork.calculate(request),output);return 0
             default:throw VivoChemistryError.invalid("unresolved QM/MM free-energy command")
             }
         } catch {
@@ -72,24 +82,26 @@ struct VivoQMMMFreeEnergyCLICommands {
         }
     }
     private static let help="""
-    QM/MM activation free-energy and transmission workflows
+    QM/MM activation free-energy, transmission and chemical qualification workflows
       numivivo qmmm-free-energy-analyze analysis-request.json --output activation-pmf.json
       numivivo qmmm-transmission-analyze transmission-evidence.json --output transmission.json
       numivivo qmmm-transmission-apply transmission-application.json --output calculated-rate-request.json
       numivivo qmmm-free-energy-rate rate-request.json --output rate.json [--kinetics kinetic-pack.json]
       numivivo qmmm-free-energy-replicated-rate replicas.json --output replicated-rate.json [--kinetics kinetic-pack.json]
+      numivivo qmmm-chemical-qualify qualification.json --output qualification-result.json
+      numivivo qmmm-chemical-state-network state-network.json --output effective-rate.json
 
-    qmmm-free-energy-analyze reconstructs a retained umbrella data set with the
-    native unbinned MBAR implementation and exits 75 if overlap/sampling checks do
-    not qualify the PMF. qmmm-transmission-analyze reconstructs previously generated
-    flux-weighted dividing-surface shooting evidence and exits 75 when its recrossing
-    acceptance gates fail. It does not serialize or execute a Born-Oppenheimer force
-    provider. qmmm-transmission-apply binds only a converged result to its exact PMF
-    rate request. qmmm-free-energy-rate then performs the unchanged flux-normalized
-    kinetic conversion. qmmm-free-energy-replicated-rate requires disjoint stochastic
-    seeds and identical Hamiltonian, reaction, environment and transmission bindings
-    across independent PMF repeats; it exits 75 when between-replica agreement is
-    insufficient and refuses kinetic-pack application in that state. Outputs are
-    canonical no-clobber JSON.
+    qmmm-free-energy-analyze reconstructs retained umbrella data with native unbinned
+    MBAR and exits 75 if sampling/overlap gates fail. qmmm-transmission-analyze
+    reconstructs paired +v/-v signed reactive-flux histories and requires a stable
+    late-time plateau; it does not serialize a Born-Oppenheimer provider.
+    qmmm-transmission-apply binds a converged transmission coefficient and sampled
+    dividing-surface velocity normalization to the exact PMF. Replicated-rate
+    qualification requires disjoint stochastic executions and preserves unresolved
+    within-replica uncertainty as unknown. qmmm-chemical-qualify evaluates
+    predeclared protocol/electronic/QM-region sensitivity and only directly compares
+    condition-matched first-order chemical-rate measurements. qmmm-chemical-state-network
+    computes sum_s p_s sum_path k_s,path only when rapid pre-equilibrium is explicitly
+    asserted; it never averages activation barriers. Outputs are canonical no-clobber JSON.
     """
 }
