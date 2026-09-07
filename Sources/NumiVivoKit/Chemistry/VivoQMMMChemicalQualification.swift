@@ -44,9 +44,7 @@ public struct VivoQMMMQualificationVariant:Codable,Sendable,Equatable {
 }
 
 public enum VivoQMMMExperimentalObservable:String,Codable,Sendable {
-    /// A first-order chemical inactivation rate for the explicitly bound pre-reactive complex.
     case chemicalInactivationRatePerSecond
-    /// Retained as external context only; it is not directly comparable to the conditional chemical rate.
     case inactivationEfficiencyPerMolarSecond
     case inhibitoryConcentrationMolar
     case targetOccupancyFraction
@@ -65,7 +63,7 @@ public struct VivoQMMMExternalValidationTarget:Codable,Sendable,Equatable {
         self.logStandardDeviation=logStandardDeviation;self.context=context;self.source=source
     }
     public func validate()throws {
-        try context.validate();try source.validate(origin:.experimental)
+        try context.validate();try source.validate(origin:.measured)
         guard !identifier.isEmpty,value.isFinite,value>0 else { throw VivoKineticsError.invalid("QM/MM external validation target") }
         if let logStandardDeviation {
             guard logStandardDeviation.isFinite,logStandardDeviation>=0 else { throw VivoKineticsError.invalid("experimental log uncertainty") }
@@ -123,11 +121,6 @@ public struct VivoQMMMChemicalQualificationResult:Codable,Sendable,Equatable {
     public let evidenceFingerprint:VivoFingerprint
 }
 
-/// This gate qualifies a declared computational protocol. It deliberately keeps
-/// independent-replica dispersion, method sensitivity and external validation as
-/// separate evidence categories. Alternate protonation states/pathways belong in
-/// an explicit state/pathway network and are therefore not accepted as ordinary
-/// sensitivity variants here.
 public enum VivoQMMMChemicalQualification {
     public static let interpretation="Qualification of one explicitly declared bound-complex chemical-rate protocol against independently replicated sampling, predeclared numerical/electronic/QM-region sensitivity variants and condition-matched external rate data. Passing this gate does not establish transferability to other proteins, chemical states or mechanisms."
 
