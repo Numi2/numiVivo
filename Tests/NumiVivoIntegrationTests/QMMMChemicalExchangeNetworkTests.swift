@@ -43,7 +43,7 @@ import Testing
                     reactantEndpointIdentifier:"R",productEndpointIdentifier:"P",mappedReactionAtomIndices:coordinate.atomIndices))
             let qualified=try VivoQMMMQualifiedActivationFreeEnergy(analysis:replicaAnalysis,provenance:provenance,
                 fluxNormalization:.init(surfaceToReactantDensityPerNM:try VivoQMMMFreeEnergyQualification.surfaceToReactantDensityPerNM(replicaAnalysis),
-                    inverseMassMetricPerDa:1))
+                    inverseMassMetricPerDa:1e-12))
             let context=VivoKineticContext(compound:"synthetic",target:"protein",targetVariant:"reference",site:"site",
                 chemicalState:state,hostContext:"exchange-host",temperatureK:300,pH:7,ionicStrengthM:0.15)
             return VivoQMMMFreeEnergyRateRequest(context:context,environment:.proteinEnvironment,freeEnergy:qualified,
@@ -73,9 +73,9 @@ import Testing
         let request=VivoQMMMChemicalExchangeNetworkRequest(identifier:"equal-rate-exchange",states:[
             .init(identifier:"A",initialPopulation:0.25,pathways:[a]),
             .init(identifier:"B",initialPopulation:0.75,pathways:[b])],exchangeEdges:[
-                .init(fromStateIdentifier:"A",toStateIdentifier:"B",rate:assumedRate(5,"A to B")),
-                .init(fromStateIdentifier:"B",toStateIdentifier:"A",rate:assumedRate(7,"B to A"))],
-            observationTimesSeconds:[0,0.01,0.1])
+                .init(fromStateIdentifier:"A",toStateIdentifier:"B",rate:assumedRate(5*k,"A to B")),
+                .init(fromStateIdentifier:"B",toStateIdentifier:"A",rate:assumedRate(7*k,"B to A"))],
+            observationTimesSeconds:[0,0.1/k,1/k])
         let result=try VivoQMMMChemicalExchangeNetwork.calculate(request)
         try VivoQMMMChemicalExchangeNetwork.validate(result,request:request)
         #expect(result.stateChemicalRatesPerSecond.count==2)
@@ -100,22 +100,23 @@ import Testing
             return copy
         }
         b = .init(identifier:"path",request:modified,result:try VivoQMMMReplicatedFreeEnergyRate.calculate(modified))
+        let k=a.result.geometricMeanRatePerSecond
         let request=VivoQMMMChemicalExchangeNetworkRequest(identifier:"unequal-rate-exchange",states:[
             .init(identifier:"A",initialPopulation:0.5,pathways:[a]),
             .init(identifier:"B",initialPopulation:0.5,pathways:[b])],exchangeEdges:[
-                .init(fromStateIdentifier:"A",toStateIdentifier:"B",rate:assumedRate(0.2,"A to B")),
-                .init(fromStateIdentifier:"B",toStateIdentifier:"A",rate:assumedRate(0.1,"B to A"))],
-            observationTimesSeconds:[0,0.01,0.1,1])
+                .init(fromStateIdentifier:"A",toStateIdentifier:"B",rate:assumedRate(0.2*k,"A to B")),
+                .init(fromStateIdentifier:"B",toStateIdentifier:"A",rate:assumedRate(0.1*k,"B to A"))],
+            observationTimesSeconds:[0,0.1/k,1/k,3/k])
         let result=try VivoQMMMChemicalExchangeNetwork.calculate(request)
         let hazards=result.observations.map(\.instantaneousHazardPerSecond)
-        #expect((hazards.max() ?? 0)-(hazards.min() ?? 0)>1e-8)
+        #expect((hazards.max() ?? 0)-(hazards.min() ?? 0)>k*1e-4)
         #expect(result.observations.last!.reactedProbability>result.observations[1].reactedProbability)
 
         let duplicate=VivoQMMMChemicalExchangeNetworkRequest(identifier:"duplicate-edge",states:request.states,
             exchangeEdges:[request.exchangeEdges[0],request.exchangeEdges[0]],observationTimesSeconds:[0])
         #expect(throws:(any Error).self) { _ = try VivoQMMMChemicalExchangeNetwork.calculate(duplicate) }
         let unknown=VivoQMMMChemicalExchangeNetworkRequest(identifier:"unknown-edge",states:request.states,
-            exchangeEdges:[.init(fromStateIdentifier:"A",toStateIdentifier:"missing",rate:assumedRate(1,"bad"))],
+            exchangeEdges:[.init(fromStateIdentifier:"A",toStateIdentifier:"missing",rate:assumedRate(k,"bad"))],
             observationTimesSeconds:[0])
         #expect(throws:(any Error).self) { _ = try VivoQMMMChemicalExchangeNetwork.calculate(unknown) }
     }
