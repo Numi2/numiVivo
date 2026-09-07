@@ -1,36 +1,35 @@
 import Foundation
 
-/// Serializable analysis envelope for already-computed dividing-surface shooting
-/// trajectories. The executable Born–Oppenheimer provider remains a runtime
+/// Serializable analysis envelope for already-computed paired dividing-surface
+/// shooting evidence. The executable Born–Oppenheimer provider remains a runtime
 /// resource and is deliberately not serialized into workflow artifacts.
 public struct VivoQMMMDynamicalTransmissionAnalysisRequest: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-dynamical-transmission-analysis/v1"
+    public static let schema="numivivo.org/qmmm-dynamical-transmission-analysis/v2"
     public var schema:String
     public var transmissionRequest:VivoQMMMDynamicalTransmissionRequest
     public var retainedSystemFingerprint:VivoFingerprint
     public var providerFingerprint:VivoFingerprint
-    public var trajectories:[VivoQMMMTransmissionTrajectory]
+    public var pairs:[VivoQMMMTransmissionPair]
 
     public init(transmissionRequest:VivoQMMMDynamicalTransmissionRequest,
                 retainedSystemFingerprint:VivoFingerprint,providerFingerprint:VivoFingerprint,
-                trajectories:[VivoQMMMTransmissionTrajectory]) {
+                pairs:[VivoQMMMTransmissionPair]) {
         schema=Self.schema;self.transmissionRequest=transmissionRequest
         self.retainedSystemFingerprint=retainedSystemFingerprint;self.providerFingerprint=providerFingerprint
-        self.trajectories=trajectories
+        self.pairs=pairs
     }
 
     public func calculate() throws -> VivoQMMMDynamicalTransmissionResult {
         guard schema==Self.schema else { throw VivoChemistryError.invalid("QM/MM transmission-analysis schema") }
         return try VivoQMMMDynamicalTransmission.analyze(request:transmissionRequest,
-            systemFingerprint:retainedSystemFingerprint,providerFingerprint:providerFingerprint,
-            trajectories:trajectories)
+            systemFingerprint:retainedSystemFingerprint,providerFingerprint:providerFingerprint,pairs:pairs)
     }
 }
 
 /// Deterministic artifact-level application of a validated computed transmission
 /// coefficient to the exact PMF rate request it was generated for.
 public struct VivoQMMMComputedTransmissionApplicationRequest: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-computed-transmission-application/v1"
+    public static let schema="numivivo.org/qmmm-computed-transmission-application/v2"
     public var schema:String
     public var analysisRequest:VivoQMMMDynamicalTransmissionAnalysisRequest
     public var result:VivoQMMMDynamicalTransmissionResult
@@ -44,7 +43,7 @@ public struct VivoQMMMComputedTransmissionApplicationRequest: Codable, Sendable,
     public func calculate() throws -> VivoQMMMFreeEnergyRateRequest {
         guard schema==Self.schema else { throw VivoChemistryError.invalid("QM/MM computed-transmission application schema") }
         let rebuilt=try analysisRequest.calculate()
-        guard rebuilt==result else { throw VivoChemistryError.invalid("computed transmission result does not reconstruct from trajectory evidence") }
+        guard rebuilt==result else { throw VivoChemistryError.invalid("computed transmission result does not reconstruct from paired trajectory evidence") }
         return try VivoQMMMDynamicalTransmission.applying(result,
             transmissionRequest:analysisRequest.transmissionRequest,to:rateRequest)
     }
