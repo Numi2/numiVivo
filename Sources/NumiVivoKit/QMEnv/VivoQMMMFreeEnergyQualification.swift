@@ -169,6 +169,12 @@ public enum VivoQMMMFreeEnergyQualification {
     }
 
     private static func inverseMassMetricPerDa(coordinate:VivoQMMMReactionCoordinate,system:VivoClassicalSystem)throws->Double {
+        // The closed-form metric is valid only when every coordinate atom is unique.
+        // Shared-atom transfer coordinates have geometry-dependent cross terms and
+        // are rate-qualified later from the sampled dividing-surface velocity ensemble.
+        guard Set(coordinate.atomIndices).count==coordinate.atomIndices.count else {
+            throw VivoChemistryError.unsupported("shared-atom reaction coordinates require sampled surface velocity normalization")
+        }
         let resolved=try VivoQMMMResolvedCoordinate(source:coordinate,system:system)
         var value=0.0
         for particle in resolved.particleIndices {

@@ -17,9 +17,19 @@ public struct VivoQMMMReactionCoordinate: Codable, Sendable, Equatable {
     }
     public func validate() throws {
         let expected = kind == .distance ? 2 : 4
-        guard !identifier.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty,
-              atomIndices.count==expected,Set(atomIndices).count==atomIndices.count else {
+        guard !identifier.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty,atomIndices.count==expected else {
             throw VivoChemistryError.invalid("reaction-coordinate identity or atom arity")
+        }
+        switch kind {
+        case .distance:
+            guard atomIndices[0] != atomIndices[1] else {
+                throw VivoChemistryError.invalid("distance coordinate requires two distinct atoms")
+            }
+        case .distanceDifference:
+            let first=Set([atomIndices[0],atomIndices[1]]),second=Set([atomIndices[2],atomIndices[3]])
+            guard first.count==2,second.count==2,first != second else {
+                throw VivoChemistryError.invalid("distance-difference coordinate requires two nonidentical atom pairs")
+            }
         }
     }
 }
@@ -65,8 +75,13 @@ public struct VivoQMMMResolvedCoordinate: Sendable, Equatable {
         case .distanceDifference:
             let (a,u)=try bond(particleIndices[0],particleIndices[1])
             let (b,v)=try bond(particleIndices[2],particleIndices[3])
-            return (a-b,[particleIndices[0]:u,particleIndices[1]:u*(-1),
-                         particleIndices[2]:v*(-1),particleIndices[3]:v])
+            var gradients:[UInt32:VivoVector3D]=[:]
+            func accumulate(_ particle:UInt32,_ contribution:VivoVector3D) {
+                gradients[particle]=(gradients[particle] ?? .zero)+contribution
+            }
+            accumulate(particleIndices[0],u);accumulate(particleIndices[1],u*(-1))
+            accumulate(particleIndices[2],v*(-1));accumulate(particleIndices[3],v)
+            return (a-b,gradients)
         }
     }
 }
