@@ -24,25 +24,40 @@ public struct VivoQMMMReactionConnectivityBinding: Codable, Sendable, Equatable 
     }
 }
 
+public struct VivoQMMMSamplingExecutionBinding: Codable, Sendable, Equatable {
+    /// Fingerprint of the complete run request, including initial states and all
+    /// stochastic window seeds. This identifies the exact executed sampling job.
+    public var requestFingerprint:VivoFingerprint
+    /// Fingerprint of the common protocol after removing stochastic seed and
+    /// initial-state identity. Independent replicas must share this value.
+    public var replicaProtocolFingerprint:VivoFingerprint
+    public init(requestFingerprint:VivoFingerprint,replicaProtocolFingerprint:VivoFingerprint) {
+        self.requestFingerprint=requestFingerprint;self.replicaProtocolFingerprint=replicaProtocolFingerprint
+    }
+}
+
 public struct VivoQMMMFreeEnergyProvenance: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-free-energy-provenance/v3"
+    public static let schema="numivivo.org/qmmm-free-energy-provenance/v4"
     public var schema:String
     public var structureFingerprint:VivoFingerprint
     public var systemFingerprint:VivoFingerprint
     public var baseProviderFingerprint:VivoFingerprint
     public var dynamicsFingerprint:VivoFingerprint
+    public var samplingExecution:VivoQMMMSamplingExecutionBinding
     public var chemicalState:String
     public var environment:VivoQMMMFreeEnergyEnvironment
     public var environmentIdentifier:String
     public var methodDescription:String
     public var reactionConnectivity:VivoQMMMReactionConnectivityBinding
     public init(structureFingerprint:VivoFingerprint,systemFingerprint:VivoFingerprint,baseProviderFingerprint:VivoFingerprint,
-                dynamicsFingerprint:VivoFingerprint,chemicalState:String,environment:VivoQMMMFreeEnergyEnvironment,
+                dynamicsFingerprint:VivoFingerprint,samplingExecution:VivoQMMMSamplingExecutionBinding,
+                chemicalState:String,environment:VivoQMMMFreeEnergyEnvironment,
                 environmentIdentifier:String,methodDescription:String,reactionConnectivity:VivoQMMMReactionConnectivityBinding) {
         schema=Self.schema;self.structureFingerprint=structureFingerprint;self.systemFingerprint=systemFingerprint
         self.baseProviderFingerprint=baseProviderFingerprint;self.dynamicsFingerprint=dynamicsFingerprint
-        self.chemicalState=chemicalState;self.environment=environment;self.environmentIdentifier=environmentIdentifier
-        self.methodDescription=methodDescription;self.reactionConnectivity=reactionConnectivity
+        self.samplingExecution=samplingExecution;self.chemicalState=chemicalState;self.environment=environment
+        self.environmentIdentifier=environmentIdentifier;self.methodDescription=methodDescription
+        self.reactionConnectivity=reactionConnectivity
     }
     public func validate(coordinate:VivoQMMMReactionCoordinate) throws {
         try reactionConnectivity.validate(coordinate:coordinate)
@@ -75,7 +90,7 @@ public struct VivoQMMMFluxNormalization: Codable, Sendable, Equatable {
 }
 
 public struct VivoQMMMQualifiedActivationFreeEnergy: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-qualified-activation-free-energy/v3"
+    public static let schema="numivivo.org/qmmm-qualified-activation-free-energy/v4"
     public let schema:String
     public let analysis:VivoQMMMActivationFreeEnergyResult
     public let provenance:VivoQMMMFreeEnergyProvenance
@@ -165,6 +180,25 @@ public enum VivoQMMMFreeEnergyQualification {
         return value
     }
 
+    private static func samplingBinding(_ sampling:VivoQMMMFreeEnergyRunRequest)throws->VivoQMMMSamplingExecutionBinding {
+        struct ProtocolIdentity:Codable {
+            let coordinate:VivoQMMMReactionCoordinate
+            let windows:[VivoQMMMUmbrellaWindow]
+            let dynamics:VivoMDConfiguration
+            let equilibrationSteps:UInt64
+            let productionSteps:UInt64
+            let sampleEvery:UInt64
+            let analysis:VivoQMMMFreeEnergyAnalysisConfiguration
+        }
+        let requestID=try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(sampling))
+        var dynamics=sampling.dynamics;dynamics.randomSeed=0
+        let protocolID=try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(ProtocolIdentity(
+            coordinate:sampling.coordinate,windows:sampling.windows,dynamics:dynamics,
+            equilibrationSteps:sampling.equilibrationSteps,productionSteps:sampling.productionSteps,
+            sampleEvery:sampling.sampleEvery,analysis:sampling.analysis)))
+        return .init(requestFingerprint:requestID,replicaProtocolFingerprint:protocolID)
+    }
+
     private static func binding(connectivity:VivoReactionConnectivityResult,coordinate:VivoQMMMReactionCoordinate,
                                 reactantEndpointIdentifier:String,productEndpointIdentifier:String)throws->VivoQMMMReactionConnectivityBinding {
         try VivoReactionConnectivity.validate(connectivity,request:connectivity.request)
@@ -205,7 +239,8 @@ public enum VivoQMMMFreeEnergyQualification {
         let reaction=try binding(connectivity:reactionConnectivity,coordinate:result.coordinate,
                                  reactantEndpointIdentifier:reactantEndpointIdentifier,productEndpointIdentifier:productEndpointIdentifier)
         let provenance=VivoQMMMFreeEnergyProvenance(structureFingerprint:system.structureFingerprint,systemFingerprint:systemID,
-            baseProviderFingerprint:baseProvider.fingerprint,dynamicsFingerprint:dynamicsID,chemicalState:chemicalState,
+            baseProviderFingerprint:baseProvider.fingerprint,dynamicsFingerprint:dynamicsID,
+            samplingExecution:try samplingBinding(sampling),chemicalState:chemicalState,
             environment:environment,environmentIdentifier:environmentIdentifier,methodDescription:methodDescription,
             reactionConnectivity:reaction)
         let flux=VivoQMMMFluxNormalization(surfaceToReactantDensityPerNM:try surfaceToReactantDensityPerNM(result),
