@@ -1,31 +1,9 @@
 import Foundation
-import CryptoKit
 import NumiVivoKit
 
 struct VivoWorkflowCLICommands {
     static func handles(_ command: String?) -> Bool {
         ["workflow-help", "workflow-catalog", "workflow-template", "workflow-plan", "workflow-run", "workflow-verify", "workflow-export", "workflow-import", "artifact-put", "artifact-show", "campaign-template", "campaign-plan", "campaign-run", "campaign-resume"].contains(command ?? "")
-    }
-    private struct Implementation: Codable { let schema: String; let executableSHA256: String; let operatingSystem: String; let executionSemantics: String }
-    private static func implementation() throws -> VivoFingerprint {
-        let invocation = CommandLine.arguments[0]
-        let executable: URL
-        if invocation.contains("/") { executable = URL(fileURLWithPath: invocation).standardizedFileURL.resolvingSymlinksInPath() }
-        else {
-            guard let path = (ProcessInfo.processInfo.environment["PATH"] ?? "").split(separator: ":").map(String.init)
-                .map({ URL(fileURLWithPath: $0.isEmpty ? "." : $0).appendingPathComponent(invocation) })
-                .first(where: { FileManager.default.isExecutableFile(atPath: $0.path) }) else {
-                throw VivoChemistryError.invalid("cannot resolve executing workflow binary")
-            }
-            executable = path.standardizedFileURL.resolvingSymlinksInPath()
-        }
-        let handle = try FileHandle(forReadingFrom: executable); defer { try? handle.close() }
-        var digest = SHA256()
-        while let bytes = try handle.read(upToCount: 4*1024*1024), !bytes.isEmpty { digest.update(data: bytes) }
-        let hash = digest.finalize().map { String(format: "%02x", $0) }.joined()
-        return try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Implementation(schema: "numivivo.org/platform-executable/v1",
-            executableSHA256: hash, operatingSystem: ProcessInfo.processInfo.operatingSystemVersionString,
-            executionSemantics: "static-native-operations;fp64-electronics;metal-transactional-md;single-owner-artifact-scheduler")))
     }
     private struct Arguments {
         let command: String
@@ -154,7 +132,7 @@ struct VivoWorkflowCLICommands {
     }
     private static func execute(_ arguments: Arguments) async throws {
         if arguments.command == "workflow-help" { try arguments.require(0, allowed: []); print(help); return }
-        let id = try implementation(), registry = try VivoPlatformOperations.registry(implementationFingerprint: id)
+        let id = try VivoWorkflowCLIImplementation.fingerprint(), registry = try VivoPlatformOperations.registry(implementationFingerprint: id)
         let rootStore = try canonicalURL(URL(fileURLWithPath: arguments.options["--store"] ?? ".numivivo/workflow-artifacts"))
         if let path = arguments.options["--output"] {
             let output = URL(fileURLWithPath: path)

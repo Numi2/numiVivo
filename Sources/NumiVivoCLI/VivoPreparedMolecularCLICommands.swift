@@ -4,7 +4,7 @@ import NumiVivoKit
 struct VivoPreparedMolecularCLICommands {
     static func handles(_ name:String?) -> Bool {
         ["molecule-prepare-template","molecule-prepare","molecule-sampling-template","molecule-sampling-analyze",
-         "molecule-sampling-run","molecule-rate","molecule-help"].contains(name ?? "")
+         "molecule-sampling-run","molecule-rate","molecule-help"].contains(name ?? "") || VivoMolecularSamplingExportCLICommands.handles(name)
     }
     private struct Implementation:Codable {let executable:VivoFingerprint;let platform:String;let architecture:String}
     private struct Receipt:Codable {let request:VivoFingerprint;let task:VivoFingerprint;let receipt:VivoFingerprint;let result:VivoFingerprint;let reused:Bool}
@@ -48,6 +48,9 @@ struct VivoPreparedMolecularCLICommands {
         return try .init(bytes:stride(from:0,to:64,by:2).map{digit(chars[$0])*16+digit(chars[$0+1])})
     }
     func run(arguments:[String]) async -> Int32 {
+        if VivoMolecularSamplingExportCLICommands.handles(arguments.first) {
+            return await VivoMolecularSamplingExportCLICommands().run(arguments: arguments)
+        }
         do {
             guard let command=arguments.first,Self.handles(command) else {throw VivoChemistryError.invalid("molecular command")}
             if command=="molecule-help" {
@@ -67,16 +70,20 @@ struct VivoPreparedMolecularCLICommands {
             switch command {
             case "molecule-prepare-template":allowed.formUnion(["--microstate","--pH","--protonation-source","--forcefield"])
             case "molecule-sampling-template":allowed.formUnion(["--context","--distance","--temperature","--cutoff"])
-            case "molecule-sampling-run":allowed.insert("--resume")
+            case "molecule-sampling-run":allowed.formUnion(["--resume", "--read-limits"])
             case "molecule-rate":allowed.insert("--kinetics")
             default:break
             }
             guard Set(options.keys).isSubset(of:allowed) else {throw VivoChemistryError.invalid("unknown molecular command option")}
+            guard options["--read-limits"] == nil || options["--resume"] != nil else {
+                throw VivoChemistryError.invalid("sampling --read-limits applies to --resume")
+            }
+            let resumeLimits = try VivoMolecularSamplingCLILimits.load(options["--read-limits"])
             guard options["--kinetics"] == nil || options["--output"] != nil else {
                 throw VivoChemistryError.invalid("--kinetics requires --output for the separately retained kinetic pack")
             }
             let root=URL(fileURLWithPath:options["--store"] ?? ".numivivo/chemistry-artifacts")
-            let inputs=([arguments[1]]+[options["--forcefield"],options["--kinetics"]].compactMap{$0}).map{URL(fileURLWithPath:$0)}
+            let inputs=([arguments[1]]+[options["--forcefield"],options["--kinetics"],options["--read-limits"]].compactMap{$0}).map{URL(fileURLWithPath:$0)}
             if let output=options["--output"] {
                 for name in [output,output+".receipt.json",output+".kinetics.json"] {try protect(URL(fileURLWithPath:name),inputs:inputs,store:root)}
             }
@@ -123,7 +130,7 @@ struct VivoPreparedMolecularCLICommands {
                 let id=try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(request))
                 FileHandle.standardError.write(Data(("Durable checkpoint reference: "+VivoMolecularSamplingRunner.checkpointReferenceName(requestFingerprint:id)+"\n").utf8))
                 let resume=try options["--resume"].map(fingerprint)
-                let result=try await VivoMolecularSamplingRunner.run(request,store:store,resumeFrom:resume)
+                let result=try await VivoMolecularSamplingRunner.run(request,store:store,resumeFrom:resume,resumeReadLimits:resumeLimits)
                 _ = try await store.put(data:VivoCanonicalJSON.encode(result),kind:"molecular-sampling-receipt",mediaType:"application/json")
                 try write(result,to:options["--output"]);return result.status == .converged ? 0:75
             }
@@ -181,7 +188,7 @@ struct VivoPreparedMolecularCLICommands {
       numivivo molecule-prepare preparation.json --output prepared.json
       numivivo molecule-sampling-template prepared.json --context CONTEXT --distance 0,1 --output sampling.json
       numivivo molecule-sampling-run sampling.json --store .numivivo/chemistry-artifacts --output sampling.receipt.json
-      numivivo molecule-sampling-run sampling.json --resume CHECKPOINT_SHA256 --output resumed.receipt.json
+      numivivo molecule-sampling-run sampling.json --resume CHECKPOINT_SHA256 [--read-limits limits.json] --output resumed.receipt.json
       numivivo molecule-sampling-analyze measurements.json --output diagnostics.json
       numivivo reaction-template h3-connected-rate --output connected.json
       numivivo reaction-run connected.json --output connected.result.json
@@ -197,6 +204,8 @@ struct VivoPreparedMolecularCLICommands {
     local model. It retains missing free-energy contributions and an assumed kinetic
     origin. Protein-environment promotion is rejected, not inferred from solvent closure.
     See Documentation/PreparedMolecularWorkflows.md for schemas and scientific limits.
+
+    \(VivoMolecularSamplingExportCLICommands.help)
 
     """
 }

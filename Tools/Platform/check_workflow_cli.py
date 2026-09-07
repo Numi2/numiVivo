@@ -68,6 +68,13 @@ def main():
           'qmmm-chemical-state-network' in qmmm_help and 'qmmm-chemical-exchange-network' in qmmm_help and
           'qmmm-chemical-exchange-validate' in qmmm_help,
           'real CLI routes transmission, pH populations, qualification, rapid-equilibrium, transient exchange and time-course validation')
+    molecular_help = run('molecular-help', 'molecule-help').stdout
+    check(all(name in molecular_help for name in ['molecule-sampling-export', 'molecule-sampling-export-verify',
+          '--read-limits', '--require-converged', '--verify-all-payloads', '--maximum-export-bytes']),
+          'molecular help discovers accepted-prefix export, fresh verification and explicit admission limits')
+    general_help = run('general-help', '--help').stdout
+    check('molecule-sampling-export' in general_help and 'molecule-sampling-export-verify' in general_help,
+          'general help discovers both sampling export commands')
     recipe_path = out / 'recipe.json'
     run('template', 'workflow-template', 'molecular-analysis', '--output', recipe_path)
     recipe = read('recipe.json')
