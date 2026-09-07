@@ -287,7 +287,14 @@ public enum VivoMBARTargetRefinement {
         }
         let covariance: [[Double]]?
         if completed == cfg.bootstrapReplicates && completed >= 32 && !bootstrapFailed {
-            covariance = (0..<d).map { i in (0..<d).map { j in (m2[i][j]+m2[j][i])/(2*Double(completed-1)) } }
+            let denominator = 2 * Double(completed - 1)
+            var symmetric = [[Double]](repeating: [Double](repeating: 0, count: d), count: d)
+            for i in 0..<d {
+                for j in 0..<d {
+                    symmetric[i][j] = (m2[i][j] + m2[j][i]) / denominator
+                }
+            }
+            covariance = symmetric
         } else { covariance = nil }
         if covariance == nil && cfg.bootstrapReplicates > 0 { issues.append("complete shared-bootstrap covariance is unavailable") }
         var corrections: [VivoMBARTargetCorrection] = [], cursor = 0
