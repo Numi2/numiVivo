@@ -161,7 +161,12 @@ import NumiVivoKit
         let count = 1_024, mass = 12.0, dt = 1.0 / 256, friction = 32.0
         let horizons = [1, 8, 32], seedSet = seeds(8, namespace: 0x4f55_434f_4e46_3031)
         let initialVelocity = VivoVector3D(0.25, -0.125, 0.0625)
-        let positions = (0..<count).map { VivoVector3D(Double($0 % 16) * 2, Double(($0 / 16) % 8) * 2, Double($0 / 128) * 2) }
+        let positions: [VivoVector3D] = (0..<count).map { (index: Int) -> VivoVector3D in
+            let x: Double = Double(index % 16) * 2
+            let y: Double = Double((index / 16) % 8) * 2
+            let z: Double = Double(index / 128) * 2
+            return VivoVector3D(x, y, z)
+        }
         let system = try model(name: "free-ou-1024", masses: [Double](repeating: mass, count: count))
         struct Design: Encodable {
             let policy: Policy; let particleCount: Int; let massDa: Double; let timeStepPS: Double
