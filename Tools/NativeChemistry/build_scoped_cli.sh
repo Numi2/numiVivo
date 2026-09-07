@@ -10,9 +10,21 @@ if [[ "$(uname -s)" != Darwin ]]; then
 fi
 mkdir -p "$OUT"; OUT="$(cd "$OUT" && pwd)"
 FILES=()
-for directory in QM ManyBody Embedding Refinement ReactionQualification; do
+for directory in QM ManyBody Embedding Refinement; do
   for file in "$ROOT/Sources/NumiVivoKit/$directory/"*.swift; do FILES+=("$file"); done
  done
+# Keep this boundary explicit: platform-only reaction sources have additional
+# structure/QM-MM dependencies and are qualified by the complete package gate.
+REACTION_SOURCES=(
+  VivoBarrierBenchmarks VivoBarrierConvergence VivoBarrierConvergenceTypes
+  VivoConnectedReaction VivoCorrelatedSolvation VivoECCSolventClosure
+  VivoNuclearDescent VivoNuclearElectronicSurface VivoNuclearQualification
+  VivoReactionConnectivity VivoResidualBarrierCampaign VivoSolvatedECCPath
+  VivoTransitionStateTheory VivoVariationalEmbedding VivoVibrationalThermochemistry
+)
+for name in "${REACTION_SOURCES[@]}"; do
+  FILES+=("$ROOT/Sources/NumiVivoKit/ReactionQualification/$name.swift")
+done
 for file in "$ROOT/Sources/NumiVivoKit/QMEnv/"VivoCPCM*.swift; do FILES+=("$file"); done
 FILES+=("$ROOT/Sources/NumiVivoKit/QMEnv/VivoSmoothCPCM.swift")
 for name in VivoArtifactPrimitives CanonicalArtifact VivoArtifactStore VivoRootedFileStore; do
