@@ -91,6 +91,31 @@ import Testing
         #expect(rate.barrier.value>8 && rate.barrier.value<13)
         #expect(rate.barrier.origin == .calculated)
         #expect(rate.parameter.origin == .assumed)
+
+        // A second independent replica can share the same samples in this
+        // deterministic fixture only because the test is exercising evidence
+        // identity and aggregation; its stochastic namespace must still differ.
+        let secondTraces=traces.enumerated().map { index,trace in
+            VivoQMMMUmbrellaTrace(window:trace.window,randomSeed:UInt64(100+index),
+                coordinateNM:trace.coordinateNM,potentialEnergyKJPerMol:trace.potentialEnergyKJPerMol)
+        }
+        let secondAnalysis=try VivoQMMMFreeEnergy.analyze(coordinate:coordinate,temperatureK:temperature,traces:secondTraces,configuration:cfg)
+        let secondQualified=try VivoQMMMQualifiedActivationFreeEnergy(analysis:secondAnalysis,provenance:provenance,
+            fluxNormalization:.init(surfaceToReactantDensityPerNM:try VivoQMMMFreeEnergyQualification.surfaceToReactantDensityPerNM(secondAnalysis),
+                                    inverseMassMetricPerDa:4.0/12.0))
+        let secondRequest=VivoQMMMFreeEnergyRateRequest(context:context,environment:.proteinEnvironment,freeEnergy:secondQualified,
+            transmissionProbability:1,transmissionOrigin:.assumed,transmissionEvidence:transmission,
+            samplingDescription:"independent synthetic replica")
+        let replicatedRequest=VivoQMMMReplicatedFreeEnergyRateRequest(replicas:[request,secondRequest],
+            agreement:.init(maximumLogRateRange:1e-8,maximumProfileBarrierRangeKJPerMol:1e-8))
+        let replicated=try VivoQMMMReplicatedFreeEnergyRate.calculate(replicatedRequest)
+        #expect(replicated.converged)
+        #expect(abs(replicated.geometricMeanRatePerSecond-rate.estimate.ratePerSecond)/rate.estimate.ratePerSecond<1e-12)
+        #expect(replicated.betweenReplicaLogRateStandardDeviation<1e-12)
+        try VivoQMMMReplicatedFreeEnergyRate.validate(replicated,request:replicatedRequest)
+        let duplicateSeedRequest=VivoQMMMReplicatedFreeEnergyRateRequest(replicas:[request,request])
+        #expect(throws:(any Error).self) { _ = try VivoQMMMReplicatedFreeEnergyRate.calculate(duplicateSeedRequest) }
+
         var wrongProvenance=provenance
         wrongProvenance.environment = .explicitSolution
         let wrong=try VivoQMMMQualifiedActivationFreeEnergy(analysis:result,provenance:wrongProvenance,
