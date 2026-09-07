@@ -98,6 +98,7 @@ public enum VivoPlatformOperations {
             "Explicit basis/solvent/embedding/nuclear barrier-refinement evidence.", empty)
         add(VivoReactionConvergenceOperations.compareSolvationCycle(implementationFingerprint: id), ["request": "vivo.solvation-cycle-comparison-request"],
             "Declared reaction-cycle contribution comparison.", empty)
+        definitions += VivoPlatformMechanismOperations.definitions(implementationFingerprint: id)
         definitions += VivoPlatformMDOperations.definitions(implementationFingerprint: id)
         definitions += VivoPlatformQMMMOperations.definitions(implementationFingerprint: id)
         definitions += VivoPlatformQMMMFreeEnergyOperations.definitions(implementationFingerprint: id)
