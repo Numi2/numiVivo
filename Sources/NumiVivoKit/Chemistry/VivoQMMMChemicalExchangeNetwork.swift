@@ -143,7 +143,11 @@ public enum VivoQMMMChemicalExchangeNetwork {
         guard scaled.isFinite, scaled >= 0 else {
             throw VivoKineticsError.numerical("chemical-state exchange time scale")
         }
-        let chunks = max(1, Int(ceil(scaled / 32)))
+        let rawChunks = ceil(scaled / 32)
+        guard rawChunks.isFinite, rawChunks <= Double(Int.max) else {
+            throw VivoKineticsError.capacity("chemical-state exchange interval requires unrepresentable uniformization work")
+        }
+        let chunks = max(1, Int(rawChunks))
         let work = chunks.multipliedReportingOverflow(by: max(1, initial.count * initial.count))
         guard !work.overflow, work.partialValue <= maximumWork else {
             throw VivoKineticsError.capacity("chemical-state exchange uniformization work exceeds declared bound")
