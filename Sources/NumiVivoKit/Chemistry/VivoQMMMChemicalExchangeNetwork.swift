@@ -3,11 +3,18 @@ import Foundation
 public struct VivoQMMMChemicalExchangeState: Codable, Sendable, Equatable {
     public var identifier: String
     public var initialPopulation: Double
+    public var populationOrigin: VivoKineticOrigin
+    public var populationEvidence: VivoKineticEvidence
     public var pathways: [VivoQMMMPathwayRate]
 
-    public init(identifier: String, initialPopulation: Double, pathways: [VivoQMMMPathwayRate]) {
+    public init(identifier: String, initialPopulation: Double,
+                populationOrigin: VivoKineticOrigin,
+                populationEvidence: VivoKineticEvidence,
+                pathways: [VivoQMMMPathwayRate]) {
         self.identifier = identifier
         self.initialPopulation = initialPopulation
+        self.populationOrigin = populationOrigin
+        self.populationEvidence = populationEvidence
         self.pathways = pathways
     }
 
@@ -21,6 +28,7 @@ public struct VivoQMMMChemicalExchangeState: Codable, Sendable, Equatable {
               Set(pathways.map(\.identifier)).count == pathways.count else {
             throw VivoKineticsError.invalid("QM/MM exchange-state identity, initial population or pathway set")
         }
+        try populationEvidence.validate(origin: populationOrigin)
         for pathway in pathways { try pathway.validate() }
     }
 }
@@ -47,7 +55,7 @@ public struct VivoQMMMChemicalExchangeEdge: Codable, Sendable, Equatable {
 }
 
 public struct VivoQMMMChemicalExchangeNetworkRequest: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/qmmm-chemical-exchange-network/v1"
+    public static let schema = "numivivo.org/qmmm-chemical-exchange-network/v2"
     public var schema: String
     public var identifier: String
     public var states: [VivoQMMMChemicalExchangeState]
@@ -79,7 +87,7 @@ public struct VivoQMMMChemicalExchangeObservation: Codable, Sendable, Equatable 
 }
 
 public struct VivoQMMMChemicalExchangeNetworkResult: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/qmmm-chemical-exchange-network-result/v1"
+    public static let schema = "numivivo.org/qmmm-chemical-exchange-network-result/v2"
     public let schema: String
     public let requestFingerprint: VivoFingerprint
     public let stateIdentifiers: [String]
@@ -91,12 +99,12 @@ public struct VivoQMMMChemicalExchangeNetworkResult: Codable, Sendable, Equatabl
 
 /// Explicit transient continuous-time Markov treatment for bound chemical states
 /// whose exchange is not fast enough for rapid-pre-equilibrium averaging. Each
-/// transient state carries its independently replicated QM/MM chemical loss rate;
-/// directed exchange edges compete with that loss. The calculation returns the
-/// full non-single-exponential survival curve and therefore does not manufacture
-/// one global rate constant when the kinetics do not support one.
+/// transient state carries an evidence-bound initial population and independently
+/// replicated QM/MM chemical loss rate; directed exchange edges compete with that
+/// loss. The calculation returns the full non-single-exponential survival curve
+/// and therefore does not manufacture one global rate constant when unsupported.
 public enum VivoQMMMChemicalExchangeNetwork {
-    public static let interpretation = "Explicit finite-state continuous-time chemical-state exchange with absorbing QM/MM chemical conversion. State exchange and reaction compete on their declared timescales; reported survival, hazard and apparent first-order rate are time dependent unless the network actually reduces to a single exponential."
+    public static let interpretation = "Explicit finite-state continuous-time chemical-state exchange with evidence-bound initial populations and absorbing QM/MM chemical conversion. State exchange and reaction compete on their declared timescales; reported survival, hazard and apparent first-order rate are time dependent unless the network actually reduces to a single exponential."
 
     private static func sameEnvironment(_ a: VivoKineticContext, _ b: VivoKineticContext) -> Bool {
         a.compound == b.compound && a.target == b.target && a.targetVariant == b.targetVariant &&
@@ -276,7 +284,7 @@ public enum VivoQMMMChemicalExchangeNetwork {
             let stateChemicalRatesPerSecond: [Double]
             let observations: [VivoQMMMChemicalExchangeObservation]
         }
-        let evidence = Evidence(schema: "numivivo.org/qmmm-chemical-exchange-network-evidence/v1",
+        let evidence = Evidence(schema: "numivivo.org/qmmm-chemical-exchange-network-evidence/v2",
                                 request: request, stateChemicalRatesPerSecond: chemicalRates,
                                 observations: observations)
         let evidenceID = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(evidence))
