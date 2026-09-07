@@ -8,6 +8,7 @@ Start with the [project overview](../README.md) for the scientific scope and fir
 |---|---|
 | Build the Apple package and run a supplied experiment | [Get started](../README.md#get-started) |
 | Calculate a small native electronic-structure example | [H₂/STO-3G chemistry](../Examples/native-chemistry/README.md) |
+| Refine a fixed-geometry electronic space by measured profile sensitivity | [Property-directed refinement](../Examples/property-directed-refinement/README.md) |
 | Compare discrete and continuous reaction components | [Hybrid reaction runtime](../Examples/hybrid-reaction-runtime/README.md) |
 | Model exposure-driven target occupancy | [Target engagement](../Examples/target-engagement/README.md) |
 | Import a prepared molecular system and run MD stages | [Prepared-system MD](../Examples/md-preparation/README.md) |
@@ -24,7 +25,7 @@ Examples are computational fixtures, not experimental protocols. Their README fi
 
 **Structure and molecular dynamics.** Read [Molecular foundation](Design/MOLECULAR_FOUNDATION_WAVE_A.md), [MD protocols](Design/MD_PROTOCOL_WORKFLOW.md), [trajectory storage](Design/MD_TRAJECTORY_ARCHIVE.md), and the [Wave B consolidation audit](Audit/WAVE_B_CONSOLIDATION.md). The current MD protocol command path is `VivoMDProtocolCLICommands` → `VivoMDProtocolRunner` → `VivoMDMetalRuntime`; trajectory persistence uses the shared `VivoArtifactStore`.
 
-**Reaction execution.** Read the [ProgramPack backend](Design/PROGRAM_PACK_METAL_BACKEND.md), [executable hybrid runtime](Design/EXECUTABLE_HYBRID_RUNTIME.md), and [exact/hybrid design](Design/EXACT_AND_HYBRID_STOCHASTIC.md). The executable contracts take precedence over older high-level fidelity descriptions.
+**Reaction execution.** Read the [ProgramPack backend](Design/PROGRAM_PACK_METAL_BACKEND.md), [executable hybrid runtime](Design/EXECUTABLE_HYBRID_RUNTIME.md), and the [exact/hybrid design](Design/EXACT_AND_HYBRID_STOCHASTIC.md). The executable contracts take precedence over older high-level fidelity descriptions.
 
 **Electronic structure and embedding.** Start with the [native example](../Examples/native-chemistry/README.md), then inspect the [QM](../Sources/NumiVivoKit/QM), [QM environment](../Sources/NumiVivoKit/QMEnv), [many-body](../Sources/NumiVivoKit/ManyBody) and [embedding](../Sources/NumiVivoKit/Embedding) modules. These are bounded research implementations. Consult the [capability map](CAPABILITIES.md) for distinctions between small-system methods and the larger intended chemistry workflow. For kinetics built from sampled QM/MM dynamics, continue with [QM/MM free energy](QMMMFreeEnergy.md), [dynamical transmission](QMMMDynamicalTransmission.md), and [chemical-state kinetics](QMMMChemicalStateKinetics.md).
 
