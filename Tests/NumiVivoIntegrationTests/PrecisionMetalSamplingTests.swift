@@ -88,4 +88,37 @@ import Testing
         #expect(run.baselineEvaluations > run.authorityEvaluations)
         try record(run,"reactive-native-corrected-sampling")
     }
+    @Test func genuineEmbeddedElectronicAuthorityEvaluatesEveryBead() async throws {
+        let h = try #require(VivoElement.from(symbol: "H")), he = try #require(VivoElement.from(symbol: "He"))
+        let atoms = [VivoMolecularAtom(index: 0,name: "H1",element: h),.init(index: 1,name: "H2",element: h),
+                     .init(index: 2,name: "MM1",element: he),.init(index: 3,name: "MM2",element: he)]
+        let q: [VivoVector3D] = [.init(0.5,0.5,0.5),.init(0.574,0.5,0.5),.init(0.7,0.7,0.7),.init(1.1,0.8,1)]
+        let document = try VivoMolecularStructureDocument(structure: .init(identifier: "nuclear-embedded-H2",
+            atoms: atoms,bonds: [.init(atomA: 0,atomB: 1)],conformers: [.init(positionsNM: q)]))
+        let charges = [0.0,0.0,0.2,-0.2]
+        let system = VivoClassicalSystem(identifier: "nuclear-embedded-H2",structureFingerprint: document.structureFingerprint,
+            particles: atoms.map { .init(index: $0.index,atomIndex: $0.index,typeIdentifier: $0.element.symbol,massDa: 2,
+                chargeE: charges[Int($0.index)],sigmaNM: 0,epsilonKJPerMol: 0) },
+            bonds: [.init(a: 0,b: 1,lengthNM: 0.074,forceConstant: 100)])
+        let plan = try VivoQMMMHamiltonianPlan.compile(document: document,system: system,
+            configuration: .init(region: .init(qmAtomIndices: [0,1],alphaElectrons: 1,betaElectrons: 1),boundary: .finiteCluster))
+        let electronic = VivoQMMMDynamicsElectronicConfiguration(basis: .hydrogenSTO3G(nucleusIndices: [0,1]),
+            budget: .init(maximumBytes: 16*1024*1024))
+        let dynamics = VivoMDConfiguration(timeStepPS: 0.00001,cutoffNM: 2,neighborSkinNM: 0,electrostatics: .cutoff,
+            ensemble: .nve,thermostat: .none,targetTemperatureK: nil,frictionPerPS: nil,neighborListEnabled: false)
+        let initial = VivoClassicalInitialState(systemFingerprint: try system.fingerprint(),positionsNM: q)
+        let spec = VivoNuclearMetalSpecification(system: system,initialState: initial,dynamics: dynamics,
+            electronic: .fixed(document: document,plan: plan,electronic: electronic))
+        let potential = try await spec.make()
+        let baseline = try await potential.checked(q)
+        #expect(baseline.energyKJPerMol < -1000 && baseline.normalizedConvergenceResidual <= 1)
+        let cfg = VivoRingPolymerConfiguration(temperatureK: 300,beadCount: 2,timeStepPS: 0.00001,integrationSteps: 1)
+        let cp = try VivoRingPolymerCheckpoint(definition: potential.definition,configuration: cfg,seed: 31,beadPositionsNM: [q,q])
+        let run = try await VivoRingPolymerSampling.run(potential: potential,checkpoint: cp,sweeps: 2)
+        try run.validate()
+        #expect(run.forceEvaluations == 6 && run.observations.count == 2)
+        #expect(run.observations.allSatisfy { $0.meanPotentialEnergyKJPerMol < -1000 })
+        try record(run,"ring-native-QMMM-authority")
+    }
+
 }

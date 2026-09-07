@@ -6,9 +6,9 @@ public extension VivoReactiveEnergyForceBackend {
     /// Batched FP32 proposal inference. Training, checkpoint accounting and exact
     /// endpoint corrections remain FP64. No speedup is asserted without timing.
     static func metal(model: VivoReactiveSurrogateModel, maximumBatchSize: Int = 1024,
-                      maximumBytes: Int = 256*1024*1024, device: MTLDevice? = nil) throws -> Self {
+                      maximumBytes: Int = 256*1024*1024) throws -> Self {
         let backend = try VivoReactiveMetalInference(model: model,maximumBatchSize: maximumBatchSize,
-            maximumBytes: maximumBytes,device: device)
+            maximumBytes: maximumBytes)
         return .init(modelFingerprint: model.fingerprint,numericalProfile: "metal-fp32-rbf-analytic-derivative/v1",
             predict: { try await backend.predict($0) })
     }
@@ -25,10 +25,12 @@ private actor VivoReactiveMetalInference {
     let scales: MTLBuffer
     var inFlight = false
     struct Uniforms { var frames: UInt32; var features: UInt32; var centers: UInt32; var members: UInt32 }
-    init(model: VivoReactiveSurrogateModel, maximumBatchSize: Int, maximumBytes: Int, device requested: MTLDevice?) throws {
+    // Create device/queue inside their sole actor owner. No non-Sendable device
+    // reference crosses the isolation boundary from an unrelated task.
+    init(model: VivoReactiveSurrogateModel, maximumBatchSize: Int, maximumBytes: Int) throws {
         try model.validate()
         guard (1...65536).contains(maximumBatchSize), maximumBytes > 0,
-              let device = requested ?? MTLCreateSystemDefaultDevice(), let queue = device.makeCommandQueue() else {
+              let device = MTLCreateSystemDefaultDevice(), let queue = device.makeCommandQueue() else {
             throw VivoChemistryError.unsupported("reactive Metal device/queue or batch capacity")
         }
         let payload = model.payload
