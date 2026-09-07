@@ -1,6 +1,18 @@
 # Validation status
 
-## Verified revision
+## 7 September 2026 reliability verification
+
+[The current reliability audit](Documentation/Audit/2026-09-07_COMPLETION_RELIABILITY.md)
+records a clean complete build, **224/224** baseline tests across 52 suites,
+**22/22** final-source cancellation/MD-recovery/hybrid regressions, and **57/57**
+production workflow CLI checks on the physical M4 Pro Mac mini. The audit binds
+each result to its exact source revision and retains the remaining scientific
+and product-completion boundaries.
+
+The results below remain historical evidence for their named revisions; they
+are not automatically requalified by the later reliability work.
+
+## Earlier verified revision
 
 The verified product implementation is the `24e8030` tree plus the focused
 acceptance-boundary regression in commit

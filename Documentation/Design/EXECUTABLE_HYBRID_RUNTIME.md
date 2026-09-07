@@ -52,6 +52,8 @@ Statistical checks use 8,192 independent lanes and fixed seeds. Mean and unbiase
 
 Run with `swift test -c release --jobs 3 -Xswiftc -enable-testing --filter HybridRuntimeTests` on an available Apple-silicon GPU. Setting `NUMIVIVO_TEST_ARTIFACTS` writes the accepted-state, continuation and moment reports outside the repository. The presence of the suite is not a passing result; retain its command output, exact revision and physical-device evidence when reporting qualification. No performance claim follows from this suite.
 
+The [7 September 2026 reliability audit](../Audit/2026-09-07_COMPLETION_RELIABILITY.md) records all seven tests passing on the physical M4 Pro, including the distribution observations and their predeclared tolerances. Cross-device equality and the remaining method boundaries above are unchanged.
+
 ## API references consulted
 
 - Apple, `MTLComputeCommandEncoder.setBytes(_:length:index:)`: https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/setbytes(_:length:index:)
