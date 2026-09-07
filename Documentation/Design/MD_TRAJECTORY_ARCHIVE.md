@@ -36,4 +36,17 @@ Sampled steps may be nonconsecutive. A trajectory is not an event log and does n
 
 `MDTrajectoryArchiveValidationTests` covers bounded reads, structural corruption, scope distinctions, cancellation and materialization limits with actual rooted storage. The separate long fixture is enabled with `NUMIVIVO_LONG_ARCHIVE_TESTS=1`; it constructs more than 100,000 real links and payloads and checks streaming validation and continuation. Test-source presence does not prove that campaign ran. Record source revision, command and results from the target host before claiming long-archive qualification. Peak-memory measurements and numerical/statistical trajectory qualification remain separate evidence.
 
+After building the complete release test targets, retain a fixture and verify it through fresh CLI processes:
+
+```sh
+NUMIVIVO_LONG_ARCHIVE_TESTS=1 NUMIVIVO_TEST_ARTIFACTS=/absolute/results/native \
+  swift test -c release --skip-build --no-parallel \
+  --filter archiveBeyondOneHundredThousandChunksResumesAndPreservesItsPrefix
+# Use the NUMIVIVO_ARCHIVE_RECEIPT path emitted by that successful campaign.
+python3 Tools/Platform/check_md_archive_cli.py --binary .build/release/numivivo \
+  --receipt /absolute/path/to/archive-validation-receipt.json --out /absolute/results/cli
+```
+
+The CLI checker verifies index/full-payload scopes, the extended prefix and explicit work-limit rejection, retaining every response and `/usr/bin/time -l` observation. On macOS its maximum resident set is reported in bytes. `--baseline-binary` optionally compares a retained older binary against the same 10,000- and 100,001-chunk prefixes with explicit limits. Each command runs in a fresh process, excluding fixture generation from its RSS; filesystem cache state and unrelated host workloads are not controlled, so timings alone do not establish a throughput claim.
+
 Setting `NUMIVIVO_TEST_ARTIFACTS` to an external directory retains the long campaign's unique archive root there; otherwise its temporary fixture is removed. A successful run writes `archive-validation-receipt.json` inside that root with the 10,000-chunk prefix, original 100,001-chunk prefix and extended manifest identities, counts, validation scope and checked payload bytes, and reference-preservation result. The retained prefixes support separate fresh-process `md-trajectory-inspect --store <root> --manifest <hash> --verify` measurements with `/usr/bin/time -l`, excluding fixture generation from the measured CLI process. The test does not produce a successful receipt when its required checks fail; retained incomplete roots remain available for diagnosis.
