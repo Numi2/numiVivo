@@ -17,13 +17,16 @@ public struct VivoQMMMFreeEnergyExecutionConfiguration: Codable, Sendable, Equat
 public struct VivoQMMMFreeEnergyExecutionRequest: Codable, Sendable, Equatable {
     public static let schema="numivivo.org/qmmm-free-energy-execution/v1"
     public var schema:String
+    /// Optional for archival decoding; execution requires the current MD contract.
+    public var numericalContract:String?
     public var sampling:VivoQMMMFreeEnergyRunRequest
     public var systemFingerprint:VivoFingerprint
     public var baseProviderFingerprint:VivoFingerprint
     public var execution:VivoQMMMFreeEnergyExecutionConfiguration
     public init(sampling:VivoQMMMFreeEnergyRunRequest,systemFingerprint:VivoFingerprint,
                 baseProviderFingerprint:VivoFingerprint,execution:VivoQMMMFreeEnergyExecutionConfiguration = .init()) {
-        schema=Self.schema;self.sampling=sampling;self.systemFingerprint=systemFingerprint
+        schema=Self.schema;numericalContract=VivoMDExecutionIdentity.current
+        self.sampling=sampling;self.systemFingerprint=systemFingerprint
         self.baseProviderFingerprint=baseProviderFingerprint;self.execution=execution
     }
 }
@@ -50,6 +53,7 @@ public struct VivoQMMMFreeEnergyExecutionReceipt:Codable,Sendable,Equatable {
 private struct VivoQMMMFreeEnergyExecutionCursor:Codable,Sendable,Equatable {
     static let schema="numivivo.org/qmmm-free-energy-execution-checkpoint/v1"
     var schema:String
+    var numericalContract:String?
     var requestFingerprint:VivoFingerprint
     var completedWindows:Int
     var currentWindowProductionSteps:UInt64
@@ -79,6 +83,9 @@ public enum VivoQMMMFreeEnergyArchiveRunner {
     public static func run(_ request:VivoQMMMFreeEnergyExecutionRequest,system:VivoClassicalSystem,
                            baseProvider:VivoMDCandidateForceProvider,store:VivoArtifactStore,
                            resumeFrom:VivoFingerprint?=nil) async throws -> VivoQMMMFreeEnergyExecutionReceipt {
+        guard request.numericalContract==VivoMDExecutionIdentity.current else {
+            throw VivoArtifactValidationError.incompatible("QM/MM free-energy execution request numerical contract is absent or differs; explicit new execution is required")
+        }
         let sampling=request.sampling
         try sampling.coordinate.validate();try sampling.analysis.validate();try sampling.dynamics.validate()
         try request.execution.validate(sampleEvery:sampling.sampleEvery)
@@ -105,6 +112,11 @@ public enum VivoQMMMFreeEnergyArchiveRunner {
         var cursor:VivoQMMMFreeEnergyExecutionCursor
         if let resumeFrom {
             cursor=try await read(VivoQMMMFreeEnergyExecutionCursor.self,id:resumeFrom,kind:"qmmm-free-energy-execution-checkpoint",store:store)
+            // Completed windows no longer retain an MD checkpoint. Their scalar
+            // prefixes must still belong to this execution's numerical contract.
+            guard cursor.numericalContract==request.numericalContract else {
+                throw VivoArtifactValidationError.incompatible("QM/MM free-energy execution cursor numerical contract is absent or differs; old windows cannot continue under another MD algorithm")
+            }
             guard cursor.schema==VivoQMMMFreeEnergyExecutionCursor.schema,cursor.requestFingerprint==requestID,
                   cursor.completedWindows>=0,cursor.completedWindows<=sampling.windows.count,
                   cursor.currentWindowProductionSteps<=sampling.productionSteps,
@@ -133,7 +145,8 @@ public enum VivoQMMMFreeEnergyArchiveRunner {
                 }
             }
         } else {
-            cursor = .init(schema:VivoQMMMFreeEnergyExecutionCursor.schema,requestFingerprint:requestID,completedWindows:0,
+            cursor = .init(schema:VivoQMMMFreeEnergyExecutionCursor.schema,numericalContract:request.numericalContract,
+                           requestFingerprint:requestID,completedWindows:0,
                            currentWindowProductionSteps:0,currentMDCheckpoint:nil,traces:[],currentCoordinates:[],currentEnergies:[])
         }
         var durable=try await put(cursor,kind:"qmmm-free-energy-execution-checkpoint",store:store)
