@@ -76,4 +76,18 @@ import Testing
         }
     }
 
+    @Test func retainedAcceptanceAndThinnedCheckpointReplayRejectTampering() async throws {
+        let potential = try PrecisionSamplingFixtures.harmonic()
+        let cfg = VivoRingPolymerConfiguration(temperatureK: 300,beadCount: 2,integrationSteps: 2)
+        let cp = try VivoRingPolymerCheckpoint(definition: potential.definition,configuration: cfg,seed: 24,
+            beadPositionsNM: [[.zero],[.zero]])
+        let run = try await VivoRingPolymerSampling.run(potential: potential,checkpoint: cp,sweeps: 6,recordEvery: 2)
+        try run.validate(recordEvery: 2)
+        var json = try #require(JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(run)) as? [String:Any])
+        var observations = try #require(json["observations"] as? [[String:Any]])
+        observations[0]["accepted"] = !run.observations[0].accepted; json["observations"] = observations
+        let altered = try VivoCanonicalJSON.decode(VivoRingPolymerRun.self,from: JSONSerialization.data(withJSONObject: json))
+        #expect(throws: (any Error).self) { try altered.validate(recordEvery: 2) }
+    }
+
 }

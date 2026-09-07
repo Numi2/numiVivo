@@ -13,7 +13,26 @@ public extension VivoRingPolymerRun {
             throw VivoChemistryError.invalid("ring evaluation accounting")
         }
         let indices = (1...sweeps).map { start.sweep+UInt64($0) }.filter { $0%UInt64(recordEvery) == 0 }
-        guard observations.map(\.sweep) == indices else { throw VivoChemistryError.invalid("ring stored sweep sequence") }
+        guard observations.map(\.sweep) == indices,
+              Double(sweeps)*Double(p)*Double(n)*3 <= Double(cfg.maximumPrimitiveWork) else {
+            throw VivoChemistryError.invalid("ring stored sweep sequence or replay budget")
+        }
+        // Each HMC sweep draws 3*N*P normal variates and one acceptance uniform,
+        // independently of acceptance. Thin output still binds the final RNG state.
+        var replay = start.randomState, observationIndex = 0
+        for offset in 1...sweeps {
+            for _ in 0..<(3*n*p) { _ = replay.normal() }
+            let logU = log(max(replay.unitInterval(),Double.leastNonzeroMagnitude))
+            let sweep = start.sweep+UInt64(offset)
+            if observationIndex < observations.count, observations[observationIndex].sweep == sweep {
+                let record = observations[observationIndex]
+                guard record.accepted == (logU < record.logAcceptanceProbability) else {
+                    throw VivoChemistryError.invalid("ring acceptance RNG replay differs from stored decision")
+                }
+                observationIndex += 1
+            }
+        }
+        guard replay == end.randomState else { throw VivoChemistryError.invalid("ring checkpoint RNG history mismatch") }
         let rt = VivoAtomicUnits.gasConstantJPerMolK*cfg.temperatureK/1000
         var previous = start.beadPositionsNM
         for record in observations {
