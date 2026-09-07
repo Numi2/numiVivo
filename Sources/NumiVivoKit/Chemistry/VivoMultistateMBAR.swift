@@ -106,7 +106,7 @@ public enum VivoMultistateMBAR {
                              stateCount: Int,
                              configuration cfg: VivoMBARConfiguration = .init()) throws -> VivoMBARResult {
         try cfg.validate()
-        guard stateCount >= 2, stateCount <= 4096,
+        guard stateCount >= 1, stateCount <= 4096,
               !samples.isEmpty, samples.count <= 10_000_000,
               Set(samples.map(\.identifier)).count == samples.count else {
             throw VivoChemistryError.invalid("MBAR state/sample identity or capacity")
