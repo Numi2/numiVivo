@@ -434,6 +434,9 @@ import Testing
         #expect(name == "molecular-sampling-" + f.requestID.hex + "-checkpoint")
         #expect(name != VivoMolecularSamplingRunner.checkpointReferenceName(requestFingerprint: f.artifact.fingerprint))
         _ = try await f.store.setReference(name, to: f.artifact)
+        await rejects { _ = try await f.store.reference(name, maximumObjectBytes: 1) }
+        await rejects { _ = try await f.store.reference(name, maximumObjectBytes: -1) }
+        #expect(try await f.store.reference(name, maximumObjectBytes: Int(f.artifact.byteCount)).artifact == f.artifact)
         let before = try await f.store.list()
         let reader = try await VivoMolecularSamplingArchiveReader.open(store: f.store, checkpoint: f.artifact.fingerprint)
         try FileManager.default.moveItem(at: f.root, to: moved)

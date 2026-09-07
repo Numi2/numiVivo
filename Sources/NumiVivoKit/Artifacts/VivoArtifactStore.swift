@@ -185,6 +185,13 @@ public actor VivoArtifactStore {
         return try VivoCanonicalJSON.decode(VivoArtifactReference.self, from: data)
     }
     public func reference(_ name: String) throws -> VivoArtifactReference {
+        try reference(name, maximumObjectBytes: limits.maximumObjectBytes)
+    }
+    /// Resolve and integrity-check a reference while bounding its target read
+    /// before allocation. Reference/descriptor metadata retains its separate
+    /// store limit. This read is additional to any later domain archive walk.
+    public func reference(_ name: String, maximumObjectBytes: Int) throws -> VivoArtifactReference {
+        guard maximumObjectBytes >= 0 else { throw VivoArtifactStoreError.invalidDescriptor("negative reference target read limit") }
         let path = try referencePath(name)
         let bytes: Data
         do { bytes = try files.readFile(path, maximumBytes: limits.maximumMetadataBytes) }
@@ -204,7 +211,8 @@ public actor VivoArtifactStore {
         let value = try VivoCanonicalJSON.decode(VivoArtifactReference.self, from: bytes)
         let persisted = try descriptor(for: value.artifact.fingerprint)
         guard Array(value.name.utf8) == Array(name.utf8), value.artifact == persisted,
-              value.updatedAt.timeIntervalSince1970.isFinite, try verify(persisted.fingerprint) else {
+              value.updatedAt.timeIntervalSince1970.isFinite,
+              try persisted.byteCount == UInt64(data(for: persisted.fingerprint, maximumBytes: maximumObjectBytes, verify: true).count) else {
             throw VivoArtifactStoreError.invalidDescriptor("reference name, persisted descriptor or object integrity mismatch")
         }
         return value
