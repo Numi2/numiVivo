@@ -45,9 +45,9 @@ import Testing
                 chemicalState:"state",hostContext:"host",temperatureK:300,pH:7,ionicStrengthM:0.15)
             let evidence:VivoKineticEvidence
             if origin == .assumed {
-                evidence=.init(source:"assumption",locator:transmissionID)
+                evidence = .init(source:"assumption",locator:transmissionID)
             } else {
-                evidence=.init(source:"synthetic calculated transmission",locator:transmissionID,
+                evidence = .init(source:"synthetic calculated transmission",locator:transmissionID,
                     sourceFingerprint:(try fingerprint(transmissionID)).hex)
             }
             requests.append(.init(context:context,environment:.proteinEnvironment,freeEnergy:qualified,
@@ -67,7 +67,7 @@ import Testing
             var copy=request
             copy.transmissionProbability=0.9
             copy.transmissionOrigin = .calculated
-            copy.transmissionEvidence=.init(source:"synthetic calculated transmission",locator:"transmission-variant",
+            copy.transmissionEvidence = .init(source:"synthetic calculated transmission",locator:"transmission-variant",
                 sourceFingerprint:(try fingerprint("transmission-variant")).hex)
             return copy
         }
@@ -102,7 +102,7 @@ import Testing
             var copy=request
             copy.transmissionProbability=0.9
             copy.transmissionOrigin = .assumed
-            copy.transmissionEvidence=.init(source:"assumption",locator:"not dynamical evidence")
+            copy.transmissionEvidence = .init(source:"assumption",locator:"not dynamical evidence")
             return copy
         }
         let assumedResult=try VivoQMMMReplicatedFreeEnergyRate.calculate(assumedRequest)
