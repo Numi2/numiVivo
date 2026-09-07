@@ -1,15 +1,28 @@
 import Foundation
 
 public enum VivoWorkflowTemplates {
+    private enum Name: String, CaseIterable {
+        case molecularAnalysis = "molecular-analysis"
+        case molecularDynamics = "md-segments"
+        case mdElectronicAnalysis = "md-electronic-analysis"
+        case propertyRefinement = "property-refinement"
+        case molecularPropertyRefinement = "molecular-property-refinement"
+    }
+
+    /// Accepted template arguments in display order, shared with CLI discovery.
+    public static var names: [String] { Name.allCases.map(\.rawValue) }
+
     /// Small reusable examples, not a specific publication's molecular inputs.
     public static func make(_ name: String) throws -> VivoWorkflowRecipe {
-        switch name {
-        case "molecular-analysis": return try molecularAnalysis()
-        case "md-segments": return try molecularDynamics()
-        case "md-electronic-analysis": return try mdElectronicAnalysis()
-        case "property-refinement": return try propertyRefinement()
-        case "molecular-property-refinement": return try molecularPropertyRefinement()
-        default: throw VivoChemistryError.invalid("unknown workflow template: \(name)")
+        guard let template = Name(rawValue: name) else {
+            throw VivoChemistryError.invalid("unknown workflow template: \(name)")
+        }
+        switch template {
+        case .molecularAnalysis: return try molecularAnalysis()
+        case .molecularDynamics: return try molecularDynamics()
+        case .mdElectronicAnalysis: return try mdElectronicAnalysis()
+        case .propertyRefinement: return try propertyRefinement()
+        case .molecularPropertyRefinement: return try molecularPropertyRefinement()
         }
     }
     public static func molecularAnalysis() throws -> VivoWorkflowRecipe {

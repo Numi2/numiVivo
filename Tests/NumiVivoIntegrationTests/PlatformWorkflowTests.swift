@@ -49,6 +49,20 @@ private actor WorkflowProbe {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         try VivoCanonicalJSON.encode(value).write(to: directory.appendingPathComponent(name + ".json"), options: .atomic)
     }
+    @Test func advertisedTemplatesConstructValidRecipes() throws {
+        let names = VivoWorkflowTemplates.names
+        try #require(!names.isEmpty)
+        #expect(Set(names).count == names.count)
+        let registry = try VivoPlatformOperations.registry(implementationFingerprint: identity())
+        for name in names {
+            let recipe = try VivoWorkflowTemplates.make(name)
+            // Static planning checks real operation names, typed ports, exports
+            // and resource contracts without executing native or Metal work.
+            let plan = try VivoWorkflowPlanner.compile(recipe, registry: registry)
+            #expect(plan.topologicalOrder.count == recipe.nodes.count)
+            #expect(!recipe.outputs.isEmpty)
+        }
+    }
     @Test func preflightRejectsCyclesTypesMissingPortsAndBudgets() throws {
         let registry = try registry(WorkflowProbe(), id: identity()), valid = recipe()
         let plan = try VivoWorkflowPlanner.compile(valid, registry: registry)

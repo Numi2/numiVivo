@@ -278,7 +278,7 @@ struct VivoWorkflowCLICommands {
     NumiVivo reusable native workflow DAG
 
     workflow-catalog [--output catalog.json]
-    workflow-template molecular-analysis|md-segments|native-electronic|qmmm-force|qmmm-minimize|qmmm-pmf|qmmm-surface|qmmm-transmission|qmmm-transmission-apply|qmmm-pmf-rate|qmmm-replicated-rate|qmmm-rate-apply|qmmm-pmf-rate-apply|property-refinement|kinetics [--output recipe.json]
+    workflow-template \(VivoWorkflowTemplates.names.joined(separator: "|")) [--output recipe.json]
     workflow-plan recipe.json [--output plan.json]
     workflow-run recipe.json [--store DIRECTORY] [--output report.json]
     workflow-verify REPORT_ARTIFACT_SHA256 [--store DIRECTORY] [--output report.json]
