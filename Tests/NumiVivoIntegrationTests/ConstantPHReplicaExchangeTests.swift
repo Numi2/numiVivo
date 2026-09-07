@@ -54,7 +54,7 @@ import Testing
         let first=try await VivoConstantPHReplicaExchange(configuration:cfg,initialPhysicalStates:initial,executableStates:states).run()
         let second=try await VivoConstantPHReplicaExchange(configuration:cfg,initialPhysicalStates:initial,executableStates:states).run()
         #expect(first==second)
-        #expect(first.finalCheckpoint.swapAttempts.contains(\.accepted))
+        #expect(first.finalCheckpoint.swapAttempts.contains(where:{$0.accepted}))
         #expect(Set(first.finalCheckpoint.lanes.map(\.walkerIdentifier))==Set([0,1]))
     }
 
