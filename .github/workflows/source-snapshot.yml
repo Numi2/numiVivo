@@ -8,9 +8,13 @@ on:
     paths:
       - .github/workflows/source-snapshot.yml
       - Sources/NumiVivoKit/Refinement/**
+      - Sources/NumiVivoKit/AdaptiveChemistry/**
+      - Sources/NumiVivoKit/Platform/*Adaptive*
       - Sources/NumiVivoKit/Workflow/*Refinement*
       - Tools/NativeChemistry/*Refinement*
+      - Tools/NativeChemistry/*Adaptive*
       - Tools/check_property_refinement.sh
+      - Tools/check_adaptive_chemistry.sh
 
 permissions:
   contents: read
