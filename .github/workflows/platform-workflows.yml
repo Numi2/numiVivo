@@ -50,6 +50,29 @@ jobs:
           for suite in ["WorkflowCancellationTests", "MDProtocolResumeTests", "MDTrajectoryArchiveValidationTests", "HybridRuntimeTests", "PlatformWorkflowTests", "PlatformSnapshotTests", "MDQMMMInterfaceTests", "PlatformQMMMWorkflowTests", "PlatformMechanismWorkflowTests", "MechanismCandidateEnumerationTests", "QMMMFreeEnergyTests", "QMMMTransmissionTests", "QMMMPathCoordinateTests", "QMMMPathBiasTests", "QMMMStringRefinementTests", "MultistateMBARTests", "ChemicalStateAlchemicalFreeEnergyTests", "MultistateReducedPotentialArchiveTests", "LatentProtonTopologyTests", "ConstantPHDiscreteMDTests", "ConstantPHNCMCTests", "ConstantPHNCMCMetalTests", "NCMCProtocolKernelTests", "ConstantPHReplicaExchangeTests", "ConstantPHMetalAdapterTests", "ChemicalStateEnumerationTests", "ChemicalStateCatalogTests", "QMMMChemicalStateThermodynamicsTests", "QMMMChemicalQualificationTests", "QMMMChemicalExchangeNetworkTests", "SolventPromotionTests", "AppleExecutionTests", "SelectedCITests", "BarrierTunnellingTests", "RingPolymerSamplingTests", "GlobalJointUncertaintyTests", "GlobalKineticUncertaintyTests", "ReactiveSurrogateTests", "PrecisionMetalSamplingTests", "PrecisionPlatformTests"]:
               assert f"Suite {suite} passed" in text, f"Missing executed suite: {suite}"
           PYTEST
+      - name: Verify long archive recovery and streaming CLI inspection
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Keep the large reproducible fixture outside uploaded evidence.
+          export NUMIVIVO_TEST_ARTIFACTS="$RUNNER_TEMP/platform-archive-fixture"
+          export NUMIVIVO_LONG_ARCHIVE_TESTS=1
+          swift test -c release --skip-build --no-parallel \
+            --filter archiveBeyondOneHundredThousandChunksResumesAndPreservesItsPrefix \
+            2>&1 | tee "$RUNNER_TEMP/platform-results/long-archive.log"
+          ARCHIVE_RECEIPT="$(python3 - <<'PYARCHIVE'
+          import os, pathlib, shutil
+          root = pathlib.Path(os.environ["NUMIVIVO_TEST_ARTIFACTS"])
+          receipts = list(root.glob("*/archive-validation-receipt.json"))
+          assert len(receipts) == 1, "Expected one completed retained archive campaign"
+          shutil.copyfile(receipts[0], pathlib.Path(os.environ["RUNNER_TEMP"]) / "platform-results/archive-receipt.json")
+          print(receipts[0])
+          PYARCHIVE
+          )"
+          python3 Tools/Platform/check_md_archive_cli.py --binary .build/release/numivivo \
+            --receipt "$ARCHIVE_RECEIPT" --out "$RUNNER_TEMP/platform-results/archive-cli" \
+            2>&1 | tee "$RUNNER_TEMP/platform-results/archive-cli.log"
       - name: Exercise real workflow CLI, partial failure, cache and safe export
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         shell: bash
