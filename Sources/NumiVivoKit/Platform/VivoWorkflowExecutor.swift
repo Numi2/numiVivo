@@ -49,12 +49,23 @@ public struct VivoWorkflowExecution: Sendable {
 public struct VivoWorkflowExecutor: Sendable {
     private let store: VivoArtifactStore
     private let registry: VivoWorkflowRegistry
-    public init(store: VivoArtifactStore, registry: VivoWorkflowRegistry) { self.store = store; self.registry = registry }
+    // Preserve shared execution ownership across concurrent and restarted runs
+    // of this executor, including numerical work still draining cancellation.
+    private let workflow: VivoChemistryWorkflow
+    public init(store: VivoArtifactStore, registry: VivoWorkflowRegistry) {
+        self.store = store; self.registry = registry
+        self.workflow = VivoChemistryWorkflow(store: store)
+    }
+
+    /// Live task ownership across this executor's runs, including cancelled
+    /// operations that are still draining. This is not per-recipe progress.
+    public func activity() async -> [VivoChemistryWorkflowActivity] {
+        await workflow.activity()
+    }
 
     public func run(_ recipe: VivoWorkflowRecipe) async throws -> VivoWorkflowExecution {
         let plan = try VivoWorkflowPlanner.compile(recipe, registry: registry)
         try Task.checkCancellation()
-        let workflow = VivoChemistryWorkflow(store: store)
         var inputs: [String: VivoChemistryTaskInput] = [:]
         // Check *all* external content before importing inline inputs or running
         // independent branches. A corrupt ancestor is not an ordinary cache miss.
@@ -171,6 +182,7 @@ public struct VivoWorkflowExecutor: Sendable {
             allTasksSucceeded: records.values.allSatisfy { $0.outputs != nil },
             meaning: "execution and declared per-operation output validation; failed and blocked work retained; reuse revalidates existing task outputs; no change to scientific evidence classifications and no inferred cross-scale rate or efficacy")
         let artifact = try await store.put(data: VivoCanonicalJSON.encode(report), kind: "vivo.workflow-run", mediaType: "application/json")
+        try Task.checkCancellation()
         return .init(report: report, artifact: artifact)
     }
 

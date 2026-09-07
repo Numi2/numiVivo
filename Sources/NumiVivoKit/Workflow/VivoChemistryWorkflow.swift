@@ -106,10 +106,33 @@ public struct VivoChemistryDAGNode: Sendable {
         self.identifier=identifier;self.operation=operation;self.inputs=inputs;self.configuration=configuration;self.resources=resources
     }
 }
+/// Live execution ownership, not numerical progress or measured resource use.
+public struct VivoChemistryWorkflowActivity: Sendable, Equatable {
+    public let taskFingerprint: VivoFingerprint
+    public let waitingCallers: Int
+    public let cancellationRequested: Bool
+}
+
 public actor VivoChemistryWorkflow {
     private let store: VivoArtifactStore
-    private var inFlight: [VivoFingerprint:Task<VivoChemistryTaskResult,Error>] = [:]
+    private struct Flight {
+        let generation: UUID
+        let job: Task<Void, Never>
+        var waiters: [UUID: CheckedContinuation<VivoChemistryTaskResult, Error>]
+        // Retain cancelled work until its actual completion. A new caller must
+        // not overlap a replacement with a still-draining numerical operation.
+        var cancelling: Bool
+    }
+    private var inFlight: [VivoFingerprint: Flight] = [:]
     public init(store: VivoArtifactStore) { self.store=store }
+    /// Cancelled tasks remain visible until the underlying operation has drained.
+    /// Callers arriving during that interval wait for a fresh generation.
+    public func activity() -> [VivoChemistryWorkflowActivity] {
+        inFlight.map { id, flight in
+            .init(taskFingerprint: id, waitingCallers: flight.waiters.count,
+                  cancellationRequested: flight.cancelling)
+        }.sorted { $0.taskFingerprint.hex < $1.taskFingerprint.hex }
+    }
     public func payload(artifact: VivoFingerprint, expectedKind: String) async throws -> Data {
         try await Self.readPayload(store:store,artifact:artifact,expectedKind:expectedKind)
     }
@@ -126,6 +149,7 @@ public actor VivoChemistryWorkflow {
         guard descriptor.kind==expectedKind else { throw VivoChemistryError.invalid("input artifact kind mismatch") };return data
     }
     public func run(_ task: VivoChemistryTask, using operation: VivoChemistryOperation) async throws -> VivoChemistryTaskResult {
+        try Task.checkCancellation()
         let id=try task.fingerprint()
         guard task.operation==operation.identifier,task.version==operation.version,
               task.implementationFingerprint==operation.implementationFingerprint,
@@ -133,65 +157,125 @@ public actor VivoChemistryWorkflow {
               task.outputs.sorted(by:{$0.name<$1.name})==operation.outputs else {
             throw VivoChemistryError.invalid("operation implementation, backend or output contract mismatch")
         }
-        if let running=inFlight[id] { return try await running.value }
-        let store=self.store
-        let job=Task<VivoChemistryTaskResult,Error> {
-            let referenceName="chemistry-task-"+id.hex
-            var inputs:[String:Data]=[:],inputBytes=0
-            for input in task.inputs {
-                let data=try await Self.readPayload(store:store,artifact:input.artifact,expectedKind:input.kind)
-                guard data.count<=task.resources.maximumInputBytes-inputBytes else { throw VivoChemistryError.resourceLimit("workflow input byte budget") }
-                inputBytes += data.count;inputs[input.name]=data
+        let waiter = UUID()
+        let result: VivoChemistryTaskResult = try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                guard !Task.isCancelled else {
+                    continuation.resume(throwing: CancellationError()); return
+                }
+                if inFlight[id] != nil {
+                    inFlight[id]!.waiters[waiter] = continuation
+                } else {
+                    start(task, operation: operation, id: id, waiters: [waiter: continuation])
+                }
             }
-            let cached: VivoArtifactReference?
-            do { cached=try await store.reference(referenceName) }
-            catch VivoArtifactStoreError.referenceMissing(_) { cached=nil }
-            if let cached {
-                guard cached.artifact.kind=="chemistry-task-receipt" else { throw VivoChemistryError.invalid("cache reference kind") }
-                let receipt=try VivoCanonicalJSON.decode(VivoChemistryTaskReceipt.self,from:try await store.data(for:cached.artifact.fingerprint,verify:true))
-                guard receipt.schema=="numivivo.org/chemistry-task-receipt/v1",receipt.taskFingerprint==id,
-                      receipt.outputs.map({VivoChemistryTaskOutput(name:$0.name,kind:$0.kind)}).sorted(by:{$0.name<$1.name})==operation.outputs else {
-                    throw VivoChemistryError.invalid("cache receipt identity/output mismatch")
+        } onCancel: {
+            Task { await self.cancelWaiter(waiter, for: id) }
+        }
+        try Task.checkCancellation()
+        return result
+    }
+
+    private func start(_ task: VivoChemistryTask, operation: VivoChemistryOperation,
+                       id: VivoFingerprint,
+                       waiters: [UUID: CheckedContinuation<VivoChemistryTaskResult, Error>]) {
+        let generation = UUID(), store = self.store
+        let job = Task {
+            let result: Result<VivoChemistryTaskResult, Error>
+            do { result = .success(try await Self.execute(task, operation: operation, id: id, store: store)) }
+            catch { result = .failure(error) }
+            complete(id, generation: generation, task: task, operation: operation, result: result)
+        }
+        inFlight[id] = Flight(generation: generation, job: job, waiters: waiters, cancelling: false)
+    }
+
+    private func cancelWaiter(_ waiter: UUID, for id: VivoFingerprint) {
+        guard let continuation = inFlight[id]?.waiters.removeValue(forKey: waiter) else { return }
+        if inFlight[id]!.waiters.isEmpty && !inFlight[id]!.cancelling {
+            inFlight[id]!.cancelling = true
+            inFlight[id]!.job.cancel()
+        }
+        continuation.resume(throwing: CancellationError())
+    }
+
+    private func complete(_ id: VivoFingerprint, generation: UUID, task: VivoChemistryTask,
+                          operation: VivoChemistryOperation, result: Result<VivoChemistryTaskResult, Error>) {
+        guard let flight = inFlight[id], flight.generation == generation else { return }
+        inFlight[id] = nil
+        if flight.cancelling {
+            // These callers arrived after the last prior waiter cancelled. They
+            // get a fresh execution (or a validated committed cache result), not
+            // the cancellation or stale output of the abandoned generation.
+            if !flight.waiters.isEmpty { start(task, operation: operation, id: id, waiters: flight.waiters) }
+        } else {
+            for continuation in flight.waiters.values { continuation.resume(with: result) }
+        }
+    }
+
+    private static func execute(_ task: VivoChemistryTask, operation: VivoChemistryOperation,
+                                id: VivoFingerprint, store: VivoArtifactStore) async throws -> VivoChemistryTaskResult {
+        try Task.checkCancellation()
+        let referenceName="chemistry-task-"+id.hex
+        var inputs:[String:Data]=[:],inputBytes=0
+        for input in task.inputs {
+            try Task.checkCancellation()
+            let data=try await Self.readPayload(store:store,artifact:input.artifact,expectedKind:input.kind)
+            guard data.count<=task.resources.maximumInputBytes-inputBytes else { throw VivoChemistryError.resourceLimit("workflow input byte budget") }
+            inputBytes += data.count;inputs[input.name]=data
+        }
+        try Task.checkCancellation()
+        let cached: VivoArtifactReference?
+        do { cached=try await store.reference(referenceName) }
+        catch VivoArtifactStoreError.referenceMissing(_) { cached=nil }
+        if let cached {
+            guard cached.artifact.kind=="chemistry-task-receipt" else { throw VivoChemistryError.invalid("cache reference kind") }
+            let receipt=try VivoCanonicalJSON.decode(VivoChemistryTaskReceipt.self,from:try await store.data(for:cached.artifact.fingerprint,verify:true))
+            guard receipt.schema=="numivivo.org/chemistry-task-receipt/v1",receipt.taskFingerprint==id,
+                  receipt.outputs.map({VivoChemistryTaskOutput(name:$0.name,kind:$0.kind)}).sorted(by:{$0.name<$1.name})==operation.outputs else {
+                throw VivoChemistryError.invalid("cache receipt identity/output mismatch")
+            }
+            var payloads:[String:Data]=[:],outputBytes=0
+            for output in receipt.outputs {
+                try Task.checkCancellation()
+                let envelope=try VivoCanonicalJSON.decode(VivoChemistryOutputEnvelope.self,from:try await store.data(for:output.artifact,verify:true))
+                let descriptor=try await store.descriptor(for:output.artifact)
+                guard descriptor.kind=="chemistry-output",envelope.schema=="numivivo.org/chemistry-output/v1",
+                      envelope.taskFingerprint==id,envelope.outputName==output.name,envelope.kind==output.kind,
+                      envelope.payload.count<=task.resources.maximumOutputBytes-outputBytes else {
+                    throw VivoChemistryError.invalid("cached output provenance or size mismatch")
                 }
-                var payloads:[String:Data]=[:],outputBytes=0
-                for output in receipt.outputs {
-                    let envelope=try VivoCanonicalJSON.decode(VivoChemistryOutputEnvelope.self,from:try await store.data(for:output.artifact,verify:true))
-                    let descriptor=try await store.descriptor(for:output.artifact)
-                    guard descriptor.kind=="chemistry-output",envelope.schema=="numivivo.org/chemistry-output/v1",
-                          envelope.taskFingerprint==id,envelope.outputName==output.name,envelope.kind==output.kind,
-                          envelope.payload.count<=task.resources.maximumOutputBytes-outputBytes else {
-                        throw VivoChemistryError.invalid("cached output provenance or size mismatch")
-                    }
-                    outputBytes += envelope.payload.count;payloads[output.name]=envelope.payload
-                }
-                try operation.validateOutputs(task.configuration,inputs,payloads,task.resources.budget)
-                return .init(taskFingerprint:id,receiptFingerprint:cached.artifact.fingerprint,outputs:receipt.outputs,reused:true)
+                outputBytes += envelope.payload.count;payloads[output.name]=envelope.payload
             }
             try Task.checkCancellation()
-            let payloads=try await operation.execute(task.configuration,inputs,task.resources.budget)
-            guard Set(payloads.keys)==Set(operation.outputs.map(\.name)) else { throw VivoChemistryError.invalid("operation returned unexpected/missing outputs") }
-            var outputBytes=0
-            for data in payloads.values {
-                guard data.count<=task.resources.maximumOutputBytes-outputBytes else { throw VivoChemistryError.resourceLimit("workflow output byte budget") }
-                outputBytes += data.count
-            }
             try operation.validateOutputs(task.configuration,inputs,payloads,task.resources.budget)
-            var receipts:[VivoChemistryOutputReceipt]=[]
-            for output in operation.outputs {
-                let envelope=VivoChemistryOutputEnvelope(schema:"numivivo.org/chemistry-output/v1",taskFingerprint:id,
-                                                         outputName:output.name,kind:output.kind,payload:payloads[output.name]!)
-                let stored=try await store.put(data:VivoCanonicalJSON.encode(envelope),kind:"chemistry-output",mediaType:"application/vnd.numivivo.chemistry-output+json")
-                guard try await store.verify(stored.fingerprint) else { throw VivoChemistryError.invalid("fresh output integrity failure") }
-                receipts.append(.init(name:output.name,kind:output.kind,artifact:stored.fingerprint))
-            }
-            let receipt=VivoChemistryTaskReceipt(schema:"numivivo.org/chemistry-task-receipt/v1",taskFingerprint:id,outputs:receipts)
-            let stored=try await store.put(data:VivoCanonicalJSON.encode(receipt),kind:"chemistry-task-receipt",mediaType:"application/vnd.numivivo.chemistry-task-receipt+json")
-            _ = try await store.setReference(referenceName,to:stored)
-            return .init(taskFingerprint:id,receiptFingerprint:stored.fingerprint,outputs:receipts,reused:false)
+            try Task.checkCancellation()
+            return .init(taskFingerprint:id,receiptFingerprint:cached.artifact.fingerprint,outputs:receipt.outputs,reused:true)
         }
-        inFlight[id]=job
-        do { let result=try await job.value;inFlight[id]=nil;return result }
-        catch { inFlight[id]=nil;throw error }
+        try Task.checkCancellation()
+        let payloads=try await operation.execute(task.configuration,inputs,task.resources.budget)
+        try Task.checkCancellation()
+        guard Set(payloads.keys)==Set(operation.outputs.map(\.name)) else { throw VivoChemistryError.invalid("operation returned unexpected/missing outputs") }
+        var outputBytes=0
+        for data in payloads.values {
+            guard data.count<=task.resources.maximumOutputBytes-outputBytes else { throw VivoChemistryError.resourceLimit("workflow output byte budget") }
+            outputBytes += data.count
+        }
+        try operation.validateOutputs(task.configuration,inputs,payloads,task.resources.budget)
+        var receipts:[VivoChemistryOutputReceipt]=[]
+        for output in operation.outputs {
+            try Task.checkCancellation()
+            let envelope=VivoChemistryOutputEnvelope(schema:"numivivo.org/chemistry-output/v1",taskFingerprint:id,
+                                                     outputName:output.name,kind:output.kind,payload:payloads[output.name]!)
+            let stored=try await store.put(data:VivoCanonicalJSON.encode(envelope),kind:"chemistry-output",mediaType:"application/vnd.numivivo.chemistry-output+json")
+            guard try await store.verify(stored.fingerprint) else { throw VivoChemistryError.invalid("fresh output integrity failure") }
+            receipts.append(.init(name:output.name,kind:output.kind,artifact:stored.fingerprint))
+        }
+        try Task.checkCancellation()
+        let receipt=VivoChemistryTaskReceipt(schema:"numivivo.org/chemistry-task-receipt/v1",taskFingerprint:id,outputs:receipts)
+        let stored=try await store.put(data:VivoCanonicalJSON.encode(receipt),kind:"chemistry-task-receipt",mediaType:"application/vnd.numivivo.chemistry-task-receipt+json")
+        try Task.checkCancellation()
+        _ = try await store.setReference(referenceName,to:stored)
+        return .init(taskFingerprint:id,receiptFingerprint:stored.fingerprint,outputs:receipts,reused:false)
     }
     public func runDAG(_ nodes: [VivoChemistryDAGNode]) async throws -> [String:VivoChemistryTaskResult] {
         guard Set(nodes.map(\.identifier)).count==nodes.count,nodes.allSatisfy({!$0.identifier.isEmpty}) else { throw VivoChemistryError.invalid("duplicate/empty DAG node") }
@@ -223,8 +307,10 @@ public actor VivoChemistryWorkflow {
             guard !ready.isEmpty else { throw VivoChemistryError.invalid("cyclic chemistry DAG") };reached.formUnion(ready.map(\.identifier))
         }
         while !remaining.isEmpty {
+            try Task.checkCancellation()
             let ready=remaining.filter{dependencies[$0.identifier]!.isSubset(of:Set(results.keys))}
             for node in ready {
+                try Task.checkCancellation()
                 let inputs=try node.inputs.map { input -> VivoChemistryTaskInput in
                     switch input {
                     case .artifact(let name,let fingerprint,let kind): return .init(name:name,artifact:fingerprint,kind:kind)

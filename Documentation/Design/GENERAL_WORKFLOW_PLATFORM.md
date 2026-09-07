@@ -25,7 +25,8 @@ trajectory archives. Recipe MD nodes provide fixed-cell NVE/NVT segments with
 explicit particle, mesh and step limits and conservative buffer preflight.
 
 All execution and per-output validation goes through `VivoChemistryWorkflow`.
-Identical concurrent tasks share its existing in-flight execution. A completed
+Identical concurrent tasks share its existing in-flight execution, including
+concurrent or restarted runs through the same executor instance. A completed
 stage is content-addressed before it can feed a child. Rerunning the same recipe
 and store revalidates prior task outputs and executes missing stages. A changed
 input, method, configuration or implementation changes its task identity; merely
@@ -37,10 +38,26 @@ node and marks unavailable exports explicitly. Exit 1 means an executed workflow
 had failures; exit 65 means invalid input or a top-level operation error. A failure
 is not automatically retried with a different method or a relaxed tolerance.
 
-Cancellation is cooperative at admission/task boundaries. Already admitted work
-may finish and leave individually validated cache entries. No completed recipe
-report is emitted by a cancelled invocation. The core's in-flight task sharing is
-not a hard real-time GPU cancellation mechanism.
+Cancellation detaches an individual caller immediately. Identical task callers
+share one execution: cancelling one caller leaves the remaining callers' work
+running; cancelling the last caller requests cooperative cancellation of that
+execution. The core checks cancellation during input/cache loading, before and
+after numerical execution, and before publishing the cache reference. Numerical
+engines can observe the same cancellation request at their own safe boundaries.
+
+Non-cooperative numerical work and submitted GPU commands may still finish. The
+core retains that draining generation until it actually exits; new callers for
+the same task on the same workflow/executor instance wait, then start a fresh
+generation or reuse a fully validated cache result already committed. They cannot overlap a replacement with draining
+work or inherit its cancellation. `VivoChemistryWorkflow.activity()` and
+`VivoWorkflowExecutor.activity()` expose task identities, waiting-caller counts
+and cancellation requests, not percentage progress, measured memory or GPU
+preemption. Executor activity covers all runs on that instance.
+
+An artifact or cache reference whose atomic store write has already started may
+finish, and immutable objects may remain after cancellation. No completed recipe
+report is returned by a cancelled invocation. No rejected or partially validated
+numerical result is promoted to a reusable cache entry.
 
 ## Recipe structure
 
