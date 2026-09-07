@@ -277,7 +277,7 @@ public enum VivoQMMMDynamicalTransmission {
             throw VivoKineticsError.invalid("nonconverged dynamical transmission or PMF evidence mismatch")
         }
         var output=rateRequest
-        output.transmissionProbability=result.transmissionCoefficient;output.transmissionOrigin=.calculated
+        output.transmissionProbability = result.transmissionCoefficient;output.transmissionOrigin = .calculated
         output.transmissionEvidence=VivoKineticEvidence(source:"NumiVivo classical dividing-surface shooting",
             locator:"flux-weighted unbiased NVE recrossing coefficient; SE=\(result.coefficientStandardError); effectiveFluxSamples=\(result.effectiveFluxSamples)",
             sourceFingerprint:result.evidenceFingerprint.hex)
