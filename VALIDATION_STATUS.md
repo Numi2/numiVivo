@@ -1,5 +1,22 @@
 # Validation status
 
+## 8 September 2026 classical MD numerical verification
+
+The [v3 numerical audit](Documentation/Audit/2026-09-08_MD_NUMERICAL_QUALIFICATION.md)
+records the unchanged independent gates that exposed and then verified repairs
+for charged-PME accuracy and periodic rigid-molecule drift. Final source
+`17406c0d59a8f56bba2fbacade6c74424408121d` passed a complete release/all-test-target
+build, **261 executed native test functions across 59 suites** (plus one explicit
+opt-in archive skip), **57 workflow CLI checks**, both target-panel tasks and six
+fresh archive CLI checks on the physical M4 Pro Mac mini.
+
+The audit preserves the negative v2 observations, exact source/executable/shader
+identities, and the 160-second coordination pause included in the 917.222-second
+full-suite wall time. Old numerical checkpoints and derived Metal sampler state
+require an explicit new run rather than silent continuation under v3. The
+numerical fixtures, restart identities and resource-admission gates do not
+establish general interacting ensembles, biological scale or product completion.
+
 ## 7 September 2026 streaming archive verification
 
 The [archive audit](Documentation/Audit/2026-09-07_ARCHIVE_STREAMING.md) records

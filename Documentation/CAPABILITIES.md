@@ -19,6 +19,8 @@ The navigation and implementation references below describe the reviewed source 
 
 Implementation: [MD source](../Sources/NumiVivoKit/MD), [structure foundation](Design/MOLECULAR_FOUNDATION_WAVE_A.md), [protocol contract](Design/MD_PROTOCOL_WORKFLOW.md), [trajectory format](Design/MD_TRAJECTORY_ARCHIVE.md).
 
+The [v3 native qualification audit](Audit/2026-09-08_MD_NUMERICAL_QUALIFICATION.md) supplies independent charged-PME refinement, finite-time Langevin velocity statistics, fixed-geometry constrained thermalization and ideal molecular NPT transition evidence for its named fixtures. It also records numerical-contract rejection for old continuation state and explicit-grid resource admission. These measured cases do not qualify general interacting or constrained equilibrium ensembles.
+
 ## Electronic structure, embedding and reaction research
 
 | Capability | Implemented source | Important boundary |

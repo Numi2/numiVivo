@@ -1,0 +1,1101 @@
+{
+  "schema": "numivivo.org/test-evidence/classical-md-qualification/v1",
+  "initialNegativeRun": {
+    "sourceCommit": "82c2e6c7733354129349b7c658137ee23193fd3a",
+    "numericalContract": "numivivo.org/md-metal-numerics/v2",
+    "buildPassed": true,
+    "buildElapsedSeconds": 32.14,
+    "allScientificGatesPassed": false,
+    "testFunctionCount": 4,
+    "passingTestFunctionCount": 2,
+    "failingTestFunctionCount": 2,
+    "loggedIssueCount": 3,
+    "elapsedSeconds": 1.547,
+    "binariesSHA256": [
+      "6451d466cba85a509aafde470c6c72ac6afb93e6d2a9cc01b5a1b2889601aab3  .build/release/numivivo",
+      "981dc4b63f387dd3971a3e78f4155e3d4982a93a738fa4572fa0205345f8bb7c  .build/release/NumiVivoPackageTests.xctest/Contents/MacOS/NumiVivoPackageTests"
+    ],
+    "pmeFineGrid": [
+      {
+        "fixture": "charged-background",
+        "energyErrorKJPerMol": -0.0021054674573406373,
+        "forceNormalizedRMS": 0.0004644618289989845,
+        "forceNormalizedMaximumComponent": 0.0010060299161058742,
+        "forceReferenceComponentRMSKJPerMolNM": 261.4485759026136,
+        "forceComponentRMSAbsoluteKJPerMolNM": 0.12143288375290773,
+        "acceptedCheckpointUnchanged": true
+      },
+      {
+        "fixture": "charged-half-scaled-primary",
+        "energyErrorKJPerMol": -0.002093038952580173,
+        "forceNormalizedRMS": 0.0008754523970856238,
+        "forceNormalizedMaximumComponent": 0.001896272554022932,
+        "forceReferenceComponentRMSKJPerMolNM": 138.71165233926078,
+        "forceComponentRMSAbsoluteKJPerMolNM": 0.12143544854411352,
+        "acceptedCheckpointUnchanged": true
+      },
+      {
+        "fixture": "neutral-affine-cell",
+        "energyErrorKJPerMol": -0.005596534632672956,
+        "forceNormalizedRMS": 0.0004335266385037034,
+        "forceNormalizedMaximumComponent": 0.0006945589403860966,
+        "forceReferenceComponentRMSKJPerMolNM": 447.6933444967352,
+        "forceComponentRMSAbsoluteKJPerMolNM": 0.1940869907201501,
+        "acceptedCheckpointUnchanged": true
+      },
+      {
+        "fixture": "neutral-base",
+        "energyErrorKJPerMol": -0.004447142025242101,
+        "forceNormalizedRMS": 0.00031977370903772516,
+        "forceNormalizedMaximumComponent": 0.0004997933295023957,
+        "forceReferenceComponentRMSKJPerMolNM": 505.4038146857704,
+        "forceComponentRMSAbsoluteKJPerMolNM": 0.1616148523838839,
+        "acceptedCheckpointUnchanged": true
+      },
+      {
+        "fixture": "neutral-displaced",
+        "energyErrorKJPerMol": -0.0023902442860048723,
+        "forceNormalizedRMS": 0.0003963047766993186,
+        "forceNormalizedMaximumComponent": 0.0007470564583528847,
+        "forceReferenceComponentRMSKJPerMolNM": 439.0122151928412,
+        "forceComponentRMSAbsoluteKJPerMolNM": 0.17398263791027216,
+        "acceptedCheckpointUnchanged": true
+      },
+      {
+        "fixture": "neutral-excluded-primary",
+        "energyErrorKJPerMol": -0.004447019070639158,
+        "forceNormalizedRMS": 0.004289691482375899,
+        "forceNormalizedMaximumComponent": 0.00670576720238671,
+        "forceReferenceComponentRMSKJPerMolNM": 37.67010866530541,
+        "forceComponentRMSAbsoluteKJPerMolNM": 0.16159314428173516,
+        "acceptedCheckpointUnchanged": true
+      },
+      {
+        "fixture": "neutral-half-scaled-primary",
+        "energyErrorKJPerMol": -0.004437543804755251,
+        "forceNormalizedRMS": 0.000628642881068652,
+        "forceNormalizedMaximumComponent": 0.0009825482226403415,
+        "forceReferenceComponentRMSKJPerMolNM": 257.07334523873436,
+        "forceComponentRMSAbsoluteKJPerMolNM": 0.1616073283968342,
+        "acceptedCheckpointUnchanged": true
+      },
+      {
+        "fixture": "neutral-lattice-translation",
+        "energyErrorKJPerMol": -0.0044471420250147276,
+        "forceNormalizedRMS": 0.00031977370903716007,
+        "forceNormalizedMaximumComponent": 0.0004997933294999216,
+        "forceReferenceComponentRMSKJPerMolNM": 505.40381468577016,
+        "forceComponentRMSAbsoluteKJPerMolNM": 0.16161485238359824,
+        "acceptedCheckpointUnchanged": true
+      },
+      {
+        "fixture": "neutral-subcell-translation",
+        "energyErrorKJPerMol": 0.0035484634433373685,
+        "forceNormalizedRMS": 0.00036805422647741233,
+        "forceNormalizedMaximumComponent": 0.0006430607205782688,
+        "forceReferenceComponentRMSKJPerMolNM": 505.4038146857696,
+        "forceComponentRMSAbsoluteKJPerMolNM": 0.18601601007290436,
+        "acceptedCheckpointUnchanged": true
+      }
+    ],
+    "pmePredeclaredLimits": {
+      "aggregateEnergyFloorKJPerMol": 0.001,
+      "aggregateForceNormalizedFloor": 1e-05,
+      "fineEnergyAbsoluteKJPerMol": 0.05,
+      "fineForceNormalizedMaximumComponent": 0.003,
+      "fineForceNormalizedRMS": 0.001,
+      "forceRMSDenominatorFloorKJPerMolNM": 1,
+      "oracleEnergyAbsoluteKJPerMol": 1e-05,
+      "oracleForceMaximumComponentKJPerMolNM": 0.0001
+    },
+    "rawJSONFileCount": 413,
+    "retainedInitialObservationsSHA256": "321ef465a55ce75df2a2f7d7e3fbff1bca0c4fb21c41f30d5b306f90d39c8331",
+    "npt": [
+      {
+        "fixture": "eight-monatomic-particles",
+        "recordedAttempts": 128,
+        "completedCampaignSummary": {
+          "acceptedProposalCount": 106,
+          "fixtureName": "eight-monatomic-particles",
+          "maximumCenterErrorNM": 6.625612042379847e-07,
+          "maximumInternalLengthErrorNM": 0,
+          "maximumPositionErrorNM": 6.625612042379847e-07,
+          "maximumScoreAbsoluteError": 6.661338147750939e-15,
+          "maximumVelocityNMPerPS": 0,
+          "maximumVolumeNM3": 6.720591138871999,
+          "minimumVolumeNM3": 1.023215605348433,
+          "proposalCount": 128,
+          "rejectedProposalCount": 22
+        }
+      },
+      {
+        "fixture": "eight-unequal-mass-rigid-dimers",
+        "recordedAttempts": 128,
+        "firstRejectedDynamics": {
+          "proposalIndex": 11,
+          "acceptedStep": 11,
+          "timePS": 1.75,
+          "statusFlags": 8,
+          "violationCount": 4
+        },
+        "scope": "Subsequent attempts retry the same uncommitted dynamics boundary; 128 records are not 128 accepted steps. Rejection certificate and accepted before/after states are retained, not internal rejected candidate buffers."
+      }
+    ]
+  },
+  "firstPassingCandidate": {
+    "sourceCommit": "be4abc6adac272aab335491263087c9a718b165f",
+    "numericalContract": "numivivo.org/md-metal-numerics/v3",
+    "binariesSHA256": [
+      "4d4df5650dfca7b390ee3896b7d9e97c1c5a84a60f0628b49bdcbc83870a31fa  .build/release/numivivo",
+      "6089256cb142ccdfc15463a4ec5f292e6f8cbe970f220dad8810839eb6668522  .build/release/NumiVivoPackageTests.xctest/Contents/MacOS/NumiVivoPackageTests"
+    ],
+    "executedTestFunctionCount": 42,
+    "suiteCount": 9,
+    "testElapsedSeconds": 6.719,
+    "passedSuites": [
+      "AppleExecutionTests",
+      "ClassicalNPTTransitionTests",
+      "ClassicalPMEConformanceTests",
+      "ClassicalThermalConformanceTests",
+      "MDProtocolResumeTests",
+      "MetalSamplingIdentityTests",
+      "MultipolePMETests",
+      "PlatformWorkflowTests",
+      "QMMMFreeEnergyArchiveIdentityTests"
+    ],
+    "rawJSONFileCount": 427,
+    "rawManifestSHA256": "ab898e0ed0d269ed4e933f3de1c6f6ea7b2d053068ba7b5c698637ff6618c5a7",
+    "fullObservationReceiptSHA256": "d09938f7d4dc4d62ed8c0d79ae11d54da15b29a8b54fc2ab1fda029ee3303142"
+  },
+  "finalNativeRun": {
+    "schema": "numivivo.org/test-evidence/classical-md-native/v1",
+    "sourceCommit": "17406c0d59a8f56bba2fbacade6c74424408121d",
+    "numericalContract": "numivivo.org/md-metal-numerics/v3",
+    "deviceName": "Apple M4 Pro",
+    "deviceRegistryID": 4294968833,
+    "swiftTestingReportedFunctionCount": 262,
+    "skippedTests": [
+      "archiveBeyondOneHundredThousandChunksResumesAndPreservesItsPrefix()"
+    ],
+    "executedTestFunctionCount": 261,
+    "suiteCount": 59,
+    "passedSuites": [
+      "AdaptiveQMMMHamiltonianTests",
+      "AdaptiveRefinementWorkflowTests",
+      "AppleExecutionTests",
+      "BarrierConvergenceTests",
+      "BarrierTunnellingTests",
+      "ChemicalStateAlchemicalFreeEnergyTests",
+      "ChemicalStateCatalogTests",
+      "ChemicalStateEnumerationTests",
+      "ClassicalNPTTransitionTests",
+      "ClassicalPMEConformanceTests",
+      "ClassicalThermalConformanceTests",
+      "ConstantPHDiscreteMDTests",
+      "ConstantPHMetalAdapterTests",
+      "ConstantPHNCMCMetalTests",
+      "ConstantPHNCMCTests",
+      "ConstantPHReplicaExchangeTests",
+      "ECCSolventClosureTests",
+      "GlobalJointUncertaintyTests",
+      "GlobalKineticUncertaintyTests",
+      "HybridRuntimeTests",
+      "LatentProtonTopologyTests",
+      "MDProtocolResumeTests",
+      "MDQMMMInterfaceTests",
+      "MDTrajectoryArchiveValidationTests",
+      "MechanismCandidateEnumerationTests",
+      "MetalSamplingIdentityTests",
+      "MolecularMultistateRefinementWorkflowTests",
+      "MultipolePMETests",
+      "MultistateMBARTests",
+      "MultistateReducedPotentialArchiveTests",
+      "NCMCProtocolKernelTests",
+      "NuclearMetalResourceTests",
+      "PeriodicQMMMHamiltonianTests",
+      "PlatformMechanismWorkflowTests",
+      "PlatformQMMMWorkflowTests",
+      "PlatformSnapshotTests",
+      "PlatformWorkflowTests",
+      "PolarizableQMMMTests",
+      "PrecisionMetalSamplingTests",
+      "PrecisionPlatformTests",
+      "PreparedMolecularWorkflowTests",
+      "PropertyRefinementWorkflowTests",
+      "QMMMChemicalExchangeNetworkTests",
+      "QMMMChemicalQualificationTests",
+      "QMMMChemicalStateThermodynamicsTests",
+      "QMMMFreeEnergyArchiveIdentityTests",
+      "QMMMFreeEnergyTests",
+      "QMMMPathBiasTests",
+      "QMMMPathCoordinateTests",
+      "QMMMReactionCoordinateTests",
+      "QMMMStringRefinementTests",
+      "QMMMTransmissionTests",
+      "ReactionConnectivityTests",
+      "ReactiveSurrogateTests",
+      "RingPolymerSamplingTests",
+      "ScientificClosureTests",
+      "SelectedCITests",
+      "SolventPromotionTests",
+      "WorkflowCancellationTests"
+    ],
+    "testElapsedSeconds": 917.222,
+    "pme": {
+      "probeCount": 27,
+      "limits": {
+        "aggregateEnergyFloorKJPerMol": 0.001,
+        "aggregateForceNormalizedFloor": 1e-05,
+        "fineEnergyAbsoluteKJPerMol": 0.05,
+        "fineForceNormalizedMaximumComponent": 0.003,
+        "fineForceNormalizedRMS": 0.001,
+        "forceRMSDenominatorFloorKJPerMolNM": 1,
+        "oracleEnergyAbsoluteKJPerMol": 1e-05,
+        "oracleForceMaximumComponentKJPerMolNM": 0.0001
+      },
+      "allAcceptedCheckpointsUnchanged": true,
+      "fineGrid": [
+        {
+          "fixture": "charged-background",
+          "energyErrorKJPerMol": -0.00013708366827813734,
+          "forceNormalizedRMS": 2.2946208986013784e-06,
+          "forceNormalizedMaximumComponent": 6.630691978610511e-06,
+          "forceComponentRMSAbsoluteKJPerMolNM": 0.0005999253661757058
+        },
+        {
+          "fixture": "charged-half-scaled-primary",
+          "energyErrorKJPerMol": -0.00012465516351767292,
+          "forceNormalizedRMS": 4.346313646537194e-06,
+          "forceNormalizedMaximumComponent": 1.2569927028167588e-05,
+          "forceComponentRMSAbsoluteKJPerMolNM": 0.000602884347495852
+        },
+        {
+          "fixture": "neutral-affine-cell",
+          "energyErrorKJPerMol": -0.00016440572642295592,
+          "forceNormalizedRMS": 2.5706664388506356e-06,
+          "forceNormalizedMaximumComponent": 6.698888061130696e-06,
+          "forceComponentRMSAbsoluteKJPerMolNM": 0.0011508702555945531
+        },
+        {
+          "fixture": "neutral-base",
+          "energyErrorKJPerMol": -0.00011364593149210123,
+          "forceNormalizedRMS": 2.0331582432649245e-06,
+          "forceNormalizedMaximumComponent": 4.2858897560248795e-06,
+          "forceComponentRMSAbsoluteKJPerMolNM": 0.0010275659320059124
+        },
+        {
+          "fixture": "neutral-displaced",
+          "energyErrorKJPerMol": -0.00010142592662987227,
+          "forceNormalizedRMS": 2.296419424182962e-06,
+          "forceNormalizedMaximumComponent": 4.644919230146516e-06,
+          "forceComponentRMSAbsoluteKJPerMolNM": 0.001008156178422431
+        },
+        {
+          "fixture": "neutral-excluded-primary",
+          "energyErrorKJPerMol": -0.00012115237142040769,
+          "forceNormalizedRMS": 2.7173470439384238e-05,
+          "forceNormalizedMaximumComponent": 5.933891940453982e-05,
+          "forceComponentRMSAbsoluteKJPerMolNM": 0.0010236275842650687
+        },
+        {
+          "fixture": "neutral-half-scaled-primary",
+          "energyErrorKJPerMol": -0.00011930650006775068,
+          "forceNormalizedRMS": 3.987410566452316e-06,
+          "forceNormalizedMaximumComponent": 8.560608588091097e-06,
+          "forceComponentRMSAbsoluteKJPerMolNM": 0.0010250569731581737
+        },
+        {
+          "fixture": "neutral-lattice-translation",
+          "energyErrorKJPerMol": -0.00011364593126472755,
+          "forceNormalizedRMS": 2.0331582430083154e-06,
+          "forceNormalizedMaximumComponent": 4.285889756137353e-06,
+          "forceComponentRMSAbsoluteKJPerMolNM": 0.0010275659318762208
+        },
+        {
+          "fixture": "neutral-subcell-translation",
+          "energyErrorKJPerMol": -0.00020519866603763148,
+          "forceNormalizedRMS": 2.2338818700513857e-06,
+          "forceNormalizedMaximumComponent": 4.900383961912239e-06,
+          "forceComponentRMSAbsoluteKJPerMolNM": 0.0011290124186813509
+        }
+      ],
+      "aggregates": [
+        {
+          "energyRMSAbsoluteKJPerMol": 1.1460635979095963,
+          "forceNormalizedRMS": 0.03955106489126029,
+          "grid": 16,
+          "probeCount": 9
+        },
+        {
+          "energyRMSAbsoluteKJPerMol": 0.007433757245810516,
+          "forceNormalizedRMS": 0.000441090256353953,
+          "grid": 32,
+          "probeCount": 9
+        },
+        {
+          "energyRMSAbsoluteKJPerMol": 0.00013682776253952706,
+          "forceNormalizedRMS": 9.449234109658067e-06,
+          "grid": 64,
+          "probeCount": 9
+        }
+      ],
+      "independentOracleConvergence": {
+        "reciprocalConvergence": {
+          "maximumEnergyAbsoluteKJPerMol": 1.1394502053008182e-07,
+          "maximumForceComponentAbsoluteKJPerMolNM": 5.312408575264271e-07
+        },
+        "realCutoffConvergence": {
+          "maximumEnergyAbsoluteKJPerMol": 1.2421264159456769e-06,
+          "maximumForceComponentAbsoluteKJPerMolNM": 5.34284057351897e-05
+        }
+      }
+    },
+    "thermal": [
+      {
+        "fixture": "classical-thermal-connected-nonlinear-triatomics",
+        "counts": {
+          "executedStatisticalComparisons": 70,
+          "familyBudget": 512,
+          "familyPlanned": 140
+        },
+        "momentComparisons": [
+          {
+            "record": "projected-velocity-moments.json",
+            "sampleCount": 4096,
+            "maximumMeanErrorFractionOfLimit": 0.23265632659061813,
+            "maximumSecondMomentErrorFractionOfLimit": 0.4280091023261111
+          }
+        ],
+        "kineticComparisons": [
+          {
+            "record": "center-of-mass-kinetic-chi-square.json",
+            "cdfAbsoluteLimit": 0.04439959401518518,
+            "cdfLocations": [
+              1.5,
+              3,
+              6
+            ],
+            "degreesOfFreedom": 3,
+            "expectedCDF": [
+              0.3177296696637874,
+              0.608374823728911,
+              0.8883897749052875
+            ],
+            "meanLowerDeviationLimit": 0.21749371045301127,
+            "meanUpperDeviationLimit": 0.22537545468034312,
+            "observedCDF": [
+              0.324951171875,
+              0.6015625,
+              0.890869140625
+            ],
+            "observedMean": 2.995691353997893,
+            "observedVariance": 5.947774656595515,
+            "sampleCount": 4096
+          },
+          {
+            "record": "global-center-of-mass-kinetic-chi-square.json",
+            "cdfAbsoluteLimit": 0.5022209270760836,
+            "cdfLocations": [
+              1.5,
+              3,
+              6
+            ],
+            "degreesOfFreedom": 3,
+            "expectedCDF": [
+              0.3177296696637874,
+              0.608374823728911,
+              0.8883897749052875
+            ],
+            "meanLowerDeviationLimit": 2.460351029172995,
+            "meanUpperDeviationLimit": 3.469214290271472,
+            "observedCDF": [
+              0.25,
+              0.5625,
+              0.90625
+            ],
+            "observedMean": 2.9371992451326383,
+            "observedVariance": 3.870057884349732,
+            "sampleCount": 32
+          },
+          {
+            "record": "rotational-kinetic-chi-square.json",
+            "cdfAbsoluteLimit": 0.04439959401518518,
+            "cdfLocations": [
+              1.5,
+              3,
+              6
+            ],
+            "degreesOfFreedom": 3,
+            "expectedCDF": [
+              0.3177296696637874,
+              0.608374823728911,
+              0.8883897749052875
+            ],
+            "meanLowerDeviationLimit": 0.21749371045301127,
+            "meanUpperDeviationLimit": 0.22537545468034312,
+            "observedCDF": [
+              0.312255859375,
+              0.603271484375,
+              0.89013671875
+            ],
+            "observedMean": 2.9977803181949145,
+            "observedVariance": 5.80896682382328,
+            "sampleCount": 4096
+          },
+          {
+            "record": "total-kinetic-chi-square.json",
+            "cdfAbsoluteLimit": 0.04439959401518518,
+            "cdfLocations": [
+              3,
+              6,
+              12
+            ],
+            "degreesOfFreedom": 6,
+            "expectedCDF": [
+              0.19115316946194194,
+              0.5768099188731565,
+              0.938031195583341
+            ],
+            "meanLowerDeviationLimit": 0.30760012864662434,
+            "meanUpperDeviationLimit": 0.3154818728739562,
+            "observedCDF": [
+              0.19287109375,
+              0.57421875,
+              0.939697265625
+            ],
+            "observedMean": 5.9934716721928085,
+            "observedVariance": 11.62350875581915,
+            "sampleCount": 4096
+          }
+        ]
+      },
+      {
+        "fixture": "classical-thermal-free-ou",
+        "counts": {
+          "executedStatisticalComparisons": 27,
+          "familyBudget": 512,
+          "familyPlanned": 140
+        },
+        "momentComparisons": [
+          {
+            "record": "moments-horizon-1.json",
+            "sampleCount": 8192,
+            "maximumMeanErrorFractionOfLimit": 0.2202864250701646,
+            "maximumSecondMomentErrorFractionOfLimit": 0.22156227150068558
+          },
+          {
+            "record": "moments-horizon-32.json",
+            "sampleCount": 8192,
+            "maximumMeanErrorFractionOfLimit": 0.14718217777288856,
+            "maximumSecondMomentErrorFractionOfLimit": 0.44152375086117746
+          },
+          {
+            "record": "moments-horizon-8.json",
+            "sampleCount": 8192,
+            "maximumMeanErrorFractionOfLimit": 0.10056460750899755,
+            "maximumSecondMomentErrorFractionOfLimit": 0.3092110535414094
+          }
+        ],
+        "kineticComparisons": []
+      },
+      {
+        "fixture": "classical-thermal-unequal-mass-dimers",
+        "counts": {
+          "executedStatisticalComparisons": 43,
+          "familyBudget": 512,
+          "familyPlanned": 140
+        },
+        "momentComparisons": [
+          {
+            "record": "projected-velocity-moments.json",
+            "sampleCount": 4096,
+            "maximumMeanErrorFractionOfLimit": 0.12728154729079683,
+            "maximumSecondMomentErrorFractionOfLimit": 0.3740727174277558
+          }
+        ],
+        "kineticComparisons": [
+          {
+            "record": "center-of-mass-kinetic-chi-square.json",
+            "cdfAbsoluteLimit": 0.04439959401518518,
+            "cdfLocations": [
+              1.5,
+              3,
+              6
+            ],
+            "degreesOfFreedom": 3,
+            "expectedCDF": [
+              0.3177296696637874,
+              0.608374823728911,
+              0.8883897749052875
+            ],
+            "meanLowerDeviationLimit": 0.21749371045301127,
+            "meanUpperDeviationLimit": 0.22537545468034312,
+            "observedCDF": [
+              0.324462890625,
+              0.599853515625,
+              0.884765625
+            ],
+            "observedMean": 3.0037408005435644,
+            "observedVariance": 5.9386008463853175,
+            "sampleCount": 4096
+          },
+          {
+            "record": "global-center-of-mass-kinetic-chi-square.json",
+            "cdfAbsoluteLimit": 0.5022209270760836,
+            "cdfLocations": [
+              1.5,
+              3,
+              6
+            ],
+            "degreesOfFreedom": 3,
+            "expectedCDF": [
+              0.3177296696637874,
+              0.608374823728911,
+              0.8883897749052875
+            ],
+            "meanLowerDeviationLimit": 2.460351029172995,
+            "meanUpperDeviationLimit": 3.469214290271472,
+            "observedCDF": [
+              0.375,
+              0.5625,
+              0.84375
+            ],
+            "observedMean": 3.369256051909065,
+            "observedVariance": 9.83701446734393,
+            "sampleCount": 32
+          },
+          {
+            "record": "rotational-kinetic-chi-square.json",
+            "cdfAbsoluteLimit": 0.04439959401518518,
+            "cdfLocations": [
+              1,
+              2,
+              4
+            ],
+            "degreesOfFreedom": 2,
+            "expectedCDF": [
+              0.3934693402873666,
+              0.6321205588285577,
+              0.8646647167633873
+            ],
+            "meanLowerDeviationLimit": 0.1775783760607407,
+            "meanUpperDeviationLimit": 0.18546012028807254,
+            "observedCDF": [
+              0.378173828125,
+              0.624755859375,
+              0.854248046875
+            ],
+            "observedMean": 2.070299161731229,
+            "observedVariance": 4.279050643277674,
+            "sampleCount": 4096
+          },
+          {
+            "record": "total-kinetic-chi-square.json",
+            "cdfAbsoluteLimit": 0.04439959401518518,
+            "cdfLocations": [
+              2.5,
+              5,
+              10
+            ],
+            "degreesOfFreedom": 5,
+            "expectedCDF": [
+              0.22350492887667728,
+              0.5841198130044921,
+              0.9247647538534879
+            ],
+            "meanLowerDeviationLimit": 0.28079444299632816,
+            "meanUpperDeviationLimit": 0.28867618722366,
+            "observedCDF": [
+              0.21875,
+              0.584228515625,
+              0.917724609375
+            ],
+            "observedMean": 5.074039962274798,
+            "observedVariance": 10.620552595352839,
+            "sampleCount": 4096
+          }
+        ]
+      }
+    ],
+    "npt": {
+      "limits": {
+        "absolutePotentialEnergyKJPerMol": 1e-12,
+        "absoluteScoreError": 1e-09,
+        "maximumCenterErrorNM": 5e-06,
+        "maximumInternalLengthErrorNM": 6.25e-07,
+        "maximumInternalVectorChangeNM": 2e-06,
+        "maximumKineticEnergyKJPerMol": 1e-06,
+        "maximumPositionErrorNM": 1e-05,
+        "maximumVelocityNMPerPS": 5e-05,
+        "proposalCount": 128,
+        "relativeCellAndVolumeError": 1e-12
+      },
+      "runs": [
+        {
+          "acceptedProposalCount": 106,
+          "fixtureName": "eight-monatomic-particles",
+          "maximumCenterErrorNM": 8.315195555192706e-08,
+          "maximumInternalLengthErrorNM": 0,
+          "maximumPositionErrorNM": 8.315195555192706e-08,
+          "maximumScoreAbsoluteError": 6.661338147750939e-15,
+          "maximumVelocityNMPerPS": 0,
+          "maximumVolumeNM3": 6.720591138871999,
+          "minimumVolumeNM3": 1.023215605348433,
+          "proposalCount": 128,
+          "rejectedProposalCount": 22
+        },
+        {
+          "acceptedProposalCount": 106,
+          "fixtureName": "eight-unequal-mass-rigid-dimers",
+          "maximumCenterErrorNM": 1.319080977696498e-07,
+          "maximumInternalLengthErrorNM": 8.922465877247987e-08,
+          "maximumPositionErrorNM": 1.49538161714404e-07,
+          "maximumScoreAbsoluteError": 6.661338147750939e-15,
+          "maximumVelocityNMPerPS": 2.384185791015625e-07,
+          "maximumVolumeNM3": 6.720591138871999,
+          "minimumVolumeNM3": 1.023215605348433,
+          "proposalCount": 128,
+          "rejectedProposalCount": 22
+        }
+      ]
+    },
+    "rawJSONFileCount": 457,
+    "rawManifestSHA256": "7a4bec6f2b6098d59b5218fe820f18817e5c29e51a9aa44dfe4ec186d2597a28",
+    "fileSHA256": {
+      "tests-final.log": "608fd953c62c07a641b5ac00209743a78fe5534233b5f658a3b19fee01ccc1f9",
+      "source-final.tar.gz": "1c99a7a66685998098348ea8edc55c51997793c57929ecdcfb669f06565d2112",
+      "shader-resources-final.json": "c244645be7a2c671c2d6091f6a7f5eff1a325c49d71f4475fa67fca5bef4120d",
+      "binaries-final.sha256": "3ba2b0fef3a87c099822b5c374fdec2bbf3386413c3a8034486b00165a5eccea"
+    },
+    "binariesSHA256": [
+      "cc154a9b2b0040bf3d51266a95e319421f30259a8e2fd768ac1e13593c3fb22a  .build/release/numivivo",
+      "34d69e2926957465ef61b066c979a9da40130f16b63fd2d30225d24b492e43f8  .build/release/NumiVivoPackageTests.xctest/Contents/MacOS/NumiVivoPackageTests"
+    ],
+    "scope": "Recorded numerical fixtures, sampler/restart identity gates and listed native suites; no equilibrium constrained trajectory, interacting NPT distribution, large-system accuracy or performance claim."
+  },
+  "coordinatedTestPause": {
+    "startUTC": "2026-09-07T22:12:01Z",
+    "endUTC": "2026-09-07T22:14:41Z",
+    "elapsedSeconds": 160.0,
+    "reason": "Confirmed CPU-only H3 test helper paused with SIGSTOP/SIGCONT to reserve an isolated Numi Human native GPU window. Test elapsed time includes this pause; no performance claim."
+  },
+  "workflowCLI": {
+    "checks": [
+      {
+        "label": "catalog exit status",
+        "passed": true
+      },
+      {
+        "label": "registered operation identifiers unique",
+        "passed": true
+      },
+      {
+        "label": "catalog exposes cross-domain, transmission and complete chemical-state qualification operation families",
+        "passed": true
+      },
+      {
+        "label": "catalog exposes nuclear statistics, global uncertainty and corrected surrogate sampling",
+        "passed": true
+      },
+      {
+        "label": "nuclear-plan exit status",
+        "passed": true
+      },
+      {
+        "label": "nuclear-run exit status",
+        "passed": true
+      },
+      {
+        "label": "Eckart fixture executes through the real workflow CLI",
+        "passed": true
+      },
+      {
+        "label": "qmmm-help exit status",
+        "passed": true
+      },
+      {
+        "label": "real CLI routes transmission, pH populations, qualification, rapid-equilibrium, transient exchange and time-course validation",
+        "passed": true
+      },
+      {
+        "label": "template exit status",
+        "passed": true
+      },
+      {
+        "label": "plan exit status",
+        "passed": true
+      },
+      {
+        "label": "planning six typed stages performs no store writes",
+        "passed": true
+      },
+      {
+        "label": "first exit status",
+        "passed": true
+      },
+      {
+        "label": "complete molecular pipeline executes",
+        "passed": true
+      },
+      {
+        "label": "independent many-body tasks admitted together",
+        "passed": true
+      },
+      {
+        "label": "all stages have successful receipts",
+        "passed": true
+      },
+      {
+        "label": "fresh pipeline actually executes",
+        "passed": true
+      },
+      {
+        "label": "second exit status",
+        "passed": true
+      },
+      {
+        "label": "every unchanged stage reuses verified outputs",
+        "passed": true
+      },
+      {
+        "label": "exports retain identical artifact identities on resume",
+        "passed": true
+      },
+      {
+        "label": "verify exit status",
+        "passed": true
+      },
+      {
+        "label": "stored report verifies against task reconstruction",
+        "passed": true
+      },
+      {
+        "label": "export exit status",
+        "passed": true
+      },
+      {
+        "label": "export contains the actual selected numerical method",
+        "passed": true
+      },
+      {
+        "label": "wrong-export-kind exit status",
+        "passed": true
+      },
+      {
+        "label": "non-ascii-digest exit status",
+        "passed": true
+      },
+      {
+        "label": "input-alias exit status",
+        "passed": true
+      },
+      {
+        "label": "input bytes survive rejected overwrite",
+        "passed": true
+      },
+      {
+        "label": "hardlink-alias exit status",
+        "passed": true
+      },
+      {
+        "label": "store-alias exit status",
+        "passed": true
+      },
+      {
+        "label": "store-symlink-alias exit status",
+        "passed": true
+      },
+      {
+        "label": "symlinked missing leaf is rejected before any artifact write",
+        "passed": true
+      },
+      {
+        "label": "store-symlink-nested-alias exit status",
+        "passed": true
+      },
+      {
+        "label": "receipt-store-alias exit status",
+        "passed": true
+      },
+      {
+        "label": "receipt preflight prevents partially published reports",
+        "passed": true
+      },
+      {
+        "label": "no-clobber exit status",
+        "passed": true
+      },
+      {
+        "label": "unknown-preflight exit status",
+        "passed": true
+      },
+      {
+        "label": "invalid operation rejected before artifact-store creation",
+        "passed": true
+      },
+      {
+        "label": "version-preflight exit status",
+        "passed": true
+      },
+      {
+        "label": "partial exit status",
+        "passed": true
+      },
+      {
+        "label": "partial report never becomes a completed workflow",
+        "passed": true
+      },
+      {
+        "label": "numerical failure and blocked dependent are distinct",
+        "passed": true
+      },
+      {
+        "label": "unrelated valid calculation retained",
+        "passed": true
+      },
+      {
+        "label": "failed branch exports remain absent",
+        "passed": true
+      },
+      {
+        "label": "import-forged exit status",
+        "passed": true
+      },
+      {
+        "label": "reject-forged exit status",
+        "passed": true
+      },
+      {
+        "label": "corrupt-cached-output exit status",
+        "passed": true
+      },
+      {
+        "label": "corrupt cache is retained as a failed node, not silently recomputed",
+        "passed": true
+      },
+      {
+        "label": "restored-cache exit status",
+        "passed": true
+      },
+      {
+        "label": "sampled-template exit status",
+        "passed": true
+      },
+      {
+        "label": "sampled-run exit status",
+        "passed": true
+      },
+      {
+        "label": "Metal-to-electronic workflow executes all nine typed stages",
+        "passed": true
+      },
+      {
+        "label": "sampled-mapping exit status",
+        "passed": true
+      },
+      {
+        "label": "production snapshot preserves particle mapping and accepted step",
+        "passed": true
+      },
+      {
+        "label": "new geometry has a distinct source-bound structure identity",
+        "passed": true
+      },
+      {
+        "label": "sampled-resume exit status",
+        "passed": true
+      },
+      {
+        "label": "all MD and electronic stages resume from verified artifacts",
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "targetPanel": {
+    "allTasksSucceeded": true,
+    "taskCount": 2
+  },
+  "archiveCLI": {
+    "schema": "numivivo.org/test-evidence/md-archive-cli/v1",
+    "receiptSHA256": "4a658f39abec8f864f7b03889a25411276157a9295fc8ebcc9d4f146acc576c8",
+    "archiveRoot": "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "rssUnit": "bytes",
+    "method": "Fresh serial CLI processes; /usr/bin/time -l; no controlled filesystem-cache policy",
+    "binaries": {
+      "candidate": {
+        "path": "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "sha256": "cc154a9b2b0040bf3d51266a95e319421f30259a8e2fd768ac1e13593c3fb22a"
+      }
+    },
+    "runs": [
+      {
+        "label": "candidate-index-10000",
+        "binary": "candidate",
+        "command": [
+          "/usr/bin/time",
+          "-l",
+          "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+          "md-trajectory-inspect",
+          "--store",
+          "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+          "--manifest",
+          "d04d67d2a1cc030fbb236914a08f08a82c6d1f1170a0ff724d63b5d594d29c22"
+        ],
+        "expectedExit": 0,
+        "passed": true,
+        "exitCode": 0,
+        "maximumResidentSetBytes": 10289152,
+        "elapsedSeconds": 3.09,
+        "userSeconds": 0.44,
+        "systemSeconds": 0.79,
+        "peakMemoryFootprintBytes": 3031520
+      },
+      {
+        "label": "candidate-index-100001",
+        "binary": "candidate",
+        "command": [
+          "/usr/bin/time",
+          "-l",
+          "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+          "md-trajectory-inspect",
+          "--store",
+          "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+          "--manifest",
+          "969425ec1b83308cbdcc80be0b47726bb3cab4c77e82bdedff3bcf7b1b5a6519"
+        ],
+        "expectedExit": 0,
+        "passed": true,
+        "exitCode": 0,
+        "maximumResidentSetBytes": 10338304,
+        "elapsedSeconds": 12.42,
+        "userSeconds": 3.88,
+        "systemSeconds": 5.86,
+        "peakMemoryFootprintBytes": 3080672
+      },
+      {
+        "label": "candidate-full-10000",
+        "binary": "candidate",
+        "command": [
+          "/usr/bin/time",
+          "-l",
+          "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+          "md-trajectory-inspect",
+          "--store",
+          "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+          "--manifest",
+          "d04d67d2a1cc030fbb236914a08f08a82c6d1f1170a0ff724d63b5d594d29c22",
+          "--verify"
+        ],
+        "expectedExit": 0,
+        "passed": true,
+        "exitCode": 0,
+        "maximumResidentSetBytes": 10452992,
+        "elapsedSeconds": 2.5,
+        "userSeconds": 1.04,
+        "systemSeconds": 1.18,
+        "peakMemoryFootprintBytes": 3047904
+      },
+      {
+        "label": "candidate-full-100001",
+        "binary": "candidate",
+        "command": [
+          "/usr/bin/time",
+          "-l",
+          "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+          "md-trajectory-inspect",
+          "--store",
+          "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+          "--manifest",
+          "969425ec1b83308cbdcc80be0b47726bb3cab4c77e82bdedff3bcf7b1b5a6519",
+          "--verify"
+        ],
+        "expectedExit": 0,
+        "passed": true,
+        "exitCode": 0,
+        "maximumResidentSetBytes": 10469376,
+        "elapsedSeconds": 28.96,
+        "userSeconds": 10.18,
+        "systemSeconds": 12.6,
+        "peakMemoryFootprintBytes": 3097104
+      },
+      {
+        "label": "candidate-extended-100002",
+        "binary": "candidate",
+        "command": [
+          "/usr/bin/time",
+          "-l",
+          "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+          "md-trajectory-inspect",
+          "--store",
+          "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+          "--manifest",
+          "be1ae04b398b947d62fad8484f6669a3b2d22d49da496050f8da33b376595462",
+          "--verify"
+        ],
+        "expectedExit": 0,
+        "passed": true,
+        "exitCode": 0,
+        "maximumResidentSetBytes": 10469376,
+        "elapsedSeconds": 23.88,
+        "userSeconds": 9.99,
+        "systemSeconds": 11.47,
+        "peakMemoryFootprintBytes": 3064288
+      },
+      {
+        "label": "candidate-explicit-limit",
+        "binary": "candidate",
+        "command": [
+          "/usr/bin/time",
+          "-l",
+          "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+          "md-trajectory-inspect",
+          "--store",
+          "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+          "--manifest",
+          "969425ec1b83308cbdcc80be0b47726bb3cab4c77e82bdedff3bcf7b1b5a6519",
+          "--maximum-chunks",
+          "100000"
+        ],
+        "expectedExit": 65,
+        "passed": true,
+        "exitCode": 65,
+        "maximumResidentSetBytes": 9469952,
+        "elapsedSeconds": 0.0,
+        "userSeconds": 0.0,
+        "systemSeconds": 0.0,
+        "peakMemoryFootprintBytes": 2310600
+      }
+    ],
+    "passed": true
+  },
+  "retainedFileSHA256": {
+    "build-2.log": "8fa74fd44538d309c90734d8cb7bb079ff5c1cbf4475d74a353217617f420e38",
+    "tests-2.log": "46098757bc70a7a0526ba4cd0107e86b7a11ac206daf5b8a422b1af2b51aa27c",
+    "source-2.tar.gz": "20482402b0fa70c2608e8b2a3bc014d164d8e7913dae072d3bf223e4a22822cd",
+    "build-v3.log": "98c82e941567f11c5b99316c7ef2762ced2ad43bbd0911bebdaf5368e313cb3c",
+    "tests-v3.log": "c4fdbd9f1ee8ffa49f06bdc9acf88506865b4d209a6a6f3a9e0469965da9a598",
+    "source-v3.tar.gz": "e0359ec1ea7945f3a81d479385947edc9756e0dde18a91ef325da8f1f1acd14d",
+    "build-final.log": "2421783516202570a71037811091caad78fb88bc9d26b5738c4b31dc449ea94a",
+    "tests-final.log": "608fd953c62c07a641b5ac00209743a78fe5534233b5f658a3b19fee01ccc1f9",
+    "resource-tests-final.log": "9bc7d6205216056cea354f3134cb3c3ae60cfbcd2e75191acdd4756a8c9ddaee",
+    "source-final.tar.gz": "1c99a7a66685998098348ea8edc55c51997793c57929ecdcfb669f06565d2112",
+    "compiler-final.txt": "b674f79b747370a1c05ae7cec551fffe557816c6c807f35f39f933ecbcca80d7",
+    "xcode-final.txt": "18730ed2ae28a2c9cf0c2d5db549033a4f07089331391a7133b7b32187454fa9",
+    "os-final.txt": "46c87c2b8fd5d25040390e531128cd533d199bde1b50a51790375ab5984c99bb",
+    "platform-final.txt": "83e116757bf361ada87a922313265a945238521f4545fae6f59034fd27807374",
+    "source-status-final.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "coordinated-pause-final.json": "cbe41142ce728d4113700140b470c2fcdc40e7ad7dc0738d99bb322a1412611d",
+    "full-suite-cpu-stack.txt": "6512e296f53ddbed9ee666c56d34dd4322fa0e5a05c712cd29830f0bae1542b5",
+    "workflow-help-final.txt": "489971c3be8b78f9aa66d7e81c6f29f2d058e83203166b813fdd9e80e9e6be82",
+    "cli-final/checks.json": "651f24a5bfde81bfb7d59ba95931cb6b8ac57acd9b2983a80f9c4e95f5e1282f",
+    "target-panel-final.json": "0064601400d1dcacb844d9631078bc1d5ddb299fadab58b82dc9cac5946fa024",
+    "archive-cli-final/checks.json": "1f08c8ffe7ffaa2c2ac21cdb79e060be25028d0d8aa460b8d820b304af77d160",
+    "summarize_native.py": "147a0d3eb5216144a7dd1cbbc483d1805f4335e56770112ebdcc2d6cbdbe7a8a",
+    "assemble_publication.py": "15650efba19b16fd80b310d9c0ca6d825088c832645d4095a7fed2f6ab5fb61c"
+  },
+  "remoteEvidenceRoot": "/Users/n/numivivo-md-qualification-evidence-20260907",
+  "localEvidenceRoot": "/Users/home/numivivo-md-qualification-evidence-20260907",
+  "claimBoundary": "The named numerical fixtures, continuation/resource contracts and final native/CLI gates passed. No full constrained/interacting ensemble, broad force-field accuracy, complete molecular-to-biological route, scale or performance qualification follows."
+}
