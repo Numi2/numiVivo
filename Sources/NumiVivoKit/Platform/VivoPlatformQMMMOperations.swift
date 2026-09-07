@@ -22,7 +22,7 @@ public struct VivoWorkflowMDQMMMConfiguration: Codable, Sendable, Equatable {
 /// replaces the other's Hamiltonian, periodicity, electron sector or atom mapping.
 public enum VivoPlatformQMMMOperations {
     public static func definitions(implementationFingerprint id: VivoFingerprint) -> [VivoWorkflowDefinition] {
-        [VivoPlatformOperations.pure(identifier: "vivo.platform.md-qmmm", id: id,
+        let core = [VivoPlatformOperations.pure(identifier: "vivo.platform.md-qmmm", id: id,
             inputs: ["structure": "vivo.molecular-structure-document", "system": "vivo.classical-system",
                      "checkpoint": "vivo.md-checkpoint"],
             outputs: [.init(name: "frame", kind: "vivo.md-qmmm-prepared-frame"),
@@ -56,5 +56,6 @@ public enum VivoPlatformQMMMOperations {
                     electronic: electronic, budget: budget)
                 return ["forces": try VivoCanonicalJSON.encode(forces)]
             })]
+        return core + VivoPlatformQMMMFreeEnergyOperations.definitions(implementationFingerprint:id)
     }
 }
