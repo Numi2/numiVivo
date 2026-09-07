@@ -142,10 +142,16 @@ public enum VivoConstantPHMetalStateFactory {
             let execution: VivoFingerprint
             let provider: VivoFingerprint?
         }
-        return try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Identity(
+        let systemFingerprint: VivoFingerprint = try system.fingerprint()
+        let executionFingerprint: VivoFingerprint = try VivoMDCandidateForceProvider.executionFingerprint(
+            configuration: configuration, provider: provider)
+        let providerFingerprint: VivoFingerprint? = provider?.executionFingerprint
+        let identity: Identity = .init(
             schema: "numivivo.org/constant-ph-metal-hamiltonian/v1",
-            system: system.fingerprint(),
-            execution: VivoMDCandidateForceProvider.executionFingerprint(configuration: configuration, provider: provider),
-            provider: provider?.executionFingerprint)))
+            system: systemFingerprint,
+            execution: executionFingerprint,
+            provider: providerFingerprint)
+        let encoded: Data = try VivoCanonicalJSON.encode(identity)
+        return try VivoCanonicalJSON.fingerprint(encoded)
     }
 }
