@@ -108,6 +108,7 @@ public enum VivoPlatformOperations {
         definitions += VivoPlatformMDOperations.definitions(implementationFingerprint: id)
         definitions.append(VivoPlatformSnapshotOperations.definition(implementationFingerprint: id))
         definitions += VivoPlatformQMMMOperations.definitions(implementationFingerprint: id)
+        definitions += VivoPlatformRefinementOperations.definitions(implementationFingerprint: id)
         return try .init(implementationFingerprint: id, definitions: definitions)
     }
     private static func foundations(_ id: VivoFingerprint) -> [VivoWorkflowDefinition] {
