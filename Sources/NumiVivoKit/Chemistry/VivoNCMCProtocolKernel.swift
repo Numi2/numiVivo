@@ -1,11 +1,11 @@
 import Foundation
 
 public struct VivoNCMCLambdaSchedule: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/ncmc-lambda-schedule/v1"
+    public static let schema = "numivivo.org/ncmc-lambda-schedule/v2"
     public var schema: String
     /// Strictly increasing values including 0 and 1.
     public var lambdas: [Double]
-    /// Propagation steps after each perturbation to lambdas[i], i>0.
+    /// Steps at each interval midpoint, between two thermodynamic perturbations.
     public var propagationStepsPerLambda: UInt64
 
     public init(lambdas: [Double], propagationStepsPerLambda: UInt64) {
@@ -19,6 +19,13 @@ public struct VivoNCMCLambdaSchedule: Codable, Sendable, Equatable {
             throw VivoChemistryError.invalid("NCMC lambda interval count")
         }
         return .init(lambdas: (0...intervals).map { Double($0) / Double(intervals) },
+                     propagationStepsPerLambda: propagationStepsPerLambda)
+    }
+
+    /// The reverse traversal must mirror a nonuniform schedule, not reuse it.
+    public func reversed() throws -> Self {
+        try validate()
+        return .init(lambdas: lambdas.reversed().map { 1 - $0 },
                      propagationStepsPerLambda: propagationStepsPerLambda)
     }
 
@@ -41,10 +48,12 @@ public struct VivoNCMCLambdaSchedule: Codable, Sendable, Equatable {
 
 public struct VivoNCMCPropagationResult: Codable, Sendable, Equatable {
     public let finalPhysicalState: VivoConstantPHPhysicalState
-    /// Integrator/discretization work needed for exact path acceptance. A kernel
-    /// that is analytically reversible and measure-preserving may report zero.
+    /// For deterministic reversible volume-preserving propagation this is the
+    /// FULL change in potential plus kinetic energy at fixed lambda. Symplectic
+    /// or reversible does not imply energy-conserving: finite-step work is not zero.
     public let shadowWorkKJPerMol: Double
-    /// log(P_reverse/P_forward) for stochastic propagation at this fixed lambda.
+    /// v2 requires zero: stochastic heat/path-action accounting is not inferred
+    /// from this scalar and must not be added again to heat-subtracted work.
     public let logReverseOverForwardPathProbability: Double
     public let steps: UInt64
     public let method: String
@@ -64,16 +73,21 @@ public struct VivoNCMCPropagationResult: Codable, Sendable, Equatable {
     public func validate(initial: VivoConstantPHPhysicalState, expectedSteps: UInt64,
                          maximumAbsoluteWorkKJPerMol: Double) throws {
         try initial.validate(); try finalPhysicalState.validate()
-        guard steps == expectedSteps,
+        let (expectedStep, overflow) = initial.stepIndex.addingReportingOverflow(expectedSteps)
+        guard !overflow, steps == expectedSteps, expectedSteps > 0,
               finalPhysicalState.positionsNM.count == initial.positionsNM.count,
               finalPhysicalState.velocitiesNMPerPS.count == initial.velocitiesNMPerPS.count,
-              finalPhysicalState.stepIndex >= initial.stepIndex,
-              finalPhysicalState.timePS >= initial.timePS,
+              finalPhysicalState.stepIndex == expectedStep,
+              finalPhysicalState.timePS > initial.timePS,
+              finalPhysicalState.periodicCell == initial.periodicCell,
               shadowWorkKJPerMol.isFinite,
               abs(shadowWorkKJPerMol) <= maximumAbsoluteWorkKJPerMol,
               logReverseOverForwardPathProbability.isFinite,
               !method.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw VivoChemistryError.invalid("NCMC propagation result")
+        }
+        guard logReverseOverForwardPathProbability == 0 else {
+            throw VivoChemistryError.unsupported("NCMC v2 requires deterministic fixed-cell propagation; raw stochastic path ratios require explicit heat/action accounting")
         }
     }
 }
@@ -108,6 +122,12 @@ public struct VivoNCMCProtocolStep: Codable, Sendable, Equatable {
     public let lambdaBefore: Double
     public let lambdaAfter: Double
     public let prePerturbationStateFingerprint: VivoFingerprint
+    public let propagationLambda: Double
+    public let postPropagationStateFingerprint: VivoFingerprint
+    public let prePropagationPerturbationWorkKJPerMol: Double
+    public let postPropagationPerturbationWorkKJPerMol: Double
+    public let postPropagationEnergyBeforeKJPerMol: Double
+    public let postPropagationEnergyAfterKJPerMol: Double
     public let energyBeforeKJPerMol: Double
     public let energyAfterKJPerMol: Double
     public let perturbationWorkKJPerMol: Double
@@ -117,7 +137,7 @@ public struct VivoNCMCProtocolStep: Codable, Sendable, Equatable {
 }
 
 public struct VivoNCMCProtocolResult: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/ncmc-protocol-result/v1"
+    public static let schema = "numivivo.org/ncmc-protocol-result/v2"
     public let schema: String
     public let hamiltonianFingerprint: VivoFingerprint
     public let scheduleFingerprint: VivoFingerprint
@@ -136,13 +156,12 @@ public struct VivoNCMCProtocolResult: Codable, Sendable, Equatable {
     }
 }
 
-/// Exact bookkeeping for a perturb-propagate NCMC schedule. At each lambda
-/// update, protocol work is U(lambda_new,x)-U(lambda_old,x) at the identical
-/// pre-propagation state. Fixed-lambda propagation contributes independently
-/// reported shadow work and stochastic path probability. No endpoint-only work
-/// approximation is used.
+/// Symmetric perturb-propagate-perturb NCMC. Each interval evaluates the
+/// complete potential at its endpoints and midpoint, at the appropriate fixed
+/// coordinates. A reversed mirrored schedule with reversed momenta follows the
+/// reverse proposal. Deterministic segment work includes the kinetic change.
 public enum VivoNCMCProtocolKernel {
-    public static let interpretation = "Perturb-propagate NCMC work accounting over a fingerprinted lambda Hamiltonian. Protocol work is accumulated at every instantaneous lambda change on the same coordinates; each fixed-lambda propagation segment supplies its own shadow work and reverse/forward path probability."
+    public static let interpretation = "Symmetric midpoint perturb-propagate-perturb NCMC on a fixed mass/cell manifold; every perturbation uses identical coordinates on its two sides. Deterministic fixed-lambda shadow work includes potential AND kinetic energy changes. Raw stochastic path ratios and unaccounted heat are rejected. Numerical reversibility remains precision- and convergence-qualified."
 
     public static func run(initial: VivoConstantPHPhysicalState,
                            hamiltonian: VivoNCMCLambdaHamiltonian,
@@ -152,6 +171,10 @@ public enum VivoNCMCProtocolKernel {
         guard maximumAbsoluteWorkKJPerMol.isFinite, maximumAbsoluteWorkKJPerMol > 0,
               maximumAbsoluteWorkKJPerMol <= 1.0e12 else {
             throw VivoChemistryError.invalid("NCMC protocol work bound")
+        }
+        guard !hamiltonian.fromStateIdentifier.isEmpty, !hamiltonian.toStateIdentifier.isEmpty,
+              hamiltonian.fromStateIdentifier != hamiltonian.toStateIdentifier else {
+            throw VivoChemistryError.invalid("NCMC endpoint identifiers")
         }
         let scheduleID = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(schedule))
         var physical = initial
@@ -165,46 +188,52 @@ public enum VivoNCMCProtocolKernel {
             try Task.checkCancellation()
             let beforeLambda = schedule.lambdas[index - 1]
             let afterLambda = schedule.lambdas[index]
-            // Both energies address one immutable pre-propagation snapshot.
-            // Sequential evaluation also avoids overlapping access to a shared
-            // resource-owning Metal evaluator and Swift 6 mutable captures.
+            let midpoint = beforeLambda + 0.5 * (afterLambda - beforeLambda)
             let perturbationState = physical
             let before = try await hamiltonian.completePotentialEnergyKJPerMol(perturbationState, beforeLambda)
-            let after = try await hamiltonian.completePotentialEnergyKJPerMol(perturbationState, afterLambda)
-            guard before.isFinite, after.isFinite else {
-                throw VivoChemistryError.convergence("nonfinite NCMC perturbation energy")
+            let atMidpoint = try await hamiltonian.completePotentialEnergyKJPerMol(perturbationState, midpoint)
+            guard before.isFinite, atMidpoint.isFinite else {
+                throw VivoChemistryError.convergence("nonfinite NCMC pre-propagation energy")
             }
-            let delta = after - before
-            perturbationWork += delta
-            guard perturbationWork.isFinite, abs(perturbationWork) <= maximumAbsoluteWorkKJPerMol else {
-                throw VivoChemistryError.convergence("NCMC perturbation work overflow")
-            }
-            let preFingerprint = try perturbationState.fingerprint()
-            let propagated = try await hamiltonian.propagate(perturbationState, afterLambda, schedule.propagationStepsPerLambda)
+            try Task.checkCancellation()
+            let propagated = try await hamiltonian.propagate(perturbationState, midpoint, schedule.propagationStepsPerLambda)
             try propagated.validate(initial: perturbationState,
                                     expectedSteps: schedule.propagationStepsPerLambda,
                                     maximumAbsoluteWorkKJPerMol: maximumAbsoluteWorkKJPerMol)
+            let post = propagated.finalPhysicalState
+            let postMidpoint = try await hamiltonian.completePotentialEnergyKJPerMol(post, midpoint)
+            let after = try await hamiltonian.completePotentialEnergyKJPerMol(post, afterLambda)
+            guard [before, atMidpoint, postMidpoint, after].allSatisfy(\.isFinite) else {
+                throw VivoChemistryError.convergence("nonfinite NCMC perturbation energy")
+            }
+            let firstWork = atMidpoint - before, lastWork = after - postMidpoint
+            let delta = firstWork + lastWork
+            perturbationWork += delta
             shadowWork += propagated.shadowWorkKJPerMol
             logPath += propagated.logReverseOverForwardPathProbability
-            guard shadowWork.isFinite, abs(shadowWork) <= maximumAbsoluteWorkKJPerMol,
-                  logPath.isFinite else {
-                throw VivoChemistryError.convergence("NCMC propagation bookkeeping overflow")
+            guard [firstWork, lastWork, perturbationWork, shadowWork, perturbationWork + shadowWork].allSatisfy({
+                $0.isFinite && abs($0) <= maximumAbsoluteWorkKJPerMol
+            }), logPath.isFinite else {
+                throw VivoChemistryError.convergence("NCMC work accumulation exceeds numerical bounds")
             }
             trace.append(.init(index: index - 1,
                 lambdaBefore: beforeLambda, lambdaAfter: afterLambda,
-                prePerturbationStateFingerprint: preFingerprint,
-                energyBeforeKJPerMol: before, energyAfterKJPerMol: after,
+                prePerturbationStateFingerprint: try perturbationState.fingerprint(),
+                propagationLambda: midpoint,
+                postPropagationStateFingerprint: try post.fingerprint(),
+                prePropagationPerturbationWorkKJPerMol: firstWork,
+                postPropagationPerturbationWorkKJPerMol: lastWork,
+                postPropagationEnergyBeforeKJPerMol: postMidpoint,
+                postPropagationEnergyAfterKJPerMol: after,
+                energyBeforeKJPerMol: before, energyAfterKJPerMol: atMidpoint,
                 perturbationWorkKJPerMol: delta,
                 propagationShadowWorkKJPerMol: propagated.shadowWorkKJPerMol,
                 logReverseOverForwardPathProbability: propagated.logReverseOverForwardPathProbability,
                 propagationSteps: propagated.steps))
-            physical = propagated.finalPhysicalState
+            physical = post
         }
+        try Task.checkCancellation()
 
-        guard physical.positionsNM.count == initial.positionsNM.count,
-              physical.velocitiesNMPerPS.count == initial.velocitiesNMPerPS.count else {
-            throw VivoChemistryError.invalid("NCMC protocol changed particle manifold")
-        }
         return .init(schema: VivoNCMCProtocolResult.schema,
             hamiltonianFingerprint: hamiltonian.fingerprint,
             scheduleFingerprint: scheduleID,
@@ -226,8 +255,16 @@ public enum VivoNCMCProtocolKernel {
                                         VivoConstantPHExecutableState,
                                         VivoConstantPHExecutableState
                                     ) async throws -> VivoNCMCLambdaHamiltonian,
-                                    maximumAbsoluteWorkKJPerMol: Double = 1.0e8) -> VivoConstantPHNCMCSwitchEngine {
-        VivoConstantPHNCMCSwitchEngine(fingerprint: fingerprint,
+                                    maximumAbsoluteWorkKJPerMol: Double = 1.0e8) throws -> VivoConstantPHNCMCSwitchEngine {
+        try schedule.validate()
+        struct Identity: Codable {
+            let schema: String; let implementation: VivoFingerprint; let manifold: VivoFingerprint
+            let schedule: VivoNCMCLambdaSchedule; let workBound: Double
+        }
+        let engineID = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Identity(
+            schema: "numivivo.org/ncmc-switch-engine/v2", implementation: fingerprint,
+            manifold: physicalManifoldFingerprint, schedule: schedule, workBound: maximumAbsoluteWorkKJPerMol)))
+        return VivoConstantPHNCMCSwitchEngine(fingerprint: engineID,
             physicalManifoldFingerprint: physicalManifoldFingerprint) { initial, from, to in
             let lambda = try await buildHamiltonian(from, to)
             guard lambda.physicalManifoldFingerprint == physicalManifoldFingerprint,
@@ -235,10 +272,15 @@ public enum VivoNCMCProtocolKernel {
                   lambda.toStateIdentifier == to.identifier else {
                 throw VivoChemistryError.invalid("NCMC lambda Hamiltonian identity")
             }
+            guard from.physicalManifoldFingerprint == physicalManifoldFingerprint,
+                  to.physicalManifoldFingerprint == physicalManifoldFingerprint else {
+                throw VivoChemistryError.invalid("NCMC endpoint physical manifold")
+            }
+            let directedSchedule = try from.identifier < to.identifier ? schedule : schedule.reversed()
             let result = try await run(initial: initial, hamiltonian: lambda,
-                                       schedule: schedule,
+                                       schedule: directedSchedule,
                                        maximumAbsoluteWorkKJPerMol: maximumAbsoluteWorkKJPerMol)
-            return try .init(switchEngineFingerprint: fingerprint,
+            return try .init(switchEngineFingerprint: engineID,
                 physicalManifoldFingerprint: physicalManifoldFingerprint,
                 fromStateIdentifier: from.identifier,
                 toStateIdentifier: to.identifier,

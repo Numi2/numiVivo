@@ -14,7 +14,7 @@ permissions:
   contents: read
 concurrency:
   group: platform-workflows-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   apple:
     runs-on: macos-15
@@ -24,6 +24,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Build the exact complete Apple product and test targets
+        id: build
         shell: bash
         run: |
           set -euo pipefail
@@ -42,15 +43,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          swift test -c release --skip-build --filter 'PlatformWorkflowTests|PlatformSnapshotTests|MDQMMMInterfaceTests|PlatformQMMMWorkflowTests|PlatformMechanismWorkflowTests|MechanismCandidateEnumerationTests|QMMMFreeEnergyTests|QMMMTransmissionTests|QMMMPathCoordinateTests|QMMMPathBiasTests|QMMMStringRefinementTests|MultistateMBARTests|ChemicalStateAlchemicalFreeEnergyTests|MultistateReducedPotentialArchiveTests|LatentProtonTopologyTests|ConstantPHDiscreteMDTests|ConstantPHNCMCTests|NCMCProtocolKernelTests|ConstantPHReplicaExchangeTests|ConstantPHMetalAdapterTests|ChemicalStateEnumerationTests|ChemicalStateCatalogTests|QMMMChemicalStateThermodynamicsTests|QMMMChemicalQualificationTests|QMMMChemicalExchangeNetworkTests|SolventPromotionTests|AppleExecutionTests|SelectedCITests' 2>&1 | tee "$RUNNER_TEMP/platform-results/tests.log"
+          swift test -c release --skip-build --filter 'PlatformWorkflowTests|PlatformSnapshotTests|MDQMMMInterfaceTests|PlatformQMMMWorkflowTests|PlatformMechanismWorkflowTests|MechanismCandidateEnumerationTests|QMMMFreeEnergyTests|QMMMTransmissionTests|QMMMPathCoordinateTests|QMMMPathBiasTests|QMMMStringRefinementTests|MultistateMBARTests|ChemicalStateAlchemicalFreeEnergyTests|MultistateReducedPotentialArchiveTests|LatentProtonTopologyTests|ConstantPHDiscreteMDTests|ConstantPHNCMCTests|ConstantPHNCMCMetalTests|NCMCProtocolKernelTests|ConstantPHReplicaExchangeTests|ConstantPHMetalAdapterTests|ChemicalStateEnumerationTests|ChemicalStateCatalogTests|QMMMChemicalStateThermodynamicsTests|QMMMChemicalQualificationTests|QMMMChemicalExchangeNetworkTests|SolventPromotionTests|AppleExecutionTests|SelectedCITests' 2>&1 | tee "$RUNNER_TEMP/platform-results/tests.log"
           python3 - <<'PYTEST'
           import os, pathlib
           text = (pathlib.Path(os.environ["RUNNER_TEMP"]) / "platform-results/tests.log").read_text()
-          for suite in ["PlatformWorkflowTests", "PlatformSnapshotTests", "MDQMMMInterfaceTests", "PlatformQMMMWorkflowTests", "PlatformMechanismWorkflowTests", "MechanismCandidateEnumerationTests", "QMMMFreeEnergyTests", "QMMMTransmissionTests", "QMMMPathCoordinateTests", "QMMMPathBiasTests", "QMMMStringRefinementTests", "MultistateMBARTests", "ChemicalStateAlchemicalFreeEnergyTests", "MultistateReducedPotentialArchiveTests", "LatentProtonTopologyTests", "ConstantPHDiscreteMDTests", "ConstantPHNCMCTests", "NCMCProtocolKernelTests", "ConstantPHReplicaExchangeTests", "ConstantPHMetalAdapterTests", "ChemicalStateEnumerationTests", "ChemicalStateCatalogTests", "QMMMChemicalStateThermodynamicsTests", "QMMMChemicalQualificationTests", "QMMMChemicalExchangeNetworkTests", "SolventPromotionTests", "AppleExecutionTests", "SelectedCITests"]:
+          for suite in ["PlatformWorkflowTests", "PlatformSnapshotTests", "MDQMMMInterfaceTests", "PlatformQMMMWorkflowTests", "PlatformMechanismWorkflowTests", "MechanismCandidateEnumerationTests", "QMMMFreeEnergyTests", "QMMMTransmissionTests", "QMMMPathCoordinateTests", "QMMMPathBiasTests", "QMMMStringRefinementTests", "MultistateMBARTests", "ChemicalStateAlchemicalFreeEnergyTests", "MultistateReducedPotentialArchiveTests", "LatentProtonTopologyTests", "ConstantPHDiscreteMDTests", "ConstantPHNCMCTests", "ConstantPHNCMCMetalTests", "NCMCProtocolKernelTests", "ConstantPHReplicaExchangeTests", "ConstantPHMetalAdapterTests", "ChemicalStateEnumerationTests", "ChemicalStateCatalogTests", "QMMMChemicalStateThermodynamicsTests", "QMMMChemicalQualificationTests", "QMMMChemicalExchangeNetworkTests", "SolventPromotionTests", "AppleExecutionTests", "SelectedCITests"]:
               assert f"Suite {suite} passed" in text, f"Missing executed suite: {suite}"
           PYTEST
       - name: Exercise real workflow CLI, partial failure, cache and safe export
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         shell: bash
         run: |
           set -euo pipefail

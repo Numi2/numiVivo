@@ -40,7 +40,7 @@ import Testing
         let states = try [executable("A", manifold: manifold), executable("B", manifold: manifold)]
         let base = VivoConstantPHConfiguration(identifier: "zero-work", temperatureK: 300,
             referencePH: 7, targetPH: 7, states: definitions(), initialStateIdentifier: "A",
-            mdStepsPerAttempt: 1, attemptCount: 1, seed: 17)
+            mdStepsPerAttempt: 1, attemptCount: 1, seed: 0)
         let cfg = VivoConstantPHNCMCConfiguration(base: base)
         let engineID = try fingerprint("zero-work-engine")
         let engine = VivoConstantPHNCMCSwitchEngine(fingerprint: engineID, physicalManifoldFingerprint: manifold) { input, from, to in
@@ -65,6 +65,18 @@ import Testing
         #expect(result.finalCheckpoint.physicalState.positionsNM[0] == .init(1, 2, 0))
         #expect(result.finalCheckpoint.attempts[0].logAcceptanceProbability == 0)
         #expect(result.finalCheckpoint.attempts[0].endpointPotentialEnergyDifferenceKJPerMol == 0)
+        let hamiltonians = Dictionary(uniqueKeysWithValues: states.map { ($0.identifier, $0.hamiltonianFingerprint) })
+        try VivoConstantPHNCMC.validate(checkpoint: result.finalCheckpoint, configuration: cfg,
+            manifold: manifold, hamiltonians: hamiltonians, switchEngineFingerprint: engineID)
+        var encoded = try #require(JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(result.finalCheckpoint)) as? [String: Any])
+        var attempts = try #require(encoded["attempts"] as? [[String: Any]])
+        attempts[0]["accepted"] = false; encoded["attempts"] = attempts
+        let tampered = try VivoCanonicalJSON.decode(VivoConstantPHNCMCCheckpoint.self,
+            from: JSONSerialization.data(withJSONObject: encoded))
+        #expect(throws: (any Error).self) {
+            try VivoConstantPHNCMC.validate(checkpoint: tampered, configuration: cfg,
+                manifold: manifold, hamiltonians: hamiltonians, switchEngineFingerprint: engineID)
+        }
     }
 
     @Test func rejectedHighWorkCandidateRollsBackSwitchEndpointButKeepsPreSwitchMD() async throws {
@@ -88,9 +100,11 @@ import Testing
                 protocolWorkKJPerMol: 10_000, shadowWorkKJPerMol: 0,
                 switchingSteps: 10, interpretation: "synthetic high-work rejected switch")
         }
-        let sampler = try VivoConstantPHNCMC(configuration: cfg, initialPhysicalState: physical(),
+        var initial = try physical(); initial.velocitiesNMPerPS[0] = .init(0.25,-0.5,1)
+        let sampler = try VivoConstantPHNCMC(configuration: cfg, initialPhysicalState: initial,
                                              executableStates: states, switchEngine: engine)
         let result = try await sampler.run()
+        #expect(result.finalCheckpoint.physicalState.velocitiesNMPerPS[0] == initial.velocitiesNMPerPS[0] * -1)
         #expect(result.finalCheckpoint.currentStateIdentifier == "A")
         #expect(result.finalCheckpoint.acceptedMoves == 0)
         #expect(result.finalCheckpoint.physicalState.stepIndex == 2)

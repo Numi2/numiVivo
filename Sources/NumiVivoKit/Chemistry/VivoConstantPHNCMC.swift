@@ -1,7 +1,7 @@
 import Foundation
 
 public struct VivoConstantPHNCMCConfiguration: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/constant-ph-ncmc/v1"
+    public static let schema = "numivivo.org/constant-ph-ncmc/v2"
     public var schema: String
     public var base: VivoConstantPHConfiguration
     /// Maximum absolute reported protocol/shadow work accepted as numerically sane.
@@ -32,7 +32,7 @@ public struct VivoConstantPHNCMCConfiguration: Codable, Sendable, Equatable {
 /// `logReverseOverForwardPathProbability` covers any nonsymmetric stochastic
 /// protocol generation not already represented by the discrete neighbor proposal.
 public struct VivoConstantPHNCMCSwitchResult: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/constant-ph-ncmc-switch-result/v1"
+    public static let schema = "numivivo.org/constant-ph-ncmc-switch-result/v2"
     public let schema: String
     public let switchEngineFingerprint: VivoFingerprint
     public let physicalManifoldFingerprint: VivoFingerprint
@@ -94,9 +94,11 @@ public struct VivoConstantPHNCMCSwitchResult: Codable, Sendable, Equatable {
               finalPhysicalStateFingerprint == (try finalPhysicalState.fingerprint()),
               finalPhysicalState.positionsNM.count == initial.positionsNM.count,
               finalPhysicalState.velocitiesNMPerPS.count == initial.velocitiesNMPerPS.count,
-              finalPhysicalState.stepIndex >= initial.stepIndex,
-              finalPhysicalState.timePS >= initial.timePS,
               switchingSteps > 0,
+              initial.stepIndex <= UInt64.max - switchingSteps,
+              finalPhysicalState.stepIndex == initial.stepIndex + switchingSteps,
+              finalPhysicalState.timePS > initial.timePS,
+              finalPhysicalState.periodicCell == initial.periodicCell,
               protocolWorkKJPerMol.isFinite,
               shadowWorkKJPerMol.isFinite,
               logReverseOverForwardPathProbability.isFinite,
@@ -157,7 +159,7 @@ public struct VivoConstantPHNCMCAttempt: Codable, Sendable, Equatable {
 }
 
 public struct VivoConstantPHNCMCCheckpoint: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/constant-ph-ncmc-checkpoint/v1"
+    public static let schema = "numivivo.org/constant-ph-ncmc-checkpoint/v2"
     public var schema: String
     public let configurationFingerprint: VivoFingerprint
     public let physicalManifoldFingerprint: VivoFingerprint
@@ -198,7 +200,7 @@ public struct VivoConstantPHNCMCCheckpoint: Codable, Sendable, Equatable {
 }
 
 public struct VivoConstantPHNCMCResult: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/constant-ph-ncmc-result/v1"
+    public static let schema = "numivivo.org/constant-ph-ncmc-result/v2"
     public let schema: String
     public let configurationFingerprint: VivoFingerprint
     public let finalCheckpoint: VivoConstantPHNCMCCheckpoint
@@ -216,7 +218,7 @@ public typealias VivoConstantPHNCMCProgressSink = @Sendable (VivoConstantPHNCMCC
 /// NCMC endpoint atomically with the proposed chemical state.
 public actor VivoConstantPHNCMC {
     private static let gasConstantKJ = 0.00831446261815324
-    public static let interpretation = "Discrete constant-pH NCMC over a fixed particle/mass manifold. Each state proposal uses a complete switching-engine nonequilibrium work (protocol plus shadow/integration work) and any explicit reverse/forward path-probability correction. Endpoint potential-energy differences are retained only as diagnostics. Rejected switching trajectories never mutate the committed physical state."
+    public static let interpretation = "Discrete constant-pH NCMC over a fixed particle/mass manifold. Each state proposal uses a complete switching-engine nonequilibrium work (protocol plus shadow/integration work) and any explicit reverse/forward path-probability correction. Endpoint potential-energy differences are retained only as diagnostics. Rejected switching trajectories restore pre-switch coordinates and reverse momenta; failed evaluations do not commit an attempt."
 
     public let configuration: VivoConstantPHNCMCConfiguration
     private let runtime: [String: VivoConstantPHExecutableState]
@@ -294,8 +296,10 @@ public actor VivoConstantPHNCMC {
             let propagated = try await currentRuntime.propagate(checkpoint.physicalState, base.mdStepsPerAttempt)
             try propagated.validate()
             guard propagated.positionsNM.count == checkpoint.physicalState.positionsNM.count,
-                  propagated.stepIndex >= checkpoint.physicalState.stepIndex,
-                  propagated.timePS >= checkpoint.physicalState.timePS else {
+                  checkpoint.physicalState.stepIndex <= UInt64.max - base.mdStepsPerAttempt,
+                  propagated.stepIndex == checkpoint.physicalState.stepIndex + base.mdStepsPerAttempt,
+                  propagated.timePS > checkpoint.physicalState.timePS,
+                  propagated.periodicCell == checkpoint.physicalState.periodicCell else {
                 throw VivoChemistryError.invalid("constant-pH NCMC propagator changed physical manifold or reversed the MD clock")
             }
             let neighbors = currentDefinition.neighbors
@@ -334,7 +338,11 @@ public actor VivoConstantPHNCMC {
             let logUniform = log(max(random.unitInterval(), Double.leastNonzeroMagnitude))
             let accepted = logUniform < logAcceptance
             let nextState = accepted ? proposedIdentifier : checkpoint.currentStateIdentifier
-            let nextPhysical = accepted ? switched.finalPhysicalState : propagated
+            // Rejection restores the pre-switch coordinates and reverses momentum.
+            // Returning the unchanged forward momenta breaks the NCMC invariant
+            // measure for deterministic propagation without a fresh Maxwell draw.
+            var nextPhysical = accepted ? switched.finalPhysicalState : propagated
+            if !accepted { nextPhysical.velocitiesNMPerPS = propagated.velocitiesNMPerPS.map { $0 * -1 } }
             var counts = checkpoint.visitCounts
             counts[nextState, default: 0] += 1
             let attempt = VivoConstantPHNCMCAttempt(
@@ -372,6 +380,7 @@ public actor VivoConstantPHNCMC {
             try Self.validate(checkpoint: checkpoint, configuration: configuration,
                               manifold: manifold, hamiltonians: hamiltonians,
                               switchEngineFingerprint: switchEngine.fingerprint)
+            try Task.checkCancellation()
             committed = checkpoint
             if let progress { try await progress(checkpoint) }
         }
@@ -399,7 +408,7 @@ public actor VivoConstantPHNCMC {
             let populations: [String: Double]
         }
         return try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Evidence(
-            schema: "numivivo.org/constant-ph-ncmc-evidence/v1",
+            schema: "numivivo.org/constant-ph-ncmc-evidence/v2",
             configuration: configuration,
             checkpoint: checkpoint,
             populations: populations)))
@@ -419,16 +428,50 @@ public actor VivoConstantPHNCMC {
               checkpoint.switchEngineFingerprint == switchEngineFingerprint,
               (0...base.attemptCount).contains(checkpoint.completedAttempts),
               base.states.contains(where: { $0.identifier == checkpoint.currentStateIdentifier }),
-              checkpoint.randomState != 0,
               checkpoint.visitCounts.keys.sorted() == base.states.map(\.identifier).sorted(),
-              checkpoint.visitCounts.values.allSatisfy({ $0 >= 0 }),
+              checkpoint.visitCounts.values.allSatisfy({ $0 >= 0 && $0 <= base.attemptCount + 1 }),
               checkpoint.visitCounts.values.reduce(0, +) == checkpoint.completedAttempts + 1,
               checkpoint.acceptedMoves >= 0,
               checkpoint.acceptedMoves <= checkpoint.completedAttempts,
               checkpoint.attempts.count == checkpoint.completedAttempts else {
             throw VivoChemistryError.invalid("constant-pH NCMC checkpoint identity or counters")
         }
+        let definitions = Dictionary(uniqueKeysWithValues: base.states.map { ($0.identifier, $0) })
+        var random = VivoSplitMix64(state: base.seed)
+        var current = base.initialStateIdentifier
+        var counts = Dictionary(uniqueKeysWithValues: base.states.map { ($0.identifier, 0) })
+        counts[current] = 1
+        var acceptedCount = 0
+        let rt = Self.gasConstantKJ * base.temperatureK
+        let protonSlope = rt * log(10) * (base.targetPH - base.referencePH)
+        func agrees(_ a: Double, _ b: Double) -> Bool {
+            a.isFinite && b.isFinite && abs(a - b) <= 1e-10 * max(1, abs(a), abs(b))
+        }
         for (index, attempt) in checkpoint.attempts.enumerated() {
+            guard let from = definitions[current], attempt.fromStateIdentifier == current else {
+                throw VivoChemistryError.invalid("NCMC checkpoint state history")
+            }
+            let selected = min(Int(random.unitInterval() * Double(from.neighbors.count)), from.neighbors.count - 1)
+            guard let to = definitions[from.neighbors[selected]], attempt.proposedStateIdentifier == to.identifier else {
+                throw VivoChemistryError.invalid("NCMC checkpoint proposal/RNG history")
+            }
+            let logUniform = log(max(random.unitInterval(), Double.leastNonzeroMagnitude))
+            let reservoir = (to.referenceSemigrandBiasKJPerMol + Double(to.boundProtonOffset) * protonSlope)
+                - (from.referenceSemigrandBiasKJPerMol + Double(from.boundProtonOffset) * protonSlope)
+            let proposal = log(Double(from.neighbors.count) / Double(to.neighbors.count))
+            let acceptance = min(0, -(attempt.totalNonequilibriumWorkKJPerMol + reservoir) / rt
+                + proposal + attempt.logPathProbabilityRatio)
+            guard agrees(attempt.logUniform, logUniform), agrees(attempt.semigrandReservoirDifferenceKJPerMol, reservoir),
+                  agrees(attempt.logProposalRatio, proposal), agrees(attempt.logAcceptanceProbability, acceptance),
+                  attempt.accepted == (logUniform < acceptance),
+                  agrees(attempt.endpointPotentialEnergyDifferenceKJPerMol,
+                         attempt.proposedEndpointPotentialEnergyKJPerMol - attempt.fromEndpointPotentialEnergyKJPerMol),
+                  abs(attempt.protocolWorkKJPerMol) <= configuration.maximumAbsoluteWorkKJPerMol,
+                  abs(attempt.shadowWorkKJPerMol) <= configuration.maximumAbsoluteWorkKJPerMol else {
+                throw VivoChemistryError.invalid("NCMC checkpoint acceptance/work history")
+            }
+            if attempt.accepted { current = to.identifier; acceptedCount += 1 }
+            counts[current, default: 0] += 1
             guard attempt.attemptIndex == index,
                   attempt.fromEndpointPotentialEnergyKJPerMol.isFinite,
                   attempt.proposedEndpointPotentialEnergyKJPerMol.isFinite,
@@ -447,6 +490,10 @@ public actor VivoConstantPHNCMC {
                   attempt.switchingSteps > 0 else {
                 throw VivoChemistryError.invalid("constant-pH NCMC attempt trace")
             }
+        }
+        guard current == checkpoint.currentStateIdentifier, counts == checkpoint.visitCounts,
+              acceptedCount == checkpoint.acceptedMoves, random.state == checkpoint.randomState else {
+            throw VivoChemistryError.invalid("NCMC checkpoint final state/counters/RNG do not reconstruct")
         }
     }
 }
