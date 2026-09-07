@@ -27,7 +27,7 @@ import Testing
                            "vivo.platform.qmmm-transmission-analyze","vivo.platform.qmmm-apply-transmission",
                            "vivo.platform.qmmm-replicated-free-energy-rate","vivo.platform.qmmm-apply-replicated-rate",
                            "vivo.platform.qmmm-chemical-qualification","vivo.platform.qmmm-chemical-state-network",
-                           "vivo.platform.qmmm-chemical-exchange-network"] {
+                           "vivo.platform.qmmm-chemical-exchange-network","vivo.platform.qmmm-chemical-exchange-validation"] {
             _ = try registry.definition(identifier)
         }
         let prepare = try registry.definition("vivo.platform.md-qmmm").operation
@@ -45,9 +45,6 @@ import Testing
         #expect(electronic.nuclei.map(\.structureAtomIndex) == [0,nil])
         let direct = try VivoQMMMCompiler.prepareMD(document: document, system: system, checkpoint: checkpoint, request: request)
         #expect(frame == direct)
-
-        // A center-distance fixture exercises the registered force adapter without
-        // asserting chemical validation or depending on a particular paper/backend.
         let centers = electronic.nuclei.map(\.positionBohr) + electronic.pointCharges.map(\.positionBohr)
         var energy = 0.0, forces = [SIMD3<Double>](repeating: .zero, count: centers.count)
         for i in centers.indices { for j in 0..<i {
