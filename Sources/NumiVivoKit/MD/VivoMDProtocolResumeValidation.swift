@@ -8,6 +8,7 @@ enum VivoMDProtocolResumeValidation {
         let checkpoint: VivoMDCheckpoint
         let lastSampledStep: UInt64?
         let lastObservedStep: UInt64?
+        let trajectoryValidation: VivoMDTrajectoryValidation?
     }
 
     static func load(system: VivoClassicalSystem, plan: VivoMDProtocolPlan,
@@ -59,7 +60,8 @@ enum VivoMDProtocolResumeValidation {
             observationTail: cursor.observationTail, observationCount: cursor.observationCount,
             allowPending: cursor.phase == .running, system: system, plan: plan, store: store)
         return .init(cursor: cursor, checkpoint: current,
-                     lastSampledStep: outputs.sample, lastObservedStep: outputs.observation)
+                     lastSampledStep: outputs.sample, lastObservedStep: outputs.observation,
+                     trajectoryValidation: outputs.trajectory)
     }
 
     private static func state(_ hash: VivoFingerprint, _ system: VivoClassicalSystem,
@@ -190,7 +192,7 @@ enum VivoMDProtocolResumeValidation {
         entry: VivoMDCheckpoint, current: VivoMDCheckpoint, manifest hash: VivoFingerprint?,
         observationTail: VivoFingerprint?, observationCount: UInt64, allowPending: Bool,
         system: VivoClassicalSystem, plan: VivoMDProtocolPlan, store: VivoArtifactStore) async throws
-        -> (sample: UInt64?, observation: UInt64?) {
+        -> (sample: UInt64?, observation: UInt64?, trajectory: VivoMDTrajectoryValidation?) {
         func expectedLast(count: UInt64, interval: UInt64?) throws -> UInt64? {
             guard let interval else {
                 guard count == 0 else { throw invalid("output for a disabled schedule") }; return nil
@@ -201,9 +203,10 @@ enum VivoMDProtocolResumeValidation {
             return count == 0 ? nil : entry.acceptedStep + count * interval
         }
         var sample: UInt64?
+        var trajectoryValidation: VivoMDTrajectoryValidation?
         if let hash {
             guard let interval = stage.sampleEvery else { throw invalid("trajectory for an unsampled stage") }
-            let manifest = try await read(VivoMDTrajectoryManifest.self, hash, "md-trajectory-manifest", store)
+            let manifest = try await read(VivoMDTrajectoryManifest.self, hash, "md-trajectory-manifest", store, maximumBytes: 64 * 1024)
             try manifest.validate()
             sample = try expectedLast(count: manifest.frameCount, interval: interval)
             guard manifest.systemFingerprint == entry.systemFingerprint,
@@ -215,8 +218,7 @@ enum VivoMDProtocolResumeValidation {
                   manifest.firstTimePS.map({ $0 > entry.timePS }) ?? true,
                   manifest.lastTimePS.map({ $0 <= current.timePS }) ?? true else { throw invalid("trajectory prefix binding") }
             let reader = try await VivoMDTrajectoryArchiveReader.open(store: store, manifest: hash)
-            _ = try await reader.index()
-            if let tail = manifest.tail { _ = try await reader.readChunk(tail) }
+            trajectoryValidation = try await reader.validate(scope: .restart)
         } else if stage.sampleEvery != nil { throw invalid("sampled stage has no durable trajectory prefix") }
         let observation = try expectedLast(count: observationCount, interval: stage.observablesEvery)
         guard (observation == nil) == (observationTail == nil) else { throw invalid("observation count/tail") }
@@ -234,14 +236,14 @@ enum VivoMDProtocolResumeValidation {
                   degrees > UInt64(system.constraints.count), value.degreesOfFreedom == degrees - UInt64(system.constraints.count),
                   let temperature = value.temperatureK, temperature.isFinite, temperature >= 0 else { throw invalid("observation prefix binding") }
         }
-        return (sample, observation)
+        return (sample, observation, trajectoryValidation)
     }
 
     private static func read<T: Decodable & Sendable>(_ type: T.Type, _ hash: VivoFingerprint,
         _ kind: String, _ store: VivoArtifactStore, maximumBytes: UInt64 = 2 * 1024 * 1024) async throws -> T {
         let descriptor = try await store.descriptor(for: hash)
         guard descriptor.kind == kind, descriptor.byteCount <= maximumBytes else { throw invalid("artifact type or size") }
-        let data = try await store.data(for: hash)
+        let data = try await store.data(for: hash, maximumBytes: Int(maximumBytes))
         guard UInt64(data.count) == descriptor.byteCount else { throw invalid("artifact descriptor byte count") }
         return try VivoCanonicalJSON.decode(type, from: data)
     }

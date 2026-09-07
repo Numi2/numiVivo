@@ -76,7 +76,10 @@ public actor VivoMDProtocolRunner {
         let device = try device ?? VivoMetalDeviceSelector.productionDevice()
         let writer: VivoMDTrajectoryArchiveWriter?
         if cursor.phase == .running, let hash = cursor.trajectoryManifest {
-            writer = try await .resume(store: store, manifest: hash, targetChunkBytes: plan.trajectoryChunkBytes)
+            guard let validation = verified.trajectoryValidation, validation.manifestFingerprint == hash else {
+                throw VivoArtifactValidationError.invalid("running trajectory lacks its verified restart binding")
+            }
+            writer = try .resume(validated: validation, targetChunkBytes: plan.trajectoryChunkBytes)
         } else { writer = nil }
         let runtime: VivoMDMetalRuntime?
         if cursor.phase == .running {
@@ -258,8 +261,12 @@ public actor VivoMDProtocolRunner {
             // and terminal cursor have all been published. It cannot be appended
             // while a terminal outcome owns the runner.
             let prefix = try await trajectory.snapshot()
-            let archive = try await VivoMDTrajectoryArchiveReader.open(store: store, manifest: prefix.fingerprint)
-            let m = archive.manifest
+            // This persistence path deliberately remains available after task
+            // cancellation. The writer has already validated the flushed view;
+            // do not enter a cancellable archive-inspection traversal here.
+            let m = try await Self.read(VivoMDTrajectoryManifest.self, fingerprint: prefix.fingerprint,
+                kind: "md-trajectory-manifest", store: store, maximumBytes: 64 * 1024)
+            try m.validate()
             let sealed = VivoMDTrajectoryManifest(schema: m.schema, systemFingerprint: m.systemFingerprint,
                 configurationFingerprint: m.configurationFingerprint, particleCount: m.particleCount,
                 includeVelocities: m.includeVelocities, frameCount: m.frameCount, chunkCount: m.chunkCount,
@@ -335,6 +342,6 @@ public actor VivoMDProtocolRunner {
         guard descriptor.kind == kind, descriptor.byteCount <= maximumBytes else {
             throw VivoArtifactValidationError.incompatible("unexpected type/size for protocol artifact \(fingerprint.hex)")
         }
-        return try VivoCanonicalJSON.decode(type, from: await store.data(for: fingerprint))
+        return try VivoCanonicalJSON.decode(type, from: await store.data(for: fingerprint, maximumBytes: Int(maximumBytes)))
     }
 }

@@ -77,11 +77,13 @@ struct VivoMDProtocolCLICommands {
                 let store = try VivoArtifactStore(rootURL: URL(fileURLWithPath: args.required("store")), createIfNeeded: false)
                 let hash = try fingerprint(args.required("manifest"))
                 let reader = try await VivoMDTrajectoryArchiveReader.open(store: store, manifest: hash)
-                let maximum = try args.positive("maximum-chunks", fallback: 100_000)
-                let links = try await reader.index(maximumChunks: maximum)
-                if args.verify { try await reader.verify(maximumChunks: maximum) }
-                try printJSON(TrajectoryReport(manifest: reader.manifest, indexedChunks: links.count,
-                                                allPayloadsVerified: args.verify))
+                let maximum: UInt64?
+                if args.options["maximum-chunks"] != nil {
+                    maximum = try args.positive("maximum-chunks", fallback: 100_000)
+                } else { maximum = nil }
+                let validation = try await reader.validate(scope: args.verify ? .allPayloads : .index, maximumChunks: maximum)
+                try printJSON(TrajectoryReport(manifest: reader.manifest, indexedChunks: validation.indexedChunks,
+                                                allPayloadsVerified: validation.scope == .allPayloads))
                 return 0
             default: throw ProtocolCLIError.usage("unknown MD protocol command")
             }
@@ -134,7 +136,7 @@ struct VivoMDProtocolCLICommands {
     }
     private struct TrajectoryReport: Encodable {
         let manifest: VivoMDTrajectoryManifest
-        let indexedChunks: Int
+        let indexedChunks: UInt64
         let allPayloadsVerified: Bool
     }
 
@@ -148,7 +150,7 @@ struct VivoMDProtocolCLICommands {
       numivivo md-protocol-resume protocol.json --system system.json --store ./md-artifacts \
           --reference <checkpoint-reference-from-receipt> > resumed-receipt.json
       numivivo md-protocol-inspect --store ./md-artifacts --reference <checkpoint-reference>
-      numivivo md-trajectory-inspect --store ./md-artifacts --manifest <sha256> [--verify]
+      numivivo md-trajectory-inspect --store ./md-artifacts --manifest <sha256> [--verify] [--maximum-chunks <limit>]
 
     --checkpoint <sha256> replaces --reference for resume/inspection. A resume forks
     a new run reference; the original prefix is never overwritten. Stages preserve

@@ -122,8 +122,15 @@ public actor VivoArtifactStore {
         } catch VivoRootedFileStore.Failure.missing(_) { throw VivoArtifactStoreError.objectMissing(fingerprint) }
     }
     public func data(for fingerprint: VivoFingerprint, verify: Bool = true) throws -> Data {
+        try data(for: fingerprint, maximumBytes: limits.maximumObjectBytes, verify: verify)
+    }
+    /// Applies a caller's allocation bound to the opened file before reading it.
+    /// Zero permits only an empty object; negative limits are invalid. Disabling
+    /// hashing does not disable either this bound or the store's own limit.
+    public func data(for fingerprint: VivoFingerprint, maximumBytes: Int, verify: Bool = true) throws -> Data {
+        guard maximumBytes >= 0 else { throw VivoArtifactStoreError.invalidDescriptor("negative object read limit") }
         do {
-            let data = try files.readFile(objectRelativePath(fingerprint), maximumBytes: limits.maximumObjectBytes)
+            let data = try files.readFile(objectRelativePath(fingerprint), maximumBytes: min(maximumBytes, limits.maximumObjectBytes))
             if verify, try VivoCanonicalJSON.fingerprint(data) != fingerprint { throw VivoArtifactStoreError.integrityFailure(fingerprint) }
             return data
         } catch VivoRootedFileStore.Failure.missing(_) { throw VivoArtifactStoreError.objectMissing(fingerprint) }
