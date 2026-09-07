@@ -3,6 +3,26 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite(.serialized) struct RingPolymerSamplingTests {
+    @Test func correlatedDiagnosticsDetectDisplacedChains() throws {
+        var stable: [[Double]] = []
+        for seed in 1...4 {
+            var rng = VivoSplitMix64(state: UInt64(seed))
+            stable.append((0..<256).map { _ in rng.normal() })
+        }
+        let mixed = try VivoCorrelatedSamplingAnalysis.calculate(chains: stable)
+        #expect(mixed.splitRHat < 1.1)
+        #expect(mixed.autocorrelationEffectiveSampleSize > 100)
+        let displaced = try VivoCorrelatedSamplingAnalysis.calculate(chains: [
+            [Double](repeating: -1,count: 64),[Double](repeating: 1,count: 64)])
+        #expect(displaced.splitRHat == Double.greatestFiniteMagnitude)
+        #expect(displaced.autocorrelationEffectiveSampleSize == 4)
+        let trending = [Array(0..<64).map { Double($0) },Array(1...64).map { Double($0) }]
+        let bounded = try VivoCorrelatedSamplingAnalysis.calculate(
+            chains:trending,maximumAutocorrelationProducts:1)
+        #expect(bounded.autocorrelationSequenceTruncated)
+        #expect(bounded.autocorrelationEffectiveSampleSize == 4)
+    }
+
     @Test func oneBeadLimitAndIsotopeNormalization() throws {
         let q: [[VivoVector3D]] = [[.init(0.2,0,0)]], rt = VivoAtomicUnits.gasConstantJPerMolK*0.3
         #expect(try VivoRingPolymerSampling.springEnergy(positions: q,massesDa: [1],temperatureK: 300) == 0)
@@ -88,6 +108,43 @@ import Testing
         observations[0]["accepted"] = !run.observations[0].accepted; json["observations"] = observations
         let altered = try VivoCanonicalJSON.decode(VivoRingPolymerRun.self,from: JSONSerialization.data(withJSONObject: json))
         #expect(throws: (any Error).self) { try altered.validate(recordEvery: 2) }
+    }
+
+    @Test func independentChainsProduceExplicitBeadConvergenceEvidence() async throws {
+        let potential = try PrecisionSamplingFixtures.harmonic(k: 25_000)
+        var evidence: [VivoRingPolymerConvergenceChain] = []
+        for beadCount in [1,2,4] { for replica in 0..<2 {
+            let cfg = VivoRingPolymerConfiguration(temperatureK:300,beadCount:beadCount,
+                timeStepPS:0.0007,integrationSteps:4)
+            let checkpoint = try VivoRingPolymerCheckpoint(definition:potential.definition,configuration:cfg,
+                seed:UInt64(100*beadCount+replica),beadPositionsNM:Array(repeating:[.zero],count:beadCount))
+            let run = try await VivoRingPolymerSampling.run(potential:potential,checkpoint:checkpoint,sweeps:160)
+            evidence.append(.init(identifier:"P\(beadCount)-R\(replica)",run:run,discardedObservations:32))
+        } }
+        let configuration = VivoRingPolymerConvergenceConfiguration(
+            observable:.primitiveTotalEnergyKJPerMol,absoluteTolerance:100,relativeTolerance:0,
+            minimumEffectiveSamples:4,maximumSplitRHat:2)
+        let request = VivoRingPolymerConvergenceRequest(campaignIdentifier:"harmonic-control",
+            selectionProtocol:"Three bead levels and two seeds were fixed before inspecting the retained energy series.",
+            chains:evidence,configuration:configuration)
+        let result = try VivoRingPolymerConvergence.assess(request)
+        try VivoRingPolymerConvergence.validate(result,request:request)
+        #expect(result.passed)
+        #expect(result.beadDiagnostics.map(\.beadCount) == [1,2,4])
+        #expect(result.comparisons.count == 2)
+        #expect(result.beadDiagnostics.allSatisfy { $0.statistics.retainedSamplesPerChain == 128 })
+        let strict = try VivoRingPolymerConvergence.assess(campaignIdentifier:"harmonic-control-strict",
+            selectionProtocol:"The deliberately impossible tolerance is a negative qualification fixture.",
+            chains:evidence,configuration:.init(observable:.primitiveTotalEnergyKJPerMol,
+                absoluteTolerance:1e-12,relativeTolerance:0,minimumEffectiveSamples:4,maximumSplitRHat:2))
+        #expect(!strict.passed)
+        var reused=evidence
+        reused[1] = .init(identifier:"forged",run:evidence[0].run,discardedObservations:32)
+        #expect(throws:(any Error).self) {
+            try VivoRingPolymerConvergence.assess(campaignIdentifier:"reused-chain",
+                selectionProtocol:"Duplicate start evidence must not be called independent.",
+                chains:reused,configuration:configuration)
+        }
     }
 
 }

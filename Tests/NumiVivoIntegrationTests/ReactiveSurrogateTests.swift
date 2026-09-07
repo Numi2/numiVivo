@@ -90,4 +90,58 @@ import Testing
         #expect(run.observations.contains { $0.accepted && $0.positionsNM != q })
     }
 
+    @Test func independentGroupedCoverageCannotHideUnsupportedRegions() async throws {
+        let (model,authority,baseline,training) = try await PrecisionSamplingFixtures.trainedPair()
+        var labels: [VivoReactiveTrainingLabel] = []
+        let firstDistances=(0..<8).map { 0.81+0.02*Double($0) }
+        let secondDistances=(0..<8).map { 1.03+0.02*Double($0) }
+        let coverageGroups:[(String,[Double])] = [
+            ("coverage-a",firstDistances),("coverage-b",secondDistances)]
+        for (group,distances) in coverageGroups {
+            for (index,distance) in distances.enumerated() {
+                let positions=PrecisionSamplingFixtures.pairPositions(distance)
+                labels.append(.init(identifier:"\(group)-\(index)",sourceGroup:group,
+                    authority:try await authority.checked(positions),baseline:try await baseline.checked(positions)))
+            }
+        }
+        let source = try PrecisionSamplingFixtures.id("independent-coverage-source")
+        let request = VivoReactiveSurrogateCoverageRequest(campaignIdentifier:"pair-coverage",
+            model:model,labels:labels,evidenceSourceFingerprint:source,
+            independenceDeclaration:"Coverage trajectories were fixed before the model and were not used for fit or threshold selection.",
+            domainDescription:"Two independent pair-distance source groups spanning 0.81 through 1.17 nm.")
+        let result = try VivoReactiveSurrogateCoverage.assess(request)
+        try VivoReactiveSurrogateCoverage.validate(result,request:request)
+        #expect(result.passed)
+        #expect(result.groups.count == 2 && result.overallEligibleFraction == 1)
+        #expect(result.groups.allSatisfy { $0.passed && $0.eligibleCount == 8 })
+
+        var unsupported:[VivoReactiveTrainingLabel]=[]
+        for group in ["far-a","far-b"] { for index in 0..<8 {
+            let positions=PrecisionSamplingFixtures.pairPositions(2+0.02*Double(index)+(group=="far-b" ? 0.3:0))
+            unsupported.append(.init(identifier:"\(group)-\(index)",sourceGroup:group,
+                authority:try await authority.checked(positions),baseline:try await baseline.checked(positions)))
+        } }
+        let failed = try VivoReactiveSurrogateCoverage.assess(campaignIdentifier:"unsupported-control",
+            model:model,labels:labels+unsupported,evidenceSourceFingerprint:source,
+            independenceDeclaration:"Deliberate external-domain negative control.",
+            domainDescription:"Distances outside the frozen descriptor support.",
+            configuration:.init(minimumOverallEligibleFraction:0.5,minimumPerGroupEligibleFraction:0.5))
+        #expect(!failed.passed)
+        #expect(failed.overallEligibleFraction >= 0.5)
+        #expect(failed.groups.contains { $0.passed })
+        #expect(failed.groups.contains { !$0.passed && $0.outsideDescriptorSupportCount == 8 })
+        #expect(throws:(any Error).self) {
+            try VivoReactiveSurrogateCoverage.assess(campaignIdentifier:"source-reuse",model:model,
+                labels:labels,evidenceSourceFingerprint:model.payload.trainingDataFingerprint,
+                independenceDeclaration:"A reused development-source identity must be rejected.",
+                domainDescription:"Invalid source provenance.")
+        }
+        #expect(throws:(any Error).self) {
+            try VivoReactiveSurrogateCoverage.assess(campaignIdentifier:"training-reuse",model:model,
+                labels:training,evidenceSourceFingerprint:source,
+                independenceDeclaration:"This false declaration must not bypass exact training-data identity.",
+                domainDescription:"Invalid reuse of fitting and held-out labels.")
+        }
+    }
+
 }

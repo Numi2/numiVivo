@@ -113,6 +113,28 @@ public enum VivoPlatformPrecisionSamplingOperations {
                     _ = try budget.elements([r.labels.count,max(1,r.authority.atomIndices.count),16],simultaneousArrays: 4)
                     return ["model":try VivoCanonicalJSON.encode(VivoReactiveDeltaSurrogate.train(authority: r.authority,baseline: r.baseline,
                         labels: r.labels,heldOutGroups: r.heldOutGroups,configuration: r.configuration))]
+                }),
+            VivoPlatformOperations.pure(identifier: "vivo.platform.ring-polymer-convergence",id: id,
+                inputs: ["request":"vivo.ring-polymer-convergence-request"],outputs: [.init(name:"assessment",kind:"vivo.ring-polymer-convergence-result")],
+                summary: "Independent-chain diagnostics and consecutive finite-bead convergence for one declared equilibrium observable.",configure: VivoPlatformOperations.empty,
+                calculate: { _,input,budget in
+                    let r=try VivoPlatformOperations.input(VivoRingPolymerConvergenceRequest.self,"request",input)
+                    guard r.configuration.maximumPrimitiveWork <= budget.maximumOperatorApplications else {
+                        throw VivoChemistryError.resourceLimit("ring convergence workflow budget")
+                    }
+                    _=try budget.elements([r.chains.count,max(1,r.chains.map { $0.run.observations.count }.max() ?? 1)],simultaneousArrays:6)
+                    return ["assessment":try VivoCanonicalJSON.encode(VivoRingPolymerConvergence.assess(r))]
+                }),
+            VivoPlatformOperations.pure(identifier: "vivo.platform.reactive-surrogate-coverage",id: id,
+                inputs: ["request":"vivo.reactive-surrogate-coverage-request"],outputs: [.init(name:"assessment",kind:"vivo.reactive-surrogate-coverage-result")],
+                summary: "Grouped external-domain coverage of a frozen surrogate against authoritative complete-Hamiltonian labels.",configure: VivoPlatformOperations.empty,
+                calculate: { _,input,budget in
+                    let r=try VivoPlatformOperations.input(VivoReactiveSurrogateCoverageRequest.self,"request",input)
+                    guard r.configuration.maximumPrimitiveWork <= budget.maximumOperatorApplications else {
+                        throw VivoChemistryError.resourceLimit("reactive coverage workflow budget")
+                    }
+                    _=try budget.elements([r.labels.count,max(1,r.model.payload.authorityDefinition.atomIndices.count)],simultaneousArrays:8)
+                    return ["assessment":try VivoCanonicalJSON.encode(VivoReactiveSurrogateCoverage.assess(r))]
                 })]
         return pure+[ring(id),reactive(id),labels(id)]
     }

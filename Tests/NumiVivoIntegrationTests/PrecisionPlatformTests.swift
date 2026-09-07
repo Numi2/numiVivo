@@ -6,7 +6,9 @@ import Testing
     @Test func correctionWorkflowReconstructsAndRejectsAlteredOutputs() async throws {
         let identity = try PrecisionSamplingFixtures.id("precision-operation")
         let registry = try VivoPlatformOperations.registry(implementationFingerprint: identity)
-        for name in ["barrier-tunnelling","global-kinetic-uncertainty","reactive-surrogate-train","ring-polymer-sample","reactive-surrogate-sample","reactive-surrogate-label"] {
+        for name in ["barrier-tunnelling","global-kinetic-uncertainty","reactive-surrogate-train",
+                     "ring-polymer-sample","reactive-surrogate-sample","reactive-surrogate-label",
+                     "ring-polymer-convergence","reactive-surrogate-coverage"] {
             _ = try registry.definition("vivo.platform."+name)
         }
         let operation = try registry.definition("vivo.platform.barrier-tunnelling").operation

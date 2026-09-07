@@ -167,6 +167,8 @@ RNG replay; cached validation is not a new GPU trajectory or chemical experiment
 | `vivo.platform.reactive-surrogate-train` | `model` |
 | `vivo.platform.ring-polymer-sample` | `run`, `checkpoint` |
 | `vivo.platform.reactive-surrogate-sample` | `run`, `checkpoint` |
+| `vivo.platform.ring-polymer-convergence` | `assessment` |
+| `vivo.platform.reactive-surrogate-coverage` | `assessment` |
 
 Use `VivoRingPolymerWorkflowRequest`, `VivoReactiveSamplingWorkflowRequest` and
 `VivoReactiveLabelWorkflowRequest` for native request construction. Potential
@@ -191,6 +193,44 @@ surrogate-Monte-Carlo execution. Synthetic fixtures test algorithmic contracts,
 not protein chemistry. `Tools/PrecisionSampling/reference_checks.py` independently
 checks the Eckart thermal integral with SciPy adaptive quadrature; it is a reference
 tool, not a native-runtime dependency.
+
+## Qualification campaigns
+
+`VivoCorrelatedSamplingAnalysis` computes classical split-R-hat, a conservative
+initial-positive-sequence autocorrelation effective sample size and Monte Carlo
+standard error from equal-length independent chains. Constant but displaced
+chains explicitly fail mixing. The autocorrelation work is bounded; a sequence
+that remains positive at that bound is marked truncated and cannot pass. These
+are bulk scalar diagnostics with at most ten million retained scalar values; they
+are not rank-normalized tail diagnostics and do not prove that the discarded
+interval removed initialization bias.
+
+`VivoRingPolymerConvergence.assess` binds complete retained runs to one potential,
+temperature, declared observable and predeclared selection protocol. Every bead
+level requires distinct checkpoint starts and at least two chain identities. A
+level must pass the chain diagnostics, and the requested number of consecutive
+bead refinements must have an upper difference bound below the declared absolute
+plus relative tolerance. The bound includes both levels' Monte Carlo standard
+errors. Available observables are the primitive total-energy estimator, mean
+potential energy, mass-weighted ring radius of gyration and a mapped centroid
+distance. A passing synthetic harmonic campaign does not qualify a prepared
+molecular Hamiltonian, isotope reweighting overlap or a quantum rate.
+
+`VivoReactiveSurrogateCoverage.assess` evaluates a frozen model against grouped
+authoritative labels from a separately fingerprinted campaign. Training-data
+identity, duplicate geometries and reuse of held-out selection groups are rejected.
+Each source group must independently meet descriptor/committee eligibility and
+the frozen held-out energy/force limits, so one long correlated trajectory cannot
+hide an unsupported region. Analysis is capped at 1,024 groups and the configured
+primitive-work budget. The collection protocol and independence declaration remain
+in the result because fingerprints cannot authenticate how evidence was generated.
+Coverage still does not make learned forces authoritative or establish mixing,
+throughput or speedup.
+
+The next scientific runs must therefore supply multiple independently initialized
+prepared-system chains at increasing bead counts and new grouped surrogate probes.
+Until those evidence objects pass, the implementation remains executable but the
+corresponding prepared system remains scientifically unqualified.
 
 ## Method references
 
