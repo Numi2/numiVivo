@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoQMMMFreeEnergyCLICommands {
     static func handles(_ name:String?)->Bool {
-        ["qmmm-free-energy-analyze","qmmm-free-energy-rate","qmmm-free-energy-help"].contains(name ?? "")
+        ["qmmm-free-energy-analyze","qmmm-free-energy-rate","qmmm-free-energy-replicated-rate","qmmm-free-energy-help"].contains(name ?? "")
     }
     private func load<T:Decodable & Sendable>(_ type:T.Type,_ path:String)throws->T {
         try VivoValidatedArtifactLoader.decode(type,at:URL(fileURLWithPath:path),limits:.init(
@@ -34,7 +34,7 @@ struct VivoQMMMFreeEnergyCLICommands {
             }
             switch command {
             case "qmmm-free-energy-analyze":
-                guard kinetics==nil else { throw VivoChemistryError.invalid("--kinetics applies only to qmmm-free-energy-rate") }
+                guard kinetics==nil else { throw VivoChemistryError.invalid("--kinetics applies only to QM/MM rate commands") }
                 let request=try load(VivoQMMMFreeEnergyAnalysisRequest.self,arguments[1]),result=try request.calculate()
                 try write(result,output);return result.converged ? 0:75
             case "qmmm-free-energy-rate":
@@ -46,6 +46,16 @@ struct VivoQMMMFreeEnergyCLICommands {
                     try write(VivoQMMMFreeEnergyRate.applying(result,request:request,to:pack),output+".kinetics.json")
                 }
                 return 0
+            case "qmmm-free-energy-replicated-rate":
+                let request=try load(VivoQMMMReplicatedFreeEnergyRateRequest.self,arguments[1])
+                let result=try VivoQMMMReplicatedFreeEnergyRate.calculate(request)
+                try write(result,output)
+                if let kinetics {
+                    guard let output else { throw VivoChemistryError.invalid("--kinetics requires --output so the updated pack has a distinct path") }
+                    let pack=try load(VivoCovalentKineticPack.self,kinetics)
+                    try write(VivoQMMMReplicatedFreeEnergyRate.applying(result,request:request,to:pack),output+".kinetics.json")
+                }
+                return result.converged ? 0:75
             default:throw VivoChemistryError.invalid("unresolved QM/MM free-energy command")
             }
         } catch {
@@ -56,13 +66,15 @@ struct VivoQMMMFreeEnergyCLICommands {
     QM/MM activation free-energy workflows
       numivivo qmmm-free-energy-analyze analysis-request.json --output activation-pmf.json
       numivivo qmmm-free-energy-rate rate-request.json --output rate.json [--kinetics kinetic-pack.json]
+      numivivo qmmm-free-energy-replicated-rate replicas.json --output replicated-rate.json [--kinetics kinetic-pack.json]
 
     qmmm-free-energy-analyze reconstructs a retained umbrella data set with the
     native unbinned MBAR implementation and exits 75 if overlap/sampling checks do
-    not qualify the PMF. qmmm-free-energy-rate accepts only a converged activation
-    PMF for the exact kinetic context. Protein environments are permitted here
-    because the barrier comes from environment-consistent sampling; the older
-    local-RRHO molecule-rate path remains intentionally unable to infer protein
-    activation free energies. Outputs are canonical no-clobber JSON.
+    not qualify the PMF. qmmm-free-energy-rate converts one fully qualified PMF
+    through the flux-normalized TST contract. qmmm-free-energy-replicated-rate
+    additionally requires disjoint stochastic seeds and identical Hamiltonian,
+    reaction, environment and transmission bindings across independent PMF repeats;
+    it exits 75 when between-replica agreement is insufficient and refuses kinetic
+    pack application in that state. Outputs are canonical no-clobber JSON.
     """
 }
