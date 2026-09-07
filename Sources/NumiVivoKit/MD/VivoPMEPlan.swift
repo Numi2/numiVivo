@@ -90,15 +90,20 @@ public struct VivoPMEPlan: Codable, Sendable, Equatable {
         guard lengthNM.isFinite, lengthNM > 0 else {
             throw VivoMDRuntimeError.metal("PME lattice-vector length is invalid")
         }
-        let requested = max(4, Int(ceil(lengthNM / spacingNM)))
-        var value = 1
+        // A finite positive spacing can still produce an infinite or oversized
+        // quotient. Validate in the destination axis type before conversion;
+        // direct planner callers must receive an error rather than an Int trap.
+        guard let requested = UInt32(exactly: max(4.0, ceil(lengthNM / spacingNM))) else {
+            throw VivoMDRuntimeError.metal("PME mesh dimension exceeds UInt32")
+        }
+        var value: UInt32 = 1
         while value < requested {
             let doubled = value.multipliedReportingOverflow(by: 2)
-            guard !doubled.overflow, doubled.partialValue <= Int(UInt32.max) else {
+            guard !doubled.overflow else {
                 throw VivoMDRuntimeError.metal("PME mesh dimension exceeds UInt32")
             }
             value = doubled.partialValue
         }
-        return UInt32(value)
+        return value
     }
 }

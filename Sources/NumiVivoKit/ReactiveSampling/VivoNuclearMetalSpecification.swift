@@ -51,11 +51,16 @@ public struct VivoNuclearMetalSpecification: Codable, Sendable, Equatable {
         var bytes = Double(n)*Double(2048+neighbors*16)+Double(types)*Double(types)*32
         bytes += Double(system.bonds.count+system.angles.count+system.torsions.count+system.nonbondedExceptions.count)*512
         if dynamics.electrostatics == .pme, let cell = initialState.periodicCell {
-            for v in [cell.a,cell.b,cell.c] {
-                guard v.norm/dynamics.resolvedPMEGridSpacingNM <= 65_536 else { throw VivoChemistryError.resourceLimit("nuclear PME axis budget") }
+            if dynamics.pmeGridDimensions == nil {
+                for v in [cell.a,cell.b,cell.c] {
+                    guard v.norm/dynamics.resolvedPMEGridSpacingNM <= 65_536 else { throw VivoChemistryError.resourceLimit("nuclear PME axis budget") }
+                }
             }
+            // Admit the same explicit-or-spacing-derived mesh that the runtime
+            // allocates, for both the point cap and combined byte reservation.
             let mesh = try VivoPMEPlan.make(cell: cell,cutoffNM: dynamics.cutoffNM,
-                tolerance: dynamics.resolvedPMETolerance,targetGridSpacingNM: dynamics.resolvedPMEGridSpacingNM)
+                tolerance: dynamics.resolvedPMETolerance,targetGridSpacingNM: dynamics.resolvedPMEGridSpacingNM,
+                fixedGridDimensions: dynamics.pmeGridDimensions)
             guard mesh.gridPointCount <= UInt64(maximumMeshPoints) else { throw VivoChemistryError.resourceLimit("nuclear PME mesh budget") }
             bytes += Double(mesh.gridPointCount)*256
         }

@@ -76,12 +76,15 @@ public enum VivoPlatformMDOperations {
             + system.nonbondedExceptions.count + (system.linearVirtualSites?.count ?? 0)
         try reserve(terms, 512)
         if c.dynamics.electrostatics == .pme, let cell = initial.periodicCell {
-            for vector in [cell.a, cell.b, cell.c] {
-                let points = vector.norm / c.dynamics.resolvedPMEGridSpacingNM
-                guard points.isFinite, points <= 65_536 else { throw VivoChemistryError.resourceLimit("MD workflow PME axis capacity") }
+            if c.dynamics.pmeGridDimensions == nil {
+                for vector in [cell.a, cell.b, cell.c] {
+                    let points = vector.norm / c.dynamics.resolvedPMEGridSpacingNM
+                    guard points.isFinite, points <= 65_536 else { throw VivoChemistryError.resourceLimit("MD workflow PME axis capacity") }
+                }
             }
             let mesh = try VivoPMEPlan.make(cell: cell, cutoffNM: c.dynamics.cutoffNM,
-                tolerance: c.dynamics.resolvedPMETolerance, targetGridSpacingNM: c.dynamics.resolvedPMEGridSpacingNM)
+                tolerance: c.dynamics.resolvedPMETolerance, targetGridSpacingNM: c.dynamics.resolvedPMEGridSpacingNM,
+                fixedGridDimensions: c.dynamics.pmeGridDimensions)
             guard mesh.gridPointCount <= UInt64(c.maximumMeshPoints) else { throw VivoChemistryError.resourceLimit("MD workflow reciprocal mesh capacity") }
             try reserve(Int(mesh.gridPointCount), 256)
         }

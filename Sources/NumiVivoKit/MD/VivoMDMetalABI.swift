@@ -84,7 +84,8 @@ enum VivoMDMetalABI {
             let plan = try VivoPMEPlan.make(cell: cell,
                                             cutoffNM: cutoff,
                                             tolerance: configuration.resolvedPMETolerance,
-                                            targetGridSpacingNM: configuration.resolvedPMEGridSpacingNM)
+                                            targetGridSpacingNM: configuration.resolvedPMEGridSpacingNM,
+                                            fixedGridDimensions: configuration.pmeGridDimensions)
             guard plan.ewaldBetaPerNM <= Double(Float.greatestFiniteMagnitude) else {
                 throw VivoMDRuntimeError.metal("PME Ewald beta exceeds FP32 command range")
             }
