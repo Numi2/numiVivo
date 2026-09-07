@@ -124,7 +124,7 @@ import Testing
         #expect(computed.transmissionEvidence.sourceFingerprint==result.evidenceFingerprint.hex)
 
         var unresolved=trajectories
-        unresolved[0]=.init(sourceCheckpointFingerprint:ids[0],initialCoordinateNM:0.29,
+        unresolved[0] = .init(sourceCheckpointFingerprint:ids[0],initialCoordinateNM:0.29,
             productDirectedCoordinateVelocityNMPerPS:1,velocitiesTimeReversed:false,outcome:.unresolved,committedSteps:100,finalCoordinateNM:0.1)
         let failed=try VivoQMMMDynamicalTransmission.analyze(request:request,systemFingerprint:systemID,
             providerFingerprint:providerID,trajectories:unresolved)
