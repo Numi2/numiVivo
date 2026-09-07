@@ -9,7 +9,7 @@ on:
       - 'Sources/NumiVivoKit/Chemistry/VivoMultistateMBAR.swift'
       - 'Sources/NumiVivoKit/Chemistry/*Exchange*'
       - 'Sources/NumiVivoKit/Chemistry/VivoQMMMVariantSensitivity.swift'
-      - 'Sources/NumiVivoCLI/VivoWorkflowCLICommands.swift'
+      - 'Sources/NumiVivoCLI/VivoWorkflowCLI*.swift'
       - 'Tests/NumiVivoIntegrationTests/AdaptiveRefinementWorkflowTests.swift'
       - 'Tests/NumiVivoIntegrationTests/QMMMChemicalQualificationTests.swift'
       - 'Tools/NativeChemistry/*Adaptive*'
