@@ -2,9 +2,7 @@ import Foundation
 
 public struct VivoQMMMReplicaAgreementConfiguration: Codable, Sendable, Equatable {
     public var minimumReplicates: Int
-    /// Maximum allowed range across independent ln(k) estimates.
     public var maximumLogRateRange: Double
-    /// Secondary profile diagnostic; the flux criterion remains authoritative.
     public var maximumProfileBarrierRangeKJPerMol: Double
     public init(minimumReplicates:Int=2,maximumLogRateRange:Double=0.5,
                 maximumProfileBarrierRangeKJPerMol:Double=2.0) {
@@ -36,11 +34,7 @@ public struct VivoQMMMReplicatedFreeEnergyRateResult: Codable, Sendable, Equatab
     public let replicaResults:[VivoQMMMFreeEnergyRateResult]
     public let geometricMeanRatePerSecond:Double
     public let meanLogRatePerSecond:Double
-    /// Sample standard deviation of independent replica ln(k) values.
     public let betweenReplicaLogRateStandardDeviation:Double
-    /// Quadrature combination of mean within-replica conditional variance and
-    /// observed between-replica variance. It remains conditional on one model,
-    /// reaction coordinate, chemical state and transmission model.
     public let combinedConditionalLogRateStandardDeviation:Double
     public let logRateRange:Double
     public let profileBarrierRangeKJPerMol:Double
@@ -51,10 +45,6 @@ public struct VivoQMMMReplicatedFreeEnergyRateResult: Codable, Sendable, Equatab
     public let evidenceData:Data
 }
 
-/// Independent replicas are a qualification layer over the existing single-PMF
-/// result. They must use the same Hamiltonian/context/connectivity contract and
-/// disjoint stochastic seeds. Agreement is scored in ln(k), because the actual
-/// kinetic observable is exponentially sensitive to free energy.
 public enum VivoQMMMReplicatedFreeEnergyRate {
     private struct Evidence: Codable {
         let schema:String
@@ -80,7 +70,7 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
         var results:[VivoQMMMFreeEnergyRateResult]=[];results.reserveCapacity(request.replicas.count)
         for replica in request.replicas { results.append(try VivoQMMMFreeEnergyRate.calculate(replica)) }
         let first=request.replicas[0],firstFE=first.freeEnergy,firstP=firstFE.provenance
-        var allSeeds:[UInt64]=[]
+        var allSeeds:[UInt64]=[],executionIDs:[VivoFingerprint]=[]
         for replica in request.replicas {
             let fe=replica.freeEnergy,p=fe.provenance
             guard replica.context==first.context,replica.environment==first.environment,
@@ -91,13 +81,18 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
                   fe.analysis.temperatureK==firstFE.analysis.temperatureK,
                   fe.analysis.configuration==firstFE.analysis.configuration,
                   p.structureFingerprint==firstP.structureFingerprint,p.systemFingerprint==firstP.systemFingerprint,
-                  p.baseProviderFingerprint==firstP.baseProviderFingerprint,p.dynamicsFingerprint==firstP.dynamicsFingerprint,
+                  p.baseProviderFingerprint==firstP.baseProviderFingerprint,
+                  p.samplingExecution.replicaProtocolFingerprint==firstP.samplingExecution.replicaProtocolFingerprint,
                   p.chemicalState==firstP.chemicalState,p.environment==firstP.environment,
                   p.environmentIdentifier==firstP.environmentIdentifier,p.reactionConnectivity==firstP.reactionConnectivity,
                   p.environment==environment(replica) else {
-                throw VivoKineticsError.invalid("QM/MM replicas differ in Hamiltonian, context, reaction mapping or transmission model")
+                throw VivoKineticsError.invalid("QM/MM replicas differ in Hamiltonian, protocol, context, reaction mapping or transmission model")
             }
+            executionIDs.append(p.samplingExecution.requestFingerprint)
             allSeeds.append(contentsOf:fe.analysis.traces.map(\.randomSeed))
+        }
+        guard Set(executionIDs).count==executionIDs.count else {
+            throw VivoKineticsError.invalid("QM/MM replicas reuse the same exact sampling execution")
         }
         guard Set(allSeeds).count==allSeeds.count else {
             throw VivoKineticsError.invalid("QM/MM independent replicas reuse stochastic window seeds")
@@ -127,7 +122,7 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
             combinedConditionalLogRateStandardDeviation:combined,issues:issues))
         let evidenceID=try VivoCanonicalJSON.fingerprint(evidenceData)
         let evidence=VivoKineticEvidence(source:"NumiVivo independently replicated QM/MM PMF rates",
-            locator:"geometric mean across disjoint-seed PMF replicas; between-replica agreement retained",
+            locator:"geometric mean across exact disjoint-seed sampling executions under one replica protocol",
             sourceFingerprint:evidenceID.hex)
         let origin:VivoKineticOrigin = first.transmissionOrigin == .assumed ? .assumed:.calculated
         let uncertainty:VivoKineticUncertainty = combined>0 ? .logNormal(logStandardDeviation:combined):.unknown
