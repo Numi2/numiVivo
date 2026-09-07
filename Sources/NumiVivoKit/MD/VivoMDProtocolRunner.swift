@@ -16,6 +16,9 @@ public actor VivoMDProtocolRunner {
     private var trajectory: VivoMDTrajectoryArchiveWriter?
     private var latestDurable: VivoStoredArtifact?
     private var busy = false
+    private var lastSampledStep: UInt64?
+    private var lastObservedStep: UInt64?
+    private var entryAcceptedStep: UInt64
 
     public static func start(system: VivoClassicalSystem, initialState: VivoClassicalInitialState,
                              plan: VivoMDProtocolPlan, store: VivoArtifactStore,
@@ -55,82 +58,16 @@ public actor VivoMDProtocolRunner {
     public static func resume(system: VivoClassicalSystem, plan: VivoMDProtocolPlan,
                               store: VivoArtifactStore, checkpoint: VivoFingerprint,
                               device: MTLDevice? = nil) async throws -> VivoMDProtocolRunner {
-        let device = try device ?? VivoMetalDeviceSelector.productionDevice()
-        try plan.validate()
-        guard plan.systemFingerprint == (try system.fingerprint()) else {
-            throw VivoArtifactValidationError.incompatible("resume system differs from protocol")
-        }
-        var cursor = try await read(VivoMDProtocolCheckpoint.self, fingerprint: checkpoint,
-                                    kind: "md-protocol-checkpoint", store: store)
-        try cursor.validate(plan: plan)
-        let current = try await read(VivoMDCheckpoint.self, fingerprint: cursor.currentCheckpoint,
-                                     kind: "md-checkpoint", store: store, maximumBytes: 512 * 1024 * 1024)
-        let entry = try await read(VivoMDCheckpoint.self, fingerprint: cursor.entryCheckpoint,
-                                   kind: "md-checkpoint", store: store, maximumBytes: 512 * 1024 * 1024)
-        try current.validate(particleCount: system.particles.count)
-        try entry.validate(particleCount: system.particles.count)
+        let verified = try await VivoMDProtocolResumeValidation.load(system: system, plan: plan,
+            store: store, checkpoint: checkpoint)
+        var cursor = verified.cursor
+        let current = verified.checkpoint
         let stage = plan.stages[cursor.stageIndex]
-        let configurationID = try stage.configuration.fingerprint()
-        guard current.systemFingerprint == plan.systemFingerprint, entry.systemFingerprint == plan.systemFingerprint,
-              current.configurationFingerprint == configurationID, entry.configurationFingerprint == configurationID,
-              cursor.completedStepsInStage <= UInt64.max - entry.acceptedStep,
-              current.acceptedStep == entry.acceptedStep + cursor.completedStepsInStage,
-              current.timePS >= entry.timePS else {
-            throw VivoArtifactValidationError.incompatible("protocol cursor and MD checkpoint disagree")
-        }
-        if stage.kind == .minimization, current.timePS != entry.timePS {
-            throw VivoArtifactValidationError.invalid("minimization cursor advanced physical time")
-        }
-        for (index, hash) in cursor.priorStageReports.enumerated() {
-            let report = try await read(VivoMDProtocolStageReport.self, fingerprint: hash,
-                                        kind: "md-stage-report", store: store)
-            guard report.planFingerprint == cursor.planFingerprint, report.stageIndex == index,
-                  report.stageIdentifier == plan.stages[index].identifier, report.successful else {
-                throw VivoArtifactValidationError.incompatible("completed-stage report disagrees with protocol")
-            }
-        }
-        if let hash = cursor.activeStageReport {
-            let report = try await read(VivoMDProtocolStageReport.self, fingerprint: hash,
-                                        kind: "md-stage-report", store: store)
-            guard report.planFingerprint == cursor.planFingerprint, report.stageIndex == cursor.stageIndex,
-                  report.stageIdentifier == stage.identifier, report.exitCheckpoint == cursor.currentCheckpoint,
-                  report.committedSteps == cursor.completedStepsInStage,
-                  report.successful == (cursor.phase == .stageFinished) else {
-                throw VivoArtifactValidationError.incompatible("active-stage report disagrees with cursor")
-            }
-        }
-        if let tail = cursor.observationTail {
-            let observation = try await read(VivoMDObservationLink.self, fingerprint: tail,
-                                             kind: "md-observation-link", store: store)
-            guard observation.schema == VivoMDObservationLink.schemaID,
-                  observation.ordinal == cursor.observationCount - 1,
-                  observation.stageIdentifier == stage.identifier,
-                  observation.observation.systemFingerprint == plan.systemFingerprint,
-                  observation.observation.configurationFingerprint == configurationID,
-                  observation.observation.stepIndex <= current.acceptedStep,
-                  observation.observation.timePS <= current.timePS else {
-                throw VivoArtifactValidationError.incompatible("observation prefix disagrees with restart state")
-            }
-        }
-        var writer: VivoMDTrajectoryArchiveWriter?
-        if let hash = cursor.trajectoryManifest {
-            let archive = try await VivoMDTrajectoryArchiveReader.open(store: store, manifest: hash)
-            let manifest = archive.manifest
-            guard manifest.systemFingerprint == plan.systemFingerprint,
-                  manifest.configurationFingerprint == configurationID,
-                  manifest.particleCount == UInt32(system.particles.count),
-                  manifest.includeVelocities == plan.trajectoryIncludesVelocities,
-                  manifest.lastStep.map({ $0 <= current.acceptedStep }) ?? true,
-                  manifest.lastTimePS.map({ $0 <= current.timePS }) ?? true,
-                  manifest.sealed == (cursor.phase != .running) else {
-                throw VivoArtifactValidationError.incompatible("trajectory prefix disagrees with restart cursor")
-            }
-            if cursor.phase == .running {
-                writer = try await .resume(store: store, manifest: hash, targetChunkBytes: plan.trajectoryChunkBytes)
-            }
-        } else if stage.sampleEvery != nil {
-            throw VivoArtifactValidationError.invalid("sampled stage cursor has no durable trajectory prefix")
-        }
+        let device = try device ?? VivoMetalDeviceSelector.productionDevice()
+        let writer: VivoMDTrajectoryArchiveWriter?
+        if cursor.phase == .running, let hash = cursor.trajectoryManifest {
+            writer = try await .resume(store: store, manifest: hash, targetChunkBytes: plan.trajectoryChunkBytes)
+        } else { writer = nil }
         let runtime: VivoMDMetalRuntime?
         if cursor.phase == .running {
             runtime = try await .restore(system: system, configuration: stage.configuration,
@@ -139,16 +76,21 @@ public actor VivoMDProtocolRunner {
         cursor.runID = UUID(); cursor.resumedFrom = checkpoint
         let stored = try await store.descriptor(for: checkpoint)
         let runner = VivoMDProtocolRunner(system: system, plan: plan, store: store, device: device,
-            cursor: cursor, runtime: runtime, trajectory: writer, latestDurable: stored)
+            cursor: cursor, runtime: runtime, trajectory: writer, latestDurable: stored,
+            lastSampledStep: verified.lastSampledStep, lastObservedStep: verified.lastObservedStep,
+            entryAcceptedStep: current.acceptedStep - cursor.completedStepsInStage)
         try await runner.persist()
         return runner
     }
 
     private init(system: VivoClassicalSystem, plan: VivoMDProtocolPlan, store: VivoArtifactStore,
                  device: MTLDevice, cursor: VivoMDProtocolCheckpoint, runtime: VivoMDMetalRuntime?,
-                 trajectory: VivoMDTrajectoryArchiveWriter?, latestDurable: VivoStoredArtifact?) {
+                 trajectory: VivoMDTrajectoryArchiveWriter?, latestDurable: VivoStoredArtifact?,
+                 lastSampledStep: UInt64? = nil, lastObservedStep: UInt64? = nil, entryAcceptedStep: UInt64 = 0) {
         self.system = system; self.plan = plan; self.store = store; self.device = device
         self.cursor = cursor; self.runtime = runtime; self.trajectory = trajectory; self.latestDurable = latestDurable
+        self.lastSampledStep = lastSampledStep; self.lastObservedStep = lastObservedStep
+        self.entryAcceptedStep = entryAcceptedStep
         runID = cursor.runID; planFingerprint = cursor.planFingerprint
         checkpointReferenceName = "md-\(cursor.runID.uuidString.lowercased())-checkpoint"
     }
@@ -173,6 +115,10 @@ public actor VivoMDProtocolRunner {
                     try await finishStage(success: success, minimization: result, rejected: nil)
                     continue
                 }
+                // A previous publication failure may have saved the accepted
+                // boundary with its current sample/observation still pending.
+                // Repair it before any new dynamics or stage finalization.
+                try await publishCurrentBoundary()
                 while cursor.completedStepsInStage < stage.steps {
                     try Task.checkCancellation()
                     let result = try await runtime.step()
@@ -181,18 +127,8 @@ public actor VivoMDProtocolRunner {
                         return receipt(.rejected, diagnostic: "MD candidate rejected; no automatic retry or timestep change")
                     }
                     cursor.completedStepsInStage += 1
-                    let ordinal = cursor.completedStepsInStage
-                    let sampleDue = stage.sampleEvery.map { ordinal % $0 == 0 } ?? false
-                    let observationDue = stage.observablesEvery.map { ordinal % $0 == 0 } ?? false
-                    if sampleDue {
-                        let pair = try await runtime.sample(includeObservables: observationDue)
-                        guard let trajectory else { throw VivoArtifactValidationError.invalid("trajectory writer missing") }
-                        try await trajectory.append(pair.state)
-                        if let observation = pair.observables { try await record(observation) }
-                    } else if observationDue {
-                        try await record(runtime.observables())
-                    }
-                    if ordinal % stage.checkpointEvery == 0 { try await persist() }
+                    try await publishCurrentBoundary()
+                    if cursor.completedStepsInStage % stage.checkpointEvery == 0 { try await persist() }
                 }
                 try await finishStage(success: true, minimization: nil, rejected: nil)
             }
@@ -235,8 +171,31 @@ public actor VivoMDProtocolRunner {
         cursor.transition = transition.fingerprint; cursor.trajectoryManifest = nil
         cursor.observationTail = nil; cursor.observationCount = 0; cursor.activeStageReport = nil
         runtime = nextRuntime; trajectory = writer
+        lastSampledStep = nil; lastObservedStep = nil; entryAcceptedStep = state.acceptedStep
         // Resume from this entry skips initialization; it is never sampled twice.
         try await persist()
+    }
+
+    private func publishCurrentBoundary() async throws {
+        let stage = plan.stages[cursor.stageIndex], ordinal = cursor.completedStepsInStage
+        guard ordinal > 0 else { return }
+        guard let runtime else { throw VivoArtifactValidationError.invalid("publication has no MD authority") }
+        let acceptedStep = entryAcceptedStep + ordinal
+        let needsSample = (stage.sampleEvery.map { ordinal % $0 == 0 } ?? false) && lastSampledStep != acceptedStep
+        let needsObservation = (stage.observablesEvery.map { ordinal % $0 == 0 } ?? false) && lastObservedStep != acceptedStep
+        if needsSample {
+            let pair = try await runtime.sample(includeObservables: needsObservation)
+            guard let trajectory else { throw VivoArtifactValidationError.invalid("trajectory writer missing") }
+            try await trajectory.append(pair.state)
+            lastSampledStep = acceptedStep
+            if let observation = pair.observables {
+                try await record(observation)
+                lastObservedStep = acceptedStep
+            }
+        } else if needsObservation {
+            try await record(runtime.observables())
+            lastObservedStep = acceptedStep
+        }
     }
 
     private func record(_ observation: VivoMDObservables) async throws {
