@@ -112,61 +112,14 @@ public enum VivoQMMMChemicalExchangeNetwork {
         a.pH == b.pH && a.ionicStrengthM == b.ionicStrengthM
     }
 
-    private static func multiply(_ row: [Double], _ matrix: [[Double]]) -> [Double] {
-        var out = [Double](repeating: 0, count: row.count)
-        for i in row.indices where row[i] != 0 {
-            for j in out.indices where matrix[i][j] != 0 {
-                out[j] += row[i] * matrix[i][j]
-            }
-        }
-        return out
+    struct ResolvedNetwork {
+        let identifiers: [String]
+        let chemicalRates: [Double]
+        let generator: VivoQMMatrix
     }
-
-    private static func uniformizedStep(_ initial: [Double], transition: [[Double]], x: Double) throws -> [Double] {
-        if x == 0 { return initial }
-        guard x.isFinite, x > 0, x <= 32 else {
-            throw VivoKineticsError.numerical("chemical-state uniformization step size")
-        }
-        var term = initial
-        var weight = exp(-x)
-        var cumulative = weight
-        var output = initial.map { $0 * weight }
-        for n in 1...512 {
-            term = multiply(term, transition)
-            weight *= x / Double(n)
-            cumulative += weight
-            for i in output.indices { output[i] += weight * term[i] }
-            if 1 - cumulative <= 1e-14 && n > Int(x) { break }
-        }
-        guard output.allSatisfy({ $0.isFinite && $0 >= -1e-13 }), cumulative > 1 - 1e-11 else {
-            throw VivoKineticsError.numerical("chemical-state uniformization convergence")
-        }
-        return output.map { max(0, $0) }
-    }
-
-    private static func advance(_ initial: [Double], transition: [[Double]], lambda: Double,
-                                deltaTime: Double, maximumWork: Int) throws -> [Double] {
-        if deltaTime == 0 { return initial }
-        let scaled = lambda * deltaTime
-        guard scaled.isFinite, scaled >= 0 else {
-            throw VivoKineticsError.numerical("chemical-state exchange time scale")
-        }
-        let rawChunks = ceil(scaled / 32)
-        guard rawChunks.isFinite, rawChunks <= Double(Int.max) else {
-            throw VivoKineticsError.capacity("chemical-state exchange interval requires unrepresentable uniformization work")
-        }
-        let chunks = max(1, Int(rawChunks))
-        let work = chunks.multipliedReportingOverflow(by: max(1, initial.count * initial.count))
-        guard !work.overflow, work.partialValue <= maximumWork else {
-            throw VivoKineticsError.capacity("chemical-state exchange uniformization work exceeds declared bound")
-        }
-        let x = scaled / Double(chunks)
-        var state = initial
-        for _ in 0..<chunks { state = try uniformizedStep(state, transition: transition, x: x) }
-        return state
-    }
-
-    public static func calculate(_ request: VivoQMMMChemicalExchangeNetworkRequest) throws -> VivoQMMMChemicalExchangeNetworkResult {
+    /// One validation and generator-construction authority for propagation and
+    /// local kinetic sensitivity. Derivative adapters may not bypass rate proof.
+    static func resolve(_ request: VivoQMMMChemicalExchangeNetworkRequest) throws -> ResolvedNetwork {
         guard request.schema == VivoQMMMChemicalExchangeNetworkRequest.schema,
               !request.identifier.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               request.identifier.utf8.count <= 512,
@@ -224,57 +177,36 @@ public enum VivoQMMMChemicalExchangeNetwork {
             }
         }
 
-        var generator = [[Double]](repeating: [Double](repeating: 0, count: request.states.count),
-                                   count: request.states.count)
+        var generator = VivoQMMatrix(request.states.count,request.states.count)
         for edge in request.exchangeEdges {
             let i = index[edge.fromStateIdentifier]!, j = index[edge.toStateIdentifier]!
-            generator[i][j] += edge.rate.value
+            generator[i,j] += edge.rate.value
         }
-        var lambda = 0.0
-        for i in generator.indices {
-            let exchangeOut = generator[i].reduce(0, +)
-            let totalOut = exchangeOut + chemicalRates[i]
-            generator[i][i] = -totalOut
-            lambda = max(lambda, totalOut)
+        for i in 0..<generator.rows {
+            let exchangeOut = (0..<generator.columns).reduce(0.0) { $0+generator[i,$1] }
+            let totalOut = exchangeOut+chemicalRates[i]
+            guard totalOut.isFinite, totalOut > 0 else { throw VivoKineticsError.numerical("chemical-state generator overflow") }
+            generator[i,i] = -totalOut
         }
-        guard lambda.isFinite, lambda > 0 else {
-            throw VivoKineticsError.numerical("chemical-state exchange generator")
-        }
-        var transition = [[Double]](repeating: [Double](repeating: 0, count: request.states.count),
-                                    count: request.states.count)
-        for i in transition.indices {
-            for j in transition.indices {
-                transition[i][j] = (i == j ? 1.0 : 0.0) + generator[i][j] / lambda
-                guard transition[i][j].isFinite, transition[i][j] >= -1e-13 else {
-                    throw VivoKineticsError.numerical("chemical-state uniformized transition matrix")
-                }
-                transition[i][j] = max(0, transition[i][j])
-            }
-        }
+        return .init(identifiers: identifiers,chemicalRates: chemicalRates,generator: generator)
+    }
 
-        var probability = request.states.map(\.initialPopulation)
-        var currentTime = 0.0
-        var observations: [VivoQMMMChemicalExchangeObservation] = []
-        observations.reserveCapacity(request.observationTimesSeconds.count)
-        for time in request.observationTimesSeconds {
-            probability = try advance(probability, transition: transition, lambda: lambda,
-                                      deltaTime: time - currentTime, maximumWork: request.maximumUniformizationWork)
-            currentTime = time
-            let survival = probability.reduce(0, +)
-            guard survival.isFinite, survival >= 0, survival <= 1 + 1e-10 else {
-                throw VivoKineticsError.numerical("chemical-state survival probability")
-            }
-            let boundedSurvival = min(1, max(0, survival))
-            let reacted = max(0, 1 - boundedSurvival)
-            let reactiveFlux = zip(probability, chemicalRates).reduce(0.0) { $0 + $1.0 * $1.1 }
-            let hazard = boundedSurvival > 0 ? reactiveFlux / boundedSurvival : 0
-            let apparent: Double? = time > 0 && boundedSurvival > 0 ? -log(boundedSurvival) / time : nil
-            guard hazard.isFinite, hazard >= 0, apparent == nil || (apparent!.isFinite && apparent! >= 0) else {
-                throw VivoKineticsError.numerical("chemical-state hazard or apparent rate")
-            }
-            observations.append(.init(timeSeconds: time, unreactedProbabilityByState: probability,
-                                      survivalProbability: boundedSurvival, reactedProbability: reacted,
-                                      instantaneousHazardPerSecond: hazard, apparentFirstOrderRatePerSecond: apparent))
+    public static func calculate(_ request: VivoQMMMChemicalExchangeNetworkRequest) throws -> VivoQMMMChemicalExchangeNetworkResult {
+        let resolved = try resolve(request), identifiers = resolved.identifiers, chemicalRates = resolved.chemicalRates
+        let trajectory: VivoLinearKineticSensitivityResult
+        do {
+            trajectory = try VivoLinearKineticSensitivity.calculate(generator: resolved.generator,
+                initialProbability: request.states.map(\.initialPopulation), observationTimesSeconds: request.observationTimesSeconds,
+                configuration: .init(maximumPrimitiveWork: request.maximumUniformizationWork))
+        } catch VivoChemistryError.resourceLimit(let reason) { throw VivoKineticsError.capacity(reason) }
+          catch VivoChemistryError.invalid(let reason) { throw VivoKineticsError.invalid(reason) }
+          catch VivoChemistryError.convergence(let reason) { throw VivoKineticsError.numerical(reason) }
+        let observations = trajectory.observations.map { point in
+            let survival = min(1,max(0,point.survivalProbability))
+            return VivoQMMMChemicalExchangeObservation(timeSeconds: point.timeSeconds,
+                unreactedProbabilityByState: point.probabilityByState, survivalProbability: survival,
+                reactedProbability: max(0,1-survival),instantaneousHazardPerSecond: point.hazardPerSecond ?? 0,
+                apparentFirstOrderRatePerSecond: point.timeSeconds > 0 && survival > 0 ? -log(survival)/point.timeSeconds : nil)
         }
 
         let requestID = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(request))
