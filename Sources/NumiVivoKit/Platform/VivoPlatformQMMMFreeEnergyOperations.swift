@@ -73,6 +73,14 @@ public enum VivoPlatformQMMMFreeEnergyOperations {
             configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
                 let request=try VivoPlatformOperations.input(VivoQMMMChemicalStateNetworkRequest.self,"request",inputs)
                 return ["result":try VivoCanonicalJSON.encode(VivoQMMMChemicalStateNetwork.calculate(request))]
+            }),
+         VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-chemical-exchange-network",id:id,
+            inputs:["request":"vivo.qmmm-chemical-exchange-network-request"],
+            outputs:[.init(name:"result",kind:"vivo.qmmm-chemical-exchange-network-result")],
+            summary:"Propagate explicit slow/intermediate chemical-state interconversion competing with independently replicated QM/MM reaction rates.",
+            configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
+                let request=try VivoPlatformOperations.input(VivoQMMMChemicalExchangeNetworkRequest.self,"request",inputs)
+                return ["result":try VivoCanonicalJSON.encode(VivoQMMMChemicalExchangeNetwork.calculate(request))]
             })]
     }
 }
