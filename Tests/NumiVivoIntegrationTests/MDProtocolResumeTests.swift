@@ -392,4 +392,74 @@ import Testing
         }
         #expect(try await f.store.data(for: durable.fingerprint) == savedBytes)
     }
+
+    @Test func actualStageReportWriteFailureCannotResetAnUnsuccessfulMinimizer() async throws {
+        let f = try await fixture(minimization: true, twoStages: true)
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        var plan = f.plan
+        plan.stages[0].minimization?.maximumIterations = 1
+        plan.stages[0].minimization?.forceToleranceKJPerMolNM = 1e-12
+        let settings = try #require(plan.stages[0].minimization)
+        let reference = try await VivoMDMetalRuntime.make(system: f.system, initialState: f.initial,
+                                                          configuration: plan.stages[0].configuration)
+        let entry = try await reference.checkpoint()
+        let outcome = try await reference.minimize(settings)
+        let exit = try await reference.checkpoint()
+        #expect(!outcome.converged && outcome.attemptedIterations == 1 && outcome.acceptedIterations == 1)
+        #expect(exit.positionsNM != entry.positionsNM && exit.acceptedStep == entry.acceptedStep)
+        let expectedReport = VivoMDProtocolStageReport(schema: "numivivo.org/md-stage-report/v1",
+            planFingerprint: try plan.fingerprint(), stageIdentifier: "prepare", stageIndex: 0, successful: false,
+            entryCheckpoint: try entry.fingerprint(), exitCheckpoint: try exit.fingerprint(), transition: nil,
+            committedSteps: 0, startTimePS: entry.timePS, endTimePS: exit.timePS, trajectoryManifest: nil,
+            observationTail: nil, observationCount: 0, minimization: outcome, rejected: nil)
+        let reportHash = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(expectedReport))
+        let hex = reportHash.hex
+        let sentinel = f.root.appendingPathComponent("objects/sha256/\(hex.prefix(2))/\(hex.dropFirst(2).prefix(2))/\(hex)")
+        try #require(!FileManager.default.fileExists(atPath: sentinel.path))
+        try FileManager.default.createDirectory(at: sentinel, withIntermediateDirectories: true)
+        let runner = try await VivoMDProtocolRunner.start(system: f.system, initialState: f.initial, plan: plan, store: f.store)
+        let initialReference = try await f.store.reference(runner.checkpointReferenceName)
+        let initialBytes = try await f.store.data(for: initialReference.artifact.fingerprint)
+
+        // The first attempt advances accepted geometry but fails its required
+        // gate. Repeated storage failures must keep THAT terminal outcome; they
+        // must not expose that geometry with a new running minimizer budget.
+        for _ in 0..<2 {
+            let failed = try await runner.run()
+            #expect(failed.disposition == .failed && failed.persistenceDiagnostic != nil)
+            #expect(failed.latestDurableCheckpoint == initialReference.artifact)
+            #expect(try await f.store.reference(runner.checkpointReferenceName) == initialReference)
+            let durable = try await VivoMDProtocolResumeValidation.load(system: f.system, plan: plan, store: f.store,
+                                                                       checkpoint: initialReference.artifact.fingerprint)
+            #expect(durable.cursor.phase == .running && durable.cursor.activeStageReport == nil)
+            #expect(durable.checkpoint == entry && durable.checkpoint != exit)
+        }
+
+        // A process-level resume can only restart the old durable entry, not
+        // continue the unpublished failed geometry with another iteration budget.
+        let resumed = try await VivoMDProtocolRunner.resume(system: f.system, plan: plan, store: f.store,
+                                                            checkpoint: initialReference.artifact.fingerprint)
+        let resumedInitial = try await f.store.reference(resumed.checkpointReferenceName)
+        let resumedFailure = try await resumed.run()
+        #expect(resumedFailure.disposition == .failed && resumedFailure.persistenceDiagnostic != nil)
+        #expect(resumedFailure.latestDurableCheckpoint == resumedInitial.artifact)
+        try #require(FileManager.default.contentsOfDirectory(atPath: sentinel.path).isEmpty)
+        try FileManager.default.removeItem(at: sentinel)
+
+        for pendingRunner in [runner, resumed] {
+            let repaired = try await pendingRunner.run()
+            #expect(repaired.disposition == .rejected && repaired.completedStages == 0)
+            let hash = try #require(repaired.latestDurableCheckpoint).fingerprint
+            let verified = try await VivoMDProtocolResumeValidation.load(system: f.system, plan: plan,
+                                                                        store: f.store, checkpoint: hash)
+            #expect(verified.cursor.phase == .blocked && verified.cursor.activeStageReport == reportHash)
+            #expect(verified.checkpoint == exit)
+            let storedReport = try await read(VivoMDProtocolStageReport.self, reportHash, f.store)
+            #expect(storedReport == expectedReport && storedReport.minimization == outcome)
+            let blockedResume = try await VivoMDProtocolRunner.resume(system: f.system, plan: plan, store: f.store, checkpoint: hash)
+            let blockedReceipt = try await blockedResume.run()
+            #expect(blockedReceipt.disposition == .rejected && blockedReceipt.completedStages == 0)
+        }
+        #expect(try await f.store.data(for: initialReference.artifact.fingerprint) == initialBytes)
+    }
 }

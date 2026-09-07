@@ -19,6 +19,16 @@ public actor VivoMDProtocolRunner {
     private var lastSampledStep: UInt64?
     private var lastObservedStep: UInt64?
     private var entryAcceptedStep: UInt64
+    private struct PendingStageFinalization {
+        let cursor: VivoMDProtocolCheckpoint
+        let successful: Bool
+        let minimization: VivoMDMinimizationCertificate?
+        let rejected: VivoMDStepCertificate?
+        var checkpoint: VivoMDCheckpoint?
+    }
+    // Once a numerical stage returns its outcome, that outcome owns this actor
+    // until its terminal cursor is durable. Storage failure cannot reset a gate.
+    private var pendingFinalization: PendingStageFinalization?
 
     public static func start(system: VivoClassicalSystem, initialState: VivoClassicalInitialState,
                              plan: VivoMDProtocolPlan, store: VivoArtifactStore,
@@ -101,6 +111,10 @@ public actor VivoMDProtocolRunner {
         do {
             while true {
                 try Task.checkCancellation()
+                if pendingFinalization != nil {
+                    try await publishPendingFinalization()
+                    continue
+                }
                 if cursor.phase == .blocked { return receipt(.rejected, diagnostic: "stage gate blocked; inspect its immutable report") }
                 if cursor.phase == .stageFinished {
                     if cursor.stageIndex + 1 == plan.stages.count { return receipt(.completed) }
@@ -135,9 +149,10 @@ public actor VivoMDProtocolRunner {
         } catch {
             let disposition: VivoMDProtocolDisposition = error is CancellationError ? .cancelled : .failed
             var persistence: String?
-            // A healthy runtime can export its last accepted boundary even after
-            // task cancellation. A poisoned GPU runtime keeps the prior durable
-            // cursor; never fabricate a checkpoint of the failed command.
+            // A returned terminal outcome must be published together with its
+            // checkpoint. If that still fails, retain the prior durable prefix;
+            // never save the new geometry as a fresh running minimizer/retry.
+            // Other healthy running boundaries remain exportable on cancellation.
             do { try await persist() } catch { persistence = String(describing: error) }
             return receipt(disposition, diagnostic: String(describing: error), persistence: persistence)
         }
@@ -212,16 +227,36 @@ public actor VivoMDProtocolRunner {
 
     private func finishStage(success: Bool, minimization: VivoMDMinimizationCertificate?,
                              rejected: VivoMDStepCertificate?) async throws {
-        guard let runtime else { throw VivoArtifactValidationError.invalid("cannot finish without an MD state") }
-        let state = try await runtime.checkpoint()
+        guard pendingFinalization == nil, runtime != nil else {
+            throw VivoArtifactValidationError.invalid("cannot replace a pending MD stage outcome")
+        }
+        // No suspension or fallible export between receiving the result and
+        // retaining its certificate/budget. Retrying run() cannot execute again.
+        pendingFinalization = .init(cursor: cursor, successful: success,
+                                    minimization: minimization, rejected: rejected, checkpoint: nil)
+        try await publishPendingFinalization()
+    }
+
+    private func publishPendingFinalization() async throws {
+        guard var pending = pendingFinalization else {
+            throw VivoArtifactValidationError.invalid("no pending MD stage outcome")
+        }
+        if pending.checkpoint == nil {
+            guard let runtime else { throw VivoArtifactValidationError.invalid("pending outcome has no MD state") }
+            pending.checkpoint = try await runtime.checkpoint()
+            pendingFinalization = pending
+        }
+        guard let state = pending.checkpoint else {
+            throw VivoArtifactValidationError.invalid("pending outcome checkpoint is missing")
+        }
         let exit = try await Self.put(state, kind: "md-checkpoint", store: store)
-        let entry = try await Self.read(VivoMDCheckpoint.self, fingerprint: cursor.entryCheckpoint,
+        let entry = try await Self.read(VivoMDCheckpoint.self, fingerprint: pending.cursor.entryCheckpoint,
                                         kind: "md-checkpoint", store: store, maximumBytes: 512 * 1024 * 1024)
         var sealedHash: VivoFingerprint?
         if let trajectory {
-            // Build an immutable sealed view without sealing/mutating the writer
-            // first. A later failed report write can still flush a valid running
-            // prefix during error handling; no half-finalized cursor is emitted.
+            // Keep the writer retryable until the outcome, complete output view
+            // and terminal cursor have all been published. It cannot be appended
+            // while a terminal outcome owns the runner.
             let prefix = try await trajectory.snapshot()
             let archive = try await VivoMDTrajectoryArchiveReader.open(store: store, manifest: prefix.fingerprint)
             let m = archive.manifest
@@ -235,33 +270,45 @@ public actor VivoMDProtocolRunner {
             sealedHash = artifact.fingerprint
         }
         let report = VivoMDProtocolStageReport(schema: "numivivo.org/md-stage-report/v1",
-            planFingerprint: planFingerprint, stageIdentifier: plan.stages[cursor.stageIndex].identifier,
-            stageIndex: cursor.stageIndex, successful: success, entryCheckpoint: cursor.entryCheckpoint,
-            exitCheckpoint: exit.fingerprint, transition: cursor.transition, committedSteps: cursor.completedStepsInStage,
+            planFingerprint: planFingerprint, stageIdentifier: plan.stages[pending.cursor.stageIndex].identifier,
+            stageIndex: pending.cursor.stageIndex, successful: pending.successful, entryCheckpoint: pending.cursor.entryCheckpoint,
+            exitCheckpoint: exit.fingerprint, transition: pending.cursor.transition, committedSteps: pending.cursor.completedStepsInStage,
             startTimePS: entry.timePS, endTimePS: state.timePS, trajectoryManifest: sealedHash,
-            observationTail: cursor.observationTail, observationCount: cursor.observationCount,
-            minimization: minimization, rejected: rejected)
+            observationTail: pending.cursor.observationTail, observationCount: pending.cursor.observationCount,
+            minimization: pending.minimization, rejected: pending.rejected)
         let stored = try await Self.put(report, kind: "md-stage-report", store: store)
-        cursor.currentCheckpoint = exit.fingerprint; cursor.activeStageReport = stored.fingerprint
-        cursor.trajectoryManifest = sealedHash; cursor.phase = success ? .stageFinished : .blocked
-        trajectory = nil
-        try await persist()
+        var finished = pending.cursor
+        finished.currentCheckpoint = exit.fingerprint; finished.activeStageReport = stored.fingerprint
+        finished.trajectoryManifest = sealedHash; finished.phase = pending.successful ? .stageFinished : .blocked
+        try await publishCursor(finished)
+        cursor = finished
+        pendingFinalization = nil; trajectory = nil; runtime = nil
     }
 
     private func persist() async throws {
+        if pendingFinalization != nil {
+            try await publishPendingFinalization()
+            return
+        }
+        var next = cursor
         if let runtime {
             let checkpoint = try await runtime.checkpoint()
             let artifact = try await Self.put(checkpoint, kind: "md-checkpoint", store: store)
-            cursor.currentCheckpoint = artifact.fingerprint
+            next.currentCheckpoint = artifact.fingerprint
         }
         if let trajectory {
             let prefix = try await trajectory.snapshot()
-            cursor.trajectoryManifest = prefix.fingerprint
+            next.trajectoryManifest = prefix.fingerprint
         }
-        try cursor.validate(plan: plan)
-        let artifact = try await Self.put(cursor, kind: "md-protocol-checkpoint", store: store)
-        latestDurable = artifact
+        try await publishCursor(next)
+        cursor = next
+    }
+
+    private func publishCursor(_ next: VivoMDProtocolCheckpoint) async throws {
+        try next.validate(plan: plan)
+        let artifact = try await Self.put(next, kind: "md-protocol-checkpoint", store: store)
         _ = try await store.setReference(checkpointReferenceName, to: artifact)
+        latestDurable = artifact
     }
     private func receipt(_ disposition: VivoMDProtocolDisposition, diagnostic: String? = nil,
                          persistence: String? = nil) -> VivoMDProtocolRunReceipt {
