@@ -31,12 +31,9 @@ public struct VivoQMMMFreeEnergyRateResult: Codable, Sendable, Equatable {
     public static let schema="numivivo.org/qmmm-free-energy-rate-result/v3"
     public let schema:String
     public let requestFingerprint:VivoFingerprint
-    /// Positive-velocity conventional TST flux before the explicit transmission probability.
     public let untransmittedFluxTSTRatePerSecond:Double
     public let positiveCoordinateVelocityNMPerPS:Double
     public let surfaceToReactantDensityPerNM:Double
-    /// Eyring-equivalent barrier that reproduces the direct PMF flux exactly.
-    /// This is not the simple PMF peak-minus-basin-minimum diagnostic.
     public let barrier:VivoActivationBarrier
     public let rateRequest:VivoTransitionStateRateRequest
     public let estimate:VivoTransitionStateRateEstimate
@@ -46,12 +43,6 @@ public struct VivoQMMMFreeEnergyRateResult: Codable, Sendable, Equatable {
     public let limitations:[String]
 }
 
-/// Protein/explicit-solution bridge. The configurational PMF contributes the
-/// dividing-surface density / reactant-basin population. The coordinate mass
-/// metric supplies the canonical positive velocity. Their product is a true
-/// conventional classical TST flux with units of inverse time. Only then is an
-/// Eyring-equivalent activation free energy constructed for the existing kinetic
-/// contract. Biased trajectory elapsed time is never interpreted as a rate.
 public enum VivoQMMMFreeEnergyRate {
     private static let gasConstantKJ=0.00831446261815324
     public static func calculate(_ request:VivoQMMMFreeEnergyRateRequest)throws->VivoQMMMFreeEnergyRateResult {
@@ -80,11 +71,15 @@ public enum VivoQMMMFreeEnergyRate {
         guard equivalentBarrier.isFinite,equivalentBarrier>=0 else { throw VivoKineticsError.numerical("PMF flux-to-barrier conversion") }
         let environment=request.environment == .proteinEnvironment ? "protein" : "explicit solution"
         let evidence=VivoKineticEvidence(source:"NumiVivo qualified QM/MM activation PMF",
-            locator:"\(environment) PMF + mapped connectivity + exact Hamiltonian provenance + coordinate mass metric",
+            locator:"\(environment) PMF + mapped connectivity + exact Hamiltonian and sampling provenance + coordinate mass metric",
             sourceFingerprint:request.freeEnergy.evidenceFingerprint.hex)
+        // The PMF profile-height SD estimates a different observable than the
+        // dividing-surface-density/reactant-population ratio used by this rate.
+        // Do not silently transfer it into a flux uncertainty. Independent PMF
+        // replicas provide the current production sampling-dispersion estimate.
         let barrier=VivoActivationBarrier(context:request.context,quantity:.activationGibbsFreeEnergy,
             referenceState:.preReactiveBoundComplex,value:equivalentBarrier,
-            unit:.kilojoulesPerMol,conditionalStandardDeviation:pmf.conditionalStandardDeviationKJPerMol,
+            unit:.kilojoulesPerMol,conditionalStandardDeviation:nil,
             method:"flux-normalized periodic QM/MM umbrella/MBAR conventional TST; Eyring-equivalent barrier",
             samplingDescription:request.samplingDescription,origin:.calculated,evidence:evidence)
         let rateRequest=VivoTransitionStateRateRequest(barrier:barrier,transmissionProbability:request.transmissionProbability,
@@ -96,11 +91,11 @@ public enum VivoQMMMFreeEnergyRate {
         }
         let limitations=[
             "The PMF profile height is diagnostic; rate normalization uses dividing-surface density divided by integrated reactant-basin population.",
-            "The reported uncertainty is conditional on the sampled Hamiltonian, declared coordinate and approximate finite-sample PMF uncertainty.",
+            "Single-PMF profile-height uncertainty is not propagated into the flux rate because it is not the same statistical observable; use independent replicated PMFs for sampling dispersion.",
             "Alternative protonation states, reactive conformers and mechanisms require explicit population/pathway integration.",
             "Classical umbrella time is not interpreted as physical reaction time.",
             request.transmissionOrigin == .assumed ? "Dynamical recrossing and tunnelling remain unresolved because transmission is assumed." : "Transmission evidence is external to the PMF reconstruction.",
-            "Force-field, QM level, adaptive-region calibration and finite-size errors are not included in the conditional sampling SD."
+            "Force-field, QM level, adaptive-region calibration and finite-size errors are outside the replicated sampling dispersion."
         ]
         return .init(schema:VivoQMMMFreeEnergyRateResult.schema,
             requestFingerprint:try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(request)),
