@@ -8,31 +8,80 @@ public enum VivoQMMMRateEnvironment: String, Codable, Sendable {
     }
 }
 
+public struct VivoQMMMSampledFluxNormalization: Codable, Sendable, Equatable {
+    public static let schema="numivivo.org/qmmm-sampled-flux-normalization/v1"
+    public let schema:String
+    public let freeEnergyEvidenceFingerprint:VivoFingerprint
+    public let surfaceEvidenceFingerprint:VivoFingerprint
+    public let positiveCoordinateVelocityNMPerPS:Double
+    public let positiveCoordinateVelocityStandardErrorNMPerPS:Double
+    public let effectiveSurfaceSamples:Double
+    public init(freeEnergyEvidenceFingerprint:VivoFingerprint,surfaceEvidenceFingerprint:VivoFingerprint,
+                positiveCoordinateVelocityNMPerPS:Double,positiveCoordinateVelocityStandardErrorNMPerPS:Double,
+                effectiveSurfaceSamples:Double) {
+        schema=Self.schema;self.freeEnergyEvidenceFingerprint=freeEnergyEvidenceFingerprint
+        self.surfaceEvidenceFingerprint=surfaceEvidenceFingerprint
+        self.positiveCoordinateVelocityNMPerPS=positiveCoordinateVelocityNMPerPS
+        self.positiveCoordinateVelocityStandardErrorNMPerPS=positiveCoordinateVelocityStandardErrorNMPerPS
+        self.effectiveSurfaceSamples=effectiveSurfaceSamples
+    }
+    public func validate(freeEnergy:VivoQMMMQualifiedActivationFreeEnergy)throws {
+        guard schema==Self.schema,freeEnergyEvidenceFingerprint==freeEnergy.evidenceFingerprint,
+              positiveCoordinateVelocityNMPerPS.isFinite,positiveCoordinateVelocityNMPerPS>0,
+              positiveCoordinateVelocityStandardErrorNMPerPS.isFinite,positiveCoordinateVelocityStandardErrorNMPerPS>=0,
+              effectiveSurfaceSamples.isFinite,effectiveSurfaceSamples>=2 else {
+            throw VivoKineticsError.invalid("sampled QM/MM surface flux normalization")
+        }
+    }
+}
+
+public enum VivoQMMMSurfaceFluxNormalization {
+    public static func make(surface:VivoQMMMSurfaceEnsembleResult,
+                            request:VivoQMMMSurfaceEnsembleRequest)throws->VivoQMMMSampledFluxNormalization {
+        try VivoQMMMSurfaceEnsemble.validate(surface,request:request)
+        guard surface.converged,surface.freeEnergyEvidenceFingerprint==request.freeEnergy.evidenceFingerprint else {
+            throw VivoKineticsError.invalid("nonconverged or mismatched dividing-surface ensemble")
+        }
+        return .init(freeEnergyEvidenceFingerprint:request.freeEnergy.evidenceFingerprint,
+                     surfaceEvidenceFingerprint:surface.evidenceFingerprint,
+                     positiveCoordinateVelocityNMPerPS:surface.positiveCoordinateVelocityNMPerPS,
+                     positiveCoordinateVelocityStandardErrorNMPerPS:surface.positiveCoordinateVelocityStandardErrorNMPerPS,
+                     effectiveSurfaceSamples:surface.effectiveSurfaceSamples)
+    }
+}
+
 public struct VivoQMMMFreeEnergyRateRequest: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-free-energy-rate/v3"
+    public static let schema="numivivo.org/qmmm-free-energy-rate/v4"
     public var schema:String
     public var context:VivoKineticContext
     public var environment:VivoQMMMRateEnvironment
     public var freeEnergy:VivoQMMMQualifiedActivationFreeEnergy
+    /// Required when the coordinate mass metric is geometry dependent or when
+    /// constrained dynamics should define the actual canonical velocity law.
+    public var sampledFluxNormalization:VivoQMMMSampledFluxNormalization?
     public var transmissionProbability:Double
     public var transmissionOrigin:VivoKineticOrigin
     public var transmissionEvidence:VivoKineticEvidence
     public var samplingDescription:String
     public init(context:VivoKineticContext,environment:VivoQMMMRateEnvironment,freeEnergy:VivoQMMMQualifiedActivationFreeEnergy,
+                sampledFluxNormalization:VivoQMMMSampledFluxNormalization?=nil,
                 transmissionProbability:Double=1,transmissionOrigin:VivoKineticOrigin = .assumed,
                 transmissionEvidence:VivoKineticEvidence,samplingDescription:String) {
         schema=Self.schema;self.context=context;self.environment=environment;self.freeEnergy=freeEnergy
-        self.transmissionProbability=transmissionProbability;self.transmissionOrigin=transmissionOrigin
-        self.transmissionEvidence=transmissionEvidence;self.samplingDescription=samplingDescription
+        self.sampledFluxNormalization=sampledFluxNormalization;self.transmissionProbability=transmissionProbability
+        self.transmissionOrigin=transmissionOrigin;self.transmissionEvidence=transmissionEvidence
+        self.samplingDescription=samplingDescription
     }
 }
 
 public struct VivoQMMMFreeEnergyRateResult: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-free-energy-rate-result/v3"
+    public static let schema="numivivo.org/qmmm-free-energy-rate-result/v4"
     public let schema:String
     public let requestFingerprint:VivoFingerprint
     public let untransmittedFluxTSTRatePerSecond:Double
     public let positiveCoordinateVelocityNMPerPS:Double
+    public let positiveCoordinateVelocityStandardErrorNMPerPS:Double?
+    public let velocityNormalization:String
     public let surfaceToReactantDensityPerNM:Double
     public let barrier:VivoActivationBarrier
     public let rateRequest:VivoTransitionStateRateRequest
@@ -60,7 +109,20 @@ public enum VivoQMMMFreeEnergyRate {
             throw VivoKineticsError.invalid("QM/MM rate context/environment differs from the qualified PMF or transmission is invalid")
         }
         let rt=gasConstantKJ*request.context.temperatureK
-        let positiveVelocity=sqrt(rt*flux.inverseMassMetricPerDa/(2*Double.pi))
+        let positiveVelocity:Double,velocitySE:Double?,velocityOrigin:String,fluxEvidence:String
+        if let sampled=request.sampledFluxNormalization {
+            try sampled.validate(freeEnergy:request.freeEnergy)
+            positiveVelocity=sampled.positiveCoordinateVelocityNMPerPS
+            velocitySE=sampled.positiveCoordinateVelocityStandardErrorNMPerPS
+            velocityOrigin="sampled canonical dividing-surface velocity"
+            fluxEvidence=sampled.surfaceEvidenceFingerprint.hex
+        } else if let metric=flux.inverseMassMetricPerDa {
+            positiveVelocity=sqrt(rt*metric/(2*Double.pi));velocitySE=nil
+            velocityOrigin="analytic unconstrained Cartesian mass metric"
+            fluxEvidence=request.freeEnergy.evidenceFingerprint.hex
+        } else {
+            throw VivoKineticsError.unsupported("geometry-dependent/shared-atom reaction coordinate requires sampled dividing-surface velocity normalization")
+        }
         let fluxRate=flux.surfaceToReactantDensityPerNM*positiveVelocity*1e12
         let thermal=VivoAtomicUnits.boltzmannJPerK*request.context.temperatureK/VivoTransitionStateTheory.planckJouleSecond
         guard positiveVelocity.isFinite,positiveVelocity>0,fluxRate.isFinite,fluxRate>0,
@@ -71,12 +133,8 @@ public enum VivoQMMMFreeEnergyRate {
         guard equivalentBarrier.isFinite,equivalentBarrier>=0 else { throw VivoKineticsError.numerical("PMF flux-to-barrier conversion") }
         let environment=request.environment == .proteinEnvironment ? "protein" : "explicit solution"
         let evidence=VivoKineticEvidence(source:"NumiVivo qualified QM/MM activation PMF",
-            locator:"\(environment) PMF + mapped connectivity + exact Hamiltonian and sampling provenance + coordinate mass metric",
+            locator:"\(environment) PMF + mapped connectivity + exact Hamiltonian/sampling provenance + \(velocityOrigin); fluxEvidence=\(fluxEvidence)",
             sourceFingerprint:request.freeEnergy.evidenceFingerprint.hex)
-        // The PMF profile-height SD estimates a different observable than the
-        // dividing-surface-density/reactant-population ratio used by this rate.
-        // Do not silently transfer it into a flux uncertainty. Independent PMF
-        // replicas provide the current production sampling-dispersion estimate.
         let barrier=VivoActivationBarrier(context:request.context,quantity:.activationGibbsFreeEnergy,
             referenceState:.preReactiveBoundComplex,value:equivalentBarrier,
             unit:.kilojoulesPerMol,conditionalStandardDeviation:nil,
@@ -89,17 +147,19 @@ public enum VivoQMMMFreeEnergyRate {
         guard abs(derived.estimate.naturalLogRatePerSecond-directLog)<1e-10 else {
             throw VivoKineticsError.numerical("PMF flux and Eyring-equivalent kinetic derivation disagree")
         }
-        let limitations=[
+        var limitations=[
             "The PMF profile height is diagnostic; rate normalization uses dividing-surface density divided by integrated reactant-basin population.",
             "Single-PMF profile-height uncertainty is not propagated into the flux rate because it is not the same statistical observable; use independent replicated PMFs for sampling dispersion.",
             "Alternative protonation states, reactive conformers and mechanisms require explicit population/pathway integration.",
             "Classical umbrella time is not interpreted as physical reaction time.",
-            request.transmissionOrigin == .assumed ? "Dynamical recrossing and tunnelling remain unresolved because transmission is assumed." : "Transmission evidence is external to the PMF reconstruction.",
+            request.transmissionOrigin == .assumed ? "Dynamical recrossing and tunnelling remain unresolved because transmission is assumed." : "Transmission is separately qualified against the same PMF Hamiltonian.",
             "Force-field, QM level, adaptive-region calibration and finite-size errors are outside the replicated sampling dispersion."
         ]
+        if velocitySE != nil { limitations.append("Surface velocity uncertainty is reported separately and is not yet combined with PMF replica dispersion.") }
         return .init(schema:VivoQMMMFreeEnergyRateResult.schema,
             requestFingerprint:try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(request)),
             untransmittedFluxTSTRatePerSecond:fluxRate,positiveCoordinateVelocityNMPerPS:positiveVelocity,
+            positiveCoordinateVelocityStandardErrorNMPerPS:velocitySE,velocityNormalization:velocityOrigin,
             surfaceToReactantDensityPerNM:flux.surfaceToReactantDensityPerNM,barrier:barrier,
             rateRequest:rateRequest,estimate:derived.estimate,parameter:derived.parameter,
             evidenceFingerprint:derived.evidenceFingerprint,evidenceData:derived.evidenceData,limitations:limitations)
