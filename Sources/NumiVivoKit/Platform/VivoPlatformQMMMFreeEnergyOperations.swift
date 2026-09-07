@@ -81,6 +81,14 @@ public enum VivoPlatformQMMMFreeEnergyOperations {
             configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
                 let request=try VivoPlatformOperations.input(VivoQMMMChemicalExchangeNetworkRequest.self,"request",inputs)
                 return ["result":try VivoCanonicalJSON.encode(VivoQMMMChemicalExchangeNetwork.calculate(request))]
+            }),
+         VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-chemical-exchange-validation",id:id,
+            inputs:["request":"vivo.qmmm-chemical-exchange-validation-request"],
+            outputs:[.init(name:"result",kind:"vivo.qmmm-chemical-exchange-validation-result")],
+            summary:"Compare explicit transient exchange survival only to measured condition-matched time-course observations at simulated times.",
+            configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
+                let request=try VivoPlatformOperations.input(VivoQMMMChemicalExchangeValidationRequest.self,"request",inputs)
+                return ["result":try VivoCanonicalJSON.encode(VivoQMMMChemicalExchangeValidation.calculate(request))]
             })]
     }
 }
