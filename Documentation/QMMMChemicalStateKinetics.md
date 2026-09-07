@@ -58,9 +58,24 @@ numivivo qmmm-chemical-exchange-network exchange-network.json \
 
 Workflow operation: `vivo.platform.qmmm-chemical-exchange-network`.
 
+## Transient external validation
+
+A slow/intermediate exchange model must not be validated by comparing one fitted first-order constant when its predicted survival is not single exponential. `VivoQMMMChemicalExchangeValidation` therefore compares the immutable exchange-network result directly with measured survival fractions.
+
+Each target carries an exact observation time, survival fraction, optional probability standard deviation, complete environmental context, and immutable measured-source fingerprint. A target is directly comparable only when its compound, target, variant, site, host, temperature, pH and ionic strength match the simulated ensemble and the target time is one of the exchange run's explicit observation times.
+
+Acceptance can gate both absolute probability error and, when measurement uncertainty is supplied, the standardized residual. Off-grid times and condition-mismatched measurements remain inspectable but are not silently interpolated or counted as validation evidence.
+
+```sh
+numivivo qmmm-chemical-exchange-validate validation.json \
+  --output transient-validation.json
+```
+
+Workflow operation: `vivo.platform.qmmm-chemical-exchange-validation`.
+
 ## Evidence and scope
 
-Exchange-rate parameters use the shared `VivoKineticParameter` contract, so measured, fitted and calculated values require immutable evidence fingerprints while assumptions remain explicit. State-specific reaction pathways retain their complete replicated PMF/transmission provenance.
+Exchange-rate parameters use the shared `VivoKineticParameter` contract, so measured, fitted and calculated values require immutable evidence fingerprints while assumptions remain explicit. State-specific reaction pathways retain their complete replicated PMF/transmission provenance. Measured transient validation targets likewise require immutable evidence snapshots.
 
 This layer does not calculate protonation free energies, conformational populations, exchange rates, tunnelling corrections or missing pathways. Those quantities must come from qualified calculations or external evidence. It also does not propagate their joint uncertainty automatically; sensitivity or posterior analysis must treat those inputs explicitly.
 
