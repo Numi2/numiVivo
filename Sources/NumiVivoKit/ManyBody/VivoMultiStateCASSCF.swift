@@ -92,6 +92,49 @@ public struct VivoMultiStateCASSCFConfiguration:Codable,Sendable,Equatable {
         davidson = .init(roots:weights.count,maximumSubspace:max(40,4*weights.count+2))
     }
 }
+/// Charged primitive work, not measured elapsed time or a performance estimate.
+public struct VivoMultiStateCASSCFWork: Codable, Sendable, Equatable {
+    public let energyEvaluations: Int
+    public let hamiltonianOperatorApplications: Int
+    public let reservedAuxiliaryWork: Int
+    public var total: Int { hamiltonianOperatorApplications + reservedAuxiliaryWork }
+}
+private final class VivoMultistateWorkCounter {
+    let budget: VivoChemistryBudget
+    var operators = 0, auxiliary = 0
+    init(_ budget: VivoChemistryBudget) { self.budget = budget }
+    func remaining() throws -> VivoChemistryBudget {
+        var b = budget; b.maximumOperatorApplications -= operators + auxiliary
+        guard b.maximumOperatorApplications > 0 else {
+            throw VivoChemistryError.resourceLimit("multistate CASSCF aggregate work")
+        }
+        return b
+    }
+    /// Charge a checked conservative primitive count before a numerical call.
+    /// The call receives its pre-charge allowance; subsequent calls see the debit.
+    func reserve(_ dimensions: [Int], multiplier: Int = 1) throws -> VivoChemistryBudget {
+        let b = try remaining()
+        var count = multiplier
+        for dimension in dimensions {
+            let next = count.multipliedReportingOverflow(by: dimension)
+            guard dimension >= 0, !next.overflow else {
+                throw VivoChemistryError.resourceLimit("multistate CASSCF work overflow")
+            }
+            count = next.partialValue
+        }
+        guard count <= b.maximumOperatorApplications else {
+            throw VivoChemistryError.resourceLimit("multistate CASSCF auxiliary work")
+        }
+        auxiliary += count
+        return b
+    }
+    func addOperators(_ count: Int) throws {
+        guard count >= 0, count <= budget.maximumOperatorApplications - operators - auxiliary else {
+            throw VivoChemistryError.resourceLimit("multistate CASSCF Hamiltonian work")
+        }
+        operators += count
+    }
+}
 public struct VivoMultiStateCASSCFResult:Codable,Sendable,Equatable {
     public let configuration:VivoMultiStateCASSCFConfiguration
     public let orbitalRotation:VivoQMMatrix
@@ -103,6 +146,8 @@ public struct VivoMultiStateCASSCFResult:Codable,Sendable,Equatable {
     public let iterations:[VivoCASSCFIteration]
     public let finalRootAssignment:[Int]
     public let finalOverlapSquared:[Double]
+    /// Nil only when decoding a result produced before aggregate work accounting.
+    public var numericalWork: VivoMultiStateCASSCFWork? = nil
 }
 public enum VivoMultiStateCASSCF {
     /// State-averaged energy with analytic weighted CI-RDM orbital gradients.
@@ -118,6 +163,7 @@ public enum VivoMultiStateCASSCF {
               cfg.davidson.roots==cfg.weights.count,cfg.minimumOverlapSquared.isFinite,cfg.minimumOverlapSquared>0,cfg.minimumOverlapSquared<=1 else {
             throw VivoChemistryError.invalid("state-average weights, labels or root policy")
         }
+        let workCounter = VivoMultistateWorkCounter(budget)
         let n=input.orbitalCount,frozen=Set(partition.frozenOrbitals),selected=partition.doublyOccupiedCore+partition.active,opt=cfg.optimization
         var group=[Int](repeating:2,count:n)
         for p in partition.doublyOccupiedCore { group[p]=0 };for p in partition.active { group[p]=1 }
@@ -131,13 +177,22 @@ public enum VivoMultiStateCASSCF {
         }
         func spectrum(_ rotation:VivoQMMatrix) throws -> (VivoEmbeddedHamiltonian,[VivoCIResult]) {
             guard evaluations<opt.maximumEnergyEvaluations else { throw VivoChemistryError.resourceLimit("multistate energy evaluations") };evaluations+=1
-            let full=try input.rotated(by:rotation,budget:budget),active=try full.frozenCore(active:partition.active,doublyOccupiedCore:partition.doublyOccupiedCore,budget:budget)
-            return (full,try VivoDirectCI.solve(active,configuration:cfg.davidson,budget:budget).roots)
+            let transformBudget = try workCounter.reserve([n,n,n,n,n], multiplier: 16)
+            let full = try input.rotated(by: rotation, budget: transformBudget)
+            let active = try full.frozenCore(active: partition.active,
+                doublyOccupiedCore: partition.doublyOccupiedCore, budget: transformBudget)
+            let solved = try VivoDirectCI.solve(active, configuration: cfg.davidson, budget: workCounter.remaining())
+            try workCounter.addOperators(solved.operatorApplications)
+            return (full, solved.roots)
         }
         func gradient(_ full:VivoEmbeddedHamiltonian,_ states:[VivoCIResult]) throws -> [Double] {
             var g=[Double](repeating:0,count:pairs.count)
+            if pairs.isEmpty { return g }
             for i in states.indices where cfg.weights[i]>0 {
-                let part=try VivoCASOrbitalGradient.compute(hamiltonian:full,partition:partition,state:states[i].state,pairs:pairs,budget:budget)
+                let m = 2 * partition.active.count
+                _ = try workCounter.reserve([m,m,m,m,max(1,states[i].state.determinants.count)], multiplier: 4)
+                let gradientBudget = try workCounter.reserve([n,n,n,n,n], multiplier: 16)
+                let part=try VivoCASOrbitalGradient.compute(hamiltonian:full,partition:partition,state:states[i].state,pairs:pairs,budget:gradientBudget)
                 for j in g.indices { g[j]+=cfg.weights[i]*part[j] }
             };return g
         }
@@ -161,11 +216,15 @@ public enum VivoMultiStateCASSCF {
                 if evaluations>=opt.maximumEnergyEvaluations { break }
                 var k=VivoQMMatrix(n,n)
                 for (i,pair) in pairs.enumerated() { k[pair.first,pair.second]=alpha*direction[i];k[pair.second,pair.first] = -alpha*direction[i] }
+                _ = try workCounter.reserve([n,n,n], multiplier: 512)
                 let delta=try VivoQMDenseAlgebra.orbitalRotation(generator:k),candidateU=try u.multiplied(by:delta)
                 let (candidateFull,raw)=try spectrum(candidateU)
                 let match:VivoRootFollowingResult
                 if cfg.followRoots {
-                    do { match=try VivoStateFollowing.match(previous:states,candidates:raw,orbitalOverlap:frame(u).transposed.multiplied(by:frame(candidateU)),coreCount:partition.doublyOccupiedCore.count,minimumOverlapSquared:cfg.minimumOverlapSquared,budget:budget) }
+                    let electrons = max(1,input.alphaElectrons + input.betaElectrons)
+                    let overlapBudget = try workCounter.reserve([states[0].state.determinants.count,
+                        raw[0].state.determinants.count,electrons,electrons,electrons], multiplier: 4)
+                    do { match=try VivoStateFollowing.match(previous:states,candidates:raw,orbitalOverlap:frame(u).transposed.multiplied(by:frame(candidateU)),coreCount:partition.doublyOccupiedCore.count,minimumOverlapSquared:cfg.minimumOverlapSquared,budget:overlapBudget) }
                     catch VivoChemistryError.convergence(_) { alpha*=0.5;continue }
                 } else { match = .init(states:raw,candidateIndices:Array(raw.indices),overlapsSquared:[]) }
                 let candidateValue=energy(match.states)
@@ -184,6 +243,8 @@ public enum VivoMultiStateCASSCF {
             if !accepted { termination=evaluations>=opt.maximumEnergyEvaluations ? .evaluationLimit:.lineSearchFailed;break }
         }
         return .init(configuration:cfg,orbitalRotation:u,states:states,weightedEnergyHartree:value,orbitalGradient:g,
-            termination:termination,iterations:history,finalRootAssignment:assignment,finalOverlapSquared:overlaps)
+            termination:termination,iterations:history,finalRootAssignment:assignment,finalOverlapSquared:overlaps,
+            numericalWork: .init(energyEvaluations: evaluations, hamiltonianOperatorApplications: workCounter.operators,
+                                 reservedAuxiliaryWork: workCounter.auxiliary))
     }
 }

@@ -76,29 +76,8 @@ public enum VivoMolecularECCPath {
     public static func prepare(_ request: VivoMolecularECCPathRequest,
                                integrals: [VivoAOIntegrals], references: [VivoHartreeFockResult]) throws -> [VivoECCPathPoint] {
         try request.validate()
-        guard integrals.count==request.snapshots.count,references.count==integrals.count else {
-            throw VivoChemistryError.invalid("missing path AO/reference snapshot")
-        }
-        var points:[VivoECCPathPoint]=[]
-        for i in integrals.indices {
-            let ao=integrals[i], reference=references[i], system=request.snapshots[i].system
-            guard ao.sourceBasis==request.basis,ao.sourceSystem==system else {
-                throw VivoChemistryError.invalid("path snapshot integral source binding")
-            }
-            try VivoHartreeFock.validate(result:reference,system:system,integrals:ao,configuration:request.reference,budget:request.budget)
-            let h=try VivoEmbeddedHamiltonian.fromAO(ao,coefficients:reference.alphaCoefficients,
-                alphaElectrons:system.alphaElectrons,betaElectrons:system.betaElectrons,
-                orbitalIdentifiers:(0..<ao.count).map { "path-orbital-\($0)" },
-                energyReference:"physical electronic Hamiltonian; scalar inherited from AO integrals once; no thermal/standard-state correction",
-                budget:request.budget)
-            var overlap:VivoQMMatrix?
-            if i>0 {
-                let cross=try VivoGaussianIntegralEngine.crossOverlap(leftSystem:request.snapshots[i-1].system,leftBasis:request.basis,
-                    rightSystem:system,rightBasis:request.basis,budget:request.budget)
-                overlap=try references[i-1].alphaCoefficients.transposed.multiplied(by:cross).multiplied(by:reference.alphaCoefficients)
-            }
-            points.append(.init(identifier:request.snapshots[i].identifier,hamiltonian:h,overlapWithPrevious:overlap))
-        }
+        let points = try VivoMolecularOrbitalFrames.prepare(snapshots: request.snapshots,basis: request.basis,
+            reference: request.reference,integrals: integrals,references: references,budget: request.budget)
         try request.configuration.validate(points:points,budget:request.budget)
         return points
     }

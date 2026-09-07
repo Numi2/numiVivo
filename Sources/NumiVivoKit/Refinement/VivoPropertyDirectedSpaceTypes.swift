@@ -8,23 +8,39 @@ public struct VivoOrbitalRefinementBlock: Codable, Sendable, Equatable {
 public enum VivoSpaceRefinementSolver: Codable, Sendable, Equatable {
     case directCI(configuration: VivoDavidsonConfiguration)
     case selectedCI(configuration: VivoSelectedCIConfiguration)
+    case multistateCI(configuration: VivoDavidsonConfiguration, states: VivoRefinementStatePolicy)
+    case stateAveragedCASSCF(configuration: VivoMultiStateCASSCFConfiguration, states: VivoRefinementStatePolicy)
+    public var statePolicy: VivoRefinementStatePolicy {
+        switch self {
+        case .directCI, .selectedCI: return .groundState
+        case .multistateCI(_, let states), .stateAveragedCASSCF(_, let states): return states
+        }
+    }
+    public var optimizesOrbitals: Bool {
+        if case .stateAveragedCASSCF = self { return true }; return false
+    }
 }
 public struct VivoElectronicProfileTarget: Codable, Sendable, Equatable {
     public let barrierPointIdentifier: String
     public let maximumBarrierShiftHartree: Double
     public let maximumRelativeProfileShiftHartree: Double
+    /// V2 only. Bounds every included pairwise electronic excitation-gap change.
+    public let maximumStateGapShiftHartree: Double?
     public init(barrierPointIdentifier: String, maximumBarrierShiftHartree: Double = 1e-4,
-                maximumRelativeProfileShiftHartree: Double = 1e-4) {
+                maximumRelativeProfileShiftHartree: Double = 1e-4,
+                maximumStateGapShiftHartree: Double? = nil) {
         self.barrierPointIdentifier = barrierPointIdentifier
         self.maximumBarrierShiftHartree = maximumBarrierShiftHartree
         self.maximumRelativeProfileShiftHartree = maximumRelativeProfileShiftHartree
+        self.maximumStateGapShiftHartree = maximumStateGapShiftHartree
     }
 }
 /// Fixed-geometry exploration, not an activation Gibbs free energy or a rate.
 /// The first and last points define the two endpoints. The declared interior
 /// barrier point is an evaluation point, not a saddle characterization.
 public struct VivoPropertyDirectedSpaceRequest: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/property-directed-space/v1"
+    public static let schema = "numivivo.org/property-directed-space/v2"
+    public static let legacySchema = "numivivo.org/property-directed-space/v1"
     public let schema: String
     public let identifier: String
     public let points: [VivoECCPathPoint]
@@ -63,16 +79,35 @@ public struct VivoPropertyDirectedSpaceRequest: Codable, Sendable, Equatable {
     }
     public func validate() throws {
         try budget.validate()
-        guard schema == Self.schema, !identifier.isEmpty, identifier.utf8.count <= 1024,
-              (4...32).contains(points.count), (1...32).contains(candidateBlocks.count),
+        guard [Self.schema, Self.legacySchema].contains(schema), !identifier.isEmpty, identifier.utf8.count <= 1024,
+              (4...32).contains(points.count), (0...32).contains(candidateBlocks.count),
               (1...32).contains(maximumRounds), (1...31).contains(maximumActiveOrbitals),
               (1...100_000).contains(maximumPointEvaluations),
               [minimumTransportSingularValue,minimumStateOverlapSquared].allSatisfy({ $0.isFinite && $0 > 0 && $0 <= 1 }),
               [target.maximumBarrierShiftHartree,target.maximumRelativeProfileShiftHartree].allSatisfy({ $0.isFinite && $0 > 0 }) else {
             throw VivoChemistryError.invalid("property-directed space identity, dimensions, tolerances or capacities")
         }
+        let statePolicy = solver.statePolicy
+        try statePolicy.validate()
+        if let tolerance = target.maximumStateGapShiftHartree {
+            guard tolerance.isFinite, tolerance > 0 else { throw VivoChemistryError.invalid("state-gap tolerance") }
+        }
+        if statePolicy.labels.count > 1 {
+            guard schema == Self.schema, target.maximumStateGapShiftHartree != nil else {
+                throw VivoChemistryError.invalid("multistate refinement requires a v2 request and an explicit gap tolerance")
+            }
+        }
+        if schema == Self.legacySchema {
+            guard !solver.optimizesOrbitals, statePolicy.labels.count == 1,
+                  target.maximumStateGapShiftHartree == nil, !candidateBlocks.isEmpty else {
+                throw VivoChemistryError.invalid("v2 refinement features in a v1 request")
+            }
+        }
         let first = points[0].hamiltonian, n = first.orbitalCount
         try first.validate(budget: budget); try initialSpace.validate(for: first,budget: budget)
+        guard !candidateBlocks.isEmpty || initialSpace.active.count == n else {
+            throw VivoChemistryError.invalid("an empty candidate universe is allowed only when the entire orbital space is active")
+        }
         let pointIDs = points.map(\.identifier), discovery = Set(discoveryPointIdentifiers), confirmation = Set(confirmationPointIdentifiers)
         guard n <= 31, Set(pointIDs).count == pointIDs.count,
               points.allSatisfy({ !$0.identifier.isEmpty && $0.identifier.utf8.count <= 1024 }),
@@ -116,7 +151,8 @@ public struct VivoPropertyDirectedSpaceRequest: Codable, Sendable, Equatable {
                 }
             }
         }
-        let accuracy = min(target.maximumBarrierShiftHartree,target.maximumRelativeProfileShiftHartree)/100
+        let accuracy = min(target.maximumBarrierShiftHartree,target.maximumRelativeProfileShiftHartree,
+                           target.maximumStateGapShiftHartree ?? Double.greatestFiniteMagnitude)/100
         switch solver {
         case .directCI(let cfg):
             try VivoDirectCI.validate(cfg)
@@ -128,9 +164,28 @@ public struct VivoPropertyDirectedSpaceRequest: Codable, Sendable, Equatable {
             guard cfg.effectiveFullResidualTolerance <= accuracy, cfg.pt2ToleranceHartree <= accuracy else {
                 throw VivoChemistryError.invalid("selected-CI probe tolerances are too loose for the requested property shifts")
             }
+        case .multistateCI(let cfg, let states):
+            try VivoDirectCI.validate(cfg)
+            guard cfg.roots == states.labels.count, cfg.residualTolerance <= accuracy else {
+                throw VivoChemistryError.invalid("multistate CI root count or accuracy")
+            }
+        case .stateAveragedCASSCF(let cfg, let states):
+            try cfg.optimization.validate(); try VivoDirectCI.validate(cfg.davidson)
+            guard schema == Self.schema, cfg.rootLabels == states.labels,
+                  cfg.weights.count == states.labels.count, cfg.davidson.roots == states.labels.count,
+                  cfg.weights.allSatisfy({ $0.isFinite && $0 >= 0 }), abs(cfg.weights.reduce(0,+)-1) < 1e-12,
+                  !cfg.followRoots, cfg.optimization.energyToleranceHartree <= accuracy,
+                  cfg.davidson.residualTolerance <= accuracy else {
+                throw VivoChemistryError.invalid("refinement SA-CASSCF requires tightly converged energy-ordered roots and explicit weights")
+            }
+            for group in states.groups {
+                guard group.allSatisfy({ abs(cfg.weights[$0] - cfg.weights[group[0]]) < 1e-12 }) else {
+                    throw VivoChemistryError.invalid("weights must be equal inside an interchangeable state subspace")
+                }
+            }
         }
         _ = try budget.elements([points.count,n,n,n,n],simultaneousArrays: 8)
-        _ = try budget.elements([points.count,budget.maximumDeterminants,16],simultaneousArrays: 6)
+        _ = try budget.elements([points.count,budget.maximumDeterminants,16,statePolicy.labels.count],simultaneousArrays: 6)
         for (i,point) in points.enumerated() {
             let h = point.hamiltonian; try h.validate(budget: budget)
             guard h.orbitalIdentifiers == first.orbitalIdentifiers, h.alphaElectrons == first.alphaElectrons,
@@ -157,6 +212,10 @@ public struct VivoSpacePointObservation: Codable, Sendable, Equatable {
     /// Local active-column indices; the enclosing evaluation's partition maps
     /// them back to the common full orbital frame. Not environmental coverage.
     public let orbitalInformation: VivoSelectiveOrbitalInformationResult?
+    /// Nil for legacy single-root evidence. Energies are in adiabatic energy order.
+    public var roots: [VivoRefinementRootObservation]? = nil
+    /// Relative to the transported input frame; exported anchors must retain it.
+    public var optimizedOrbitalRotation: VivoQMMatrix? = nil
 }
 public struct VivoSpaceEvaluation: Codable, Sendable, Equatable {
     public let partition: VivoActiveSpace
@@ -174,6 +233,8 @@ public struct VivoSpacePropertyShift: Codable, Sendable, Equatable {
     public let maximumAbsoluteEnergyHartree: Double
     public let minimumExpansionStateOverlapSquared: Double
     public let normalizedPropertyImpact: Double
+    public var rootShifts: [VivoRefinementRootShift]? = nil
+    public var maximumStateGapShiftHartree: Double? = nil
 }
 public struct VivoSpaceRefinementTrial: Codable, Sendable, Equatable {
     public let blockIdentifier: String
@@ -199,7 +260,7 @@ public struct VivoSpaceConfirmation: Codable, Sendable, Equatable {
     public let passed: Bool
 }
 public struct VivoPropertyDirectedSpaceResult: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/property-directed-space-result/v1"
+    public static let schema = "numivivo.org/property-directed-space-result/v2"
     public let schema: String
     public let request: VivoPropertyDirectedSpaceRequest
     public let transportRotations: [VivoQMMatrix]

@@ -14,9 +14,9 @@ public extension VivoWorkflowTemplates {
         return try .init(identifier: "property-refinement",artifacts: [
             .init(identifier: "request",source: .json(kind: "vivo.property-directed-space-request",payload: VivoPlatformOperations.json(request)))
         ],nodes: [
-            .init(identifier: "refine",operation: "vivo.native.property-directed-space",
+            .init(identifier: "refine",operation: "vivo.native.property-directed-space",version: "2",
                 inputs: ["request":.artifact(identifier: "request")],resources: resources),
-            .init(identifier: "anchor",operation: "vivo.native.refined-anchor-hamiltonian",
+            .init(identifier: "anchor",operation: "vivo.native.refined-anchor-hamiltonian",version: "2",
                 inputs: ["refinement":.output(node: "refine",port: "refinement")],
                 configuration: VivoPlatformOperations.json(VivoRefinedHamiltonianSelection(pointIdentifier: "barrier-point")),resources: resources),
             .init(identifier: "selected",operation: "vivo.native.selected-ci",version: "2",
@@ -34,5 +34,28 @@ public extension VivoWorkflowTemplates {
             .init(name: "electronic",node: "selected",port: "electronic"),
             .init(name: "information",node: "information",port: "information")
         ])
+    }
+}
+
+public extension VivoWorkflowTemplates {
+    /// A native molecular preparation example, not a characterized reaction.
+    static func molecularPropertyRefinement() throws -> VivoWorkflowRecipe {
+        let source = try VivoPropertyRefinementExamples.molecularHydrogenStretch()
+        let resources = VivoChemistryResourceContract(budget: source.budget,
+            maximumInputBytes: source.budget.maximumBytes,maximumOutputBytes: source.budget.maximumBytes)
+        return try .init(identifier: "molecular-property-refinement",artifacts: [
+            .init(identifier: "source",source: .json(kind: VivoMolecularSpacePreparationWorkflow.inputKind,
+                payload: VivoPlatformOperations.json(source)))
+        ],nodes: [
+            .init(identifier: "prepare",operation: "vivo.native.molecular-space-preparation",
+                inputs: ["request":.artifact(identifier: "source")],resources: resources),
+            .init(identifier: "refine",operation: "vivo.native.property-directed-space",version: "2",
+                inputs: ["request":.output(node: "prepare",port: "request")],resources: resources),
+            .init(identifier: "anchor",operation: "vivo.native.refined-anchor-hamiltonian",version: "2",
+                inputs: ["refinement":.output(node: "refine",port: "refinement")],
+                configuration: VivoPlatformOperations.json(VivoRefinedHamiltonianSelection(pointIdentifier: "h2-2")),resources: resources)
+        ],outputs: [.init(name: "preparation",node: "prepare",port: "preparation"),
+                    .init(name: "refinement",node: "refine",port: "refinement"),
+                    .init(name: "anchor",node: "anchor",port: "hamiltonian")])
     }
 }

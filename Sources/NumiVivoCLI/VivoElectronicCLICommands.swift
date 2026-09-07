@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoElectronicCLICommands {
     static func handles(_ command:String?) -> Bool {
-        ["chemistry-template","chemistry-run","chemistry-solve","chemistry-refine","chemistry-correlations","chemistry-export-space","chemistry-help"].contains(command ?? "")
+        ["chemistry-template","chemistry-run","chemistry-solve","chemistry-refine","chemistry-prepare-space","chemistry-correlations","chemistry-export-space","chemistry-help"].contains(command ?? "")
     }
     private struct ImplementationIdentity: Codable {
         let executable: VivoFingerprint
@@ -121,7 +121,7 @@ struct VivoElectronicCLICommands {
             guard args.positional.count==1 else { throw VivoChemistryError.invalid("one input JSON file is required") }
             let source=args.positional[0]
             switch args.command {
-            case "chemistry-run", "chemistry-refine": try args.allow(["--output","--store"])
+            case "chemistry-run", "chemistry-refine", "chemistry-prepare-space": try args.allow(["--output","--store"])
             case "chemistry-correlations": try args.allow(["--output","--store","--budget","--selection"])
             case "chemistry-export-space":
                 try args.allow(["--output","--store","--point"])
@@ -196,6 +196,25 @@ struct VivoElectronicCLICommands {
                         return 2
                     }
                 }
+            case "chemistry-prepare-space":
+                let request = try VivoCanonicalJSON.decode(VivoMolecularSpacePreparationRequest.self,from: read(source))
+                try request.validate()
+                let requestID = try await put(request,kind: VivoMolecularSpacePreparationWorkflow.inputKind,store: store)
+                let basisID = try await put(request.basis,kind: "vivo.gaussian-basis",store: store)
+                var systems: [VivoFingerprint] = []
+                for snapshot in request.snapshots { systems.append(try await put(snapshot.system,kind: "vivo.electronic-system",store: store)) }
+                let plan = try VivoMolecularSpacePreparationWorkflow.plan(request,requestArtifact: requestID,
+                    systemArtifacts: systems,basisArtifact: basisID,implementationFingerprint: identity)
+                let results = try await workflow.runDAG(plan.nodes)
+                guard let result = results[plan.resultNode]?.outputs.first(where: { $0.name == plan.resultOutput }) else {
+                    throw VivoChemistryError.invalid("molecular preparation request output missing")
+                }
+                let payload = try await workflow.payload(artifact: result.artifact,expectedKind: plan.resultKind)
+                let records = results.keys.sorted().map { key in
+                    NodeReceipt(identifier: key,task: results[key]!.taskFingerprint,receipt: results[key]!.receiptFingerprint,reused: results[key]!.reused)
+                }
+                try finish(payload: payload,receipt: .init(schema: "numivivo.org/electronic-cli-receipt/v1",input: requestID,
+                    implementation: identity,nodes: records,result: result.artifact,resultKind: result.kind),args: args)
             case "chemistry-run":
                 try args.allow(["--output","--store"])
                 let request=try VivoElectronicRequestDocument.decode(read(source))
@@ -256,6 +275,8 @@ struct VivoElectronicCLICommands {
         if name == "algebraic-space-refinement" || name == "algebraic-selected-space-refinement" {
             return try VivoCanonicalJSON.encode(VivoPropertyRefinementExamples.algebraicPath(selectedCI: name == "algebraic-selected-space-refinement"))
         }
+        if name == "molecular-h2-space-preparation" { return try VivoCanonicalJSON.encode(VivoPropertyRefinementExamples.molecularHydrogenStretch()) }
+        if name == "algebraic-multistate-refinement" { return try VivoCanonicalJSON.encode(VivoPropertyRefinementExamples.multistateCancellation()) }
         if name == "orbital-information-selection" {
             return try VivoCanonicalJSON.encode(VivoOrbitalInformationSelection(orbitals: [0,1],pairs: [.init(0,1)]))
         }
@@ -300,7 +321,9 @@ struct VivoElectronicCLICommands {
       numivivo chemistry-run h2.json --store .numivivo/chemistry-artifacts --output h2.result.json
       numivivo chemistry-template solver-fci --output solver.json
       numivivo chemistry-solve hamiltonian.json --solver solver.json --output result.json
-      numivivo chemistry-template algebraic-space-refinement --output refinement.json
+      numivivo chemistry-template molecular-h2-space-preparation --output molecule.json
+      numivivo chemistry-prepare-space molecule.json --output refinement.json
+      numivivo chemistry-template algebraic-space-refinement --output algebraic.json
       numivivo chemistry-refine refinement.json --output refinement.result.json
       numivivo chemistry-correlations state.json --selection pairs.json --output information.json
       numivivo chemistry-export-space refinement.result.json --point barrier-point --output anchor.json
@@ -310,7 +333,8 @@ struct VivoElectronicCLICommands {
                h2-ecc-dmet, solver-ccsd, solver-fci, solver-direct-fci,
                solver-tensor-ccsd, solver-ecc-dmet, solver-lih-sa-casscf,
                solver-selected-ci, solver-selected-ci-probe, orbital-information-selection,
-               algebraic-space-refinement, algebraic-selected-space-refinement.
+               algebraic-space-refinement, algebraic-selected-space-refinement,
+               algebraic-multistate-refinement, molecular-h2-space-preparation.
     chemistry-run explicitly dispatches original and advanced request schemas.
     Advanced JSON supports densityFittedMP2 (with an explicit auxiliary basis),
     multistateCASSCF, smoothCPCM and integrated eccDMET. No method fallback.
@@ -320,6 +344,11 @@ struct VivoElectronicCLICommands {
     chemistry-correlations accepts an optional --budget and --selection. Without
     --selection it computes single-orbital information only; unmeasured pairs
     are not zero. state.json is an explicit VivoCIState, not a solver wrapper.
+    chemistry-prepare-space reuses native AO/HF workflow stages and derives a
+    refinement request from mapped reactive atoms and atomic projections. It does
+    not infer a mechanism, valence target shells or an accurate rate. The v2
+    refinement schema also supports declared multistate CI and state-averaged
+    CASSCF with state-specific/gap checks; mean energies cannot cancel errors.
     chemistry-refine compares matched electronic profiles using the request's
     budget. Incomplete or failed confirmation returns exit code 2 while retaining
     its result/receipt. Exit 0 establishes sensitivity only inside the declared

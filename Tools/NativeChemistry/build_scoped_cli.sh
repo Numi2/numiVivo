@@ -20,7 +20,7 @@ for name in VivoArtifactPrimitives CanonicalArtifact VivoArtifactStore VivoRoote
 done
 FILES+=("$ROOT/Sources/NumiVivoKit/Structure/VivoMolecularStructure.swift")
 FILES+=("$ROOT/Sources/NumiVivoKit/JSONValue.swift" "$ROOT/Sources/NumiVivoKit/Geometry/VivoCartesianGeometry.swift")
-for name in VivoChemistryWorkflow VivoElectronicWorkflow VivoElectronicWorkflowOperations VivoAdvancedElectronicWorkflow VivoAdvancedChemistryOperations VivoElectronicRequestDispatch VivoCorrelationRefinementOperations VivoRefinedHamiltonianOperation VivoECCDMETOperation VivoMolecularECCPathWorkflow VivoReproductionPreflight VivoReactionQualificationWorkflow; do
+for name in VivoChemistryWorkflow VivoElectronicWorkflow VivoElectronicWorkflowOperations VivoAdvancedElectronicWorkflow VivoAdvancedChemistryOperations VivoElectronicRequestDispatch VivoCorrelationRefinementOperations VivoRefinedHamiltonianOperation VivoMolecularSpacePreparationWorkflow VivoECCDMETOperation VivoMolecularECCPathWorkflow VivoReproductionPreflight VivoReactionQualificationWorkflow; do
   FILES+=("$ROOT/Sources/NumiVivoKit/Workflow/$name.swift")
 done
 CLI=("$ROOT/Sources/NumiVivoCLI/VivoReactionCLICommands.swift" "$ROOT/Sources/NumiVivoCLI/VivoElectronicCLICommands.swift" "$ROOT/Sources/NumiVivoCLI/VivoECCPathCLICommands.swift" "$ROOT/Tools/NativeChemistry/ScopedCLIMain.swift")

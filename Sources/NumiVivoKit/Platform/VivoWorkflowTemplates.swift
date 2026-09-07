@@ -8,6 +8,7 @@ public enum VivoWorkflowTemplates {
         case "md-segments": return try molecularDynamics()
         case "md-electronic-analysis": return try mdElectronicAnalysis()
         case "property-refinement": return try propertyRefinement()
+        case "molecular-property-refinement": return try molecularPropertyRefinement()
         default: throw VivoChemistryError.invalid("unknown workflow template: \(name)")
         }
     }

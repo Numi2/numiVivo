@@ -20,7 +20,12 @@ public extension VivoCorrelationRefinementOperations {
             throw VivoChemistryError.invalid("refined Hamiltonian orbital-frame count")
         }
         let parent = result.request.points[index].hamiltonian
-        let rotation = result.transportRotations[index]
+        guard let point = result.confirmation?.chosen.points.first(where: { $0.pointIdentifier == selection.pointIdentifier }) else {
+            throw VivoChemistryError.invalid("refined anchor is absent from complete confirmation")
+        }
+        let rotation = try point.optimizedOrbitalRotation.map {
+            try result.transportRotations[index].multiplied(by: $0)
+        } ?? result.transportRotations[index]
         let reduced = try parent.rotated(by: rotation,budget: budget).frozenCore(active: result.finalSpace.active,
             doublyOccupiedCore: result.finalSpace.doublyOccupiedCore,budget: budget)
         var provenance = reduced.provenance
@@ -40,7 +45,7 @@ public extension VivoCorrelationRefinementOperations {
         return h
     }
     static func refinedHamiltonian(implementationFingerprint id: VivoFingerprint) -> VivoChemistryOperation {
-        .init(identifier: "vivo.native.refined-anchor-hamiltonian",version: "1",implementationFingerprint: id,
+        .init(identifier: "vivo.native.refined-anchor-hamiltonian",version: "2",implementationFingerprint: id,
             outputs: [.init(name: "hamiltonian",kind: "vivo.embedded-hamiltonian")],execute: { cfg,inputs,budget in
                 guard Set(inputs.keys) == ["refinement"], let data = inputs["refinement"] else {
                     throw VivoChemistryError.invalid("refined Hamiltonian input slots")

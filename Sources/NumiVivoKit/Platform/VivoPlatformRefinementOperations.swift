@@ -35,6 +35,9 @@ public enum VivoPlatformRefinementOperations {
                 }
             }
         ]
+        definitions.append(definition(VivoMolecularSpacePreparationWorkflow.operation(implementationFingerprint: id,suppliedPrimitives: false),
+            ["request":VivoMolecularSpacePreparationWorkflow.inputKind],
+            "Prepare native molecular orbitals and conservative reactive-atom projection groups before refinement.",VivoPlatformOperations.empty))
         definitions.append(VivoPlatformOperations.pure(identifier: "vivo.platform.selected-ci-state",id: id,
             inputs: ["electronic":"vivo.selected-ci-result","hamiltonian":"vivo.embedded-hamiltonian"],
             outputs: [.init(name: "state",kind: "vivo.ci-state")],

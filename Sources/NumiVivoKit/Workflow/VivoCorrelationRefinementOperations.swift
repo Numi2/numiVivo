@@ -89,7 +89,7 @@ public enum VivoCorrelationRefinementOperations {
     /// Persists incomplete exploration as such. It never converts a budget limit
     /// or failed holdout into a sensitivity-established result.
     public static func propertyDirectedSpace(implementationFingerprint id: VivoFingerprint) -> VivoChemistryOperation {
-        .init(identifier: "vivo.native.property-directed-space",version: "1",implementationFingerprint: id,
+        .init(identifier: "vivo.native.property-directed-space",version: "2",implementationFingerprint: id,
             outputs: [.init(name: "refinement",kind: "vivo.property-directed-space-result")],execute: { cfg,inputs,budget in
                 guard cfg == .object([:]), Set(inputs.keys) == ["request"], let input = inputs["request"] else {
                     throw VivoChemistryError.invalid("property-refinement input/configuration slots")

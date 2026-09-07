@@ -28,7 +28,8 @@ public enum VivoPropertyDirectedSpace {
     private struct Evaluation {
         let summary: VivoSpaceEvaluation
         let indices: [Int]
-        let states: [VivoCIState] // lifted into the full common spatial-orbital frame
+        let states: [[VivoCIState]] // [point][energy-ordered root], lifted into each full orbital frame
+        let orbitalFrames: [VivoQMMatrix] // relative to the transported input frame
     }
     private final class Runner {
         let request: VivoPropertyDirectedSpaceRequest
@@ -95,7 +96,9 @@ public enum VivoPropertyDirectedSpace {
         func evaluate(_ partition: VivoActiveSpace, indices: [Int]) throws -> Evaluation {
             guard partition.active.count <= request.maximumActiveOrbitals else { throw Limit.activeSpace }
             let startOperators = operatorWork, startAuxiliary = auxiliaryWork
-            var observations: [VivoSpacePointObservation] = [], states: [VivoCIState] = []
+            let policy = request.solver.statePolicy
+            var observations: [VivoSpacePointObservation] = [], states: [[VivoCIState]] = []
+            var frames: [VivoQMMatrix] = []
             for index in indices {
                 guard pointEvaluations < request.maximumPointEvaluations else {
                     throw VivoChemistryError.resourceLimit("refinement point-evaluation budget")
@@ -106,99 +109,149 @@ public enum VivoPropertyDirectedSpace {
                 let reduced = try h.frozenCore(active: partition.active,doublyOccupiedCore: partition.doublyOccupiedCore,
                                                budget: remainingBudget())
                 let budget = try remainingBudget()
-                let state: VivoCIState, energy: Double, residual: Double, pt2: Double?
+                let rootStates: [VivoCIState], energies: [Double], residuals: [Double], pt2: Double?
+                let frame: VivoQMMatrix
                 var returned = false
                 do {
                     switch request.solver {
-                    case .directCI(let cfg):
+                    case .directCI(let cfg), .multistateCI(let cfg, _):
                         let result = try VivoDirectCI.solve(reduced,configuration: cfg,budget: budget)
                         operatorWork += result.operatorApplications; returned = true
-                        state = result.roots[0].state; energy = result.roots[0].energyHartree
-                        residual = result.roots[0].eigenResidualNorm; pt2 = nil
+                        rootStates = result.roots.map(\.state); energies = result.roots.map(\.energyHartree)
+                        residuals = result.roots.map(\.eigenResidualNorm); pt2 = nil
+                        frame = try .identity(n)
                     case .selectedCI(let cfg):
                         let result = try VivoSelectedCI.solve(reduced,configuration: cfg,budget: budget)
                         operatorWork += result.operatorApplications; returned = true
                         guard result.converged else {
-                            throw VivoChemistryError.convergence("selected CI at \(request.points[index].identifier): \(result.termination.rawValue); no property sensitivity inferred from an unconverged probe")
+                            throw VivoChemistryError.convergence("selected CI at \(request.points[index].identifier): \(result.termination.rawValue); no sensitivity from an unconverged probe")
                         }
-                        state = result.state; energy = result.variationalEnergyHartree
-                        residual = result.diagnostics.fullResidualNorm; pt2 = result.pt2CorrectionHartree
+                        rootStates = [result.state]; energies = [result.variationalEnergyHartree]
+                        residuals = [result.diagnostics.fullResidualNorm]; pt2 = result.pt2CorrectionHartree
+                        frame = try .identity(n)
+                    case .stateAveragedCASSCF(let cfg, _):
+                        let result = try VivoMultiStateCASSCF.solve(h,partition: partition,configuration: cfg,budget: budget)
+                        guard let work = result.numericalWork else {
+                            throw VivoChemistryError.invalid("optimized refinement requires aggregate solver work accounting")
+                        }
+                        operatorWork += work.hamiltonianOperatorApplications
+                        try reserve(work.reservedAuxiliaryWork); returned = true
+                        guard result.converged else {
+                            throw VivoChemistryError.convergence("SA-CASSCF refinement did not converge: \(result.termination.rawValue)")
+                        }
+                        rootStates = result.states.map(\.state); energies = result.states.map(\.energyHartree)
+                        residuals = result.states.map(\.eigenResidualNorm); pt2 = nil
+                        frame = result.orbitalRotation
                     }
                 } catch {
-                    // An exception does not report its partial inner work. Charge
-                    // the entire remaining allowance instead of inventing a count.
-                    if !returned { failedWorkReservation += budget.maximumOperatorApplications }
+                    // A failed inner call does not report all its partial work.
+                    // Reserve the remaining allowance rather than inventing it.
+                    if !returned { failedWorkReservation += max(0,request.budget.maximumOperatorApplications-chargedWork) }
                     throw error
                 }
-                var information: VivoSelectiveOrbitalInformationResult?
-                if request.collectOrbitalInformation {
-                    let selection = try VivoOrbitalInformationSelection.all(orbitalCount: state.orbitalCount)
-                    let report = try VivoSelectiveOrbitalInformation.analyze(state,selection: selection,budget: remainingBudget())
-                    try reserve(report.reservedPrimitiveWork); information = report
+                try policy.validateSpectrum(energies)
+                var rootReports: [VivoRefinementRootObservation] = []
+                for root in rootStates.indices {
+                    var information: VivoSelectiveOrbitalInformationResult?
+                    if request.collectOrbitalInformation {
+                        let selection = try VivoOrbitalInformationSelection.all(orbitalCount: rootStates[root].orbitalCount)
+                        let report = try VivoSelectiveOrbitalInformation.analyze(rootStates[root],selection: selection,budget: remainingBudget())
+                        try reserve(report.reservedPrimitiveWork); information = report
+                    }
+                    rootReports.append(.init(label: policy.labels[root],energyHartree: energies[root],
+                        determinantCount: rootStates[root].determinants.count,residualNorm: residuals[root],orbitalInformation: information))
                 }
-                states.append(try lift(state,partition: partition,full: h))
-                observations.append(.init(pointIdentifier: request.points[index].identifier,energyHartree: energy,
-                    determinantCount: state.determinants.count,ciResidualNorm: residual,
-                    pt2CorrectionHartree: pt2,orbitalInformation: information))
+                states.append(try rootStates.map { try lift($0,partition: partition,full: h) })
+                frames.append(frame)
+                observations.append(.init(pointIdentifier: request.points[index].identifier,energyHartree: energies[0],
+                    determinantCount: rootStates[0].determinants.count,ciResidualNorm: residuals[0],
+                    pt2CorrectionHartree: pt2,orbitalInformation: rootReports[0].orbitalInformation,
+                    roots: policy.labels.count > 1 || request.solver.optimizesOrbitals ? rootReports : nil,
+                    optimizedOrbitalRotation: request.solver.optimizesOrbitals ? frame : nil))
             }
             var minimum: Double?, assessed = 0
             if indices.count > 1 {
                 for j in 1..<indices.count where indices[j] == indices[j-1]+1 {
-                    let a = states[j-1], b = states[j], electrons = max(1,a.alphaElectrons+a.betaElectrons)
-                    let cost = try request.budget.elements([a.determinants.count,b.determinants.count,electrons,electrons,electrons])
+                    let a = states[j-1], b = states[j], electrons = max(1,a[0].alphaElectrons+a[0].betaElectrons)
+                    let cost = try request.budget.elements([a[0].determinants.count,b[0].determinants.count,electrons,electrons,electrons])
                     let budget = try remainingBudget(); try reserve(cost)
-                    let overlap = try VivoStateFollowing.overlaps(previous: [a],candidates: [b],orbitalOverlap: edges[indices[j]-1],budget: budget)[0,0]
-                    let square = overlap*overlap
-                    guard square.isFinite, square <= 1+1e-6, square >= request.minimumStateOverlapSquared else {
-                        throw VivoChemistryError.convergence("refinement path state discontinuity at \(request.points[indices[j]].identifier)")
-                    }
-                    minimum = min(minimum ?? 1,square); assessed += 1
+                    let physicalOverlap = try frames[j-1].transposed.multiplied(by: edges[indices[j]-1]).multiplied(by: frames[j])
+                    let overlap = try VivoStateFollowing.overlaps(previous: a,candidates: b,orbitalOverlap: physicalOverlap,budget: budget)
+                    let retained = try policy.minimumRetainedOverlapSquared(overlap,threshold: request.minimumStateOverlapSquared)
+                    minimum = min(minimum ?? 1,retained); assessed += 1
                 }
             }
-            // Nonadjacent physical overlaps are never approximated by multiplying
-            // adjacent overlap matrices. Unchecked discovery edges stay explicit;
-            // the final confirmation evaluates every adjacent physical edge.
+            // Never invent nonadjacent overlaps by multiplying adjacent ones.
+            // Confirmation evaluates every physical adjacent edge.
             return .init(summary: .init(partition: partition,points: observations,
                 minimumAdjacentStateOverlapSquared: minimum,assessedAdjacentEdges: assessed,
                 hamiltonianOperatorApplications: operatorWork-startOperators,
-                reservedAuxiliaryWork: auxiliaryWork-startAuxiliary),indices: indices,states: states)
+                reservedAuxiliaryWork: auxiliaryWork-startAuxiliary),indices: indices,states: states,orbitalFrames: frames)
         }
         func contrast(_ base: Evaluation, _ trial: Evaluation) throws -> VivoSpacePropertyShift {
             guard base.indices == trial.indices, Set(base.summary.partition.active).isSubset(of: Set(trial.summary.partition.active)) else {
                 throw VivoChemistryError.invalid("paired refinement must use identical geometries and nested active spaces")
             }
-            let a = base.summary.points.map(\.energyHartree), b = trial.summary.points.map(\.energyHartree)
+            let policy = request.solver.statePolicy, roots = policy.labels.count
             let r = base.indices.firstIndex(of: 0)!, p = base.indices.firstIndex(of: request.points.count-1)!
             let t = base.summary.points.firstIndex { $0.pointIdentifier == request.target.barrierPointIdentifier }!
-            var minOverlap = 1.0
+            func energies(_ evaluation: Evaluation, _ point: Int) -> [Double] {
+                evaluation.summary.points[point].roots?.map(\.energyHartree) ?? [evaluation.summary.points[point].energyHartree]
+            }
+            var minOverlap = 1.0, maxGap = 0.0
             for i in base.indices.indices {
                 let left = base.states[i], right = trial.states[i]
-                try reserve(left.determinants.count+right.determinants.count)
-                // A coefficient overlap is exact HERE: both states are lifted
-                // into the same complete orbital frame at the same geometry.
-                let map = Dictionary(uniqueKeysWithValues: zip(left.determinants,left.coefficients))
-                let overlap = zip(right.determinants,right.coefficients).reduce(0.0) { $0+(map[$1.0] ?? 0)*$1.1 }
-                let square = overlap*overlap
-                guard square.isFinite, square <= 1+1e-6, square >= request.minimumStateOverlapSquared else {
-                    throw VivoChemistryError.convergence("active-space expansion lost the tracked electronic state")
+                let overlap: VivoQMMatrix
+                if !request.solver.optimizesOrbitals {
+                    // Exact HERE: both states are lifted into the same complete
+                    // fixed orbital frame at the same geometry.
+                    try reserve((left[0].determinants.count+right[0].determinants.count)*roots*roots)
+                    var values = VivoQMMatrix(roots,roots)
+                    for a in 0..<roots {
+                        let map = Dictionary(uniqueKeysWithValues: zip(left[a].determinants,left[a].coefficients))
+                        for b in 0..<roots {
+                            values[a,b] = zip(right[b].determinants,right[b].coefficients).reduce(0.0) { $0+(map[$1.0] ?? 0)*$1.1 }
+                        }
+                    }
+                    overlap = values
+                } else {
+                    let electrons = max(1,left[0].alphaElectrons+left[0].betaElectrons)
+                    let cost = try request.budget.elements([left[0].determinants.count,right[0].determinants.count,electrons,electrons,electrons])
+                    let budget = try remainingBudget(); try reserve(cost)
+                    overlap = try VivoStateFollowing.overlaps(previous: left,candidates: right,
+                        orbitalOverlap: base.orbitalFrames[i].transposed.multiplied(by: trial.orbitalFrames[i]),budget: budget)
                 }
-                guard b[i] <= a[i]+1e-8*max(1,abs(a[i])) else {
-                    throw VivoChemistryError.convergence("nested electronic space increased variational energy; state/solver review required")
+                minOverlap = min(minOverlap,try policy.minimumRetainedOverlapSquared(overlap,threshold: request.minimumStateOverlapSquared))
+                let a = energies(base,i), b = energies(trial,i)
+                for root in 0..<roots {
+                    // Min-max ordering applies to fixed-orbital nested CI spaces,
+                    // not to separately stationary state-averaged orbital optima.
+                    if !request.solver.optimizesOrbitals && b[root] > a[root]+1e-8*max(1,abs(a[root])) {
+                        throw VivoChemistryError.convergence("nested CI increased an energy-ordered variational root")
+                    }
+                    for other in 0..<root { maxGap = max(maxGap,abs((b[root]-b[other])-(a[root]-a[other]))) }
                 }
-                minOverlap = min(minOverlap,square)
             }
-            let forward = (b[t]-b[r])-(a[t]-a[r]), reverse = (b[t]-b[p])-(a[t]-a[p])
-            let reaction = (b[p]-b[r])-(a[p]-a[r])
-            let relative = a.indices.map { abs((b[$0]-b[r])-(a[$0]-a[r])) }.max()!
-            let absolute = zip(a,b).map { abs($0-$1) }.max()!
-            let impact = max(max(abs(forward),abs(reverse),abs(reaction))/request.target.maximumBarrierShiftHartree,
+            var shifts: [VivoRefinementRootShift] = [], impact = 0.0
+            for root in 0..<roots {
+                let a = base.indices.indices.map { energies(base,$0)[root] }
+                let b = base.indices.indices.map { energies(trial,$0)[root] }
+                let forward = (b[t]-b[r])-(a[t]-a[r]), reverse = (b[t]-b[p])-(a[t]-a[p])
+                let reaction = (b[p]-b[r])-(a[p]-a[r])
+                let relative = a.indices.map { abs((b[$0]-b[r])-(a[$0]-a[r])) }.max()!
+                let absolute = zip(a,b).map { abs($0-$1) }.max()!
+                impact = max(impact,max(abs(forward),abs(reverse),abs(reaction))/request.target.maximumBarrierShiftHartree,
                              relative/request.target.maximumRelativeProfileShiftHartree)
-            guard [forward,reverse,reaction,relative,absolute,impact].allSatisfy(\.isFinite) else {
-                throw VivoChemistryError.convergence("property sensitivity overflow")
+                shifts.append(.init(label: policy.labels[root],forwardHartree: forward,reverseHartree: reverse,reactionHartree: reaction,
+                    maximumRelativeProfileHartree: relative,maximumAbsoluteEnergyHartree: absolute))
             }
-            return .init(forwardHartree: forward,reverseHartree: reverse,reactionHartree: reaction,
-                maximumRelativeProfileHartree: relative,maximumAbsoluteEnergyHartree: absolute,
-                minimumExpansionStateOverlapSquared: minOverlap,normalizedPropertyImpact: impact)
+            if let tolerance = request.target.maximumStateGapShiftHartree { impact = max(impact,maxGap/tolerance) }
+            guard impact.isFinite, maxGap.isFinite else { throw VivoChemistryError.convergence("property sensitivity overflow") }
+            let first = shifts[0]
+            return .init(forwardHartree: first.forwardHartree,reverseHartree: first.reverseHartree,reactionHartree: first.reactionHartree,
+                maximumRelativeProfileHartree: first.maximumRelativeProfileHartree,maximumAbsoluteEnergyHartree: first.maximumAbsoluteEnergyHartree,
+                minimumExpansionStateOverlapSquared: minOverlap,normalizedPropertyImpact: impact,
+                rootShifts: roots > 1 ? shifts : nil,maximumStateGapShiftHartree: roots > 1 ? maxGap : nil)
         }
         func confirmation(_ partition: VivoActiveSpace) throws -> VivoSpaceConfirmation {
             // Confirmation geometries have not supplied energies to selection.
