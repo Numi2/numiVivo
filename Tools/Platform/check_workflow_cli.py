@@ -51,14 +51,16 @@ def main():
     check({'vivo.platform.md-start', 'vivo.platform.md-continue', 'vivo.platform.target-reference',
            'vivo.platform.structure-electronic-system', 'vivo.native.advanced-many-body',
            'vivo.platform.qmmm-transmission-analyze', 'vivo.platform.qmmm-apply-transmission',
-           'vivo.platform.qmmm-chemical-qualification', 'vivo.platform.qmmm-chemical-state-network',
-           'vivo.platform.qmmm-chemical-exchange-network'}.issubset(registered),
-          'catalog exposes cross-domain, transmission and chemical-qualification operation families')
+           'vivo.platform.qmmm-chemical-qualification', 'vivo.platform.qmmm-chemical-state-thermodynamics',
+           'vivo.platform.qmmm-chemical-state-network', 'vivo.platform.qmmm-chemical-exchange-network',
+           'vivo.platform.qmmm-chemical-exchange-validation'}.issubset(registered),
+          'catalog exposes cross-domain, transmission and complete chemical-state qualification operation families')
     qmmm_help = run('qmmm-help', 'qmmm-free-energy-help').stdout
     check('qmmm-transmission-analyze' in qmmm_help and 'qmmm-transmission-apply' in qmmm_help and
-          'qmmm-chemical-qualify' in qmmm_help and 'qmmm-chemical-state-network' in qmmm_help and
-          'qmmm-chemical-exchange-network' in qmmm_help,
-          'real CLI routes transmission, qualification, rapid-equilibrium and transient-exchange commands')
+          'qmmm-chemical-qualify' in qmmm_help and 'qmmm-chemical-state-populations' in qmmm_help and
+          'qmmm-chemical-state-network' in qmmm_help and 'qmmm-chemical-exchange-network' in qmmm_help and
+          'qmmm-chemical-exchange-validate' in qmmm_help,
+          'real CLI routes transmission, pH populations, qualification, rapid-equilibrium, transient exchange and time-course validation')
     recipe_path = out / 'recipe.json'
     run('template', 'workflow-template', 'molecular-analysis', '--output', recipe_path)
     recipe = read('recipe.json')
