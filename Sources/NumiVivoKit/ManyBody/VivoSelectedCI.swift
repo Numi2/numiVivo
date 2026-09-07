@@ -1,5 +1,7 @@
 import Foundation
 
+/// Existing selected-CI request fields are retained. The two optional guards
+/// decode older requests, but new results use a stricter, versioned contract.
 public struct VivoSelectedCIConfiguration: Codable, Sendable, Equatable {
     public var maximumIterations: Int
     public var maximumDeterminants: Int
@@ -9,191 +11,309 @@ public struct VivoSelectedCIConfiguration: Codable, Sendable, Equatable {
     public var eigenResidualTolerance: Double
     public var minimumDenominatorHartree: Double
     public var maximumDavidsonSubspace: Int
-    public init(maximumIterations: Int = 32, maximumDeterminants: Int = 4096,
+    public var maximumExternalDeterminants: Int?
+    public var fullResidualTolerance: Double?
+    public init(maximumIterations: Int = 32, maximumDeterminants: Int = 512,
                 selectionBatchSize: Int = 128, minimumSelectionContributionHartree: Double = 1e-9,
                 pt2ToleranceHartree: Double = 1e-6, eigenResidualTolerance: Double = 1e-9,
-                minimumDenominatorHartree: Double = 1e-5, maximumDavidsonSubspace: Int = 48) {
-        self.maximumIterations=maximumIterations;self.maximumDeterminants=maximumDeterminants
-        self.selectionBatchSize=selectionBatchSize;self.minimumSelectionContributionHartree=minimumSelectionContributionHartree
-        self.pt2ToleranceHartree=pt2ToleranceHartree;self.eigenResidualTolerance=eigenResidualTolerance
-        self.minimumDenominatorHartree=minimumDenominatorHartree;self.maximumDavidsonSubspace=maximumDavidsonSubspace
+                minimumDenominatorHartree: Double = 1e-5, maximumDavidsonSubspace: Int = 48,
+                maximumExternalDeterminants: Int? = nil, fullResidualTolerance: Double? = nil) {
+        self.maximumIterations = maximumIterations; self.maximumDeterminants = maximumDeterminants
+        self.selectionBatchSize = selectionBatchSize; self.minimumSelectionContributionHartree = minimumSelectionContributionHartree
+        self.pt2ToleranceHartree = pt2ToleranceHartree; self.eigenResidualTolerance = eigenResidualTolerance
+        self.minimumDenominatorHartree = minimumDenominatorHartree; self.maximumDavidsonSubspace = maximumDavidsonSubspace
+        self.maximumExternalDeterminants = maximumExternalDeterminants; self.fullResidualTolerance = fullResidualTolerance
+    }
+    public var effectiveFullResidualTolerance: Double { fullResidualTolerance ?? max(1e-7,10*eigenResidualTolerance) }
+    public func externalCapacity(budget: VivoChemistryBudget) -> Int {
+        maximumExternalDeterminants ?? min(50_000,max(1,budget.maximumBytes/4096))
     }
     public func validate(budget: VivoChemistryBudget) throws {
-        guard (1...1000).contains(maximumIterations),(1...budget.maximumDeterminants).contains(maximumDeterminants),
-              (1...maximumDeterminants).contains(selectionBatchSize),minimumSelectionContributionHartree.isFinite,
-              minimumSelectionContributionHartree>=0,pt2ToleranceHartree.isFinite,pt2ToleranceHartree>0,
-              eigenResidualTolerance.isFinite,eigenResidualTolerance>0,minimumDenominatorHartree.isFinite,
-              minimumDenominatorHartree>0,(4...512).contains(maximumDavidsonSubspace) else {
-            throw VivoChemistryError.invalid("selected-CI iteration, determinant, threshold, denominator or Davidson contract")
+        try budget.validate()
+        guard (1...1000).contains(maximumIterations), (1...budget.maximumDeterminants).contains(maximumDeterminants),
+              (1...maximumDeterminants).contains(selectionBatchSize),
+              minimumSelectionContributionHartree.isFinite, minimumSelectionContributionHartree >= 0,
+              pt2ToleranceHartree.isFinite, pt2ToleranceHartree > 0,
+              eigenResidualTolerance.isFinite, eigenResidualTolerance > 0,
+              minimumDenominatorHartree.isFinite, minimumDenominatorHartree > 0,
+              (4...512).contains(maximumDavidsonSubspace), externalCapacity(budget: budget) > 0,
+              effectiveFullResidualTolerance.isFinite, effectiveFullResidualTolerance > 0,
+              eigenResidualTolerance <= effectiveFullResidualTolerance/10 else {
+            throw VivoChemistryError.invalid("selected-CI capacities, thresholds or inner/full residual contract")
         }
     }
+    var davidson: VivoDavidsonConfiguration {
+        .init(maximumIterations: max(150,4*maximumIterations),maximumSubspace: maximumDavidsonSubspace,
+              residualTolerance: eigenResidualTolerance)
+    }
 }
-
+public enum VivoSelectedCITermination: String, Codable, Sendable {
+    case residualConverged, determinantLimit, iterationLimit, selectionThreshold
+}
+public struct VivoSelectedCIExternalContribution: Codable, Sendable, Equatable {
+    public let determinant: UInt64
+    /// <D|H|Psi> after summing all connected contributions, not max |H_Di c_i|.
+    public let residualAmplitudeHartree: Double
+    public let denominatorHartree: Double
+    public let intruder: Bool
+    public let selectionAmplitude: Double
+    public let selectionContributionHartree: Double
+}
+public struct VivoSelectedCIDiagnostics: Codable, Sendable, Equatable {
+    public let projectedResidualNorm: Double
+    public let externalResidualNorm: Double
+    public var fullResidualNorm: Double { hypot(projectedResidualNorm,externalResidualNorm) }
+    /// Complete EN2 sum, or nil if any nonzero external contribution has a
+    /// nonnegative/near-zero denominator. This estimate is never an error bound.
+    public let epsteinNesbetCorrectionHartree: Double?
+    public let intruderCount: Int
+    public let externalDeterminantCount: Int
+    public let operatorApplications: Int
+    public let externalContributions: [VivoSelectedCIExternalContribution]
+}
 public struct VivoSelectedCIIteration: Codable, Sendable, Equatable {
-    public let iteration:Int
-    public let determinantCount:Int
-    public let variationalEnergyHartree:Double
-    public let eigenResidual:Double
-    public let externalCandidateCount:Int
-    public let selectedCount:Int
-    public let pt2CorrectionHartree:Double
-    public let largestExternalContributionHartree:Double
-    public let intruderCandidateCount:Int
+    public let iteration: Int
+    public let determinantCount: Int
+    public let variationalEnergyHartree: Double
+    public let eigenResidual: Double
+    public let externalCandidateCount: Int
+    public let selectedCount: Int
+    public let pt2CorrectionHartree: Double?
+    public let largestExternalContributionHartree: Double
+    public let intruderCandidateCount: Int
+    public let fullResidualNorm: Double
+    public let addedDeterminants: [UInt64]
 }
-
 public struct VivoSelectedCIResult: Codable, Sendable, Equatable {
-    public let converged:Bool
-    public let variationalEnergyHartree:Double
-    public let pt2CorrectedEnergyHartree:Double
-    public let pt2CorrectionHartree:Double
-    public let state:VivoCIState
-    public let fullSectorDimension:Int
-    public let selectedDeterminantCount:Int
-    public let eigenResidual:Double
-    public let iterations:[VivoSelectedCIIteration]
-    public let operatorApplications:Int
-    public let method:String
+    public let schema: String
+    public let converged: Bool
+    public let variationalEnergyHartree: Double
+    /// Nil when a valid unregularized EN2 correction is unavailable.
+    public let pt2CorrectedEnergyHartree: Double?
+    public let pt2CorrectionHartree: Double?
+    public let state: VivoCIState
+    public let fullSectorDimension: Int
+    public let selectedDeterminantCount: Int
+    public let eigenResidual: Double
+    public let iterations: [VivoSelectedCIIteration]
+    public let operatorApplications: Int
+    public let method: String
+    public let configuration: VivoSelectedCIConfiguration
+    public let seedDeterminants: [UInt64]
+    public let diagnostics: VivoSelectedCIDiagnostics
+    public let termination: VivoSelectedCITermination
+    public let matrixVectorProducts: Int
 }
-
-/// Deterministic CIPSI-style selected CI. Only selected determinants are stored
-/// in the variational Hamiltonian. Connected external determinants are generated
-/// from the wavefunction, ranked by Epstein-Nesbet second-order contributions,
-/// and admitted in bounded batches. PT2 is a remainder diagnostic, not a rigorous
-/// error bar. Near-zero denominators are selected preferentially and reported.
+/// Consolidated deterministic CIPSI-style selected CI. The existing Davidson
+/// and Slater-Condon implementations serve both full and selected spaces.
+/// PT2 is a diagnostic, never an error bound or global-ground-root certificate.
 public enum VivoSelectedCI {
-    public static let method="adaptive determinant-selected variational CI with matrix-free Davidson and Epstein-Nesbet PT2 selection; PT2 is a diagnostic remainder, not a certified error bound or DMRG replacement"
-
-    private static func sectorDimension(_ n:Int,_ a:Int,_ b:Int) throws -> Int {
-        func choose(_ n:Int,_ input:Int) throws -> Int {
-            guard input>=0,input<=n else{return 0};let k=min(input,n-input);if k==0{return 1};var c=1
-            for i in 1...k {let x=c.multipliedReportingOverflow(by:n-k+i);guard !x.overflow else{throw VivoChemistryError.resourceLimit("selected-CI sector dimension overflow")};c=x.partialValue/i}
+    public static let method = "numivivo.selected-ci.v2: deterministic residual/EN2 selection with shared Davidson; PT2 is a diagnostic remainder, not a certified error bound; full connected residual required"
+    private static func sectorDimension(_ n: Int, _ a: Int, _ b: Int) throws -> Int {
+        func choose(_ population: Int) throws -> Int {
+            let k = min(population,n-population); var c = 1
+            if k > 0 { for i in 1...k {
+                let x = c.multipliedReportingOverflow(by: n-k+i)
+                guard !x.overflow else { throw VivoChemistryError.resourceLimit("selected-CI sector dimension overflow") }
+                c = x.partialValue/i
+            } }
             return c
         }
-        let ca=try choose(n,a),cb=try choose(n,b),x=ca.multipliedReportingOverflow(by:cb)
-        guard !x.overflow else{throw VivoChemistryError.resourceLimit("selected-CI sector dimension overflow")};return x.partialValue
+        let ca = try choose(a), cb = try choose(b), x = ca.multipliedReportingOverflow(by: cb)
+        guard !x.overflow else { throw VivoChemistryError.resourceLimit("selected-CI sector dimension overflow") }
+        return x.partialValue
     }
-    private static func hartreeFockDeterminant(_ h:VivoEmbeddedHamiltonian)->UInt64 {
-        var d:UInt64=0
-        for p in 0..<h.alphaElectrons {d |= UInt64(1) << (2*p)}
-        for p in 0..<h.betaElectrons {d |= UInt64(1) << (2*p+1)}
+    private static func defaultSeed(_ h: VivoEmbeddedHamiltonian) -> UInt64 {
+        var d: UInt64 = 0
+        for p in 0..<h.alphaElectrons { d |= UInt64(1) << (2*p) }
+        for p in 0..<h.betaElectrons { d |= UInt64(1) << (2*p+1) }
         return d
     }
-    private static func diagonal(_ det:UInt64,_ h:VivoEmbeddedHamiltonian)->Double {
-        let occ=(0..<(2*h.orbitalCount)).filter{det & (UInt64(1)<<$0) != 0};var e=0.0
-        func integral(_ p:Int,_ q:Int,_ r:Int,_ s:Int)->Double {
-            (p%2==r%2 && q%2==s%2 ? h.eri(p/2,r/2,q/2,s/2):0) -
-            (p%2==s%2 && q%2==r%2 ? h.eri(p/2,s/2,q/2,r/2):0)
+    /// Conservative accounting for live sparse maps, sort buffers, occupied/
+    /// virtual lists and result records; not an OS resident-memory measurement.
+    private static func reservedBytes(external: Int, selected: Int, budget: VivoChemistryBudget) throws -> Int {
+        let a = external.multipliedReportingOverflow(by: 1024)
+        let b = selected.multipliedReportingOverflow(by: 2048)
+        let sum = a.partialValue.addingReportingOverflow(b.partialValue)
+        guard !a.overflow, !b.overflow, !sum.overflow, sum.partialValue < budget.maximumBytes else {
+            throw VivoChemistryError.resourceLimit("selected CI aggregate sparse workspace")
         }
-        for p in occ {e += h.oneElectron[p/2,p/2];for q in occ {e += 0.5*integral(p,q,p,q)}}
-        return e
+        return sum.partialValue
     }
-    private static func connected(_ det:UInt64,_ h:VivoEmbeddedHamiltonian,
-                                  visit:(UInt64,Double)throws->Void) throws {
-        let modes=2*h.orbitalCount,occ=(0..<modes).filter{det & (UInt64(1)<<$0) != 0},vir=(0..<modes).filter{det & (UInt64(1)<<$0) == 0}
-        func integral(_ p:Int,_ q:Int,_ r:Int,_ s:Int)->Double {
-            (p%2==r%2 && q%2==s%2 ? h.eri(p/2,r/2,q/2,s/2):0) -
-            (p%2==s%2 && q%2==r%2 ? h.eri(p/2,s/2,q/2,r/2):0)
+    /// Recomputes the complete connected residual without enumerating the sector.
+    /// Capacity exhaustion throws rather than publishing a screened 'full' norm.
+    public static func diagnose(_ h: VivoEmbeddedHamiltonian, state: VivoCIState, energyHartree: Double,
+                                configuration cfg: VivoSelectedCIConfiguration = .init(),
+                                budget: VivoChemistryBudget = .init()) throws -> VivoSelectedCIDiagnostics {
+        try cfg.validate(budget: budget); try h.validate(budget: budget); try state.validate(budget: budget)
+        guard state.orbitalCount == h.orbitalCount, state.alphaElectrons == h.alphaElectrons,
+              state.betaElectrons == h.betaElectrons, energyHartree.isFinite else {
+            throw VivoChemistryError.invalid("selected CI diagnostic Hamiltonian/state binding")
         }
-        for i in occ {for a in vir where i%2==a%2 {
-            guard let action=vivoApplyFermions(det,[.init(mode:i,creation:false),.init(mode:a,creation:true)]) else{continue}
-            var value=h.oneElectron[a/2,i/2]
-            for j in occ where j != i {value += integral(a,j,i,j)}
-            if value != 0 {try visit(action.0,Double(action.1)*value)}
-        }}
-        if occ.count>=2 && vir.count>=2 {for ii in 0..<(occ.count-1) {for jj in (ii+1)..<occ.count {
-            let i=occ[ii],j=occ[jj]
-            for aa in 0..<(vir.count-1) {for bb in (aa+1)..<vir.count {
-                let a=vir[aa],b=vir[bb]
-                guard i%2+j%2==a%2+b%2,
-                      let action=vivoApplyFermions(det,[.init(mode:i,creation:false),.init(mode:j,creation:false),.init(mode:b,creation:true),.init(mode:a,creation:true)]) else{continue}
-                let value=Double(action.1)*integral(a,b,i,j);if value != 0 {try visit(action.0,value)}
-            }}
-        }}}
-    }
-
-    private static func solveProjected(_ h:VivoEmbeddedHamiltonian,determinants:[UInt64],initial:[Double]?,
-                                       cfg:VivoSelectedCIConfiguration,budget:VivoChemistryBudget,
-                                       work:inout Int) throws -> (energy:Double,coefficients:[Double],residual:Double) {
-        let action=try VivoDirectHamiltonian(h,determinants:determinants,budget:budget),d=determinants.count
-        let capacity=min(d,cfg.maximumDavidsonSubspace)
-        func dot(_ a:[Double],_ b:[Double])->Double{zip(a,b).reduce(0){$0+$1.0*$1.1}}
-        func orth(_ source:[Double],_ basis:[[Double]])->[Double]?{var q=source;for _ in 0..<2{for b in basis{let p=dot(q,b);for i in q.indices{q[i]-=p*b[i]}}};let n=q.reduce(0){hypot($0,$1)};return n>1e-12 ? q.map{$0/n}:nil}
-        var seed=initial ?? [Double](repeating:0,count:d)
-        if initial==nil {seed[action.diagonal.indices.min(by:{action.diagonal[$0]<action.diagonal[$1]})!]=1}
-        guard seed.count==d,let q=orth(seed,[]) else{throw VivoChemistryError.invalid("selected-CI Davidson seed")}
-        var basis=[q],images=[try action.apply(q,work:&work)]
-        for _ in 0..<max(20,cfg.maximumIterations*4) {
-            let m=basis.count;var p=VivoQMMatrix(m,m)
-            for i in 0..<m {for j in 0...i {let x=0.5*(dot(basis[i],images[j])+dot(basis[j],images[i]));p[i,j]=x;p[j,i]=x}}
-            let eig=try VivoQMDenseAlgebra.symmetricEigen(p,tolerance:1e-14,maximumSweeps:128)
-            var v=[Double](repeating:0,count:d),av=v
-            for j in 0..<m {for i in 0..<d {v[i]+=eig.vectors[j,0]*basis[j][i];av[i]+=eig.vectors[j,0]*images[j][i]}}
-            let r=(0..<d).map{av[$0]-eig.values[0]*v[$0]},rn=r.reduce(0){hypot($0,$1)}
-            if rn<=cfg.eigenResidualTolerance {if let k=v.indices.max(by:{abs(v[$0])<abs(v[$1])}),v[k]<0{v=v.map { -$0 }};return(eig.values[0]+h.constantEnergyHartree,v,rn)}
-            let correction=(0..<d).map{i->Double in let gap=eig.values[0]-action.diagonal[i];return r[i]/((gap<0 ? -1.0:1.0)*max(abs(gap),cfg.minimumDenominatorHartree))}
-            guard let next=orth(correction,basis) else{throw VivoChemistryError.convergence("selected-CI Davidson stagnation")}
-            if basis.count>=capacity {basis=[v];images=[av]}
-            basis.append(next);images.append(try action.apply(next,work:&work))
-        }
-        throw VivoChemistryError.convergence("selected-CI Davidson iteration bound")
-    }
-
-    public static func solve(_ h:VivoEmbeddedHamiltonian,configuration cfg:VivoSelectedCIConfiguration = .init(),
-                             initialDeterminants:[UInt64]? = nil,budget:VivoChemistryBudget = .init()) throws -> VivoSelectedCIResult {
-        try h.validate(budget:budget);try cfg.validate(budget:budget)
-        guard h.orbitalCount<=31 else{throw VivoChemistryError.resourceLimit("selected CI uses UInt64 spin determinants")}
-        let full=try sectorDimension(h.orbitalCount,h.alphaElectrons,h.betaElectrons)
-        var determinants=initialDeterminants ?? [hartreeFockDeterminant(h)]
-        determinants=Array(Set(determinants)).sorted()
-        guard !determinants.isEmpty,determinants.count<=cfg.maximumDeterminants else{throw VivoChemistryError.invalid("selected-CI initial determinant population")}
-        let probe=VivoCIState(orbitalCount:h.orbitalCount,alphaElectrons:h.alphaElectrons,betaElectrons:h.betaElectrons,
-            determinants:determinants,coefficients:[Double](repeating:1/sqrt(Double(determinants.count)),count:determinants.count))
-        try probe.validate(budget:budget)
-        var work=0,previous:[UInt64:Double]=[:],history:[VivoSelectedCIIteration]=[],final:(Double,[Double],Double)?
-        var lastPT2=Double.infinity
-        for iteration in 1...cfg.maximumIterations {
-            let initial=determinants.map{previous[$0] ?? 0},seed=initial.contains(where:{$0 != 0}) ? initial:nil
-            let solved=try solveProjected(h,determinants:determinants,initial:seed,cfg:cfg,budget:budget,work:&work)
-            final=solved;previous=Dictionary(uniqueKeysWithValues:zip(determinants,solved.1))
-            let selected=Set(determinants),electronic=solved.0-h.constantEnergyHartree
-            var coupling:[UInt64:Double]=[:]
-            for (det,c) in zip(determinants,solved.1) where abs(c)>1e-15 {
-                try connected(det,h) { external,value in
-                    guard work<budget.maximumOperatorApplications else{throw VivoChemistryError.resourceLimit("selected-CI external coupling work")};work+=1
-                    if !selected.contains(external){coupling[external,default:0]+=c*value}
+        _ = try reservedBytes(external: cfg.externalCapacity(budget: budget), selected: state.determinants.count, budget: budget)
+        let action = try VivoDirectHamiltonian(h,determinants: state.determinants,budget: budget)
+        var projected = [Double](repeating: 0,count: state.determinants.count)
+        var external: [UInt64: Double] = [:], work = 0
+        // Ascending determinant order fixes accumulation order. No small
+        // coefficient is discarded from a purported complete residual.
+        for k in state.determinants.indices.sorted(by: { state.determinants[$0] < state.determinants[$1] }) where state.coefficients[k] != 0 {
+            try action.connections(from: k,work: &work) { destination,value in
+                let contribution = value*state.coefficients[k]
+                guard contribution.isFinite else { throw VivoChemistryError.convergence("selected CI residual overflow") }
+                if let i = action.index[destination] { projected[i] += contribution }
+                else if contribution != 0 {
+                    if external[destination] == nil, external.count >= cfg.externalCapacity(budget: budget) {
+                        throw VivoChemistryError.resourceLimit("selected CI external frontier capacity; residual is not complete")
+                    }
+                    external[destination,default: 0] += contribution
                 }
             }
-            var ranked:[(det:UInt64,contribution:Double,intruder:Bool)]=[];var pt2=0.0,intruders=0,largest=0.0
-            ranked.reserveCapacity(coupling.count)
-            for (det,v) in coupling where v != 0 {
-                let raw=electronic-diagonal(det,h),intruder=abs(raw)<cfg.minimumDenominatorHartree
-                let denom=intruder ? (raw<0 ? -cfg.minimumDenominatorHartree:cfg.minimumDenominatorHartree):raw
-                let contribution=v*v/denom;pt2+=contribution;largest=max(largest,abs(contribution));if intruder{intruders+=1}
-                ranked.append((det,contribution,intruder))
-            }
-            ranked.sort{a,b in let x=abs(a.contribution),y=abs(b.contribution);return x==y ? a.det<b.det:x>y}
-            let room=cfg.maximumDeterminants-determinants.count
-            let eligible=ranked.filter{$0.intruder || abs($0.contribution)>=cfg.minimumSelectionContributionHartree}
-            let chosen=Array(eligible.prefix(min(room,cfg.selectionBatchSize)))
-            history.append(.init(iteration:iteration,determinantCount:determinants.count,variationalEnergyHartree:solved.0,
-                eigenResidual:solved.2,externalCandidateCount:coupling.count,selectedCount:chosen.count,
-                pt2CorrectionHartree:pt2,largestExternalContributionHartree:largest,intruderCandidateCount:intruders))
-            lastPT2=pt2
-            if abs(pt2)<=cfg.pt2ToleranceHartree && intruders==0 {
-                let state=VivoCIState(orbitalCount:h.orbitalCount,alphaElectrons:h.alphaElectrons,betaElectrons:h.betaElectrons,
-                    determinants:determinants,coefficients:solved.1);try state.validate(budget:budget)
-                return .init(converged:true,variationalEnergyHartree:solved.0,pt2CorrectedEnergyHartree:solved.0+pt2,
-                    pt2CorrectionHartree:pt2,state:state,fullSectorDimension:full,selectedDeterminantCount:determinants.count,
-                    eigenResidual:solved.2,iterations:history,operatorApplications:work,method:method)
-            }
-            guard iteration<cfg.maximumIterations,!chosen.isEmpty,room>0 else{break}
-            determinants.append(contentsOf:chosen.map(\.det));determinants.sort()
         }
-        guard let solved=final else{throw VivoChemistryError.convergence("selected-CI produced no variational state")}
-        let state=VivoCIState(orbitalCount:h.orbitalCount,alphaElectrons:h.alphaElectrons,betaElectrons:h.betaElectrons,
-            determinants:determinants,coefficients:determinants.map{previous[$0] ?? 0});try state.validate(budget:budget)
-        return .init(converged:false,variationalEnergyHartree:solved.0,pt2CorrectedEnergyHartree:solved.0+lastPT2,
-            pt2CorrectionHartree:lastPT2,state:state,fullSectorDimension:full,selectedDeterminantCount:determinants.count,
-            eigenResidual:solved.2,iterations:history,operatorApplications:work,method:method)
+        let electronic = energyHartree-h.constantEnergyHartree
+        var inside = 0.0, outside = 0.0, correction = 0.0, compensation = 0.0, intruders = 0
+        for i in projected.indices { inside = hypot(inside,projected[i]-electronic*state.coefficients[i]) }
+        var contributions: [VivoSelectedCIExternalContribution] = []
+        for d in external.keys.sorted() {
+            let r = external[d]!
+            if r == 0 { continue }
+            guard work < budget.maximumOperatorApplications else { throw VivoChemistryError.resourceLimit("selected CI diagnostic work") }
+            work += 1
+            let denominator = electronic-action.diagonalElement(d)
+            let intruder = denominator >= -cfg.minimumDenominatorHartree
+            let amplitude = abs(r)/max(abs(denominator),cfg.minimumDenominatorHartree)
+            let selection = amplitude*abs(r)
+            guard r.isFinite, denominator.isFinite, amplitude.isFinite, selection.isFinite else {
+                throw VivoChemistryError.convergence("selected CI diagnostic nonfinite")
+            }
+            outside = hypot(outside,r)
+            if intruder { intruders += 1 }
+            else {
+                let term = (r/denominator)*r
+                guard term.isFinite else { throw VivoChemistryError.convergence("selected CI EN2 overflow") }
+                let y = term-compensation, t = correction+y
+                compensation = (t-correction)-y; correction = t
+            }
+            contributions.append(.init(determinant: d,residualAmplitudeHartree: r,denominatorHartree: denominator,
+                intruder: intruder,selectionAmplitude: amplitude,selectionContributionHartree: selection))
+        }
+        guard inside.isFinite, outside.isFinite, correction.isFinite else { throw VivoChemistryError.convergence("selected CI norm overflow") }
+        return .init(projectedResidualNorm: inside,externalResidualNorm: outside,
+            epsteinNesbetCorrectionHartree: intruders == 0 ? correction : nil,
+            intruderCount: intruders,externalDeterminantCount: contributions.count,
+            operatorApplications: work,externalContributions: contributions)
+    }
+    public static func solve(_ h: VivoEmbeddedHamiltonian, configuration cfg: VivoSelectedCIConfiguration = .init(),
+                             initialDeterminants suppliedSeeds: [UInt64]? = nil,
+                             budget: VivoChemistryBudget = .init()) throws -> VivoSelectedCIResult {
+        try cfg.validate(budget: budget); try h.validate(budget: budget)
+        guard h.orbitalCount <= 31 else { throw VivoChemistryError.resourceLimit("selected CI supports at most 31 spatial orbitals") }
+        let seeds = (suppliedSeeds ?? [defaultSeed(h)]).sorted()
+        guard !seeds.isEmpty, seeds.count <= cfg.maximumDeterminants, Set(seeds).count == seeds.count else {
+            throw VivoChemistryError.invalid("selected CI seed set")
+        }
+        var dets = seeds, history: [VivoSelectedCIIteration] = [], work = 0, products = 0
+        var previousEnergy: Double?
+        for iteration in 1...cfg.maximumIterations {
+            let reserved = try reservedBytes(external: cfg.externalCapacity(budget: budget), selected: dets.count, budget: budget)
+            var innerBudget = budget
+            innerBudget.maximumBytes -= reserved; innerBudget.maximumOperatorApplications -= work
+            guard innerBudget.maximumOperatorApplications > 0 else { throw VivoChemistryError.resourceLimit("selected CI aggregate work") }
+            let eig = try VivoDirectCI.diagonalize(h,determinants: dets,configuration: cfg.davidson,budget: innerBudget)
+            work += eig.operatorApplications; products += eig.matrixVectorProducts
+            let state = eig.states[0], energy = eig.energiesHartree[0]
+            if let previousEnergy, energy > previousEnergy+max(1e-10,10*cfg.davidson.residualTolerance) {
+                throw VivoChemistryError.convergence("selected CI variational energy increased on nested expansion")
+            }
+            var diagnosticBudget = budget; diagnosticBudget.maximumOperatorApplications -= work
+            guard diagnosticBudget.maximumOperatorApplications > 0 else { throw VivoChemistryError.resourceLimit("selected CI aggregate diagnostic work") }
+            let diagnostics = try diagnose(h,state: state,energyHartree: energy,configuration: cfg,budget: diagnosticBudget)
+            work += diagnostics.operatorApplications
+            let remaining = cfg.maximumDeterminants-dets.count
+            let ranked = diagnostics.externalContributions.filter {
+                $0.intruder || $0.selectionContributionHartree >= cfg.minimumSelectionContributionHartree
+            }.sorted {
+                if $0.intruder != $1.intruder { return $0.intruder }
+                if $0.selectionContributionHartree != $1.selectionContributionHartree {
+                    return $0.selectionContributionHartree > $1.selectionContributionHartree
+                }
+                return $0.determinant < $1.determinant
+            }
+            var termination: VivoSelectedCITermination?
+            if diagnostics.fullResidualNorm <= cfg.effectiveFullResidualTolerance,
+               let pt2 = diagnostics.epsteinNesbetCorrectionHartree, abs(pt2) <= cfg.pt2ToleranceHartree { termination = .residualConverged }
+            else if remaining == 0 { termination = .determinantLimit }
+            else if iteration == cfg.maximumIterations { termination = .iterationLimit }
+            else if ranked.isEmpty { termination = .selectionThreshold }
+            let added = termination == nil ? Array(ranked.prefix(min(remaining,cfg.selectionBatchSize))).map(\.determinant) : []
+            history.append(.init(iteration: iteration,determinantCount: dets.count,variationalEnergyHartree: energy,
+                eigenResidual: diagnostics.projectedResidualNorm,externalCandidateCount: diagnostics.externalDeterminantCount,
+                selectedCount: added.count,pt2CorrectionHartree: diagnostics.epsteinNesbetCorrectionHartree,
+                largestExternalContributionHartree: diagnostics.externalContributions.map(\.selectionContributionHartree).max() ?? 0,
+                intruderCandidateCount: diagnostics.intruderCount,fullResidualNorm: diagnostics.fullResidualNorm,
+                addedDeterminants: added))
+            if let termination {
+                return .init(schema: "numivivo.selected-ci.v2",converged: termination == .residualConverged,
+                    variationalEnergyHartree: energy,
+                    pt2CorrectedEnergyHartree: diagnostics.epsteinNesbetCorrectionHartree.map { energy+$0 },
+                    pt2CorrectionHartree: diagnostics.epsteinNesbetCorrectionHartree,state: state,
+                    fullSectorDimension: try sectorDimension(h.orbitalCount,h.alphaElectrons,h.betaElectrons),
+                    selectedDeterminantCount: dets.count,eigenResidual: diagnostics.projectedResidualNorm,
+                    iterations: history,operatorApplications: work,method: method,configuration: cfg,
+                    seedDeterminants: seeds,diagnostics: diagnostics,termination: termination,matrixVectorProducts: products)
+            }
+            previousEnergy = energy; dets = (dets+added).sorted()
+        }
+        throw VivoChemistryError.convergence("unreachable selected CI termination")
+    }
+    /// Recompute eigenpair evidence, not global-ground-root certification.
+    /// Workflow receipts separately bind the exact request and implementation.
+    public static func validate(_ result: VivoSelectedCIResult, hamiltonian h: VivoEmbeddedHamiltonian,
+                                budget: VivoChemistryBudget = .init()) throws {
+        guard result.schema == "numivivo.selected-ci.v2", result.method == method, !result.iterations.isEmpty,
+              result.iterations.count <= result.configuration.maximumIterations,
+              result.operatorApplications > 0, result.matrixVectorProducts > 0,
+              result.seedDeterminants == result.seedDeterminants.sorted(), !result.seedDeterminants.isEmpty,
+              Set(result.seedDeterminants).count == result.seedDeterminants.count else {
+            throw VivoChemistryError.invalid("selected CI result schema/provenance")
+        }
+        var reconstructed = result.seedDeterminants
+        for (index,step) in result.iterations.enumerated() {
+            guard step.iteration == index+1, step.determinantCount == reconstructed.count,
+                  step.variationalEnergyHartree.isFinite, step.fullResidualNorm.isFinite, step.fullResidualNorm >= 0,
+                  step.selectedCount == step.addedDeterminants.count,
+                  step.addedDeterminants.count <= result.configuration.selectionBatchSize,
+                  Set(step.addedDeterminants).count == step.addedDeterminants.count,
+                  Set(step.addedDeterminants).isDisjoint(with: Set(reconstructed)),
+                  (index+1 == result.iterations.count ? step.addedDeterminants.isEmpty : !step.addedDeterminants.isEmpty) else {
+                throw VivoChemistryError.invalid("selected CI nested iteration record")
+            }
+            reconstructed = (reconstructed+step.addedDeterminants).sorted()
+        }
+        guard reconstructed == result.state.determinants,
+              result.iterations.last?.variationalEnergyHartree == result.variationalEnergyHartree,
+              result.iterations.last?.fullResidualNorm == result.diagnostics.fullResidualNorm else {
+            throw VivoChemistryError.invalid("selected CI final iteration binding")
+        }
+        let checked = try diagnose(h,state: result.state,energyHartree: result.variationalEnergyHartree,
+                                   configuration: result.configuration,budget: budget)
+        func close(_ a: Double, _ b: Double) -> Bool { a.isFinite && b.isFinite && abs(a-b) <= 1e-11*max(1,abs(a),abs(b)) }
+        let residualConverged = checked.fullResidualNorm <= result.configuration.effectiveFullResidualTolerance &&
+            (checked.epsteinNesbetCorrectionHartree.map { abs($0) <= result.configuration.pt2ToleranceHartree } ?? false)
+        guard close(checked.fullResidualNorm,result.diagnostics.fullResidualNorm),
+              close(checked.projectedResidualNorm,result.diagnostics.projectedResidualNorm),
+              checked.intruderCount == result.diagnostics.intruderCount,
+              checked.externalDeterminantCount == result.diagnostics.externalDeterminantCount,
+              checked.operatorApplications == result.diagnostics.operatorApplications,
+              checked.externalContributions == result.diagnostics.externalContributions,
+              checked.epsteinNesbetCorrectionHartree == result.diagnostics.epsteinNesbetCorrectionHartree,
+              result.converged == (result.termination == .residualConverged), result.converged == residualConverged,
+              result.selectedDeterminantCount == result.state.determinants.count,
+              result.fullSectorDimension == (try sectorDimension(h.orbitalCount,h.alphaElectrons,h.betaElectrons)),
+              result.pt2CorrectionHartree == checked.epsteinNesbetCorrectionHartree,
+              result.pt2CorrectedEnergyHartree == checked.epsteinNesbetCorrectionHartree.map({ result.variationalEnergyHartree+$0 }),
+              close(result.eigenResidual,checked.projectedResidualNorm),
+              checked.projectedResidualNorm <= 1.1*result.configuration.eigenResidualTolerance else {
+            throw VivoChemistryError.invalid("selected CI result fails independent residual reconstruction")
+        }
     }
 }
