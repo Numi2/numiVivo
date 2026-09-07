@@ -13,6 +13,7 @@ Start with the [project overview](../README.md) for the scientific scope and fir
 | Import a prepared molecular system and run MD stages | [Prepared-system MD](../Examples/md-preparation/README.md) |
 | Sample a QM/MM activation PMF and context-qualified rate | [QM/MM free energy](QMMMFreeEnergy.md) |
 | Compute dividing-surface recrossing and a transmission coefficient | [QM/MM dynamical transmission](QMMMDynamicalTransmission.md) |
+| Combine alternate bound chemical states and pathways | [QM/MM chemical-state kinetics](QMMMChemicalStateKinetics.md) |
 | Inspect or resume an MD run | [Protocol execution and restart](Design/MD_PROTOCOL_WORKFLOW.md) |
 | Read and verify stored coordinate samples | [Trajectory archive format](Design/MD_TRAJECTORY_ARCHIVE.md) |
 | Explore molecular-control and host-context concepts | [Digital tissue homeostasis](../Examples/digital-tissue-homeostasis/README.md) |
@@ -25,7 +26,7 @@ Examples are computational fixtures, not experimental protocols. Their README fi
 
 **Reaction execution.** Read the [ProgramPack backend](Design/PROGRAM_PACK_METAL_BACKEND.md), [executable hybrid runtime](Design/EXECUTABLE_HYBRID_RUNTIME.md), and [exact/hybrid design](Design/EXACT_AND_HYBRID_STOCHASTIC.md). The executable contracts take precedence over older high-level fidelity descriptions.
 
-**Electronic structure and embedding.** Start with the [native example](../Examples/native-chemistry/README.md), then inspect the [QM](../Sources/NumiVivoKit/QM), [QM environment](../Sources/NumiVivoKit/QMEnv), [many-body](../Sources/NumiVivoKit/ManyBody) and [embedding](../Sources/NumiVivoKit/Embedding) modules. These are bounded research implementations. Consult the [capability map](CAPABILITIES.md) for distinctions between small-system methods and the larger intended chemistry workflow. For kinetics built from sampled QM/MM dynamics, continue with [QM/MM free energy](QMMMFreeEnergy.md) and [dynamical transmission](QMMMDynamicalTransmission.md).
+**Electronic structure and embedding.** Start with the [native example](../Examples/native-chemistry/README.md), then inspect the [QM](../Sources/NumiVivoKit/QM), [QM environment](../Sources/NumiVivoKit/QMEnv), [many-body](../Sources/NumiVivoKit/ManyBody) and [embedding](../Sources/NumiVivoKit/Embedding) modules. These are bounded research implementations. Consult the [capability map](CAPABILITIES.md) for distinctions between small-system methods and the larger intended chemistry workflow. For kinetics built from sampled QM/MM dynamics, continue with [QM/MM free energy](QMMMFreeEnergy.md), [dynamical transmission](QMMMDynamicalTransmission.md), and [chemical-state kinetics](QMMMChemicalStateKinetics.md).
 
 **Physiology, populations and kinetics.** Read [Target engagement](Design/TARGET_ENGAGEMENT.md), [multicellular and partition models](Design/MULTICELLULAR_AND_PARTITION.md), and the source in [Physiology](../Sources/NumiVivoKit/Physiology), [Population](../Sources/NumiVivoKit/Population) and [Coupling](../Sources/NumiVivoKit/Coupling).
 
