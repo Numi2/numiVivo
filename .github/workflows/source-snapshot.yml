@@ -7,6 +7,10 @@ on:
     branches: [main]
     paths:
       - .github/workflows/source-snapshot.yml
+      - Sources/NumiVivoKit/Refinement/**
+      - Sources/NumiVivoKit/Workflow/*Refinement*
+      - Tools/NativeChemistry/*Refinement*
+      - Tools/check_property_refinement.sh
 
 permissions:
   contents: read
