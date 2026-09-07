@@ -34,9 +34,23 @@ The accepted step and seed determine random stream reconstruction. In-flight SSA
 
 ## Explicit remaining boundaries
 
-This path does not execute general VivoProgram expression bytecode, temporal rules, delayed reactions, monitors, spatial transport or live authority migration. A spatial plan is rejected rather than treated as well mixed. The legacy ProgramPack runtime/catalog has separate shader-binding inconsistencies; this implementation isolates its source library instead of pretending those legacy paths are repaired. Public molecular checkpoint v2 restoration on that legacy actor remains a separate task. The new hybrid runtime exposes its own working source-level checkpoint/restore APIs.
+This path does not execute general VivoProgram expression bytecode, temporal rules, delayed reactions, monitors, spatial transport or live authority migration. A spatial plan is rejected rather than treated as well mixed. The hybrid implementation loads its own shader library and owns its own checkpoint contract. The separate ProgramPack backend and molecular v2 restore integration are described in [PROGRAM_PACK_METAL_BACKEND.md](PROGRAM_PACK_METAL_BACKEND.md); those changes do not qualify the hybrid path.
 
-No package build, shader compilation, simulation, statistical test, checkpoint round trip or performance benchmark was executed in this implementation pass. Source/API/ABI review is not execution evidence.
+The original implementation pass did not execute a package build, shader compilation, simulation, statistical test, checkpoint round trip or performance benchmark. Source/API/ABI review is not execution evidence.
+
+## Native conformance suite
+
+`Tests/NumiVivoIntegrationTests/HybridRuntimeTests.swift` exercises this dedicated backend on an actual production-selected Metal device. It fails when suitable hardware is absent. The suite covers:
+
+- joint exact-SSA, tau-leap and RK2 execution over disjoint components, count conservation, RK2 agreement with the analytical Heun recurrence, inactive representation invariants, partial final SIMD groups, and publications preserving all UInt32 count bits;
+- bitwise equality of accepted snapshots and checkpoints across exact event dispatch chunk sizes of 1 and 128;
+- mixed-authority checkpoint continuation, refusal of incompatible identities/seed/ABI or malformed/noncanonical payloads, unchanged accepted state after refused restore, and prepared-candidate reservation/discard;
+- a guaranteed UInt32-overflow rejection and a guaranteed exact-work-budget exhaustion, verifying that neither commits the independent continuous component or returns accepted publications;
+- Poisson birth moments for exact SSA and low-mean tau inversion, a larger-mean tau PTRS case, and the Binomial survivor distribution of exact first-order decay.
+
+Statistical checks use 8,192 independent lanes and fixed seeds. Mean and unbiased sample-variance tolerances are declared as six analytical standard errors before execution; the small-mean Poisson cases also check the zero-event probability. These checks do not qualify arbitrary tau-leap error, every supported propensity law, rare-event tails, connected-network hybrid methods or cross-device identity.
+
+Run with `swift test -c release --jobs 3 -Xswiftc -enable-testing --filter HybridRuntimeTests` on an available Apple-silicon GPU. Setting `NUMIVIVO_TEST_ARTIFACTS` writes the accepted-state, continuation and moment reports outside the repository. The presence of the suite is not a passing result; retain its command output, exact revision and physical-device evidence when reporting qualification. No performance claim follows from this suite.
 
 ## API references consulted
 

@@ -35,7 +35,7 @@ Examples are computational fixtures, not experimental protocols. Their README fi
 
 ## Status and qualification
 
-[Capability map](CAPABILITIES.md) · [Audit entry point](../AUDIT.md) · [Execution audit](Audit/2026-09-04_EXECUTION_AUDIT.md) · [Wave B audit](Audit/WAVE_B_CONSOLIDATION.md)
+[Completion roadmap](COMPLETION_ROADMAP.md) · [Capability map](CAPABILITIES.md) · [Audit entry point](../AUDIT.md) · [Execution audit](Audit/2026-09-04_EXECUTION_AUDIT.md) · [Wave B audit](Audit/WAVE_B_CONSOLIDATION.md)
 
 Historical audit reports apply to the source identities they record. They do not establish that subsequent changes compiled or passed the same checks. Source inspection, portable assertions, Apple package compilation, GPU numerical comparisons and biological validation are different evidence levels.
 

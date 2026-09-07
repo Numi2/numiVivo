@@ -6,7 +6,7 @@ NumiVivo is a research platform for molecular simulation and programmable biolog
 
 The ambition is to follow a molecular change across scales: how a structure moves, where electrons interact, which reactions become possible, and how those reactions affect a cell or physiological model. Every transition should preserve the quantities, assumptions and evidence needed to understand the result.
 
-[Get started](#get-started) · [Explore the capabilities](#explore-the-capabilities) · [Examples](#choose-an-experiment) · [Documentation](Documentation/README.md) · [Implementation status](Documentation/CAPABILITIES.md)
+[Get started](#get-started) · [Explore the capabilities](#explore-the-capabilities) · [Examples](#choose-an-experiment) · [Documentation](Documentation/README.md) · [Implementation status](Documentation/CAPABILITIES.md) · [Completion roadmap](Documentation/COMPLETION_ROADMAP.md)
 
 > **Research software, under active development.** The capabilities below describe source implementations and their intended workflows—not a fully qualified release. Apple package integration, GPU numerical behavior and performance require qualification. The [capability map](Documentation/CAPABILITIES.md) separates implemented methods, current restrictions and planned work.
 
