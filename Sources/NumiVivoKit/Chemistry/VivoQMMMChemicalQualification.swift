@@ -3,6 +3,7 @@ import Foundation
 public enum VivoQMMMQualificationDimension:String,Codable,Sendable,CaseIterable {
     case samplingProtocol
     case reactionCoordinate
+    case transmissionProtocol
     case electronicModel
     case qmRegion
     case periodicFiniteSize
@@ -122,7 +123,7 @@ public struct VivoQMMMChemicalQualificationResult:Codable,Sendable,Equatable {
 }
 
 public enum VivoQMMMChemicalQualification {
-    public static let interpretation="Qualification of one explicitly declared bound-complex chemical-rate protocol against independently replicated sampling, predeclared numerical/electronic/QM-region sensitivity variants and condition-matched external rate data. Passing this gate does not establish transferability to other proteins, chemical states or mechanisms."
+    public static let interpretation="Qualification of one explicitly declared bound-complex chemical-rate protocol against independently replicated sampling, reaction-coordinate, dynamical-transmission, electronic-model, QM-region and periodic finite-size sensitivity variants plus condition-matched external rate data. Passing this gate does not establish transferability to other proteins, chemical states or mechanisms."
 
     private static func baselineInvariant(_ baseline:VivoQMMMFreeEnergyRateRequest,
                                           _ variant:VivoQMMMFreeEnergyRateRequest,
@@ -146,6 +147,16 @@ public enum VivoQMMMChemicalQualification {
                   a.reactionConnectivity.reactantEndpointIdentifier==b.reactionConnectivity.reactantEndpointIdentifier,
                   a.reactionConnectivity.productEndpointIdentifier==b.reactionConnectivity.productEndpointIdentifier else {
                 throw VivoKineticsError.invalid("coordinate sensitivity changed Hamiltonian or endpoint identity")
+            }
+        case .transmissionProtocol:
+            guard a.systemFingerprint==b.systemFingerprint,a.baseProviderFingerprint==b.baseProviderFingerprint,
+                  baseline.freeEnergy.evidenceFingerprint==variant.freeEnergy.evidenceFingerprint,
+                  baseline.freeEnergy.analysis.coordinate==variant.freeEnergy.analysis.coordinate,
+                  a.reactionConnectivity==b.reactionConnectivity,
+                  baseline.transmissionOrigin == .calculated,variant.transmissionOrigin == .calculated,
+                  baseline.transmissionEvidence.sourceFingerprint != nil,
+                  variant.transmissionEvidence.sourceFingerprint != nil else {
+                throw VivoKineticsError.invalid("transmission-protocol sensitivity must hold the qualified PMF/Hamiltonian/reaction fixed and use calculated transmission evidence")
             }
         case .electronicModel,.qmRegion:
             guard a.reactionConnectivity.reactantEndpointIdentifier==b.reactionConnectivity.reactantEndpointIdentifier,
