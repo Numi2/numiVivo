@@ -23,7 +23,7 @@ import Foundation
             for origin in 0..<2 {
                 let weights = energies.map { origin == 0 ? 1.0 : exp(-$0) }, total = weights.reduce(0,+)
                 for draw in 0..<count {
-                    var target = random.unit()*total, microstate = weights.count-1
+                    var target = random.unitInterval()*total, microstate = weights.count-1
                     for i in weights.indices { target -= weights[i]; if target <= 0 { microstate = i; break } }
                     let identifier = "sample-\(seed)-\(origin)-\(draw)"
                     samples.append(.init(identifier: identifier,originStateIndex: origin,independentBlockIdentifier: identifier,
@@ -164,9 +164,9 @@ import Foundation
                 records: [observed,confirmed,tuned],remainingDeclaredWorkUnits: 100)
         }
         let tinyCovariance = try VivoQMMatrix(rows: 2,columns: 2,values: [1e-320,0,0,1e-320])
-        let tiny = try VivoObservableCovariance.project(derivatives: [1,-1],covariance: tinyCovariance)
-        try expect(tiny.standardDeviation.isFinite && tiny.standardDeviation > 0,"subnormal covariance normalization stays finite")
-        try expect(tiny.variance == 2e-320,"subnormal covariance retains the represented variance")
+        let tinyProjection = try VivoObservableCovariance.project(derivatives: [1,-1],covariance: tinyCovariance)
+        try expect(tinyProjection.standardDeviation.isFinite && tinyProjection.standardDeviation > 0,"subnormal covariance normalization stays finite")
+        try expect(tinyProjection.variance == 2e-320,"subnormal covariance retains the represented variance")
         var loop = proposals; loop[0].prerequisites = ["c"]
         try expectThrows("cyclic adaptive actions reject") { try VivoAdaptiveRefinementPolicy.validate(criteria: [criterion],proposals: loop) }
         try expect(try VivoAdaptiveRefinementPolicy.decide(criteria: [criterion],proposals: proposals,records: [],remainingDeclaredWorkUnits: 1).selectedActionIdentifier == nil,
