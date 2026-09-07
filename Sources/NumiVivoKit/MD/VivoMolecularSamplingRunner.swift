@@ -90,13 +90,13 @@ public struct VivoMolecularSamplingRunReceipt:Codable,Sendable,Equatable {
     public let diagnostic:String?
     public let interpretation:String
 }
-private struct VivoMolecularReplicaCursor:Codable,Sendable,Equatable {
+struct VivoMolecularReplicaCursor:Codable,Sendable,Equatable {
     var series:VivoMolecularReplicaSeries
     var mdCheckpoint:VivoFingerprint?
     var trajectory:VivoFingerprint?
     var minimization:VivoFingerprint?
 }
-private struct VivoMolecularSamplingCursor:Codable,Sendable,Equatable {
+struct VivoMolecularSamplingCursor:Codable,Sendable,Equatable {
     static let schema="numivivo.org/molecular-sampling-checkpoint/v1"
     var schema:String
     var requestFingerprint:VivoFingerprint
@@ -140,46 +140,24 @@ public enum VivoMolecularSamplingRunner {
     }
 
     public static func run(_ request:VivoMolecularSamplingRunRequest,store:VivoArtifactStore,
-                           resumeFrom:VivoFingerprint? = nil) async throws -> VivoMolecularSamplingRunReceipt {
+                           resumeFrom:VivoFingerprint? = nil,
+                           resumeReadLimits:VivoMolecularSamplingReadLimits = .init()) async throws -> VivoMolecularSamplingRunReceipt {
         try request.validate()
-        let requestID=try await put(request,kind:"molecular-sampling-run",store:store)
+        let requestID=try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(request))
         let systemID=try request.system.fingerprint(),structureID=try VivoStructureCodec.fingerprint(request.structure)
         let map=try atomMap(structure:request.structure,system:request.system)
         var cursor:VivoMolecularSamplingCursor
+        var latest:VivoMolecularSamplingResult?
+        var resumeValidations:[VivoMolecularSamplingReplicaRestart]=[]
         if let resumeFrom {
-            cursor=try await read(VivoMolecularSamplingCursor.self,id:resumeFrom,kind:"molecular-sampling-checkpoint",store:store)
-            guard cursor.schema==VivoMolecularSamplingCursor.schema,cursor.requestFingerprint==requestID,
-                  cursor.completedBlocks>=0,cursor.completedBlocks<=request.maximumBlocks,
-                  cursor.consecutivePasses>=0,cursor.consecutivePasses<=cursor.completedBlocks,
-                  cursor.replicas.count==request.replicaSeeds.count,cursor.diagnostics.count==cursor.completedBlocks else {
-                throw VivoArtifactValidationError.incompatible("sampling resume request or block cursor differs")
+            let reader=try await VivoMolecularSamplingArchiveReader.open(store:store,checkpoint:resumeFrom,limits:resumeReadLimits)
+            guard reader.cursor.requestFingerprint==requestID else {
+                throw VivoArtifactValidationError.incompatible("sampling resume request identity differs")
             }
-            let expectedFrames=UInt64(cursor.completedBlocks)*request.stepsPerBlock/request.sampleEvery
-            for (i,replica) in cursor.replicas.enumerated() {
-                var cfg=request.md;cfg.randomSeed=request.replicaSeeds[i]
-                guard replica.series.configuration==cfg,UInt64(replica.series.timesPS.count)==expectedFrames,
-                      replica.series.steps.count==replica.series.timesPS.count,
-                      replica.series.valuesByObservable.count==request.observables.count,
-                      replica.series.valuesByObservable.allSatisfy({$0.count==replica.series.timesPS.count && $0.allSatisfy(\.isFinite)}) else {
-                    throw VivoArtifactValidationError.invalid("sampling resume scalar prefix differs from its block schedule")
-                }
-                if cursor.completedBlocks>0 {
-                    guard let md=replica.mdCheckpoint,let trajectory=replica.trajectory,
-                          replica.series.sourceFingerprint==trajectory else { throw VivoArtifactValidationError.invalid("sampling resume lacks durable replica state") }
-                    let checkpoint=try await read(VivoMDCheckpoint.self,id:md,kind:"md-checkpoint",store:store)
-                    try checkpoint.validate(particleCount:request.system.particles.count)
-                    let archive=try await VivoMDTrajectoryArchiveReader.open(store:store,manifest:trajectory)
-                    guard checkpoint.systemFingerprint==systemID,checkpoint.configurationFingerprint == (try cfg.fingerprint()),
-                          checkpoint.acceptedStep==request.equilibrationSteps+UInt64(cursor.completedBlocks)*request.stepsPerBlock,
-                          archive.manifest.systemFingerprint==systemID,archive.manifest.configurationFingerprint==checkpoint.configurationFingerprint,
-                          archive.manifest.frameCount==expectedFrames,archive.manifest.lastStep==checkpoint.acceptedStep,
-                          archive.manifest.lastTimePS==checkpoint.timePS,!archive.manifest.sealed,
-                          replica.series.steps.last==checkpoint.acceptedStep,replica.series.timesPS.last==checkpoint.timePS else {
-                        throw VivoArtifactValidationError.incompatible("sampling archive, scalar observations and exact MD checkpoint disagree")
-                    }
-                }
-            }
+            resumeValidations=try await reader.validateForResume(request:request)
+            cursor=reader.cursor;latest=reader.latest
         } else {
+            _ = try await put(request,kind:"molecular-sampling-run",store:store)
             var replicas:[VivoMolecularReplicaCursor]=[]
             for (i,initial) in request.initialStates.enumerated() {
                 let initialID=try await put(initial,kind:"classical-initial-state",store:store)
@@ -191,27 +169,7 @@ public enum VivoMolecularSamplingRunner {
             cursor = .init(schema:VivoMolecularSamplingCursor.schema,requestFingerprint:requestID,
                            completedBlocks:0,consecutivePasses:0,replicas:replicas,diagnostics:[])
         }
-        var durable=try await put(cursor,kind:"molecular-sampling-checkpoint",store:store)
-        var latest:VivoMolecularSamplingResult?
-        if let last=cursor.diagnostics.last {
-            latest=try await read(VivoMolecularSamplingResult.self,id:last,kind:"molecular-sampling-result",store:store)
-            try VivoMolecularSampling.validate(latest!)
-            guard latest!.request.replicas==cursor.replicas.map(\.series),
-                  latest!.request.configuration==request.convergence,latest!.request.observables==request.observables,
-                  latest!.request.contextIdentifier==request.contextIdentifier,
-                  latest!.request.systemFingerprint==systemID,latest!.request.structureFingerprint==structureID else {
-                throw VivoArtifactValidationError.incompatible("sampling resume diagnostics differ from their scalar prefix")
-            }
-            // Reconstruct the consecutive-pass history rather than trust a counter.
-            var passes=0
-            for id in cursor.diagnostics.reversed() {
-                let result=try await read(VivoMolecularSamplingResult.self,id:id,kind:"molecular-sampling-result",store:store)
-                try VivoMolecularSampling.validate(result)
-                if !result.converged { break };passes+=1
-            }
-            guard passes==cursor.consecutivePasses else { throw VivoArtifactValidationError.invalid("sampling consecutive-pass history mismatch") }
-        }
-        durable=try await publish(cursor,store:store)
+        var durable=try await publish(cursor,store:store)
         func receipt(_ status:VivoMolecularSamplingRunStatus,_ diagnostic:String? = nil)->VivoMolecularSamplingRunReceipt {
             .init(schema:VivoMolecularSamplingRunReceipt.schema,requestFingerprint:requestID,status:status,
                   completedBlocks:cursor.completedBlocks,consecutivePasses:cursor.consecutivePasses,checkpoint:durable,
@@ -225,8 +183,10 @@ public enum VivoMolecularSamplingRunner {
                 for i in next.replicas.indices {
                     // The helper returns before the next arena is created. It
                     // never thermalizes or minimizes a resumed production state.
-                    next.replicas[i]=try await advanceReplica(next.replicas[i],index:i,request:request,map:map,store:store)
+                    next.replicas[i]=try await advanceReplica(next.replicas[i],index:i,request:request,map:map,store:store,
+                        validatedReplica:resumeValidations.isEmpty ? nil:resumeValidations[i])
                 }
+                resumeValidations=[]
                 let analysis=VivoMolecularSamplingRequest(structureFingerprint:structureID,systemFingerprint:systemID,
                     contextIdentifier:request.contextIdentifier,observables:request.observables,
                     replicas:next.replicas.map(\.series),configuration:request.convergence)
@@ -244,10 +204,17 @@ public enum VivoMolecularSamplingRunner {
         }
     }
     private static func advanceReplica(_ previous:VivoMolecularReplicaCursor,index:Int,
-                                       request:VivoMolecularSamplingRunRequest,map:[Int],store:VivoArtifactStore) async throws -> VivoMolecularReplicaCursor {
+                                       request:VivoMolecularSamplingRunRequest,map:[Int],store:VivoArtifactStore,
+                                       validatedReplica:VivoMolecularSamplingReplicaRestart? = nil) async throws -> VivoMolecularReplicaCursor {
         var cursor=previous
         let cfg=cursor.series.configuration,runtime:VivoMDMetalRuntime
-        if let id=cursor.mdCheckpoint {
+        if let validatedReplica {
+            guard validatedReplica.checkpointFingerprint==cursor.mdCheckpoint,
+                  validatedReplica.trajectoryValidation.manifestFingerprint==cursor.trajectory else {
+                throw VivoArtifactValidationError.incompatible("sampling continuation differs from validated replica state")
+            }
+            runtime=try await .restore(system:request.system,configuration:cfg,checkpoint:validatedReplica.checkpoint)
+        } else if let id=cursor.mdCheckpoint {
             let checkpoint=try await read(VivoMDCheckpoint.self,id:id,kind:"md-checkpoint",store:store)
             runtime=try await .restore(system:request.system,configuration:cfg,checkpoint:checkpoint)
         } else {
@@ -265,7 +232,9 @@ public enum VivoMolecularSamplingRunner {
             }
         }
         let writer:VivoMDTrajectoryArchiveWriter
-        if let manifest=cursor.trajectory {
+        if let validatedReplica {
+            writer=try .resume(validated:validatedReplica.trajectoryValidation,targetChunkBytes:request.trajectoryChunkBytes)
+        } else if let manifest=cursor.trajectory {
             writer=try await .resume(store:store,manifest:manifest,targetChunkBytes:request.trajectoryChunkBytes)
         } else {
             writer=try .init(store:store,systemFingerprint:runtime.systemFingerprint,
