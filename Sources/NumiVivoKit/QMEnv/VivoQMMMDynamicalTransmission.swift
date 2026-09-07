@@ -25,29 +25,26 @@ public struct VivoQMMMTransmissionAcceptance:Codable,Sendable,Equatable {
 }
 
 public struct VivoQMMMDynamicalTransmissionRequest:Codable,Sendable,Equatable {
-    public static let schema="numivivo.org/qmmm-dynamical-transmission/v1"
+    public static let schema="numivivo.org/qmmm-dynamical-transmission/v2"
     public var schema:String
-    public var freeEnergy:VivoQMMMQualifiedActivationFreeEnergy
-    public var sourceDynamics:VivoMDConfiguration
+    public var surfaceRequest:VivoQMMMSurfaceEnsembleRequest
+    public var surfaceEnsemble:VivoQMMMSurfaceEnsembleResult
     public var shootingDynamics:VivoMDConfiguration
-    public var surfaceCheckpoints:[VivoMDCheckpoint]
     public var reactantCommitmentRangeNM:ClosedRange<Double>
     public var productCommitmentRangeNM:ClosedRange<Double>
-    public var surfaceToleranceNM:Double
     public var maximumSteps:UInt64
     public var observeEverySteps:UInt64
     public var commitmentObservations:Int
     public var acceptance:VivoQMMMTransmissionAcceptance
-    public init(freeEnergy:VivoQMMMQualifiedActivationFreeEnergy,sourceDynamics:VivoMDConfiguration,
-                shootingDynamics:VivoMDConfiguration,surfaceCheckpoints:[VivoMDCheckpoint],
-                reactantCommitmentRangeNM:ClosedRange<Double>,productCommitmentRangeNM:ClosedRange<Double>,
-                surfaceToleranceNM:Double=0.01,maximumSteps:UInt64=5000,observeEverySteps:UInt64=5,
+    public var freeEnergy:VivoQMMMQualifiedActivationFreeEnergy { surfaceRequest.freeEnergy }
+    public init(surfaceRequest:VivoQMMMSurfaceEnsembleRequest,surfaceEnsemble:VivoQMMMSurfaceEnsembleResult,
+                shootingDynamics:VivoMDConfiguration,reactantCommitmentRangeNM:ClosedRange<Double>,
+                productCommitmentRangeNM:ClosedRange<Double>,maximumSteps:UInt64=5000,observeEverySteps:UInt64=5,
                 commitmentObservations:Int=3,acceptance:VivoQMMMTransmissionAcceptance = .init()) {
-        schema=Self.schema;self.freeEnergy=freeEnergy;self.sourceDynamics=sourceDynamics;self.shootingDynamics=shootingDynamics
-        self.surfaceCheckpoints=surfaceCheckpoints;self.reactantCommitmentRangeNM=reactantCommitmentRangeNM
-        self.productCommitmentRangeNM=productCommitmentRangeNM;self.surfaceToleranceNM=surfaceToleranceNM
-        self.maximumSteps=maximumSteps;self.observeEverySteps=observeEverySteps
-        self.commitmentObservations=commitmentObservations;self.acceptance=acceptance
+        schema=Self.schema;self.surfaceRequest=surfaceRequest;self.surfaceEnsemble=surfaceEnsemble
+        self.shootingDynamics=shootingDynamics;self.reactantCommitmentRangeNM=reactantCommitmentRangeNM
+        self.productCommitmentRangeNM=productCommitmentRangeNM;self.maximumSteps=maximumSteps
+        self.observeEverySteps=observeEverySteps;self.commitmentObservations=commitmentObservations;self.acceptance=acceptance
     }
 }
 
@@ -62,7 +59,7 @@ public struct VivoQMMMTransmissionTrajectory:Codable,Sendable,Equatable {
 }
 
 public struct VivoQMMMDynamicalTransmissionResult:Codable,Sendable,Equatable {
-    public static let schema="numivivo.org/qmmm-dynamical-transmission-result/v1"
+    public static let schema="numivivo.org/qmmm-dynamical-transmission-result/v2"
     public let schema:String
     public let requestFingerprint:VivoFingerprint
     public let retainedSystemFingerprint:VivoFingerprint
@@ -82,7 +79,7 @@ public struct VivoQMMMDynamicalTransmissionResult:Codable,Sendable,Equatable {
 }
 
 public enum VivoQMMMDynamicalTransmission {
-    public static let interpretation="Flux-weighted classical dynamical transmission coefficient from product-directed, time-reversal-symmetrized near-dividing-surface checkpoints propagated under the same unbiased Born-Oppenheimer Hamiltonian in deterministic NVE. Finite surface-band, finite-time and commitment-basin choices remain explicit. The result measures classical recrossing only; it is not a tunnelling correction or evidence for missing reaction pathways."
+    public static let interpretation="Flux-weighted classical dynamical transmission coefficient from a qualified step-separated near-dividing-surface ensemble. Product-directed, time-reversal-symmetrized states are launched as fresh unbiased NVE trajectories under the same Born-Oppenheimer Hamiltonian. Finite surface-band, finite-time and commitment-basin choices remain explicit; this measures classical recrossing only, not tunnelling or missing pathways."
 
     private static func forceEquivalent(source:VivoMDConfiguration,shooting:VivoMDConfiguration)->Bool {
         var normalized=shooting
@@ -106,58 +103,60 @@ public enum VivoQMMMDynamicalTransmission {
     }
 
     private static func validateStatic(_ request:VivoQMMMDynamicalTransmissionRequest)throws->Double {
-        try request.freeEnergy.validate();try request.sourceDynamics.validate();try request.shootingDynamics.validate();try request.acceptance.validate()
-        let sourceID=try request.sourceDynamics.fingerprint()
-        guard request.schema==VivoQMMMDynamicalTransmissionRequest.schema,
-              request.freeEnergy.provenance.dynamicsFingerprint==sourceID,
-              request.sourceDynamics.ensemble == .nvt,
-              request.sourceDynamics.targetTemperatureK==request.freeEnergy.analysis.temperatureK,
+        try VivoQMMMSurfaceEnsemble.validate(request.surfaceEnsemble,request:request.surfaceRequest)
+        try request.shootingDynamics.validate();try request.acceptance.validate()
+        let source=request.surfaceRequest.dynamics
+        guard request.schema==VivoQMMMDynamicalTransmissionRequest.schema,request.surfaceEnsemble.converged,
+              request.surfaceEnsemble.states.count>=request.acceptance.minimumSurfaceCheckpoints,
               request.shootingDynamics.ensemble == .nve,request.shootingDynamics.thermostat == .none,
               request.shootingDynamics.targetTemperatureK == nil,request.shootingDynamics.frictionPerPS == nil,
-              forceEquivalent(source:request.sourceDynamics,shooting:request.shootingDynamics),
-              request.surfaceCheckpoints.count>=request.acceptance.minimumSurfaceCheckpoints,
+              forceEquivalent(source:source,shooting:request.shootingDynamics),
               request.maximumSteps>0,request.observeEverySteps>0,request.maximumSteps>=request.observeEverySteps,
-              request.commitmentObservations>0,request.commitmentObservations<=100000,
-              request.surfaceToleranceNM.isFinite,request.surfaceToleranceNM>0 else {
-            throw VivoChemistryError.invalid("QM/MM dynamical-transmission dynamics or execution contract")
+              request.commitmentObservations>0,request.commitmentObservations<=100000 else {
+            throw VivoChemistryError.invalid("QM/MM dynamical-transmission surface evidence, dynamics or execution contract")
         }
         return try productDirection(request)
     }
 
     private static func validateRun(_ request:VivoQMMMDynamicalTransmissionRequest,system:VivoClassicalSystem,
                                     provider:VivoMDCandidateForceProvider)throws->(VivoQMMMResolvedCoordinate,Double) {
-        let direction=try validateStatic(request),systemID=try system.fingerprint(),sourceID=try request.sourceDynamics.fingerprint()
-        guard request.freeEnergy.provenance.systemFingerprint==systemID,
-              request.freeEnergy.provenance.structureFingerprint==system.structureFingerprint,
-              request.freeEnergy.provenance.baseProviderFingerprint==provider.fingerprint,
-              provider.retainedSystemFingerprint==systemID else {
+        let direction=try validateStatic(request),systemID=try system.fingerprint(),freeEnergy=request.freeEnergy
+        guard freeEnergy.provenance.systemFingerprint==systemID,
+              freeEnergy.provenance.structureFingerprint==system.structureFingerprint,
+              freeEnergy.provenance.baseProviderFingerprint==provider.fingerprint,
+              provider.retainedSystemFingerprint==systemID,
+              request.surfaceEnsemble.retainedSystemFingerprint==systemID,
+              request.surfaceEnsemble.baseProviderFingerprint==provider.fingerprint else {
             throw VivoChemistryError.invalid("QM/MM dynamical transmission differs from the qualified PMF Hamiltonian")
         }
-        let coordinate=try VivoQMMMResolvedCoordinate(source:request.freeEnergy.analysis.coordinate,system:system)
-        var ids=Set<VivoFingerprint>()
-        for checkpoint in request.surfaceCheckpoints {
-            try checkpoint.validate(particleCount:system.particles.count)
-            guard checkpoint.systemFingerprint==systemID,checkpoint.configurationFingerprint==sourceID else {
-                throw VivoChemistryError.invalid("surface checkpoint system or source dynamics mismatch")
+        let coordinate=try VivoQMMMResolvedCoordinate(source:freeEnergy.analysis.coordinate,system:system)
+        var sourceDynamics=request.surfaceRequest.dynamics;sourceDynamics.randomSeed=request.surfaceRequest.randomSeed
+        let surfaceProvider=try VivoQMMMUmbrellaBias.provider(base:provider,system:system,coordinate:freeEnergy.analysis.coordinate,
+                                                              window:request.surfaceRequest.surfaceWindow)
+        let surfaceExecution=try VivoMDCandidateForceProvider.executionFingerprint(configuration:sourceDynamics,provider:surfaceProvider)
+        guard surfaceProvider.fingerprint==request.surfaceEnsemble.surfaceProviderFingerprint,
+              surfaceExecution==request.surfaceEnsemble.surfaceExecutionFingerprint else {
+            throw VivoChemistryError.invalid("surface ensemble provider/execution identity differs from the requested umbrella Hamiltonian")
+        }
+        for state in request.surfaceEnsemble.states {
+            guard state.positionsNM.count==system.particles.count,state.velocitiesNMPerPS.count==system.particles.count else {
+                throw VivoChemistryError.invalid("surface state particle shape")
             }
-            guard ids.insert(try checkpoint.fingerprint()).inserted else { throw VivoChemistryError.invalid("duplicate dividing-surface checkpoint") }
-            let geometry=try VivoMDCandidateGeometry(particlePositionsNM:checkpoint.positionsNM,periodicCell:checkpoint.periodicCell)
+            let geometry=try VivoMDCandidateGeometry(particlePositionsNM:state.positionsNM,periodicCell:state.periodicCell)
             let value=try coordinate.evaluate(geometry).valueNM
-            guard abs(value-request.freeEnergy.analysis.configuration.dividingSurfaceNM)<=request.surfaceToleranceNM else {
-                throw VivoChemistryError.invalid("surface checkpoint lies outside the declared dividing-surface tolerance")
-            }
-            try provider.validate(system:system,configuration:request.shootingDynamics,cell:checkpoint.periodicCell)
+            guard abs(value-state.coordinateNM)<=1e-10 else { throw VivoChemistryError.invalid("surface state stored coordinate differs from mapped geometry") }
+            try provider.validate(system:system,configuration:request.shootingDynamics,cell:state.periodicCell)
         }
         return (coordinate,direction)
     }
 
-    private static func coordinateVelocity(_ coordinate:VivoQMMMResolvedCoordinate,checkpoint:VivoMDCheckpoint,
+    private static func coordinateVelocity(_ coordinate:VivoQMMMResolvedCoordinate,state:VivoQMMMSurfaceState,
                                            direction:Double)throws->Double {
-        let geometry=try VivoMDCandidateGeometry(particlePositionsNM:checkpoint.positionsNM,periodicCell:checkpoint.periodicCell)
+        let geometry=try VivoMDCandidateGeometry(particlePositionsNM:state.positionsNM,periodicCell:state.periodicCell)
         let evaluated=try coordinate.evaluate(geometry)
         var velocity=0.0
         for (particle,gradient) in evaluated.gradients {
-            let v=checkpoint.velocitiesNMPerPS[Int(particle)]
+            let v=state.velocitiesNMPerPS[Int(particle)]
             velocity += gradient.x*v.x+gradient.y*v.y+gradient.z*v.z
         }
         let value=direction*velocity
@@ -165,41 +164,27 @@ public enum VivoQMMMDynamicalTransmission {
         return value
     }
 
-    private static func reverseVelocities(_ checkpoint:VivoMDCheckpoint)->VivoMDCheckpoint {
-        var result=checkpoint
-        result.velocitiesNMPerPS=checkpoint.velocitiesNMPerPS.map{.init(-$0.x,-$0.y,-$0.z)}
-        return result
-    }
-
-    private static func transition(_ source:VivoMDCheckpoint,request:VivoQMMMDynamicalTransmissionRequest,
-                                   particleCount:Int,reverse:Bool)throws->VivoMDCheckpoint {
-        let staged=try VivoMDStageTransfer.prepare(checkpoint:source,source:request.sourceDynamics,
-            destination:request.shootingDynamics,particleCount:particleCount,velocityInitialization:.preserve)
-        let checkpoint=reverse ? reverseVelocities(staged.destinationCheckpoint):staged.destinationCheckpoint
-        try checkpoint.validate(particleCount:particleCount);return checkpoint
-    }
-
     public static func run(_ request:VivoQMMMDynamicalTransmissionRequest,system:VivoClassicalSystem,
                            baseProvider:VivoMDCandidateForceProvider,device:MTLDevice?=nil) async throws -> VivoQMMMDynamicalTransmissionResult {
-        let (coordinate,direction)=try validateRun(request,system:system,provider:baseProvider)
-        var trajectories:[VivoQMMMTransmissionTrajectory]=[];trajectories.reserveCapacity(request.surfaceCheckpoints.count)
-        for source in request.surfaceCheckpoints {
+        let (coordinate,direction)=try validateRun(request,system:system,provider:baseProvider),systemID=try system.fingerprint()
+        var trajectories:[VivoQMMMTransmissionTrajectory]=[];trajectories.reserveCapacity(request.surfaceEnsemble.states.count)
+        for state in request.surfaceEnsemble.states {
             try Task.checkCancellation()
-            let sourceGeometry=try VivoMDCandidateGeometry(particlePositionsNM:source.positionsNM,periodicCell:source.periodicCell)
-            let initialCoordinate=try coordinate.evaluate(sourceGeometry).valueNM
-            let rawVelocity=try coordinateVelocity(coordinate,checkpoint:source,direction:direction)
-            let reverse=rawVelocity<0,weight=abs(rawVelocity),sourceID=try source.fingerprint()
+            let rawVelocity=try coordinateVelocity(coordinate,state:state,direction:direction)
+            let reverse=rawVelocity<0,weight=abs(rawVelocity)
             guard weight.isFinite else { throw VivoChemistryError.invalid("surface flux weight") }
             if weight==0 {
-                trajectories.append(.init(sourceCheckpointFingerprint:sourceID,initialCoordinateNM:initialCoordinate,
+                trajectories.append(.init(sourceCheckpointFingerprint:state.checkpointFingerprint,initialCoordinateNM:state.coordinateNM,
                     productDirectedCoordinateVelocityNMPerPS:0,velocitiesTimeReversed:false,outcome:.unresolved,
-                    committedSteps:0,finalCoordinateNM:initialCoordinate));continue
+                    committedSteps:0,finalCoordinateNM:state.coordinateNM));continue
             }
-            let start=try transition(source,request:request,particleCount:system.particles.count,reverse:reverse)
-            let runtime=try await VivoMDMetalRuntime.restore(system:system,configuration:request.shootingDynamics,
-                checkpoint:start,device:device,forceProvider:baseProvider)
+            let velocities=reverse ? state.velocitiesNMPerPS.map{VivoVector3D(-$0.x,-$0.y,-$0.z)}:state.velocitiesNMPerPS
+            let initial=VivoClassicalInitialState(systemFingerprint:systemID,positionsNM:state.positionsNM,
+                                                   periodicCell:state.periodicCell,sourceTimePS:state.timePS)
+            let runtime=try await VivoMDMetalRuntime.make(system:system,initialState:initial,configuration:request.shootingDynamics,
+                initialVelocitiesNMPerPS:velocities,device:device,forceProvider:baseProvider)
             var productStreak=0,reactantStreak=0,outcome:VivoQMMMTransmissionOutcome = .unresolved
-            var finalCoordinate=initialCoordinate,committed:UInt64=0
+            var finalCoordinate=state.coordinateNM,committed:UInt64=0
             while committed<request.maximumSteps,outcome == .unresolved {
                 try Task.checkCancellation()
                 let block=min(request.observeEverySteps,request.maximumSteps-committed)
@@ -216,12 +201,11 @@ public enum VivoQMMMDynamicalTransmission {
                 if productStreak>=request.commitmentObservations { outcome = .productCommitted }
                 else if reactantStreak>=request.commitmentObservations { outcome = .reactantRecrossed }
             }
-            trajectories.append(.init(sourceCheckpointFingerprint:sourceID,initialCoordinateNM:initialCoordinate,
+            trajectories.append(.init(sourceCheckpointFingerprint:state.checkpointFingerprint,initialCoordinateNM:state.coordinateNM,
                 productDirectedCoordinateVelocityNMPerPS:weight,velocitiesTimeReversed:reverse,outcome:outcome,
                 committedSteps:committed,finalCoordinateNM:finalCoordinate))
         }
-        return try analyze(request:request,systemFingerprint:try system.fingerprint(),providerFingerprint:baseProvider.fingerprint,
-                           trajectories:trajectories)
+        return try analyze(request:request,systemFingerprint:systemID,providerFingerprint:baseProvider.fingerprint,trajectories:trajectories)
     }
 
     public static func analyze(request:VivoQMMMDynamicalTransmissionRequest,systemFingerprint:VivoFingerprint,
@@ -231,17 +215,11 @@ public enum VivoQMMMDynamicalTransmission {
               providerFingerprint==request.freeEnergy.provenance.baseProviderFingerprint else {
             throw VivoChemistryError.invalid("dynamical-transmission evidence is not bound to the qualified PMF Hamiltonian")
         }
-        let sourceID=try request.sourceDynamics.fingerprint(),surface=request.freeEnergy.analysis.configuration.dividingSurfaceNM
-        var expected=Set<VivoFingerprint>()
-        for checkpoint in request.surfaceCheckpoints {
-            let id=try checkpoint.fingerprint()
-            guard checkpoint.systemFingerprint==systemFingerprint,checkpoint.configurationFingerprint==sourceID,
-                  expected.insert(id).inserted else { throw VivoChemistryError.invalid("dynamical-transmission source checkpoint identity") }
-        }
-        let actual=Set(trajectories.map(\.sourceCheckpointFingerprint))
-        guard trajectories.count==request.surfaceCheckpoints.count,actual==expected,
+        let expected=Set(request.surfaceEnsemble.states.map(\.checkpointFingerprint)),actual=Set(trajectories.map(\.sourceCheckpointFingerprint))
+        guard trajectories.count==request.surfaceEnsemble.states.count,actual==expected,
               trajectories.allSatisfy({ trajectory in
-                  trajectory.initialCoordinateNM.isFinite && abs(trajectory.initialCoordinateNM-surface)<=request.surfaceToleranceNM &&
+                  trajectory.initialCoordinateNM.isFinite &&
+                  abs(trajectory.initialCoordinateNM-request.surfaceRequest.surfaceWindow.centerNM)<=request.surfaceRequest.surfaceToleranceNM &&
                   trajectory.productDirectedCoordinateVelocityNMPerPS.isFinite && trajectory.productDirectedCoordinateVelocityNMPerPS>=0 &&
                   trajectory.committedSteps<=request.maximumSteps && trajectory.finalCoordinateNM.isFinite &&
                   (trajectory.outcome != .productCommitted || request.productCommitmentRangeNM.contains(trajectory.finalCoordinateNM)) &&
@@ -267,12 +245,13 @@ public enum VivoQMMMDynamicalTransmission {
         let requestID=try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(request))
         struct Evidence:Codable {
             let schema:String;let requestFingerprint:VivoFingerprint;let system:VivoFingerprint;let provider:VivoFingerprint
-            let trajectories:[VivoQMMMTransmissionTrajectory];let coefficient:Double;let standardError:Double;let effective:Double;let unresolved:Double
+            let surfaceEvidence:VivoFingerprint;let trajectories:[VivoQMMMTransmissionTrajectory]
+            let coefficient:Double;let standardError:Double;let effective:Double;let unresolved:Double
         }
         let evidenceID=try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Evidence(
-            schema:"numivivo.org/qmmm-dynamical-transmission-evidence/v1",requestFingerprint:requestID,
-            system:systemFingerprint,provider:providerFingerprint,trajectories:trajectories,coefficient:coefficient,
-            standardError:standardError,effective:effective,unresolved:unresolved)))
+            schema:"numivivo.org/qmmm-dynamical-transmission-evidence/v2",requestFingerprint:requestID,
+            system:systemFingerprint,provider:providerFingerprint,surfaceEvidence:request.surfaceEnsemble.evidenceFingerprint,
+            trajectories:trajectories,coefficient:coefficient,standardError:standardError,effective:effective,unresolved:unresolved)))
         return .init(schema:VivoQMMMDynamicalTransmissionResult.schema,requestFingerprint:requestID,
             retainedSystemFingerprint:systemFingerprint,providerFingerprint:providerFingerprint,trajectories:trajectories,
             transmissionCoefficient:coefficient,coefficientStandardError:standardError,effectiveFluxSamples:effective,
@@ -300,7 +279,7 @@ public enum VivoQMMMDynamicalTransmission {
         var output=rateRequest
         output.transmissionProbability=result.transmissionCoefficient;output.transmissionOrigin=.calculated
         output.transmissionEvidence=VivoKineticEvidence(source:"NumiVivo classical dividing-surface shooting",
-            locator:"flux-weighted NVE recrossing coefficient; SE=\(result.coefficientStandardError); effectiveFluxSamples=\(result.effectiveFluxSamples)",
+            locator:"flux-weighted unbiased NVE recrossing coefficient; SE=\(result.coefficientStandardError); effectiveFluxSamples=\(result.effectiveFluxSamples)",
             sourceFingerprint:result.evidenceFingerprint.hex)
         return output
     }
