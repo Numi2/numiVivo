@@ -3,14 +3,13 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite(.serialized) struct QMMMTransmissionTests {
-    private func qualifiedPMF() throws -> VivoQMMMQualifiedActivationFreeEnergy {
+    private func qualifiedPMF(source:VivoMDConfiguration,systemID:VivoFingerprint,providerID:VivoFingerprint) throws -> VivoQMMMQualifiedActivationFreeEnergy {
         let coordinate=VivoQMMMReactionCoordinate(identifier:"synthetic-transfer",kind:.distanceDifference,atomIndices:[0,1,2,3])
         let windows=[VivoQMMMUmbrellaWindow(identifier:"left",centerNM:-0.15,forceConstantKJPerMolNM2:10),
                      VivoQMMMUmbrellaWindow(identifier:"right",centerNM:0.15,forceConstantKJPerMolNM2:10)]
         var values:[Double]=[]
         for _ in 0..<20 { for i in 0...60 {
-            let x=Double(i)*0.01
-            values.append(-0.30+x);values.append(0.30-x)
+            let x=Double(i)*0.01;values.append(-0.30+x);values.append(0.30-x)
         } }
         let traces=windows.enumerated().map { index,window in
             VivoQMMMUmbrellaTrace(window:window,randomSeed:UInt64(index+1),coordinateNM:values,
@@ -23,10 +22,8 @@ import Testing
         #expect(analysis.converged)
         let protocolID=try VivoCanonicalJSON.fingerprint(Data("transmission-test-protocol".utf8))
         let provenance=VivoQMMMFreeEnergyProvenance(
-            structureFingerprint:try VivoCanonicalJSON.fingerprint(Data("structure".utf8)),
-            systemFingerprint:try VivoCanonicalJSON.fingerprint(Data("system".utf8)),
-            baseProviderFingerprint:try VivoCanonicalJSON.fingerprint(Data("provider".utf8)),
-            dynamicsFingerprint:try VivoCanonicalJSON.fingerprint(Data("source-dynamics".utf8)),
+            structureFingerprint:try VivoCanonicalJSON.fingerprint(Data("structure".utf8)),systemFingerprint:systemID,
+            baseProviderFingerprint:providerID,dynamicsFingerprint:try source.fingerprint(),
             samplingExecution:.init(requestFingerprint:try VivoCanonicalJSON.fingerprint(Data("execution".utf8)),
                                     replicaProtocolFingerprint:protocolID),
             chemicalState:"state",environment:.proteinEnvironment,environmentIdentifier:"host",
@@ -39,12 +36,13 @@ import Testing
     }
 
     @Test func fluxWeightedEstimatorReconstructsAndProducesCalculatedTransmissionEvidence() throws {
-        let freeEnergy=try qualifiedPMF()
         let source=VivoMDConfiguration(timeStepPS:0.001,electrostatics:.cutoff,ensemble:.nvt,thermostat:.langevinMiddle,
             targetTemperatureK:300,frictionPerPS:1,neighborListEnabled:false)
         let shooting=VivoMDConfiguration(timeStepPS:0.001,electrostatics:.cutoff,ensemble:.nve,thermostat:.none,
             targetTemperatureK:nil,frictionPerPS:nil,neighborListEnabled:false)
         let sourceID=try source.fingerprint(),systemID=try VivoCanonicalJSON.fingerprint(Data("dummy-system".utf8))
+        let providerID=try VivoCanonicalJSON.fingerprint(Data("dummy-provider".utf8))
+        let freeEnergy=try qualifiedPMF(source:source,systemID:systemID,providerID:providerID)
         let checkpoints=(0..<4).map { i in VivoMDCheckpoint(systemFingerprint:systemID,configurationFingerprint:sourceID,
             acceptedStep:UInt64(i),timePS:Double(i)*0.001,positionsNM:[.zero],velocitiesNMPerPS:[.zero],periodicCell:nil) }
         let request=VivoQMMMDynamicalTransmissionRequest(freeEnergy:freeEnergy,sourceDynamics:source,shootingDynamics:shooting,
@@ -62,7 +60,6 @@ import Testing
                 productDirectedCoordinateVelocityNMPerPS:1,velocitiesTimeReversed:false,outcome:.productCommitted,committedSteps:9,finalCoordinateNM:0.4),
             VivoQMMMTransmissionTrajectory(sourceCheckpointFingerprint:ids[3],initialCoordinateNM:0.29,
                 productDirectedCoordinateVelocityNMPerPS:1,velocitiesTimeReversed:true,outcome:.reactantRecrossed,committedSteps:7,finalCoordinateNM:-0.4)]
-        let providerID=try VivoCanonicalJSON.fingerprint(Data("dummy-provider".utf8))
         let result=try VivoQMMMDynamicalTransmission.analyze(request:request,systemFingerprint:systemID,
             providerFingerprint:providerID,trajectories:trajectories)
         #expect(result.converged)
@@ -90,5 +87,10 @@ import Testing
         #expect(!failed.converged)
         #expect(failed.unresolvedFluxFraction==0.25)
         #expect(throws:(any Error).self) { _ = try VivoQMMMDynamicalTransmission.applying(failed,transmissionRequest:request,to:rate) }
+        #expect(throws:(any Error).self) {
+            _ = try VivoQMMMDynamicalTransmission.analyze(request:request,
+                systemFingerprint:try VivoCanonicalJSON.fingerprint(Data("wrong-system".utf8)),
+                providerFingerprint:providerID,trajectories:trajectories)
+        }
     }
 }
