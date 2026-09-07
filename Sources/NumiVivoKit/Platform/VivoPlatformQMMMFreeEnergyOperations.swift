@@ -21,6 +21,22 @@ public enum VivoPlatformQMMMFreeEnergyOperations {
                 let request=try VivoPlatformOperations.input(VivoQMMMFreeEnergyRateRequest.self,"request",inputs)
                 return ["result":try VivoCanonicalJSON.encode(VivoQMMMFreeEnergyRate.calculate(request))]
             }),
+         VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-transmission-analyze",id:id,
+            inputs:["request":"vivo.qmmm-dynamical-transmission-analysis-request"],
+            outputs:[.init(name:"result",kind:"vivo.qmmm-dynamical-transmission-result")],
+            summary:"Reconstruct flux-weighted dividing-surface recrossing evidence already generated under the bound BO Hamiltonian.",
+            configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
+                let request=try VivoPlatformOperations.input(VivoQMMMDynamicalTransmissionAnalysisRequest.self,"request",inputs)
+                return ["result":try VivoCanonicalJSON.encode(request.calculate())]
+            }),
+         VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-apply-transmission",id:id,
+            inputs:["request":"vivo.qmmm-computed-transmission-application-request"],
+            outputs:[.init(name:"rateRequest",kind:"vivo.qmmm-free-energy-rate-request")],
+            summary:"Apply only a converged computed recrossing coefficient to its exact PMF rate request.",
+            configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
+                let request=try VivoPlatformOperations.input(VivoQMMMComputedTransmissionApplicationRequest.self,"request",inputs)
+                return ["rateRequest":try VivoCanonicalJSON.encode(request.calculate())]
+            }),
          VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-replicated-free-energy-rate",id:id,
             inputs:["request":"vivo.qmmm-replicated-free-energy-rate-request"],
             outputs:[.init(name:"result",kind:"vivo.qmmm-replicated-free-energy-rate-result")],
