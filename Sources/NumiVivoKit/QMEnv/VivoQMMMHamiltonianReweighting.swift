@@ -73,7 +73,7 @@ public enum VivoQMMMHamiltonianReweighting {
         guard sum.isFinite,sum>0,square.isFinite,square>0 else { throw VivoChemistryError.convergence("Hamiltonian reweighting normalization") }
         let normalized=shifted.map{$0/sum},effective=sum*sum/square,largest=normalized.max() ?? 1
         let logMean=maximum+log(sum)-log(Double(delta.count))
-        let freeEnergy=-logMean/beta
+        let freeEnergy = -logMean/beta
         let mean=delta.reduce(0,+)/Double(delta.count)
         let variance=delta.count>1 ? delta.reduce(0.0){$0+pow($1-mean,2)}/Double(delta.count-1):0
         let sd=sqrt(max(0,variance))
