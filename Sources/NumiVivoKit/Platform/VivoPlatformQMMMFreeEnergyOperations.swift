@@ -61,10 +61,18 @@ public enum VivoPlatformQMMMFreeEnergyOperations {
          VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-chemical-qualification",id:id,
             inputs:["request":"vivo.qmmm-chemical-qualification-request"],
             outputs:[.init(name:"result",kind:"vivo.qmmm-chemical-qualification-result")],
-            summary:"Predeclared protocol/electronic/QM-region sensitivity and condition-matched external validation for one replicated chemical-rate protocol.",
+            summary:"Predeclared PMF/coordinate/transmission/electronic/QM-region/finite-size sensitivity and condition-matched external validation.",
             configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
                 let request=try VivoPlatformOperations.input(VivoQMMMChemicalQualificationRequest.self,"request",inputs)
                 return ["result":try VivoCanonicalJSON.encode(VivoQMMMChemicalQualification.calculate(request))]
+            }),
+         VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-chemical-state-thermodynamics",id:id,
+            inputs:["request":"vivo.qmmm-chemical-state-thermodynamics-request"],
+            outputs:[.init(name:"result",kind:"vivo.qmmm-chemical-state-thermodynamics-result")],
+            summary:"Semigrand-canonical pH reweighting of an explicitly enumerated evidence-backed chemical-state set.",
+            configure:VivoPlatformOperations.empty,calculate:{ _,inputs,_ in
+                let request=try VivoPlatformOperations.input(VivoQMMMChemicalStateThermodynamicsRequest.self,"request",inputs)
+                return ["result":try VivoCanonicalJSON.encode(VivoQMMMChemicalStateThermodynamics.calculate(request))]
             }),
          VivoPlatformOperations.pure(identifier:"vivo.platform.qmmm-chemical-state-network",id:id,
             inputs:["request":"vivo.qmmm-chemical-state-network-request"],
