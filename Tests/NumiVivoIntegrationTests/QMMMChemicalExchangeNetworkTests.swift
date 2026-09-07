@@ -88,6 +88,30 @@ import Testing
             }
             #expect(abs(observation.unreactedProbabilityByState.reduce(0,+)-observation.survivalProbability)<1e-12)
         }
+
+        let time=request.observationTimesSeconds[2],predicted=result.observations[2].survivalProbability
+        let measured=VivoQMMMChemicalExchangeValidationTarget(identifier:"time-course-1",timeSeconds:time,
+            survivalProbability:predicted+0.01,standardDeviationProbability:0.02,
+            context:a.request.replicas[0].context,
+            source:.init(source:"synthetic measured time course",locator:"row 1",
+                         sourceFingerprint:(try fingerprint("exchange-measured-time-course")).hex))
+        let validationRequest=VivoQMMMChemicalExchangeValidationRequest(identifier:"exchange-validation",
+            networkRequest:request,networkResult:result,targets:[measured],
+            maximumAbsoluteProbabilityError:0.02,maximumStandardizedResidual:1)
+        let validation=try VivoQMMMChemicalExchangeValidation.calculate(validationRequest)
+        #expect(validation.converged)
+        #expect(validation.points.count==1 && validation.points[0].comparable && validation.points[0].passed==true)
+        #expect(abs((validation.points[0].standardizedResidual ?? -1)-0.5)<1e-10)
+        try VivoQMMMChemicalExchangeValidation.validate(validation,request:validationRequest)
+
+        let offGrid=VivoQMMMChemicalExchangeValidationTarget(identifier:"off-grid",timeSeconds:0.5/k,
+            survivalProbability:0.5,context:a.request.replicas[0].context,
+            source:.init(source:"synthetic measured time course",locator:"row 2",
+                         sourceFingerprint:(try fingerprint("exchange-measured-off-grid")).hex))
+        let offGridResult=try VivoQMMMChemicalExchangeValidation.calculate(.init(identifier:"off-grid-validation",
+            networkRequest:request,networkResult:result,targets:[offGrid]))
+        #expect(!offGridResult.converged)
+        #expect(offGridResult.points[0].comparable==false)
     }
 
     @Test func unequalStateRatesProduceTimeDependentHazardAndInvalidEdgesReject() throws {
