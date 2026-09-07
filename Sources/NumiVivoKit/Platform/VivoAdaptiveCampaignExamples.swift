@@ -9,7 +9,7 @@ public enum VivoAdaptiveCampaignExamples {
         for origin in 0..<2 {
             let weights = energy.map { origin == 0 ? 1.0 : exp(-$0) }, total = weights.reduce(0,+)
             for sample in 0..<samplesPerOrigin {
-                var selector = rng.unit()*total, microstate = weights.count-1
+                var selector = rng.unitInterval()*total, microstate = weights.count-1
                 for i in weights.indices { selector -= weights[i]; if selector <= 0 { microstate = i; break } }
                 let identity = "finite-state-seed-\(seed)-origin-\(origin)-draw-\(sample)"
                 samples.append(.init(identifier: identity,originStateIndex: origin,independentBlockIdentifier: identity,
