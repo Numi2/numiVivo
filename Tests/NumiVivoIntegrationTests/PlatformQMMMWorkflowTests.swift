@@ -24,6 +24,7 @@ import Testing
         let configuration = try VivoPlatformOperations.json(VivoWorkflowMDQMMMConfiguration(request: request))
         let registry = try VivoPlatformOperations.registry(implementationFingerprint: identity)
         for identifier in ["vivo.platform.qmmm-free-energy-analyze","vivo.platform.qmmm-free-energy-rate",
+                           "vivo.platform.qmmm-transmission-analyze","vivo.platform.qmmm-apply-transmission",
                            "vivo.platform.qmmm-replicated-free-energy-rate","vivo.platform.qmmm-apply-replicated-rate"] {
             _ = try registry.definition(identifier)
         }
