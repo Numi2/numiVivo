@@ -403,10 +403,15 @@ import Testing
     @Test(arguments: ["receipt", "envelope"])
     func workflowVerificationRejectsOversizedWireBeforeReadingOrHashing(_ oversized: String) async throws {
         let f = try await fixture(); defer { try? FileManager.default.removeItem(at: f.root) }
+        actor ExecutionCounter {
+            private(set) var calls = 0
+            func record() { calls += 1 }
+        }
+        let executions = ExecutionCounter()
         let expected = ["value": Data("1".utf8)]
         let operation = VivoChemistryOperation(identifier: "test.sampling-export-wire-limit", version: "1",
             implementationFingerprint: f.implementation, outputs: [.init(name: "value", kind: "synthetic-value")],
-            execute: { _, _, _ in expected },
+            execute: { _, _, _ in await executions.record(); return expected },
             validateOutputs: { _, _, payloads, _ in
                 guard payloads == expected else { throw VivoChemistryError.invalid("synthetic workflow output differs") }
             })
@@ -416,6 +421,7 @@ import Testing
         let workflow = VivoChemistryWorkflow(store: f.store)
         let valid = try await workflow.run(task, using: operation)
         _ = try await workflow.verifyReceipt(valid.receiptFingerprint, task: task, using: operation)
+        try #require(await executions.calls == 1)
         let wireID: VivoFingerprint, receiptID: VivoFingerprint
         if oversized == "receipt" {
             var data = try await f.store.data(for: valid.receiptFingerprint)
@@ -434,6 +440,10 @@ import Testing
                 outputs: [.init(name: output.name, kind: output.kind, artifact: wireID)])
             receiptID = try await put(receipt, kind: "chemistry-task-receipt", store: f.store).fingerprint
         }
+        // Publish the actual cache reference while its target still hashes
+        // correctly; both immutable verification and cache lookup must bound it.
+        let cacheTarget = try await f.store.descriptor(for: receiptID)
+        _ = try await f.store.setReference("chemistry-task-" + valid.taskFingerprint.hex, to: cacheTarget)
         // If verification reads/hashes before bounding wire size, this corruption
         // would raise integrityFailure instead of the rooted fstat limit error.
         try await corrupt(wireID, fixture: f)
@@ -442,6 +452,12 @@ import Testing
             _ = try await workflow.verifyReceipt(receiptID, task: task, using: operation)
             Issue.record("oversized workflow wire object was accepted")
         } catch VivoRootedFileStore.Failure.exceededLimit(_) {}
+        #expect(try inventory(f.root) == before)
+        do {
+            _ = try await workflow.run(task, using: operation)
+            Issue.record("oversized cached workflow wire object was accepted")
+        } catch VivoRootedFileStore.Failure.exceededLimit(_) {}
+        #expect(await executions.calls == 1)
         #expect(try inventory(f.root) == before)
     }
 }

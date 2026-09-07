@@ -7,7 +7,7 @@ import Testing
 /// synthetic harmonic model is a routing/identity fixture, not an equilibrium,
 /// molecular accuracy, kinetics or performance qualification.
 @Suite(.serialized) struct MolecularSamplingNativeBridgeTests: Sendable {
-    private struct ReplicaEvidence: Codable {
+    private struct ReplicaEvidence: Encodable {
         let index: Int
         let seed: UInt64
         let checkpoint: String
@@ -15,7 +15,7 @@ import Testing
         let acceptedStep: UInt64
         let timePS: Double
     }
-    private struct Evidence: Codable {
+    private struct Evidence: Encodable {
         let schema = "numivivo.org/test-evidence/sampling-prefix/v1"
         let status = "success"
         let nativeStatus = "accepted-metal-sampling-and-exact-prefix-resume"
