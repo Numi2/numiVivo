@@ -35,22 +35,25 @@ unbinned MBAR + overlap/autocorrelation diagnostics
 qualified PMF bound to exact system/provider/dynamics/reaction/environment
                          |
                          v
-qualified dividing-surface ensemble
+finite-band reweighted dividing-surface ensemble
                          |
                          v
-fresh unbiased NVE recrossing trajectories under the same BO Hamiltonian
+paired +v/-v fresh unbiased NVE shooting under the same BO Hamiltonian
                          |
                          v
-computed classical transmission coefficient kappa
+stable signed reactive-flux plateau kappa
                          |
                          v
-flux-normalized context-qualified rate + independent replica agreement
+sampled positive surface flux + PMF surface/reactant ratio
+                         |
+                         v
+context-qualified rate + independent replica agreement
                          |
                          v
 existing kinetic context / covalent kinetic pack
 ```
 
-See [QM/MM dynamical transmission](QMMMDynamicalTransmission.md) for the surface-ensemble and recrossing contract.
+See [QM/MM dynamical transmission](QMMMDynamicalTransmission.md) for the surface-ensemble and paired recrossing contract.
 
 ## Reaction coordinates
 
@@ -62,7 +65,7 @@ For these coordinate classes the coordinate mass metric is geometry independent:
 g_xi = sum_i |d xi / d r_i|^2 / m_i
 ```
 
-NumiVivo computes it from the exact physical particle masses rather than introducing a fitted kinetic prefactor.
+NumiVivo computes it from the exact physical particle masses rather than introducing a fitted kinetic prefactor. This analytic metric remains available for conventional TST normalization when no sampled surface-flux normalization is attached.
 
 ## Unified force setup
 
@@ -96,7 +99,7 @@ A profile that fails overlap, effective-sample, autocorrelation or MBAR residual
 
 ## Flux-normalized rate
 
-For a one-dimensional coordinate `xi`, conventional classical transition-state flux is calculated as
+Without sampled surface-flux evidence, the conventional one-dimensional classical TST normalization is
 
 ```text
 k_TST = [rho(xi*) / integral_R rho(xi) dxi]
@@ -105,19 +108,23 @@ k_TST = [rho(xi*) / integral_R rho(xi) dxi]
 
 The bracketed term has units of inverse nanometres and the positive-velocity factor is in nanometres per picosecond under NumiVivo's kJ/mol, Da, nm and ps units. The result is converted to inverse seconds.
 
-This avoids assigning kinetic meaning to umbrella elapsed time and avoids treating PMF peak-minus-basin-minimum as an Eyring barrier. For compatibility with existing kinetic infrastructure, NumiVivo constructs the unique nonnegative Eyring-equivalent activation free energy whose `kBT/h` expression reproduces this direct PMF flux.
+This avoids assigning kinetic meaning to umbrella elapsed time and avoids treating PMF peak-minus-basin-minimum as an Eyring barrier. For compatibility with existing kinetic infrastructure, NumiVivo constructs the unique nonnegative Eyring-equivalent activation free energy whose `kBT/h` expression reproduces the direct flux rate.
 
-The transmission factor can remain explicitly assumed/external, or it can be replaced by a calculated result from `VivoQMMMDynamicalTransmission`. A calculated result is accepted only when the exact PMF evidence, retained system and BO provider identities match and the recrossing acceptance gates pass. The resulting coefficient is still applied through the shared `VivoTransitionStateDerivation`; the direct PMF flux calculation itself is unchanged.
+When a converged computed transmission result is applied, `VivoQMMMDynamicalTransmission.applying` also attaches `VivoQMMMSurfaceFluxNormalization` derived from the same statistically qualified dividing-surface ensemble used by paired shooting. The rate then uses that sampled positive coordinate flux together with the PMF surface-to-reactant probability ratio, instead of combining the shooting coefficient with a separately inferred surface velocity factor.
+
+The transmission factor can remain explicitly assumed/external, or it can be replaced by the calculated paired signed reactive-flux plateau from `VivoQMMMDynamicalTransmission`. A calculated result is accepted only when the exact PMF evidence, retained system and BO provider identities match and the surface, plateau, unresolved-flux and sampling-error gates pass.
 
 A flux greater than the Eyring thermal prefactor implies a negative/barrierless equivalent activation free energy and is rejected by this contract rather than forced into the bound-complex TST model.
 
 ## Dynamical recrossing
 
-`VivoQMMMSurfaceEnsemble` samples an independent harmonic window centered exactly at the qualified dividing surface and records step-separated accepted positions and velocities. Those biased checkpoint fingerprints are retained as provenance.
+`VivoQMMMSurfaceEnsemble` runs an independent harmonic window centered exactly at the qualified dividing surface. The complete production coordinate trace is used to estimate correlation, and retained states must satisfy correlation-aware accepted-step separation. A Gaussian delta-kernel and inverse umbrella factor reweight the finite surface band; normalized state weights, effective surface sample count and the sampled positive coordinate flux are retained as evidence.
 
-`VivoQMMMDynamicalTransmission` does **not** restore those biased checkpoints into the shooting calculation. It creates fresh initial states from their exact positions, velocities, cell and clock, removes the umbrella provider, and launches unbiased NVE trajectories with the same force-equivalent BO Hamiltonian. Surface states are weighted by the magnitude of product-directed reaction-coordinate velocity; negative directions are time reversed before launching.
+Biased checkpoint fingerprints remain execution provenance. `VivoQMMMDynamicalTransmission` does **not** restore them into the shooting calculation. For each retained state it creates fresh initial states from the exact positions, velocities, cell and clock and launches both the product-directed velocity and its exact time reverse under the unbiased force-equivalent BO Hamiltonian.
 
-The result records product commitment, reactant recrossing and unresolved finite-time trajectories, effective flux sample count, unresolved flux fraction and coefficient standard error. It estimates classical recrossing only; quantum tunnelling and alternative pathways remain separate.
+At every observation time the estimator evaluates the signed product indicator `hP(+v,t)-hP(-v,t)`, weighted by the state importance weight and positive coordinate speed. The final transmission coefficient is the mean of a required late-time plateau. The result retains the full coefficient history, plateau range, effective flux sample count, unresolved paired-flux fraction and coefficient standard error.
+
+It estimates classical recrossing only; quantum tunnelling and alternative pathways remain separate.
 
 ## Reaction and environment qualification
 
@@ -125,7 +132,7 @@ A rate-producing PMF is not accepted from a bare profile JSON. `VivoQMMMFreeEner
 
 The qualifying API reruns `VivoReactionConnectivity.validate`, so a stored `converged=true` flag is not authority. Reaction-coordinate atoms must occur in the qualified saddle's structure mapping. This is the path that permits `proteinEnvironment`; the local-RRHO prepared-rate path remains unable to relabel an isolated calculation as a protein activation free energy.
 
-Transmission evidence is bound to this exact PMF/system/provider identity. A coefficient calculated for another Hamiltonian cannot be transplanted into the rate request.
+Transmission and sampled surface-flux evidence are bound to this exact PMF/system/provider identity. A coefficient or surface normalization calculated for another Hamiltonian cannot be transplanted into the rate request.
 
 ## Independent PMF replicas
 
@@ -133,9 +140,9 @@ A single numerically converged PMF is useful evidence but is not the production 
 
 Replica agreement is evaluated directly in `ln(k)` because rate is exponentially sensitive to free energy. A secondary PMF profile-barrier range is retained as a diagnostic. The result records the geometric-mean rate, sample standard deviation across independent replica log rates, mean within-replica conditional variance, their quadrature combination, explicit acceptance issues and an immutable evidence fingerprint.
 
-When calculated transmission is used in a replicated rate, every replica must carry the same declared transmission binding required by `VivoQMMMReplicatedFreeEnergyRate`; mixing assumed, external and computed transmission evidence inside one replica set is rejected.
+When calculated transmission is used in a replicated rate, every replica must carry the same declared transmission/surface-flux binding required by `VivoQMMMReplicatedFreeEnergyRate`; mixing assumed, external and computed transmission evidence inside one replica set is rejected.
 
-A replicated result can exist with `converged=false` so the disagreement remains inspectable, but it cannot replace the inactivation parameter of a `VivoCovalentKineticPack` until the configured agreement gates pass.
+A replicated result can exist with `converged=false` so disagreement remains inspectable, but it cannot replace the inactivation parameter of a `VivoCovalentKineticPack` until the configured agreement gates pass.
 
 ## CLI analysis and rate conversion
 
@@ -158,12 +165,12 @@ numivivo qmmm-free-energy-replicated-rate replicas.json \
 
 The two rate commands accept `--kinetics kinetic-pack.json`. The single-PMF command writes a pack using that qualified rate. The replicated command writes a pack only when independent-replica agreement passes. Association, dissociation and target-turnover parameters are retained.
 
-Actual umbrella surface collection and NVE shooting are exposed through the Swift execution API because the authoritative BO provider is an executable, fingerprinted closure. Offline JSON does not pretend to serialize such a provider. Once trajectories exist, `qmmm-transmission-analyze` reconstructs the deterministic estimator and `qmmm-transmission-apply` produces the exact rate request containing its calculated coefficient.
+Actual surface collection and paired NVE shooting are exposed through the Swift execution API because the authoritative BO provider is an executable, fingerprinted closure. Offline JSON does not pretend to serialize such a provider. Once paired branch evidence exists, `qmmm-transmission-analyze` reconstructs the deterministic estimator and `qmmm-transmission-apply` produces the exact rate request containing its calculated coefficient and sampled flux normalization.
 
 The corresponding artifact-DAG operations are `vivo.platform.qmmm-transmission-analyze` and `vivo.platform.qmmm-apply-transmission`.
 
 ## What this does not establish
 
-Passing the numerical gates establishes convergence only for the declared Hamiltonian, reaction coordinate, windows, surface protocol, finite shooting horizon and sampled state. It does not establish correct protonation or tautomer populations, complete reactive-conformer populations, absence of alternative mechanisms, electronic-structure or force-field accuracy, calibrated adaptive-region promotion free energies, negligible finite-size error, quantum tunnelling, or experimental predictive accuracy.
+Passing the numerical gates establishes convergence only for the declared Hamiltonian, reaction coordinate, umbrella windows, finite surface band/kernel, correlation protocol, shooting horizon, commitment basins and sampled state. It does not establish correct protonation or tautomer populations, complete reactive-conformer populations, absence of alternative mechanisms, electronic-structure or force-field accuracy, calibrated adaptive-region promotion free energies, negligible finite-size error, quantum tunnelling, or experimental predictive accuracy.
 
-A realistic protein-rate qualification therefore still needs a chemically justified prepared system, mapped reaction, independent production trajectories, reaction-coordinate/window sensitivity, shooting-horizon and commitment-basin sensitivity, electronic-model and QM-region sensitivity, alternate chemical states and pathways, and external chemical validation. The software path keeps those questions explicit instead of filling missing terms with continuum-solvent convergence or a local harmonic barrier.
+A realistic protein-rate qualification therefore still needs a chemically justified prepared system, mapped reaction, independent production trajectories, reaction-coordinate/window/surface-band sensitivity, shooting-horizon and commitment-basin sensitivity, electronic-model and QM-region sensitivity, alternate chemical states and pathways, and external chemical validation. The software path keeps those questions explicit instead of filling missing terms with continuum-solvent convergence or a local harmonic barrier.
