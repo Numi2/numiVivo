@@ -1,5 +1,17 @@
 # Validation status
 
+## 7 September 2026 streaming archive verification
+
+The [archive audit](Documentation/Audit/2026-09-07_ARCHIVE_STREAMING.md) records
+successful validation and continuation of a real **100,001-chunk** archive to
+100,002 chunks, nine initial fresh-process CLI comparisons, and six repeated
+CLI checks on integrated source `b257234`. That source passed the complete
+release/all-test-target build, **84 executed native test functions in 12
+suites** (plus one explicit opt-in skip), **57 workflow CLI checks**, and both
+target-panel tasks. Source revisions, binary hashes, compact receipts and
+fixture-specific memory observations are retained in the audit. This is archive
+and integration evidence, not complete scientific or product qualification.
+
 ## 7 September 2026 reliability verification
 
 [The current reliability audit](Documentation/Audit/2026-09-07_COMPLETION_RELIABILITY.md)

@@ -1,0 +1,230 @@
+{
+  "schema": "numivivo.org/test-evidence/md-archive-cli/v1",
+  "receiptSHA256": "4a658f39abec8f864f7b03889a25411276157a9295fc8ebcc9d4f146acc576c8",
+  "archiveRoot": "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "rssUnit": "bytes",
+  "method": "Fresh serial CLI processes; /usr/bin/time -l; no controlled filesystem-cache policy",
+  "binaries": {
+    "candidate": {
+      "path": "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+      "sha256": "89e72aa155a5de0ea47f67765c68294c8f810df5c3ed953a27263098c1dbd8ad"
+    },
+    "baseline": {
+      "path": "/Users/n/numivivo-completion-20260907/.build/arm64-apple-macosx/release/numivivo",
+      "sha256": "d250e2c5dce3b7388b4e9e28c74674dbebf68dd622ec8846195f38ee8e713fe7"
+    }
+  },
+  "runs": [
+    {
+      "label": "candidate-index-10000",
+      "binary": "candidate",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "md-trajectory-inspect",
+        "--store",
+        "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+        "--manifest",
+        "d04d67d2a1cc030fbb236914a08f08a82c6d1f1170a0ff724d63b5d594d29c22"
+      ],
+      "expectedExit": 0,
+      "passed": true,
+      "exitCode": 0,
+      "maximumResidentSetBytes": 10387456,
+      "elapsedSeconds": 1.78,
+      "userSeconds": 0.42,
+      "systemSeconds": 0.66,
+      "peakMemoryFootprintBytes": 3129848
+    },
+    {
+      "label": "candidate-index-100001",
+      "binary": "candidate",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "md-trajectory-inspect",
+        "--store",
+        "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+        "--manifest",
+        "969425ec1b83308cbdcc80be0b47726bb3cab4c77e82bdedff3bcf7b1b5a6519"
+      ],
+      "expectedExit": 0,
+      "passed": true,
+      "exitCode": 0,
+      "maximumResidentSetBytes": 10354688,
+      "elapsedSeconds": 10.85,
+      "userSeconds": 4.02,
+      "systemSeconds": 6.56,
+      "peakMemoryFootprintBytes": 3080672
+    },
+    {
+      "label": "candidate-full-10000",
+      "binary": "candidate",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "md-trajectory-inspect",
+        "--store",
+        "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+        "--manifest",
+        "d04d67d2a1cc030fbb236914a08f08a82c6d1f1170a0ff724d63b5d594d29c22",
+        "--verify"
+      ],
+      "expectedExit": 0,
+      "passed": true,
+      "exitCode": 0,
+      "maximumResidentSetBytes": 10436608,
+      "elapsedSeconds": 3.0,
+      "userSeconds": 1.05,
+      "systemSeconds": 1.32,
+      "peakMemoryFootprintBytes": 3064312
+    },
+    {
+      "label": "candidate-full-100001",
+      "binary": "candidate",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "md-trajectory-inspect",
+        "--store",
+        "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+        "--manifest",
+        "969425ec1b83308cbdcc80be0b47726bb3cab4c77e82bdedff3bcf7b1b5a6519",
+        "--verify"
+      ],
+      "expectedExit": 0,
+      "passed": true,
+      "exitCode": 0,
+      "maximumResidentSetBytes": 10452992,
+      "elapsedSeconds": 30.13,
+      "userSeconds": 10.15,
+      "systemSeconds": 13.17,
+      "peakMemoryFootprintBytes": 3064288
+    },
+    {
+      "label": "candidate-extended-100002",
+      "binary": "candidate",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "md-trajectory-inspect",
+        "--store",
+        "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+        "--manifest",
+        "be1ae04b398b947d62fad8484f6669a3b2d22d49da496050f8da33b376595462",
+        "--verify"
+      ],
+      "expectedExit": 0,
+      "passed": true,
+      "exitCode": 0,
+      "maximumResidentSetBytes": 10502144,
+      "elapsedSeconds": 27.04,
+      "userSeconds": 9.97,
+      "systemSeconds": 12.74,
+      "peakMemoryFootprintBytes": 3113440
+    },
+    {
+      "label": "candidate-explicit-limit",
+      "binary": "candidate",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-completion-final-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "md-trajectory-inspect",
+        "--store",
+        "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+        "--manifest",
+        "969425ec1b83308cbdcc80be0b47726bb3cab4c77e82bdedff3bcf7b1b5a6519",
+        "--maximum-chunks",
+        "100000"
+      ],
+      "expectedExit": 65,
+      "passed": true,
+      "exitCode": 65,
+      "maximumResidentSetBytes": 9420800,
+      "elapsedSeconds": 0.0,
+      "userSeconds": 0.0,
+      "systemSeconds": 0.0,
+      "peakMemoryFootprintBytes": 2245088
+    },
+    {
+      "label": "baseline-full-10000",
+      "binary": "baseline",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-completion-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "md-trajectory-inspect",
+        "--store",
+        "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+        "--manifest",
+        "d04d67d2a1cc030fbb236914a08f08a82c6d1f1170a0ff724d63b5d594d29c22",
+        "--verify",
+        "--maximum-chunks",
+        "10000"
+      ],
+      "expectedExit": 0,
+      "passed": true,
+      "exitCode": 0,
+      "maximumResidentSetBytes": 12713984,
+      "elapsedSeconds": 5.27,
+      "userSeconds": 1.85,
+      "systemSeconds": 2.47,
+      "peakMemoryFootprintBytes": 5341712
+    },
+    {
+      "label": "baseline-full-100001",
+      "binary": "baseline",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-completion-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "md-trajectory-inspect",
+        "--store",
+        "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+        "--manifest",
+        "969425ec1b83308cbdcc80be0b47726bb3cab4c77e82bdedff3bcf7b1b5a6519",
+        "--verify",
+        "--maximum-chunks",
+        "100001"
+      ],
+      "expectedExit": 0,
+      "passed": true,
+      "exitCode": 0,
+      "maximumResidentSetBytes": 30703616,
+      "elapsedSeconds": 44.37,
+      "userSeconds": 17.71,
+      "systemSeconds": 24.63,
+      "peakMemoryFootprintBytes": 23478800
+    },
+    {
+      "label": "baseline-default-limit",
+      "binary": "baseline",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-completion-20260907/.build/arm64-apple-macosx/release/numivivo",
+        "md-trajectory-inspect",
+        "--store",
+        "/Users/n/numivivo-archive-evidence-20260907/native/numivivo-long-archive-6C155416-4B45-448B-975E-A2E214E6877B",
+        "--manifest",
+        "969425ec1b83308cbdcc80be0b47726bb3cab4c77e82bdedff3bcf7b1b5a6519"
+      ],
+      "expectedExit": 65,
+      "passed": true,
+      "exitCode": 65,
+      "maximumResidentSetBytes": 9388032,
+      "elapsedSeconds": 0.0,
+      "userSeconds": 0.0,
+      "systemSeconds": 0.0,
+      "peakMemoryFootprintBytes": 2277832
+    }
+  ],
+  "passed": true
+}

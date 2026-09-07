@@ -74,3 +74,5 @@ All four cases met their predeclared bounds. Full-precision observations and tol
 The [completion roadmap](../COMPLETION_ROADMAP.md) remains active. In particular, this record does not establish the complete MD force/ensemble/PME matrix, biological-scale accuracy, useful maximum system size, performance against independent tools, or a fully qualified molecular-to-biological research campaign. Nuclear and surrogate qualification remains a separate workstream with its own evidence.
 
 Trajectory restart checks validate the link sequence and final coordinate payload; they do not exhaustively reread older coordinate and observation payloads. The current materialized index also limits resume to 100,000 chunks although the writer permits more. A separately isolated streaming-validation repair is in development and is not part of the tested source named here.
+
+Later on 7 September, the separate [streaming archive milestone](2026-09-07_ARCHIVE_STREAMING.md) removed that implicit resume ceiling and verified a real 100,001-chunk continuation. It does not change the historical scope of this reliability record.

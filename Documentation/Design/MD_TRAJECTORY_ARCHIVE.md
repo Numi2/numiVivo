@@ -36,6 +36,8 @@ Sampled steps may be nonconsecutive. A trajectory is not an event log and does n
 
 `MDTrajectoryArchiveValidationTests` covers bounded reads, structural corruption, scope distinctions, cancellation and materialization limits with actual rooted storage. The separate long fixture is enabled with `NUMIVIVO_LONG_ARCHIVE_TESTS=1`; it constructs more than 100,000 real links and payloads and checks streaming validation and continuation. Test-source presence does not prove that campaign ran. Record source revision, command and results from the target host before claiming long-archive qualification. Peak-memory measurements and numerical/statistical trajectory qualification remain separate evidence.
 
+The [7 September native archive audit](../Audit/2026-09-07_ARCHIVE_STREAMING.md) records the executed 100,001-chunk campaign, extension to 100,002 chunks, and fresh-process CLI memory observations with exact source and binary identities.
+
 After building the complete release test targets, retain a fixture and verify it through fresh CLI processes:
 
 ```sh
