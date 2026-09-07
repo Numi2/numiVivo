@@ -55,6 +55,12 @@ def main():
            'vivo.platform.qmmm-chemical-state-network', 'vivo.platform.qmmm-chemical-exchange-network',
            'vivo.platform.qmmm-chemical-exchange-validation'}.issubset(registered),
           'catalog exposes cross-domain, transmission and complete chemical-state qualification operation families')
+    precision = {"vivo.platform."+name for name in ["barrier-tunnelling", "global-kinetic-uncertainty", "reactive-surrogate-label", "reactive-surrogate-train", "ring-polymer-sample", "reactive-surrogate-sample"]}
+    check(precision.issubset(registered), 'catalog exposes nuclear statistics, global uncertainty and corrected surrogate sampling')
+    nuclear_recipe = pathlib.Path(__file__).resolve().parents[2] / 'Examples/workflows/barrier-tunnelling.json'
+    run('nuclear-plan', 'workflow-plan', nuclear_recipe)
+    run('nuclear-run', 'workflow-run', nuclear_recipe, '--store', out / 'nuclear-store', '--output', out / 'nuclear.json')
+    check(read('nuclear.json')['allTasksSucceeded'], 'Eckart fixture executes through the real workflow CLI')
     qmmm_help = run('qmmm-help', 'qmmm-free-energy-help').stdout
     check('qmmm-transmission-analyze' in qmmm_help and 'qmmm-transmission-apply' in qmmm_help and
           'qmmm-chemical-qualify' in qmmm_help and 'qmmm-chemical-state-populations' in qmmm_help and

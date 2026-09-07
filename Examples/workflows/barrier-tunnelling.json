@@ -1,0 +1,137 @@
+{
+  "artifacts": [
+    {
+      "identifier": "barrier",
+      "source": {
+        "json": {
+          "kind": "vivo.barrier-tunnelling-request",
+          "payload": {
+            "schema": "numivivo.org/barrier-tunnelling-request/v1",
+            "model": "asymmetricEckart",
+            "temperatureK": 300,
+            "imaginaryWavenumberPerCM": 1000,
+            "forwardBarrierKJPerMol": 40,
+            "reverseBarrierKJPerMol": 60,
+            "hamiltonianFingerprint": {
+              "bytes": [
+                67,
+                117,
+                86,
+                64,
+                46,
+                217,
+                240,
+                171,
+                194,
+                3,
+                236,
+                76,
+                145,
+                100,
+                34,
+                143,
+                2,
+                58,
+                166,
+                134,
+                73,
+                142,
+                76,
+                161,
+                70,
+                101,
+                166,
+                45,
+                64,
+                122,
+                213,
+                71
+              ]
+            },
+            "stationaryPointEvidence": {
+              "bytes": [
+                121,
+                247,
+                174,
+                119,
+                73,
+                63,
+                97,
+                115,
+                134,
+                185,
+                10,
+                58,
+                20,
+                30,
+                74,
+                120,
+                32,
+                71,
+                242,
+                211,
+                10,
+                11,
+                82,
+                234,
+                219,
+                71,
+                97,
+                12,
+                173,
+                55,
+                181,
+                64
+              ]
+            },
+            "energyConvention": "Synthetic one-dimensional numerical fixture; common asymptote convention; not chemical validation",
+            "relativeTolerance": 1e-08,
+            "maximumEvaluations": 262144
+          }
+        }
+      }
+    }
+  ],
+  "identifier": "synthetic-eckart-correction",
+  "nodes": [
+    {
+      "identifier": "tunnelling",
+      "operation": "vivo.platform.barrier-tunnelling",
+      "version": "1",
+      "configuration": {},
+      "inputs": {
+        "request": {
+          "artifact": {
+            "identifier": "barrier"
+          }
+        }
+      },
+      "resources": {
+        "budget": {
+          "maximumBasisFunctions": 64,
+          "maximumBytes": 268435456,
+          "maximumDeterminants": 512,
+          "maximumOperatorApplications": 100000000
+        },
+        "maximumInputBytes": 268435456,
+        "maximumOutputBytes": 268435456,
+        "numericalBackend": "cpu-fp64"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "name": "correction",
+      "node": "tunnelling",
+      "port": "correction"
+    }
+  ],
+  "policy": {
+    "maximumConcurrentMetalTasks": 1,
+    "maximumConcurrentTasks": 2,
+    "maximumInlineBytes": 134217728,
+    "maximumNodes": 256,
+    "maximumReservedBytes": 2147483648
+  },
+  "schema": "numivivo.org/workflow-recipe/v1"
+}

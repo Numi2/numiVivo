@@ -7,7 +7,7 @@ import Testing
         try VivoCanonicalJSON.fingerprint(Data(value.utf8))
     }
 
-    private func replicatedPathway(state:String,executionPrefix:String,seedBase:UInt64) throws -> VivoQMMMPathwayRate {
+    func replicatedPathway(state:String,executionPrefix:String,seedBase:UInt64) throws -> VivoQMMMPathwayRate {
         let coordinate=VivoQMMMReactionCoordinate(identifier:"exchange-transfer",kind:.distance,atomIndices:[0,1])
         let windows=[VivoQMMMUmbrellaWindow(identifier:"left",centerNM:-0.10,forceConstantKJPerMolNM2:20),
                      VivoQMMMUmbrellaWindow(identifier:"right",centerNM:0.10,forceConstantKJPerMolNM2:20)]

@@ -118,6 +118,7 @@ public enum VivoPlatformOperations {
         // QM/MM module owns its free-energy adapters; register each authority once.
         definitions += VivoPlatformRefinementOperations.definitions(implementationFingerprint: id)
         definitions += VivoPlatformAdaptiveOperations.definitions(implementationFingerprint: id)
+        definitions += VivoPlatformPrecisionSamplingOperations.definitions(implementationFingerprint: id)
         return try .init(implementationFingerprint: id, definitions: definitions)
     }
 

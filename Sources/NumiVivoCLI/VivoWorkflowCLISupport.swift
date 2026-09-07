@@ -47,7 +47,7 @@ extension VivoFingerprint {
 
 extension VivoWorkflowCLICommands {
     /// Compatibility with the common command router. The static executor exits
-    /// with 1/2 on failure; reaching this return therefore means success only.
+    /// with 65 for invalid input and 1 for incomplete execution; reaching this return therefore means success only.
     func run(arguments: [String]) async -> Int32 {
         await Self.run(arguments)
         return 0
