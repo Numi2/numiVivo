@@ -8,9 +8,11 @@ struct VivoMolecularSamplingExportCLICommands {
 
     func run(arguments raw: [String]) async -> Int32 {
         do {
+            try Task.checkCancellation()
             let arguments = try Arguments(raw)
             let limits = try VivoMolecularSamplingCLILimits.load(arguments.options["--read-limits"])
             let root = try Self.canonicalURL(URL(fileURLWithPath: arguments.options["--store"]!))
+            try Task.checkCancellation()
             let outputs = try OutputPlan(arguments: arguments, storeRoot: root)
             try Task.checkCancellation()
             // Reading and selection require an existing store. No typo in its
