@@ -18,7 +18,7 @@ public struct VivoQMMMReplicaAgreementConfiguration: Codable, Sendable, Equatabl
 }
 
 public struct VivoQMMMReplicatedFreeEnergyRateRequest: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-replicated-free-energy-rate/v1"
+    public static let schema="numivivo.org/qmmm-replicated-free-energy-rate/v2"
     public var schema:String
     public var replicas:[VivoQMMMFreeEnergyRateRequest]
     public var agreement:VivoQMMMReplicaAgreementConfiguration
@@ -28,14 +28,16 @@ public struct VivoQMMMReplicatedFreeEnergyRateRequest: Codable, Sendable, Equata
 }
 
 public struct VivoQMMMReplicatedFreeEnergyRateResult: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-replicated-free-energy-rate-result/v1"
+    public static let schema="numivivo.org/qmmm-replicated-free-energy-rate-result/v2"
     public let schema:String
     public let requestFingerprint:VivoFingerprint
     public let replicaResults:[VivoQMMMFreeEnergyRateResult]
     public let geometricMeanRatePerSecond:Double
     public let meanLogRatePerSecond:Double
     public let betweenReplicaLogRateStandardDeviation:Double
-    public let combinedConditionalLogRateStandardDeviation:Double
+    /// Nil means at least one required within-replica uncertainty component is
+    /// unresolved. Missing uncertainty is never replaced by numerical zero.
+    public let combinedConditionalLogRateStandardDeviation:Double?
     public let logRateRange:Double
     public let profileBarrierRangeKJPerMol:Double
     public let converged:Bool
@@ -52,10 +54,10 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
         let replicaResults:[VivoQMMMFreeEnergyRateResult]
         let meanLogRatePerSecond:Double
         let betweenReplicaLogRateStandardDeviation:Double
-        let combinedConditionalLogRateStandardDeviation:Double
+        let combinedConditionalLogRateStandardDeviation:Double?
         let issues:[String]
     }
-    private enum SelfEvidence { static let schema="numivivo.org/qmmm-replicated-free-energy-rate-evidence/v1" }
+    private enum SelfEvidence { static let schema="numivivo.org/qmmm-replicated-free-energy-rate-evidence/v2" }
 
     private static func environment(_ request:VivoQMMMFreeEnergyRateRequest)->VivoQMMMFreeEnergyEnvironment {
         switch request.environment { case .explicitSolution:return .explicitSolution;case .proteinEnvironment:return .proteinEnvironment }
@@ -88,6 +90,9 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
                   p.environment==environment(replica) else {
                 throw VivoKineticsError.invalid("QM/MM replicas differ in Hamiltonian, protocol, context, reaction mapping or transmission model")
             }
+            // A sampled velocity normalization is an independently generated
+            // surface artifact. Replicas may use distinct surface evidence, but
+            // every item is already bound to its exact PMF in the rate validator.
             executionIDs.append(p.samplingExecution.requestFingerprint)
             allSeeds.append(contentsOf:fe.analysis.traces.map(\.randomSeed))
         }
@@ -97,16 +102,19 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
         guard Set(allSeeds).count==allSeeds.count else {
             throw VivoKineticsError.invalid("QM/MM independent replicas reuse stochastic window seeds")
         }
-        let logs=results.map{ $0.estimate.naturalLogRatePerSecond },mean=logs.reduce(0,+)/Double(logs.count)
+        let logs=results.map{$0.estimate.naturalLogRatePerSecond},mean=logs.reduce(0,+)/Double(logs.count)
         let range=(logs.max() ?? mean)-(logs.min() ?? mean)
         let variance=logs.count>1 ? logs.reduce(0){$0+pow($1-mean,2)}/Double(logs.count-1):0
         let between=sqrt(max(0,variance))
-        let withinVariance=results.reduce(0.0) { partial,result in
-            let sd=result.estimate.conditionalLogRateStandardDeviation ?? 0
-            return partial+sd*sd
-        }/Double(results.count)
-        let combined=sqrt(max(0,variance+withinVariance))
-        let barriers=request.replicas.map{ $0.freeEnergy.analysis.activationFreeEnergyKJPerMol }
+        let within=results.map{$0.estimate.conditionalLogRateStandardDeviation}
+        let combined:Double?
+        if within.allSatisfy({$0 != nil}) {
+            let withinVariance=within.reduce(0.0){$0+pow($1!,2)}/Double(within.count)
+            let value=sqrt(max(0,variance+withinVariance))
+            guard value.isFinite else { throw VivoKineticsError.numerical("QM/MM replicated conditional uncertainty") }
+            combined=value
+        } else { combined=nil }
+        let barriers=request.replicas.map{$0.freeEnergy.analysis.activationFreeEnergyKJPerMol}
         let barrierRange=(barriers.max() ?? 0)-(barriers.min() ?? 0)
         var issues:[String]=[]
         if range>request.agreement.maximumLogRateRange { issues.append("independent replica log-rate range exceeds tolerance") }
@@ -114,7 +122,7 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
             issues.append("independent replica PMF profile-barrier range exceeds diagnostic tolerance")
         }
         let rate=exp(mean)
-        guard rate.isFinite,rate>0,between.isFinite,combined.isFinite,barrierRange.isFinite else {
+        guard rate.isFinite,rate>0,between.isFinite,barrierRange.isFinite else {
             throw VivoKineticsError.numerical("QM/MM replicated log-rate aggregation")
         }
         let evidenceData=try VivoCanonicalJSON.encode(Evidence(schema:SelfEvidence.schema,request:request,replicaResults:results,
@@ -122,10 +130,12 @@ public enum VivoQMMMReplicatedFreeEnergyRate {
             combinedConditionalLogRateStandardDeviation:combined,issues:issues))
         let evidenceID=try VivoCanonicalJSON.fingerprint(evidenceData)
         let evidence=VivoKineticEvidence(source:"NumiVivo independently replicated QM/MM PMF rates",
-            locator:"geometric mean across exact disjoint-seed sampling executions under one replica protocol",
+            locator:"geometric mean across exact disjoint-seed sampling executions under one replica protocol; unresolved within-replica uncertainty remains unknown",
             sourceFingerprint:evidenceID.hex)
         let origin:VivoKineticOrigin = first.transmissionOrigin == .assumed ? .assumed:.calculated
-        let uncertainty:VivoKineticUncertainty = combined>0 ? .logNormal(logStandardDeviation:combined):.unknown
+        let uncertainty:VivoKineticUncertainty
+        if let combined,combined>0 { uncertainty = .logNormal(logStandardDeviation:combined) }
+        else { uncertainty = .unknown }
         let parameter=VivoKineticParameter(value:rate,unit:.perSecond,origin:origin,uncertainty:uncertainty,evidence:evidence)
         try parameter.validate(unit:.perSecond,label:"replicated QM/MM inactivation",positive:true)
         return .init(schema:VivoQMMMReplicatedFreeEnergyRateResult.schema,
