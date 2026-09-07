@@ -114,4 +114,45 @@ import Testing
             criteria:[.init(dimension:.transmissionProtocol)])
         #expect(throws:(any Error).self) { _ = try VivoQMMMChemicalQualification.calculate(qualification) }
     }
+
+    @Test func adaptiveModelSpaceFamilyBindsNestedVariantsAndQualification() throws {
+        let baselineRequest=try replicated(transmission:1,transmissionID:"adaptive-model-space-baseline")
+        let baselineResult=try VivoQMMMReplicatedFreeEnergyRate.calculate(baselineRequest)
+        #expect(baselineResult.converged)
+        func variant(_ identifier:String)->VivoQMMMQualificationVariant {
+            .init(identifier:identifier,dimension:.qmRegion,request:baselineRequest,result:baselineResult,
+                  description:"identity numerical fixture for adaptive QM-region orchestration contracts")
+        }
+        let small=VivoAdaptiveQMMMModelSpaceCandidate(identifier:"qm-small",kind:.qmRegion,componentIdentifiers:["atom:0"],
+            variant:variant("qm-small-variant"),costClass:"qmmm-region",declaredWorkUnits:10,initialEstimatedSeconds:5,
+            expectedMetricReduction:0.2)
+        let large=VivoAdaptiveQMMMModelSpaceCandidate(identifier:"qm-large",kind:.qmRegion,role:.confirmation,
+            parentIdentifier:"qm-small",componentIdentifiers:["atom:0","atom:1"],variant:variant("qm-large-variant"),
+            costClass:"qmmm-region",declaredWorkUnits:20,initialEstimatedSeconds:10,expectedMetricReduction:0)
+        let observable=try VivoAdaptiveMetricContext.rate(baselineRequest).hex
+        let family=VivoAdaptiveQMMMModelSpaceFamily(baselineRequest:baselineRequest,baselineResult:baselineResult,
+            criterionIdentifier:"qm-region-rate-sensitivity",observableFingerprint:observable,candidates:[small,large])
+        try family.validate()
+        let proposals=try family.proposals()
+        #expect(proposals.count==2 && proposals[1].role == .confirmation && proposals[1].prerequisites == ["qm-small"])
+        let single=try family.sensitivityRequest(for:"qm-large")
+        let sensitivity=try VivoQMMMVariantSensitivity.calculate(single)
+        #expect(sensitivity.absoluteLogRateShift==0)
+        try VivoQMMMVariantSensitivity.validate(sensitivity,request:single)
+        let qualificationRequest=try family.qualificationRequest(for:"qm-large",maximumAbsoluteLogRateShift:0.01)
+        let qualification=try VivoQMMMChemicalQualification.calculate(qualificationRequest)
+        #expect(qualification.converged && qualification.sensitivity.count==1 && qualification.sensitivity[0].absoluteLogRateShift==0)
+
+        var forged=family
+        forged.observableFingerprint=String(repeating:"0",count:64)
+        #expect(throws:(any Error).self) { try forged.validate() }
+        var nonNested=family
+        nonNested.candidates[1].componentIdentifiers=["atom:1"]
+        #expect(throws:(any Error).self) { try nonNested.validate() }
+        var confirmationParent=family
+        confirmationParent.candidates.append(.init(identifier:"qm-after-holdout",kind:.qmRegion,parentIdentifier:"qm-large",
+            componentIdentifiers:["atom:0","atom:1","atom:2"],variant:variant("qm-after-holdout-variant"),
+            costClass:"qmmm-region",declaredWorkUnits:30,initialEstimatedSeconds:15,expectedMetricReduction:0.1))
+        #expect(throws:(any Error).self) { try confirmationParent.validate() }
+    }
 }
