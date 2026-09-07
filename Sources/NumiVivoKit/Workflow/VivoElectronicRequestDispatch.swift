@@ -42,12 +42,24 @@ public struct VivoNativeSolverDispatch: Sendable {
         let json=try VivoCanonicalJSON.decode(VivoJSONValue.self,from:data)
         guard case .object(let object)=json else{throw VivoChemistryError.invalid("solver document must be an object")}
         func encoded<T:Encodable>(_ value:T) throws -> VivoJSONValue {try VivoCanonicalJSON.decode(VivoJSONValue.self,from:VivoCanonicalJSON.encode(value))}
-        if object["schema"] != nil {
-            let request=try VivoCanonicalJSON.decode(VivoECCDMETSolverRequest.self,from:data)
-            guard request.schema==VivoECCDMETSolverRequest.schema,Set(object.keys)==["schema","configuration"] else {
-                throw VivoChemistryError.unsupported("unknown ECC solver schema or fields")
+        if let schema = object["schema"] {
+            guard case .string(let identifier) = schema else { throw VivoChemistryError.invalid("solver schema must be a string") }
+            switch identifier {
+            case VivoECCDMETSolverRequest.schema:
+                guard Set(object.keys) == ["schema","configuration"] else { throw VivoChemistryError.unsupported("unknown ECC solver fields") }
+                let request = try VivoCanonicalJSON.decode(VivoECCDMETSolverRequest.self,from: data)
+                return .init(operation: VivoAdvancedChemistryOperations.eccDMET(implementationFingerprint: id),
+                             configuration: try encoded(request.configuration))
+            case VivoSelectedCISolverRequest.schema:
+                let required: Set<String> = ["schema","configuration","requireConverged"]
+                guard required.isSubset(of: Set(object.keys)), Set(object.keys).isSubset(of: required.union(["initialDeterminants"])) else {
+                    throw VivoChemistryError.unsupported("unknown or missing selected-CI solver fields")
+                }
+                let request = try VivoCanonicalJSON.decode(VivoSelectedCISolverRequest.self,from: data)
+                return .init(operation: VivoCorrelationRefinementOperations.selectedCI(implementationFingerprint: id),
+                             configuration: try encoded(request))
+            default: throw VivoChemistryError.unsupported("unknown native solver schema \(identifier)")
             }
-            return .init(operation:VivoAdvancedChemistryOperations.eccDMET(implementationFingerprint:id),configuration:try encoded(request.configuration))
         }
         guard object.count==1,let key=object.keys.first else{throw VivoChemistryError.invalid("exactly one explicit solver method is required")}
         if ["mp2","configurationInteraction","ccsd","casci","casscf"].contains(key) {
