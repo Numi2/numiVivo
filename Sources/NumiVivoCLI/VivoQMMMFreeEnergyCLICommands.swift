@@ -5,7 +5,8 @@ struct VivoQMMMFreeEnergyCLICommands {
     static func handles(_ name:String?)->Bool {
         ["qmmm-free-energy-analyze","qmmm-free-energy-rate","qmmm-free-energy-replicated-rate",
          "qmmm-transmission-analyze","qmmm-transmission-apply","qmmm-chemical-qualify",
-         "qmmm-chemical-state-network","qmmm-chemical-exchange-network","qmmm-chemical-exchange-validate",
+         "qmmm-chemical-state-populations","qmmm-chemical-state-network",
+         "qmmm-chemical-exchange-network","qmmm-chemical-exchange-validate",
          "qmmm-free-energy-help"].contains(name ?? "")
     }
     private func load<T:Decodable & Sendable>(_ type:T.Type,_ path:String)throws->T {
@@ -72,6 +73,10 @@ struct VivoQMMMFreeEnergyCLICommands {
                 let request=try load(VivoQMMMChemicalQualificationRequest.self,arguments[1])
                 let result=try VivoQMMMChemicalQualification.calculate(request)
                 try write(result,output);return result.converged ? 0:75
+            case "qmmm-chemical-state-populations":
+                guard kinetics==nil else { throw VivoChemistryError.invalid("--kinetics requires an explicit state/pathway network after population calculation") }
+                let request=try load(VivoQMMMChemicalStateThermodynamicsRequest.self,arguments[1])
+                try write(VivoQMMMChemicalStateThermodynamics.calculate(request),output);return 0
             case "qmmm-chemical-state-network":
                 guard kinetics==nil else { throw VivoChemistryError.invalid("--kinetics requires an explicit downstream kinetic model adapter") }
                 let request=try load(VivoQMMMChemicalStateNetworkRequest.self,arguments[1])
@@ -99,6 +104,7 @@ struct VivoQMMMFreeEnergyCLICommands {
       numivivo qmmm-free-energy-rate rate-request.json --output rate.json [--kinetics kinetic-pack.json]
       numivivo qmmm-free-energy-replicated-rate replicas.json --output replicated-rate.json [--kinetics kinetic-pack.json]
       numivivo qmmm-chemical-qualify qualification.json --output qualification-result.json
+      numivivo qmmm-chemical-state-populations thermodynamics.json --output state-populations.json
       numivivo qmmm-chemical-state-network state-network.json --output effective-rate.json
       numivivo qmmm-chemical-exchange-network exchange-network.json --output transient-kinetics.json
       numivivo qmmm-chemical-exchange-validate validation.json --output transient-validation.json
@@ -110,12 +116,14 @@ struct VivoQMMMFreeEnergyCLICommands {
     qmmm-transmission-apply binds a converged transmission coefficient and sampled
     dividing-surface velocity normalization to the exact PMF. Replicated-rate
     qualification requires disjoint stochastic executions and preserves unresolved
-    within-replica uncertainty as unknown. qmmm-chemical-qualify evaluates
-    predeclared protocol/electronic/QM-region sensitivity and only directly compares
-    condition-matched first-order chemical-rate measurements. qmmm-chemical-state-network
-    computes sum_s p_s sum_path k_s,path only when rapid pre-equilibrium is explicitly
-    asserted. qmmm-chemical-exchange-network propagates explicit transient state exchange
-    when interconversion competes with chemical conversion. qmmm-chemical-exchange-validate
+    within-replica uncertainty as unknown. qmmm-chemical-qualify evaluates explicit
+    PMF, coordinate, transmission, electronic, QM-region and finite-size sensitivity.
+    qmmm-chemical-state-populations reweights an explicitly enumerated, evidence-backed
+    state set from a declared reference pH using semigrand proton stoichiometry; it does
+    not enumerate states or predict pKa. qmmm-chemical-state-network computes
+    sum_s p_s sum_path k_s,path only when rapid pre-equilibrium is explicitly asserted.
+    qmmm-chemical-exchange-network propagates explicit transient state exchange when
+    interconversion competes with chemical conversion. qmmm-chemical-exchange-validate
     compares that potentially non-single-exponential survival curve only to measured,
     condition-matched survival fractions at explicit simulated times. Outputs are
     canonical no-clobber JSON.
