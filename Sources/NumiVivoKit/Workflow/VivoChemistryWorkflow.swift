@@ -148,6 +148,117 @@ public actor VivoChemistryWorkflow {
         }
         guard descriptor.kind==expectedKind else { throw VivoChemistryError.invalid("input artifact kind mismatch") };return data
     }
+    /// Verify one immutable receipt and its exact task/output bindings without
+    /// consulting cache references, executing an operation, or writing artifacts.
+    /// The operation's validator supplies payload semantics; this does not walk
+    /// arbitrary source archives referenced by those payloads.
+    ///
+    /// Reads are bounded before allocation: input/output payload contracts plus
+    /// JSON/base64 wire overhead, and receipt metadata derived from task outputs.
+    /// These wire limits are separate from any domain archive traversal budget.
+    public func verifyReceipt(_ receipt: VivoFingerprint, task: VivoChemistryTask,
+                              using operation: VivoChemistryOperation) async throws -> VivoChemistryTaskResult {
+        try Task.checkCancellation()
+        let id = try task.fingerprint()
+        guard task.operation == operation.identifier, task.version == operation.version,
+              task.implementationFingerprint == operation.implementationFingerprint,
+              task.resources.numericalBackend == operation.numericalBackend,
+              task.outputs.sorted(by: { $0.name < $1.name }) == operation.outputs else {
+            throw VivoChemistryError.invalid("operation implementation, backend or output contract mismatch")
+        }
+        let inputs = try await Self.readInputs(task, store: store)
+        return try await Self.verifyReceipt(receipt, task: task, operation: operation,
+                                            id: id, inputs: inputs, store: store)
+    }
+
+    // Eight wire bytes per three decoded bytes also admits escaped base64
+    // slashes. The fixed slack admits ordinary JSON whitespace without trusting
+    // an object's reported size. Every arithmetic operation is checked.
+    private static func wireLimit(payloadBytes: Int, metadataBytes: Int) throws -> Int {
+        let (rounded, o1) = payloadBytes.addingReportingOverflow(2)
+        let (encoded, o2) = (rounded / 3).multipliedReportingOverflow(by: 8)
+        let (metadata, o3) = metadataBytes.addingReportingOverflow(4096)
+        let (total, o4) = encoded.addingReportingOverflow(metadata)
+        guard payloadBytes >= 0, metadataBytes >= 0, !o1, !o2, !o3, !o4 else {
+            throw VivoChemistryError.resourceLimit("workflow wire byte budget overflow")
+        }
+        return total
+    }
+
+    private static func receiptWireLimit(id: VivoFingerprint, outputs: [VivoChemistryTaskOutput]) throws -> Int {
+        let expected = outputs.map { VivoChemistryOutputReceipt(name: $0.name, kind: $0.kind, artifact: id) }
+        let skeleton = VivoChemistryTaskReceipt(schema: "numivivo.org/chemistry-task-receipt/v1",
+                                                taskFingerprint: id, outputs: expected)
+        return try wireLimit(payloadBytes: 0, metadataBytes: VivoCanonicalJSON.encode(skeleton).count)
+    }
+
+    private static func readInputs(_ task: VivoChemistryTask, store: VivoArtifactStore) async throws -> [String: Data] {
+        var inputs: [String: Data] = [:], remaining = task.resources.maximumInputBytes
+        for input in task.inputs {
+            try Task.checkCancellation()
+            let descriptor = try await store.descriptor(for: input.artifact)
+            let data: Data
+            if descriptor.kind == "chemistry-output" {
+                // Input envelopes can originate from any producer output name;
+                // their metadata has a separate, fixed 64 KiB allowance.
+                let wire = try await store.data(for: input.artifact,
+                    maximumBytes: wireLimit(payloadBytes: remaining, metadataBytes: 64 * 1024))
+                guard descriptor.byteCount == UInt64(wire.count) else { throw VivoChemistryError.invalid("artifact byte count mismatch") }
+                let envelope = try VivoCanonicalJSON.decode(VivoChemistryOutputEnvelope.self, from: wire)
+                guard envelope.schema == "numivivo.org/chemistry-output/v1", envelope.kind == input.kind,
+                      !envelope.outputName.isEmpty else { throw VivoChemistryError.invalid("chemistry input envelope") }
+                data = envelope.payload
+            } else {
+                guard descriptor.kind == input.kind else { throw VivoChemistryError.invalid("input artifact kind mismatch") }
+                data = try await store.data(for: input.artifact, maximumBytes: remaining)
+                guard descriptor.byteCount == UInt64(data.count) else { throw VivoChemistryError.invalid("artifact byte count mismatch") }
+            }
+            guard data.count <= remaining else { throw VivoChemistryError.resourceLimit("workflow input byte budget") }
+            remaining -= data.count; inputs[input.name] = data
+        }
+        try Task.checkCancellation()
+        return inputs
+    }
+
+    private static func verifyReceipt(_ fingerprint: VivoFingerprint, task: VivoChemistryTask,
+                                      operation: VivoChemistryOperation, id: VivoFingerprint,
+                                      inputs: [String: Data], store: VivoArtifactStore) async throws -> VivoChemistryTaskResult {
+        try Task.checkCancellation()
+        let receiptLimit = try receiptWireLimit(id: id, outputs: operation.outputs)
+        let descriptor = try await store.descriptor(for: fingerprint)
+        guard descriptor.kind == "chemistry-task-receipt" else { throw VivoChemistryError.invalid("workflow receipt kind") }
+        let data = try await store.data(for: fingerprint, maximumBytes: receiptLimit)
+        guard descriptor.byteCount == UInt64(data.count) else { throw VivoChemistryError.invalid("workflow receipt byte count mismatch") }
+        let receipt = try VivoCanonicalJSON.decode(VivoChemistryTaskReceipt.self, from: data)
+        guard receipt.schema == "numivivo.org/chemistry-task-receipt/v1", receipt.taskFingerprint == id,
+              receipt.outputs.map({ VivoChemistryTaskOutput(name: $0.name, kind: $0.kind) })
+                .sorted(by: { $0.name < $1.name }) == operation.outputs else {
+            throw VivoChemistryError.invalid("workflow receipt identity/output mismatch")
+        }
+        var payloads: [String: Data] = [:], remaining = task.resources.maximumOutputBytes
+        for output in receipt.outputs {
+            try Task.checkCancellation()
+            let empty = VivoChemistryOutputEnvelope(schema: "numivivo.org/chemistry-output/v1",
+                taskFingerprint: id, outputName: output.name, kind: output.kind, payload: Data())
+            let maximum = try wireLimit(payloadBytes: remaining, metadataBytes: VivoCanonicalJSON.encode(empty).count)
+            let descriptor = try await store.descriptor(for: output.artifact)
+            guard descriptor.kind == "chemistry-output" else { throw VivoChemistryError.invalid("workflow output kind") }
+            let data = try await store.data(for: output.artifact, maximumBytes: maximum)
+            guard descriptor.byteCount == UInt64(data.count) else { throw VivoChemistryError.invalid("workflow output byte count mismatch") }
+            let envelope = try VivoCanonicalJSON.decode(VivoChemistryOutputEnvelope.self, from: data)
+            guard envelope.schema == empty.schema, envelope.taskFingerprint == id,
+                  envelope.outputName == output.name, envelope.kind == output.kind,
+                  envelope.payload.count <= remaining else {
+                throw VivoChemistryError.invalid("workflow output provenance or size mismatch")
+            }
+            remaining -= envelope.payload.count; payloads[output.name] = envelope.payload
+        }
+        try Task.checkCancellation()
+        try operation.validateOutputs(task.configuration, inputs, payloads, task.resources.budget)
+        try Task.checkCancellation()
+        return .init(taskFingerprint: id, receiptFingerprint: fingerprint, outputs: receipt.outputs, reused: true)
+    }
+
     public func run(_ task: VivoChemistryTask, using operation: VivoChemistryOperation) async throws -> VivoChemistryTaskResult {
         try Task.checkCancellation()
         let id=try task.fingerprint()
@@ -225,31 +336,15 @@ public actor VivoChemistryWorkflow {
         }
         try Task.checkCancellation()
         let cached: VivoArtifactReference?
-        do { cached=try await store.reference(referenceName) }
+        do {
+            cached = try await store.reference(referenceName,
+                maximumObjectBytes: receiptWireLimit(id: id, outputs: operation.outputs))
+        }
         catch VivoArtifactStoreError.referenceMissing(_) { cached=nil }
         if let cached {
             guard cached.artifact.kind=="chemistry-task-receipt" else { throw VivoChemistryError.invalid("cache reference kind") }
-            let receipt=try VivoCanonicalJSON.decode(VivoChemistryTaskReceipt.self,from:try await store.data(for:cached.artifact.fingerprint,verify:true))
-            guard receipt.schema=="numivivo.org/chemistry-task-receipt/v1",receipt.taskFingerprint==id,
-                  receipt.outputs.map({VivoChemistryTaskOutput(name:$0.name,kind:$0.kind)}).sorted(by:{$0.name<$1.name})==operation.outputs else {
-                throw VivoChemistryError.invalid("cache receipt identity/output mismatch")
-            }
-            var payloads:[String:Data]=[:],outputBytes=0
-            for output in receipt.outputs {
-                try Task.checkCancellation()
-                let envelope=try VivoCanonicalJSON.decode(VivoChemistryOutputEnvelope.self,from:try await store.data(for:output.artifact,verify:true))
-                let descriptor=try await store.descriptor(for:output.artifact)
-                guard descriptor.kind=="chemistry-output",envelope.schema=="numivivo.org/chemistry-output/v1",
-                      envelope.taskFingerprint==id,envelope.outputName==output.name,envelope.kind==output.kind,
-                      envelope.payload.count<=task.resources.maximumOutputBytes-outputBytes else {
-                    throw VivoChemistryError.invalid("cached output provenance or size mismatch")
-                }
-                outputBytes += envelope.payload.count;payloads[output.name]=envelope.payload
-            }
-            try Task.checkCancellation()
-            try operation.validateOutputs(task.configuration,inputs,payloads,task.resources.budget)
-            try Task.checkCancellation()
-            return .init(taskFingerprint:id,receiptFingerprint:cached.artifact.fingerprint,outputs:receipt.outputs,reused:true)
+            return try await verifyReceipt(cached.artifact.fingerprint, task: task, operation: operation,
+                                           id: id, inputs: inputs, store: store)
         }
         try Task.checkCancellation()
         let payloads=try await operation.execute(task.configuration,inputs,task.resources.budget)
