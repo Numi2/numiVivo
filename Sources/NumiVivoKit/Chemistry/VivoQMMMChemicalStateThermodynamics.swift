@@ -80,6 +80,25 @@ public struct VivoQMMMChemicalStateThermodynamicsResult: Codable, Sendable, Equa
     }
 }
 
+public struct VivoQMMMChemicalStatePathwayBinding: Codable, Sendable, Equatable {
+    public var stateIdentifier: String
+    public var pathways: [VivoQMMMPathwayRate]
+
+    public init(stateIdentifier: String, pathways: [VivoQMMMPathwayRate]) {
+        self.stateIdentifier = stateIdentifier
+        self.pathways = pathways
+    }
+
+    public func validate() throws {
+        guard !stateIdentifier.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              !pathways.isEmpty,
+              Set(pathways.map(\.identifier)).count == pathways.count else {
+            throw VivoKineticsError.invalid("chemical-state thermodynamic pathway binding")
+        }
+        for pathway in pathways { try pathway.validate() }
+    }
+}
+
 /// Reweights an explicitly enumerated state set across pH in the semigrand
 /// canonical ensemble. Input free energies are relative semigrand Gibbs free
 /// energies at `referencePH`. For state i with relative bound-proton count n_i,
@@ -150,6 +169,49 @@ public enum VivoQMMMChemicalStateThermodynamics {
                      requestFingerprint: requestID, populations: populations,
                      mostPopulatedStateIdentifier: request.states[maximumIndex].identifier,
                      interpretation: interpretation, evidenceFingerprint: evidenceID)
+    }
+
+    private static func boundPathways(_ bindings:[VivoQMMMChemicalStatePathwayBinding],
+                                      result:VivoQMMMChemicalStateThermodynamicsResult,
+                                      request:VivoQMMMChemicalStateThermodynamicsRequest) throws -> [String:[VivoQMMMPathwayRate]] {
+        try validate(result,request:request)
+        guard bindings.count == result.populations.count,
+              Set(bindings.map(\.stateIdentifier)).count == bindings.count,
+              Set(bindings.map(\.stateIdentifier)) == Set(result.populations.map(\.identifier)) else {
+            throw VivoKineticsError.invalid("thermodynamic population/pathway binding must cover every state exactly once")
+        }
+        for binding in bindings { try binding.validate() }
+        return Dictionary(uniqueKeysWithValues:bindings.map { ($0.stateIdentifier,$0.pathways) })
+    }
+
+    public static func rapidEquilibriumNetwork(identifier:String,
+                                               request:VivoQMMMChemicalStateThermodynamicsRequest,
+                                               result:VivoQMMMChemicalStateThermodynamicsResult,
+                                               pathways:[VivoQMMMChemicalStatePathwayBinding]) throws -> VivoQMMMChemicalStateNetworkRequest {
+        let bound=try boundPathways(pathways,result:result,request:request)
+        let states=result.populations.map { population in
+            VivoQMMMChemicalStateRate(identifier:population.identifier,equilibriumPopulation:population.population,
+                populationOrigin:.calculated,populationEvidence:result.populationEvidence,
+                pathways:bound[population.identifier]!)
+        }
+        return .init(identifier:identifier,states:states,rapidPreEquilibrium:true)
+    }
+
+    public static func equilibriumInitializedExchangeNetwork(identifier:String,
+                                                             request:VivoQMMMChemicalStateThermodynamicsRequest,
+                                                             result:VivoQMMMChemicalStateThermodynamicsResult,
+                                                             pathways:[VivoQMMMChemicalStatePathwayBinding],
+                                                             exchangeEdges:[VivoQMMMChemicalExchangeEdge],
+                                                             observationTimesSeconds:[Double],
+                                                             maximumUniformizationWork:Int=2_000_000) throws -> VivoQMMMChemicalExchangeNetworkRequest {
+        let bound=try boundPathways(pathways,result:result,request:request)
+        let states=result.populations.map { population in
+            VivoQMMMChemicalExchangeState(identifier:population.identifier,initialPopulation:population.population,
+                populationOrigin:.calculated,populationEvidence:result.populationEvidence,
+                pathways:bound[population.identifier]!)
+        }
+        return .init(identifier:identifier,states:states,exchangeEdges:exchangeEdges,
+                     observationTimesSeconds:observationTimesSeconds,maximumUniformizationWork:maximumUniformizationWork)
     }
 
     public static func validate(_ result: VivoQMMMChemicalStateThermodynamicsResult,
