@@ -165,10 +165,12 @@ public enum VivoNCMCProtocolKernel {
             try Task.checkCancellation()
             let beforeLambda = schedule.lambdas[index - 1]
             let afterLambda = schedule.lambdas[index]
-            async let beforeValue = hamiltonian.completePotentialEnergyKJPerMol(physical, beforeLambda)
-            async let afterValue = hamiltonian.completePotentialEnergyKJPerMol(physical, afterLambda)
-            let before = try await beforeValue
-            let after = try await afterValue
+            // Both energies address one immutable pre-propagation snapshot.
+            // Sequential evaluation also avoids overlapping access to a shared
+            // resource-owning Metal evaluator and Swift 6 mutable captures.
+            let perturbationState = physical
+            let before = try await hamiltonian.completePotentialEnergyKJPerMol(perturbationState, beforeLambda)
+            let after = try await hamiltonian.completePotentialEnergyKJPerMol(perturbationState, afterLambda)
             guard before.isFinite, after.isFinite else {
                 throw VivoChemistryError.convergence("nonfinite NCMC perturbation energy")
             }
@@ -177,9 +179,9 @@ public enum VivoNCMCProtocolKernel {
             guard perturbationWork.isFinite, abs(perturbationWork) <= maximumAbsoluteWorkKJPerMol else {
                 throw VivoChemistryError.convergence("NCMC perturbation work overflow")
             }
-            let preFingerprint = try physical.fingerprint()
-            let propagated = try await hamiltonian.propagate(physical, afterLambda, schedule.propagationStepsPerLambda)
-            try propagated.validate(initial: physical,
+            let preFingerprint = try perturbationState.fingerprint()
+            let propagated = try await hamiltonian.propagate(perturbationState, afterLambda, schedule.propagationStepsPerLambda)
+            try propagated.validate(initial: perturbationState,
                                     expectedSteps: schedule.propagationStepsPerLambda,
                                     maximumAbsoluteWorkKJPerMol: maximumAbsoluteWorkKJPerMol)
             shadowWork += propagated.shadowWorkKJPerMol
@@ -200,7 +202,7 @@ public enum VivoNCMCProtocolKernel {
         }
 
         guard physical.positionsNM.count == initial.positionsNM.count,
-              hamiltonian.physicalManifoldFingerprint == hamiltonian.physicalManifoldFingerprint else {
+              physical.velocitiesNMPerPS.count == initial.velocitiesNMPerPS.count else {
             throw VivoChemistryError.invalid("NCMC protocol changed particle manifold")
         }
         return .init(schema: VivoNCMCProtocolResult.schema,
