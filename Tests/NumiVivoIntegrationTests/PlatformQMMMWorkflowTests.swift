@@ -25,7 +25,9 @@ import Testing
         let registry = try VivoPlatformOperations.registry(implementationFingerprint: identity)
         for identifier in ["vivo.platform.qmmm-free-energy-analyze","vivo.platform.qmmm-free-energy-rate",
                            "vivo.platform.qmmm-transmission-analyze","vivo.platform.qmmm-apply-transmission",
-                           "vivo.platform.qmmm-replicated-free-energy-rate","vivo.platform.qmmm-apply-replicated-rate"] {
+                           "vivo.platform.qmmm-replicated-free-energy-rate","vivo.platform.qmmm-apply-replicated-rate",
+                           "vivo.platform.qmmm-chemical-qualification","vivo.platform.qmmm-chemical-state-network",
+                           "vivo.platform.qmmm-chemical-exchange-network"] {
             _ = try registry.definition(identifier)
         }
         let prepare = try registry.definition("vivo.platform.md-qmmm").operation
