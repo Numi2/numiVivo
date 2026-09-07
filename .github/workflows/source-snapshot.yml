@@ -1,7 +1,6 @@
 name: Reproducible source snapshot
 
-# This workflow packages tracked source only. It does not build, test, benchmark
-# or claim numerical qualification. Manual dispatch captures any selected ref.
+# Packages tracked source only; does not build or claim numerical qualification.
 on:
   workflow_dispatch:
   push:
@@ -28,7 +27,11 @@ jobs:
           test "$(git -C source rev-parse FETCH_HEAD)" = "${GITHUB_SHA}"
           git -C source archive --format=tar --prefix=numiVivo/ FETCH_HEAD | gzip -n > snapshot/numivivo-source.tar.gz
           printf '%s\n' "${GITHUB_SHA}" > snapshot/SOURCE_COMMIT.txt
-          (cd snapshot && sha256sum numivivo-source.tar.gz SOURCE_COMMIT.txt > SHA256SUMS)
+          # A NUL-delimited manifest binds every offline source file to its Git
+          # blob identity without assuming whitespace-free repository paths.
+          git -C source ls-tree -r -z --full-tree FETCH_HEAD > snapshot/SOURCE_TREE.git-z
+          git -C source rev-parse 'FETCH_HEAD^{tree}' > snapshot/SOURCE_TREE.txt
+          (cd snapshot && sha256sum numivivo-source.tar.gz SOURCE_COMMIT.txt SOURCE_TREE.git-z SOURCE_TREE.txt > SHA256SUMS)
       - name: Retain source and digest
         # actions/upload-artifact v7, pinned to the inspected commit.
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
