@@ -138,6 +138,7 @@ public enum VivoConstantPHMetalStateFactory {
                                                provider: VivoMDCandidateForceProvider?) throws -> VivoFingerprint {
         struct Identity: Codable {
             let schema: String
+            let numericalContract: String
             let system: VivoFingerprint
             let execution: VivoFingerprint
             let provider: VivoFingerprint?
@@ -148,6 +149,7 @@ public enum VivoConstantPHMetalStateFactory {
         let providerFingerprint: VivoFingerprint? = provider?.fingerprint
         let identity: Identity = .init(
             schema: "numivivo.org/constant-ph-metal-hamiltonian/v1",
+            numericalContract: VivoMDExecutionIdentity.current,
             system: systemFingerprint,
             execution: executionFingerprint,
             provider: providerFingerprint)

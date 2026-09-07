@@ -22,10 +22,7 @@ public extension VivoNuclearPotential {
         probeConfig.barostat = .none; probeConfig.targetPressureBar = nil
         let runtime = try await VivoMDMetalRuntime.make(system: system, initialState: initialState,
             configuration: probeConfig, forceProvider: provider)
-        struct Identity: Encodable { let system: VivoFingerprint; let execution: VivoFingerprint; let projection: String }
-        let id = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Identity(system: system.fingerprint(),
-            execution: VivoMDCandidateForceProvider.executionFingerprint(configuration: probeConfig, provider: provider),
-            projection: "explicit-nearest-FP32-coordinate-projection;complete-Metal-plus-BO-potential/v1")))
+        let id = try VivoNuclearMetalPotentialIdentity.fingerprint(system: system,configuration: probeConfig,provider: provider)
         let definition = try VivoNuclearPotentialDefinition(hamiltonianFingerprint: id,
             atomIndices: atoms.map { $0.atomIndex! }, particleIndices: atoms.map(\.index),
             massesDa: atoms.map(\.massDa), periodicCell: initialState.periodicCell,
@@ -35,6 +32,24 @@ public extension VivoNuclearPotential {
         return try .init(definition: definition, evaluate: { try await owner.evaluate($0) })
     }
 }
+
+/// Both direct Metal callers and serializable specifications bind the numerical
+/// evaluator, in addition to the source Hamiltonian and coordinate projection.
+/// Generic CPU nuclear-potential identities remain owned by their callers.
+enum VivoNuclearMetalPotentialIdentity {
+    static func fingerprint(system: VivoClassicalSystem, configuration: VivoMDConfiguration,
+                            provider: VivoMDCandidateForceProvider?) throws -> VivoFingerprint {
+        struct Identity: Encodable {
+            let system: VivoFingerprint; let execution: VivoFingerprint
+            let projection: String; let numericalContract: String
+        }
+        return try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Identity(system: system.fingerprint(),
+            execution: VivoMDCandidateForceProvider.executionFingerprint(configuration: configuration,provider: provider),
+            projection: "explicit-nearest-FP32-coordinate-projection;complete-Metal-plus-BO-potential/v1",
+            numericalContract: VivoMDExecutionIdentity.current)))
+    }
+}
+
 private actor VivoNuclearMetalProbe {
     let runtime: VivoMDMetalRuntime
     let definition: VivoNuclearPotentialDefinition

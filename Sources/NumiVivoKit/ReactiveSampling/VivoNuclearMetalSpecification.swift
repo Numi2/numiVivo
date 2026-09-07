@@ -30,9 +30,12 @@ public struct VivoNuclearMetalSpecification: Codable, Sendable, Equatable {
         }
         let atoms = system.particles.filter { $0.role == .atom }
         guard atoms.allSatisfy({ $0.atomIndex != nil }) else { throw VivoChemistryError.invalid("nuclear atom mapping") }
-        struct Identity: Encodable { let schema: String; let specification: VivoNuclearMetalSpecification }
+        struct Identity: Encodable {
+            let schema: String; let numericalContract: String; let specification: VivoNuclearMetalSpecification
+        }
         let id = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Identity(
-            schema: "numivivo.org/nuclear-metal-complete-potential/v1;explicit-FP32-coordinate-projection",specification: self)))
+            schema: "numivivo.org/nuclear-metal-complete-potential/v1;explicit-FP32-coordinate-projection",
+            numericalContract: VivoMDExecutionIdentity.current,specification: self)))
         let document: VivoMolecularStructureDocument?
         switch electronic { case .classical: document = nil; case .fixed(let d,_,_), .adaptive(let d,_,_,_): document = d }
         let groups = initialState.periodicCell == nil ? [] : try VivoNuclearMolecularGroups.build(system: system,document: document)
