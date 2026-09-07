@@ -8,8 +8,10 @@ on:
       - 'Sources/NumiVivoKit/Platform/VivoPlatformOperations.swift'
       - 'Sources/NumiVivoKit/Chemistry/VivoMultistateMBAR.swift'
       - 'Sources/NumiVivoKit/Chemistry/*Exchange*'
+      - 'Sources/NumiVivoKit/Chemistry/VivoQMMMVariantSensitivity.swift'
       - 'Sources/NumiVivoCLI/VivoWorkflowCLICommands.swift'
       - 'Tests/NumiVivoIntegrationTests/AdaptiveRefinementWorkflowTests.swift'
+      - 'Tests/NumiVivoIntegrationTests/QMMMChemicalQualificationTests.swift'
       - 'Tools/NativeChemistry/*Adaptive*'
       - 'Tools/NativeChemistry/check_adaptive*'
       - 'Tools/check_adaptive_chemistry.sh'
@@ -40,7 +42,7 @@ jobs:
         run: |
           set -o pipefail
           swift build -c debug --product numivivo 2>&1 | tee adaptive-observations/build.log
-          swift test -c debug --filter 'AdaptiveRefinementWorkflowTests|QMMMChemicalExchangeNetworkTests|MultistateMBARTests|PropertyRefinementWorkflowTests' 2>&1 | tee adaptive-observations/tests.log
+          swift test -c debug --filter 'AdaptiveRefinementWorkflowTests|QMMMChemicalQualificationTests|QMMMChemicalExchangeNetworkTests|MultistateMBARTests|PropertyRefinementWorkflowTests' 2>&1 | tee adaptive-observations/tests.log
       - name: Execute actual native campaign CLI
         run: python3 Tools/NativeChemistry/check_adaptive_cli.py .build/debug/numivivo "$PWD/adaptive-observations/cli"
       - name: Retain source and all observations
