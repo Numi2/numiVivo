@@ -1,5 +1,22 @@
 # Validation status
 
+## 8 September 2026 accepted sampling export
+
+The [sampling/export audit](Documentation/Audit/2026-09-08_SAMPLING_EXPORT.md)
+records tested source `3e9440632897e2dd58520ae8bd3674595e3d8fdb`: a complete
+release/all-test-target build, **116 executed host/native test functions in 18
+suites** (plus one explicit opt-in archive skip), **87 sampling/export/electronic
+CLI checks**, **61 general workflow CLI checks**, two fresh target-panel tasks
+and six fresh CLI checks on the retained large archive.
+
+A production checkpoint-reference defect was exposed and repaired. The real
+Metal fixture reproduces its final cursor, checkpoints, diagnostics and
+manifests exactly when resumed from an earlier published block. The CLI exports
+the original state, verifies immutable receipts independently of cache refs,
+and completes the existing seven-stage electronic route. The short synthetic
+sampling prefix remains explicitly unconverged; this does not qualify a QM
+ensemble, reaction rate, useful scale or product completion.
+
 ## 8 September 2026 classical MD numerical verification
 
 The [v3 numerical audit](Documentation/Audit/2026-09-08_MD_NUMERICAL_QUALIFICATION.md)

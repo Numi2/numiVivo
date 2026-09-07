@@ -2,7 +2,7 @@
 
 This increment extends the existing molecular structures, native force-field compiler, Metal MD runtime, density fitting, correlated solvers, artifact DAG, nuclear qualification and kinetic derivation. It does not introduce a second solver, MD engine, thermochemistry implementation or artifact store.
 
-**Status:** source implementation. The production electronic/ManyBody/Embedding subset passed a Swift 6 type check in a non-Apple development environment. Changed preparation, sampling, reaction and CLI sources passed syntax parsing. The new regression cases have been authored but not run. Complete Apple package compilation, Metal execution, quantitative chemistry benchmarks and realistic protein-rate validation remain to be performed. A source snapshot/checksum is not numerical evidence.
+**Validation is revision-specific.** The [sampling/export audit](Audit/2026-09-08_SAMPLING_EXPORT.md) records a complete Apple release/test build, executed preparation and sampling regressions, actual Metal prefix continuation and a selected-state electronic handoff. The [MD numerical audit](Audit/2026-09-08_MD_NUMERICAL_QUALIFICATION.md) records its separate scientific fixtures. These results do not establish realistic protein rates or a complete prepared-system-through-observable campaign.
 
 ## 1. Explicit molecular preparation
 
@@ -89,7 +89,9 @@ numivivo molecule-sampling-run sampling.json \
   --output continued-sampling-result.json
 ```
 
-The runner publishes `molecular-sampling/<request-sha256>/checkpoint` in the existing artifact store. The receipt contains that checkpoint, trajectory manifests, status and latest diagnostics. Outputs are no-clobber; use a new output filename when continuing. The generated schedule is only a starting configuration, not a universal equilibration duration. Distinct velocity seeds do not establish diverse initial conformations.
+The runner publishes `molecular-sampling-<request-sha256>-checkpoint` in the existing artifact store. The receipt contains that checkpoint, trajectory manifests, status and latest diagnostics. Outputs are no-clobber; use a new output filename when continuing. The generated schedule is only a starting configuration, not a universal equilibration duration. Distinct velocity seeds do not establish diverse initial conformations.
+
+The [accepted sampling export interface](Design/MOLECULAR_SAMPLING_EXPORT.md) validates a selected completed prefix and publishes its exact checkpoint, source model, snapshot and atom mapping as existing typed workflow outputs. The export retains partial termination and declared stopping criteria separately, and its immutable receipt can be freshly verified independently of cache references.
 
 Geometry observables use explicit **structure-atom to physical-particle** maps, so virtual-site indices are not mistaken for atom indices. Supported observables are distances, distance differences, torsion sine/cosine, potential energy, temperature and periodic volume. Sine/cosine avoids an angular discontinuity at a torsion branch cut.
 

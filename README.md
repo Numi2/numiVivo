@@ -46,7 +46,7 @@ The repository also contains experimental quantum-algorithm, reaction-path, reac
 
 ## Prepared systems and chemistry-to-rate workflows
 
-The [prepared molecular workflow guide](Documentation/PreparedMolecularWorkflows.md) connects explicit protonation/stereo preparation and native parameter assignment, checkpointed adaptive replica sampling, density-fitted active spaces, mapped reaction connectivity and context-bound conditional rates through the existing runtimes and artifact DAG. It includes the new `molecule-*` commands and `h3-connected-rate` workflow fixture.
+The [prepared molecular workflow guide](Documentation/PreparedMolecularWorkflows.md) connects explicit protonation/stereo preparation and native parameter assignment, checkpointed adaptive replica sampling, density-fitted active spaces, mapped reaction connectivity and context-bound conditional rates through the existing runtimes and artifact DAG. It includes the new `molecule-*` commands and `h3-connected-rate` workflow fixture. Accepted replica states can be [exported and freshly verified](Documentation/Design/MOLECULAR_SAMPLING_EXPORT.md) as typed workflow inputs, retaining exact checkpoints, atom mapping and partial sampling status. The [native/CLI audit](Documentation/Audit/2026-09-08_SAMPLING_EXPORT.md) records the tested scope.
 
 These integrations do not yet provide arbitrary-triclinic Metal MD, automatic pKa/CIP chemistry, a universal native force field or complete protein reaction free energies. The guide distinguishes implemented source paths from the remaining physical and execution qualification.
 

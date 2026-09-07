@@ -1,0 +1,575 @@
+{
+  "environment": {
+    "hardware": "Apple M4 Pro",
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6\nBuildVersion:\t\t25G72",
+    "swift": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: arm64-apple-macosx26.0",
+    "xcode": "Xcode 26.6\nBuild version 17F113"
+  },
+  "exactPrefixIdentityAgreementBetweenTheseTwoExecutions": [
+    "checkpoint",
+    "request",
+    "resumedFrom",
+    "sourceReceipt",
+    "replicas",
+    "reference",
+    "numericalContract"
+  ],
+  "existingWorkflowCLI": {
+    "checks": 61,
+    "log": {
+      "bytes": 73,
+      "path": "workflow-cli-3.log",
+      "sha256": "3f11ef0c515534e9fe9a7386bdd7183ebaa7178eeb12f852c3cd2e5f663dd0b5"
+    },
+    "passed": true,
+    "report": {
+      "bytes": 5700,
+      "path": "workflow-cli-3/checks.json",
+      "sha256": "2c27a8c12655d5ee8d2837e6a01df13c10fe86fa2b0a9f2c7ff8b337c5e1be3f"
+    }
+  },
+  "finalBuildSeconds": 212.08,
+  "finalTests": {
+    "executedFunctions": 116,
+    "explicitSkips": [
+      "\u279c Test archiveBeyondOneHundredThousandChunksResumesAndPreservesItsPrefix() skipped."
+    ],
+    "log": {
+      "bytes": 2647486,
+      "path": "tests-3.log",
+      "sha256": "920ae8cf40788f4af070b423f11dd070239533671c128735166ef7d316cfcc53"
+    },
+    "metalValidationEnabled": true,
+    "reportedFunctionsIncludingSkip": 117,
+    "suites": [
+      "MolecularSamplingArchiveReaderTests",
+      "MolecularSamplingExporterTests",
+      "PlatformSnapshotMappingHelperTests",
+      "KineticsPreparedOutputTests",
+      "PreparedMolecularWorkflowTests",
+      "WorkflowCancellationTests",
+      "MDProtocolResumeTests",
+      "MDTrajectoryArchiveValidationTests",
+      "PlatformWorkflowTests",
+      "PlatformSnapshotTests",
+      "MolecularSamplingNativeBridgeTests",
+      "ClassicalPMEConformanceTests",
+      "ClassicalThermalConformanceTests",
+      "ClassicalNPTTransitionTests",
+      "MetalSamplingIdentityTests",
+      "QMMMFreeEnergyArchiveIdentityTests",
+      "NuclearMetalResourceTests",
+      "MDQMMMInterfaceTests"
+    ],
+    "wallSeconds": 5.654
+  },
+  "frozenExecutableBundle": "binaries-3 with matching shader resources at bundle and test-bundle roots",
+  "hostedCIExecuted": false,
+  "independentReview": {
+    "bytes": 7532,
+    "path": "independent-review-3.json",
+    "sha256": "cfee7f983b7012e0180e58d0284ca884712f10e308dc51ec4976a0b1c66ef12f"
+  },
+  "nativePrefixes": {
+    "2": {
+      "file": {
+        "bytes": 1646,
+        "path": "native-2/molecular-sampling-prefix-66CEF42A-8371-4EEA-B48D-6F3E24490EA9/sampling-prefix-receipt.json",
+        "sha256": "4e0ec06f5c5a840b826cf469c5fa856a85152ee3dfb9356be6b1d1c57e480fa0"
+      },
+      "receipt": {
+        "checkpoint": "d29abc6c0f44ac83267865e6f3f49ffc0ed13a4785493c29ebb5f4808ab1e488",
+        "completedBlocks": 4,
+        "declaredObservableCriteriaSatisfied": false,
+        "exactResumedCursor": true,
+        "model": "synthetic two-particle harmonic routing fixture; not physical H2 parameters",
+        "nativeStatus": "accepted-metal-sampling-and-exact-prefix-resume",
+        "numericalContract": "numivivo.org/md-metal-numerics/v3",
+        "reference": "molecular-sampling-922d2a827fb3ab5bb105b6c237a031494a82f4c834d1b79c82bdee8dd7ee374e-checkpoint",
+        "replicas": [
+          {
+            "acceptedStep": 36,
+            "checkpoint": "9fcfddc4fa3e834c53ab798175aad02bca8ec81dc6118ce4be484c217fac8bb8",
+            "index": 0,
+            "seed": 17,
+            "timePS": 0.16015625,
+            "trajectory": "a9f7a60fe82f9ff7bed0091279116e34c80ba7b5222191ea25c75751afe361a2"
+          },
+          {
+            "acceptedStep": 36,
+            "checkpoint": "2d3424c03036b90ce70dfa9919ba968f6258b9aa13dac165a92d6d34e2e98911",
+            "index": 1,
+            "seed": 29,
+            "timePS": 0.41015625,
+            "trajectory": "b9926067ad557c6eb2f7a8862b049a8532871bf19fe2e43ed412faacb5c4bd93"
+          }
+        ],
+        "request": "922d2a827fb3ab5bb105b6c237a031494a82f4c834d1b79c82bdee8dd7ee374e",
+        "requestFile": "/Users/n/numivivo-sampling-reader-evidence-20260908/native-2/molecular-sampling-prefix-66CEF42A-8371-4EEA-B48D-6F3E24490EA9/request.json",
+        "resumedFrom": "18f06947f60e126ed3a00ed9f4e24b1d74d605b82528068993dd32f2cc7ceadb",
+        "schema": "numivivo.org/test-evidence/sampling-prefix/v1",
+        "sourceCommit": "62c971e2f937be3053e8c247f867aa1311034335",
+        "sourceReceipt": "8274e84dffb1ec780690a16f698deb6dd7157326584fa4036263f515a64b0fd2",
+        "sourceTermination": "budgetExhausted",
+        "status": "success",
+        "store": "/Users/n/numivivo-sampling-reader-evidence-20260908/native-2/molecular-sampling-prefix-66CEF42A-8371-4EEA-B48D-6F3E24490EA9/store"
+      }
+    },
+    "3": {
+      "file": {
+        "bytes": 1646,
+        "path": "native-3/molecular-sampling-prefix-AA0D3A10-29B9-46DF-8F0E-2BAD3F4B4ED6/sampling-prefix-receipt.json",
+        "sha256": "6ba5e0dc8a3e45b0da5b0b53a3b12135cda0eea0aa1b6b5dbec776eb01fd521c"
+      },
+      "receipt": {
+        "checkpoint": "d29abc6c0f44ac83267865e6f3f49ffc0ed13a4785493c29ebb5f4808ab1e488",
+        "completedBlocks": 4,
+        "declaredObservableCriteriaSatisfied": false,
+        "exactResumedCursor": true,
+        "model": "synthetic two-particle harmonic routing fixture; not physical H2 parameters",
+        "nativeStatus": "accepted-metal-sampling-and-exact-prefix-resume",
+        "numericalContract": "numivivo.org/md-metal-numerics/v3",
+        "reference": "molecular-sampling-922d2a827fb3ab5bb105b6c237a031494a82f4c834d1b79c82bdee8dd7ee374e-checkpoint",
+        "replicas": [
+          {
+            "acceptedStep": 36,
+            "checkpoint": "9fcfddc4fa3e834c53ab798175aad02bca8ec81dc6118ce4be484c217fac8bb8",
+            "index": 0,
+            "seed": 17,
+            "timePS": 0.16015625,
+            "trajectory": "a9f7a60fe82f9ff7bed0091279116e34c80ba7b5222191ea25c75751afe361a2"
+          },
+          {
+            "acceptedStep": 36,
+            "checkpoint": "2d3424c03036b90ce70dfa9919ba968f6258b9aa13dac165a92d6d34e2e98911",
+            "index": 1,
+            "seed": 29,
+            "timePS": 0.41015625,
+            "trajectory": "b9926067ad557c6eb2f7a8862b049a8532871bf19fe2e43ed412faacb5c4bd93"
+          }
+        ],
+        "request": "922d2a827fb3ab5bb105b6c237a031494a82f4c834d1b79c82bdee8dd7ee374e",
+        "requestFile": "/Users/n/numivivo-sampling-reader-evidence-20260908/native-3/molecular-sampling-prefix-AA0D3A10-29B9-46DF-8F0E-2BAD3F4B4ED6/request.json",
+        "resumedFrom": "18f06947f60e126ed3a00ed9f4e24b1d74d605b82528068993dd32f2cc7ceadb",
+        "schema": "numivivo.org/test-evidence/sampling-prefix/v1",
+        "sourceCommit": "3e9440632897e2dd58520ae8bd3674595e3d8fdb",
+        "sourceReceipt": "8274e84dffb1ec780690a16f698deb6dd7157326584fa4036263f515a64b0fd2",
+        "sourceTermination": "budgetExhausted",
+        "status": "success",
+        "store": "/Users/n/numivivo-sampling-reader-evidence-20260908/native-3/molecular-sampling-prefix-AA0D3A10-29B9-46DF-8F0E-2BAD3F4B4ED6/store"
+      }
+    }
+  },
+  "productionCLIHash": "a245e33d4f83085d8cd90883d2f2cd26fee8ff54a1f514e8aec471c6f3dbcf3f",
+  "rawFileCount": 1144,
+  "rawManifest": {
+    "bytes": 279718,
+    "path": "raw-manifest-3.json",
+    "sha256": "3451458fdf95b511f29cb4febb98d0e59c2a80e54d19804d4435954eaf4d3652"
+  },
+  "retainedArchiveCLI": {
+    "archiveRegenerated": false,
+    "expectedLimitFailures": 1,
+    "invocations": 6,
+    "log": {
+      "bytes": 136,
+      "path": "archive-cli-3.log",
+      "sha256": "51f742261a22c2a19f53f9cef49147f8477cff55f8595b492502a029f49fdae4"
+    },
+    "passed": true,
+    "report": {
+      "bytes": 5362,
+      "path": "archive-cli-3/checks.json",
+      "sha256": "06004eed46d5f3caf1565939761a498dc22507bac6e7d0aadc03da06d0e5532d"
+    },
+    "scope": "Fresh correctness/inspection checks on previously retained 100001-to-100002 fixture; raw process measurements do not add a speed or memory qualification."
+  },
+  "retainedEvidenceRoot": "/Users/n/numivivo-sampling-reader-evidence-20260908",
+  "retainedFailure": {
+    "cause": "Production sampling checkpointReferenceName generated slash-containing names rejected by the artifact store; actual runner could not publish its initial cursor.",
+    "executedFunctions": 15,
+    "failedFunctions": 1,
+    "log": {
+      "bytes": 5512,
+      "path": "tests-1.log",
+      "sha256": "a2fe5afcef35ff036e96f5d0b1aac4dcfdce6077889776e3e342d91f6f76e523"
+    },
+    "sourceCommit": "32831ef4a56f7fbe955829bf74c25df0f50ea2fb",
+    "unaffectedPassedFunctions": 14
+  },
+  "samplingCLI": {
+    "checks": 87,
+    "electronicRouteNodes": [
+      "fci",
+      "hamiltonian",
+      "integrals",
+      "mp2",
+      "reference",
+      "snapshot",
+      "system"
+    ],
+    "electronicRoutePassed": true,
+    "exportImplementationFingerprint": "f4cecb7779311d5da6a7fcbec68a2f28ecaae62fa64267b01af816cabe081120",
+    "fixtureSourceCommit": "3e9440632897e2dd58520ae8bd3674595e3d8fdb",
+    "log": {
+      "bytes": 146,
+      "path": "sampling-cli-3.log",
+      "sha256": "f0c516a88c296b830fcf8daf543dc3431b8461b6e1786417d1dd36ae1e9c203c"
+    },
+    "outputs": {
+      "checkpoint": {
+        "artifact": "26e35244a4f369ccc7cb8b83d63317a9277110af21e8fc0ba104444441c2480a",
+        "kind": "vivo.md-checkpoint",
+        "payload": "9fcfddc4fa3e834c53ab798175aad02bca8ec81dc6118ce4be484c217fac8bb8"
+      },
+      "configuration": {
+        "artifact": "b338c8475e0dcc9737457488c8b2d89953fd7b4dd415e8b123e3ff419c4ebf29",
+        "kind": "vivo.md-configuration",
+        "payload": "62ee858e9828837e972eef24c1153ca57e132a94d2b4217ca1b4b0ff0e8677fa"
+      },
+      "frame": {
+        "artifact": "1561ae1a11c8dd418aa1a07a9c969457ced68b625f31dd77660d1483cc035b0a",
+        "kind": "vivo.trajectory-frame",
+        "payload": "51f2b3f8676488bba05f6e3a8acca8bab01806e4356a21c96e3df8c7e40db39d"
+      },
+      "mapping": {
+        "artifact": "b8aa23a0ccfcd6a3507d8c60da9ffd5138a3e4542650b4e366641bceb662cc0d",
+        "kind": "vivo.md-snapshot-mapping",
+        "payload": "cc831916dd8b6fac45a11078b363d5a7398dd7c4ee5685f4f96a8067aa6efde1"
+      },
+      "provenance": {
+        "artifact": "6e6ae994ee55a22d27e02d2607a60ec376a7162cbf0566311a435d883259181f",
+        "kind": "vivo.molecular-sampling-selected-state",
+        "payload": "e9ff576803a4d8f5fb95beaa325daa07110baa466f2868d061894f2e537fb265"
+      },
+      "snapshot": {
+        "artifact": "2630187508365282ed6fbbccc25fccfd74b7b5be6b89cba999b245d127bf0991",
+        "kind": "vivo.md-state-snapshot",
+        "payload": "0b6f39583d63a5d7630157d08cfe4da0590a2a8fba9393a0099ad4673934b469"
+      },
+      "source-structure": {
+        "artifact": "f87cf5c5fd971a1c67c6aef01943c6a26be7072deb5fe2aa6be332fc8bea858d",
+        "kind": "vivo.molecular-structure-document",
+        "payload": "704061c6c9ee5079263faa41bc9bdb031d77627dc258c91f1ff93f874f5276fc"
+      },
+      "structure": {
+        "artifact": "33ebaefbbec23001ba81c1f1e43f60ec83287f77542fafd453d5c28412f92037",
+        "kind": "vivo.molecular-structure-document",
+        "payload": "128b69cb080025791831cbc7040443dea71d71e804e5c631bf25a8371c970108"
+      },
+      "system": {
+        "artifact": "1e197722fd8697fa916abf75b0257e18b69e396fef5c18cd18bd1d43ddedf575",
+        "kind": "vivo.classical-system",
+        "payload": "2f06013ed7468e82e523caae81c94c833467d637e0b176c9004318cc442998eb"
+      }
+    },
+    "passed": true,
+    "repeatedElectronicRouteAllReused": true,
+    "report": {
+      "bytes": 32988,
+      "path": "sampling-cli-3/checks.json",
+      "sha256": "eafb4afabf85b9f60be096d76bf8fc617905530d3dd5d212641837b46ba859a3"
+    },
+    "strongerVerification": {
+      "canonicalCheckpointFingerprint": {
+        "bytes": [
+          159,
+          207,
+          221,
+          196,
+          250,
+          62,
+          131,
+          76,
+          83,
+          171,
+          121,
+          129,
+          117,
+          170,
+          208,
+          43,
+          202,
+          142,
+          200,
+          29,
+          198,
+          17,
+          140,
+          228,
+          190,
+          72,
+          76,
+          33,
+          127,
+          172,
+          139,
+          184
+        ]
+      },
+      "declaredObservableCriteriaSatisfied": false,
+      "exportReceiptFingerprint": {
+        "bytes": [
+          97,
+          124,
+          130,
+          196,
+          199,
+          187,
+          11,
+          163,
+          30,
+          179,
+          180,
+          97,
+          85,
+          203,
+          227,
+          31,
+          73,
+          4,
+          211,
+          4,
+          97,
+          1,
+          200,
+          168,
+          139,
+          177,
+          105,
+          30,
+          16,
+          28,
+          183,
+          163
+        ]
+      },
+      "indexedChunks": 4,
+      "mdCheckpointFingerprint": {
+        "bytes": [
+          159,
+          207,
+          221,
+          196,
+          250,
+          62,
+          131,
+          76,
+          83,
+          171,
+          121,
+          129,
+          117,
+          170,
+          208,
+          43,
+          202,
+          142,
+          200,
+          29,
+          198,
+          17,
+          140,
+          228,
+          190,
+          72,
+          76,
+          33,
+          127,
+          172,
+          139,
+          184
+        ]
+      },
+      "recordedValidationScope": "restart",
+      "samplingCheckpointFingerprint": {
+        "bytes": [
+          210,
+          154,
+          188,
+          108,
+          15,
+          68,
+          172,
+          131,
+          38,
+          120,
+          101,
+          230,
+          243,
+          244,
+          159,
+          252,
+          14,
+          209,
+          58,
+          71,
+          133,
+          73,
+          60,
+          41,
+          235,
+          181,
+          244,
+          128,
+          138,
+          177,
+          228,
+          136
+        ]
+      },
+      "sourceTermination": "budgetExhausted",
+      "taskFingerprint": {
+        "bytes": [
+          136,
+          101,
+          189,
+          231,
+          137,
+          125,
+          195,
+          22,
+          176,
+          236,
+          243,
+          62,
+          230,
+          212,
+          135,
+          181,
+          20,
+          101,
+          173,
+          198,
+          8,
+          104,
+          35,
+          237,
+          118,
+          109,
+          7,
+          22,
+          251,
+          108,
+          165,
+          41
+        ]
+      },
+      "validationScope": "allPayloads",
+      "verifiedOutputCount": 9,
+      "verifiedPayloadBytes": 1600,
+      "verifiedPayloads": 4
+    },
+    "taskFingerprint": "8865bde7897dc316b0ecf33ee6d487b51465adc6086823ed766d0716fb6ca529",
+    "workflowReceiptFingerprint": "e346449e39ed82b9d2a6145d7e0112bae04800d1119c9ce8654f60d1db8e7b33"
+  },
+  "schema": "numivivo.org/test-evidence/sampling-export-observations/v1",
+  "scope": "Accepted two-replica synthetic harmonic Metal sampling prefix, exact immutable continuation, selected state export and explicit seven-stage electronic handoff; no ensemble, molecular accuracy, kinetics, throughput or product completion claim.",
+  "shaderResources": {
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoErrorFunctions.metalh": "8739b8f8d4d7c19dbe834f811045d625cf8cc0e1074b259082829b0d424694af",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoExactSSAKernels.metal": "66d0ae4a1d37e2f1e14a8f4d1ee50ae360edef4abee03493c8ba2a39b568a4e0",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoHybridExecution.metal": "c095118eedc55639dff36f5919a48df0355f1e58f98cfe56bd1c3fd7afb616c3",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoKernels.metal": "c9789e8a14d2e97fe59e6460f30964b5533dd9f60bb84b4d6d4757b61b096861",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDBarostat.metal": "051b3edd5163e2188f62aab28f7b8670c010a5fb687d847066dc74e50c2c7dfc",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDExecutionSupport.metal": "028bd34ee33bc2e7de020d0138ebb53093344cc5e6e80e206bc61022a8c8a59f",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDKernels.metal": "ac46bfeaac11f08a82d01e8c3dd73e530f35f64df04dd340672a4a484fa82fa6",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDMinimization.metal": "1a7f69eb02a6728daae74bc9d772ffde18f21a6580b7b079f8c66cf875364ead",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDNeighborGrid.metal": "fb7a21b80f926ea5537b69e0565ff009e37e1574091431007a9d3186afc9544b",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDPME.metal": "0ab857929665cad4d6c5188b28af63e1f8389d2a44e630b78c030ea9b91be353",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDPMECorrections.metal": "6ca876522512d9be57e662d7f24ade30baa10c9cfcac8c1c63c7c885ad7effa0",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDPeriodicGeometry.metalh": "f15218e73c348db0ca28a9802a97ba033582595a51d986c846b4293f5c049b05",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDVirtualSites.metal": "102cfc48168073e53bfbbb0062f935d12ff8f0b33d35c36e0c68c3d889ca8bde",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMetalABI.h": "cfdeaafd16cb0997080b222cdb457ef800aee331616d0dd231d243426b19d59d",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoMigrationKernels.metal": "b1f25b3a2bb3085e96c0f94018cdad6000822205ea5cbf884aa539d419d1dea5",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoPartitionKernels.metal": "602d246323da7d2c299f8b3e798fd78a2e714252e1a810fc6841af45a08068d1",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoPhysiologyKernels.metal": "88998cd7dfb14d905dd9c62a83a101014f1dd5397706a7bdddbc8ee670424a52",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoPopulationKernels.metal": "314031ef753516f16cbca1d969002089852583e569624cb7baec0ccbc3800406",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoProgramPackRuntime.metal": "a70ab4a819cbf3223ff16384b71ad0d4a7444b709ede9dd931b125754f459121",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoTargetLikelihood.metal": "761a55a6fc3e2381af24e5134551f3b1545eae48a5fff1748b0a2d55c4ea356e",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoTransactionCommitKernels.metal": "6a135c1a54198a7200cfeae74bc2a186bc54d0816062126f2551ac29cf8b496c",
+    "NumiVivo_NumiVivoShaders.bundle/NumiVivoTransactionKernels.metal": "e274f08810eb04fe155cb386b10602fbc7d1a046e680dfafc67e0722fe0d9d8c",
+    "NumiVivo_NumiVivoShaders.bundle/README.txt": "49d01498a46ba1c27f24044562ad285f6a0c39d013e071723497c40425f45f4b"
+  },
+  "sources": [
+    {
+      "archive": {
+        "bytes": 1586524,
+        "path": "source-1.tar.gz",
+        "sha256": "b36f7b49422c030f9bf8d3a630ff8340e29cfbf35e5d918313225aee8b1fa7e7"
+      },
+      "binaryResources": {
+        "bytes": 7568,
+        "path": "binary-resource-hashes-1.json",
+        "sha256": "ba3022980b101dbbffa7867da83a2cde4758cb3b06e69c68650338253e26f6cd"
+      },
+      "buildLog": {
+        "bytes": 9867,
+        "path": "build-1.log",
+        "sha256": "19523cc4b853454b0c3046822bf9779fd282ecd0d151ab7b918238dfcdbc2c58"
+      },
+      "capturedStatus": {
+        "bytes": 0,
+        "path": "source-status-1.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sourceCommit": "32831ef4a56f7fbe955829bf74c25df0f50ea2fb"
+    },
+    {
+      "archive": {
+        "bytes": 1588998,
+        "path": "source-2.tar.gz",
+        "sha256": "37a9c179141f436c37b628040aef2920089eadc8e669f71fa541a8b48ee66920"
+      },
+      "binaryResources": {
+        "bytes": 7568,
+        "path": "binary-resource-hashes-2.json",
+        "sha256": "7d52185c355618410a57101dbe20360e4ae99662d149b85d5723e7c5a5a2fd8f"
+      },
+      "buildLog": {
+        "bytes": 14732,
+        "path": "build-2.log",
+        "sha256": "dd6821631dd430c02968a29e31b9a161a45396fc49b8c5fb8299c7d3b1eeee56"
+      },
+      "capturedStatus": {
+        "bytes": 0,
+        "path": "source-status-2.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sourceCommit": "62c971e2f937be3053e8c247f867aa1311034335"
+    },
+    {
+      "archive": {
+        "bytes": 1613403,
+        "path": "source-3.tar.gz",
+        "sha256": "9ec790bf524aa6cb7baf4cfe495454c35adf0ca74d3903d41cccb9617df16620"
+      },
+      "binaryResources": {
+        "bytes": 7568,
+        "path": "binary-resource-hashes-3.json",
+        "sha256": "9e6c7534fb887b1308fc003695d211069c44340490e2db520ec533c67005ad8c"
+      },
+      "buildLog": {
+        "bytes": 9869,
+        "path": "build-3.log",
+        "sha256": "e3faa23e9dc9b7458166e91d71c8bc7a5835da3dd2c11a5e70250ca072cda471"
+      },
+      "capturedStatus": {
+        "bytes": 0,
+        "path": "source-status-3.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sourceCommit": "3e9440632897e2dd58520ae8bd3674595e3d8fdb"
+    }
+  ],
+  "targetPanel": {
+    "freshTasks": 2,
+    "passed": true,
+    "report": {
+      "bytes": 2648,
+      "path": "target-panel-3.json",
+      "sha256": "795b58601b28d5dd34c626be6a79686a180378c73504810d7c6913d3faa2ab0b"
+    }
+  },
+  "testExecutableHash": "8719f7d1c810183d5690b7e5b5f23e1d8a927429fc6ebfae68179b463e64898a",
+  "testedSourceCommit": "3e9440632897e2dd58520ae8bd3674595e3d8fdb"
+}
