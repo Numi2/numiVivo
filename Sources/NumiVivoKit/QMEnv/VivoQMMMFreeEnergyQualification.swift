@@ -25,11 +25,7 @@ public struct VivoQMMMReactionConnectivityBinding: Codable, Sendable, Equatable 
 }
 
 public struct VivoQMMMSamplingExecutionBinding: Codable, Sendable, Equatable {
-    /// Fingerprint of the complete run request, including initial states and all
-    /// stochastic window seeds. This identifies the exact executed sampling job.
     public var requestFingerprint:VivoFingerprint
-    /// Fingerprint of the common protocol after removing stochastic seed and
-    /// initial-state identity. Independent replicas must share this value.
     public var replicaProtocolFingerprint:VivoFingerprint
     public init(requestFingerprint:VivoFingerprint,replicaProtocolFingerprint:VivoFingerprint) {
         self.requestFingerprint=requestFingerprint;self.replicaProtocolFingerprint=replicaProtocolFingerprint
@@ -37,7 +33,7 @@ public struct VivoQMMMSamplingExecutionBinding: Codable, Sendable, Equatable {
 }
 
 public struct VivoQMMMFreeEnergyProvenance: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-free-energy-provenance/v4"
+    public static let schema="numivivo.org/qmmm-free-energy-provenance/v5"
     public var schema:String
     public var structureFingerprint:VivoFingerprint
     public var systemFingerprint:VivoFingerprint
@@ -72,25 +68,28 @@ public struct VivoQMMMFreeEnergyProvenance: Codable, Sendable, Equatable {
 
 public struct VivoQMMMFluxNormalization: Codable, Sendable, Equatable {
     /// exp[-beta A(xi*)] / integral_R exp[-beta A(xi)] dxi, in nm^-1.
-    /// The arbitrary PMF additive constant cancels exactly.
     public let surfaceToReactantDensityPerNM: Double
-    /// g_xi = sum_i |d xi/d r_i|^2 / m_i. For the supported distance and
-    /// distance-difference coordinates every nonzero Cartesian gradient has
-    /// unit norm, so this is a geometry-independent sum of inverse masses.
-    public let inverseMassMetricPerDa: Double
-    public init(surfaceToReactantDensityPerNM:Double,inverseMassMetricPerDa:Double) {
+    /// Analytic Cartesian mass metric when geometry independent. Shared-atom or
+    /// constrained coordinates deliberately leave this nil and require a sampled
+    /// dividing-surface positive velocity before rate conversion.
+    public let inverseMassMetricPerDa: Double?
+    public init(surfaceToReactantDensityPerNM:Double,inverseMassMetricPerDa:Double?=nil) {
         self.surfaceToReactantDensityPerNM=surfaceToReactantDensityPerNM;self.inverseMassMetricPerDa=inverseMassMetricPerDa
     }
     public func validate() throws {
-        guard surfaceToReactantDensityPerNM.isFinite,surfaceToReactantDensityPerNM>0,
-              inverseMassMetricPerDa.isFinite,inverseMassMetricPerDa>0 else {
-            throw VivoChemistryError.invalid("QM/MM PMF flux normalization or reaction-coordinate mass metric")
+        guard surfaceToReactantDensityPerNM.isFinite,surfaceToReactantDensityPerNM>0 else {
+            throw VivoChemistryError.invalid("QM/MM PMF surface/reactant normalization")
+        }
+        if let inverseMassMetricPerDa {
+            guard inverseMassMetricPerDa.isFinite,inverseMassMetricPerDa>0 else {
+                throw VivoChemistryError.invalid("QM/MM reaction-coordinate analytic mass metric")
+            }
         }
     }
 }
 
 public struct VivoQMMMQualifiedActivationFreeEnergy: Codable, Sendable, Equatable {
-    public static let schema="numivivo.org/qmmm-qualified-activation-free-energy/v4"
+    public static let schema="numivivo.org/qmmm-qualified-activation-free-energy/v5"
     public let schema:String
     public let analysis:VivoQMMMActivationFreeEnergyResult
     public let provenance:VivoQMMMFreeEnergyProvenance
@@ -168,13 +167,8 @@ public enum VivoQMMMFreeEnergyQualification {
         return ratio
     }
 
-    private static func inverseMassMetricPerDa(coordinate:VivoQMMMReactionCoordinate,system:VivoClassicalSystem)throws->Double {
-        // The closed-form metric is valid only when every coordinate atom is unique.
-        // Shared-atom transfer coordinates have geometry-dependent cross terms and
-        // are rate-qualified later from the sampled dividing-surface velocity ensemble.
-        guard Set(coordinate.atomIndices).count==coordinate.atomIndices.count else {
-            throw VivoChemistryError.unsupported("shared-atom reaction coordinates require sampled surface velocity normalization")
-        }
+    private static func inverseMassMetricPerDa(coordinate:VivoQMMMReactionCoordinate,system:VivoClassicalSystem)throws->Double? {
+        guard Set(coordinate.atomIndices).count==coordinate.atomIndices.count else { return nil }
         let resolved=try VivoQMMMResolvedCoordinate(source:coordinate,system:system)
         var value=0.0
         for particle in resolved.particleIndices {
@@ -221,9 +215,6 @@ public enum VivoQMMMFreeEnergyQualification {
                      productEndpointIdentifier:productEndpointIdentifier,mappedReactionAtomIndices:coordinate.atomIndices)
     }
 
-    /// Builds provenance from the same system/provider/configuration used by the
-    /// production runner and from a deterministically revalidated mapped reaction.
-    /// A PMF cannot be relabelled as another environment, Hamiltonian or reaction.
     public static func qualify(_ result:VivoQMMMActivationFreeEnergyResult,
                                sampling:VivoQMMMFreeEnergyRunRequest,
                                system:VivoClassicalSystem,
