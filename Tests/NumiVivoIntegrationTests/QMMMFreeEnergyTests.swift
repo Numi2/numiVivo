@@ -40,10 +40,7 @@ import Testing
         let windows=[-0.24,-0.18,-0.12,-0.06,0,0.06].enumerated().map {
             VivoQMMMUmbrellaWindow(identifier:"w\($0.offset)",centerNM:$0.element,forceConstantKJPerMolNM2:500)
         }
-        func unbiased(_ x:Double)->Double {
-            // One smooth reactant basin. U(-0.2)=0 and U(0)=10 kJ/mol.
-            250*pow(x+0.2,2)
-        }
+        func unbiased(_ x:Double)->Double { 250*pow(x+0.2,2) }
         struct RNG { var x:UInt64;mutating func uniform()->Double{x = x&*6364136223846793005&+1442695040888963407;return Double(x>>11)/Double(UInt64(1)<<53)} }
         var traces:[VivoQMMMUmbrellaTrace]=[]
         for (index,window) in windows.enumerated() {
@@ -67,11 +64,14 @@ import Testing
         let binding=VivoQMMMReactionConnectivityBinding(
             connectivityFingerprint:try VivoCanonicalJSON.fingerprint(Data("mapped-connectivity".utf8)),
             reactantEndpointIdentifier:"R",productEndpointIdentifier:"P",mappedReactionAtomIndices:coordinate.atomIndices)
+        let protocolID=try VivoCanonicalJSON.fingerprint(Data("shared-replica-protocol".utf8))
         let provenance=VivoQMMMFreeEnergyProvenance(
             structureFingerprint:try VivoCanonicalJSON.fingerprint(Data("structure".utf8)),
             systemFingerprint:try VivoCanonicalJSON.fingerprint(Data("system".utf8)),
             baseProviderFingerprint:try VivoCanonicalJSON.fingerprint(Data("provider".utf8)),
             dynamicsFingerprint:try VivoCanonicalJSON.fingerprint(Data("dynamics".utf8)),
+            samplingExecution:.init(requestFingerprint:try VivoCanonicalJSON.fingerprint(Data("sampling-execution-1".utf8)),
+                                    replicaProtocolFingerprint:protocolID),
             chemicalState:"prepared-reactive-state",environment:.proteinEnvironment,
             environmentIdentifier:"protein-pocket",methodDescription:"synthetic protein-environment PMF fixture",
             reactionConnectivity:binding)
@@ -92,15 +92,16 @@ import Testing
         #expect(rate.barrier.origin == .calculated)
         #expect(rate.parameter.origin == .assumed)
 
-        // A second independent replica can share the same samples in this
-        // deterministic fixture only because the test is exercising evidence
-        // identity and aggregation; its stochastic namespace must still differ.
         let secondTraces=traces.enumerated().map { index,trace in
             VivoQMMMUmbrellaTrace(window:trace.window,randomSeed:UInt64(100+index),
                 coordinateNM:trace.coordinateNM,potentialEnergyKJPerMol:trace.potentialEnergyKJPerMol)
         }
         let secondAnalysis=try VivoQMMMFreeEnergy.analyze(coordinate:coordinate,temperatureK:temperature,traces:secondTraces,configuration:cfg)
-        let secondQualified=try VivoQMMMQualifiedActivationFreeEnergy(analysis:secondAnalysis,provenance:provenance,
+        var secondProvenance=provenance
+        secondProvenance.samplingExecution = .init(
+            requestFingerprint:try VivoCanonicalJSON.fingerprint(Data("sampling-execution-2".utf8)),
+            replicaProtocolFingerprint:protocolID)
+        let secondQualified=try VivoQMMMQualifiedActivationFreeEnergy(analysis:secondAnalysis,provenance:secondProvenance,
             fluxNormalization:.init(surfaceToReactantDensityPerNM:try VivoQMMMFreeEnergyQualification.surfaceToReactantDensityPerNM(secondAnalysis),
                                     inverseMassMetricPerDa:4.0/12.0))
         let secondRequest=VivoQMMMFreeEnergyRateRequest(context:context,environment:.proteinEnvironment,freeEnergy:secondQualified,
@@ -113,8 +114,8 @@ import Testing
         #expect(abs(replicated.geometricMeanRatePerSecond-rate.estimate.ratePerSecond)/rate.estimate.ratePerSecond<1e-12)
         #expect(replicated.betweenReplicaLogRateStandardDeviation<1e-12)
         try VivoQMMMReplicatedFreeEnergyRate.validate(replicated,request:replicatedRequest)
-        let duplicateSeedRequest=VivoQMMMReplicatedFreeEnergyRateRequest(replicas:[request,request])
-        #expect(throws:(any Error).self) { _ = try VivoQMMMReplicatedFreeEnergyRate.calculate(duplicateSeedRequest) }
+        let duplicateExecutionRequest=VivoQMMMReplicatedFreeEnergyRateRequest(replicas:[request,request])
+        #expect(throws:(any Error).self) { _ = try VivoQMMMReplicatedFreeEnergyRate.calculate(duplicateExecutionRequest) }
 
         var wrongProvenance=provenance
         wrongProvenance.environment = .explicitSolution
