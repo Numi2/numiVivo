@@ -5,7 +5,7 @@ struct VivoQMMMFreeEnergyCLICommands {
     static func handles(_ name:String?)->Bool {
         ["qmmm-free-energy-analyze","qmmm-free-energy-rate","qmmm-free-energy-replicated-rate",
          "qmmm-transmission-analyze","qmmm-transmission-apply","qmmm-chemical-qualify",
-         "qmmm-chemical-state-network","qmmm-free-energy-help"].contains(name ?? "")
+         "qmmm-chemical-state-network","qmmm-chemical-exchange-network","qmmm-free-energy-help"].contains(name ?? "")
     }
     private func load<T:Decodable & Sendable>(_ type:T.Type,_ path:String)throws->T {
         try VivoValidatedArtifactLoader.decode(type,at:URL(fileURLWithPath:path),limits:.init(
@@ -75,6 +75,10 @@ struct VivoQMMMFreeEnergyCLICommands {
                 guard kinetics==nil else { throw VivoChemistryError.invalid("--kinetics requires an explicit downstream kinetic model adapter") }
                 let request=try load(VivoQMMMChemicalStateNetworkRequest.self,arguments[1])
                 try write(VivoQMMMChemicalStateNetwork.calculate(request),output);return 0
+            case "qmmm-chemical-exchange-network":
+                guard kinetics==nil else { throw VivoChemistryError.invalid("--kinetics requires an explicit downstream kinetic model adapter") }
+                let request=try load(VivoQMMMChemicalExchangeNetworkRequest.self,arguments[1])
+                try write(VivoQMMMChemicalExchangeNetwork.calculate(request),output);return 0
             default:throw VivoChemistryError.invalid("unresolved QM/MM free-energy command")
             }
         } catch {
@@ -90,6 +94,7 @@ struct VivoQMMMFreeEnergyCLICommands {
       numivivo qmmm-free-energy-replicated-rate replicas.json --output replicated-rate.json [--kinetics kinetic-pack.json]
       numivivo qmmm-chemical-qualify qualification.json --output qualification-result.json
       numivivo qmmm-chemical-state-network state-network.json --output effective-rate.json
+      numivivo qmmm-chemical-exchange-network exchange-network.json --output transient-kinetics.json
 
     qmmm-free-energy-analyze reconstructs retained umbrella data with native unbinned
     MBAR and exits 75 if sampling/overlap gates fail. qmmm-transmission-analyze
@@ -102,6 +107,9 @@ struct VivoQMMMFreeEnergyCLICommands {
     predeclared protocol/electronic/QM-region sensitivity and only directly compares
     condition-matched first-order chemical-rate measurements. qmmm-chemical-state-network
     computes sum_s p_s sum_path k_s,path only when rapid pre-equilibrium is explicitly
-    asserted; it never averages activation barriers. Outputs are canonical no-clobber JSON.
+    asserted. qmmm-chemical-exchange-network instead propagates an explicit transient
+    continuous-time state-exchange network when interconversion competes with chemical
+    conversion, returning survival and time-dependent hazard without inventing a single
+    global rate. Outputs are canonical no-clobber JSON.
     """
 }
