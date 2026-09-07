@@ -65,14 +65,18 @@ import Testing
               evidence:.init(source:"assumption",locator:label))
     }
 
+    private func state(_ identifier:String,_ population:Double,_ pathway:VivoQMMMPathwayRate)->VivoQMMMChemicalExchangeState {
+        .init(identifier:identifier,initialPopulation:population,populationOrigin:.assumed,
+              populationEvidence:.init(source:"assumption",locator:"initial population \(identifier)"),pathways:[pathway])
+    }
+
     @Test func equalChemicalRatesRemainSingleExponentialUnderArbitraryExchange() throws {
         let a=try replicatedPathway(state:"A",executionPrefix:"A-execution",seedBase:10)
         let b=try replicatedPathway(state:"B",executionPrefix:"B-execution",seedBase:1000)
         let k=a.result.geometricMeanRatePerSecond
         #expect(abs(k-b.result.geometricMeanRatePerSecond)/k<1e-12)
         let request=VivoQMMMChemicalExchangeNetworkRequest(identifier:"equal-rate-exchange",states:[
-            .init(identifier:"A",initialPopulation:0.25,pathways:[a]),
-            .init(identifier:"B",initialPopulation:0.75,pathways:[b])],exchangeEdges:[
+            state("A",0.25,a),state("B",0.75,b)],exchangeEdges:[
                 .init(fromStateIdentifier:"A",toStateIdentifier:"B",rate:assumedRate(5*k,"A to B")),
                 .init(fromStateIdentifier:"B",toStateIdentifier:"A",rate:assumedRate(7*k,"B to A"))],
             observationTimesSeconds:[0,0.1/k,1/k])
@@ -126,8 +130,7 @@ import Testing
         b = .init(identifier:"path",request:modified,result:try VivoQMMMReplicatedFreeEnergyRate.calculate(modified))
         let k=a.result.geometricMeanRatePerSecond
         let request=VivoQMMMChemicalExchangeNetworkRequest(identifier:"unequal-rate-exchange",states:[
-            .init(identifier:"A",initialPopulation:0.5,pathways:[a]),
-            .init(identifier:"B",initialPopulation:0.5,pathways:[b])],exchangeEdges:[
+            state("A",0.5,a),state("B",0.5,b)],exchangeEdges:[
                 .init(fromStateIdentifier:"A",toStateIdentifier:"B",rate:assumedRate(0.2*k,"A to B")),
                 .init(fromStateIdentifier:"B",toStateIdentifier:"A",rate:assumedRate(0.1*k,"B to A"))],
             observationTimesSeconds:[0,0.1/k,1/k,3/k])
