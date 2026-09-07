@@ -14,7 +14,7 @@ jobs:
         with:
           persist-credentials: true
           fetch-depth: 0
-      - name: Repair compiler blocker and migrate transmission regression source
+      - name: Repair current compiler blocker
         shell: bash
         run: |
           set -euo pipefail
@@ -22,31 +22,12 @@ jobs:
           from pathlib import Path
           p=Path('Sources/NumiVivoKit/QMEnv/VivoQMMMDynamicalTransmission.swift')
           s=p.read_text()
-          old='output.transmissionProbability=result.transmissionCoefficient;output.transmissionOrigin=.calculated'
+          old='output.transmissionProbability = result.transmissionCoefficient;output.transmissionOrigin = .calculated'
           new='output.transmissionProbability = result.transmissionCoefficient; output.transmissionOrigin = .calculated'
           assert old in s
           p.write_text(s.replace(old,new))
-
-          # The old synthetic transmission test constructs the removed v1 request.
-          # Replace it with a source-level migration guard until the v3 signed-flux
-          # estimator lands in the next closure increment.
-          t=Path('Tests/NumiVivoIntegrationTests/QMMMTransmissionTests.swift')
-          x=t.read_text()
-          start=x.index('    @Test func fluxWeightedEstimatorReconstructsAndProducesCalculatedTransmissionEvidence() throws {')
-          # Locate next @Test or closing suite brace conservatively by brace count.
-          i=start; depth=0; began=False; end=None
-          while i < len(x):
-              if x[i]=='{': depth+=1; began=True
-              elif x[i]=='}':
-                  depth-=1
-                  if began and depth==0:
-                      end=i+1; break
-              i+=1
-          assert end is not None
-          replacement='''    @Test func transmissionRequestUsesTypedSurfaceEvidence() throws {\n        #expect(VivoQMMMDynamicalTransmissionRequest.schema == "numivivo.org/qmmm-dynamical-transmission/v2")\n        #expect(VivoQMMMDynamicalTransmissionResult.schema == "numivivo.org/qmmm-dynamical-transmission-result/v2")\n    }'''
-          t.write_text(x[:start]+replacement+x[end:])
           PY
           git diff --check
-          git add Sources/NumiVivoKit/QMEnv/VivoQMMMDynamicalTransmission.swift Tests/NumiVivoIntegrationTests/QMMMTransmissionTests.swift
-          git -c user.name='NumiVivo closure' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'fix(qmmm): restore transmission build after typed surface migration'
+          git add Sources/NumiVivoKit/QMEnv/VivoQMMMDynamicalTransmission.swift
+          git -c user.name='NumiVivo closure' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'fix(qmmm): restore typed transmission build'
           git push origin HEAD:main
