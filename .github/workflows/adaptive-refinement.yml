@@ -1,0 +1,53 @@
+name: Adaptive chemistry campaign conformance
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/NumiVivoKit/AdaptiveChemistry/**'
+      - 'Sources/NumiVivoKit/Platform/*Adaptive*'
+      - 'Sources/NumiVivoKit/Platform/VivoPlatformOperations.swift'
+      - 'Sources/NumiVivoKit/Chemistry/VivoMultistateMBAR.swift'
+      - 'Sources/NumiVivoKit/Chemistry/*Exchange*'
+      - 'Sources/NumiVivoCLI/VivoWorkflowCLICommands.swift'
+      - 'Tests/NumiVivoIntegrationTests/AdaptiveRefinementWorkflowTests.swift'
+      - 'Tools/NativeChemistry/*Adaptive*'
+      - 'Tools/NativeChemistry/check_adaptive*'
+      - 'Tools/check_adaptive_chemistry.sh'
+      - '.github/workflows/adaptive-refinement.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: adaptive-chemistry-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  native:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Record exact source and runner
+        run: |
+          mkdir -p adaptive-observations
+          swift --version | tee adaptive-observations/toolchain.txt
+          uname -a | tee adaptive-observations/platform.txt
+          git rev-parse HEAD > adaptive-observations/commit.txt
+          git ls-tree -r -z --full-tree HEAD > adaptive-observations/SOURCE_TREE.git-z
+          git archive --format=tar --prefix=numiVivo/ HEAD | gzip -n > adaptive-observations/source.tar.gz
+      - name: Execute authentic numerical authorities
+        run: bash Tools/check_adaptive_chemistry.sh "$PWD/adaptive-observations/numerics"
+      - name: Build complete native product and execute integration tests
+        run: |
+          set -o pipefail
+          swift build -c debug --product numivivo 2>&1 | tee adaptive-observations/build.log
+          swift test -c debug --filter 'AdaptiveRefinementWorkflowTests|QMMMChemicalExchangeNetworkTests|MultistateMBARTests|PropertyRefinementWorkflowTests' 2>&1 | tee adaptive-observations/tests.log
+      - name: Execute actual native campaign CLI
+        run: python3 Tools/NativeChemistry/check_adaptive_cli.py .build/debug/numivivo "$PWD/adaptive-observations/cli"
+      - name: Retain source and all observations
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: adaptive-chemistry-${{ github.sha }}
+          path: adaptive-observations/
+          retention-days: 14
+          if-no-files-found: error
