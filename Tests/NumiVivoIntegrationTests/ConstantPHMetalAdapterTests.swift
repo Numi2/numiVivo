@@ -24,7 +24,7 @@ import Testing
         #expect(Set(executable.map(\.physicalManifoldFingerprint).map(\.hex)).count==1)
         #expect(Set(executable.map(\.hamiltonianFingerprint).map(\.hex)).count==2)
         let physical=try VivoConstantPHPhysicalState(stepIndex:0,timePS:0,
-            positionsNM:[.zero],velocitiesNMPerPS:[.init(0.001,0,0)],periodicCell:nil)
+            positionsNM:[.zero],velocitiesNMPerPS:[.init(Double(Float(0.001)),0,0)],periodicCell:nil)
         let e0=try await executable[0].potentialEnergyKJPerMol(physical)
         let e1=try await executable[1].potentialEnergyKJPerMol(physical)
         #expect(abs(e0)<1e-12 && abs(e1)<1e-12)

@@ -57,7 +57,7 @@ import Testing
             }
         }
         let doubly=try #require(result.catalog.states.first{$0.boundProtonOffset==2})
-        #expect(doubly.hydrogenCount == 8)
+        #expect(doubly.hydrogenCount == 6) // two waters (four H) plus two declared protons
         #expect(doubly.expectedFormalCharge == 2)
     }
 

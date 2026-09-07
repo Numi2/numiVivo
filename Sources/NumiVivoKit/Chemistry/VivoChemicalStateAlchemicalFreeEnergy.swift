@@ -19,6 +19,8 @@ public struct VivoChemicalAlchemicalState: Codable, Sendable, Equatable {
 }
 
 public struct VivoProtonReservoirCalibration: Codable, Sendable, Equatable {
+    /// Temperature of this calibration; no implicit temperature extrapolation.
+    public var temperatureK: Double
     /// pH at which this calibration is defined.
     public var referencePH: Double
     /// Additive semigrand contribution per relative bound proton at referencePH.
@@ -31,12 +33,13 @@ public struct VivoProtonReservoirCalibration: Codable, Sendable, Equatable {
     public var origin: VivoKineticOrigin
     public var evidence: VivoKineticEvidence
 
-    public init(referencePH: Double,
+    public init(referencePH: Double, temperatureK: Double,
                 contributionPerBoundProtonKJPerMol: Double,
                 standardDeviationKJPerMol: Double? = nil,
                 origin: VivoKineticOrigin,
                 evidence: VivoKineticEvidence) {
         self.referencePH = referencePH
+        self.temperatureK = temperatureK
         self.contributionPerBoundProtonKJPerMol = contributionPerBoundProtonKJPerMol
         self.standardDeviationKJPerMol = standardDeviationKJPerMol
         self.origin = origin
@@ -44,7 +47,7 @@ public struct VivoProtonReservoirCalibration: Codable, Sendable, Equatable {
     }
 
     public func validate() throws {
-        guard referencePH.isFinite, (-10...30).contains(referencePH),
+        guard temperatureK.isFinite, temperatureK > 0, referencePH.isFinite, (-10...30).contains(referencePH),
               contributionPerBoundProtonKJPerMol.isFinite else {
             throw VivoChemistryError.invalid("proton-reservoir calibration")
         }
@@ -58,7 +61,7 @@ public struct VivoProtonReservoirCalibration: Codable, Sendable, Equatable {
 }
 
 public struct VivoChemicalStateAlchemicalFreeEnergyRequest: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/chemical-state-alchemical-free-energy/v1"
+    public static let schema = "numivivo.org/chemical-state-alchemical-free-energy/v2"
     public var schema: String
     public var identifier: String
     public var temperatureK: Double
@@ -103,9 +106,15 @@ public struct VivoChemicalStateAlchemicalEstimate: Codable, Sendable, Equatable 
 }
 
 public struct VivoChemicalStateAlchemicalFreeEnergyResult: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/chemical-state-alchemical-free-energy-result/v1"
+    public static let schema = "numivivo.org/chemical-state-alchemical-free-energy-result/v2"
     public let schema: String
     public let requestFingerprint: VivoFingerprint
+    /// The conversion from dimensionless MBAR free energies and the reservoir
+    /// are bound to this context. Changing temperature requires new evidence.
+    public let temperatureK: Double
+    public let referencePH: Double
+    /// Any assumed physical or required reservoir input remains assumed.
+    public let origin: VivoKineticOrigin
     public let mbar: VivoMBARResult
     public let estimates: [VivoChemicalStateAlchemicalEstimate]
     public let interpretation: String
@@ -115,7 +124,10 @@ public struct VivoChemicalStateAlchemicalFreeEnergyResult: Codable, Sendable, Eq
                                       temperatureK: Double,
                                       referencePH: Double,
                                       targetPH: Double) throws -> VivoQMMMChemicalStateThermodynamicsRequest {
-        guard temperatureK.isFinite, referencePH.isFinite, targetPH.isFinite else {
+        guard schema == Self.schema, mbar.converged,
+              temperatureK == self.temperatureK, referencePH == self.referencePH,
+              temperatureK.isFinite, temperatureK > 0, referencePH.isFinite, targetPH.isFinite,
+              (-10...30).contains(referencePH), (-10...30).contains(targetPH) else {
             throw VivoChemistryError.invalid("alchemical thermodynamics adapter context")
         }
         let evidence = VivoKineticEvidence(source: "NumiVivo alchemical multistate free-energy calculation",
@@ -125,7 +137,7 @@ public struct VivoChemicalStateAlchemicalFreeEnergyResult: Codable, Sendable, Eq
             VivoQMMMChemicalThermodynamicState(identifier: estimate.identifier,
                 boundProtonOffset: estimate.boundProtonOffset,
                 relativeSemigrandFreeEnergyKJPerMol: estimate.relativeSemigrandFreeEnergyKJPerMolAtReferencePH,
-                origin: .calculated, evidence: evidence)
+                origin: origin, evidence: evidence)
         }
         return .init(identifier: identifier, temperatureK: temperatureK,
                      referencePH: referencePH, targetPH: targetPH, states: states)
@@ -158,13 +170,13 @@ public enum VivoChemicalStateAlchemicalFreeEnergy {
                 throw VivoChemistryError.unsupported("proton-changing alchemical states require an explicit proton-reservoir calibration")
             }
             try calibration.validate()
-            guard calibration.referencePH == request.referencePH else {
-                throw VivoChemistryError.invalid("proton-reservoir calibration pH differs from alchemical reference pH")
+            guard calibration.referencePH == request.referencePH, calibration.temperatureK == request.temperatureK else {
+                throw VivoChemistryError.invalid("proton-reservoir calibration temperature/pH differs from alchemical context")
             }
         } else if let calibration = request.protonReservoir {
             try calibration.validate()
-            guard calibration.referencePH == request.referencePH else {
-                throw VivoChemistryError.invalid("optional proton-reservoir calibration pH differs from alchemical reference pH")
+            guard calibration.referencePH == request.referencePH, calibration.temperatureK == request.temperatureK else {
+                throw VivoChemistryError.invalid("optional proton-reservoir calibration temperature/pH differs from alchemical context")
             }
         }
         let mbar = try VivoMultistateMBAR.solve(samples: request.samples,
@@ -190,10 +202,12 @@ public enum VivoChemicalStateAlchemicalFreeEnergy {
             let deltaProtons = request.states[index].boundProtonOffset - referenceProtons
             let sampleSD = mbar.estimates[index].bootstrapStandardDeviation.map { $0 * rt }
             let combinedSD: Double?
-            if sampleSD != nil || (calibrationSD != nil && deltaProtons != 0) {
-                let a = sampleSD ?? 0
-                let b = Double(abs(deltaProtons)) * (calibrationSD ?? 0)
-                combinedSD = sqrt(a * a + b * b)
+            if deltaProtons == 0 {
+                combinedSD = sampleSD
+            } else if let sampleSD, let calibrationSD {
+                // Conditional on the explicitly declared independent-component
+                // approximation; unknown uncertainty is never numerical zero.
+                combinedSD = hypot(sampleSD, Double(abs(deltaProtons)) * calibrationSD)
             } else { combinedSD = nil }
             return .init(identifier: request.states[index].identifier,
                 boundProtonOffset: request.states[index].boundProtonOffset,
@@ -202,6 +216,12 @@ public enum VivoChemicalStateAlchemicalFreeEnergy {
                 conditionalStandardDeviationKJPerMol: combinedSD,
                 effectiveSamples: mbar.estimates[index].effectiveSamples)
         }
+        guard estimates.allSatisfy({
+            $0.relativePhysicalFreeEnergyKJPerMol.isFinite && $0.relativeSemigrandFreeEnergyKJPerMolAtReferencePH.isFinite
+                && ($0.conditionalStandardDeviationKJPerMol?.isFinite != false)
+        }) else { throw VivoChemistryError.convergence("alchemical energy or uncertainty conversion overflow") }
+        let origin: VivoKineticOrigin = request.samplingOrigin == .assumed
+            || (protonOffsets.count > 1 && request.protonReservoir?.origin == .assumed) ? .assumed : .calculated
         let requestID = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(request))
         struct Evidence: Codable {
             let schema: String
@@ -210,10 +230,11 @@ public enum VivoChemicalStateAlchemicalFreeEnergy {
             let estimates: [VivoChemicalStateAlchemicalEstimate]
         }
         let evidenceID = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Evidence(
-            schema: "numivivo.org/chemical-state-alchemical-free-energy-evidence/v1",
+            schema: "numivivo.org/chemical-state-alchemical-free-energy-evidence/v2",
             request: request, mbar: mbar, estimates: estimates)))
         return .init(schema: VivoChemicalStateAlchemicalFreeEnergyResult.schema,
-            requestFingerprint: requestID, mbar: mbar, estimates: estimates,
+            requestFingerprint: requestID, temperatureK: request.temperatureK, referencePH: request.referencePH,
+            origin: origin, mbar: mbar, estimates: estimates,
             interpretation: interpretation, evidenceFingerprint: evidenceID)
     }
 

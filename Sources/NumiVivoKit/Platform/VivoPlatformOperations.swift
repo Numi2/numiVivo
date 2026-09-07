@@ -95,11 +95,27 @@ public enum VivoPlatformOperations {
         add(VivoReactionQualificationWorkflow.operation(implementationFingerprint: id), ["request": "vivo.reaction-calculation-request"],
             "General nuclear, solvent, embedding and reaction requests; no paper data required.", empty)
 
+        definitions.append(pure(identifier: "vivo.platform.target-reference", id: id,
+            inputs: ["experiment": "vivo.target-engagement-experiment"],
+            outputs: [.init(name: "result", kind: "vivo.target-engagement-result")],
+            summary: "Exposure-driven target fractions through the existing FP64 reference; assumptions retained.",
+            configure: { try decode(VivoTargetEngagementNumerics.self, $0).validate() }, calculate: { cfg, inputs, _ in
+                let experiment = try input(VivoTargetEngagementExperiment.self, "experiment", inputs)
+                let result = try VivoTargetEngagementReference.run(experiment, numerics: decode(VivoTargetEngagementNumerics.self, cfg))
+                return ["result": try VivoCanonicalJSON.encode(result)]
+            }))
+        definitions.append(pure(identifier: "vivo.platform.finite-drug", id: id,
+            inputs: ["experiment": "vivo.finite-drug-experiment"],
+            outputs: [.init(name: "result", kind: "vivo.finite-drug-result")],
+            summary: "Existing mass-balanced finite-drug reaction operator; no inferred pharmacological rate.",
+            configure: empty, calculate: { _, inputs, _ in
+                ["result": try VivoCanonicalJSON.encode(VivoFiniteDrugRunRecord.run(input(VivoFiniteDrugExperiment.self, "experiment", inputs)))]
+            }))
         definitions += VivoPlatformMechanismOperations.definitions(implementationFingerprint: id)
         definitions += VivoPlatformMDOperations.definitions(implementationFingerprint: id)
         definitions.append(VivoPlatformSnapshotOperations.definition(implementationFingerprint: id))
         definitions += VivoPlatformQMMMOperations.definitions(implementationFingerprint: id)
-        definitions += VivoPlatformQMMMFreeEnergyOperations.definitions(implementationFingerprint: id)
+        // QM/MM module owns its free-energy adapters; register each authority once.
         definitions += VivoPlatformRefinementOperations.definitions(implementationFingerprint: id)
         definitions += VivoPlatformAdaptiveOperations.definitions(implementationFingerprint: id)
         return try .init(implementationFingerprint: id, definitions: definitions)

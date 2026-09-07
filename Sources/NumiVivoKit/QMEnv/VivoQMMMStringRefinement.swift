@@ -18,7 +18,7 @@ public struct VivoQMMMStringNodeForce: Codable, Sendable, Equatable {
 }
 
 public struct VivoQMMMStringRefinementConfiguration: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/qmmm-string-refinement/v1"
+    public static let schema = "numivivo.org/qmmm-string-refinement/v2"
     public var schema: String
     /// Step in scaled-coordinate space per kJ/mol of generalized scaled force.
     public var mobilityPerKJPerMol: Double
@@ -29,17 +29,25 @@ public struct VivoQMMMStringRefinementConfiguration: Codable, Sendable, Equatabl
     public var minimumEffectiveSamples: Double
     /// Convergence threshold on scaled perpendicular force norm, kJ/mol.
     public var perpendicularForceToleranceKJPerMol: Double
+    /// Conservative standard-deviation guard; not an asserted confidence interval.
+    public var standardErrorMultiplier: Double
+    /// Includes smoothing and arc-length reparameterization, not just force motion.
+    public var convergenceScaledDisplacementTolerance: Double
     public init(mobilityPerKJPerMol: Double = 0.002,
                 smoothing: Double = 0.05,
                 maximumScaledNodeDisplacement: Double = 0.25,
                 minimumEffectiveSamples: Double = 50,
-                perpendicularForceToleranceKJPerMol: Double = 0.5) {
+                perpendicularForceToleranceKJPerMol: Double = 0.5,
+                standardErrorMultiplier: Double = 2,
+                convergenceScaledDisplacementTolerance: Double = 0.001) {
         schema = Self.schema
         self.mobilityPerKJPerMol = mobilityPerKJPerMol
         self.smoothing = smoothing
         self.maximumScaledNodeDisplacement = maximumScaledNodeDisplacement
         self.minimumEffectiveSamples = minimumEffectiveSamples
         self.perpendicularForceToleranceKJPerMol = perpendicularForceToleranceKJPerMol
+        self.standardErrorMultiplier = standardErrorMultiplier
+        self.convergenceScaledDisplacementTolerance = convergenceScaledDisplacementTolerance
     }
     public func validate() throws {
         guard schema == Self.schema,
@@ -47,7 +55,9 @@ public struct VivoQMMMStringRefinementConfiguration: Codable, Sendable, Equatabl
               smoothing.isFinite, smoothing >= 0, smoothing <= 0.5,
               maximumScaledNodeDisplacement.isFinite, maximumScaledNodeDisplacement > 0, maximumScaledNodeDisplacement <= 10,
               minimumEffectiveSamples.isFinite, minimumEffectiveSamples >= 1,
-              perpendicularForceToleranceKJPerMol.isFinite, perpendicularForceToleranceKJPerMol > 0 else {
+              perpendicularForceToleranceKJPerMol.isFinite, perpendicularForceToleranceKJPerMol > 0,
+              standardErrorMultiplier.isFinite, standardErrorMultiplier >= 1, standardErrorMultiplier <= 10,
+              convergenceScaledDisplacementTolerance.isFinite, convergenceScaledDisplacementTolerance > 0 else {
             throw VivoChemistryError.invalid("QM/MM string-refinement configuration")
         }
     }
@@ -56,18 +66,21 @@ public struct VivoQMMMStringRefinementConfiguration: Codable, Sendable, Equatabl
 public struct VivoQMMMStringNodeDiagnostic: Codable, Sendable, Equatable {
     public let nodeIdentifier: String
     public let scaledPerpendicularForceNormKJPerMol: Double
+    public let perpendicularForceStandardDeviationUpperBoundKJPerMol: Double
+    public let uncertaintyGuardedPerpendicularForceNormKJPerMol: Double
     public let scaledDisplacementNorm: Double
     public let effectiveSamples: Double
     public let maximumComponentStandardErrorKJPerMolNM: Double
 }
 
 public struct VivoQMMMStringRefinementResult: Codable, Sendable, Equatable {
-    public static let schema = "numivivo.org/qmmm-string-refinement-result/v1"
+    public static let schema = "numivivo.org/qmmm-string-refinement-result/v2"
     public let schema: String
     public let sourcePathFingerprint: VivoFingerprint
     public let refinedPath: VivoQMMMPathCoordinate
     public let diagnostics: [VivoQMMMStringNodeDiagnostic]
     public let maximumPerpendicularForceNormKJPerMol: Double
+    public let maximumUncertaintyGuardedPerpendicularForceNormKJPerMol: Double
     public let maximumScaledDisplacement: Double
     public let converged: Bool
     public let interpretation: String
@@ -78,14 +91,14 @@ public struct VivoQMMMStringRefinementResult: Codable, Sendable, Equatable {
 /// generalized forces. Sampling/force estimation is separate: this function
 /// refuses undersampled nodes and does not invent forces from path geometry.
 public enum VivoQMMMStringRefinement {
-    public static let interpretation = "Finite-temperature string refinement in dimension-scaled collective-variable space. Endpoints are fixed. Interior mean forces are projected perpendicular to the local path tangent, optionally Laplacian-smoothed, displacement-limited, and reparameterized to equal scaled arc length. Input mean forces and effective sample sizes remain the sampling authority."
+    public static let interpretation = "Finite-temperature string refinement in dimension-scaled collective-variable space. Endpoints are fixed. Interior mean forces are projected perpendicular to the local path tangent, optionally Laplacian-smoothed, displacement-limited, and reparameterized to equal scaled arc length. Convergence requires a covariance-agnostic standard-error guard on perpendicular force and small final displacement, including reparameterization. This is refinement in the declared Euclidean scaled metric; it does not infer a molecular CV mobility tensor or an unrestrained minimum-free-energy path."
 
     public static func refine(path: VivoQMMMPathCoordinate,
                               nodeForces: [VivoQMMMStringNodeForce],
                               configuration: VivoQMMMStringRefinementConfiguration = .init()) throws -> VivoQMMMStringRefinementResult {
         try path.validate(); try configuration.validate()
         let dimensions = path.components.count, count = path.nodes.count
-        guard nodeForces.count == max(0, count - 2),
+        guard count >= 3, nodeForces.count == count - 2,
               Set(nodeForces.map(\.nodeIdentifier)).count == nodeForces.count else {
             throw VivoChemistryError.invalid("string refinement requires exactly one force record per interior node")
         }
@@ -102,13 +115,13 @@ public enum VivoQMMMStringRefinement {
             }
         }
 
-        var y = path.nodes.map { node in
+        let y = path.nodes.map { node in
             zip(node.valuesNM, path.scalesNM).map { $0.0 / $0.1 }
         }
         let originalY = y
         var provisional = y
         var diagnostics: [VivoQMMMStringNodeDiagnostic] = []
-        var maximumForce = 0.0
+        var maximumForce = 0.0, maximumGuardedForce = 0.0
 
         func norm(_ vector: [Double]) -> Double { sqrt(vector.reduce(0) { $0 + $1*$1 }) }
         func dot(_ a: [Double], _ b: [Double]) -> Double { zip(a,b).reduce(0) { $0 + $1.0*$1.1 } }
@@ -129,6 +142,20 @@ public enum VivoQMMMStringRefinement {
             let perpendicular = (0..<dimensions).map { scaledForce[$0] - parallel*tangent[$0] }
             let forceNorm = norm(perpendicular)
             maximumForce = max(maximumForce, forceNorm)
+            // ||P e_j|| = sqrt(1-t_j^2). Minkowski gives this upper bound
+            // on RMS projected error for ANY covariance compatible with the
+            // supplied component standard errors. Independence is not assumed.
+            var errorBound = 0.0
+            for d in 0..<dimensions {
+                let scaledError = observation.standardErrorKJPerMolNM[d] * path.scalesNM[d]
+                let columnNorm = sqrt(max(0.0, 1.0 - tangent[d]*tangent[d]))
+                errorBound += scaledError * columnNorm
+            }
+            let guardedForce = forceNorm + configuration.standardErrorMultiplier * errorBound
+            guard forceNorm.isFinite, errorBound.isFinite, guardedForce.isFinite else {
+                throw VivoChemistryError.convergence("string force or uncertainty overflow")
+            }
+            maximumGuardedForce = max(maximumGuardedForce, guardedForce)
             var displacement = perpendicular.map { configuration.mobilityPerKJPerMol * $0 }
             if configuration.smoothing > 0 {
                 for d in 0..<dimensions {
@@ -143,6 +170,8 @@ public enum VivoQMMMStringRefinement {
             for d in 0..<dimensions { provisional[i][d] += displacement[d] }
             diagnostics.append(.init(nodeIdentifier: path.nodes[i].identifier,
                 scaledPerpendicularForceNormKJPerMol: forceNorm,
+                perpendicularForceStandardDeviationUpperBoundKJPerMol: errorBound,
+                uncertaintyGuardedPerpendicularForceNormKJPerMol: guardedForce,
                 scaledDisplacementNorm: norm(displacement),
                 effectiveSamples: observation.effectiveSamples,
                 maximumComponentStandardErrorKJPerMolNM: observation.standardErrorKJPerMolNM.max() ?? 0))
@@ -198,7 +227,7 @@ public enum VivoQMMMStringRefinement {
             let diagnostics: [VivoQMMMStringNodeDiagnostic]
         }
         let evidenceID = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(Evidence(
-            schema: "numivivo.org/qmmm-string-refinement-evidence/v1", path: path,
+            schema: "numivivo.org/qmmm-string-refinement-evidence/v2", path: path,
             observations: nodeForces, configuration: configuration,
             refined: refined, diagnostics: diagnostics)))
         return .init(schema: VivoQMMMStringRefinementResult.schema,
@@ -206,8 +235,10 @@ public enum VivoQMMMStringRefinement {
             refinedPath: refined,
             diagnostics: diagnostics,
             maximumPerpendicularForceNormKJPerMol: maximumForce,
+            maximumUncertaintyGuardedPerpendicularForceNormKJPerMol: maximumGuardedForce,
             maximumScaledDisplacement: maximumDisplacement,
-            converged: maximumForce <= configuration.perpendicularForceToleranceKJPerMol,
+            converged: maximumGuardedForce <= configuration.perpendicularForceToleranceKJPerMol
+                && maximumDisplacement <= configuration.convergenceScaledDisplacementTolerance,
             interpretation: interpretation,
             evidenceFingerprint: evidenceID)
     }

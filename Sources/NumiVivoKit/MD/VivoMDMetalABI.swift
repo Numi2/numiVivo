@@ -97,7 +97,10 @@ enum VivoMDMetalABI {
         let capacity = max(1, min(configuration.resolvedMaximumNeighborsPerParticle,
                                   max(possible, 1)))
         let radius = cutoff + configuration.neighborSkinNM
-        guard radius.isFinite, radius > cutoff,
+        // A disabled neighbor list legitimately has zero skin. When enabled,
+        // the radius must remain strictly larger even in device FP32 arithmetic.
+        guard radius.isFinite, radius >= cutoff,
+              !configuration.resolvedNeighborListEnabled || Float(radius) > Float(cutoff),
               radius <= Double(Float.greatestFiniteMagnitude) else {
             throw VivoMDRuntimeError.metal("neighbor-list radius is invalid")
         }

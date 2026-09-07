@@ -22,7 +22,7 @@ import Testing
         let observations = ["n1","n2"].map {
             VivoQMMMStringNodeForce(nodeIdentifier: $0,
                 meanForceKJPerMolNM: [force,force],
-                standardErrorKJPerMolNM: [0.01,0.01], effectiveSamples: 200)
+                standardErrorKJPerMolNM: [0,0], effectiveSamples: 200)
         }
         let result = try VivoQMMMStringRefinement.refine(path: source, nodeForces: observations,
             configuration: .init(mobilityPerKJPerMol: 0.01, smoothing: 0,
@@ -55,15 +55,18 @@ import Testing
         #expect(result.refinedPath.nodes[2].valuesNM != source.nodes[2].valuesNM)
         #expect(!result.converged)
         #expect(result.maximumPerpendicularForceNormKJPerMol > 0.1)
-        let nodes = result.refinedPath.nodes.map(\.valuesNM)
-        func scaledDistance(_ a:[Double],_ b:[Double])->Double {
-            sqrt(zip(a,b).enumerated().reduce(0.0) { partial,item in
-                let d=(item.element.0-item.element.1)/source.scalesNM[item.offset]
-                return partial+d*d
-            })
+        // Equal distances ALONG the provisional polyline do not imply equal
+        // Euclidean chords between resampled points around a corner.
+        let outer = sqrt(0.96*0.96 + 1.04*1.04), middle = sqrt(2.0)
+        let spacing = (2*outer + middle)/3
+        let t = spacing/outer
+        let expected1 = [0.1*(1+0.96*t), 0.1*(1+1.04*t)]
+        let u = (2*spacing - outer - middle)/outer
+        let expected2 = [0.1*(2.96+1.04*u), 0.1*(3.04+0.96*u)]
+        for d in 0..<2 {
+            #expect(abs(result.refinedPath.nodes[1].valuesNM[d] - expected1[d]) < 1e-12)
+            #expect(abs(result.refinedPath.nodes[2].valuesNM[d] - expected2[d]) < 1e-12)
         }
-        let lengths = (1..<nodes.count).map { scaledDistance(nodes[$0-1],nodes[$0]) }
-        #expect((lengths.max() ?? 0) - (lengths.min() ?? 0) < 1e-10)
     }
 
     @Test func missingOrUndersampledNodeForceIsRejected() throws {
@@ -81,4 +84,32 @@ import Testing
             _ = try VivoQMMMStringRefinement.refine(path: source, nodeForces: Array(insufficient.prefix(1)))
         }
     }
+    @Test func zeroMeanForceWithLargeUncertaintyDoesNotDeclareConvergence() throws {
+        let source = path()
+        let observations = ["n1","n2"].map {
+            VivoQMMMStringNodeForce(nodeIdentifier: $0, meanForceKJPerMolNM: [0,0],
+                standardErrorKJPerMolNM: [10,10], effectiveSamples: 500)
+        }
+        let result = try VivoQMMMStringRefinement.refine(path: source, nodeForces: observations,
+            configuration: .init(smoothing: 0, perpendicularForceToleranceKJPerMol: 0.1))
+        #expect(result.maximumPerpendicularForceNormKJPerMol == 0)
+        #expect(result.maximumUncertaintyGuardedPerpendicularForceNormKJPerMol > 2.8)
+        #expect(!result.converged)
+        #expect(abs(result.diagnostics[0].perpendicularForceStandardDeviationUpperBoundKJPerMol - sqrt(2)) < 1e-12)
+    }
+
+    @Test func reparameterizationMotionIsPartOfConvergenceAndOldSchemaIsRejected() throws {
+        var source = path(); source.nodes[1].valuesNM = [0.12,0.12]
+        let observations = ["n1","n2"].map {
+            VivoQMMMStringNodeForce(nodeIdentifier: $0, meanForceKJPerMolNM: [0,0],
+                standardErrorKJPerMolNM: [0,0], effectiveSamples: 500)
+        }
+        let result = try VivoQMMMStringRefinement.refine(path: source, nodeForces: observations,
+            configuration: .init(smoothing: 0))
+        #expect(result.maximumUncertaintyGuardedPerpendicularForceNormKJPerMol == 0)
+        #expect(result.maximumScaledDisplacement > 0.5 && !result.converged)
+        var old = VivoQMMMStringRefinementConfiguration(); old.schema = "numivivo.org/qmmm-string-refinement/v1"
+        #expect(throws: (any Error).self) { try old.validate() }
+    }
+
 }
