@@ -80,7 +80,10 @@ public struct VivoAdaptiveQMMMModelSpaceFamily: Codable, Sendable, Equatable {
             throw VivoChemistryError.invalid("adaptive QM/MM model-space family identity")
         }
         try VivoQMMMReplicatedFreeEnergyRate.validate(baselineResult,request:baselineRequest)
-        guard baselineResult.converged else { throw VivoChemistryError.invalid("adaptive QM/MM model-space baseline is not converged") }
+        guard baselineResult.converged,
+              observableFingerprint == (try VivoAdaptiveMetricContext.rate(baselineRequest).hex) else {
+            throw VivoChemistryError.invalid("adaptive QM/MM model-space baseline or observable binding")
+        }
         let byID=Dictionary(uniqueKeysWithValues:candidates.map{($0.identifier,$0)})
         for candidate in candidates {
             try candidate.variant.validate()
@@ -146,5 +149,22 @@ public struct VivoAdaptiveQMMMModelSpaceFamily: Codable, Sendable, Equatable {
         }
         return .init(baselineRequest:baselineRequest,baselineResult:baselineResult,variant:candidate.variant,
                      standardDeviationMultiplier:standardDeviationMultiplier)
+    }
+
+    /// Direct bridge to the already allowlisted chemical-sensitivity workflow.
+    /// The tolerance here only controls that workflow's own `converged` flag;
+    /// adaptive campaign acceptance still uses its separately declared criterion.
+    public func qualificationRequest(for identifier:String,
+                                     maximumAbsoluteLogRateShift:Double=1e12) throws -> VivoQMMMChemicalQualificationRequest {
+        try validate()
+        guard maximumAbsoluteLogRateShift.isFinite,maximumAbsoluteLogRateShift>0,
+              let candidate=candidates.first(where:{$0.identifier==identifier}) else {
+            throw VivoChemistryError.invalid("adaptive model-space qualification request")
+        }
+        return .init(identifier:"adaptive-model-space:"+candidate.identifier,
+            baselineRequest:baselineRequest,baselineResult:baselineResult,variants:[candidate.variant],
+            criteria:[.init(dimension:candidate.variant.dimension,requiredVariants:1,
+                            maximumAbsoluteLogRateShift:maximumAbsoluteLogRateShift)],
+            externalTargets:[],maximumDirectValidationAbsoluteLogError:1e12)
     }
 }
