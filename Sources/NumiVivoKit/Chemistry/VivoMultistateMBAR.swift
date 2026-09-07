@@ -16,7 +16,9 @@ public struct VivoMBARReducedPotentialSample: Codable, Sendable, Equatable {
 public struct VivoMBARConfiguration: Codable, Sendable, Equatable {
     public var residualTolerance: Double
     public var maximumIterations: Int
-    public var minimumSymmetricReweightingESSFraction: Double
+    /// Minimum of mean Metropolis acceptance in both directions after correcting
+    /// the cross-state energy difference by the converged MBAR free-energy offset.
+    public var minimumBidirectionalAcceptanceOverlap: Double
     public var minimumTargetEffectiveSamples: Double
     public var bootstrapReplicates: Int
     public var bootstrapSeed: UInt64
@@ -24,14 +26,14 @@ public struct VivoMBARConfiguration: Codable, Sendable, Equatable {
 
     public init(residualTolerance: Double = 1e-10,
                 maximumIterations: Int = 20_000,
-                minimumSymmetricReweightingESSFraction: Double = 0.01,
+                minimumBidirectionalAcceptanceOverlap: Double = 0.01,
                 minimumTargetEffectiveSamples: Double = 20,
                 bootstrapReplicates: Int = 128,
                 bootstrapSeed: UInt64 = 0x4D424152,
                 maximumWorkElements: Int = 100_000_000) {
         self.residualTolerance = residualTolerance
         self.maximumIterations = maximumIterations
-        self.minimumSymmetricReweightingESSFraction = minimumSymmetricReweightingESSFraction
+        self.minimumBidirectionalAcceptanceOverlap = minimumBidirectionalAcceptanceOverlap
         self.minimumTargetEffectiveSamples = minimumTargetEffectiveSamples
         self.bootstrapReplicates = bootstrapReplicates
         self.bootstrapSeed = bootstrapSeed
@@ -41,9 +43,9 @@ public struct VivoMBARConfiguration: Codable, Sendable, Equatable {
     public func validate() throws {
         guard residualTolerance.isFinite, residualTolerance > 0, residualTolerance <= 1e-3,
               (1...1_000_000).contains(maximumIterations),
-              minimumSymmetricReweightingESSFraction.isFinite,
-              minimumSymmetricReweightingESSFraction > 0,
-              minimumSymmetricReweightingESSFraction <= 1,
+              minimumBidirectionalAcceptanceOverlap.isFinite,
+              minimumBidirectionalAcceptanceOverlap > 0,
+              minimumBidirectionalAcceptanceOverlap <= 1,
               minimumTargetEffectiveSamples.isFinite,
               minimumTargetEffectiveSamples >= 2,
               (0...4096).contains(bootstrapReplicates),
@@ -56,9 +58,16 @@ public struct VivoMBARConfiguration: Codable, Sendable, Equatable {
 public struct VivoMBARPairwiseOverlap: Codable, Sendable, Equatable {
     public let stateA: Int
     public let stateB: Int
-    public let effectiveFractionAToB: Double
-    public let effectiveFractionBToA: Double
-    public let symmetricEffectiveFraction: Double
+    /// Normalized importance-weight ESS fraction. Useful for diagnosing weight
+    /// concentration, but not sufficient by itself to establish phase-space overlap.
+    public let reweightingESSFractionAToB: Double
+    public let reweightingESSFractionBToA: Double
+    /// Mean free-energy-corrected Metropolis acceptance from configurations drawn
+    /// in each originating state. A constant energy offset therefore preserves
+    /// overlap, while mutually inaccessible wells have near-zero acceptance.
+    public let meanAcceptanceAToB: Double
+    public let meanAcceptanceBToA: Double
+    public let symmetricAcceptanceOverlap: Double
     public let connected: Bool
 }
 
@@ -91,7 +100,7 @@ public struct VivoMBARResult: Codable, Sendable, Equatable {
 /// sample generation and decorrelation. This solver never interprets correlated
 /// trajectory frames as independent evidence and does not infer missing states.
 public enum VivoMultistateMBAR {
-    public static let interpretation = "Log-domain multistate Bennett acceptance ratio over explicitly supplied decorrelated reduced-potential samples. Acceptance requires a connected pairwise reweighting-overlap graph and target-state effective sample counts. Stratified bootstrap resamples within originating states; it quantifies finite independent-sample dispersion only."
+    public static let interpretation = "Log-domain multistate Bennett acceptance ratio over explicitly supplied decorrelated reduced-potential samples. Acceptance requires a connected free-energy-corrected bidirectional acceptance-overlap graph and sufficient target-state effective sample counts. Stratified bootstrap resamples within originating states and quantifies finite independent-sample dispersion only."
 
     public static func solve(samples: [VivoMBARReducedPotentialSample],
                              stateCount: Int,
@@ -121,12 +130,12 @@ public enum VivoMultistateMBAR {
         let core = try solveCore(samples: samples, stateCount: stateCount, counts: counts,
                                  tolerance: cfg.residualTolerance, maximumIterations: cfg.maximumIterations)
         let effective = targetEffectiveSamples(samples: samples, counts: counts, freeEnergies: core.freeEnergies)
-        let overlap = pairwiseOverlap(samples: samples, counts: counts,
-                                      threshold: cfg.minimumSymmetricReweightingESSFraction)
+        let overlap = pairwiseOverlap(samples: samples, counts: counts, freeEnergies: core.freeEnergies,
+                                      threshold: cfg.minimumBidirectionalAcceptanceOverlap)
         let connected = graphConnected(stateCount: stateCount, overlap: overlap)
         var issues: [String] = []
         if !core.converged { issues.append("MBAR fixed-point residual did not converge") }
-        if !connected { issues.append("pairwise reweighting-overlap graph is disconnected") }
+        if !connected { issues.append("pairwise bidirectional acceptance-overlap graph is disconnected") }
         for (index, value) in effective.enumerated() where value < cfg.minimumTargetEffectiveSamples {
             issues.append("state \(index) effective sample count \(value) is below \(cfg.minimumTargetEffectiveSamples)")
         }
@@ -209,9 +218,9 @@ public enum VivoMultistateMBAR {
     }
 
     private static func pairwiseOverlap(samples: [VivoMBARReducedPotentialSample], counts: [Int],
-                                        threshold: Double) -> [VivoMBARPairwiseOverlap] {
+                                        freeEnergies f: [Double], threshold: Double) -> [VivoMBARPairwiseOverlap] {
         let kCount = counts.count
-        func fraction(from: Int, to: Int) -> Double {
+        func essFraction(from: Int, to: Int) -> Double {
             var logs: [Double] = []
             logs.reserveCapacity(counts[from])
             for sample in samples where sample.originStateIndex == from {
@@ -220,19 +229,31 @@ public enum VivoMultistateMBAR {
             guard let maximum = logs.max(), maximum.isFinite else { return 0 }
             var sum = 0.0, sum2 = 0.0
             for value in logs {
-                let w = exp(value - maximum)
-                sum += w; sum2 += w * w
+                let w = exp(value - maximum); sum += w; sum2 += w * w
             }
             guard sum2 > 0 else { return 0 }
             return min(1, max(0, (sum * sum / sum2) / Double(logs.count)))
         }
+        func meanAcceptance(from: Int, to: Int) -> Double {
+            let deltaF = f[to] - f[from]
+            var sum = 0.0, count = 0
+            for sample in samples where sample.originStateIndex == from {
+                let corrected = (sample.reducedPotentials[to] - sample.reducedPotentials[from]) - deltaF
+                let probability = corrected <= 0 ? 1.0 : exp(-min(corrected, 745))
+                sum += probability; count += 1
+            }
+            return count > 0 ? sum / Double(count) : 0
+        }
         var result: [VivoMBARPairwiseOverlap] = []
         for a in 0..<kCount { for b in (a + 1)..<kCount {
-            let ab = fraction(from: a, to: b), ba = fraction(from: b, to: a)
-            let symmetric = min(ab, ba)
+            let essAB = essFraction(from: a, to: b), essBA = essFraction(from: b, to: a)
+            let acceptanceAB = meanAcceptance(from: a, to: b)
+            let acceptanceBA = meanAcceptance(from: b, to: a)
+            let symmetric = min(acceptanceAB, acceptanceBA)
             result.append(.init(stateA: a, stateB: b,
-                effectiveFractionAToB: ab, effectiveFractionBToA: ba,
-                symmetricEffectiveFraction: symmetric, connected: symmetric >= threshold))
+                reweightingESSFractionAToB: essAB, reweightingESSFractionBToA: essBA,
+                meanAcceptanceAToB: acceptanceAB, meanAcceptanceBToA: acceptanceBA,
+                symmetricAcceptanceOverlap: symmetric, connected: symmetric >= threshold))
         } }
         return result
     }
