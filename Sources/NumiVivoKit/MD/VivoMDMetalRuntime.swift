@@ -352,7 +352,7 @@ public actor VivoMDMetalRuntime {
         try copy(proposal, arena.candidateVelocity, arena.velocityScratch)
         try clear(proposal)
         try engine.encodeProposal(commandBuffer: proposal, positions: arena.candidatePosition, dynamics: arena.dynamics,
-                                  cell: oldCell, scale: scale, status: arena.status)
+                                  cell: oldCell, proposedCell: proposedCell, scale: scale, status: arena.status)
         let newABI = command(for: proposalPhase)
         try normalize(proposal, position: arena.candidatePosition, velocity: arena.candidateVelocity, abi: newABI)
         try validateCandidate(proposal, abi: newABI)

@@ -33,6 +33,7 @@ let package = Package(
             .copy("Resources/NumiVivoKernels.metal"),
             .copy("Resources/NumiVivoMetalABI.h"),
             .copy("Resources/NumiVivoErrorFunctions.metalh"),
+            .copy("Resources/NumiVivoMDPeriodicGeometry.metalh"),
             .copy("Resources/README.txt")
         ]),
         .target(name: "NumiVivoKit", dependencies: ["NumiVivoCore", "NumiVivoShaders"],

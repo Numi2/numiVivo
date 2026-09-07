@@ -1,4 +1,5 @@
 #include <metal_stdlib>
+#include "NumiVivoMDPeriodicGeometry.metalh"
 using namespace metal;
 namespace nvivo_md_support {
 struct Command {
@@ -16,8 +17,7 @@ struct Status { atomic_uint flags,firstParticle,violationCount,reserved; };
 static_assert(sizeof(Command)==176, "MD support command ABI");
 inline float3 image(float3 d,constant Command&c){
     if(c.periodic==0)return d;
-    float3 f=float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));
-    f-=rint(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;
+    return nvivo_md_periodic::minimumImage(d,c.cellA.xyz,c.cellB.xyz,c.cellC.xyz,c.reciprocalA.xyz,c.reciprocalB.xyz,c.reciprocalC.xyz);
 }
 inline void fail(device Status&s,uint g,uint flag){
     atomic_fetch_or_explicit(&s.flags,flag,memory_order_relaxed);

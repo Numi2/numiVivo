@@ -1,4 +1,5 @@
 #include <metal_stdlib>
+#include "NumiVivoMDPeriodicGeometry.metalh"
 using namespace metal;
 namespace nvivo_md_min {
 struct Command {
@@ -15,8 +16,7 @@ struct ReduceCommand {uint sourceCount,reserved0,reserved1,reserved2;};
 static_assert(sizeof(Command)==176,"MD minimization command ABI");
 inline float3 wrap(float3 p,constant Command&c){
     if(c.periodic==0)return p;
-    float3 f=float3(dot(c.reciprocalA.xyz,p),dot(c.reciprocalB.xyz,p),dot(c.reciprocalC.xyz,p));
-    f-=floor(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;
+    return nvivo_md_periodic::wrapPosition(p,c.cellA.xyz,c.cellB.xyz,c.cellC.xyz,c.reciprocalA.xyz,c.reciprocalB.xyz,c.reciprocalC.xyz);
 }
 
 // Energy is counted on every particle, including virtual sites. The stationarity

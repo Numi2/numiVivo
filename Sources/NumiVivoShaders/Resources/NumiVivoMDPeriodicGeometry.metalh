@@ -1,0 +1,36 @@
+#ifndef NUMIVIVO_MD_PERIODIC_GEOMETRY_H
+#define NUMIVIVO_MD_PERIODIC_GEOMETRY_H
+
+#include <metal_stdlib>
+using namespace metal;
+
+namespace nvivo_md_periodic {
+inline float3 fractional(float3 value, float3 reciprocalA, float3 reciprocalB, float3 reciprocalC) {
+    return float3(dot(reciprocalA,value),dot(reciprocalB,value),dot(reciprocalC,value));
+}
+
+// The reciprocal cell selects an integer lattice image; it must not reconstruct
+// the physical vector. A cell/reciprocal round trip is not an FP32 identity and
+// repeated zero-correction projection passes would otherwise move stationary atoms.
+// Subtracting only the selected lattice displacement preserves a value exactly
+// when the selected image is zero. Fused subtraction avoids rounding the
+// displacement separately; fractional rounding can select an adjacent image
+// for values very close to a cell face.
+inline float3 subtractLattice(float3 value, float3 image, float3 a, float3 b, float3 c) {
+    value=fma(float3(-image.x),a,value);
+    value=fma(float3(-image.y),b,value);
+    return fma(float3(-image.z),c,value);
+}
+
+// MD preflight restricts these nearest-image operations to orthogonal cells.
+inline float3 minimumImage(float3 displacement, float3 a, float3 b, float3 c,
+                          float3 reciprocalA, float3 reciprocalB, float3 reciprocalC) {
+    return subtractLattice(displacement,rint(fractional(displacement,reciprocalA,reciprocalB,reciprocalC)),a,b,c);
+}
+
+inline float3 wrapPosition(float3 position, float3 a, float3 b, float3 c,
+                           float3 reciprocalA, float3 reciprocalB, float3 reciprocalC) {
+    return subtractLattice(position,floor(fractional(position,reciprocalA,reciprocalB,reciprocalC)),a,b,c);
+}
+} // namespace nvivo_md_periodic
+#endif

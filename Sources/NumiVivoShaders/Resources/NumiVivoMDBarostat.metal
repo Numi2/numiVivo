@@ -1,15 +1,16 @@
 #include <metal_stdlib>
+#include "NumiVivoMDPeriodicGeometry.metalh"
 using namespace metal;
 namespace nvivo_md_barostat {
 struct Command {
-    uint particleCount,componentCount;float scale,toleranceNM;
+    uint particleCount,componentCount;float centerScaleDelta,toleranceNM;
     float4 cellA,cellB,cellC,reciprocalA,reciprocalB,reciprocalC;
+    float4 proposedCellA,proposedCellB,proposedCellC,proposedReciprocalA,proposedReciprocalB,proposedReciprocalC;
 };
 struct Status { atomic_uint flags,firstParticle,violationCount,reserved; };
-static_assert(sizeof(Command)==112,"NPT command ABI");
+static_assert(sizeof(Command)==208,"NPT command ABI");
 inline float3 image(float3 d,constant Command&c){
-    float3 f=float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));
-    f-=rint(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;
+    return nvivo_md_periodic::minimumImage(d,c.cellA.xyz,c.cellB.xyz,c.cellC.xyz,c.reciprocalA.xyz,c.reciprocalB.xyz,c.reciprocalC.xyz);
 }
 inline void fail(device Status&s,uint p){
     atomic_fetch_or_explicit(&s.flags,4u,memory_order_relaxed);
@@ -59,10 +60,12 @@ inline void fail(device Status&s,uint p){
     if(particle>=c.particleCount||dynamics[particle].y==0)return;
     if(atomic_load_explicit(&status.flags,memory_order_relaxed)!=0)return;
     float3 center=centers[componentIndices[particle]].xyz;
-    float3 p=unwrapped[particle].xyz+(c.scale-1.0f)*center;
-    float3 f=float3(dot(c.reciprocalA.xyz,p),dot(c.reciprocalB.xyz,p),dot(c.reciprocalC.xyz,p))/c.scale;
-    f-=floor(f);
-    float3 result=c.scale*(c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z);
+    float3 p=fma(float3(c.centerScaleDelta),center,unwrapped[particle].xyz);
+    // Use exactly the proposed cell packed for subsequent force/constraint
+    // evaluation. Reconstructing through old-cell fractions and a rounded scale
+    // perturbs internal molecular coordinates even when the center shift is zero.
+    float3 result=nvivo_md_periodic::wrapPosition(p,c.proposedCellA.xyz,c.proposedCellB.xyz,c.proposedCellC.xyz,
+        c.proposedReciprocalA.xyz,c.proposedReciprocalB.xyz,c.proposedReciprocalC.xyz);
     if(!all(isfinite(result))){fail(status,particle);return;}
     positions[particle]=float4(result,0);
     // Virtual positions are reconstructed from their parents by the next pass.

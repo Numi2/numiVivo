@@ -1,5 +1,6 @@
 #include <metal_stdlib>
 #include "NumiVivoErrorFunctions.metalh"
+#include "NumiVivoMDPeriodicGeometry.metalh"
 using namespace metal;
 
 namespace nvivo_pme {
@@ -39,8 +40,8 @@ inline void fail(device Status&s,uint flag,uint particle){
     atomic_fetch_add_explicit(&s.violationCount,1u,memory_order_relaxed);
 }
 inline float3 minimumImage(float3 d,constant MDCommand&c){
-    float3 f=float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));
-    f-=rint(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;
+    return nvivo_md_periodic::minimumImage(d,c.cellA.xyz,c.cellB.xyz,c.cellC.xyz,
+                                         c.reciprocalA.xyz,c.reciprocalB.xyz,c.reciprocalC.xyz);
 }
 inline int findException(uint owner,uint partner,device const uint*o,device const uint*p,device const uint*i){
     uint lo=o[owner],hi=o[owner+1];while(lo<hi){uint m=lo+(hi-lo)/2,v=p[m];if(v<partner)lo=m+1;else hi=m;}
@@ -94,10 +95,16 @@ inline float atomicAddFloat(device atomic_uint* address,float value){
     while(true){float current=as_type<float>(old);uint desired=as_type<uint>(current+value);uint expected=old;
         if(atomic_compare_exchange_weak_explicit(address,&expected,desired,memory_order_relaxed,memory_order_relaxed))return current;old=expected;}
 }
-inline void bspline4(float t,thread float w[4],thread float dw[4]){
-    float omt=1.0f-t,t2=t*t,t3=t2*t,omt2=omt*omt;
-    w[0]=omt2*omt/6.0f;w[1]=(3.0f*t3-6.0f*t2+4.0f)/6.0f;w[2]=(-3.0f*t3+3.0f*t2+3.0f*t+1.0f)/6.0f;w[3]=t3/6.0f;
-    dw[0]=-0.5f*omt2;dw[1]=1.5f*t2-2.0f*t;dw[2]=-1.5f*t2+t+0.5f;dw[3]=0.5f*t2;
+// Shared sixth-order cardinal assignment. Components are the value and its
+// first three derivatives with respect to the fractional grid coordinate.
+// Charge gather differentiates the same assignment used to spread its energy;
+// multipoles also consume the higher derivatives without a separate basis.
+constant int m6coeff[6][6] = {{1,-5,10,-10,5,-1},{26,-50,20,20,-20,5},{66,0,-60,0,30,-10},{26,50,20,-20,-20,10},{1,5,10,10,5,-5},{0,0,0,0,0,1}};
+inline void bspline6(float t,thread float4 out[6]) {
+    for(uint j=0;j<6;++j){float v=float(m6coeff[j][5]),d=0,d2=0,d3=0;
+        for(int power=4;power>=0;--power){d3=d3*t+3*d2;d2=d2*t+2*d;d=d*t+v;v=v*t+float(m6coeff[j][power]);}
+        out[j]=float4(v,d,d2,d3)/120.0f;
+    }
 }
 inline float3 fractional(float3 p,constant PMECommand&c){float3 f=float3(dot(c.reciprocalA.xyz,p),dot(c.reciprocalB.xyz,p),dot(c.reciprocalC.xyz,p));return f-floor(f);}
 
@@ -105,9 +112,9 @@ inline float3 fractional(float3 p,constant PMECommand&c){float3 f=float3(dot(c.r
 
 [[host_name("nvivo_pme_spread")]] kernel void nvivo_pme_spread(device const float4*positions[[buffer(0)]],device const float4*dynamics[[buffer(1)]],device atomic_uint*gridRealBits[[buffer(2)]],device Status&s[[buffer(3)]],constant PMECommand&c[[buffer(4)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.particleCount)return;float q=dynamics[gid].z;if(q==0)return;float3 f=fractional(positions[gid].xyz,c);
-    float3 u=f*float3(c.gridX,c.gridY,c.gridZ);int3 base=int3(floor(u))-1;float3 t=u-floor(u);
-    float wx[4],wy[4],wz[4],d[4];bspline4(t.x,wx,d);bspline4(t.y,wy,d);bspline4(t.z,wz,d);
-    for(uint iz=0;iz<4;++iz)for(uint iy=0;iy<4;++iy)for(uint ix=0;ix<4;++ix){uint x=wrapIndex(base.x+int(ix),c.gridX),y=wrapIndex(base.y+int(iy),c.gridY),z=wrapIndex(base.z+int(iz),c.gridZ);float value=q*wx[ix]*wy[iy]*wz[iz];atomicAddFloat(&gridRealBits[2ul*gridIndex(x,y,z,c)],value);}
+    float3 u=f*float3(c.gridX,c.gridY,c.gridZ);int3 base=int3(floor(u))-2;float3 t=u-floor(u);
+    float4 wx[6],wy[6],wz[6];bspline6(t.x,wx);bspline6(t.y,wy);bspline6(t.z,wz);
+    for(uint iz=0;iz<6;++iz)for(uint iy=0;iy<6;++iy)for(uint ix=0;ix<6;++ix){uint x=wrapIndex(base.x+int(ix),c.gridX),y=wrapIndex(base.y+int(iy),c.gridY),z=wrapIndex(base.z+int(iz),c.gridZ);float value=q*wx[ix].x*wy[iy].x*wz[iz].x;atomicAddFloat(&gridRealBits[2ul*gridIndex(x,y,z,c)],value);}
 }
 
 inline uint reverseBitsN(uint v,uint bits){uint r=0;for(uint i=0;i<bits;++i){r=(r<<1)|(v&1u);v>>=1;}return r;}
@@ -128,19 +135,27 @@ inline uint3 decodeGrid(uint index,constant PMECommand&c){uint x=index%c.gridX;u
 
 inline int signedMode(uint index,uint n){return index<=n/2?int(index):int(index)-int(n);}
 inline float sincPi(float x){if(abs(x)<1e-7f)return 1.0f;float p=3.141592653589793f*x;return sin(p)/p;}
+// The centered nodal weights of M6 are [1,26,66,26,1]/120.
+// Their discrete Fourier modulus, not the continuum sinc transform, matches
+// the cardinal interpolation. It is positive, including the Nyquist mode.
+inline float cardinal6Modulus(int mode,uint count){
+    float theta=6.283185307179586f*float(mode)/float(count);
+    return (66.0f+52.0f*cos(theta)+2.0f*cos(2.0f*theta))/120.0f;
+}
 [[host_name("nvivo_pme_influence")]] kernel void nvivo_pme_influence(device const float2*chargeK[[buffer(0)]],device float2*potentialK[[buffer(1)]],constant PMECommand&c[[buffer(2)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.gridPointCount)return;uint3 q=decodeGrid(gid,c);int mx=signedMode(q.x,c.gridX),my=signedMode(q.y,c.gridY),mz=signedMode(q.z,c.gridZ);if(mx==0&&my==0&&mz==0){potentialK[gid]=0;return;}
     float3 k=6.283185307179586f*(float(mx)*c.reciprocalA.xyz+float(my)*c.reciprocalB.xyz+float(mz)*c.reciprocalC.xyz);float k2=dot(k,k);float beta=c.betaPerNM;
-    float sx=sincPi(float(mx)/float(c.gridX)),sy=sincPi(float(my)/float(c.gridY)),sz=sincPi(float(mz)/float(c.gridZ));float b=sx*sx*sx*sx*sy*sy*sy*sy*sz*sz*sz*sz;float deconv=max(b*b,1e-12f);
+    float b=cardinal6Modulus(mx,c.gridX)*cardinal6Modulus(my,c.gridY)*cardinal6Modulus(mz,c.gridZ);
+    float deconv=b*b;
     float influence=float(c.gridPointCount)*(c.coulombPrefactor/c.volumeNM3)*12.566370614359172f*exp(-k2/(4.0f*beta*beta))/(k2*deconv);potentialK[gid]=chargeK[gid]*influence;
 }
 
 [[host_name("nvivo_pme_scale_inverse")]] kernel void nvivo_pme_scale_inverse(device float2*grid[[buffer(0)]],constant PMECommand&c[[buffer(1)]],uint gid[[thread_position_in_grid]]){if(gid<c.gridPointCount)grid[gid]*=c.inverseGridCount;}
 
 [[host_name("nvivo_pme_gather")]] kernel void nvivo_pme_gather(device const float4*positions[[buffer(0)]],device const float4*dynamics[[buffer(1)]],device const float2*potential[[buffer(2)]],device float4*forceEnergy[[buffer(3)]],device Status&s[[buffer(4)]],constant PMECommand&c[[buffer(5)]],uint gid[[thread_position_in_grid]]){
-    if(gid>=c.particleCount)return;float qcharge=dynamics[gid].z;if(qcharge==0)return;float3 f=fractional(positions[gid].xyz,c),u=f*float3(c.gridX,c.gridY,c.gridZ);int3 base=int3(floor(u))-1;float3 t=u-floor(u);
-    float wx[4],wy[4],wz[4],dx[4],dy[4],dz[4];bspline4(t.x,wx,dx);bspline4(t.y,wy,dy);bspline4(t.z,wz,dz);float phi=0,dux=0,duy=0,duz=0;
-    for(uint iz=0;iz<4;++iz)for(uint iy=0;iy<4;++iy)for(uint ix=0;ix<4;++ix){uint x=wrapIndex(base.x+int(ix),c.gridX),y=wrapIndex(base.y+int(iy),c.gridY),z=wrapIndex(base.z+int(iz),c.gridZ);float v=potential[gridIndex(x,y,z,c)].x;phi+=wx[ix]*wy[iy]*wz[iz]*v;dux+=dx[ix]*wy[iy]*wz[iz]*v;duy+=wx[ix]*dy[iy]*wz[iz]*v;duz+=wx[ix]*wy[iy]*dz[iz]*v;}
+    if(gid>=c.particleCount)return;float qcharge=dynamics[gid].z;if(qcharge==0)return;float3 f=fractional(positions[gid].xyz,c),u=f*float3(c.gridX,c.gridY,c.gridZ);int3 base=int3(floor(u))-2;float3 t=u-floor(u);
+    float4 wx[6],wy[6],wz[6];bspline6(t.x,wx);bspline6(t.y,wy);bspline6(t.z,wz);float phi=0,dux=0,duy=0,duz=0;
+    for(uint iz=0;iz<6;++iz)for(uint iy=0;iy<6;++iy)for(uint ix=0;ix<6;++ix){uint x=wrapIndex(base.x+int(ix),c.gridX),y=wrapIndex(base.y+int(iy),c.gridY),z=wrapIndex(base.z+int(iz),c.gridZ);float v=potential[gridIndex(x,y,z,c)].x;phi+=wx[ix].x*wy[iy].x*wz[iz].x*v;dux+=wx[ix].y*wy[iy].x*wz[iz].x*v;duy+=wx[ix].x*wy[iy].y*wz[iz].x*v;duz+=wx[ix].x*wy[iy].x*wz[iz].y*v;}
     float3 grad=float(c.gridX)*dux*c.reciprocalA.xyz+float(c.gridY)*duy*c.reciprocalB.xyz+float(c.gridZ)*duz*c.reciprocalC.xyz;float self=-c.coulombPrefactor*c.betaPerNM*0.5641895835477563f*qcharge*qcharge;float4 add=float4(-qcharge*grad,0.5f*qcharge*phi+self);float4 value=forceEnergy[gid]+add;if(!all(isfinite(value))){fail(s,statusNonFinite,gid);return;}forceEnergy[gid]=value;
 }
 } // namespace nvivo_pme
@@ -151,13 +166,6 @@ inline float sincPi(float x){if(abs(x)<1e-7f)return 1.0f;float p=3.1415926535897
 namespace nvivo_pme {
 struct MultipoleSource { float4 positionCharge,dipole,q0,q1; };
 struct MultipoleMeshExtra { uint4 halfWidths; };
-constant int m6coeff[6][6] = {{1,-5,10,-10,5,-1},{26,-50,20,20,-20,5},{66,0,-60,0,30,-10},{26,50,20,-20,-20,10},{1,5,10,10,5,-5},{0,0,0,0,0,1}};
-inline void bspline6(float t,thread float4 out[6]) {
-    for(uint j=0;j<6;++j){float v=float(m6coeff[j][5]),d=0,d2=0,d3=0;
-        for(int power=4;power>=0;--power){d3=d3*t+3*d2;d2=d2*t+2*d;d=d*t+v;v=v*t+float(m6coeff[j][power]);}
-        out[j]=float4(v,d,d2,d3)/120.0f;
-    }
-}
 inline float weightDerivative(uint3 order,float4 x,float4 y,float4 z){return x[order.x]*y[order.y]*z[order.z];}
 constant uint3 momentPowers[10]={uint3(0),uint3(1,0,0),uint3(0,1,0),uint3(0,0,1),uint3(2,0,0),uint3(1,1,0),uint3(1,0,1),uint3(0,2,0),uint3(0,1,1),uint3(0,0,2)};
 constant float momentWeights[10]={1,1,1,1,0.5f,1,1,0.5f,1,0.5f};

@@ -235,6 +235,19 @@ import NumiVivoKit
             forceNormalizedRMS: sqrt(selected.reduce(0) { $0 + $1.forceError.normalizedRMS * $1.forceError.normalizedRMS } / Double(selected.count)))
     }
 
+    @Test func plannerDeclaresTheImplementedOrderAndPreservesExplicitCoarseMeshes() throws {
+        let coarse = try VivoPMEPlan.make(cell: cell(), cutoffNM: cutoffNM,
+            tolerance: pmeTolerance, targetGridSpacingNM: 0.5, fixedGridDimensions: [4, 4, 4])
+        #expect(coarse.interpolationOrder == 6)
+        #expect(coarse.gridX == 4 && coarse.gridY == 4 && coarse.gridZ == 4 && coarse.gridPointCount == 64)
+        // An explicitly requested prior interpolation algorithm cannot silently
+        // become a different implementation. Coarse grid accuracy is separate.
+        #expect(throws: VivoMDRuntimeError.self) {
+            try VivoPMEPlan.make(cell: cell(), cutoffNM: cutoffNM,
+                tolerance: pmeTolerance, targetGridSpacingNM: 0.5, interpolationOrder: 4)
+        }
+    }
+
     @Test func chargedClassicalPMEConvergesToIndependentDirectEwaldWithoutChangingAcceptedState() async throws {
         let evidence = try PMEEvidenceSink()
         try evidence.record(limits, name: "preregistered-limits")

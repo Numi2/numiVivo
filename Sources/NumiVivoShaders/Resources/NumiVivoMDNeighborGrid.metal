@@ -1,4 +1,5 @@
 #include <metal_stdlib>
+#include "NumiVivoMDPeriodicGeometry.metalh"
 using namespace metal;
 
 namespace nvivo_md_grid {
@@ -49,9 +50,7 @@ inline int wrapCell(int value, uint n) {
     return m < 0 ? m + int(n) : m;
 }
 inline float3 minimumImage(float3 d, constant Command& c) {
-    float3 f = float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));
-    f -= rint(f);
-    return c.cellA.xyz*f.x + c.cellB.xyz*f.y + c.cellC.xyz*f.z;
+    return nvivo_md_periodic::minimumImage(d,c.cellA.xyz,c.cellB.xyz,c.cellC.xyz,c.reciprocalA.xyz,c.reciprocalB.xyz,c.reciprocalC.xyz);
 }
 
 [[host_name("nvivo_md_grid_clear")]] kernel void nvivo_md_grid_clear(device atomic_uint* counts [[buffer(0)]],

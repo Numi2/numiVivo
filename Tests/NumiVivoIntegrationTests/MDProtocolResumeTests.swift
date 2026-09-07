@@ -96,6 +96,39 @@ import Testing
         return try VivoCanonicalJSON.decode(T.self, from: JSONSerialization.data(withJSONObject: object, options: .sortedKeys))
     }
 
+    @Test func priorNumericalContractsRemainDecodableButCannotContinue() async throws {
+        var f = try await fixture()
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        _ = try await load(f)
+        for contract in [nil, "numivivo.org/md-metal-numerics/v2"] as [String?] {
+            var archived = f.entry; archived.numericalContract = contract
+            // Archival decoding preserves the original declaration; it must not
+            // silently stamp the current algorithm onto old accepted state.
+            let decoded = try VivoCanonicalJSON.decode(VivoMDCheckpoint.self,
+                from: VivoCanonicalJSON.encode(archived))
+            #expect(decoded.numericalContract == contract && decoded.positionsNM == f.entry.positionsNM)
+            #expect(throws: VivoArtifactValidationError.self) { try decoded.validate(particleCount: 2) }
+            do {
+                _ = try await VivoMDMetalRuntime.restore(system: f.system,
+                    configuration: configuration(), checkpoint: decoded)
+                Issue.record("An old numerical contract must not restore under the current algorithm")
+            } catch VivoArtifactValidationError.incompatible(let message) {
+                #expect(message.contains("numerical contract"))
+            } catch { Issue.record("Unexpected old-contract restore error: \(error)") }
+            #expect(throws: VivoArtifactValidationError.self) {
+                try VivoMDStageTransfer.prepare(checkpoint: decoded, source: configuration(),
+                    destination: configuration(), particleCount: 2)
+            }
+            f.cursor.currentCheckpoint = try await put(decoded, "md-checkpoint", f.store)
+            await rejects { _ = try await load(f) }
+        }
+        f.cursor.currentCheckpoint = f.cursor.entryCheckpoint
+        f.cursor.numericalContract = "numivivo.org/md-metal-numerics/v2"
+        await rejects { _ = try await load(f) }
+        var oldPlan = f.plan; oldPlan.numericalContract = "numivivo.org/md-metal-numerics/v2"
+        #expect(throws: VivoArtifactValidationError.self) { try oldPlan.validate() }
+    }
+
     @Test func requiredMinimizationGateCannotBeBypassedByARehashedReport() async throws {
         var f = try await fixture(minimization: true); defer { try? FileManager.default.removeItem(at: f.root) }
         f.cursor.phase = .stageFinished

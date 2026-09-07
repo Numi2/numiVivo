@@ -3,6 +3,12 @@ import Foundation
 /// Immutable reciprocal-space plan for particle-mesh Ewald electrostatics.
 /// Mesh dimensions are powers of two so the Metal backend can use a radix-2
 /// transform schedule without depending on platform FFT APIs.
+/// Classical charge PME uses sixth-order cardinal assignment and differentiates
+/// that same mesh energy for forces. The requested tolerance sets Ewald beta;
+/// it is not a bound on force error from a particular mesh.
+/// A four-point axis remains supported: the six assignment nodes wrap and sum
+/// periodic aliases on that axis. Explicit grids are never silently enlarged.
+/// Only interpolation order six is executable under the current contract.
 public struct VivoPMEPlan: Codable, Sendable, Equatable {
     public var gridX: UInt32
     public var gridY: UInt32
@@ -21,11 +27,11 @@ public struct VivoPMEPlan: Codable, Sendable, Equatable {
                             cutoffNM: Double,
                             tolerance: Double,
                             targetGridSpacingNM: Double,
-                            interpolationOrder: UInt32 = 4,fixedGridDimensions: [UInt32]? = nil) throws -> Self {
+                            interpolationOrder: UInt32 = 6,fixedGridDimensions: [UInt32]? = nil) throws -> Self {
         guard cell.isValid, cutoffNM.isFinite, cutoffNM > 0,
               tolerance.isFinite, tolerance > 0, tolerance < 0.1,
               targetGridSpacingNM.isFinite, targetGridSpacingNM > 0,
-              interpolationOrder == 4 else {
+              interpolationOrder == 6 else {
             throw VivoMDRuntimeError.metal("invalid PME planning request")
         }
         let determinant = cell.a.dot(cell.b.cross(cell.c))

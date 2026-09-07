@@ -155,13 +155,14 @@ private final class NumiVivoRuntimeLibraryCache: @unchecked Sendable {
         guard let url else { throw NumiVivoShaderError.sourceResourceMissing }
         do {
             var source = try String(contentsOf: url, encoding: .utf8)
-            let mathInclude = "#include \"NumiVivoErrorFunctions.metalh\""
-            if source.contains(mathInclude) {
-                guard let header = Bundle.module.url(forResource: "NumiVivoErrorFunctions", withExtension: "metalh")
-                    ?? Bundle.module.url(forResource: "NumiVivoErrorFunctions", withExtension: "metalh", subdirectory: "Resources") else {
+            for name in ["NumiVivoErrorFunctions", "NumiVivoMDPeriodicGeometry"] {
+                let include = "#include \"\(name).metalh\""
+                guard source.contains(include) else { continue }
+                guard let header = Bundle.module.url(forResource: name, withExtension: "metalh")
+                    ?? Bundle.module.url(forResource: name, withExtension: "metalh", subdirectory: "Resources") else {
                     throw NumiVivoShaderError.sourceResourceMissing
                 }
-                source = source.replacingOccurrences(of: mathInclude, with: try String(contentsOf: header, encoding: .utf8))
+                source = source.replacingOccurrences(of: include, with: try String(contentsOf: header, encoding: .utf8))
             }
             let options = MTLCompileOptions()
             options.fastMathEnabled = false

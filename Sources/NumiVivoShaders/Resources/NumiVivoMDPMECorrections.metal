@@ -1,5 +1,6 @@
 #include <metal_stdlib>
 #include "NumiVivoErrorFunctions.metalh"
+#include "NumiVivoMDPeriodicGeometry.metalh"
 using namespace metal;
 
 namespace nvivo_pme_correction {
@@ -16,7 +17,10 @@ struct Status { atomic_uint flags,firstParticle,violationCount,reserved; };
 struct PairException { uint2 atoms; float2 scales; float2 overrideC12C6; uint flags; };
 constant uint statusNonFinite=1u,statusInvalidGeometry=4u;
 inline void fail(device Status&s,uint flag,uint particle){atomic_fetch_or_explicit(&s.flags,flag,memory_order_relaxed);atomic_fetch_min_explicit(&s.firstParticle,particle,memory_order_relaxed);atomic_fetch_add_explicit(&s.violationCount,1u,memory_order_relaxed);}
-inline float3 minimumImage(float3 d,constant MDCommand&c){float3 f=float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));f-=rint(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;}
+inline float3 minimumImage(float3 d,constant MDCommand&c){
+    return nvivo_md_periodic::minimumImage(d,c.cellA.xyz,c.cellB.xyz,c.cellC.xyz,
+                                         c.reciprocalA.xyz,c.reciprocalB.xyz,c.reciprocalC.xyz);
+}
 
 [[host_name("nvivo_pme_exception_correction")]] kernel void nvivo_pme_exception_correction(device const float4*positions[[buffer(0)]],
                                             device const float4*dynamics[[buffer(1)]],

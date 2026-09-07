@@ -173,7 +173,7 @@ public enum VivoMDCapabilityAnalyzer {
         if !unresolved.isEmpty {blockers.append("unresolved virtual-site rules: \(unresolved)")}
         if system.particles.contains(where:{$0.role == .drude}) {blockers.append("Drude polarization is not implemented")}
         if !virtual.isEmpty {notes.append("virtual forces redistribute to physical parents; virtual slots are not minimization degrees of freedom")}
-        if configuration.electrostatics == .pme {notes.append("cubic mesh/FFT PME; the input tolerance is a planning heuristic, not a demonstrated force-error bound")}
+        if configuration.electrostatics == .pme {notes.append("sixth-order cardinal mesh/FFT PME; the input tolerance is a planning heuristic, not a demonstrated force-error bound")}
         if configuration.ensemble == .npt {notes.append("molecular-center log-volume proposals; operational failures abort rather than count as Metropolis rejections")}
         if configuration.resolvedNeighborListEnabled {notes.append("neighbor lists are rebuilt at both force positions; rebuildInterval is retained for compatibility, not yet an amortization guarantee")}
         notes.append("reported thermal degrees of freedom assume independent distance constraints")

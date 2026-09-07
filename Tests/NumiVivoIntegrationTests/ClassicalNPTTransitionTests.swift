@@ -259,6 +259,11 @@ import NumiVivoKit
                     // applying any score, geometry or acceptance assertion.
                     try evidence.record(row, name: "observation-\(fixture.name)-\(index)")
                     rows.append(row)
+                    // A rejected dynamics step has no pressure-move certificate.
+                    // Stop at that numerical failure after preserving its complete
+                    // state, instead of replaying it and later diagnosing nil.
+                    try #require(step.committed && step.statusFlags == 0,
+                        "NPT dynamics rejected proposal \(index): acceptedStep=\(before.acceptedStep), timePS=\(before.timePS), statusFlags=\(step.statusFlags), firstViolationParticle=\(String(describing: step.firstViolationParticle)), violationCount=\(step.violationCount)")
                 } catch {
                     try evidence.record(AttemptFailure(proposalIndex: index, before: before,
                         certificate: certificate, error: String(describing: error)), name: "failure-\(fixture.name)-\(index)")

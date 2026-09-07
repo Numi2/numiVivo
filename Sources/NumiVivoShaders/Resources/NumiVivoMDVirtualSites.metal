@@ -1,4 +1,5 @@
 #include <metal_stdlib>
+#include "NumiVivoMDPeriodicGeometry.metalh"
 using namespace metal;
 namespace nvivo_md_virtual {
 struct Command{uint particleCount,typeCount,electrostatics,periodic;uint stepLow,stepHigh,seedLow,seedHigh;float dtPS,cutoffNM,coulombPrefactor,reactionFieldK;float reactionFieldC,minimumDistanceNM,constraintTolerance,langevinA;float targetTemperatureK,boltzmannKJPerMolK;uint neighborCapacity;float neighborRadiusNM;float4 cellA,cellB,cellC,reciprocalA,reciprocalB,reciprocalC;};
@@ -9,8 +10,8 @@ static_assert(sizeof(Command)==176,"MD command ABI");
 static_assert(sizeof(LinearVirtualSite)==48,"linear virtual site ABI");
 static_assert(sizeof(ParentIncidence)==8,"virtual parent incidence ABI");
 inline void fail(device Status&s,uint flag,uint p){atomic_fetch_or_explicit(&s.flags,flag,memory_order_relaxed);atomic_fetch_min_explicit(&s.firstParticle,p,memory_order_relaxed);atomic_fetch_add_explicit(&s.violationCount,1u,memory_order_relaxed);}
-inline float3 image(float3 d,constant Command&c){if(c.periodic==0)return d;float3 f=float3(dot(c.reciprocalA.xyz,d),dot(c.reciprocalB.xyz,d),dot(c.reciprocalC.xyz,d));f-=rint(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;}
-inline float3 wrap(float3 p,constant Command&c){if(c.periodic==0)return p;float3 f=float3(dot(c.reciprocalA.xyz,p),dot(c.reciprocalB.xyz,p),dot(c.reciprocalC.xyz,p));f-=floor(f);return c.cellA.xyz*f.x+c.cellB.xyz*f.y+c.cellC.xyz*f.z;}
+inline float3 image(float3 d,constant Command&c){if(c.periodic==0)return d;return nvivo_md_periodic::minimumImage(d,c.cellA.xyz,c.cellB.xyz,c.cellC.xyz,c.reciprocalA.xyz,c.reciprocalB.xyz,c.reciprocalC.xyz);}
+inline float3 wrap(float3 p,constant Command&c){if(c.periodic==0)return p;return nvivo_md_periodic::wrapPosition(p,c.cellA.xyz,c.cellB.xyz,c.cellC.xyz,c.reciprocalA.xyz,c.reciprocalB.xyz,c.reciprocalC.xyz);}
 
 [[host_name("nvivo_md_update_virtual_position")]] kernel void nvivo_md_update_virtual_position(device float4*position[[buffer(0)]],device const LinearVirtualSite*sites[[buffer(1)]],device const uint*siteIndexByParticle[[buffer(2)]],device Status&s[[buffer(3)]],constant Command&c[[buffer(4)]],uint gid[[thread_position_in_grid]]){
     if(gid>=c.particleCount)return;uint index=siteIndexByParticle[gid];if(index==0xffffffffu)return;

@@ -90,7 +90,7 @@ public struct VivoMDBarostatPlan: Sendable, Equatable {
 private struct VivoMDBarostatMetalCommand {
     var particleCount: UInt32
     var componentCount: UInt32
-    var scale: Float
+    var centerScaleDelta: Float
     var toleranceNM: Float
     var cellA: SIMD4<Float>
     var cellB: SIMD4<Float>
@@ -98,6 +98,12 @@ private struct VivoMDBarostatMetalCommand {
     var reciprocalA: SIMD4<Float>
     var reciprocalB: SIMD4<Float>
     var reciprocalC: SIMD4<Float>
+    var proposedCellA: SIMD4<Float>
+    var proposedCellB: SIMD4<Float>
+    var proposedCellC: SIMD4<Float>
+    var proposedReciprocalA: SIMD4<Float>
+    var proposedReciprocalB: SIMD4<Float>
+    var proposedReciprocalC: SIMD4<Float>
 }
 
 final class VivoMDBarostatEngine: @unchecked Sendable {
@@ -143,16 +149,24 @@ final class VivoMDBarostatEngine: @unchecked Sendable {
         self.centerPipeline=centerPipeline;self.scalePipeline=scalePipeline
     }
     func encodeProposal(commandBuffer:MTLCommandBuffer,positions:MTLBuffer,dynamics:MTLBuffer,
-                        cell:VivoPeriodicCell,scale:Double,status:MTLBuffer) throws {
+                        cell:VivoPeriodicCell,proposedCell:VivoPeriodicCell,scale:Double,status:MTLBuffer) throws {
         guard scale.isFinite,scale>0,Float(scale).isFinite,Float(scale)>0 else { throw VivoMDRuntimeError.metal("invalid NPT scale") }
         let d=cell.a.dot(cell.b.cross(cell.c))
         guard d.isFinite,abs(d)>1e-18 else { throw VivoMDRuntimeError.metal("singular NPT cell") }
+        let proposedDeterminant=proposedCell.a.dot(proposedCell.b.cross(proposedCell.c))
+        guard proposedDeterminant.isFinite,abs(proposedDeterminant)>1e-18 else {
+            throw VivoMDRuntimeError.metal("singular proposed NPT cell")
+        }
         func f(_ v:VivoVector3D)->SIMD4<Float>{ .init(Float(v.x),Float(v.y),Float(v.z),0) }
         var abi=VivoMDBarostatMetalCommand(particleCount:UInt32(plan.componentIndexByParticle.count),
-            componentCount:plan.componentCount,scale:Float(scale),toleranceNM:1e-4,
+            componentCount:plan.componentCount,centerScaleDelta:Float(scale-1),toleranceNM:1e-4,
             cellA:f(cell.a),cellB:f(cell.b),cellC:f(cell.c),
-            reciprocalA:f(cell.b.cross(cell.c)/d),reciprocalB:f(cell.c.cross(cell.a)/d),reciprocalC:f(cell.a.cross(cell.b)/d))
-        guard MemoryLayout<VivoMDBarostatMetalCommand>.stride==112 else { throw VivoMDRuntimeError.metal("NPT ABI mismatch") }
+            reciprocalA:f(cell.b.cross(cell.c)/d),reciprocalB:f(cell.c.cross(cell.a)/d),reciprocalC:f(cell.a.cross(cell.b)/d),
+            proposedCellA:f(proposedCell.a),proposedCellB:f(proposedCell.b),proposedCellC:f(proposedCell.c),
+            proposedReciprocalA:f(proposedCell.b.cross(proposedCell.c)/proposedDeterminant),
+            proposedReciprocalB:f(proposedCell.c.cross(proposedCell.a)/proposedDeterminant),
+            proposedReciprocalC:f(proposedCell.a.cross(proposedCell.b)/proposedDeterminant))
+        guard MemoryLayout<VivoMDBarostatMetalCommand>.stride==208 else { throw VivoMDRuntimeError.metal("NPT ABI mismatch") }
         try encode(centerPipeline,command:commandBuffer,buffers:[positions,dynamics,offsets,members,parents,edgeOffsets,edges,unwrapped,centers,status],
                    abi:&abi,count:Int(plan.componentCount))
         try encode(scalePipeline,command:commandBuffer,buffers:[positions,dynamics,componentIndices,centers,unwrapped,status],
