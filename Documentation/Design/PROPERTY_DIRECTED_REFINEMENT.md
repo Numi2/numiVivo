@@ -46,6 +46,14 @@ The shared workflow binds inputs, configuration, numerical budget, implementatio
 
 Export does not extrapolate to new geometries, change a running trajectory, or qualify a new production Hamiltonian. Any MD/QM/MM production-model change must remain separately versioned and independently equilibrated/qualified. Electronic anchor sensitivity must not bypass the existing PMF, transmission, replicated-rate or chemical-qualification requirements.
 
+## Adaptive observable-directed closure
+
+The downstream adaptive controller now treats the requested observable, rather than electronic-space size, as the scheduling target. `VivoMBARTargetRefinement` supplies overlap- and support-qualified equilibrium target corrections with shared bootstrap covariance; unsampled targets remain exploratory. `VivoLinearKineticSensitivity` and `VivoObservableCovariance` propagate finite-state kinetic sensitivities and declared covariance without discarding off-diagonal terms. `VivoAdaptiveRefinementPolicy` ranks predeclared discovery and held-out confirmation actions by expected metric reduction per calibrated execution cost, while `VivoAdaptiveCampaign` executes complete content-addressed workflow recipes and prevents confirmation data from becoming later tuning evidence.
+
+Electronic-model and QM-region closure uses the existing replicated QM/MM rate and chemical-qualification authorities. `VivoQMMMVariantSensitivity` reconstructs one independently replicated variant through the dimension-specific invariants and exposes both `|delta ln k|` and, where replica-derived standard deviations are present, the conservative guard `|delta ln k| + m(sigma_baseline + sigma_variant)`. This guard is not a confidence interval or a model-error bound. `VivoAdaptiveQMMMModelSpaceFamily` represents active-space, embedding-fragment, embedding-bath, electronic-model and QM-region candidates as immutable model versions. Nested physical spaces must be strict semantic supersets; confirmation candidates are leaves and cannot become parents for later discovery.
+
+The family is bound to the exact baseline-rate observable fingerprint and can emit both adaptive action proposals and the existing `VivoQMMMChemicalQualificationRequest`. Consequently the campaign can compare electronic refinement, equilibrium sampling, replicated-rate uncertainty, chemical-model/QM-region sensitivity and kinetic-observable covariance through the same native metric contract. It does not transfer samples or dynamical transmission evidence between different Hamiltonians. A different fragment, bath, active space or QM region is a new production model that must have its own required equilibration, PMF/replicas and transmission qualification before it can become accepted evidence.
+
 ## Entry points
 
 Library: `VivoSelectedCI`, `VivoSelectiveOrbitalInformation`, `VivoPropertyDirectedSpace`, `VivoCorrelationRefinementOperations.materializeHamiltonian`.
@@ -58,7 +66,7 @@ CLI: `chemistry-prepare-space`, `chemistry-solve`, `chemistry-correlations`, `ch
 
 The portable harness exercises actual production numerical source with deterministic algebraic fixtures and negative tests. It is not a mocked solver, but it is also not the complete Apple package or a protein reaction. Apple artifact/CLI integration has a separate test driver and full-module tests. Retain exact source hashes, compiler/platform information and failures when running either.
 
-The following remain separate development and scientific-qualification work: scalable broad-system probes beyond the finite orbital/ERI representation and unrestricted/spin-polarized molecular preparation; adaptive fragment/bath/QM-region changes through the common workflow; cost-calibrated allocation between electronic refinements and actual sampling/transmission trajectories; overlap-qualified free-energy corrections; downstream kinetic-observable sensitivities; and measured Metal/TensorOps acceleration. No speedup, enzyme-barrier accuracy, or experimental agreement is asserted here.
+The implementation boundary that still remains is narrower: scalable broad-system correlated probes beyond the present finite orbital/ERI representation, unrestricted/spin-polarized molecular preparation for this automatic seeding path, automatic construction of previously undeclared model variants, and measured Metal/TensorOps acceleration on representative molecular workloads. Real-reaction, protein, free-energy and rate benchmarks remain scientific qualification work rather than missing interfaces. No speedup, enzyme-barrier accuracy, or experimental agreement is asserted here.
 
 ## Methodological sources
 
