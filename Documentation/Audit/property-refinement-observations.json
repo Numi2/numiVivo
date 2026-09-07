@@ -1,0 +1,65 @@
+{
+  "schema": "numivivo.org/refinement-execution-observations/v1",
+  "nativeSourceCheckpoint": "7bef2ac885b19cc8866cb1f0af902aab24d1d141",
+  "scope": "42 authentic production numerical/test sources; deterministic algebraic fixtures, not full package or independent chemistry conformance",
+  "compiler": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "platform": "Linux 6.18.35 x86_64",
+  "compilerFlags": [
+    "-swift-version",
+    "6",
+    "-Onone",
+    "-whole-module-optimization",
+    "-parse-as-library"
+  ],
+  "command": "bash Tools/check_property_refinement.sh <output-directory>",
+  "sourceManifest": "property-refinement-source-sha256.txt",
+  "sourceManifestSHA256": "102a49721ec9aaae14cbd7af53d25239bbc5607069b6b57ffbfd7e128843836b",
+  "sourceCount": 42,
+  "sourceIdentityCheck": "40 tested paths match the verified source snapshot; the two new fixture/harness blobs match GitHub at the checkpoint; repository comparison changes no other tested source",
+  "nativeExecution": {
+    "status": "passed",
+    "assertions": 25,
+    "checks": [
+      "direct CI establishes declared-pool sensitivity",
+      "property-directed selection retains reaction-sensitive block",
+      "first expansion is the measured reactive block",
+      "large absolute common-mode correction is not mistaken for barrier sensitivity",
+      "confirmation checks every physical adjacent overlap",
+      "joint candidate union is checked even when individual shifts are small",
+      "aggregate point budget respected",
+      "bounded replay reconstructs result",
+      "selected-CI and direct-CI refinement agree",
+      "selected/direct energy reactant",
+      "selected/direct energy held-out-early",
+      "selected/direct energy barrier-point",
+      "selected/direct energy held-out-late",
+      "selected/direct energy product",
+      "budget exhaustion does not establish low sensitivity",
+      "infeasible joint candidate check blocks acceptance",
+      "held-out electronic sensitivity fails confirmation",
+      "failed holdout is not reused to tune the candidate space",
+      "forged active-space evidence rejects",
+      "splitting a transported orbital group rejects",
+      "overlapping discovery and holdout identities reject",
+      "single-orbital entropy uses natural logarithms",
+      "mutual-information convention has no half factor",
+      "missing pair coverage is not reported as zero",
+      "forged orbital-information coverage rejects"
+    ]
+  },
+  "unexecuted": [
+    "complete Apple Swift package",
+    "nine PropertyRefinementWorkflowTests integration tests",
+    "check_refinement_cli.py against the Apple native CLI",
+    "general five-stage recipe execution",
+    "Metal kernels or GPU comparison",
+    "external molecular oracle",
+    "reaction/free-energy/rate accuracy or speed benchmark"
+  ],
+  "limitations": [
+    "full connected CI residual is not a global-ground-root or spin certificate",
+    "property acceptance covers the declared fixed-geometry candidate pool",
+    "native agreement does not establish chemical accuracy",
+    "cache validation replays numerics and is not a measured acceleration claim"
+  ]
+}
