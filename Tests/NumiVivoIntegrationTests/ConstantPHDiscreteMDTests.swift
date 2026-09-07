@@ -137,9 +137,17 @@ import Testing
             mdStepsPerAttempt: 1, attemptCount: 2, seed: 1)
         #expect(throws: (any Error).self) { try badConfiguration.validate() }
 
+        let validStates = [
+            VivoConstantPHStateDefinition(identifier: "a", boundProtonOffset: 0,
+                referenceSemigrandBiasKJPerMol: 0, origin: .assumed,
+                evidence: evidence("a"), neighbors: ["b"]),
+            VivoConstantPHStateDefinition(identifier: "b", boundProtonOffset: 0,
+                referenceSemigrandBiasKJPerMol: 0, origin: .assumed,
+                evidence: evidence("b"), neighbors: ["a"])
+        ]
         let validConfiguration = VivoConstantPHConfiguration(identifier: "mixed-manifold",
             temperatureK: 300, referencePH: 7, targetPH: 7,
-            states: Array(invalid.prefix(2)), initialStateIdentifier: "a",
+            states: validStates, initialStateIdentifier: "a",
             mdStepsPerAttempt: 1, attemptCount: 2, seed: 1)
         let a = try executable("a", manifold: fingerprint("m1"), energy: 0)
         let b = try executable("b", manifold: fingerprint("m2"), energy: 0)
