@@ -3,6 +3,7 @@
 import argparse
 import copy
 import json
+import os
 import pathlib
 import subprocess
 
@@ -95,7 +96,7 @@ def main():
     run('input-alias', 'workflow-run', recipe_path, '--output', recipe_path, '--force', '--store', store, expected=65)
     check(recipe_path.read_bytes() == original, 'input bytes survive rejected overwrite')
     link = out / 'recipe-hardlink.json'
-    link.hardlink_to(recipe_path)
+    os.link(recipe_path, link)
     run('hardlink-alias', 'workflow-run', recipe_path, '--output', link, '--force', '--store', store, expected=65)
     run('store-alias', 'workflow-run', recipe_path, '--output', store / 'uncreated' / 'output.json', '--store', store, expected=65)
     store_link = out / 'linked-store'
