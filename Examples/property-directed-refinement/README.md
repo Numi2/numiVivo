@@ -65,3 +65,18 @@ Only a residual-converged state passes the state-extraction node. Repeating a
 recipe/store validates existing artifacts before reuse; receipt existence does
 not weaken any of these requirements. Existing workflow exports require an
 explicit `--force` to replace previously written files.
+
+## Prepared molecular and multistate requests
+
+```sh
+numivivo chemistry-template molecular-h2-space-preparation --output molecule.json
+numivivo chemistry-prepare-space molecule.json --output prepared-refinement.json
+numivivo chemistry-refine prepared-refinement.json --output molecular-refinement.json
+numivivo chemistry-export-space molecular-refinement.json --point h2-2 --output molecular-anchor.json
+numivivo chemistry-template algebraic-multistate-refinement --output states.json
+numivivo chemistry-refine states.json --output states.result.json
+numivivo workflow-template molecular-property-refinement --output molecular-recipe.json
+numivivo workflow-run molecular-recipe.json --store .numivivo/molecular-refinement --output molecular-run.json
+```
+
+The H2 example executes physical Gaussian integrals and adjacent cross-geometry overlaps. Its declared interior point is not a transition state and the small basis is not a barrier-accuracy recommendation. The two-state algebraic example requires expansion even though the two state-specific barrier shifts cancel in their average. V2 state-averaged-CASSCF requests use the existing native optimizer and retain the optimized orbital frame in each exported Hamiltonian.

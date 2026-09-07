@@ -16,6 +16,14 @@ Projected residual, external residual and their full norm remain distinct. PT2 i
 
 `VivoSelectiveOrbitalInformation` requests exact one-/two-spatial-orbital marginals from the existing CI wavefunction trace. It does not reconstruct a general two-spatial-orbital density operator from ordinary one-/two-particle RDMs. Occupation, double occupation, single entropy, pair entropy and mutual information retain separate definitions. An incomplete pair query must not be interpreted as a sparse matrix with zero-valued omitted edges.
 
+## Molecular input and seeding
+
+`VivoMolecularSpacePreparation` turns a fixed-composition, explicitly mapped, restricted-reference path into a refinement request. Seeds come from explicit reactive atoms or mapped endpoint bond/order/stereochemical and formal-charge changes. It does not infer connectivity from distances, perform atom-map isomorphism, guess protonation or discover a mechanism.
+
+The native AO-metric atomic projector is diagonalized independently in occupied and virtual subspaces. A target is all AOs on the reactive atoms unless explicit basis-shell indices select a narrower target; principal-shell/valence character is never guessed from Gaussian exponents. Near-degenerate projector groups stay indivisible. The first discovery geometry fixes the initial space and candidate groups; every other orbital remains a candidate. Holdout structures use the fixed projection policy but cannot change thresholds/groups. Ambiguous transport or an infeasible candidate union fails rather than shrinking the tested universe.
+
+The molecular CLI planner reuses existing AO-integral and HF task identities. `VivoMolecularOrbitalFrames` is shared with the ECC molecular path: physical adjacent AO overlaps are integrated, never assumed to be identity. Primitive source systems, basis, electron sector and frozen external charges must match. Molecular preparation has a bounded number of per-call-budget stages; it does not claim one aggregate primitive-work count for all AO/HF validation. The subsequent refinement retains its own cumulative work budget.
+
 ## Refinement sequence
 
 `VivoPropertyDirectedSpace` transports complete orbital subspaces through `VivoOrbitalPathTransport`, preserving the existing physical state-overlap calculations. It never multiplies neighboring overlap matrices to invent an unchecked nonadjacent physical overlap.
@@ -24,7 +32,9 @@ Every expansion uses the same discovery geometries and nested active spaces. Occ
 
 All predeclared candidates are considered. Individually small changes are insufficient: the controller must also compare the complete candidate union. When discovery suggests adequate sensitivity, it evaluates all path points and all adjacent physical state-overlap edges, including the held-out points. A failed holdout terminates; the same points are not reused for tuning while still described as held out. If a candidate union cannot fit the allowed space, no low-sensitivity conclusion is issued.
 
-Current solvers for this loop are a single tightly converged direct-CI root or a tightly converged selected-CI root. Existing CASSCF, multistate CASSCF and ECC-DMET are not replaced, but they are not silently inserted as alternative refinement backends.
+The v2 solver selector supports one direct/selected-CI root, multiple energy-ordered direct-CI roots, and the existing state-averaged CASSCF optimizer. Each included root is compared separately; every pairwise excitation-gap change is also checked. Weighted means cannot cancel state-specific changes. Contiguous, predeclared state groups may rotate internally: the minimum singular value of their physical overlap block controls retention. Separate groups require a declared minimum spectral gap. These are included energy ranks, not an inferred diabatic labeling or a certificate that all relevant excited states were requested.
+
+State-averaged refinement uses energy-ordered roots (`followRoots=false`) and equal weights within an interchangeable group. The shared optimizer reports cumulative Hamiltonian work and conservative auxiliary reservations. Finite orbital stationarity is not a global minimum. Export composes its optimized orbital frame with path transport before projecting the physical Hamiltonian; dropping the optimized rotation would produce the wrong calculation.
 
 ## Workflow and immutable handoff
 
@@ -42,13 +52,13 @@ Library: `VivoSelectedCI`, `VivoSelectiveOrbitalInformation`, `VivoPropertyDirec
 
 The general workflow catalog registers the same operations through `VivoPlatformRefinementOperations`. `workflow-template property-refinement` composes refinement, anchor export, selected CI, Hamiltonian-validated state extraction and selective orbital information. Failed confirmation blocks the downstream calculation; an unconverged probe cannot enter the accepted-state extraction node.
 
-CLI: `chemistry-solve`, `chemistry-correlations`, `chemistry-refine`, `chemistry-export-space`, plus templates listed by `chemistry-help`. See the [complete algebraic example](../../Examples/property-directed-refinement/README.md).
+CLI: `chemistry-prepare-space`, `chemistry-solve`, `chemistry-correlations`, `chemistry-refine`, `chemistry-export-space`, plus templates listed by `chemistry-help`. See the [complete algebraic example](../../Examples/property-directed-refinement/README.md).
 
 ## Qualification boundary and remaining development
 
 The portable harness exercises actual production numerical source with deterministic algebraic fixtures and negative tests. It is not a mocked solver, but it is also not the complete Apple package or a protein reaction. Apple artifact/CLI integration has a separate test driver and full-module tests. Retain exact source hashes, compiler/platform information and failures when running either.
 
-The following remain separate development and scientific-qualification work: automatic chemical orbital seeding from prepared molecules; scalable broad-system probes beyond the finite orbital/ERI representation; multistate and optimized-orbital refinement; adaptive fragment/bath/QM-region changes through the common workflow; cost-calibrated allocation between electronic refinements and actual sampling/transmission trajectories; overlap-qualified free-energy corrections; downstream kinetic-observable sensitivities; and measured Metal/TensorOps acceleration. No speedup, enzyme-barrier accuracy, or experimental agreement is asserted here.
+The following remain separate development and scientific-qualification work: scalable broad-system probes beyond the finite orbital/ERI representation and unrestricted/spin-polarized molecular preparation; adaptive fragment/bath/QM-region changes through the common workflow; cost-calibrated allocation between electronic refinements and actual sampling/transmission trajectories; overlap-qualified free-energy corrections; downstream kinetic-observable sensitivities; and measured Metal/TensorOps acceleration. No speedup, enzyme-barrier accuracy, or experimental agreement is asserted here.
 
 ## Methodological sources
 
@@ -57,3 +67,9 @@ The implementation combines established building blocks; their combination is a 
 - Selected CI and perturbative selection: Holmes, Tubman and Umrigar, *Heat-bath Configuration Interaction*, arXiv:1606.07453. The native implementation uses its documented deterministic residual/contribution ranking; it is not presented as a reproduction of every HCI screening algorithm.
 - Orbital-information-driven representation optimization: *Quantum Information-Assisted Complete Active Space Optimization*, arXiv:2309.01676. Its formal construction does not make an arbitrary approximate mutual-information cut a certified reaction-rate bound.
 - Existing NumiVivo conventions: [ECC-DMET integration](ECC_DMET_INTEGRATION.md), [native correlated execution](NATIVE_CORRELATED_EXECUTION.md), and [artifacts and provenance](ARTIFACTS_AND_PROVENANCE.md).
+
+## V2 migration and observed scope
+
+New requests/results use `/v2`; the property and anchor workflow operation versions are also `2`. Legacy v1 requests remain accepted only with their original single-root, fixed-orbital features. Old v1 reports must be rerun; they are not relabeled as v2 evidence. An empty candidate set is accepted only when the whole orbital space is already active.
+
+The focused portable harness now includes 39 assertions: the earlier failure cases, a two-state cancellation fixture, degenerate state-subspace retention, shared state-averaged optimization and native H2 AO/HF/projector/cross-overlap preparation. These are implementation checks, not a measured speedup, molecular barrier benchmark or full Apple package claim. The native-CLI driver and full-module integration tests separately exercise source binding, cached primitives, versioned recipes and optimized-frame export.

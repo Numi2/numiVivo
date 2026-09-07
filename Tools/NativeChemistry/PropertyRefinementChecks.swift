@@ -79,6 +79,60 @@ import Foundation
         try rejects("forged orbital-information coverage rejects") {
             try VivoSelectiveOrbitalInformation.validate(bad,state: state,selection: information.selection)
         }
+        let multiRequest = try VivoPropertyRefinementExamples.multistateCancellation()
+        let multi = try VivoPropertyDirectedSpace.run(multiRequest)
+        try require(multi.sensitivityEstablishedWithinDeclaredPool && multi.finalSpace.active == [0,1,2,3],
+                    "multistate refinement expands despite average-energy cancellation")
+        let shifts = multi.rounds[0].trials[0].shift.rootShifts!
+        try require(abs(shifts[0].forwardHartree + shifts[1].forwardHartree) < 1e-10 &&
+                    abs(shifts[0].forwardHartree) > 0.01,"opposite state errors do not cancel the acceptance criterion")
+        try require(multi.rounds[0].trials[0].shift.maximumStateGapShiftHartree! > 0.01,
+                    "every pairwise state gap participates in qualification")
+        var mixing = VivoQMMatrix(2,2)
+        mixing[0,0] = 1/sqrt(2); mixing[0,1] = -1/sqrt(2)
+        mixing[1,0] = 1/sqrt(2); mixing[1,1] = 1/sqrt(2)
+        let grouped = VivoRefinementStatePolicy(labels: ["a","b"],groups: [[0,1]])
+        let retained = try grouped.minimumRetainedOverlapSquared(mixing,threshold: 0.9)
+        try require(retained > 0.999999,"degenerate state-subspace rotations preserve physical overlap")
+        try rejects("separate state identities cannot silently mix") {
+            _ = try VivoRefinementStatePolicy(labels: ["a","b"],groups: [[0],[1]])
+                .minimumRetainedOverlapSquared(mixing,threshold: 0.9)
+        }
+        try rejects("near-degenerate roots across separate groups reject") {
+            try VivoRefinementStatePolicy(labels: ["a","b"],groups: [[0],[1]]).validateSpectrum([0,1e-12])
+        }
+        let saRequest = try changed(multiRequest) { json in
+            var cfg = VivoMultiStateCASSCFConfiguration(weights: [0.5,0.5],rootLabels: ["lower","upper"],
+                optimization: .init(gradientTolerance: 1e-8,energyToleranceHartree: 1e-12),followRoots: false)
+            cfg.davidson.residualTolerance = 1e-12
+            let solver = VivoSpaceRefinementSolver.stateAveragedCASSCF(configuration: cfg,
+                states: .init(labels: ["lower","upper"],groups: [[0],[1]]))
+            json["solver"] = try JSONSerialization.jsonObject(with: JSONEncoder().encode(solver))
+        }
+        let sa = try VivoPropertyDirectedSpace.run(saRequest)
+        try require(sa.sensitivityEstablishedWithinDeclaredPool,"state-averaged CASSCF uses shared refinement loop")
+        try require(sa.confirmation!.chosen.points.allSatisfy { $0.optimizedOrbitalRotation != nil },
+                    "optimized orbital frames survive the refinement result")
+        try require(sa.reservedAuxiliaryWork > 0 && sa.hamiltonianOperatorApplications > 0,
+                    "optimized refinement reports aggregate solver work")
+        let molecularRequest = try VivoPropertyRefinementExamples.molecularHydrogenStretch()
+        let preparation = try VivoMolecularSpacePreparation.prepare(molecularRequest)
+        try require(preparation.refinementRequest.initialSpace.active == [0,1] &&
+                    preparation.refinementRequest.candidateBlocks.isEmpty,"atomic projection produces a complete small molecular seed")
+        let molecular = try VivoPropertyDirectedSpace.run(preparation.refinementRequest)
+        try require(molecular.sensitivityEstablishedWithinDeclaredPool,"molecular preparation feeds the actual refinement solver")
+        try require(preparation.refinementRequest.points[1].overlapWithPrevious != (try? VivoQMMatrix.identity(2)),
+                    "cross-geometry molecular overlap is integrated rather than assigned identity")
+        let atomH = VivoElement.from(symbol: "H")!
+        let atoms = [VivoMolecularAtom(index: 0,name: "H-left",element: atomH),
+                     VivoMolecularAtom(index: 1,name: "H-right",element: atomH)]
+        let seeds = try VivoReactionAtomSeeds.derive(source: .mappedEndpoints(
+            reactant: .init(identifier: "bonded",atoms: atoms,bonds: [.init(atomA: 0,atomB: 1)]),
+            product: .init(identifier: "separated",atoms: atoms),additionalAtomIndices: []),
+            atomIdentifiers: ["H-left","H-right"],system: molecularRequest.snapshots[0].system)
+        try require(seeds.map(\.atomIndex) == [0,1],"mapped bond changes generate mandatory reactive atoms")
+        let unknown = try changed(molecularRequest) { $0["targetShellIndices"] = [99] }
+        try rejects("unknown atomic target shell rejects") { try unknown.validate() }
         if CommandLine.arguments.count == 2 {
             let directory = URL(fileURLWithPath: CommandLine.arguments[1])
             try FileManager.default.createDirectory(at: directory,withIntermediateDirectories: true)
@@ -86,11 +140,15 @@ import Foundation
             try encoder.encode(request).write(to: directory.appendingPathComponent("algebraic.request.json"))
             try encoder.encode(result).write(to: directory.appendingPathComponent("algebraic.result.json"))
             try encoder.encode(selected).write(to: directory.appendingPathComponent("selected.result.json"))
+            try encoder.encode(multi).write(to: directory.appendingPathComponent("multistate.result.json"))
+            try encoder.encode(sa).write(to: directory.appendingPathComponent("optimized.result.json"))
+            try encoder.encode(preparation).write(to: directory.appendingPathComponent("molecular.preparation.json"))
+            try encoder.encode(molecular).write(to: directory.appendingPathComponent("molecular.result.json"))
             try encoder.encode(heldoutResult).write(to: directory.appendingPathComponent("holdout-rejection.result.json"))
-            try JSONSerialization.data(withJSONObject: ["scope":"portable native refinement subset; algebraic fixtures only",
+            try JSONSerialization.data(withJSONObject: ["scope":"portable native refinement subset; algebraic and H2 preparation fixtures",
                 "passed":passed,"assertions":passed.count],options: [.sortedKeys,.prettyPrinted])
                 .write(to: directory.appendingPathComponent("results.json"))
         }
-        print("\(passed.count) property-refinement assertions passed; algebraic fixtures, not chemical qualification")
+        print("\(passed.count) property-refinement assertions passed; algebraic and H2 preparation fixtures; not chemical qualification")
     }
 }

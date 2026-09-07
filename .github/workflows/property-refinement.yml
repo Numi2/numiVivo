@@ -1,0 +1,66 @@
+name: Property refinement integration
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/property-refinement.yml'
+      - 'Sources/NumiVivoKit/Refinement/**'
+      - 'Sources/NumiVivoKit/QM/**'
+      - 'Sources/NumiVivoKit/ManyBody/**'
+      - 'Sources/NumiVivoKit/Workflow/**'
+      - 'Sources/NumiVivoKit/Platform/*Refinement*'
+      - 'Sources/NumiVivoCLI/VivoElectronicCLICommands.swift'
+      - 'Tools/NativeChemistry/*Refinement*'
+      - 'Tools/NativeChemistry/check_refinement_cli.py'
+      - 'Tools/NativeChemistry/build_scoped_cli.sh'
+      - 'Tools/check_property_refinement.sh'
+permissions:
+  contents: read
+concurrency:
+  group: property-refinement-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  apple:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Execute production numerical subset
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD > "$RUNNER_TEMP/refinement-source.txt"
+          bash Tools/check_property_refinement.sh "$RUNNER_TEMP/refinement-numerics" 2>&1 | tee "$RUNNER_TEMP/refinement-numerics.log"
+      - name: Build production chemistry CLI and artifact system
+        id: cli
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash Tools/NativeChemistry/build_scoped_cli.sh "$RUNNER_TEMP/refinement-cli" 2>&1 | tee "$RUNNER_TEMP/refinement-cli-build.log"
+      - name: Verify molecular multistate and cache workflows
+        if: ${{ !cancelled() && steps.cli.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Tools/NativeChemistry/check_refinement_cli.py "$RUNNER_TEMP/refinement-cli/numivivo-chemistry" "$RUNNER_TEMP/refinement-cli-checks" 2>&1 | tee "$RUNNER_TEMP/refinement-cli-checks.log"
+      - name: Retain source identities and failures
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: property-refinement-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/refinement-source.txt
+            ${{ runner.temp }}/refinement-numerics/
+            ${{ runner.temp }}/refinement-numerics.log
+            ${{ runner.temp }}/refinement-cli/compiler.txt
+            ${{ runner.temp }}/refinement-cli/platform.txt
+            ${{ runner.temp }}/refinement-cli/sources.sha256
+            ${{ runner.temp }}/refinement-cli-build.log
+            ${{ runner.temp }}/refinement-cli-checks/
+            ${{ runner.temp }}/refinement-cli-checks.log
+          if-no-files-found: error
+          retention-days: 14
