@@ -145,7 +145,7 @@ public enum VivoConstantPHMetalStateFactory {
         let systemFingerprint: VivoFingerprint = try system.fingerprint()
         let executionFingerprint: VivoFingerprint = try VivoMDCandidateForceProvider.executionFingerprint(
             configuration: configuration, provider: provider)
-        let providerFingerprint: VivoFingerprint? = provider?.executionFingerprint
+        let providerFingerprint: VivoFingerprint? = provider?.fingerprint
         let identity: Identity = .init(
             schema: "numivivo.org/constant-ph-metal-hamiltonian/v1",
             system: systemFingerprint,
