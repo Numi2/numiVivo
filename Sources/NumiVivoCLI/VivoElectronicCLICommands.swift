@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoElectronicCLICommands {
     static func handles(_ command:String?) -> Bool {
-        ["chemistry-template","chemistry-run","chemistry-solve","chemistry-help"].contains(command ?? "")
+        ["chemistry-template","chemistry-run","chemistry-solve","chemistry-refine","chemistry-correlations","chemistry-export-space","chemistry-help"].contains(command ?? "")
     }
     private struct ImplementationIdentity: Codable {
         let executable: VivoFingerprint
@@ -32,7 +32,7 @@ struct VivoElectronicCLICommands {
         init(_ arguments:[String]) throws {
             command=arguments.first ?? "chemistry-help"
             var positional:[String]=[], options:[String:String]=[:], i=1
-            let allowed:Set<String> = ["--output","--store","--solver","--budget"]
+            let allowed:Set<String> = ["--output","--store","--solver","--budget","--selection","--point"]
             while i<arguments.count {
                 let word=arguments[i]
                 if word.hasPrefix("--") {
@@ -104,7 +104,7 @@ struct VivoElectronicCLICommands {
         try output(payload,path:args.options["--output"])
         if let path=args.options["--output"] { try output(VivoCanonicalJSON.encode(receipt),path:path+".receipt.json") }
         let reused=receipt.nodes.filter(\.reused).count
-        FileHandle.standardError.write(Data("Native chemistry complete: \(receipt.nodes.count) stages, \(reused) reused; result SHA-256 \(receipt.result.hex).\n".utf8))
+        FileHandle.standardError.write(Data("Native chemistry artifacts recorded: \(receipt.nodes.count) stages, \(reused) reused; result SHA-256 \(receipt.result.hex).\n".utf8))
     }
     func run(arguments:[String]) async -> Int32 {
         do {
@@ -121,14 +121,18 @@ struct VivoElectronicCLICommands {
             guard args.positional.count==1 else { throw VivoChemistryError.invalid("one input JSON file is required") }
             let source=args.positional[0]
             switch args.command {
-            case "chemistry-run": try args.allow(["--output","--store"])
+            case "chemistry-run", "chemistry-refine": try args.allow(["--output","--store"])
+            case "chemistry-correlations": try args.allow(["--output","--store","--budget","--selection"])
+            case "chemistry-export-space":
+                try args.allow(["--output","--store","--point"])
+                guard args.options["--point"] != nil else { throw VivoChemistryError.invalid("chemistry-export-space requires --point identifier") }
             case "chemistry-solve":
                 try args.allow(["--output","--store","--solver","--budget"])
                 guard args.options["--solver"] != nil else { throw VivoChemistryError.invalid("chemistry-solve requires --solver solver.json") }
             default: throw VivoChemistryError.invalid("unknown electronic command")
             }
             if let destination=args.options["--output"] {
-                let inputs=([source]+[args.options["--solver"],args.options["--budget"]].compactMap{$0}).map {
+                let inputs=([source]+[args.options["--solver"],args.options["--budget"],args.options["--selection"]].compactMap{$0}).map {
                     URL(fileURLWithPath:$0).resolvingSymlinksInPath().standardizedFileURL
                 }
                 for path in [destination,destination+".receipt.json"] {
@@ -140,6 +144,58 @@ struct VivoElectronicCLICommands {
             let store=try VivoArtifactStore(rootURL:URL(fileURLWithPath:args.options["--store"] ?? ".numivivo/chemistry-artifacts"))
             let workflow=VivoChemistryWorkflow(store:store), identity=try implementation()
             switch args.command {
+            case "chemistry-refine", "chemistry-correlations", "chemistry-export-space":
+                let budget: VivoChemistryBudget, inputID: VivoFingerprint
+                let operation: VivoChemistryOperation, config: VivoJSONValue, slot: String, kind: String
+                if args.command == "chemistry-refine" {
+                    let request = try VivoCanonicalJSON.decode(VivoPropertyDirectedSpaceRequest.self,from: read(source))
+                    try request.validate(); budget = request.budget
+                    inputID = try await put(request,kind: "vivo.property-directed-space-request",store: store)
+                    operation = VivoCorrelationRefinementOperations.propertyDirectedSpace(implementationFingerprint: identity)
+                    config = .object([:]); slot = "request"; kind = "vivo.property-directed-space-request"
+                } else if args.command == "chemistry-export-space" {
+                    let report = try VivoCanonicalJSON.decode(VivoPropertyDirectedSpaceResult.self,from: read(source))
+                    budget = report.request.budget
+                    guard let point = args.options["--point"] else { throw VivoChemistryError.invalid("missing anchor identifier") }
+                    inputID = try await put(report,kind: "vivo.property-directed-space-result",store: store)
+                    operation = VivoCorrelationRefinementOperations.refinedHamiltonian(implementationFingerprint: identity)
+                    config = try VivoCanonicalJSON.decode(VivoJSONValue.self,from: VivoCanonicalJSON.encode(VivoRefinedHamiltonianSelection(pointIdentifier: point)))
+                    slot = "refinement"; kind = "vivo.property-directed-space-result"
+                } else {
+                    budget = try args.options["--budget"].map { try VivoCanonicalJSON.decode(VivoChemistryBudget.self,from: read($0)) } ?? .init()
+                    try budget.validate()
+                    let state = try VivoCanonicalJSON.decode(VivoCIState.self,from: read(source,maximumBytes: budget.maximumBytes))
+                    try state.validate(budget: budget)
+                    let selection: VivoOrbitalInformationSelection
+                    if let path = args.options["--selection"] {
+                        selection = try VivoCanonicalJSON.decode(VivoOrbitalInformationSelection.self,from: read(path))
+                    } else {
+                        // Default is linear single-orbital coverage, not an
+                        // implicit quadratic request for every orbital pair.
+                        selection = .init(orbitals: Array(0..<state.orbitalCount))
+                    }
+                    try selection.validate(orbitalCount: state.orbitalCount)
+                    inputID = try await put(state,kind: "vivo.ci-state",store: store)
+                    operation = VivoCorrelationRefinementOperations.orbitalInformation(implementationFingerprint: identity)
+                    config = try VivoCanonicalJSON.decode(VivoJSONValue.self,from: VivoCanonicalJSON.encode(selection))
+                    slot = "state"; kind = "vivo.ci-state"
+                }
+                let task = VivoChemistryTask(operation: operation.identifier,version: operation.version,implementationFingerprint: identity,
+                    inputs: [.init(name: slot,artifact: inputID,kind: kind)],configuration: config,outputs: operation.outputs,
+                    resources: .init(budget: budget,maximumInputBytes: budget.maximumBytes,maximumOutputBytes: budget.maximumBytes))
+                let result = try await workflow.run(task,using: operation)
+                guard let value = result.outputs.first else { throw VivoChemistryError.invalid("correlation/refinement output missing") }
+                let payload = try await workflow.payload(artifact: value.artifact,expectedKind: value.kind)
+                try finish(payload: payload,receipt: .init(schema: "numivivo.org/electronic-cli-receipt/v1",input: inputID,
+                    implementation: identity,nodes: [.init(identifier: args.command,task: result.taskFingerprint,
+                    receipt: result.receiptFingerprint,reused: result.reused)],result: value.artifact,resultKind: value.kind),args: args)
+                if args.command == "chemistry-refine" {
+                    let report = try VivoCanonicalJSON.decode(VivoPropertyDirectedSpaceResult.self,from: payload)
+                    if !report.sensitivityEstablishedWithinDeclaredPool {
+                        FileHandle.standardError.write(Data("Refinement evidence retained, but sensitivity is not established: \(report.termination.rawValue).\n".utf8))
+                        return 2
+                    }
+                }
             case "chemistry-run":
                 try args.allow(["--output","--store"])
                 let request=try VivoElectronicRequestDocument.decode(read(source))
@@ -178,6 +234,13 @@ struct VivoElectronicCLICommands {
                 try finish(payload:payload,receipt:.init(schema:"numivivo.org/electronic-cli-receipt/v1",input:inputID,
                     implementation:identity,nodes:[.init(identifier:"many-body",task:result.taskFingerprint,receipt:result.receiptFingerprint,reused:result.reused)],
                     result:value.artifact,resultKind:value.kind),args:args)
+                if value.kind == "vivo.selected-ci-result" {
+                    let report = try VivoCanonicalJSON.decode(VivoSelectedCIResult.self,from: payload)
+                    if !report.converged {
+                        FileHandle.standardError.write(Data("Unconverged selected-CI probe retained: \(report.termination.rawValue).\n".utf8))
+                        return 2
+                    }
+                }
             default: throw VivoChemistryError.invalid("unknown electronic command")
             }
             return 0
@@ -186,6 +249,16 @@ struct VivoElectronicCLICommands {
         }
     }
     private func template(_ name:String) throws -> Data {
+        if name == "solver-selected-ci" { return try VivoCanonicalJSON.encode(VivoSelectedCISolverRequest()) }
+        if name == "solver-selected-ci-probe" {
+            return try VivoCanonicalJSON.encode(VivoSelectedCISolverRequest(requireConverged: false))
+        }
+        if name == "algebraic-space-refinement" || name == "algebraic-selected-space-refinement" {
+            return try VivoCanonicalJSON.encode(VivoPropertyRefinementExamples.algebraicPath(selectedCI: name == "algebraic-selected-space-refinement"))
+        }
+        if name == "orbital-information-selection" {
+            return try VivoCanonicalJSON.encode(VivoOrbitalInformationSelection(orbitals: [0,1],pairs: [.init(0,1)]))
+        }
         if name == "solver-ccsd" { return try VivoCanonicalJSON.encode(VivoManyBodySolverRequest.ccsd(configuration:.init())) }
         if name == "solver-lih-sa-casscf" {
             return try VivoCanonicalJSON.encode(VivoAdvancedManyBodyRequest.multistateCASSCF(partition:.init(doublyOccupiedCore:[0],active:[1,2]),
@@ -227,18 +300,38 @@ struct VivoElectronicCLICommands {
       numivivo chemistry-run h2.json --store .numivivo/chemistry-artifacts --output h2.result.json
       numivivo chemistry-template solver-fci --output solver.json
       numivivo chemistry-solve hamiltonian.json --solver solver.json --output result.json
+      numivivo chemistry-template algebraic-space-refinement --output refinement.json
+      numivivo chemistry-refine refinement.json --output refinement.result.json
+      numivivo chemistry-correlations state.json --selection pairs.json --output information.json
+      numivivo chemistry-export-space refinement.result.json --point barrier-point --output anchor.json
 
     Templates: h2-ccsd, h2-casci, h2-casscf, h2-lda, h2-lda-cpcm,
                h2-cpcm-rhf, h2-direct-fci, h2-tensor-ccsd, h2-smooth-cpcm,
                h2-ecc-dmet, solver-ccsd, solver-fci, solver-direct-fci,
-               solver-tensor-ccsd, solver-ecc-dmet, solver-lih-sa-casscf.
+               solver-tensor-ccsd, solver-ecc-dmet, solver-lih-sa-casscf,
+               solver-selected-ci, solver-selected-ci-probe, orbital-information-selection,
+               algebraic-space-refinement, algebraic-selected-space-refinement.
     chemistry-run explicitly dispatches original and advanced request schemas.
     Advanced JSON supports densityFittedMP2 (with an explicit auxiliary basis),
     multistateCASSCF, smoothCPCM and integrated eccDMET. No method fallback.
-    chemistry-solve accepts an optional --budget budget.json.
+    chemistry-solve accepts an optional --budget budget.json. Selected CI uses
+    the shared native Davidson kernel; its probe template can retain a bounded,
+    unconverged result (exit 2) but does not qualify it. PT2 is not an error bound.
+    chemistry-correlations accepts an optional --budget and --selection. Without
+    --selection it computes single-orbital information only; unmeasured pairs
+    are not zero. state.json is an explicit VivoCIState, not a solver wrapper.
+    chemistry-refine compares matched electronic profiles using the request's
+    budget. Incomplete or failed confirmation returns exit code 2 while retaining
+    its result/receipt. Exit 0 establishes sensitivity only inside the declared
+    candidate pool, not an activation free energy, rate or production update.
+    chemistry-export-space materializes only a declared anchor from a validated,
+    sensitivity-established report. Parent Hamiltonian, orbital frame, partition
+    and evidence fingerprints enter its provenance. It never changes a live
+    production Hamiltonian or qualifies unseen geometries.
+    The algebraic templates test software behavior, not molecular accuracy.
     With --output, a sibling <output>.receipt.json records input/result hashes,
-    implementation identity and reused stages. Nonconverged solvers fail and
-    do not publish a successful workflow receipt. All coordinates are in Bohr;
+    implementation identity and reused stages. Accepted-solver policies reject
+    nonconvergence; explicit probes retain diagnostics instead. Coordinates are in Bohr;
     these electronic/continuum energies are not activation Gibbs free energies.
 
     """
