@@ -65,8 +65,36 @@ struct VivoWorkflowCLICommands {
         guard data.count <= 256*1024*1024 else { throw VivoChemistryError.resourceLimit("workflow file grew beyond its read limit") }
         return data
     }
+    /// Resolve the existing ancestor before appending a not-yet-created suffix.
+    /// Foundation may leave a symlink unresolved when the leaf does not exist.
+    /// Dangling symlinks are not safe output roots and are rejected explicitly.
+    private static func canonicalURL(_ url: URL) throws -> URL {
+        let manager = FileManager.default
+        var ancestor = url.absoluteURL, suffix: [String] = []
+        guard ancestor.isFileURL, ancestor.path.utf8.count <= 8192 else {
+            throw VivoChemistryError.invalid("workflow output must be a bounded local file path")
+        }
+        while !manager.fileExists(atPath: ancestor.path) {
+            if let attributes = try? manager.attributesOfItem(atPath: ancestor.path),
+               attributes[.type] as? FileAttributeType == .typeSymbolicLink {
+                throw VivoChemistryError.invalid("workflow path has a dangling symbolic link")
+            }
+            let parent = ancestor.deletingLastPathComponent()
+            guard parent.path != ancestor.path, !ancestor.lastPathComponent.isEmpty, suffix.count < 4096 else {
+                throw VivoChemistryError.invalid("workflow path has no resolvable existing ancestor")
+            }
+            suffix.append(ancestor.lastPathComponent); ancestor = parent
+        }
+        var resolved = ancestor.resolvingSymlinksInPath().standardizedFileURL
+        for component in suffix.reversed() { resolved.appendPathComponent(component) }
+        return resolved.standardizedFileURL
+    }
+    private static func isInside(_ target: URL, root: URL) -> Bool {
+        let prefix = root.path == "/" ? "/" : root.path+"/"
+        return target.path == root.path || target.path.hasPrefix(prefix)
+    }
     private static func aliases(_ a: URL, _ b: URL) throws -> Bool {
-        let x = a.standardizedFileURL.resolvingSymlinksInPath(), y = b.standardizedFileURL.resolvingSymlinksInPath()
+        let x = try canonicalURL(a), y = try canonicalURL(b)
         if x == y { return true }
         let manager = FileManager.default
         guard manager.fileExists(atPath: x.path), manager.fileExists(atPath: y.path) else { return false }
@@ -79,7 +107,7 @@ struct VivoWorkflowCLICommands {
     }
     private static func output<T: Encodable>(_ value: T, arguments: Arguments, source: String? = nil) throws {
         if let path = arguments.options["--output"] {
-            let destination = URL(fileURLWithPath: path).standardizedFileURL.resolvingSymlinksInPath()
+            let destination = try canonicalURL(URL(fileURLWithPath: path))
             if let source, try aliases(destination,URL(fileURLWithPath: source)) {
                 throw VivoChemistryError.invalid("refusing to overwrite workflow input")
             }
@@ -92,7 +120,7 @@ struct VivoWorkflowCLICommands {
     private static func publish(_ execution: VivoWorkflowExecution, arguments: Arguments) throws {
         try output(execution.report, arguments: arguments)
         if let path = arguments.options["--output"] {
-            let receipt = URL(fileURLWithPath: path).appendingPathExtension("receipt.json")
+            let receipt = try canonicalURL(URL(fileURLWithPath: path).appendingPathExtension("receipt.json"))
             if FileManager.default.fileExists(atPath: receipt.path), !arguments.switches.contains("--force") {
                 throw VivoChemistryError.invalid("receipt output exists; use --force explicitly")
             }
@@ -105,7 +133,7 @@ struct VivoWorkflowCLICommands {
     private static func publishCampaign(_ execution: VivoAdaptiveCampaignExecution,arguments: Arguments) throws {
         try output(execution.report,arguments: arguments)
         if let path = arguments.options["--output"] {
-            let receipt = URL(fileURLWithPath: path).appendingPathExtension("receipt.json")
+            let receipt = try canonicalURL(URL(fileURLWithPath: path).appendingPathExtension("receipt.json"))
             if FileManager.default.fileExists(atPath: receipt.path), !arguments.switches.contains("--force") {
                 throw VivoChemistryError.invalid("campaign receipt exists; use --force explicitly")
             }
@@ -127,28 +155,28 @@ struct VivoWorkflowCLICommands {
     private static func execute(_ arguments: Arguments) async throws {
         if arguments.command == "workflow-help" { try arguments.require(0, allowed: []); print(help); return }
         let id = try implementation(), registry = try VivoPlatformOperations.registry(implementationFingerprint: id)
-        let rootStore = URL(fileURLWithPath: arguments.options["--store"] ?? ".numivivo/workflow-artifacts").standardizedFileURL.resolvingSymlinksInPath()
-        if ["workflow-run", "workflow-verify", "campaign-run", "campaign-resume"].contains(arguments.command), let path = arguments.options["--output"] {
-            let target = URL(fileURLWithPath: path).standardizedFileURL.resolvingSymlinksInPath()
-            let receipt = target.appendingPathExtension("receipt.json")
-            if !arguments.switches.contains("--force"), FileManager.default.fileExists(atPath: receipt.path) {
-                throw VivoChemistryError.invalid("workflow receipt exists; use --force explicitly")
-            }
-        }
+        let rootStore = try canonicalURL(URL(fileURLWithPath: arguments.options["--store"] ?? ".numivivo/workflow-artifacts"))
         if let path = arguments.options["--output"] {
-            let target = URL(fileURLWithPath: path).standardizedFileURL.resolvingSymlinksInPath()
-            if arguments.options["--store"] != nil || ["workflow-run","workflow-verify","workflow-export","workflow-import","artifact-put","artifact-show","campaign-run","campaign-resume"].contains(arguments.command) {
-                guard target.path != rootStore.path, !target.path.hasPrefix(rootStore.path + "/") else {
-                    throw VivoChemistryError.invalid("workflow exports must be outside the artifact store")
+            let output = URL(fileURLWithPath: path)
+            let writesReceipt = ["workflow-run", "workflow-verify", "workflow-export", "campaign-run", "campaign-resume"].contains(arguments.command)
+            let destinations = writesReceipt ? [output, output.appendingPathExtension("receipt.json")] : [output]
+            let usesStore = arguments.options["--store"] != nil || ["workflow-run","workflow-verify","workflow-export","workflow-import","artifact-put","artifact-show","campaign-run","campaign-resume"].contains(arguments.command)
+            let readsFile = ["workflow-plan", "workflow-run", "workflow-import", "artifact-put", "campaign-plan", "campaign-run"].contains(arguments.command)
+            for destination in destinations {
+                let target = try canonicalURL(destination)
+                if usesStore, isInside(target,root: rootStore) {
+                    throw VivoChemistryError.invalid("workflow outputs and receipts must be outside the artifact store")
                 }
-            }
-            if ["workflow-plan", "workflow-run", "workflow-import", "artifact-put", "campaign-plan", "campaign-run"].contains(arguments.command), let input = arguments.positionals.first {
-                guard try !aliases(target,URL(fileURLWithPath: input)) else {
+                if readsFile, let input = arguments.positionals.first,
+                   try aliases(target,URL(fileURLWithPath: input)) {
                     throw VivoChemistryError.invalid("refusing to overwrite workflow source input")
                 }
+                if FileManager.default.fileExists(atPath: target.path), !arguments.switches.contains("--force") {
+                    throw VivoChemistryError.invalid("output or receipt exists; use --force explicitly")
+                }
             }
-            if FileManager.default.fileExists(atPath: target.path), !arguments.switches.contains("--force") {
-                throw VivoChemistryError.invalid("output exists; use --force explicitly")
+            if writesReceipt, try aliases(destinations[0],destinations[1]) {
+                throw VivoChemistryError.invalid("workflow output and receipt alias each other")
             }
         }
         switch arguments.command {
@@ -213,13 +241,13 @@ struct VivoWorkflowCLICommands {
             let reader = VivoChemistryWorkflow(store: store)
             let bytes = try await reader.payload(artifact: artifact, expectedKind: kind)
             if let path = arguments.options["--output"] {
-                let destination = URL(fileURLWithPath: path).standardizedFileURL.resolvingSymlinksInPath()
+                let destination = try canonicalURL(URL(fileURLWithPath: path))
                 let receipt = destination.appendingPathExtension("receipt.json")
                 if FileManager.default.fileExists(atPath: receipt.path), !arguments.switches.contains("--force") {
                     throw VivoChemistryError.invalid("export receipt exists; use --force explicitly")
                 }
-                let resolvedReceipt = receipt.standardizedFileURL.resolvingSymlinksInPath()
-                guard resolvedReceipt.path != rootStore.path, !resolvedReceipt.path.hasPrefix(rootStore.path+"/") else {
+                let resolvedReceipt = try canonicalURL(receipt)
+                guard !isInside(resolvedReceipt,root: rootStore) else {
                     throw VivoChemistryError.invalid("export receipt aliases the artifact store")
                 }
                 try bytes.write(to: destination, options: .atomic)

@@ -101,6 +101,13 @@ def main():
     store_link = out / 'linked-store'
     store_link.symlink_to(store, target_is_directory=True)
     run('store-symlink-alias', 'workflow-run', recipe_path, '--output', store_link / 'new-leaf.json', '--store', store, expected=65)
+    check(not (store / 'new-leaf.json').exists(), 'symlinked missing leaf is rejected before any artifact write')
+    run('store-symlink-nested-alias', 'workflow-run', recipe_path, '--output', store_link / 'absent-parent' / 'new-leaf.json', '--store', store, expected=65)
+    receipt_destination = out / 'receipt-alias.json'
+    receipt_alias = receipt_destination.with_suffix(receipt_destination.suffix + '.receipt.json')
+    receipt_alias.symlink_to(store / 'would-be-receipt.json')
+    run('receipt-store-alias', 'workflow-run', recipe_path, '--output', receipt_destination, '--force', '--store', store, expected=65)
+    check(not receipt_destination.exists() and not (store / 'would-be-receipt.json').exists(), 'receipt preflight prevents partially published reports')
     run('no-clobber', 'workflow-run', recipe_path, '--output', out / 'first.json', '--store', store, expected=65)
     malformed = copy.deepcopy(recipe)
     malformed['nodes'][0]['operation'] = 'not.registered'
