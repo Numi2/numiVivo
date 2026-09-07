@@ -112,7 +112,7 @@ struct VivoMolecularSamplingCursor:Codable,Sendable,Equatable {
 /// A complete cross-replica block is the durable publication boundary.
 public enum VivoMolecularSamplingRunner {
     public static func checkpointReferenceName(requestFingerprint:VivoFingerprint) -> String {
-        "molecular-sampling/"+requestFingerprint.hex+"/checkpoint"
+        "molecular-sampling-"+requestFingerprint.hex+"-checkpoint"
     }
     private static func publish(_ cursor:VivoMolecularSamplingCursor,store:VivoArtifactStore) async throws -> VivoFingerprint {
         let artifact=try await store.put(data:VivoCanonicalJSON.encode(cursor),kind:"molecular-sampling-checkpoint",mediaType:"application/json")

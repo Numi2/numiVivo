@@ -431,6 +431,8 @@ import Testing
         let moved = f.root.deletingLastPathComponent().appendingPathComponent(f.root.lastPathComponent + "-moved")
         defer { try? FileManager.default.removeItem(at: f.root); try? FileManager.default.removeItem(at: moved) }
         let name = VivoMolecularSamplingRunner.checkpointReferenceName(requestFingerprint: f.requestID)
+        #expect(name == "molecular-sampling-" + f.requestID.hex + "-checkpoint")
+        #expect(name != VivoMolecularSamplingRunner.checkpointReferenceName(requestFingerprint: f.artifact.fingerprint))
         _ = try await f.store.setReference(name, to: f.artifact)
         let before = try await f.store.list()
         let reader = try await VivoMolecularSamplingArchiveReader.open(store: f.store, checkpoint: f.artifact.fingerprint)
