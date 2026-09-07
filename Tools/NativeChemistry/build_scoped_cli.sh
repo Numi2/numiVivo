@@ -10,7 +10,7 @@ if [[ "$(uname -s)" != Darwin ]]; then
 fi
 mkdir -p "$OUT"; OUT="$(cd "$OUT" && pwd)"
 FILES=()
-for directory in QM ManyBody Embedding ReactionQualification; do
+for directory in QM ManyBody Embedding Refinement ReactionQualification; do
   for file in "$ROOT/Sources/NumiVivoKit/$directory/"*.swift; do FILES+=("$file"); done
  done
 for file in "$ROOT/Sources/NumiVivoKit/QMEnv/"VivoCPCM*.swift; do FILES+=("$file"); done
@@ -18,8 +18,9 @@ FILES+=("$ROOT/Sources/NumiVivoKit/QMEnv/VivoSmoothCPCM.swift")
 for name in VivoArtifactPrimitives CanonicalArtifact VivoArtifactStore VivoRootedFileStore; do
   FILES+=("$ROOT/Sources/NumiVivoKit/Artifacts/$name.swift")
 done
+FILES+=("$ROOT/Sources/NumiVivoKit/Structure/VivoMolecularStructure.swift")
 FILES+=("$ROOT/Sources/NumiVivoKit/JSONValue.swift" "$ROOT/Sources/NumiVivoKit/Geometry/VivoCartesianGeometry.swift")
-for name in VivoChemistryWorkflow VivoElectronicWorkflow VivoElectronicWorkflowOperations VivoAdvancedElectronicWorkflow VivoAdvancedChemistryOperations VivoElectronicRequestDispatch VivoECCDMETOperation VivoMolecularECCPathWorkflow VivoReproductionPreflight VivoReactionQualificationWorkflow; do
+for name in VivoChemistryWorkflow VivoElectronicWorkflow VivoElectronicWorkflowOperations VivoAdvancedElectronicWorkflow VivoAdvancedChemistryOperations VivoElectronicRequestDispatch VivoCorrelationRefinementOperations VivoRefinedHamiltonianOperation VivoECCDMETOperation VivoMolecularECCPathWorkflow VivoReproductionPreflight VivoReactionQualificationWorkflow; do
   FILES+=("$ROOT/Sources/NumiVivoKit/Workflow/$name.swift")
 done
 CLI=("$ROOT/Sources/NumiVivoCLI/VivoReactionCLICommands.swift" "$ROOT/Sources/NumiVivoCLI/VivoElectronicCLICommands.swift" "$ROOT/Sources/NumiVivoCLI/VivoECCPathCLICommands.swift" "$ROOT/Tools/NativeChemistry/ScopedCLIMain.swift")
