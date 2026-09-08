@@ -311,8 +311,10 @@ import Testing
         try VivoKineticsDocumentIO.write(encounterBytes, to: root.appendingPathComponent("encounter-result.json"))
         let encounterOutput = try VivoCanonicalJSON.decode(VivoConditionalEncounterWorkflowResult.self, from: encounterBytes)
         let encounter = encounterOutput.encounter, hazard = rate.rateConstant * campaign.encounter.reservoirPressurePa
-        try #require(encounterOutput.sourceReactionPayloadFingerprint == VivoCanonicalJSON.fingerprint(qualifiedBytes))
-        try #require(encounter.sourceTransitionStateFingerprint == VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(rate)))
+        let qualifiedPayloadFingerprint = try VivoCanonicalJSON.fingerprint(qualifiedBytes)
+        let rateFingerprint = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(rate))
+        try #require(encounterOutput.sourceReactionPayloadFingerprint == qualifiedPayloadFingerprint)
+        try #require(encounter.sourceTransitionStateFingerprint == rateFingerprint)
         try #require(encounter.transmission == rate.request.transmission && encounter.rateUnits == rate.rateUnits && encounter.molecularity == 2)
         try #require(abs(encounter.conditionalHazardPerSecond - hazard) <= 1e-12 * max(1, hazard))
         try #require(encounter.kinetics.observations.map(\.timeSeconds) == campaign.encounter.observationTimesSeconds)
