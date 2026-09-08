@@ -86,7 +86,11 @@ Its [measured follow-up](../Audit/2026-09-08_INTERACTING_ENSEMBLES.md) passes al
 seven prepared systems at three time steps over 5 ps, including independent
 endpoint energy checks. The completed 50 ps NVT matrix passes kinetic checks at
 0.5 fs, fails kinetic checks at 1 fs, and lacks sufficient configurational sampling
-at both steps. A separately declared 210 ps finer-step follow-up is running.
+at both steps. The separately declared 210 ps finer-step follow-up now passes
+the prescribed global kinetic and configurational checks using all six prepared
+rigid-water replicas, with independent checks on all 96 continuation endpoints.
+The original failures remain retained. This closes that bounded NVT gate;
+NPT, broader ensemble qualification and the subsequent roadmap gates remain open.
 
 1. Extend this panel to interacting NVE/NVT/NPT ensemble distributions,
    timestep refinement, constrained motion and numerical failure recovery.

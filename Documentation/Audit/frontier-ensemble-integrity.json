@@ -1,0 +1,40 @@
+{
+  "schema": "numivivo.org/frontier-ensemble-evidence-integrity/v1",
+  "copies": [
+    {
+      "schema": "numivivo.org/audit/evidence-integrity-verification/v1",
+      "manifestSHA256": "29a6c2de0d85a3cbf45d7ac7e59e807220ec21361780dd3130c392bbd6351802",
+      "root": "/Users/home/numivivo-ensemble-evidence-20260908",
+      "entries": 1734,
+      "regularFiles": 1734,
+      "symlinks": 0,
+      "declaredFileBytes": 6182195791,
+      "failures": [],
+      "passed": true,
+      "exclusions": [
+        "ensemble-mirror-verification.json",
+        "raw-ensemble-manifest.json",
+        "__pycache__"
+      ],
+      "scope": "Integrity of listed entries only. Exclusions and unlisted files are not verified. Existing scientific outcomes are unchanged; no trajectory is replayed."
+    },
+    {
+      "schema": "numivivo.org/audit/evidence-integrity-verification/v1",
+      "manifestSHA256": "29a6c2de0d85a3cbf45d7ac7e59e807220ec21361780dd3130c392bbd6351802",
+      "root": "/Users/n/numivivo-ensemble-evidence-20260908",
+      "entries": 1734,
+      "regularFiles": 1734,
+      "symlinks": 0,
+      "declaredFileBytes": 6182195791,
+      "failures": [],
+      "passed": true,
+      "exclusions": [
+        "ensemble-mirror-verification.json",
+        "raw-ensemble-manifest.json",
+        "__pycache__"
+      ],
+      "scope": "Integrity of listed entries only. Exclusions and unlisted files are not verified. Existing scientific outcomes are unchanged; no trajectory is replayed."
+    }
+  ],
+  "localInventoryEqualsSealOutsideExplicitExclusions": true
+}

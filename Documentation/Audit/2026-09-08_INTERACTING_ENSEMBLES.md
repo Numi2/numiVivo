@@ -116,10 +116,40 @@ including altered clocks, checkpoint words, energy accounting, source identities
 directory escapes, incomplete matrices and retained parent failures. The derived
 analysis policy explicitly names its one finer time step and separate schema.
 
-Measurement status: the longer follow-up is running. Its first zero-step restore
-preserved the complete checkpoint exactly. Ten-ps chunks use the same native
-binary, configuration and stochastic step counter, with independent endpoint
-energy checks. No longer-run ensemble verdict is available yet.
+All six replicas completed 210 ps. Each initial zero-step restore preserved its
+complete checkpoint exactly. All 96 ten-ps continuation chunks passed the state,
+clock, constraint and observation checks, plus independent potential and kinetic
+endpoint comparisons. The largest new potential error was 8.96e-6 kJ/mol per
+particle, below the unchanged 0.002 limit. The same native binary, configuration
+and stochastic step counter were retained throughout.
+
+The prepared 0.5 fs, 210 ps rigid-water follow-up **passes** both kinetic tests and
+the configurational test. Each temperature contributes 12,000 production
+observations from three replicas; these observations are correlated, not 12,000
+independent samples. There are no validation errors or unresolved diagnostics.
+
+| Target, K | Mean temperature, K | Mean standard error, K | Width temperature, K | Gamma CDF bootstrap probability | Kinetic verdict |
+|---|---:|---:|---:|---:|---|
+| 300 | 299.88828 | 0.08293 | 300.23007 | 0.323838 | Passed |
+| 305 | 304.89732 | 0.08296 | 304.48621 | 0.231384 | Passed |
+
+The potential-energy density-ratio fit implies a 4.7346 K difference for the
+requested 5 K, 1.206 standard errors from the prescribed slope. All 2,000 bootstrap
+fits completed. Effective-sample totals are 786.3 and 839.1, above 200; the smallest
+individual count is 189.4, above 40. All replicas provide 40 complete five-ps
+blocks. Block correlations are -0.074 and -0.039, and split R-hat values are
+1.0031 and 1.0004. The fixed drift, overlap and precision checks also pass.
+
+![Original and longer interacting ensemble results](frontier-nvt-210ps.svg)
+
+The [continuation observations](frontier-interacting-ensemble-continuation-observations.json)
+bind all chunk audits, exact checkpoint chains, source identities and the final
+qualification. This closes the prescribed global kinetic/configurational gate for
+this one prepared model and execution setting. It does not promote the original
+1 fs failures or establish general equilibration. The original 50 ps matrix stays
+failed. The continuation's top-level `passed` remains false, with analysis exit 1,
+because the original failed water preparation is retained; its prepared-case
+statistical outcome is explicitly `passed`.
 
 ## Software and evidence identity
 
@@ -203,6 +233,14 @@ both copies of the previous sealed evidence without mismatches. Its
 [observations](frontier-evidence-verifier-observations.json) bind implementation,
 control logs and the independently pinned prior seal. This is integrity of the
 listed entries; excluded files and scientific outcomes retain their own checks.
+
+After all measurement and analysis writers exited, the final raw seal recorded
+1,734 regular files, no symlinks and 6,182,195,791 bytes. Its SHA256 is
+`29a6c2de0d85a3cbf45d7ac7e59e807220ec21361780dd3130c392bbd6351802`.
+Both Mac copies passed [pinned-seal verification](frontier-ensemble-integrity.json)
+without mismatches. The local inventory also matches every listed path outside
+the explicit exclusions. The seal excludes itself, its local verification output
+and Python caches; the previously frozen runtime remains separately bound.
 
 ## Scientific boundary
 

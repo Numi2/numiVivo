@@ -1,0 +1,3632 @@
+{
+  "schema": "numivivo.org/frontier-md-ensemble-continuation-observations/v1",
+  "orchestrationSource": "a1b363b63fedec196bc4e4e0b38a7b7e4b94997d",
+  "nativeSource": "c7ded9f9784d238a329e2ca0ae34b01676165ee2",
+  "binarySHA256": "eed5b517985dbda7ed545bd82407d99113ee65b9dc64f972dc5a0eefcfcae60a",
+  "sourceIdentities": {
+    "parentCampaignSHA256": "70ab1030020429a6b471e1a4d80a7205ed672bbbaccadfb2cebc1ea0a900edac",
+    "parentQualificationSHA256": "fbf47b4e6b7cf6312b8076bfc51594956a481cfd3ff50054ec7126a8d304b6f1",
+    "environment": {
+      "python": "3.13.14",
+      "numpy": "2.5.3",
+      "scipy": "1.18.1",
+      "openmm": "8.6.0"
+    },
+    "tools": {
+      "continue_ensemble.py": "f537f27faeddd393b028a8022f225775513fa5c96a66655066df43a2fd3c2096",
+      "ensemble_campaign.py": "5a40a774c1c0406371d93d524ff2fc8a3fbf12ab7f0d2af00ec1da300040df43",
+      "ensemble_statistics.py": "72a515d2f7fff85a082015c3b9b0fd0e6334518e170cf73a61edb4fba53a5b46",
+      "run_campaign.py": "3633b376cfdea2c3f68e3f450e2ef8b425228653afec8a134b6dd33e0bb82a25",
+      "audit_endpoints.py": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    "binarySHA256": "eed5b517985dbda7ed545bd82407d99113ee65b9dc64f972dc5a0eefcfcae60a",
+    "nativeSource": "c7ded9f9784d238a329e2ca0ae34b01676165ee2",
+    "binaryManifest": {
+      "buildSource": "c7ded9f9784d238a329e2ca0ae34b01676165ee2",
+      "buildCommand": "swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing",
+      "files": [
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoErrorFunctions.metalh",
+          "sha256": "8739b8f8d4d7c19dbe834f811045d625cf8cc0e1074b259082829b0d424694af"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoExactSSAKernels.metal",
+          "sha256": "66d0ae4a1d37e2f1e14a8f4d1ee50ae360edef4abee03493c8ba2a39b568a4e0"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoHybridExecution.metal",
+          "sha256": "c095118eedc55639dff36f5919a48df0355f1e58f98cfe56bd1c3fd7afb616c3"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoKernels.metal",
+          "sha256": "c9789e8a14d2e97fe59e6460f30964b5533dd9f60bb84b4d6d4757b61b096861"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDBarostat.metal",
+          "sha256": "051b3edd5163e2188f62aab28f7b8670c010a5fb687d847066dc74e50c2c7dfc"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDExecutionSupport.metal",
+          "sha256": "028bd34ee33bc2e7de020d0138ebb53093344cc5e6e80e206bc61022a8c8a59f"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDKernels.metal",
+          "sha256": "335ae84cbdb45b2247e47abd3f5b0a1ff9f3333de373e2001935d1cebf32f209"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDMinimization.metal",
+          "sha256": "1a7f69eb02a6728daae74bc9d772ffde18f21a6580b7b079f8c66cf875364ead"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDNeighborGrid.metal",
+          "sha256": "fb7a21b80f926ea5537b69e0565ff009e37e1574091431007a9d3186afc9544b"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDPME.metal",
+          "sha256": "0ab857929665cad4d6c5188b28af63e1f8389d2a44e630b78c030ea9b91be353"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDPMECorrections.metal",
+          "sha256": "6ca876522512d9be57e662d7f24ade30baa10c9cfcac8c1c63c7c885ad7effa0"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDPeriodicGeometry.metalh",
+          "sha256": "f15218e73c348db0ca28a9802a97ba033582595a51d986c846b4293f5c049b05"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMDVirtualSites.metal",
+          "sha256": "102cfc48168073e53bfbbb0062f935d12ff8f0b33d35c36e0c68c3d889ca8bde"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMetalABI.h",
+          "sha256": "cfdeaafd16cb0997080b222cdb457ef800aee331616d0dd231d243426b19d59d"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoMigrationKernels.metal",
+          "sha256": "b1f25b3a2bb3085e96c0f94018cdad6000822205ea5cbf884aa539d419d1dea5"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoPartitionKernels.metal",
+          "sha256": "602d246323da7d2c299f8b3e798fd78a2e714252e1a810fc6841af45a08068d1"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoPhysiologyKernels.metal",
+          "sha256": "88998cd7dfb14d905dd9c62a83a101014f1dd5397706a7bdddbc8ee670424a52"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoPopulationKernels.metal",
+          "sha256": "314031ef753516f16cbca1d969002089852583e569624cb7baec0ccbc3800406"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoProgramPackRuntime.metal",
+          "sha256": "a70ab4a819cbf3223ff16384b71ad0d4a7444b709ede9dd931b125754f459121"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoTargetLikelihood.metal",
+          "sha256": "761a55a6fc3e2381af24e5134551f3b1545eae48a5fff1748b0a2d55c4ea356e"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoTransactionCommitKernels.metal",
+          "sha256": "6a135c1a54198a7200cfeae74bc2a186bc54d0816062126f2551ac29cf8b496c"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/NumiVivoTransactionKernels.metal",
+          "sha256": "e274f08810eb04fe155cb386b10602fbc7d1a046e680dfafc67e0722fe0d9d8c"
+        },
+        {
+          "path": "NumiVivo_NumiVivoShaders.bundle/README.txt",
+          "sha256": "49d01498a46ba1c27f24044562ad285f6a0c39d013e071723497c40425f45f4b"
+        },
+        {
+          "path": "numivivo",
+          "sha256": "eed5b517985dbda7ed545bd82407d99113ee65b9dc64f972dc5a0eefcfcae60a"
+        }
+      ]
+    }
+  },
+  "policy": {
+    "schema": "numivivo.org/md-ensemble-continuation-policy/v1",
+    "timeStepPS": 0.0005,
+    "totalDurationPS": 210,
+    "chunkDurationPS": 10,
+    "bootstrapBlockPS": 5,
+    "reason": "The original coarse-step 50 ps subset had insufficient potential-energy effective samples and unresolved one-ps block correlation. Extend all six finer-step replicas with a fixed amount of additional data. Retain the original campaign and its failed or inconclusive outcomes.",
+    "scope": "Adaptive follow-up to the original finite rigid-water NVT campaign, at its finer time step only. Same Hamiltonian, thermostat, seeds, equilibration exclusion, observation interval and statistical acceptance limits. Longer sampling is not proof of complete equilibration, experimental accuracy or general thermostat qualification."
+  },
+  "softwareValidation": {
+    "pythonChecks": 35,
+    "logSHA256": "e185bad2ae3d6c1c6e93f60ab4aa55d58539feafebc261ca1afda1228c343909"
+  },
+  "campaignSHA256": "cbbe8725942f3636d54ad0f08fb793d1b65e002ed80984c9faa8500c2d518e38",
+  "qualificationSHA256": "0e659f321dc42d8ed59b7b9f48039a8bce44d20fafad6b1495046c59ef53d097",
+  "qualification": {
+    "schema": "numivivo.org/md-ensemble-continuation-qualification/v1",
+    "campaignSHA256": "cbbe8725942f3636d54ad0f08fb793d1b65e002ed80984c9faa8500c2d518e38",
+    "preparedOutcome": "passed",
+    "cases": [
+      {
+        "identifier": "water-orthogonal-smooth",
+        "timeStepPS": 0.0005,
+        "outcome": "passed",
+        "kinetic": [
+          {
+            "outcome": "passed",
+            "degreesOfFreedom": 5370,
+            "targetTemperatureK": 300,
+            "samples": 12000,
+            "replicas": 3,
+            "meanKineticEnergyKJPerMol": 6694.805487996419,
+            "standardDeviationKineticEnergyKJPerMol": 129.34823867216542,
+            "meanTemperatureK": 299.8882765714324,
+            "meanTemperatureStandardErrorK": 0.08292685399874812,
+            "meanTemperatureZ": 1.3472527074193954,
+            "widthTemperatureK": 300.23007120052574,
+            "widthTemperatureStandardErrorK": 2.117610896920239,
+            "widthTemperatureZ": 0.10864658888011386,
+            "gammaCDFDistance": 0.010358207166428213,
+            "gammaCDFBootstrapP": 0.3238380809595202,
+            "diagnostics": {
+              "kineticEnergy": {
+                "effectiveSamplesPerReplica": [
+                  1789.8352671826672,
+                  1610.162548409828,
+                  1807.6005672579647
+                ],
+                "totalEffectiveSamples": 5207.5983828504595,
+                "splitRHat": 1.000997557831366,
+                "blocksPerReplica": 40,
+                "blockLagOneCorrelation": -0.03803115340432478,
+                "halfTraceDriftZ": 0.3270476507433292,
+                "inconclusiveReasons": []
+              },
+              "squaredKineticDeviation": {
+                "effectiveSamplesPerReplica": [
+                  3276.3836497915167,
+                  3459.259404611684,
+                  3409.3711938873207
+                ],
+                "totalEffectiveSamples": 10145.014248290521,
+                "splitRHat": 1.0,
+                "blocksPerReplica": 40,
+                "blockLagOneCorrelation": 0.17148425622344693,
+                "halfTraceDriftZ": 1.0151488190901437,
+                "inconclusiveReasons": []
+              }
+            },
+            "failureReasons": [],
+            "inconclusiveReasons": []
+          },
+          {
+            "outcome": "passed",
+            "degreesOfFreedom": 5370,
+            "targetTemperatureK": 305,
+            "samples": 12000,
+            "replicas": 3,
+            "meanKineticEnergyKJPerMol": 6806.629027018229,
+            "standardDeviationKineticEnergyKJPerMol": 131.181912712018,
+            "meanTemperatureK": 304.89731954624256,
+            "meanTemperatureStandardErrorK": 0.08296006895631404,
+            "meanTemperatureZ": 1.2377093588424333,
+            "widthTemperatureK": 304.4862102341527,
+            "widthTemperatureStandardErrorK": 2.1486202629757796,
+            "widthTemperatureZ": 0.2391254400327288,
+            "gammaCDFDistance": 0.011321687677443903,
+            "gammaCDFBootstrapP": 0.23138430784607697,
+            "diagnostics": {
+              "kineticEnergy": {
+                "effectiveSamplesPerReplica": [
+                  1607.6129713082007,
+                  1772.1451497768282,
+                  1463.264379650024
+                ],
+                "totalEffectiveSamples": 4843.022500735053,
+                "splitRHat": 1.0000017915191197,
+                "blocksPerReplica": 40,
+                "blockLagOneCorrelation": 0.09468868992643442,
+                "halfTraceDriftZ": 1.156316515176792,
+                "inconclusiveReasons": []
+              },
+              "squaredKineticDeviation": {
+                "effectiveSamplesPerReplica": [
+                  3020.900095300469,
+                  3446.7712740236425,
+                  2747.5923026876667
+                ],
+                "totalEffectiveSamples": 9215.263672011777,
+                "splitRHat": 1.0,
+                "blocksPerReplica": 40,
+                "blockLagOneCorrelation": 0.1974773002112557,
+                "halfTraceDriftZ": 1.6064842683286804,
+                "inconclusiveReasons": []
+              }
+            },
+            "failureReasons": [],
+            "inconclusiveReasons": []
+          }
+        ],
+        "configurational": {
+          "outcome": "passed",
+          "expectedSlopeMolPerKJ": 0.006572259838400356,
+          "fittedSlopeMolPerKJ": 0.006223361839285974,
+          "slopeStandardErrorMolPerKJ": 0.0002892260421456582,
+          "slopeZ": 1.2063159891344488,
+          "estimatedTemperatureDifferenceK": 4.734567707536593,
+          "overlapScore": 0.7535828466437313,
+          "bootstrapFitFailures": 0,
+          "diagnostics": {
+            "lowerTemperature": {
+              "effectiveSamplesPerReplica": [
+                301.8431749378126,
+                242.74683468543148,
+                241.73329494632782
+              ],
+              "totalEffectiveSamples": 786.3233045695719,
+              "splitRHat": 1.0030514137377866,
+              "blocksPerReplica": 40,
+              "blockLagOneCorrelation": -0.07356752799498043,
+              "halfTraceDriftZ": 0.13781890123961335,
+              "inconclusiveReasons": []
+            },
+            "higherTemperature": {
+              "effectiveSamplesPerReplica": [
+                189.44906340681413,
+                332.57100997190634,
+                317.06665065455087
+              ],
+              "totalEffectiveSamples": 839.0867240332714,
+              "splitRHat": 1.00036661020697,
+              "blocksPerReplica": 40,
+              "blockLagOneCorrelation": -0.03923116439746675,
+              "halfTraceDriftZ": 0.21410615365199764,
+              "inconclusiveReasons": []
+            }
+          },
+          "failureReasons": [],
+          "inconclusiveReasons": []
+        }
+      }
+    ],
+    "validationErrors": [],
+    "policy": {
+      "schema": "numivivo.org/md-ensemble-continuation-policy/v1",
+      "timeStepPS": 0.0005,
+      "totalDurationPS": 210,
+      "chunkDurationPS": 10,
+      "bootstrapBlockPS": 5,
+      "reason": "The original coarse-step 50 ps subset had insufficient potential-energy effective samples and unresolved one-ps block correlation. Extend all six finer-step replicas with a fixed amount of additional data. Retain the original campaign and its failed or inconclusive outcomes.",
+      "scope": "Adaptive follow-up to the original finite rigid-water NVT campaign, at its finer time step only. Same Hamiltonian, thermostat, seeds, equilibration exclusion, observation interval and statistical acceptance limits. Longer sampling is not proof of complete equilibration, experimental accuracy or general thermostat qualification."
+    },
+    "effectiveStatisticsPolicy": {
+      "schema": "numivivo.org/md-ensemble-continuation-analysis-policy/v1",
+      "cases": [
+        "water-orthogonal-smooth"
+      ],
+      "temperaturesK": [
+        300,
+        305
+      ],
+      "seeds": [
+        1729,
+        2718,
+        31415
+      ],
+      "higherTemperatureSeedOffset": 1000000,
+      "timeStepsPS": [
+        0.0005
+      ],
+      "durationPS": 210,
+      "equilibrationPS": 10,
+      "observationIntervalPS": 0.05,
+      "frictionPerPS": 10,
+      "maximumConstraintIterations": 64,
+      "constraintTolerance": 1e-06,
+      "bootstrapBlockPS": 5,
+      "bootstrapReplicates": 2000,
+      "bootstrapSeed": 726104,
+      "maximumStatisticalZ": 3.5,
+      "minimumEffectiveSamplesPerReplica": 40,
+      "minimumTotalEffectiveSamples": 200,
+      "minimumBlocksPerReplica": 20,
+      "maximumBlockAutocorrelation": 0.3,
+      "maximumSplitRHat": 1.05,
+      "minimumDistributionBootstrapP": 0.005,
+      "maximumRelativeMeanTemperatureError": 0.005,
+      "maximumRelativeWidthTemperatureError": 0.15,
+      "maximumRelativeSlopeStandardError": 0.35,
+      "minimumTemperatureOverlap": 0.15,
+      "boltzmannKJPerMolK": 0.00831446261815324,
+      "scope": "Adaptive follow-up to the original finite rigid-water NVT campaign, at its finer time step only. Same Hamiltonian, thermostat, seeds, equilibration exclusion, observation interval and statistical acceptance limits. Longer sampling is not proof of complete equilibration, experimental accuracy or general thermostat qualification."
+    },
+    "parentPreparedOutcome": "failed",
+    "inputFailures": [
+      {
+        "identifier": "water",
+        "status": "preparation-failed",
+        "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+      }
+    ],
+    "passed": false,
+    "scope": "Adaptive follow-up to the original finite rigid-water NVT campaign, at its finer time step only. Same Hamiltonian, thermostat, seeds, equilibration exclusion, observation interval and statistical acceptance limits. Longer sampling is not proof of complete equilibration, experimental accuracy or general thermostat qualification."
+  },
+  "nativeRuns": [
+    {
+      "directory": "run-06-water-orthogonal-smooth",
+      "identifier": "water-orthogonal-smooth",
+      "timeStepPS": 0.0005,
+      "temperatureK": 300,
+      "seed": 1729,
+      "outcome": "passed",
+      "wallSeconds": 1970.4308461658657,
+      "chunks": [
+        {
+          "directory": "chunk-000",
+          "requestedSteps": 0,
+          "restoreSHA256": "ad08164e509338b5cea38c459d1d4ec1758a0ef6c6e177ae9cc26945ab3d056a",
+          "reportSHA256": "0a76423d6cf0d6dc3db3e2deee4a85c9128dd33eab5053be16b55cb99f27dce7",
+          "checkpointSHA256": "68c21e3b488f7288823f190b048f682955a5a44de42792b29613208a1f064ff6",
+          "auditSHA256": "6df6841dda14cae4d3eaee049c5f856fd5103f4ace0770288a34f8ef67fd38ce",
+          "audit": {
+            "endpointKinetic": null
+          }
+        },
+        {
+          "directory": "chunk-001",
+          "requestedSteps": 20000,
+          "restoreSHA256": "68c21e3b488f7288823f190b048f682955a5a44de42792b29613208a1f064ff6",
+          "reportSHA256": "cc762ae2ce0fac68d57dbe5d09b62f0e9012051df0ff5adb3af5e33498445526",
+          "checkpointSHA256": "f99ad5ab44f591914700b296947a745d2a31cf2b552a5f1a6b0e5850dedf6a76",
+          "auditSHA256": "72d5986e7ec4d88bcad365995bef9d2e66c3901f9a0f423b0fd06129ac1a6434",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6635.911398591947,
+              "nativeKineticEnergyKJPerMol": 6635.91162109375,
+              "absoluteErrorKJPerMol": 0.00022250180336413905,
+              "roundoffBoundKJPerMol": 0.007910642263689292,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35543.495424151246,
+              "nativeEnergyKJPerMol": -35543.515625,
+              "errorPerParticleKJPerMol": 7.523593576919822e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 79,
+                "imageShiftsSHA256": "51df76ead6de3420087348028a0a328375ab1588f306b01ec7d31b5993af6ab1",
+                "positionsSHA256": "c2e9507c988a9749bf40f8e1e60dc1cfb21d1a731110402610f897f49a472714"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-002",
+          "requestedSteps": 20000,
+          "restoreSHA256": "f99ad5ab44f591914700b296947a745d2a31cf2b552a5f1a6b0e5850dedf6a76",
+          "reportSHA256": "ea23662c8176c14bbd0cdd2e7ceb3b65e4e1a92acb33c4b9d36a0ab9d6c69f89",
+          "checkpointSHA256": "d86e9779f44b10e169ea46796a5ca11e372b7eaa58f31a51209634243c252f06",
+          "auditSHA256": "c9798c54e84a232236d054aaea7d110eecfaf4f933506c773e5029bdab47fae6",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6608.335021419035,
+              "nativeKineticEnergyKJPerMol": 6608.33447265625,
+              "absoluteErrorKJPerMol": 0.0005487627850015997,
+              "roundoffBoundKJPerMol": 0.007877768621189184,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35219.939132718835,
+              "nativeEnergyKJPerMol": -35219.953125,
+              "errorPerParticleKJPerMol": 5.211277901293845e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 87,
+                "imageShiftsSHA256": "69561d77eea0f0c32470d5760e67da66a70bd05f37b620ad37ccaaa9f51e47bf",
+                "positionsSHA256": "80a956c0a023ddcaf2ffd84b69781449a6d63c0cd6e7afda168624ea90532a16"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-003",
+          "requestedSteps": 20000,
+          "restoreSHA256": "d86e9779f44b10e169ea46796a5ca11e372b7eaa58f31a51209634243c252f06",
+          "reportSHA256": "801380af8f17d7532b5ed1a5704e9c596580208eb2edd3a59b1dde440a228f49",
+          "checkpointSHA256": "f8e30cc49f021ad25e2e1cad63b3fa1501f872e68fa91c6a41e0d5740617d678",
+          "auditSHA256": "5b30f5a08dd37c4485318142a849bb13055274c7760d562b3ea15609593de654",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6893.749776581574,
+              "nativeKineticEnergyKJPerMol": 6893.75,
+              "absoluteErrorKJPerMol": 0.00022341842577588977,
+              "roundoffBoundKJPerMol": 0.008218009928690794,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35249.657077619224,
+              "nativeEnergyKJPerMol": -35249.67578125,
+              "errorPerParticleKJPerMol": 6.96597049390859e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 79,
+                "imageShiftsSHA256": "4637dce1a0ffa0ffd9a01433c5b3111c0c0920f637fbdb18c0a21cf855874e39",
+                "positionsSHA256": "20e506efbd5e752a9f25555357d2483e0d877ce44c4fa10a8754c03869b777f0"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-004",
+          "requestedSteps": 20000,
+          "restoreSHA256": "f8e30cc49f021ad25e2e1cad63b3fa1501f872e68fa91c6a41e0d5740617d678",
+          "reportSHA256": "1408bc2872b149aba21543ea22a7949744a2106f016087e8bb31a3a4985bba99",
+          "checkpointSHA256": "9de6538fc1c920787b58df6aadb94fc4eed9da474851a20fedb3c5fe3ad7d0c6",
+          "auditSHA256": "79cf40f24a37564c42b1677cda971d43eb9e0325e3cc2cb88b351401bef2c51e",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6735.932992872416,
+              "nativeKineticEnergyKJPerMol": 6735.9326171875,
+              "absoluteErrorKJPerMol": 0.00037568491643469315,
+              "roundoffBoundKJPerMol": 0.00802987743776781,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35355.81243617908,
+              "nativeEnergyKJPerMol": -35355.828125,
+              "errorPerParticleKJPerMol": 5.843136281822592e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 73,
+                "imageShiftsSHA256": "2ad2740d02f849ac3edc2938c08dd2793bfcd12f7edc573b6fd139fef6b8c0a8",
+                "positionsSHA256": "2473b803708d3005e9db7917cc787edca1811dc4a34c26cdff7eb063e8805669"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-005",
+          "requestedSteps": 20000,
+          "restoreSHA256": "9de6538fc1c920787b58df6aadb94fc4eed9da474851a20fedb3c5fe3ad7d0c6",
+          "reportSHA256": "6f5d6bba8994c6ed46faf5d20e5e197f12dcca44d076685fb4f48d18e0cf11d5",
+          "checkpointSHA256": "dadd444caf76ceacd84795f542ac2540b5efcebd5831b04fb9d8311a3de0f104",
+          "auditSHA256": "f082b5640f854036454bd2f86729e1bf94df962d2eb746524837ad0836ec42e7",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6656.021002109765,
+              "nativeKineticEnergyKJPerMol": 6656.02099609375,
+              "absoluteErrorKJPerMol": 6.016014594933949e-06,
+              "roundoffBoundKJPerMol": 0.007934614807751861,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35319.22614577372,
+              "nativeEnergyKJPerMol": -35319.234375,
+              "errorPerParticleKJPerMol": 3.064888745400659e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 99,
+                "imageShiftsSHA256": "8fe613e8030b883c3f03ae7cd73c72c960a187eaee9d582d10e304b6df358d79",
+                "positionsSHA256": "33df3fca7425fd7f8c4aafd191f83bc5546bebf6960fe85db562249772054079"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-006",
+          "requestedSteps": 20000,
+          "restoreSHA256": "dadd444caf76ceacd84795f542ac2540b5efcebd5831b04fb9d8311a3de0f104",
+          "reportSHA256": "9f1c7f8ee63c6065912477a605ef7ccbc58a7be01da4eb07ab8953ff5d4776ee",
+          "checkpointSHA256": "cfb560f1c72e1ef3c14ae8e985bdb15fcc073068c3c9957d278f2231fad833d8",
+          "auditSHA256": "dbc2e51f5c8254981d20523406ef3fab2d55f69372aa80f8952aee70487362d1",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6682.870177126756,
+              "nativeKineticEnergyKJPerMol": 6682.8701171875,
+              "absoluteErrorKJPerMol": 5.99392560616252e-05,
+              "roundoffBoundKJPerMol": 0.00796662155669488,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35078.77606409119,
+              "nativeEnergyKJPerMol": -35078.7890625,
+              "errorPerParticleKJPerMol": 4.8411206005824456e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 88,
+                "imageShiftsSHA256": "ff1c04f33064ece4a8e4a14ddd2c25785033ca0cd84125e4a99baeddce09e24f",
+                "positionsSHA256": "2f7f75fd88763810b0c010ea77a79696dc28205244f3d424e28fd9e8e9711f7e"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-007",
+          "requestedSteps": 20000,
+          "restoreSHA256": "cfb560f1c72e1ef3c14ae8e985bdb15fcc073068c3c9957d278f2231fad833d8",
+          "reportSHA256": "14a98e4c8149ceaa184a8467d57c679ca76158c5ac0e660a79059b164aa5eaa9",
+          "checkpointSHA256": "4693962befb047258a95b88851b102991f5bd06b31b60ab4eb65e510dff6b644",
+          "auditSHA256": "7408edb8dea9aadf34f6714a33820de3c0da402abd2b6f6a256faac0fe9334fe",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6641.334563297974,
+              "nativeKineticEnergyKJPerMol": 6641.33447265625,
+              "absoluteErrorKJPerMol": 9.064172354555922e-05,
+              "roundoffBoundKJPerMol": 0.007917107187513305,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35175.55542889616,
+              "nativeEnergyKJPerMol": -35175.578125,
+              "errorPerParticleKJPerMol": 8.452925080991935e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 80,
+                "imageShiftsSHA256": "c9ad0d186fe4e13b885a32dfc0d24e3d62199f2b3e914fc45c4ef974c38246e4",
+                "positionsSHA256": "c3e0fd2a30b335abf69675c3b6f6ba1e1249f04aa65c585ad7852e671e01cca7"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-008",
+          "requestedSteps": 20000,
+          "restoreSHA256": "4693962befb047258a95b88851b102991f5bd06b31b60ab4eb65e510dff6b644",
+          "reportSHA256": "d3be94dcd472d1fd28fe54cf12ce952184de4b9d061ebdd58da7a58a8ceb2196",
+          "checkpointSHA256": "e9bd713abdbe68617173a7769c90042d9cac046ee1c9412f3101886440e715f7",
+          "auditSHA256": "9bedecba71ccdcbd58846aaeb1c9544d6f375d9b0d95aee97c273cd63742d5eb",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6698.646512066224,
+              "nativeKineticEnergyKJPerMol": 6698.646484375,
+              "absoluteErrorKJPerMol": 2.7691224204318132e-05,
+              "roundoffBoundKJPerMol": 0.00798542843591292,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35118.0560072597,
+              "nativeEnergyKJPerMol": -35118.07421875,
+              "errorPerParticleKJPerMol": 6.782677951589699e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 96,
+                "imageShiftsSHA256": "5804eaee4e8a4ce93f60385c814dc3f4748a5ced76b3c640f0850c94d37176d9",
+                "positionsSHA256": "7f928ad59058a81c91f2273a171dd0ed74f40bd24380d8a9861b643abae2cbf6"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-009",
+          "requestedSteps": 20000,
+          "restoreSHA256": "e9bd713abdbe68617173a7769c90042d9cac046ee1c9412f3101886440e715f7",
+          "reportSHA256": "3dd7c892afb2d134e9923983ff94bb4e656d486b5443ef6a54f0bb3050adddd5",
+          "checkpointSHA256": "3628917b43eb5507a609f41c0e7a451f0cf6226f600238b4b7f17d7cbeacfaec",
+          "auditSHA256": "ddb9768b5c1fe50cd57906768e85c55702af8af8c13c1b5584610aca1782a8c0",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6734.348955358594,
+              "nativeKineticEnergyKJPerMol": 6734.3486328125,
+              "absoluteErrorKJPerMol": 0.0003225460941393976,
+              "roundoffBoundKJPerMol": 0.008027989115650308,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35216.92134538328,
+              "nativeEnergyKJPerMol": -35216.9375,
+              "errorPerParticleKJPerMol": 6.016617028642744e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 78,
+                "imageShiftsSHA256": "1957f07bef3628998c6eb5b8144b00da59eb0bfd5162e9cdd38a6ac60b9780d3",
+                "positionsSHA256": "9e1f64400cbe644fd3413c724115e780d66728af83c8f3b2aebbd980898913e9"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-010",
+          "requestedSteps": 20000,
+          "restoreSHA256": "3628917b43eb5507a609f41c0e7a451f0cf6226f600238b4b7f17d7cbeacfaec",
+          "reportSHA256": "f708ad14cfbaaa704ae4701ff7f5c228abf08391579e93892fd102855793397a",
+          "checkpointSHA256": "8646dfd896985956587e442d8e30b3d7733ffdbe04a119f5a65c24b9957305f3",
+          "auditSHA256": "583b7c8a8df588dbceee552379b345afb25fffb5ffced7aceaf6190d11f7f0ad",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6655.2221462975085,
+              "nativeKineticEnergyKJPerMol": 6655.22265625,
+              "absoluteErrorKJPerMol": 0.0005099524914840003,
+              "roundoffBoundKJPerMol": 0.007933662496278292,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35297.17663586361,
+              "nativeEnergyKJPerMol": -35297.1875,
+              "errorPerParticleKJPerMol": 4.0462332928563626e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 96,
+                "imageShiftsSHA256": "c87ac5fda782750e5db2112a6ad0cd1dc50dc53e7883ec69bf6ed60d0da99ec1",
+                "positionsSHA256": "998f1260beb8c17869377c58a29e7ebce27728411734570de07cfff599524f30"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-011",
+          "requestedSteps": 20000,
+          "restoreSHA256": "8646dfd896985956587e442d8e30b3d7733ffdbe04a119f5a65c24b9957305f3",
+          "reportSHA256": "336299fb181246296353a7ad875cc236dddf05872f508a20e8cb80ad9b926dfe",
+          "checkpointSHA256": "1154873d28f5d6159427b8db6edffefdd5f5d11faa842b712a912c97052b332a",
+          "auditSHA256": "601de1de0eb719a0ac6d8a6794d104e92e8bc3c555d099e9420ae1001f9be4ec",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6806.966268861302,
+              "nativeKineticEnergyKJPerMol": 6806.96630859375,
+              "absoluteErrorKJPerMol": 3.9732448385620955e-05,
+              "roundoffBoundKJPerMol": 0.00811455580236328,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35493.40457325388,
+              "nativeEnergyKJPerMol": -35493.42578125,
+              "errorPerParticleKJPerMol": 7.898695016838264e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 73,
+                "imageShiftsSHA256": "1e13b23983e07f49eeaf44a665456b77ce209b877cedf001710fc1cdf9e2f547",
+                "positionsSHA256": "1b49093a6cb1549561d175afb2b289b5d3dbc039bca702ffba3dd300f5108580"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-012",
+          "requestedSteps": 20000,
+          "restoreSHA256": "1154873d28f5d6159427b8db6edffefdd5f5d11faa842b712a912c97052b332a",
+          "reportSHA256": "8212a7e1da2f2db7b7f8ec815fb9c5a59e386eda8618833a36cc08edb7d28a10",
+          "checkpointSHA256": "836643c6867a60d069adca90d14da7adbb5ab7f55e034205e1575b15f2db5423",
+          "auditSHA256": "9638081b7ee4377902c668382d75809d1070b882f33b2234acb6ec08de8a988d",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6635.491154645165,
+              "nativeKineticEnergyKJPerMol": 6635.49072265625,
+              "absoluteErrorKJPerMol": 0.00043198891489737434,
+              "roundoffBoundKJPerMol": 0.00791014129326875,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35715.79177218239,
+              "nativeEnergyKJPerMol": -35715.8046875,
+              "errorPerParticleKJPerMol": 4.8101741562162145e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 83,
+                "imageShiftsSHA256": "367e43ead59071b2e58e38e1b6dc6410853468fd135d5aceda626f2a76bfe6f1",
+                "positionsSHA256": "8ffd00540be06e13d68f22a8ee05d76f4bf4c2f23dbfb1e16c993c0c1f157bda"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-013",
+          "requestedSteps": 20000,
+          "restoreSHA256": "836643c6867a60d069adca90d14da7adbb5ab7f55e034205e1575b15f2db5423",
+          "reportSHA256": "1a5f5ec035a845a8cb4adf61a95b2df80f9c628144303933b2b0ce1514e9ec3e",
+          "checkpointSHA256": "3b4e37430c408cee68d0270948733aec68214e9877a132a08743ea3e8f976261",
+          "auditSHA256": "85edfdd625879a8911be5889845e8795d77d7e2f97002ab35f31ea6736df8b73",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6553.300363066432,
+              "nativeKineticEnergyKJPerMol": 6553.30078125,
+              "absoluteErrorKJPerMol": 0.0004181835683993995,
+              "roundoffBoundKJPerMol": 0.007812162117751299,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35795.945932312694,
+              "nativeEnergyKJPerMol": -35795.9609375,
+              "errorPerParticleKJPerMol": 5.5885241363454245e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 66,
+                "imageShiftsSHA256": "5f09071dda0ad080763df67edb3c02bc2bcb25ec85835637b98611957b5a9a01",
+                "positionsSHA256": "6f1a5a734e9f503f086e2ff9b722ba05c2c231b0c0e011a4516036795d080087"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-014",
+          "requestedSteps": 20000,
+          "restoreSHA256": "3b4e37430c408cee68d0270948733aec68214e9877a132a08743ea3e8f976261",
+          "reportSHA256": "602ac001f49d86877491f8258c18513e84894efddc6fb70653c0ef9adff66901",
+          "checkpointSHA256": "8cbda3a99a5e8ff55b4fbc24b5f655e4ac13817487ae9da24207bd0da9c98d46",
+          "auditSHA256": "b63ed72b50aac195f52576a748ac9e2aaa01520a425cc1b319e59b93126a606f",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6460.04466226238,
+              "nativeKineticEnergyKJPerMol": 6460.04443359375,
+              "absoluteErrorKJPerMol": 0.000228668630370521,
+              "roundoffBoundKJPerMol": 0.007700992526832708,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35360.97717314161,
+              "nativeEnergyKJPerMol": -35360.9921875,
+              "errorPerParticleKJPerMol": 5.591939809581255e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 94,
+                "imageShiftsSHA256": "0abceab6781084ca37d6151cb7c9bfef49f7bf793715aaa6575b72ce8b66d42e",
+                "positionsSHA256": "d63af9528bf30423538652fa42d8b75994004d4f091a4e36d3a3d3d23ae2555b"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-015",
+          "requestedSteps": 20000,
+          "restoreSHA256": "8cbda3a99a5e8ff55b4fbc24b5f655e4ac13817487ae9da24207bd0da9c98d46",
+          "reportSHA256": "3f5683478ac293f5c990b155f5703f22c50d181dba6907c18a50a654369d6d2d",
+          "checkpointSHA256": "ab93db03afd86ce56b70c45ed235902ace26631477d202d492c303dfe053cbd0",
+          "auditSHA256": "8dd0aceed4e7617393a47abb43c61d22a78cf6781d945c21d594d5b34b52f21b",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6825.724339232136,
+              "nativeKineticEnergyKJPerMol": 6825.72412109375,
+              "absoluteErrorKJPerMol": 0.0002181383861170616,
+              "roundoffBoundKJPerMol": 0.008136917191442642,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35386.435456800915,
+              "nativeEnergyKJPerMol": -35386.453125,
+              "errorPerParticleKJPerMol": 6.580334854809987e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 95,
+                "imageShiftsSHA256": "e972cb10da13d3ad9f5eed28125808acd3a56fbd15d6144a65403c3d643d5f3e",
+                "positionsSHA256": "23a29ef102627ed72f3bc2eb4383cc8fce2945d33de65920c444f26d56e4e986"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-016",
+          "requestedSteps": 20000,
+          "restoreSHA256": "ab93db03afd86ce56b70c45ed235902ace26631477d202d492c303dfe053cbd0",
+          "reportSHA256": "c12fd4989d5f8ce47004f73db0ce137aad2324536e7ed0ac96fde65b36473752",
+          "checkpointSHA256": "9edd846908262d145edb18eaa901fa68587c983d07ee2042d506728f27aa029a",
+          "auditSHA256": "db4cb765d18182cb9c115e0348784959bdba1cac6cc8404f15d9b6c5862d8307",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6318.088686093264,
+              "nativeKineticEnergyKJPerMol": 6318.08837890625,
+              "absoluteErrorKJPerMol": 0.0003071870141866384,
+              "roundoffBoundKJPerMol": 0.007531767614434813,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35545.48773271707,
+              "nativeEnergyKJPerMol": -35545.5078125,
+              "errorPerParticleKJPerMol": 7.478503884966147e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 90,
+                "imageShiftsSHA256": "73da98a9606e282dfade70a79e2b1e40e1feff7f81d1cd899943ef1c8c9e2118",
+                "positionsSHA256": "30a7bb2250f4388b7937a27ee118f7e44e0c4c4799adce4e51e31795555479da"
+              },
+              "passed": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "directory": "run-07-water-orthogonal-smooth",
+      "identifier": "water-orthogonal-smooth",
+      "timeStepPS": 0.0005,
+      "temperatureK": 300,
+      "seed": 2718,
+      "outcome": "passed",
+      "wallSeconds": 1957.2464586249553,
+      "chunks": [
+        {
+          "directory": "chunk-000",
+          "requestedSteps": 0,
+          "restoreSHA256": "eedcd435db2c6905340e768e8f7d5c54cd94c79f6785faf1ea563a5927724b04",
+          "reportSHA256": "d40cd1fd291bf597b29e9d35547ff18d6781eed8ec62348f4b4e22ea2824fcdd",
+          "checkpointSHA256": "b7bf95fe6b984face66beb59768ea79e4806484e362710c24a7bd73510d2362c",
+          "auditSHA256": "6df6841dda14cae4d3eaee049c5f856fd5103f4ace0770288a34f8ef67fd38ce",
+          "audit": {
+            "endpointKinetic": null
+          }
+        },
+        {
+          "directory": "chunk-001",
+          "requestedSteps": 20000,
+          "restoreSHA256": "b7bf95fe6b984face66beb59768ea79e4806484e362710c24a7bd73510d2362c",
+          "reportSHA256": "e090d968810c9bcbffa0193e2036771d858278d8c36e65721b42d6ade625c52d",
+          "checkpointSHA256": "773d5d530175afcbb58ad145ab1f154cb33c48f8d80a9d2989c7a996650d65d0",
+          "auditSHA256": "87417da525dc053c6bd738cbce83cc143a5c74a8e2456581d45be31ce39e221e",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6795.682279991287,
+              "nativeKineticEnergyKJPerMol": 6795.68212890625,
+              "absoluteErrorKJPerMol": 0.0001510850370323169,
+              "roundoffBoundKJPerMol": 0.008101104223362816,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35484.41345683584,
+              "nativeEnergyKJPerMol": -35484.42578125,
+              "errorPerParticleKJPerMol": 4.590098382783724e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 90,
+                "imageShiftsSHA256": "7b9ebaed6b298fd2193cd146e8d1ca7058745b89dc0c5b708087e31356d914d7",
+                "positionsSHA256": "dc0cf475cbc8ddb00e8d9156fdc0434492814f4787d9c4234f0a0edb59f5e9d3"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-002",
+          "requestedSteps": 20000,
+          "restoreSHA256": "773d5d530175afcbb58ad145ab1f154cb33c48f8d80a9d2989c7a996650d65d0",
+          "reportSHA256": "fdb8c9641be6f896cdd071ce2aa79b57b944a607e5a1ce8367e9c95e343d4a2d",
+          "checkpointSHA256": "89524f87fceb04d332396a5acd3496c8287c4ae1d52140efdba26057cbac13de",
+          "auditSHA256": "61ab842e87a669a8b83843decc00b8def85329030ff5f50ae11556807343428f",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6515.070934425214,
+              "nativeKineticEnergyKJPerMol": 6515.0712890625,
+              "absoluteErrorKJPerMol": 0.00035463728636386804,
+              "roundoffBoundKJPerMol": 0.0077665890331414305,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35499.26757352974,
+              "nativeEnergyKJPerMol": -35499.28515625,
+              "errorPerParticleKJPerMol": 6.548499166479879e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 94,
+                "imageShiftsSHA256": "565b479813b88a4cf2e918dbeb9aed24e302d8b36c9b311a46a6f5776bddeca5",
+                "positionsSHA256": "16fcbd03f10c64376200d243f3df2a12fbc86a15fa3839c6ad8c992afa9b2292"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-003",
+          "requestedSteps": 20000,
+          "restoreSHA256": "89524f87fceb04d332396a5acd3496c8287c4ae1d52140efdba26057cbac13de",
+          "reportSHA256": "05276b84f924bd69f419b3cf0231aca97c26fba0336c012f9664f21c34677c97",
+          "checkpointSHA256": "9e2a2001242bfb14fec58f4dd66d850037fbface0b403f0d685706368de96e93",
+          "auditSHA256": "1b3a90394920db2a9f16d5c840dd1bfb4dd8981bb987b4e564d1d8df8281bc36",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6641.437632028424,
+              "nativeKineticEnergyKJPerMol": 6641.4375,
+              "absoluteErrorKJPerMol": 0.0001320284236498992,
+              "roundoffBoundKJPerMol": 0.007917230055161094,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35485.13120175095,
+              "nativeEnergyKJPerMol": -35485.14453125,
+              "errorPerParticleKJPerMol": 4.964431676687586e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 88,
+                "imageShiftsSHA256": "653f038ea897a05322d2e50913872e974b842b9e9f3bf2fcbac26007aff34d13",
+                "positionsSHA256": "04b82f054595b3c9584095304e8794a01be0c910ead8849b1822c843e9c56006"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-004",
+          "requestedSteps": 20000,
+          "restoreSHA256": "9e2a2001242bfb14fec58f4dd66d850037fbface0b403f0d685706368de96e93",
+          "reportSHA256": "04bdbddfd84673822609b2c03f1bcd6f61b00fe33d946db86cdcc27079ab5f88",
+          "checkpointSHA256": "2d6a2b2c21461624daa511ac94269746d573d2096f5169de6f48086a795ba1bd",
+          "auditSHA256": "7bd893b84b48a561f4c94c3532fc0556f63c15b448f185e273c41dac7b409c0e",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6562.330587247484,
+              "nativeKineticEnergyKJPerMol": 6562.330078125,
+              "absoluteErrorKJPerMol": 0.0005091224838906783,
+              "roundoffBoundKJPerMol": 0.00782292699667511,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35387.4951205682,
+              "nativeEnergyKJPerMol": -35387.515625,
+              "errorPerParticleKJPerMol": 7.636659887915882e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 91,
+                "imageShiftsSHA256": "666c1b1c8d03c31b830b14aa8e887a9b14de61cdc4902b3252826616daaa1c82",
+                "positionsSHA256": "b65afaabd93a8ecf2b5e7a20efe09f6793b115a1579e980a4186aecb96655270"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-005",
+          "requestedSteps": 20000,
+          "restoreSHA256": "2d6a2b2c21461624daa511ac94269746d573d2096f5169de6f48086a795ba1bd",
+          "reportSHA256": "9810d6666929e4bd3f19266e6e39506dcf41c963ca6cddaa428f231da65a7543",
+          "checkpointSHA256": "4f1b442a17daa82336693d383aa6a1f31bf9392ce21abd447b61ca197895aed7",
+          "auditSHA256": "2eadcaceca52cbdc6d3e866929f9c7af01433564dd25739d97379c03671996ca",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6635.046133983889,
+              "nativeKineticEnergyKJPerMol": 6635.0458984375,
+              "absoluteErrorKJPerMol": 0.00023554638937639538,
+              "roundoffBoundKJPerMol": 0.007909610786667676,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35507.75587936834,
+              "nativeEnergyKJPerMol": -35507.7734375,
+              "errorPerParticleKJPerMol": 6.5393413996299665e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 86,
+                "imageShiftsSHA256": "cb7d5f9d3601b69345365f4a32e584092bd5c715998e8a63685ecfb48eadc4a7",
+                "positionsSHA256": "4ecf65cf026865c22b4d736a2a4457cc0e7d2c28cee7287cc86224156c3020aa"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-006",
+          "requestedSteps": 20000,
+          "restoreSHA256": "4f1b442a17daa82336693d383aa6a1f31bf9392ce21abd447b61ca197895aed7",
+          "reportSHA256": "4c9f5654962f092b5cdf03d151e293ea8740f8489503fa35291977bdeca50942",
+          "checkpointSHA256": "82b3ba089a4f3a0c6020daa9a1046682d0a9e075cdfb1ac1475556fcefabafae",
+          "auditSHA256": "1298069cc66d189bc6ee297fe54cf252a9d602853709d139f38bbedc23989b1c",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6883.436889847279,
+              "nativeKineticEnergyKJPerMol": 6883.43701171875,
+              "absoluteErrorKJPerMol": 0.00012187147058284609,
+              "roundoffBoundKJPerMol": 0.008205715995027153,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35670.29042559373,
+              "nativeEnergyKJPerMol": -35670.3046875,
+              "errorPerParticleKJPerMol": 5.311696934106185e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 88,
+                "imageShiftsSHA256": "0a0895948d3f08b5f441fcb1124a255f022cec06c03cc2dda35e457183ae0d4e",
+                "positionsSHA256": "c3782a4b84d45425a47cf144f8ef7eb785b5c226c90e276adab658fa0283ecd4"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-007",
+          "requestedSteps": 20000,
+          "restoreSHA256": "82b3ba089a4f3a0c6020daa9a1046682d0a9e075cdfb1ac1475556fcefabafae",
+          "reportSHA256": "8e8dd3ccdb1459cb75a9ce510e52657738ab132a1c1a21a6a23c18716a7b401b",
+          "checkpointSHA256": "5915f0ed047c4a9654b03b0815618554e8d6abee316c4d1275c74265e101ac6b",
+          "auditSHA256": "aa2eb0d07bc1e5e39ab0fddf16207eb9cc1c566517508794184e648ff298eb54",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6715.172458180368,
+              "nativeKineticEnergyKJPerMol": 6715.17236328125,
+              "absoluteErrorKJPerMol": 9.489911826676689e-05,
+              "roundoffBoundKJPerMol": 0.008005128922351945,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35546.40233173809,
+              "nativeEnergyKJPerMol": -35546.4140625,
+              "errorPerParticleKJPerMol": 4.368998848241745e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 77,
+                "imageShiftsSHA256": "49965451d76ec41a40ede24c2e59c2afc4fc872e3e974bf8fcf57e9692cf0d89",
+                "positionsSHA256": "3bc8438eecf4af06a503bc84559bbfdfe9cd68eeed339d591d3beca7f2bf5d8c"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-008",
+          "requestedSteps": 20000,
+          "restoreSHA256": "5915f0ed047c4a9654b03b0815618554e8d6abee316c4d1275c74265e101ac6b",
+          "reportSHA256": "88025d641fba185f3a6787947ea2dfd7ae62f7e9b177fca31faf825736278c1a",
+          "checkpointSHA256": "fe12fbff6b0f8df62fa5627c0e6d58075e49dcb4f61594b3deddbaeddda8bd3c",
+          "auditSHA256": "759ceb781a81fa4fc9a970a4bd5d0acfc277730a2b2c28507b6cddb796bea83b",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6533.96203679925,
+              "nativeKineticEnergyKJPerMol": 6533.9619140625,
+              "absoluteErrorKJPerMol": 0.00012273675019969232,
+              "roundoffBoundKJPerMol": 0.007789109008915733,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35557.567549831176,
+              "nativeEnergyKJPerMol": -35557.5859375,
+              "errorPerParticleKJPerMol": 6.848293789306888e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 72,
+                "imageShiftsSHA256": "06aedb73eb2e5e011e0af4c742ac29dfbe5a00cc52c3fe8d3b90007f29b5f86c",
+                "positionsSHA256": "cc9fc0a1f4408091285f120a21895b40b638b84ab3a241f8c11c0c2ae2d1ad49"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-009",
+          "requestedSteps": 20000,
+          "restoreSHA256": "fe12fbff6b0f8df62fa5627c0e6d58075e49dcb4f61594b3deddbaeddda8bd3c",
+          "reportSHA256": "a3d62503983c2d7957416823ecaf5eb78ac02b888adbeb40018110df1b6e10bb",
+          "checkpointSHA256": "0178915b27309eb0e8bc4f77c70dd9cea57e01b67a1a471e36d1bc50d085111c",
+          "auditSHA256": "5d717f773a713e8b7bf53a5266e3c1bd35d16bc61e7433d424f1aac97cd4dfee",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6850.746194054397,
+              "nativeKineticEnergyKJPerMol": 6850.74609375,
+              "absoluteErrorKJPerMol": 0.0001003043971650186,
+              "roundoffBoundKJPerMol": 0.008166745602366923,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35644.2973419074,
+              "nativeEnergyKJPerMol": -35644.3125,
+              "errorPerParticleKJPerMol": 5.645472105432933e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 94,
+                "imageShiftsSHA256": "b8c9d5a3182539134884b703d8daabce3cce4d4025f645121310d1e99fd2fcb9",
+                "positionsSHA256": "973e8582373727c143e72e4884dfe8594191c5f18b99540559f7878fb1a210c9"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-010",
+          "requestedSteps": 20000,
+          "restoreSHA256": "0178915b27309eb0e8bc4f77c70dd9cea57e01b67a1a471e36d1bc50d085111c",
+          "reportSHA256": "a0efdd16f086035ef2c3ca5c8536110b8ee3ac10618bb4430d8283c9654957e6",
+          "checkpointSHA256": "31602eab7a3c56bcc1cf9aec5302a5f021c1f029c987c48fb60ad0ab0aa2ff36",
+          "auditSHA256": "76732aff236a7ffe2959443a7ee7ed76e2509ab040c02b6998dec5bde9df1d81",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6756.393431765968,
+              "nativeKineticEnergyKJPerMol": 6756.3935546875,
+              "absoluteErrorKJPerMol": 0.00012292153223825153,
+              "roundoffBoundKJPerMol": 0.00805426821068785,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35701.149857141194,
+              "nativeEnergyKJPerMol": -35701.16015625,
+              "errorPerParticleKJPerMol": 3.835794713618702e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 91,
+                "imageShiftsSHA256": "b50e89732192d8850b4500d6590c15043217ddbb41ddcda33f10d93ee75bd59a",
+                "positionsSHA256": "6547fdb0fc968cfce96c5c9709145e5b47d732d37dd0959532f6f3f668b335a8"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-011",
+          "requestedSteps": 20000,
+          "restoreSHA256": "31602eab7a3c56bcc1cf9aec5302a5f021c1f029c987c48fb60ad0ab0aa2ff36",
+          "reportSHA256": "c73b241250a06d9b7c21bf40f39c9b57b06e31db4cd84aaa77fa2162e483c9bf",
+          "checkpointSHA256": "bb61f004aef9a677837be801080326a7f3a5eb7299c2cef7c974997467ef2f08",
+          "auditSHA256": "a62f573f1264420ad69d3955bdf001ce68e3513bbffa4c17d8d00abdf2a07d96",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6772.568557773389,
+              "nativeKineticEnergyKJPerMol": 6772.568359375,
+              "absoluteErrorKJPerMol": 0.00019839838932966813,
+              "roundoffBoundKJPerMol": 0.008073550486471504,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35661.21809166431,
+              "nativeEnergyKJPerMol": -35661.23828125,
+              "errorPerParticleKJPerMol": 7.519398766502155e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 84,
+                "imageShiftsSHA256": "640f3e9d9cc0a764433863c6161afc52545a722a8c915bfcf642f6e8cf8682e6",
+                "positionsSHA256": "ad6ff6c1c0bc0b3b4261aad28f6bc7f9229115627bb9f2fe3e000cae2682b758"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-012",
+          "requestedSteps": 20000,
+          "restoreSHA256": "bb61f004aef9a677837be801080326a7f3a5eb7299c2cef7c974997467ef2f08",
+          "reportSHA256": "a4aa8b2527a2c59803ff905e7ce08f8174f3ab038427a6356bd89281e17cdc6a",
+          "checkpointSHA256": "fa96d95eecd054879a6b64710ce6fe2fca111a0d957fc664e3b4fe3f80a93ab7",
+          "auditSHA256": "d7dfa1893991f59d1d9ee9e0af4a948f587fe773879a70c6eb5c8beb382045a0",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6559.720811893292,
+              "nativeKineticEnergyKJPerMol": 6559.720703125,
+              "absoluteErrorKJPerMol": 0.00010876829219341744,
+              "roundoffBoundKJPerMol": 0.007819815898307788,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35500.3847258123,
+              "nativeEnergyKJPerMol": -35500.40234375,
+              "errorPerParticleKJPerMol": 6.561615531206186e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 76,
+                "imageShiftsSHA256": "01508dac28d9fb46c74ffaf748b0f384cba0c9e42ef7ffa2a055246921087c40",
+                "positionsSHA256": "e35fb1f9d6708a96661fba7d19eb41b4b8f975c4a53ce9f8671a04a6898d5d3d"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-013",
+          "requestedSteps": 20000,
+          "restoreSHA256": "fa96d95eecd054879a6b64710ce6fe2fca111a0d957fc664e3b4fe3f80a93ab7",
+          "reportSHA256": "02a5b563b65ca4b988e35fcd217a6bb3d27aac046aec662605388fc815d56163",
+          "checkpointSHA256": "bcd73e75bd73b791f2f546f2f9fbcbb2bde5430002fa2f9b208657538eb74318",
+          "auditSHA256": "03ddc3fdfb36951623748e8b4f179c7fdad956f403c0c7994fbdeccb9c65d89b",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6585.793361753881,
+              "nativeKineticEnergyKJPerMol": 6585.79296875,
+              "absoluteErrorKJPerMol": 0.00039300388107221806,
+              "roundoffBoundKJPerMol": 0.007850896836815736,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35335.16542936454,
+              "nativeEnergyKJPerMol": -35335.18359375,
+              "errorPerParticleKJPerMol": 6.7651342493057025e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 85,
+                "imageShiftsSHA256": "42a3712b9fa51558c8a8d9972e370a8abc571dbde58fc462d758b1b1981c3116",
+                "positionsSHA256": "283a3a042491d97fedd184072445f673bed26e5ba4f3f4aded6abc0486db5c2e"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-014",
+          "requestedSteps": 20000,
+          "restoreSHA256": "bcd73e75bd73b791f2f546f2f9fbcbb2bde5430002fa2f9b208657538eb74318",
+          "reportSHA256": "d7483c81091342422ff5e4f06d8bc965d130935ebccd224a706128ad15ba58a6",
+          "checkpointSHA256": "143e1e2872c057e053e19d52ed6f37526828fd04249e0c0d40917b5492c02f54",
+          "auditSHA256": "0466fc1782340e18818f4e93404ed2941dbb89bd4ee08c03bc33f97de2e6c34d",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6827.314597606295,
+              "nativeKineticEnergyKJPerMol": 6827.31494140625,
+              "absoluteErrorKJPerMol": 0.00034379995486233383,
+              "roundoffBoundKJPerMol": 0.008138812929412395,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35047.496452104126,
+              "nativeEnergyKJPerMol": -35047.515625,
+              "errorPerParticleKJPerMol": 7.140743342406867e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 72,
+                "imageShiftsSHA256": "80b437c502485097ca9e06b3cba9be046156411361c36f2953909d7ae57f20e3",
+                "positionsSHA256": "1feba0287114a29805f854b8af2f50643d1516aaa45aa284aa7f1b491d75f342"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-015",
+          "requestedSteps": 20000,
+          "restoreSHA256": "143e1e2872c057e053e19d52ed6f37526828fd04249e0c0d40917b5492c02f54",
+          "reportSHA256": "bd3836c265326195d009b4022847233d7f3e25a280bd17ac66a20a5c4aacede0",
+          "checkpointSHA256": "9bc0bfdfa5ac237368abea2f7d02ba071c3b18804789825268f3ebff368dc3a1",
+          "auditSHA256": "559a9fcab0c4d27ef53bf04dac20c6a6041d53bdbf4fcbf0037098fbcc51ba9f",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6643.1443080918325,
+              "nativeKineticEnergyKJPerMol": 6643.14404296875,
+              "absoluteErrorKJPerMol": 0.00026512308249948546,
+              "roundoffBoundKJPerMol": 0.007919264573996552,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35330.20640622795,
+              "nativeEnergyKJPerMol": -35330.22265625,
+              "errorPerParticleKJPerMol": 6.0521497380758466e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 94,
+                "imageShiftsSHA256": "4d07e837c216d8619821cf3b624013262fc06a84225e6e7c73ad57c28ca15e35",
+                "positionsSHA256": "6dad5d4f3ea67a7d0d439932f785e7d6bce01c0849adb0663ff63771b206146b"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-016",
+          "requestedSteps": 20000,
+          "restoreSHA256": "9bc0bfdfa5ac237368abea2f7d02ba071c3b18804789825268f3ebff368dc3a1",
+          "reportSHA256": "99f49eb87c59ffffbecd417c53ae1b7b926a68ab26ed00de594c1d4f851f5bc9",
+          "checkpointSHA256": "3371067ece7269486356bf8752dc8a3a03ce43c19e69fb7fa64d21966c44bae1",
+          "auditSHA256": "00c58a0009da24a3b09ab32da87f548c0436d97d16ede0e0abfc741807169ee4",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6481.264461643047,
+              "nativeKineticEnergyKJPerMol": 6481.2646484375,
+              "absoluteErrorKJPerMol": 0.00018679445292946184,
+              "roundoffBoundKJPerMol": 0.007726288529073686,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35359.57683186431,
+              "nativeEnergyKJPerMol": -35359.58984375,
+              "errorPerParticleKJPerMol": 4.84613992197498e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 60,
+                "imageShiftsSHA256": "c8aee2e5803e714302f6cb2c48393a7d3a448604f290e535e7af825e0ecbff86",
+                "positionsSHA256": "cab3fb72133f6fd45f728d6a168210f90234d49b7e12b7a3b734f8f98c25b46e"
+              },
+              "passed": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "directory": "run-08-water-orthogonal-smooth",
+      "identifier": "water-orthogonal-smooth",
+      "timeStepPS": 0.0005,
+      "temperatureK": 300,
+      "seed": 31415,
+      "outcome": "passed",
+      "wallSeconds": 1946.1648891661316,
+      "chunks": [
+        {
+          "directory": "chunk-000",
+          "requestedSteps": 0,
+          "restoreSHA256": "c6abdded71a66b89a4c85ce3967dbebed4d40bf2a306baaa9ee70cb018d10c9e",
+          "reportSHA256": "efa2ea597cf2944dfbefdcf7eb2f5735e295160e03766132dcbd82da7f47e51b",
+          "checkpointSHA256": "dc53f75e1bbc3866d3b3a1a59d9751eb3204a5cb89d19d800041ab796b98abab",
+          "auditSHA256": "6df6841dda14cae4d3eaee049c5f856fd5103f4ace0770288a34f8ef67fd38ce",
+          "audit": {
+            "endpointKinetic": null
+          }
+        },
+        {
+          "directory": "chunk-001",
+          "requestedSteps": 20000,
+          "restoreSHA256": "dc53f75e1bbc3866d3b3a1a59d9751eb3204a5cb89d19d800041ab796b98abab",
+          "reportSHA256": "d13242b1ad624481c72d9bf2305e190097e132c8208ee2af35807b002bcdd6d0",
+          "checkpointSHA256": "3cb41d31e63bb0892c14ceeea004c37b0c69193936c984f689f9a26a4d0e075f",
+          "auditSHA256": "63c5c5b602a5341242598ebcccdd18975e462600fbe950af544b2a93fb7adaf4",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6606.01693240113,
+              "nativeKineticEnergyKJPerMol": 6606.0166015625,
+              "absoluteErrorKJPerMol": 0.0003308386303615407,
+              "roundoffBoundKJPerMol": 0.00787500524044558,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35536.8822090677,
+              "nativeEnergyKJPerMol": -35536.8984375,
+              "errorPerParticleKJPerMol": 6.044108864592884e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 89,
+                "imageShiftsSHA256": "e728a9d046f22d7c84f256bb15d6eae21f375e67822636ab1492193f0658391a",
+                "positionsSHA256": "867cb66117f420e3100033bfd111acf032331399678cf3f072ffd6a570831df9"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-002",
+          "requestedSteps": 20000,
+          "restoreSHA256": "3cb41d31e63bb0892c14ceeea004c37b0c69193936c984f689f9a26a4d0e075f",
+          "reportSHA256": "654c03f17c54296a7e82ce9f65cc1e1377a76c135ae54f2fddc492a52ebb00e8",
+          "checkpointSHA256": "861a3ea8ebbd0945309032d81509404124914b732b563daff777bdb1bbaedc72",
+          "auditSHA256": "7c84d590bbd67bcacaa43f5b154da4875058531cd5f140a0a0dd9d67a20d3b2e",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6647.486648214186,
+              "nativeKineticEnergyKJPerMol": 6647.48583984375,
+              "absoluteErrorKJPerMol": 0.0008083704360615229,
+              "roundoffBoundKJPerMol": 0.007924441052977132,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35571.02447491075,
+              "nativeEnergyKJPerMol": -35571.04296875,
+              "errorPerParticleKJPerMol": 6.887835846759476e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 88,
+                "imageShiftsSHA256": "a194c686c9e791941956cff0a88b0322a1c0c7f3c21b42b7b759e24cc7e7591d",
+                "positionsSHA256": "c51807bb6d738498d49f1b251e32dc2b9991704f727fe038978201e44cf4df7b"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-003",
+          "requestedSteps": 20000,
+          "restoreSHA256": "861a3ea8ebbd0945309032d81509404124914b732b563daff777bdb1bbaedc72",
+          "reportSHA256": "8bfa2d6fefe244e095ea25a0325a02d6417f390c09e88ff140e255b848b9cbd9",
+          "checkpointSHA256": "8fa87f1edab3aec04885ac479a7c8f4991300d844a5944b11c9ce20b5c97991e",
+          "auditSHA256": "aacfec6adda07e8b8ea6d0fe6cb873f7b61c6523b3575f5e0c957f46f485397a",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6675.641778512274,
+              "nativeKineticEnergyKJPerMol": 6675.64111328125,
+              "absoluteErrorKJPerMol": 0.0006652310239587678,
+              "roundoffBoundKJPerMol": 0.007958004623788473,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35518.253860076715,
+              "nativeEnergyKJPerMol": -35518.2734375,
+              "errorPerParticleKJPerMol": 7.2914053203825955e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 103,
+                "imageShiftsSHA256": "35581280792b4e8e984dccd6b4bab72977241e1722b0e071e54e28385e1b7a16",
+                "positionsSHA256": "1385bbc52bae9429baa2d39ac44a0a38c824ea47f38e0821e925fecafcdc9da6"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-004",
+          "requestedSteps": 20000,
+          "restoreSHA256": "8fa87f1edab3aec04885ac479a7c8f4991300d844a5944b11c9ce20b5c97991e",
+          "reportSHA256": "09082597f4ad8e0f2e0c51312db16de4242853d60d41d0e1bb2efe3bed04933c",
+          "checkpointSHA256": "e8113d85195a65c8da2c3ff78000ef18b36e772b3e1ae415723999653ea1b547",
+          "auditSHA256": "ca66484117bc813ad2dd0a56fd2ba457da87e1aeb4041f9acaf93b5055f7e6dd",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6615.6875786088885,
+              "nativeKineticEnergyKJPerMol": 6615.6875,
+              "absoluteErrorKJPerMol": 7.860888854338555e-05,
+              "roundoffBoundKJPerMol": 0.007886533562827648,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35547.737455023744,
+              "nativeEnergyKJPerMol": -35547.75390625,
+              "errorPerParticleKJPerMol": 6.1270861289840285e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 91,
+                "imageShiftsSHA256": "8120d68f5faba56e182ec5febe1882ca807dfbfa8884b1d8cde756ebaca64d42",
+                "positionsSHA256": "1aaee318ac8f331b74c14230471bcc9e6804355e366859730b240be729b067a3"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-005",
+          "requestedSteps": 20000,
+          "restoreSHA256": "e8113d85195a65c8da2c3ff78000ef18b36e772b3e1ae415723999653ea1b547",
+          "reportSHA256": "5df1fc6d2199cf90afb91559d80207a9d8969c4327c8da484f05786235aabcd0",
+          "checkpointSHA256": "0f165d6c8c79629fa4b8a8dd8f68e827e1ce7af56c66b8eadf33d89dd5d0df1f",
+          "auditSHA256": "64d0587f02e887b046d7e1e8520ec0308464aec16cf950a1196b764828750b0f",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6834.675097230836,
+              "nativeKineticEnergyKJPerMol": 6834.6748046875,
+              "absoluteErrorKJPerMol": 0.0002925433363998309,
+              "roundoffBoundKJPerMol": 0.008147587339182109,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35852.16622166749,
+              "nativeEnergyKJPerMol": -35852.1875,
+              "errorPerParticleKJPerMol": 7.92489106570903e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 97,
+                "imageShiftsSHA256": "0a7f2e32b4665bb6ad570633455a77eb45f3dd4d51366b8c08af30857219e60d",
+                "positionsSHA256": "9ae3606d99c56c3a9362cc04ebc879e9f21f7c66293ff2e29cf1cd57b96d0415"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-006",
+          "requestedSteps": 20000,
+          "restoreSHA256": "0f165d6c8c79629fa4b8a8dd8f68e827e1ce7af56c66b8eadf33d89dd5d0df1f",
+          "reportSHA256": "89c19c451516208c4cba6588655edea571b64cd46e01ffabd1d7152a05ad9f3e",
+          "checkpointSHA256": "87f8b6bca244fa682627990194f3624ab471566a825b1429d80dc121f7db76bf",
+          "auditSHA256": "32bbe037f965346052354795197e0bf2df1d0e4a7d5f6af626afea1a157865ab",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6557.162169457486,
+              "nativeKineticEnergyKJPerMol": 6557.162109375,
+              "absoluteErrorKJPerMol": 6.008248601574451e-05,
+              "roundoffBoundKJPerMol": 0.007816765755201866,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35354.87885624019,
+              "nativeEnergyKJPerMol": -35354.90234375,
+              "errorPerParticleKJPerMol": 8.747675907026345e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 94,
+                "imageShiftsSHA256": "d8cab29698ffae39b7dfc998d38efbd62940d0ab0e29bc6080347e656172567e",
+                "positionsSHA256": "3d2e3e1f3fac0f4d2eb24c1236681a212ed1b73612467123f74bdb26a1cff554"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-007",
+          "requestedSteps": 20000,
+          "restoreSHA256": "87f8b6bca244fa682627990194f3624ab471566a825b1429d80dc121f7db76bf",
+          "reportSHA256": "ab7869112e91340752da5c175002eced47c8390c61eeae73aaa42414bb3f65c9",
+          "checkpointSHA256": "628cb0b4cc60031d40efca9e8ff1d99cb688cd1d17ed9adf910cfa0f452b2dd4",
+          "auditSHA256": "1543866cc71a13ac18471026644f2d62f25d7885757fff788869de595f848be8",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6851.562445268096,
+              "nativeKineticEnergyKJPerMol": 6851.5625,
+              "absoluteErrorKJPerMol": 5.473190412885742e-05,
+              "roundoffBoundKJPerMol": 0.008167718650799688,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35521.625506168406,
+              "nativeEnergyKJPerMol": -35521.640625,
+              "errorPerParticleKJPerMol": 5.630849755683036e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 88,
+                "imageShiftsSHA256": "1abdda3a76241e3f28d4f1bcb5e1dc6576aee3c276cd5eeb51a51490f1f22d0b",
+                "positionsSHA256": "d9170fb259da2c87f60c8db120cf89460cc332f6fba86faf5626a68464c169da"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-008",
+          "requestedSteps": 20000,
+          "restoreSHA256": "628cb0b4cc60031d40efca9e8ff1d99cb688cd1d17ed9adf910cfa0f452b2dd4",
+          "reportSHA256": "887549109f7856354ae1bff1f971e5cf6418954b3c1686bb35be2716aa8a4287",
+          "checkpointSHA256": "04dd7452f49465d1c3679dead8c60f2efbdb63d69ffed4676a573531dec9320a",
+          "auditSHA256": "7c11faf92227a0185cd178a84e0073c74cff540eadb3000796a30236017f8f8d",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6609.076177230408,
+              "nativeKineticEnergyKJPerMol": 6609.076171875,
+              "absoluteErrorKJPerMol": 5.355407665774692e-06,
+              "roundoffBoundKJPerMol": 0.007878652148819634,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35858.977854961006,
+              "nativeEnergyKJPerMol": -35858.9921875,
+              "errorPerParticleKJPerMol": 5.338003349904963e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 67,
+                "imageShiftsSHA256": "503828581c04e1c3f172cf923e97ab66ddc125ef150838fd55e585aa5ecc31e9",
+                "positionsSHA256": "498624c32d72b6e48130c6181b9869b335374dc85a6aec338a8d40e0b03743f5"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-009",
+          "requestedSteps": 20000,
+          "restoreSHA256": "04dd7452f49465d1c3679dead8c60f2efbdb63d69ffed4676a573531dec9320a",
+          "reportSHA256": "cf4357e64927b4f641f6b0cef179792020c8c8110682bc5fdf087a568dbc06d8",
+          "checkpointSHA256": "8866baaa51fe43366a6010e4aec3c1d2c0822a211fac9f6b77c81d55d64df30c",
+          "auditSHA256": "8809ad59990fa005c0c9936703db35cd404df891ae3e9e23e7ea8c1be51781ea",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6682.813494555395,
+              "nativeKineticEnergyKJPerMol": 6682.8134765625,
+              "absoluteErrorKJPerMol": 1.7992894754570443e-05,
+              "roundoffBoundKJPerMol": 0.00796655398572371,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35511.66699468007,
+              "nativeEnergyKJPerMol": -35511.6796875,
+              "errorPerParticleKJPerMol": 4.727307237074251e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 66,
+                "imageShiftsSHA256": "5cdbc13604e012e56b26f8849ccad174c0ab969150d7ff66ea7caa303354630a",
+                "positionsSHA256": "adc8a9d746fe4c347a4f57969995a645f8a8a93751848a38516c69d92438f3ac"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-010",
+          "requestedSteps": 20000,
+          "restoreSHA256": "8866baaa51fe43366a6010e4aec3c1d2c0822a211fac9f6b77c81d55d64df30c",
+          "reportSHA256": "af20b2b52c3a069aa29a9cb6723b23efb6abe2fdf5b6829d58d726091e0be824",
+          "checkpointSHA256": "7951969b231d65c42f7ed60381c87dbbc8bf22107020dbcc89aeb3cad5a673f0",
+          "auditSHA256": "e62896eaa950068635edc5a3be7b4be67c08d5173910cc8158cf1eefdf24e66e",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6545.346893452346,
+              "nativeKineticEnergyKJPerMol": 6545.3466796875,
+              "absoluteErrorKJPerMol": 0.00021376484619395342,
+              "roundoffBoundKJPerMol": 0.007802680831827138,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35611.636144913966,
+              "nativeEnergyKJPerMol": -35611.65625,
+              "errorPerParticleKJPerMol": 7.487927759465115e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 91,
+                "imageShiftsSHA256": "496c2c88991af60540788b84a9db1455511bad555ff2f36af8c61bb3efe29fc6",
+                "positionsSHA256": "63ea384d1bec0ec2db14a2052814fa4c1e757c6a22ed0782a1c60ae1b5fe2744"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-011",
+          "requestedSteps": 20000,
+          "restoreSHA256": "7951969b231d65c42f7ed60381c87dbbc8bf22107020dbcc89aeb3cad5a673f0",
+          "reportSHA256": "b432d6899d1cc738801a622c5d384f8a00639c8773628b31b873daa1290a2207",
+          "checkpointSHA256": "bdd89543f04a62f452e19af0d84d07f5cbec81fccae8e52c8f59d73dcc80eeeb",
+          "auditSHA256": "fdbe9499f34c8b3d3519cf6132f09c89de1f331397b934fdc6d4ac1b86362087",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6354.082804602533,
+              "nativeKineticEnergyKJPerMol": 6354.08251953125,
+              "absoluteErrorKJPerMol": 0.0002850712826329982,
+              "roundoffBoundKJPerMol": 0.007574675998540558,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35417.941670690256,
+              "nativeEnergyKJPerMol": -35417.95703125,
+              "errorPerParticleKJPerMol": 5.720878861934724e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 69,
+                "imageShiftsSHA256": "b9a1ff01bc470aa67a98f301815f5e29f905355919cbb36c075456bd829a32ff",
+                "positionsSHA256": "313728305be1703a6bc1c298b86bd51b9a7d14abde5c17aaf27137c05a75e704"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-012",
+          "requestedSteps": 20000,
+          "restoreSHA256": "bdd89543f04a62f452e19af0d84d07f5cbec81fccae8e52c8f59d73dcc80eeeb",
+          "reportSHA256": "157009a748e2c41f7ef39d400ab3aae2e2faf41c766d3f40be42cdb08786e36f",
+          "checkpointSHA256": "4a876157224badfa28c0c486157c8154d82c2a55d91d3d96df3da531bac0b79a",
+          "auditSHA256": "94e16996e9b2e398f31d129519baab5aa8eee2bb1b9047a39fc6f3a16d43e6b3",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6731.308606735347,
+              "nativeKineticEnergyKJPerMol": 6731.30859375,
+              "absoluteErrorKJPerMol": 1.2985346984351054e-05,
+              "roundoffBoundKJPerMol": 0.008024364733336068,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35430.92247311183,
+              "nativeEnergyKJPerMol": -35430.9375,
+              "errorPerParticleKJPerMol": 5.5966063947165365e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 93,
+                "imageShiftsSHA256": "4c1daff583084c6af1127b86c2fc56dea5bc07d98e79a009720eaaab90d27790",
+                "positionsSHA256": "03a4cc62ae7e1f181770968f2a46bf580090278f0c0bed58def197533e7effeb"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-013",
+          "requestedSteps": 20000,
+          "restoreSHA256": "4a876157224badfa28c0c486157c8154d82c2a55d91d3d96df3da531bac0b79a",
+          "reportSHA256": "d6756db7edd5a3a9576bee9ce2b57a80f0397a0ee6e3e073234f1b983790917f",
+          "checkpointSHA256": "9a78d6d02bb34f1786f648f828bf9fd783bf5698b745af2fcd9016f4dffd8409",
+          "auditSHA256": "7519f06bfbd770266050bfa966f1fdf33d3f6330307c5190ff6f2c185a8b9205",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6878.485370488692,
+              "nativeKineticEnergyKJPerMol": 6878.4853515625,
+              "absoluteErrorKJPerMol": 1.892619184218347e-05,
+              "roundoffBoundKJPerMol": 0.008199813316941272,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35450.82992394903,
+              "nativeEnergyKJPerMol": -35450.8515625,
+              "errorPerParticleKJPerMol": 8.059050640684432e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 80,
+                "imageShiftsSHA256": "59b3131064639588fefb81fe6ff75f4ba4531c313b99f87b2f14e148e692471b",
+                "positionsSHA256": "037a3ead4e26de0b8ea91bc590a37c3d5d2ad10dd9b4bd29aee96d57aebc3704"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-014",
+          "requestedSteps": 20000,
+          "restoreSHA256": "9a78d6d02bb34f1786f648f828bf9fd783bf5698b745af2fcd9016f4dffd8409",
+          "reportSHA256": "77c997342f09f6ab6d8122e65c5269102db9b397ad713cde2bc68110a5187179",
+          "checkpointSHA256": "aef686dee95bb3484bc4615f6e05c057a00a1be34ab23fb2aa5c5a583b43afbd",
+          "auditSHA256": "d0ce3d7414e2ee3ce94e99fd16984a31621e27ca6de27c982478a9151f1f6295",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6687.822256484146,
+              "nativeKineticEnergyKJPerMol": 6687.82177734375,
+              "absoluteErrorKJPerMol": 0.00047914039623719873,
+              "roundoffBoundKJPerMol": 0.007972524902352153,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35502.971130263584,
+              "nativeEnergyKJPerMol": -35502.98828125,
+              "errorPerParticleKJPerMol": 6.3877044379142295e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 83,
+                "imageShiftsSHA256": "4a79dbea06a82edab7e6d632c82187af6818c1c0458a3fc57043dedb89c31154",
+                "positionsSHA256": "b60ebfd0727a1c07527595efc9a5984543303a5e870dbb69f9bc40d06db5b57d"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-015",
+          "requestedSteps": 20000,
+          "restoreSHA256": "aef686dee95bb3484bc4615f6e05c057a00a1be34ab23fb2aa5c5a583b43afbd",
+          "reportSHA256": "35d462536a9de277965a7d26200c5e4d1dcf63c55f24dea5b130911148b80722",
+          "checkpointSHA256": "67ca455e07e5a98bbd06b46ef6da4f2d98257dea7e9ae1a645733a040dc54923",
+          "auditSHA256": "b6379788f43ee898639d098b585dd94dfaffe49114586dd8beb39c96fa968a3b",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6431.642784931629,
+              "nativeKineticEnergyKJPerMol": 6431.642578125,
+              "absoluteErrorKJPerMol": 0.00020680662873928668,
+              "roundoffBoundKJPerMol": 0.007667134810286092,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35223.02777058468,
+              "nativeEnergyKJPerMol": -35223.046875,
+              "errorPerParticleKJPerMol": 7.1152384797010566e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 89,
+                "imageShiftsSHA256": "1758be27814fa7da6bc4cd7c9a0806cd4263cbf9384fd5efa41ad0c5b44195f4",
+                "positionsSHA256": "ea6daf4bc022a7101c0b583e32f753b6f0530712c10cf8399bd2e08ff23ceb10"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-016",
+          "requestedSteps": 20000,
+          "restoreSHA256": "67ca455e07e5a98bbd06b46ef6da4f2d98257dea7e9ae1a645733a040dc54923",
+          "reportSHA256": "ed848ac6fec88f7728d10a8b3d19dad99bd56c1c56664f797a1eb8fd8a1a1304",
+          "checkpointSHA256": "25caf58b37ccf21cad3ea607a1088615ff8ad3423bda656fd76bc69a1972a160",
+          "auditSHA256": "e474e3aa9cd34978d126c70ea4cf789116ef04fc697979d0c91d9a8189b4582d",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6643.921959463507,
+              "nativeKineticEnergyKJPerMol": 6643.921875,
+              "absoluteErrorKJPerMol": 8.446350693702698e-05,
+              "roundoffBoundKJPerMol": 0.007920191607777016,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35602.75064630865,
+              "nativeEnergyKJPerMol": -35602.765625,
+              "errorPerParticleKJPerMol": 5.578655997565228e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 92,
+                "imageShiftsSHA256": "a1fc9e26a8fef8b5866bb919747f0d68f0f9ec9be958d2dead9c5b93ad9cabcb",
+                "positionsSHA256": "1bd5ec8d554d418415cd9f37c78ba2593a74e30cbddd5e3cbb02214087fc490e"
+              },
+              "passed": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "directory": "run-09-water-orthogonal-smooth",
+      "identifier": "water-orthogonal-smooth",
+      "timeStepPS": 0.0005,
+      "temperatureK": 305,
+      "seed": 1001729,
+      "outcome": "passed",
+      "wallSeconds": 1938.2378851249814,
+      "chunks": [
+        {
+          "directory": "chunk-000",
+          "requestedSteps": 0,
+          "restoreSHA256": "89caed6e6d19b81c24c75ac9226e8eb6d6cbfad99067612fec5895f82b9d2635",
+          "reportSHA256": "e049ccfa4127d1179e2420bb16991e0cf58400eba1b6d9d9e25f40dfd72d81fb",
+          "checkpointSHA256": "838653dae30bd1bb7c171cfda86c78550987f5e089838d4730e6b1c6005d7121",
+          "auditSHA256": "6df6841dda14cae4d3eaee049c5f856fd5103f4ace0770288a34f8ef67fd38ce",
+          "audit": {
+            "endpointKinetic": null
+          }
+        },
+        {
+          "directory": "chunk-001",
+          "requestedSteps": 20000,
+          "restoreSHA256": "838653dae30bd1bb7c171cfda86c78550987f5e089838d4730e6b1c6005d7121",
+          "reportSHA256": "e743807fd244e3fb15ce8ff1e34046b3cdd87bea1eca987b8da1a3af38ce12a9",
+          "checkpointSHA256": "6b6b247a31fd0f6e30e10b4562a0e621878fbf700ac78908af2a2035ccc00db2",
+          "auditSHA256": "f4a1f95611ee5673476968ee052ad46f041842d2cb0d57301025e1c0941f0e4a",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6667.800110986999,
+              "nativeKineticEnergyKJPerMol": 6667.7998046875,
+              "absoluteErrorKJPerMol": 0.0003062994992433232,
+              "roundoffBoundKJPerMol": 0.007948656616498967,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35485.76126018335,
+              "nativeEnergyKJPerMol": -35485.7734375,
+              "errorPerParticleKJPerMol": 4.535313462404954e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 85,
+                "imageShiftsSHA256": "ea7951183527dee60788b5d7049c84cbc36748844247aa1b35dfb5dd9524318d",
+                "positionsSHA256": "fe99e15900fb6cc48a07fca2f70dd5ae9ea77db6a73aab11081ec2651b2ab554"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-002",
+          "requestedSteps": 20000,
+          "restoreSHA256": "6b6b247a31fd0f6e30e10b4562a0e621878fbf700ac78908af2a2035ccc00db2",
+          "reportSHA256": "e54f187273a89579abafa70d5b4d70a7842d1ca4d58c8f44e37f7fda3872d437",
+          "checkpointSHA256": "54bf2667234f25e7b287e7e742bde2c05699b5716f011eebc5f51037615ee42d",
+          "auditSHA256": "5be16fbdd040c441843235b166e6d8834d0beb3b392d8357f3185d9bfea859f5",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6417.880887624167,
+              "nativeKineticEnergyKJPerMol": 6417.880859375,
+              "absoluteErrorKJPerMol": 2.824916737154126e-05,
+              "roundoffBoundKJPerMol": 0.007650729330720303,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35389.38178866211,
+              "nativeEnergyKJPerMol": -35389.3984375,
+              "errorPerParticleKJPerMol": 6.200684502450281e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 91,
+                "imageShiftsSHA256": "4e9ef9f1d987048cef6c08b3b1138e8e4aed32cf78b044f651180f6893bb333b",
+                "positionsSHA256": "1fe00a9fa2ad4117b982e1bec2b7df366a72e559374267f17447915085f09412"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-003",
+          "requestedSteps": 20000,
+          "restoreSHA256": "54bf2667234f25e7b287e7e742bde2c05699b5716f011eebc5f51037615ee42d",
+          "reportSHA256": "66be6d44885b5a87f236989ba37462dafe1eaba92e6077e67fa28457427448b5",
+          "checkpointSHA256": "b0ea73f26796858d753b4cab898add8d3e985978421131e8d8692b1ffc7f72d6",
+          "auditSHA256": "93aaf05631a45237c659211e079c8ebb43ffe3052edc760705fa58db8aa906e7",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6567.668714923449,
+              "nativeKineticEnergyKJPerMol": 6567.6689453125,
+              "absoluteErrorKJPerMol": 0.0002303890505572781,
+              "roundoffBoundKJPerMol": 0.007829290548338887,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35557.41908420477,
+              "nativeEnergyKJPerMol": -35557.4296875,
+              "errorPerParticleKJPerMol": 3.949085747375668e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 87,
+                "imageShiftsSHA256": "71c7df8618406fc4296ea813ef5446d2382385db2b29ebe2d94c5ddc4ba18153",
+                "positionsSHA256": "46d5869f3f480648245f4cfeb52b21cfd7c2d2e160fe6fa9a534d69a84fc63a1"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-004",
+          "requestedSteps": 20000,
+          "restoreSHA256": "b0ea73f26796858d753b4cab898add8d3e985978421131e8d8692b1ffc7f72d6",
+          "reportSHA256": "63a07e40f37a3c09a0213c6209ee2c47ff96eb7cea91a9dfdd9fa47020140b82",
+          "checkpointSHA256": "bf306d011a1a9cbf787b181cb732b244fb8f3f50ba99a7adf64292dd03daaaf4",
+          "auditSHA256": "28de0af1748d564f28a61007d2b8eee8d49a732e21be47a54de5accabf842a12",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6826.349259847011,
+              "nativeKineticEnergyKJPerMol": 6826.3486328125,
+              "absoluteErrorKJPerMol": 0.0006270345111261122,
+              "roundoffBoundKJPerMol": 0.008137662155755957,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35421.69556526566,
+              "nativeEnergyKJPerMol": -35421.71484375,
+              "errorPerParticleKJPerMol": 7.180068654908315e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 90,
+                "imageShiftsSHA256": "29aabcbdbf752be808f9a8955cdf35c476ca6db822b206f929d395db8646f4b5",
+                "positionsSHA256": "e865708778919b0fd71fe9646da4bb6344e8538eccb6b850127fa7026e16b8e0"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-005",
+          "requestedSteps": 20000,
+          "restoreSHA256": "bf306d011a1a9cbf787b181cb732b244fb8f3f50ba99a7adf64292dd03daaaf4",
+          "reportSHA256": "daec45abbc34792d168b9ca40efb753e32a68236e28947438236f53fe8c4a463",
+          "checkpointSHA256": "4b4ade144d061cff149ab74b1434217645a643097bbf0f635376034ed505066a",
+          "auditSHA256": "9fcd952d75f189e13c9c2715e8aefd25a8a8c9e50a542b8c1e3f37085532dcc8",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6743.438915361499,
+              "nativeKineticEnergyKJPerMol": 6743.43896484375,
+              "absoluteErrorKJPerMol": 4.948225068801548e-05,
+              "roundoffBoundKJPerMol": 0.008038825205307847,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35469.991219539894,
+              "nativeEnergyKJPerMol": -35470.00390625,
+              "errorPerParticleKJPerMol": 4.725031696912074e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 82,
+                "imageShiftsSHA256": "e25cff582d6430ec48e29ae7ea28acb1e826b8ebb0b1fae111f681165145c64d",
+                "positionsSHA256": "e17643f0bdaf5e2c2d15390b89f84c751a7c73012f456beb286bf468d02616ed"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-006",
+          "requestedSteps": 20000,
+          "restoreSHA256": "4b4ade144d061cff149ab74b1434217645a643097bbf0f635376034ed505066a",
+          "reportSHA256": "11c13667288147adf7eb57691ab214246255bcbe4d0a81b4ab1607b124d0950b",
+          "checkpointSHA256": "534ce3f957463091e8ac3e2f94c5c0e9857a102d86f17aea19a901001ead4f55",
+          "auditSHA256": "14db9506121ad0c97ac5c5b68207c64743f72a326c911e386689aa6ebb395066",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6751.0770011576615,
+              "nativeKineticEnergyKJPerMol": 6751.07666015625,
+              "absoluteErrorKJPerMol": 0.0003410014114706428,
+              "roundoffBoundKJPerMol": 0.008047930523975117,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35178.4286507995,
+              "nativeEnergyKJPerMol": -35178.44140625,
+              "errorPerParticleKJPerMol": 4.7506333339189354e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 83,
+                "imageShiftsSHA256": "20a2607a07b47794ae824b045d18b40a0921875ef3ae325a4f33bab8144ae2c1",
+                "positionsSHA256": "cbba6efe1c40cf422ca4456ad60e4e94f45ad5f2a6c8df1beab3de7de168a247"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-007",
+          "requestedSteps": 20000,
+          "restoreSHA256": "534ce3f957463091e8ac3e2f94c5c0e9857a102d86f17aea19a901001ead4f55",
+          "reportSHA256": "c3f9d84d1fedcab29d69273eb40d1bfdb5bcac5d4851f8d5af5e71f44680ef5f",
+          "checkpointSHA256": "eec794cb0fbff97fc5a4239f2a384fc9bfaf5956e8b62341365d9bb71f52c0f7",
+          "auditSHA256": "afbd9ea8c6d05e82b30206f784f972ca2947139e54afe454383cfae75b9838b1",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6878.641454722458,
+              "nativeKineticEnergyKJPerMol": 6878.64111328125,
+              "absoluteErrorKJPerMol": 0.0003414412076381268,
+              "roundoffBoundKJPerMol": 0.008199999384069253,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35331.320456728805,
+              "nativeEnergyKJPerMol": -35331.33203125,
+              "errorPerParticleKJPerMol": 4.310808638787136e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 80,
+                "imageShiftsSHA256": "a7b202f4d14757accb83737b80770716bf9d39d2b048df0cd93433ed2a954763",
+                "positionsSHA256": "5c1ed5b81087dae9e8addf4090afc28acb5af3142bd571ac8349056fb381d7c2"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-008",
+          "requestedSteps": 20000,
+          "restoreSHA256": "eec794cb0fbff97fc5a4239f2a384fc9bfaf5956e8b62341365d9bb71f52c0f7",
+          "reportSHA256": "d7d3187987e4b054e5742f8b772d4c8a45f40bfd092a8d357dd375ff86566163",
+          "checkpointSHA256": "b0128634a393a13287eebc01a41dbdb823be21dd79e8182413b3240c5e129fc4",
+          "auditSHA256": "818db363c10e3f3905510d00ba71777d2ef501705260d55870c20effb6cecd27",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6832.111859717856,
+              "nativeKineticEnergyKJPerMol": 6832.111328125,
+              "absoluteErrorKJPerMol": 0.0005315928556228755,
+              "roundoffBoundKJPerMol": 0.008144531718310801,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35398.825803095475,
+              "nativeEnergyKJPerMol": -35398.84375,
+              "errorPerParticleKJPerMol": 6.684135763560816e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 75,
+                "imageShiftsSHA256": "7aaba18065e88b8aea303bf19a15d6e60ce02b2c24217cca3a8057c05ad19ab7",
+                "positionsSHA256": "8d93b22c4914872bd7a4d4b8b1628873c75fe97155d102f0d94687d5ff00cfff"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-009",
+          "requestedSteps": 20000,
+          "restoreSHA256": "b0128634a393a13287eebc01a41dbdb823be21dd79e8182413b3240c5e129fc4",
+          "reportSHA256": "99adb67aa70bdc8d35711430a93bbd4cc0ac43689481108f25aadd76858e1bba",
+          "checkpointSHA256": "6d5731c113c9f680965d10f3ec808b74607ea7b4a9733acf6f7aba87e02a6c23",
+          "auditSHA256": "bd4a0794dffce57843f2d11a864becf349d0382a8cc4c2bbddf35f7944170216",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6648.049148416902,
+              "nativeKineticEnergyKJPerMol": 6648.048828125,
+              "absoluteErrorKJPerMol": 0.0003202919024261064,
+              "roundoffBoundKJPerMol": 0.007925111606271873,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35259.652240197756,
+              "nativeEnergyKJPerMol": -35259.66796875,
+              "errorPerParticleKJPerMol": 5.857933796526e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 87,
+                "imageShiftsSHA256": "d2a3290a188e3d1542ac60441f83510e6e4c231aacb59b0dbc8d1a9e6854bb26",
+                "positionsSHA256": "3ae8ab584a06cf525c4e4fb84e03dfde86f174a0449cfe70e8a1f921b0383c40"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-010",
+          "requestedSteps": 20000,
+          "restoreSHA256": "6d5731c113c9f680965d10f3ec808b74607ea7b4a9733acf6f7aba87e02a6c23",
+          "reportSHA256": "50d7f7d63f8c214de9007baac1bd531d76107bd080603ce5e386b323c26c9b83",
+          "checkpointSHA256": "3ffe36c9a15acdec0ebbcc8d993789a1792a7fc821f44827b32d6e19afb9e7a5",
+          "auditSHA256": "d1be275dc257f389e9e9b697cd19b53b5d80d86f4675fa65af60533dde2fbc8a",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6836.256705311171,
+              "nativeKineticEnergyKJPerMol": 6836.2568359375,
+              "absoluteErrorKJPerMol": 0.00013062632933724672,
+              "roundoffBoundKJPerMol": 0.008149472765185756,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35320.04056328954,
+              "nativeEnergyKJPerMol": -35320.05859375,
+              "errorPerParticleKJPerMol": 6.715255291712795e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 94,
+                "imageShiftsSHA256": "75e11fb33a67c02c8165664d3928e96e7e754de8c9d035a78b2abb0754be9108",
+                "positionsSHA256": "1cbb83585bb01abae2b869c77d1244ebf06a74535e41d20387c8c623832f38c5"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-011",
+          "requestedSteps": 20000,
+          "restoreSHA256": "3ffe36c9a15acdec0ebbcc8d993789a1792a7fc821f44827b32d6e19afb9e7a5",
+          "reportSHA256": "ad2556958ab55ddd68b3d361a2db43e7459f6fce6e51651e3745b5c1d8c59f72",
+          "checkpointSHA256": "1f8eb261ab9bb29209c537236b0d69fb51fc99f6d991140660e727674df399a4",
+          "auditSHA256": "a6ddf0a658ccf7d24804b8614996ea69a2cd3f0800d57aaaa5c9b303d9451585",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6598.252193978906,
+              "nativeKineticEnergyKJPerMol": 6598.25244140625,
+              "absoluteErrorKJPerMol": 0.0002474273442203412,
+              "roundoffBoundKJPerMol": 0.007865748939902599,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35470.35320774879,
+              "nativeEnergyKJPerMol": -35470.3671875,
+              "errorPerParticleKJPerMol": 5.20661125112207e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 81,
+                "imageShiftsSHA256": "6c1c29a68f464bd8a8891d7a75249a48fe747c4cb5e6dd7b280c02493869610c",
+                "positionsSHA256": "edb74d4ab60dd6664e781fe6adda3ad7a853f6def9a512db36e0303b05e089af"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-012",
+          "requestedSteps": 20000,
+          "restoreSHA256": "1f8eb261ab9bb29209c537236b0d69fb51fc99f6d991140660e727674df399a4",
+          "reportSHA256": "498d0b300a396c4bc854d12cdfa2ccbf2fed73cee57e95d3281d85d14cad33b8",
+          "checkpointSHA256": "162f76a1243e365026b26229fae4a4b1c469e9825228cdef4d22365aa5ee69a6",
+          "auditSHA256": "814d42576532388218ca8dc5812033f9b19bc5f475a6bd48b61e9ab60748636c",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6908.150112099208,
+              "nativeKineticEnergyKJPerMol": 6908.1494140625,
+              "absoluteErrorKJPerMol": 0.0006980367079449934,
+              "roundoffBoundKJPerMol": 0.008235176486818426,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35360.37734749174,
+              "nativeEnergyKJPerMol": -35360.3984375,
+              "errorPerParticleKJPerMol": 7.854751679782706e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 82,
+                "imageShiftsSHA256": "acf9576946c6e73c1ed240ac86150b57c293761f50ab9404dca25ba13977a93f",
+                "positionsSHA256": "231972a0c06cb50517368fd316132f61e9b84fe592438b9c792c6d1f8184687f"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-013",
+          "requestedSteps": 20000,
+          "restoreSHA256": "162f76a1243e365026b26229fae4a4b1c469e9825228cdef4d22365aa5ee69a6",
+          "reportSHA256": "8cfec5830ee7624705e3269b96a33093331ab5068a70fef1658e4e486a213bfc",
+          "checkpointSHA256": "d8d8a2af7c7ae8b9106d5d05440396b571ea5dd7f79de1ed020b76860c1783f3",
+          "auditSHA256": "baa4d2e5619552c6908bd4c830ac2bdeb4b4d9e7921324cb0125c4f2ad011656",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6861.9073632153895,
+              "nativeKineticEnergyKJPerMol": 6861.9072265625,
+              "absoluteErrorKJPerMol": 0.00013665288952324772,
+              "roundoffBoundKJPerMol": 0.008180050768690298,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35125.64262996055,
+              "nativeEnergyKJPerMol": -35125.65625,
+              "errorPerParticleKJPerMol": 5.072640390369479e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 81,
+                "imageShiftsSHA256": "ae50d92ef8af33ba48111641f2aecf3a2e9676e43421663f42e069c9519e3741",
+                "positionsSHA256": "b0ac6106740bb600362d1eb0d9d6a174cd6932793c56b4a883d9be8abb41eca5"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-014",
+          "requestedSteps": 20000,
+          "restoreSHA256": "d8d8a2af7c7ae8b9106d5d05440396b571ea5dd7f79de1ed020b76860c1783f3",
+          "reportSHA256": "425a7598c1e05fd65cd47bc7d4375e0926ddc65821301d2c57cb74a87973cb6d",
+          "checkpointSHA256": "9d682ebeb88e36c6a862afc30c7c76da2dc61e6b9c96eb1cde08a1e60542e5f2",
+          "auditSHA256": "232ff8d623e7f57aa46c588f3adb9b640ea8b9bd10ac72046d31538e79449c86",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6905.422260123376,
+              "nativeKineticEnergyKJPerMol": 6905.421875,
+              "absoluteErrorKJPerMol": 0.00038512337596330326,
+              "roundoffBoundKJPerMol": 0.008231924629981525,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35220.95630320336,
+              "nativeEnergyKJPerMol": -35220.97265625,
+              "errorPerParticleKJPerMol": 6.090520163113512e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 83,
+                "imageShiftsSHA256": "76295a88bfac4ed2eb6f50ef7f458722e37067547827233a4a32baf7f206b508",
+                "positionsSHA256": "d510f53630de3aaf34da3c962686c61a85891a23295c88645ffb1a213281a034"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-015",
+          "requestedSteps": 20000,
+          "restoreSHA256": "9d682ebeb88e36c6a862afc30c7c76da2dc61e6b9c96eb1cde08a1e60542e5f2",
+          "reportSHA256": "4ae0a1603d123b1fd204e2f1f96da55648c702c7b5cdde99b20697c76f4e5656",
+          "checkpointSHA256": "7e0fe2a9e4a3cde43199b73e7b4d028ef86efaafbea7e1a5115acb30d48fb04b",
+          "auditSHA256": "2c4302ccd9fc0434bc9f4465f3ee2b6a44534eb1d0e4d755b9d83ffc6bb39052",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6878.914130851905,
+              "nativeKineticEnergyKJPerMol": 6878.9140625,
+              "absoluteErrorKJPerMol": 6.835190470155794e-05,
+              "roundoffBoundKJPerMol": 0.008200324439733439,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35566.60682934575,
+              "nativeEnergyKJPerMol": -35566.62109375,
+              "errorPerParticleKJPerMol": 5.312627281133412e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 78,
+                "imageShiftsSHA256": "4bfc24511416e3f241ea904521b39568360e501ebb2a357c9323137fd1ffd2a0",
+                "positionsSHA256": "508941b17c5004638c5739e630be5a88391c9b8ad6e80ef6e9e669cb91a66972"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-016",
+          "requestedSteps": 20000,
+          "restoreSHA256": "7e0fe2a9e4a3cde43199b73e7b4d028ef86efaafbea7e1a5115acb30d48fb04b",
+          "reportSHA256": "bca2b018159c96ecb059a8d9d78323628c274ff8fc93487c1f97e9f7e31de611",
+          "checkpointSHA256": "21ef3fe2c76396f7e8123107e2fce89b37c0987d47211f37f60cae44db8a1f5e",
+          "auditSHA256": "ff3270d77396c08fef4b8c60d31ab9989faab3809e4abae718e3e3cea3552666",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6693.62649290218,
+              "nativeKineticEnergyKJPerMol": 6693.6259765625,
+              "absoluteErrorKJPerMol": 0.0005163396799616748,
+              "roundoffBoundKJPerMol": 0.007979444099598264,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35352.58585453476,
+              "nativeEnergyKJPerMol": -35352.59765625,
+              "errorPerParticleKJPerMol": 4.395424671041011e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 96,
+                "imageShiftsSHA256": "783bcd3a82a230b416dbe1264b1e5e77878f074e412d45097fafe0808aa7d53c",
+                "positionsSHA256": "9e3e33efc944cf01bb6a0cf5ca03d9b30965fc8a8f39fb0d24f19f56d14720be"
+              },
+              "passed": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "directory": "run-10-water-orthogonal-smooth",
+      "identifier": "water-orthogonal-smooth",
+      "timeStepPS": 0.0005,
+      "temperatureK": 305,
+      "seed": 1002718,
+      "outcome": "passed",
+      "wallSeconds": 1944.0564303328283,
+      "chunks": [
+        {
+          "directory": "chunk-000",
+          "requestedSteps": 0,
+          "restoreSHA256": "fbfbd3fd5d2f63c880f6f5de2d99b20bba5b13620358b6abdd7d299de1a036d3",
+          "reportSHA256": "6be852095165efd4122b6024d01afe5bcacf5406b2cd642eb1211725880286fb",
+          "checkpointSHA256": "c191e3daacf157c46ac48063af3a9bbe8a1d85aad12ecc7c1e0b268053eba7cf",
+          "auditSHA256": "6df6841dda14cae4d3eaee049c5f856fd5103f4ace0770288a34f8ef67fd38ce",
+          "audit": {
+            "endpointKinetic": null
+          }
+        },
+        {
+          "directory": "chunk-001",
+          "requestedSteps": 20000,
+          "restoreSHA256": "c191e3daacf157c46ac48063af3a9bbe8a1d85aad12ecc7c1e0b268053eba7cf",
+          "reportSHA256": "ce4ea77ad817fe37b49867a65e8955cf68168c44b736d22e54b198a845a6a93b",
+          "checkpointSHA256": "9452e2f2b4ae31f21e2335f7b063b81d7d7e4f292051e0ad3acebaa46b9a0fce",
+          "auditSHA256": "e7ab5d0b415986af6ddb096c44abfd204746dc2cf108b4007e728a9bff2a8ff2",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6862.833913507566,
+              "nativeKineticEnergyKJPerMol": 6862.833984375,
+              "absoluteErrorKJPerMol": 7.08674342604354e-05,
+              "roundoffBoundKJPerMol": 0.00818115530402764,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35279.523937908176,
+              "nativeEnergyKJPerMol": -35279.54296875,
+              "errorPerParticleKJPerMol": 7.0878368060085474e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 68,
+                "imageShiftsSHA256": "660367b2eddaf5ae6aefc1a25515701db60c98dce8b5ef7541f859848db46c73",
+                "positionsSHA256": "5a019aff27c215aeffa55c8910a9325af341e5d4f83eca069d3ce15f2b8dcaa8"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-002",
+          "requestedSteps": 20000,
+          "restoreSHA256": "9452e2f2b4ae31f21e2335f7b063b81d7d7e4f292051e0ad3acebaa46b9a0fce",
+          "reportSHA256": "fbbf2fea147bc16723e091b73906e57a191f9c87d5b4edad81c835c3a204bd36",
+          "checkpointSHA256": "bd12f810dcd7b2ace1881e75b1cd03719f5944e8532444a1fefbfe181a1f4aea",
+          "auditSHA256": "a353fd3e926409d493668fadae88ba7bfbf07db333b60f179b97518ff590e396",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6867.185779112045,
+              "nativeKineticEnergyKJPerMol": 6867.185546875,
+              "absoluteErrorKJPerMol": 0.0002322370446563582,
+              "roundoffBoundKJPerMol": 0.008186343138281324,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35492.7989465642,
+              "nativeEnergyKJPerMol": -35492.8125,
+              "errorPerParticleKJPerMol": 5.047834561565402e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 83,
+                "imageShiftsSHA256": "ffd67f9cbb67eb9313fdd08904f7e9e673404128762dce4b968fbf242dce4026",
+                "positionsSHA256": "185c04c489571ba6bf11e9545f15fb78365e1fd04711c2b8ff20a7b45101f486"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-003",
+          "requestedSteps": 20000,
+          "restoreSHA256": "bd12f810dcd7b2ace1881e75b1cd03719f5944e8532444a1fefbfe181a1f4aea",
+          "reportSHA256": "5def2442b6a38a3dbcc0a8ee53ca30c571aba94dd1e572b8ea1dd3cbb4bdc0d4",
+          "checkpointSHA256": "f1d804560c59e57a303432edd0bc04b61aed16884473ae31663e39aa4cef29fa",
+          "auditSHA256": "d5f3557fc6bb12e54f001c7d3510fb9f052cd4778a2571031fb692bec8a4f7a9",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6914.101642831993,
+              "nativeKineticEnergyKJPerMol": 6914.1015625,
+              "absoluteErrorKJPerMol": 8.033199264900759e-05,
+              "roundoffBoundKJPerMol": 0.00824227127278002,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35544.03063564404,
+              "nativeEnergyKJPerMol": -35544.0546875,
+              "errorPerParticleKJPerMol": 8.957860692190891e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 85,
+                "imageShiftsSHA256": "ad8f602176eb3d8bde9dcd66928a0569b08abc2d759f9373fc2ba0ab50d79a29",
+                "positionsSHA256": "d025155c5e03aa7ed744e651b0871a8b97fb52492fc8426db7f66d7541b7c98c"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-004",
+          "requestedSteps": 20000,
+          "restoreSHA256": "f1d804560c59e57a303432edd0bc04b61aed16884473ae31663e39aa4cef29fa",
+          "reportSHA256": "1020093c630b912b9927bf822a9846a661892103c111e432eb32cd345d3085ca",
+          "checkpointSHA256": "34551af1b6726bde22a320ff04c8d3cdbe18682d802c58c69392c5ad52f91da7",
+          "auditSHA256": "f7f264b161699084d8d95a09baea9b8c2c5a553a69630fe9177a7db507d27e91",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6756.724277320591,
+              "nativeKineticEnergyKJPerMol": 6756.72412109375,
+              "absoluteErrorKJPerMol": 0.0001562268407724332,
+              "roundoffBoundKJPerMol": 0.008054662609793187,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35511.914008544874,
+              "nativeEnergyKJPerMol": -35511.9296875,
+              "errorPerParticleKJPerMol": 5.839461871740205e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 81,
+                "imageShiftsSHA256": "611d4ae192e83c34425cc787dd573fafce98af538b11038feefeba70ef3a2155",
+                "positionsSHA256": "d6cc90eb9051959d88c25547ded168ee7edc77a386964fca5598e2ce8895d0b3"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-005",
+          "requestedSteps": 20000,
+          "restoreSHA256": "34551af1b6726bde22a320ff04c8d3cdbe18682d802c58c69392c5ad52f91da7",
+          "reportSHA256": "3c5e686fc6d0705fe9db4becb08baad273b2e0d839f71f476c0ca446960538ac",
+          "checkpointSHA256": "f1e267ffad4788ae4cd036c761babe5d62c68554cdf254151becc804a8c46298",
+          "auditSHA256": "03a4cd78d112a5e7a1eb293616d4a154f69b8251aac313facbf5ddb19ee3c7ef",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6868.9378270834,
+              "nativeKineticEnergyKJPerMol": 6868.9375,
+              "absoluteErrorKJPerMol": 0.00032708340040699113,
+              "roundoffBoundKJPerMol": 0.00818843174471038,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35434.426831026794,
+              "nativeEnergyKJPerMol": -35434.4453125,
+              "errorPerParticleKJPerMol": 6.88323024417546e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 59,
+                "imageShiftsSHA256": "c97ecbf039ad4364774c5305959809ef542b32747f2a87fc4ab678b4c0a21806",
+                "positionsSHA256": "a79d56d2466fad91c6716ea20b98f46b07c58c75c06c87a125a4a3ac9f5d4a4b"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-006",
+          "requestedSteps": 20000,
+          "restoreSHA256": "f1e267ffad4788ae4cd036c761babe5d62c68554cdf254151becc804a8c46298",
+          "reportSHA256": "f2e3aaef707b27807c3d5793ed7295a4f33ee26cc7925fa3bf78e7048328d825",
+          "checkpointSHA256": "008aed7cf3a35601153bf886bae933ce7befa4ccceb3508d30bc78db7c05436e",
+          "auditSHA256": "9fdad7e3e89220ae7e2af7e3bbbba9835eceda82fbb684c6d849e4ec7734866b",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6733.890261106373,
+              "nativeKineticEnergyKJPerMol": 6733.89013671875,
+              "absoluteErrorKJPerMol": 0.00012438762314559426,
+              "roundoffBoundKJPerMol": 0.008027442308839181,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35158.06638475275,
+              "nativeEnergyKJPerMol": -35158.078125,
+              "errorPerParticleKJPerMol": 4.372531565485498e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 68,
+                "imageShiftsSHA256": "6b1dd0d2ed6b1178b95e5e68981cf6643bc67e9f5f6299792e726d9194131167",
+                "positionsSHA256": "8dfaf505299982a4d65f937624a35cfccc5dd6342583b200d6df57fda5e7362c"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-007",
+          "requestedSteps": 20000,
+          "restoreSHA256": "008aed7cf3a35601153bf886bae933ce7befa4ccceb3508d30bc78db7c05436e",
+          "reportSHA256": "8959f3bc089852fe2c377340003cf7015ad40b2c4ffa6c2761534e038cf33c61",
+          "checkpointSHA256": "4fb4dfd0e960a47f30442a08edcb15905cb86c624e267679f087aa25bd826ffe",
+          "auditSHA256": "4918e5f0b1ffa8a9675d6fea964691ca2b71f036beed4ffbb4b98820a6f74905",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 7024.792308638461,
+              "nativeKineticEnergyKJPerMol": 7024.79248046875,
+              "absoluteErrorKJPerMol": 0.00017183028921863297,
+              "roundoffBoundKJPerMol": 0.008374224986388025,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35351.08881614084,
+              "nativeEnergyKJPerMol": -35351.109375,
+              "errorPerParticleKJPerMol": 7.656930787124614e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 90,
+                "imageShiftsSHA256": "46e73c9d786adf3b8573a2c83941ef792781bbe57ad91aa5529080a7299e7f9e",
+                "positionsSHA256": "4eaed1a08ca6cfbb86eca6f12e4a8fe1740d7acbe200d101b020ebed56091e83"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-008",
+          "requestedSteps": 20000,
+          "restoreSHA256": "4fb4dfd0e960a47f30442a08edcb15905cb86c624e267679f087aa25bd826ffe",
+          "reportSHA256": "8df6e165b9744bcecece0abb17c0f78430d58896b0d2526352ad4a6ec0020e7f",
+          "checkpointSHA256": "5f445c046c3b3f424f5e911f95563f4fea14c7e16ac50761742060c2f752a36e",
+          "auditSHA256": "a5cb773110ce53d21ba8bf30a8a4234d87fe057ea59eff7794cc52ef2557f40b",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6997.323158493754,
+              "nativeKineticEnergyKJPerMol": 6997.32275390625,
+              "absoluteErrorKJPerMol": 0.00040458750390826026,
+              "roundoffBoundKJPerMol": 0.008341479168618824,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35095.7280891189,
+              "nativeEnergyKJPerMol": -35095.7421875,
+              "errorPerParticleKJPerMol": 5.250793705682237e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 77,
+                "imageShiftsSHA256": "a0f54d87f9aca1ff5626ed4b99bf10128447bdcf9a351708d075455eb40cab56",
+                "positionsSHA256": "a607550d44b58331a7f2e90e26c711316f81cb2b74f66c1aa5615dcab0899040"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-009",
+          "requestedSteps": 20000,
+          "restoreSHA256": "5f445c046c3b3f424f5e911f95563f4fea14c7e16ac50761742060c2f752a36e",
+          "reportSHA256": "b1122cedda69c34103c07689b85b409f04e283245caf1e132afaa878a5b99744",
+          "checkpointSHA256": "9fb1cc7e7e4c867c01fcd4ef9f7acef76b47b788d8c8a82b52fd8539abdcbd34",
+          "auditSHA256": "7b96ea44f0517737e72b0ca8ebe09bd667cc3f1b5f418d2b0fcee2797f9678ac",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6781.417166945322,
+              "nativeKineticEnergyKJPerMol": 6781.41650390625,
+              "absoluteErrorKJPerMol": 0.000663039071696403,
+              "roundoffBoundKJPerMol": 0.008084098863175135,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35498.533222829166,
+              "nativeEnergyKJPerMol": -35498.546875,
+              "errorPerParticleKJPerMol": 5.084607386840178e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 80,
+                "imageShiftsSHA256": "f0d16758900f6987a78b906bd43dbf51d7daa7dffa9d9926b894b729abb9a18d",
+                "positionsSHA256": "7b251817425dd2dff0b355fc1ba4153ed002ebb83393ac877a5793bc4fa1df18"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-010",
+          "requestedSteps": 20000,
+          "restoreSHA256": "9fb1cc7e7e4c867c01fcd4ef9f7acef76b47b788d8c8a82b52fd8539abdcbd34",
+          "reportSHA256": "77783cdedfaa0ba2b5255ff9c9c3ec50a53618554a599aa04b66ca776c47eaa9",
+          "checkpointSHA256": "5c415485544225de4fdf5a7508d94079832a223c4d6b1c7656458e2eff5b9809",
+          "auditSHA256": "673b79c601d5a3ae3d3fbb6917320102f9e1a163a83fdaa5933a7b367198a265",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 7103.065288011874,
+              "nativeKineticEnergyKJPerMol": 7103.06494140625,
+              "absoluteErrorKJPerMol": 0.0003466056241450133,
+              "roundoffBoundKJPerMol": 0.008467533760242027,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35582.74224096991,
+              "nativeEnergyKJPerMol": -35582.76171875,
+              "errorPerParticleKJPerMol": 7.254294261988426e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 88,
+                "imageShiftsSHA256": "ef6027603fceaf26ca266503b7f5024343686ab8fd1ff115fe84bcd9d24b558e",
+                "positionsSHA256": "a4a2eae451ca90bd7b97f89f0b9251a71f020325eda0d4c1032633f89092ee13"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-011",
+          "requestedSteps": 20000,
+          "restoreSHA256": "5c415485544225de4fdf5a7508d94079832a223c4d6b1c7656458e2eff5b9809",
+          "reportSHA256": "22f9fdf82182a7c762551520a2abad39bbe061118330f952dd81c6bde37d532c",
+          "checkpointSHA256": "9cac774e115310d06f5e2e796e4967010af8e4379ba22ba6e9ce22b4c68701a6",
+          "auditSHA256": "87c5b7640f4f52792309a34ec7dd6da8cf813febcea881c0c624c447e016d801",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6688.326983742097,
+              "nativeKineticEnergyKJPerMol": 6688.32666015625,
+              "absoluteErrorKJPerMol": 0.00032358584667235846,
+              "roundoffBoundKJPerMol": 0.007973126584847785,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35036.04106065334,
+              "nativeEnergyKJPerMol": -35036.0625,
+              "errorPerParticleKJPerMol": 7.984859091047634e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 76,
+                "imageShiftsSHA256": "3574d33f82fb0412a69d3e354640c42cb739a67e49d515d2c2036d2ecb7716d2",
+                "positionsSHA256": "807abfb9dbdd049347a87804fa1c8051939df1b9a96c53b2ece8bfee266bdc95"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-012",
+          "requestedSteps": 20000,
+          "restoreSHA256": "9cac774e115310d06f5e2e796e4967010af8e4379ba22ba6e9ce22b4c68701a6",
+          "reportSHA256": "1683742f1a6321a85a805a8619f2af1d09f245a1cfbe78c1a014c0ecd54e9820",
+          "checkpointSHA256": "772d37876c942b681b93f61b081df77c6c39143de4207e74e26795dfa69593a1",
+          "auditSHA256": "768a92c13cee88c08693d36fd4c65c0fb0329ad76e8c9b03c9031ad3c3f77227",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6635.19561588493,
+              "nativeKineticEnergyKJPerMol": 6635.1953125,
+              "absoluteErrorKJPerMol": 0.0003033849297935376,
+              "roundoffBoundKJPerMol": 0.00790978898319234,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35433.115077700815,
+              "nativeEnergyKJPerMol": -35433.12890625,
+              "errorPerParticleKJPerMol": 5.150297647983779e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 73,
+                "imageShiftsSHA256": "2e54d11715fe3b4ae1afabbb6e03c51b2a365634540e56a12476cd18ae2432b9",
+                "positionsSHA256": "10ef910a7d9d679175c5468d6840a4df1039e0640b521d3b05b1b01663e068d5"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-013",
+          "requestedSteps": 20000,
+          "restoreSHA256": "772d37876c942b681b93f61b081df77c6c39143de4207e74e26795dfa69593a1",
+          "reportSHA256": "5f57816f8cd49b63e62e0e5e8324e3be1b8664f35ed9d54b0a0da4ebbdfe9e4b",
+          "checkpointSHA256": "472d102c37408abbbc66ed006ab89829ad0aa70cf8a1278cb123fc8b05f0282e",
+          "auditSHA256": "3a8189771bc63dc7b4a9599e3234aa4c78dc6502fef64bb666ec8eadb7669f6f",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6769.983630044126,
+              "nativeKineticEnergyKJPerMol": 6769.98388671875,
+              "absoluteErrorKJPerMol": 0.0002566746243246598,
+              "roundoffBoundKJPerMol": 0.00807046900881664,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35088.194463200634,
+              "nativeEnergyKJPerMol": -35088.21484375,
+              "errorPerParticleKJPerMol": 7.590521179014744e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 103,
+                "imageShiftsSHA256": "c89caee8277689c46f0a7ad399bff80a8bc294a75102b06f9771b2e4d9e34333",
+                "positionsSHA256": "045988ff150fa24f096de8905f32d5dc63eda12b3ec2f93e3fabc400cac7fd6e"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-014",
+          "requestedSteps": 20000,
+          "restoreSHA256": "472d102c37408abbbc66ed006ab89829ad0aa70cf8a1278cb123fc8b05f0282e",
+          "reportSHA256": "ba396b0718ebfc400d7f9b00567fc392566c79941b9ba8041173b37516de9afd",
+          "checkpointSHA256": "baaa13db386ed26fc133ae81fd1101aa958af48371eb83d21f4758df50bc2d1a",
+          "auditSHA256": "0021b3e6d46a85099c95162d8d538df89581b4506630316d43fba801d49ad5e8",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6761.8182033471,
+              "nativeKineticEnergyKJPerMol": 6761.818359375,
+              "absoluteErrorKJPerMol": 0.0001560278997203568,
+              "roundoffBoundKJPerMol": 0.008060735050058544,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35325.3746584818,
+              "nativeEnergyKJPerMol": -35325.390625,
+              "errorPerParticleKJPerMol": 5.9465617132225735e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 97,
+                "imageShiftsSHA256": "28e13fe3c4133fd3c44b8266f61dd100e589568c61f8900eb2a7ca861c4d0263",
+                "positionsSHA256": "d9c6ce54af1db6ebadaab4ec943bb351ab33ad057917506d86624718770e3799"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-015",
+          "requestedSteps": 20000,
+          "restoreSHA256": "baaa13db386ed26fc133ae81fd1101aa958af48371eb83d21f4758df50bc2d1a",
+          "reportSHA256": "1b69bb74550377df5158c9ba22ca30a726c11d2d80343eefc92f63ce57d264ac",
+          "checkpointSHA256": "c8d7f763cd2eecef7a0eaf1a386fb9054861372f14b294627a6efe80ca722b32",
+          "auditSHA256": "83260a3a24bf4240eb2e517e2a72cfc41e542139ea868aa2878be1d5e7127124",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6697.674061945531,
+              "nativeKineticEnergyKJPerMol": 6697.673828125,
+              "absoluteErrorKJPerMol": 0.00023382053132081637,
+              "roundoffBoundKJPerMol": 0.00798426918365087,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35148.59408549202,
+              "nativeEnergyKJPerMol": -35148.609375,
+              "errorPerParticleKJPerMol": 5.694416380232439e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 81,
+                "imageShiftsSHA256": "4d78e1766c85b106d7d4431ccfd0c05fe37370db6cb13b151c5f84024b0629b7",
+                "positionsSHA256": "dbeb46b9b8d0e9d9ab98537d595ac86612d28e00b2fe595d5e3aaa4d6982b41b"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-016",
+          "requestedSteps": 20000,
+          "restoreSHA256": "c8d7f763cd2eecef7a0eaf1a386fb9054861372f14b294627a6efe80ca722b32",
+          "reportSHA256": "233e6879ff15f8455db59306d30f1acfcce364fe92eaa90d8c9802aa10fc3081",
+          "checkpointSHA256": "e8b26331d071bf6e73f7ab8b4e870910decc67d605b43d3b70b72820236c7e81",
+          "auditSHA256": "e4edead64d77394443fd88c7df080f0e5feec6044fb527adc5da343705838bf0",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6769.757547808998,
+              "nativeKineticEnergyKJPerMol": 6769.75732421875,
+              "absoluteErrorKJPerMol": 0.00022359024842444342,
+              "roundoffBoundKJPerMol": 0.008070199497469063,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -34932.120586561505,
+              "nativeEnergyKJPerMol": -34932.13671875,
+              "errorPerParticleKJPerMol": 6.008263871600952e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 87,
+                "imageShiftsSHA256": "9c35c1fcacafc9719ed20658143382e6d8c18c2af4b404b63c1bfb9520e58bda",
+                "positionsSHA256": "5cd561ac753cc33cbab7bd4dea0d153718aea39c88670e037b16e13b239a5d9d"
+              },
+              "passed": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "directory": "run-11-water-orthogonal-smooth",
+      "identifier": "water-orthogonal-smooth",
+      "timeStepPS": 0.0005,
+      "temperatureK": 305,
+      "seed": 1031415,
+      "outcome": "passed",
+      "wallSeconds": 1966.6312022502534,
+      "chunks": [
+        {
+          "directory": "chunk-000",
+          "requestedSteps": 0,
+          "restoreSHA256": "26a3637155c420d4049fc36df6af51c734388cccef5d4faca3d2ccd429e50933",
+          "reportSHA256": "f7c402dc14786b7c9fecd115787c3c9a0c078c229eb64cd328c1b1f6d92d0a4c",
+          "checkpointSHA256": "21b3fa91a5b9bdaca54329ed7766852a308efde8abd574d89863937d166092e3",
+          "auditSHA256": "6df6841dda14cae4d3eaee049c5f856fd5103f4ace0770288a34f8ef67fd38ce",
+          "audit": {
+            "endpointKinetic": null
+          }
+        },
+        {
+          "directory": "chunk-001",
+          "requestedSteps": 20000,
+          "restoreSHA256": "21b3fa91a5b9bdaca54329ed7766852a308efde8abd574d89863937d166092e3",
+          "reportSHA256": "f97a4fcecf1e47305cabafcf610be8f061c29e58b9a1dbed3f5574cf41bb2fb0",
+          "checkpointSHA256": "f93f9423793202f512d715c0107b6ad7bb34db482dcea44359fba62b586d2186",
+          "auditSHA256": "a48d5f3860afe81e03f00ad040688756fcb5c121895623ba1c0684774791a08a",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6756.266968411621,
+              "nativeKineticEnergyKJPerMol": 6756.2666015625,
+              "absoluteErrorKJPerMol": 0.00036684912083728705,
+              "roundoffBoundKJPerMol": 0.008054117454441876,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35043.26828533021,
+              "nativeEnergyKJPerMol": -35043.28125,
+              "errorPerParticleKJPerMol": 4.828554856481666e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 103,
+                "imageShiftsSHA256": "abb268ce34ea319c44b782d185feee4a70656108435c4cf79057f44b449967b9",
+                "positionsSHA256": "6fa9bbff77bda1a624057a2721c57390e8714805e226e446ecea2bec137e34c4"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-002",
+          "requestedSteps": 20000,
+          "restoreSHA256": "f93f9423793202f512d715c0107b6ad7bb34db482dcea44359fba62b586d2186",
+          "reportSHA256": "ee805fe6eb3293eca4585dc5189724335f4d6d4232b75a03cc585de5eb533548",
+          "checkpointSHA256": "8f27be03c90d3dcb5752b77835c85270e6a11f646ab720523d12b6e01ed914c7",
+          "auditSHA256": "234371ad2bbcaa29b19055d235c91c3fa42f7a77c4a968d9928813513744ea28",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6962.93570105299,
+              "nativeKineticEnergyKJPerMol": 6962.935546875,
+              "absoluteErrorKJPerMol": 0.00015417799022543477,
+              "roundoffBoundKJPerMol": 0.008300486076041539,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35280.43801810307,
+              "nativeEnergyKJPerMol": -35280.453125,
+              "errorPerParticleKJPerMol": 5.6264048149146735e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 81,
+                "imageShiftsSHA256": "453aff80a862999494762f976d5c1c55aa70fda2b034f804fb3164976d8a0b81",
+                "positionsSHA256": "a4a4d78f8eef1f7b70e194a07eb64416a18cd47495208bddcaba364c2a61052a"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-003",
+          "requestedSteps": 20000,
+          "restoreSHA256": "8f27be03c90d3dcb5752b77835c85270e6a11f646ab720523d12b6e01ed914c7",
+          "reportSHA256": "c9f8d6756f202e395a1206f77f6c98ba5f104e260c0febe4db5d300d97c54323",
+          "checkpointSHA256": "ebb03303e795156f3e99128dfa2167d4c164b9366cd04b465ea1682f929c31de",
+          "auditSHA256": "0c6b5723bb916d3c6d3c888fde15fce4c496f9da864eba3ae80de78420bec4f8",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 7147.780038721241,
+              "nativeKineticEnergyKJPerMol": 7147.77978515625,
+              "absoluteErrorKJPerMol": 0.00025356499099871144,
+              "roundoffBoundKJPerMol": 0.008520837960430624,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35114.028170027304,
+              "nativeEnergyKJPerMol": -35114.04296875,
+              "errorPerParticleKJPerMol": 5.511628564454102e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 79,
+                "imageShiftsSHA256": "5d0f4d7796ff241e7b713ac5ba3a59a172ddb9539c4882e0c8e10571e559144a",
+                "positionsSHA256": "1717c6bb49efff8985086a2a4dd6c19631ed7a0540cb70057d7783d8dd4c48a1"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-004",
+          "requestedSteps": 20000,
+          "restoreSHA256": "ebb03303e795156f3e99128dfa2167d4c164b9366cd04b465ea1682f929c31de",
+          "reportSHA256": "eee6357de86f2ee1e470af06d100714814f4022bf594abdb61fb3d2f134649ed",
+          "checkpointSHA256": "9fc74b0965ff5de2a563937239c8bdb62e9816999c4f5c42ca467f79049e6172",
+          "auditSHA256": "d6e6baa11a3a63caeb397e10ced9b031e6d893f4e640b471b8c4e562c03a8149",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6756.099636008879,
+              "nativeKineticEnergyKJPerMol": 6756.099609375,
+              "absoluteErrorKJPerMol": 2.663387931534089e-05,
+              "roundoffBoundKJPerMol": 0.008053917978435585,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35571.989644603746,
+              "nativeEnergyKJPerMol": -35572.0078125,
+              "errorPerParticleKJPerMol": 6.766441807990245e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 91,
+                "imageShiftsSHA256": "2194225e4a94748e79a8a0aec06dc041942bdee43938446f3669bc8eac7e2fa4",
+                "positionsSHA256": "ebde577949698c96603798795c5af71bb46e277f432d33ebc9df24529bf42eca"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-005",
+          "requestedSteps": 20000,
+          "restoreSHA256": "9fc74b0965ff5de2a563937239c8bdb62e9816999c4f5c42ca467f79049e6172",
+          "reportSHA256": "1c7dca44698478ca9ace10eafc0bdf11922d5f8dca1331918262b29c43b25767",
+          "checkpointSHA256": "32e5b5e10b332915edb50ceff4c74d524d0df83d416d74d2d2aae993b7db3852",
+          "auditSHA256": "4db56b2421639174109e2e63767ad0f8df90018dd32b6d3d7d75cc695e48de63",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 7064.9392975748715,
+              "nativeKineticEnergyKJPerMol": 7064.939453125,
+              "absoluteErrorKJPerMol": 0.00015555012851109495,
+              "roundoffBoundKJPerMol": 0.008422083983727522,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35211.77479489503,
+              "nativeEnergyKJPerMol": -35211.7890625,
+              "errorPerParticleKJPerMol": 5.313819356685855e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 76,
+                "imageShiftsSHA256": "932c55b1bc0b8189f0a40c52436bf614be2d83322f29077a6b4ebdd86f8e7805",
+                "positionsSHA256": "8b4a5a18b4c04f7b5e0bf63311a3902c51c927b57c78919497d920cada2008cb"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-006",
+          "requestedSteps": 20000,
+          "restoreSHA256": "32e5b5e10b332915edb50ceff4c74d524d0df83d416d74d2d2aae993b7db3852",
+          "reportSHA256": "611b83522b847ab2da56012fbea6765927011a3e628c6eda4433fcfd2adf64b2",
+          "checkpointSHA256": "429010086caa5b387435b39da43c7934dcb5688f381ffcf40a707612024a7e98",
+          "auditSHA256": "ad864aaf16146f88e4698546e4409c709cb2ef6f04b4b003fd88e7f77a374ac5",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6468.043541436912,
+              "nativeKineticEnergyKJPerMol": 6468.04345703125,
+              "absoluteErrorKJPerMol": 8.440566216449952e-05,
+              "roundoffBoundKJPerMol": 0.007710527945235798,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -34907.803774897475,
+              "nativeEnergyKJPerMol": -34907.82421875,
+              "errorPerParticleKJPerMol": 7.6140977747502495e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 72,
+                "imageShiftsSHA256": "a497810684bdb93ea9bed35334bacd6ad0ac408fea1b42aa704cb78f346dd909",
+                "positionsSHA256": "b22c7e3a019b768b42c4785d5f9dcff7b39448aa6b26db81871b107bb7adfb49"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-007",
+          "requestedSteps": 20000,
+          "restoreSHA256": "429010086caa5b387435b39da43c7934dcb5688f381ffcf40a707612024a7e98",
+          "reportSHA256": "d32480245793984228382023a225c9f72cdc9619df16e3bcdef2c9e2b4b6661a",
+          "checkpointSHA256": "002583dc3a77978d28d9132883c73f98a46a1b447bee19ee7b2c46386909987f",
+          "auditSHA256": "4273dfbf33387beba56c979a04631e1a2c17554215e604fbdb062c23c30028e0",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6652.614290616516,
+              "nativeKineticEnergyKJPerMol": 6652.6142578125,
+              "absoluteErrorKJPerMol": 3.280401597294258e-05,
+              "roundoffBoundKJPerMol": 0.007930553686342481,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35575.91335050081,
+              "nativeEnergyKJPerMol": -35575.9296875,
+              "errorPerParticleKJPerMol": 6.084543461191643e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 65,
+                "imageShiftsSHA256": "07aae38a712006562cab307bade0624fd4e49279aba7186a83affa3320e61277",
+                "positionsSHA256": "c9da4bd6c40407444a4e05f2ec2bb5b4daf70d255d774f5084ba508741dadca7"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-008",
+          "requestedSteps": 20000,
+          "restoreSHA256": "002583dc3a77978d28d9132883c73f98a46a1b447bee19ee7b2c46386909987f",
+          "reportSHA256": "1e233cadf83913b3fffb9a317bec6da6c31b513505170664642c007ad10cb25a",
+          "checkpointSHA256": "27e62d9b71bfcdca06c698b33ae8cce564303dcfb5921ee796cf11bcd90a5ce4",
+          "auditSHA256": "aa3e6a04fc488433f3ba99db45abcf938d3ab03e3cdd6548b8a97e2933af02cd",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6799.111987052367,
+              "nativeKineticEnergyKJPerMol": 6799.1123046875,
+              "absoluteErrorKJPerMol": 0.0003176351328875171,
+              "roundoffBoundKJPerMol": 0.008105192757657914,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35347.29654459149,
+              "nativeEnergyKJPerMol": -35347.3125,
+              "errorPerParticleKJPerMol": 5.942424026524277e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 87,
+                "imageShiftsSHA256": "2f826dc3042e05153d4e731b818b56235f366e3661c60c4b429f78a2608c5944",
+                "positionsSHA256": "fdb562086c5b6a518ad978f05b19d2d763dc402160145979be76022268026892"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-009",
+          "requestedSteps": 20000,
+          "restoreSHA256": "27e62d9b71bfcdca06c698b33ae8cce564303dcfb5921ee796cf11bcd90a5ce4",
+          "reportSHA256": "8cbc452975ae740fe5d239262a4c96613d2a1cc88e740f8a00ed91471cbd96c1",
+          "checkpointSHA256": "fdd90b306a0b1bbc78c42e6d45ce970002501e5cafd84ed683b9ac3a09b882ba",
+          "auditSHA256": "1197aa026bd5f9125acbe1bf7a4cef0a47165d11eaa799a46e7e60378f49a068",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6805.040371139849,
+              "nativeKineticEnergyKJPerMol": 6805.0400390625,
+              "absoluteErrorKJPerMol": 0.0003320773494124296,
+              "roundoffBoundKJPerMol": 0.008112259950635194,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35527.01970474183,
+              "nativeEnergyKJPerMol": -35527.0390625,
+              "errorPerParticleKJPerMol": 7.209593358187758e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 98,
+                "imageShiftsSHA256": "71cd8a997bf24172ff4f075fac5fddc0a7b110f7e8a7c94d24ea7af9fd18249f",
+                "positionsSHA256": "123b9d7931377bce242b7e65745f0db5390ade6e426e87ecee584050dca92f35"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-010",
+          "requestedSteps": 20000,
+          "restoreSHA256": "fdd90b306a0b1bbc78c42e6d45ce970002501e5cafd84ed683b9ac3a09b882ba",
+          "reportSHA256": "c85eb44116fb72395d278e2f2939401f261c2da6f512d0db0b6b042108547abd",
+          "checkpointSHA256": "eaabda61a7431e6516f7c39af89b75596c8a7c8076092d9e4c3731e5ebf27ba7",
+          "auditSHA256": "ccfd6892656ea48847ae353888672d4170dd7305d1320604f08a5ac99d7edb3f",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6746.2452374990835,
+              "nativeKineticEnergyKJPerMol": 6746.2451171875,
+              "absoluteErrorKJPerMol": 0.00012031158348690951,
+              "roundoffBoundKJPerMol": 0.008042170605978595,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35493.32427668333,
+              "nativeEnergyKJPerMol": -35493.3359375,
+              "errorPerParticleKJPerMol": 4.342948481114495e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 101,
+                "imageShiftsSHA256": "30d98a3b78c942cd83757f9294881602e256ac72a19672663b46be4af894f453",
+                "positionsSHA256": "8067f104ceb212902ed891a3ceca2a0d7a3802808094492b1198a52c8930b718"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-011",
+          "requestedSteps": 20000,
+          "restoreSHA256": "eaabda61a7431e6516f7c39af89b75596c8a7c8076092d9e4c3731e5ebf27ba7",
+          "reportSHA256": "2ac0fda6f8aef2ace43460ba0c70a57c9ec4b3cf1b8d3f298765686eab8e71c4",
+          "checkpointSHA256": "b35aff00724a55cf59307a67443cb00f71956bdf83e33624a9ef5574561b2262",
+          "auditSHA256": "311b56df839b224ef930ec685746f12dbae3739aa2210ce08a77487bdc831cf3",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6875.516672971014,
+              "nativeKineticEnergyKJPerMol": 6875.51611328125,
+              "absoluteErrorKJPerMol": 0.0005596897635768983,
+              "roundoffBoundKJPerMol": 0.008196274349502758,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35594.905001555104,
+              "nativeEnergyKJPerMol": -35594.921875,
+              "errorPerParticleKJPerMol": 6.284337019065683e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 88,
+                "imageShiftsSHA256": "64b24e08a10ff2a6d383e80ddb37665b9956edb19b5d49f524c43aaace46d7a5",
+                "positionsSHA256": "72c9bbd3114e8a878ed0db1ac2e31a6e2e9d6c0f57c16a5e911a3799a8e1feda"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-012",
+          "requestedSteps": 20000,
+          "restoreSHA256": "b35aff00724a55cf59307a67443cb00f71956bdf83e33624a9ef5574561b2262",
+          "reportSHA256": "7903c3eb90f5331af6a7c7f390d86672a06e780fb2b61917e1504f1e8d1493a6",
+          "checkpointSHA256": "07105f0d871b2eb36a823c453db24683dec051563e3f25bb07b32346280f2ef8",
+          "auditSHA256": "0b23d245cbb39706748701728fab4b80c4bbe101907488a5b0fe77f90260d6f8",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6647.457295056349,
+              "nativeKineticEnergyKJPerMol": 6647.45751953125,
+              "absoluteErrorKJPerMol": 0.00022447490118793212,
+              "roundoffBoundKJPerMol": 0.0079244060612445,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35434.79983000329,
+              "nativeEnergyKJPerMol": -35434.8203125,
+              "errorPerParticleKJPerMol": 7.628490393929309e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 74,
+                "imageShiftsSHA256": "9c8aa17a8a19bbf0920a813358adcac8d934dbc0aecbd3840bc035ab31e91da7",
+                "positionsSHA256": "54113255566de992f2c0b80bbc3230aa46efebfac0b1fb5f5c4bf07a25d62602"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-013",
+          "requestedSteps": 20000,
+          "restoreSHA256": "07105f0d871b2eb36a823c453db24683dec051563e3f25bb07b32346280f2ef8",
+          "reportSHA256": "d94ec666bbff7a347bda8cb0b770c32dba9d6f89116a5f38d3f86def43bcecee",
+          "checkpointSHA256": "3f790cb0521ab12055b0cdebba17a481e502a41fe128b3389a0d760a3e76a816",
+          "auditSHA256": "3ad2d9390ecfbd9041b4edc227d571a5b1d975080cfec035d49fe5c77b77ca8a",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6901.909194794927,
+              "nativeKineticEnergyKJPerMol": 6901.9091796875,
+              "absoluteErrorKJPerMol": 1.5107427316252142e-05,
+              "roundoffBoundKJPerMol": 0.008227736724769655,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35097.21840819606,
+              "nativeEnergyKJPerMol": -35097.23046875,
+              "errorPerParticleKJPerMol": 4.491826421381764e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 81,
+                "imageShiftsSHA256": "85fd9a7aeb7c5ab086af98f55c3a47466a5a661325fd5aee5147c949638fb7a3",
+                "positionsSHA256": "4ffe161ee325a3eb86f09589813f68b7a540a119167055ed3c09035998609234"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-014",
+          "requestedSteps": 20000,
+          "restoreSHA256": "3f790cb0521ab12055b0cdebba17a481e502a41fe128b3389a0d760a3e76a816",
+          "reportSHA256": "0ab90e40c9ae1f5b5bf34c0abaad3bb438dafa56f196d85ad953b0dfbb630c9a",
+          "checkpointSHA256": "0db6e3e855a9afb47590473355ba9b33f1a0289511e0a323984f318693cce8a6",
+          "auditSHA256": "4704f206dc929f95ca6cf42843fe253781a73558722a6aeb0942afef378bf2ed",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6760.541717341867,
+              "nativeKineticEnergyKJPerMol": 6760.5419921875,
+              "absoluteErrorKJPerMol": 0.00027484563270263607,
+              "roundoffBoundKJPerMol": 0.008059213358346492,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35281.8590319269,
+              "nativeEnergyKJPerMol": -35281.875,
+              "errorPerParticleKJPerMol": 5.947140819831878e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 79,
+                "imageShiftsSHA256": "8da4229c55122b743a971237c7751b7cb3826f6c0c42ab7dea21295388674997",
+                "positionsSHA256": "91a49cd9fae50e6bd47e86b45899c0e6c1ce5a8a5540052ede65b5679e0520cf"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-015",
+          "requestedSteps": 20000,
+          "restoreSHA256": "0db6e3e855a9afb47590473355ba9b33f1a0289511e0a323984f318693cce8a6",
+          "reportSHA256": "4248dbfce9cfaad469a45df3231aebe6f19e78d3c57f3efca42233ddd7f1c771",
+          "checkpointSHA256": "8bf84a6112f8ed1a25b1728493f1d788a081b82eeb1f5bc92339e07f171c896f",
+          "auditSHA256": "be8d3c2549e6c40a80fd78080d34c25399a5e42ec26ade0f59edabb8c2d0f703",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6770.529923621586,
+              "nativeKineticEnergyKJPerMol": 6770.529296875,
+              "absoluteErrorKJPerMol": 0.000626746586021909,
+              "roundoffBoundKJPerMol": 0.008071120242285524,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35261.557390402304,
+              "nativeEnergyKJPerMol": -35261.57421875,
+              "errorPerParticleKJPerMol": 6.267541041337578e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 74,
+                "imageShiftsSHA256": "98484a20c19fe60c56ac88e8a890120ad640f3e57d5ca8f5421ba652cfd32699",
+                "positionsSHA256": "f47f1efb1b34a4080aa0c883ebf9db613bb145f8007db9ee721d25ed0f4b34ea"
+              },
+              "passed": true
+            }
+          }
+        },
+        {
+          "directory": "chunk-016",
+          "requestedSteps": 20000,
+          "restoreSHA256": "8bf84a6112f8ed1a25b1728493f1d788a081b82eeb1f5bc92339e07f171c896f",
+          "reportSHA256": "7c598a51d469d1e580ff5752980ba516093160aadb21f0feb5473d6f8dc5e180",
+          "checkpointSHA256": "d01f9cfd477189b1c2afc3a7261479324bd1686025d472370b91c9aa6b7e3d82",
+          "auditSHA256": "66b2c5a4ef71f3b22bd46c48bdb5286c561202bf8cb3ee9152b6b2b27ce80559",
+          "audit": {
+            "endpointKinetic": {
+              "referenceKineticEnergyKJPerMol": 6847.051184566915,
+              "nativeKineticEnergyKJPerMol": 6847.05126953125,
+              "absoluteErrorKJPerMol": 8.496433474647347e-05,
+              "roundoffBoundKJPerMol": 0.008162340802557132,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            "endpointPotential": {
+              "referenceEnergyKJPerMol": -35393.34897267184,
+              "nativeEnergyKJPerMol": -35393.36328125,
+              "errorPerParticleKJPerMol": 5.329079389246094e-06,
+              "limitPerParticleKJPerMol": 0.002,
+              "images": {
+                "convention": "whole finite molecular images; integer cell translations only",
+                "components": 895,
+                "shiftedParticles": 85,
+                "imageShiftsSHA256": "bf47892dbbda0aea860debded8274905810653aedd1c91b673691187811056ed",
+                "positionsSHA256": "cc387ec9f3283327bbc5006c7089b883b5ffd471459b1b271cd2b7fa6166cf1f"
+              },
+              "passed": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "parentPreparedOutcome": "failed",
+  "inputFailures": [
+    {
+      "identifier": "water",
+      "status": "preparation-failed",
+      "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+    }
+  ],
+  "excludedPreparedCases": [
+    {
+      "identifier": "alanine-smooth",
+      "particles": 2269,
+      "status": "prepared",
+      "requestSHA256": "c4a708ad437c4b6d1dde43f10cb3cad63cc498996f6118712a2354efea429260",
+      "serializedSystemSHA256": "4044307403ce329f08ea591cbcbdf920a7f6f452f808b373414c7e6c22fcaa66",
+      "parentIdentifier": "alanine",
+      "parentRequestSHA256": "4e9edeecbc9071f1e4701b41541cbcfbca67be537fc13e4267ac803ef6ba0b4c"
+    },
+    {
+      "identifier": "protein-smooth",
+      "particles": 23558,
+      "status": "prepared",
+      "requestSHA256": "cad8c194917dd4a8630a96f3449b8bfec384e2753a593fab2802f30e86b2c434",
+      "serializedSystemSHA256": "44b4a4bf200422c521de48eaf2746a6a188a5a1ff3d7566908e7681e1d3e6f4b",
+      "parentIdentifier": "protein",
+      "parentRequestSHA256": "de768f8e3b613813e40ce47e58be63ccb6127c62450eba8b11c571aa47893de6"
+    },
+    {
+      "identifier": "complex-vacuum",
+      "particles": 2621,
+      "status": "prepared",
+      "requestSHA256": "e9d09a5a81f14c2337763ab07e9836b1d4c2967aa8fff45c9ed80824c49b1c2c",
+      "serializedSystemSHA256": "ee500e9bcfb426c6727bf27785c5189b9d7114589b234ae30e00b3689d2cb80a",
+      "parentIdentifier": "complex",
+      "parentRequestSHA256": "0f73c8615ca64d1320f159fedd1cb2fa51c4a5321df393708babdaab9465852d"
+    },
+    {
+      "identifier": "dna-smooth",
+      "particles": 13646,
+      "status": "prepared",
+      "requestSHA256": "57dd6fb6e4988124cbbfd0b78d39c6f22f0211afd8d766fea9faffbdd863125f",
+      "serializedSystemSHA256": "a6030302e5f9738e68bdf047012fb87dea6682a5253646da87e741e22f2bff0a",
+      "parentIdentifier": "dna",
+      "parentRequestSHA256": "89fc94b5a01e6d564dcea6e287841539822c1a1114569415f357aa7564403fbd"
+    },
+    {
+      "identifier": "membrane-smooth",
+      "particles": 32512,
+      "status": "prepared",
+      "requestSHA256": "96d0f69fb0351c23636e6aa60829bb2b6f150e89454a7c329d635d31e55e52c3",
+      "serializedSystemSHA256": "40bce2afbb80f130015fac45e39cc758d1efa3b0bd431d444ab23537d087ad1c",
+      "parentIdentifier": "membrane",
+      "parentRequestSHA256": "a35f87bee2e1ff8e403f61294ec5abac6bc32c8e4074568af0bfc75139c8411f"
+    },
+    {
+      "identifier": "ions-smooth",
+      "particles": 2681,
+      "status": "prepared",
+      "requestSHA256": "9bba176d459db6cb6ecd0667874939b396db25c65040a38b1f8412eb42674f59",
+      "serializedSystemSHA256": "eb5c4d4a99ef8d70bc673c73d7eab0c5d9570e800dbdaf020769a0f3b4d59175",
+      "parentIdentifier": "ions",
+      "parentRequestSHA256": "ade0ec8f4337a031c33991ed3add45a2fe8812a60a8a4de7e4036e7ea092d1b4"
+    }
+  ],
+  "cancelledBeforeAdmission": [
+    {
+      "artifact": "sampling-extension-waiter-1-cancelled.json",
+      "sha256": "4e27f9e81fbc98040d2ffa687313cd1366cd2eeea3b8eaeee9e7acdd629740f4"
+    },
+    {
+      "artifact": "sampling-extension-waiter-2-cancelled.json",
+      "sha256": "fe5051138f99820ba864f326886959a431c3d14d167c18d707946829e4cdcf72"
+    }
+  ],
+  "scope": "Adaptive follow-up to the original finite rigid-water NVT campaign, at its finer time step only. Same Hamiltonian, thermostat, seeds, equilibration exclusion, observation interval and statistical acceptance limits. Longer sampling is not proof of complete equilibration, experimental accuracy or general thermostat qualification."
+}

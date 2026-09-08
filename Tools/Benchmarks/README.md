@@ -149,6 +149,10 @@ the other prescribed replicas are still attempted. Native execution and endpoint
 agreement are distinct from the final statistical verdict. Source and policy
 declaration alone do not establish a measured continuation pass.
 
+The [completed measurement](../../Documentation/Audit/2026-09-08_INTERACTING_ENSEMBLES.md)
+passes this prepared rigid-water follow-up at 0.5 fs over 210 ps. It retains the
+original 1 fs failures and failed water preparation without relabeling them.
+
 ## Imported masses and constraints
 
 Verify the imported atomic masses and distance-constraint endpoints/targets

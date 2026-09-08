@@ -92,5 +92,10 @@ chain, rejects missing/duplicate observations and assesses all original plus new
 production observations with the declared wider blocks. This does not claim
 bitwise PME trajectory replay or extend the result to other time steps.
 
+The [completed measurement audit](../Audit/2026-09-08_INTERACTING_ENSEMBLES.md)
+records the original 50 ps failures and inconclusive results and the subsequent
+prepared-case pass at 0.5 fs over 210 ps. The original failed water preparation
+remains retained; the broader frontier roadmap stays open.
+
 References: [Merz and Shirts, physical validation](https://doi.org/10.1371/journal.pone.0202764),
 [OpenMM's documented velocity convention](https://docs.openmm.org/latest/api-python/generated/openmm.openmm.LangevinMiddleIntegrator.html).
