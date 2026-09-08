@@ -35,10 +35,10 @@ def main():
     ax.set_xticks([0.25,0.5,1],labels=["0.25","0.5","1.0"])
     ax.set_xlabel("Time step (femtoseconds)")
     ax.set_ylabel("RMS energy deviation (kJ/mol per particle)")
-    ax.set_title("Smaller time steps reduce energy error",loc="left",fontsize=17,pad=20)
+    ax.set_title("Energy error under timestep refinement",loc="left",fontsize=17,pad=20)
     ax.grid(True,which="major",alpha=0.2);ax.legend(frameon=False,ncol=2,fontsize=9)
     ax.spines[["top","right"]].set_visible(False)
-    fig.supxlabel("0.1 ps constrained NVE · smooth periodic LJ; unchanged vacuum model\n"
+    fig.supxlabel(f"{data['policy']['durationPS']:g} ps constrained NVE · smooth periodic LJ; unchanged vacuum model\n"
                   "Short conservation study; equilibrium and speed not assessed.\n"+"; ".join(failures),fontsize=9)
     fig.savefig(a.out,metadata={"Creator":"NumiVivo benchmark plot; matplotlib "+matplotlib.__version__,"Date":None} if a.out.suffix==".svg" else None,dpi=160)
     if a.out.suffix==".svg":

@@ -80,6 +80,11 @@ applicable; links and identities accompany generated observations.
 
 ## Subsequent roadmap gates
 
+The [next ensemble milestone](MD_ENSEMBLE_QUALIFICATION.md) now provides a fixed
+5 ps conservation campaign and independent kinetic/configurational NVT analysis.
+Implementation and statistical control tests do not themselves establish a
+passing measured ensemble; retained campaign observations decide that result.
+
 1. Extend this panel to interacting NVE/NVT/NPT ensemble distributions,
    timestep refinement, constrained motion and numerical failure recovery.
 2. Qualify reduced triclinic execution across all geometry-dependent owners.
