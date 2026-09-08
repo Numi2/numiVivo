@@ -365,7 +365,9 @@ def analyze(args):
         except Exception as error:
             errors.append(dict(identifier=key[0], timeStepPS=key[1], temperatureK=key[2], seed=key[3], error=f"{type(error).__name__}: {error}"))
     effective = copy.deepcopy(base)
-    effective.update(durationPS=policy["totalDurationPS"], bootstrapBlockPS=policy["bootstrapBlockPS"])
+    effective.update(schema="numivivo.org/md-ensemble-continuation-analysis-policy/v1",
+        timeStepsPS=[policy["timeStepPS"]], durationPS=policy["totalDurationPS"],
+        bootstrapBlockPS=policy["bootstrapBlockPS"], scope=policy["scope"])
     results = []
     for case in base["cases"]:
         row = dict(identifier=case, timeStepPS=policy["timeStepPS"], outcome="failed")

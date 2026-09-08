@@ -183,6 +183,14 @@ class ContinuationTests(unittest.TestCase):
                     self.assertEqual(len(result["validationErrors"]), 6)
                     self.assertEqual(result["inputFailures"], campaign["inputFailures"])
                     self.assertEqual(result["parentPreparedOutcome"], "inconclusive")
+                    effective = result["effectiveStatisticsPolicy"]
+                    self.assertEqual(effective["schema"], "numivivo.org/md-ensemble-continuation-analysis-policy/v1")
+                    self.assertEqual(effective["timeStepsPS"], [.0005])
+                    self.assertEqual(effective["durationPS"], 210)
+                    self.assertEqual(effective["bootstrapBlockPS"], 5)
+                    for key, value in base.items():
+                        if key not in ("schema", "timeStepsPS", "durationPS", "bootstrapBlockPS", "scope"):
+                            self.assertEqual(effective[key], value, key)
 
 
 if __name__ == "__main__":
