@@ -1,0 +1,9 @@
+{
+  "schema": "numivivo.org/md-ensemble-continuation-policy/v1",
+  "timeStepPS": 0.0005,
+  "totalDurationPS": 210,
+  "chunkDurationPS": 10,
+  "bootstrapBlockPS": 5,
+  "reason": "The original coarse-step 50 ps subset had insufficient potential-energy effective samples and unresolved one-ps block correlation. Extend all six finer-step replicas with a fixed amount of additional data. Retain the original campaign and its failed or inconclusive outcomes.",
+  "scope": "Adaptive follow-up to the original finite rigid-water NVT campaign, at its finer time step only. Same Hamiltonian, thermostat, seeds, equilibration exclusion, observation interval and statistical acceptance limits. Longer sampling is not proof of complete equilibration, experimental accuracy or general thermostat qualification."
+}

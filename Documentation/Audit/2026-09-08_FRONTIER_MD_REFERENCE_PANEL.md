@@ -186,6 +186,11 @@ those of `c7ded9f9784d238a329e2ca0ae34b01676165ee2`.
 
 ## Remaining qualification
 
+The [subsequent conservation audit](2026-09-08_INTERACTING_ENSEMBLES.md) extends
+these checks to 5 ps at three time steps on all seven prepared systems, with
+passing independent endpoint energy comparisons. It also tracks the separate
+interacting-NVT campaign.
+
 The subsequent gates are interacting ensemble distributions, longer trajectories,
 triclinic cells across every dependent owner, matched-accuracy performance,
 efficient sampling/free energies, broader native chemistry and learned-force

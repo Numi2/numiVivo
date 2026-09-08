@@ -127,3 +127,24 @@ every molecular cycle and exception image. Parameters, relative bonded geometry,
 velocities and source checkpoints remain unchanged. Winding molecules, ambiguous
 half-box bonds and unsupported cells are refused. This follows
 [OpenMM's periodic-coordinate requirements](https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#periodic).
+
+## Continuing an insufficiently sampled NVT campaign
+
+The separate adaptive policy in `ensemble_continuation_policy.json` extends every
+finer-step replica from its existing exact checkpoint to 210 ps, in 10 ps chunks.
+It retains the first campaign's failures and inherits its scientific limits.
+Run only after the original matrix and qualification have completed, using the
+same executable/shader bundle and the same NumPy/SciPy/OpenMM environment:
+
+```sh
+python continue_ensemble.py run --parent /path/to/nvt-campaign \
+  --parent-qualification /path/to/nvt-qualification.json \
+  --binary /path/to/frozen/numivivo --out /path/to/new-continuation
+python continue_ensemble.py analyze --campaign /path/to/new-continuation \
+  --out /path/to/new-continuation-qualification.json
+```
+
+Output paths must be new. A failed chunk remains retained and ends that replica;
+the other prescribed replicas are still attempted. Native execution and endpoint
+agreement are distinct from the final statistical verdict. Source and policy
+declaration alone do not establish a measured continuation pass.

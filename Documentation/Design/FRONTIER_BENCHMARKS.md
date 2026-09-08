@@ -82,8 +82,9 @@ applicable; links and identities accompany generated observations.
 
 The [next ensemble milestone](MD_ENSEMBLE_QUALIFICATION.md) now provides a fixed
 5 ps conservation campaign and independent kinetic/configurational NVT analysis.
-Implementation and statistical control tests do not themselves establish a
-passing measured ensemble; retained campaign observations decide that result.
+Its [measured follow-up](../Audit/2026-09-08_INTERACTING_ENSEMBLES.md) passes all
+seven prepared systems at three time steps over 5 ps, including independent
+endpoint energy checks. NVT requires its own completed statistical campaign.
 
 1. Extend this panel to interacting NVE/NVT/NPT ensemble distributions,
    timestep refinement, constrained motion and numerical failure recovery.

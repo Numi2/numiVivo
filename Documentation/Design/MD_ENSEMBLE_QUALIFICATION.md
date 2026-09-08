@@ -61,5 +61,36 @@ water properties, NPT, free energies, transport or general scientific leadership
 Policies, source/binary/shader identity, exact commands, all inputs, reports and
 failures must accompany measured results.
 
+## Declared sampling extension
+
+The first completed 300 K, 1 fs subset had only 142.4 total effective potential
+samples, below 200, and one-ps block correlation 0.419, above 0.3. Its kinetic
+mean also missed the fixed 3.5-sigma threshold (3.579); that observation stays
+failed. These are interim subset findings, not a completed matrix verdict.
+
+`ensemble_continuation_policy.json` declares a separate adaptive follow-up before
+any continuation data: all six original 0.5 fs replicas continue to 210 ps. The
+first 10 ps remains excluded; five-ps blocks provide 40 complete blocks per
+replica. Every statistical acceptance limit remains inherited unchanged. The
+longer policy is explicitly informed by the initial coarse subset, not a blinded
+preregistration or a retroactive relabeling of the 50 ps result.
+
+`continue_ensemble.py` requires the original complete matrix and qualification,
+retaining failed and inconclusive outcomes. It checks each selected parent's
+passed native/static execution and exact input hashes, and restores its existing
+final checkpoint with the identical executable and complete shader bundle.
+A zero-step restore must preserve all checkpoint words, velocities, cell,
+fingerprints, time and stochastic step counter. Ten-ps chunks preserve the same
+configuration; no velocity initialization or new equilibration exclusion occurs.
+
+The existing `md-run` command emits observables together with sampled JSON
+positions. Both sampling intervals must be supplied. JSON snapshots reconstruct
+the compensated high/low positions in Double; no FP32 trajectory archive is used.
+Every chunk retains commands, raw reports, exact checkpoints, hashes and an
+independent final kinetic/potential audit. Offline analysis verifies the complete
+chain, rejects missing/duplicate observations and assesses all original plus new
+production observations with the declared wider blocks. This does not claim
+bitwise PME trajectory replay or extend the result to other time steps.
+
 References: [Merz and Shirts, physical validation](https://doi.org/10.1371/journal.pone.0202764),
 [OpenMM's documented velocity convention](https://docs.openmm.org/latest/api-python/generated/openmm.openmm.LangevinMiddleIntegrator.html).
