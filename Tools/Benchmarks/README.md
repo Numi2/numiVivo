@@ -148,3 +148,20 @@ Output paths must be new. A failed chunk remains retained and ends that replica;
 the other prescribed replicas are still attempted. Native execution and endpoint
 agreement are distinct from the final statistical verdict. Source and policy
 declaration alone do not establish a measured continuation pass.
+
+## Imported masses and constraints
+
+Verify the imported atomic masses and distance-constraint endpoints/targets
+against the serialized OpenMM System, without creating a simulation context:
+
+```sh
+python Tools/Benchmarks/audit_mass_constraints.py --references /path/to/references \
+  --out /path/to/new-mass-constraint-audit.json
+```
+
+This checks exact source parameters in dalton and nanometers, including repeated
+constraint multiplicities. It accepts reordered symmetric endpoints, rejects
+changed inputs, and retains preparation failures. Its result covers those fields;
+force agreement, GPU arithmetic, trajectories and ensemble statistics retain their
+separate checks. The audit binds the exact bytes it parses and verifies that its
+inputs and implementation remain unchanged before writing the result.

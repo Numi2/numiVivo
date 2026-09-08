@@ -1,0 +1,915 @@
+{
+  "schema": "numivivo.org/frontier-md-mass-constraint-observations/v1",
+  "auditorSHA256": "6ea6600882c2242b97abab8229d0aba13405283fc9a766c3ccbd902094eb2be3",
+  "sourceArchiveSHA256": "2d4c26605acad576aa7a2a4068d4f9e842317f453f5d4fa02bf843b04d5dccab",
+  "testLogSHA256": "f463a20033db715d216d623a070dba8853646113da6050b0e33bf622a4a6bf64",
+  "pythonChecks": 5,
+  "audits": [
+    {
+      "name": "nve-0",
+      "exitCode": 1,
+      "auditSHA256": "002a568adbfa3fcf9a7c168b53fdae8034ab5c5f42bb85146aebaa3d797741c9",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "alanine-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2269,
+            "referenceConstraintCount": 2259,
+            "nativeConstraintCount": 2259,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "f1abef2077148ce2c3499521a8ed8cc222369e6dce6766a4232915b05b69587d",
+          "serializedSystemSHA256": "4044307403ce329f08ea591cbcbdf920a7f6f452f808b373414c7e6c22fcaa66"
+        },
+        {
+          "identifier": "protein-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 23558,
+            "referenceConstraintCount": 22290,
+            "nativeConstraintCount": 22290,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "405b159da1b5579102341e7550b6dc7e2ebdd3a9ed9dbdd0a40e64c1cbdfeb80",
+          "serializedSystemSHA256": "44b4a4bf200422c521de48eaf2746a6a188a5a1ff3d7566908e7681e1d3e6f4b"
+        },
+        {
+          "identifier": "complex-vacuum",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2621,
+            "referenceConstraintCount": 1323,
+            "nativeConstraintCount": 1323,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "5303e223e77ec279e73dcb79ac150fd3b56f67cea9d795baf4b2c82f187b238a",
+          "serializedSystemSHA256": "ee500e9bcfb426c6727bf27785c5189b9d7114589b234ae30e00b3689d2cb80a"
+        },
+        {
+          "identifier": "dna-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 13646,
+            "referenceConstraintCount": 13160,
+            "nativeConstraintCount": 13160,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "cec1c793e5c77f58da4ef5a7e35a657ab815f647301775f50b30b4ae6b3b982b",
+          "serializedSystemSHA256": "a6030302e5f9738e68bdf047012fb87dea6682a5253646da87e741e22f2bff0a"
+        },
+        {
+          "identifier": "membrane-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 32512,
+            "referenceConstraintCount": 25856,
+            "nativeConstraintCount": 25856,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "555336fbe330c236fe2de7b3f7386741b49743bb5b917c46f5e5948faed07518",
+          "serializedSystemSHA256": "40bce2afbb80f130015fac45e39cc758d1efa3b0bd431d444ab23537d087ad1c"
+        },
+        {
+          "identifier": "ions-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2681,
+            "referenceConstraintCount": 2679,
+            "nativeConstraintCount": 2679,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "e0b9e036e7a04dd08dd5b2f0b9201926e685ed3a55b0df07e0252bbcd38aaa78",
+          "serializedSystemSHA256": "eb5c4d4a99ef8d70bc673c73d7eab0c5d9570e800dbdaf020769a0f3b4d59175"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "acb16a62f1e81b680bbabd64c5b171a6cbfe0b8051d0f8a0d6ab09abc55a7441",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "90d476012767aaf66ad523efaa9cfe655ffcd2b3fbdca2278348f49918c4b5c6"
+    },
+    {
+      "name": "nve-1",
+      "exitCode": 1,
+      "auditSHA256": "fc46ac4161c33932e5844a78423bef4038c7e8ae1420b2e9976285f39f4ae780",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "alanine-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2269,
+            "referenceConstraintCount": 2259,
+            "nativeConstraintCount": 2259,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "bfd0d0f57ba6cd30a17b3f1ca8fcbe5f3b04693e51cbf076cb363765894a8657",
+          "serializedSystemSHA256": "4044307403ce329f08ea591cbcbdf920a7f6f452f808b373414c7e6c22fcaa66"
+        },
+        {
+          "identifier": "protein-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 23558,
+            "referenceConstraintCount": 22290,
+            "nativeConstraintCount": 22290,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "901dedc0d033c17d65339a9587a2340c056bbb76cb43c669f53973614313effa",
+          "serializedSystemSHA256": "44b4a4bf200422c521de48eaf2746a6a188a5a1ff3d7566908e7681e1d3e6f4b"
+        },
+        {
+          "identifier": "complex-vacuum",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2621,
+            "referenceConstraintCount": 1323,
+            "nativeConstraintCount": 1323,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "9611f40758e1b1c29ef7402674a5cce65a2a1ef54199f69874e160af36036da2",
+          "serializedSystemSHA256": "ee500e9bcfb426c6727bf27785c5189b9d7114589b234ae30e00b3689d2cb80a"
+        },
+        {
+          "identifier": "dna-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 13646,
+            "referenceConstraintCount": 13160,
+            "nativeConstraintCount": 13160,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "8b9726f38a72fcb2b4e363ae7156f9ba2af7fbffb3fe9334efe22bb0b9f572c0",
+          "serializedSystemSHA256": "a6030302e5f9738e68bdf047012fb87dea6682a5253646da87e741e22f2bff0a"
+        },
+        {
+          "identifier": "membrane-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 32512,
+            "referenceConstraintCount": 25856,
+            "nativeConstraintCount": 25856,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "8aa3a6aa818101e64a825739b251461b5efb983f9d8a0eee3a97e911aeec485a",
+          "serializedSystemSHA256": "40bce2afbb80f130015fac45e39cc758d1efa3b0bd431d444ab23537d087ad1c"
+        },
+        {
+          "identifier": "ions-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2681,
+            "referenceConstraintCount": 2679,
+            "nativeConstraintCount": 2679,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "e1271d2ac22f90ce8980684f16950acbc103afdaa807b58bfae3f08c2fabf587",
+          "serializedSystemSHA256": "eb5c4d4a99ef8d70bc673c73d7eab0c5d9570e800dbdaf020769a0f3b4d59175"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "1d98895306abe60a8e6384afff7d5d82daf79c9a996868d4faf5d2c7da172b1a",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "f54d58ff6386572db39070ae65fb5a040d3d62b09a5db70d60102ff95ad2d888"
+    },
+    {
+      "name": "nve-2",
+      "exitCode": 1,
+      "auditSHA256": "f94aac9c5859b7ffc97aab79c12f2f8a55eda3f1b1603eaeefed144b8f23ea3e",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "alanine-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2269,
+            "referenceConstraintCount": 2259,
+            "nativeConstraintCount": 2259,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "e6390fa3491a295a2956ed14fd5eb762101070db23bd526a859908a7e9b4c758",
+          "serializedSystemSHA256": "4044307403ce329f08ea591cbcbdf920a7f6f452f808b373414c7e6c22fcaa66"
+        },
+        {
+          "identifier": "protein-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 23558,
+            "referenceConstraintCount": 22290,
+            "nativeConstraintCount": 22290,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "3ebbae6e4cb0555e9fc34d8fb423d058c379a1db857bee5a6882e211abb53008",
+          "serializedSystemSHA256": "44b4a4bf200422c521de48eaf2746a6a188a5a1ff3d7566908e7681e1d3e6f4b"
+        },
+        {
+          "identifier": "complex-vacuum",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2621,
+            "referenceConstraintCount": 1323,
+            "nativeConstraintCount": 1323,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "194de8b3fd574cade853aca24a2f9ddcba31117788f19681c36b00d8b0128140",
+          "serializedSystemSHA256": "ee500e9bcfb426c6727bf27785c5189b9d7114589b234ae30e00b3689d2cb80a"
+        },
+        {
+          "identifier": "dna-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 13646,
+            "referenceConstraintCount": 13160,
+            "nativeConstraintCount": 13160,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "86aa1259ad670da693bb42b1d5e841e9bf787f0ca86fed24e07fc82a7b5355c7",
+          "serializedSystemSHA256": "a6030302e5f9738e68bdf047012fb87dea6682a5253646da87e741e22f2bff0a"
+        },
+        {
+          "identifier": "membrane-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 32512,
+            "referenceConstraintCount": 25856,
+            "nativeConstraintCount": 25856,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "6f4a8e4064d68a9b0fa7cca710212949309fa82893d493d16a07dd78360bb5b0",
+          "serializedSystemSHA256": "40bce2afbb80f130015fac45e39cc758d1efa3b0bd431d444ab23537d087ad1c"
+        },
+        {
+          "identifier": "ions-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2681,
+            "referenceConstraintCount": 2679,
+            "nativeConstraintCount": 2679,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "cd88e63376df74b68aa503de4b0d21e1f181c967b5eb68894769b5a3cc0fb1fe",
+          "serializedSystemSHA256": "eb5c4d4a99ef8d70bc673c73d7eab0c5d9570e800dbdaf020769a0f3b4d59175"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "e5536a8dc1d8d87bccd73053ae8048a8d5bfc9d4f8bfd2b87630ffea75dd287d",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "6ca7043deb74265bd7d2ef7de719ed03bb0a80938c7674d50ee7408f2f353e0c"
+    },
+    {
+      "name": "nvt-00",
+      "exitCode": 1,
+      "auditSHA256": "0bf865c406e4698547ad70d96a050ef9d33b2c9405f714e1113158d7ec4a954a",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "5e84bed0203dfca9fdaa1aeb7f619f27dae5cc4d4c3a2d68bad11b2c6a2a0c0b",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "795cf92fb1a96efaece85f99b121cd10afdd42675f8c0ce2eda6df47435b47c7"
+    },
+    {
+      "name": "nvt-01",
+      "exitCode": 1,
+      "auditSHA256": "c3a696b94e357e7100e8dd8c016f9dd3f5c649d28eb6a1c0d8f92c904ae865c4",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "395caa208a53eb4ad17b25a76612190efb65d25a42e87245cd03b2400cc32a75",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "e6b9c5067326690cf88a91a6cec07f3bacf0c79931559372553805c3d3ddfa75"
+    },
+    {
+      "name": "nvt-02",
+      "exitCode": 1,
+      "auditSHA256": "9a8278f74ca7bba77b3ae36780bfa28812dbeb878835d064e1de6182976f41ce",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "75cbad287564f2eda4ce04f6b0c2250dc9c1adf9325ee426695c4391ca21b8ea",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "a7ccf442ec2f78c2decfc420779d750a6e265959ec320dffd2ccc45f9c952b7a"
+    },
+    {
+      "name": "nvt-03",
+      "exitCode": 1,
+      "auditSHA256": "ebb4bdea85e483aaadded4d65bb2c66b6ab0683d34c829f44281396d47d05dbb",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "a3dd402ada2e527f79064cf58a14e6eef5e643718f84dc2e5b66bb0704da9653",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "e5e2a4a30c5b171ae3705742a2d5f209f43c136a546d8ac5d5320f8526f9e4b3"
+    },
+    {
+      "name": "nvt-04",
+      "exitCode": 1,
+      "auditSHA256": "80896ca7e696247a7bb7ddc0c4986a644613d72feecc7bb32fcd27e4da7cc36c",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "6783360d5fd84da53bde1c989d1c0dc9d073b8ed19bfd03eb634d9fd5e5f0d5e",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "ec36ec8f0e145eb2c8d27819856ec4c99c65b429f30e687a23ce5f6037ff7eb3"
+    },
+    {
+      "name": "nvt-05",
+      "exitCode": 1,
+      "auditSHA256": "5029dc56d719fbc19538d20f29914b29f842da4c486da3785a53578c830211af",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "8a5607478b405126b51ad907f44af5b99c0ba9d4a03b2b564d8e231184d5e7ce",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "ed496aeed04b83431fe85762bda8d621b7c6532c846dbb0cb60ac3701fe4f8d9"
+    },
+    {
+      "name": "nvt-06",
+      "exitCode": 1,
+      "auditSHA256": "5c2c94671c24cfb744e7022028cc0f6b63535cfabce8baa58133913f372c88e2",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "8dfa15b3d8e99280158939657111e5f52af2dafe1dfc54f8f6c35c5e19012e74",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "5c0fb2bd66c806878602a29ea59ab4c7f823fbaf8e104f53e0558c4f38e33927"
+    },
+    {
+      "name": "nvt-07",
+      "exitCode": 1,
+      "auditSHA256": "c169ad1ec5e594dc328f7d7de53e73a2edb5def74fc365672a1e2d11a7110ce3",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "dc978225cbf150879b582eedf99a13f3b6e56dc08f670b88893da9f498dc0f4e",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "cabd35429c7b4c782db47da686ef3b5c7fba67408da8966290452462c64af4f3"
+    },
+    {
+      "name": "nvt-08",
+      "exitCode": 1,
+      "auditSHA256": "93c3faedcdff22eddd01ac71dc66012a486850d71fe5a8a90abf160d7a2d3209",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "ffc8e824a2b1b5939573e78aa43eb242c7ac3851224ac66c4a71a47b3d2ebe9d",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "43dffc9faafcdae5aa38e43bea0f1ff8f1d041e68812221aff32e638d525cc2c"
+    },
+    {
+      "name": "nvt-09",
+      "exitCode": 1,
+      "auditSHA256": "06ddc9685536ededc7693a795fa7f298f1c343f6a4566131f533ce78744273c3",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "1799d38232bc26b314f9b13160c3609145f7a3804c1c006120a8bd742b49ed04",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "487003f4f8ae8e1a6f882618ba3fd6d223cbdb7ecf4fa92196d7bbd993474875"
+    },
+    {
+      "name": "nvt-10",
+      "exitCode": 1,
+      "auditSHA256": "4d26c0ba8f18cb4bdb569ef86029db9b5e65f5b613829cf0fabcedc17e254eb8",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "d34c713cc7b95afd60ad312090dcaf2fce8f435e38818215faa1ec833c39541f",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "37461d6a58afed393a59a3a3fe83dde855515add5a7aec43f90277cbca886c19"
+    },
+    {
+      "name": "nvt-11",
+      "exitCode": 1,
+      "auditSHA256": "5ff5c68c83f4ec08d298748e2b0c7841b770357504cc558678992db3df1f0d78",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "comparison": {
+            "particleCount": 2685,
+            "referenceConstraintCount": 2685,
+            "nativeConstraintCount": 2685,
+            "particleMassesEqual": true,
+            "constraintTargetsEqual": true,
+            "mismatchedMassCount": 0,
+            "firstMismatchedMassIndices": [],
+            "maximumMassDifferenceDa": 0.0,
+            "missingReferenceConstraintCount": 0,
+            "extraNativeConstraintCount": 0,
+            "missingReferenceConstraintExamples": [],
+            "extraNativeConstraintExamples": [],
+            "passed": true
+          },
+          "requestSHA256": "7bb233168c0907931b9adc36bf19bc64f3fa632ab7aa46dc5c88e7ca8af11cff",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "referenceManifestSHA256": "5790f57f7ea2c744aa740404af5a9327a6b662b24ddce5e90b29c8d976d4c2c7"
+    }
+  ],
+  "measuredTrajectoryInputs": 33,
+  "preparedPassed": true,
+  "scope": "Imported atomic mass and distance-constraint parameter identity for every completed 5 ps NVE and 50 ps NVT trajectory input. Original failed preparation records are retained. Other force-field parameters, GPU arithmetic and scientific ensemble outcomes are separate checks."
+}

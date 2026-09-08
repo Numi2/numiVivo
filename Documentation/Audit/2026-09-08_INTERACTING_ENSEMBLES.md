@@ -170,6 +170,27 @@ campaigns, all 33 final potential comparisons and all 66 start/end kinetic check
 passed. The largest potential error remains 2.02e-5 kJ/mol per particle. These
 energy comparisons do not establish the missing configurational sampling evidence.
 
+## Reference mass and constraint inputs
+
+The additional [parameter audit](../../Tools/Benchmarks/audit_mass_constraints.py)
+compares the native request's particle masses and distance-constraint endpoints
+and targets directly with the serialized OpenMM System. It performs no force
+evaluation or dynamics. Constraint order and endpoint direction are immaterial;
+parameter values and multiplicities must agree exactly in dalton and nanometers.
+
+All 33 completed NVE/NVT trajectory inputs pass this check, covering the seven
+prepared molecular models and every measured temperature/time-step configuration.
+There are no mass or constraint-target mismatches. This establishes reference
+parameter agreement for the masses used in the independent endpoint kinetic sums
+and the constraint targets used in the checkpoint residual checks. It does not
+certify every other force-field parameter or experimental model accuracy.
+
+Five additional Python controls passed in 0.174 s. They cover changed masses,
+changed/missing/duplicate constraints, invalid indices and nonfinite values,
+altered input files, and retained original preparation failures. The
+[compact observations](frontier-mass-constraint-observations.json) bind every
+request, serialized model, auditor source archive and control log.
+
 Remote raw evidence: `/Users/n/numivivo-ensemble-evidence-20260908`.
 Local mirror: `/Users/home/numivivo-ensemble-evidence-20260908`.
 The previous sealed native/reference evidence remains in the corresponding
