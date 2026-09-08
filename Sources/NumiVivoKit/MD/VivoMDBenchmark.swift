@@ -44,17 +44,25 @@ public struct VivoMDBenchmarkRequest: Codable, Sendable, Equatable {
     public var limits: VivoMDBenchmarkLimits
     public var dynamicsSteps: Int
     public var dynamicsPreparation: VivoMDBenchmarkPreparation?
+    /// Optional bounded energy/temperature series for explicit conservation studies.
+    public var dynamicsObserveEvery: Int?
     public init(identifier: String, system: VivoClassicalSystem, configuration: VivoMDConfiguration,
                 references: [VivoMDBenchmarkReference], referenceProvenance: [String: String],
                 limits: VivoMDBenchmarkLimits = .init(), dynamicsSteps: Int = 0,
-                dynamicsPreparation: VivoMDBenchmarkPreparation? = nil) {
+                dynamicsPreparation: VivoMDBenchmarkPreparation? = nil,dynamicsObserveEvery:Int?=nil) {
         self.identifier=identifier; self.system=system; self.configuration=configuration
         self.references=references; self.referenceProvenance=referenceProvenance
         self.limits=limits; self.dynamicsSteps=dynamicsSteps
         self.dynamicsPreparation=dynamicsPreparation
+        self.dynamicsObserveEvery=dynamicsObserveEvery
     }
     public func validate() throws {
         try limits.validate(); try configuration.validate(); try VivoClassicalSystemValidator.validate(system)
+        if let interval=dynamicsObserveEvery {
+            guard interval>0,dynamicsSteps>0,dynamicsSteps/interval<=1000 else {
+                throw VivoChemistryError.invalid("benchmark observation interval exceeds bounded series capacity")
+            }
+        }
         guard schema == Self.schema, !identifier.isEmpty, !referenceProvenance.isEmpty,
               system.particles.count <= 1_000_000, (1...32).contains(references.count),
               (0...100_000).contains(dynamicsSteps), Set(references.map(\.identifier)).count == references.count else {
@@ -110,6 +118,7 @@ public struct VivoMDBenchmarkDynamics: Codable, Sendable, Equatable {
     public let preparedCheckpoint: VivoMDCheckpoint
     public let end: VivoMDObservables
     public let finalCheckpoint: VivoMDCheckpoint
+    public let observations: [VivoMDObservables]?
     /// This short trajectory is execution evidence, not an equilibrium gate.
     public let ensembleOutcome: VivoBenchmarkOutcome = .inconclusive
 }
@@ -157,17 +166,20 @@ public enum VivoMDBenchmark {
             if request.dynamicsPreparation == .projectConstraints { _ = try await runtime.projectConstraints() }
             let prepared=try await runtime.thermalize(temperatureK:config.targetTemperatureK ?? 300,seed:config.randomSeed)
             let start=try await runtime.observables(), clock=ContinuousClock(), began=clock.now
+            var observations:[VivoMDObservables]?=request.dynamicsObserveEvery == nil ? nil:[start]
             var committed=0,rejected:VivoMDStepCertificate?
             for _ in 0..<request.dynamicsSteps {
                 try Task.checkCancellation()
                 let step=try await runtime.step()
                 if !step.committed { rejected=step;break };committed+=1
+                if let interval=request.dynamicsObserveEvery,committed%interval==0 { observations?.append(try await runtime.observables()) }
             }
             let duration=began.duration(to:clock.now).components
             let seconds=Double(duration.seconds)+Double(duration.attoseconds)/1e18
             let end=try await runtime.observables(), checkpoint=try await runtime.checkpoint()
+            if observations != nil,observations?.last?.stepIndex != end.stepIndex { observations?.append(end) }
             dynamics = .init(requestedSteps:request.dynamicsSteps,committedSteps:committed,wallSeconds:seconds,
-                rejected:rejected,start:start,preparedCheckpoint:prepared,end:end,finalCheckpoint:checkpoint)
+                rejected:rejected,start:start,preparedCheckpoint:prepared,end:end,finalCheckpoint:checkpoint,observations:observations)
           } catch is CancellationError { throw CancellationError() }
           catch { executionError=String(describing:error) }
         }

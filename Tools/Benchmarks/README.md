@@ -7,7 +7,7 @@ OpenMM reference calculations, launch the CLI, and audit results.
 ```sh
 python3 -m venv /absolute/reference-env
 /absolute/reference-env/bin/python -m pip install -r Tools/Benchmarks/requirements.txt
-/absolute/reference-env/bin/python Tools/Benchmarks/prepare_references.py --out /absolute/new-references --project-initial-constraints
+/absolute/reference-env/bin/python Tools/Benchmarks/prepare_references.py --out /absolute/new-references --project-initial-constraints --position-precision compensated
 swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing
 python3 Tools/Benchmarks/run_campaign.py --references /absolute/new-references --binary .build/release/numivivo --out /absolute/new-campaign
 ```
@@ -34,6 +34,26 @@ prepared checkpoint is retained. Static reference comparisons still use the
 original supplied coordinates. Omitting the flag preserves the original state
 and can correctly reject geometries that do not meet the execution constraints.
 The vacuum protein–ligand complex retains its original vacuum model.
+
+Compensated positions preserve GPU coordinate corrections and both exact words
+in checkpoints. This opt-in v5 mode currently supports fixed-cell classical
+dynamics with physical atoms. The original FP32 configuration remains available
+for comparison; it fails the strict realistic-system constraint gate.
+
+To reuse verified reference physics with a different native execution setting:
+
+```sh
+python3 Tools/Benchmarks/derive_campaign.py --references /absolute/new-references --out /absolute/variant --position-precision compensated
+python3 Tools/Benchmarks/run_nve_refinement.py --references /absolute/new-references --binary /absolute/frozen/numivivo --out /absolute/nve-refinement
+```
+
+The derivation retains parent hashes, preparation failures, identical reference
+geometries, models, observations and limits. The NVE runner copies and hashes
+`nve_policy.json` before running three matched-duration timestep variants. It
+checks identical prepared coordinates/velocities, energy conservation and
+refinement using a bounded observation series. This is a short conservation
+study, not equilibration or general scientific qualification. Timings with
+observation collection include that work and are not throughput comparisons.
 
 Limits and scientific boundaries are fixed in the
 [campaign contract](../../Documentation/Design/FRONTIER_BENCHMARKS.md).

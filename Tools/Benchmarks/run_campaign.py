@@ -7,6 +7,7 @@ import math
 import os
 from pathlib import Path
 import subprocess
+import struct
 import time
 
 
@@ -46,6 +47,47 @@ def verify_comparisons(request,report):
     return all(outcomes)
 
 
+def verify_checkpoint(request,checkpoint):
+    """Independent FP64 geometry/velocity check; no native residual is trusted."""
+    xyz=checkpoint["positionsNM"];velocity=checkpoint["velocitiesNMPerPS"]
+    count=len(request["system"]["particles"])
+    assert len(xyz)==len(velocity)==count
+    def vector(v):return [v[k] for k in ("x","y","z")]
+    def dot(a,b):return math.fsum(x*y for x,y in zip(a,b))
+    def cross(a,b):return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]
+    def fp32(x):return struct.unpack("f",struct.pack("f",x))[0]
+    precision=request["configuration"].get("positionPrecision","fp32")
+    assert checkpoint.get("positionPrecision","fp32")==precision
+    words=velocity
+    if precision=="compensated":
+        high=checkpoint["positionHighNM"];low=checkpoint["positionCorrectionsNM"]
+        assert len(high)==len(low)==count
+        assert all(h[k]+l[k]==p[k] for h,l,p in zip(high,low,xyz) for k in ("x","y","z"))
+        words=words+high+low
+    else:words=words+xyz
+    assert all(math.isfinite(x) and fp32(x)==x for v in words for x in vector(v))
+    cell=checkpoint.get("periodicCell");basis=None
+    if cell:
+        basis=[vector(cell[k]) for k in ("a","b","c")]
+        reciprocal=[cross(basis[1],basis[2]),cross(basis[2],basis[0]),cross(basis[0],basis[1])]
+        volume=dot(basis[0],reciprocal[0]);assert volume>0
+        reciprocal=[[x/volume for x in r] for r in reciprocal]
+    errors=[];velocity_errors=[]
+    for q in request["system"]["constraints"]:
+        a,b=q["a"],q["b"]
+        d=[xyz[a][k]-xyz[b][k] for k in ("x","y","z")]
+        if basis:
+            n=[round(dot(d,r)) for r in reciprocal]
+            d=[d[k]-math.fsum(n[j]*basis[j][k] for j in range(3)) for k in range(3)]
+        dv=[velocity[a][k]-velocity[b][k] for k in ("x","y","z")]
+        errors.append(abs(math.sqrt(dot(d,d))-q["distanceNM"])/q["distanceNM"])
+        velocity_errors.append(abs(dot(d,dv))/q["distanceNM"])
+    tolerance=request["configuration"]["constraintTolerance"]
+    maximum=max(errors,default=0);maximum_velocity=max(velocity_errors,default=0)
+    return dict(maximumRelativeConstraintError=maximum,maximumConstraintVelocityNMPerPS=maximum_velocity,
+                passed=maximum<=tolerance and maximum_velocity<=tolerance/request["configuration"]["timeStepPS"])
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--references",type=Path,required=True)
@@ -55,7 +97,7 @@ def main():
     args=parser.parse_args()
     if not 1<=args.timeout<=86400:parser.error("invalid timeout")
     binary=args.binary.resolve(strict=True);references=args.references.resolve(strict=True)
-    binary_hash=digest(binary)
+    binary_hash=digest(binary);runner_hash=digest(Path(__file__))
     manifest=json.loads((references/"manifest.json").read_text())
     assert manifest["schema"]=="numivivo.org/md-reference-campaign/v1"
     args.out.mkdir(parents=True,exist_ok=False)
@@ -81,30 +123,44 @@ def main():
             except subprocess.TimeoutExpired:row["error"]="native command exceeded fixed wall-time limit"
         row.update(exitCode=code,wallSeconds=time.monotonic()-begin,particles=case["particles"],requestSHA256=digest(request_path))
         if report_path.exists():
-            report=json.loads(report_path.read_text())
-            if report.get("executionError"):row["executionError"]=report["executionError"]
-            assert report["identifier"]==name
-            if report["outcome"]=="unsupported":
-                assert not report["capability"]["executable"] and not report["comparisons"]
-                row["blockers"]=report["capability"]["blockers"]
-            else:
-                static_pass=verify_comparisons(request,report)
-                row["hamiltonianAgreement"]="passed" if static_pass else "failed"
-                row["comparisons"]=report["comparisons"]
-                dynamics=report.get("dynamics")
-                if dynamics:
-                    assert dynamics["ensembleOutcome"]=="inconclusive"
-                    row["committedSteps"]=dynamics["committedSteps"]
-                    row["requestedSteps"]=dynamics["requestedSteps"]
-                expected=static_pass and not report.get("executionError") and (not dynamics or not dynamics.get("rejected"))
-                assert report["outcome"]==("passed" if expected else "failed")
-            row.update(outcome=report["outcome"],device=report.get("deviceName"),reportSHA256=digest(report_path))
-            assert (code==0)==(report["outcome"]=="passed")
+            report=None
+            row["reportSHA256"]=digest(report_path)
+            try:
+                report=json.loads(report_path.read_text())
+                if report.get("executionError"):row["executionError"]=report["executionError"]
+                assert report["identifier"]==name
+                if report["outcome"]=="unsupported":
+                    assert not report["capability"]["executable"] and not report["comparisons"]
+                    row["blockers"]=report["capability"]["blockers"]
+                else:
+                    static_pass=verify_comparisons(request,report)
+                    row["hamiltonianAgreement"]="passed" if static_pass else "failed"
+                    row["comparisons"]=report["comparisons"]
+                    dynamics=report.get("dynamics")
+                    if dynamics:
+                        assert dynamics["ensembleOutcome"]=="inconclusive"
+                        row["committedSteps"]=dynamics["committedSteps"]
+                        row["requestedSteps"]=dynamics["requestedSteps"]
+                        assert dynamics["requestedSteps"]==request["dynamicsSteps"]
+                        assert 0<=dynamics["committedSteps"]<=dynamics["requestedSteps"]
+                        row["preparedConstraints"]=verify_checkpoint(request,dynamics["preparedCheckpoint"])
+                        row["finalConstraints"]=verify_checkpoint(request,dynamics["finalCheckpoint"])
+                        assert row["preparedConstraints"]["passed"] and row["finalConstraints"]["passed"],"independent constraints failed"
+                        assert dynamics["finalCheckpoint"]["acceptedStep"]-dynamics["preparedCheckpoint"]["acceptedStep"]==dynamics["committedSteps"]
+                    execution_pass=(request["dynamicsSteps"]==0 or bool(dynamics and not dynamics.get("rejected") and dynamics["committedSteps"]==request["dynamicsSteps"]))
+                    expected=static_pass and not report.get("executionError") and execution_pass
+                    assert report["outcome"]==("passed" if expected else "failed")
+                row.update(outcome=report["outcome"],device=report.get("deviceName"),reportSHA256=digest(report_path))
+                assert (code==0)==(report["outcome"]=="passed")
+            except (AssertionError,KeyError,TypeError,ValueError,OverflowError) as error:
+                row.update(outcome="verification-failed",verificationError=f"{type(error).__name__}: {error}",
+                           nativeOutcome=report.get("outcome") if isinstance(report,dict) else None)
         else:row["outcome"]="execution-failed"
         rows.append(row);print(json.dumps(row),flush=True)
     assert digest(binary)==binary_hash,"executable changed during campaign"
+    assert digest(Path(__file__))==runner_hash,"runner changed during campaign"
     summary=dict(schema="numivivo.org/md-benchmark-campaign/v1",binarySHA256=binary_hash,
-        referenceManifestSHA256=digest(references/"manifest.json"),runnerSHA256=digest(Path(__file__)),
+        referenceManifestSHA256=digest(references/"manifest.json"),runnerSHA256=runner_hash,
         cases=rows,passed=all(r["outcome"]=="passed" for r in rows),
         scope="static Hamiltonian agreement and short execution smoke only; no ensemble or speed leadership claim")
     write(args.out/"scorecard.json",summary)

@@ -28,4 +28,8 @@ Required evidence: sub-ULP drifts, exact restart of both words, large-coordinate
 and periodic-boundary constraints, rollback, unsupported-path admission, and
 the unchanged independent reference panel with explicit precision configuration.
 Scientific ensembles, free energies and speed leadership require separate runs.
-Native v5 validation is pending at the introduction of this document.
+Initial source `e315adbf872f49b78ac88fefbfd51bc61ab228ba` passed 39 native tests
+in eight suites on M4 Pro (one opt-in long-archive test skipped). All seven
+prepared realistic systems passed 21 static comparisons and 100 steps each;
+the original invalid water preparation remains failed. Subsequent hardening,
+broader regressions and conservation evidence require their own source record.

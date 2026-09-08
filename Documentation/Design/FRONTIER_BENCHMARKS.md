@@ -59,6 +59,13 @@ transactional position/velocity projection before assigning thermal velocities.
 Absent/`preserve` retains prior behavior. The prepared checkpoint is explicit
 in the dynamics result; static reference coordinates are never projected.
 
+The [v5 position profile](MD_NUMERICAL_PROFILE_V5.md) is opt-in through
+`configuration.positionPrecision: "compensated"`. The independent Python
+verifier checks the saved position/velocity constraints and exact checkpoint
+words. Optional `dynamicsObserveEvery` records at most 1002 energy/temperature
+observations at accepted steps. The initial matched-duration NVE study fixes
+its limits in `Tools/Benchmarks/nve_policy.json` before measurement.
+
 The reference environment is isolated and never used as a production force
 provider. `Tools/Benchmarks/requirements.txt` pins its packages. Source/package
 data are downloaded into the external evidence directory, not silently added

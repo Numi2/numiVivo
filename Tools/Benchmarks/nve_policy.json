@@ -1,0 +1,11 @@
+{
+  "schema": "numivivo.org/md-nve-refinement-policy/v1",
+  "durationPS": 0.1,
+  "timeStepsPS": [0.001, 0.0005, 0.00025],
+  "observationIntervalPS": 0.005,
+  "initialTemperatureK": 300,
+  "maximumAbsoluteEnergyDeviationPerParticleKJPerMol": 0.01,
+  "minimumRMSRefinementRatio": 2.0,
+  "refinementFloorPerParticleKJPerMol": 0.00001,
+  "scope": "short interacting constrained NVE conservation and timestep refinement; no equilibrium, transport or performance qualification"
+}

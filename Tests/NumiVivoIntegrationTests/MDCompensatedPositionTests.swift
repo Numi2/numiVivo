@@ -31,6 +31,8 @@ import Testing
         #expect(try await exact.checkpoint()==tiny)
         var missing=checkpoint;missing.positionCorrectionsNM=nil
         #expect(throws:Error.self) { try missing.validate(particleCount:1) }
+        var noncanonical=tiny;noncanonical.positionHighNM=[.init(999,0,0)];noncanonical.positionCorrectionsNM=[.init(1,0,0)]
+        #expect(throws:Error.self) { try noncanonical.validate(particleCount:1) }
         var wrong=configuration;wrong.positionPrecision = .fp32
         await #expect(throws:Error.self) { try await VivoMDMetalRuntime.restore(system:model,configuration:wrong,checkpoint:checkpoint) }
     }
@@ -77,5 +79,19 @@ import Testing
         #expect(!VivoMDExecutionPreflight.blockers(system:model,initial:initial,configuration:npt).isEmpty)
         let stage=VivoMDProtocolStage(identifier:"sample",kind:.dynamics,configuration:configuration,steps:1,sampleEvery:1)
         #expect(throws:Error.self) { try stage.validate() }
+    }
+    @Test func benchmarkObservationSeriesIsBoundedAndUsesAcceptedSteps() async throws {
+        let model=try model(1)
+        let geometry=try VivoMDCandidateGeometry(particlePositionsNM:[.init(1,0,0)],periodicCell:nil)
+        let reference=VivoMDBenchmarkReference(identifier:"zero-force",geometry:geometry,energyKJPerMol:0,forcesKJPerMolNM:[.zero])
+        var request=VivoMDBenchmarkRequest(identifier:"observations",system:model,configuration:config(),references:[reference],
+            referenceProvenance:["reference":"one free classical atom"],dynamicsSteps:8,dynamicsObserveEvery:2)
+        let report=try await VivoMDBenchmark.run(request)
+        #expect(report.outcome == .passed)
+        #expect(report.dynamics?.observations?.map(\.stepIndex)==[0,2,4,6,8])
+        request.dynamicsObserveEvery=0
+        #expect(throws:Error.self) { try request.validate() }
+        request.dynamicsObserveEvery=1;request.dynamicsSteps=1001
+        #expect(throws:Error.self) { try request.validate() }
     }
 }

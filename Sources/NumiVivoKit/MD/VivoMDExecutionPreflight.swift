@@ -9,6 +9,9 @@ public enum VivoMDExecutionPreflight {
         for vector in vectors {
             for x in [vector.x,vector.y,vector.z] {
                 guard Float(x).isFinite else { throw VivoMDRuntimeError.unsupported(["periodic cell is outside FP32"])}
+                if configuration.resolvedPositionPrecision == .compensated && Double(Float(x)) != x {
+                    throw VivoMDRuntimeError.unsupported(["compensated coordinates require an explicitly FP32-representable fixed cell"])
+                }
             }
         }
         // The current force, constraint and virtual-site kernels independently

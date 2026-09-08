@@ -66,6 +66,9 @@ public struct VivoMDCheckpoint: Codable, Sendable, Equatable {
             }
             for i in 0..<particleCount {
                 guard hi[i]+lo[i]==positionsNM[i] else { throw VivoArtifactValidationError.invalid("checkpoint coordinate view differs from exact words") }
+                for (h,p) in zip([hi[i].x,hi[i].y,hi[i].z],[positionsNM[i].x,positionsNM[i].y,positionsNM[i].z]) {
+                    guard Double(Float(p))==h else { throw VivoArtifactValidationError.invalid("checkpoint high word is not the nearest FP32 force coordinate") }
+                }
             }
             exactWords += hi+lo
         } else {
