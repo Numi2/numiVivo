@@ -24,7 +24,8 @@ def prepare(case,source,out):
     forces=[f for f in system.getForces() if isinstance(f,mm.NonbondedForce)]
     assert len(forces)==1;nb=forces[0];periodic=nb.getNonbondedMethod()!=mm.NonbondedForce.NoCutoff
     identifier=case["identifier"]+ ("-smooth" if periodic else "-vacuum")
-    directory=out/identifier;shutil.copytree(root,directory)
+    directory=out/identifier
+    shutil.copytree(root,directory,ignore=shutil.ignore_patterns("request.json","reference-system.xml"))
     request=copy.deepcopy(original);request["identifier"]=identifier
     if periodic:
         assert nb.getNonbondedMethod()==mm.NonbondedForce.PME and abs(scalar(nb.getCutoffDistance(),u.nanometer)-0.8)<1e-12

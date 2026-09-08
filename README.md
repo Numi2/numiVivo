@@ -52,6 +52,12 @@ These integrations do not yet provide arbitrary-triclinic Metal MD, automatic pK
 
 The [prepared molecule to observable example](Examples/prepared-reaction/README.md) now supplies a complete finite route: prepare a synthetic harmonic H₂ system, sample an accepted state, use its geometry for fresh H₃ exchange qualification, and calculate a tagged atom's conditional reaction probability. Its [native and public-CLI audit](Documentation/Audit/2026-09-08_PREPARED_REACTION_CAMPAIGN.md) retains the model transfer, partial sampling status, reaction evidence and explicit bath assumptions.
 
+The [independent MD benchmark panel](Tools/Benchmarks/README.md) now checks realistic
+water, protein, ligand, DNA and membrane systems. Its [audit](Documentation/Audit/2026-09-08_FRONTIER_MD_REFERENCE_PANEL.md)
+records corrected torsion forces, opt-in compensated positions, RATTLE integration,
+and short energy-conservation/refinement results. Failed inputs and the remaining
+equilibrium, performance and broader-model qualifications remain explicit.
+
 ## Built around Apple silicon
 
 **Native execution rather than a Python simulation loop.** Swift manages scientific objects, experiments and concurrent operations. C++23 implements compilation, validation and portable reference components. Metal executes molecular-dynamics and kinetic kernels. Precision-sensitive chemistry retains FP64 native CPU calculations rather than forcing every calculation onto the GPU.

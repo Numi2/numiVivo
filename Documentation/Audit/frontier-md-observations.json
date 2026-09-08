@@ -1,0 +1,782 @@
+{
+  "schema": "numivivo.org/audit/frontier-md-observations/v1",
+  "sourceCommit": "c7ded9f9784d238a329e2ca0ae34b01676165ee2",
+  "numericalContract": "numivivo.org/md-metal-numerics/v6",
+  "device": {
+    "name": "Apple M4 Pro",
+    "cpuCores": 12,
+    "memoryBytes": 25769803776,
+    "macOS": "26.6 (25G72)",
+    "xcode": "26.6 (17F113)",
+    "swift": "6.3.3"
+  },
+  "referenceEngine": {
+    "name": "OpenMM",
+    "version": "8.6.0",
+    "platform": "Reference",
+    "precision": "FP64 CPU",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "inputRevision": "f6ef22a8b9f66e582df2ffa62f3bb6516de43536"
+  },
+  "validation": {
+    "releaseBuildSeconds": 229.93,
+    "focusedReportedTests": 41,
+    "focusedSuites": 8,
+    "focusedSeconds": 3.798,
+    "fullReportedTests": 332,
+    "fullSuites": 70,
+    "fullSeconds": 2954.994,
+    "skippedLogLines": [
+      "\u279c Test archiveBeyondOneHundredThousandChunksResumesAndPreservesItsPrefix() skipped."
+    ],
+    "fullReactionRoute": "passed",
+    "benchmarkCLIChecks": {
+      "passed": true,
+      "checks": [
+        {
+          "name": "existing-output",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "symlink-input-alias",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "schema",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "work-bound",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "observation-interval",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "observation-budget",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "unknown-precision",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "missing-force",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "negative-limit",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "non-fp32-coordinate",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "duplicate-observation",
+          "passed": true,
+          "exitCode": 65
+        },
+        {
+          "name": "altered-reference-fails",
+          "passed": true,
+          "exitCode": 75
+        }
+      ]
+    },
+    "samplingExportCLIChecks": {
+      "passed": true,
+      "checks": 87
+    },
+    "generalWorkflowCLIChecks": {
+      "passed": true,
+      "checks": 61
+    },
+    "independentPreparedCases": 7,
+    "independentStaticComparisons": 21
+  },
+  "originalPanel": {
+    "allPass": false,
+    "cases": [
+      {
+        "identifier": "water",
+        "referenceStatus": "preparation-failed",
+        "ensemble": "inconclusive",
+        "experimentalAccuracy": "not-evaluated",
+        "outcome": "preparation-failed",
+        "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+      },
+      {
+        "identifier": "alanine",
+        "referenceStatus": "prepared",
+        "ensemble": "inconclusive",
+        "experimentalAccuracy": "not-evaluated",
+        "exitCode": 0,
+        "particles": 2269,
+        "requestSHA256": "eadd33c400cefd6518f076c29a4978df45190042c8b2a411f4260e9cdf71fc3f",
+        "reportSHA256": "cc1a134a88da6a06ff51dc921c8b71a4a758ca7a67634ed20d077d019e196020",
+        "hamiltonianAgreement": "passed",
+        "comparisons": [
+          {
+            "energyErrorPerParticleKJPerMol": 1.5851554866263367e-05,
+            "forceNormalizedMaximum": 1.956581967409488e-05,
+            "forceNormalizedRMS": 4.760180052401524e-06,
+            "geometryUnchanged": true,
+            "identifier": "source",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 1.5745416749589437e-05,
+            "forceNormalizedMaximum": 2.1737701426925733e-05,
+            "forceNormalizedRMS": 4.687568165551578e-06,
+            "geometryUnchanged": true,
+            "identifier": "translated",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 1.9163392344530738e-05,
+            "forceNormalizedMaximum": 2.0281642585208284e-05,
+            "forceNormalizedRMS": 4.7795011846865e-06,
+            "geometryUnchanged": true,
+            "identifier": "perturbed",
+            "outcome": "passed"
+          }
+        ],
+        "committedSteps": 100,
+        "requestedSteps": 100,
+        "preparedConstraints": {
+          "maximumRelativeConstraintError": 1.9090239944983865e-07,
+          "maximumConstraintVelocityNMPerPS": 6.824201276814982e-07,
+          "passed": true
+        },
+        "finalConstraints": {
+          "maximumRelativeConstraintError": 1.9280253431048709e-07,
+          "maximumConstraintVelocityNMPerPS": 5.9157509868802e-07,
+          "passed": true
+        },
+        "outcome": "passed",
+        "device": "Apple M4 Pro"
+      },
+      {
+        "identifier": "protein",
+        "referenceStatus": "prepared",
+        "ensemble": "inconclusive",
+        "experimentalAccuracy": "not-evaluated",
+        "exitCode": 0,
+        "particles": 23558,
+        "requestSHA256": "cc0548e58fdf0257b59ef0f38a97daa0958ccebb9c4213f9cb6bc82cbc53c4ac",
+        "reportSHA256": "3407be817465dbda86abce401ea0605ffea075261627bc0a60ad8c73a2725b5f",
+        "hamiltonianAgreement": "passed",
+        "comparisons": [
+          {
+            "energyErrorPerParticleKJPerMol": 9.840413734339122e-06,
+            "forceNormalizedMaximum": 0.00011589278215987557,
+            "forceNormalizedRMS": 4.764817046633501e-06,
+            "geometryUnchanged": true,
+            "identifier": "source",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 9.649533204644507e-06,
+            "forceNormalizedMaximum": 0.00011078307232032345,
+            "forceNormalizedRMS": 4.749240169038453e-06,
+            "geometryUnchanged": true,
+            "identifier": "translated",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 7.724575647476737e-06,
+            "forceNormalizedMaximum": 9.440624727951055e-05,
+            "forceNormalizedRMS": 4.763142490178303e-06,
+            "geometryUnchanged": true,
+            "identifier": "perturbed",
+            "outcome": "passed"
+          }
+        ],
+        "committedSteps": 100,
+        "requestedSteps": 100,
+        "preparedConstraints": {
+          "maximumRelativeConstraintError": 2.012872637757828e-07,
+          "maximumConstraintVelocityNMPerPS": 3.428595834208727e-07,
+          "passed": true
+        },
+        "finalConstraints": {
+          "maximumRelativeConstraintError": 2.248943057782296e-07,
+          "maximumConstraintVelocityNMPerPS": 4.1791953177667195e-07,
+          "passed": true
+        },
+        "outcome": "passed",
+        "device": "Apple M4 Pro"
+      },
+      {
+        "identifier": "complex",
+        "referenceStatus": "prepared",
+        "ensemble": "inconclusive",
+        "experimentalAccuracy": "not-evaluated",
+        "exitCode": 0,
+        "particles": 2621,
+        "requestSHA256": "feb890190b11a315220b1ea546c38c61fbdd5998b91d84727450f462c054d5a5",
+        "reportSHA256": "c7d337f833cae90776249d494129c6259cee061a7885e71c31a6268745c6bb39",
+        "hamiltonianAgreement": "passed",
+        "comparisons": [
+          {
+            "energyErrorPerParticleKJPerMol": 2.8373614240164853e-06,
+            "forceNormalizedMaximum": 1.1467655550443338e-05,
+            "forceNormalizedRMS": 1.9512380689661525e-06,
+            "geometryUnchanged": true,
+            "identifier": "source",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 2.150212812300246e-06,
+            "forceNormalizedMaximum": 1.1570316869966224e-05,
+            "forceNormalizedRMS": 1.9581392393123795e-06,
+            "geometryUnchanged": true,
+            "identifier": "translated",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 5.585167904936796e-06,
+            "forceNormalizedMaximum": 1.1481822778473588e-05,
+            "forceNormalizedRMS": 1.9263138256029555e-06,
+            "geometryUnchanged": true,
+            "identifier": "perturbed",
+            "outcome": "passed"
+          }
+        ],
+        "committedSteps": 100,
+        "requestedSteps": 100,
+        "preparedConstraints": {
+          "maximumRelativeConstraintError": 1.0278858388758291e-07,
+          "maximumConstraintVelocityNMPerPS": 5.589968474090457e-07,
+          "passed": true
+        },
+        "finalConstraints": {
+          "maximumRelativeConstraintError": 1.1265072263349996e-07,
+          "maximumConstraintVelocityNMPerPS": 2.0229958157624694e-07,
+          "passed": true
+        },
+        "outcome": "passed",
+        "device": "Apple M4 Pro"
+      },
+      {
+        "identifier": "dna",
+        "referenceStatus": "prepared",
+        "ensemble": "inconclusive",
+        "experimentalAccuracy": "not-evaluated",
+        "exitCode": 0,
+        "particles": 13646,
+        "requestSHA256": "9b894cec6ab0b54fbb07c9009f02074045809affffd19c4a9dc31f3cc8c61f2f",
+        "reportSHA256": "96235b9c144d78ada91e109fbe4aaebb9e847190314b4bf349c3eb02e8b3eca2",
+        "hamiltonianAgreement": "passed",
+        "comparisons": [
+          {
+            "energyErrorPerParticleKJPerMol": 4.5506443995587935e-06,
+            "forceNormalizedMaximum": 0.00029890128338886984,
+            "forceNormalizedRMS": 4.513898014753962e-06,
+            "geometryUnchanged": true,
+            "identifier": "source",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 3.654638708963724e-06,
+            "forceNormalizedMaximum": 0.0003025806179206985,
+            "forceNormalizedRMS": 4.495113104942889e-06,
+            "geometryUnchanged": true,
+            "identifier": "translated",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 5.107621578236234e-06,
+            "forceNormalizedMaximum": 0.0004309775831655288,
+            "forceNormalizedRMS": 5.651831093007781e-06,
+            "geometryUnchanged": true,
+            "identifier": "perturbed",
+            "outcome": "passed"
+          }
+        ],
+        "committedSteps": 100,
+        "requestedSteps": 100,
+        "preparedConstraints": {
+          "maximumRelativeConstraintError": 2.4339975232443063e-07,
+          "maximumConstraintVelocityNMPerPS": 6.956301389608044e-07,
+          "passed": true
+        },
+        "finalConstraints": {
+          "maximumRelativeConstraintError": 2.0760341619289098e-07,
+          "maximumConstraintVelocityNMPerPS": 5.304800709883318e-07,
+          "passed": true
+        },
+        "outcome": "passed",
+        "device": "Apple M4 Pro"
+      },
+      {
+        "identifier": "membrane",
+        "referenceStatus": "prepared",
+        "ensemble": "inconclusive",
+        "experimentalAccuracy": "not-evaluated",
+        "exitCode": 0,
+        "particles": 32512,
+        "requestSHA256": "34af2055fa43487455e1d540e8726ff57a3fa60f9608007884fc32e63fbb078f",
+        "reportSHA256": "656306f0dbd0c13e2b540b3cc795801a9e9857c77e4cd18b42a0f80b2a068d0d",
+        "hamiltonianAgreement": "passed",
+        "comparisons": [
+          {
+            "energyErrorPerParticleKJPerMol": 1.781239089315187e-05,
+            "forceNormalizedMaximum": 5.5587626990750756e-05,
+            "forceNormalizedRMS": 4.728575029700771e-06,
+            "geometryUnchanged": true,
+            "identifier": "source",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 1.7769409670273584e-05,
+            "forceNormalizedMaximum": 6.649029088237391e-05,
+            "forceNormalizedRMS": 4.761451742213983e-06,
+            "geometryUnchanged": true,
+            "identifier": "translated",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 1.832307180117687e-05,
+            "forceNormalizedMaximum": 5.528903792824733e-05,
+            "forceNormalizedRMS": 4.730944437364482e-06,
+            "geometryUnchanged": true,
+            "identifier": "perturbed",
+            "outcome": "passed"
+          }
+        ],
+        "committedSteps": 100,
+        "requestedSteps": 100,
+        "preparedConstraints": {
+          "maximumRelativeConstraintError": 2.450339382718342e-07,
+          "maximumConstraintVelocityNMPerPS": 8.140454854645407e-07,
+          "passed": true
+        },
+        "finalConstraints": {
+          "maximumRelativeConstraintError": 2.3534715985100878e-07,
+          "maximumConstraintVelocityNMPerPS": 7.083922333375274e-07,
+          "passed": true
+        },
+        "outcome": "passed",
+        "device": "Apple M4 Pro"
+      },
+      {
+        "identifier": "ions",
+        "referenceStatus": "prepared",
+        "ensemble": "inconclusive",
+        "experimentalAccuracy": "not-evaluated",
+        "exitCode": 0,
+        "particles": 2681,
+        "requestSHA256": "7d0a702ee9a4c38dbc7d22f50cf5b104779ef2571f8c7b406a7eb6c3420b1b7e",
+        "reportSHA256": "0edc8ab62f40f8621d7f43847e40eddf6515f8b857906d03746aa445040f5da0",
+        "hamiltonianAgreement": "passed",
+        "comparisons": [
+          {
+            "energyErrorPerParticleKJPerMol": 4.8204329612024655e-06,
+            "forceNormalizedMaximum": 1.5140183742695464e-05,
+            "forceNormalizedRMS": 2.356738167117118e-06,
+            "geometryUnchanged": true,
+            "identifier": "source",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 4.770772881439065e-06,
+            "forceNormalizedMaximum": 1.3746110258451785e-05,
+            "forceNormalizedRMS": 2.3356174210666087e-06,
+            "geometryUnchanged": true,
+            "identifier": "translated",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 4.1462438902201066e-06,
+            "forceNormalizedMaximum": 1.754771115594302e-05,
+            "forceNormalizedRMS": 2.3321959407713548e-06,
+            "geometryUnchanged": true,
+            "identifier": "perturbed",
+            "outcome": "passed"
+          }
+        ],
+        "committedSteps": 100,
+        "requestedSteps": 100,
+        "preparedConstraints": {
+          "maximumRelativeConstraintError": 1.9684760566462937e-07,
+          "maximumConstraintVelocityNMPerPS": 5.701217781708894e-07,
+          "passed": true
+        },
+        "finalConstraints": {
+          "maximumRelativeConstraintError": 2.599861528159691e-07,
+          "maximumConstraintVelocityNMPerPS": 8.191603770810091e-07,
+          "passed": true
+        },
+        "outcome": "passed",
+        "device": "Apple M4 Pro"
+      },
+      {
+        "identifier": "water-orthogonal",
+        "referenceStatus": "prepared",
+        "ensemble": "inconclusive",
+        "experimentalAccuracy": "not-evaluated",
+        "exitCode": 0,
+        "particles": 2685,
+        "requestSHA256": "0c641cbe4cbd48a02884af48a85e0567faf20269ed0a74cfd2cd45719e5b2353",
+        "reportSHA256": "80625c6f541318e4d97413d11202faed0e6f36980ab67fdd5953e28486f861aa",
+        "hamiltonianAgreement": "passed",
+        "comparisons": [
+          {
+            "energyErrorPerParticleKJPerMol": 5.163062230321393e-06,
+            "forceNormalizedMaximum": 1.401146209554434e-05,
+            "forceNormalizedRMS": 2.3863159624322905e-06,
+            "geometryUnchanged": true,
+            "identifier": "source",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 6.549008532290241e-06,
+            "forceNormalizedMaximum": 1.2688497055537683e-05,
+            "forceNormalizedRMS": 2.3796788994809128e-06,
+            "geometryUnchanged": true,
+            "identifier": "translated",
+            "outcome": "passed"
+          },
+          {
+            "energyErrorPerParticleKJPerMol": 3.7052429079995586e-06,
+            "forceNormalizedMaximum": 1.5567143361062813e-05,
+            "forceNormalizedRMS": 2.361202584711008e-06,
+            "geometryUnchanged": true,
+            "identifier": "perturbed",
+            "outcome": "passed"
+          }
+        ],
+        "committedSteps": 100,
+        "requestedSteps": 100,
+        "preparedConstraints": {
+          "maximumRelativeConstraintError": 1.9684760566462937e-07,
+          "maximumConstraintVelocityNMPerPS": 6.819395707693987e-07,
+          "passed": true
+        },
+        "finalConstraints": {
+          "maximumRelativeConstraintError": 2.0785681908031478e-07,
+          "maximumConstraintVelocityNMPerPS": 5.355233612953481e-07,
+          "passed": true
+        },
+        "outcome": "passed",
+        "device": "Apple M4 Pro"
+      }
+    ]
+  },
+  "nve": {
+    "allPass": false,
+    "policy": {
+      "schema": "numivivo.org/md-nve-refinement-policy/v1",
+      "durationPS": 0.1,
+      "timeStepsPS": [
+        0.001,
+        0.0005,
+        0.00025
+      ],
+      "observationIntervalPS": 0.005,
+      "initialTemperatureK": 300,
+      "maximumAbsoluteEnergyDeviationPerParticleKJPerMol": 0.01,
+      "minimumRMSRefinementRatio": 2.0,
+      "refinementFloorPerParticleKJPerMol": 1e-05,
+      "scope": "short interacting constrained NVE conservation and timestep refinement; no equilibrium, transport or performance qualification"
+    },
+    "identities": {
+      "policySHA256": "6dcbaf6e3b212bb390e9e8a6ebf76402690eeaab16fa2e6b3059b276b9c05350",
+      "generatorSHA256": "f82d4b4565f3c4c8cbe7b40291ec625276521ac8a1fcb0cdf7962c7c039b70b5",
+      "runnerSHA256": "3633b376cfdea2c3f68e3f450e2ef8b425228653afec8a134b6dd33e0bb82a25",
+      "qualifierSHA256": "92c7a02f0a152c37ec7b0e3c16e9d7e181c69275e30d904e813611d69ab7304b",
+      "binarySHA256": "eed5b517985dbda7ed545bd82407d99113ee65b9dc64f972dc5a0eefcfcae60a",
+      "parentManifestSHA256": "d18521c2a7825cfe02f9515d57b212a05b6487a3801058d907fad265fdbf59ca"
+    },
+    "cases": [
+      {
+        "identifier": "water",
+        "outcome": "preparation-failed",
+        "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+      },
+      {
+        "identifier": "alanine-smooth",
+        "outcome": "passed",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          3.8223115498888394,
+          3.4082471421267115
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 100,
+            "maximumAbsoluteDeviationPerParticle": 0.0005108769006170119,
+            "rmsDeviationPerParticle": 0.0002730155578616613,
+            "reportSHA256": "e642828f7cbeee7a70799f5a90934ef3e06ddd896055fca60f048dde6fcead72"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 200,
+            "maximumAbsoluteDeviationPerParticle": 0.00013148516692375496,
+            "rmsDeviationPerParticle": 7.14268196870559e-05,
+            "reportSHA256": "71de1946aa1044591470a6a721cde25664c3268c5567885a44d89c079faebf40"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 400,
+            "maximumAbsoluteDeviationPerParticle": 3.4861860951961217e-05,
+            "rmsDeviationPerParticle": 2.0957054083374453e-05,
+            "reportSHA256": "f85b6700559ba34889de25a3e2ad3e00cab09a9a2a82c4158ba45855b6fd53f3"
+          }
+        ]
+      },
+      {
+        "identifier": "protein-smooth",
+        "outcome": "passed",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          4.640005682866218,
+          4.682093195972857
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 100,
+            "maximumAbsoluteDeviationPerParticle": 0.0001474087889464301,
+            "rmsDeviationPerParticle": 7.236270053984985e-05,
+            "reportSHA256": "ba6b2e1c596aab6b24d2f85e86f01271cea206f8730fe2f60c759c0c5f201418"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 200,
+            "maximumAbsoluteDeviationPerParticle": 3.3660274641310805e-05,
+            "rmsDeviationPerParticle": 1.5595390498562938e-05,
+            "reportSHA256": "8aaa6634a3ed934aa17e4dd4ddc4e7c42847d56012f3286d81475320633ad662"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 400,
+            "maximumAbsoluteDeviationPerParticle": 6.3009381101961115e-06,
+            "rmsDeviationPerParticle": 3.3308586236550746e-06,
+            "reportSHA256": "3df3d5ab7cef252961df04b13b2ad7ed56eeb95d4a916138f76c905c6ccc631c"
+          }
+        ]
+      },
+      {
+        "identifier": "complex-vacuum",
+        "outcome": "passed",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          4.178139008954331,
+          4.123423167031833
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 100,
+            "maximumAbsoluteDeviationPerParticle": 0.008052262674074781,
+            "rmsDeviationPerParticle": 0.004420630998485088,
+            "reportSHA256": "5e31bd608603b3af301d8c7a628364503ecb57decd789103a1879b75b1988ce5"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 200,
+            "maximumAbsoluteDeviationPerParticle": 0.0019240628576879053,
+            "rmsDeviationPerParticle": 0.001058038277092041,
+            "reportSHA256": "8ccd57969e843a82ff243ec13eb689ec97b76d7d35b587246f6c2cc17787a3b4"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 400,
+            "maximumAbsoluteDeviationPerParticle": 0.0004735638830599008,
+            "rmsDeviationPerParticle": 0.0002565922133705354,
+            "reportSHA256": "2cbbdbd8d9c7ae7e9de3bf2a54fe6c11c73bd2343e9e06135ab2cb69b7b35b9e"
+          }
+        ]
+      },
+      {
+        "identifier": "dna-smooth",
+        "outcome": "passed",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          3.989757660672357,
+          4.003583940717045
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 100,
+            "maximumAbsoluteDeviationPerParticle": 0.0025076029605745273,
+            "rmsDeviationPerParticle": 0.0015552880580246631,
+            "reportSHA256": "06db13b34e36a7a64a14abebd1d1b7053d8bcc27c6c6696eb583275ff5c687c0"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 200,
+            "maximumAbsoluteDeviationPerParticle": 0.0006260419720064488,
+            "rmsDeviationPerParticle": 0.0003898201821517563,
+            "reportSHA256": "a0be2ced33d0715f7e3189238304d1dfd84874e6d4cf5b5ede2c43d40e9dc1e7"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 400,
+            "maximumAbsoluteDeviationPerParticle": 0.00015629580096731643,
+            "rmsDeviationPerParticle": 9.736780542733899e-05,
+            "reportSHA256": "ef40bbae436a4b6480fcadbf1cb0e5b7d12c6476d101a4279c086b3c9a5f54ae"
+          }
+        ]
+      },
+      {
+        "identifier": "membrane-smooth",
+        "outcome": "passed",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          4.520826212805082,
+          3.989918442743808
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 100,
+            "maximumAbsoluteDeviationPerParticle": 0.0010085218534694883,
+            "rmsDeviationPerParticle": 0.0006356803187585885,
+            "reportSHA256": "95aa34e1f0e5f333180e02709fa7f3f3fe81f8dd8f8fbc897ceb0f41c587df13"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 200,
+            "maximumAbsoluteDeviationPerParticle": 0.00023765263594980316,
+            "rmsDeviationPerParticle": 0.00014061153621832364,
+            "reportSHA256": "a8ba2ff97f88c986cc0ae18204f4fef8b8739a15233a3798ef3d4d8bb3cc861a"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 400,
+            "maximumAbsoluteDeviationPerParticle": 6.031426857775591e-05,
+            "rmsDeviationPerParticle": 3.524170687599999e-05,
+            "reportSHA256": "91ddff607213ce088263016910fcbac74adbba1a446e843a95c8716fa4159654"
+          }
+        ]
+      },
+      {
+        "identifier": "ions-smooth",
+        "outcome": "passed",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          3.92057888174968,
+          3.9974109807206557
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 100,
+            "maximumAbsoluteDeviationPerParticle": 0.0006327075951137635,
+            "rmsDeviationPerParticle": 0.0003849802728019502,
+            "reportSHA256": "a6762b6b338833ab4983475d23135b76ffe9f90c211426b4fec1f1912a29f4fb"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 200,
+            "maximumAbsoluteDeviationPerParticle": 0.00016209261935844834,
+            "rmsDeviationPerParticle": 9.819475246220293e-05,
+            "reportSHA256": "3f11fbf1a5eb408a2f8290a6a75c7afca325887d5b5739f380a047bfef20ba1c"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 400,
+            "maximumAbsoluteDeviationPerParticle": 4.134272426333458e-05,
+            "rmsDeviationPerParticle": 2.4564587663313096e-05,
+            "reportSHA256": "007ab1c8c28a4fad7750bd2f6e54f448ed5723778e0ec569666caea4e55e0ba5"
+          }
+        ]
+      },
+      {
+        "identifier": "water-orthogonal-smooth",
+        "outcome": "passed",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          3.9887128754656564,
+          3.5230984482302143
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 100,
+            "maximumAbsoluteDeviationPerParticle": 0.00032315671554934824,
+            "rmsDeviationPerParticle": 0.00010688424320903282,
+            "reportSHA256": "e63a178a2564371bfcb8979b2c4bf5cfaf68d2252efb5fe442c78d557ad400a2"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 200,
+            "maximumAbsoluteDeviationPerParticle": 8.110742551210428e-05,
+            "rmsDeviationPerParticle": 2.6796675154652433e-05,
+            "reportSHA256": "46a4c815d98b215dd2839d1521b5c06686d873d05489a8121ee75273adfe8d7a"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 400,
+            "maximumAbsoluteDeviationPerParticle": 2.3823033054003723e-05,
+            "rmsDeviationPerParticle": 7.6059966953558784e-06,
+            "reportSHA256": "b48dc95ccd5118845dbca1d265c28da349398556e85ce4fdff3258cab1afd731"
+          }
+        ]
+      }
+    ]
+  },
+  "retainedLimitations": [
+    "Original AMBER water preparation failed the fixed-cutoff cell admission.",
+    "The switched periodic LJ panel is a separately named Hamiltonian; original sharp-cutoff failures remain.",
+    "PME accumulation is not generally bitwise deterministic; exact checkpoint words do not establish general bitwise replay.",
+    "Short force, constraint and conservation checks do not establish equilibrium, transport, experimental accuracy or performance leadership.",
+    "Compensated positions currently exclude NPT, virtual/Drude particles, external force providers, minimization and FP32 trajectory archives."
+  ],
+  "rawEvidence": {
+    "remoteRoot": "/Users/n/numivivo-frontier-evidence-20260908",
+    "localRoot": "/Users/home/numivivo-frontier-evidence-20260908",
+    "manifestFiles": 4605
+  },
+  "artifactSHA256": {
+    "binary-manifest-8.json": "572050549d8e9b0439e4066f7b0f189cb9ad4263b5c982bfe1042f430597f0ae",
+    "native-test-binary-8.json": "95e6e66b0d7d98cacc4868e52f3a7428b498805a8edfed75a8d113484bf84403",
+    "frozen-binary-verification-8.json": "aedeb9a1309ba1e21568c7285ee815a1bc3af0da0925a21e95088a588b5df56d",
+    "source-archive-verification-8.json": "aa5700c0a36ee9fbadc4622602653fb94cf3036c8a78fcfe41dee9d969c6dee6",
+    "campaign-8/scorecard.json": "46c12e321164486a8b517c934744f04dfb49c2c89e22e531b78ad8143dcffbc3",
+    "references-5/manifest.json": "e4558a5d266b1da7cf63f0f66d61872a43c7e7ede1f13c75aabaa54f8f7886f3",
+    "references-smooth-8b/manifest.json": "d18521c2a7825cfe02f9515d57b212a05b6487a3801058d907fad265fdbf59ca",
+    "nve-smooth-8/qualification.json": "a1d2a0dbfab8dd98d628aad18f7a5a9bf90e2c518e38f2dcfe0b4d4fec2e98a5",
+    "nve-smooth-8/preregistered-policy.json": "b23e0a081252671eb5966f535a88246cd1e26655de270b65330c49faf0a0315f",
+    "benchmark-cli-8/checks.json": "7b5789a0ee06e6131434388e6069006611f69874a027a89c71f76b5392b9816c",
+    "tests-8.log": "5980f4110a44a2205af12e32c760c8b0150135d3168c3dec2e1dece2bfa80d4a",
+    "tests-full-8.log": "b4c95bcd0f995cf89b3a781c78fb907618551137cdda9c36b3485c9d4882fa49",
+    "independent-panel-reverification-8.json": "cb7d8691ac0b2459fae606ee7dcb4f0e14faecf7197984c6df4044eee0c08ba7",
+    "raw-manifest-8.json": "0a86b4311d525b1f68a17eff168896c1c67ee5b98a31b80bcd8b61c4bfe195ab",
+    "sampling-export-cli-8/checks.json": "f2f51baa0a8493c80a915c1d540c2f3aa86bb8730bf51c1c1b71fb661c42efe5",
+    "workflow-cli-8/checks.json": "2c27a8c12655d5ee8d2837e6a01df13c10fe86fa2b0a9f2c7ff8b337c5e1be3f",
+    "loaded-test-image-verification-8.json": "744a9c361aaeadc5c82770c42a3b003fe268f049f0f7e1e9b089de58076b6a5d",
+    "native-route-integrity-8.json": "d3e21936c23e5c97255c4ae8c2cce41d8b9a675b4c79d11c36ab5fcd5698a227",
+    "host-8.json": "7d53937f9d12261febdc2cb5670fc2a8d00f9c3ea279ae452ce33ac055f99975"
+  },
+  "publishedPlot": {
+    "rawPlotSHA256": "ac326e774184a73c1bb1046715d1ea0e6a4b08d5276c855c2f15728ea9d87c3b",
+    "publishedPlotSHA256": "23926edb67b8ebe00b524d2a7fb3e7410eaacca4a3689d426678331bf064527b",
+    "transform": "Trailing line whitespace removed; normalized XML structure, attributes and text verified equal. Raw plot remains unchanged in the sealed evidence."
+  }
+}

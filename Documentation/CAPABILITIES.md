@@ -11,8 +11,9 @@ The navigation and implementation references below describe the reviewed source 
 | Structure identity | Atoms, bonds, residues, chains, conformers, selections, mapping and periodic cells. | Archival representation does not imply every geometry is executable by every backend. |
 | Interchange | PDB, mmCIF, SDF/MOL V2000, MOL2 and a strict SMILES subset. | Full stereochemistry, V3000, query semantics and other unrepresented chemistry are not general supported import claims. |
 | Force fields | Unit-explicit particles and bonded terms, nonbonded exceptions, direct type-pair tables and AMBER topology/restart import. | Native general atom typing, AM1-BCC generation and protonation prediction remain distinct from importing prepared parameters. |
-| Virtual sites and constraints | Linear virtual sites, parent-force redistribution and bounded distance-constraint projection; executable AMBER preparation helpers. | General virtual-site frames, polarizable/Drude execution and every AMBER extension are not supported. Constraint-solver accuracy still requires independent checks. |
+| Virtual sites and constraints | Linear, out-of-plane and local-coordinate virtual-site definitions with parent-force redistribution; bounded distance-constraint projection and executable AMBER preparation helpers. | Each represented site model needs its own qualification. Unrepresented site definitions, Drude particles and unsupported AMBER extensions remain rejected. Compensated mode currently requires physical atoms. |
 | MD integrators | NVE and Langevin-middle NVT source; molecular-center Monte Carlo NPT. | Ensemble correctness, conservation, equilibration and speed are not established by implementation alone. |
+| Compensated coordinates | Opt-in high/low FP32 positions, RATTLE drift and exact-word checkpoint storage in numerical profile v6. | Fixed-cell classical NVE/NVT with physical atoms; excludes minimization, NPT, virtual/Drude sites, external force providers and FP32 trajectory archives. Exact stored words do not guarantee general bitwise PME replay. |
 | Nonbonded execution | Bounded neighbor construction, LJ, cutoff/reaction-field electrostatics and a PME mesh/FFT path. | PME settings are planning controls, not certified force-error bounds. Compare exception conventions, reciprocal accuracy, cutoff treatment and pressure sensitivity with independent references. |
 | Periodic geometry | Orthogonal-cell execution preflight; general triclinic archival cells. | The current nearest-image MD profile rejects skew cells. A truncated-octahedron import must not be silently converted into an orthogonal simulation. |
 | Adaptive sampling and state handoff | Seeded replica blocks, explicit observable diagnostics, bounded accepted-prefix selection, exact checkpoint/snapshot export, immutable verification and mapped geometry seeds for fresh reaction qualification. | A selected prefix can remain unconverged; geometry transfer does not establish QM ensemble sampling. [Full-route evidence](Audit/2026-09-08_PREPARED_REACTION_CAMPAIGN.md), [export interface](Design/MOLECULAR_SAMPLING_EXPORT.md) and [reaction handoff](Design/PREPARED_REACTION_CAMPAIGN.md). |
@@ -21,6 +22,12 @@ The navigation and implementation references below describe the reviewed source 
 Implementation: [MD source](../Sources/NumiVivoKit/MD), [structure foundation](Design/MOLECULAR_FOUNDATION_WAVE_A.md), [protocol contract](Design/MD_PROTOCOL_WORKFLOW.md), [trajectory format](Design/MD_TRAJECTORY_ARCHIVE.md).
 
 The [v3 native qualification audit](Audit/2026-09-08_MD_NUMERICAL_QUALIFICATION.md) supplies independent charged-PME refinement, finite-time Langevin velocity statistics, fixed-geometry constrained thermalization and ideal molecular NPT transition evidence for its named fixtures. It also records numerical-contract rejection for old continuation state and explicit-grid resource admission. These measured cases do not qualify general interacting or constrained equilibrium ensembles.
+
+The [frontier MD audit](Audit/2026-09-08_FRONTIER_MD_REFERENCE_PANEL.md) adds seven
+prepared realistic systems, independent energies/forces, strict constraints and
+a separately identified smooth-model NVE refinement panel. It records the
+torsion-sign, coordinate-precision and RATTLE repairs, failed original inputs,
+sharp-cutoff limitations and nondeterministic PME accumulation separately.
 
 ## Electronic structure, embedding and reaction research
 

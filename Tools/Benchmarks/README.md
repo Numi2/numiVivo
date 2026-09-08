@@ -36,7 +36,8 @@ and can correctly reject geometries that do not meet the execution constraints.
 The vacuum protein–ligand complex retains its original vacuum model.
 
 Compensated positions preserve GPU coordinate corrections and both exact words
-in checkpoints. This opt-in v5 mode currently supports fixed-cell classical
+in checkpoints. Introduced in v5 and retained with the v6 RATTLE correction,
+this opt-in mode currently supports fixed-cell classical
 dynamics with physical atoms. The original FP32 configuration remains available
 for comparison; it fails the strict realistic-system constraint gate.
 
@@ -56,13 +57,26 @@ study, not equilibration or general scientific qualification. Timings with
 observation collection include that work and are not throughput comparisons.
 
 For smooth-Hamiltonian conservation tests, prepare a separately named reference
-panel with `/absolute/reference-env/bin/python Tools/Benchmarks/prepare_smoothed_references.py
---references /absolute/new-references --out /absolute/smooth-references`, then
-pass that new directory to the NVE runner. Periodic LJ interactions explicitly
+panel, then pass that new directory to the NVE runner:
+
+```sh
+/absolute/reference-env/bin/python Tools/Benchmarks/prepare_smoothed_references.py --references /absolute/new-references --out /absolute/smooth-references
+python3 Tools/Benchmarks/run_nve_refinement.py --references /absolute/smooth-references --binary /absolute/frozen/numivivo --out /absolute/smooth-nve-refinement
+```
+
+Periodic LJ interactions explicitly
 switch from 0.7 to 0.8 nm in both engines; independent observations are recalculated.
 The vacuum case retains its original model. The original sharp-cutoff panel and
 failed preparation remain available and must not be relabeled as passing this
 different model. `nve_policy.json` and its limits remain unchanged.
+
+The optional `plot_nve.py` helper uses `matplotlib==3.10.7` to plot the measured
+energy deviations while showing missing cases explicitly. Install it in a
+separate plotting environment, then run:
+
+```sh
+/absolute/plot-env/bin/python Tools/Benchmarks/plot_nve.py --qualification /absolute/smooth-nve-refinement/qualification.json --out /absolute/new-refinement.svg
+```
 
 Limits and scientific boundaries are fixed in the
 [campaign contract](../../Documentation/Design/FRONTIER_BENCHMARKS.md).

@@ -42,3 +42,6 @@ smooth-LJ panel switches interactions from 0.7 to 0.8 nm in both native and
 OpenMM models and recalculates all independent observations. It changes the
 Hamiltonian; it does not relabel the original panel or relax the NVE policy.
 See [OpenMM's switching-function definition](https://docs.openmm.org/latest/userguide/theory/02_standard_forces.html).
+
+The [measured reference-panel audit](../Audit/2026-09-08_FRONTIER_MD_REFERENCE_PANEL.md)
+records the actual v6 results and the remaining qualification boundaries.
