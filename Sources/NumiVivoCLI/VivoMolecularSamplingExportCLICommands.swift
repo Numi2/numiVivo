@@ -11,7 +11,7 @@ struct VivoMolecularSamplingExportCLICommands {
             try Task.checkCancellation()
             let arguments = try Arguments(raw)
             let limits = try VivoMolecularSamplingCLILimits.load(arguments.options["--read-limits"])
-            let root = try Self.canonicalURL(URL(fileURLWithPath: arguments.options["--store"]!))
+            let root = try VivoWorkflowCLIDocumentPaths.canonicalURL(URL(fileURLWithPath: arguments.options["--store"]!))
             try Task.checkCancellation()
             let outputs = try OutputPlan(arguments: arguments, storeRoot: root)
             try Task.checkCancellation()
@@ -135,21 +135,21 @@ struct VivoMolecularSamplingExportCLICommands {
             var destinations: [String: URL] = [:]
             let inputs = (arguments.positionals + [arguments.options["--read-limits"]].compactMap { $0 })
                 .map { URL(fileURLWithPath: $0) }
-            let root = try VivoMolecularSamplingExportCLICommands.canonicalURL(storeRoot)
+            let root = try VivoWorkflowCLIDocumentPaths.canonicalURL(storeRoot)
             let prefix = root.path == "/" ? "/" : root.path + "/"
             for (name, option) in options {
                 guard let path = arguments.options[option] else { continue }
-                let target = try VivoMolecularSamplingExportCLICommands.canonicalURL(URL(fileURLWithPath: path))
+                let target = try VivoWorkflowCLIDocumentPaths.canonicalURL(URL(fileURLWithPath: path))
                 guard target != root, !target.path.hasPrefix(prefix) else {
                     throw VivoChemistryError.invalid("sampling export output aliases artifact storage")
                 }
                 for input in inputs {
-                    if try VivoMolecularSamplingExportCLICommands.aliases(target, input) {
+                    if try VivoWorkflowCLIDocumentPaths.aliases(target, input) {
                         throw VivoChemistryError.invalid("sampling export output aliases an input")
                     }
                 }
                 for other in destinations.values {
-                    if try VivoMolecularSamplingExportCLICommands.aliases(target, other) {
+                    if try VivoWorkflowCLIDocumentPaths.aliases(target, other) {
                         throw VivoChemistryError.invalid("sampling export destinations alias each other")
                     }
                     guard !target.path.hasPrefix(other.path + "/"), !other.path.hasPrefix(target.path + "/") else {
@@ -179,49 +179,6 @@ struct VivoMolecularSamplingExportCLICommands {
                 try FileHandle.standardOutput.write(contentsOf: Data("\n".utf8))
             }
         }
-    }
-
-    /// Resolve existing ancestors without treating an unresolved symbolic link
-    /// as a safe absent leaf. OutputPlan then captures the existing pinned-root,
-    /// immutable-link publication boundary before asynchronous work begins.
-    private static func canonicalURL(_ url: URL) throws -> URL {
-        let manager = FileManager.default
-        var ancestor = url.absoluteURL, suffix: [String] = []
-        guard ancestor.isFileURL, ancestor.path.utf8.count <= 8192, !ancestor.path.contains("\0") else {
-            throw VivoChemistryError.invalid("sampling export needs a bounded local path")
-        }
-        while !manager.fileExists(atPath: ancestor.path) {
-            if let attributes = try? manager.attributesOfItem(atPath: ancestor.path),
-               attributes[.type] as? FileAttributeType == .typeSymbolicLink {
-                throw VivoChemistryError.invalid("sampling export path contains a dangling symbolic link")
-            }
-            let parent = ancestor.deletingLastPathComponent()
-            guard parent.path != ancestor.path, !ancestor.lastPathComponent.isEmpty, suffix.count < 4096 else {
-                throw VivoChemistryError.invalid("sampling export path has no existing ancestor")
-            }
-            suffix.append(ancestor.lastPathComponent); ancestor = parent
-        }
-        var result = ancestor.resolvingSymlinksInPath().standardizedFileURL
-        if !suffix.isEmpty {
-            guard try result.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else {
-                throw VivoChemistryError.invalid("sampling export path parent is not a directory")
-            }
-        }
-        for component in suffix.reversed() { result.appendPathComponent(component) }
-        return result.standardizedFileURL
-    }
-
-    private static func aliases(_ left: URL, _ right: URL) throws -> Bool {
-        let a = try canonicalURL(left), b = try canonicalURL(right)
-        if a == b { return true }
-        let manager = FileManager.default
-        guard manager.fileExists(atPath: a.path), manager.fileExists(atPath: b.path) else { return false }
-        let x = try manager.attributesOfItem(atPath: a.path), y = try manager.attributesOfItem(atPath: b.path)
-        guard let xi = x[.systemFileNumber] as? NSNumber, let yi = y[.systemFileNumber] as? NSNumber,
-              let xd = x[.systemNumber] as? NSNumber, let yd = y[.systemNumber] as? NSNumber else {
-            throw VivoChemistryError.invalid("cannot establish sampling output file identity")
-        }
-        return xi == yi && xd == yd
     }
 
     static let help = """

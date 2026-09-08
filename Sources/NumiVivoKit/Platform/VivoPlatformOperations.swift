@@ -94,6 +94,9 @@ public enum VivoPlatformOperations {
         }
         add(VivoReactionQualificationWorkflow.operation(implementationFingerprint: id), ["request": "vivo.reaction-calculation-request"],
             "General nuclear, solvent, embedding and reaction requests; no paper data required.", empty)
+        add(VivoConditionalEncounterWorkflow.operation(implementationFingerprint: id),
+            ["request": VivoConditionalEncounterWorkflow.requestKind, "reaction": "vivo.reaction-calculation-result"],
+            "First-event probability for a tagged reactant under explicit maintained reservoirs; full source reaction validation.", empty)
 
         definitions.append(pure(identifier: "vivo.platform.target-reference", id: id,
             inputs: ["experiment": "vivo.target-engagement-experiment"],
