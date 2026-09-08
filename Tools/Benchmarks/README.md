@@ -120,3 +120,10 @@ the native v6 kinetic reduction is checked against its FP32 forward-roundoff bou
 Apply it separately to each NVE timestep or NVT matrix cell. This checks saved
 endpoint accounting, not an independently integrated trajectory or experimental
 agreement.
+
+Native checkpoints wrap atoms separately. Before OpenMM evaluation, the auditor
+reconstructs whole finite molecules using integer box translations and validates
+every molecular cycle and exception image. Parameters, relative bonded geometry,
+velocities and source checkpoints remain unchanged. Winding molecules, ambiguous
+half-box bonds and unsupported cells are refused. This follows
+[OpenMM's periodic-coordinate requirements](https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#periodic).
