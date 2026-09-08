@@ -54,6 +54,11 @@ The campaign must hash its source inputs, serialized OpenMM System, generator,
 request, report, executable, shaders and logs. Native reports additionally bind
 the canonical request fingerprint and numerical execution contract.
 
+The optional `dynamicsPreparation: "projectConstraints"` invokes the owning
+transactional position/velocity projection before assigning thermal velocities.
+Absent/`preserve` retains prior behavior. The prepared checkpoint is explicit
+in the dynamics result; static reference coordinates are never projected.
+
 The reference environment is isolated and never used as a production force
 provider. `Tools/Benchmarks/requirements.txt` pins its packages. Source/package
 data are downloaded into the external evidence directory, not silently added

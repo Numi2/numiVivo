@@ -7,7 +7,7 @@ OpenMM reference calculations, launch the CLI, and audit results.
 ```sh
 python3 -m venv /absolute/reference-env
 /absolute/reference-env/bin/python -m pip install -r Tools/Benchmarks/requirements.txt
-/absolute/reference-env/bin/python Tools/Benchmarks/prepare_references.py --out /absolute/new-references
+/absolute/reference-env/bin/python Tools/Benchmarks/prepare_references.py --out /absolute/new-references --project-initial-constraints
 swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing
 python3 Tools/Benchmarks/run_campaign.py --references /absolute/new-references --binary .build/release/numivivo --out /absolute/new-campaign
 ```
@@ -28,6 +28,11 @@ package water fixture; it does not replace or repair the original source.
 Use `--cases water-orthogonal alanine` for a small reference subset, or `--steps 0`
 to request static comparisons only. The default 100 steps are a short execution
 smoke check, not a thermostat/barostat equilibrium or performance qualification.
+`--project-initial-constraints` explicitly prepares the imported geometry on
+its declared constraint manifold before assigning velocities; the resulting
+prepared checkpoint is retained. Static reference comparisons still use the
+original supplied coordinates. Omitting the flag preserves the original state
+and can correctly reject geometries that do not meet the execution constraints.
 The vacuum protein–ligand complex retains its original vacuum model.
 
 Limits and scientific boundaries are fixed in the

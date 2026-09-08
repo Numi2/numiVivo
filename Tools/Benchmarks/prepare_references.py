@@ -155,7 +155,7 @@ def export_system(system, name, xml):
     return result
 
 
-def prepare(name, root, steps):
+def prepare(name, root, steps, project_constraints=False):
     root.mkdir()
     system,positions,periodic,sources=load_case(name,root)
     nb=next(f for f in system.getForces() if isinstance(f,mm.NonbondedForce))
@@ -198,6 +198,7 @@ def prepare(name, root, steps):
         scope="static Hamiltonian comparison; prepared parameters; no experimental or ensemble qualification"),
         limits=dict(energyAbsolutePerParticleKJPerMol=0.002,forceNormalizedRMS=0.001,forceNormalizedMaximum=0.01,forceNormalizationFloor=1),
         dynamicsSteps=steps)
+    if project_constraints:request["dynamicsPreparation"]="projectConstraints"
     write(root/"request.json",request)
     write(root/"sources.json",dict(sources=sources,python=platform.python_version(),openmm=mm.__version__,numpy=np.__version__,scipy=scipy.__version__,
         preparation="original supplied geometry; no minimization; no dispersion correction; no COM removal"))
@@ -210,12 +211,13 @@ def main():
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--cases",nargs="+",choices=list(CASES),default=list(CASES))
     parser.add_argument("--steps",type=int,default=100)
+    parser.add_argument("--project-initial-constraints",action="store_true",help="explicitly project imported state before native dynamics; static references remain unchanged")
     args=parser.parse_args()
     if not 0<=args.steps<=100_000:parser.error("steps must be 0...100000")
     args.out.mkdir(parents=True,exist_ok=False)
     records=[]
     for name in args.cases:
-        try:record=prepare(name,args.out/name,args.steps)
+        try:record=prepare(name,args.out/name,args.steps,args.project_initial_constraints)
         except Exception as e:record=dict(identifier=name,status="preparation-failed",error=f"{type(e).__name__}: {e}")
         records.append(record);print(json.dumps(record),flush=True)
     write(args.out/"manifest.json",dict(schema="numivivo.org/md-reference-campaign/v1",cases=records,
