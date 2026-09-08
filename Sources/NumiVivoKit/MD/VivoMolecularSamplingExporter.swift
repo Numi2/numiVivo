@@ -85,6 +85,21 @@ public struct VivoMolecularSamplingExportVerification: Codable, Sendable, Equata
     public let verifiedOutputCount: Int
 }
 
+/// Authority to consume one freshly verified export. Unlike the serializable
+/// verification summary, this value cannot be decoded or constructed by a
+/// caller. It retains the exact accepted state and rooted store that were read.
+public struct VivoVerifiedMolecularSamplingExport: Sendable {
+    public let receipt: VivoMolecularSamplingExportReceipt
+    public let verification: VivoMolecularSamplingExportVerification
+    public let selection: VivoValidatedMolecularSamplingSelection
+
+    fileprivate init(receipt: VivoMolecularSamplingExportReceipt,
+                     verification: VivoMolecularSamplingExportVerification,
+                     selection: VivoValidatedMolecularSamplingSelection) {
+        self.receipt = receipt; self.verification = verification; self.selection = selection
+    }
+}
+
 public enum VivoMolecularSamplingExporter {
     public static let operationIdentifier = "vivo.platform.molecular-sampling-export"
     public static let operationVersion = "1"
@@ -134,6 +149,18 @@ public enum VivoMolecularSamplingExporter {
                               implementationFingerprint: VivoFingerprint,
                               limits: VivoMolecularSamplingReadLimits = .init(),
                               minimumValidation: VivoMolecularSamplingSelectionValidation? = nil) async throws -> VivoMolecularSamplingExportVerification {
+        try await verifiedExport(receipt, store: store, implementationFingerprint: implementationFingerprint,
+                                 limits: limits, minimumValidation: minimumValidation).verification
+    }
+
+    /// The same bounded verification as `verify`, retaining a nonserializable
+    /// capability for downstream geometry consumers. No second archive read or
+    /// mutable cache lookup is needed to obtain the accepted source state.
+    public static func verifiedExport(_ receipt: VivoMolecularSamplingExportReceipt,
+                                      store: VivoArtifactStore,
+                                      implementationFingerprint: VivoFingerprint,
+                                      limits: VivoMolecularSamplingReadLimits = .init(),
+                                      minimumValidation: VivoMolecularSamplingSelectionValidation? = nil) async throws -> VivoVerifiedMolecularSamplingExport {
         try Task.checkCancellation()
         guard receipt.schema == VivoMolecularSamplingExportReceipt.schemaID,
               receipt.implementationFingerprint == implementationFingerprint,
@@ -167,7 +194,7 @@ public enum VivoMolecularSamplingExporter {
             throw invalid("immutable workflow receipt or output identity differs")
         }
         try Task.checkCancellation()
-        return .init(exportReceiptFingerprint: try receipt.fingerprint(), taskFingerprint: result.taskFingerprint,
+        let verification = VivoMolecularSamplingExportVerification(exportReceiptFingerprint: try receipt.fingerprint(), taskFingerprint: result.taskFingerprint,
             samplingCheckpointFingerprint: selection.samplingCheckpointFingerprint,
             mdCheckpointFingerprint: selection.mdCheckpointFingerprint,
             canonicalCheckpointFingerprint: prepared.provenance.canonicalCheckpointFingerprint,
@@ -178,6 +205,7 @@ public enum VivoMolecularSamplingExporter {
             verifiedPayloads: selection.trajectoryValidation.verifiedPayloads,
             verifiedPayloadBytes: selection.trajectoryValidation.verifiedPayloadBytes,
             verifiedOutputCount: result.outputs.count)
+        return .init(receipt: receipt, verification: verification, selection: selection)
     }
 
     private struct Prepared: Sendable {

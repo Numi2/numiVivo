@@ -220,6 +220,15 @@ import Testing
         #expect(verification.mdCheckpointFingerprint == selected.mdCheckpointFingerprint)
         #expect(verification.canonicalCheckpointFingerprint == canonicalID)
         #expect(verification.sourceTermination == "notRecorded" && !verification.declaredObservableCriteriaSatisfied)
+        let beforeCapability = try inventory(f.root)
+        let verified = try await VivoMolecularSamplingExporter.verifiedExport(receipt, store: f.store,
+            implementationFingerprint: f.implementation)
+        #expect(verified.receipt == receipt && verified.verification == verification)
+        #expect(verified.selection.mdCheckpointData == selected.mdCheckpointData)
+        #expect(verified.selection.mdCheckpointFingerprint == selected.mdCheckpointFingerprint)
+        #expect(verified.selection.replicaSeed == selected.replicaSeed)
+        #expect(verified.selection.store === f.store)
+        #expect(try inventory(f.root) == beforeCapability)
     }
 
     @Test func repeatedPublicationReusesTheExactTaskReceiptAndOutputs() async throws {
