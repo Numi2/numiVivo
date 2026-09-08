@@ -28,6 +28,8 @@ if VivoWorkflowCLICommands.handles(arguments.first) {
     status = await VivoMDProtocolCLICommands().run(arguments: arguments)
 } else if VivoHybridCLICommands.handles(arguments.first) {
     status = await VivoHybridCLICommands().run(arguments: arguments)
+} else if VivoMDBenchmarkCLI.handles(arguments.first) {
+    status = await VivoMDBenchmarkCLI().run(arguments: arguments)
 } else if VivoMDCLICommands.handles(arguments.first) {
     status = await VivoMDCLICommands().run(arguments: arguments)
 } else if VivoStructureCLICommands.handles(arguments.first) {
