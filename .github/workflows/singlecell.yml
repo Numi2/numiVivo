@@ -4,13 +4,16 @@ on:
   push:
     branches: [main]
     paths:
+      - 'Sources/CNumiVivoZlib/**'
       - 'Sources/NumiVivoKit/Omics/**'
       - 'Sources/NumiVivoKit/Artifacts/**'
       - 'Sources/NumiVivoKit/Platform/**'
       - 'Sources/NumiVivoKit/Workflow/**'
       - 'Sources/NumiVivoCLI/**'
+      - 'Tests/NumiVivoIntegrationTests/SingleCell*.swift'
       - 'Tools/Omics/**'
       - 'Examples/singlecell/**'
+      - 'Examples/singlecell-cohort/**'
       - 'Package.swift'
       - '.github/workflows/singlecell.yml'
 permissions:
@@ -35,24 +38,39 @@ jobs:
           swift --version > "$RUNNER_TEMP/singlecell-evidence/compiler.txt"
           uname -srm > "$RUNNER_TEMP/singlecell-evidence/platform.txt"
           git archive --format=tar.gz HEAD > "$RUNNER_TEMP/singlecell-evidence/source.tar.gz"
-      - name: Run actual native count and safe-I/O checks
+      - name: Run native count, safe-I/O, statistics and gzip checks
         shell: bash
         run: |
           set -euo pipefail
           bash Tools/Omics/run_portable_checks.sh 2>&1 | tee "$RUNNER_TEMP/singlecell-evidence/native.log"
-      - name: Build complete Apple executable
+      - name: Build complete Apple executable and test targets
         shell: bash
         run: |
           set -euo pipefail
-          swift build -c release --jobs 3 2>&1 | tee "$RUNNER_TEMP/singlecell-evidence/build.log"
+          swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing 2>&1 | tee "$RUNNER_TEMP/singlecell-evidence/build.log"
           shasum -a 256 .build/release/numivivo > "$RUNNER_TEMP/singlecell-evidence/binary.sha256"
-      - name: Exercise public CLI, artifacts and common workflow scheduler
+      - name: Run cohort statistics and interchange regression suites
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test -c release --skip-build --filter 'SingleCellCohortTests|SingleCellInterchangeTests' \
+            2>&1 | tee "$RUNNER_TEMP/singlecell-evidence/cohort-tests.log"
+          grep -q 'Suite SingleCellCohortTests passed' "$RUNNER_TEMP/singlecell-evidence/cohort-tests.log"
+          grep -q 'Suite SingleCellInterchangeTests passed' "$RUNNER_TEMP/singlecell-evidence/cohort-tests.log"
+      - name: Exercise count CLI, artifacts and common workflow scheduler
         shell: bash
         run: |
           set -euo pipefail
           python3 Tools/Omics/check_cli.py --binary .build/release/numivivo \
             --out "$RUNNER_TEMP/singlecell-evidence/cli" \
             2>&1 | tee "$RUNNER_TEMP/singlecell-evidence/cli.log"
+      - name: Exercise native cohort CLI, gzip, MEX, tables and analysis replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Tools/Omics/check_analysis_cli.py --binary .build/release/numivivo \
+            --out "$RUNNER_TEMP/singlecell-evidence/analysis-cli" \
+            2>&1 | tee "$RUNNER_TEMP/singlecell-evidence/analysis-cli.log"
       - name: Confirm source unchanged
         if: always()
         shell: bash

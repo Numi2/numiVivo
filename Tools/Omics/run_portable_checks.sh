@@ -14,7 +14,4 @@ swiftc -swift-version 6 -parse-as-library -I "$ROOT/Sources/CNumiVivoZlib" \
   "$ROOT/Sources/NumiVivoKit/Artifacts/VivoRootedFileStore.swift" \
   "$ROOT/Tools/Omics/main.swift" -o "$WORK/omics-checks"
 "$WORK/omics-checks"
-swiftc -swift-version 6 -parse-as-library \
-  "$ROOT/Sources/NumiVivoKit/Omics/VivoOmicsLinearStatistics.swift" \
-  "$ROOT/Tools/Omics/statistics-smoke.swift" -o "$WORK/statistics-checks"
-"$WORK/statistics-checks"
+bash "$ROOT/Tools/Omics/run_math_compression_checks.sh"

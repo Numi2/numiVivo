@@ -1,13 +1,10 @@
 # Native single-cell counts to a reproducible report
 
-This example is synthetic. It is not a measured biological dataset and does not
-establish single-cell biological accuracy. The second library has twice the
-counts of the first, while its library-size-normalized values are the same.
-There are three features and three barcodes per library, including an empty cell.
-The samples and biological-replicate IDs differ; the repeated barcode strings do
-not refer to the same cells. Duplicate gene symbols retain their distinct IDs.
-
-On the Apple machine, from the repository root:
+This example is synthetic. It has three features and three barcodes per library,
+including an empty cell. The second library has twice the raw counts of the
+first but the same library-size-normalized values. Sample and replicate IDs
+differ; repeated barcode strings do not refer to the same cells. Duplicate gene
+symbols retain distinct IDs. This is not a measured biological dataset.
 
 ```sh
 swift build -c release
@@ -18,49 +15,52 @@ RUN="$(mktemp -d "${TMPDIR:-/tmp}/numivivo-singlecell.XXXXXX")"
   --store "$RUN/artifacts" --output "$RUN/verification.json"
 .build/release/numivivo singlecell-export "$RUN/receipt.json" \
   --store "$RUN/artifacts" --output "$RUN/report.json"
+.build/release/numivivo singlecell-mex "$RUN/receipt.json" \
+  --store "$RUN/artifacts" --output "$RUN/reexported-counts"
 ```
 
-The report contains the exact raw count dataset, per-cell quality metrics, a
-separate optional normalized view, and raw pseudobulk counts with source-cell
-indices. The expected per-cell totals are `5, 8, 0, 10, 16, 0`; the pseudobulk
-count rows are `[2, 4, 7]` and `[4, 8, 14]`. Empty cells are retained, and their
-mitochondrial fractions are missing rather than a fabricated zero percent.
+The report retains exact raw counts, per-cell quality metrics, a separate optional
+normalized view, and raw pseudobulk counts with source-cell indices. Expected
+cell totals are `5, 8, 0, 10, 16, 0`; pseudobulk rows are `[2, 4, 7]` and
+`[4, 8, 14]`. Empty cells remain present in this count report, with missing rather
+than fabricated zero mitochondrial fractions.
 
-`receipt.json` identifies the immutable input bundle, result and executing
-implementation. Source bytes are archived in the existing artifact store.
-Verification reads those bytes, not the current source paths, and reconstructs
-the result. A later change to an input file creates a different input identity.
-The same executable and operating-system identity are required for verification;
-this is intentionally not a cross-implementation equivalence certificate.
+The receipt binds immutable input bytes, the result and the executing binary/OS.
+Verification reconstructs the calculation from archived bytes, not current source
+paths. Changed inputs get different identities. After rebuilding, regenerate a
+receipt with the new executable; cross-version equivalence is not assumed.
 
 ## Supply another count dataset
 
-Create a manifest with the same shape as `manifest.json`. Declare each library's
-sample, biological replicate, optional donor, condition, batch, organism, source
-origin and count unit. Supply mitochondrial feature IDs explicitly. Optional
-`cellGroups` annotations map barcodes to supplied group labels; no cell types are
-inferred. These metadata are user declarations, not independently verified facts.
+Use the manifest shape shown here. Declare each library's sample, biological
+replicate, optional donor, condition, batch, organism, evidence origin and count
+unit. Supply mitochondrial feature IDs explicitly. Optional `cellGroups` maps
+barcodes to supplied annotations; no cell type is inferred from counts.
 
-The current importer accepts uncompressed UTF-8 `matrix.mtx`, three-column
-`features.tsv` restricted to `Gene Expression`, and `barcodes.tsv`. Matrix Market
-must use `coordinate integer general`, with features as rows and barcodes as
-columns. There is no gzip decompression, HDF5/AnnData import, automatic modality
-filtering, or gene-ID remapping. Source paths must remain inside the manifest
-directory; absolute paths, `..`, symlinks and special files are rejected.
+Plain UTF-8 or gzip `matrix.mtx`, `features.tsv` and `barcodes.tsv` sources are
+supported by the campaign. Gzip is decoded natively, with checksums and an
+aggregate expansion budget. Original compressed bytes remain archived. Matrix
+Market must use `coordinate integer general`, with features as rows and barcodes
+as columns. Features require ID, name and `Gene Expression`. HDF5/AnnData,
+automatic modality filtering and gene-ID remapping are not implemented.
+Paths must remain relative to the manifest directory; `..`, symlinks and special
+source files are rejected.
 
-All libraries must share the exact ordered feature dictionary, annotation,
-count unit and source evidence class. Do not mix measured and synthetic inputs
-and then label the combined dataset measured. Technical libraries can share a
-biological-replicate ID; inconsistent donor or organism declarations for that ID
-are rejected. Pseudobulk rows group by replicate, condition and supplied cell
-group. Donor IDs and contributing batches remain visible for later repeated-
-measure or batch-aware analysis. Aggregation does not prove independent samples.
+All libraries need the exact same ordered feature dictionary and annotations,
+count unit and source evidence class. Technical libraries may share a biological-
+replicate ID; inconsistent donor/organism metadata for that ID is rejected.
+Pseudobulk aggregation preserves contributing donors, samples and batches, but
+does not establish that declared replicates are statistically independent.
 
-Only omit `normalizationTarget` when no normalized view is needed. Raw counts
-always remain UInt64. Library-size normalization is not conversion to absolute
-molecules, concentration, or a differential-expression result. There is no cell
-filtering, doublet removal, batch correction, clustering, gene selection,
-annotation inference or hypothesis testing in this profile.
+## Quality filtering and expression analysis
+
+`singlecell-analyze` is a separate stage with an explicit analysis plan. It adds
+recorded cell selection, feature summaries and optional donor-aware expression
+contrasts without changing the original count result. This small count-only
+fixture is not an appropriate differential-expression example: both libraries
+are control samples, and it has insufficient replication/reference genes.
+Use the [complete paired-donor example](../singlecell-cohort/README.md), generated
+by `singlecell-example`, for the analysis commands and TSV/MEX exports.
 
 ## Qualification commands
 
@@ -68,14 +68,15 @@ annotation inference or hypothesis testing in this profile.
 bash Tools/Omics/run_portable_checks.sh
 python3 Tools/Omics/check_cli.py --binary .build/release/numivivo \
   --out "$RUN/cli-checks"
+python3 Tools/Omics/check_analysis_cli.py --binary .build/release/numivivo \
+  --out "$RUN/analysis-cli-checks"
 ```
 
-The first command compiles and executes the actual Foundation-based Swift
-implementation and safe filesystem reader. The second tests the built public
-CLI, including artifact integrity, failed inputs, stable repeated runs, generic
-workflow execution and cache validation. Python is test orchestration only; it
-supplies no production calculation. The `Single-cell count workflows` action
-retains the source, compiler, binary and execution logs.
+The Swift checks execute native numerical/source-reading code. Python only
+orchestrates tests of the public executable and provides no production fit.
+The `Single-cell count workflows` action retains source/compiler/binary identities
+and execution logs; the existence of that action does not establish a passing run.
 
-See [the method and ownership contract](../../Documentation/Design/SINGLECELL_COUNTS.md)
-and [the implementation audit](../../Documentation/Audit/2026-09-08_SINGLECELL_FOUNDATION.md).
+See [the count contract](../../Documentation/Design/SINGLECELL_COUNTS.md),
+[the analysis contract](../../Documentation/Design/SINGLECELL_ANALYSIS.md), and
+[the original scoped audit](../../Documentation/Audit/2026-09-08_SINGLECELL_FOUNDATION.md).

@@ -3,37 +3,29 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-help"].contains(name ?? "")
-    }
-    private struct Verification: Encodable {
-        let schemaVersion: Int
-        let status: String
-        let evidence: VivoOmicsEvidence
-        let cells: Int
-        let features: Int
-        let pseudobulkGroups: Int
-        let numericalProfile: String
+        ["singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
+         "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
     private func canonicalURL(_ url: URL) throws -> URL {
         let manager = FileManager.default
         var ancestor = url.absoluteURL, suffix: [String] = []
-        guard ancestor.isFileURL, ancestor.path.utf8.count <= 8192 else {
-            throw VivoOmicsError.invalid("bounded local output path required")
-        }
+        guard ancestor.isFileURL, ancestor.path.utf8.count <= 8192 else { throw VivoOmicsError.invalid("bounded local output path required") }
         while !manager.fileExists(atPath: ancestor.path) {
             if let attributes = try? manager.attributesOfItem(atPath: ancestor.path),
-               attributes[.type] as? FileAttributeType == .typeSymbolicLink {
-                throw VivoOmicsError.invalid("dangling symbolic link in output path")
-            }
+               attributes[.type] as? FileAttributeType == .typeSymbolicLink { throw VivoOmicsError.invalid("dangling symbolic link in output path") }
             let parent = ancestor.deletingLastPathComponent()
-            guard parent.path != ancestor.path, suffix.count < 4096 else {
-                throw VivoOmicsError.invalid("output has no resolvable ancestor")
-            }
+            guard parent.path != ancestor.path, suffix.count < 4096 else { throw VivoOmicsError.invalid("output has no resolvable ancestor") }
             suffix.append(ancestor.lastPathComponent); ancestor = parent
         }
         var resolved = ancestor.resolvingSymlinksInPath().standardizedFileURL
         for part in suffix.reversed() { resolved.appendPathComponent(part) }
         return resolved.standardizedFileURL
+    }
+    private func load<T: Decodable>(_ type: T.Type, _ url: URL) throws -> T {
+        try VivoCanonicalJSON.decode(type, from: VivoSingleCellCampaignIO.readDocument(url, maximumBytes: 128 * 1_024))
+    }
+    private func printJSON<T: Encodable>(_ value: T) throws {
+        FileHandle.standardOutput.write(try VivoCanonicalJSON.encode(value)); FileHandle.standardOutput.write(Data("\n".utf8))
     }
     func run(arguments: [String]) async -> Int32 {
         do {
@@ -42,6 +34,16 @@ struct VivoSingleCellCLICommands {
                 guard arguments.count == 1 else { throw VivoOmicsError.invalid("singlecell-help takes no arguments") }
                 FileHandle.standardOutput.write(Data(Self.help.utf8)); return 0
             }
+            if command == "singlecell-example" {
+                guard arguments.count == 3, arguments[1] == "--output", arguments[2] != "-" else {
+                    throw VivoOmicsError.invalid("singlecell-example --output <new-directory>")
+                }
+                let destination = try canonicalURL(URL(fileURLWithPath: arguments[2]))
+                var files = try VivoSingleCellMEXExchange.files(VivoSingleCellExamples.pairedCounts())
+                files["analysis.json"] = try VivoCanonicalJSON.encode(VivoSingleCellExamples.pairedPlan())
+                try VivoOmicsDirectoryExport.write(files, to: destination)
+                try printJSON(["status": "written-synthetic-example", "directory": destination.path]); return 0
+            }
             guard arguments.count >= 4, !arguments[1].hasPrefix("--"), arguments[1] != "-" else {
                 throw VivoOmicsError.invalid("one manifest/receipt file and --store <directory> are required")
             }
@@ -49,46 +51,89 @@ struct VivoSingleCellCLICommands {
             var options: [String: String] = [:], index = 2
             while index < arguments.count {
                 let key = arguments[index]
-                guard ["--store", "--output"].contains(key), options[key] == nil,
+                guard ["--store", "--output", "--plan"].contains(key), options[key] == nil,
                       index + 1 < arguments.count, !arguments[index + 1].isEmpty,
                       !arguments[index + 1].hasPrefix("--") else { throw VivoOmicsError.invalid("unknown, duplicate or incomplete option") }
                 options[key] = arguments[index + 1]; index += 2
             }
+            guard (command == "singlecell-analyze") == (options["--plan"] != nil) else {
+                throw VivoOmicsError.invalid("--plan is required only for singlecell-analyze")
+            }
             guard let storePath = options["--store"], storePath != "-" else { throw VivoOmicsError.invalid("--store <directory> is required") }
             let storeURL = URL(fileURLWithPath: storePath).standardizedFileURL
+            let directoryCommand = ["singlecell-mex", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(command)
+            if directoryCommand, options["--output"] == nil || options["--output"] == "-" {
+                throw VivoOmicsError.invalid("directory exports require --output <new-directory>")
+            }
+            var outputURL: URL?
             if let output = options["--output"], output != "-" {
-                let url = try canonicalURL(URL(fileURLWithPath: output))
-                let root = try canonicalURL(storeURL).path
-                guard url != inputURL.resolvingSymlinksInPath(), url.path != root,
-                      !url.path.hasPrefix(root == "/" ? "/" : root + "/"), !FileManager.default.fileExists(atPath: url.path) else {
+                let url = try canonicalURL(URL(fileURLWithPath: output)), root = try canonicalURL(storeURL).path
+                var inputs = [inputURL]
+                if let plan = options["--plan"] { inputs.append(URL(fileURLWithPath: plan)) }
+                guard !inputs.contains(where: { $0.resolvingSymlinksInPath().standardizedFileURL == url }),
+                      url.path != root, !url.path.hasPrefix(root == "/" ? "/" : root + "/"),
+                      !FileManager.default.fileExists(atPath: url.path) else {
                     throw VivoOmicsError.invalid("output must be new, outside the artifact store, and not an input")
                 }
+                outputURL = url
             }
             let implementation = try VivoWorkflowCLIImplementation.fingerprint()
+            let store = try VivoArtifactStore(rootURL: storeURL, createIfNeeded: command == "singlecell-run")
             let output: Data
             switch command {
             case "singlecell-run":
                 let input = try VivoSingleCellCampaignIO.snapshot(manifestURL: inputURL)
-                let store = try VivoArtifactStore(rootURL: storeURL)
-                let receipt = try await VivoSingleCellArtifacts.publish(input: input, implementation: implementation, store: store)
-                output = try VivoCanonicalJSON.encode(receipt)
-            case "singlecell-verify", "singlecell-export":
-                let receipt = try VivoKineticsDocumentIO.read(VivoSingleCellRunReceipt.self, from: inputURL)
-                let store = try VivoArtifactStore(rootURL: storeURL, createIfNeeded: false)
+                output = try await VivoCanonicalJSON.encode(VivoSingleCellArtifacts.publish(input: input, implementation: implementation, store: store))
+            case "singlecell-analyze":
+                let receipt = try load(VivoSingleCellRunReceipt.self, inputURL)
+                let plan = try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: options["--plan"]!), maximumBytes: 2 * 1_024 * 1_024)
+                output = try await VivoCanonicalJSON.encode(VivoSingleCellAnalysisArtifacts.publish(counts: receipt, planBytes: plan, implementation: implementation, store: store))
+            case "singlecell-verify", "singlecell-export", "singlecell-mex":
+                let receipt = try load(VivoSingleCellRunReceipt.self, inputURL)
                 let report = try await VivoSingleCellArtifacts.verify(receipt: receipt, implementation: implementation, store: store)
+                if command == "singlecell-mex" {
+                    var files = try VivoSingleCellMEXExchange.files(report.dataset)
+                    files["source-receipt.json"] = try VivoCanonicalJSON.encode(receipt)
+                    try VivoOmicsDirectoryExport.write(files, to: outputURL!)
+                    try printJSON(["status": "written-verified-counts", "directory": outputURL!.path]); return 0
+                }
                 if command == "singlecell-export" { output = try VivoCanonicalJSON.encode(report) }
-                else { output = try VivoCanonicalJSON.encode(Verification(schemaVersion: 1,
-                    status: "verified-native-reconstruction-not-biological-validation", evidence: report.dataset.evidence,
-                    cells: report.dataset.cells.count, features: report.dataset.features.count,
-                    pseudobulkGroups: report.pseudobulk.groups.count, numericalProfile: report.numericalProfile)) }
+                else {
+                    struct Verification: Encodable {
+                        let schemaVersion: Int; let status: String; let evidence: VivoOmicsEvidence
+                        let cells: Int; let features: Int; let pseudobulkGroups: Int; let numericalProfile: String
+                    }
+                    output = try VivoCanonicalJSON.encode(Verification(schemaVersion: 1, status: "verified-native-reconstruction-not-biological-validation",
+                        evidence: report.dataset.evidence, cells: report.dataset.cells.count, features: report.dataset.features.count,
+                        pseudobulkGroups: report.pseudobulk.groups.count, numericalProfile: report.numericalProfile))
+                }
+            case "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables":
+                let receipt = try load(VivoSingleCellAnalysisReceipt.self, inputURL)
+                let report = try await VivoSingleCellAnalysisArtifacts.verify(receipt, implementation: implementation, store: store)
+                if directoryCommand {
+                    var files: [String: Data]
+                    if command == "singlecell-analysis-tables" { files = try VivoSingleCellAnalysisTables.files(report, receipt: receipt) }
+                    else {
+                        files = try VivoSingleCellMEXExchange.files(report.processed.dataset)
+                        files["analysis-receipt.json"] = try VivoCanonicalJSON.encode(receipt)
+                        files["processed-to-original-cell-indices.json"] = try VivoCanonicalJSON.encode(report.processed.sourceCellIndices)
+                    }
+                    try VivoOmicsDirectoryExport.write(files, to: outputURL!)
+                    try printJSON(["status": "written-verified-analysis", "directory": outputURL!.path]); return 0
+                }
+                if command == "singlecell-analysis-export" { output = try VivoCanonicalJSON.encode(report) }
+                else {
+                    struct Verification: Encodable { let status: String; let acceptedCells: Int; let rejectedCells: Int; let contrasts: Int; let testedFeatures: [Int] }
+                    output = try VivoCanonicalJSON.encode(Verification(status: "verified-native-analysis-not-biological-calibration",
+                        acceptedCells: report.processed.dataset.cells.count,
+                        rejectedCells: report.processed.decisions.count - report.processed.dataset.cells.count,
+                        contrasts: report.contrasts.count, testedFeatures: report.contrasts.map(\.testedFeatures)))
+                }
             default: throw VivoOmicsError.invalid("unsupported single-cell command")
             }
             try Task.checkCancellation()
-            if let path = options["--output"], path != "-" {
-                try VivoKineticsDocumentIO.write(output, to: URL(fileURLWithPath: path), overwrite: false)
-            } else {
-                FileHandle.standardOutput.write(output); FileHandle.standardOutput.write(Data("\n".utf8))
-            }
+            if let url = outputURL { try VivoKineticsDocumentIO.write(output, to: url, overwrite: false) }
+            else { FileHandle.standardOutput.write(output); FileHandle.standardOutput.write(Data("\n".utf8)) }
             return 0
         } catch is CancellationError {
             FileHandle.standardError.write(Data("numivivo singlecell: cancelled; no success receipt published\n".utf8)); return 130
@@ -97,16 +142,23 @@ struct VivoSingleCellCLICommands {
         }
     }
     static let help = """
-    NumiVivo single-cell count workflows
-      singlecell-run <manifest.json> --store <artifact-directory> [--output <new-receipt.json|->]
-      singlecell-verify <receipt.json> --store <artifact-directory> [--output <new-summary.json|->]
-      singlecell-export <receipt.json> --store <artifact-directory> [--output <new-report.json|->]
+    NumiVivo native single-cell workflows
+      singlecell-example --output <new-example-directory>
+      singlecell-run <manifest.json> --store <directory> [--output <new-receipt.json|->]
+      singlecell-verify <receipt.json> --store <directory>
+      singlecell-export <receipt.json> --store <directory> [--output <new-report.json|->]
+      singlecell-mex <receipt.json> --store <directory> --output <new-MEX-directory>
+      singlecell-analyze <receipt.json> --plan <analysis.json> --store <directory> [--output <new-analysis-receipt.json|->]
+      singlecell-analysis-verify <analysis-receipt.json> --store <directory>
+      singlecell-analysis-export <analysis-receipt.json> --store <directory> [--output <new-report.json|->]
+      singlecell-analysis-mex <analysis-receipt.json> --store <directory> --output <new-MEX-directory>
+      singlecell-analysis-tables <analysis-receipt.json> --store <directory> --output <new-table-directory>
     Source paths are relative to the manifest directory; symlinks and ../ are rejected.
-    Inputs: uncompressed 10x integer/general Matrix Market, three-column Gene Expression
-    features.tsv and barcodes.tsv. Use explicit sample, replicate, evidence and count units.
-    Raw counts remain exact UInt64. Optional log normalization is a separate FP64 view.
-    No filtering, inferred cell types, batch correction or differential-expression test is performed.
-    Verification needs the recorded executable/OS and reconstructs results from immutable source bytes.
-    This is bounded native CPU processing, not a GPU/atlas-scale or biological-validity claim.
+    Input is integer/general MEX Gene Expression data, plain or gzip with bounded native decoding.
+    Counts stay UInt64; QC records every cell decision and keeps feature identities.
+    Expression uses explicit biological replicates/paired donors, not cells as independent samples.
+    The moderated log-expression model is untrended: no voom weights, mixed model, or NB fit is claimed.
+    Replay requires the recorded executable/OS. Regenerate count receipts after rebuilding the executable.
+    No doublet correction, inferred cell annotation, HDF5/AnnData or biological calibration is performed.
     """ + "\n"
 }

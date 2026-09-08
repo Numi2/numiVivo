@@ -1,0 +1,17 @@
+{
+  "schema": "numivivo.org/scoped-omics-development-checks/v1",
+  "baseline": "8890dd25861ac76be9f2f9adefc04092b3d3432a",
+  "command": "bash Tools/Omics/run_math_compression_checks.sh",
+  "exitCode": 0,
+  "log": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu\nquantile 1.0 12.706204736174694\nquantile 2.0 4.302652729749461\nquantile 3.0 3.1824463052837073\nquantile 8.0 2.306004135204166\nquantile 30.0 2.0422724563012338\nquantile 1000.0 1.9623390808262164\nNative omics statistics smoke passed\nNative gzip smoke passed\n",
+  "sourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoOmicsLinearStatistics.swift": "b7089152f9ad8ae87fc87c762c1f28b832aea02c408fb9218fe06ec3584839aa",
+    "Sources/NumiVivoKit/Omics/VivoOmicsSourceDecoder.swift": "9f07ae764bb71f57be6319fd43debb1594fee886dd2198a152edc499210687b3",
+    "Sources/CNumiVivoZlib/module.modulemap": "13c0b5cb86aa7654ca45b0ded7ca4f6bf0dfe9e15be90a371f4a731b294a806c",
+    "Sources/CNumiVivoZlib/shim.h": "fe99566fc4d613c5e8e0949f5214e60c344908016eebcfed13978bb3a0191e5b",
+    "Tools/Omics/statistics-smoke.swift": "f34a68a6d9adb489bd07c4c065b4a82f2ea87531082fd08d079de6ee9d2a7d9a",
+    "Tools/Omics/gzip-smoke.swift": "8f0723b05e1fee80d1c688fd00824bbe35929037513082ff2dea3d153d8fcf35",
+    "Tools/Omics/run_math_compression_checks.sh": "e209873857bbd81b701d955b54f61f7409f68d04b602009e4162ad4ea066a77f"
+  },
+  "scope": "Actual standalone native statistics and gzip compilation/execution. Remaining Swift integration syntax-parsed only. Complete Apple product, cohort integration and biological calibration not executed here."
+}
