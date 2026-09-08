@@ -137,10 +137,10 @@ Run only after the original matrix and qualification have completed, using the
 same executable/shader bundle and the same NumPy/SciPy/OpenMM environment:
 
 ```sh
-python continue_ensemble.py run --parent /path/to/nvt-campaign \
+python Tools/Benchmarks/continue_ensemble.py run --parent /path/to/nvt-campaign \
   --parent-qualification /path/to/nvt-qualification.json \
   --binary /path/to/frozen/numivivo --out /path/to/new-continuation
-python continue_ensemble.py analyze --campaign /path/to/new-continuation \
+python Tools/Benchmarks/continue_ensemble.py analyze --campaign /path/to/new-continuation \
   --out /path/to/new-continuation-qualification.json
 ```
 

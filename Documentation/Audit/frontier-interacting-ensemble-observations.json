@@ -1,0 +1,2623 @@
+{
+  "schema": "numivivo.org/frontier-md-ensemble-observations/v1",
+  "nativeSource": "c7ded9f9784d238a329e2ca0ae34b01676165ee2",
+  "ensembleSource": "13e041ff39d43d49503f9074818f4551e1c3b2ba",
+  "endpointSource": "b2d9b1131ff1f42a5770feddeeb0c3061674be2f",
+  "softwareValidation": {
+    "pythonChecks": 26,
+    "logSHA256": "003876d8aa79a3c98d14392e7996d11a140beda7dd1438ab99cdbcad071cdde4",
+    "syntheticCorrelatedControlSHA256": "616d76d6f6875255c7c4ca854c0417f597d1e1a4d0f61725eb173b8863544941",
+    "analyticCoordinateControlSHA256": "39acdcfd5ad6457c2739d8f7b40739805396e3398de819137693741385b4e9cd"
+  },
+  "solverAdmission": {
+    "32": {
+      "scorecardSHA256": "3298120c17f4ec1c5d96d3757dc93ef7dceb5d5ce9855ba6ff1076a32c5763e3",
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "alanine-smooth",
+          "executionError": "MD numerical candidate rejected with status 8",
+          "hamiltonianAgreement": "passed",
+          "outcome": "failed"
+        },
+        {
+          "identifier": "protein-smooth",
+          "hamiltonianAgreement": "passed",
+          "outcome": "passed"
+        },
+        {
+          "identifier": "complex-vacuum",
+          "hamiltonianAgreement": "passed",
+          "outcome": "passed"
+        },
+        {
+          "identifier": "dna-smooth",
+          "executionError": "MD numerical candidate rejected with status 8",
+          "hamiltonianAgreement": "passed",
+          "outcome": "failed"
+        },
+        {
+          "identifier": "membrane-smooth",
+          "executionError": "MD numerical candidate rejected with status 8",
+          "hamiltonianAgreement": "passed",
+          "outcome": "failed"
+        },
+        {
+          "identifier": "ions-smooth",
+          "executionError": "MD numerical candidate rejected with status 8",
+          "hamiltonianAgreement": "passed",
+          "outcome": "failed"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "executionError": "MD numerical candidate rejected with status 8",
+          "hamiltonianAgreement": "passed",
+          "outcome": "failed"
+        }
+      ]
+    },
+    "64": {
+      "scorecardSHA256": "a4a80e487e6497e0a2844706164a35db50cf2390b84f3dff0de8278da2f198e8",
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "alanine-smooth",
+          "hamiltonianAgreement": "passed",
+          "outcome": "passed"
+        },
+        {
+          "identifier": "protein-smooth",
+          "hamiltonianAgreement": "passed",
+          "outcome": "passed"
+        },
+        {
+          "identifier": "complex-vacuum",
+          "hamiltonianAgreement": "passed",
+          "outcome": "passed"
+        },
+        {
+          "identifier": "dna-smooth",
+          "hamiltonianAgreement": "passed",
+          "outcome": "passed"
+        },
+        {
+          "identifier": "membrane-smooth",
+          "hamiltonianAgreement": "passed",
+          "outcome": "passed"
+        },
+        {
+          "identifier": "ions-smooth",
+          "hamiltonianAgreement": "passed",
+          "outcome": "passed"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "hamiltonianAgreement": "passed",
+          "outcome": "passed"
+        }
+      ]
+    }
+  },
+  "longNVE": {
+    "qualificationSHA256": "7166979bd22529583e3860cd902ea64f9c3b8ea03bd26fe7594f30abf85dc286",
+    "policy": {
+      "schema": "numivivo.org/md-nve-refinement-policy/v1",
+      "durationPS": 5.0,
+      "timeStepsPS": [
+        0.001,
+        0.0005,
+        0.00025
+      ],
+      "observationIntervalPS": 0.005,
+      "initialTemperatureK": 300,
+      "maximumAbsoluteEnergyDeviationPerParticleKJPerMol": 0.01,
+      "minimumRMSRefinementRatio": 2.0,
+      "refinementFloorPerParticleKJPerMol": 1e-05,
+      "scope": "5 ps interacting constrained NVE conservation and timestep refinement, 50 times the original duration; no equilibrium, transport or performance qualification"
+    },
+    "cases": [
+      {
+        "identifier": "water",
+        "outcome": "preparation-failed",
+        "scope": "5 ps interacting constrained NVE conservation and timestep refinement, 50 times the original duration; no equilibrium, transport or performance qualification",
+        "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+      },
+      {
+        "identifier": "alanine-smooth",
+        "outcome": "passed",
+        "scope": "5 ps interacting constrained NVE conservation and timestep refinement, 50 times the original duration; no equilibrium, transport or performance qualification",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          3.6799029920934307,
+          6.537482456965403
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 5000,
+            "maximumAbsoluteDeviationPerParticle": 0.0006804518785808727,
+            "rmsDeviationPerParticle": 0.00035043470762043734,
+            "reportSHA256": "263487c98168ab9fd10081ca7075aa18a4767a0864918fc4b50c71ad81fd6bd4"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 10000,
+            "maximumAbsoluteDeviationPerParticle": 0.0001947529886513883,
+            "rmsDeviationPerParticle": 9.522933304855445e-05,
+            "reportSHA256": "99acace6e2dd3ff40d69d75a6fc3ed46e035f90b4a314c21d1ba5adfb6f30b7a"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 20000,
+            "maximumAbsoluteDeviationPerParticle": 3.529225429704716e-05,
+            "rmsDeviationPerParticle": 1.4566667471067818e-05,
+            "reportSHA256": "d2090f140d15b272a49e2f5f6ed9e95221418ca763a280e280ff8bd1d6d39d13"
+          }
+        ]
+      },
+      {
+        "identifier": "protein-smooth",
+        "outcome": "passed",
+        "scope": "5 ps interacting constrained NVE conservation and timestep refinement, 50 times the original duration; no equilibrium, transport or performance qualification",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          3.7853692570769786,
+          2.3832152048971014
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 5000,
+            "maximumAbsoluteDeviationPerParticle": 0.00019831373631038287,
+            "rmsDeviationPerParticle": 8.055687307213929e-05,
+            "reportSHA256": "6af85db02cea92bf4390ee9b105514534847f76a7dca303a3ad6125e8d57918a"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 10000,
+            "maximumAbsoluteDeviationPerParticle": 5.256308897189914e-05,
+            "rmsDeviationPerParticle": 2.1281113572086345e-05,
+            "reportSHA256": "1f745b2cda8de30a7b44c80359def3991ac17a6fd885c87c34e28bd5528fc5e7"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 20000,
+            "maximumAbsoluteDeviationPerParticle": 2.3379796672043467e-05,
+            "rmsDeviationPerParticle": 8.92958115085758e-06,
+            "reportSHA256": "b50ecc071f732cf57db9e994b2f5c9e1ce9eddfc1bbb4c29746f2f2c3770b2ca"
+          }
+        ]
+      },
+      {
+        "identifier": "complex-vacuum",
+        "outcome": "passed",
+        "scope": "5 ps interacting constrained NVE conservation and timestep refinement, 50 times the original duration; no equilibrium, transport or performance qualification",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          4.363532095196477,
+          4.231025578621973
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 5000,
+            "maximumAbsoluteDeviationPerParticle": 0.00805114489937047,
+            "rmsDeviationPerParticle": 0.002770751660275837,
+            "reportSHA256": "223e14a3a02642bff91648f72d6ca72af384954d652ff61077425bf42338eb18"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 10000,
+            "maximumAbsoluteDeviationPerParticle": 0.0019240628576879053,
+            "rmsDeviationPerParticle": 0.0006349790948772839,
+            "reportSHA256": "d522f88e7e00c108a9e1c3ac14ad54ba8676ab4b483304255b35538a29bbdab2"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 20000,
+            "maximumAbsoluteDeviationPerParticle": 0.00047430906619610834,
+            "rmsDeviationPerParticle": 0.0001500768745255598,
+            "reportSHA256": "b0ee0939f7d591ce078d20c578917ad5143bc6c22f865a44525ee9e1dd295f6d"
+          }
+        ]
+      },
+      {
+        "identifier": "dna-smooth",
+        "outcome": "passed",
+        "scope": "5 ps interacting constrained NVE conservation and timestep refinement, 50 times the original duration; no equilibrium, transport or performance qualification",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          4.027643443890089,
+          4.046451932769156
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 5000,
+            "maximumAbsoluteDeviationPerParticle": 0.0025055991682544337,
+            "rmsDeviationPerParticle": 0.0014963426139417931,
+            "reportSHA256": "3f790671f743c7f2f6f215a8a7223d04fefb27ec6f1a70954f27363c6c7f9ad0"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 10000,
+            "maximumAbsoluteDeviationPerParticle": 0.0006248969478235381,
+            "rmsDeviationPerParticle": 0.000371518143248687,
+            "reportSHA256": "7b8321c7d6885d3dfd66a4a99394cc9223f8233968a4d0495abd7faee4ccb92f"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 20000,
+            "maximumAbsoluteDeviationPerParticle": 0.00015414888062435878,
+            "rmsDeviationPerParticle": 9.181330939335825e-05,
+            "reportSHA256": "96c2281ff4fcccb8e2062448286a662b6b82a6ac6ae589162962230d9b41d7d9"
+          }
+        ]
+      },
+      {
+        "identifier": "membrane-smooth",
+        "outcome": "passed",
+        "scope": "5 ps interacting constrained NVE conservation and timestep refinement, 50 times the original duration; no equilibrium, transport or performance qualification",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          4.760581475943956,
+          4.296111428208261
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 5000,
+            "maximumAbsoluteDeviationPerParticle": 0.0010087621493602363,
+            "rmsDeviationPerParticle": 0.0005594608975240661,
+            "reportSHA256": "a8496f9ce62959edd5114b76a83dbc46fbc796bf54ccc3b4f5dc781506ec6cbd"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 10000,
+            "maximumAbsoluteDeviationPerParticle": 0.0002378929318405512,
+            "rmsDeviationPerParticle": 0.00011751944596497698,
+            "reportSHA256": "b85385d1fac8416073ac376a3c0020d9327a0be546e33f35314524dd19c229f7"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 20000,
+            "maximumAbsoluteDeviationPerParticle": 5.863219734251968e-05,
+            "rmsDeviationPerParticle": 2.7354841216022587e-05,
+            "reportSHA256": "1bc64100795633a5791ddd78bafa1d6d3ee02002e6cf950314302432b4fcf431"
+          }
+        ]
+      },
+      {
+        "identifier": "ions-smooth",
+        "outcome": "passed",
+        "scope": "5 ps interacting constrained NVE conservation and timestep refinement, 50 times the original duration; no equilibrium, transport or performance qualification",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          3.7857329538633997,
+          7.216646928793314
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 5000,
+            "maximumAbsoluteDeviationPerParticle": 0.0006339824808839985,
+            "rmsDeviationPerParticle": 0.0003056656415008406,
+            "reportSHA256": "145d8e79a71faaeedb86a3f50fad20287123aca64aff14392c48fe39dae0e915"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 10000,
+            "maximumAbsoluteDeviationPerParticle": 0.00016008922743379335,
+            "rmsDeviationPerParticle": 8.0741469413183e-05,
+            "reportSHA256": "053e8fd9f50fad23f2e9988e6534225c3fc009683426b652576e411af7066c70"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 20000,
+            "maximumAbsoluteDeviationPerParticle": 4.243548349496457e-05,
+            "rmsDeviationPerParticle": 1.1188224976205629e-05,
+            "reportSHA256": "5afd9f491bfbf6a1b84cc2085dada2a78e9b98f80ededd4dfe0ac3bb100ccf57"
+          }
+        ]
+      },
+      {
+        "identifier": "water-orthogonal-smooth",
+        "outcome": "passed",
+        "scope": "5 ps interacting constrained NVE conservation and timestep refinement, 50 times the original duration; no equilibrium, transport or performance qualification",
+        "conservationPassed": true,
+        "refinementPassed": true,
+        "rmsRefinementRatios": [
+          4.05045806924603,
+          2.265887585940619
+        ],
+        "measurements": [
+          {
+            "timeStepPS": 0.001,
+            "committedSteps": 5000,
+            "maximumAbsoluteDeviationPerParticle": 0.00031915590083798884,
+            "rmsDeviationPerParticle": 9.415224614508962e-05,
+            "reportSHA256": "ce7451571e68645c1a724bbd3b9d065e1a59400acec6bd0b053d6376537efd21"
+          },
+          {
+            "timeStepPS": 0.0005,
+            "committedSteps": 10000,
+            "maximumAbsoluteDeviationPerParticle": 8.110742551210428e-05,
+            "rmsDeviationPerParticle": 2.3244839110904692e-05,
+            "reportSHA256": "bbcf21eab4fd6ea17a3e029a0f9ddb8d3a2086a3f8ae6debbbe419c917429a13"
+          },
+          {
+            "timeStepPS": 0.00025,
+            "committedSteps": 20000,
+            "maximumAbsoluteDeviationPerParticle": 2.782384776536313e-05,
+            "rmsDeviationPerParticle": 1.0258602083851948e-05,
+            "reportSHA256": "3e0af7bd0541001bbb6d7f1b9a88436bd9d57862cb200e2b6e4a5c105ec74d81"
+          }
+        ]
+      }
+    ]
+  },
+  "ensemble": {
+    "qualificationSHA256": "fbf47b4e6b7cf6312b8076bfc51594956a481cfd3ff50054ec7126a8d304b6f1",
+    "qualification": {
+      "schema": "numivivo.org/md-ensemble-qualification/v1",
+      "campaignSHA256": "70ab1030020429a6b471e1a4d80a7205ed672bbbaccadfb2cebc1ea0a900edac",
+      "identities": {
+        "binarySHA256": "eed5b517985dbda7ed545bd82407d99113ee65b9dc64f972dc5a0eefcfcae60a",
+        "binaryManifestSHA256": "572050549d8e9b0439e4066f7b0f189cb9ad4263b5c982bfe1042f430597f0ae",
+        "nativeSource": "c7ded9f9784d238a329e2ca0ae34b01676165ee2",
+        "analysisEnvironment": {
+          "python": "3.13.14",
+          "numpy": "2.5.3",
+          "scipy": "1.18.1"
+        },
+        "parentManifestSHA256": "20b99bc2fbd39f4accb546872270aba956dc0f5cbf07995e5ad8748931466f77",
+        "policySHA256": "f15d9ca64e0429a4337c92c4839e980f00120d2aeea3fb3e796c4266891caab2",
+        "tools": {
+          "run_ensemble.py": "699de93b7db8d221735a11e2ed50918ec7c93ea2406b82ad68c376c5b8bce954",
+          "analyze_ensemble.py": "3cf7da5c99cc82b2244033917358045d8ee405ab100c06d18d26a91d53ce3811",
+          "ensemble_campaign.py": "5a40a774c1c0406371d93d524ff2fc8a3fbf12ab7f0d2af00ec1da300040df43",
+          "ensemble_statistics.py": "72a515d2f7fff85a082015c3b9b0fd0e6334518e170cf73a61edb4fba53a5b46",
+          "derive_campaign.py": "dcc5646a9a6047baa998b28dbf2381f72b4f3239dd648e8873c78a822b804720",
+          "run_campaign.py": "3633b376cfdea2c3f68e3f450e2ef8b425228653afec8a134b6dd33e0bb82a25"
+        }
+      },
+      "policy": {
+        "schema": "numivivo.org/md-ensemble-policy/v1",
+        "cases": [
+          "water-orthogonal-smooth"
+        ],
+        "temperaturesK": [
+          300,
+          305
+        ],
+        "seeds": [
+          1729,
+          2718,
+          31415
+        ],
+        "higherTemperatureSeedOffset": 1000000,
+        "timeStepsPS": [
+          0.001,
+          0.0005
+        ],
+        "durationPS": 50,
+        "equilibrationPS": 10,
+        "observationIntervalPS": 0.05,
+        "frictionPerPS": 10,
+        "maximumConstraintIterations": 64,
+        "constraintTolerance": 1e-06,
+        "bootstrapBlockPS": 1,
+        "bootstrapReplicates": 2000,
+        "bootstrapSeed": 726104,
+        "maximumStatisticalZ": 3.5,
+        "minimumEffectiveSamplesPerReplica": 40,
+        "minimumTotalEffectiveSamples": 200,
+        "minimumBlocksPerReplica": 20,
+        "maximumBlockAutocorrelation": 0.3,
+        "maximumSplitRHat": 1.05,
+        "minimumDistributionBootstrapP": 0.005,
+        "maximumRelativeMeanTemperatureError": 0.005,
+        "maximumRelativeWidthTemperatureError": 0.15,
+        "maximumRelativeSlopeStandardError": 0.35,
+        "minimumTemperatureOverlap": 0.15,
+        "boltzmannKJPerMolK": 0.00831446261815324,
+        "scope": "Finite interacting rigid-water NVT kinetic moments and two-temperature configurational consistency at two time steps. Necessary ensemble checks, not proof of complete equilibration, transport, experimental water accuracy or performance leadership."
+      },
+      "preparedWordsEqualAcrossTimeSteps": true,
+      "preparedOutcome": "failed",
+      "cases": [
+        {
+          "identifier": "water-orthogonal-smooth",
+          "timeStepPS": 0.001,
+          "outcome": "failed",
+          "kinetic": [
+            {
+              "outcome": "failed",
+              "degreesOfFreedom": 5370,
+              "targetTemperatureK": 300,
+              "samples": 2400,
+              "replicas": 3,
+              "meanKineticEnergyKJPerMol": 6684.9888883463545,
+              "standardDeviationKineticEnergyKJPerMol": 130.27103054513717,
+              "meanTemperatureK": 299.4485501064697,
+              "meanTemperatureStandardErrorK": 0.15409960221587748,
+              "meanTemperatureZ": 3.5785289877500888,
+              "widthTemperatureK": 302.3719625209616,
+              "widthTemperatureStandardErrorK": 4.107491878188938,
+              "widthTemperatureZ": 0.5774722364167917,
+              "gammaCDFDistance": 0.037994235781033114,
+              "gammaCDFBootstrapP": 0.009995002498750625,
+              "diagnostics": {
+                "kineticEnergy": {
+                  "effectiveSamplesPerReplica": [
+                    410.99087199571073,
+                    485.5782580342591,
+                    421.5881583131969
+                  ],
+                  "totalEffectiveSamples": 1318.1572883431668,
+                  "splitRHat": 1.0,
+                  "blocksPerReplica": 40,
+                  "blockLagOneCorrelation": 0.02506992780284252,
+                  "halfTraceDriftZ": 0.3336048520028567,
+                  "inconclusiveReasons": []
+                },
+                "squaredKineticDeviation": {
+                  "effectiveSamplesPerReplica": [
+                    659.5931041383163,
+                    743.0631388939188,
+                    769.5620354154152
+                  ],
+                  "totalEffectiveSamples": 2172.2182784476504,
+                  "splitRHat": 1.0,
+                  "blocksPerReplica": 40,
+                  "blockLagOneCorrelation": -0.13456323688076233,
+                  "halfTraceDriftZ": 0.44984439223085215,
+                  "inconclusiveReasons": []
+                }
+              },
+              "failureReasons": [
+                "kinetic mean misses the prescribed temperature"
+              ],
+              "inconclusiveReasons": []
+            },
+            {
+              "outcome": "failed",
+              "degreesOfFreedom": 5370,
+              "targetTemperatureK": 305,
+              "samples": 2400,
+              "replicas": 3,
+              "meanKineticEnergyKJPerMol": 6797.600026855469,
+              "standardDeviationKineticEnergyKJPerMol": 135.57513949298462,
+              "meanTemperatureK": 304.49287294912665,
+              "meanTemperatureStandardErrorK": 0.17331178045284978,
+              "meanTemperatureZ": 2.926096827049311,
+              "widthTemperatureK": 314.68332465016437,
+              "widthTemperatureStandardErrorK": 4.736456662430684,
+              "widthTemperatureZ": 2.04442378349452,
+              "gammaCDFDistance": 0.04556261763644576,
+              "gammaCDFBootstrapP": 0.0034982508745627187,
+              "diagnostics": {
+                "kineticEnergy": {
+                  "effectiveSamplesPerReplica": [
+                    385.6680097105262,
+                    401.5480226297975,
+                    347.17952076735764
+                  ],
+                  "totalEffectiveSamples": 1134.3955531076813,
+                  "splitRHat": 1.0053821593332184,
+                  "blocksPerReplica": 40,
+                  "blockLagOneCorrelation": 0.1222999340094821,
+                  "halfTraceDriftZ": 0.1758092313987633,
+                  "inconclusiveReasons": []
+                },
+                "squaredKineticDeviation": {
+                  "effectiveSamplesPerReplica": [
+                    638.2658840950459,
+                    676.2498619112239,
+                    639.5998081463223
+                  ],
+                  "totalEffectiveSamples": 1954.115554152592,
+                  "splitRHat": 1.0023936050093816,
+                  "blocksPerReplica": 40,
+                  "blockLagOneCorrelation": 0.06726726404952697,
+                  "halfTraceDriftZ": 0.6844456816727524,
+                  "inconclusiveReasons": []
+                }
+              },
+              "failureReasons": [
+                "kinetic distribution shape rejected by block-bootstrap gamma CDF check"
+              ],
+              "inconclusiveReasons": []
+            }
+          ],
+          "configurational": {
+            "outcome": "inconclusive",
+            "expectedSlopeMolPerKJ": 0.006572259838400356,
+            "fittedSlopeMolPerKJ": 0.006254464478191257,
+            "slopeStandardErrorMolPerKJ": 0.0004875408233559245,
+            "slopeZ": 0.6518333337126423,
+            "estimatedTemperatureDifferenceK": 4.7582297656947,
+            "overlapScore": 0.7507415936641318,
+            "bootstrapFitFailures": 0,
+            "diagnostics": {
+              "lowerTemperature": {
+                "effectiveSamplesPerReplica": [
+                  46.692820853544994,
+                  58.40168491087108,
+                  37.346964811638784
+                ],
+                "totalEffectiveSamples": 142.44147057605485,
+                "splitRHat": 1.0038395706412384,
+                "blocksPerReplica": 40,
+                "blockLagOneCorrelation": 0.41901271201544676,
+                "halfTraceDriftZ": 0.6603745000837444,
+                "inconclusiveReasons": [
+                  "insufficient effective samples in a replica",
+                  "insufficient total effective samples",
+                  "unresolved correlation between bootstrap blocks"
+                ]
+              },
+              "higherTemperature": {
+                "effectiveSamplesPerReplica": [
+                  44.91905567320395,
+                  75.65870720897729,
+                  52.79349408113412
+                ],
+                "totalEffectiveSamples": 173.37125696331537,
+                "splitRHat": 1.0374842269298448,
+                "blocksPerReplica": 40,
+                "blockLagOneCorrelation": 0.362685515735942,
+                "halfTraceDriftZ": 0.01461528636065671,
+                "inconclusiveReasons": [
+                  "insufficient total effective samples",
+                  "unresolved correlation between bootstrap blocks"
+                ]
+              }
+            },
+            "failureReasons": [],
+            "inconclusiveReasons": [
+              "lowerTemperature: insufficient effective samples in a replica",
+              "lowerTemperature: insufficient total effective samples",
+              "lowerTemperature: unresolved correlation between bootstrap blocks",
+              "higherTemperature: insufficient total effective samples",
+              "higherTemperature: unresolved correlation between bootstrap blocks"
+            ]
+          }
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "timeStepPS": 0.0005,
+          "outcome": "inconclusive",
+          "kinetic": [
+            {
+              "outcome": "passed",
+              "degreesOfFreedom": 5370,
+              "targetTemperatureK": 300,
+              "samples": 2400,
+              "replicas": 3,
+              "meanKineticEnergyKJPerMol": 6694.218893432617,
+              "standardDeviationKineticEnergyKJPerMol": 128.46241483604754,
+              "meanTemperatureK": 299.86200055294313,
+              "meanTemperatureStandardErrorK": 0.16832900633694098,
+              "meanTemperatureZ": 0.8198197687963507,
+              "widthTemperatureK": 298.1739863545399,
+              "widthTemperatureStandardErrorK": 4.026723437393426,
+              "widthTemperatureZ": 0.4534738165782979,
+              "gammaCDFDistance": 0.015062035199595147,
+              "gammaCDFBootstrapP": 0.703648175912044,
+              "diagnostics": {
+                "kineticEnergy": {
+                  "effectiveSamplesPerReplica": [
+                    369.31567743540256,
+                    251.2380563716002,
+                    524.5221623777985
+                  ],
+                  "totalEffectiveSamples": 1145.0758961848012,
+                  "splitRHat": 1.0019786312507182,
+                  "blocksPerReplica": 40,
+                  "blockLagOneCorrelation": -0.041401305971861486,
+                  "halfTraceDriftZ": 0.3285806790096917,
+                  "inconclusiveReasons": []
+                },
+                "squaredKineticDeviation": {
+                  "effectiveSamplesPerReplica": [
+                    611.176741452827,
+                    582.0711530229532,
+                    800.0
+                  ],
+                  "totalEffectiveSamples": 1993.2478944757802,
+                  "splitRHat": 1.0001633410866522,
+                  "blocksPerReplica": 40,
+                  "blockLagOneCorrelation": 0.027296799228882243,
+                  "halfTraceDriftZ": 1.1912734419847535,
+                  "inconclusiveReasons": []
+                }
+              },
+              "failureReasons": [],
+              "inconclusiveReasons": []
+            },
+            {
+              "outcome": "passed",
+              "degreesOfFreedom": 5370,
+              "targetTemperatureK": 305,
+              "samples": 2400,
+              "replicas": 3,
+              "meanKineticEnergyKJPerMol": 6808.983311564128,
+              "standardDeviationKineticEnergyKJPerMol": 131.15133152387529,
+              "meanTemperatureK": 305.0027777759543,
+              "meanTemperatureStandardErrorK": 0.15573215085022263,
+              "meanTemperatureZ": 0.017836881717415737,
+              "widthTemperatureK": 304.4152282680452,
+              "widthTemperatureStandardErrorK": 4.541443115596092,
+              "widthTemperatureZ": 0.12876341662115776,
+              "gammaCDFDistance": 0.010362263578302722,
+              "gammaCDFBootstrapP": 0.9460269865067467,
+              "diagnostics": {
+                "kineticEnergy": {
+                  "effectiveSamplesPerReplica": [
+                    390.965799846856,
+                    449.78068291557975,
+                    357.2211781930133
+                  ],
+                  "totalEffectiveSamples": 1197.967660955449,
+                  "splitRHat": 1.0042322693463435,
+                  "blocksPerReplica": 40,
+                  "blockLagOneCorrelation": 0.05920530646661059,
+                  "halfTraceDriftZ": 1.491734210673627,
+                  "inconclusiveReasons": []
+                },
+                "squaredKineticDeviation": {
+                  "effectiveSamplesPerReplica": [
+                    679.15538669315,
+                    730.1193453811001,
+                    621.916011819733
+                  ],
+                  "totalEffectiveSamples": 2031.190743893983,
+                  "splitRHat": 1.00105773643154,
+                  "blocksPerReplica": 40,
+                  "blockLagOneCorrelation": -0.16023136525527323,
+                  "halfTraceDriftZ": 0.3605322338616083,
+                  "inconclusiveReasons": []
+                }
+              },
+              "failureReasons": [],
+              "inconclusiveReasons": []
+            }
+          ],
+          "configurational": {
+            "outcome": "inconclusive",
+            "expectedSlopeMolPerKJ": 0.006572259838400356,
+            "fittedSlopeMolPerKJ": 0.005903593493998082,
+            "slopeStandardErrorMolPerKJ": 0.0005254895369898644,
+            "slopeZ": 1.2724636692722016,
+            "estimatedTemperatureDifferenceK": 4.491296478803705,
+            "overlapScore": 0.7735760953334128,
+            "bootstrapFitFailures": 0,
+            "diagnostics": {
+              "lowerTemperature": {
+                "effectiveSamplesPerReplica": [
+                  44.464890429927834,
+                  45.93104953437956,
+                  37.745073528396354
+                ],
+                "totalEffectiveSamples": 128.14101349270373,
+                "splitRHat": 1.0088337035982975,
+                "blocksPerReplica": 40,
+                "blockLagOneCorrelation": 0.45196412622740306,
+                "halfTraceDriftZ": 0.05339837705719549,
+                "inconclusiveReasons": [
+                  "insufficient effective samples in a replica",
+                  "insufficient total effective samples",
+                  "unresolved correlation between bootstrap blocks"
+                ]
+              },
+              "higherTemperature": {
+                "effectiveSamplesPerReplica": [
+                  35.11284181734313,
+                  72.13702559394649,
+                  89.84708860701576
+                ],
+                "totalEffectiveSamples": 197.09695601830538,
+                "splitRHat": 1.0224482960609944,
+                "blocksPerReplica": 40,
+                "blockLagOneCorrelation": 0.3640777420331074,
+                "halfTraceDriftZ": 1.308581627983331,
+                "inconclusiveReasons": [
+                  "insufficient effective samples in a replica",
+                  "insufficient total effective samples",
+                  "unresolved correlation between bootstrap blocks"
+                ]
+              }
+            },
+            "failureReasons": [],
+            "inconclusiveReasons": [
+              "lowerTemperature: insufficient effective samples in a replica",
+              "lowerTemperature: insufficient total effective samples",
+              "lowerTemperature: unresolved correlation between bootstrap blocks",
+              "higherTemperature: insufficient effective samples in a replica",
+              "higherTemperature: insufficient total effective samples",
+              "higherTemperature: unresolved correlation between bootstrap blocks"
+            ]
+          }
+        }
+      ],
+      "inputFailures": [
+        {
+          "identifier": "water",
+          "status": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        }
+      ],
+      "excludedPreparedCases": [
+        {
+          "identifier": "alanine-smooth",
+          "particles": 2269,
+          "status": "prepared",
+          "requestSHA256": "c4a708ad437c4b6d1dde43f10cb3cad63cc498996f6118712a2354efea429260",
+          "serializedSystemSHA256": "4044307403ce329f08ea591cbcbdf920a7f6f452f808b373414c7e6c22fcaa66",
+          "parentIdentifier": "alanine",
+          "parentRequestSHA256": "4e9edeecbc9071f1e4701b41541cbcfbca67be537fc13e4267ac803ef6ba0b4c"
+        },
+        {
+          "identifier": "protein-smooth",
+          "particles": 23558,
+          "status": "prepared",
+          "requestSHA256": "cad8c194917dd4a8630a96f3449b8bfec384e2753a593fab2802f30e86b2c434",
+          "serializedSystemSHA256": "44b4a4bf200422c521de48eaf2746a6a188a5a1ff3d7566908e7681e1d3e6f4b",
+          "parentIdentifier": "protein",
+          "parentRequestSHA256": "de768f8e3b613813e40ce47e58be63ccb6127c62450eba8b11c571aa47893de6"
+        },
+        {
+          "identifier": "complex-vacuum",
+          "particles": 2621,
+          "status": "prepared",
+          "requestSHA256": "e9d09a5a81f14c2337763ab07e9836b1d4c2967aa8fff45c9ed80824c49b1c2c",
+          "serializedSystemSHA256": "ee500e9bcfb426c6727bf27785c5189b9d7114589b234ae30e00b3689d2cb80a",
+          "parentIdentifier": "complex",
+          "parentRequestSHA256": "0f73c8615ca64d1320f159fedd1cb2fa51c4a5321df393708babdaab9465852d"
+        },
+        {
+          "identifier": "dna-smooth",
+          "particles": 13646,
+          "status": "prepared",
+          "requestSHA256": "57dd6fb6e4988124cbbfd0b78d39c6f22f0211afd8d766fea9faffbdd863125f",
+          "serializedSystemSHA256": "a6030302e5f9738e68bdf047012fb87dea6682a5253646da87e741e22f2bff0a",
+          "parentIdentifier": "dna",
+          "parentRequestSHA256": "89fc94b5a01e6d564dcea6e287841539822c1a1114569415f357aa7564403fbd"
+        },
+        {
+          "identifier": "membrane-smooth",
+          "particles": 32512,
+          "status": "prepared",
+          "requestSHA256": "96d0f69fb0351c23636e6aa60829bb2b6f150e89454a7c329d635d31e55e52c3",
+          "serializedSystemSHA256": "40bce2afbb80f130015fac45e39cc758d1efa3b0bd431d444ab23537d087ad1c",
+          "parentIdentifier": "membrane",
+          "parentRequestSHA256": "a35f87bee2e1ff8e403f61294ec5abac6bc32c8e4074568af0bfc75139c8411f"
+        },
+        {
+          "identifier": "ions-smooth",
+          "particles": 2681,
+          "status": "prepared",
+          "requestSHA256": "9bba176d459db6cb6ecd0667874939b396db25c65040a38b1f8412eb42674f59",
+          "serializedSystemSHA256": "eb5c4d4a99ef8d70bc673c73d7eab0c5d9570e800dbdaf020769a0f3b4d59175",
+          "parentIdentifier": "ions",
+          "parentRequestSHA256": "ade0ec8f4337a031c33991ed3add45a2fe8812a60a8a4de7e4036e7ea092d1b4"
+        }
+      ],
+      "passed": false,
+      "scope": "Finite interacting rigid-water NVT kinetic moments and two-temperature configurational consistency at two time steps. Necessary ensemble checks, not proof of complete equilibration, transport, experimental water accuracy or performance leadership."
+    },
+    "campaignCells": [
+      {
+        "directory": "run-00",
+        "timeStepPS": 0.001,
+        "temperatureK": 300,
+        "seed": 1729,
+        "exitCode": 1,
+        "scorecardSHA256": "d4e513fa384699bfcf2d974e814415a7e227ac29d8161295a1b078e1533ffac9",
+        "referenceManifestSHA256": "795cf92fb1a96efaece85f99b121cd10afdd42675f8c0ce2eda6df47435b47c7",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 460.2483373330906
+      },
+      {
+        "directory": "run-01",
+        "timeStepPS": 0.001,
+        "temperatureK": 300,
+        "seed": 2718,
+        "exitCode": 1,
+        "scorecardSHA256": "57b9bfb9e615ff92787738d8a95aebd7af0613984518fe8e852b7e8b73ce0e48",
+        "referenceManifestSHA256": "e6b9c5067326690cf88a91a6cec07f3bacf0c79931559372553805c3d3ddfa75",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 458.4910285831429
+      },
+      {
+        "directory": "run-02",
+        "timeStepPS": 0.001,
+        "temperatureK": 300,
+        "seed": 31415,
+        "exitCode": 1,
+        "scorecardSHA256": "86194e3a228c8fd0a8953ac6d48a59187b4e9d7a52a65cf9eb33d8d5838ee2c2",
+        "referenceManifestSHA256": "a7ccf442ec2f78c2decfc420779d750a6e265959ec320dffd2ccc45f9c952b7a",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 457.3527940423228
+      },
+      {
+        "directory": "run-03",
+        "timeStepPS": 0.001,
+        "temperatureK": 305,
+        "seed": 1001729,
+        "exitCode": 1,
+        "scorecardSHA256": "a0779073a1343747a6331bf876e95476fb00f61043c0bc834d42ed88fe188044",
+        "referenceManifestSHA256": "e5e2a4a30c5b171ae3705742a2d5f209f43c136a546d8ac5d5320f8526f9e4b3",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 457.5413442500867
+      },
+      {
+        "directory": "run-04",
+        "timeStepPS": 0.001,
+        "temperatureK": 305,
+        "seed": 1002718,
+        "exitCode": 1,
+        "scorecardSHA256": "772b80534e20f8edd8dea8f66034796da86cc729280d2e21700a74e281042beb",
+        "referenceManifestSHA256": "ec36ec8f0e145eb2c8d27819856ec4c99c65b429f30e687a23ce5f6037ff7eb3",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 457.67693375004455
+      },
+      {
+        "directory": "run-05",
+        "timeStepPS": 0.001,
+        "temperatureK": 305,
+        "seed": 1031415,
+        "exitCode": 1,
+        "scorecardSHA256": "9d49f92f66b88f1fbdc274001d239f79a5d6d349c596c975d4a5ef9edfb0999c",
+        "referenceManifestSHA256": "ed496aeed04b83431fe85762bda8d621b7c6532c846dbb0cb60ac3701fe4f8d9",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 456.0583240003325
+      },
+      {
+        "directory": "run-06",
+        "timeStepPS": 0.0005,
+        "temperatureK": 300,
+        "seed": 1729,
+        "exitCode": 1,
+        "scorecardSHA256": "f2e6ba1186ac6cd60cb6d90c929ba080473f885890b00faf9f1672100719f971",
+        "referenceManifestSHA256": "5c0fb2bd66c806878602a29ea59ab4c7f823fbaf8e104f53e0558c4f38e33927",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 910.930076458957
+      },
+      {
+        "directory": "run-07",
+        "timeStepPS": 0.0005,
+        "temperatureK": 300,
+        "seed": 2718,
+        "exitCode": 1,
+        "scorecardSHA256": "f855958d12c89c48295c5d7477536ef858f2ae2dbeaef319d0a4e85f7a3b66b9",
+        "referenceManifestSHA256": "cabd35429c7b4c782db47da686ef3b5c7fba67408da8966290452462c64af4f3",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 909.3523686248809
+      },
+      {
+        "directory": "run-08",
+        "timeStepPS": 0.0005,
+        "temperatureK": 300,
+        "seed": 31415,
+        "exitCode": 1,
+        "scorecardSHA256": "378cf43e34cb90db1fbc1c816612ec8a1744c48f8a560a784b18d4e43efc0217",
+        "referenceManifestSHA256": "43dffc9faafcdae5aa38e43bea0f1ff8f1d041e68812221aff32e638d525cc2c",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 909.8959891251288
+      },
+      {
+        "directory": "run-09",
+        "timeStepPS": 0.0005,
+        "temperatureK": 305,
+        "seed": 1001729,
+        "exitCode": 1,
+        "scorecardSHA256": "639b7c7476bf0b122ddfdfc7b5bb61850f744d48e15c0c2caf8af1c0cc825f11",
+        "referenceManifestSHA256": "487003f4f8ae8e1a6f882618ba3fd6d223cbdb7ecf4fa92196d7bbd993474875",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 910.9184959167615
+      },
+      {
+        "directory": "run-10",
+        "timeStepPS": 0.0005,
+        "temperatureK": 305,
+        "seed": 1002718,
+        "exitCode": 1,
+        "scorecardSHA256": "f7fc93ac0172aa0cfb30e73e868728f5f727466b5a267d61ece73eeb294400d8",
+        "referenceManifestSHA256": "37461d6a58afed393a59a3a3fe83dde855515add5a7aec43f90277cbca886c19",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 908.7821006663144
+      },
+      {
+        "directory": "run-11",
+        "timeStepPS": 0.0005,
+        "temperatureK": 305,
+        "seed": 1031415,
+        "exitCode": 1,
+        "scorecardSHA256": "315939984a3db42cf7984271c4f88020602a842ce823294f522184838e7cdcd6",
+        "referenceManifestSHA256": "5790f57f7ea2c744aa740404af5a9327a6b662b24ddce5e90b29c8d976d4c2c7",
+        "cases": [
+          {
+            "identifier": "water",
+            "outcome": "preparation-failed"
+          },
+          {
+            "identifier": "water-orthogonal-smooth",
+            "outcome": "passed"
+          }
+        ],
+        "wallSeconds": 909.3630340839736
+      }
+    ]
+  },
+  "endpointAudits": [
+    {
+      "artifact": "endpoint-nve-0-whole.json",
+      "sha256": "0f19b67b1d28d34272b0c463a30442cd02e5216017e4c48e382b8ddb17d45f0a",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "alanine-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 5692.199202257607,
+              "nativeKineticEnergyKJPerMol": 5692.19921875,
+              "absoluteErrorKJPerMol": 1.6492393115186132e-05,
+              "roundoffBoundKJPerMol": 0.006785648317937761,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6905.014846306437,
+              "nativeKineticEnergyKJPerMol": 6905.0146484375,
+              "absoluteErrorKJPerMol": 0.00019786893699347274,
+              "roundoffBoundKJPerMol": 0.008231438954285849,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -25667.859705639745,
+            "nativeEnergyKJPerMol": -25667.900390625,
+            "errorPerParticleKJPerMol": 1.7930800024332903e-05,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 750,
+              "shiftedParticles": 40,
+              "imageShiftsSHA256": "354a21fad7f7ce017846485fc06b3e9c3077e3155b66af048a632150fbf4b3dc",
+              "positionsSHA256": "6a65a722fd325ec20bd7405f93f5dc2d05744b39d17e48572e6848a91627c26c"
+            },
+            "passed": true
+          },
+          "requestSHA256": "f1abef2077148ce2c3499521a8ed8cc222369e6dce6766a4232915b05b69587d",
+          "reportSHA256": "263487c98168ab9fd10081ca7075aa18a4767a0864918fc4b50c71ad81fd6bd4",
+          "serializedSystemSHA256": "4044307403ce329f08ea591cbcbdf920a7f6f452f808b373414c7e6c22fcaa66"
+        },
+        {
+          "identifier": "protein-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 60239.553304921894,
+              "nativeKineticEnergyKJPerMol": 60239.5546875,
+              "absoluteErrorKJPerMol": 0.0013825781061314046,
+              "roundoffBoundKJPerMol": 0.08258293826536617,
+              "roundoffOperationBound": 23,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 59816.89054376993,
+              "nativeKineticEnergyKJPerMol": 59816.890625,
+              "absoluteErrorKJPerMol": 8.123007137328386e-05,
+              "roundoffBoundKJPerMol": 0.08200350620503909,
+              "roundoffOperationBound": 23,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -301551.9294521346,
+            "nativeEnergyKJPerMol": -301552.125,
+            "errorPerParticleKJPerMol": 8.300698930837238e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 7024,
+              "shiftedParticles": 330,
+              "imageShiftsSHA256": "1bd95e23a988b1099c577d306d78b181e1b6cbe8614e30561d73da5dd6ea6aeb",
+              "positionsSHA256": "ae3bbcc5815dc8a853adcf61c2065e7cf474acc98eaeaeafb09ff96e3ecb75ca"
+            },
+            "passed": true
+          },
+          "requestSHA256": "405b159da1b5579102341e7550b6dc7e2ebdd3a9ed9dbdd0a40e64c1cbdfeb80",
+          "reportSHA256": "6af85db02cea92bf4390ee9b105514534847f76a7dca303a3ad6125e8d57918a",
+          "serializedSystemSHA256": "44b4a4bf200422c521de48eaf2746a6a188a5a1ff3d7566908e7681e1d3e6f4b"
+        },
+        {
+          "identifier": "complex-vacuum",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 8166.705448973012,
+              "nativeKineticEnergyKJPerMol": 8166.705078125,
+              "absoluteErrorKJPerMol": 0.0003708480116983992,
+              "roundoffBoundKJPerMol": 0.009735493151025966,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 10209.165546683136,
+              "nativeKineticEnergyKJPerMol": 10209.166015625,
+              "absoluteErrorKJPerMol": 0.00046894186380086467,
+              "roundoffBoundKJPerMol": 0.01217029822537823,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -17707.24418566444,
+            "nativeEnergyKJPerMol": -17707.2578125,
+            "errorPerParticleKJPerMol": 5.1990978862989544e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "unchanged vacuum coordinates",
+              "components": 2621,
+              "shiftedParticles": 0,
+              "imageShiftsSHA256": "b0080c9706f35926730b6ff17f6536b2d9185b347051d9176ad927414fda9d22",
+              "positionsSHA256": "ee357fe98742c2191f9b42b53dcf9b4bae0c8ac3c41e38f57f6f065d4b25fef5"
+            },
+            "passed": true
+          },
+          "requestSHA256": "5303e223e77ec279e73dcb79ac150fd3b56f67cea9d795baf4b2c82f187b238a",
+          "reportSHA256": "223e14a3a02642bff91648f72d6ca72af384954d652ff61077425bf42338eb18",
+          "serializedSystemSHA256": "ee500e9bcfb426c6727bf27785c5189b9d7114589b234ae30e00b3689d2cb80a"
+        },
+        {
+          "identifier": "dna-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 33988.97973034573,
+              "nativeKineticEnergyKJPerMol": 33988.98046875,
+              "absoluteErrorKJPerMol": 0.0007384042692137882,
+              "roundoffBoundKJPerMol": 0.04456989183289805,
+              "roundoffOperationBound": 22,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 20527.925449567745,
+              "nativeKineticEnergyKJPerMol": 20527.92578125,
+              "absoluteErrorKJPerMol": 0.00033168225490953773,
+              "roundoffBoundKJPerMol": 0.026918358794827693,
+              "roundoffOperationBound": 22,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -213294.74149211537,
+            "nativeEnergyKJPerMol": -213294.796875,
+            "errorPerParticleKJPerMol": 4.058543502227691e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 4298,
+              "shiftedParticles": 35,
+              "imageShiftsSHA256": "69b7cfff150278a3761cf385f101e3493043c1057fedbe29e29086c865caac74",
+              "positionsSHA256": "71dd9c8939eab96fd029ade559116499653a4d75835af9ae58014252dc33fd28"
+            },
+            "passed": true
+          },
+          "requestSHA256": "cec1c793e5c77f58da4ef5a7e35a657ab815f647301775f50b30b4ae6b3b982b",
+          "reportSHA256": "3f790671f743c7f2f6f215a8a7223d04fefb27ec6f1a70954f27363c6c7f9ad0",
+          "serializedSystemSHA256": "a6030302e5f9738e68bdf047012fb87dea6682a5253646da87e741e22f2bff0a"
+        },
+        {
+          "identifier": "membrane-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 89371.02314477097,
+              "nativeKineticEnergyKJPerMol": 89371.015625,
+              "absoluteErrorKJPerMol": 0.00751977096660994,
+              "roundoffBoundKJPerMol": 0.12251952398125611,
+              "roundoffOperationBound": 23,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 89938.54671448853,
+              "nativeKineticEnergyKJPerMol": 89938.546875,
+              "absoluteErrorKJPerMol": 0.00016051146667450666,
+              "roundoffBoundKJPerMol": 0.12329754698567073,
+              "roundoffOperationBound": 23,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -309982.5650788725,
+            "nativeEnergyKJPerMol": -309983.15625,
+            "errorPerParticleKJPerMol": 1.818316706173685e-05,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 5248,
+              "shiftedParticles": 2442,
+              "imageShiftsSHA256": "f9563380205c01a3d627938779a65ea36f7fb654a7bf5876e7ec168b816167b7",
+              "positionsSHA256": "f00df2b7246316c648fd3adbf4ca327d68d1a992f7b6e9764a176b3593cf7313"
+            },
+            "passed": true
+          },
+          "requestSHA256": "555336fbe330c236fe2de7b3f7386741b49743bb5b917c46f5e5948faed07518",
+          "reportSHA256": "a8496f9ce62959edd5114b76a83dbc46fbc796bf54ccc3b4f5dc781506ec6cbd",
+          "serializedSystemSHA256": "40bce2afbb80f130015fac45e39cc758d1efa3b0bd431d444ab23537d087ad1c"
+        },
+        {
+          "identifier": "ions-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6618.111305734273,
+              "nativeKineticEnergyKJPerMol": 6618.11083984375,
+              "absoluteErrorKJPerMol": 0.000465890522718837,
+              "roundoffBoundKJPerMol": 0.007889422874158796,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6979.437582057772,
+              "nativeKineticEnergyKJPerMol": 6979.4375,
+              "absoluteErrorKJPerMol": 8.205777157854754e-05,
+              "roundoffBoundKJPerMol": 0.008320157874600465,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35775.519493358326,
+            "nativeEnergyKJPerMol": -35775.53515625,
+            "errorPerParticleKJPerMol": 5.842182645973698e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 88,
+              "imageShiftsSHA256": "d790e28c1606d0842c0ba93ffde944fb1afcefd4862d08521c822cfcbdcd22a2",
+              "positionsSHA256": "7eb48f10fe2edbe1fc35d883b57def75082eb898db54b1b299cd45e16f12c606"
+            },
+            "passed": true
+          },
+          "requestSHA256": "e0b9e036e7a04dd08dd5b2f0b9201926e685ed3a55b0df07e0252bbcd38aaa78",
+          "reportSHA256": "145d8e79a71faaeedb86a3f50fad20287123aca64aff14392c48fe39dae0e915",
+          "serializedSystemSHA256": "eb5c4d4a99ef8d70bc673c73d7eab0c5d9570e800dbdaf020769a0f3b4d59175"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6696.946041095795,
+              "nativeKineticEnergyKJPerMol": 6696.9462890625,
+              "absoluteErrorKJPerMol": 0.0002479667045918177,
+              "roundoffBoundKJPerMol": 0.007983401314133536,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6392.60861950451,
+              "nativeKineticEnergyKJPerMol": 6392.6083984375,
+              "absoluteErrorKJPerMol": 0.00022106700998847373,
+              "roundoffBoundKJPerMol": 0.007620602403527395,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35355.85543507105,
+            "nativeEnergyKJPerMol": -35355.875,
+            "errorPerParticleKJPerMol": 7.28675193765532e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 81,
+              "imageShiftsSHA256": "6ff41fbf63b33978430e6abb0a97a871a70bbe4c98ebb819bc7201f2e13bf4a4",
+              "positionsSHA256": "58dbc90fa2d061b2a7cf2f06b5066794c7265e897259cfd162f07a40b1109a4c"
+            },
+            "passed": true
+          },
+          "requestSHA256": "acb16a62f1e81b680bbabd64c5b171a6cbfe0b8051d0f8a0d6ab09abc55a7441",
+          "reportSHA256": "ce7451571e68645c1a724bbd3b9d065e1a59400acec6bd0b053d6376537efd21",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nve-1-whole.json",
+      "sha256": "8ebb5dd8aae3aa759d34536011c052dfc0d185d246e78a002fc8a064c5d2c004",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "alanine-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 5692.199202257607,
+              "nativeKineticEnergyKJPerMol": 5692.19921875,
+              "absoluteErrorKJPerMol": 1.6492393115186132e-05,
+              "roundoffBoundKJPerMol": 0.006785648317937761,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6759.119912426065,
+              "nativeKineticEnergyKJPerMol": 6759.1201171875,
+              "absoluteErrorKJPerMol": 0.00020476143527048407,
+              "roundoffBoundKJPerMol": 0.008057518432787058,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -25521.516829869055,
+            "nativeEnergyKJPerMol": -25521.5625,
+            "errorPerParticleKJPerMol": 2.0127867318169777e-05,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 750,
+              "shiftedParticles": 47,
+              "imageShiftsSHA256": "fcb0b45a2813c6f88e82bf93cd61ed482922d9697c39e06644d8c435d6607984",
+              "positionsSHA256": "88b71a46eeb7341d5cad82c1ad0275822e8f874cc8383f4308a5698b662ec513"
+            },
+            "passed": true
+          },
+          "requestSHA256": "bfd0d0f57ba6cd30a17b3f1ca8fcbe5f3b04693e51cbf076cb363765894a8657",
+          "reportSHA256": "99acace6e2dd3ff40d69d75a6fc3ed46e035f90b4a314c21d1ba5adfb6f30b7a",
+          "serializedSystemSHA256": "4044307403ce329f08ea591cbcbdf920a7f6f452f808b373414c7e6c22fcaa66"
+        },
+        {
+          "identifier": "protein-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 60239.553304921894,
+              "nativeKineticEnergyKJPerMol": 60239.5546875,
+              "absoluteErrorKJPerMol": 0.0013825781061314046,
+              "roundoffBoundKJPerMol": 0.08258293826536617,
+              "roundoffOperationBound": 23,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 60079.65628083304,
+              "nativeKineticEnergyKJPerMol": 60079.65625,
+              "absoluteErrorKJPerMol": 3.083304181927815e-05,
+              "roundoffBoundKJPerMol": 0.08236373404246407,
+              "roundoffOperationBound": 23,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -301816.12393026735,
+            "nativeEnergyKJPerMol": -301816.3125,
+            "errorPerParticleKJPerMol": 8.004488184508396e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 7024,
+              "shiftedParticles": 378,
+              "imageShiftsSHA256": "fad20dd4471decd04c40984e8fb4c26ef37260b0f86be01e36e5d17260f68b1c",
+              "positionsSHA256": "0df5ee0993772cc4afe12dd12b75b3c50b846f3335434d80163561ba118d58d7"
+            },
+            "passed": true
+          },
+          "requestSHA256": "901dedc0d033c17d65339a9587a2340c056bbb76cb43c669f53973614313effa",
+          "reportSHA256": "1f745b2cda8de30a7b44c80359def3991ac17a6fd885c87c34e28bd5528fc5e7",
+          "serializedSystemSHA256": "44b4a4bf200422c521de48eaf2746a6a188a5a1ff3d7566908e7681e1d3e6f4b"
+        },
+        {
+          "identifier": "complex-vacuum",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 8166.705448973012,
+              "nativeKineticEnergyKJPerMol": 8166.705078125,
+              "absoluteErrorKJPerMol": 0.0003708480116983992,
+              "roundoffBoundKJPerMol": 0.009735493151025966,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 10189.099805598358,
+              "nativeKineticEnergyKJPerMol": 10189.099609375,
+              "absoluteErrorKJPerMol": 0.00019622335821622983,
+              "roundoffBoundKJPerMol": 0.012146377969472799,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -17689.106577389095,
+            "nativeEnergyKJPerMol": -17689.123046875,
+            "errorPerParticleKJPerMol": 6.283664977093942e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "unchanged vacuum coordinates",
+              "components": 2621,
+              "shiftedParticles": 0,
+              "imageShiftsSHA256": "b0080c9706f35926730b6ff17f6536b2d9185b347051d9176ad927414fda9d22",
+              "positionsSHA256": "fa1da7103ebdeb1258c157bcdf27cd2f507cd81f8a270cc91a20c769ca7a2be0"
+            },
+            "passed": true
+          },
+          "requestSHA256": "9611f40758e1b1c29ef7402674a5cce65a2a1ef54199f69874e160af36036da2",
+          "reportSHA256": "d522f88e7e00c108a9e1c3ac14ad54ba8676ab4b483304255b35538a29bbdab2",
+          "serializedSystemSHA256": "ee500e9bcfb426c6727bf27785c5189b9d7114589b234ae30e00b3689d2cb80a"
+        },
+        {
+          "identifier": "dna-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 33988.97973034573,
+              "nativeKineticEnergyKJPerMol": 33988.98046875,
+              "absoluteErrorKJPerMol": 0.0007384042692137882,
+              "roundoffBoundKJPerMol": 0.04456989183289805,
+              "roundoffOperationBound": 22,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 20880.420919704942,
+              "nativeKineticEnergyKJPerMol": 20880.419921875,
+              "absoluteErrorKJPerMol": 0.0009978299422073178,
+              "roundoffBoundKJPerMol": 0.027380587481163343,
+              "roundoffOperationBound": 22,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -213661.7036758251,
+            "nativeEnergyKJPerMol": -213661.796875,
+            "errorPerParticleKJPerMol": 6.829779782308866e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 4298,
+              "shiftedParticles": 28,
+              "imageShiftsSHA256": "287a387632f5a77ed3fadbc0750f9f71d9fa2a82e7bf11e05092fd88840feac8",
+              "positionsSHA256": "5d0861027f65404c75cc88036284c6b14e6ac32923ab1fd589df22d2f3d41e91"
+            },
+            "passed": true
+          },
+          "requestSHA256": "8b9726f38a72fcb2b4e363ae7156f9ba2af7fbffb3fe9334efe22bb0b9f572c0",
+          "reportSHA256": "7b8321c7d6885d3dfd66a4a99394cc9223f8233968a4d0495abd7faee4ccb92f",
+          "serializedSystemSHA256": "a6030302e5f9738e68bdf047012fb87dea6682a5253646da87e741e22f2bff0a"
+        },
+        {
+          "identifier": "membrane-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 89371.02314477097,
+              "nativeKineticEnergyKJPerMol": 89371.015625,
+              "absoluteErrorKJPerMol": 0.00751977096660994,
+              "roundoffBoundKJPerMol": 0.12251952398125611,
+              "roundoffOperationBound": 23,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 90338.41236335815,
+              "nativeKineticEnergyKJPerMol": 90338.40625,
+              "absoluteErrorKJPerMol": 0.006113358147558756,
+              "roundoffBoundKJPerMol": 0.12384572628622484,
+              "roundoffOperationBound": 23,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -310393.3548909137,
+            "nativeEnergyKJPerMol": -310393.96875,
+            "errorPerParticleKJPerMol": 1.8881000439759243e-05,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 5248,
+              "shiftedParticles": 2349,
+              "imageShiftsSHA256": "48b37e78874b1354e42762d7e22d75bb3836e271cfaab0d36380c418d13ae9d5",
+              "positionsSHA256": "139baf958427aeff6ee818de6417f129e0f2a1978c8c9554d21bdc7fbb563da4"
+            },
+            "passed": true
+          },
+          "requestSHA256": "8aa3a6aa818101e64a825739b251461b5efb983f9d8a0eee3a97e911aeec485a",
+          "reportSHA256": "b85385d1fac8416073ac376a3c0020d9327a0be546e33f35314524dd19c229f7",
+          "serializedSystemSHA256": "40bce2afbb80f130015fac45e39cc758d1efa3b0bd431d444ab23537d087ad1c"
+        },
+        {
+          "identifier": "ions-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6618.111305734273,
+              "nativeKineticEnergyKJPerMol": 6618.11083984375,
+              "absoluteErrorKJPerMol": 0.000465890522718837,
+              "roundoffBoundKJPerMol": 0.007889422874158796,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 7110.935081771819,
+              "nativeKineticEnergyKJPerMol": 7110.93505859375,
+              "absoluteErrorKJPerMol": 2.317806865903549e-05,
+              "roundoffBoundKJPerMol": 0.008476915296656031,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35906.711111965415,
+            "nativeEnergyKJPerMol": -35906.7265625,
+            "errorPerParticleKJPerMol": 5.762974481685077e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 105,
+              "imageShiftsSHA256": "d52b0c642016962e5c6e4b7d40282042a3a6b45bd756d355feff98ee89b42610",
+              "positionsSHA256": "cd52781df3be6b474a84bc45a08c673faf087a342faf63e54a952ad58e0bf8f1"
+            },
+            "passed": true
+          },
+          "requestSHA256": "e1271d2ac22f90ce8980684f16950acbc103afdaa807b58bfae3f08c2fabf587",
+          "reportSHA256": "053e8fd9f50fad23f2e9988e6534225c3fc009683426b652576e411af7066c70",
+          "serializedSystemSHA256": "eb5c4d4a99ef8d70bc673c73d7eab0c5d9570e800dbdaf020769a0f3b4d59175"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6696.946041095795,
+              "nativeKineticEnergyKJPerMol": 6696.9462890625,
+              "absoluteErrorKJPerMol": 0.0002479667045918177,
+              "roundoffBoundKJPerMol": 0.007983401314133536,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6804.800237387657,
+              "nativeKineticEnergyKJPerMol": 6804.7998046875,
+              "absoluteErrorKJPerMol": 0.0004327001570345601,
+              "roundoffBoundKJPerMol": 0.008111973688553984,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35768.58138722554,
+            "nativeEnergyKJPerMol": -35768.60546875,
+            "errorPerParticleKJPerMol": 8.968910413969385e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 74,
+              "imageShiftsSHA256": "6aba5eaa75abe64d1a3238f88d04c1eb36a9bf360ddc88238a3f53e17aa8f12f",
+              "positionsSHA256": "4936ad10082407b4505bedfd86b1bd968b4d5c2294c5876e9da13c48cb8ea201"
+            },
+            "passed": true
+          },
+          "requestSHA256": "1d98895306abe60a8e6384afff7d5d82daf79c9a996868d4faf5d2c7da172b1a",
+          "reportSHA256": "bbcf21eab4fd6ea17a3e029a0f9ddb8d3a2086a3f8ae6debbbe419c917429a13",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nve-2-whole.json",
+      "sha256": "ff00c6677207dac9f078e13d7efd02fc4c78e0de49e3a33ea281cb71242198e5",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "alanine-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 5692.199202257607,
+              "nativeKineticEnergyKJPerMol": 5692.19921875,
+              "absoluteErrorKJPerMol": 1.6492393115186132e-05,
+              "roundoffBoundKJPerMol": 0.006785648317937761,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 7100.120631939182,
+              "nativeKineticEnergyKJPerMol": 7100.12060546875,
+              "absoluteErrorKJPerMol": 2.6470432203495875e-05,
+              "roundoffBoundKJPerMol": 0.008464023452473443,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -25862.20635559087,
+            "nativeEnergyKJPerMol": -25862.251953125,
+            "errorPerParticleKJPerMol": 2.0095872246945454e-05,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 750,
+              "shiftedParticles": 39,
+              "imageShiftsSHA256": "3856db35ebd16dddad5e258a8a5da418e7d755a05fc6f43ab14f812ce4d6154f",
+              "positionsSHA256": "f5b2ca93c5f123fd7c5cb049cad04b76ce25a9bde31e3742f87702aaaea7e414"
+            },
+            "passed": true
+          },
+          "requestSHA256": "e6390fa3491a295a2956ed14fd5eb762101070db23bd526a859908a7e9b4c758",
+          "reportSHA256": "d2090f140d15b272a49e2f5f6ed9e95221418ca763a280e280ff8bd1d6d39d13",
+          "serializedSystemSHA256": "4044307403ce329f08ea591cbcbdf920a7f6f452f808b373414c7e6c22fcaa66"
+        },
+        {
+          "identifier": "protein-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 60239.553304921894,
+              "nativeKineticEnergyKJPerMol": 60239.5546875,
+              "absoluteErrorKJPerMol": 0.0013825781061314046,
+              "roundoffBoundKJPerMol": 0.08258293826536617,
+              "roundoffOperationBound": 23,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 60118.831688145416,
+              "nativeKineticEnergyKJPerMol": 60118.8359375,
+              "absoluteErrorKJPerMol": 0.004249354584317189,
+              "roundoffBoundKJPerMol": 0.08241743994953593,
+              "roundoffOperationBound": 23,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -301855.90000279184,
+            "nativeEnergyKJPerMol": -301856.125,
+            "errorPerParticleKJPerMol": 9.550777152673256e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 7024,
+              "shiftedParticles": 370,
+              "imageShiftsSHA256": "c7004eb71a89e2ee3cb4a9153030526d1312af905b9b097b4bb906ced7f75b7e",
+              "positionsSHA256": "f7d4190a0a69931c19ac76f51b9137644b2a00f0e186f18afe7e7537ceebcede"
+            },
+            "passed": true
+          },
+          "requestSHA256": "3ebbae6e4cb0555e9fc34d8fb423d058c379a1db857bee5a6882e211abb53008",
+          "reportSHA256": "b50ecc071f732cf57db9e994b2f5c9e1ce9eddfc1bbb4c29746f2f2c3770b2ca",
+          "serializedSystemSHA256": "44b4a4bf200422c521de48eaf2746a6a188a5a1ff3d7566908e7681e1d3e6f4b"
+        },
+        {
+          "identifier": "complex-vacuum",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 8166.705448973012,
+              "nativeKineticEnergyKJPerMol": 8166.705078125,
+              "absoluteErrorKJPerMol": 0.0003708480116983992,
+              "roundoffBoundKJPerMol": 0.009735493151025966,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 9964.61153506439,
+              "nativeKineticEnergyKJPerMol": 9964.611328125,
+              "absoluteErrorKJPerMol": 0.00020693939040938858,
+              "roundoffBoundKJPerMol": 0.01187876677802702,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -17464.668516598373,
+            "nativeEnergyKJPerMol": -17464.671875,
+            "errorPerParticleKJPerMol": 1.2813436197398037e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "unchanged vacuum coordinates",
+              "components": 2621,
+              "shiftedParticles": 0,
+              "imageShiftsSHA256": "b0080c9706f35926730b6ff17f6536b2d9185b347051d9176ad927414fda9d22",
+              "positionsSHA256": "8df04c94676ca8d20ef7d1e746121007f47ee27f63732bb8fbf64ae11e7b8afb"
+            },
+            "passed": true
+          },
+          "requestSHA256": "194de8b3fd574cade853aca24a2f9ddcba31117788f19681c36b00d8b0128140",
+          "reportSHA256": "b0ee0939f7d591ce078d20c578917ad5143bc6c22f865a44525ee9e1dd295f6d",
+          "serializedSystemSHA256": "ee500e9bcfb426c6727bf27785c5189b9d7114589b234ae30e00b3689d2cb80a"
+        },
+        {
+          "identifier": "dna-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 33988.97973034573,
+              "nativeKineticEnergyKJPerMol": 33988.98046875,
+              "absoluteErrorKJPerMol": 0.0007384042692137882,
+              "roundoffBoundKJPerMol": 0.04456989183289805,
+              "roundoffOperationBound": 22,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 20744.46836314904,
+              "nativeKineticEnergyKJPerMol": 20744.46875,
+              "absoluteErrorKJPerMol": 0.00038685095933033153,
+              "roundoffBoundKJPerMol": 0.027202312362914736,
+              "roundoffOperationBound": 22,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -213529.33178819332,
+            "nativeEnergyKJPerMol": -213529.40625,
+            "errorPerParticleKJPerMol": 5.456676438658836e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 4298,
+              "shiftedParticles": 26,
+              "imageShiftsSHA256": "c7b4fa754f4d567565b70665d38aa8802edd920a3f22be95f7c9cc8a28cff139",
+              "positionsSHA256": "dc4d07ee77b624da8a5786a8e5e6067b9f010663e59f2647bb06f6d2ef35e1bc"
+            },
+            "passed": true
+          },
+          "requestSHA256": "86aa1259ad670da693bb42b1d5e841e9bf787f0ca86fed24e07fc82a7b5355c7",
+          "reportSHA256": "96c2281ff4fcccb8e2062448286a662b6b82a6ac6ae589162962230d9b41d7d9",
+          "serializedSystemSHA256": "a6030302e5f9738e68bdf047012fb87dea6682a5253646da87e741e22f2bff0a"
+        },
+        {
+          "identifier": "membrane-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 89371.02314477097,
+              "nativeKineticEnergyKJPerMol": 89371.015625,
+              "absoluteErrorKJPerMol": 0.00751977096660994,
+              "roundoffBoundKJPerMol": 0.12251952398125611,
+              "roundoffOperationBound": 23,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 90019.91735543334,
+              "nativeKineticEnergyKJPerMol": 90019.9140625,
+              "absoluteErrorKJPerMol": 0.003292933339253068,
+              "roundoffBoundKJPerMol": 0.12340909870601695,
+              "roundoffOperationBound": 23,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -310077.4002220917,
+            "nativeEnergyKJPerMol": -310077.96875,
+            "errorPerParticleKJPerMol": 1.748670977784374e-05,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 5248,
+              "shiftedParticles": 2437,
+              "imageShiftsSHA256": "babc2ac703dccb1409bc32beb77326d91bd32bb42c1c4889bb9be96abf240864",
+              "positionsSHA256": "3c65c457da7a248a560f3b12d69deddd1311e1a63a6c54ad56a4351b0df5c1d1"
+            },
+            "passed": true
+          },
+          "requestSHA256": "6f4a8e4064d68a9b0fa7cca710212949309fa82893d493d16a07dd78360bb5b0",
+          "reportSHA256": "1bc64100795633a5791ddd78bafa1d6d3ee02002e6cf950314302432b4fcf431",
+          "serializedSystemSHA256": "40bce2afbb80f130015fac45e39cc758d1efa3b0bd431d444ab23537d087ad1c"
+        },
+        {
+          "identifier": "ions-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6618.111305734273,
+              "nativeKineticEnergyKJPerMol": 6618.11083984375,
+              "absoluteErrorKJPerMol": 0.000465890522718837,
+              "roundoffBoundKJPerMol": 0.007889422874158796,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6891.892780472367,
+              "nativeKineticEnergyKJPerMol": 6891.892578125,
+              "absoluteErrorKJPerMol": 0.000202347367121547,
+              "roundoffBoundKJPerMol": 0.00821579621418307,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35687.29163650912,
+            "nativeEnergyKJPerMol": -35687.30859375,
+            "errorPerParticleKJPerMol": 6.324968622779944e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 69,
+              "imageShiftsSHA256": "a8c7a2b9d6afc8434522c00023f629f0ca79d43b3a8db79e812d16d507a2ae6e",
+              "positionsSHA256": "117c7fcf5e7c800834b8d86225ddcbc00d3ec47d1a8f75d416a03319e973beef"
+            },
+            "passed": true
+          },
+          "requestSHA256": "cd88e63376df74b68aa503de4b0d21e1f181c967b5eb68894769b5a3cc0fb1fe",
+          "reportSHA256": "5afd9f491bfbf6a1b84cc2085dada2a78e9b98f80ededd4dfe0ac3bb100ccf57",
+          "serializedSystemSHA256": "eb5c4d4a99ef8d70bc673c73d7eab0c5d9570e800dbdaf020769a0f3b4d59175"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6696.946041095795,
+              "nativeKineticEnergyKJPerMol": 6696.9462890625,
+              "absoluteErrorKJPerMol": 0.0002479667045918177,
+              "roundoffBoundKJPerMol": 0.007983401314133536,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6693.018879779015,
+              "nativeKineticEnergyKJPerMol": 6693.0185546875,
+              "absoluteErrorKJPerMol": 0.00032509151515114354,
+              "roundoffBoundKJPerMol": 0.007978719767447452,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35656.835493462044,
+            "nativeEnergyKJPerMol": -35656.8515625,
+            "errorPerParticleKJPerMol": 5.984744117760014e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 74,
+              "imageShiftsSHA256": "77b98f805368b94325923ad866b18058eb6a9021126201308fa436ab872d1f9e",
+              "positionsSHA256": "bd404002149f7c672559babbc68c60d7dd501001a1b3b1ebf7bfa5048da3bd59"
+            },
+            "passed": true
+          },
+          "requestSHA256": "e5536a8dc1d8d87bccd73053ae8048a8d5bfc9d4f8bfd2b87630ffea75dd287d",
+          "reportSHA256": "3e0af7bd0541001bbb6d7f1b9a88436bd9d57862cb200e2b6e4a5c105ec74d81",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-00.json",
+      "sha256": "21b2c12522d0c4cc66a63aba36e7415136a78bfdaccc5330ccda6615e00491d0",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6696.946041095795,
+              "nativeKineticEnergyKJPerMol": 6696.9462890625,
+              "absoluteErrorKJPerMol": 0.0002479667045918177,
+              "roundoffBoundKJPerMol": 0.007983401314133536,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6884.607197987042,
+              "nativeKineticEnergyKJPerMol": 6884.607421875,
+              "absoluteErrorKJPerMol": 0.00022388795787264826,
+              "roundoffBoundKJPerMol": 0.00820711111270923,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35501.864155338844,
+            "nativeEnergyKJPerMol": -35501.87890625,
+            "errorPerParticleKJPerMol": 5.493821659484389e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 83,
+              "imageShiftsSHA256": "ee2ff62ef55e1b69ce3c78d2543938cc10bf16c46af5947f1aff52ad89f858a0",
+              "positionsSHA256": "44f8b947644b1edc2e3d2edcd8d9eb36947caf152e6b6627a335531011ecfba0"
+            },
+            "passed": true
+          },
+          "requestSHA256": "5e84bed0203dfca9fdaa1aeb7f619f27dae5cc4d4c3a2d68bad11b2c6a2a0c0b",
+          "reportSHA256": "b9075c2022eee7168ee95e96677e737fc55d408b58fa72ac24e2e17f8f790e5c",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-01.json",
+      "sha256": "66d89a903fa00d3e00e2c9f675f9c8eace0113626cc8aed3c047514db91bdcfe",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6654.445766962485,
+              "nativeKineticEnergyKJPerMol": 6654.4453125,
+              "absoluteErrorKJPerMol": 0.0004544624853224377,
+              "roundoffBoundKJPerMol": 0.00793273697888549,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6455.936062576728,
+              "nativeKineticEnergyKJPerMol": 6455.93603515625,
+              "absoluteErrorKJPerMol": 2.742047763604205e-05,
+              "roundoffBoundKJPerMol": 0.007696094688498278,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35392.83006115159,
+            "nativeEnergyKJPerMol": -35392.84765625,
+            "errorPerParticleKJPerMol": 6.553109278260718e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 91,
+              "imageShiftsSHA256": "1e036c8004e8cc3adcbb8aa1b7fde6f096496ddbe82b7927c68fb3f75f8de845",
+              "positionsSHA256": "b605ee054b472dd3ad8eebce77d70a8fc3aa82c9a1933aa7a01b9761573e4a5c"
+            },
+            "passed": true
+          },
+          "requestSHA256": "395caa208a53eb4ad17b25a76612190efb65d25a42e87245cd03b2400cc32a75",
+          "reportSHA256": "8d3b393a25918aaf9f5f73c56ed4afee8923746b72355c02570699a5c89893d2",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-02.json",
+      "sha256": "892ebb55c9640d15b29210826daad89745a26ce043f1481c097d58bd459c315a",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6772.195354797597,
+              "nativeKineticEnergyKJPerMol": 6772.1953125,
+              "absoluteErrorKJPerMol": 4.229759724694304e-05,
+              "roundoffBoundKJPerMol": 0.008073105593325127,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6736.991507207576,
+              "nativeKineticEnergyKJPerMol": 6736.9912109375,
+              "absoluteErrorKJPerMol": 0.0002962700764328474,
+              "roundoffBoundKJPerMol": 0.008031139286690787,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35380.59550587955,
+            "nativeEnergyKJPerMol": -35380.6171875,
+            "errorPerParticleKJPerMol": 8.075091414659994e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 91,
+              "imageShiftsSHA256": "de58c6f2b65a70e0eb43631538a5b601327b4d957bcc728f6c0eddba93d9da80",
+              "positionsSHA256": "ba88a3b87ff1a1639200152a9d12ec4bc5aaac202310bef1b62c37e682e922b2"
+            },
+            "passed": true
+          },
+          "requestSHA256": "75cbad287564f2eda4ce04f6b0c2250dc9c1adf9325ee426695c4391ca21b8ea",
+          "reportSHA256": "e9390a8435966b63740d58a6e7eb7f0401718f18be6e79d9d942467ee6c0afa8",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-03.json",
+      "sha256": "8885cb257bfe0f46128bb869f4e821ca41368af8c3d2b85200d1f3b1ef6c297a",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6667.1200083502645,
+              "nativeKineticEnergyKJPerMol": 6667.11962890625,
+              "absoluteErrorKJPerMol": 0.00037944401447020937,
+              "roundoffBoundKJPerMol": 0.007947845870011013,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6863.182333091296,
+              "nativeKineticEnergyKJPerMol": 6863.18212890625,
+              "absoluteErrorKJPerMol": 0.00020418504573171958,
+              "roundoffBoundKJPerMol": 0.008181570653033196,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35315.49879123585,
+            "nativeEnergyKJPerMol": -35315.515625,
+            "errorPerParticleKJPerMol": 6.269558343266308e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 79,
+              "imageShiftsSHA256": "083f228d929d19d283e0b11e3f23dcb30984c758e59dacffb4292985544b1d45",
+              "positionsSHA256": "46e58e1506a31a8f74b083380570585a831237011f8567fcdba54da37b8d7ea7"
+            },
+            "passed": true
+          },
+          "requestSHA256": "a3dd402ada2e527f79064cf58a14e6eef5e643718f84dc2e5b66bb0704da9653",
+          "reportSHA256": "e36933f3544b37754e4be86aa6db0bea6c9065dbf77c2c3e840d280e7bf2a98a",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-04.json",
+      "sha256": "ed79f30f6065bc95c93d7952c50727f84872335d0cb7a9462b63a094ed837fd4",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6793.131540994854,
+              "nativeKineticEnergyKJPerMol": 6793.13134765625,
+              "absoluteErrorKJPerMol": 0.00019333860382175772,
+              "roundoffBoundKJPerMol": 0.00809806350190205,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6918.357527368088,
+              "nativeKineticEnergyKJPerMol": 6918.35693359375,
+              "absoluteErrorKJPerMol": 0.0005937743380854954,
+              "roundoffBoundKJPerMol": 0.008247344688547584,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35035.77359308017,
+            "nativeEnergyKJPerMol": -35035.7890625,
+            "errorPerParticleKJPerMol": 5.761422654804626e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 101,
+              "imageShiftsSHA256": "92c429dba73f57febcad8d179d8e13eda4f23458fa5e93a6d568534bb665f204",
+              "positionsSHA256": "12017f02f837eb0eddbeba1e3074bdf537b9577b7d696f76ec4b66776c49c5aa"
+            },
+            "passed": true
+          },
+          "requestSHA256": "6783360d5fd84da53bde1c989d1c0dc9d073b8ed19bfd03eb634d9fd5e5f0d5e",
+          "reportSHA256": "4fcbfc68d8def7d0acaf151e0bac33e0f35fdc812281ed8421727f2ea1f3ba44",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-05.json",
+      "sha256": "43930e6848d9c6f71233eff0d3a254ac0839220993d4f793c2a7e5640b1f706f",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6875.609935760125,
+              "nativeKineticEnergyKJPerMol": 6875.60986328125,
+              "absoluteErrorKJPerMol": 7.247887515404727e-05,
+              "roundoffBoundKJPerMol": 0.008196385527543608,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6794.987566399229,
+              "nativeKineticEnergyKJPerMol": 6794.9873046875,
+              "absoluteErrorKJPerMol": 0.0002617117288536974,
+              "roundoffBoundKJPerMol": 0.008100276059238062,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35325.120045901975,
+            "nativeEnergyKJPerMol": -35325.1328125,
+            "errorPerParticleKJPerMol": 4.754785111857304e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 100,
+              "imageShiftsSHA256": "04dbac0e768da18fe84357a4ec59ed1acc928a113eabdf316ca01b17e7f63b71",
+              "positionsSHA256": "def8e528652c2cd60d4c012d7912f9998d0acc441e63e7dd4c883f67148ff2fc"
+            },
+            "passed": true
+          },
+          "requestSHA256": "8a5607478b405126b51ad907f44af5b99c0ba9d4a03b2b564d8e231184d5e7ce",
+          "reportSHA256": "1120916fa8978e09f9083e322fac57a12e30f05c93615f0a36f7161ab805c0ba",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-06.json",
+      "sha256": "277615301096f4a9a07147fffe6061e47192ff5c2b32ef2262bdb0b4c2ecaa95",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6696.946041095795,
+              "nativeKineticEnergyKJPerMol": 6696.9462890625,
+              "absoluteErrorKJPerMol": 0.0002479667045918177,
+              "roundoffBoundKJPerMol": 0.007983401314133536,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6792.788053599979,
+              "nativeKineticEnergyKJPerMol": 6792.7880859375,
+              "absoluteErrorKJPerMol": 3.2337520678993315e-05,
+              "roundoffBoundKJPerMol": 0.008097654032530799,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35405.83344398346,
+            "nativeEnergyKJPerMol": -35405.85546875,
+            "errorPerParticleKJPerMol": 8.202892566859389e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 75,
+              "imageShiftsSHA256": "4b6f9b508359e461adac2f7d3640159931a053e778b696ef49e6b42530623326",
+              "positionsSHA256": "14a54b00bbebf6de5d59ce661058c72922f192c15a0ea87ee59da509356fa29e"
+            },
+            "passed": true
+          },
+          "requestSHA256": "8dfa15b3d8e99280158939657111e5f52af2dafe1dfc54f8f6c35c5e19012e74",
+          "reportSHA256": "001b75a7d3c7d17ff31964950f9ce0ee11924f887b5d82baa93aafd2d603ae5d",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-07.json",
+      "sha256": "6d608a9fca01bbf4c8dc333219d77b9c242fd608379519afcb6138fe7d65511b",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6654.445766962485,
+              "nativeKineticEnergyKJPerMol": 6654.4453125,
+              "absoluteErrorKJPerMol": 0.0004544624853224377,
+              "roundoffBoundKJPerMol": 0.00793273697888549,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6698.79280203717,
+              "nativeKineticEnergyKJPerMol": 6698.79248046875,
+              "absoluteErrorKJPerMol": 0.000321568420076801,
+              "roundoffBoundKJPerMol": 0.007985602827355859,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35698.66334765346,
+            "nativeEnergyKJPerMol": -35698.6796875,
+            "errorPerParticleKJPerMol": 6.0856039245618125e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 82,
+              "imageShiftsSHA256": "cfca17ac9fcc8e3279ad41bde4d71271b126502e2289098f19484494d7483c71",
+              "positionsSHA256": "e6f14cd1e9b855cf7067f6af1ec26fe9b27893aa46ee8a96868a340913fa1309"
+            },
+            "passed": true
+          },
+          "requestSHA256": "dc978225cbf150879b582eedf99a13f3b6e56dc08f670b88893da9f498dc0f4e",
+          "reportSHA256": "052297b966abc019104d2f9363849c1b9ed7df4641217ca99f31a320df6c8ab4",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-08.json",
+      "sha256": "6893f0f19f7f01b400485c1af34e7785375559d5cfa6f1374357ea229c666fe7",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6772.195354797597,
+              "nativeKineticEnergyKJPerMol": 6772.1953125,
+              "absoluteErrorKJPerMol": 4.229759724694304e-05,
+              "roundoffBoundKJPerMol": 0.008073105593325127,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6695.352654078677,
+              "nativeKineticEnergyKJPerMol": 6695.3525390625,
+              "absoluteErrorKJPerMol": 0.00011501617700560018,
+              "roundoffBoundKJPerMol": 0.007981501846526294,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35410.7986744924,
+            "nativeEnergyKJPerMol": -35410.8125,
+            "errorPerParticleKJPerMol": 5.149164842354963e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 83,
+              "imageShiftsSHA256": "27f9959e7401234db9470f4b0dafed39db5fd457e6962d5cba5a9b4d76bc8129",
+              "positionsSHA256": "7acfba2f0fce96264823ebe4acb0d179224abb5c2f92f26e8c55812582f61cdc"
+            },
+            "passed": true
+          },
+          "requestSHA256": "ffc8e824a2b1b5939573e78aa43eb242c7ac3851224ac66c4a71a47b3d2ebe9d",
+          "reportSHA256": "238f3ab51e932566df8337107b2ad3ffce4c4e387f3d8ae47a951de43af1ce64",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-09.json",
+      "sha256": "2d95fb082e728aa05aba515bdabc43c2014c95cc72cce865e7ac5901a59a7921",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6667.1200083502645,
+              "nativeKineticEnergyKJPerMol": 6667.11962890625,
+              "absoluteErrorKJPerMol": 0.00037944401447020937,
+              "roundoffBoundKJPerMol": 0.007947845870011013,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6981.5562410911825,
+              "nativeKineticEnergyKJPerMol": 6981.55615234375,
+              "absoluteErrorKJPerMol": 8.874743252818007e-05,
+              "roundoffBoundKJPerMol": 0.008322683515992997,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35484.047901330865,
+            "nativeEnergyKJPerMol": -35484.0625,
+            "errorPerParticleKJPerMol": 5.437120720674761e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 82,
+              "imageShiftsSHA256": "70ee2a5b6ed39cc5c9d9e17c22d7925614188ff88920c1c5230950e076ce7921",
+              "positionsSHA256": "dcd7237a8767d41200f5a342e86a8b86069567701448fa0ffb3835183ed3cafb"
+            },
+            "passed": true
+          },
+          "requestSHA256": "1799d38232bc26b314f9b13160c3609145f7a3804c1c006120a8bd742b49ed04",
+          "reportSHA256": "8b431f24c053fe45bcbccdb612ee2c205e9d44acf7e1aa8d95faf4b24aa5a558",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-10.json",
+      "sha256": "fc967c0147699b7b2c650dbed47f27fc91fdb46ce8f901fd56c3e9b6f8e2c428",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6793.131540994854,
+              "nativeKineticEnergyKJPerMol": 6793.13134765625,
+              "absoluteErrorKJPerMol": 0.00019333860382175772,
+              "roundoffBoundKJPerMol": 0.00809806350190205,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6685.059534335585,
+              "nativeKineticEnergyKJPerMol": 6685.05908203125,
+              "absoluteErrorKJPerMol": 0.000452304335340159,
+              "roundoffBoundKJPerMol": 0.007969231476980521,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35376.50297615782,
+            "nativeEnergyKJPerMol": -35376.515625,
+            "errorPerParticleKJPerMol": 4.7109281866216346e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 85,
+              "imageShiftsSHA256": "0340d509fd8d09988a21442576053233d6a1b3b107bdd57b94b24f5365e02adc",
+              "positionsSHA256": "24deb5167df93d6656a9f1e41c53b8805a42f6a358710f67ef88885e7b21cfb8"
+            },
+            "passed": true
+          },
+          "requestSHA256": "d34c713cc7b95afd60ad312090dcaf2fce8f435e38818215faa1ec833c39541f",
+          "reportSHA256": "1626adfdcaeac104cca48bac5ee0fa625eec26e9dc7e5abfef1ef3b2ed427d84",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    },
+    {
+      "artifact": "endpoint-nvt-11.json",
+      "sha256": "74b8614c6d69451fd53b273b0163e0da5351d212cf4b33168e080ec1833557f7",
+      "preparedPassed": true,
+      "cases": [
+        {
+          "identifier": "water",
+          "outcome": "preparation-failed",
+          "error": "OpenMMException: NonbondedForce: The cutoff distance cannot be greater than half the periodic box size.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#boxsize"
+        },
+        {
+          "identifier": "water-orthogonal-smooth",
+          "outcome": "passed",
+          "kinetic": [
+            {
+              "endpoint": "start",
+              "referenceKineticEnergyKJPerMol": 6875.609935760125,
+              "nativeKineticEnergyKJPerMol": 6875.60986328125,
+              "absoluteErrorKJPerMol": 7.247887515404727e-05,
+              "roundoffBoundKJPerMol": 0.008196385527543608,
+              "roundoffOperationBound": 20,
+              "passed": true
+            },
+            {
+              "endpoint": "end",
+              "referenceKineticEnergyKJPerMol": 6841.834951328465,
+              "nativeKineticEnergyKJPerMol": 6841.83447265625,
+              "absoluteErrorKJPerMol": 0.0004786722147400724,
+              "roundoffBoundKJPerMol": 0.008156122560559542,
+              "roundoffOperationBound": 20,
+              "passed": true
+            }
+          ],
+          "finalPotential": {
+            "referenceEnergyKJPerMol": -35326.49530318112,
+            "nativeEnergyKJPerMol": -35326.5078125,
+            "errorPerParticleKJPerMol": 4.658964202432326e-06,
+            "limitPerParticleKJPerMol": 0.002,
+            "referenceImages": {
+              "convention": "whole finite molecular images; integer cell translations only",
+              "components": 895,
+              "shiftedParticles": 77,
+              "imageShiftsSHA256": "34040ce3c4eccec42cf0306a423e731cc89d32ed3e1341fd7e08cceb0d3ee2bb",
+              "positionsSHA256": "2ca368ad08b43f936c64f5174e5eb4e3db3152986bd9944fe019baeb7a34e4ac"
+            },
+            "passed": true
+          },
+          "requestSHA256": "7bb233168c0907931b9adc36bf19bc64f3fa632ab7aa46dc5c88e7ca8af11cff",
+          "reportSHA256": "173e2166abc0f7d9f59af6f3c7625bf76dd3624d37cff86c48bab30cbc85cb4c",
+          "serializedSystemSHA256": "50c59265042f2e6a6899a84ed6be53303521025193f7efcc7a2720b8720ae20b"
+        }
+      ],
+      "auditorSHA256": "eefc1c52ba74b8f50261aa251166192ac28fede2ddd6af22e018ee0d269ade3c"
+    }
+  ],
+  "retainedAuditorFailure": {
+    "artifact": "endpoint-nve-0.json",
+    "sha256": "3e8629a07d29c134efcc6651e55007e63fd347a96cc400e63fd91ff4a906d540",
+    "reason": "Initial auditor supplied atom-wrapped coordinates to OpenMM bonded forces; corrected offline whole-image conversion reuses unchanged native reports."
+  },
+  "scope": "Bounded prepared-system conservation and rigid-water kinetic/configurational consistency. Not full equilibration, all kinetic partitions, NPT, experimental or performance leadership qualification."
+}

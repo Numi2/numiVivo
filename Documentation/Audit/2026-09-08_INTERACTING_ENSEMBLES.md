@@ -70,8 +70,56 @@ diagnostics retain correlation, drift, replica disagreement and insufficient
 precision as inconclusive. Failed observations are retained even when precision
 is insufficient to classify the overall result.
 
-Measurement status: admitted and running. Implementation tests and the completed
-NVE gate do not establish a measured NVT pass.
+All 12 native trajectories completed, and all six temperature/seed pairs retained
+identical prepared position and velocity words across the two time steps. The
+original statistical matrix is **failed**: the 1 fs kinetic checks fail, while
+the 0.5 fs kinetic checks pass and both configurational checks are inconclusive.
+
+| Time step | Target, K | Mean temperature, K | Mean standard error, K | Gamma CDF bootstrap probability | Kinetic verdict |
+|---|---:|---:|---:|---:|---|
+| 1 fs | 300 | 299.44855 | 0.15410 | 0.009995 | Failed: mean |
+| 1 fs | 305 | 304.49287 | 0.17331 | 0.003498 | Failed: shape |
+| 0.5 fs | 300 | 299.86200 | 0.16833 | 0.703648 | Passed |
+| 0.5 fs | 305 | 305.00278 | 0.15573 | 0.946027 | Passed |
+
+The 300 K, 1 fs mean is 3.579 standard errors from its target, exceeding the fixed
+3.5 limit. The 305 K, 1 fs gamma CDF probability is below the fixed 0.005 limit.
+These observations remain failed. The finer-step result is consistent with
+reduced finite-step kinetic error; this small matrix does not establish a general
+thermostat bias law or qualify every time step.
+
+Potential-energy information remains insufficient at both steps. Effective sample
+totals are 142/173 at 1 fs and 128/197 at 0.5 fs, versus the required 200 per
+temperature. One-ps block correlations range from 0.363 to 0.452, above 0.3.
+Some individual replicas also miss the 40-effective-sample minimum. The fitted
+temperature differences are 4.758 and 4.491 K for a requested 5 K; the unresolved
+sampling diagnostics prevent certification. All prescribed bootstrap fits completed.
+
+![Measured original NVT comparison](frontier-nvt-50ps.svg)
+
+The [complete compact observations](frontier-interacting-ensemble-observations.json)
+retain policies, case verdicts, diagnostics, source identities and raw artifact
+hashes. Endpoint agreement and native completion do not override these statistics.
+
+## Fixed longer follow-up
+
+The separately declared adaptive policy continues all six 0.5 fs replicas to
+210 ps, retains the original 10 ps exclusion, and uses five-ps blocks. This gives
+40 complete blocks and 4,000 production observations per replica. The original
+coarse subset motivated this duration/block choice before any continuation data.
+All statistical acceptance limits remain unchanged, and the original 50 ps
+campaign is retained with its failed and inconclusive verdicts.
+
+The continuation harness is published at
+`a1b363b63fedec196bc4e4e0b38a7b7e4b94997d`. All 35 Python checks passed in 1.658 s,
+including altered clocks, checkpoint words, energy accounting, source identities,
+directory escapes, incomplete matrices and retained parent failures. The derived
+analysis policy explicitly names its one finer time step and separate schema.
+
+Measurement status: the longer follow-up is running. Its first zero-step restore
+preserved the complete checkpoint exactly. Ten-ps chunks use the same native
+binary, configuration and stochastic step counter, with independent endpoint
+energy checks. No longer-run ensemble verdict is available yet.
 
 ## Software and evidence identity
 
@@ -115,8 +163,12 @@ potential error was 2.02e-5 kJ/mol per particle, versus the unchanged 0.002 limi
 All 42 start/end kinetic checks passed their independently computed roundoff bound.
 The original checkpoint files and native trajectories were reused unchanged.
 An analytic boundary-bond control independently recovered 0.03125 kJ/mol; supplying
-the split molecule without conversion gave 30.03125 kJ/mol. NVT endpoint audits
-remain to be completed.
+the split molecule without conversion gave 30.03125 kJ/mol.
+
+All 12 original NVT endpoints also passed. Across the longer NVE and original NVT
+campaigns, all 33 final potential comparisons and all 66 start/end kinetic checks
+passed. The largest potential error remains 2.02e-5 kJ/mol per particle. These
+energy comparisons do not establish the missing configurational sampling evidence.
 
 Remote raw evidence: `/Users/n/numivivo-ensemble-evidence-20260908`.
 Local mirror: `/Users/home/numivivo-ensemble-evidence-20260908`.

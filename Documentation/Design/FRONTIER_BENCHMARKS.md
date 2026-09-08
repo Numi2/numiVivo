@@ -84,7 +84,9 @@ The [next ensemble milestone](MD_ENSEMBLE_QUALIFICATION.md) now provides a fixed
 5 ps conservation campaign and independent kinetic/configurational NVT analysis.
 Its [measured follow-up](../Audit/2026-09-08_INTERACTING_ENSEMBLES.md) passes all
 seven prepared systems at three time steps over 5 ps, including independent
-endpoint energy checks. NVT requires its own completed statistical campaign.
+endpoint energy checks. The completed 50 ps NVT matrix passes kinetic checks at
+0.5 fs, fails kinetic checks at 1 fs, and lacks sufficient configurational sampling
+at both steps. A separately declared 210 ps finer-step follow-up is running.
 
 1. Extend this panel to interacting NVE/NVT/NPT ensemble distributions,
    timestep refinement, constrained motion and numerical failure recovery.
