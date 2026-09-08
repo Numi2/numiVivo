@@ -7,9 +7,11 @@ reads retained observations; it does not provide forces to the simulation.
 ## Fixed campaigns
 
 The separately named smooth-LJ panel retains the previous Hamiltonian and static
-limits. An explicit 32-iteration execution variant uses the runtime's existing
-default, with the same 1e-6 constraint tolerance. Short comparisons and NVE
-refinement check this variant before longer runs. A failed variant remains
+limits. An explicit 32-iteration execution variant used the runtime's existing
+default, with the same 1e-6 constraint tolerance. It failed admission on several
+systems and remains failed. A 64-iteration variant passed all seven short force,
+constraint and NVE-refinement cases; the prospective NVT policy uses 64 iterations.
+This increases solver work without changing its accuracy requirement. A failed variant remains
 failed; solver or scientific limits are not loosened to promote it.
 
 - `long_nve_policy.json` extends conservation/refinement from 0.1 to 5 ps, using
@@ -21,6 +23,11 @@ failed; solver or scientific limits are not loosened to promote it.
   production samples per seed; one-ps blocks support correlated uncertainty
   estimates. This elevated friction is a declared test condition, not a transport
   model or a claim about every thermostat setting.
+
+The higher-temperature seeds add the fixed offset 1,000,000 to the three listed
+base seeds. Thus the two temperature samples use disjoint random streams, while
+each temperature/seed pair retains the same prepared state across time steps.
+This was fixed before any NVT measurements; early policy snapshots remain visible.
 
 The subset and excluded prepared cases are explicit in derived manifests.
 Original preparation failures remain in every derived campaign. NVT input here

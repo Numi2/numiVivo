@@ -80,3 +80,30 @@ separate plotting environment, then run:
 
 Limits and scientific boundaries are fixed in the
 [campaign contract](../../Documentation/Design/FRONTIER_BENCHMARKS.md).
+
+For the longer conservation gate, pass `--policy Tools/Benchmarks/long_nve_policy.json`
+to `run_nve_refinement.py`. It fixes 5 ps at each of three time steps and retains
+the original conservation limits.
+
+The separate interacting NVT campaign requires the Python environment above,
+including the pinned NumPy/SciPy versions, and a frozen native executable with
+its complete `NumiVivo_NumiVivoShaders.bundle`. Its JSON binary manifest contains
+`buildSource`, `buildCommand`, and a `files` array with relative `path` and
+`sha256` for the executable and every bundle file. No files may be omitted.
+
+```sh
+/absolute/reference-env/bin/python -m unittest discover -s Tools/Benchmarks -p 'test_ensemble_*.py' -v
+/absolute/reference-env/bin/python Tools/Benchmarks/run_ensemble.py --references /absolute/smooth-references --binary /absolute/frozen/numivivo --binary-manifest /absolute/binary-manifest.json --out /absolute/new-nvt-campaign
+/absolute/reference-env/bin/python Tools/Benchmarks/analyze_ensemble.py --campaign /absolute/new-nvt-campaign --out /absolute/new-nvt-qualification.json
+```
+
+The default policy fixes 12 rigid-water trajectories, independent seeds across
+temperatures, two time steps, equilibration exclusion and block-bootstrap tests.
+Analysis requires the recorded code and Python/NumPy/SciPy versions. It checks
+the complete matrix, model identity, input/report hashes, clocks, independently
+counted degrees of freedom and checkpoint constraints before using observations.
+Missing data fail validation; insufficient statistical evidence stays inconclusive.
+Parent preparation failures and excluded cases remain explicit. Therefore a
+requested subset can pass while the full retained panel still returns nonzero.
+The [ensemble design](../../Documentation/Design/MD_ENSEMBLE_QUALIFICATION.md)
+defines the limited scientific claim.
