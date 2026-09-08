@@ -78,8 +78,8 @@ public struct VivoSingleCellLibraryBytes: Codable, Sendable, Equatable {
     }
 }
 
-/// Exact original manifest and source bytes. Encoding this through the existing
-/// artifact store retains sources without referring to mutable external paths.
+/// Exact original manifest and source bytes, including any gzip encoding.
+/// The existing artifact store retains sources independently of mutable paths.
 public struct VivoSingleCellInputBundle: Codable, Sendable, Equatable {
     public let schemaVersion: Int
     public let manifest: Data
@@ -117,14 +117,20 @@ public enum VivoSingleCellCampaign {
             guard data.count <= remaining else { throw VivoOmicsError.limit("aggregate campaign source bytes") }
             remaining -= data.count
         }
+        // The raw-source and expanded-source allowances are independent and
+        // apply globally across all libraries, not once per compressed file.
+        var remainingExpanded = limits.maximumInputBytes - input.manifest.count
+        func expand(_ data: Data) throws -> Data {
+            let result = try VivoOmicsSourceDecoder.decode(data, maximumExpandedBytes: remainingExpanded)
+            remainingExpanded -= result.count; return result
+        }
         var datasets: [VivoSingleCellDataset] = []
         var remainingCells = limits.maximumCells, remainingNNZ = limits.maximumNonzeros
         for (index, raw) in input.libraries.enumerated() {
             try Task.checkCancellation()
-            // Apply the remaining global allowance before parsing each library.
-            // A zero-cell remainder still permits a declared empty library.
             var local = limits; local.maximumCells = max(1, remainingCells); local.maximumNonzeros = remainingNNZ
-            let dataset = try VivoMatrixMarketCounts.decode(matrix: raw.matrix, features: raw.features, barcodes: raw.barcodes,
+            let matrix = try expand(raw.matrix), features = try expand(raw.features), barcodes = try expand(raw.barcodes)
+            let dataset = try VivoMatrixMarketCounts.decode(matrix: matrix, features: features, barcodes: barcodes,
                 metadata: plan.libraries[index].metadata, limits: local)
             guard dataset.cells.count <= remainingCells else { throw VivoOmicsError.limit("aggregate campaign cells") }
             remainingCells -= dataset.cells.count; remainingNNZ -= dataset.matrix.counts.count

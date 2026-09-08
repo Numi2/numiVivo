@@ -9,6 +9,7 @@ let package = Package(
         .executable(name: "numivivo", targets: ["NumiVivoCLI"])
     ],
     targets: [
+        .systemLibrary(name: "CNumiVivoZlib", path: "Sources/CNumiVivoZlib"),
         .target(name: "NumiVivoCore", path: "Sources/NumiVivoCore", publicHeadersPath: "include",
                 cxxSettings: [.headerSearchPath("include"), .define("NVIVO_BUILDING_CORE")]),
         .target(name: "NumiVivoShaders", path: "Sources/NumiVivoShaders", resources: [
@@ -36,7 +37,7 @@ let package = Package(
             .copy("Resources/NumiVivoMDPeriodicGeometry.metalh"),
             .copy("Resources/README.txt")
         ]),
-        .target(name: "NumiVivoKit", dependencies: ["NumiVivoCore", "NumiVivoShaders"],
+        .target(name: "NumiVivoKit", dependencies: ["NumiVivoCore", "NumiVivoShaders", "CNumiVivoZlib"],
                 path: "Sources/NumiVivoKit", linkerSettings: [.linkedFramework("Metal"), .linkedFramework("Accelerate")]),
         .executableTarget(name: "NumiVivoCLI", dependencies: ["NumiVivoKit"], path: "Sources/NumiVivoCLI"),
         .testTarget(name: "NumiVivoIntegrationTests", dependencies: ["NumiVivoKit", "NumiVivoShaders"],
