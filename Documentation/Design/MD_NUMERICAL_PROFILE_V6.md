@@ -34,3 +34,11 @@ transport properties, general bitwise PME replay or performance leadership.
 Reference: Andersen, [RATTLE: A velocity version of the SHAKE algorithm](https://doi.org/10.1016/0021-9991(83)90014-1),
 Journal of Computational Physics 52 (1983), 24–34; maintained
 [LAMMPS SHAKE/RATTLE documentation](https://docs.lammps.org/fix_shake.html).
+
+The original periodic panel uses a sharp LJ cutoff, so cutoff crossings can
+produce energy jumps independent of the integrator. The initial v6 study retains
+that model and its failed/inconclusive refinement results. A separately named
+smooth-LJ panel switches interactions from 0.7 to 0.8 nm in both native and
+OpenMM models and recalculates all independent observations. It changes the
+Hamiltonian; it does not relabel the original panel or relax the NVE policy.
+See [OpenMM's switching-function definition](https://docs.openmm.org/latest/userguide/theory/02_standard_forces.html).

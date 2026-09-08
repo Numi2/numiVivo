@@ -89,6 +89,7 @@ import Testing
         let report=try await VivoMDBenchmark.run(request)
         #expect(report.outcome == .passed)
         #expect(report.dynamics?.observations?.map(\.stepIndex)==[0,2,4,6,8])
+        #expect(report.dynamics?.observations?.last==report.dynamics?.end)
         request.dynamicsObserveEvery=0
         #expect(throws:Error.self) { try request.validate() }
         request.dynamicsObserveEvery=1;request.dynamicsSteps=1001

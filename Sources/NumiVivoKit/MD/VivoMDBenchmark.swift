@@ -176,8 +176,15 @@ public enum VivoMDBenchmark {
             }
             let duration=began.duration(to:clock.now).components
             let seconds=Double(duration.seconds)+Double(duration.attoseconds)/1e18
-            let end=try await runtime.observables(), checkpoint=try await runtime.checkpoint()
-            if observations != nil,observations?.last?.stepIndex != end.stepIndex { observations?.append(end) }
+            let checkpoint=try await runtime.checkpoint()
+            let end:VivoMDObservables
+            if let last=observations?.last,last.stepIndex==checkpoint.acceptedStep {
+                // One authoritative observation per sampled boundary. Repeating
+                // an FP32 PME reduction can differ by an accumulation-order ULP.
+                end=last
+            } else {
+                end=try await runtime.observables();observations?.append(end)
+            }
             dynamics = .init(requestedSteps:request.dynamicsSteps,committedSteps:committed,wallSeconds:seconds,
                 rejected:rejected,start:start,preparedCheckpoint:prepared,end:end,finalCheckpoint:checkpoint,observations:observations)
           } catch is CancellationError { throw CancellationError() }

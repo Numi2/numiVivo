@@ -58,7 +58,7 @@ def main():
                 assert score["outcome"]=="passed",score
                 report=read(run["out"]/case["identifier"]/"report.json");dynamics=report["dynamics"]
                 samples=dynamics["observations"];assert len(samples)==round(policy["durationPS"]/policy["observationIntervalPS"])+1
-                assert samples[0]==dynamics["start"] and samples[-1]==dynamics["end"]
+                assert samples[0]==dynamics["start"] and samples[-1]==dynamics["end"],"series boundaries differ from start/end observations"
                 cp=dynamics["preparedCheckpoint"]
                 prepared.append({k:cp[k] for k in ("positionsNM","positionHighNM","positionCorrectionsNM","velocitiesNMPerPS","acceptedStep","timePS")})
                 for i,sample in enumerate(samples):
@@ -77,7 +77,7 @@ def main():
             conservation=all(m["maximumAbsoluteDeviationPerParticle"]<=policy["maximumAbsoluteEnergyDeviationPerParticleKJPerMol"] for m in measurements)
             row.update(outcome="passed" if conservation and all(refinement) else "failed",conservationPassed=conservation,
                 refinementPassed=all(refinement),rmsRefinementRatios=ratios,measurements=measurements)
-        except (AssertionError,KeyError,TypeError,ValueError) as error:row["error"]=str(error)
+        except (AssertionError,KeyError,TypeError,ValueError) as error:row["error"]=f"{type(error).__name__}: {error}"
         results.append(row);print(json.dumps(row),flush=True)
     write(a.out/"qualification.json",dict(schema="numivivo.org/md-nve-refinement-result/v1",identities=identities,
         policy=policy,cases=results,passed=all(r["outcome"]=="passed" for r in results)))

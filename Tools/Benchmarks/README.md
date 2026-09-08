@@ -55,5 +55,14 @@ refinement using a bounded observation series. This is a short conservation
 study, not equilibration or general scientific qualification. Timings with
 observation collection include that work and are not throughput comparisons.
 
+For smooth-Hamiltonian conservation tests, prepare a separately named reference
+panel with `/absolute/reference-env/bin/python Tools/Benchmarks/prepare_smoothed_references.py
+--references /absolute/new-references --out /absolute/smooth-references`, then
+pass that new directory to the NVE runner. Periodic LJ interactions explicitly
+switch from 0.7 to 0.8 nm in both engines; independent observations are recalculated.
+The vacuum case retains its original model. The original sharp-cutoff panel and
+failed preparation remain available and must not be relabeled as passing this
+different model. `nve_policy.json` and its limits remain unchanged.
+
 Limits and scientific boundaries are fixed in the
 [campaign contract](../../Documentation/Design/FRONTIER_BENCHMARKS.md).
