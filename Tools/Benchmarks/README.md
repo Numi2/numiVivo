@@ -107,3 +107,16 @@ Parent preparation failures and excluded cases remain explicit. Therefore a
 requested subset can pass while the full retained panel still returns nonzero.
 The [ensemble design](../../Documentation/Design/MD_ENSEMBLE_QUALIFICATION.md)
 defines the limited scientific claim.
+
+An additional offline endpoint audit recomputes final potential energy with the
+serialized OpenMM Reference system and start/end kinetic energy from saved masses
+and exact velocity words. It retains the original per-particle potential limit;
+the native v6 kinetic reduction is checked against its FP32 forward-roundoff bound.
+
+```sh
+/absolute/reference-env/bin/python Tools/Benchmarks/audit_endpoints.py --references /absolute/variant --campaign /absolute/native-campaign --out /absolute/new-endpoint-audit.json
+```
+
+Apply it separately to each NVE timestep or NVT matrix cell. This checks saved
+endpoint accounting, not an independently integrated trajectory or experimental
+agreement.
