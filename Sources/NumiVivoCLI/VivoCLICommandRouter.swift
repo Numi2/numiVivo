@@ -509,6 +509,8 @@ struct VivoCLICommandRouter {
       numivivo compile-physiology-coupling <source.json> --program <program.vivopack> --physiology <prepared.json> --lanes <count> --output <bridge.json>
       numivivo plan-capacity <program.vivopack> --lanes <count> [--physiology <prepared.json>]
       numivivo inspect-checkpoint <checkpoint.vivocheckpoint>
+      numivivo md-benchmark <request.json> --output <new-report.json>
+      numivivo md-benchmark-help
       numivivo version
 
     Common options:

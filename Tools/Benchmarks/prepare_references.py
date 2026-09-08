@@ -13,6 +13,7 @@ import platform
 import urllib.request
 
 import numpy as np
+import scipy
 import openmm as mm
 from openmm import app, unit as u
 
@@ -98,7 +99,7 @@ def load_case(name, root):
             for symbol in ["Na","Cl"]:
                 residue=top.addResidue(symbol.upper(),chain)
                 top.addAtom(symbol,app.Element.getBySymbol(symbol),residue)
-            model.add(top,u.Quantity(coordinates,u.nanometer))
+            model.add(top,u.Quantity([v.value_in_unit(u.nanometer) for v in coordinates],u.nanometer))
         system=ff.createSystem(model.topology,nonbondedMethod=app.PME,nonbondedCutoff=0.8*u.nanometer,**kwargs)
         positions=model.positions; periodic=True
         sources.append({"forcefields": forcefields, "package": "openmm", "version": mm.__version__})
@@ -161,7 +162,7 @@ def prepare(name, root, steps):
     if periodic:nb.setEwaldErrorTolerance(1e-7)
     xml=mm.XmlSerializer.serialize(system).encode();(root/"reference-system.xml").write_bytes(xml)
     native=export_system(system,name,xml)
-    box=np.asarray(system.getDefaultPeriodicBoxVectors().value_in_unit(u.nanometer),dtype=np.float32).astype(float)
+    box=np.asarray([v.value_in_unit(u.nanometer) for v in system.getDefaultPeriodicBoxVectors()],dtype=np.float32).astype(float)
     # The comparison uses the exact native FP32 cell in both engines.
     if periodic:system.setDefaultPeriodicBoxVectors(*[mm.Vec3(*v)*u.nanometer for v in box])
     xml=mm.XmlSerializer.serialize(system).encode();(root/"reference-system.xml").write_bytes(xml)
@@ -196,7 +197,7 @@ def prepare(name, root, steps):
         limits=dict(energyAbsolutePerParticleKJPerMol=0.002,forceNormalizedRMS=0.001,forceNormalizedMaximum=0.01,forceNormalizationFloor=1),
         dynamicsSteps=steps)
     write(root/"request.json",request)
-    write(root/"sources.json",dict(sources=sources,python=platform.python_version(),openmm=mm.__version__,numpy=np.__version__,
+    write(root/"sources.json",dict(sources=sources,python=platform.python_version(),openmm=mm.__version__,numpy=np.__version__,scipy=scipy.__version__,
         preparation="original supplied geometry; no minimization; no dispersion correction; no COM removal"))
     return dict(identifier=name,particles=system.getNumParticles(),requestSHA256=sha((root/"request.json").read_bytes()),
                 serializedSystemSHA256=sha(xml),status="prepared")

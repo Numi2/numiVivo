@@ -31,11 +31,11 @@ struct MDBenchmarkTests {
         #expect(throws:Error.self) { try VivoMDBenchmarkComparison.compare(value,reference:reference,limits:limits) }
     }
     @Test func unsupportedCellPublishesNoPassingObservation() async throws {
-        let (ref,_)=try fixture(),id=try VivoCanonicalJSON.fingerprint(Data("cell".utf8))
+        let (reference,_)=try fixture(),id=try VivoCanonicalJSON.fingerprint(Data("cell".utf8))
         let system=VivoClassicalSystem(identifier:"skew",structureFingerprint:id,particles:(0..<2).map {
             .init(index:UInt32($0),atomIndex:UInt32($0),typeIdentifier:"A",massDa:12,chargeE:0,sigmaNM:0,epsilonKJPerMol:0)
         })
-        var ref=ref
+        var ref=reference
         ref.geometry=try .init(particlePositionsNM:[.zero,.init(1,0,0)],
             periodicCell:.init(a:.init(4,0,0),b:.init(1,4,0),c:.init(0,0,4)))
         let request=VivoMDBenchmarkRequest(identifier:"skew",system:system,configuration:.init(),references:[ref],referenceProvenance:["fixture":"synthetic"])

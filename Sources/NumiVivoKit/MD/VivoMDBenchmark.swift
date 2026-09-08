@@ -119,6 +119,7 @@ public struct VivoMDBenchmarkReport: Codable, Sendable {
     public let comparisons: [VivoMDBenchmarkComparison]
     public let evaluations: [VivoMDHamiltonianEvaluation]
     public let dynamics: VivoMDBenchmarkDynamics?
+    public let executionError: String?
     public let outcome: VivoBenchmarkOutcome
 }
 
@@ -132,7 +133,7 @@ public enum VivoMDBenchmark {
         let identity=try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(request))
         guard capability.executable else {
             return .init(requestFingerprint:identity,numericalContract:VivoMDExecutionIdentity.current,
-                identifier:request.identifier,capability:capability,deviceName:nil,comparisons:[],evaluations:[],dynamics:nil,outcome:.unsupported)
+                identifier:request.identifier,capability:capability,deviceName:nil,comparisons:[],evaluations:[],dynamics:nil,executionError:nil,outcome:.unsupported)
         }
         let runtime=try await VivoMDMetalRuntime.make(system:system,initialState:initial,configuration:config)
         let before=try await runtime.checkpoint()
@@ -145,7 +146,9 @@ public enum VivoMDBenchmark {
         let after=try await runtime.checkpoint()
         guard before==after else { throw VivoChemistryError.invalid("benchmark probes changed accepted state") }
         var dynamics:VivoMDBenchmarkDynamics?
+        var executionError:String?
         if request.dynamicsSteps>0 {
+          do {
             _ = try await runtime.thermalize(temperatureK:config.targetTemperatureK ?? 300,seed:config.randomSeed)
             let start=try await runtime.observables(), clock=ContinuousClock(), began=clock.now
             var committed=0,rejected:VivoMDStepCertificate?
@@ -159,10 +162,12 @@ public enum VivoMDBenchmark {
             let end=try await runtime.observables(), checkpoint=try await runtime.checkpoint()
             dynamics = .init(requestedSteps:request.dynamicsSteps,committedSteps:committed,wallSeconds:seconds,
                 rejected:rejected,start:start,end:end,finalCheckpoint:checkpoint)
+          } catch is CancellationError { throw CancellationError() }
+          catch { executionError=String(describing:error) }
         }
         return .init(requestFingerprint:identity,numericalContract:VivoMDExecutionIdentity.current,
             identifier:request.identifier,capability:capability,deviceName:runtime.deviceName,
-            comparisons:comparisons,evaluations:evaluations,dynamics:dynamics,
-            outcome:comparisons.allSatisfy({$0.outcome == .passed}) && dynamics?.rejected == nil ? .passed:.failed)
+            comparisons:comparisons,evaluations:evaluations,dynamics:dynamics,executionError:executionError,
+            outcome:comparisons.allSatisfy({$0.outcome == .passed}) && dynamics?.rejected == nil && executionError == nil ? .passed:.failed)
     }
 }
