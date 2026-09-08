@@ -3,7 +3,7 @@ import Foundation
 /// Increment when executable numerical semantics change. Source/configuration
 /// identity alone does not identify the algorithm used to continue a trajectory.
 public enum VivoMDExecutionIdentity {
-    public static let current = "numivivo.org/md-metal-numerics/v3"
+    public static let current = "numivivo.org/md-metal-numerics/v4"
 }
 
 public enum VivoMDVelocityInitialization: String, Codable, Sendable {

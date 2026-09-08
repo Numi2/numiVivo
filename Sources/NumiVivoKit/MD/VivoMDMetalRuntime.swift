@@ -257,6 +257,26 @@ public actor VivoMDMetalRuntime {
         return result
     }
 
+    /// Explicit preparation of imported physical state. This changes geometry
+    /// and velocities on the constraint manifold without advancing the clock.
+    /// A failed projection publishes none of the proposed state.
+    public func projectConstraints() async throws -> VivoMDCheckpoint {
+        try reserve(); defer { inFlight=false }; try Task.checkCancellation()
+        let abi=command(for:cellResources),buffer=try makeCommand("prepare.constraintProjection")
+        try copyAccepted(into:buffer);try clear(buffer)
+        try projectPosition(buffer,abi:abi)
+        try projectVelocity(buffer,position:arena.candidatePosition,source:arena.candidateVelocity,
+            scratch:arena.velocityScratch,dynamics:arena.dynamics,abi:abi)
+        try normalize(buffer,position:arena.candidatePosition,velocity:arena.candidateVelocity,abi:abi)
+        try encode(.mdClearForce,buffer,[arena.forceEnergy],abi)
+        try validateCandidate(buffer,abi:abi)
+        try await complete(buffer);try ensureNumericalSuccess();try Task.checkCancellation()
+        let snapshot=try await readSnapshotReserved(position:arena.candidatePosition,velocity:arena.candidateVelocity)
+        let result=try checkpoint(from:snapshot)
+        try Task.checkCancellation();arena.commit()
+        return result
+    }
+
     public func minimize(_ settings: VivoMDMinimizationConfiguration = .init()) async throws -> VivoMDMinimizationCertificate {
         try settings.validate(); try reserve(); defer { inFlight = false }; try Task.checkCancellation()
         let phase = cellResources, abi = command(for: phase)

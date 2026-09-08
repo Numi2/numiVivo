@@ -11,8 +11,10 @@ import time
 
 
 def digest(path):
+    result=hashlib.sha256()
     with path.open("rb") as f:
-        return hashlib.file_digest(f,"sha256").hexdigest()
+        for block in iter(lambda:f.read(1024*1024),b""):result.update(block)
+    return result.hexdigest()
 
 
 def write(path,value):

@@ -3,6 +3,7 @@ import Foundation
 /// A comparison against supplied, separately generated reference observations.
 /// Passing this gate does not authenticate a reference engine or establish an ensemble.
 public enum VivoBenchmarkOutcome: String, Codable, Sendable { case passed, failed, inconclusive, unsupported }
+public enum VivoMDBenchmarkPreparation: String, Codable, Sendable { case preserve, projectConstraints }
 
 public struct VivoMDBenchmarkLimits: Codable, Sendable, Equatable {
     public var energyAbsolutePerParticleKJPerMol: Double = 0.002
@@ -42,12 +43,15 @@ public struct VivoMDBenchmarkRequest: Codable, Sendable, Equatable {
     public var referenceProvenance: [String: String]
     public var limits: VivoMDBenchmarkLimits
     public var dynamicsSteps: Int
+    public var dynamicsPreparation: VivoMDBenchmarkPreparation?
     public init(identifier: String, system: VivoClassicalSystem, configuration: VivoMDConfiguration,
                 references: [VivoMDBenchmarkReference], referenceProvenance: [String: String],
-                limits: VivoMDBenchmarkLimits = .init(), dynamicsSteps: Int = 0) {
+                limits: VivoMDBenchmarkLimits = .init(), dynamicsSteps: Int = 0,
+                dynamicsPreparation: VivoMDBenchmarkPreparation? = nil) {
         self.identifier=identifier; self.system=system; self.configuration=configuration
         self.references=references; self.referenceProvenance=referenceProvenance
         self.limits=limits; self.dynamicsSteps=dynamicsSteps
+        self.dynamicsPreparation=dynamicsPreparation
     }
     public func validate() throws {
         try limits.validate(); try configuration.validate(); try VivoClassicalSystemValidator.validate(system)
@@ -103,6 +107,7 @@ public struct VivoMDBenchmarkDynamics: Codable, Sendable, Equatable {
     public let wallSeconds: Double
     public let rejected: VivoMDStepCertificate?
     public let start: VivoMDObservables
+    public let preparedCheckpoint: VivoMDCheckpoint
     public let end: VivoMDObservables
     public let finalCheckpoint: VivoMDCheckpoint
     /// This short trajectory is execution evidence, not an equilibrium gate.
@@ -149,7 +154,8 @@ public enum VivoMDBenchmark {
         var executionError:String?
         if request.dynamicsSteps>0 {
           do {
-            _ = try await runtime.thermalize(temperatureK:config.targetTemperatureK ?? 300,seed:config.randomSeed)
+            if request.dynamicsPreparation == .projectConstraints { _ = try await runtime.projectConstraints() }
+            let prepared=try await runtime.thermalize(temperatureK:config.targetTemperatureK ?? 300,seed:config.randomSeed)
             let start=try await runtime.observables(), clock=ContinuousClock(), began=clock.now
             var committed=0,rejected:VivoMDStepCertificate?
             for _ in 0..<request.dynamicsSteps {
@@ -161,7 +167,7 @@ public enum VivoMDBenchmark {
             let seconds=Double(duration.seconds)+Double(duration.attoseconds)/1e18
             let end=try await runtime.observables(), checkpoint=try await runtime.checkpoint()
             dynamics = .init(requestedSteps:request.dynamicsSteps,committedSteps:committed,wallSeconds:seconds,
-                rejected:rejected,start:start,end:end,finalCheckpoint:checkpoint)
+                rejected:rejected,start:start,preparedCheckpoint:prepared,end:end,finalCheckpoint:checkpoint)
           } catch is CancellationError { throw CancellationError() }
           catch { executionError=String(describing:error) }
         }
