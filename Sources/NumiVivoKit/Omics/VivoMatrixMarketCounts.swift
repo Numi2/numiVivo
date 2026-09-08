@@ -8,6 +8,18 @@ public struct VivoSingleCellImport: Codable, Sendable, Equatable {
     public let sample: VivoOmicsSample
     public let mitochondrialFeatureIDs: [String]
     public let cellGroups: [String: String]
+    private enum CodingKeys: String, CodingKey { case datasetID, evidence, sourceDescription, countUnit, sample, mitochondrialFeatureIDs, cellGroups }
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["datasetID", "evidence", "sourceDescription", "countUnit", "sample", "mitochondrialFeatureIDs", "cellGroups"])
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        datasetID = try values.decode(String.self, forKey: .datasetID)
+        evidence = try values.decode(VivoOmicsEvidence.self, forKey: .evidence)
+        sourceDescription = try values.decode(String.self, forKey: .sourceDescription)
+        countUnit = try values.decode(VivoOmicsCountUnit.self, forKey: .countUnit)
+        sample = try values.decode(VivoOmicsSample.self, forKey: .sample)
+        mitochondrialFeatureIDs = try values.decodeIfPresent([String].self, forKey: .mitochondrialFeatureIDs) ?? []
+        cellGroups = try values.decodeIfPresent([String: String].self, forKey: .cellGroups) ?? [:]
+    }
     public init(datasetID: String, evidence: VivoOmicsEvidence, sourceDescription: String,
                 countUnit: VivoOmicsCountUnit, sample: VivoOmicsSample,
                 mitochondrialFeatureIDs: [String] = [], cellGroups: [String: String] = [:]) {
@@ -21,13 +33,14 @@ public struct VivoSingleCellImport: Codable, Sendable, Equatable {
 /// three-column Gene Expression features, one barcode per line. Mixed modalities,
 /// floating-point counts, duplicate coordinates and silently dropped rows are rejected.
 public enum VivoMatrixMarketCounts {
-    private static func lines(_ data: Data, limits: VivoOmicsLimits) throws -> [Substring] {
+    private static func lines(_ data: Data, maximumLines: Int, limits: VivoOmicsLimits) throws -> [Substring] {
         guard data.count <= limits.maximumInputBytes else { throw VivoOmicsError.limit("text bytes") }
         guard let text = String(data: data, encoding: .utf8), !text.contains("\0") else {
             throw VivoOmicsError.invalid("input must be uncompressed UTF-8 without NUL")
         }
-        var rows = text.split(omittingEmptySubsequences: false, whereSeparator: { $0 == "\n" || $0 == "\r\n" })
+        var rows = text.split(maxSplits: maximumLines, omittingEmptySubsequences: false, whereSeparator: { $0 == "\n" || $0 == "\r\n" })
         if rows.last?.isEmpty == true { rows.removeLast() }
+        guard rows.count <= maximumLines else { throw VivoOmicsError.limit("text record count") }
         return try rows.map { row in
             let line = row.last == "\r" ? row.dropLast() : row
             guard line.utf8.count <= limits.maximumLineBytes else { throw VivoOmicsError.limit("text line bytes") }
@@ -46,7 +59,7 @@ public enum VivoMatrixMarketCounts {
               metadata.cellGroups.count <= limits.maximumCells else { throw VivoOmicsError.limit("annotation count") }
         let mitochondrial = Set(metadata.mitochondrialFeatureIDs)
         guard mitochondrial.count == metadata.mitochondrialFeatureIDs.count else { throw VivoOmicsError.invalid("duplicate mitochondrial annotation") }
-        let featureLines = try lines(features, limits: limits)
+        let featureLines = try lines(features, maximumLines: limits.maximumFeatures, limits: limits)
         guard !featureLines.isEmpty, featureLines.count <= limits.maximumFeatures else { throw VivoOmicsError.limit("features") }
         let decodedFeatures: [VivoOmicsFeature] = try featureLines.map { line in
             let fields = line.split(separator: "\t", omittingEmptySubsequences: false)
@@ -56,11 +69,12 @@ public enum VivoMatrixMarketCounts {
             return .init(id: String(fields[0]), name: String(fields[1]), mitochondrial: mitochondrial.contains(String(fields[0])))
         }
         guard mitochondrial.isSubset(of: Set(decodedFeatures.map(\.id))) else { throw VivoOmicsError.invalid("unknown mitochondrial feature ID") }
-        let barcodeLines = try lines(barcodes, limits: limits)
+        let barcodeLines = try lines(barcodes, maximumLines: limits.maximumCells, limits: limits)
         guard barcodeLines.count <= limits.maximumCells else { throw VivoOmicsError.limit("barcodes") }
         let cells = barcodeLines.map { VivoOmicsCell(barcode: String($0), sampleID: metadata.sample.id, group: metadata.cellGroups[String($0)]) }
         guard Set(metadata.cellGroups.keys).isSubset(of: Set(cells.map(\.barcode))) else { throw VivoOmicsError.invalid("annotation names an unknown barcode") }
-        let matrixLines = try lines(matrix, limits: limits)
+        let (recordLimit, overflow) = limits.maximumNonzeros.addingReportingOverflow(4096)
+        let matrixLines = try lines(matrix, maximumLines: overflow ? Int.max : recordLimit, limits: limits)
         guard matrixLines.first == "%%MatrixMarket matrix coordinate integer general" else {
             throw VivoOmicsError.invalid("requires Matrix Market coordinate integer general")
         }

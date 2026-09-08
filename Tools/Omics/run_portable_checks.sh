@@ -8,5 +8,8 @@ swiftc -swift-version 6 -parse-as-library \
   "$ROOT/Sources/NumiVivoKit/Omics/VivoSparseCounts.swift" \
   "$ROOT/Sources/NumiVivoKit/Omics/VivoMatrixMarketCounts.swift" \
   "$ROOT/Sources/NumiVivoKit/Omics/VivoSingleCellAnalysis.swift" \
+  "$ROOT/Sources/NumiVivoKit/Omics/VivoSingleCellCampaign.swift" \
+  "$ROOT/Sources/NumiVivoKit/Omics/VivoSingleCellCampaignIO.swift" \
+  "$ROOT/Sources/NumiVivoKit/Artifacts/VivoRootedFileStore.swift" \
   "$ROOT/Tools/Omics/main.swift" -o "$WORK/omics-checks"
 "$WORK/omics-checks"

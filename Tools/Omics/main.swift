@@ -1,4 +1,9 @@
 import Foundation
+#if canImport(Darwin)
+import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#endif
 
 @main struct OmicsChecks {
     static func main() {
@@ -93,6 +98,70 @@ import Foundation
         let badLibrary = try decode(matrixText, featureText, barcodeText, metadata(badDonor))
         try rejects("inconsistent replicate donor") { _ = try VivoSingleCellAnalysis.concatenate([dataset, badLibrary], id: "bad", sourceDescription: "bad") }
         try check(decode(matrixText.replacingOccurrences(of: "\n", with: "\r\n")) == dataset, "CRLF input")
+        let pathRecord = VivoSingleCellLibraryPaths(matrix: "matrix.mtx", features: "features.tsv", barcodes: "barcodes.tsv", metadata: metadata())
+        let manifest = VivoSingleCellManifest(id: "campaign", sourceDescription: "Synthetic count campaign", libraries: [pathRecord], normalizationTarget: 10_000)
+        let manifestBytes = try JSONEncoder().encode(manifest)
+        let bundle = VivoSingleCellInputBundle(manifest: manifestBytes, libraries: [.init(matrix: Data(matrixText.utf8), features: Data(featureText.utf8), barcodes: Data(barcodeText.utf8))])
+        let report = try VivoSingleCellCampaign.evaluate(bundle)
+        try check(report.quality == qc && report.dataset.id == "campaign", "complete campaign composition")
+        try check(report.normalized?.values == normalized.values, "campaign normalized view")
+        try VivoSingleCellCampaign.verify(report, input: bundle); passed += 1
+        let encodedBundle = try JSONEncoder().encode(bundle)
+        try check(JSONDecoder().decode(VivoSingleCellInputBundle.self, from: encodedBundle) == bundle, "exact original byte snapshot round trip")
+        try rejects("missing campaign library") { _ = try VivoSingleCellCampaign.evaluate(.init(manifest: manifestBytes, libraries: [])) }
+        var manifestObject = try JSONSerialization.jsonObject(with: manifestBytes) as! [String: Any]
+        manifestObject["normalizationTargte"] = 10_000
+        let unknownManifest = try JSONSerialization.data(withJSONObject: manifestObject)
+        try rejects("misspelled manifest option") { _ = try VivoSingleCellCampaign.manifest(from: unknownManifest) }
+        var metadataObject = try JSONSerialization.jsonObject(with: JSONEncoder().encode(metadata())) as! [String: Any]
+        metadataObject["cellGruops"] = ["B1": "T"]
+        let unknownMetadata = try JSONSerialization.data(withJSONObject: metadataObject)
+        try rejects("misspelled cell annotation") { _ = try JSONDecoder().decode(VivoSingleCellImport.self, from: unknownMetadata) }
+        var requested = VivoOmicsLimits(); requested.maximumCells += 1
+        let excessive = VivoSingleCellManifest(id: "bad", sourceDescription: "Synthetic", libraries: [pathRecord], limits: requested)
+        try rejects("manifest cannot raise admission ceiling") { _ = try excessive.admittedLimits() }
+        for path in ["../matrix.mtx", "/matrix.mtx", "a/../matrix.mtx", "a//b", "./matrix", "a\\b", "x\0y"] {
+            let record = VivoSingleCellLibraryPaths(matrix: path, features: "features.tsv", barcodes: "barcodes.tsv", metadata: metadata())
+            let manifest = VivoSingleCellManifest(id: "bad", sourceDescription: "Synthetic", libraries: [record])
+            try rejects("unsafe manifest path \(path)") { _ = try manifest.admittedLimits() }
+        }
+        let reportBytes = try JSONEncoder().encode(report)
+        var alteredReport = try JSONSerialization.jsonObject(with: reportBytes) as! [String: Any]
+        alteredReport["numericalProfile"] = "unidentified"
+        let altered = try JSONDecoder().decode(VivoSingleCellReport.self, from: JSONSerialization.data(withJSONObject: alteredReport))
+        try rejects("changed numerical profile") { try VivoSingleCellCampaign.verify(altered, input: bundle) }
+        var alteredDataset = alteredReport["dataset"] as! [String: Any]
+        alteredDataset["id"] = "transplanted"
+        alteredReport["dataset"] = alteredDataset; alteredReport["numericalProfile"] = VivoSingleCellCampaign.numericalProfile
+        let transplanted = try JSONDecoder().decode(VivoSingleCellReport.self, from: JSONSerialization.data(withJSONObject: alteredReport))
+        try rejects("transplanted dataset context") { try VivoSingleCellCampaign.verify(transplanted, input: bundle) }
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-omics-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let manifestURL = directory.appendingPathComponent("manifest.json"), matrixURL = directory.appendingPathComponent("matrix.mtx")
+        try manifestBytes.write(to: manifestURL)
+        try Data(matrixText.utf8).write(to: matrixURL)
+        try Data(featureText.utf8).write(to: directory.appendingPathComponent("features.tsv"))
+        try Data(barcodeText.utf8).write(to: directory.appendingPathComponent("barcodes.tsv"))
+        try check(VivoSingleCellCampaignIO.snapshot(manifestURL: manifestURL) == bundle, "safe file loader retains exact original bytes")
+        try FileManager.default.removeItem(at: matrixURL)
+        try FileManager.default.createSymbolicLink(atPath: matrixURL.path, withDestinationPath: "features.tsv")
+        try rejects("symlink source refused by shared rooted reader") { _ = try VivoSingleCellCampaignIO.snapshot(manifestURL: manifestURL) }
+        try FileManager.default.removeItem(at: matrixURL)
+        guard mkfifo(matrixURL.path, 0o600) == 0 else { throw VivoOmicsError.invalid("cannot create FIFO test fixture") }
+        try rejects("FIFO rejected without blocking") { _ = try VivoSingleCellCampaignIO.snapshot(manifestURL: manifestURL) }
+        try FileManager.default.removeItem(at: matrixURL)
+        try Data(matrixText.replacingOccurrences(of: "3 2 7", with: "3 2 8").utf8).write(to: matrixURL)
+        let changedSnapshot = try VivoSingleCellCampaignIO.snapshot(manifestURL: manifestURL)
+        try check(changedSnapshot != bundle, "changing a source changes snapshot bytes")
+        try VivoSingleCellCampaign.verify(report, input: bundle); passed += 1
+        try rejects("old report cannot be transplanted to changed source") { try VivoSingleCellCampaign.verify(report, input: changedSnapshot) }
+        try FileManager.default.removeItem(at: matrixURL)
+        try rejects("missing source refused") { _ = try VivoSingleCellCampaignIO.snapshot(manifestURL: manifestURL) }
+        var lineLimit = VivoOmicsLimits(); lineLimit.maximumFeatures = 3
+        try rejects("excess feature text records") { _ = try decode(matrixText, featureText + "g4\tX\tGene Expression\n", barcodeText, nil, lineLimit) }
+        var commentLimit = VivoOmicsLimits(); commentLimit.maximumNonzeros = 4
+        try rejects("excess comment records") { _ = try decode("%%MatrixMarket matrix coordinate integer general\n" + String(repeating: "%\n", count: 5000), featureText, barcodeText, nil, commentLimit) }
         // Deterministic matrix panel checked against a separate dense reference.
         for seed in 0..<25 {
             let featureCount = 7, cellCount = 11

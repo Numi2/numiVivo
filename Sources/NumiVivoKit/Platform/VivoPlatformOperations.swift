@@ -122,6 +122,7 @@ public enum VivoPlatformOperations {
         definitions += VivoPlatformRefinementOperations.definitions(implementationFingerprint: id)
         definitions += VivoPlatformAdaptiveOperations.definitions(implementationFingerprint: id)
         definitions += VivoPlatformPrecisionSamplingOperations.definitions(implementationFingerprint: id)
+        definitions += VivoPlatformOmicsOperations.definitions(implementationFingerprint: id)
         return try .init(implementationFingerprint: id, definitions: definitions)
     }
 

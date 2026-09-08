@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "synthetic-singlecell-counts",
+  "sourceDescription": "Two synthetic libraries with explicit identities; second has doubled counts. No biological inference.",
+  "libraries": [
+    {
+      "matrix": "control-1.mtx",
+      "features": "features.tsv",
+      "barcodes": "barcodes.tsv",
+      "metadata": {
+        "datasetID": "library-1",
+        "evidence": "synthetic",
+        "sourceDescription": "Synthetic count fixture, not a biological observation.",
+        "countUnit": "umiCount",
+        "sample": {
+          "id": "sample-1",
+          "biologicalReplicateID": "replicate-1",
+          "donorID": "donor-1",
+          "condition": "control",
+          "batchID": "batch-1",
+          "organism": "NCBITaxon:9606"
+        },
+        "mitochondrialFeatureIDs": [
+          "g1"
+        ],
+        "cellGroups": {}
+      }
+    },
+    {
+      "matrix": "control-2.mtx",
+      "features": "features.tsv",
+      "barcodes": "barcodes.tsv",
+      "metadata": {
+        "datasetID": "library-2",
+        "evidence": "synthetic",
+        "sourceDescription": "Synthetic count fixture, not a biological observation.",
+        "countUnit": "umiCount",
+        "sample": {
+          "id": "sample-2",
+          "biologicalReplicateID": "replicate-2",
+          "donorID": "donor-2",
+          "condition": "control",
+          "batchID": "batch-1",
+          "organism": "NCBITaxon:9606"
+        },
+        "mitochondrialFeatureIDs": [
+          "g1"
+        ],
+        "cellGroups": {}
+      }
+    }
+  ],
+  "normalizationTarget": 10000
+}

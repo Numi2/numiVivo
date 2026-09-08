@@ -1,0 +1,26 @@
+{
+  "schema": "numivivo.org/scoped-source-qualification/v1",
+  "baselineCommit": "ca5e4351d033594c5e5a8ae0bfb22a0e96962b7e",
+  "execution": {
+    "compiler": "Swift 6.2.1 (swift-6.2.1-RELEASE)",
+    "target": "x86_64-unknown-linux-gnu",
+    "command": "bash Tools/Omics/run_portable_checks.sh",
+    "status": "passed",
+    "assertions": 120,
+    "scope": "Actual native sparse math, campaign composition and existing safe-I/O source; artifact adapter and full Apple CLI not executed by this command."
+  },
+  "appleIntegrationStatus": "not-yet-observed-for-this-increment",
+  "biologicalValidation": "not-performed-synthetic-only",
+  "sourceSHA256": {
+    "Sources/NumiVivoKit/Artifacts/VivoRootedFileStore.swift": "ab76207f5f3901419881df32f22d98f3f09e87ae7cc19a4ce6b9d4e92dc4c59c",
+    "Sources/NumiVivoKit/Omics/VivoMatrixMarketCounts.swift": "f7a241fe94dc561c0ee18044a0d51d2e3af062dc8f9551928e4ef04eed95bbb6",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellAnalysis.swift": "c28202218bab41dd92caa875d083f827ef2e622f6d68e0e693943339c8170db6",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellArtifacts.swift": "8db67054b017fee22b879ffaed4a81a946a731a49a3e7bd2379bd3c20d97c5c1",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellCampaign.swift": "cf7061d570de9b398d42e7fa5599f3f98068d82bea75486a4ca6e985566f1222",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellCampaignIO.swift": "09c849255df47db212a4e2a810f26378c39b36d713cff3120e55cc1c0502cd40",
+    "Sources/NumiVivoKit/Omics/VivoSparseCounts.swift": "abbbd11b0e2ed7bee33437a13b0daf0463dac21a0210fc0b3604f4e5b77a7664",
+    "Tools/Omics/main.swift": "1ca57d37b67179441f50f2381a0011d26c758ac7f4e52ef4f5d19cdb9acd265f",
+    "Tools/Omics/run_portable_checks.sh": "ce94834d303b1f40d9acb9eede94f9c5357cb27dd4474681251d9107b5120d46"
+  },
+  "log": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu\nOmics portable native checks passed: 120\n"
+}

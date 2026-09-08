@@ -11,6 +11,21 @@ public enum VivoOmicsError: Error, LocalizedError, Sendable {
     }
 }
 
+struct VivoOmicsJSONKey: CodingKey {
+    let stringValue: String
+    let intValue: Int? = nil
+    init?(stringValue: String) { self.stringValue = stringValue }
+    init?(intValue: Int) { return nil }
+}
+func vivoOmicsRejectUnknownKeys(_ decoder: Decoder, allowed: Set<String>) throws {
+    let fields = try decoder.container(keyedBy: VivoOmicsJSONKey.self)
+    let unknown = Set(fields.allKeys.map(\.stringValue)).subtracting(allowed)
+    guard unknown.isEmpty else {
+        throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath,
+            debugDescription: "Unknown omics fields: " + unknown.sorted().joined(separator: ", ")))
+    }
+}
+
 /// Limits are checked before allocating from untrusted dimensions. This profile
 /// is bounded in-memory processing, not an out-of-core or atlas-scale claim.
 public struct VivoOmicsLimits: Codable, Sendable, Equatable {
@@ -19,6 +34,16 @@ public struct VivoOmicsLimits: Codable, Sendable, Equatable {
     public var maximumNonzeros: Int = 2_000_000
     public var maximumInputBytes: Int = 64 * 1_024 * 1_024
     public var maximumLineBytes: Int = 16_384
+    private enum CodingKeys: String, CodingKey { case maximumCells, maximumFeatures, maximumNonzeros, maximumInputBytes, maximumLineBytes }
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["maximumCells", "maximumFeatures", "maximumNonzeros", "maximumInputBytes", "maximumLineBytes"])
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        maximumCells = try values.decodeIfPresent(Int.self, forKey: .maximumCells) ?? 100_000
+        maximumFeatures = try values.decodeIfPresent(Int.self, forKey: .maximumFeatures) ?? 100_000
+        maximumNonzeros = try values.decodeIfPresent(Int.self, forKey: .maximumNonzeros) ?? 2_000_000
+        maximumInputBytes = try values.decodeIfPresent(Int.self, forKey: .maximumInputBytes) ?? 64 * 1_024 * 1_024
+        maximumLineBytes = try values.decodeIfPresent(Int.self, forKey: .maximumLineBytes) ?? 16_384
+    }
     public init() {}
     public func validate() throws {
         guard maximumCells > 0, maximumCells < Int.max,
@@ -50,6 +75,17 @@ public struct VivoOmicsSample: Codable, Sendable, Equatable {
     public let condition: String
     public let batchID: String
     public let organism: String
+    private enum CodingKeys: String, CodingKey { case id, biologicalReplicateID, donorID, condition, batchID, organism }
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["id", "biologicalReplicateID", "donorID", "condition", "batchID", "organism"])
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(String.self, forKey: .id)
+        biologicalReplicateID = try values.decode(String.self, forKey: .biologicalReplicateID)
+        donorID = try values.decodeIfPresent(String.self, forKey: .donorID)
+        condition = try values.decode(String.self, forKey: .condition)
+        batchID = try values.decode(String.self, forKey: .batchID)
+        organism = try values.decode(String.self, forKey: .organism)
+    }
     public init(id: String, biologicalReplicateID: String, donorID: String? = nil,
                 condition: String, batchID: String, organism: String) {
         self.id = id; self.biologicalReplicateID = biologicalReplicateID; self.donorID = donorID

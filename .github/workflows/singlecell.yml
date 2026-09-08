@@ -1,0 +1,68 @@
+name: Single-cell count workflows
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/NumiVivoKit/Omics/**'
+      - 'Sources/NumiVivoKit/Artifacts/**'
+      - 'Sources/NumiVivoKit/Platform/**'
+      - 'Sources/NumiVivoKit/Workflow/**'
+      - 'Sources/NumiVivoCLI/**'
+      - 'Tools/Omics/**'
+      - 'Examples/singlecell/**'
+      - 'Package.swift'
+      - '.github/workflows/singlecell.yml'
+permissions:
+  contents: read
+concurrency:
+  group: singlecell-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  apple:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Retain source and compiler identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/singlecell-evidence"
+          git rev-parse HEAD > "$RUNNER_TEMP/singlecell-evidence/source-commit.txt"
+          swift --version > "$RUNNER_TEMP/singlecell-evidence/compiler.txt"
+          uname -srm > "$RUNNER_TEMP/singlecell-evidence/platform.txt"
+          git archive --format=tar.gz HEAD > "$RUNNER_TEMP/singlecell-evidence/source.tar.gz"
+      - name: Run actual native count and safe-I/O checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash Tools/Omics/run_portable_checks.sh 2>&1 | tee "$RUNNER_TEMP/singlecell-evidence/native.log"
+      - name: Build complete Apple executable
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift build -c release --jobs 3 2>&1 | tee "$RUNNER_TEMP/singlecell-evidence/build.log"
+          shasum -a 256 .build/release/numivivo > "$RUNNER_TEMP/singlecell-evidence/binary.sha256"
+      - name: Exercise public CLI, artifacts and common workflow scheduler
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Tools/Omics/check_cli.py --binary .build/release/numivivo \
+            --out "$RUNNER_TEMP/singlecell-evidence/cli" \
+            2>&1 | tee "$RUNNER_TEMP/singlecell-evidence/cli.log"
+      - name: Confirm source unchanged
+        if: always()
+        shell: bash
+        run: |
+          git status --porcelain > "$RUNNER_TEMP/singlecell-evidence/git-status.txt"
+          git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: singlecell-${{ github.sha }}
+          path: ${{ runner.temp }}/singlecell-evidence/
+          retention-days: 14
+          if-no-files-found: error
