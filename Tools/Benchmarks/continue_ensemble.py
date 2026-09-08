@@ -24,6 +24,10 @@ SOURCES = ("continue_ensemble.py", "ensemble_campaign.py", "ensemble_statistics.
            "run_campaign.py", "audit_endpoints.py")
 
 
+def valid_component(value):
+    return isinstance(value, str) and bool(value) and all(c.isalnum() or c in "-_" for c in value)
+
+
 def continuation_schedule(base, policy):
     validate_policy(base)
     if policy.get("schema") != "numivivo.org/md-ensemble-continuation-policy/v1":
@@ -149,11 +153,14 @@ def load_parent(root, qualification_path):
     keys = [(r["timeStepPS"], r["temperatureK"], r["seed"]) for r in campaign["runs"]]
     if sorted(keys) != sorted(grid):
         raise ValueError("parent matrix incomplete or duplicated")
+    directories = [r.get("directory") for r in campaign["runs"]]
+    if any(not valid_component(name) for name in directories) or len(set(directories)) != len(directories):
+        raise ValueError("unsafe or duplicated parent run directory")
     return campaign, qualification
 
 
 def parent_cell(root, campaign, row, case):
-    if Path(row["directory"]).name != row["directory"]:
+    if not valid_component(row["directory"]):
         raise ValueError("unsafe parent directory")
     directory = root / row["directory"]
     score_path = directory / "native/scorecard.json"
@@ -316,7 +323,7 @@ def analyze(args):
     indexed = {}
     for row in campaign["runs"]:
         key = (row["identifier"], row["timeStepPS"], row["temperatureK"], row["seed"])
-        if key not in expected or key in indexed or Path(row["directory"]).name != row["directory"]:
+        if key not in expected or key in indexed or not valid_component(row["directory"]):
             raise ValueError("invalid continuation matrix cell")
         indexed[key] = row
     if set(indexed) != expected:

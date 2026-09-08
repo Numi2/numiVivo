@@ -1,5 +1,6 @@
 """Corrupt continuation boundaries deliberately; fixtures are not MD evidence."""
 import copy
+import json
 import math
 from pathlib import Path
 import tempfile
@@ -122,13 +123,22 @@ class ContinuationTests(unittest.TestCase):
                 binaryManifestSHA256=digest(root/"binary-manifest.json"), parentManifestSHA256=digest(root/"parent-manifest.json"),
                 tools={n:digest(TOOLS/n) for n in ("ensemble_campaign.py", "ensemble_statistics.py", "run_campaign.py")})
             campaign = dict(schema="numivivo.org/md-ensemble-campaign/v1", policy=base, identities=identities,
-                runs=[dict(timeStepPS=d, temperatureK=t, seed=s) for d,t,s in campaign_grid(base)])
+                runs=[dict(timeStepPS=d, temperatureK=t, seed=s, directory=f"run-{i:02d}") for i,(d,t,s) in enumerate(campaign_grid(base))])
             write(root/"campaign.json", campaign)
             qualification = root/"qualification.json"
             with self.assertRaises(FileNotFoundError):load_parent(root, qualification)
             write(qualification, dict(campaignSHA256=digest(root/"campaign.json"), preparedOutcome="failed"))
             _, result = load_parent(root, qualification)
             self.assertEqual(result["preparedOutcome"], "failed")
+            for name in ("../outside", "..", "/absolute", "", "run-01"):
+                altered = copy.deepcopy(campaign)
+                altered["runs"][0]["directory"] = name
+                # The original fixture is deliberately replaced to exercise
+                # validly rebound but unsafe metadata before any native writes.
+                (root/"campaign.json").write_text(json.dumps(altered))
+                qualification.write_text(json.dumps(dict(campaignSHA256=digest(root/"campaign.json"), preparedOutcome="failed")))
+                with self.subTest(directory=name), self.assertRaisesRegex(ValueError, "parent run directory"):
+                    load_parent(root, qualification)
             (root/"policy.json").write_text('{}')
             with self.assertRaises(ValueError):load_parent(root, qualification)
 
