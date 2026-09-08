@@ -8,7 +8,7 @@ import Testing
 @Suite(.serialized) struct ConditionalEncounterTests {
     private func components(_ count: Int = 2) throws -> [VivoConditionalEncounterComponent] {
         try (0..<count).map { index in
-            .init(index: index, atomIdentifiers: ["atom-\(index)"],
+            try .init(index: index, atomIdentifiers: ["atom-\(index)"],
                   qualifiedPointFingerprint: VivoCanonicalJSON.fingerprint(Data("host component \(index)".utf8)))
         }
     }

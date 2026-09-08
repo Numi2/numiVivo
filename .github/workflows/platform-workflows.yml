@@ -8,6 +8,7 @@ on:
       - 'Tests/NumiVivoIntegrationTests/**'
       - 'Tools/Platform/**'
       - 'Examples/workflows/**'
+      - 'Examples/prepared-reaction/**'
       - 'Package.swift'
       - '.github/workflows/platform-workflows.yml'
 permissions:
@@ -18,7 +19,7 @@ concurrency:
 jobs:
   apple:
     runs-on: macos-15
-    timeout-minutes: 40
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -54,11 +55,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          swift test -c release --skip-build --filter 'KineticsPreparedOutputTests|MolecularSamplingExporterTests|PlatformSnapshotMappingHelperTests|MolecularSamplingNativeBridgeTests|MolecularSamplingArchiveReaderTests|NuclearMetalResourceTests|ClassicalPMEConformanceTests|ClassicalThermalConformanceTests|ClassicalNPTTransitionTests|MetalSamplingIdentityTests|QMMMFreeEnergyArchiveIdentityTests|WorkflowCancellationTests|MDProtocolResumeTests|MDTrajectoryArchiveValidationTests|HybridRuntimeTests|PlatformWorkflowTests|PlatformSnapshotTests|MDQMMMInterfaceTests|PlatformQMMMWorkflowTests|PlatformMechanismWorkflowTests|MechanismCandidateEnumerationTests|QMMMFreeEnergyTests|QMMMTransmissionTests|QMMMPathCoordinateTests|QMMMPathBiasTests|QMMMStringRefinementTests|MultistateMBARTests|ChemicalStateAlchemicalFreeEnergyTests|MultistateReducedPotentialArchiveTests|LatentProtonTopologyTests|ConstantPHDiscreteMDTests|ConstantPHNCMCTests|ConstantPHNCMCMetalTests|NCMCProtocolKernelTests|ConstantPHReplicaExchangeTests|ConstantPHMetalAdapterTests|ChemicalStateEnumerationTests|ChemicalStateCatalogTests|QMMMChemicalStateThermodynamicsTests|QMMMChemicalQualificationTests|QMMMChemicalExchangeNetworkTests|SolventPromotionTests|AppleExecutionTests|SelectedCITests|BarrierTunnellingTests|RingPolymerSamplingTests|GlobalJointUncertaintyTests|GlobalKineticUncertaintyTests|ReactiveSurrogateTests|PrecisionMetalSamplingTests|PrecisionPlatformTests' 2>&1 | tee "$RUNNER_TEMP/platform-results/tests.log"
+          swift test -c release --skip-build --filter 'SamplingReactionSeedTests|ConditionalEncounterTests|PreparedReactionFullRouteTests|KineticsPreparedOutputTests|MolecularSamplingExporterTests|PlatformSnapshotMappingHelperTests|MolecularSamplingNativeBridgeTests|MolecularSamplingArchiveReaderTests|NuclearMetalResourceTests|ClassicalPMEConformanceTests|ClassicalThermalConformanceTests|ClassicalNPTTransitionTests|MetalSamplingIdentityTests|QMMMFreeEnergyArchiveIdentityTests|WorkflowCancellationTests|MDProtocolResumeTests|MDTrajectoryArchiveValidationTests|HybridRuntimeTests|PlatformWorkflowTests|PlatformSnapshotTests|MDQMMMInterfaceTests|PlatformQMMMWorkflowTests|PlatformMechanismWorkflowTests|MechanismCandidateEnumerationTests|QMMMFreeEnergyTests|QMMMTransmissionTests|QMMMPathCoordinateTests|QMMMPathBiasTests|QMMMStringRefinementTests|MultistateMBARTests|ChemicalStateAlchemicalFreeEnergyTests|MultistateReducedPotentialArchiveTests|LatentProtonTopologyTests|ConstantPHDiscreteMDTests|ConstantPHNCMCTests|ConstantPHNCMCMetalTests|NCMCProtocolKernelTests|ConstantPHReplicaExchangeTests|ConstantPHMetalAdapterTests|ChemicalStateEnumerationTests|ChemicalStateCatalogTests|QMMMChemicalStateThermodynamicsTests|QMMMChemicalQualificationTests|QMMMChemicalExchangeNetworkTests|SolventPromotionTests|AppleExecutionTests|SelectedCITests|BarrierTunnellingTests|RingPolymerSamplingTests|GlobalJointUncertaintyTests|GlobalKineticUncertaintyTests|ReactiveSurrogateTests|PrecisionMetalSamplingTests|PrecisionPlatformTests' 2>&1 | tee "$RUNNER_TEMP/platform-results/tests.log"
           python3 - <<'PYTEST'
           import os, pathlib
           text = (pathlib.Path(os.environ["RUNNER_TEMP"]) / "platform-results/tests.log").read_text()
-          for suite in ["KineticsPreparedOutputTests", "MolecularSamplingExporterTests", "PlatformSnapshotMappingHelperTests", "MolecularSamplingNativeBridgeTests", "MolecularSamplingArchiveReaderTests", "NuclearMetalResourceTests", "ClassicalPMEConformanceTests", "ClassicalThermalConformanceTests", "ClassicalNPTTransitionTests", "MetalSamplingIdentityTests", "QMMMFreeEnergyArchiveIdentityTests", "WorkflowCancellationTests", "MDProtocolResumeTests", "MDTrajectoryArchiveValidationTests", "HybridRuntimeTests", "PlatformWorkflowTests", "PlatformSnapshotTests", "MDQMMMInterfaceTests", "PlatformQMMMWorkflowTests", "PlatformMechanismWorkflowTests", "MechanismCandidateEnumerationTests", "QMMMFreeEnergyTests", "QMMMTransmissionTests", "QMMMPathCoordinateTests", "QMMMPathBiasTests", "QMMMStringRefinementTests", "MultistateMBARTests", "ChemicalStateAlchemicalFreeEnergyTests", "MultistateReducedPotentialArchiveTests", "LatentProtonTopologyTests", "ConstantPHDiscreteMDTests", "ConstantPHNCMCTests", "ConstantPHNCMCMetalTests", "NCMCProtocolKernelTests", "ConstantPHReplicaExchangeTests", "ConstantPHMetalAdapterTests", "ChemicalStateEnumerationTests", "ChemicalStateCatalogTests", "QMMMChemicalStateThermodynamicsTests", "QMMMChemicalQualificationTests", "QMMMChemicalExchangeNetworkTests", "SolventPromotionTests", "AppleExecutionTests", "SelectedCITests", "BarrierTunnellingTests", "RingPolymerSamplingTests", "GlobalJointUncertaintyTests", "GlobalKineticUncertaintyTests", "ReactiveSurrogateTests", "PrecisionMetalSamplingTests", "PrecisionPlatformTests"]:
+          for suite in ["SamplingReactionSeedTests", "ConditionalEncounterTests", "PreparedReactionFullRouteTests", "KineticsPreparedOutputTests", "MolecularSamplingExporterTests", "PlatformSnapshotMappingHelperTests", "MolecularSamplingNativeBridgeTests", "MolecularSamplingArchiveReaderTests", "NuclearMetalResourceTests", "ClassicalPMEConformanceTests", "ClassicalThermalConformanceTests", "ClassicalNPTTransitionTests", "MetalSamplingIdentityTests", "QMMMFreeEnergyArchiveIdentityTests", "WorkflowCancellationTests", "MDProtocolResumeTests", "MDTrajectoryArchiveValidationTests", "HybridRuntimeTests", "PlatformWorkflowTests", "PlatformSnapshotTests", "MDQMMMInterfaceTests", "PlatformQMMMWorkflowTests", "PlatformMechanismWorkflowTests", "MechanismCandidateEnumerationTests", "QMMMFreeEnergyTests", "QMMMTransmissionTests", "QMMMPathCoordinateTests", "QMMMPathBiasTests", "QMMMStringRefinementTests", "MultistateMBARTests", "ChemicalStateAlchemicalFreeEnergyTests", "MultistateReducedPotentialArchiveTests", "LatentProtonTopologyTests", "ConstantPHDiscreteMDTests", "ConstantPHNCMCTests", "ConstantPHNCMCMetalTests", "NCMCProtocolKernelTests", "ConstantPHReplicaExchangeTests", "ConstantPHMetalAdapterTests", "ChemicalStateEnumerationTests", "ChemicalStateCatalogTests", "QMMMChemicalStateThermodynamicsTests", "QMMMChemicalQualificationTests", "QMMMChemicalExchangeNetworkTests", "SolventPromotionTests", "AppleExecutionTests", "SelectedCITests", "BarrierTunnellingTests", "RingPolymerSamplingTests", "GlobalJointUncertaintyTests", "GlobalKineticUncertaintyTests", "ReactiveSurrogateTests", "PrecisionMetalSamplingTests", "PrecisionPlatformTests"]:
               assert f"Suite {suite} passed" in text, f"Missing executed suite: {suite}"
           PYTEST
       - name: Verify accepted sampling export and connected electronic workflow
@@ -81,6 +82,15 @@ jobs:
           python3 Tools/Platform/check_sampling_export_cli.py --binary .build/release/numivivo \
             --fixture "$SAMPLING_RECEIPT" --out "$RUNNER_TEMP/platform-results/sampling-export-cli" \
             2>&1 | tee "$RUNNER_TEMP/platform-results/sampling-export-cli.log"
+      - name: Run published preparation to reaction and observable through public CLI
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        timeout-minutes: 40
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Tools/Platform/run_prepared_reaction_example.py --binary .build/release/numivivo \
+            --out "$RUNNER_TEMP/platform-results/prepared-reaction-cli" \
+            2>&1 | tee "$RUNNER_TEMP/platform-results/prepared-reaction-cli.log"
       - name: Verify long archive recovery and streaming CLI inspection
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         shell: bash

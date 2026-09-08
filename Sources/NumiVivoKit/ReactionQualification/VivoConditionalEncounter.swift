@@ -93,7 +93,7 @@ public enum VivoConditionalEncounter {
         }
         return try endpoint.components.enumerated().map { index, component in
             try Task.checkCancellation()
-            return .init(index: index, atomIdentifiers: component.atomIndices.map { connection.atomIdentifiers[$0] },
+            return try .init(index: index, atomIdentifiers: component.atomIndices.map { connection.atomIdentifiers[$0] },
                 qualifiedPointFingerprint: VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(component.point)))
         }
     }
