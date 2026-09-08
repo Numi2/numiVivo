@@ -32,6 +32,9 @@ def main():
     run("symlink-input-alias",original,65,alias=True)
     mutations=[("schema",lambda r:r.update(schema="unknown")),
                ("work-bound",lambda r:r.update(dynamicsSteps=100001)),
+               ("observation-interval",lambda r:r.update(dynamicsSteps=10,dynamicsObserveEvery=0)),
+               ("observation-budget",lambda r:r.update(dynamicsSteps=1001,dynamicsObserveEvery=1)),
+               ("unknown-precision",lambda r:r["configuration"].update(positionPrecision="fp128")),
                ("missing-force",lambda r:r["references"][0].update(forcesKJPerMolNM=[])),
                ("negative-limit",lambda r:r["limits"].update(forceNormalizedRMS=-1)),
                ("non-fp32-coordinate",lambda r:r["references"][0]["geometry"]["particlePositionsNM"][0].update(x=0.1)),

@@ -94,4 +94,24 @@ import Testing
         request.dynamicsObserveEvery=1;request.dynamicsSteps=1001
         #expect(throws:Error.self) { try request.validate() }
     }
+    @Test(arguments:[VivoMDPositionPrecision.fp32,.compensated])
+    func freeRigidRotorRetainsEnergyAndAngularMomentum(_ precision:VivoMDPositionPrecision) async throws {
+        var model=try model(2),configuration=config(32)
+        model.constraints=[.init(a:0,b:1,distanceNM:0.125)]
+        configuration.positionPrecision=precision
+        let initial=VivoClassicalInitialState(systemFingerprint:try model.fingerprint(),positionsNM:[.init(-0.0625,0,0),.init(0.0625,0,0)])
+        let runtime=try await VivoMDMetalRuntime.make(system:model,initialState:initial,configuration:configuration,
+            initialVelocitiesNMPerPS:[.init(0,1,0),.init(0,-1,0)])
+        let energy=try await runtime.observables().totalEnergyKJPerMol
+        var maximumError=0.0
+        for i in 0..<300 {
+            #expect(try await runtime.step().committed)
+            if i%10==9 { maximumError=max(maximumError,abs(try await runtime.observables().totalEnergyKJPerMol/energy-1)) }
+        }
+        let state=try await runtime.checkpoint()
+        let angular=zip(state.positionsNM,state.velocitiesNMPerPS).reduce(0.0) { $0+12*($1.0.x*$1.1.y-$1.0.y*$1.1.x) }
+        let limit=precision == .compensated ? 2e-4:5e-3
+        #expect(maximumError<limit)
+        #expect(abs(angular/(-1.5)-1)<limit)
+    }
 }

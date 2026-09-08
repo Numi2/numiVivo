@@ -532,12 +532,19 @@ public actor VivoMDMetalRuntime {
     }
 
     private func constrainedDrift(_ buffer: MTLCommandBuffer, abi: VivoMDMetalCommand) throws {
+        if !packed.constraints.isEmpty {
+            // RATTLE impulses follow the constraint normals at the start of
+            // this drift. Closest-point projection at the new geometry damps
+            // tangential motion and produces first-order energy loss.
+            try copy(buffer,arena.candidatePosition,work.constraintReferencePosition)
+            if let corrections { try copy(buffer,corrections.candidate(arena),corrections.constraintReference) }
+        }
         if let corrections {
             let low=corrections.candidate(arena)
             try encode(.mdCompensatedDrift,buffer,[arena.candidatePosition,low,arena.candidateVelocity,arena.dynamics],abi)
             if !packed.constraints.isEmpty {
                 try copy(buffer,arena.candidatePosition,work.referencePosition);try copy(buffer,low,corrections.reference)
-                try projectPosition(buffer,abi:abi)
+                try projectPosition(buffer,abi:abi,rattle:true)
                 try encode(.mdCompensatedImpulse,buffer,[arena.candidatePosition,low,work.referencePosition,corrections.reference,
                     arena.candidateVelocity,arena.dynamics,arena.status],abi)
             }
@@ -546,22 +553,26 @@ public actor VivoMDMetalRuntime {
         try encode(.mdDrift, buffer, [arena.candidatePosition, arena.candidateVelocity, arena.dynamics], abi)
         if !packed.constraints.isEmpty {
             try copy(buffer, arena.candidatePosition, work.referencePosition)
-            try projectPosition(buffer, abi: abi)
+            try projectPosition(buffer, abi: abi,rattle:true)
             try encode(.mdDriftConstraintImpulse, buffer, [arena.candidatePosition, work.referencePosition,
                 arena.candidateVelocity, arena.dynamics, arena.status], abi)
         }
     }
-    private func projectPosition(_ buffer: MTLCommandBuffer, abi: VivoMDMetalCommand) throws {
+    private func projectPosition(_ buffer: MTLCommandBuffer, abi: VivoMDMetalCommand,rattle:Bool=false) throws {
         guard !packed.constraints.isEmpty else { return }
         var source = arena.candidatePosition, destination = arena.positionScratch
         for _ in 0..<configuration.maximumConstraintIterations {
             if let corrections {
-                try encode(.mdCompensatedConstraintPosition,buffer,[source,try corrections.forPosition(source,arena:arena),
-                    destination,try corrections.forPosition(destination,arena:arena),arena.dynamics,arena.constraints,
-                    arena.constraintOffsets,arena.constraintIncidence,arena.status],abi)
+                let sourceLow=try corrections.forPosition(source,arena:arena)
+                let destinationLow=try corrections.forPosition(destination,arena:arena)
+                try encode(.mdCompensatedConstraintPosition,buffer,[source,sourceLow,
+                    destination,destinationLow,arena.dynamics,arena.constraints,
+                    arena.constraintOffsets,arena.constraintIncidence,arena.status,
+                    rattle ? work.constraintReferencePosition:source,
+                    rattle ? corrections.constraintReference:sourceLow],abi)
             } else {
                 try encode(.mdConstraintPosition, buffer, [source, destination, arena.dynamics, arena.constraints,
-                    arena.constraintOffsets, arena.constraintIncidence, arena.status], abi)
+                    arena.constraintOffsets, arena.constraintIncidence, arena.status,rattle ? work.constraintReferencePosition:source], abi)
             }
             swap(&source, &destination)
         }

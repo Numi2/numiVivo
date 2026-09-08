@@ -6,6 +6,7 @@ import Foundation
 /// working-set preflight. This is not a replacement for a cross-runtime budget.
 final class VivoMDWorkBuffers: @unchecked Sendable {
     let referencePosition: MTLBuffer
+    let constraintReferencePosition: MTLBuffer
     let directionA: MTLBuffer
     let directionB: MTLBuffer
     let unitDynamics: MTLBuffer
@@ -19,7 +20,7 @@ final class VivoMDWorkBuffers: @unchecked Sendable {
             throw VivoMDRuntimeError.metal("MD workspace shape exceeds device limits")
         }
         let vectorBytes = max(count * 16, 16), termBytes = max(count * 8, 16)
-        let required = UInt64(vectorBytes) * 4 + UInt64(termBytes) * 2 + 16
+        let required = UInt64(vectorBytes) * 5 + UInt64(termBytes) * 2 + 16
         let budget = UInt64(Double(device.recommendedMaxWorkingSetSize) * 0.8)
         guard required <= budget, UInt64(device.currentAllocatedSize) <= budget - required else {
             throw VivoMDRuntimeError.metal("MD workspace exceeds remaining working-set headroom")
@@ -32,6 +33,7 @@ final class VivoMDWorkBuffers: @unchecked Sendable {
             return result
         }
         referencePosition = try buffer(vectorBytes, "unconstrainedPosition")
+        constraintReferencePosition = try buffer(vectorBytes, "constraintDirectionPosition")
         directionA = try buffer(vectorBytes, "projectedDirectionA")
         directionB = try buffer(vectorBytes, "projectedDirectionB")
         unitDynamics = try buffer(vectorBytes, "unitMetric", shared: true)

@@ -1,13 +1,17 @@
 import Foundation
 @preconcurrency import Metal
 
-/// Low words follow the arena's existing transactional A/B ownership. Five
-/// buffers cost 80 bytes per particle; no second state or commit owner is added.
+/// Low words follow the arena's existing transactional A/B ownership. Six
+/// buffers cost 96 bytes per particle; no second state or commit owner is added.
 final class VivoMDPositionCorrections: @unchecked Sendable {
-    let a,b,scratch,reference,readback:MTLBuffer
+    let a,b,scratch,reference,constraintReference,readback:MTLBuffer
     init(device:MTLDevice,positions:[VivoVector3D],exactCorrections:[VivoVector3D]?=nil) throws {
         guard !positions.isEmpty,positions.count<=device.maxBufferLength/16 else {
             throw VivoMDRuntimeError.metal("compensated coordinate allocation exceeds buffer limit")
+        }
+        let required=UInt64(positions.count)*96,budget=UInt64(Double(device.recommendedMaxWorkingSetSize)*0.8)
+        guard required<=budget,UInt64(device.currentAllocatedSize)<=budget-required else {
+            throw VivoMDRuntimeError.metal("compensated coordinates exceed remaining working-set headroom")
         }
         func allocate(_ name:String)throws->MTLBuffer {
             guard let buffer=device.makeBuffer(length:positions.count*16,options:.storageModeShared) else {
@@ -19,6 +23,7 @@ final class VivoMDPositionCorrections: @unchecked Sendable {
         }
         a=try allocate("A");b=try allocate("B");scratch=try allocate("scratch")
         reference=try allocate("reference");readback=try allocate("readback")
+        constraintReference=try allocate("constraintDirection")
         for buffer in [a,b] {
             let pointer=buffer.contents().assumingMemoryBound(to:SIMD4<Float>.self)
             for (i,p) in positions.enumerated() {
