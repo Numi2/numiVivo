@@ -129,7 +129,7 @@ def main():
     sampling = read('sampling-receipt.json')
     check(sampling['status'] == 'budgetExhausted' and sampling['completedBlocks'] == cfg['maximumBlocks'], 'partial accepted sampling is explicit')
     imported = json.loads(run('import-sampling-receipt', 'workflow-import', out / 'sampling-receipt.json',
-                             '--kind', 'molecular-sampling-receipt', '--store', store).stdout)
+                             '--kind', 'molecular-sampling-receipt', '--media-type', 'application/json', '--store', store).stdout)
     run('export-sampling', 'molecule-sampling-export', '--store', store, '--checkpoint', digest(sampling['checkpoint']),
         '--replica', 0, '--receipt', digest(imported['fingerprint']), '--verify-all-payloads', '--output', out / 'sampling-export.json')
     run('destination-template', 'reaction-template', config['reactionTemplate'], '--output', out / 'destination.json')
@@ -176,7 +176,7 @@ def main():
         invalid = dict(copy.deepcopy(conditions), **update)
         run(label, 'reaction-encounter-request', out / 'reaction-result.json', '--conditions', write(label + '.json', invalid), expected=65)
     imported = json.loads(run('import-encounter-request', 'workflow-import', out / 'encounter-request.json',
-                             '--kind', 'vivo.conditional-encounter-request', '--store', store).stdout)
+                             '--kind', 'vivo.conditional-encounter-request', '--media-type', 'application/json', '--store', store).stdout)
     encounter_recipe = recipe('encounter', 'vivo.native.conditional-encounter',
                               {'request': {'kind': imported['kind'], 'fingerprint': imported['fingerprint']},
                                'reaction': {'kind': reaction_output['kind'], 'fingerprint': reaction_output['artifact']}}, budget)
