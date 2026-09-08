@@ -17,7 +17,7 @@ import Testing
         let implementation: VivoFingerprint
     }
 
-        private func put<T: Encodable>(_ value: T, kind: String, store: VivoArtifactStore) async throws -> VivoStoredArtifact {
+    private func put<T: Encodable>(_ value: T, kind: String, store: VivoArtifactStore) async throws -> VivoStoredArtifact {
         try await store.put(data: VivoCanonicalJSON.encode(value), kind: kind, mediaType: "application/json")
     }
 
@@ -106,12 +106,6 @@ import Testing
                         validation: VivoMolecularSamplingSelectionValidation = .restart) async throws -> VivoValidatedMolecularSamplingSelection {
         let reader = try await VivoMolecularSamplingArchiveReader.open(store: f.store, checkpoint: f.checkpointID)
         return try await reader.selectReplica(index: 0, validation: validation, receipt: receipt)
-    }
-
-    private func payload(_ name: String, publication: VivoMolecularSamplingExportPublication,
-                         store: VivoArtifactStore) async throws -> Data {
-        let output = try #require(publication.receipt.outputs.first { $0.name == name })
-        return try await VivoChemistryWorkflow(store: store).payload(artifact: output.artifact, expectedKind: output.kind)
     }
 
     private func rejects(_ body: () async throws -> Void) async {
