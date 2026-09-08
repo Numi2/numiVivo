@@ -197,6 +197,13 @@ The previous sealed native/reference evidence remains in the corresponding
 `numivivo-frontier-evidence-20260908` roots. New evidence retains commands, policies,
 source snapshots, binary/shader identities, requests, XML, reports and failed logs.
 
+The reusable [evidence-copy checker](../../Tools/Benchmarks/verify_evidence.py)
+passed nine controls on each Mac and verified all 4,600 files and five links in
+both copies of the previous sealed evidence without mismatches. Its
+[observations](frontier-evidence-verifier-observations.json) bind implementation,
+control logs and the independently pinned prior seal. This is integrity of the
+listed entries; excluded files and scientific outcomes retain their own checks.
+
 ## Scientific boundary
 
 Conservation and global kinetic/configurational consistency are necessary tests.

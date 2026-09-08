@@ -165,3 +165,24 @@ changed inputs, and retains preparation failures. Its result covers those fields
 force agreement, GPU arithmetic, trajectories and ensemble statistics retain their
 separate checks. The audit binds the exact bytes it parses and verifies that its
 inputs and implementation remain unchanged before writing the result.
+
+## Verifying a sealed evidence copy
+
+Once every writer has finished, verify a copied evidence tree against the seal's
+SHA256 recorded independently in its published audit. This requires only Python's
+standard library on macOS or another POSIX host:
+
+```sh
+python3 Tools/Benchmarks/verify_evidence.py --root /path/to/evidence-copy \
+  --manifest /path/to/raw-evidence-manifest.json --expected-sha256 AUDIT_SEAL_SHA256 \
+  --out /path/to/new-copy-verification.json
+```
+
+The checker validates each listed file's size and SHA256 and each symbolic link's
+exact target without following it. It rejects missing files, substituted types,
+unsafe or duplicate inventory paths, changed seals and files changed while read.
+Dangling links retained by negative controls are checked as links. A relocated
+copy can preserve those exact targets without making them valid local paths.
+Exclusions and unlisted files are outside this check, including any separately
+sealed runtime bundle. A successful integrity check preserves every original
+scientific verdict, including failures; it does not rerun or qualify the science.

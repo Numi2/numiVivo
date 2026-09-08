@@ -1,0 +1,60 @@
+{
+  "schema": "numivivo.org/frontier-evidence-verifier-observations/v1",
+  "implementation": {
+    "verify_evidence.py": "c0c5fa363ea71e0f14a39d4b66e11a4f552e9f7a4badee0df505b027c6ab1791",
+    "test_evidence_verification.py": "9b1cb2a1cc0401f8e66ad4804b6cd91d304a216ce5fa2c14a993d5058bf44d45"
+  },
+  "sourceArchiveSHA256": "77bf2f305323338cc293a3c5b10833a6025f71fd8258d8029cbb29380baddbc6",
+  "softwareValidation": {
+    "controlsPerHost": 9,
+    "logs": {
+      "evidence-verifier-tests-2.log": "a5ddfc50d1b3931ec97ce3dfed720562451b1acdb8dadfde350cd046193316db",
+      "evidence-verifier-tests-remote-1.log": "eddea963a2688c7386c3ad80503e0c8f02387965cceb5b1f786290f7d3820ade"
+    }
+  },
+  "previousEvidenceCopies": [
+    {
+      "schema": "numivivo.org/audit/evidence-integrity-verification/v1",
+      "manifestSHA256": "0a86b4311d525b1f68a17eff168896c1c67ee5b98a31b80bcd8b61c4bfe195ab",
+      "root": "/Users/home/numivivo-frontier-evidence-20260908",
+      "entries": 4605,
+      "regularFiles": 4600,
+      "symlinks": 5,
+      "declaredFileBytes": 4002632595,
+      "failures": [],
+      "passed": true,
+      "exclusions": [
+        "reference-env",
+        "binaries-*",
+        "*.bundle",
+        "*.tar",
+        "NumiVivoPackageTests-8",
+        "__pycache__",
+        "raw-manifest-8.json"
+      ],
+      "scope": "Integrity of listed entries only. Exclusions and unlisted files are not verified. Existing scientific outcomes are unchanged; no trajectory is replayed."
+    },
+    {
+      "schema": "numivivo.org/audit/evidence-integrity-verification/v1",
+      "manifestSHA256": "0a86b4311d525b1f68a17eff168896c1c67ee5b98a31b80bcd8b61c4bfe195ab",
+      "root": "/Users/n/numivivo-frontier-evidence-20260908",
+      "entries": 4605,
+      "regularFiles": 4600,
+      "symlinks": 5,
+      "declaredFileBytes": 4002632595,
+      "failures": [],
+      "passed": true,
+      "exclusions": [
+        "reference-env",
+        "binaries-*",
+        "*.bundle",
+        "*.tar",
+        "NumiVivoPackageTests-8",
+        "__pycache__",
+        "raw-manifest-8.json"
+      ],
+      "scope": "Integrity of listed entries only. Exclusions and unlisted files are not verified. Existing scientific outcomes are unchanged; no trajectory is replayed."
+    }
+  ],
+  "scope": "Listed-entry integrity only. Native code and original scientific outcomes are unchanged."
+}
