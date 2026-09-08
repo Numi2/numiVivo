@@ -1,0 +1,139 @@
+{
+  "schema": "numivivo.org/molecular-preparation/v1",
+  "structure": {
+    "schemaVersion": 1,
+    "identifier": "published-synthetic-harmonic-h2-preparation",
+    "atoms": [
+      {
+        "index": 0,
+        "name": "H1",
+        "element": {
+          "atomicNumber": 1,
+          "symbol": "H"
+        },
+        "formalCharge": 0,
+        "residueIndex": 0,
+        "isHetero": false
+      },
+      {
+        "index": 1,
+        "name": "H2",
+        "element": {
+          "atomicNumber": 1,
+          "symbol": "H"
+        },
+        "formalCharge": 0,
+        "residueIndex": 0,
+        "isHetero": false
+      }
+    ],
+    "bonds": [
+      {
+        "atomA": 0,
+        "atomB": 1,
+        "order": "single",
+        "stereo": "unspecified"
+      }
+    ],
+    "residues": [
+      {
+        "index": 0,
+        "name": "SYNH2",
+        "atomIndices": [
+          0,
+          1
+        ]
+      }
+    ],
+    "chains": [],
+    "conformers": [
+      {
+        "identifier": "explicit-initial-geometry",
+        "positionsNM": [
+          {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          {
+            "x": 0.125,
+            "y": 0,
+            "z": 0
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "purpose": "synthetic harmonic routing fixture; not physical H2 force-field parameters"
+    }
+  },
+  "microstateIdentifier": "explicit-neutral-SYNH2",
+  "protonationSourceIdentifier": "published synthetic neutral H2 topology; no pKa or population inference",
+  "pH": 7,
+  "expectedFormalCharge": 0,
+  "removeHydrogens": [],
+  "addHydrogens": [],
+  "chargeEdits": [],
+  "residueEdits": [],
+  "stereochemistry": [],
+  "forceField": {
+    "schema": "numivivo.org/force-field-library/v1",
+    "identifier": "published-synthetic-harmonic-h2-routing",
+    "version": "1",
+    "mixingRule": "lorentzBerthelot",
+    "coulomb14Scale": 1,
+    "lennardJones14Scale": 1,
+    "atomTypes": [
+      {
+        "identifier": "H",
+        "elementAtomicNumber": 1,
+        "massDa": 1,
+        "sigmaNM": 0,
+        "epsilonKJPerMol": 0
+      }
+    ],
+    "residueTemplates": [
+      {
+        "residueNames": [
+          "SYNH2"
+        ],
+        "atoms": [
+          {
+            "name": "H1",
+            "typeIdentifier": "H",
+            "chargeE": 0
+          },
+          {
+            "name": "H2",
+            "typeIdentifier": "H",
+            "chargeE": 0
+          }
+        ],
+        "bonds": [
+          {
+            "atomA": "H1",
+            "atomB": "H2",
+            "order": "single"
+          }
+        ],
+        "impropers": []
+      }
+    ],
+    "bondParameters": [
+      {
+        "typeA": "H",
+        "typeB": "H",
+        "lengthNM": 0.125,
+        "forceConstant": 1000
+      }
+    ],
+    "angleParameters": [],
+    "torsionParameters": [],
+    "provenance": {
+      "purpose": "published synthetic contract fixture; not an empirical or ab initio H2 potential",
+      "energyConvention": "U = 0.5 * 1000 kJ mol^-1 nm^-2 * (r - 0.125 nm)^2",
+      "nonbonded": "partial charges, sigma and epsilon are all exactly zero",
+      "massConvention": "each classical particle is exactly 1 Da; destination electronic thermochemistry uses 1.008 Da explicitly"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "numivivo.org/examples/prepared-reaction/v1",
+  "sampling": {
+    "replicaSeeds": [
+      17,
+      29
+    ],
+    "sourceTimesPS": [
+      0.125,
+      0.375
+    ],
+    "timeStepPS": 0.0009765625,
+    "temperatureK": 300,
+    "frictionPerPS": 1,
+    "cutoffNM": 0.5,
+    "equilibrationSteps": 4,
+    "stepsPerBlock": 8,
+    "sampleEvery": 4,
+    "maximumBlocks": 4,
+    "requiredConsecutivePasses": 2,
+    "minimumRetainedFramesPerReplica": 64,
+    "minimumReplicas": 2,
+    "maximumRHat": 1.1,
+    "minimumEffectiveSamplesPerReplica": 20,
+    "maximumAutocorrelationLag": 64,
+    "maximumMeanStandardError": 100,
+    "trajectoryChunkBytes": 1048576
+  },
+  "reactionTemplate": "h3-connected-rate",
+  "modelTransferStatement": "Geometry seeds only: the selected partial classical synthetic harmonic H2 prefix uses masses 1 Da, U=0.5*1000 kJ/mol/nm^2*(r-0.125 nm)^2, zero charges/LJ and 300 K. Both H2 endpoint components use these sampled coordinates as guesses for fresh full-CI/STO-3G qualification with destination masses 1.008 Da and thermochemistry 298.15 K. The isolated H components, H3 saddle guess, electron counts, basis, solver, connectivity refinements, standard state and assumed transmission remain explicit destination inputs. No sampled convergence, ensemble rate, model equivalence or independent recrossing evidence is claimed.",
+  "encounter": {
+    "reservoirPressurePa": 101325,
+    "observationTimesSeconds": [
+      0,
+      1e-12,
+      1e-09,
+      1e-06,
+      0.001
+    ]
+  }
+}
