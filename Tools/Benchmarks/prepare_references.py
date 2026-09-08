@@ -27,6 +27,7 @@ CASES = {
     "dna": ("dna_dodecamer_explicit/minimized_dna_dodecamer.pdb",),
     "membrane": (),
     "ions": (),
+    "water-orthogonal": (),
 }
 
 
@@ -91,15 +92,16 @@ def load_case(name, root):
             sources.append({"package": "openmm", "file": source.name, "sha256": sha(data)})
             pdb = app.PDBFile(str(source))
             model = app.Modeller(pdb.topology, pdb.positions)
-            waters=list(model.topology.residues())
-            chosen=[waters[0],waters[len(waters)//2]]
-            coordinates=[model.positions[next(r.atoms()).index] for r in chosen]
-            model.delete(chosen)
-            top=app.Topology(); chain=top.addChain()
-            for symbol in ["Na","Cl"]:
-                residue=top.addResidue(symbol.upper(),chain)
-                top.addAtom(symbol,app.Element.getBySymbol(symbol),residue)
-            model.add(top,u.Quantity([v.value_in_unit(u.nanometer) for v in coordinates],u.nanometer))
+            if name == "ions":
+                waters=list(model.topology.residues())
+                chosen=[waters[0],waters[len(waters)//2]]
+                coordinates=[model.positions[next(r.atoms()).index] for r in chosen]
+                model.delete(chosen)
+                top=app.Topology(); chain=top.addChain()
+                for symbol in ["Na","Cl"]:
+                    residue=top.addResidue(symbol.upper(),chain)
+                    top.addAtom(symbol,app.Element.getBySymbol(symbol),residue)
+                model.add(top,u.Quantity([v.value_in_unit(u.nanometer) for v in coordinates],u.nanometer))
         system=ff.createSystem(model.topology,nonbondedMethod=app.PME,nonbondedCutoff=0.8*u.nanometer,**kwargs)
         positions=model.positions; periodic=True
         sources.append({"forcefields": forcefields, "package": "openmm", "version": mm.__version__})

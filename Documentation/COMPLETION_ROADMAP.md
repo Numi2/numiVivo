@@ -18,6 +18,13 @@ This roadmap orders the work without replacing the intended architecture with a 
 
 ## Execution order
 
+The [frontier benchmark contract](Design/FRONTIER_BENCHMARKS.md) and
+[reference campaign tools](../Tools/Benchmarks/README.md) make the next broad
+simulation milestone executable: realistic-system force/energy comparisons,
+explicit unsupported inputs and short native execution checks. These gates
+precede interacting ensemble, triclinic, performance, sampling and broader
+chemistry qualification; a completed scorecard does not close those milestones.
+
 1. Completed the cancellation, MD recovery and hybrid conformance milestone with [native Mac mini evidence](Audit/2026-09-07_COMPLETION_RELIABILITY.md): a clean complete build, 224 baseline tests, 22 final-source regressions and 57 CLI checks. This milestone does not complete the acceptance table.
 2. Completed the [streaming archive recovery milestone](Audit/2026-09-07_ARCHIVE_STREAMING.md): a real 100,001-chunk archive validates, resumes and extends through production code while preserving its prefix. Fresh CLI processes verify the archive with memory independent of its length for the measured fixture. The explicit materializing index retains its bound. Turn new integrity or recovery failures into owning-runtime repairs; do not relax gates to obtain a pass.
 3. Extend the [v3 MD numerical milestone](Audit/2026-09-08_MD_NUMERICAL_QUALIFICATION.md) into the wider force/ensemble/continuation matrix. Nuclear/surrogate and resource-admission work remains evidence-scoped; respect physical GPU ownership.

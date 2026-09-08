@@ -11,6 +11,9 @@ Inputs come from pinned openmmtools revision
 The panel comprises TIP3P water, NaCl in water, solvated alanine dipeptide,
 DHFR, the supplied vacuum T4 lysozyme/ligand complex, solvated DNA, and POPC.
 The original geometry is preserved. Preparation exceptions are retained.
+The original water source failed the reference engine's fixed-cutoff cell
+admission. A separately identified `water-orthogonal` package fixture is added;
+the original failed case stays in the scorecard and raw evidence.
 This panel exercises prepared parameter input; it does not validate automatic
 chemical perception, protonation or parameter fitting.
 
