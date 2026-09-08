@@ -50,6 +50,8 @@ The [prepared molecular workflow guide](Documentation/PreparedMolecularWorkflows
 
 These integrations do not yet provide arbitrary-triclinic Metal MD, automatic pKa/CIP chemistry, a universal native force field or complete protein reaction free energies. The guide distinguishes implemented source paths from the remaining physical and execution qualification.
 
+The [prepared molecule to observable example](Examples/prepared-reaction/README.md) now supplies a complete finite route: prepare a synthetic harmonic H₂ system, sample an accepted state, use its geometry for fresh H₃ exchange qualification, and calculate a tagged atom's conditional reaction probability. Its [native and public-CLI audit](Documentation/Audit/2026-09-08_PREPARED_REACTION_CAMPAIGN.md) retains the model transfer, partial sampling status, reaction evidence and explicit bath assumptions.
+
 ## Built around Apple silicon
 
 **Native execution rather than a Python simulation loop.** Swift manages scientific objects, experiments and concurrent operations. C++23 implements compilation, validation and portable reference components. Metal executes molecular-dynamics and kinetic kernels. Precision-sensitive chemistry retains FP64 native CPU calculations rather than forcing every calculation onto the GPU.
@@ -98,6 +100,7 @@ Inspect target-state fractions over the supplied exposure schedule. The inputs a
 | Start with | What it exercises | Input |
 |---|---|---|
 | [Native chemistry](Examples/native-chemistry/README.md) | Gaussian integrals → Hartree–Fock → embedded Hamiltonian → MP2/FCI → orbital information. | Included H₂/STO-3G example. |
+| [Prepared molecule to observable](Examples/prepared-reaction/README.md) | Preparation → Metal sampling → verified geometry seeds → fresh reaction qualification → conditional probability. | Published synthetic H₂ library, H₃ exchange seeds and maintained H₂ bath. |
 | [Hybrid reactions](Examples/hybrid-reaction-runtime/README.md) | Exact SSA, tau-leaping and RK2 on separate reaction components; checkpoint and resume. | Included synthetic model and counts. |
 | [Target engagement](Examples/target-engagement/README.md) | Exposure, binding, covalent conversion, competition and turnover. | Included synthetic experiments. |
 | [Prepared-system MD](Examples/md-preparation/README.md) | AMBER import → minimization → NVT → NPT → production samples. | Your prepared topology and restart. |

@@ -1,0 +1,212 @@
+{
+  "schema": "numivivo.org/test-evidence/prepared-reaction-observations/v1",
+  "passed": true,
+  "implementationSource": {
+    "commit": "3d387f95309fd138f9dfa3f451c4d569dfdffe14",
+    "gitBlobsVerified": 725,
+    "sourceArchiveSHA256": "ff20b3c74e84adf5a8d8abf020173dd64fd295bfe6a2a358c5f889db85f69f20"
+  },
+  "runnerSource": {
+    "commit": "f10a0b1aaf038e0e25d7c9235bb9b5de9d528e05",
+    "gitBlobsVerified": 725,
+    "sourceArchiveSHA256": "a2dc0c6ba44089d3aac711941c0d36f8bc9d5ed8707c37cd0ec369d2ca88b54f"
+  },
+  "buildLog": {
+    "file": "build-3.log",
+    "sha256": "390bf8c506db18140d72172c2f01b5f6fcf5bccd55286ebce14cd996ad8ae1c9"
+  },
+  "hostTests": {
+    "file": "host-tests-3.log",
+    "passedFunctions": 57,
+    "skippedFunctions": 1,
+    "sha256": "7375cc5b1d9daada11e372f971c31951bfff60edadf6b32d596f3fb5a8685828",
+    "footer": "\u2714 Test run with 58 tests in 7 suites passed after 2.366 seconds."
+  },
+  "nativeTests": {
+    "file": "native-tests-3.log",
+    "passedFunctions": 2,
+    "skippedFunctions": 0,
+    "sha256": "80fc5966b675b54f1531b18bd09fffd3f8753ddf33f666e6e26dd9f790779f45",
+    "footer": "\u2714 Test run with 2 tests in 1 suite passed after 2202.453 seconds."
+  },
+  "cliChecks": {
+    "sampling-cli-3": {
+      "checks": 87,
+      "sha256": "3288f529a16bb84fe4654d804cead1933d6b1f47d190642223c435501b262784"
+    },
+    "workflow-cli-4": {
+      "checks": 61,
+      "sha256": "2c27a8c12655d5ee8d2837e6a01df13c10fe86fa2b0a9f2c7ff8b337c5e1be3f"
+    },
+    "full-route-cli-4": {
+      "checks": 42,
+      "sha256": "92e21f53f65c0b59ccdd212adaf0c563c12aefb44bf07268b1671f3598949a1c"
+    }
+  },
+  "binaryResourceEntriesVerified": 51,
+  "executables": [
+    {
+      "path": "NumiVivoPackageTests.xctest/Contents/MacOS/NumiVivoPackageTests",
+      "bytes": 52183000,
+      "sha256": "b544c4d654b94c3b4b9fe6055b1921ee0abe6e8b2ae2061a8a93617886dbd50c"
+    },
+    {
+      "path": "numivivo",
+      "bytes": 44598856,
+      "sha256": "ba39e032dc0c04c860d142354055add29f6b1ccd04d6881308714666031f4c8a"
+    }
+  ],
+  "nativeLauncher": {
+    "path": "/Applications/Xcode-26.6.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec/swift/pm/swiftpm-testing-helper",
+    "sha256": "da2601bc562f2e0dd0cd7e00e923aee763ce94bdbf3eddccdebf1a4b8d5d313d"
+  },
+  "currentBuildAndFrozenTestImageIdentical": true,
+  "sampledTestImageUUID": "34F2A8CC-378F-315B-9D83-FC071170668E",
+  "nativeCampaignReceiptSHA256": "c05fef93f18d332eda51cfff03afb8795b7eb9b7a0966d111b9838e1d4a3dd04",
+  "nativeCampaignReceipt": "/Users/n/numivivo-prepared-reaction-evidence-20260908/native-3/prepared-reaction-campaign-EC9E5BE3-DF6E-4FF9-B206-CC234182EBC8/prepared-reaction-campaign-receipt.json",
+  "contentObjectsVerified": {
+    "native": 72,
+    "fullRouteCLI": 75
+  },
+  "selectedCheckpoint": "a33a48188cf07c27065cd580b3d300060939962e381bf9d1daf83928fcbf6cce",
+  "nativeAndCLICheckpointsIdentical": true,
+  "nativeAndCLIReactionPayloadsIdentical": true,
+  "cliTimedStages": [
+    {
+      "label": "reaction",
+      "elapsedSeconds": 1111.6409327919998
+    },
+    {
+      "label": "encounter",
+      "elapsedSeconds": 738.0486792500001
+    }
+  ],
+  "rateConstant": 1.8113347239568756e-11,
+  "rateUnits": "Pa^-1 s^-1",
+  "temperatureK": 298.15,
+  "reservoirPressurePa": 101325,
+  "conditionalHazardPerSecond": 1.835334909049304e-06,
+  "observations": [
+    {
+      "derivatives": [
+        {
+          "hazardPerSecond": 1.835334909049304e-06,
+          "logSurvivalProbability": 0,
+          "parameterIdentifier": "natural-log-rate",
+          "probabilityByState": [
+            0
+          ],
+          "reactedProbability": 0,
+          "reactiveFluxPerSecond": 1.835334909049304e-06,
+          "survivalProbability": 0
+        }
+      ],
+      "hazardPerSecond": 1.835334909049304e-06,
+      "probabilityByState": [
+        1
+      ],
+      "reactedProbability": 0,
+      "reactiveFluxPerSecond": 1.835334909049304e-06,
+      "survivalProbability": 1,
+      "timeSeconds": 0
+    },
+    {
+      "derivatives": [
+        {
+          "hazardPerSecond": 1.835334909049304e-06,
+          "logSurvivalProbability": -1.835334909049304e-18,
+          "parameterIdentifier": "natural-log-rate",
+          "probabilityByState": [
+            -1.835334909049304e-18
+          ],
+          "reactedProbability": 1.835334909049304e-18,
+          "reactiveFluxPerSecond": 1.835334909049304e-06,
+          "survivalProbability": -1.835334909049304e-18
+        }
+      ],
+      "hazardPerSecond": 1.835334909049304e-06,
+      "probabilityByState": [
+        1
+      ],
+      "reactedProbability": 0,
+      "reactiveFluxPerSecond": 1.835334909049304e-06,
+      "survivalProbability": 1,
+      "timeSeconds": 1e-12
+    },
+    {
+      "derivatives": [
+        {
+          "hazardPerSecond": 1.835334909049304e-06,
+          "logSurvivalProbability": -1.835334909049304e-15,
+          "parameterIdentifier": "natural-log-rate",
+          "probabilityByState": [
+            -1.8353349090493004e-15
+          ],
+          "reactedProbability": 1.8353349090493004e-15,
+          "reactiveFluxPerSecond": 1.8353349090492972e-06,
+          "survivalProbability": -1.8353349090493004e-15
+        }
+      ],
+      "hazardPerSecond": 1.835334909049304e-06,
+      "probabilityByState": [
+        0.9999999999999981
+      ],
+      "reactedProbability": 1.887379141862766e-15,
+      "reactiveFluxPerSecond": 1.8353349090493006e-06,
+      "survivalProbability": 0.9999999999999981,
+      "timeSeconds": 1e-09
+    },
+    {
+      "derivatives": [
+        {
+          "hazardPerSecond": 1.835334909049304e-06,
+          "logSurvivalProbability": -1.8353349090493034e-12,
+          "parameterIdentifier": "natural-log-rate",
+          "probabilityByState": [
+            -1.835334909045935e-12
+          ],
+          "reactedProbability": 1.835334909045935e-12,
+          "reactiveFluxPerSecond": 1.835334909042567e-06,
+          "survivalProbability": -1.835334909045935e-12
+        }
+      ],
+      "hazardPerSecond": 1.835334909049304e-06,
+      "probabilityByState": [
+        0.9999999999981646
+      ],
+      "reactedProbability": 1.8354207043103088e-12,
+      "reactiveFluxPerSecond": 1.8353349090459354e-06,
+      "survivalProbability": 0.9999999999981646,
+      "timeSeconds": 1e-06
+    },
+    {
+      "derivatives": [
+        {
+          "hazardPerSecond": 1.835334909049304e-06,
+          "logSurvivalProbability": -1.8353349090493042e-09,
+          "parameterIdentifier": "natural-log-rate",
+          "probabilityByState": [
+            -1.8353349056808498e-09
+          ],
+          "reactedProbability": 1.8353349056808498e-09,
+          "reactiveFluxPerSecond": 1.8353349023123955e-06,
+          "survivalProbability": -1.8353349056808498e-09
+        }
+      ],
+      "hazardPerSecond": 1.835334909049304e-06,
+      "probabilityByState": [
+        0.999999998164665
+      ],
+      "reactedProbability": 1.8353349950928077e-09,
+      "reactiveFluxPerSecond": 1.8353349056808497e-06,
+      "survivalProbability": 0.999999998164665,
+      "timeSeconds": 0.001
+    }
+  ],
+  "negativeControls": {
+    "changed-component-identity-rejected": true,
+    "changed-numeric-rate-rejected": true,
+    "changed-temperature-rejected": true
+  },
+  "scope": "Real preparation and accepted partial synthetic harmonic MD feed both H2 geometry guesses for fresh full-CI/STO-3G H3 exchange qualification. The isolated H components and saddle remain explicit independent destination inputs. Conditional probabilities describe a tagged H in an externally maintained ideal H2 reservoir under the declared TST model, standard state and assumed transmission. This is a complete finite software route, not a converged sampling ensemble, physical H2 force-field validation, experimental rate, diffusion simulation, finite-bath kinetics, efficacy or uncertainty qualification."
+}

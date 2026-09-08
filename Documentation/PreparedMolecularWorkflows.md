@@ -2,7 +2,7 @@
 
 This increment extends the existing molecular structures, native force-field compiler, Metal MD runtime, density fitting, correlated solvers, artifact DAG, nuclear qualification and kinetic derivation. It does not introduce a second solver, MD engine, thermochemistry implementation or artifact store.
 
-**Validation is revision-specific.** The [sampling/export audit](Audit/2026-09-08_SAMPLING_EXPORT.md) records a complete Apple release/test build, executed preparation and sampling regressions, actual Metal prefix continuation and a selected-state electronic handoff. The [MD numerical audit](Audit/2026-09-08_MD_NUMERICAL_QUALIFICATION.md) records its separate scientific fixtures. These results do not establish realistic protein rates or a complete prepared-system-through-observable campaign.
+**Validation is revision-specific.** The [prepared-reaction audit](Audit/2026-09-08_PREPARED_REACTION_CAMPAIGN.md) records a complete finite preparation-through-observable campaign through both the SDK and public CLI. The earlier [sampling/export audit](Audit/2026-09-08_SAMPLING_EXPORT.md) records accepted-prefix continuation and electronic handoff; the [MD numerical audit](Audit/2026-09-08_MD_NUMERICAL_QUALIFICATION.md) records separate scientific fixtures. These results do not establish realistic protein rates or general chemical accuracy.
 
 ## 1. Explicit molecular preparation
 
@@ -92,6 +92,8 @@ numivivo molecule-sampling-run sampling.json \
 The runner publishes `molecular-sampling-<request-sha256>-checkpoint` in the existing artifact store. The receipt contains that checkpoint, trajectory manifests, status and latest diagnostics. Outputs are no-clobber; use a new output filename when continuing. The generated schedule is only a starting configuration, not a universal equilibration duration. Distinct velocity seeds do not establish diverse initial conformations.
 
 The [accepted sampling export interface](Design/MOLECULAR_SAMPLING_EXPORT.md) validates a selected completed prefix and publishes its exact checkpoint, source model, snapshot and atom mapping as existing typed workflow outputs. The export retains partial termination and declared stopping criteria separately, and its immutable receipt can be freshly verified independently of cache references.
+
+The [geometry-seed and encounter interfaces](Design/PREPARED_REACTION_CAMPAIGN.md) extend that handoff into fresh nuclear/reaction qualification and a conditional observable. `reaction-seed` changes only explicitly mapped initial coordinates; `reaction-seed-verify` rechecks the immutable source chain. `reaction-encounter-request` binds explicit tagged-component, reservoir and time conditions for the `vivo.native.conditional-encounter` workflow operation. The [complete published example](../Examples/prepared-reaction/README.md) uses a partial sampling prefix only as geometry, with fresh chemistry and separately declared bath assumptions.
 
 Geometry observables use explicit **structure-atom to physical-particle** maps, so virtual-site indices are not mistaken for atom indices. Supported observables are distances, distance differences, torsion sine/cosine, potential energy, temperature and periodic volume. Sine/cosine avoids an angular discontinuity at a torsion branch cut.
 
