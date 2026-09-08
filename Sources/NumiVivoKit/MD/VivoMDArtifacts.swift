@@ -27,6 +27,11 @@ public struct VivoMDCheckpoint: Codable, Sendable, Equatable {
     public static let schema = "numivivo.org/md-checkpoint/v1"
     public var schema: String
     public var numericalContract: String?
+    public var positionPrecision: VivoMDPositionPrecision?
+    /// Exact GPU words for compensated restart, independent of the rounded
+    /// Double physical-coordinate view in positionsNM.
+    public var positionHighNM: [VivoVector3D]?
+    public var positionCorrectionsNM: [VivoVector3D]?
     public var systemFingerprint: VivoFingerprint
     public var configurationFingerprint: VivoFingerprint
     public var acceptedStep: UInt64
@@ -36,8 +41,11 @@ public struct VivoMDCheckpoint: Codable, Sendable, Equatable {
     public var periodicCell: VivoPeriodicCell?
     public init(systemFingerprint: VivoFingerprint, configurationFingerprint: VivoFingerprint,
                 acceptedStep: UInt64, timePS: Double, positionsNM: [VivoVector3D],
-                velocitiesNMPerPS: [VivoVector3D], periodicCell: VivoPeriodicCell?) {
+                velocitiesNMPerPS: [VivoVector3D], periodicCell: VivoPeriodicCell?, positionPrecision:VivoMDPositionPrecision?=nil,
+                positionHighNM:[VivoVector3D]?=nil,positionCorrectionsNM:[VivoVector3D]?=nil) {
         schema=Self.schema;numericalContract=VivoMDExecutionIdentity.current
+        self.positionPrecision=positionPrecision
+        self.positionHighNM=positionHighNM;self.positionCorrectionsNM=positionCorrectionsNM
         self.systemFingerprint=systemFingerprint;self.configurationFingerprint=configurationFingerprint
         self.acceptedStep=acceptedStep;self.timePS=timePS;self.positionsNM=positionsNM
         self.velocitiesNMPerPS=velocitiesNMPerPS;self.periodicCell=periodicCell
@@ -50,7 +58,21 @@ public struct VivoMDCheckpoint: Codable, Sendable, Equatable {
               positionsNM.allSatisfy(\.isFinite),velocitiesNMPerPS.allSatisfy(\.isFinite),timePS.isFinite,timePS>=0,
               periodicCell?.isValid != false else {throw VivoArtifactValidationError.invalid("MD checkpoint shape, clock, cell or values are invalid")}
         // Restart must not introduce another hidden FP64 -> FP32 rounding step.
-        for vector in positionsNM + velocitiesNMPerPS {
+        var exactWords=velocitiesNMPerPS
+        if (positionPrecision ?? .fp32) == .compensated {
+            guard let hi=positionHighNM,let lo=positionCorrectionsNM,hi.count==particleCount,lo.count==particleCount,
+                  hi.allSatisfy(\.isFinite),lo.allSatisfy(\.isFinite) else {
+                throw VivoArtifactValidationError.invalid("compensated checkpoint requires exact high and correction words")
+            }
+            for i in 0..<particleCount {
+                guard hi[i]+lo[i]==positionsNM[i] else { throw VivoArtifactValidationError.invalid("checkpoint coordinate view differs from exact words") }
+            }
+            exactWords += hi+lo
+        } else {
+            guard positionHighNM==nil,positionCorrectionsNM==nil else { throw VivoArtifactValidationError.invalid("FP32 checkpoint contains unexpected compensation") }
+            exactWords += positionsNM
+        }
+        for vector in exactWords {
             for x in [vector.x,vector.y,vector.z] {
                 guard Double(Float(x))==x else {throw VivoArtifactValidationError.invalid("checkpoint does not contain exact FP32 runtime state")}
             }

@@ -35,6 +35,9 @@ public struct VivoMolecularSamplingRunRequest: Codable, Sendable, Equatable {
         _ = try VivoStructureValidator.validate(structure)
         try VivoClassicalSystemValidator.validate(system,atomCount:UInt32(structure.atoms.count))
         try md.validate();try convergence.validate();try minimization?.validate()
+        guard md.resolvedPositionPrecision == .fp32 else {
+            throw VivoArtifactValidationError.incompatible("molecular sampling archives require FP32 coordinates; compensated encoding is not implemented")
+        }
         guard schema==Self.schema,system.structureFingerprint == (try VivoStructureCodec.fingerprint(structure)),
               !contextIdentifier.isEmpty,!observables.isEmpty,observables.count<=64,
               initialStates.count==replicaSeeds.count,replicaSeeds.count>=convergence.minimumReplicas,

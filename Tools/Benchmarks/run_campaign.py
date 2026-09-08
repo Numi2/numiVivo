@@ -82,6 +82,7 @@ def main():
         row.update(exitCode=code,wallSeconds=time.monotonic()-begin,particles=case["particles"],requestSHA256=digest(request_path))
         if report_path.exists():
             report=json.loads(report_path.read_text())
+            if report.get("executionError"):row["executionError"]=report["executionError"]
             assert report["identifier"]==name
             if report["outcome"]=="unsupported":
                 assert not report["capability"]["executable"] and not report["comparisons"]

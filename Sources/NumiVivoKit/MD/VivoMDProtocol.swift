@@ -33,6 +33,9 @@ public struct VivoMDProtocolStage: Codable, Sendable, Equatable {
     }
     public func validate() throws {
         try configuration.validate()
+        if configuration.resolvedPositionPrecision == .compensated && (kind == .minimization || sampleEvery != nil) {
+            throw VivoArtifactValidationError.incompatible("compensated coordinates require dynamics without FP32 trajectory archives")
+        }
         guard !identifier.isEmpty, identifier.utf8.count <= 128,
               checkpointEvery > 0, sampleEvery != 0, observablesEvery != 0 else {
             throw VivoArtifactValidationError.invalid("invalid MD stage identifier or sampling schedule")

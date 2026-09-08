@@ -4,6 +4,7 @@ public enum VivoMDElectrostatics:String,Codable,Sendable,CaseIterable{case cutof
 public enum VivoMDEnsemble:String,Codable,Sendable,CaseIterable{case nve,nvt,npt}
 public enum VivoMDThermostat:String,Codable,Sendable,CaseIterable{case none,langevinMiddle,velocityRescale}
 public enum VivoMDBarostat:String,Codable,Sendable,CaseIterable{case none,monteCarloIsotropic}
+public enum VivoMDPositionPrecision:String,Codable,Sendable,CaseIterable{case fp32,compensated}
 
 public struct VivoMDConfiguration:Codable,Sendable,Equatable {
     public static let schema="numivivo.org/md-configuration/v1"
@@ -19,6 +20,8 @@ public struct VivoMDConfiguration:Codable,Sendable,Equatable {
     public var pmeGridSpacingNM:Double?
     /// Fixed mesh dimensions for a cell-moving Hamiltonian; nil preserves legacy planning.
     public var pmeGridDimensions:[UInt32]?
+    /// Two FP32 words retain position increments; force evaluation remains FP32.
+    public var positionPrecision:VivoMDPositionPrecision?
     public var ensemble:VivoMDEnsemble
     public var thermostat:VivoMDThermostat
     public var targetTemperatureK:Double?
@@ -44,7 +47,8 @@ public struct VivoMDConfiguration:Codable,Sendable,Equatable {
                 barostatMaximumLogVolumeStep:Double?=0.01,
                 constraintTolerance:Double=1e-6,maximumConstraintIterations:UInt32=32,
                 neighborRebuildInterval:UInt32=10,neighborListEnabled:Bool?=true,
-                maximumNeighborsPerParticle:UInt32?=512,randomSeed:UInt64=0x4e554d495649564f,lennardJonesSwitchOnNM:Double?=nil,pmeGridDimensions:[UInt32]?=nil) {
+                maximumNeighborsPerParticle:UInt32?=512,randomSeed:UInt64=0x4e554d495649564f,lennardJonesSwitchOnNM:Double?=nil,pmeGridDimensions:[UInt32]?=nil,positionPrecision:VivoMDPositionPrecision?=nil) {
+        self.positionPrecision=positionPrecision
         schema=Self.schema;self.lennardJonesSwitchOnNM=lennardJonesSwitchOnNM;self.timeStepPS=timeStepPS;self.cutoffNM=cutoffNM;self.neighborSkinNM=neighborSkinNM
         self.electrostatics=electrostatics;self.relativeDielectric=relativeDielectric;self.reactionFieldDielectric=reactionFieldDielectric
         self.pmeTolerance=pmeTolerance;self.pmeGridSpacingNM=pmeGridSpacingNM;self.pmeGridDimensions=pmeGridDimensions;self.ensemble=ensemble;self.thermostat=thermostat
@@ -55,6 +59,7 @@ public struct VivoMDConfiguration:Codable,Sendable,Equatable {
         self.maximumNeighborsPerParticle=maximumNeighborsPerParticle;self.randomSeed=randomSeed
     }
     public var resolvedNeighborListEnabled:Bool{neighborListEnabled ?? true}
+    public var resolvedPositionPrecision:VivoMDPositionPrecision{positionPrecision ?? .fp32}
     public var resolvedMaximumNeighborsPerParticle:UInt32{maximumNeighborsPerParticle ?? 512}
     public var resolvedPMETolerance:Double{pmeTolerance ?? 1e-5}
     public var resolvedPMEGridSpacingNM:Double{pmeGridSpacingNM ?? 0.12}
@@ -167,6 +172,7 @@ public enum VivoMDCapabilityAnalyzer {
         var notes:[String]=[]
         if system.polarization != nil && forceProvider == nil { blockers.append("induced-dipole model requires its explicit variational force provider") }
         if let forceProvider {
+            if configuration.resolvedPositionPrecision == .compensated { blockers.append("compensated coordinates do not yet support external candidate force providers") }
             do { try forceProvider.validate(system:system,configuration:configuration,cell:initialState.periodicCell) }
             catch { blockers.append(String(describing:error)) }
         }
@@ -177,6 +183,7 @@ public enum VivoMDCapabilityAnalyzer {
         if configuration.ensemble == .npt {notes.append("molecular-center log-volume proposals; operational failures abort rather than count as Metropolis rejections")}
         if configuration.resolvedNeighborListEnabled {notes.append("neighbor lists are rebuilt at both force positions; rebuildInterval is retained for compatibility, not yet an amortization guarantee")}
         notes.append("reported thermal degrees of freedom assume independent distance constraints")
+        if configuration.resolvedPositionPrecision == .compensated { notes.append("compensated positions; FP32 forces and velocities; fixed-cell classical dynamics only") }
         notes.append("executable means no known source-contract blocker; it does not establish Metal availability or numerical correctness")
         return .init(executable:blockers.isEmpty,particleCount:UInt32(system.particles.count),
             massiveParticleCount:UInt32(system.particles.filter{$0.massDa>0}.count),virtualSiteCount:UInt32(virtual.count),

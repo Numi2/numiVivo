@@ -30,6 +30,10 @@ public enum VivoMDExecutionPreflight {
     public static func blockers(system:VivoClassicalSystem,initial:VivoClassicalInitialState,
                                 configuration:VivoMDConfiguration) -> [String] {
         var result:[String]=[]
+        if configuration.resolvedPositionPrecision == .compensated {
+            if configuration.ensemble == .npt { result.append("compensated coordinates require a fixed cell; NPT is not implemented") }
+            if system.particles.contains(where:{$0.role != .atom}) { result.append("compensated coordinates currently require physical atom particles") }
+        }
         if configuration.thermostat == .velocityRescale {result.append("velocity-rescale thermostat is not implemented")}
         if configuration.electrostatics == .pme && !configuration.resolvedNeighborListEnabled {
             result.append("PME real-space evaluation requires neighbor-list execution")

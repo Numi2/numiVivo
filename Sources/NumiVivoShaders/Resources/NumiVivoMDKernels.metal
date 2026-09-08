@@ -36,4 +36,104 @@ inline uint4 philox(uint4 x,uint2 k){for(uint r=0;r<10;++r){uint h0=mulhi(0xD251
 [[host_name("nvivo_md_validate_constraints")]] kernel void nvivo_md_validate_constraints(device const float4*p[[buffer(0)]],device const float4*v[[buffer(1)]],device const Constraint*q[[buffer(2)]],device const uint*o[[buffer(3)]],device const Incidence*inc[[buffer(4)]],device Status&s[[buffer(5)]],constant Command&c[[buffer(6)]],uint g[[thread_position_in_grid]]){if(g>=c.particleCount)return;for(uint i=o[g];i<o[g+1];++i){Incidence e=inc[i];if(e.localIndex!=0)continue;Constraint x=q[e.termIndex];float3 d=minimumImage(p[x.atoms.x].xyz-p[x.atoms.y].xyz,c);float length=sqrt(dot(d,d)),pe=fabs(length-x.distanceNM)/max(x.distanceNM,1e-8f),ve=fabs(dot(d,v[x.atoms.x].xyz-v[x.atoms.y].xyz))/max(x.distanceNM,1e-8f);if(!isfinite(pe)||!isfinite(ve)||pe>c.constraintTolerance||ve>c.constraintTolerance/max(c.dtPS,1e-8f))fail(s,statusConstraint,g);}}
 [[host_name("nvivo_md_kinetic")]] kernel void nvivo_md_kinetic(device const float4*v[[buffer(0)]],device const float4*dyn[[buffer(1)]],device float*ke[[buffer(2)]],constant Command&c[[buffer(3)]],uint g[[thread_position_in_grid]]){if(g<c.particleCount)ke[g]=.5f*dyn[g].x*dot(v[g].xyz,v[g].xyz);}
 [[host_name("nvivo_md_validate")]] kernel void nvivo_md_validate(device const float4*p[[buffer(0)]],device const float4*v[[buffer(1)]],device const float4*fe[[buffer(2)]],device Status&s[[buffer(3)]],constant Command&c[[buffer(4)]],uint g[[thread_position_in_grid]]){if(g<c.particleCount&&(!all(isfinite(p[g]))||!all(isfinite(v[g]))||!all(isfinite(fe[g]))))fail(s,statusNonFinite,g);}
+// Error-free additions require fastMathEnabled=false (the library contract).
+// Only positions are compensated; force evaluation and velocities remain FP32.
+struct PositionPair { float3 hi,lo; };
+inline PositionPair positionSum(float3 a,float3 b) {
+    float3 s=a+b,v=s-a;
+    return {s,(a-(s-v))+(b-v)};
+}
+inline PositionPair positionAdd(PositionPair a,float3 b) {
+    PositionPair s=positionSum(a.hi,b);
+    return positionSum(s.hi,s.lo+a.lo);
+}
+inline PositionPair positionSubtractLattice(PositionPair a,float3 n,constant Command&c) {
+    float3 lattice[3]={c.cellA.xyz,c.cellB.xyz,c.cellC.xyz};
+    for(uint i=0;i<3;++i) {
+        float3 product=-n[i]*lattice[i];
+        float3 error=fma(float3(-n[i]),lattice[i],-product);
+        a=positionAdd(a,product);a=positionAdd(a,error);
+    }
+    return a;
+}
+inline float3 positionFractional(float3 p,constant Command&c) {
+    return float3(dot(p,c.reciprocalA.xyz),dot(p,c.reciprocalB.xyz),dot(p,c.reciprocalC.xyz));
+}
+inline PositionPair positionWrap(PositionPair p,constant Command&c) {
+    if(c.periodic!=0)p=positionSubtractLattice(p,floor(positionFractional(p.hi,c)+positionFractional(p.lo,c)),c);
+    return p;
+}
+inline float3 positionDifference(float3 ah,float3 al,float3 bh,float3 bl,constant Command&c) {
+    PositionPair d=positionSum(ah,-bh);d=positionAdd(d,al);d=positionAdd(d,-bl);
+    if(c.periodic!=0)d=positionSubtractLattice(d,rint(positionFractional(d.hi,c)+positionFractional(d.lo,c)),c);
+    return d.hi+d.lo;
+}
+inline float3 positionDistance(uint a,uint b,device const float4*hi,device const float4*lo,constant Command&c) {
+    return positionDifference(hi[a].xyz,lo[a].xyz,hi[b].xyz,lo[b].xyz,c);
+}
+
+[[host_name("nvivo_md_compensated_drift")]] kernel void nvivo_md_compensated_drift(
+    device float4*hi[[buffer(0)]],device float4*lo[[buffer(1)]],device const float4*v[[buffer(2)]],
+    device const float4*dyn[[buffer(3)]],constant Command&c[[buffer(4)]],uint g[[thread_position_in_grid]]) {
+    if(g>=c.particleCount||dyn[g].y==0)return;
+    PositionPair p=positionWrap(positionAdd({hi[g].xyz,lo[g].xyz},c.dtPS*v[g].xyz),c);
+    hi[g]=float4(p.hi,0);lo[g]=float4(p.lo,0);
+}
+[[host_name("nvivo_md_compensated_constraint_position")]] kernel void nvivo_md_compensated_constraint_position(
+    device const float4*hi[[buffer(0)]],device const float4*lo[[buffer(1)]],
+    device float4*outHi[[buffer(2)]],device float4*outLo[[buffer(3)]],device const float4*dyn[[buffer(4)]],
+    device const Constraint*q[[buffer(5)]],device const uint*o[[buffer(6)]],device const Incidence*inc[[buffer(7)]],
+    device Status&s[[buffer(8)]],constant Command&c[[buffer(9)]],uint g[[thread_position_in_grid]]) {
+    if(g>=c.particleCount)return;
+    float3 correction=0;float wi=dyn[g].y;
+    for(uint i=o[g];i<o[g+1];++i) {
+        Incidence e=inc[i];Constraint x=q[e.termIndex];uint other=e.localIndex==0?x.atoms.y:x.atoms.x;
+        float sum=wi+dyn[other].y;if(sum<=0)continue;
+        float3 d=positionDistance(x.atoms.x,x.atoms.y,hi,lo,c);float r2=dot(d,d);
+        if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)){fail(s,statusInvalidGeometry,g);continue;}
+        float residual=r2-x.distanceNM*x.distanceNM;
+        correction+=(e.localIndex==0?-wi:wi)*residual*d/(2.f*sum*r2);
+    }
+    PositionPair p=positionWrap(positionAdd({hi[g].xyz,lo[g].xyz},correction),c);
+    outHi[g]=float4(p.hi,0);outLo[g]=float4(p.lo,0);
+}
+[[host_name("nvivo_md_compensated_constraint_velocity")]] kernel void nvivo_md_compensated_constraint_velocity(
+    device const float4*hi[[buffer(0)]],device const float4*lo[[buffer(1)]],device const float4*src[[buffer(2)]],
+    device float4*dst[[buffer(3)]],device const float4*dyn[[buffer(4)]],device const Constraint*q[[buffer(5)]],
+    device const uint*o[[buffer(6)]],device const Incidence*inc[[buffer(7)]],device Status&s[[buffer(8)]],
+    constant Command&c[[buffer(9)]],uint g[[thread_position_in_grid]]) {
+    if(g>=c.particleCount)return;float3 correction=0;float wi=dyn[g].y;
+    for(uint i=o[g];i<o[g+1];++i) {
+        Incidence e=inc[i];Constraint x=q[e.termIndex];uint other=e.localIndex==0?x.atoms.y:x.atoms.x;
+        float sum=wi+dyn[other].y;if(sum<=0)continue;
+        float3 d=positionDistance(x.atoms.x,x.atoms.y,hi,lo,c);float r2=dot(d,d);
+        if(!(r2>c.minimumDistanceNM*c.minimumDistanceNM)){fail(s,statusInvalidGeometry,g);continue;}
+        float lambda=dot(d,src[x.atoms.x].xyz-src[x.atoms.y].xyz)/(sum*r2);
+        correction+=(e.localIndex==0?-wi:wi)*lambda*d;
+    }
+    dst[g]=float4(src[g].xyz+correction,0);
+}
+[[host_name("nvivo_md_compensated_validate_constraints")]] kernel void nvivo_md_compensated_validate_constraints(
+    device const float4*hi[[buffer(0)]],device const float4*lo[[buffer(1)]],device const float4*v[[buffer(2)]],
+    device const Constraint*q[[buffer(3)]],device const uint*o[[buffer(4)]],device const Incidence*inc[[buffer(5)]],
+    device Status&s[[buffer(6)]],constant Command&c[[buffer(7)]],uint g[[thread_position_in_grid]]) {
+    if(g>=c.particleCount)return;
+    if(!all(isfinite(lo[g]))){fail(s,statusNonFinite,g);return;}
+    for(uint i=o[g];i<o[g+1];++i) {
+        Incidence e=inc[i];if(e.localIndex!=0)continue;Constraint x=q[e.termIndex];
+        float3 d=positionDistance(x.atoms.x,x.atoms.y,hi,lo,c);
+        float pe=fabs(length(d)-x.distanceNM)/max(x.distanceNM,1e-8f);
+        float ve=fabs(dot(d,v[x.atoms.x].xyz-v[x.atoms.y].xyz))/max(x.distanceNM,1e-8f);
+        if(!isfinite(pe)||!isfinite(ve)||pe>c.constraintTolerance||ve>c.constraintTolerance/max(c.dtPS,1e-8f))fail(s,statusConstraint,g);
+    }
+}
+[[host_name("nvivo_md_compensated_impulse")]] kernel void nvivo_md_compensated_impulse(
+    device const float4*hi[[buffer(0)]],device const float4*lo[[buffer(1)]],
+    device const float4*beforeHi[[buffer(2)]],device const float4*beforeLo[[buffer(3)]],
+    device float4*v[[buffer(4)]],device const float4*dyn[[buffer(5)]],device Status&s[[buffer(6)]],
+    constant Command&c[[buffer(7)]],uint g[[thread_position_in_grid]]) {
+    if(g>=c.particleCount||dyn[g].y==0)return;
+    float3 result=v[g].xyz+positionDifference(hi[g].xyz,lo[g].xyz,beforeHi[g].xyz,beforeLo[g].xyz,c)/c.dtPS;
+    if(!all(isfinite(result))){fail(s,statusNonFinite,g);return;}v[g]=float4(result,0);
+}
 }

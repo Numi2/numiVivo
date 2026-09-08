@@ -58,6 +58,7 @@ public actor VivoMDMetalRuntime {
     private let queue: MTLCommandQueue
     private let packed: VivoMDPackedSystem
     private let arena: VivoMDGPUArena
+    private let corrections: VivoMDPositionCorrections?
     private let work: VivoMDWorkBuffers
     private let pipelines: [NumiVivoKernel: NumiVivoPipeline]
     private let totalChargeE: Double
@@ -82,19 +83,23 @@ public actor VivoMDMetalRuntime {
     public static func restore(system: VivoClassicalSystem, configuration: VivoMDConfiguration,
                                checkpoint: VivoMDCheckpoint, device: MTLDevice? = nil, forceProvider: VivoMDCandidateForceProvider? = nil) async throws -> VivoMDMetalRuntime {
         try checkpoint.validate(particleCount: system.particles.count)
+        guard (checkpoint.positionPrecision ?? .fp32)==configuration.resolvedPositionPrecision else {
+            throw VivoArtifactValidationError.incompatible("MD restore position precision mismatch")
+        }
         let systemID = try system.fingerprint()
         let configurationID = try VivoMDCandidateForceProvider.executionFingerprint(configuration: configuration,provider: forceProvider)
         guard checkpoint.systemFingerprint == systemID, checkpoint.configurationFingerprint == configurationID else {
             throw VivoArtifactValidationError.incompatible("MD restore system/configuration identity mismatch")
         }
-        let initial = VivoClassicalInitialState(systemFingerprint: systemID, positionsNM: checkpoint.positionsNM,
+        let initial = VivoClassicalInitialState(systemFingerprint: systemID, positionsNM: checkpoint.positionHighNM ?? checkpoint.positionsNM,
                                                 periodicCell: checkpoint.periodicCell, sourceTimePS: checkpoint.timePS)
         return try await makeInternal(system: system, initial: initial, configuration: configuration,
-            velocities: checkpoint.velocitiesNMPerPS, step: checkpoint.acceptedStep, time: checkpoint.timePS, device: device, forceProvider: forceProvider)
+            velocities: checkpoint.velocitiesNMPerPS, step: checkpoint.acceptedStep, time: checkpoint.timePS, device: device, forceProvider: forceProvider,
+            exactCorrections:checkpoint.positionCorrectionsNM)
     }
     private static func makeInternal(system: VivoClassicalSystem, initial: VivoClassicalInitialState,
                                      configuration: VivoMDConfiguration, velocities: [VivoVector3D]?,
-                                     step: UInt64, time: Double, device requested: MTLDevice?, forceProvider: VivoMDCandidateForceProvider?) async throws -> VivoMDMetalRuntime {
+                                     step: UInt64, time: Double, device requested: MTLDevice?, forceProvider: VivoMDCandidateForceProvider?,exactCorrections:[VivoVector3D]?=nil) async throws -> VivoMDMetalRuntime {
         try forceProvider?.validate(system: system,configuration: configuration,cell: initial.periodicCell)
         let report = try VivoMDCapabilityAnalyzer.analyze(system: system, initialState: initial, configuration: configuration, forceProvider: forceProvider)
         guard report.executable else { throw VivoMDRuntimeError.unsupported(report.blockers) }
@@ -114,11 +119,17 @@ public actor VivoMDMetalRuntime {
             .mdDriftConstraintImpulse, .mdProjectedForceSeed, .mdValidateProjectedForce, .mdObservationTerms, .mdSumPairReduce
         ]
         if configuration.electrostatics == .pme { names += [.mdPMERealSpaceNeighbor, .mdPMEExceptionCorrection] }
+        if configuration.resolvedPositionPrecision == .compensated {
+            names += [.mdCompensatedDrift,.mdCompensatedConstraintPosition,.mdCompensatedConstraintVelocity,
+                      .mdCompensatedValidateConstraints,.mdCompensatedImpulse]
+        }
         var pipelines: [NumiVivoKernel: NumiVivoPipeline] = [:]
         for name in names { pipelines[name] = try await catalog.pipeline(name) }
         let arena = try await VivoMDGPUArena.make(device: device, queue: queue, packed: packed, initial: initial,
             velocities: velocities ?? [VivoVector3D](repeating: .zero, count: system.particles.count), configuration: configuration)
         let work = try VivoMDWorkBuffers(device: device, particles: system.particles)
+        let corrections = configuration.resolvedPositionPrecision == .compensated
+            ? try VivoMDPositionCorrections(device:device,positions:initial.positionsNM,exactCorrections:exactCorrections):nil
         let totalCharge = packed.particleDynamics.reduce(0.0) { $0 + Double($1.z) }
         let cell = try await makeCellResources(device: device, catalog: catalog, packed: packed, arena: arena,
             configuration: configuration, totalCharge: totalCharge, cell: initial.periodicCell)
@@ -132,7 +143,7 @@ public actor VivoMDMetalRuntime {
         } else { dependentSites = nil }
         let runtime = try VivoMDMetalRuntime(system: system, configuration: configuration, device: device, catalog: catalog,
             queue: queue, packed: packed, arena: arena, work: work, pipelines: pipelines, totalCharge: totalCharge,
-            cell: cell, barostat: barostat, dependentSites: dependentSites, forceProvider: forceProvider, step: step, time: time)
+            cell: cell, barostat: barostat, dependentSites: dependentSites, forceProvider: forceProvider, step: step, time: time, corrections:corrections)
         try await runtime.establishDerivedState()
         return runtime
     }
@@ -159,7 +170,8 @@ public actor VivoMDMetalRuntime {
     private init(system: VivoClassicalSystem, configuration: VivoMDConfiguration, device: MTLDevice,
         catalog: NumiVivoPipelineCatalog, queue: MTLCommandQueue, packed: VivoMDPackedSystem, arena: VivoMDGPUArena,
         work: VivoMDWorkBuffers, pipelines: [NumiVivoKernel: NumiVivoPipeline], totalCharge: Double,
-        cell: VivoMDCellResources, barostat: VivoMDBarostatEngine?, dependentSites: VivoMDDependentSites?, forceProvider: VivoMDCandidateForceProvider?, step: UInt64, time: Double) throws {
+        cell: VivoMDCellResources, barostat: VivoMDBarostatEngine?, dependentSites: VivoMDDependentSites?, forceProvider: VivoMDCandidateForceProvider?, step: UInt64, time: Double, corrections:VivoMDPositionCorrections?) throws {
+        self.corrections=corrections
         self.system = system; self.configuration = configuration; self.device = device; self.catalog = catalog
         self.queue = queue; self.packed = packed; self.arena = arena; self.work = work; self.pipelines = pipelines
         totalChargeE = totalCharge; cellResources = cell; barostatEngine = barostat; self.dependentSites = dependentSites
@@ -278,6 +290,7 @@ public actor VivoMDMetalRuntime {
     }
 
     public func minimize(_ settings: VivoMDMinimizationConfiguration = .init()) async throws -> VivoMDMinimizationCertificate {
+        guard corrections == nil else { throw VivoMDRuntimeError.unsupported(["compensated-coordinate minimization is not implemented"]) }
         try settings.validate(); try reserve(); defer { inFlight = false }; try Task.checkCancellation()
         let phase = cellResources, abi = command(for: phase)
         let start = try makeCommand("minimize.initialProjection")
@@ -331,7 +344,8 @@ public actor VivoMDMetalRuntime {
         return try await readSnapshotReserved()
     }
     public func checkpoint() async throws -> VivoMDCheckpoint {
-        let state = try await snapshot()
+        try reserve();defer { inFlight=false }
+        let state = try await readSnapshotReserved()
         return try checkpoint(from: state)
     }
     public func observables() async throws -> VivoMDObservables {
@@ -428,6 +442,10 @@ public actor VivoMDMetalRuntime {
         let setup=try makeCommand("hamiltonian-probe"),abi=command(for:phase)
         try clear(setup)
         try copy(setup,arena.positionReadback,arena.candidatePosition)
+        if let corrections {
+            guard let blit=setup.makeBlitCommandEncoder() else { throw VivoMDRuntimeError.metal("probe correction reset") }
+            blit.fill(buffer:corrections.candidate(arena),range:0..<arena.particleCount*16,value:0);blit.endEncoding()
+        }
         try copy(setup,arena.acceptedVelocity,arena.candidateVelocity)
         try normalize(setup,position:arena.candidatePosition,velocity:arena.candidateVelocity,abi:abi)
         try await complete(setup);try ensureNumericalSuccess()
@@ -514,6 +532,17 @@ public actor VivoMDMetalRuntime {
     }
 
     private func constrainedDrift(_ buffer: MTLCommandBuffer, abi: VivoMDMetalCommand) throws {
+        if let corrections {
+            let low=corrections.candidate(arena)
+            try encode(.mdCompensatedDrift,buffer,[arena.candidatePosition,low,arena.candidateVelocity,arena.dynamics],abi)
+            if !packed.constraints.isEmpty {
+                try copy(buffer,arena.candidatePosition,work.referencePosition);try copy(buffer,low,corrections.reference)
+                try projectPosition(buffer,abi:abi)
+                try encode(.mdCompensatedImpulse,buffer,[arena.candidatePosition,low,work.referencePosition,corrections.reference,
+                    arena.candidateVelocity,arena.dynamics,arena.status],abi)
+            }
+            return
+        }
         try encode(.mdDrift, buffer, [arena.candidatePosition, arena.candidateVelocity, arena.dynamics], abi)
         if !packed.constraints.isEmpty {
             try copy(buffer, arena.candidatePosition, work.referencePosition)
@@ -526,25 +555,42 @@ public actor VivoMDMetalRuntime {
         guard !packed.constraints.isEmpty else { return }
         var source = arena.candidatePosition, destination = arena.positionScratch
         for _ in 0..<configuration.maximumConstraintIterations {
-            try encode(.mdConstraintPosition, buffer, [source, destination, arena.dynamics, arena.constraints,
-                arena.constraintOffsets, arena.constraintIncidence, arena.status], abi)
+            if let corrections {
+                try encode(.mdCompensatedConstraintPosition,buffer,[source,try corrections.forPosition(source,arena:arena),
+                    destination,try corrections.forPosition(destination,arena:arena),arena.dynamics,arena.constraints,
+                    arena.constraintOffsets,arena.constraintIncidence,arena.status],abi)
+            } else {
+                try encode(.mdConstraintPosition, buffer, [source, destination, arena.dynamics, arena.constraints,
+                    arena.constraintOffsets, arena.constraintIncidence, arena.status], abi)
+            }
             swap(&source, &destination)
         }
-        if configuration.maximumConstraintIterations % 2 != 0 { try copy(buffer, source, arena.candidatePosition) }
+        if configuration.maximumConstraintIterations % 2 != 0 {
+            try copy(buffer, source, arena.candidatePosition)
+            if let corrections { try copy(buffer,corrections.scratch,corrections.candidate(arena)) }
+        }
     }
     private func projectVelocity(_ buffer: MTLCommandBuffer, position: MTLBuffer, source original: MTLBuffer,
                                   scratch: MTLBuffer, dynamics: MTLBuffer, abi: VivoMDMetalCommand) throws {
         guard !packed.constraints.isEmpty else { return }
         var source = original, destination = scratch
         for _ in 0..<configuration.maximumConstraintIterations {
-            try encode(.mdConstraintVelocity, buffer, [position, source, destination, dynamics, arena.constraints,
-                arena.constraintOffsets, arena.constraintIncidence, arena.status], abi)
+            if let corrections {
+                try encode(.mdCompensatedConstraintVelocity,buffer,[position,try corrections.forPosition(position,arena:arena),
+                    source,destination,dynamics,arena.constraints,arena.constraintOffsets,arena.constraintIncidence,arena.status],abi)
+            } else {
+                try encode(.mdConstraintVelocity, buffer, [position, source, destination, dynamics, arena.constraints,
+                    arena.constraintOffsets, arena.constraintIncidence, arena.status], abi)
+            }
             swap(&source, &destination)
         }
         if configuration.maximumConstraintIterations % 2 != 0 { try copy(buffer, source, original) }
     }
     private func validateCandidate(_ buffer: MTLCommandBuffer, abi: VivoMDMetalCommand) throws {
-        if !packed.constraints.isEmpty {
+        if let corrections {
+            try encode(.mdCompensatedValidateConstraints,buffer,[arena.candidatePosition,corrections.candidate(arena),
+                arena.candidateVelocity,arena.constraints,arena.constraintOffsets,arena.constraintIncidence,arena.status],abi)
+        } else if !packed.constraints.isEmpty {
             try encode(.mdValidateConstraints, buffer, [arena.candidatePosition, arena.candidateVelocity, arena.constraints,
                 arena.constraintOffsets, arena.constraintIncidence, arena.status], abi)
         }
@@ -654,15 +700,18 @@ public actor VivoMDMetalRuntime {
     private func readSnapshotReserved(position: MTLBuffer? = nil, velocity: MTLBuffer? = nil) async throws -> VivoMDStateSnapshot {
         let buffer = try makeCommand("snapshot")
         try copy(buffer, position ?? arena.acceptedPosition, arena.positionReadback)
+        if let corrections { try copy(buffer,try corrections.forPosition(position ?? arena.acceptedPosition,arena:arena),corrections.readback) }
         try copy(buffer, velocity ?? arena.acceptedVelocity, arena.velocityReadback)
         try await complete(buffer)
         let positionsPointer = arena.positionReadback.contents().assumingMemoryBound(to: SIMD4<Float>.self)
         let velocitiesPointer = arena.velocityReadback.contents().assumingMemoryBound(to: SIMD4<Float>.self)
+        let lows=corrections?.readback.contents().assumingMemoryBound(to:SIMD4<Float>.self)
         var positions: [VivoVector3D] = [], velocities: [VivoVector3D] = []
         positions.reserveCapacity(arena.particleCount); velocities.reserveCapacity(arena.particleCount)
         for i in 0..<arena.particleCount {
             let p = positionsPointer[i], v = velocitiesPointer[i]
-            positions.append(.init(Double(p.x), Double(p.y), Double(p.z)))
+            let low=lows?[i] ?? .zero
+            positions.append(.init(Double(p.x)+Double(low.x), Double(p.y)+Double(low.y), Double(p.z)+Double(low.z)))
             velocities.append(.init(Double(v.x), Double(v.y), Double(v.z)))
         }
         let state = VivoMDStateSnapshot(systemFingerprint: systemFingerprint, configurationFingerprint: configurationFingerprint,
@@ -671,9 +720,17 @@ public actor VivoMDMetalRuntime {
         return state
     }
     private func checkpoint(from state: VivoMDStateSnapshot) throws -> VivoMDCheckpoint {
+        var high:[VivoVector3D]?,low:[VivoVector3D]?
+        if let corrections {
+            let hp=arena.positionReadback.contents().assumingMemoryBound(to:SIMD4<Float>.self)
+            let lp=corrections.readback.contents().assumingMemoryBound(to:SIMD4<Float>.self)
+            high=(0..<arena.particleCount).map { .init(Double(hp[$0].x),Double(hp[$0].y),Double(hp[$0].z)) }
+            low=(0..<arena.particleCount).map { .init(Double(lp[$0].x),Double(lp[$0].y),Double(lp[$0].z)) }
+        }
         let result = VivoMDCheckpoint(systemFingerprint: state.systemFingerprint, configurationFingerprint: state.configurationFingerprint,
             acceptedStep: state.stepIndex, timePS: state.timePS, positionsNM: state.positionsNM,
-            velocitiesNMPerPS: state.velocitiesNMPerPS, periodicCell: state.periodicCell)
+            velocitiesNMPerPS: state.velocitiesNMPerPS, periodicCell: state.periodicCell,positionPrecision:configuration.positionPrecision,
+            positionHighNM:high,positionCorrectionsNM:low)
         try result.validate(particleCount: arena.particleCount)
         return result
     }
@@ -710,6 +767,7 @@ public actor VivoMDMetalRuntime {
     }
     private func copyAccepted(into buffer: MTLCommandBuffer) throws {
         try copy(buffer, arena.acceptedPosition, arena.candidatePosition)
+        if let corrections { try copy(buffer,corrections.accepted(arena),corrections.candidate(arena)) }
         try copy(buffer, arena.acceptedVelocity, arena.candidateVelocity)
     }
     private func copy(_ buffer: MTLCommandBuffer, _ source: MTLBuffer, _ destination: MTLBuffer) throws {

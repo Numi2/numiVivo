@@ -212,12 +212,19 @@ def main():
     parser.add_argument("--cases",nargs="+",choices=list(CASES),default=list(CASES))
     parser.add_argument("--steps",type=int,default=100)
     parser.add_argument("--project-initial-constraints",action="store_true",help="explicitly project imported state before native dynamics; static references remain unchanged")
+    parser.add_argument("--position-precision",choices=["fp32","compensated"],default="fp32")
     args=parser.parse_args()
     if not 0<=args.steps<=100_000:parser.error("steps must be 0...100000")
     args.out.mkdir(parents=True,exist_ok=False)
     records=[]
     for name in args.cases:
-        try:record=prepare(name,args.out/name,args.steps,args.project_initial_constraints)
+        try:
+            record=prepare(name,args.out/name,args.steps,args.project_initial_constraints)
+            if args.position_precision!="fp32":
+                path=args.out/name/"request.json"
+                request=json.loads(path.read_text());request["configuration"]["positionPrecision"]=args.position_precision
+                path.write_text(json.dumps(request,indent=2,allow_nan=False)+"\n")
+                record["requestSHA256"]=sha(path.read_bytes())
         except Exception as e:record=dict(identifier=name,status="preparation-failed",error=f"{type(e).__name__}: {e}")
         records.append(record);print(json.dumps(record),flush=True)
     write(args.out/"manifest.json",dict(schema="numivivo.org/md-reference-campaign/v1",cases=records,

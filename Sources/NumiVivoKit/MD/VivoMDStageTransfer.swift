@@ -56,6 +56,10 @@ public struct VivoMDStageTransfer: Codable, Sendable, Equatable {
         try checkpoint.validate(particleCount: particleCount)
         let sourceFingerprint = try source.fingerprint()
         let destinationFingerprint = try destination.fingerprint()
+        guard (checkpoint.positionPrecision ?? .fp32)==source.resolvedPositionPrecision,
+              source.resolvedPositionPrecision==destination.resolvedPositionPrecision else {
+            throw VivoArtifactValidationError.incompatible("stage transfer cannot change coordinate precision; explicit state import required")
+        }
         guard checkpoint.configurationFingerprint == sourceFingerprint else {
             throw VivoArtifactValidationError.incompatible("MD stage source configuration does not identify the checkpoint")
         }
@@ -67,6 +71,7 @@ public struct VivoMDStageTransfer: Codable, Sendable, Equatable {
             throw VivoArtifactValidationError.invalid("thermalization seed supplied without Maxwell-Boltzmann initialization")
         }
         var next = checkpoint
+        next.positionPrecision=destination.positionPrecision
         next.configurationFingerprint = destinationFingerprint
         if velocityInitialization != .preserve {
             next.velocitiesNMPerPS = [VivoVector3D](repeating: .zero, count: particleCount)

@@ -74,6 +74,11 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
     case mdBarostatScale = "nvivo_md_barostat_scale"
     case mdHalfKick = "nvivo_md_half_kick"
     case mdDrift = "nvivo_md_drift"
+    case mdCompensatedDrift = "nvivo_md_compensated_drift"
+    case mdCompensatedConstraintPosition = "nvivo_md_compensated_constraint_position"
+    case mdCompensatedConstraintVelocity = "nvivo_md_compensated_constraint_velocity"
+    case mdCompensatedValidateConstraints = "nvivo_md_compensated_validate_constraints"
+    case mdCompensatedImpulse = "nvivo_md_compensated_impulse"
     case mdLangevin = "nvivo_md_langevin"
     case mdConstraintPosition = "nvivo_md_constraint_position"
     case mdConstraintVelocity = "nvivo_md_constraint_velocity"
@@ -114,7 +119,9 @@ public enum NumiVivoKernel: String, CaseIterable, Sendable {
         case .mdClearForce, .mdClearStatus, .mdBonded, .mdBuildNeighborList,
              .mdValidateNeighborDisplacement, .mdNonbondedNeighbor, .mdNonbondedDirect,
              .mdHalfKick, .mdDrift, .mdLangevin, .mdConstraintPosition, .mdConstraintVelocity,
-             .mdValidateConstraints, .mdKinetic, .mdValidate:
+             .mdValidateConstraints, .mdKinetic, .mdValidate,
+             .mdCompensatedDrift,.mdCompensatedConstraintPosition,.mdCompensatedConstraintVelocity,
+             .mdCompensatedValidateConstraints,.mdCompensatedImpulse:
             return "NumiVivoMDKernels"
         default:
             return "NumiVivoProgramPackRuntime"
