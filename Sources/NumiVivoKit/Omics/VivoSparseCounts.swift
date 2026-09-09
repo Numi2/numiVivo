@@ -31,7 +31,7 @@ func vivoOmicsRejectUnknownKeys(_ decoder: Decoder, allowed: Set<String>) throws
 public struct VivoOmicsLimits: Codable, Sendable, Equatable {
     public var maximumCells: Int = 100_000
     public var maximumFeatures: Int = 100_000
-    public var maximumNonzeros: Int = 2_000_000
+    public var maximumNonzeros: Int = 5_000_000
     public var maximumInputBytes: Int = 64 * 1_024 * 1_024
     public var maximumLineBytes: Int = 16_384
     private enum CodingKeys: String, CodingKey { case maximumCells, maximumFeatures, maximumNonzeros, maximumInputBytes, maximumLineBytes }
@@ -40,7 +40,7 @@ public struct VivoOmicsLimits: Codable, Sendable, Equatable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         maximumCells = try values.decodeIfPresent(Int.self, forKey: .maximumCells) ?? 100_000
         maximumFeatures = try values.decodeIfPresent(Int.self, forKey: .maximumFeatures) ?? 100_000
-        maximumNonzeros = try values.decodeIfPresent(Int.self, forKey: .maximumNonzeros) ?? 2_000_000
+        maximumNonzeros = try values.decodeIfPresent(Int.self, forKey: .maximumNonzeros) ?? 5_000_000
         maximumInputBytes = try values.decodeIfPresent(Int.self, forKey: .maximumInputBytes) ?? 64 * 1_024 * 1_024
         maximumLineBytes = try values.decodeIfPresent(Int.self, forKey: .maximumLineBytes) ?? 16_384
     }

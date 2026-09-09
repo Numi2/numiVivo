@@ -84,7 +84,7 @@ identities are explicit, never inferred from names.
   "barcode"`, `sampleColumn: "sample"`, `groupColumn: "group"`, and
   `featureNameColumn: "name"` when importing native output again.
 - Publication refuses existing destinations. The current source limit is 64 MiB;
-  count processing remains bounded at 100,000 cells/features and 2 million
+  count processing remains bounded at 100,000 cells/features and 5 million
   nonzeros by default. This is not out-of-core execution. HDF5 itself may retain
   decompression and variable-string buffers beyond the Swift sparse arrays.
 
@@ -145,10 +145,17 @@ cells or features are dropped: 2,700 cells, 32,738 features and 2,286,884 nonzer
 The required reference re-encoding is recorded explicitly; direct native legacy
 import is not qualified.
 
-This check qualifies **annotation preservation**, not the count-analysis route:
-the complete matrix exceeds that route's current 2-million-nonzero default. It
-also supplies no donor-aware DE, expected-biology or integration benchmark result.
-The multi-dataset benchmark requirement remains open.
+With `--full-product --count-analysis`, this check also runs native count import,
+count receipts, analysis and replay/export, comparing exact counts and QC to
+Scanpy and log normalization to a 1e-10 absolute tolerance. The complete PBMC3K
+matrix passed after raising the bounded count default to 5 million nonzeros.
+This is not an out-of-core implementation, and the full replay/export peaked at
+1.48 GB resident memory in the recorded debug build. PBMC3K supplies no
+donor-aware DE or integration result.
+
+The [experimental benchmark suite](../Tools/Omics/Benchmarks/README.md) records
+one paired-donor Kang comparison, Haber count/QC checks and a rejected
+non-count Hagai input. The multi-dataset donor-DE requirement remains open.
 
 ```
 python Tools/Omics/H5AD/check_annotations.py --binary /path/to/numivivo --full-product --out /tmp/annotation-checks
@@ -162,7 +169,8 @@ bash Tools/Omics/H5AD/build.sh /tmp/numivivo-h5ad-build
 python Tools/Omics/H5AD/check_interop.py --binary /tmp/numivivo-h5ad-build/h5ad-check --out /tmp/h5ad-checks
 ```
 
-Use the versions pinned in `Tools/Omics/H5AD/requirements.txt`. The test creates
+Use the versions pinned in `Tools/Omics/H5AD/requirements.txt`. The optional
+public count/Scanpy check uses `Tools/Omics/Benchmarks/requirements.txt`. The test creates
 AnnData files, imports/exports with the actual Swift owners, reopens results in
 AnnData, checks exact counts, source bytes, missing annotations and metadata,
 and checks malformed input rejection. Reports identify the executable hash and
@@ -193,11 +201,12 @@ The complete development objective remains open:
 1. **AnnData/H5AD:** native count exchange, raw-axis import, explicit feature IDs
    and source-preserving annotation edits implemented. Axis-changing operations
    (cell/feature filtering/reordering with every aligned slot), direct legacy
-   encoding support, and larger count projections remain. Full PBMC3K annotation
-   preservation is a real-file interoperability check, not a biology benchmark.
-2. **Experimental benchmarks:** several public datasets with known donors,
-   perturbations and expected biology; same-data Scanpy and edgeR/limma/DESeq2
-   comparisons remain to be implemented and run.
+   encoding support, and out-of-core projections remain. Full PBMC3K count/QC
+   and annotation preservation now pass; this single library is not a donor-DE benchmark.
+2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
+   exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
+   tuft-cell count/QC passes. Several independent donor-resolved studies, robust
+   reference sensitivity and R edgeR/limma/DESeq2 comparisons remain.
 3. **Negative-binomial DE:** likelihood, dispersion estimation and shrinkage,
    offsets, paired/batch designs and diagnostics remain. Existing moderated
    log-linear DE is a baseline, not a production NB method.

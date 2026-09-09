@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "status": "ineligible-for-raw-count-DE",
+  "sourceSHA256": "41b98069fe5d88193cec2b1dcb0eb43843e4de83c8aa22ea29cef1bb65ba064e",
+  "sourceURL": "https://ndownloader.figshare.com/files/46978846",
+  "publication": "https://doi.org/10.1038/s41586-018-0657-2",
+  "reason": "X contains noninteger expression and no raw or counts layer is supplied",
+  "inspectedStoredValues": 10000,
+  "fractionalValuesInInspectedPrefix": 10000,
+  "exampleFractionalValues": [
+    1.1743143796920776,
+    1.6996161937713623,
+    1.1743143796920776,
+    1.1743143796920776,
+    1.1743143796920776
+  ],
+  "policy": "Do not round expression, invert normalization or synthesize counts. Acquire original raw data before count-model benchmarking."
+}

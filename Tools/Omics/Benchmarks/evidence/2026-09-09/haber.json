@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-real-counts-qc",
+  "sourceSHA256": "efcb49770529ec14e1ba6b45b3d0086b3829e4a63a85c02793f0d7ad90b6db21",
+  "sourceURL": "https://ndownloader.figshare.com/files/54169301",
+  "publication": "https://doi.org/10.1038/nature24489",
+  "scope": "All annotated tuft cells and all source genes",
+  "cells": 409,
+  "features": 15215,
+  "nonzeros": 684794,
+  "exactImportedCounts": true,
+  "exactScanpyQC": true,
+  "maxLogNormalizationError": 8.881784197001252e-16,
+  "donorDEQualified": false,
+  "limitation": "Individual donors are not identified; two batch labels per treatment are insufficient for the current three-replicate gate",
+  "versions": {
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5",
+    "h5py": "3.16.0"
+  },
+  "binarySHA256": "3420335413edc5cbfe3b25c7af7f95731708423dfd0ac9043cc3ba78556e8cc0",
+  "nativeCommands": [
+    {
+      "label": "import",
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-build/numivivo",
+        "singlecell-h5ad-import",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/prepared.h5ad",
+        "--plan",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/mapping.json",
+        "--output",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/imported"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 2.157434791326523,
+      "peakResidentBytes": 228573184
+    },
+    {
+      "label": "counts",
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-build/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/imported/manifest.json",
+        "--store",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/store",
+        "--output",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/counts.json"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 3.2234999160282314,
+      "peakResidentBytes": 255688704
+    },
+    {
+      "label": "analysis",
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-build/numivivo",
+        "singlecell-analyze",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/store",
+        "--output",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/analysis-receipt.json"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 4.792683958075941,
+      "peakResidentBytes": 386367488
+    },
+    {
+      "label": "replay",
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-build/numivivo",
+        "singlecell-analysis-export",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/analysis-receipt.json",
+        "--store",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/store",
+        "--output",
+        "/Users/home/numivivo-haber-qc-qualified-20260909/native-report.json"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 5.268815457820892,
+      "peakResidentBytes": 485965824
+    }
+  ]
+}

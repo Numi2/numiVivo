@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "status": "completed-real-data-comparison",
+  "sourceSHA256": "e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830",
+  "binarySHA256": "3420335413edc5cbfe3b25c7af7f95731708423dfd0ac9043cc3ba78556e8cc0",
+  "versions": {
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "pydeseq2": "0.5.4",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5",
+    "h5py": "3.16.0"
+  },
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "cells": 2651,
+  "genes": 15706,
+  "nonzeros": 1479543,
+  "donors": 8,
+  "pseudobulks": 16,
+  "integrity": {
+    "exactImportedCounts": true,
+    "exactPseudobulkCounts": true,
+    "exactScanpyQC": true,
+    "maxLogNormalizationError": 8.881784197001252e-16
+  },
+  "modelComparison": {
+    "native": "moderated log-linear baseline, not native NB",
+    "reference": "PyDESeq2 negative binomial",
+    "eligibleGenes": 8894,
+    "nativeTested": 8894,
+    "referenceFinite": 8894,
+    "commonFiniteGenes": 8894,
+    "effectSpearman": 0.8991449783554981,
+    "effectSignAgreement": 0.8641780975938835,
+    "top50BHOverlap": 26,
+    "referenceFitSeconds": 5.801290666218847,
+    "referenceDiagnostics": [
+      {
+        "category": "UserWarning",
+        "message": "The dispersion trend curve fitting did not converge. Switching to a mean-based dispersion trend."
+      }
+    ]
+  },
+  "expectedBiology": {
+    "status": "passed",
+    "positiveInBoth": 5,
+    "required": 4,
+    "genes": {
+      "ISG15": {
+        "nativeLog2Effect": 5.605736605378247,
+        "referenceLog2Effect": 5.60187627200956,
+        "nativeBH": 1.6998181490102733e-06,
+        "referenceBH": 9.546344148114476e-145
+      },
+      "IFIT1": {
+        "nativeLog2Effect": 7.180721528901815,
+        "referenceLog2Effect": 6.976794528400268,
+        "nativeBH": 5.193376645348458e-05,
+        "referenceBH": 1.1667957328474192e-27
+      },
+      "IFIT3": {
+        "nativeLog2Effect": 7.630236426215334,
+        "referenceLog2Effect": 7.37413670047509,
+        "nativeBH": 3.020710101442451e-05,
+        "referenceBH": 3.6375367674016855e-39
+      },
+      "MX1": {
+        "nativeLog2Effect": 6.000750104237019,
+        "referenceLog2Effect": 5.351438629915002,
+        "nativeBH": 0.0005726678629458694,
+        "referenceBH": 6.275764376346756e-25
+      },
+      "OAS1": {
+        "nativeLog2Effect": 4.901043515440312,
+        "referenceLog2Effect": 4.60595077644736,
+        "nativeBH": 0.00020423892822172475,
+        "referenceBH": 1.7509341624325778e-30
+      }
+    }
+  },
+  "qualificationBoundary": "One predefined B-cell IFNB contrast in one real paired-donor study; not multi-dataset competitiveness, causal proof or native NB qualification",
+  "nativeCommands": [
+    {
+      "label": "native-import",
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-build/numivivo",
+        "singlecell-h5ad-import",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/prepared.h5ad",
+        "--plan",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/mapping.json",
+        "--output",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/imported"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 4.1934387921355665,
+      "peakResidentBytes": 381206528
+    },
+    {
+      "label": "native-counts",
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-build/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/imported/manifest.json",
+        "--store",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/count-receipt.json"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 6.3819072912447155,
+      "peakResidentBytes": 414023680
+    },
+    {
+      "label": "native-analysis",
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-build/numivivo",
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/count-receipt.json",
+        "--plan",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/analysis-receipt.json"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 10.266108750365674,
+      "peakResidentBytes": 764084224
+    },
+    {
+      "label": "native-replay-export",
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-build/numivivo",
+        "singlecell-analysis-export",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/analysis-receipt.json",
+        "--store",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-benchmark-qualified-20260909/native-report.json"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 11.355227624997497,
+      "peakResidentBytes": 993525760
+    }
+  ]
+}

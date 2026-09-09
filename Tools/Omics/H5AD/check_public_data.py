@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Full PBMC3K annotation preservation, not a DE/integration benchmark.
+"""Full PBMC3K annotation preservation and optional native count/QC qualification.
 
 Download URL and checksum are pinned. No cells/features are selected or dropped.
 The upstream legacy H5AD is retained and re-encoded by the current reference
@@ -24,7 +24,10 @@ p.add_argument('--binary', type=Path, required=True)
 p.add_argument('--out', type=Path, required=True)
 p.add_argument('--download', type=Path, help='Use an existing downloaded file, still verified against the pinned checksum')
 p.add_argument('--full-product', action='store_true')
+p.add_argument('--count-analysis', action='store_true', help='Also check full count import, replay, QC and normalization against Scanpy; requires --full-product')
 a = p.parse_args()
+if a.count_analysis and not a.full_product:
+    p.error('--count-analysis requires --full-product')
 a.out.mkdir(parents=True, exist_ok=False)
 raw = a.out / 'pbmc3k_raw.h5ad'
 if a.download:
@@ -90,8 +93,59 @@ with h5py.File(modern) as source, h5py.File(output) as target:
 report = dict(status='passed-full-public-PBMC3K-annotation-preservation', sourceURL=URL, sourceSHA256=SHA256,
     cells=2700, features=32738, nonzeros=2286884, dtype=str(original.X.dtype), cellOrFeatureSubsetting=False,
     referenceReencodingRequired=True, directLegacyH5ADSupport=False, countProjectionQualified=False,
-    countProjectionLimitation='2286884 nonzeros exceeds current default count-model limit of 2000000; this run qualifies source-preserving annotations only',
+    countProjectionLimitation='Count analysis not requested in this invocation',
     biologicalBenchmark=False, annotationReceipt=receipt, anndata=version('anndata'), h5py=h5py.__version__,
     binarySHA256=hashlib.sha256(a.binary.read_bytes()).hexdigest())
+if a.count_analysis:
+    import time
+    import scanpy as sc
+    from scipy import sparse
+    commands = []
+    def invoke(label, *args):
+        command = [str(a.binary.resolve()), *map(str, args)]
+        start = time.perf_counter()
+        result = subprocess.run(['/usr/bin/time', '-l', *command], capture_output=True, text=True)
+        (a.out / (label + '.log')).write_text(result.stdout + result.stderr)
+        peak = next((int(line.split()[0]) for line in result.stderr.splitlines() if 'maximum resident set size' in line), None)
+        commands.append(dict(label=label, command=command, returncode=result.returncode,
+            elapsedSeconds=time.perf_counter()-start, peakResidentBytes=peak))
+        (a.out / 'commands.json').write_text(json.dumps(commands, indent=2))
+        assert result.returncode == 0, result.stderr
+    mapping = dict(schemaVersion=1, id='pbmc3k-full', evidence='measured', countUnit='umiCount', matrixPath='X',
+        sourceDescription='Full public PBMC3K library; no donor-level inference', sampleColumn='numivivo_source_library',
+        featureIDColumn='gene_ids', mitochondrialFeatureIDs=[], samples=[dict(id='pbmc3k-public-library',
+        biologicalReplicateID='unreported', condition='unreported', batchID='unreported', organism='NCBITaxon:9606')])
+    map_path = a.out / 'count-mapping.json'
+    map_path.write_text(json.dumps(mapping))
+    analysis = a.out / 'count-analysis.json'
+    analysis.write_text(json.dumps(dict(schemaVersion=1, id='pbmc3k-full-qc', normalizationTarget=10000, contrasts=[])))
+    imported, store = a.out / 'imported', a.out / 'store'
+    count_receipt, analysis_receipt = a.out / 'count-receipt.json', a.out / 'analysis-receipt.json'
+    invoke('native-count-import', 'singlecell-h5ad-import', output, '--plan', map_path, '--output', imported)
+    invoke('native-counts', 'singlecell-run', imported/'manifest.json', '--store', store, '--output', count_receipt)
+    invoke('native-analysis', 'singlecell-analyze', count_receipt, '--plan', analysis, '--store', store, '--output', analysis_receipt)
+    invoke('native-replay-export', 'singlecell-analysis-export', analysis_receipt, '--store', store, '--output', a.out/'native-report.json')
+    processed = json.loads((a.out/'native-report.json').read_text())['processed']
+    assert [c['barcode'] for c in processed['dataset']['cells']] == list(original.obs_names)
+    assert [f['id'] for f in processed['dataset']['features']] == list(original.var.gene_ids)
+    matrix = processed['dataset']['matrix']
+    recovered = sparse.csr_matrix((matrix['counts'],matrix['featureIndices'],matrix['rowOffsets']),shape=original.shape)
+    assert (recovered != original.X).nnz == 0
+    reference_counts = ad.AnnData(X=original.X.astype(np.float64).copy())
+    sc.pp.calculate_qc_metrics(reference_counts, percent_top=None, log1p=False, inplace=True)
+    quality = [d['quality'] for d in processed['decisions']]
+    np.testing.assert_array_equal([q['totalCounts'] for q in quality],reference_counts.obs.total_counts)
+    np.testing.assert_array_equal([q['detectedFeatures'] for q in quality],reference_counts.obs.n_genes_by_counts)
+    sc.pp.normalize_total(reference_counts, target_sum=10000)
+    sc.pp.log1p(reference_counts)
+    norm = processed['normalized']
+    normalized = sparse.csr_matrix((norm['values'],norm['featureIndices'],norm['rowOffsets']),shape=original.shape)
+    np.testing.assert_array_equal(normalized.indices,reference_counts.X.indices)
+    np.testing.assert_array_equal(normalized.indptr,reference_counts.X.indptr)
+    error = float(np.max(np.abs(normalized.data-reference_counts.X.data)))
+    assert error < 1e-10
+    report.update(status='passed-full-public-PBMC3K-annotation-counts-qc', countProjectionQualified=True,
+        countProjectionLimitation=None, exactImportedCounts=True, exactScanpyQC=True,
+        maxLogNormalizationError=error, nativeCommands=commands, scanpy=version('scanpy'))
 (a.out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
 print(json.dumps({k:v for k,v in report.items() if k != 'annotationReceipt'}, indent=2))

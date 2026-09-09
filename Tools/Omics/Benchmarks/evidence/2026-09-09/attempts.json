@@ -1,0 +1,24 @@
+{
+  "status": "retained-attempt-history",
+  "attempts": [
+    {
+      "scope": "PBMC3K initial count invocation",
+      "status": "failed",
+      "reason": "Benchmark mapping omitted required batchID; decoder rejected the mapping before import",
+      "resolution": "Added explicit unreported batchID; fresh complete invocation passed",
+      "evidence": "/Users/home/numivivo-pbmc3k-count-qualified-20260909/native-count-import.log"
+    },
+    {
+      "scope": "Kang initial comparison",
+      "status": "passed-with-reference-warning",
+      "reason": "PyDESeq2 mean dispersion-trend fallback appeared on stderr",
+      "resolution": "Harness now captures warning category and message; fresh full run reproduced and retained the warning"
+    },
+    {
+      "scope": "Hagai acquisition",
+      "status": "partial-download",
+      "reason": "Initial transfer timed out",
+      "resolution": "Resumed transfer; complete source SHA256 verified before audit"
+    }
+  ]
+}
