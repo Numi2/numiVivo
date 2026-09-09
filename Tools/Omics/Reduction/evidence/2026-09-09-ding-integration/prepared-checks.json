@@ -1,0 +1,185 @@
+{
+  "status": "passed",
+  "sourceFiles": {
+    "cells.tsv.gz": "1011261d57c4a8c694e6c6ddebfd7107603d3789f6d5bc7ce30d91f8ecea3900",
+    "genes.tsv.gz": "ddb188e8fd1331d0098067273a882ed98bac7679a763701d838e6ff08898c00f",
+    "counts.mtx.gz": "e057891069195275e89f00c6b852380e9515367122fec06a0e563942901f09cb"
+  },
+  "annotationFiles": {
+    "CellType": "a211f2a98c99ae286ecd25efbf859092d289f804a57d8b4c7b3a320184733eeb",
+    "Experiment": "f5fe806825d175d23731bbb3e99fce64739d294bf6fbed59f9e16b8339f2b7ef",
+    "Method": "351c2e588e990435cdafedeae85766f9a85ca686abf75f8f1f34bb9a3cf5b28e"
+  },
+  "preparedSHA256": "4949a73367f3b38568b0cee8255321f96cde6ebc2e7fae32fd8da5c39714b7b9",
+  "originalCells": 44615,
+  "umiCells": 44031,
+  "readCountCells": 584,
+  "features": 33694,
+  "originalNonzeros": 39622839,
+  "umiNonzeros": 38102066,
+  "allRetainedCountValuesExact": true,
+  "allRetainedCellFeatureIdentitiesExact": true,
+  "sourceLabelMatches": 29457,
+  "unmatchedPortalUMICells": 1038,
+  "unmappedReadCountAnnotations": 526,
+  "coverage": [
+    {
+      "experiment": "pbmc1",
+      "method": "10x Chromium (v2) A",
+      "annotationStatus": "source-assigned",
+      "cells": 3182
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "10x Chromium (v2) A",
+      "annotationStatus": "unavailable",
+      "cells": 1990
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "10x Chromium (v2) B",
+      "annotationStatus": "source-assigned",
+      "cells": 3044
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "10x Chromium (v2) B",
+      "annotationStatus": "unavailable",
+      "cells": 13
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "10x Chromium (v3)",
+      "annotationStatus": "source-assigned",
+      "cells": 3215
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "10x Chromium (v3)",
+      "annotationStatus": "unavailable",
+      "cells": 818
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "CEL-Seq2",
+      "annotationStatus": "source-assigned",
+      "cells": 251
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "CEL-Seq2",
+      "annotationStatus": "unavailable",
+      "cells": 6
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "Drop-seq",
+      "annotationStatus": "source-assigned",
+      "cells": 2873
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "Drop-seq",
+      "annotationStatus": "unavailable",
+      "cells": 1810
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "Seq-Well",
+      "annotationStatus": "source-assigned",
+      "cells": 3176
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "Seq-Well",
+      "annotationStatus": "source-unassigned",
+      "cells": 46
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "Seq-Well",
+      "annotationStatus": "unavailable",
+      "cells": 1903
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "inDrops",
+      "annotationStatus": "source-assigned",
+      "cells": 3222
+    },
+    {
+      "experiment": "pbmc1",
+      "method": "inDrops",
+      "annotationStatus": "unavailable",
+      "cells": 2962
+    },
+    {
+      "experiment": "pbmc2",
+      "method": "10x Chromium (v2)",
+      "annotationStatus": "source-assigned",
+      "cells": 3362
+    },
+    {
+      "experiment": "pbmc2",
+      "method": "CEL-Seq2",
+      "annotationStatus": "source-assigned",
+      "cells": 273
+    },
+    {
+      "experiment": "pbmc2",
+      "method": "CEL-Seq2",
+      "annotationStatus": "unavailable",
+      "cells": 34
+    },
+    {
+      "experiment": "pbmc2",
+      "method": "Drop-seq",
+      "annotationStatus": "source-assigned",
+      "cells": 3358
+    },
+    {
+      "experiment": "pbmc2",
+      "method": "Drop-seq",
+      "annotationStatus": "unavailable",
+      "cells": 3054
+    },
+    {
+      "experiment": "pbmc2",
+      "method": "Seq-Well",
+      "annotationStatus": "source-assigned",
+      "cells": 549
+    },
+    {
+      "experiment": "pbmc2",
+      "method": "Seq-Well",
+      "annotationStatus": "unavailable",
+      "cells": 364
+    },
+    {
+      "experiment": "pbmc2",
+      "method": "inDrops",
+      "annotationStatus": "source-assigned",
+      "cells": 2906
+    },
+    {
+      "experiment": "pbmc2",
+      "method": "inDrops",
+      "annotationStatus": "unavailable",
+      "cells": 1620
+    }
+  ],
+  "sourceCellTypeCounts": {
+    "": 14574,
+    "Cytotoxic T cell": 8801,
+    "CD4+ T cell": 6919,
+    "CD14+ monocyte": 5131,
+    "B cell": 4930,
+    "Natural killer cell": 1511,
+    "Megakaryocyte": 800,
+    "CD16+ monocyte": 782,
+    "Dendritic cell": 374,
+    "Plasmacytoid dendritic cell": 163,
+    "Unassigned": 46
+  },
+  "qualification": "Independent study evaluation of previously fixed candidate settings. Transductive correction, source-derived evaluation labels and partial annotation coverage do not establish prospective or complete biological validation. Retain prior Kang failures."
+}

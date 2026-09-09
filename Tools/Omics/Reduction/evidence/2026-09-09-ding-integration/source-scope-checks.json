@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "command": [
+    "env",
+    "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+    "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+    "singlecell-pca-integrate",
+    "/Users/n/numivivo-ding-benchmark-20260909/pca",
+    "--plan",
+    "/Users/n/numivivo-ding-benchmark-20260909/donor-rejection-plan.json",
+    "--output",
+    "/Users/n/numivivo-ding-benchmark-20260909/rejected-donor"
+  ],
+  "exitCode": 65,
+  "unknownDonorRejected": true,
+  "noDestinationPublished": true,
+  "qualification": "Source experiment IDs remain experimental strata and biological-sample identifiers; no known donor identity is invented."
+}

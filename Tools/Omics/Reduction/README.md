@@ -91,3 +91,7 @@ For the next stage, see [exact neighbors and fuzzy connectivity](NEIGHBORS.md).
 [Donor/batch integration](INTEGRATION.md) retains original PCA and requires an
 explicit corrected representation for downstream graphs. Its real-data checks
 measure donor mixing and response preservation separately.
+
+The [independent Ding benchmark](DING_INTEGRATION.md) evaluates all 44,031 source
+UMI-method cells against the fixed/adaptive integration candidates and harmonypy.
+Numerical replay passes; rare-cell and local-program preservation gates fail.

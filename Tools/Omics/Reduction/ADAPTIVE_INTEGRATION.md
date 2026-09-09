@@ -73,17 +73,23 @@ missing strata and failed global condition-erasure control. Kang and Hagai were
 already inspected, so their adaptive results are retrospective development and
 regression evidence. There is no parameter grid search or unseen-validation claim.
 
-Independent Ding PBMC source discovery acquired the original GSE132044 count,
+At this adaptive-mode publication, independent Ding PBMC source discovery acquired the original GSE132044 count,
 cell and gene files: the declared matrix is 33,694 features by 44,615 cells with
 39,622,839 entries. The 584 Smart-seq2 cells use read counts; the other 44,031
 cells use UMI-method counts and must retain that unit distinction. The
 [source portal](https://singlecell.broadinstitute.org/single_cell/study/SCP424/single-cell-comparison-pbmc-data)
 describes sampled normalized data and individual-analysis author annotations,
 separately from Harmony-derived annotations. Its annotation download requires
-sign-in and the original cell labels have not been acquired. No source labels
-are regenerated or assumed, and no independent biological evaluation is claimed.
+sign-in and the original cell labels had not yet been acquired. No source labels
+were regenerated or assumed, and that publication claimed no independent biological evaluation.
 PBMC1 and PBMC2 identify experiments; individual donor identity requires further
-source verification. Raw-file hashes and this pending gate are retained.
+source verification. Raw-file hashes and that historical pending gate are retained.
+
+The subsequent [Ding benchmark](DING_INTEGRATION.md) obtains source annotations
+through the documented public visualization API, records exact join coverage,
+and evaluates all 44,031 UMI-method cells. All six native and all six reference
+runs fail per-type preservation. Donor identity remains unreported; the original
+adaptive archive and its pending-source history remain unchanged.
 
 ## Measured outcomes, 2026-09-09
 

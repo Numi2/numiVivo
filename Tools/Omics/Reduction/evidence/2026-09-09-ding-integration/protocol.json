@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "status": "declared-before-Ding-PCA-native-or-reference-results",
+  "sourceStudy": "GSE132044 / SCP424",
+  "cells": 44031,
+  "features": 33694,
+  "seeds": [
+    7,
+    19,
+    41
+  ],
+  "integration": {
+    "covariate": "batch",
+    "clusters": 100,
+    "diversity": 2,
+    "temperature": 0.1,
+    "maximumIterations": 10,
+    "relativeTolerance": 0.01,
+    "maximumWork": 2000000000
+  },
+  "modes": {
+    "fixed": {
+      "ridge": 1
+    },
+    "adaptive": {
+      "ridge": 0.2,
+      "ridgeScaling": "expectedClusterBatchMass"
+    }
+  },
+  "reference": {
+    "package": "harmonypy",
+    "version": "2.0.0",
+    "fixedLambda": 1,
+    "adaptiveLambda": null,
+    "alpha": 0.2
+  },
+  "evaluationNeighbors": 30,
+  "gateMargins": {
+    "maximumCellTypeBalancedAccuracyLoss": 0.02,
+    "maximumPerTypeRecallLoss": 0.05,
+    "maximumProgramSpearmanLoss": 0.05,
+    "minimumNegativeControlAccuracyLoss": 0.1
+  },
+  "programs": {
+    "NK-associated": [
+      "NKG7",
+      "GNLY",
+      "KLRD1"
+    ],
+    "T-receptor": [
+      "CD3D",
+      "CD3E",
+      "TRAC"
+    ]
+  },
+  "programProvenance": "Analyst-declared diagnostic gene sets, equal-weight mean log1p counts per 10000. Not new inferred cell labels, exclusive lineage markers, treatment responses or causal validation.",
+  "sourcePolicy": "Every original UMI-method cell and gene enters PCA/correction. All 584 Smart-seq2 read-count cells remain an explicit incompatible-unit source. Source labels are joined by experiment, method and exact barcode including plate/array tag. No expression-based, fuzzy or row-position matches.",
+  "evaluationPolicy": "Cell-type and classifier metrics use every available source-assigned label; unavailable and source-Unassigned cells remain in correction and full-neighbor program evaluation. Report coverage by experiment and method. Hold out each source experiment for classifier training, not an assumed donor. Mixing is evaluated within type/experiment strata. No treatment classification claim.",
+  "metadataPolicy": "Native batchID retains the source Method. Native condition retains the source Experiment as a protected design stratum, not a treatment/health claim. biologicalReplicateID is the experiment (the paper reports one biological sample per experiment). Donor identity remains unreported. Methods shared across experiments connect this design.",
+  "controls": "Source-cell-type centering is a label-informed diagnostic erasure control only. No thresholds or parameters selected after integration outputs.",
+  "qualification": "Independent study evaluation of previously fixed candidate settings. Transductive correction, source-derived evaluation labels and partial annotation coverage do not establish prospective or complete biological validation. Retain prior Kang failures."
+}

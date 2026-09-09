@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "sourceStudy": "SCP424",
+  "apiDocumentation": "https://singlecell.broadinstitute.org/single_cell/api/v1",
+  "sourceDescription": "https://singlecell.broadinstitute.org/single_cell/study/SCP424/single-cell-comparison-pbmc-data",
+  "files": [
+    {
+      "field": "CellType",
+      "url": "https://singlecell.broadinstitute.org/single_cell/api/v1/studies/SCP424/annotations/CellType/cell_values?annotation_type=group&annotation_scope=study",
+      "sha256": "a211f2a98c99ae286ecd25efbf859092d289f804a57d8b4c7b3a320184733eeb",
+      "bytes": 1404570,
+      "rows": 31021
+    },
+    {
+      "field": "Experiment",
+      "url": "https://singlecell.broadinstitute.org/single_cell/api/v1/studies/SCP424/annotations/Experiment/cell_values?annotation_type=group&annotation_scope=study",
+      "sha256": "f5fe806825d175d23731bbb3e99fce64739d294bf6fbed59f9e16b8339f2b7ef",
+      "bytes": 1160778,
+      "rows": 31021
+    },
+    {
+      "field": "Method",
+      "url": "https://singlecell.broadinstitute.org/single_cell/api/v1/studies/SCP424/annotations/Method/cell_values?annotation_type=group&annotation_scope=study",
+      "sha256": "351c2e588e990435cdafedeae85766f9a85ca686abf75f8f1f34bb9a3cf5b28e",
+      "bytes": 1378445,
+      "rows": 31021
+    }
+  ],
+  "allFieldCellIdentitiesExactlyAligned": true,
+  "authenticationUsed": false,
+  "qualification": "Official public visualization metadata, not the authenticated raw meta.txt file download. CellType is the source study-level individual-analysis annotation, separately described from Harmony-derived cluster annotations. Values are source annotations, not newly inferred labels."
+}
