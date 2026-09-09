@@ -34,8 +34,12 @@ jobs:
       - name: Provision execution dependencies
         run: |
           set -euo pipefail
-          sudo apt-get update -qq
-          sudo apt-get install -y samtools hisat2
+          mkdir -p "$RUNNER_TEMP/ubuntu-sources"
+          test -f /etc/apt/sources.list.d/ubuntu.sources
+          cp /etc/apt/sources.list.d/ubuntu.sources "$RUNNER_TEMP/ubuntu-sources/"
+          APT_OPTIONS=(-o Dir::Etc::sourcelist=/dev/null -o "Dir::Etc::sourceparts=$RUNNER_TEMP/ubuntu-sources")
+          sudo apt-get "${APT_OPTIONS[@]}" update -qq
+          sudo apt-get "${APT_OPTIONS[@]}" install -y samtools hisat2
           chmod +x provisioned/regtools
           sha256sum provisioned/regtools
           df -h .
