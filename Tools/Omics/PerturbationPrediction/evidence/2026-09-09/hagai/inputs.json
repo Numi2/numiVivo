@@ -1,0 +1,58 @@
+{
+  "study": "Hagai-fibroblasts",
+  "inputHashes": {
+    "counts.tsv": "fab83116ed02d61841c6641f9149c7c7cd9531b00bce02994b5b4176533bea0d",
+    "samples.tsv": "412475f80da92f5fea4f4317fb15d10101d7e509dabba3e8d004d667cb7170d9",
+    "input.json": "439bd02d40d647423078f50a15bb4f51a5fe3db24194467381014dca38b58eff"
+  },
+  "source": {
+    "schemaVersion": 1,
+    "contrast": [
+      0,
+      1,
+      0,
+      0
+    ],
+    "minimumFeatureCounts": 10,
+    "minimumExpressingPseudobulks": 3,
+    "expectedGenes": [
+      "ENSMUSG00000025225",
+      "ENSMUSG00000021025",
+      "ENSMUSG00000034855",
+      "ENSMUSG00000035692",
+      "ENSMUSG00000024401"
+    ],
+    "observations": 6,
+    "features": 22048,
+    "eligibleFeatures": 12673,
+    "nativeTrend": "gammaParametric",
+    "sourceReport": "/Users/home/numivivo-hagai-gamma-product-20260909/native/report.json",
+    "sourceReportSHA256": "e48207360053c8eba01a2fa3527ec3e673757d14d29cc6c6d392b0ecd6ad893a",
+    "independentCounts": "/Users/home/numivivo-hagai-gamma-product-20260909/reference-pseudobulk.tsv",
+    "independentCountsSHA256": "207cdba697820212726ecc20cfcaafc6c95207b8390be026c3d8523f48a87f4c",
+    "sourceH5AD": "/Users/home/numivivo-hagai-gamma-product-20260909/native/original.h5ad",
+    "sourceH5ADSHA256": "2d0a69d121bcf6e9b63b82fafd06e597f6165a927b87b0cc51cb5c90c2caa5f5",
+    "exactCountsAndAxes": true,
+    "design": "Exact native numeric matrix with paired donor fixed effects; no invented batch covariate",
+    "qualification": "Two public study contrasts; comparison does not calibrate FDR or establish biological truth"
+  },
+  "donors": [
+    "mouse1",
+    "mouse2",
+    "mouse3"
+  ],
+  "features": 22048,
+  "markers": [
+    "ENSMUSG00000025225",
+    "ENSMUSG00000021025",
+    "ENSMUSG00000034855",
+    "ENSMUSG00000035692",
+    "ENSMUSG00000024401"
+  ],
+  "packages": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0"
+  },
+  "normalization": "per-library natural-log(1+CPM), complete source gene denominator; original DE size factors ignored"
+}

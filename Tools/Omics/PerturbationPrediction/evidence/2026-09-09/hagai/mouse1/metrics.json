@@ -1,0 +1,360 @@
+{
+  "heldOutDonor": "mouse1",
+  "trainingDonors": [
+    "mouse2",
+    "mouse3"
+  ],
+  "warnings": [],
+  "models": {
+    "noChange": {
+      "allGenes": {
+        "response": {
+          "features": 22048,
+          "rmse": 0.6076307861295127,
+          "mae": 0.33201034840650645,
+          "pearson": null,
+          "nonzeroTruthFeatures": 14138,
+          "signAgreement": 0.0,
+          "explainedSumSquaresVsZero": 0.0
+        },
+        "expression": {
+          "features": 22048,
+          "rmse": 0.6076307861295127,
+          "mae": 0.33201034840650645,
+          "pearson": 0.9442579360031839,
+          "nonzeroTruthFeatures": 12897,
+          "signAgreement": 0.9563464371559277,
+          "explainedSumSquaresVsZero": 0.9236281231344937
+        }
+      },
+      "trainingExpressed": {
+        "response": {
+          "features": 12278,
+          "rmse": 0.8096768998737525,
+          "mae": 0.5739552068986888,
+          "pearson": null,
+          "nonzeroTruthFeatures": 12197,
+          "signAgreement": 0.0,
+          "explainedSumSquaresVsZero": 0.0
+        },
+        "expression": {
+          "features": 12278,
+          "rmse": 0.8096768998737525,
+          "mae": 0.5739552068986888,
+          "pearson": 0.897014045352967,
+          "nonzeroTruthFeatures": 11837,
+          "signAgreement": 0.988510602348568,
+          "explainedSumSquaresVsZero": 0.9243696762487362
+        }
+      },
+      "trainingTop200Response": {
+        "response": {
+          "features": 200,
+          "rmse": 3.137621978712142,
+          "mae": 2.829671019269858,
+          "pearson": null,
+          "nonzeroTruthFeatures": 200,
+          "signAgreement": 0.0,
+          "explainedSumSquaresVsZero": 0.0
+        },
+        "expression": {
+          "features": 200,
+          "rmse": 3.137621978712142,
+          "mae": 2.829671019269858,
+          "pearson": 0.3327873246933308,
+          "nonzeroTruthFeatures": 200,
+          "signAgreement": 0.975,
+          "explainedSumSquaresVsZero": 0.6202420289048027
+        }
+      },
+      "priorMarkers": {
+        "response": {
+          "features": 5,
+          "rmse": 4.834725545862825,
+          "mae": 4.431084507920197,
+          "pearson": null,
+          "nonzeroTruthFeatures": 5,
+          "signAgreement": 0.0,
+          "explainedSumSquaresVsZero": 0.0
+        },
+        "expression": {
+          "features": 5,
+          "rmse": 4.834725545862825,
+          "mae": 4.431084507920197,
+          "pearson": -0.19282729787928865,
+          "nonzeroTruthFeatures": 5,
+          "signAgreement": 1.0,
+          "explainedSumSquaresVsZero": 0.540105718332896
+        }
+      }
+    },
+    "meanResponse": {
+      "allGenes": {
+        "response": {
+          "features": 22048,
+          "rmse": 0.3336358800637534,
+          "mae": 0.18814304167154494,
+          "pearson": 0.8383111552225171,
+          "nonzeroTruthFeatures": 14138,
+          "signAgreement": 0.7624840854434857,
+          "explainedSumSquaresVsZero": 0.6985148259567471
+        },
+        "expression": {
+          "features": 22048,
+          "rmse": 0.3336358800637534,
+          "mae": 0.18814304167154494,
+          "pearson": 0.9831219088420379,
+          "nonzeroTruthFeatures": 12897,
+          "signAgreement": 0.9650306272776614,
+          "explainedSumSquaresVsZero": 0.9769750114111929
+        }
+      },
+      "trainingExpressed": {
+        "response": {
+          "features": 12278,
+          "rmse": 0.43905392829818124,
+          "mae": 0.31534248574130563,
+          "pearson": 0.8422069506774608,
+          "nonzeroTruthFeatures": 12197,
+          "signAgreement": 0.8165942444863491,
+          "explainedSumSquaresVsZero": 0.7059560579391687
+        },
+        "expression": {
+          "features": 12278,
+          "rmse": 0.43905392829818124,
+          "mae": 0.31534248574130563,
+          "pearson": 0.9701673664567498,
+          "nonzeroTruthFeatures": 11837,
+          "signAgreement": 0.9842020782292811,
+          "explainedSumSquaresVsZero": 0.9777613614648415
+        }
+      },
+      "trainingTop200Response": {
+        "response": {
+          "features": 200,
+          "rmse": 1.084104652705661,
+          "mae": 0.8503320555247322,
+          "pearson": 0.9036060926490208,
+          "nonzeroTruthFeatures": 200,
+          "signAgreement": 0.995,
+          "explainedSumSquaresVsZero": 0.8806173597184743
+        },
+        "expression": {
+          "features": 200,
+          "rmse": 1.084104652705661,
+          "mae": 0.8503320555247322,
+          "pearson": 0.9036932883660304,
+          "nonzeroTruthFeatures": 200,
+          "signAgreement": 0.965,
+          "explainedSumSquaresVsZero": 0.9546634907427001
+        }
+      },
+      "priorMarkers": {
+        "response": {
+          "features": 5,
+          "rmse": 0.897814852507829,
+          "mae": 0.5824212470890787,
+          "pearson": 0.9736370161569049,
+          "nonzeroTruthFeatures": 5,
+          "signAgreement": 1.0,
+          "explainedSumSquaresVsZero": 0.9655150246050088
+        },
+        "expression": {
+          "features": 5,
+          "rmse": 0.897814852507829,
+          "mae": 0.5824212470890787,
+          "pearson": 0.7771866773230611,
+          "nonzeroTruthFeatures": 5,
+          "signAgreement": 1.0,
+          "explainedSumSquaresVsZero": 0.9841405570124128
+        }
+      }
+    },
+    "medianResponse": {
+      "allGenes": {
+        "response": {
+          "features": 22048,
+          "rmse": 0.3336358800637534,
+          "mae": 0.18814304167154494,
+          "pearson": 0.8383111552225171,
+          "nonzeroTruthFeatures": 14138,
+          "signAgreement": 0.7624840854434857,
+          "explainedSumSquaresVsZero": 0.6985148259567471
+        },
+        "expression": {
+          "features": 22048,
+          "rmse": 0.3336358800637534,
+          "mae": 0.18814304167154494,
+          "pearson": 0.9831219088420379,
+          "nonzeroTruthFeatures": 12897,
+          "signAgreement": 0.9650306272776614,
+          "explainedSumSquaresVsZero": 0.9769750114111929
+        }
+      },
+      "trainingExpressed": {
+        "response": {
+          "features": 12278,
+          "rmse": 0.43905392829818124,
+          "mae": 0.31534248574130563,
+          "pearson": 0.8422069506774608,
+          "nonzeroTruthFeatures": 12197,
+          "signAgreement": 0.8165942444863491,
+          "explainedSumSquaresVsZero": 0.7059560579391687
+        },
+        "expression": {
+          "features": 12278,
+          "rmse": 0.43905392829818124,
+          "mae": 0.31534248574130563,
+          "pearson": 0.9701673664567498,
+          "nonzeroTruthFeatures": 11837,
+          "signAgreement": 0.9842020782292811,
+          "explainedSumSquaresVsZero": 0.9777613614648415
+        }
+      },
+      "trainingTop200Response": {
+        "response": {
+          "features": 200,
+          "rmse": 1.084104652705661,
+          "mae": 0.8503320555247322,
+          "pearson": 0.9036060926490208,
+          "nonzeroTruthFeatures": 200,
+          "signAgreement": 0.995,
+          "explainedSumSquaresVsZero": 0.8806173597184743
+        },
+        "expression": {
+          "features": 200,
+          "rmse": 1.084104652705661,
+          "mae": 0.8503320555247322,
+          "pearson": 0.9036932883660304,
+          "nonzeroTruthFeatures": 200,
+          "signAgreement": 0.965,
+          "explainedSumSquaresVsZero": 0.9546634907427001
+        }
+      },
+      "priorMarkers": {
+        "response": {
+          "features": 5,
+          "rmse": 0.897814852507829,
+          "mae": 0.5824212470890787,
+          "pearson": 0.9736370161569049,
+          "nonzeroTruthFeatures": 5,
+          "signAgreement": 1.0,
+          "explainedSumSquaresVsZero": 0.9655150246050088
+        },
+        "expression": {
+          "features": 5,
+          "rmse": 0.897814852507829,
+          "mae": 0.5824212470890787,
+          "pearson": 0.7771866773230611,
+          "nonzeroTruthFeatures": 5,
+          "signAgreement": 1.0,
+          "explainedSumSquaresVsZero": 0.9841405570124128
+        }
+      }
+    },
+    "contextRidge": {
+      "allGenes": {
+        "response": {
+          "features": 22048,
+          "rmse": 0.37102864120861045,
+          "mae": 0.21156816383178315,
+          "pearson": 0.7951108500642982,
+          "nonzeroTruthFeatures": 14138,
+          "signAgreement": 0.7233696420993069,
+          "explainedSumSquaresVsZero": 0.6271489826452432
+        },
+        "expression": {
+          "features": 22048,
+          "rmse": 0.37102864120861045,
+          "mae": 0.21156816383178315,
+          "pearson": 0.9792695836543193,
+          "nonzeroTruthFeatures": 12897,
+          "signAgreement": 0.95843994727456,
+          "explainedSumSquaresVsZero": 0.9715246680134038
+        }
+      },
+      "trainingExpressed": {
+        "response": {
+          "features": 12278,
+          "rmse": 0.48953238533120275,
+          "mae": 0.35568971246696635,
+          "pearson": 0.7993509912993422,
+          "nonzeroTruthFeatures": 12197,
+          "signAgreement": 0.7777322292366976,
+          "explainedSumSquaresVsZero": 0.6344562538621423
+        },
+        "expression": {
+          "features": 12278,
+          "rmse": 0.48953238533120275,
+          "mae": 0.35568971246696635,
+          "pearson": 0.9631382349472475,
+          "nonzeroTruthFeatures": 11837,
+          "signAgreement": 0.9810762862211709,
+          "explainedSumSquaresVsZero": 0.972353808134344
+        }
+      },
+      "trainingTop200Response": {
+        "response": {
+          "features": 200,
+          "rmse": 1.132784161482609,
+          "mae": 0.8616532975452407,
+          "pearson": 0.8795132163040192,
+          "nonzeroTruthFeatures": 200,
+          "signAgreement": 0.995,
+          "explainedSumSquaresVsZero": 0.869655383333542
+        },
+        "expression": {
+          "features": 200,
+          "rmse": 1.132784161482609,
+          "mae": 0.8616532975452407,
+          "pearson": 0.8845491282343463,
+          "nonzeroTruthFeatures": 200,
+          "signAgreement": 0.975,
+          "explainedSumSquaresVsZero": 0.9505005928315646
+        }
+      },
+      "priorMarkers": {
+        "response": {
+          "features": 5,
+          "rmse": 1.081594731712358,
+          "mae": 0.6418348722607824,
+          "pearson": 0.9169252360595379,
+          "nonzeroTruthFeatures": 5,
+          "signAgreement": 1.0,
+          "explainedSumSquaresVsZero": 0.9499521442138112
+        },
+        "expression": {
+          "features": 5,
+          "rmse": 1.081594731712358,
+          "mae": 0.6418348722607824,
+          "pearson": 0.6031219527231254,
+          "nonzeroTruthFeatures": 5,
+          "signAgreement": 1.0,
+          "explainedSumSquaresVsZero": 0.976983277314232
+        }
+      }
+    }
+  },
+  "compositionDiagnostics": {
+    "noChange": {
+      "impliedCPMSum": 1000000.0,
+      "relativeDeviationFromMillion": 0.0,
+      "renormalized": false
+    },
+    "meanResponse": {
+      "impliedCPMSum": 1443786.8967270865,
+      "relativeDeviationFromMillion": 0.4437868967270866,
+      "renormalized": false
+    },
+    "medianResponse": {
+      "impliedCPMSum": 1443786.8967270865,
+      "relativeDeviationFromMillion": 0.4437868967270866,
+      "renormalized": false
+    },
+    "contextRidge": {
+      "impliedCPMSum": 1541216.2905249712,
+      "relativeDeviationFromMillion": 0.5412162905249711,
+      "renormalized": false
+    }
+  }
+}

@@ -313,11 +313,17 @@ The complete development objective remains open:
    exact IDs, signed weights, definition fingerprints, missing-gene coverage and
    null scores for empty libraries. Full Kang and Baron comparisons pass against
    independent sparse Scanpy-normalized products, with descriptive within-donor
-   response observations. Learned reference mapping, calibrated annotation and
-   independent multi-study biological qualification remain; scores do not assign
-   authoritative labels.
-7. **Perturbation prediction:** held-out perturbation/donor/context experiments,
-   connection to Bayesian/mechanistic owners and real-data evaluation remain.
+   response observations. [Native frozen reference mapping](../Tools/Omics/ReferenceMapping/NATIVE.md)
+   now fits training-only PCA and returns provenance-bound candidate kNN labels;
+   all four Baron held-out donor folds match independent reference arithmetic.
+   Calibrated annotation, novel-class rejection and independent multi-study
+   biological qualification remain; labels are not authoritative.
+7. **Perturbation prediction:** [real donor-held-out response baselines](../Tools/Omics/PerturbationPrediction/README.md)
+   now evaluate all eight Kang and three Hagai donors using supplied controls and
+   sealed treated outcomes. These external reference baselines do not implement
+   a native perturbation predictor. Native integration with Bayesian/mechanistic
+   owners, unseen perturbation identity, unseen cell/tissue contexts and
+   single-cell response distributions remain open.
 8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired
    RNA/ATAC and spatial assays remain.
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
