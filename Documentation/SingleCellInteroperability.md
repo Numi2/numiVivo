@@ -370,5 +370,7 @@ The complete development objective remains open:
     molecular mechanism → reaction/kinetics → cellular phenotype → tissue
     prediction requires executable, independently qualified links at each boundary.
     [AlphaGenome Atlas integration assessment](AlphaGenomeAtlas.md) identifies
-    a candidate external prediction source for the variant/regulation/RNA link;
-    no adapter or biological qualification is claimed.
+    an external prediction source for the variant/regulation/RNA link. A separate
+    [native genomic evidence layer and retrieval adapter](Design/ALPHAGENOME_ATLAS.md)
+    already exists for bounded public-reference research. RNA/ATAC integration,
+    live service qualification and downstream biological coupling remain open.

@@ -2,7 +2,10 @@
 
 Assessed 2026-09-09 from the [DeepMind announcement, 2026-09-08](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
 and the [official API repository](https://github.com/google-deepmind/alphagenome).
-This is a proposed integration, not implemented functionality or qualification.
+The single-cell integration below remains proposed. The repository now also has
+a [native Atlas evidence layer and external retrieval adapter](Design/ALPHAGENOME_ATLAS.md)
+for bounded public-reference genomic research. That implemented path is separate
+from RNA/ATAC integration and biological qualification.
 
 ## Fit to the roadmap
 
@@ -38,8 +41,7 @@ expression, donor integration, or held-out perturbation prediction.
    generalization. Preserve unsupported variants and contexts in coverage reports.
 
 Atlas's exhaustive single-letter scope does not establish exhaustive coverage of
-indels, structural variation, haplotypes or combinatorial perturbations. A later
-adapter must distinguish an Atlas lookup from a fresh model prediction.
+indels, structural variation, haplotypes or combinatorial perturbations. Consumers must distinguish an Atlas lookup from a fresh model prediction.
 
 ## Access boundary
 
@@ -53,5 +55,9 @@ that use. The announcement says commercial Atlas availability on Google Cloud
 is forthcoming; base-model commercial availability is a separate offering.
 
 No credentials were requested, service calls made, package installed, or Atlas
-predictions imported during this assessment. The native single-cell evidence
-work remains the immediate development priority.
+predictions imported during this assessment. The existing adapter pins the SDK,
+checks GRCh38 reference bases, archives responses, and distinguishes available,
+missing and failed results. Live service access and independent biological
+qualification remain unverified by this assessment. The next single-cell link
+is a bounded experimental RNA/ATAC comparison using that evidence foundation;
+the native single-cell evidence work remains the immediate development priority.
