@@ -62,7 +62,7 @@ reconstructs the query result. Hashes bind source, plan, result and implementati
 Existing output directories are refused and failed staging directories removed.
 Reference copying is restricted to named, size-bounded files.
 
-Bounds: the existing H5AD reader's 1 GiB source/100 million nonzero limits apply;
+Bounds: the existing H5AD streaming reader's 1 GiB source/1 billion nonzero limits apply;
 reference labels are limited to 100,000 training cells and 256 classes, k to 128,
 PCA components to 64. Query scores, votes and neighbor arrays have explicit size
 bounds. `maximumDistanceOperations` and `maximumProjectionUpdates` default to

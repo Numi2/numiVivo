@@ -56,7 +56,10 @@ public enum VivoH5ADPseudobulk {
     static var sourceLimits: VivoOmicsLimits {
         var limits=VivoOmicsLimits()
         limits.maximumCells=1_000_000; limits.maximumFeatures=100_000
-        limits.maximumNonzeros=100_000_000; limits.maximumInputBytes=1_073_741_824
+        // Source entry count bounds scan work, not resident matrix allocation:
+        // the reader keeps at most one sparse major segment and 65,536-entry
+        // input slices. The separate aggregate allowance remains unchanged.
+        limits.maximumNonzeros=1_000_000_000; limits.maximumInputBytes=1_073_741_824
         return limits
     }
     static let maximumAggregateNonzeros=5_000_000

@@ -66,6 +66,17 @@ run('reject-oversized-plan',['aggregate',source,huge,a.out/'oversized-plan'],Fal
 for name in ['negative','nan','infinity','fractional','float-outside-exact-range']:
     run('reject-'+name,['aggregate',a.interop/(name+'.h5ad'),plan,a.out/('rejected-'+name)],False)
     assert not (a.out/('rejected-'+name)).exists()
+oversized_source=a.out/'oversized-source.h5ad';shutil.copyfile(source,oversized_source)
+with h5py.File(oversized_source,'r+') as f:
+    g=f['layers/counts']
+    for key in ['data','indices','indptr']:del g[key]
+    # Unallocated chunked arrays declare excessive scan work without creating a
+    # billion-entry fixture or reading any of its values before rejection.
+    g.create_dataset('data',shape=(1_000_000_001,),dtype=np.uint64,chunks=(65_536,))
+    g.create_dataset('indices',shape=(1_000_000_001,),dtype=np.int32,chunks=(65_536,))
+    g.create_dataset('indptr',data=np.array([0,1_000_000_001,1_000_000_001,1_000_000_001,1_000_000_001],dtype=np.int64))
+run('reject-oversized-source',['aggregate',oversized_source,plan,a.out/'oversized-source'],False)
+assert not (a.out/'oversized-source').exists()
 for field in ['plan','report','source','implementation']:
     dest=a.out/('tamper-'+field);shutil.copytree(a.out/'csr',dest)
     if field=='source':

@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "checks": [
+    "aggregate",
+    "verify",
+    "reject-overwrite"
+  ],
+  "source": {
+    "url": "https://zenodo.org/records/13350497/files/NormanWeissman2019_filtered.h5ad",
+    "bytes": 698680199,
+    "md5": "c870e6967d91c017d9da827bab183cd6",
+    "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+  },
+  "binarySHA256": "04fbffe62ed37ca4196c57aec8b3c5afb1e9c514dfe18444b75b579c67a3726f",
+  "reportSHA256": "c36a13a80371e80fc5c0eb0dee598cdaed69dc955c7df312a4174588bffcee9c",
+  "exactAggregateValues": 3577278,
+  "exactCellQCRecords": 111445,
+  "sourceEntries": 361582621,
+  "totalCounts": 1635387239,
+  "limitations": "One complete filtered release; no donor replication, DE, prediction, million-cell or GPU qualification."
+}

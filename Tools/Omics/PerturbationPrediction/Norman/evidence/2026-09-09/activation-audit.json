@@ -1,0 +1,844 @@
+{
+  "scope": "Descriptive target-gene activation in pooled single-target conditions; no independent replicate inference or causal validation. Full-gene library denominators, log1p CPM at 1e6.",
+  "observedTargets": 102,
+  "missingTargets": [
+    "C19orf26",
+    "C3orf72",
+    "KIAA1804"
+  ],
+  "positiveChanges": 100,
+  "nonpositiveChanges": [
+    "CELF2",
+    "CKS1B"
+  ],
+  "rows": [
+    {
+      "target": "AHR",
+      "featureID": "ENSG00000106546",
+      "status": "observed",
+      "controlCounts": 49,
+      "perturbedCounts": 248,
+      "targetLog1pCPMChange": 3.3534429702925386
+    },
+    {
+      "target": "ARID1A",
+      "featureID": "ENSG00000117713",
+      "status": "observed",
+      "controlCounts": 11888,
+      "perturbedCounts": 241,
+      "targetLog1pCPMChange": 0.3144062796425411
+    },
+    {
+      "target": "ARRDC3",
+      "featureID": "ENSG00000113369",
+      "status": "observed",
+      "controlCounts": 646,
+      "perturbedCounts": 107,
+      "targetLog1pCPMChange": 1.2647585852777647
+    },
+    {
+      "target": "ATL1",
+      "featureID": "ENSG00000198513",
+      "status": "observed",
+      "controlCounts": 48,
+      "perturbedCounts": 7,
+      "targetLog1pCPMChange": 0.67154513547458
+    },
+    {
+      "target": "BAK1",
+      "featureID": "ENSG00000030110",
+      "status": "observed",
+      "controlCounts": 3901,
+      "perturbedCounts": 2575,
+      "targetLog1pCPMChange": 1.6100533875532999
+    },
+    {
+      "target": "BCL2L11",
+      "featureID": "ENSG00000153094",
+      "status": "observed",
+      "controlCounts": 4590,
+      "perturbedCounts": 779,
+      "targetLog1pCPMChange": 1.2208488909261601
+    },
+    {
+      "target": "BCORL1",
+      "featureID": "ENSG00000085185",
+      "status": "observed",
+      "controlCounts": 1781,
+      "perturbedCounts": 369,
+      "targetLog1pCPMChange": 1.5310882569660484
+    },
+    {
+      "target": "BPGM",
+      "featureID": "ENSG00000172331",
+      "status": "observed",
+      "controlCounts": 3411,
+      "perturbedCounts": 710,
+      "targetLog1pCPMChange": 1.7336270720698344
+    },
+    {
+      "target": "C19orf26",
+      "status": "missing-feature"
+    },
+    {
+      "target": "C3orf72",
+      "status": "missing-feature"
+    },
+    {
+      "target": "CBFA2T3",
+      "featureID": "ENSG00000129993",
+      "status": "observed",
+      "controlCounts": 7054,
+      "perturbedCounts": 632,
+      "targetLog1pCPMChange": 0.5626054402747269
+    },
+    {
+      "target": "CBL",
+      "featureID": "ENSG00000110395",
+      "status": "observed",
+      "controlCounts": 3770,
+      "perturbedCounts": 554,
+      "targetLog1pCPMChange": 1.02279443503652
+    },
+    {
+      "target": "CDKN1A",
+      "featureID": "ENSG00000124762",
+      "status": "observed",
+      "controlCounts": 161,
+      "perturbedCounts": 816,
+      "targetLog1pCPMChange": 4.270141514676636
+    },
+    {
+      "target": "CDKN1B",
+      "featureID": "ENSG00000111276",
+      "status": "observed",
+      "controlCounts": 2082,
+      "perturbedCounts": 127,
+      "targetLog1pCPMChange": 0.2268283792852519
+    },
+    {
+      "target": "CDKN1C",
+      "featureID": "ENSG00000129757",
+      "status": "observed",
+      "controlCounts": 3645,
+      "perturbedCounts": 735,
+      "targetLog1pCPMChange": 2.2457693659796263
+    },
+    {
+      "target": "CEBPA",
+      "featureID": "ENSG00000245848",
+      "status": "observed",
+      "controlCounts": 1205,
+      "perturbedCounts": 444,
+      "targetLog1pCPMChange": 2.6100074830051945
+    },
+    {
+      "target": "CEBPB",
+      "featureID": "ENSG00000172216",
+      "status": "observed",
+      "controlCounts": 4680,
+      "perturbedCounts": 417,
+      "targetLog1pCPMChange": 0.989744550965304
+    },
+    {
+      "target": "CEBPE",
+      "featureID": "ENSG00000092067",
+      "status": "observed",
+      "controlCounts": 816,
+      "perturbedCounts": 6555,
+      "targetLog1pCPMChange": 4.379853247625785
+    },
+    {
+      "target": "CELF2",
+      "featureID": "ENSG00000048740",
+      "status": "observed",
+      "controlCounts": 24024,
+      "perturbedCounts": 907,
+      "targetLog1pCPMChange": -0.005432370803871045
+    },
+    {
+      "target": "CITED1",
+      "featureID": "ENSG00000125931",
+      "status": "observed",
+      "controlCounts": 1007,
+      "perturbedCounts": 249,
+      "targetLog1pCPMChange": 2.6088849461595753
+    },
+    {
+      "target": "CKS1B",
+      "featureID": "ENSG00000173207",
+      "status": "observed",
+      "controlCounts": 78242,
+      "perturbedCounts": 1177,
+      "targetLog1pCPMChange": -0.13751060500125423
+    },
+    {
+      "target": "CLDN6",
+      "featureID": "ENSG00000184697",
+      "status": "observed",
+      "controlCounts": 1588,
+      "perturbedCounts": 3181,
+      "targetLog1pCPMChange": 3.566301198738071
+    },
+    {
+      "target": "CNN1",
+      "featureID": "ENSG00000130176",
+      "status": "observed",
+      "controlCounts": 1463,
+      "perturbedCounts": 2496,
+      "targetLog1pCPMChange": 3.2463257881177507
+    },
+    {
+      "target": "CNNM4",
+      "featureID": "ENSG00000158158",
+      "status": "observed",
+      "controlCounts": 339,
+      "perturbedCounts": 66,
+      "targetLog1pCPMChange": 1.347831171401224
+    },
+    {
+      "target": "COL1A1",
+      "featureID": "ENSG00000108821",
+      "status": "observed",
+      "controlCounts": 150,
+      "perturbedCounts": 2845,
+      "targetLog1pCPMChange": 5.812267056462926
+    },
+    {
+      "target": "COL2A1",
+      "featureID": "ENSG00000139219",
+      "status": "observed",
+      "controlCounts": 8637,
+      "perturbedCounts": 7219,
+      "targetLog1pCPMChange": 2.8259648417725693
+    },
+    {
+      "target": "CSRNP1",
+      "featureID": "ENSG00000144655",
+      "status": "observed",
+      "controlCounts": 804,
+      "perturbedCounts": 277,
+      "targetLog1pCPMChange": 1.843894330440327
+    },
+    {
+      "target": "DLX2",
+      "featureID": "ENSG00000115844",
+      "status": "observed",
+      "controlCounts": 164,
+      "perturbedCounts": 535,
+      "targetLog1pCPMChange": 3.363953647648333
+    },
+    {
+      "target": "DUSP9",
+      "featureID": "ENSG00000130829",
+      "status": "observed",
+      "controlCounts": 1331,
+      "perturbedCounts": 2792,
+      "targetLog1pCPMChange": 3.6854040528606684
+    },
+    {
+      "target": "EGR1",
+      "featureID": "ENSG00000120738",
+      "status": "observed",
+      "controlCounts": 2639,
+      "perturbedCounts": 126,
+      "targetLog1pCPMChange": 0.6410140025546913
+    },
+    {
+      "target": "ELMSAN1",
+      "featureID": "ENSG00000156030",
+      "status": "observed",
+      "controlCounts": 1811,
+      "perturbedCounts": 501,
+      "targetLog1pCPMChange": 1.0893520339710094
+    },
+    {
+      "target": "ETS2",
+      "featureID": "ENSG00000157557",
+      "status": "observed",
+      "controlCounts": 1683,
+      "perturbedCounts": 1124,
+      "targetLog1pCPMChange": 1.91234418309352
+    },
+    {
+      "target": "FEV",
+      "featureID": "ENSG00000163497",
+      "status": "observed",
+      "controlCounts": 4521,
+      "perturbedCounts": 4207,
+      "targetLog1pCPMChange": 2.9644291681186603
+    },
+    {
+      "target": "FOSB",
+      "featureID": "ENSG00000125740",
+      "status": "observed",
+      "controlCounts": 114,
+      "perturbedCounts": 53,
+      "targetLog1pCPMChange": 1.3982135701512404
+    },
+    {
+      "target": "FOXA1",
+      "featureID": "ENSG00000129514",
+      "status": "observed",
+      "controlCounts": 95,
+      "perturbedCounts": 215,
+      "targetLog1pCPMChange": 2.5469668535509533
+    },
+    {
+      "target": "FOXA3",
+      "featureID": "ENSG00000170608",
+      "status": "observed",
+      "controlCounts": 975,
+      "perturbedCounts": 304,
+      "targetLog1pCPMChange": 2.0253999476291464
+    },
+    {
+      "target": "FOXF1",
+      "featureID": "ENSG00000103241",
+      "status": "observed",
+      "controlCounts": 8,
+      "perturbedCounts": 126,
+      "targetLog1pCPMChange": 2.300545800135885
+    },
+    {
+      "target": "FOXL2",
+      "featureID": "ENSG00000183770",
+      "status": "observed",
+      "controlCounts": 5129,
+      "perturbedCounts": 979,
+      "targetLog1pCPMChange": 1.4537661357226956
+    },
+    {
+      "target": "FOXO4",
+      "featureID": "ENSG00000184481",
+      "status": "observed",
+      "controlCounts": 1163,
+      "perturbedCounts": 208,
+      "targetLog1pCPMChange": 2.3257217371601957
+    },
+    {
+      "target": "GLB1L2",
+      "featureID": "ENSG00000149328",
+      "status": "observed",
+      "controlCounts": 546,
+      "perturbedCounts": 203,
+      "targetLog1pCPMChange": 2.027751086597542
+    },
+    {
+      "target": "HES7",
+      "featureID": "ENSG00000179111",
+      "status": "observed",
+      "controlCounts": 43,
+      "perturbedCounts": 997,
+      "targetLog1pCPMChange": 6.4933166220999885
+    },
+    {
+      "target": "HK2",
+      "featureID": "ENSG00000159399",
+      "status": "observed",
+      "controlCounts": 2566,
+      "perturbedCounts": 462,
+      "targetLog1pCPMChange": 2.034011687397858
+    },
+    {
+      "target": "HNF4A",
+      "featureID": "ENSG00000101076",
+      "status": "observed",
+      "controlCounts": 7,
+      "perturbedCounts": 136,
+      "targetLog1pCPMChange": 3.7413956879738093
+    },
+    {
+      "target": "HOXA13",
+      "featureID": "ENSG00000106031",
+      "status": "observed",
+      "controlCounts": 3,
+      "perturbedCounts": 111,
+      "targetLog1pCPMChange": 3.6389324923041517
+    },
+    {
+      "target": "HOXB9",
+      "featureID": "ENSG00000170689",
+      "status": "observed",
+      "controlCounts": 13272,
+      "perturbedCounts": 2419,
+      "targetLog1pCPMChange": 1.334467311371153
+    },
+    {
+      "target": "HOXC13",
+      "featureID": "ENSG00000123364",
+      "status": "observed",
+      "controlCounts": 1452,
+      "perturbedCounts": 312,
+      "targetLog1pCPMChange": 2.1234123092669144
+    },
+    {
+      "target": "IER5L",
+      "featureID": "ENSG00000188483",
+      "status": "observed",
+      "controlCounts": 578,
+      "perturbedCounts": 433,
+      "targetLog1pCPMChange": 2.9665436863841306
+    },
+    {
+      "target": "IGDCC3",
+      "featureID": "ENSG00000174498",
+      "status": "observed",
+      "controlCounts": 691,
+      "perturbedCounts": 1776,
+      "targetLog1pCPMChange": 3.750649344048965
+    },
+    {
+      "target": "IKZF3",
+      "featureID": "ENSG00000161405",
+      "status": "observed",
+      "controlCounts": 3669,
+      "perturbedCounts": 572,
+      "targetLog1pCPMChange": 1.2313141917760966
+    },
+    {
+      "target": "IRF1",
+      "featureID": "ENSG00000125347",
+      "status": "observed",
+      "controlCounts": 1003,
+      "perturbedCounts": 610,
+      "targetLog1pCPMChange": 2.611525517250964
+    },
+    {
+      "target": "ISL2",
+      "featureID": "ENSG00000159556",
+      "status": "observed",
+      "controlCounts": 1096,
+      "perturbedCounts": 194,
+      "targetLog1pCPMChange": 1.2316888825629178
+    },
+    {
+      "target": "JUN",
+      "featureID": "ENSG00000177606",
+      "status": "observed",
+      "controlCounts": 1860,
+      "perturbedCounts": 412,
+      "targetLog1pCPMChange": 2.4619568140032007
+    },
+    {
+      "target": "KIAA1804",
+      "status": "missing-feature"
+    },
+    {
+      "target": "KIF18B",
+      "featureID": "ENSG00000186185",
+      "status": "observed",
+      "controlCounts": 1930,
+      "perturbedCounts": 184,
+      "targetLog1pCPMChange": 1.4639062643135086
+    },
+    {
+      "target": "KIF2C",
+      "featureID": "ENSG00000142945",
+      "status": "observed",
+      "controlCounts": 9644,
+      "perturbedCounts": 2306,
+      "targetLog1pCPMChange": 1.5389027739469276
+    },
+    {
+      "target": "KLF1",
+      "featureID": "ENSG00000105610",
+      "status": "observed",
+      "controlCounts": 12502,
+      "perturbedCounts": 9547,
+      "targetLog1pCPMChange": 1.4331374666408223
+    },
+    {
+      "target": "KMT2A",
+      "featureID": "ENSG00000118058",
+      "status": "observed",
+      "controlCounts": 13280,
+      "perturbedCounts": 610,
+      "targetLog1pCPMChange": 0.924249472748703
+    },
+    {
+      "target": "LHX1",
+      "featureID": "ENSG00000273706",
+      "status": "observed",
+      "controlCounts": 1538,
+      "perturbedCounts": 2832,
+      "targetLog1pCPMChange": 4.198322413327231
+    },
+    {
+      "target": "LYL1",
+      "featureID": "ENSG00000104903",
+      "status": "observed",
+      "controlCounts": 33648,
+      "perturbedCounts": 4821,
+      "targetLog1pCPMChange": 1.4524384507968238
+    },
+    {
+      "target": "MAML2",
+      "featureID": "ENSG00000184384",
+      "status": "observed",
+      "controlCounts": 192,
+      "perturbedCounts": 200,
+      "targetLog1pCPMChange": 2.2729036469238757
+    },
+    {
+      "target": "MAP2K3",
+      "featureID": "ENSG00000034152",
+      "status": "observed",
+      "controlCounts": 1141,
+      "perturbedCounts": 797,
+      "targetLog1pCPMChange": 2.327988206770548
+    },
+    {
+      "target": "MAP2K6",
+      "featureID": "ENSG00000108984",
+      "status": "observed",
+      "controlCounts": 5,
+      "perturbedCounts": 102,
+      "targetLog1pCPMChange": 1.9696311550393917
+    },
+    {
+      "target": "MAP4K3",
+      "featureID": "ENSG00000011566",
+      "status": "observed",
+      "controlCounts": 1935,
+      "perturbedCounts": 124,
+      "targetLog1pCPMChange": 0.7217734918387593
+    },
+    {
+      "target": "MAP4K5",
+      "featureID": "ENSG00000012983",
+      "status": "observed",
+      "controlCounts": 2456,
+      "perturbedCounts": 103,
+      "targetLog1pCPMChange": 0.3610296494458054
+    },
+    {
+      "target": "MAP7D1",
+      "featureID": "ENSG00000116871",
+      "status": "observed",
+      "controlCounts": 11861,
+      "perturbedCounts": 3860,
+      "targetLog1pCPMChange": 1.596985322975856
+    },
+    {
+      "target": "MAPK1",
+      "featureID": "ENSG00000100030",
+      "status": "observed",
+      "controlCounts": 33365,
+      "perturbedCounts": 3751,
+      "targetLog1pCPMChange": 0.6938726099903256
+    },
+    {
+      "target": "MEIS1",
+      "featureID": "ENSG00000143995",
+      "status": "observed",
+      "controlCounts": 496,
+      "perturbedCounts": 119,
+      "targetLog1pCPMChange": 1.1877378492899193
+    },
+    {
+      "target": "MIDN",
+      "featureID": "ENSG00000167470",
+      "status": "observed",
+      "controlCounts": 9201,
+      "perturbedCounts": 485,
+      "targetLog1pCPMChange": 0.9607320172399896
+    },
+    {
+      "target": "NCL",
+      "featureID": "ENSG00000115053",
+      "status": "observed",
+      "controlCounts": 162131,
+      "perturbedCounts": 5428,
+      "targetLog1pCPMChange": 0.6270836867148244
+    },
+    {
+      "target": "NIT1",
+      "featureID": "ENSG00000158793",
+      "status": "observed",
+      "controlCounts": 1718,
+      "perturbedCounts": 65,
+      "targetLog1pCPMChange": 1.0790927865930104
+    },
+    {
+      "target": "OSR2",
+      "featureID": "ENSG00000164920",
+      "status": "observed",
+      "controlCounts": 1015,
+      "perturbedCounts": 1506,
+      "targetLog1pCPMChange": 2.785136546949155
+    },
+    {
+      "target": "PLK4",
+      "featureID": "ENSG00000142731",
+      "status": "observed",
+      "controlCounts": 2460,
+      "perturbedCounts": 24,
+      "targetLog1pCPMChange": 0.08086112080387453
+    },
+    {
+      "target": "POU3F2",
+      "featureID": "ENSG00000184486",
+      "status": "observed",
+      "controlCounts": 1177,
+      "perturbedCounts": 537,
+      "targetLog1pCPMChange": 2.8122121502483526
+    },
+    {
+      "target": "PRDM1",
+      "featureID": "ENSG00000057657",
+      "status": "observed",
+      "controlCounts": 297,
+      "perturbedCounts": 134,
+      "targetLog1pCPMChange": 2.793855708078078
+    },
+    {
+      "target": "PRTG",
+      "featureID": "ENSG00000166450",
+      "status": "observed",
+      "controlCounts": 48,
+      "perturbedCounts": 663,
+      "targetLog1pCPMChange": 3.9827070088193457
+    },
+    {
+      "target": "PTPN1",
+      "featureID": "ENSG00000196396",
+      "status": "observed",
+      "controlCounts": 10658,
+      "perturbedCounts": 624,
+      "targetLog1pCPMChange": 0.6532402885485302
+    },
+    {
+      "target": "PTPN12",
+      "featureID": "ENSG00000127947",
+      "status": "observed",
+      "controlCounts": 8307,
+      "perturbedCounts": 763,
+      "targetLog1pCPMChange": 0.9544418679966622
+    },
+    {
+      "target": "PTPN13",
+      "featureID": "ENSG00000163629",
+      "status": "observed",
+      "controlCounts": 0,
+      "perturbedCounts": 45,
+      "targetLog1pCPMChange": 2.5255435093167162
+    },
+    {
+      "target": "PTPN9",
+      "featureID": "ENSG00000169410",
+      "status": "observed",
+      "controlCounts": 2255,
+      "perturbedCounts": 454,
+      "targetLog1pCPMChange": 1.6604960432280387
+    },
+    {
+      "target": "RHOXF2",
+      "featureID": "ENSG00000131721",
+      "status": "observed",
+      "controlCounts": 6688,
+      "perturbedCounts": 173,
+      "targetLog1pCPMChange": 0.20879992860130914
+    },
+    {
+      "target": "RREB1",
+      "featureID": "ENSG00000124782",
+      "status": "observed",
+      "controlCounts": 5844,
+      "perturbedCounts": 264,
+      "targetLog1pCPMChange": 0.5711734461734808
+    },
+    {
+      "target": "RUNX1T1",
+      "featureID": "ENSG00000079102",
+      "status": "observed",
+      "controlCounts": 30,
+      "perturbedCounts": 592,
+      "targetLog1pCPMChange": 3.7373048514454226
+    },
+    {
+      "target": "S1PR2",
+      "featureID": "ENSG00000267534",
+      "status": "observed",
+      "controlCounts": 675,
+      "perturbedCounts": 149,
+      "targetLog1pCPMChange": 1.5119600348257214
+    },
+    {
+      "target": "SAMD1",
+      "featureID": "ENSG00000141858",
+      "status": "observed",
+      "controlCounts": 8785,
+      "perturbedCounts": 686,
+      "targetLog1pCPMChange": 0.7992097388326358
+    },
+    {
+      "target": "SET",
+      "featureID": "ENSG00000119335",
+      "status": "observed",
+      "controlCounts": 204398,
+      "perturbedCounts": 25229,
+      "targetLog1pCPMChange": 0.47961196368504755
+    },
+    {
+      "target": "SGK1",
+      "featureID": "ENSG00000118515",
+      "status": "observed",
+      "controlCounts": 1113,
+      "perturbedCounts": 581,
+      "targetLog1pCPMChange": 2.617879535910311
+    },
+    {
+      "target": "SLC38A2",
+      "featureID": "ENSG00000134294",
+      "status": "observed",
+      "controlCounts": 7378,
+      "perturbedCounts": 507,
+      "targetLog1pCPMChange": 0.8663501530073461
+    },
+    {
+      "target": "SLC4A1",
+      "featureID": "ENSG00000004939",
+      "status": "observed",
+      "controlCounts": 123,
+      "perturbedCounts": 891,
+      "targetLog1pCPMChange": 3.5796034949865825
+    },
+    {
+      "target": "SLC6A9",
+      "featureID": "ENSG00000196517",
+      "status": "observed",
+      "controlCounts": 440,
+      "perturbedCounts": 523,
+      "targetLog1pCPMChange": 2.8355324022324564
+    },
+    {
+      "target": "SNAI1",
+      "featureID": "ENSG00000124216",
+      "status": "observed",
+      "controlCounts": 823,
+      "perturbedCounts": 135,
+      "targetLog1pCPMChange": 1.3659942578683912
+    },
+    {
+      "target": "SPI1",
+      "featureID": "ENSG00000066336",
+      "status": "observed",
+      "controlCounts": 5850,
+      "perturbedCounts": 974,
+      "targetLog1pCPMChange": 1.3579288040366766
+    },
+    {
+      "target": "STIL",
+      "featureID": "ENSG00000123473",
+      "status": "observed",
+      "controlCounts": 2561,
+      "perturbedCounts": 173,
+      "targetLog1pCPMChange": 1.0419987423593704
+    },
+    {
+      "target": "TBX2",
+      "featureID": "ENSG00000121068",
+      "status": "observed",
+      "controlCounts": 441,
+      "perturbedCounts": 549,
+      "targetLog1pCPMChange": 2.778441847762963
+    },
+    {
+      "target": "TBX3",
+      "featureID": "ENSG00000135111",
+      "status": "observed",
+      "controlCounts": 11,
+      "perturbedCounts": 281,
+      "targetLog1pCPMChange": 3.263013431365895
+    },
+    {
+      "target": "TGFBR2",
+      "featureID": "ENSG00000163513",
+      "status": "observed",
+      "controlCounts": 80,
+      "perturbedCounts": 244,
+      "targetLog1pCPMChange": 2.8213326206146228
+    },
+    {
+      "target": "TMSB4X",
+      "featureID": "ENSG00000205542",
+      "status": "observed",
+      "controlCounts": 428622,
+      "perturbedCounts": 152764,
+      "targetLog1pCPMChange": 2.086645891674186
+    },
+    {
+      "target": "TP73",
+      "featureID": "ENSG00000078900",
+      "status": "observed",
+      "controlCounts": 280,
+      "perturbedCounts": 64,
+      "targetLog1pCPMChange": 2.2218597534957936
+    },
+    {
+      "target": "TSC22D1",
+      "featureID": "ENSG00000102804",
+      "status": "observed",
+      "controlCounts": 7127,
+      "perturbedCounts": 1454,
+      "targetLog1pCPMChange": 1.7167404610549517
+    },
+    {
+      "target": "UBASH3A",
+      "featureID": "ENSG00000160185",
+      "status": "observed",
+      "controlCounts": 782,
+      "perturbedCounts": 251,
+      "targetLog1pCPMChange": 1.4052492143338884
+    },
+    {
+      "target": "UBASH3B",
+      "featureID": "ENSG00000154127",
+      "status": "observed",
+      "controlCounts": 1183,
+      "perturbedCounts": 999,
+      "targetLog1pCPMChange": 2.0429264182663687
+    },
+    {
+      "target": "ZBTB1",
+      "featureID": "ENSG00000126804",
+      "status": "observed",
+      "controlCounts": 704,
+      "perturbedCounts": 58,
+      "targetLog1pCPMChange": 0.38968577631487333
+    },
+    {
+      "target": "ZBTB10",
+      "featureID": "ENSG00000205189",
+      "status": "observed",
+      "controlCounts": 1488,
+      "perturbedCounts": 54,
+      "targetLog1pCPMChange": 1.22048128812831
+    },
+    {
+      "target": "ZBTB25",
+      "featureID": "ENSG00000089775",
+      "status": "observed",
+      "controlCounts": 602,
+      "perturbedCounts": 42,
+      "targetLog1pCPMChange": 0.09839566513529396
+    },
+    {
+      "target": "ZC3HAV1",
+      "featureID": "ENSG00000105939",
+      "status": "observed",
+      "controlCounts": 14686,
+      "perturbedCounts": 2110,
+      "targetLog1pCPMChange": 1.1289349926245702
+    },
+    {
+      "target": "ZNF318",
+      "featureID": "ENSG00000171467",
+      "status": "observed",
+      "controlCounts": 2329,
+      "perturbedCounts": 392,
+      "targetLog1pCPMChange": 1.0717845087153397
+    }
+  ]
+}

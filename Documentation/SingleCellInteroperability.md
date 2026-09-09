@@ -201,7 +201,7 @@ fingerprint types but does not yet publish its report into the artifact-store
 DAG. It is not a substitute for general chunked transforms or sparse PCA.
 
 Explicit limits are 1 GiB source bytes, 1 million cell identities, 100,000
-features, 100 million source sparse entries, 5 million aggregate nonzeros,
+features, 1 billion source sparse entries, 5 million aggregate nonzeros,
 2 MiB encoded plan and 512 MiB encoded report. The CLI's common plan reader
 has a tighter 128 KiB input limit. These are bounds, not demonstrated scale:
 metadata, group membership and JSON reports remain resident. Compression
@@ -323,6 +323,9 @@ The complete development objective remains open:
    sealed treated outcomes. [Native donor-response prediction](../Tools/Omics/PerturbationPrediction/NATIVE.md)
    now fits and freezes all four baselines through streamed H5AD aggregation,
    with reconstruction and real-data numerical agreement on all eleven folds.
+   The [complete Norman filtered release](../Tools/Omics/PerturbationPrediction/Norman/README.md)
+   supplies 105 single-target and 131 paired-target conditions with explicit
+   unseen-combination and unseen-target splits; model qualification remains next.
    Bayesian/mechanistic integration, unseen perturbation identity, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired
@@ -330,6 +333,8 @@ The complete development objective remains open:
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
    selected-entry PCA now pass full Baron and Hagai comparisons against Scanpy;
    see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).
+   Full Norman count aggregation now exercises 361.6 million source entries
+   through bounded slices, with 3.58 million aggregate nonzeros.
    Metadata, moments, basis, scores and report remain resident. Streaming
    downstream graphs/integration, parallel kernels and million-cell qualification
    remain open.

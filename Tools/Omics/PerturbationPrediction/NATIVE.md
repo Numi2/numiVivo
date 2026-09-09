@@ -56,7 +56,7 @@ model/result and implementation hashes are bound; recomputing a receipt after
 altering a fitted model does not bypass reconstruction. Existing outputs are
 refused and failed staging directories removed.
 
-Bounds: existing H5AD source limits apply (1 GiB and 100 million nonzeros).
+Bounds: existing H5AD streaming source limits apply (1 GiB and 1 billion nonzeros).
 Training supports 2-64 donors, at most 2 million donor-gene values and 100 million
 fit work units (`donors² × genes`). Pseudobulk materialization is limited to 128
 groups and 4 million group-gene values. Encoded model/prediction documents are

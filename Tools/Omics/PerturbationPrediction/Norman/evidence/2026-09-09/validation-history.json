@@ -1,0 +1,13 @@
+{
+  "initialComparison": {
+    "status": "interrupted",
+    "exitCode": 130,
+    "reason": "Python NpzFile repeatedly decompressed arrays during per-cell reference lookups. Explicit SIGINT to owned comparison process after native publish, verify, and overwrite rejection had completed.",
+    "observedStack": "numpy.lib._npyio_impl.__getitem__ -> numpy.lib._format_impl.read_array -> zipfile._read1 -> decompressor.decompress -> KeyboardInterrupt",
+    "repair": "Materialize the small reference arrays once; rerun complete product qualification in a fresh output directory.",
+    "nativeProductFailure": false
+  },
+  "streamHarnessReview": {
+    "repair": "Restored indentation of pre-existing cleanup assertion inside malformed-count loop before final 25-command rerun."
+  }
+}

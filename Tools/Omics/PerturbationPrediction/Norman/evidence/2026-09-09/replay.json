@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "exactArrays": [
+    "counts",
+    "conditions",
+    "feature_ids",
+    "gene_symbols",
+    "barcodes",
+    "cell_conditions",
+    "totals",
+    "detected",
+    "mitochondrial"
+  ],
+  "exactDocuments": [
+    "plan.json",
+    "splits.json"
+  ],
+  "auditEqualExceptElapsedSeconds": true
+}

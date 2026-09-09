@@ -1,0 +1,17 @@
+{
+  "scope": "Observed full native publish and reconstruction on Apple M4. Includes source snapshot and report serialization; not a matched scverse speed benchmark.",
+  "stages": {
+    "aggregate": {
+      "wallSeconds": 67.95,
+      "userSeconds": 64.55,
+      "systemSeconds": 0.55,
+      "maximumResidentBytes": 1633157120
+    },
+    "verify": {
+      "wallSeconds": 68.62,
+      "userSeconds": 64.93,
+      "systemSeconds": 0.58,
+      "maximumResidentBytes": 1703641088
+    }
+  }
+}
