@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "baseRevision": "c674d082f5189ee6f432f7824a7fa7aa9fbcfbc6",
+  "productSHA256": "07a390938e35be4f3a80d9087ee2b1c11daeeae4d10c9b9227d148a70931d36a",
+  "sourceAndTestBytesMatchedMacMini": true,
+  "sourceAndTestSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoMultiAssayH5MU.swift": "6551e96cf24665ee1fc1624683ce773639e1a1f103bcab25778bb9728fd27c57",
+    "Tests/NumiVivoIntegrationTests/MultiAssayH5MUImportTests.swift": "6a3ca436b49c4ae30d4698dbf28b9f89cd78830cf771a1f538f052a460be6f4f"
+  },
+  "swiftTests": 63,
+  "swiftSuites": 17,
+  "nativeHDF5Enabled": true,
+  "productCommands": 6,
+  "nonspatialRegressionCommands": 1,
+  "coordinateOverlayVisuallyInspected": true,
+  "maximumResidentBytes": 4629364736,
+  "scope": "Count/spot/pixel-coordinate interchange; not segmentation, physical image registration, spatial biology or tissue prediction",
+  "archiveRestorationSHA256": {
+    "original.h5": "62b7550bcf473d7aa0a6f48800b65822aeac8791c396507a91833b2699e0d4c4",
+    "dataset.json": "faf13f9cc6bbbe0f8346fd931585bb821048c1604ad4112471768d5d1fd36103",
+    "dataset.h5mu": "0a6be6b64c9bce570dbf5ab3c8942ca203b33bc8715eedf292b16fdede21cbe2"
+  },
+  "checkerSHA256": "7de5d1d2e5e030946548990b10b45de9e01600d602f36741cd78f9ddc7251506",
+  "warnings": [
+    "Scanpy read_visium deprecation retained; pinned reference version remains available.",
+    "Duplicate display-name warnings retained; stable gene IDs were not renamed.",
+    "MuData native-producer and synthetic cross-space duplicate-variable warnings retained."
+  ],
+  "archiveSHA256": {
+    "bundle/dataset.h5mu.gz": "0e36989456af1adc7c09ce9329ea5ac41e50a9b8d6f0ede35aecdde30b74a605",
+    "bundle/dataset.json.gz": "f78f7b37f6b0419e7b2ce9e79157c0844d31c3973aef11143932909580c093bc",
+    "bundle/original.h5.gz": "9de6692b67564a2906d3531e0675c8fa3cd4df0bcb5d9a4489d0ab5153822315",
+    "bundle/plan.json": "da04ea95b86f56002d03e9aef6a926fd15b15f7c0c2f59ca69927a9c442bc2d4",
+    "bundle/receipt.json": "50028c05d117218681375239c538bb5ad813bec116c0f483565e886ecc7849ba",
+    "checks.json": "a1d8163db0e1fddef4cf7fd5b0d2de477f93e9275151553224ad0bdb19fabaf3",
+    "commands.json": "d9f8ac011ed7020e9198b40428bc71d8ad72e061dbd555e828e1616ad087bc04",
+    "coordinate-overlay.png": "12f4cd941b41f4aafd4cfcf98abf640c454415f1a22fa061ec321fdee4bd233d",
+    "frames.h5mu": "d997dd358f6f6f936cfe89bc4266c8c5781987782e3c7c9c6fa2c67a4f5e003b",
+    "frames.json": "f4d5ed5353248b6163c5724816416ea572bf6e5b3b17d90c5db0f6915c389518",
+    "logs/import.log.gz": "7927ded43d10295604811f81d55cd961a4056d4b2f068b95219dcb1e0d7e7811",
+    "logs/multiple-frames.log.gz": "14cf44151f2e532bfa528e488e4c7eba9080492dc7c8cd4476ba4ca6466c9d10",
+    "logs/native-reimport.log.gz": "744e3ebc6c3441be036e0492e853191b6cf6552d56264118c213229228900f62",
+    "logs/numivivo-spatial-check-20260909.log.gz": "ff2fba2510cbff8b0d84d1c429331365222e8ee94d3fbd858897ff6362243ef3",
+    "logs/numivivo-spatial-release-20260909.log.gz": "f2873a1ae8d12dca6ff91272c354f6b7dd6983fd175b6735cb78bc78e953b33d",
+    "logs/numivivo-spatial-tests-20260909.log.gz": "e124bef0458b9e3ff48f0b4d43fc8b54432cbccea4b8824c6530128c80e6f7e4",
+    "logs/reimport-verify.log.gz": "7d5b65335ff2979d2bc885a2dbc4492e069b45c832897ecb7a6a5c48a62a58dd",
+    "logs/repeat.log.gz": "e513c2d33b9a4f0c3a554c2d240bc80f2c9f1bd315fcc77fe053460ac24c5315",
+    "logs/verify.log.gz": "86ebf267824eb7b7ba90d781c187c081268842692ddbbd6d0555e0a468650d7e",
+    "nonspatial-regression.json": "51a2ebb3ae8fd2a6672305a211894d0526ebacae3730fa6e53bc3bd9558bbd10",
+    "nonspatial-regression.log": "86e9facea346ecc4fc3a778c51c29d2414a6ecc06e000f0f0baff321545350cd",
+    "plan.json": "a21dda98e73f8f1314bd3ee36637dd39698d4c1adeadd3b8b52cdbba4c215c93",
+    "reimport/plan.json": "da04ea95b86f56002d03e9aef6a926fd15b15f7c0c2f59ca69927a9c442bc2d4",
+    "reimport/receipt.json": "beb06197b31e323c7dfcd78abb2efdc67c2301938deff86dfdfe5b803ef72e42",
+    "repeat/plan.json": "da04ea95b86f56002d03e9aef6a926fd15b15f7c0c2f59ca69927a9c442bc2d4",
+    "repeat/receipt.json": "50028c05d117218681375239c538bb5ad813bec116c0f483565e886ecc7849ba",
+    "source/original.h5": "eb883e48d9aa935d7959600153ad7ba8c7f1748302fcf56eef4c6999574bb37d",
+    "source/spatial.tar.gz": "064f7e62e43a705730c30911911940dbbe583ebc6b743dd2dc52eba5037a2ef5"
+  },
+  "nativeHDF5Version": "2.2.0",
+  "nativeHDF5Libraries": {
+    "libaec.0.dylib": "6d3a4455baacac9af8238eb5ee72af10ef4a854e79fbbc75dce3da4af56524ab",
+    "libhdf5.dylib": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e",
+    "libsz.2.dylib": "e553aa5b2770b66005ce40b59653d9bfc7f371e68f69f3c4cc0bc75c4ca9d531"
+  }
+}

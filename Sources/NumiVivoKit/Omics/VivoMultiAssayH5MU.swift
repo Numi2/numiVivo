@@ -73,6 +73,28 @@ public enum VivoMultiAssayH5MU {
             let obsm = try group(file, "obsm"), varm = try group(file, "varm")
             defer { for g in [obsmap, varmap, obsm, varm] { h.close(g, "H5Gclose") } }
             for name in ["obsp", "varp"] { h.close(try group(file, name), "H5Gclose") }
+            struct SpatialArray: Encodable {
+                let frameID: String
+                let path: String
+            }
+            var spatialArrays: [SpatialArray] = []
+            var occupied = Set(data.assays.map(\.id))
+            for f in data.spatialFrames {
+                var name = "spatial", suffix = 0
+                while occupied.contains(name) { suffix += 1; name = "spatial_" + String(suffix) }
+                occupied.insert(name)
+                var coordinates = [Double](repeating: .nan, count: data.observations.count * f.axes.count)
+                for (row, observation) in data.observations.enumerated() {
+                    if let position = observation.position, position.frameID == f.id {
+                        for axis in f.axes.indices { coordinates[row * f.axes.count + axis] = position.coordinates[axis] }
+                    }
+                }
+                try coordinates.withUnsafeBytes {
+                    try raw(obsm, name, type: h.native("NATIVE_DOUBLE"),
+                        shape: [UInt64(data.observations.count), UInt64(f.axes.count)], buffer: $0.baseAddress)
+                }
+                spatialArrays.append(.init(frameID: f.id, path: "obsm/" + name))
+            }
             var featureOffset = 0
             for a in data.assays {
                 try Task.checkCancellation()
@@ -106,10 +128,11 @@ public enum VivoMultiAssayH5MU {
             struct Metadata: Encodable {
                 let schema = "numivivo.org/multi-assay/v1"
                 let id: String; let evidence: VivoOmicsEvidence; let sourceDescription: String
-                let samples: [VivoOmicsSample]; let observations: [VivoAssayObservation]; let spatialFrames: [VivoSpatialFrame]; let assays: [AssayMetadata]
+                let samples: [VivoOmicsSample]; let observations: [VivoAssayObservation]; let spatialFrames: [VivoSpatialFrame]; let spatialArrays: [SpatialArray]?; let assays: [AssayMetadata]
             }
             let metadata = Metadata(id: data.id, evidence: data.evidence, sourceDescription: data.sourceDescription,
                 samples: data.samples, observations: data.observations, spatialFrames: data.spatialFrames,
+                spatialArrays: spatialArrays.isEmpty ? nil : spatialArrays,
                 assays: data.assays.map { .init(id: $0.id, kind: $0.kind, featureNamespace: $0.featureNamespace, countUnit: $0.countUnit,
                     genomeAssembly: $0.genomeAssembly, sourceDescription: $0.sourceDescription, features: $0.features, observationIndices: $0.observationIndices) })
             let uns = try group(file, "uns"); defer { h.close(uns, "H5Gclose") }

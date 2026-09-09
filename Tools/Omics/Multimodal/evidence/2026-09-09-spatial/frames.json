@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "id": "partial-fixture",
+  "evidence": "synthetic",
+  "sourceDescription": "Structural control only",
+  "samples": [
+    {
+      "batchID": "one-library",
+      "biologicalReplicateID": "donor1",
+      "condition": "healthy",
+      "donorID": "donor1",
+      "id": "pbmc5k",
+      "organism": "NCBITaxon:9606"
+    }
+  ],
+  "observations": [
+    {
+      "identity": {
+        "barcode": "b0",
+        "sampleID": "pbmc5k"
+      },
+      "kind": "cell",
+      "position": {
+        "frameID": "volume",
+        "coordinates": [
+          1.0,
+          2.0,
+          3.0
+        ]
+      }
+    },
+    {
+      "identity": {
+        "barcode": "b1",
+        "sampleID": "pbmc5k"
+      },
+      "kind": "cell",
+      "position": null
+    },
+    {
+      "identity": {
+        "barcode": "b2",
+        "sampleID": "pbmc5k"
+      },
+      "kind": "spot",
+      "position": {
+        "frameID": "slide",
+        "coordinates": [
+          2.5,
+          4.0
+        ]
+      }
+    }
+  ],
+  "spatialFrames": [
+    {
+      "id": "slide",
+      "unit": "micrometer",
+      "axes": [
+        "x",
+        "y"
+      ],
+      "sourceDescription": "Synthetic coordinate frame"
+    },
+    {
+      "id": "volume",
+      "unit": "pixel",
+      "axes": [
+        "x",
+        "y",
+        "z"
+      ],
+      "sourceDescription": "Synthetic 3D frame"
+    }
+  ],
+  "assays": [
+    {
+      "id": "spatial",
+      "kind": "rna",
+      "featureNamespace": "fixture-rna",
+      "countUnit": "umiCount",
+      "genomeAssembly": null,
+      "sourceDescription": "Synthetic fixture",
+      "features": [
+        {
+          "id": "shared-id",
+          "name": "rna",
+          "interval": null
+        }
+      ],
+      "observationIndices": [
+        0,
+        1,
+        2
+      ],
+      "matrix": {
+        "cellCount": 3,
+        "featureCount": 1,
+        "rowOffsets": [
+          0,
+          1,
+          1,
+          2
+        ],
+        "featureIndices": [
+          0,
+          0
+        ],
+        "counts": [
+          9007199254740993,
+          4
+        ]
+      }
+    },
+    {
+      "id": "protein",
+      "kind": "antibodyCapture",
+      "featureNamespace": "fixture-protein",
+      "countUnit": "umiCount",
+      "genomeAssembly": null,
+      "sourceDescription": "Synthetic fixture",
+      "features": [
+        {
+          "id": "shared-id",
+          "name": "protein",
+          "interval": null
+        }
+      ],
+      "observationIndices": [
+        2,
+        0
+      ],
+      "matrix": {
+        "cellCount": 2,
+        "featureCount": 1,
+        "rowOffsets": [
+          0,
+          1,
+          1
+        ],
+        "featureIndices": [
+          0
+        ],
+        "counts": [
+          7
+        ]
+      }
+    }
+  ]
+}

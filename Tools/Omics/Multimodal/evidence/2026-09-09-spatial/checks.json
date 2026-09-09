@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "sourceSHA256": "eb883e48d9aa935d7959600153ad7ba8c7f1748302fcf56eef4c6999574bb37d",
+  "spatialArchiveSHA256": "064f7e62e43a705730c30911911940dbbe583ebc6b743dd2dc52eba5037a2ef5",
+  "inputH5MUSHA256": "62b7550bcf473d7aa0a6f48800b65822aeac8791c396507a91833b2699e0d4c4",
+  "binarySHA256": "07a390938e35be4f3a80d9087ee2b1c11daeeae4d10c9b9227d148a70931d36a",
+  "checkerSHA256": "7de5d1d2e5e030946548990b10b45de9e01600d602f36741cd78f9ddc7251506",
+  "sourceURL": "https://cf.10xgenomics.com/samples/spatial-exp/1.0.0/V1_Human_Lymph_Node/V1_Human_Lymph_Node_filtered_feature_bc_matrix.h5",
+  "spatialURL": "https://cf.10xgenomics.com/samples/spatial-exp/1.0.0/V1_Human_Lymph_Node/V1_Human_Lymph_Node_spatial.tar.gz",
+  "spots": 4039,
+  "features": 33538,
+  "nonzeros": 21210753,
+  "totalUMIs": 70070300,
+  "allCountsAndCoordinatesExact": true,
+  "scanpyCountAndCoordinateAgreement": true,
+  "nativeSpatialReimportBytesExact": true,
+  "repeatBundleBytesExact": true,
+  "multipleFramesAndNameCollisionExact": true,
+  "commands": 6,
+  "maximumResidentBytes": 4629364736,
+  "scope": "Count/spot/pixel-coordinate interchange; not segmentation, physical image registration, spatial biology or tissue prediction",
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "packages": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "anndata": "0.13.3.post0",
+    "mudata": "0.4.1",
+    "scanpy": "1.12.4",
+    "h5py": "3.16.0",
+    "matplotlib": "3.11.1"
+  }
+}

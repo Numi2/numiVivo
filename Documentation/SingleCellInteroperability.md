@@ -348,8 +348,11 @@ The complete development objective remains open:
    MuData-written sources. The [complete real paired RNA/ATAC benchmark](../Tools/Omics/Multimodal/MULTIOME.md)
    now preserves all 2,711 nuclei, 36,601 genes and 98,319 peaks, with explicit
    cut-site units and exact agreement across native 10x and independent MuData
-   imports. Biological ATAC/joint-model and real spatial qualification, continuous
-   measurements and joint multimodal analysis remain open.
+   imports. The [complete Visium spatial interchange benchmark](../Tools/Omics/Multimodal/SPATIAL.md)
+   now checks all 4,039 spots, counts and pixel coordinates through native H5MU
+   reimport, including standard spatial-array export. Biological ATAC/spatial
+   analysis, native Visium-directory ingestion, continuous measurements and joint
+   multimodal analysis remain open.
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
    selected-entry PCA now pass full Baron and Hagai comparisons against Scanpy;
    see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).

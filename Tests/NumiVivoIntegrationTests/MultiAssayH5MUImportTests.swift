@@ -19,6 +19,21 @@ import Testing
         object["ignoreMissingModalities"] = true
         #expect(throws: (any Error).self) { try VivoCanonicalJSON.decode(VivoH5MUMultiAssayPlan.self, from: JSONSerialization.data(withJSONObject: object)) }
     }
+    @Test(.enabled(if: ProcessInfo.processInfo.environment["NUMIVIVO_TEST_HDF5"] == "1")) func spatialArraysRoundTripPositionsAndMissingRows() throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("h5mu-spatial-" + UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: url) }
+        let fixture = MultiAssayTests.fixture(), base = Self.plan()
+        try VivoMultiAssayH5MU.writeSnapshot(fixture, to: url)
+        let plan = VivoH5MUMultiAssayPlan(schemaVersion: 1, id: base.id, evidence: base.evidence,
+            sourceDescription: base.sourceDescription, samples: base.samples, sampleColumn: base.sampleColumn,
+            barcodeColumn: base.barcodeColumn, groupColumn: nil, defaultObservationKind: .cell,
+            observationKindColumn: base.observationKindColumn,
+            spatial: .init(path: "obsm/spatial", frame: fixture.spatialFrames[0]), assays: base.assays)
+        let result = try VivoMultiAssayH5MUImport.readSnapshot(url, plan: plan)
+        #expect(result.observations == fixture.observations)
+        #expect(result.spatialFrames == fixture.spatialFrames)
+        #expect(result.assays == fixture.assays)
+    }
     @Test(.enabled(if: ProcessInfo.processInfo.environment["NUMIVIVO_TEST_HDF5"] == "1")) func nativeReadPreservesPartialMapsKindsAndExactIntegers() throws {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("h5mu-read-" + UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: url) }

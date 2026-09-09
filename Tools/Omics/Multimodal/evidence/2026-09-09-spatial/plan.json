@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "visium-human-lymph-node-1.0",
+  "evidence": "measured",
+  "sourceDescription": "10x Genomics Human Lymph Node, Visium, Space Ranger 1.0.0, full filtered release; CC BY 4.0; one section, no independent replication",
+  "samples": [
+    {
+      "id": "lymph-node",
+      "biologicalReplicateID": "donor1",
+      "donorID": "donor1",
+      "condition": "source-unspecified",
+      "batchID": "one-section",
+      "organism": "NCBITaxon:9606"
+    }
+  ],
+  "sampleColumn": "sample",
+  "barcodeColumn": "barcode",
+  "defaultObservationKind": "spot",
+  "observationKindColumn": "observation_kind",
+  "spatial": {
+    "path": "obsm/spatial",
+    "frame": {
+      "id": "full-resolution-image",
+      "unit": "pixel",
+      "axes": [
+        "x",
+        "y"
+      ],
+      "sourceDescription": "Space Ranger 1.0 full-resolution image pixels: x=pxl_col_in_fullres, y=pxl_row_in_fullres; no physical-scale conversion"
+    }
+  },
+  "assays": [
+    {
+      "sourceName": "rna",
+      "id": "rna",
+      "kind": "rna",
+      "featureNamespace": "Ensembl:GRCh38-SpaceRanger-1.0-source-release",
+      "countUnit": "umiCount",
+      "genomeAssembly": "GRCh38",
+      "matrixPath": "X",
+      "featureNameColumn": "name"
+    }
+  ]
+}

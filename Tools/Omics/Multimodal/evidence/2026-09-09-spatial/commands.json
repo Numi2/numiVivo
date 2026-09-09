@@ -1,0 +1,82 @@
+[
+  {
+    "label": "import",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-spatial-check-20260909/input.h5mu",
+      "--plan",
+      "/Users/home/numivivo-spatial-check-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-spatial-check-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 12.289963165763766,
+    "maximumResidentBytes": 3535323136
+  },
+  {
+    "label": "verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-spatial-check-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 12.957941832952201,
+    "maximumResidentBytes": 4464918528
+  },
+  {
+    "label": "repeat",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-spatial-check-20260909/input.h5mu",
+      "--plan",
+      "/Users/home/numivivo-spatial-check-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-spatial-check-20260909/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 11.843297833111137,
+    "maximumResidentBytes": 3944841216
+  },
+  {
+    "label": "native-reimport",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-spatial-check-20260909/bundle/dataset.h5mu",
+      "--plan",
+      "/Users/home/numivivo-spatial-check-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-spatial-check-20260909/reimport"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 12.528154542203993,
+    "maximumResidentBytes": 4108845056
+  },
+  {
+    "label": "reimport-verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-spatial-check-20260909/reimport"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 14.358152833301574,
+    "maximumResidentBytes": 4629364736
+  },
+  {
+    "label": "multiple-frames",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-spatial-check-20260909/frames.json",
+      "--output",
+      "/Users/home/numivivo-spatial-check-20260909/frames.h5mu"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 0.017234500031918287,
+    "maximumResidentBytes": 16760832
+  }
+]

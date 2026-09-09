@@ -11,7 +11,7 @@ feature IDs are allowed across spaces, but not within a space.
 
 This is a count-assay foundation, not a joint latent model or a complete
 multimodal analysis suite. Continuous protein/metabolite measurements, joint
-RNA/ATAC analysis, WNN integration and real spatial/ATAC qualification remain open. Current native single-cell algorithms retain their
+RNA/ATAC analysis, WNN integration and biological spatial/ATAC qualification remain open. Current native single-cell algorithms retain their
 own RNA/count interfaces; this change does not silently apply RNA normalization
 or differential expression to antibody or accessibility features.
 
@@ -44,8 +44,8 @@ Each modality is an AnnData containing its own matrix and feature IDs. Global
 observation IDs are unique generated indices; exact source sample/barcode pairs
 remain separate columns. Observation maps preserve missing assays and row order.
 Complete typed metadata, including spatial frames and genomic intervals, is
-retained in `uns['numivivo']` JSON. Spatial coordinates currently use that metadata
-representation, not a standardized `obsm['spatial']` integration. MuData emits a
+retained in `uns['numivivo']` JSON. Spatial coordinates are also exported as numeric
+`obsm` arrays with explicit frame-to-path metadata; see [spatial interchange](SPATIAL.md). MuData emits a
 creator warning for this native HDF5 producer; independent reads and roundtrips
 are explicitly checked. The original 10x file retains any source-specific tags
 outside the typed count projection.
@@ -76,8 +76,7 @@ the plan. String, categorical and nullable-string identity columns are supported
 An optional spatial mapping selects a numeric `obsm/<name>` array and declares
 its frame, axes and units. Entirely NaN rows mean missing positions; partially
 missing or infinite positions reject. Native export retains these positions in
-typed `uns` metadata as described above. It does not synthesize a standard spatial
-array. Accessibility mappings require the explicit convention
+typed `uns` metadata and standard numeric arrays as described above. Accessibility mappings require the explicit convention
 `contig:start-end:zero-based-half-open`, an assembly, and fragment/read/cut-site units.
 
 The import is a declared count/identity projection. Unselected annotations and
