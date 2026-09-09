@@ -1,0 +1,147 @@
+[
+  {
+    "label": "baron-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-window-neighbors-20260909/baron-fit.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 7.12,
+    "maximumResidentBytes": 172228608
+  },
+  {
+    "label": "baron-workers-1",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron/plan-1.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron/workers-1"
+    ],
+    "exitCode": 0,
+    "seconds": 7.15,
+    "maximumResidentBytes": 230948864
+  },
+  {
+    "label": "baron-workers-4",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron/plan-4.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron/workers-4"
+    ],
+    "exitCode": 0,
+    "seconds": 6.61,
+    "maximumResidentBytes": 232783872
+  },
+  {
+    "label": "baron-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron/workers-4"
+    ],
+    "exitCode": 0,
+    "seconds": 6.68,
+    "maximumResidentBytes": 223248384
+  },
+  {
+    "label": "hagai-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-window-neighbors-20260909/hagai-fit.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real/hagai/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 13.77,
+    "maximumResidentBytes": 200507392
+  },
+  {
+    "label": "hagai-workers-1",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-window-neighbors-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-window-neighbors-20260909/real/hagai/plan-1.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real/hagai/workers-1"
+    ],
+    "exitCode": 0,
+    "seconds": 15.92,
+    "maximumResidentBytes": 305168384
+  },
+  {
+    "label": "hagai-workers-4",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-window-neighbors-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-window-neighbors-20260909/real/hagai/plan-4.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real/hagai/workers-4"
+    ],
+    "exitCode": 0,
+    "seconds": 14.66,
+    "maximumResidentBytes": 303644672
+  },
+  {
+    "label": "hagai-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-window-neighbors-20260909/real/hagai/workers-4"
+    ],
+    "exitCode": 0,
+    "seconds": 14.68,
+    "maximumResidentBytes": 300826624
+  },
+  {
+    "label": "baron-held-out-human3-workers-1",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-pca-query-20260909/baron/human3/query",
+      "--plan",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron-held-out-human3/plan-1.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real/baron-held-out-human3/workers-1"
+    ],
+    "exitCode": 65,
+    "seconds": 0.11,
+    "maximumResidentBytes": 63979520
+  }
+]

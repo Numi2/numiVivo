@@ -1,0 +1,112 @@
+{
+  "status": "passed",
+  "baseCommit": "c77e973242baf68ab7ebfffb519412f8392a4e09",
+  "nativeSourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoSingleCellNeighbors.swift": "49ecffe62ca2c5cb6503fefdd1c524f9cca0f0f9df601c10f6228ed68437af33",
+    "Sources/NumiVivoKit/Omics/VivoH5ADPCAQuery.swift": "f69fc22a278605553e74b1075f36d4da1c145be66c1f78ffb41d3b1a75ceb234",
+    "Sources/NumiVivoKit/Omics/VivoWindowedPCANeighbors.swift": "9cc7d9771d43b52a882fdc6eb01c546873ad7f514684a193b62ae5f236dae01c",
+    "Sources/NumiVivoKit/Omics/VivoPCANeighborBundle.swift": "7b5383e1e8e50f03d2ce2f4bac8c20376569b9b7fa26ecd5b776ccbefa996d29",
+    "Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift": "f32e4fdf9c7778c5a979ac969ee0a967d22e19f58f04a517c15ed880e8b2757a",
+    "Tests/NumiVivoIntegrationTests/SingleCellWindowedNeighborTests.swift": "4ff5789b1eca7fb83f6dc4e3b73dbba19015db3e78af61e85a170bfb548b4da2",
+    "Tools/Omics/H5AD/build.sh": "30cd0951583a86ee066a5204c20aecbeb70178f9da9bbc518da988c0802adad6"
+  },
+  "localRemoteBytesExact": true,
+  "binarySHA256": "db321e8d1009b968bd9141c376e63cc67e1f451bd71a0fad0a82c465ef364a7c",
+  "referenceToolSHA256": {
+    "Tools/Omics/Reduction/run_window_neighbors.py": "4b5a3bb15f9b9d09224d891d4f2a9955ff72eb9d5243a5101f36099db1b530da",
+    "Tools/Omics/Reduction/check_window_neighbors.py": "2828bd346a4bcc8f12dd3d7aa4405f80a34fddd36b73c30263c39e1abb299648",
+    "Tools/Omics/Reduction/window_neighbors_reference.py": "f6a4f9fc2ba3992d175d405fe6760f2917d261c1fbad0ebba25f40cdb80ac1fc",
+    "Tools/Omics/Reduction/check_neighbors.py": "eb5900d85154f156b989913724706cab81bdb97d8e1336e75b9b8d4dd6f5d30d",
+    "Tools/Omics/Reduction/pca_bundle_reference.py": "3526b632171544deb1d3d600f77a1e75d9141627becdf4866b22c9a5c69e16e1",
+    "Tools/Omics/Reduction/check_pca_query.py": "5eb2076fc2f06db26864d5cc8667243aca50f05ab141bae1224d87f514ae4650"
+  },
+  "swiftTests": 73,
+  "swiftSuites": 21,
+  "nativeSuccessfulCommands": 13,
+  "staleInputAttemptsRejected": 2,
+  "graphFixtureCommands": 19,
+  "graphFixtureExpectedRejections": 9,
+  "queryInputRegressionCommands": 22,
+  "queryInputExpectedRejections": 13,
+  "allSerialParallelGraphBytesExact": true,
+  "rebuiltQueryScoresExactPreviousRelease": true,
+  "initialTestTypecheckFailureRetained": true,
+  "references": [
+    {
+      "name": "baron",
+      "status": "passed",
+      "reportSHA256": "8df303a108b4610a72fa69a529897940772564a99881f9ed1fa7bf9b38269a99",
+      "cells": 8569,
+      "dimensions": 20,
+      "neighborsIncludingSelf": 15,
+      "distancePairs": 36709596,
+      "connectivityEntries": 176850,
+      "connectedComponents": 1,
+      "exactNeighborMembershipAndOrder": true,
+      "maximumDistanceError": 0.0,
+      "maximumConnectivityError": 3.5303908019201913e-06,
+      "maximumSigmaError": 7.62939453125e-06,
+      "maximumKernelMassResidual": 9.994824528458679e-06,
+      "qualification": "Numerical exact-neighbor and fuzzy-graph agreement; no embedding, clustering or biological validation",
+      "versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "umap-learn": "0.5.12"
+      },
+      "allBinaryCoordinatesChecked": true,
+      "executionAccountingChecked": true,
+      "baselinePCANumericsExact": true
+    },
+    {
+      "name": "hagai",
+      "status": "passed",
+      "reportSHA256": "6ab9eb2104df87fe75ed76fe2d4c973ce430808901f70a9fdc1ebfce989c93a8",
+      "cells": 13863,
+      "dimensions": 20,
+      "neighborsIncludingSelf": 15,
+      "distancePairs": 96084453,
+      "connectivityEntries": 293178,
+      "connectedComponents": 1,
+      "exactNeighborMembershipAndOrder": true,
+      "maximumDistanceError": 0.0,
+      "maximumConnectivityError": 5.66832224058178e-06,
+      "maximumSigmaError": 7.62939453125e-06,
+      "maximumKernelMassResidual": 9.999752490941205e-06,
+      "qualification": "Numerical exact-neighbor and fuzzy-graph agreement; no embedding, clustering or biological validation",
+      "versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "umap-learn": "0.5.12"
+      },
+      "allBinaryCoordinatesChecked": true,
+      "executionAccountingChecked": true,
+      "baselinePCANumericsExact": true
+    },
+    {
+      "name": "baron-held-out-human3",
+      "status": "passed",
+      "reportSHA256": "bcb19243b831bff04116db7e9c36bc6476f25712f6f93264d8db040f66939dc5",
+      "cells": 3605,
+      "dimensions": 20,
+      "neighborsIncludingSelf": 15,
+      "distancePairs": 6496210,
+      "connectivityEntries": 74824,
+      "connectedComponents": 1,
+      "exactNeighborMembershipAndOrder": true,
+      "maximumDistanceError": 0.0,
+      "maximumConnectivityError": 3.0683460092717496e-06,
+      "maximumSigmaError": 7.62939453125e-06,
+      "maximumKernelMassResidual": 9.999268760996216e-06,
+      "qualification": "Numerical exact-neighbor and fuzzy-graph agreement; no embedding, clustering or biological validation",
+      "versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "umap-learn": "0.5.12"
+      },
+      "allBinaryCoordinatesChecked": true,
+      "executionAccountingChecked": true,
+      "baselinePCANumericsExact": false
+    }
+  ],
+  "scope": "Complete Baron/Hagai exact neighborhoods and held-out query graph; bounded score access and Dispatch CPU workers; resident final graphs, quadratic search, no million-cell/Metal/biological qualification"
+}

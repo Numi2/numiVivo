@@ -1,0 +1,85 @@
+[
+  {
+    "label": "baron-held-out-human3-query-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-pca-query-20260909/inputs/human3/train.h5ad",
+      "--plan",
+      "/Users/n/numivivo-pca-query-20260909/inputs/human3/fit.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/reference"
+    ],
+    "exitCode": 0,
+    "seconds": 3.48,
+    "maximumResidentBytes": 131235840
+  },
+  {
+    "label": "baron-held-out-human3-query-project",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-h5ad-pca-query",
+      "/Users/n/numivivo-pca-query-20260909/inputs/human3/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-pca-query-20260909/inputs/human3/query.json",
+      "--reference",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/reference",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/query"
+    ],
+    "exitCode": 0,
+    "seconds": 4.75,
+    "maximumResidentBytes": 167116800
+  },
+  {
+    "label": "baron-held-out-human3-workers-1",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/query",
+      "--plan",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/plan-1.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/workers-1"
+    ],
+    "exitCode": 0,
+    "seconds": 5.08,
+    "maximumResidentBytes": 172376064
+  },
+  {
+    "label": "baron-held-out-human3-workers-4",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/query",
+      "--plan",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/plan-4.json",
+      "--output",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/workers-4"
+    ],
+    "exitCode": 0,
+    "seconds": 5.02,
+    "maximumResidentBytes": 170164224
+  },
+  {
+    "label": "baron-held-out-human3-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-window-neighbors-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-window-neighbors-20260909/real-query-current/baron-held-out-human3/workers-4"
+    ],
+    "exitCode": 0,
+    "seconds": 5.01,
+    "maximumResidentBytes": 168673280
+  }
+]

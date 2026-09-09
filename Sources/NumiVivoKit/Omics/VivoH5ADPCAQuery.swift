@@ -65,7 +65,7 @@ public enum VivoH5ADPCAQuery {
         try bytes.write(to: root.appendingPathComponent(name), options: .withoutOverwriting)
         return try VivoCanonicalJSON.fingerprint(bytes)
     }
-    private static func snapshotReference(_ source: URL, to destination: URL) throws {
+    static func snapshotReference(_ source: URL, to destination: URL) throws {
         try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         for (name, limit) in [("original.h5ad", 1_073_741_824), ("plan.json", 2_097_152), ("receipt.json", 65_536),
             ("metadata.json", 536_870_912), ("quality.json", 268_435_456), ("model.json", 67_108_864),

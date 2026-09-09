@@ -378,8 +378,12 @@ The complete development objective remains open:
    training-only centers/loadings with query scores in 16 MiB file windows. All
    8,569 Baron cells pass donor-held-out projection checks against Scanpy/SciPy;
    existing label-reference reports remain exact. Training metadata, moments,
-   basis and fitted scores still remain resident. Streaming downstream graphs/integration, parallel
-   kernels and million-cell qualification remain open.
+   basis and fitted scores still remain resident. [File-backed exact neighbors](../Tools/Omics/Reduction/WINDOWED_NEIGHBORS.md)
+   now use independent Dispatch workers and bounded score tiles. Complete Baron,
+   Hagai and held-out human3 graphs match SciPy membership/distances and umap-learn
+   topology, with identical serial/parallel graph bytes. Final graph arrays remain
+   resident and exact search remains quadratic. Approximate search with measured
+   recall, streamed graph/integration storage and million-cell qualification remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

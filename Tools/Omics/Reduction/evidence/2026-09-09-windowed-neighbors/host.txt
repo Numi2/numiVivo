@@ -1,0 +1,15 @@
+ProductName:		macOS
+ProductVersion:		26.6
+BuildVersion:		25G72
+hw.model: Mac16,11
+hw.memsize: 25769803776
+c77e973242baf68ab7ebfffb519412f8392a4e09
+ M Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift
+ M Sources/NumiVivoKit/Omics/VivoH5ADPCAQuery.swift
+ M Sources/NumiVivoKit/Omics/VivoSingleCellNeighbors.swift
+ M Tools/Omics/H5AD/build.sh
+?? Sources/NumiVivoKit/Omics/VivoPCANeighborBundle.swift
+?? Sources/NumiVivoKit/Omics/VivoWindowedPCANeighbors.swift
+?? Tests/NumiVivoIntegrationTests/SingleCellWindowedNeighborTests.swift
+db321e8d1009b968bd9141c376e63cc67e1f451bd71a0fad0a82c465ef364a7c  /Users/n/numivivo-window-neighbors-20260909/numivivo
+a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e  /Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib

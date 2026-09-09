@@ -1,0 +1,22 @@
+[
+  {
+    "name": "baron",
+    "kind": "fitted",
+    "input": "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+    "fitPlan": "/Users/n/numivivo-window-neighbors-20260909/baron-fit.json"
+  },
+  {
+    "name": "hagai",
+    "kind": "fitted",
+    "input": "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+    "fitPlan": "/Users/n/numivivo-window-neighbors-20260909/hagai-fit.json"
+  },
+  {
+    "name": "baron-held-out-human3",
+    "kind": "query",
+    "input": "/Users/n/numivivo-pca-query-20260909/inputs/human3/query.h5ad",
+    "trainingInput": "/Users/n/numivivo-pca-query-20260909/inputs/human3/train.h5ad",
+    "fitPlan": "/Users/n/numivivo-pca-query-20260909/inputs/human3/fit.json",
+    "queryPlan": "/Users/n/numivivo-pca-query-20260909/inputs/human3/query.json"
+  }
+]

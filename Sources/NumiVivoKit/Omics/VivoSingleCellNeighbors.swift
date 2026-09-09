@@ -106,6 +106,18 @@ enum VivoSingleCellNeighbors {
                 indices.append(neighbor.index); distances.append(sqrt(neighbor.squaredDistance))
             }
         }
+        return try finish(indices: indices, distances: distances, cells: cells, dimensions: d, options: options, distancePairs: pairProduct.partialValue)
+    }
+    /// Shared UMAP-compatible graph construction for resident and file-backed
+    /// exact searches. Search execution settings do not alter this calculation.
+    static func finish(indices: [Int], distances: [Double], cells: [VivoOmicsCellIdentity], dimensions d: Int,
+                       options: VivoSingleCellNeighborOptions, distancePairs: Int) throws -> VivoSingleCellNeighborGraph {
+        let n = cells.count, k = options.neighbors
+        guard indices.count == n*k, distances.count == n*k,
+              indices.allSatisfy({ $0 >= 0 && $0 < n }), distances.allSatisfy({ $0.isFinite && $0 >= 0 }),
+              (0..<n).allSatisfy({ indices[$0*k] == $0 && distances[$0*k] == 0 }) else {
+            throw VivoOmicsError.invalid("neighbor graph arrays")
+        }
         let globalMean = distances.reduce(0,+)/Double(distances.count), target = log2(Double(k))
         var rhos = [Double](repeating: 0,count: n), sigmas = rhos, residuals = rhos
         var directed = [[Int: Double]](repeating: [:],count: n)
@@ -168,7 +180,7 @@ enum VivoSingleCellNeighbors {
         return .init(method: options.representation == .integrated ? "exact-euclidean-integrated-knn-umap-fuzzy-union-v1" : "exact-euclidean-PCA-knn-umap-fuzzy-union-v1",options: options,cells: cells,dimensions: d,
             neighborIndices: indices,neighborDistances: distances,rhos: rhos,sigmas: sigmas,kernelMassResiduals: residuals,
             rowOffsets: offsets,columnIndices: columns,weights: weights,connectedComponents: components,
-            isolatedCells: (0..<n).filter { offsets[$0] == offsets[$0+1] }.count,distancePairs: pairProduct.partialValue,
+            isolatedCells: (0..<n).filter { offsets[$0] == offsets[$0+1] }.count,distancePairs: distancePairs,
             qualification: "Exact neighbors in the declared representation and UMAP-compatible fuzzy graph; not an embedding, clustering, integration or biological qualification")
     }
 }
