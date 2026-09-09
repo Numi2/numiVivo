@@ -335,7 +335,8 @@ The complete development objective remains open:
    An [external unseen-target experiment](../Tools/Omics/PerturbationPrediction/Norman/UNSEEN_TARGETS.md)
    now scores all 105 target folds, with descriptor coverage for 102. Its
    co-response ridge model underperforms the mean-single baseline; this does not
-   qualify a native unseen-target predictor.
+   qualify a native unseen-target predictor. A [control-only descriptor follow-up](../Tools/Omics/PerturbationPrediction/Norman/CONTROL_DESCRIPTORS.md)
+   covers 97 targets but also fails to beat the mean-response baseline.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired

@@ -1,0 +1,31 @@
+{
+  "baseRevision": "9b78420000921d9167366fccf2b69c4f32e998cf",
+  "cpu": "Apple M4",
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "python": "3.12.14",
+  "packages": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.0",
+    "h5py": "3.16.0",
+    "threadpoolctl": "3.6.0"
+  },
+  "scoreReplayByteExact": true,
+  "checksImplementationSHA256": "d32e5b1eb1678b02dfc123af939110a42de86ce2b4e6ef10eb717ed3fc27c5b2",
+  "files": {
+    "checks.json": "d517817234e0ce1ec3b127eec7a0c74edfc5504077e6629812a15fb5dc633c8a",
+    "descriptors/coverage.json": "e5d298a500b8b59ef40ad1830e11dfe465a61f5903f8a86ca1cac2cbd482df0a",
+    "descriptors/descriptors.npz": "ff3452759dd1e7cab6e778e346a32bb5bc674feb0d22feff34f11437055d6b6a",
+    "descriptors/receipt.json": "f9df32f3192644f8cc2faa008fffa096f0b9c57f140361e4fed515631a55d40d",
+    "descriptors-repeat.log": "262655852367e1bf3dbd8880f5e46ee71a5a6e34c0ce53be11fef210b2e559c6",
+    "descriptors.log": "6a53bdb301785d98995b2385a58ba722aa8a87498961da5d68980938a4fe5dbb",
+    "predictions/folds.json": "b56abb8e1f1cf2a7a8175efdb5e54a6fc5e2f1e047f3768a7d914d0524e7ecbd",
+    "predictions/predictions.npz": "046ee65886a6feb451e2b20e08592674c532a3c3bec8d385fdf2cbf8b2aa485d",
+    "predictions/receipt.json": "09e8dff1dff865c61f9d2fdce0c612126dd84a44a36c666a3e33120f47399841",
+    "predictions-repeat.log": "e72dbae297ea7266c0a27d57a74a9a41e57273eea68af3d2b254e7055d2094f8",
+    "predictions.log": "ea7e9f4c62cb9483678d5a27297c47811972a2ace8ea84427bc236f10dd2ac58",
+    "scores/receipt.json": "989c7fd3597b760d60d557d8a83ed5e1d529fc2cd85cb98a35cc1dc129236c7c",
+    "scores/results.json": "b7edfbd3aeb26685edb868f9630346bdfbde4be851adeaa3b751fb0b3fb7508a",
+    "scores/summary.json": "c9409f5d05cf119a11713c8e7085f79e1d83e9e03fa31447820226668ae62fc4"
+  }
+}

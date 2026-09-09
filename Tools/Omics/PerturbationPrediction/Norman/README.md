@@ -8,6 +8,9 @@ scores all 131 held-out pairs. The [native composition predictor](NATIVE_COMPOSI
 now reproduces those predictions through verified condition-count training artifacts.
 The [unseen-target co-response experiment](UNSEEN_TARGETS.md) now evaluates all
 105 held-target folds; its descriptor model fails to improve on the mean baseline.
+A [second experiment using only untreated-cell correlations](CONTROL_DESCRIPTORS.md)
+also underperforms the mean baseline and loses descriptor coverage on five weakly
+expressed targets.
 
 The source is [scPerturb RNA release 1.4, Zenodo 13350497](https://zenodo.org/records/13350497),
 file `NormanWeissman2019_filtered.h5ad`, from

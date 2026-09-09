@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "descriptorReplayByteExact": true,
+  "predictionReplayByteExact": true,
+  "foldMutationInputsExact": 105,
+  "mutationRefitTargets": [
+    "AHR",
+    "KIAA1804",
+    "ZNF318"
+  ],
+  "controls": 11855,
+  "landmarks": 2000,
+  "supportedTargets": 97,
+  "landmarkTargetsExcluded": true,
+  "unsupportedTargets": [
+    {
+      "target": "C19orf26",
+      "status": "unresolved-symbol",
+      "detectedControlCells": null
+    },
+    {
+      "target": "C3orf72",
+      "status": "unresolved-symbol",
+      "detectedControlCells": null
+    },
+    {
+      "target": "FOXF1",
+      "status": "insufficient-control-expression",
+      "detectedControlCells": 8
+    },
+    {
+      "target": "HNF4A",
+      "status": "insufficient-control-expression",
+      "detectedControlCells": 7
+    },
+    {
+      "target": "HOXA13",
+      "status": "insufficient-control-expression",
+      "detectedControlCells": 3
+    },
+    {
+      "target": "KIAA1804",
+      "status": "unresolved-symbol",
+      "detectedControlCells": null
+    },
+    {
+      "target": "MAP2K6",
+      "status": "insufficient-control-expression",
+      "detectedControlCells": 5
+    },
+    {
+      "target": "PTPN13",
+      "status": "insufficient-control-expression",
+      "detectedControlCells": 0
+    }
+  ],
+  "predictionReceiptSHA256": "09e8dff1dff865c61f9d2fdce0c612126dd84a44a36c666a3e33120f47399841",
+  "descriptorReceiptSHA256": "f9df32f3192644f8cc2faa008fffa096f0b9c57f140361e4fed515631a55d40d",
+  "implementationSHA256": "d32e5b1eb1678b02dfc123af939110a42de86ce2b4e6ef10eb717ed3fc27c5b2"
+}
