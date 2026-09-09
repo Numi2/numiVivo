@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "arraysReplayedExactly": [
+    "noChange",
+    "meanSingleResponse",
+    "coResponseRidge",
+    "shuffledCoResponseRidge",
+    "targetIDs",
+    "featureIDs",
+    "baseline",
+    "trainingTop1000",
+    "supported"
+  ],
+  "folds": 105,
+  "supportedTargets": 102,
+  "excludedMutationInputFolds": 105,
+  "excludedMutationPredictionReplayTarget": "AHR",
+  "sourceConditionOrderExact": true,
+  "rejected": [
+    "negative",
+    "fractional",
+    "nonfinite",
+    "inexact",
+    "empty-control"
+  ],
+  "referenceSHA256": "ec22f61196cf51f7c1a62c681e4076bd9ea269429f1423dfd65e21c11a7ce8bf",
+  "predictionReceiptSHA256": "307db2b659f7b640fcc3ed89859189ab18649e583ee57f48d0e6b62a48f0d481",
+  "implementationSHA256": "ca57546761f3b8aab813374585eefe2dc6999e0195c50b2345e107dc64957db1"
+}

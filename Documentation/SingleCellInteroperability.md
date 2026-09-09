@@ -332,7 +332,11 @@ The complete development objective remains open:
    now selects verified condition counts, fits a frozen model and reproduces all
    786 query/method vectors exactly. Neither these baselines nor the donor models
    qualify genetic interactions.
-   Bayesian/mechanistic integration, unseen-target gene prediction, unseen
+   An [external unseen-target experiment](../Tools/Omics/PerturbationPrediction/Norman/UNSEEN_TARGETS.md)
+   now scores all 105 target folds, with descriptor coverage for 102. Its
+   co-response ridge model underperforms the mean-single baseline; this does not
+   qualify a native unseen-target predictor.
+   Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired
    RNA/ATAC and spatial assays remain.

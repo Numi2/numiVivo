@@ -1,0 +1,30 @@
+{
+  "baseRevision": "fdb18d787ea23d6788f419682fabaf78b12f771d",
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "cpu": "Apple M4",
+  "python": "3.12.14",
+  "packages": {
+    "numpy": "2.5.3",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "threadpoolctl": "3.6.0"
+  },
+  "scoreReplayExact": true,
+  "sourceFiles": {
+    "Tools/Omics/PerturbationPrediction/Norman/unseen_targets.py": "3c056ffc38b040bcb541ab4c19580ac01e0c9fdb96e9dcf8fbb442cfca2289f7",
+    "Tools/Omics/PerturbationPrediction/Norman/check_unseen_targets.py": "ca57546761f3b8aab813374585eefe2dc6999e0195c50b2345e107dc64957db1",
+    "Tools/Omics/PerturbationPrediction/Norman/combinations.py": "996c8431a389812ac20b6ac6cfeecbb86fa7a23910a3a746272fb4acee92bac5",
+    "Tools/Omics/PerturbationPrediction/Norman/UNSEEN_TARGETS_PROTOCOL.md": "0b3fab457983d347583453f393edfc799343cc568cd151c74ce1abef4b90b0d1"
+  },
+  "files": {
+    "checks.json": "42eca241c47237abb38d4cf34fc6f3033235c208342983006f295d018c0558e5",
+    "first.log": "82c1ef5722fad2c51b9bd229872cf0c2084585c85aa5a78a3ae3c007d9c05b19",
+    "folds.json": "425c8da4f780030cc0787e057106c928102c9bc33aea2890d4eb447f3a5c8032",
+    "predictions.npz": "d5e4e0e99eb0d560330c1f991b9846607d9d842aba095712efb95f31f3ab936f",
+    "receipt.json": "307db2b659f7b640fcc3ed89859189ab18649e583ee57f48d0e6b62a48f0d481",
+    "repeat.log": "c9957c034e0a062bbc6faf55a9cf872315d2651b78fa3df8099d7b996908eab8",
+    "scores/receipt.json": "ed73e9144d0d086a7302462642f34aef617447b00f73157c4caa39f373b28703",
+    "scores/results.json": "4bb25f1d695aa02ad117f87665e0cd80b4e5e28510fbf177847d9d2ef3039062",
+    "scores/summary.json": "b6f41f84fdf161e3eadb48877cd85a4a4fafaac6f257e343da531960aace7f42"
+  }
+}

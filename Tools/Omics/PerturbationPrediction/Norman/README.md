@@ -6,6 +6,8 @@ prediction benchmark; it does not establish a fitted unseen-perturbation model.
 The subsequent [external combination baseline qualification](COMBINATIONS.md)
 scores all 131 held-out pairs. The [native composition predictor](NATIVE_COMPOSITION.md)
 now reproduces those predictions through verified condition-count training artifacts.
+The [unseen-target co-response experiment](UNSEEN_TARGETS.md) now evaluates all
+105 held-target folds; its descriptor model fails to improve on the mean baseline.
 
 The source is [scPerturb RNA release 1.4, Zenodo 13350497](https://zenodo.org/records/13350497),
 file `NormanWeissman2019_filtered.h5ad`, from
