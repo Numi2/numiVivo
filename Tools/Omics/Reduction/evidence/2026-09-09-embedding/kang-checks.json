@@ -1,0 +1,145 @@
+{
+  "status": "passed",
+  "checks": [
+    "count publication",
+    "reduction publication",
+    "native reconstruction",
+    "report export",
+    "deterministic receipt",
+    "controlled unconverged rejection without receipt",
+    "controlled neighbor work-budget rejection without receipt",
+    "controlled unconverged clustering rejection without receipt",
+    "controlled embedding work-budget rejection without receipt"
+  ],
+  "binarySHA256": "0f68d25b01621d538cf427ba080958447c2cc6e355b75d4b65caeaf4ab3613c8",
+  "commands": [
+    {
+      "arguments": [
+        "singlecell-run",
+        "/Users/home/numivivo-kang-native-nb-qualified-20260909/imported/manifest.json",
+        "--store",
+        "/Users/home/numivivo-kang-embedding-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-embedding-product-20260909/counts.json"
+      ],
+      "exitCode": 0,
+      "seconds": 2.9754674998112023,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-embedding-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-embedding-product-20260909/plan.json",
+        "--store",
+        "/Users/home/numivivo-kang-embedding-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-embedding-product-20260909/analysis.json"
+      ],
+      "exitCode": 0,
+      "seconds": 5.533223167061806,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analysis-verify",
+        "/Users/home/numivivo-kang-embedding-product-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-kang-embedding-product-20260909/store"
+      ],
+      "exitCode": 0,
+      "seconds": 5.450645791832358,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analysis-export",
+        "/Users/home/numivivo-kang-embedding-product-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-kang-embedding-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-embedding-product-20260909/report.json"
+      ],
+      "exitCode": 0,
+      "seconds": 7.071557458024472,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-embedding-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-embedding-product-20260909/plan.json",
+        "--store",
+        "/Users/home/numivivo-kang-embedding-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-embedding-product-20260909/repeat.json"
+      ],
+      "exitCode": 0,
+      "seconds": 5.9553455407731235,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-embedding-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-embedding-product-20260909/insufficient-basis.json",
+        "--store",
+        "/Users/home/numivivo-kang-embedding-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-embedding-product-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.4896755828522146,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-embedding-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-embedding-product-20260909/insufficient-neighbor-budget.json",
+        "--store",
+        "/Users/home/numivivo-kang-embedding-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-embedding-product-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.6454966249875724,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-embedding-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-embedding-product-20260909/insufficient-clustering-sweeps.json",
+        "--store",
+        "/Users/home/numivivo-kang-embedding-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-embedding-product-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.700398708228022,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-embedding-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-embedding-product-20260909/insufficient-embedding-budget.json",
+        "--store",
+        "/Users/home/numivivo-kang-embedding-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-embedding-product-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.7082561659626663,
+      "expectedSuccess": false
+    }
+  ],
+  "qualification": "Software reconstruction and numerical convergence; not biological qualification"
+}

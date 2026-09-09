@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "reportSHA256": "63ab4893b44ab6bdd5fbae1af2af04558d557d6e0878c54c78fe160ff8df77d0",
+  "cells": 2651,
+  "dimensions": 2,
+  "epochs": 500,
+  "evaluationNeighbors": 15,
+  "curveA": 1.5769436134595154,
+  "curveB": 0.8950607192931058,
+  "curveSquaredError": 0.07863531806579335,
+  "attractiveUpdates": 8739624,
+  "negativeSamples": 43655516,
+  "initial": {
+    "trustworthiness": 0.8434165735109292,
+    "continuity": 0.9013858530740245,
+    "neighborRecall": 0.06322142587702753
+  },
+  "native": {
+    "trustworthiness": 0.9010569037539992,
+    "continuity": 0.9296467966961913,
+    "neighborRecall": 0.19844083993461586
+  },
+  "references": [
+    {
+      "seed": 7,
+      "trustworthiness": 0.902273162669343,
+      "continuity": 0.9297433494841555,
+      "neighborRecall": 0.20032692065887087
+    },
+    {
+      "seed": 19,
+      "trustworthiness": 0.9027626058803232,
+      "continuity": 0.9288406048395818,
+      "neighborRecall": 0.20324405884571858
+    },
+    {
+      "seed": 41,
+      "trustworthiness": 0.9032279252480468,
+      "continuity": 0.9296732554136067,
+      "neighborRecall": 0.19957248836916885
+    }
+  ],
+  "qualification": "Numerical and descriptive neighborhood preservation checks; not optimizer convergence, density preservation, biological labels or donor integration",
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "umap-learn": "0.5.12"
+  }
+}

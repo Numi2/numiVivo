@@ -1,0 +1,14 @@
+{
+  "testedBase": "d621a689ab0a6c65957efe49656cdaff23a0055a",
+  "publicationBase": "dd3bb60b0326317712e771902018584ea7efb3ce",
+  "upstreamChanges": [
+    ".github/workflows/alphagenome-adapters.yml",
+    "Documentation/Design/ALPHAGENOME_ATLAS.md",
+    "ReferenceAdapters/AlphaGenomeAtlas/atlas_bridge.py",
+    "ReferenceAdapters/AlphaGenomeAtlas/requirements.txt",
+    "ReferenceAdapters/AlphaGenomeAtlas/run_pvacsplice.py",
+    "ReferenceAdapters/AlphaGenomeAtlas/test_atlas_bridge.py",
+    "ReferenceAdapters/AlphaGenomeAtlas/test_splice_runner.py"
+  ],
+  "qualification": "Upstream changes contain no Swift, package, Omics or artifact-owner inputs. Native compilation inputs and all tested embedding sources are unchanged."
+}

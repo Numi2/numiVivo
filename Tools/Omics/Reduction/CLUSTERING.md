@@ -56,9 +56,10 @@ python check_clustering.py --report /new/native/report.json --out /new/reference
 The real-data scope is the complete previously qualified Kang B-cell cohort
 (2,651 cells) and PBMC3k (2,700 cells), using the default 20-component PCA and
 15-neighbor graph. Count provenance, graph checks and resident/pair-work bounds
-remain those of the existing benchmark and reduction owners. Native UMAP
-coordinate optimization, stronger partition stability/biological evaluation,
-Leiden refinement, donor-aware integration and out-of-core execution remain open.
+remain those of the existing benchmark and reduction owners.
+[Native UMAP coordinates](EMBEDDING.md) now have separate reference checks.
+Stronger partition stability/biological evaluation, Leiden refinement, donor-aware
+integration and out-of-core execution remain open.
 
 The seeded visit order is tied to the retained graph row order. Permuting rows
 can lead to another local optimum; cell identities must be used when comparing

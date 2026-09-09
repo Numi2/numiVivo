@@ -274,9 +274,11 @@ The complete development objective remains open:
    Sparse multilevel Louvain now has independent objective, connectivity and
    three-seed heuristic reference comparisons on both datasets;
    [clustering limits](../Tools/Omics/Reduction/CLUSTERING.md) remain explicit.
-   Native UMAP coordinate optimization, partition stability and biological
-   validation remain. Never densify cells × genes; resident limits and an
-   explicit pair-work budget still apply.
+   Native fixed-epoch UMAP-compatible optimization now has curve, gradient,
+   schedule and real-data neighborhood-preservation checks;
+   [embedding limits](../Tools/Omics/Reduction/EMBEDDING.md) remain explicit.
+   Partition/embedding stability and biological validation remain. Never densify
+   cells × genes; resident, pair-work and embedding-update limits still apply.
 5. **Batch integration:** donor/batch-aware methods and biological-signal
    preservation evaluation remain.
 6. **Annotation:** deterministic marker/program scoring with provenance, then

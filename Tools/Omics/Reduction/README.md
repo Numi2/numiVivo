@@ -83,3 +83,5 @@ for the intentional insufficient-basis rejections.
 For the next stage, see [exact neighbors and fuzzy connectivity](NEIGHBORS.md).
 
 [Multilevel Louvain clustering](CLUSTERING.md) consumes the verified sparse graph.
+
+[Native UMAP-compatible coordinates](EMBEDDING.md) optimize the same sparse graph.

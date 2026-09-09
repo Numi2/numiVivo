@@ -50,9 +50,10 @@ python check_neighbors.py --report /new/native/report.json --out /new/reference.
 Real-data comparisons use all Kang B cells (2,651 cells; 20 PCA dimensions) and
 PBMC3k (2,700 cells; 20 dimensions), with 15 neighbors including self. Original
 count and PCA qualification remain in the benchmark and reduction evidence.
-The graph tests are numerical evidence, not biological validation. Native UMAP
-coordinate optimization, clustering, batch integration, approximate search and
-out-of-core execution remain separate open requirements.
+The graph tests are numerical evidence, not biological validation.
+[Louvain clustering](CLUSTERING.md) and [native UMAP coordinates](EMBEDDING.md)
+now have separate reference checks. Batch integration, approximate search and
+out-of-core execution remain open requirements.
 
 The reference algorithm is documented in the installed, version-pinned
 `umap.umap_` functions `smooth_knn_dist`, `compute_membership_strengths` and
