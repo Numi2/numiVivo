@@ -1,0 +1,80 @@
+name: HCC1395 reference execution
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/hcc1395-reference-run.yml
+      - Tools/Neoantigen/HCC1395/reference_*.py
+permissions:
+  contents: read
+concurrency:
+  group: hcc1395-reference-execution-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  resolve-real-inputs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Resolve official public data without substituting test fixtures
+        run: |
+          mkdir -p evidence
+          python3 -u - <<'PY' | tee evidence/source-resolution.log
+          import concurrent.futures, gzip, hashlib, io, json, re, urllib.parse, urllib.request, zipfile
+          headers={'User-Agent':'NumiVivo-HCC1395-reference-qualification'}
+          bases=['https://genomedata.org/pmbio-workshop/results/','https://genomedata.org/pmbio-workshop/references/','https://genomedata.org/hcc1395/results/','https://genomedata.org/hcc1395/references/']
+          seen=set(); queue=bases; entries=[]
+          def page(url):
+            try:
+              with urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=20) as r:
+                data=r.read(512*1024)
+              links=re.findall(r'href="([^"]+)"',data.decode())
+              return url, links, None
+            except Exception as e: return url, [], type(e).__name__+': '+str(e)[:180]
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+            for depth in range(5):
+              current=[u for u in queue if u not in seen][:60]; queue=[]
+              if not current: break
+              seen.update(current)
+              for url,links,error in pool.map(page,current):
+                if error: print(json.dumps({'url':url,'error':error}));continue
+                for link in links:
+                  child=urllib.parse.urljoin(url,link)
+                  if not child.startswith(url) or child==url or '?' in child or '#' in child: continue
+                  if link.endswith('/'):
+                    if child not in seen: queue.append(child)
+                  else: entries.append(child)
+                print(json.dumps({'directory':url,'links':[x for x in links if not x.startswith('?')][:100]}))
+          candidates=sorted(set(u for u in entries if any(t in u.lower() for t in ['bam','cram','rna','gtf','fa.','fasta','vcf','optitype'])))
+          def head(url):
+            try:
+              with urllib.request.urlopen(urllib.request.Request(url,headers=headers,method='HEAD'),timeout=15) as r:
+                return {'url':url,'bytes':r.headers.get('Content-Length'),'modified':r.headers.get('Last-Modified')}
+            except Exception as e: return {'url':url,'error':type(e).__name__}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+            files=list(pool.map(head,candidates[:200]))
+          open('evidence/public-files.json','w').write(json.dumps(files,indent=2))
+          for f in files: print('PUBLIC_FILE '+json.dumps(f))
+          url='https://raw.githubusercontent.com/griffithlab/pVACtools_Intro_Course/e8219708889092839d60ea13af31b002812d47f5/HCC1395_inputs.zip'
+          with urllib.request.urlopen(url,timeout=60) as r: data=r.read(40*1024*1024)
+          assert hashlib.sha256(data).hexdigest()=='5454d435af43804bee111dc085c599a3e223445cedc1c52768c6e98e981e37eb'
+          z=zipfile.ZipFile(io.BytesIO(data))
+          print('HLA_TYPING '+z.read('HCC1395_inputs/optitype_normal_result.tsv').decode())
+          vcf=gzip.decompress(z.read('HCC1395_inputs/annotated.expression.vcf.gz')).decode()
+          for line in vcf.splitlines():
+            if line.startswith('#CHROM') or line.startswith('##reference') or line.startswith('##VEP') or line.startswith('##source'): print('VCF_METADATA '+line[:2000])
+          for line in vcf.splitlines():
+            if line.startswith('chr6\t') or line.startswith('chr17\t'):
+              cols=line.split('\t');print('VCF_VARIANT '+json.dumps({'chr':cols[0],'pos':cols[1],'ref':cols[3],'alt':cols[4]}))
+              if int(cols[1])>10000000: break
+          rows=z.read('HCC1395_inputs/HCC1395.splice_junctions.tsv').decode().splitlines()
+          print('REFERENCE_JUNCTIONS_6_17')
+          for row in rows:
+            if row.startswith('chr6\t') or row.startswith('chr17\t'): print(row)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hcc1395-source-resolution
+          path: evidence/
+          retention-days: 7
