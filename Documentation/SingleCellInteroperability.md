@@ -325,8 +325,12 @@ The complete development objective remains open:
    with reconstruction and real-data numerical agreement on all eleven folds.
    The [complete Norman filtered release](../Tools/Omics/PerturbationPrediction/Norman/README.md)
    supplies 105 single-target and 131 paired-target conditions with explicit
-   unseen-combination and unseen-target splits; model qualification remains next.
-   Bayesian/mechanistic integration, unseen perturbation identity, unseen
+   unseen-combination and unseen-target splits.
+   [External composition baselines](../Tools/Omics/PerturbationPrediction/Norman/COMBINATIONS.md)
+   now score every held-out pair with sealed outcomes, exact frozen replay and
+   a target-shuffled control. A native composition predictor remains to implement;
+   neither these baselines nor the donor models qualify genetic interactions.
+   Bayesian/mechanistic integration, unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired
    RNA/ATAC and spatial assays remain.

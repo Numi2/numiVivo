@@ -3,6 +3,8 @@
 This extends the native streaming input path to the complete published
 **filtered** scPerturb Norman 2019 release. It prepares the next perturbation
 prediction benchmark; it does not establish a fitted unseen-perturbation model.
+The subsequent [external combination baseline qualification](COMBINATIONS.md)
+now scores all 131 held-out pairs; a native composition predictor remains next.
 
 The source is [scPerturb RNA release 1.4, Zenodo 13350497](https://zenodo.org/records/13350497),
 file `NormanWeissman2019_filtered.h5ad`, from
@@ -93,7 +95,8 @@ interruption history are retained.
 Native timing and peak memory are recorded in `performance.json`. The resident
 metadata/aggregate/report costs remain significant; these measurements establish
 this full 111,445-cell input, not million-cell execution or an end-to-end speed
-advantage over scverse. Unseen-perturbation prediction is still unqualified.
+advantage over scverse. This input qualification alone does not qualify prediction;
+the subsequent external baseline evidence is linked above.
 
 ## Reproduce
 

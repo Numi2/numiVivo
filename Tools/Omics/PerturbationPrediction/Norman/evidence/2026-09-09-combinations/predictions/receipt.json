@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "trainingSHA256": "f931c5e510994c9a6391413f0d8f458301033268c1ca90f714460ff018f6d77e",
+  "querySHA256": "054bfb04bb52e469847b7db8dc1801ba821b3500b696c3987ee1d08a5a964cae",
+  "protocolSHA256": "c334ddcdcca2c2f285090d153ae155e703bf7a1c7c399736b9bf6f2cb7218c22",
+  "implementationSHA256": "996c8431a389812ac20b6ac6cfeecbb86fa7a23910a3a746272fb4acee92bac5",
+  "independentLinearMaxAbsoluteError": 0.0,
+  "frozenReloadExact": true,
+  "targetOrderExact": true,
+  "packages": {
+    "numpy": "2.5.3",
+    "scikit-learn": "1.9.0"
+  },
+  "files": {
+    "additiveCPMResponse.npz": "fa375436945d04ab1ad93c988fe3ff1588e923a38a24fdcd91f887ef7223b0cd",
+    "additiveLogResponse.npz": "05ba4de80dbff507d5ff866068c6586d29ebbb542217c26afc6bd5ee6616915a",
+    "diagnostics.json": "eacebe64f8234479d18f53ea5c8743d10d6ff36880258969c660a1cd7e9bb1b0",
+    "meanConstituentLogResponse.npz": "acc5a28ab4426ae85d232505ba84a330b3edb746269ffa4c93a993bc913e81c2",
+    "meanSingleResponse.npz": "3da7cc44d65c0f41d4a6d1518336b7c380ce19e0f8645b4bc51c3e6ab060e917",
+    "model.npz": "0bbee703c7a384003c8a5097306d9d908ed6e66dc949e17e67b43a3b532ee1d4",
+    "noChange.npz": "8bdcbb0baea9f2724d967fd5071f609f0317aa64c55d360ab71cfdc0ea54afab",
+    "panels.npz": "f9c77643682928b51cb42282adfc9213281b04c2669f958772415996e3a5300c",
+    "queries.json": "054bfb04bb52e469847b7db8dc1801ba821b3500b696c3987ee1d08a5a964cae",
+    "shuffledAdditiveLogResponse.npz": "303562760cd615bc99d78d1d1e9cd404d6faf0f17efb83c6d8d60afbbbd799e4"
+  }
+}
