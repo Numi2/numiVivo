@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "sourceURL": "https://cf.10xgenomics.com/samples/cell-arc/2.0.0/pbmc_granulocyte_sorted_3k/pbmc_granulocyte_sorted_3k_filtered_feature_bc_matrix.h5",
+  "sourcePage": "https://www.10xgenomics.com/datasets/pbmc-from-a-healthy-donor-granulocytes-removed-through-cell-sorting-3-k-1-standard-2-0-0",
+  "sourceSHA256": "5fbff5a4d85e0df345f6502e966ec787a8a4c429fd6b88a8772c43fd915cf3ff",
+  "binarySHA256": "8006cd81bd78d7e1c1644a8b790552f7338767c8b0db59d2597c12c2a9beabce",
+  "checkerSHA256": "1fd1cf86eeca32f80046dfccec3e456179618f83290fb61bbf2b56437b646220",
+  "planSHA256": "1629896264b1085c2bea51a8aa6f7118bba953608516b6899772bdad7bfeed0b",
+  "independentH5MUSHA256": "22bedebde10ad6c481c6d54f7a87b88c67c5f401753f07a5d3464658b489efbc",
+  "independentDatasetBytesExact": true,
+  "repeatedBundleBytesExact": true,
+  "allSourceCellsAndFeaturesRetained": true,
+  "assays": [
+    {
+      "assay": "rna",
+      "unit": "umiCount",
+      "cells": 2711,
+      "features": 36601,
+      "nonzeros": 5218473,
+      "totalCounts": 11786194,
+      "allCoordinatesExact": true,
+      "allFeatureIDsExact": true,
+      "allPeakIntervalsExact": false
+    },
+    {
+      "assay": "atac",
+      "unit": "cutSiteCount",
+      "cells": 2711,
+      "features": 98319,
+      "nonzeros": 19292713,
+      "totalCounts": 48245242,
+      "allCoordinatesExact": true,
+      "allFeatureIDsExact": true,
+      "allPeakIntervalsExact": true
+    }
+  ],
+  "commands": 10,
+  "expectedRejections": 5,
+  "measuredPeakResidentBytes": 4985749504,
+  "scope": "Complete-source count, pairing and interval interchange; not biological ATAC/joint-model qualification",
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "packages": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "anndata": "0.13.3.post0",
+    "mudata": "0.4.1",
+    "scanpy": "1.12.4",
+    "h5py": "3.16.0"
+  }
+}

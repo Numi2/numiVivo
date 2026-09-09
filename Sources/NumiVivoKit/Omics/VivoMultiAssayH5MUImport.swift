@@ -122,7 +122,7 @@ public enum VivoMultiAssayH5MUImport {
                 guard a.genomeAssembly != nil, a.countUnit != .umiCount,
                       a.peakIDConvention == "contig:start-end:zero-based-half-open" else { throw VivoOmicsError.invalid("H5MU peak identity convention/assembly/unit required") }
             } else {
-                guard a.peakIDConvention == nil, a.countUnit != .fragmentCount else { throw VivoOmicsError.invalid("H5MU non-peak mapping has peak convention/units") }
+                guard a.peakIDConvention == nil, a.countUnit != .fragmentCount, a.countUnit != .cutSiteCount else { throw VivoOmicsError.invalid("H5MU non-peak mapping has peak convention/units") }
             }
         }
         if let spatial = plan.spatial {

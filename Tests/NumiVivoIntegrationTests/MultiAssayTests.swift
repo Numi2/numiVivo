@@ -44,10 +44,29 @@ import Testing
         }
         let interval = VivoGenomicInterval(contig: "chr1", start: 10, end: 20)
         try make("GRCh38", .fragmentCount, interval).validate()
+        try make("GRCh38", .cutSiteCount, interval).validate()
         for d in [make(nil, .fragmentCount, interval), make("GRCh38", .umiCount, interval), make("GRCh38", .fragmentCount, nil),
                   make("GRCh38", .fragmentCount, .init(contig: "chr1", start: 20, end: 10))] {
             #expect(throws: (any Error).self) { try d.validate() }
         }
+    }
+    @Test func cutSiteUnitsCannotBeAppliedToRNA() throws {
+        var value = try #require(JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(Self.fixture())) as? [String: Any])
+        var assays = try #require(value["assays"] as? [[String: Any]])
+        assays[0]["countUnit"] = "cutSiteCount"; value["assays"] = assays
+        let data = try VivoCanonicalJSON.decode(VivoMultiAssayDataset.self, from: JSONSerialization.data(withJSONObject: value))
+        #expect(throws: (any Error).self) { try data.validate() }
+        let plan = VivoTenXMultiAssayPlan(schemaVersion: 1, id: "unit", evidence: .synthetic,
+            sourceDescription: "Synthetic wrong unit", sample: Self.fixture().samples[0],
+            assays: [.init(featureType: "Gene Expression", id: "rna", kind: .rna,
+                featureNamespace: "genes", countUnit: .cutSiteCount, genomeAssembly: nil)])
+        #expect(throws: (any Error).self) { try VivoMultiAssayTenX.validate(plan) }
+        let base = MultiAssayH5MUImportTests.plan()
+        var object = try #require(JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(base)) as? [String: Any])
+        var mappings = try #require(object["assays"] as? [[String: Any]])
+        mappings[0]["countUnit"] = "cutSiteCount"; object["assays"] = mappings
+        let mapped = try VivoCanonicalJSON.decode(VivoH5MUMultiAssayPlan.self, from: JSONSerialization.data(withJSONObject: object))
+        #expect(throws: (any Error).self) { try VivoMultiAssayH5MUImport.validate(mapped) }
     }
     @Test(.enabled(if: ProcessInfo.processInfo.environment["NUMIVIVO_TEST_HDF5"] == "1")) func nativeH5MUMapsPreservePartialRowsAndUInt64() throws {
         let path = FileManager.default.temporaryDirectory.appendingPathComponent("multiassay-test-" + UUID().uuidString + ".h5mu")

@@ -345,7 +345,10 @@ The complete development objective remains open:
    assays match h5py/SciPy, Scanpy and MuData; native H5MU export preserves missing
    assay rows. Native H5MU import now preserves explicit modality maps and selected CSR/CSC/dense
    count layers, with the full real CITE-seq dataset matching across native and
-   MuData-written sources. Real ATAC/paired RNA-ATAC/spatial qualification, continuous
+   MuData-written sources. The [complete real paired RNA/ATAC benchmark](../Tools/Omics/Multimodal/MULTIOME.md)
+   now preserves all 2,711 nuclei, 36,601 genes and 98,319 peaks, with explicit
+   cut-site units and exact agreement across native 10x and independent MuData
+   imports. Biological ATAC/joint-model and real spatial qualification, continuous
    measurements and joint multimodal analysis remain open.
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
    selected-entry PCA now pass full Baron and Hagai comparisons against Scanpy;

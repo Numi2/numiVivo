@@ -1,0 +1,66 @@
+{
+  "status": "passed",
+  "baseRevision": "37602be92d0a019e2fb3637ed868fb9cefb17735",
+  "productSHA256": "8006cd81bd78d7e1c1644a8b790552f7338767c8b0db59d2597c12c2a9beabce",
+  "previousProductSHA256": "db41c240e1a3034d37f2782236b00e2806fcb2cef39f9a8078701ebd6c64ddbe",
+  "sourceAndTestBytesMatchedMacMini": true,
+  "sourceAndTestSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoMultiAssay.swift": "327a9114d5173e80e306f1d3da79ce1851dd352bb2227ebf3d59849a335f001e",
+    "Sources/NumiVivoKit/Omics/VivoMultiAssayTenX.swift": "5a62554ec5e1b3326f3ea42b815a90755d645642671b765835c0ed68716de819",
+    "Sources/NumiVivoKit/Omics/VivoMultiAssayH5MUImport.swift": "f42561c60599b8a4644b8d54b00f2909be1f3ac9ae70fc635cf7761dd6aa378e",
+    "Tests/NumiVivoIntegrationTests/MultiAssayTests.swift": "d52bf41d8f7f8e3a8fa1d3a518eaa812be486f164b70495f1798c8a63f0ea931"
+  },
+  "swiftTests": 62,
+  "swiftSuites": 17,
+  "nativeHDF5Enabled": true,
+  "scope": "Complete-source count, pairing and interval interchange; not biological ATAC/joint-model qualification",
+  "realDataProductCommands": 10,
+  "expectedRejections": 5,
+  "measuredPeakResidentBytes": 4985749504,
+  "history": [
+    "Previous product rejected the correct cutSiteCount mapping. Added the explicit unit and non-accessibility rejection.",
+    "Complete source has 24511186 entries; resident cap raised from 20000000 to 32000000 with measured memory. No out-of-core claim."
+  ],
+  "archiveRestorationSHA256": {
+    "original.h5": "5fbff5a4d85e0df345f6502e966ec787a8a4c429fd6b88a8772c43fd915cf3ff",
+    "dataset.json": "8a4bae170d6b0708a3d565a0c263f6bf3e0acd12a6b5b56da3d4a47fad5b264a",
+    "dataset.h5mu": "71c351e1df893fb3996ec32b2f85d49769e4e72d1594c5039fa9c0d235792f1b"
+  },
+  "independentSourceSHA256": "22bedebde10ad6c481c6d54f7a87b88c67c5f401753f07a5d3464658b489efbc",
+  "scripts": {
+    "Tools/Omics/Multimodal/check_multiome.py": "1fd1cf86eeca32f80046dfccec3e456179618f83290fb61bbf2b56437b646220",
+    "Tools/Omics/Multimodal/pbmc3k-multiome-plan.json": "1629896264b1085c2bea51a8aa6f7118bba953608516b6899772bdad7bfeed0b"
+  },
+  "archiveSHA256": {
+    "assays.json": "bb71e1b9604298e3410b49d3059077b96dca5e9fe45023a18dc3eecc09e3c690",
+    "bundle/dataset.h5mu.gz": "7fd40b4eed097d5ccd92e0c078b48cfd74e64faae8776e9c3b4e5a57660e13b6",
+    "bundle/dataset.json.gz": "c40fecfb208d2d955d8773f1c99f14f449cb0460bcd398f413481a9069f0d8ba",
+    "bundle/original.h5": "5fbff5a4d85e0df345f6502e966ec787a8a4c429fd6b88a8772c43fd915cf3ff",
+    "bundle/plan.json": "7271513e90f91a8517a82104730680895d604aeda2485b7feff16ef42ad60e9e",
+    "bundle/receipt.json": "aba62d1aebece768856b7385c4c568c84b254080cd52daf72bda035926635c4e",
+    "checks.json": "5e1b79130c669c01638d18301d6b76a1f76c4518e7c4971333eecce023b2b09d",
+    "commands.json": "0eb78bf525a4faa42d1e96f13dc3c5feb69c38d92df04c0d592cb7c446994132",
+    "h5mu/plan.json": "10ff742fdbf2fa919b96859a583cdb377de4e09213b1aaf5dab9bba9a365b763",
+    "h5mu/receipt.json": "6b02c1dca617d157f25c74a1e48549d9ed84d598bab33d99a8a35f095e6bd014",
+    "h5mu-plan.json": "a6cae65b44345740aa27e346683df194757d447a0f0932c4ced9eb036a0abb12",
+    "independent.h5mu.gz": "22eca0d940e4b799f28a48ed5c39374ced4d2a6090705bdb479dae4e2b8d7a24",
+    "logs/assembly-mismatch.log.gz": "3b884f3d82f426fed977bd4b723def9e5bff7c31155e989a4f46b1fbc0b95ad2",
+    "logs/cutsite-rna.log.gz": "8fc3c0daf28dec7483104aa775ed7da5902e937f5640c50340e7e179161b5adc",
+    "logs/entry-budget.log.gz": "21b4be467959d7dc5ed0d9ed9d5f25027e2214a46b18315b2bc2d7a29490efcd",
+    "logs/independent-h5mu-import.log.gz": "5ec0ecf0a3e8369e5553db8345735c0aa3793d3d7e95db4d8abdb321583feb74",
+    "logs/independent-h5mu-verify.log.gz": "668ae01e11ae5eb9d0988d43350648335444b3058c2cd1dc9357377f000ad8ce",
+    "logs/missing-atac.log.gz": "5fdf08bba0e4d512eb8bef7e7fa846a6a5e8b230b5a2d340639faabd672ac443",
+    "logs/numivivo-multiome-check-20260909.log.gz": "17588f76a61ed9cf823d328e189f04d4cb4c362914461d1d5992bda4558175e3",
+    "logs/numivivo-multiome-release-20260909.log.gz": "8ada967731b5bc09a79ea6db2c36a200c9b00cd0a1e4336a04c10247030c44ae",
+    "logs/numivivo-multiome-tests-20260909.log.gz": "3cb2f75d939ca943f634025b95ad5a95cc8154a50b8371b030ae64d3c9135304",
+    "logs/previous-product-unit-rejection.log": "ba40a236929f9aaf63fe99a2c0c460693a4f96a9841aac881097ada863ecd7d5",
+    "logs/tenx-import.log.gz": "1f523cbf90b35dc119e4b89358bb3b03779ffea2a7c20da00fe46312f0ed5062",
+    "logs/tenx-repeat.log.gz": "f5fe786da01ce72ec4b6c782943847c2477128477487203bb72eb003b168d48f",
+    "logs/tenx-verify.log.gz": "5d9537eb60778eeb47b5b996d0d54109eaa2ad2905005b54d68ab848994e5200",
+    "logs/unknown-unit.log.gz": "49a02877e6b5bbd21a8150c18becb0bc59e34614a9ea0e90ebf8d28b42b454ac",
+    "plans/assembly-mismatch.json": "045f68f66cd5d4b0a3046290011d8200813fee92a84e17396feb4ae9a39ee6e5",
+    "plans/cutsite-rna.json": "1ab8c14fb43202039677887fb92e92f80ac3431e37893484514b5a97d7f40a79",
+    "plans/missing-atac.json": "ef90a74ccad68ca855ba6e82aa2d968723a912ced20b98dc069ead30cb8f99aa",
+    "plans/unknown-unit.json": "3c6f07ddec82cd8d73059211a7e3c158e2bfb88782ca0e47310b23f06073ba59"
+  }
+}

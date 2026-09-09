@@ -3,7 +3,7 @@ import Foundation
 /// Independent feature spaces share observation identities without padding missing
 /// measurements with biological zeros. Count matrices retain exact UInt64 values.
 public enum VivoAssayKind: String, Codable, Sendable { case rna, antibodyCapture, chromatinAccessibility, guideCapture }
-public enum VivoAssayCountUnit: String, Codable, Sendable { case umiCount, readCount, fragmentCount }
+public enum VivoAssayCountUnit: String, Codable, Sendable { case umiCount, readCount, fragmentCount, cutSiteCount }
 public enum VivoObservationKind: String, Codable, Sendable { case cell, spot }
 public enum VivoSpatialUnit: String, Codable, Sendable { case micrometer, pixel }
 
@@ -232,7 +232,7 @@ public struct VivoTenXMultiAssayPlan: Codable, Sendable, Equatable {
 extension VivoMultiAssayDataset {
     public static var limits: VivoOmicsLimits {
         var l = VivoOmicsLimits()
-        l.maximumFeatures = 200_000; l.maximumNonzeros = 20_000_000
+        l.maximumFeatures = 200_000; l.maximumNonzeros = 32_000_000
         l.maximumInputBytes = 1_073_741_824
         return l
     }
@@ -270,9 +270,9 @@ extension VivoMultiAssayDataset {
             remaining -= a.matrix.counts.count; remainingFeatures -= a.features.count
             try a.matrix.validate(limits: limits)
             if a.kind == .chromatinAccessibility {
-                guard a.genomeAssembly != nil, a.countUnit != .umiCount else { throw VivoOmicsError.invalid("accessibility requires assembly and fragment/read units") }
-            } else if a.countUnit == .fragmentCount {
-                throw VivoOmicsError.invalid("fragment units require an accessibility assay")
+                guard a.genomeAssembly != nil, a.countUnit != .umiCount else { throw VivoOmicsError.invalid("accessibility requires assembly and fragment/read/cut-site units") }
+            } else if (a.countUnit == .fragmentCount || a.countUnit == .cutSiteCount) {
+                throw VivoOmicsError.invalid("fragment/cut-site units require an accessibility assay")
             }
             var featureIDs = Set<String>()
             for f in a.features {

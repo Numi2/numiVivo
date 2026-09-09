@@ -1,0 +1,144 @@
+[
+  {
+    "label": "tenx-import",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-multiome-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc3k-multiome-plan.json",
+      "--output",
+      "/Users/home/numivivo-multiome-check-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 13.813278750050813,
+    "maximumResidentBytes": 3291955200
+  },
+  {
+    "label": "tenx-verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-multiome-check-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 13.961570583283901,
+    "maximumResidentBytes": 3954229248
+  },
+  {
+    "label": "tenx-repeat",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-multiome-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc3k-multiome-plan.json",
+      "--output",
+      "/Users/home/numivivo-multiome-check-20260909/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 12.732611333020031,
+    "maximumResidentBytes": 3291889664
+  },
+  {
+    "label": "independent-h5mu-import",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-multiome-check-20260909/independent.h5mu",
+      "--plan",
+      "/Users/home/numivivo-multiome-check-20260909/h5mu-plan.json",
+      "--output",
+      "/Users/home/numivivo-multiome-check-20260909/h5mu"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 17.652078582905233,
+    "maximumResidentBytes": 3789684736
+  },
+  {
+    "label": "independent-h5mu-verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-multiome-check-20260909/h5mu"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 18.71240000007674,
+    "maximumResidentBytes": 4985749504
+  },
+  {
+    "label": "missing-atac",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-multiome-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-multiome-check-20260909/missing-atac.json",
+      "--output",
+      "/Users/home/numivivo-multiome-check-20260909/missing-atac"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false,
+    "seconds": 0.17104533268138766,
+    "maximumResidentBytes": 139345920
+  },
+  {
+    "label": "cutsite-rna",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-multiome-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-multiome-check-20260909/cutsite-rna.json",
+      "--output",
+      "/Users/home/numivivo-multiome-check-20260909/cutsite-rna"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false,
+    "seconds": 0.03280699998140335,
+    "maximumResidentBytes": 62160896
+  },
+  {
+    "label": "unknown-unit",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-multiome-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-multiome-check-20260909/unknown-unit.json",
+      "--output",
+      "/Users/home/numivivo-multiome-check-20260909/unknown-unit"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false,
+    "seconds": 0.009918791707605124,
+    "maximumResidentBytes": 9584640
+  },
+  {
+    "label": "assembly-mismatch",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-multiome-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-multiome-check-20260909/assembly-mismatch.json",
+      "--output",
+      "/Users/home/numivivo-multiome-check-20260909/assembly-mismatch"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false,
+    "seconds": 0.12630991684272885,
+    "maximumResidentBytes": 145096704
+  },
+  {
+    "label": "entry-budget",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-multiome-check-20260909/oversized.h5",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc3k-multiome-plan.json",
+      "--output",
+      "/Users/home/numivivo-multiome-check-20260909/oversized"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false,
+    "seconds": 0.20198662485927343,
+    "maximumResidentBytes": 160989184
+  }
+]

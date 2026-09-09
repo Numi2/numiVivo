@@ -52,7 +52,7 @@ outside the typed count projection.
 
 Accessibility features require an assembly and explicit zero-based half-open
 intervals. The 10x Peaks mapping parses `contig:start-end`; the caller declares
-fragment or read count units. Spatial observations can be cells or spots, with
+fragment, read or cut-site count units, according to the source measurement. Spatial observations can be cells or spots, with
 finite 2D/3D positions in named frames declaring axes and pixel/micrometer units.
 These representations are structurally tested, not biological qualifications.
 
@@ -78,7 +78,7 @@ its frame, axes and units. Entirely NaN rows mean missing positions; partially
 missing or infinite positions reject. Native export retains these positions in
 typed `uns` metadata as described above. It does not synthesize a standard spatial
 array. Accessibility mappings require the explicit convention
-`contig:start-end:zero-based-half-open`, an assembly, and fragment/read units.
+`contig:start-end:zero-based-half-open`, an assembly, and fragment/read/cut-site units.
 
 The import is a declared count/identity projection. Unselected annotations and
 other analysis objects remain in the exact retained source file. Every source
@@ -110,7 +110,7 @@ oracle, Scanpy's full feature reader, and MuData for native H5MU read/roundtrip.
 ## Execution and bounds
 
 The current model is resident after import: at most 100,000 global observations,
-16 assays, 200,000 total features and 20 million total retained/source entries.
+16 assays, 200,000 total features and 32 million total retained/source entries.
 One source barcode's entries, indices and metadata are also resident. H5MU
 imports additionally hold transient row dictionaries before final CSR encoding;
 dense scan work is limited to 500 million elements across all modalities. Sources
@@ -188,3 +188,6 @@ its mutation helper assumed categorical storage for a nullable-string column.
 That failed log is retained. After correcting the helper, the complete checker
 passed; no native implementation change was needed. MuData's native-producer and
 cross-space duplicate-variable-name warnings remain in the logs.
+
+The [complete paired RNA/ATAC benchmark](MULTIOME.md) documents the separate
+Cell Ranger ARC cut-site unit and the full-source qualification protocol.

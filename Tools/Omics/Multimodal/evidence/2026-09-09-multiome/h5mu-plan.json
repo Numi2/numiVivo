@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "10x-pbmc3k-multiome",
+  "evidence": "measured",
+  "sourceDescription": "10x Genomics PBMC granulocyte-sorted 3k Multiome; Cell Ranger ARC 2.0.0; 2021-05-03; full filtered release; CC BY 4.0. One healthy human donor, no independent replication. RNA UMIs and ATAC cut-site counts.",
+  "samples": [
+    {
+      "id": "pbmc3k",
+      "biologicalReplicateID": "donor1",
+      "donorID": "donor1",
+      "condition": "healthy",
+      "batchID": "one-library",
+      "organism": "NCBITaxon:9606"
+    }
+  ],
+  "sampleColumn": "sample",
+  "barcodeColumn": "barcode",
+  "defaultObservationKind": "cell",
+  "observationKindColumn": "observation_kind",
+  "assays": [
+    {
+      "id": "rna",
+      "kind": "rna",
+      "featureNamespace": "Ensembl:GRCh38-ARC-2.0-source-release",
+      "countUnit": "umiCount",
+      "genomeAssembly": "GRCh38",
+      "sourceName": "rna",
+      "matrixPath": "X",
+      "featureNameColumn": "name"
+    },
+    {
+      "id": "atac",
+      "kind": "chromatinAccessibility",
+      "featureNamespace": "10x:GRCh38-ARC-2.0-pbmc3k-peaks",
+      "countUnit": "cutSiteCount",
+      "genomeAssembly": "GRCh38",
+      "sourceName": "atac",
+      "matrixPath": "X",
+      "featureNameColumn": "name",
+      "peakIDConvention": "contig:start-end:zero-based-half-open"
+    }
+  ]
+}

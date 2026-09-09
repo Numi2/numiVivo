@@ -15,7 +15,7 @@ public enum VivoMultiAssayTenX {
                   a.genomeAssembly.map(vivoOmicsID) ?? true else { throw VivoOmicsError.invalid("10x feature-type mapping") }
             if a.kind == .chromatinAccessibility {
                 guard a.genomeAssembly != nil, a.countUnit != .umiCount else { throw VivoOmicsError.invalid("peak assembly/count units") }
-            } else if a.countUnit == .fragmentCount { throw VivoOmicsError.invalid("non-peak fragment units") }
+            } else if (a.countUnit == .fragmentCount || a.countUnit == .cutSiteCount) { throw VivoOmicsError.invalid("non-peak fragment/cut-site units") }
         }
     }
     /// Caller supplies an immutable snapshot; only one barcode's sparse entries

@@ -1,0 +1,24 @@
+[
+  {
+    "assay": "rna",
+    "unit": "umiCount",
+    "cells": 2711,
+    "features": 36601,
+    "nonzeros": 5218473,
+    "totalCounts": 11786194,
+    "allCoordinatesExact": true,
+    "allFeatureIDsExact": true,
+    "allPeakIntervalsExact": false
+  },
+  {
+    "assay": "atac",
+    "unit": "cutSiteCount",
+    "cells": 2711,
+    "features": 98319,
+    "nonzeros": 19292713,
+    "totalCounts": 48245242,
+    "allCoordinatesExact": true,
+    "allFeatureIDsExact": true,
+    "allPeakIntervalsExact": true
+  }
+]
