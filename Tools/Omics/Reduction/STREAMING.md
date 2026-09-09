@@ -135,3 +135,38 @@ increased. Verification/repeat timings and memory are retained separately. This
 change does not claim a throughput improvement. The snapshot helper and mapping
 changes are measured together. [Full evidence](evidence/2026-09-09-windowed/README.md)
 binds source, product, baseline, complete reports, references and retained failures.
+
+## Complete Norman scale qualification
+
+The windowed path now passes the complete Norman filtered release: 111,445 cells,
+33,694 genes and 361,582,621 source nonzeros. The predeclared plan keeps 2,000
+variable genes, 20 components, a 128-vector basis and the existing `1e-6` relative
+residual gate. Only the explicit work allowance increases from the default two
+billion to twenty billion entry visits; cache admission remains two billion bytes.
+
+Native PCA uses 18,354,035 selected records (293,664,560 cache bytes), traversing
+5,799,875,060 entries through 16 MiB windows. Independent Scanpy checks agree on
+all feature statistics within the existing tolerances and exactly the same 2,000
+genes. Aligned PCA score error is `1.0971e-12`; maximum native relative residual
+is `3.0565e-12`. Full native source/report reconstruction passes.
+
+Publication took 153.94 seconds with 1,376,321,536 maximum resident bytes;
+verification took 158.47 seconds with 1,493,237,760 maximum resident bytes on the
+Mac mini. These include QC, condition aggregates, normalization, feature
+selection, PCA and report serialization/reconstruction. The source, report and
+reference hashes and original logs are retained in
+[Norman evidence](evidence/2026-09-09-norman/README.md).
+
+The independent checker now releases the source AnnData owner before promoting
+count values to FP64, avoids a redundant identity-row copy, shares immutable
+sparse indices for its linear-space moment check, and releases the full matrix
+once the PCA subset is materialized. Public Scanpy algorithms and numerical
+tolerances are unchanged. Baron/Hagai result documents remain exactly identical
+and the resident JSON input path also passes the existing Kang comparison.
+
+This is complete-cohort exploratory PCA. Fitting preprocessing on every condition
+does not qualify train-only preprocessing for held-out perturbation prediction.
+The roughly 118 MiB native JSON report, aggregates and metadata remain resident;
+report materialization is still a scale bottleneck. Million-cell, downstream
+streaming graph/integration, parallel-kernel and Metal qualification remain open.
+Native and reference hosts differ, so their timings are not a speed comparison.

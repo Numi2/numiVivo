@@ -50,17 +50,24 @@ else:
         assert path.startswith('layers/')
         x, var = obj.layers[path[len('layers/'):]], obj.var
     assert sparse.issparse(x)
-    x = x.astype(np.float64).tocsr()
-    x.sum_duplicates(); x.eliminate_zeros(); x.sort_indices()
+    x = x.tocsr()
     barcodes = obj.obs[mapping['barcodeColumn']].astype(str).tolist() if mapping.get('barcodeColumn') else obj.obs_names.tolist()
     identities = list(zip(obj.obs[mapping['sampleColumn']].astype(str), barcodes))
     feature_ids = var[mapping['featureIDColumn']].astype(str).tolist() if mapping.get('featureIDColumn') else var.index.tolist()
     target = report['reductionStorage']['options']['normalizationTarget']
     source_path = a.h5ad
+    # Keep only the count matrix and small axis metadata, not the full AnnData
+    # owner while allocating FP64 values. Preserve canonical sparse semantics.
+    del obj, var
+    x.data = x.data.astype(np.float64, copy=False)
+    x.sum_duplicates(); x.eliminate_zeros(); x.sort_indices()
 assert len(set(identities)) == len(identities)
 identity = {cell: i for i, cell in enumerate(identities)}
 rows = [identity[(c['sampleID'], c['barcode'])] for c in r['cells']]
-b = ad.AnnData(x[rows].copy())
+feature_count, source_nonzeros = x.shape[1], x.nnz
+# The complete-cohort case needs no row gather or second full matrix copy.
+b = ad.AnnData(x if rows == list(range(x.shape[0])) else x[rows])
+del x
 b.var_names = feature_ids
 assert list(b.var_names) == [f['featureID'] for f in r['features']]
 sc.pp.normalize_total(b, target_sum=target)
@@ -70,9 +77,11 @@ sc.pp.highly_variable_genes(b, flavor='seurat', n_top_genes=o['highlyVariableFea
 selected = np.flatnonzero(b.var['highly_variable'].to_numpy())
 assert selected.tolist() == r['selectedFeatureIndices'], 'HVG membership mismatch'
 errors = {}
-linear = b.X.copy()
-linear.data = np.expm1(linear.data)
+# Independent linear-space moments need new values, but the immutable CSR
+# coordinate arrays can be shared. No full duplicate index arrays are needed.
+linear = sparse.csr_matrix((np.expm1(b.X.data), b.X.indices, b.X.indptr), shape=b.X.shape, copy=False)
 reference_mean, reference_variance = stats.mean_var(linear, axis=0, correction=1)
+del linear
 for native, expected in [('meanNormalized', reference_mean), ('varianceNormalized', reference_variance)]:
     observed = np.array([f[native] for f in r['features']])
     np.testing.assert_allclose(observed, expected, rtol=1e-9, atol=1e-9)
@@ -90,6 +99,7 @@ for native, reference in [('logMeanForBinning', 'means'), ('logDispersion', 'dis
     np.testing.assert_allclose(lhs, rhs, rtol=tolerance, atol=tolerance, equal_nan=True)
     errors[native] = float(np.max(np.abs(lhs[valid] - rhs[valid])))
 c = b[:, selected].copy()
+del b
 sc.pp.pca(c, n_comps=o['components'], zero_center=True, svd_solver='arpack', dtype='float64', random_state=7)
 assert sparse.issparse(c.X)
 loading = np.asarray(r['loadings'])
@@ -109,13 +119,13 @@ np.testing.assert_allclose(scores.T @ scores / (len(rows)-1), np.diag(variance),
 assert max(r['relativeResiduals']) <= o['relativeResidualTolerance']
 result = dict(status='passed', qualification='Numerical agreement on these count axes; no biological or integration qualification',
     datasetSHA256=hashlib.sha256(source_path.read_bytes()).hexdigest(), reportSHA256=hashlib.sha256(a.report.read_bytes()).hexdigest(),
-    cells=len(rows), features=x.shape[1], sourceNonzeros=x.nnz, selectedFeatures=len(selected), components=o['components'],
+    cells=len(rows), features=feature_count, sourceNonzeros=source_nonzeros, selectedFeatures=len(selected), components=o['components'],
     featureMaximumAbsoluteErrors=errors, minimumSubspaceCosine=float(min(singular)), alignedRelativeScoreError=score_error,
     maximumNativeResidual=max(r['relativeResiduals']), maximumVarianceRelativeError=float(np.max(np.abs(variance/c.uns['pca']['variance']-1))),
     versions={name: importlib.metadata.version(name) for name in ['scanpy','anndata','numpy','scipy','pandas']})
 if 'reductionStorage' in report:
     storage = report['reductionStorage']
-    entries = int(x[rows][:, selected].nnz)
+    entries = int(c.X.nnz)
     visits = entries * (2 * min(o['maximumBasis'], len(selected)) + 3 * o['components'])
     assert storage['sourcePasses'] == 3
     assert storage['selectedEntries'] == entries and storage['cacheBytes'] == 16 * entries

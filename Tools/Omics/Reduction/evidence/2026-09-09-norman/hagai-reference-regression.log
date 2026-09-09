@@ -1,0 +1,104 @@
+{
+  "status": "passed",
+  "qualification": "Numerical agreement on these count axes; no biological or integration qualification",
+  "datasetSHA256": "2d0a69d121bcf6e9b63b82fafd06e597f6165a927b87b0cc51cb5c90c2caa5f5",
+  "reportSHA256": "8007524131cc63df290fa99e878debf11183704e5ff2beaa72a7773ef2d8d84a",
+  "cells": 13863,
+  "features": 22048,
+  "sourceNonzeros": 32848185,
+  "selectedFeatures": 2000,
+  "components": 20,
+  "featureMaximumAbsoluteErrors": {
+    "meanNormalized": 1.9895196601282805e-12,
+    "varianceNormalized": 5.820766091346741e-10,
+    "logMeanForBinning": 8.881784197001252e-15,
+    "logDispersion": 1.6209256159527285e-14,
+    "normalizedDispersion": 8.965303592844975e-07
+  },
+  "minimumSubspaceCosine": 0.9999999999999987,
+  "alignedRelativeScoreError": 1.515130024374068e-11,
+  "maximumNativeResidual": 2.980599814608733e-11,
+  "maximumVarianceRelativeError": 3.3306690738754696e-15,
+  "versions": {
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5"
+  },
+  "streamedStorage": {
+    "cacheBytes": 53794864,
+    "cacheFingerprint": {
+      "bytes": [
+        178,
+        58,
+        216,
+        179,
+        247,
+        97,
+        189,
+        147,
+        169,
+        119,
+        249,
+        182,
+        251,
+        125,
+        62,
+        154,
+        130,
+        147,
+        115,
+        93,
+        19,
+        37,
+        108,
+        182,
+        170,
+        10,
+        225,
+        254,
+        72,
+        12,
+        230,
+        78
+      ]
+    },
+    "entryVisits": 1062448564,
+    "method": "three-source-passes-windowed-selected-COO-v2",
+    "options": {
+      "maximumCacheBytes": 2000000000,
+      "maximumEntryVisits": 2000000000,
+      "normalizationTarget": 10000,
+      "pca": {
+        "components": 20,
+        "highlyVariableFeatures": 2000,
+        "maximumBasis": 128,
+        "meanBins": 20,
+        "relativeResidualTolerance": 1e-06,
+        "seed": 7
+      }
+    },
+    "qualification": "HDF5 slices, bounded write buffer and 16 MiB POSIX mapping windows for selected expression; metadata, moments, Krylov basis, scores and report remain resident. No million-cell or GPU performance qualification.",
+    "selectedEntries": 3362179,
+    "sourcePasses": 3
+  }
+}
+        4.29 real         4.23 user         0.20 sys
+          1725169664  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              143576  page reclaims
+                   1  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                   3  voluntary context switches
+                1063  involuntary context switches
+         61913868011  instructions retired
+         18380698739  cycles elapsed
+          1638827856  peak memory footprint

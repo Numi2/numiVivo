@@ -358,7 +358,11 @@ The complete development objective remains open:
    see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).
    Selected-entry PCA now uses 16 MiB mapping windows with a shared fixed-buffer
    snapshot reader, replacing the whole-cache map. Full Baron/Hagai native PCA
-   outputs remain exact; independent Scanpy comparisons pass.
+   outputs remain exact; independent Scanpy comparisons pass. The complete
+   111,445-cell Norman matrix now also passes 2,000-feature/20-component PCA
+   against Scanpy and native reconstruction, with 5.8 billion windowed entry
+   visits. Its publication/verification peaks of 1.38/1.49 GB expose the remaining
+   resident report and aggregate costs.
    Full Norman count aggregation now exercises 361.6 million source entries
    through bounded slices, with 3.58 million aggregate nonzeros.
    A [persistent count store with windowed normalization](../Tools/Omics/CountStore/README.md)

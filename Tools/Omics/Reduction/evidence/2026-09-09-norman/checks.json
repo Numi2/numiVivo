@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "nativeCommit": "272f125b08d5766d4407c0c748c6bb361101a0b3",
+  "binarySHA256": "71c4fd3c1e9279d98b09def064f3582daf16a246b63c53857a5e034091b1a799",
+  "sourceSHA256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc",
+  "reportSHA256": "34f2c84f9b6631eab683617fd36c60cf949f48904e40fd898221f1f58c7337e5",
+  "referenceCheckerSHA256": "3890ec66384f5d66a170346558fda884fcb9fa870934eb0d500dddf8ad7890e4",
+  "cells": 111445,
+  "features": 33694,
+  "sourceNonzeros": 361582621,
+  "selectedFeatures": 2000,
+  "components": 20,
+  "storage": {
+    "cacheBytes": 293664560,
+    "cacheFingerprint": {
+      "bytes": [
+        93,
+        125,
+        111,
+        28,
+        101,
+        13,
+        194,
+        204,
+        136,
+        55,
+        109,
+        244,
+        20,
+        165,
+        169,
+        57,
+        27,
+        212,
+        129,
+        86,
+        120,
+        247,
+        109,
+        93,
+        229,
+        84,
+        106,
+        176,
+        199,
+        100,
+        168,
+        176
+      ]
+    },
+    "entryVisits": 5799875060,
+    "method": "three-source-passes-windowed-selected-COO-v2",
+    "options": {
+      "maximumCacheBytes": 2000000000,
+      "maximumEntryVisits": 20000000000,
+      "normalizationTarget": 10000,
+      "pca": {
+        "components": 20,
+        "highlyVariableFeatures": 2000,
+        "maximumBasis": 128,
+        "meanBins": 20,
+        "relativeResidualTolerance": 1e-06,
+        "seed": 7
+      }
+    },
+    "qualification": "HDF5 slices, bounded write buffer and 16 MiB POSIX mapping windows for selected expression; metadata, moments, Krylov basis, scores and report remain resident. No million-cell or GPU performance qualification.",
+    "selectedEntries": 18354035,
+    "sourcePasses": 3
+  },
+  "nativeCommands": [
+    {
+      "command": [
+        "/Users/n/numivivo-window-pca-20260909/numivivo",
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-norman-window-pca-20260909/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-norman-window-pca-20260909/plan.json",
+        "--output",
+        "/Users/n/numivivo-norman-window-pca-20260909/bundle"
+      ],
+      "exitCode": 0,
+      "seconds": 153.94,
+      "maximumResidentBytes": 1376321536
+    },
+    {
+      "command": [
+        "/Users/n/numivivo-window-pca-20260909/numivivo",
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-norman-window-pca-20260909/bundle"
+      ],
+      "exitCode": 0,
+      "seconds": 158.47,
+      "maximumResidentBytes": 1493237760
+    }
+  ],
+  "alignedRelativeScoreError": 1.0971089948646915e-12,
+  "maximumNativeResidual": 3.0564949097155397e-12,
+  "scope": "Complete cohort exploratory PCA with unchanged tolerances; not held-out perturbation prediction, million-cell, parallel-kernel, GPU or cross-host performance qualification"
+}
