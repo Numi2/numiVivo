@@ -3,20 +3,26 @@ import Foundation
 public struct VivoPCAIntegrationPlan: Codable, Sendable, Equatable {
     public let schemaVersion: Int
     public let inputKind: VivoPCANeighborPlan.InputKind
-    public let integration: VivoSingleCellIntegrationOptions
+    public let integration: VivoSingleCellIntegrationOptions?
+    public let mnn: VivoMNNIntegrationOptions?
     public init(inputKind: VivoPCANeighborPlan.InputKind = .fitted, integration: VivoSingleCellIntegrationOptions = .init()) {
-        schemaVersion = 1; self.inputKind = inputKind; self.integration = integration
+        schemaVersion = 1; self.inputKind = inputKind; self.integration = integration; mnn = nil
     }
-    private enum CodingKeys: String, CodingKey { case schemaVersion, inputKind, integration }
+    public init(inputKind: VivoPCANeighborPlan.InputKind = .fitted, mnn: VivoMNNIntegrationOptions) {
+        schemaVersion = 1; self.inputKind = inputKind; integration = nil; self.mnn = mnn
+    }
+    private enum CodingKeys: String, CodingKey { case schemaVersion, inputKind, integration, mnn }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "inputKind", "integration"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "inputKind", "integration", "mnn"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try c.decode(Int.self, forKey: .schemaVersion)
         inputKind = try c.decodeIfPresent(VivoPCANeighborPlan.InputKind.self, forKey: .inputKind) ?? .fitted
-        integration = try c.decodeIfPresent(VivoSingleCellIntegrationOptions.self, forKey: .integration) ?? .init()
+        mnn = try c.decodeIfPresent(VivoMNNIntegrationOptions.self, forKey: .mnn)
+        integration = try c.decodeIfPresent(VivoSingleCellIntegrationOptions.self, forKey: .integration) ?? (mnn == nil ? .init() : nil)
     }
     public func validate() throws {
-        try integration.validate()
+        guard (integration == nil) != (mnn == nil) else { throw VivoOmicsError.invalid("select exactly one integration method") }
+        try integration?.validate(); try mnn?.validate()
         guard schemaVersion == 1, inputKind != .integrated else { throw VivoOmicsError.invalid("integration needs original fitted or query PCA") }
     }
 }
@@ -44,23 +50,28 @@ public struct VivoPCAIntegrationReceipt: Codable, Sendable, Equatable {
     public let plan: VivoFingerprint
     public let metadata: VivoFingerprint
     public let scores: VivoFingerprint
-    public let memberships: VivoFingerprint
-    public let assignmentScores: VivoFingerprint
+    public let memberships: VivoFingerprint?
+    public let assignmentScores: VivoFingerprint?
     public let report: VivoFingerprint
     public let implementation: VivoFingerprint
+    public var anchors: VivoFingerprint? = nil
 }
 
 public enum VivoPCAIntegration {
-    private static func read<T: Decodable>(_ type: T.Type, _ root: URL, _ name: String, maximum: Int) throws -> T {
+    static func components(_ root: URL) throws -> Int {
+        struct Dimensions: Decodable { let components: Int }
+        return try read(Dimensions.self, root, "report.json", maximum: 16_777_216).components
+    }
+    static func read<T: Decodable>(_ type: T.Type, _ root: URL, _ name: String, maximum: Int) throws -> T {
         try VivoCanonicalJSON.decode(type, from: VivoH5ADCountStore.read(root, name, maximum: maximum))
     }
-    private static func write<T: Encodable>(_ value: T, _ root: URL, _ name: String, maximum: Int) throws -> VivoFingerprint {
+    static func write<T: Encodable>(_ value: T, _ root: URL, _ name: String, maximum: Int) throws -> VivoFingerprint {
         let bytes = try VivoCanonicalJSON.encode(value)
         guard bytes.count <= maximum else { throw VivoOmicsError.limit("integration artifact bytes") }
         try bytes.write(to: root.appendingPathComponent(name), options: .withoutOverwriting)
         return try VivoCanonicalJSON.fingerprint(bytes)
     }
-    private static func staging(_ parent: URL) throws -> URL {
+    static func staging(_ parent: URL) throws -> URL {
         let root = parent.appendingPathComponent(".numivivo-integration-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700]); return root
     }
@@ -69,13 +80,16 @@ public enum VivoPCAIntegration {
         try plan.validate()
         try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         try VivoPCANeighborBundle.snapshot(input.appendingPathComponent("input"), kind: plan.inputKind, to: output.appendingPathComponent("input"))
+        let witnesses = plan.mnn == nil ? [("assignment-scores.bin", 1_024_000_000), ("memberships.bin", 1_600_000_000)] : [("anchors.bin", 1_600_000_000)]
         for (name, limit) in [("plan.json", 65_536), ("receipt.json", 65_536), ("report.json", 16_777_216), ("metadata.json", 536_870_912),
-            ("scores.bin", 1_024_000_000), ("assignment-scores.bin", 1_024_000_000), ("memberships.bin", 1_600_000_000)] {
+            ("scores.bin", 1_024_000_000)] + witnesses {
             _ = try VivoOmicsFileSnapshot.fingerprint(input.appendingPathComponent(name), copyTo: output.appendingPathComponent(name), maximumBytes: limit)
         }
     }
     public static func publish(input: URL, plan: VivoPCAIntegrationPlan, implementation: VivoFingerprint, to destination: URL) throws -> VivoPCAIntegrationReceipt {
-        try plan.validate(); try VivoH5ADCountStore.requireNew(destination)
+        try plan.validate()
+        if plan.mnn != nil { return try VivoPCAMNNIntegration.publish(input: input, plan: plan, implementation: implementation, to: destination) }
+        try VivoH5ADCountStore.requireNew(destination)
         let temp = try staging(destination.deletingLastPathComponent()); defer { try? FileManager.default.removeItem(at: temp) }
         let source = temp.appendingPathComponent("input")
         try VivoPCANeighborBundle.snapshot(input, kind: plan.inputKind, to: source)
@@ -91,7 +105,7 @@ public enum VivoPCAIntegration {
         }
         let metadata = try read(VivoSingleCellCountMetadata.self, source, "metadata.json", maximum: 536_870_912)
         let n = metadata.cells.count
-        try VivoSingleCellIntegration.validateAxes(rows: n, columns: dimensions, options: plan.integration)
+        try VivoSingleCellIntegration.validateAxes(rows: n, columns: dimensions, options: plan.integration!)
         var matrices: [VivoIntegrationMatrix] = []
         defer { for matrix in matrices { try? matrix.remove() } }
         func matrix(_ rows: Int, _ columns: Int) throws -> VivoIntegrationMatrix {
@@ -108,8 +122,8 @@ public enum VivoPCAIntegration {
             }
         }
         let cells = metadata.cells.map { VivoOmicsCellIdentity(sampleID: $0.sampleID, barcode: $0.barcode) }
-        let result = try VivoSingleCellIntegration.run(cells: cells, x: x, samples: metadata.samples, options: plan.integration, matrix: matrix)
-        let report = VivoPCAIntegrationReport(method: VivoIntegrationSolution.method(options: plan.integration), cells: n, components: dimensions, clusters: plan.integration.clusters,
+        let result = try VivoSingleCellIntegration.run(cells: cells, x: x, samples: metadata.samples, options: plan.integration!, matrix: matrix)
+        let report = VivoPCAIntegrationReport(method: VivoIntegrationSolution.method(options: plan.integration!), cells: n, components: dimensions, clusters: plan.integration!.clusters,
             levels: result.levels, cellLevels: result.cellLevels, assignmentCenters: result.assignmentCenters, objectives: result.objectives,
             relativeImprovements: result.relativeImprovements, stoppingReason: result.stoppingReason, maximumRidgeResidual: result.maximumRidgeResidual,
             scratchBytes: matrices.reduce(0) { $0 + $1.fileBytes }, maximumMappedBytesPerMatrix: VivoIntegrationMatrix.maximumWindowBytes,
@@ -131,12 +145,15 @@ public enum VivoPCAIntegration {
         let receipt = try VivoCanonicalJSON.decode(VivoPCAIntegrationReceipt.self, from: bytes)
         guard receipt.schemaVersion == 1, receipt.implementation == implementation, try VivoCanonicalJSON.encode(receipt) == bytes else { throw VivoOmicsError.invalid("integration receipt") }
         let plan = try read(VivoPCAIntegrationPlan.self, root, "plan.json", maximum: 65_536)
+        try plan.validate()
+        if plan.mnn != nil { return try VivoPCAMNNIntegration.verify(root, plan: plan, receipt: receipt, implementation: implementation) }
+        guard receipt.anchors == nil, receipt.memberships != nil, receipt.assignmentScores != nil else { throw VivoOmicsError.invalid("ridge integration witnesses") }
         let temp = try staging(FileManager.default.temporaryDirectory); defer { try? FileManager.default.removeItem(at: temp) }
         let rebuilt = try publish(input: root.appendingPathComponent("input"), plan: plan, implementation: implementation, to: temp.appendingPathComponent("rebuilt"))
         guard rebuilt == receipt else { throw VivoOmicsError.invalid("integration reconstruction differs") }
         for (name, hash, limit) in [("plan.json", receipt.plan, 65_536), ("metadata.json", receipt.metadata, 536_870_912),
             ("report.json", receipt.report, 16_777_216), ("scores.bin", receipt.scores, 1_024_000_000),
-            ("assignment-scores.bin", receipt.assignmentScores, 1_024_000_000), ("memberships.bin", receipt.memberships, 1_600_000_000)] {
+            ("assignment-scores.bin", receipt.assignmentScores!, 1_024_000_000), ("memberships.bin", receipt.memberships!, 1_600_000_000)] {
             guard try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), maximumBytes: limit) == hash else { throw VivoOmicsError.invalid("integration artifact fingerprint differs") }
         }
         return receipt

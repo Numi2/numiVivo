@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "command": [
+    "env",
+    "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+    "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+    "singlecell-pca-integrate",
+    "/Users/n/numivivo-native-mnn-20260910/ding/pca",
+    "--plan",
+    "/Users/n/numivivo-native-mnn-20260910/ding/unknown-donor-plan.json",
+    "--output",
+    "/Users/n/numivivo-native-mnn-20260910/ding/unknown-donor-rejected"
+  ],
+  "exitCode": 65,
+  "seconds": 14.471639499999583,
+  "planSHA256": "6bf50c99071c5a99f566a98a33537a16871ecb33ae2fcf9b52813b618cf9f5a0",
+  "unknownDingDonorRejected": true,
+  "noPublishedOutputOrStaging": true,
+  "binarySHA256": "12d037d4993a98bca43a4d5394ad8f9b7d3f9216f086f79148875cfe512eff5a"
+}

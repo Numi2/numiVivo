@@ -1,5 +1,9 @@
 # Integration geometry and reference-scale experiments
 
+This report records the reference experiments at their original revision. The
+subsequent [native implementation and verification](MNN_INTEGRATION.md) retains
+these findings and limitations.
+
 A single global PCA scale makes the Scanpy/Scanorama reference pass all measured
 preservation gates on Ding and Hagai and all measurable preservation gates on
 Kang. Its unscaled run fails these gates. Every matching anchor and the assembly

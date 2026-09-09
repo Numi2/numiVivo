@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "cohort": "hagai",
+      "arrays": [
+        "globalNeighbors",
+        "stratifiedNeighbors"
+      ],
+      "cells": 13863,
+      "everyNeighborIndexExact": true,
+      "nativeSHA256": "b18172ecb5bccb483bd2e828986231e7b07dbafdf7e7ca639bf428cd199d6ae4",
+      "referenceSHA256": "b18172ecb5bccb483bd2e828986231e7b07dbafdf7e7ca639bf428cd199d6ae4"
+    },
+    {
+      "cohort": "kang",
+      "arrays": [
+        "globalNeighbors",
+        "stratifiedNeighbors"
+      ],
+      "cells": 24673,
+      "everyNeighborIndexExact": true,
+      "nativeSHA256": "5ffc63d813f8f65321ed6237bd6aa32268cdb602f0c6fb9cb48cee171d4fc2f1",
+      "referenceSHA256": "5ffc63d813f8f65321ed6237bd6aa32268cdb602f0c6fb9cb48cee171d4fc2f1"
+    },
+    {
+      "cohort": "ding",
+      "arrays": [
+        "globalNeighbors",
+        "stratifiedNeighbors"
+      ],
+      "cells": 44031,
+      "everyNeighborIndexExact": true,
+      "nativeSHA256": "0a0f8cd01f50e764dd11219a9dab1dcd014d72ba9bdd3004797f8f920c45d91e",
+      "referenceSHA256": "0a0f8cd01f50e764dd11219a9dab1dcd014d72ba9bdd3004797f8f920c45d91e"
+    }
+  ]
+}

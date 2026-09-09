@@ -1,5 +1,9 @@
 # Donor/batch integration and response preservation
 
+The ridge method below remains the default. An opt-in
+[native scale-aware MNN method](MNN_INTEGRATION.md) is now available through the
+PCA-bundle workflow, with separate anchor witnesses and full-cohort evaluation.
+
 The native analysis path supports transductive correction of PCA coordinates for
 one explicitly selected categorical donor or batch covariate. Counts, normalized
 RNA and original PCA remain unchanged. To use corrected coordinates downstream:

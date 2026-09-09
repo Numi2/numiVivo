@@ -1,0 +1,234 @@
+[
+  {
+    "label": "hagai-fit",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/hagai/fit.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/hagai/pca"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 14.63,
+    "maximumResidentBytes": 204472320
+  },
+  {
+    "label": "hagai-mnn",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-native-mnn-20260910/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/hagai/mnn.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/hagai/mnn"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 18.1,
+    "maximumResidentBytes": 229244928
+  },
+  {
+    "label": "hagai-verify",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate-verify",
+      "/Users/n/numivivo-native-mnn-20260910/hagai/mnn"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 18.18,
+    "maximumResidentBytes": 232603648
+  },
+  {
+    "label": "kang-fit",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-file-integration-20260909/prepared/kang.h5ad",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/kang/fit.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/kang/pca"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 6.32,
+    "maximumResidentBytes": 177455104
+  },
+  {
+    "label": "kang-mnn",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-native-mnn-20260910/kang/pca",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/kang/mnn.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/kang/mnn"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 36.67,
+    "maximumResidentBytes": 227459072
+  },
+  {
+    "label": "kang-verify",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate-verify",
+      "/Users/n/numivivo-native-mnn-20260910/kang/mnn"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 36.86,
+    "maximumResidentBytes": 227704832
+  },
+  {
+    "label": "ding-fit",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-ding-benchmark-20260909/prepared/ding.h5ad",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/ding/fit.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/ding/pca"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 14.13,
+    "maximumResidentBytes": 266633216
+  },
+  {
+    "label": "ding-mnn",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-native-mnn-20260910/ding/pca",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/ding/mnn.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/ding/mnn"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": true,
+    "seconds": 77.84,
+    "maximumResidentBytes": 332939264
+  },
+  {
+    "label": "ding-mnn-attempt-2",
+    "baseLabel": "ding-mnn",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-native-mnn-20260910/ding/pca",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/ding/mnn.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/ding/mnn"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 80.12,
+    "maximumResidentBytes": 333496320
+  },
+  {
+    "label": "ding-verify",
+    "baseLabel": "ding-verify",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate-verify",
+      "/Users/n/numivivo-native-mnn-20260910/ding/mnn"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 81.08,
+    "maximumResidentBytes": 334446592
+  },
+  {
+    "label": "baron-fit",
+    "baseLabel": "baron-fit",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/baron/fit.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/baron/pca"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 6.18,
+    "maximumResidentBytes": 159449088
+  },
+  {
+    "label": "baron-mnn",
+    "baseLabel": "baron-mnn",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-native-mnn-20260910/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/baron/mnn.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/baron/mnn"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false,
+    "seconds": 6.3,
+    "maximumResidentBytes": 186875904
+  }
+]

@@ -98,4 +98,6 @@ Numerical replay passes; rare-cell and local-program preservation gates fail.
 
 [Geometry and reference-scale experiments](INTEGRATION_ALTERNATIVES.md) retain
 failed constrained candidates and identify a scale-aware mutual-neighbor reference
-that passes measured preservation margins; native implementation remains open.
+that passes measured preservation margins. The subsequent
+[native MNN implementation](MNN_INTEGRATION.md) exposes that method through
+verified PCA bundles, with exact anchor witnesses and explicit resource limits.

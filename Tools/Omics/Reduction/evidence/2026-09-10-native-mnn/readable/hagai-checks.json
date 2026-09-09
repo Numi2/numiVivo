@@ -1,0 +1,129 @@
+{
+  "status": "full-cohort-native-measured",
+  "cohort": "hagai",
+  "cells": 13863,
+  "components": 20,
+  "numerical": {
+    "originalPCABitsAndMetadataExact": true,
+    "allAnchorsAndAlignmentOrderExact": true,
+    "maximumAnchorDistanceError": 1.7763568394002505e-15,
+    "maximumCoordinateError": 1.9628743075372768e-13,
+    "medianRowNorm": 10.245999524159041,
+    "workAccountingExact": true,
+    "zeroWeightCellsByStep": [
+      0,
+      0,
+      0
+    ],
+    "referenceChecksSHA256": "a1f793e53be574c2853006bf56746002b8c7c599fea83a6f51dbef1129d23dc4"
+  },
+  "metrics": {
+    "sameDonorExcess": 0.2814476908064119,
+    "donorEntropy": 0.5878722552457851,
+    "cellTypeBalancedAccuracy": null,
+    "cellTypeRecall": {},
+    "cellTypeFolds": [],
+    "conditionBalancedAccuracy": 0.9997874282823034,
+    "conditionAccuracyByType": {
+      "unreported": 0.9997874282823034
+    },
+    "conditionFolds": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "cells": 3829,
+        "balancedAccuracy": 0.9997064004697592,
+        "iterations": 12
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "cells": 5645,
+        "balancedAccuracy": 1.0,
+        "iterations": 12
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "cells": 4389,
+        "balancedAccuracy": 0.9996558843771508,
+        "iterations": 12
+      }
+    ],
+    "missingClassifierStrata": [],
+    "programSpearman": 0.8203588029844929,
+    "withinStratumProgramSpearman": 0.48232781871999414,
+    "programDonorCorrelations": [
+      {
+        "donor": "mouse1",
+        "spearman": 0.842918220081707
+      },
+      {
+        "donor": "mouse2",
+        "spearman": 0.8170614257583505
+      },
+      {
+        "donor": "mouse3",
+        "spearman": 0.8010967631134213
+      }
+    ],
+    "programStratumCorrelations": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1703,
+        "spearman": 0.625599117536637
+      },
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2126,
+        "spearman": 0.2290161612428497
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 2126,
+        "spearman": 0.7256579989024645
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 3519,
+        "spearman": 0.2604401103365512
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1453,
+        "spearman": 0.6940462195941258
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2936,
+        "spearman": 0.35920730470733625
+      }
+    ],
+    "unavailableProgramStrata": [],
+    "sameDonorExcessByType": {
+      "unreported": 0.2814476908064119
+    }
+  },
+  "gates": {
+    "mixingImproved": true,
+    "conditionPreserved": true,
+    "programPreserved": true,
+    "withinStratumProgramPreserved": true,
+    "completeClassifierStrata": true
+  },
+  "allMeasuredGatesPassed": true,
+  "evaluationSeconds": 4.973973291926086,
+  "qualification": "Native implementation and frozen independently invoked Scanpy/Scanorama reference on the same already inspected full cohorts. Original margins retained; incomplete Kang classifier strata and partial Ding source annotations remain. Transductive correction and source-label metrics are not unseen-study or prospective biological qualification."
+}

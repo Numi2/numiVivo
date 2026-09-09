@@ -1,0 +1,113 @@
+{
+  "status": "bounded-validation-passed",
+  "baseCommit": "3b9f200e2e8b40d57935a5a9603e830ceb39c2a0",
+  "binarySHA256": "12d037d4993a98bca43a4d5394ad8f9b7d3f9216f086f79148875cfe512eff5a",
+  "nativeHost": "Physical Mac mini M4 Pro, 24 GiB, macOS 26.6 build 25G72, Swift 6.3.3",
+  "selectedReleaseTests": 91,
+  "selectedSuites": 28,
+  "releaseTestFilter": "SingleCell|MNNIntegration|MultiAssay|H5AD|Perturbation|Composition",
+  "releaseProductBuildPassed": true,
+  "scopedH5ADBuildPassed": true,
+  "sourceFilesVerified": 505,
+  "mnnLifecycle": {
+    "binarySHA256": "12d037d4993a98bca43a4d5394ad8f9b7d3f9216f086f79148875cfe512eff5a",
+    "commands": 45,
+    "donorAndBatch": true,
+    "exactAndHNSWGraphClusteringEmbedding": true,
+    "expectedRejections": 11,
+    "fittedAndQuery": true,
+    "independentReconstruction": [
+      {
+        "anchorsExact": true,
+        "kind": "fitted",
+        "maximumCoordinateError": 9.658940314238862e-15
+      },
+      {
+        "anchorsExact": true,
+        "kind": "query",
+        "maximumCoordinateError": 9.658940314238862e-15
+      }
+    ],
+    "methodSpecificWitnesses": true,
+    "qualification": "Numerical and artifact lifecycle fixtures only; full-cohort biological evaluation is separate.",
+    "rehashedWitnessesRejected": true,
+    "scratchRemoved": true,
+    "status": "passed"
+  },
+  "legacyLifecycle": {
+    "adaptiveFittedAndQuery": true,
+    "allFrozenMatrixBitsExact": true,
+    "binarySHA256": "12d037d4993a98bca43a4d5394ad8f9b7d3f9216f086f79148875cfe512eff5a",
+    "commands": 60,
+    "confoundedAndUnknownCovariateRejected": true,
+    "donorAndBatch": true,
+    "exactAndHNSWDownstreamClusteringEmbedding": true,
+    "expectedRejections": 16,
+    "fittedAndQuery": true,
+    "recursiveAndRepresentationMismatchRejected": true,
+    "rehashedAdaptivePenaltiesRejected": true,
+    "rehashedOutputsAndParentRejected": true,
+    "repeatedReceiptsExact": true,
+    "scratchRemoved": true,
+    "status": "passed"
+  },
+  "invariants": {
+    "status": "passed",
+    "deterministicTies": true,
+    "zeroWeightRowsPreserved": true,
+    "dynamicWorkAndMemoryLimitsReject": true,
+    "nonfiniteOptionsAndDuplicateIdentitiesReject": true,
+    "rejections": 4,
+    "qualification": "Numerical invariants only"
+  },
+  "sourceScope": {
+    "status": "passed",
+    "command": [
+      "env",
+      "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-native-mnn-20260910/ding/pca",
+      "--plan",
+      "/Users/n/numivivo-native-mnn-20260910/ding/unknown-donor-plan.json",
+      "--output",
+      "/Users/n/numivivo-native-mnn-20260910/ding/unknown-donor-rejected"
+    ],
+    "exitCode": 65,
+    "seconds": 14.471639499999583,
+    "planSHA256": "6bf50c99071c5a99f566a98a33537a16871ecb33ae2fcf9b52813b618cf9f5a0",
+    "unknownDingDonorRejected": true,
+    "noPublishedOutputOrStaging": true,
+    "binarySHA256": "12d037d4993a98bca43a4d5394ad8f9b7d3f9216f086f79148875cfe512eff5a"
+  },
+  "cohorts": {
+    "hagai": {
+      "mixingImproved": true,
+      "conditionPreserved": true,
+      "programPreserved": true,
+      "withinStratumProgramPreserved": true,
+      "completeClassifierStrata": true
+    },
+    "kang": {
+      "mixingImproved": true,
+      "conditionPreserved": true,
+      "programPreserved": true,
+      "withinStratumProgramPreserved": true,
+      "completeClassifierStrata": false,
+      "cellTypesPreserved": true,
+      "everyTypeRecallPreserved": true
+    },
+    "ding": {
+      "mixingImproved": true,
+      "cellTypesPreserved": true,
+      "everyTypeRecallPreserved": true,
+      "programsPreserved": true,
+      "withinStratumProgramsPreserved": true
+    }
+  },
+  "retainedFailures": [
+    "Initial new test fixture omitted required batchID argument; corrected fixture then compiled and passed.",
+    "Ding native MNN exceeded default 100 billion work terms; explicit plan ceiling raised to 1 trillion without changing numerical parameters or gates."
+  ],
+  "qualification": "Software, independent numerical reconstruction and previously inspected cohort development evidence. Kang missing classifier strata and Ding partial source annotation remain. No untouched-study, million-cell, out-of-core MNN, GPU speedup or full goal completion claim."
+}

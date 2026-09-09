@@ -103,7 +103,7 @@ public enum VivoPCANeighborBundle {
         case .integrated:
             let receipt = try VivoPCAIntegration.verify(source, implementation: implementation)
             inputHash = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(receipt))
-            dimensions = try read(VivoPCAIntegrationReport.self, root: source, name: "report.json", maximum: 16_777_216).components
+            dimensions = try VivoPCAIntegration.components(source)
         case .query:
             let receipt = try VivoH5ADPCAQuery.verify(source, implementation: implementation)
             inputHash = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(receipt))

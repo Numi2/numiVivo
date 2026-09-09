@@ -1,0 +1,1603 @@
+{
+  "status": "full-cohort-native-measured",
+  "cohort": "kang",
+  "cells": 24673,
+  "components": 20,
+  "numerical": {
+    "originalPCABitsAndMetadataExact": true,
+    "allAnchorsAndAlignmentOrderExact": true,
+    "maximumAnchorDistanceError": 1.7763568394002505e-15,
+    "maximumCoordinateError": 3.7431335808690847e-11,
+    "medianRowNorm": 8.965490772463818,
+    "workAccountingExact": true,
+    "zeroWeightCellsByStep": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "referenceChecksSHA256": "928da507d70bfc368add99eef58f2c67a2b6dda21955179f7e640ac46cd6aa8e"
+  },
+  "metrics": {
+    "sameDonorExcess": 0.03496451100981205,
+    "donorEntropy": 0.8091929657896916,
+    "cellTypeBalancedAccuracy": 0.9072350410793673,
+    "cellTypeRecall": {
+      "B cells": 0.9862639308534525,
+      "CD14+ Monocytes": 0.9897572198789039,
+      "CD4 T cells": 0.9895901960944118,
+      "CD8 T cells": 0.6892746825868977,
+      "Dendritic cells": 0.9489083796676906,
+      "FCGR3A+ Monocytes": 0.959423089525884,
+      "Megakaryocytes": 0.7584459459459459,
+      "NK cells": 0.9362168840817515
+    },
+    "cellTypeFolds": [
+      {
+        "donor": "patient_101",
+        "cells": 2024,
+        "balancedAccuracy": 0.9398578501701631,
+        "iterations": 50,
+        "recalls": {
+          "B cells": 0.9919028340080972,
+          "CD14+ Monocytes": 0.9831932773109243,
+          "CD4 T cells": 0.9804878048780488,
+          "CD8 T cells": 0.6626506024096386,
+          "Dendritic cells": 0.984375,
+          "FCGR3A+ Monocytes": 0.9565217391304348,
+          "Megakaryocytes": 1.0,
+          "NK cells": 0.959731543624161
+        }
+      },
+      {
+        "donor": "patient_1015",
+        "cells": 5090,
+        "balancedAccuracy": 0.8866440132889741,
+        "iterations": 54,
+        "recalls": {
+          "B cells": 0.9927272727272727,
+          "CD14+ Monocytes": 0.989854153455929,
+          "CD4 T cells": 0.9871220604703248,
+          "CD8 T cells": 0.8275862068965517,
+          "Dendritic cells": 0.9342105263157895,
+          "FCGR3A+ Monocytes": 0.9040247678018576,
+          "Megakaryocytes": 0.5,
+          "NK cells": 0.9576271186440678
+        }
+      },
+      {
+        "donor": "patient_1016",
+        "cells": 3358,
+        "balancedAccuracy": 0.9504671351992884,
+        "iterations": 51,
+        "recalls": {
+          "B cells": 0.9959677419354839,
+          "CD14+ Monocytes": 0.9866310160427807,
+          "CD4 T cells": 0.9719626168224299,
+          "CD8 T cells": 0.9003021148036254,
+          "Dendritic cells": 0.8723404255319149,
+          "FCGR3A+ Monocytes": 0.9882352941176471,
+          "Megakaryocytes": 1.0,
+          "NK cells": 0.8882978723404256
+        }
+      },
+      {
+        "donor": "patient_1039",
+        "cells": 1102,
+        "balancedAccuracy": 0.8704711808755228,
+        "iterations": 47,
+        "recalls": {
+          "B cells": 0.9701492537313433,
+          "CD14+ Monocytes": 0.996551724137931,
+          "CD4 T cells": 0.9940357852882704,
+          "CD8 T cells": 0.65,
+          "Dendritic cells": 1.0,
+          "FCGR3A+ Monocytes": 0.925,
+          "Megakaryocytes": 0.5675675675675675,
+          "NK cells": 0.8604651162790697
+        }
+      },
+      {
+        "donor": "patient_107",
+        "cells": 1042,
+        "balancedAccuracy": 0.896687793266235,
+        "iterations": 47,
+        "recalls": {
+          "B cells": 0.9807692307692307,
+          "CD14+ Monocytes": 0.987146529562982,
+          "CD4 T cells": 0.9973614775725593,
+          "CD8 T cells": 0.3333333333333333,
+          "Dendritic cells": 0.9333333333333333,
+          "FCGR3A+ Monocytes": 0.9545454545454546,
+          "Megakaryocytes": 1.0,
+          "NK cells": 0.987012987012987
+        }
+      },
+      {
+        "donor": "patient_1244",
+        "cells": 3343,
+        "balancedAccuracy": 0.89287400199627,
+        "iterations": 48,
+        "recalls": {
+          "B cells": 0.9906542056074766,
+          "CD14+ Monocytes": 0.9972144846796658,
+          "CD4 T cells": 0.996,
+          "CD8 T cells": 0.4878048780487805,
+          "Dendritic cells": 0.9595959595959596,
+          "FCGR3A+ Monocytes": 1.0,
+          "Megakaryocytes": 0.75,
+          "NK cells": 0.9617224880382775
+        }
+      },
+      {
+        "donor": "patient_1256",
+        "cells": 4134,
+        "balancedAccuracy": 0.8951948391591944,
+        "iterations": 46,
+        "recalls": {
+          "B cells": 0.9816933638443935,
+          "CD14+ Monocytes": 0.9873257287705957,
+          "CD4 T cells": 0.9941234084231146,
+          "CD8 T cells": 0.8658536585365854,
+          "Dendritic cells": 0.926829268292683,
+          "FCGR3A+ Monocytes": 0.9711538461538461,
+          "Megakaryocytes": 0.5,
+          "NK cells": 0.9345794392523364
+        }
+      },
+      {
+        "donor": "patient_1488",
+        "cells": 4580,
+        "balancedAccuracy": 0.9256835146792901,
+        "iterations": 51,
+        "recalls": {
+          "B cells": 0.9862475442043221,
+          "CD14+ Monocytes": 0.9901408450704225,
+          "CD4 T cells": 0.9956284153005465,
+          "CD8 T cells": 0.7866666666666666,
+          "Dendritic cells": 0.9805825242718447,
+          "FCGR3A+ Monocytes": 0.9759036144578314,
+          "Megakaryocytes": 0.75,
+          "NK cells": 0.9402985074626866
+        }
+      }
+    ],
+    "conditionBalancedAccuracy": 0.9751769681631692,
+    "conditionAccuracyByType": {
+      "B cells": 0.9909315661977344,
+      "CD14+ Monocytes": 0.9962634374103891,
+      "CD4 T cells": 0.9768789714121112,
+      "CD8 T cells": 0.9531020278937203,
+      "Dendritic cells": 0.9944381629613485,
+      "FCGR3A+ Monocytes": 0.9945246428378667,
+      "Megakaryocytes": 0.9213158750813273,
+      "NK cells": 0.9739610615108566
+    },
+    "conditionFolds": [
+      {
+        "donor": "patient_101",
+        "cellType": "B cells",
+        "cells": 247,
+        "balancedAccuracy": 1.0,
+        "iterations": 21
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "CD14+ Monocytes",
+        "cells": 476,
+        "balancedAccuracy": 1.0,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "CD4 T cells",
+        "cells": 820,
+        "balancedAccuracy": 0.9696756464928935,
+        "iterations": 21
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "CD8 T cells",
+        "cells": 83,
+        "balancedAccuracy": 0.9444444444444444,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "Dendritic cells",
+        "cells": 64,
+        "balancedAccuracy": 1.0,
+        "iterations": 12
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "FCGR3A+ Monocytes",
+        "cells": 184,
+        "balancedAccuracy": 0.9955357142857143,
+        "iterations": 16
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "NK cells",
+        "cells": 149,
+        "balancedAccuracy": 0.9506410256410256,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "B cells",
+        "cells": 825,
+        "balancedAccuracy": 0.9871870423943712,
+        "iterations": 17
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "CD14+ Monocytes",
+        "cells": 1577,
+        "balancedAccuracy": 0.9976717112922002,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "CD4 T cells",
+        "cells": 1786,
+        "balancedAccuracy": 0.977275102791263,
+        "iterations": 20
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "CD8 T cells",
+        "cells": 145,
+        "balancedAccuracy": 0.9823529411764707,
+        "iterations": 22
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "Dendritic cells",
+        "cells": 76,
+        "balancedAccuracy": 0.9875,
+        "iterations": 11
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "FCGR3A+ Monocytes",
+        "cells": 323,
+        "balancedAccuracy": 0.9785626629851204,
+        "iterations": 14
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "Megakaryocytes",
+        "cells": 4,
+        "balancedAccuracy": 1.0,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "NK cells",
+        "cells": 354,
+        "balancedAccuracy": 0.9662889066241022,
+        "iterations": 17
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "B cells",
+        "cells": 248,
+        "balancedAccuracy": 0.987869918699187,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "CD14+ Monocytes",
+        "cells": 748,
+        "balancedAccuracy": 0.9885496183206106,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "CD4 T cells",
+        "cells": 963,
+        "balancedAccuracy": 0.959206557717071,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "CD8 T cells",
+        "cells": 993,
+        "balancedAccuracy": 0.9483700944590515,
+        "iterations": 21
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "Dendritic cells",
+        "cells": 47,
+        "balancedAccuracy": 1.0,
+        "iterations": 12
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "FCGR3A+ Monocytes",
+        "cells": 170,
+        "balancedAccuracy": 0.9876543209876543,
+        "iterations": 16
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "NK cells",
+        "cells": 188,
+        "balancedAccuracy": 0.9791383219954648,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "B cells",
+        "cells": 67,
+        "balancedAccuracy": 0.9615384615384616,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "CD14+ Monocytes",
+        "cells": 290,
+        "balancedAccuracy": 0.996031746031746,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "CD4 T cells",
+        "cells": 503,
+        "balancedAccuracy": 0.9834272346874897,
+        "iterations": 20
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "CD8 T cells",
+        "cells": 20,
+        "balancedAccuracy": 0.797979797979798,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "Dendritic cells",
+        "cells": 28,
+        "balancedAccuracy": 1.0,
+        "iterations": 15
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "FCGR3A+ Monocytes",
+        "cells": 40,
+        "balancedAccuracy": 1.0,
+        "iterations": 15
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "Megakaryocytes",
+        "cells": 111,
+        "balancedAccuracy": 0.685263500325309,
+        "iterations": 10
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "NK cells",
+        "cells": 43,
+        "balancedAccuracy": 0.9772727272727273,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "B cells",
+        "cells": 104,
+        "balancedAccuracy": 1.0,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "CD14+ Monocytes",
+        "cells": 389,
+        "balancedAccuracy": 1.0,
+        "iterations": 20
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "CD4 T cells",
+        "cells": 379,
+        "balancedAccuracy": 0.9720965940815187,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "CD8 T cells",
+        "cells": 18,
+        "balancedAccuracy": 1.0,
+        "iterations": 21
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "Dendritic cells",
+        "cells": 30,
+        "balancedAccuracy": 1.0,
+        "iterations": 13
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "FCGR3A+ Monocytes",
+        "cells": 44,
+        "balancedAccuracy": 1.0,
+        "iterations": 15
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "NK cells",
+        "cells": 77,
+        "balancedAccuracy": 0.9875,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "B cells",
+        "cells": 214,
+        "balancedAccuracy": 1.0,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "CD14+ Monocytes",
+        "cells": 718,
+        "balancedAccuracy": 0.9954704944178628,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "CD4 T cells",
+        "cells": 2000,
+        "balancedAccuracy": 0.9857396674815042,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "CD8 T cells",
+        "cells": 41,
+        "balancedAccuracy": 1.0,
+        "iterations": 21
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "Dendritic cells",
+        "cells": 99,
+        "balancedAccuracy": 0.9784219703574543,
+        "iterations": 12
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "FCGR3A+ Monocytes",
+        "cells": 58,
+        "balancedAccuracy": 1.0,
+        "iterations": 16
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "Megakaryocytes",
+        "cells": 4,
+        "balancedAccuracy": 1.0,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "NK cells",
+        "cells": 209,
+        "balancedAccuracy": 0.9813084112149533,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "B cells",
+        "cells": 437,
+        "balancedAccuracy": 0.9908571069498555,
+        "iterations": 17
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "CD14+ Monocytes",
+        "cells": 789,
+        "balancedAccuracy": 0.9949284584827799,
+        "iterations": 15
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "CD4 T cells",
+        "cells": 2042,
+        "balancedAccuracy": 0.9785706811359209,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "CD8 T cells",
+        "cells": 246,
+        "balancedAccuracy": 0.9754784688995215,
+        "iterations": 20
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "Dendritic cells",
+        "cells": 82,
+        "balancedAccuracy": 0.9895833333333333,
+        "iterations": 13
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "FCGR3A+ Monocytes",
+        "cells": 104,
+        "balancedAccuracy": 1.0,
+        "iterations": 15
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "Megakaryocytes",
+        "cells": 6,
+        "balancedAccuracy": 1.0,
+        "iterations": 19
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "NK cells",
+        "cells": 428,
+        "balancedAccuracy": 0.9646538700790901,
+        "iterations": 18
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "B cells",
+        "cells": 509,
+        "balancedAccuracy": 1.0,
+        "iterations": 20
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "CD14+ Monocytes",
+        "cells": 710,
+        "balancedAccuracy": 0.9974554707379135,
+        "iterations": 17
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "CD4 T cells",
+        "cells": 2745,
+        "balancedAccuracy": 0.9890402869092285,
+        "iterations": 20
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "CD8 T cells",
+        "cells": 75,
+        "balancedAccuracy": 0.9761904761904762,
+        "iterations": 17
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "Dendritic cells",
+        "cells": 103,
+        "balancedAccuracy": 1.0,
+        "iterations": 14
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "FCGR3A+ Monocytes",
+        "cells": 166,
+        "balancedAccuracy": 0.9944444444444445,
+        "iterations": 17
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "NK cells",
+        "cells": 268,
+        "balancedAccuracy": 0.984885229259489,
+        "iterations": 20
+      }
+    ],
+    "missingClassifierStrata": [
+      {
+        "donor": "patient_101",
+        "cellType": "Megakaryocytes",
+        "reason": "Treatment classifier needs both conditions in train and held-out donor"
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "Megakaryocytes",
+        "reason": "Treatment classifier needs both conditions in train and held-out donor"
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "Megakaryocytes",
+        "reason": "Treatment classifier needs both conditions in train and held-out donor"
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "Megakaryocytes",
+        "reason": "Treatment classifier needs both conditions in train and held-out donor"
+      }
+    ],
+    "programSpearman": 0.9357546993720005,
+    "withinStratumProgramSpearman": 0.5413432416388092,
+    "programDonorCorrelations": [
+      {
+        "donor": "patient_101",
+        "spearman": 0.9265766745656921
+      },
+      {
+        "donor": "patient_1015",
+        "spearman": 0.9344006281653786
+      },
+      {
+        "donor": "patient_1016",
+        "spearman": 0.9362521353572775
+      },
+      {
+        "donor": "patient_1039",
+        "spearman": 0.9342720199019452
+      },
+      {
+        "donor": "patient_107",
+        "spearman": 0.9447478254522894
+      },
+      {
+        "donor": "patient_1244",
+        "spearman": 0.9363097955656986
+      },
+      {
+        "donor": "patient_1256",
+        "spearman": 0.9365418359203033
+      },
+      {
+        "donor": "patient_1488",
+        "spearman": 0.9369366800474189
+      }
+    ],
+    "programStratumCorrelations": [
+      {
+        "donor": "patient_101",
+        "cellType": "B cells",
+        "condition": "ctrl",
+        "cells": 106,
+        "spearman": 0.7186239155781243
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "B cells",
+        "condition": "stim",
+        "cells": 141,
+        "spearman": 0.33197054668436143
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "CD14+ Monocytes",
+        "condition": "ctrl",
+        "cells": 207,
+        "spearman": 0.45992688061589876
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "CD14+ Monocytes",
+        "condition": "stim",
+        "cells": 269,
+        "spearman": 0.45884887828515414
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "CD4 T cells",
+        "condition": "ctrl",
+        "cells": 353,
+        "spearman": 0.7375707180431995
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "CD4 T cells",
+        "condition": "stim",
+        "cells": 467,
+        "spearman": 0.6403686561666914
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "CD8 T cells",
+        "condition": "ctrl",
+        "cells": 29,
+        "spearman": 0.7260818255982354
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "CD8 T cells",
+        "condition": "stim",
+        "cells": 54,
+        "spearman": 0.44516866781017717
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "Dendritic cells",
+        "condition": "ctrl",
+        "cells": 25,
+        "spearman": 0.35663935975783023
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "Dendritic cells",
+        "condition": "stim",
+        "cells": 39,
+        "spearman": 0.5797570850202429
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "ctrl",
+        "cells": 72,
+        "spearman": 0.5792540686431414
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "stim",
+        "cells": 112,
+        "spearman": 0.35524652338811635
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "NK cells",
+        "condition": "ctrl",
+        "cells": 65,
+        "spearman": 0.5959509510022574
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "NK cells",
+        "condition": "stim",
+        "cells": 84,
+        "spearman": 0.6196415915763896
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "B cells",
+        "condition": "ctrl",
+        "cells": 459,
+        "spearman": 0.8061953901828812
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "B cells",
+        "condition": "stim",
+        "cells": 366,
+        "spearman": 0.4595427507769614
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "CD14+ Monocytes",
+        "condition": "ctrl",
+        "cells": 859,
+        "spearman": 0.6757205356965593
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "CD14+ Monocytes",
+        "condition": "stim",
+        "cells": 718,
+        "spearman": 0.4383612278494344
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "CD4 T cells",
+        "condition": "ctrl",
+        "cells": 951,
+        "spearman": 0.7425393391972551
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "CD4 T cells",
+        "condition": "stim",
+        "cells": 835,
+        "spearman": 0.5807231355714261
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "CD8 T cells",
+        "condition": "ctrl",
+        "cells": 85,
+        "spearman": 0.6983688015452469
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "CD8 T cells",
+        "condition": "stim",
+        "cells": 60,
+        "spearman": 0.4163378716310087
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "Dendritic cells",
+        "condition": "ctrl",
+        "cells": 40,
+        "spearman": 0.3034010869199978
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "Dendritic cells",
+        "condition": "stim",
+        "cells": 36,
+        "spearman": 0.5953667953667955
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "ctrl",
+        "cells": 164,
+        "spearman": 0.7036895791016932
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "stim",
+        "cells": 159,
+        "spearman": 0.1421065201815142
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "Megakaryocytes",
+        "condition": "stim",
+        "cells": 3,
+        "spearman": 0.5
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "NK cells",
+        "condition": "ctrl",
+        "cells": 179,
+        "spearman": 0.749004238687817
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "NK cells",
+        "condition": "stim",
+        "cells": 175,
+        "spearman": 0.4813591580832961
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "B cells",
+        "condition": "ctrl",
+        "cells": 125,
+        "spearman": 0.8535827698866785
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "B cells",
+        "condition": "stim",
+        "cells": 123,
+        "spearman": 0.32577291663979574
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "CD14+ Monocytes",
+        "condition": "ctrl",
+        "cells": 393,
+        "spearman": 0.7733630857092222
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "CD14+ Monocytes",
+        "condition": "stim",
+        "cells": 355,
+        "spearman": 0.459043616105316
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "CD4 T cells",
+        "condition": "ctrl",
+        "cells": 502,
+        "spearman": 0.7588066726293226
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "CD4 T cells",
+        "condition": "stim",
+        "cells": 461,
+        "spearman": 0.6830764842061515
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "CD8 T cells",
+        "condition": "ctrl",
+        "cells": 504,
+        "spearman": 0.6828193746566187
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "CD8 T cells",
+        "condition": "stim",
+        "cells": 489,
+        "spearman": 0.5696813012253537
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "Dendritic cells",
+        "condition": "ctrl",
+        "cells": 27,
+        "spearman": 0.6670321352895504
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "Dendritic cells",
+        "condition": "stim",
+        "cells": 20,
+        "spearman": 0.7127819548872181
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "ctrl",
+        "cells": 81,
+        "spearman": 0.7423462803978548
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "stim",
+        "cells": 89,
+        "spearman": 0.3071842015662241
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "NK cells",
+        "condition": "ctrl",
+        "cells": 90,
+        "spearman": 0.7208295406267365
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "NK cells",
+        "condition": "stim",
+        "cells": 98,
+        "spearman": 0.3011495132260964
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "B cells",
+        "condition": "ctrl",
+        "cells": 26,
+        "spearman": 0.7188312988788453
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "B cells",
+        "condition": "stim",
+        "cells": 41,
+        "spearman": 0.30853658536585377
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "CD14+ Monocytes",
+        "condition": "ctrl",
+        "cells": 126,
+        "spearman": 0.6787529283007291
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "CD14+ Monocytes",
+        "condition": "stim",
+        "cells": 164,
+        "spearman": 0.5364003645613701
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "CD4 T cells",
+        "condition": "ctrl",
+        "cells": 201,
+        "spearman": 0.7817236349428037
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "CD4 T cells",
+        "condition": "stim",
+        "cells": 302,
+        "spearman": 0.5372019611589111
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "CD8 T cells",
+        "condition": "ctrl",
+        "cells": 9,
+        "spearman": 0.8786687791935092
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "CD8 T cells",
+        "condition": "stim",
+        "cells": 11,
+        "spearman": 0.6727272727272727
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "Dendritic cells",
+        "condition": "ctrl",
+        "cells": 10,
+        "spearman": 0.07878787878787878
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "Dendritic cells",
+        "condition": "stim",
+        "cells": 18,
+        "spearman": 0.19504643962848298
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "ctrl",
+        "cells": 15,
+        "spearman": 0.7096819779053274
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "stim",
+        "cells": 25,
+        "spearman": 0.30846153846153845
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "Megakaryocytes",
+        "condition": "ctrl",
+        "cells": 53,
+        "spearman": 0.46921394654871856
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "Megakaryocytes",
+        "condition": "stim",
+        "cells": 58,
+        "spearman": 0.5391201039101677
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "NK cells",
+        "condition": "ctrl",
+        "cells": 21,
+        "spearman": 0.7620354376216827
+      },
+      {
+        "donor": "patient_1039",
+        "cellType": "NK cells",
+        "condition": "stim",
+        "cells": 22,
+        "spearman": 0.7684923771880295
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "B cells",
+        "condition": "ctrl",
+        "cells": 44,
+        "spearman": 0.834274322634063
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "B cells",
+        "condition": "stim",
+        "cells": 60,
+        "spearman": 0.6629063628785775
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "CD14+ Monocytes",
+        "condition": "ctrl",
+        "cells": 210,
+        "spearman": 0.4732083585963934
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "CD14+ Monocytes",
+        "condition": "stim",
+        "cells": 179,
+        "spearman": 0.5802732617747368
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "CD4 T cells",
+        "condition": "ctrl",
+        "cells": 180,
+        "spearman": 0.7980259578801644
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "CD4 T cells",
+        "condition": "stim",
+        "cells": 199,
+        "spearman": 0.5671891911029766
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "CD8 T cells",
+        "condition": "ctrl",
+        "cells": 8,
+        "spearman": 0.5868368683374969
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "CD8 T cells",
+        "condition": "stim",
+        "cells": 10,
+        "spearman": 0.33333333333333326
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "Dendritic cells",
+        "condition": "ctrl",
+        "cells": 14,
+        "spearman": 0.5146976372306373
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "Dendritic cells",
+        "condition": "stim",
+        "cells": 16,
+        "spearman": 0.8676470588235294
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "ctrl",
+        "cells": 24,
+        "spearman": 0.5914741207133697
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "stim",
+        "cells": 20,
+        "spearman": 0.4586466165413533
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "NK cells",
+        "condition": "ctrl",
+        "cells": 37,
+        "spearman": 0.7415896187218641
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "NK cells",
+        "condition": "stim",
+        "cells": 40,
+        "spearman": 0.15722326454033772
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "B cells",
+        "condition": "ctrl",
+        "cells": 118,
+        "spearman": 0.7858610274517988
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "B cells",
+        "condition": "stim",
+        "cells": 96,
+        "spearman": 0.4094139989148127
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "CD14+ Monocytes",
+        "condition": "ctrl",
+        "cells": 418,
+        "spearman": 0.5996229230703785
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "CD14+ Monocytes",
+        "condition": "stim",
+        "cells": 300,
+        "spearman": 0.3993857709530106
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "CD4 T cells",
+        "condition": "ctrl",
+        "cells": 1108,
+        "spearman": 0.7951522464427153
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "CD4 T cells",
+        "condition": "stim",
+        "cells": 892,
+        "spearman": 0.5607720327569156
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "CD8 T cells",
+        "condition": "ctrl",
+        "cells": 29,
+        "spearman": 0.5167635982412814
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "CD8 T cells",
+        "condition": "stim",
+        "cells": 12,
+        "spearman": -0.013986013986013986
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "Dendritic cells",
+        "condition": "ctrl",
+        "cells": 62,
+        "spearman": 0.43987837821058084
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "Dendritic cells",
+        "condition": "stim",
+        "cells": 37,
+        "spearman": 0.6742532005689901
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "ctrl",
+        "cells": 41,
+        "spearman": 0.6325809763154692
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "stim",
+        "cells": 17,
+        "spearman": 0.09068627450980393
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "Megakaryocytes",
+        "condition": "stim",
+        "cells": 3,
+        "spearman": -0.5
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "NK cells",
+        "condition": "ctrl",
+        "cells": 102,
+        "spearman": 0.7551961787102852
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "NK cells",
+        "condition": "stim",
+        "cells": 107,
+        "spearman": 0.5270479437293051
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "B cells",
+        "condition": "ctrl",
+        "cells": 218,
+        "spearman": 0.845518874007501
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "B cells",
+        "condition": "stim",
+        "cells": 219,
+        "spearman": 0.3821963508403122
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "CD14+ Monocytes",
+        "condition": "ctrl",
+        "cells": 402,
+        "spearman": 0.5596605572018358
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "CD14+ Monocytes",
+        "condition": "stim",
+        "cells": 387,
+        "spearman": 0.517944446583843
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "CD4 T cells",
+        "condition": "ctrl",
+        "cells": 1049,
+        "spearman": 0.7730123194949193
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "CD4 T cells",
+        "condition": "stim",
+        "cells": 993,
+        "spearman": 0.5604008288609472
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "CD8 T cells",
+        "condition": "ctrl",
+        "cells": 114,
+        "spearman": 0.7622641898606687
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "CD8 T cells",
+        "condition": "stim",
+        "cells": 132,
+        "spearman": 0.5427987039075829
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "Dendritic cells",
+        "condition": "ctrl",
+        "cells": 34,
+        "spearman": 0.6434566894175446
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "Dendritic cells",
+        "condition": "stim",
+        "cells": 48,
+        "spearman": 0.7860399478940512
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "ctrl",
+        "cells": 47,
+        "spearman": 0.6693077603293968
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "stim",
+        "cells": 57,
+        "spearman": 0.5480943738656988
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "Megakaryocytes",
+        "condition": "stim",
+        "cells": 4,
+        "spearman": -0.7999999999999999
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "NK cells",
+        "condition": "ctrl",
+        "cells": 242,
+        "spearman": 0.7790403290424858
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "NK cells",
+        "condition": "stim",
+        "cells": 186,
+        "spearman": 0.5319666742816647
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "B cells",
+        "condition": "ctrl",
+        "cells": 220,
+        "spearman": 0.8191810019058647
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "B cells",
+        "condition": "stim",
+        "cells": 289,
+        "spearman": 0.44802957682426586
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "CD14+ Monocytes",
+        "condition": "ctrl",
+        "cells": 317,
+        "spearman": 0.6095071407473017
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "CD14+ Monocytes",
+        "condition": "stim",
+        "cells": 393,
+        "spearman": 0.3640657138586825
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "CD4 T cells",
+        "condition": "ctrl",
+        "cells": 1216,
+        "spearman": 0.7867658204135609
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "CD4 T cells",
+        "condition": "stim",
+        "cells": 1529,
+        "spearman": 0.5391031512468493
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "CD8 T cells",
+        "condition": "ctrl",
+        "cells": 33,
+        "spearman": 0.6523139220383812
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "CD8 T cells",
+        "condition": "stim",
+        "cells": 42,
+        "spearman": 0.23555627582853905
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "Dendritic cells",
+        "condition": "ctrl",
+        "cells": 46,
+        "spearman": 0.39407068583122634
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "Dendritic cells",
+        "condition": "stim",
+        "cells": 57,
+        "spearman": 0.7950479647394348
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "ctrl",
+        "cells": 76,
+        "spearman": 0.67276292486015
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "FCGR3A+ Monocytes",
+        "condition": "stim",
+        "cells": 90,
+        "spearman": 0.41200971313330864
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "Megakaryocytes",
+        "condition": "ctrl",
+        "cells": 4,
+        "spearman": -0.39999999999999997
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "NK cells",
+        "condition": "ctrl",
+        "cells": 119,
+        "spearman": 0.712492010826598
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "NK cells",
+        "condition": "stim",
+        "cells": 149,
+        "spearman": 0.497021585343733
+      }
+    ],
+    "unavailableProgramStrata": [
+      {
+        "donor": "patient_101",
+        "cellType": "Megakaryocytes",
+        "condition": "ctrl",
+        "cells": 1,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      },
+      {
+        "donor": "patient_101",
+        "cellType": "Megakaryocytes",
+        "condition": "stim",
+        "cells": 0,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      },
+      {
+        "donor": "patient_1015",
+        "cellType": "Megakaryocytes",
+        "condition": "ctrl",
+        "cells": 1,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "Megakaryocytes",
+        "condition": "ctrl",
+        "cells": 1,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      },
+      {
+        "donor": "patient_1016",
+        "cellType": "Megakaryocytes",
+        "condition": "stim",
+        "cells": 0,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "Megakaryocytes",
+        "condition": "ctrl",
+        "cells": 0,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      },
+      {
+        "donor": "patient_107",
+        "cellType": "Megakaryocytes",
+        "condition": "stim",
+        "cells": 1,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      },
+      {
+        "donor": "patient_1244",
+        "cellType": "Megakaryocytes",
+        "condition": "ctrl",
+        "cells": 1,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      },
+      {
+        "donor": "patient_1256",
+        "cellType": "Megakaryocytes",
+        "condition": "ctrl",
+        "cells": 2,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      },
+      {
+        "donor": "patient_1488",
+        "cellType": "Megakaryocytes",
+        "condition": "stim",
+        "cells": 0,
+        "reason": "Spearman requires at least three cells and nonconstant program and prediction"
+      }
+    ],
+    "sameDonorExcessByType": {
+      "B cells": 0.008409461237386964,
+      "CD14+ Monocytes": 0.041969860802763125,
+      "CD4 T cells": 0.028367781773045,
+      "CD8 T cells": 0.035203626087939754,
+      "Dendritic cells": 0.0274821499650588,
+      "FCGR3A+ Monocytes": 0.040891036920648056,
+      "Megakaryocytes": 0.02381895652768517,
+      "NK cells": 0.021067887895883104
+    }
+  },
+  "gates": {
+    "mixingImproved": true,
+    "conditionPreserved": true,
+    "programPreserved": true,
+    "withinStratumProgramPreserved": true,
+    "completeClassifierStrata": false,
+    "cellTypesPreserved": true,
+    "everyTypeRecallPreserved": true
+  },
+  "allMeasuredGatesPassed": false,
+  "evaluationSeconds": 16.06347275013104,
+  "qualification": "Native implementation and frozen independently invoked Scanpy/Scanorama reference on the same already inspected full cohorts. Original margins retained; incomplete Kang classifier strata and partial Ding source annotations remain. Transductive correction and source-label metrics are not unseen-study or prospective biological qualification."
+}
