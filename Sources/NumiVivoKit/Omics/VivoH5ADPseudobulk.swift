@@ -5,21 +5,24 @@ public struct VivoH5ADPseudobulkPlan: Codable, Sendable, Equatable {
     public let schemaVersion: Int
     public let mapping: VivoH5ADImportPlan
     public let contrasts: [VivoOmicsExpressionContrast]
-    public init(mapping: VivoH5ADImportPlan,contrasts: [VivoOmicsExpressionContrast] = []) {
-        schemaVersion=1; self.mapping=mapping; self.contrasts=contrasts
+    public var reduction: VivoH5ADReductionOptions? = nil
+    public init(mapping: VivoH5ADImportPlan,contrasts: [VivoOmicsExpressionContrast] = [],reduction: VivoH5ADReductionOptions? = nil) {
+        schemaVersion=1; self.mapping=mapping; self.contrasts=contrasts;self.reduction=reduction
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,contrasts }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,contrasts,reduction }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","contrasts"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","contrasts","reduction"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion)
         mapping=try c.decode(VivoH5ADImportPlan.self,forKey: .mapping)
+        reduction=try c.decodeIfPresent(VivoH5ADReductionOptions.self,forKey: .reduction)
         contrasts=try c.decodeIfPresent([VivoOmicsExpressionContrast].self,forKey: .contrasts) ?? []
     }
     public func validate() throws {
         guard schemaVersion == 1, contrasts.count <= 32, Set(contrasts.map(\.id)).count == contrasts.count else {
             throw VivoOmicsError.invalid("streamed pseudobulk plan schema or contrasts")
         }
+        try reduction?.validate()
         for contrast in contrasts { try contrast.validate() }
     }
 }
@@ -32,6 +35,8 @@ public struct VivoH5ADPseudobulkReport: Codable, Sendable, Equatable {
     public let canonicalNonzeros: Int
     public let hdf5Version: String
     public let contrasts: [VivoOmicsExpressionResult]
+    public var reduction: VivoSingleCellReductionResult? = nil
+    public var reductionStorage: VivoH5ADReductionStorage? = nil
 }
 public struct VivoH5ADPseudobulkReceipt: Codable, Sendable, Equatable {
     public let schemaVersion: Int
@@ -128,7 +133,12 @@ public enum VivoH5ADPseudobulk {
             try accumulator.add(row: row,feature: feature,count: count)
         })
         guard let accumulator else { throw VivoOmicsError.invalid("stream has no metadata") }
-        return try accumulator.finish(version: version,contrasts: plan.contrasts)
+        var report=try accumulator.finish(version: version,contrasts: plan.contrasts)
+        if let options=plan.reduction {
+            let (reduction,storage)=try VivoH5ADReduction.run(snapshot: url,mapping: plan.mapping,metadata: report.metadata,quality: report.quality,options: options)
+            report.reduction=reduction;report.reductionStorage=storage
+        }
+        return report
     }
     /// Hash/copy in 1 MiB blocks, independent of matrix size. The copied bytes,
     /// not a subsequently reread live path, are the authority for computation.

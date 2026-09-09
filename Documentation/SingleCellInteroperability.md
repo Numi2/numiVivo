@@ -243,7 +243,7 @@ The complete development objective remains open:
 1. **AnnData/H5AD:** native count exchange, raw-axis import, explicit feature IDs
    and source-preserving annotation edits implemented. Axis-changing operations
    (cell/feature filtering/reordering with every aligned slot), direct legacy
-   encoding support, and out-of-core projections remain. Full PBMC3K count/QC
+   encoding support, and general aligned projections remain. Full PBMC3K count/QC
    and annotation preservation now pass; this single library is not a donor-DE benchmark.
 2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
@@ -294,8 +294,12 @@ The complete development objective remains open:
    connection to Bayesian/mechanistic owners and real-data evaluation remain.
 8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired
    RNA/ATAC and spatial assays remain.
-9. **Out-of-core:** chunked sparse storage, memory mapping, streaming transforms
-   and native parallel kernels remain; current bounds do not qualify million cells.
+9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
+   selected-entry PCA now pass full Baron and Hagai comparisons against Scanpy;
+   see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).
+   Metadata, moments, basis, scores and report remain resident. Streaming
+   downstream graphs/integration, parallel kernels and million-cell qualification
+   remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

@@ -84,11 +84,12 @@ python Tools/Omics/Benchmarks/audit_muraro.py --source /data/GSE85241_cellsystem
 
 ## Remaining implementation and qualification
 
-Full-cohort normalization, HVG selection and PCA need a streamed, reusable sparse
-operator/storage path beyond the resident count projection. Extend the existing
-snapshot and reduction owners, retaining all-gene library-size denominators,
-shared HVG/PCA mathematics, source axes and reconstruction evidence. Selecting
-fewer cells to fit the resident limit does not satisfy this requirement.
+Full-cohort normalization, HVG selection and PCA now pass through the
+[streamed H5AD reduction owner](../Reduction/STREAMING.md), with all 8,569 cells
+and 20,125 features contributing to QC, normalization and feature selection.
+The 2,000-gene PCA agrees numerically with Scanpy and reconstructs from the
+archived source. This extends the earlier count-only evidence; that historical
+evidence directory retains its original qualification boundary.
 
 Baron also exposes a design limitation: native donor integration currently
 rejects the disconnected donor/condition design, and the single T2D donor cannot
@@ -97,6 +98,6 @@ would hide this fact. A future cell-type benchmark may evaluate mapping from
 three non-T2D donors to the held-out T2D donor, with training-only preprocessing
 and explicit rare-type support, but that has not been executed here. Broader
 integration must measure cell-type and within-type state preservation without
-claiming disease preservation from an unidentifiable contrast. Streamed PCA,
+claiming disease preservation from an unidentifiable contrast. Streaming downstream graphs/integration,
 multi-cell-type integration, learned reference mapping, perturbation prediction
 and million-cell performance remain open.

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "mapping": {
+    "schemaVersion": 1,
+    "id": "hagai-original-mouse-all",
+    "evidence": "measured",
+    "sourceDescription": "E-MTAB-6754 author QC cluster0, six mouse source samples; donor pairing not yet qualified",
+    "countUnit": "umiCount",
+    "matrixPath": "X",
+    "samples": [
+      {
+        "id": "mouse1_unst",
+        "biologicalReplicateID": "mouse1_unst",
+        "condition": "unstimulated",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090"
+      },
+      {
+        "id": "mouse2_unst",
+        "biologicalReplicateID": "mouse2_unst",
+        "condition": "unstimulated",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090"
+      },
+      {
+        "id": "mouse3_unst",
+        "biologicalReplicateID": "mouse3_unst",
+        "condition": "unstimulated",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090"
+      },
+      {
+        "id": "mouse1_lps6",
+        "biologicalReplicateID": "mouse1_lps6",
+        "condition": "LPS6",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090"
+      },
+      {
+        "id": "mouse2_lps6",
+        "biologicalReplicateID": "mouse2_lps6",
+        "condition": "LPS6",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090"
+      },
+      {
+        "id": "mouse3_lps6",
+        "biologicalReplicateID": "mouse3_lps6",
+        "condition": "LPS6",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090"
+      }
+    ],
+    "sampleColumn": "sample",
+    "barcodeColumn": "barcode",
+    "mitochondrialFeatureIDs": []
+  },
+  "contrasts": [],
+  "reduction": {}
+}

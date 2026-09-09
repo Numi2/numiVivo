@@ -1,0 +1,315 @@
+{
+  "schema": "numivivo.org/singlecell-cli-checks/v1",
+  "passed": true,
+  "checks": [
+    "help exposes supported workflow",
+    "verified native reconstruction",
+    "source evidence not promoted",
+    "expected dimensions and replicate groups",
+    "exact raw source counts",
+    "exact per-cell totals",
+    "empty-cell mitochondrial fraction remains missing",
+    "pseudobulk retains replicate counts",
+    "normalized view separate and scale invariant",
+    "cell identities retained",
+    "repeat run has stable content identities",
+    "receipt not overwritten",
+    "output cannot enter store through symlink",
+    "general workflow executed",
+    "general workflow and dedicated command agree",
+    "validated cache reuse",
+    "changed source cannot reuse old input identity",
+    "primary stored source preserved"
+  ],
+  "commands": [
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-help"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/receipt.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/receipt.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-export",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/receipt.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/report.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/repeat.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/receipt.json"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--normalise",
+        "1"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store/forbidden.json"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store-alias/forbidden.json"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/inputs/unknown.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/wrong-implementation.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/wrong-input.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "artifact-show",
+        "e99d77f33fe5d10d526cc1d21d594540d7edcd7b2ff1cc93e398d32697e1ce05",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "artifact-put",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/false-result.json",
+        "--kind",
+        "vivo.singlecell-stored-result-v1",
+        "--media-type",
+        "application/json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/false-receipt.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "workflow-plan",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/workflow.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "workflow-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/workflow.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/workflow-run.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "workflow-export",
+        "0ddffc111df5d67dfebbeb5d7fcf84726299387e7aabe92f5b0ab547ddc2bd04",
+        "--name",
+        "report",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/workflow-report.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "workflow-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/workflow.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/workflow-repeat.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/receipt.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/changed.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "artifact-show",
+        "4983dbd6a66e2abc719394d6fb5c1297468f11c96b4dfc60fafef052b96708c5",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/damaged-store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/receipt.json",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/damaged-store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+        "artifact-show",
+        "4983dbd6a66e2abc719394d6fb5c1297468f11c96b4dfc60fafef052b96708c5",
+        "--store",
+        "/Users/home/numivivo-stream-pca-existing-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    }
+  ],
+  "binarySHA256": "3c41368c86a18ff757742a2d94ede0457cd178705f4fb202a024fb270831a459",
+  "scope": "Synthetic native CLI, artifact integrity, reconstruction and existing workflow composition; not biological validation."
+}

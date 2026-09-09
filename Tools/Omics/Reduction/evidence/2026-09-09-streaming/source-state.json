@@ -1,0 +1,28 @@
+{
+  "baseCommit": "883b802192d12e64dcfe484904ee5a71ce214bfc",
+  "sourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoH5ADReduction.swift": "5a03642e76072ba58cd33970976e3180cfce4e3d9a4d779036aebc8e8a122c8f",
+    "Sources/NumiVivoKit/Omics/VivoH5ADPseudobulk.swift": "1bda3ff5646ac102f317f0758bfb835cded6cc1f106e297d6dbc22dfc902483e",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellReduction.swift": "2f4fe6380be3ccfc5a6343b2e7dffac25e35f0598e1a1882a65ab95f15f3f252",
+    "Tests/NumiVivoIntegrationTests/SingleCellMappedReductionTests.swift": "34275e74a4fe3802dd68ac0702e8b716b322e185396996f342667ceeece4b795",
+    "Tools/Omics/H5AD/build.sh": "3ffe2145fb01ae1bdab7d177fc1a8e6133726ee09959c79ad8012f544717b7e2"
+  },
+  "remoteTestedSourcesMatchLocal": true,
+  "buildHost": "macmini:/Users/n/numivivo-h5ad-20260909",
+  "executionHost": "Darwin Ts-MacBook-Air.local 25.6.0 Darwin Kernel Version 25.6.0: Fri May 15 01:56:36 PDT 2026; root:xnu-12377.160.49.0.1~42/RELEASE_ARM64_T8132 arm64",
+  "binary": "/Users/home/numivivo-stream-pca-product-20260909/numivivo",
+  "binarySHA256": "3c41368c86a18ff757742a2d94ede0457cd178705f4fb202a024fb270831a459",
+  "artifacts": {
+    "baron": {
+      "directory": "/Users/home/numivivo-baron-stream-pca-product-20260909",
+      "reportSHA256": "08416bd24e6ae47f83fde6f7cc233f89ef6bcea21cde16054e5e4153d7047ae0",
+      "referenceSHA256": "243d85f1ba7a86bfb268d6f8e54af4198215b6cf788f4ee288278e3043841e7c"
+    },
+    "hagai": {
+      "directory": "/Users/home/numivivo-hagai-stream-pca-product-20260909",
+      "reportSHA256": "2a3ae539048841e6cc89c91583ac217aaba87138fe30b0c713d6d0e3d3d8ed3c",
+      "referenceSHA256": "41ff9834abc5779fd3a4ca5402805d864c5c3090c66c4ba849024e3a94003c8e"
+    }
+  },
+  "qualification": "CPU streamed normalization/HVG and memory-mapped selected-entry PCA. Numerical, replay and bounded-storage evidence only; no million-cell, GPU, performance comparison or biological qualification."
+}

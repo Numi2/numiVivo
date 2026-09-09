@@ -1,0 +1,14 @@
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Omics/VivoH5ADReduction.swift:63:9: error: 'self' used in method call '$defer' before all stored properties are initialized
+ 45 | /// log-normalized value. It is not a new public count format or a second engine.
+ 46 | final class VivoMappedReductionEntries {
+ 47 |     let address: UnsafeMutableRawPointer
+    |         `- note: 'self.address' not initialized
+ 48 |     let byteCount: Int
+ 49 |     let count: Int
+    :
+ 61 |         guard mapped != MAP_FAILED,let mapped else { throw VivoOmicsError.limit("cannot memory-map reduction cache") }
+ 62 |         var valid=false
+ 63 |         defer { if !valid { _ = munmap(mapped,byteCount) } }
+    |         `- error: 'self' used in method call '$defer' before all stored properties are initialized
+ 64 |         // Validate before unchecked repeated arithmetic traversal. Metadata limits
+ 65 |         // and exact file size bound every access. The owner never mutates a map.

@@ -1,0 +1,88 @@
+[
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-hagai-stream-compatible-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 14.721636999864131,
+    "maximumResidentBytes": 316506112,
+    "peakFootprintBytes": 303694664,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk-verify",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 14.740388458129019,
+    "maximumResidentBytes": 335036416,
+    "peakFootprintBytes": 322159408,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-hagai-stream-compatible-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/repeat"
+    ],
+    "exitCode": 0,
+    "seconds": 15.230206042062491,
+    "maximumResidentBytes": 316637184,
+    "peakFootprintBytes": 303825736,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-hagai-stream-compatible-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/insufficient-cache.json",
+      "--output",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/rejected-cache"
+    ],
+    "exitCode": 65,
+    "seconds": 9.031692499760538,
+    "maximumResidentBytes": 189513728,
+    "peakFootprintBytes": 176734952,
+    "expectedFailure": "cache-byte budget"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-hagai-stream-compatible-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/insufficient-work.json",
+      "--output",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/rejected-work"
+    ],
+    "exitCode": 65,
+    "seconds": 9.0412394576706,
+    "maximumResidentBytes": 190136320,
+    "peakFootprintBytes": 177341136,
+    "expectedFailure": "entry-visit budget"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-hagai-stream-compatible-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/insufficient-basis.json",
+      "--output",
+      "/Users/home/numivivo-hagai-stream-pca-product-20260909/rejected-basis"
+    ],
+    "exitCode": 65,
+    "seconds": 13.002617958001792,
+    "maximumResidentBytes": 250314752,
+    "peakFootprintBytes": 183861992,
+    "expectedFailure": "residual"
+  }
+]

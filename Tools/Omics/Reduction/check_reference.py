@@ -17,23 +17,52 @@ from fast_array_utils import stats
 from scipy import sparse
 
 p = argparse.ArgumentParser()
-p.add_argument('--dataset', type=Path, required=True)
+source = p.add_mutually_exclusive_group(required=True)
+source.add_argument('--dataset', type=Path)
+source.add_argument('--h5ad', type=Path)
 p.add_argument('--report', type=Path, required=True)
 p.add_argument('--out', type=Path, required=True)
 a = p.parse_args()
-d = json.loads(a.dataset.read_text())
-r = json.loads(a.report.read_text())['reduction']
-m = d['matrix']
-x = sparse.csr_matrix((np.asarray(m['counts'], dtype=np.float64), m['featureIndices'], m['rowOffsets']),
-                      shape=(m['cellCount'], m['featureCount']))
-identity = {(c['sampleID'], c['barcode']): i for i, c in enumerate(d['cells'])}
+report = json.loads(a.report.read_text())
+r = report['reduction']
+if a.dataset:
+    d = json.loads(a.dataset.read_text())
+    m = d['matrix']
+    x = sparse.csr_matrix((np.asarray(m['counts'], dtype=np.float64), m['featureIndices'], m['rowOffsets']),
+                          shape=(m['cellCount'], m['featureCount']))
+    identities = [(c['sampleID'], c['barcode']) for c in d['cells']]
+    feature_ids = [f['id'] for f in d['features']]
+    target = report['plan']['normalizationTarget']
+    source_path = a.dataset
+else:
+    import h5py
+    plan = json.loads((a.report.parent/'plan.json').read_text())
+    mapping = plan['mapping']
+    path = mapping['matrixPath']
+    with h5py.File(a.h5ad, 'r') as handle:
+        assert isinstance(handle[path], h5py.Group), 'Reference requires a sparse H5AD count array'
+    obj = ad.read_h5ad(a.h5ad)
+    if path == 'X':
+        x, var = obj.X, obj.var
+    elif path == 'raw/X':
+        x, var = obj.raw.X, obj.raw.var
+    else:
+        assert path.startswith('layers/')
+        x, var = obj.layers[path[len('layers/'):]], obj.var
+    assert sparse.issparse(x)
+    x = x.astype(np.float64).tocsr()
+    x.sum_duplicates(); x.eliminate_zeros(); x.sort_indices()
+    barcodes = obj.obs[mapping['barcodeColumn']].astype(str).tolist() if mapping.get('barcodeColumn') else obj.obs_names.tolist()
+    identities = list(zip(obj.obs[mapping['sampleColumn']].astype(str), barcodes))
+    feature_ids = var[mapping['featureIDColumn']].astype(str).tolist() if mapping.get('featureIDColumn') else var.index.tolist()
+    target = report['reductionStorage']['options']['normalizationTarget']
+    source_path = a.h5ad
+assert len(set(identities)) == len(identities)
+identity = {cell: i for i, cell in enumerate(identities)}
 rows = [identity[(c['sampleID'], c['barcode'])] for c in r['cells']]
 b = ad.AnnData(x[rows].copy())
-b.var_names = [f['id'] for f in d['features']]
+b.var_names = feature_ids
 assert list(b.var_names) == [f['featureID'] for f in r['features']]
-# Reference is the same common normalization target recorded in the native plan.
-report = json.loads(a.report.read_text())
-target = report['plan']['normalizationTarget']
 sc.pp.normalize_total(b, target_sum=target)
 sc.pp.log1p(b)
 o = r['options']
@@ -79,11 +108,20 @@ np.testing.assert_allclose(scores.mean(axis=0), 0, atol=1e-10)
 np.testing.assert_allclose(scores.T @ scores / (len(rows)-1), np.diag(variance), rtol=1e-7, atol=1e-8)
 assert max(r['relativeResiduals']) <= o['relativeResidualTolerance']
 result = dict(status='passed', qualification='Numerical agreement on these count axes; no biological or integration qualification',
-    datasetSHA256=hashlib.sha256(a.dataset.read_bytes()).hexdigest(), reportSHA256=hashlib.sha256(a.report.read_bytes()).hexdigest(),
+    datasetSHA256=hashlib.sha256(source_path.read_bytes()).hexdigest(), reportSHA256=hashlib.sha256(a.report.read_bytes()).hexdigest(),
     cells=len(rows), features=x.shape[1], sourceNonzeros=x.nnz, selectedFeatures=len(selected), components=o['components'],
     featureMaximumAbsoluteErrors=errors, minimumSubspaceCosine=float(min(singular)), alignedRelativeScoreError=score_error,
     maximumNativeResidual=max(r['relativeResiduals']), maximumVarianceRelativeError=float(np.max(np.abs(variance/c.uns['pca']['variance']-1))),
     versions={name: importlib.metadata.version(name) for name in ['scanpy','anndata','numpy','scipy','pandas']})
+if 'reductionStorage' in report:
+    storage = report['reductionStorage']
+    entries = int(x[rows][:, selected].nnz)
+    visits = entries * (2 * min(o['maximumBasis'], len(selected)) + 3 * o['components'])
+    assert storage['sourcePasses'] == 3
+    assert storage['selectedEntries'] == entries and storage['cacheBytes'] == 16 * entries
+    assert storage['entryVisits'] == visits <= storage['options']['maximumEntryVisits']
+    assert storage['cacheBytes'] <= storage['options']['maximumCacheBytes']
+    result['streamedStorage'] = storage
 a.out.parent.mkdir(parents=True, exist_ok=True)
 a.out.write_text(json.dumps(result, indent=2, allow_nan=False)+'\n')
 print(json.dumps(result, indent=2))

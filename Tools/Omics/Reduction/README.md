@@ -41,7 +41,9 @@ orthogonality must pass before a result can be published. Insufficient basis or
 numerical rank is an error; there is no silent fallback or tolerance relaxation.
 The bounds are currently 10,000 selected features (including ties), 64 components
 and 256 basis vectors, within the existing resident count limits. This is not yet
-an out-of-core PCA implementation or a million-cell performance qualification.
+a million-cell performance qualification. The separate [streamed H5AD route](STREAMING.md)
+now reuses this mathematics with memory-mapped selected entries beyond the
+resident count bound.
 
 ## Verification
 

@@ -1,0 +1,103 @@
+{
+  "status": "passed",
+  "binarySHA256": "3c41368c86a18ff757742a2d94ede0457cd178705f4fb202a024fb270831a459",
+  "checks": [
+    "full-source streamed PCA publication",
+    "native reconstruction",
+    "exact repeat",
+    "scratch cache absent from published bundle",
+    "cache budget rejection",
+    "entry visit budget rejection",
+    "unconverged PCA rejection",
+    "staging cleanup after failure"
+  ],
+  "commands": [
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+        "--plan",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/plan.json",
+        "--output",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/bundle"
+      ],
+      "exitCode": 0,
+      "seconds": 7.641058540903032,
+      "maximumResidentBytes": 294928384,
+      "peakFootprintBytes": 282149728,
+      "expectedFailure": null
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/bundle"
+      ],
+      "exitCode": 0,
+      "seconds": 7.00121408328414,
+      "maximumResidentBytes": 312016896,
+      "peakFootprintBytes": 299205496,
+      "expectedFailure": null
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+        "--plan",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/plan.json",
+        "--output",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/repeat"
+      ],
+      "exitCode": 0,
+      "seconds": 7.044297790620476,
+      "maximumResidentBytes": 294699008,
+      "peakFootprintBytes": 281903944,
+      "expectedFailure": null
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+        "--plan",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/insufficient-cache.json",
+        "--output",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/rejected-cache"
+      ],
+      "exitCode": 65,
+      "seconds": 4.249039500020444,
+      "maximumResidentBytes": 165855232,
+      "peakFootprintBytes": 153043664,
+      "expectedFailure": "cache-byte budget"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+        "--plan",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/insufficient-work.json",
+        "--output",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/rejected-work"
+      ],
+      "exitCode": 65,
+      "seconds": 4.228221041150391,
+      "maximumResidentBytes": 165838848,
+      "peakFootprintBytes": 153027280,
+      "expectedFailure": "entry-visit budget"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+        "--plan",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/insufficient-basis.json",
+        "--output",
+        "/Users/home/numivivo-baron-stream-pca-product-20260909/rejected-basis"
+      ],
+      "exitCode": 65,
+      "seconds": 6.144670249894261,
+      "maximumResidentBytes": 189923328,
+      "peakFootprintBytes": 158909136,
+      "expectedFailure": "residual"
+    }
+  ],
+  "qualification": "CPU workflow and storage/numerical checks; not biological integration or million-cell performance"
+}

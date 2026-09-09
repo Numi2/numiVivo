@@ -1,0 +1,177 @@
+{
+  "status": "passed",
+  "checks": [
+    "count publication",
+    "reduction publication",
+    "native reconstruction",
+    "report export",
+    "deterministic receipt",
+    "controlled unconverged rejection without receipt",
+    "controlled neighbor work-budget rejection without receipt",
+    "controlled unconverged clustering rejection without receipt",
+    "controlled embedding work-budget rejection without receipt",
+    "controlled integration budget rejection without receipt",
+    "controlled integration metadata rejection without receipt"
+  ],
+  "binarySHA256": "3c41368c86a18ff757742a2d94ede0457cd178705f4fb202a024fb270831a459",
+  "commands": [
+    {
+      "arguments": [
+        "singlecell-run",
+        "/Users/home/numivivo-kang-native-nb-qualified-20260909/imported/manifest.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/counts.json"
+      ],
+      "exitCode": 0,
+      "seconds": 2.560689500067383,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/plan.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/analysis.json"
+      ],
+      "exitCode": 0,
+      "seconds": 6.221655915956944,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analysis-verify",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store"
+      ],
+      "exitCode": 0,
+      "seconds": 5.8744480409659445,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analysis-export",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/report.json"
+      ],
+      "exitCode": 0,
+      "seconds": 7.4384971666149795,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/plan.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/repeat.json"
+      ],
+      "exitCode": 0,
+      "seconds": 6.24399666627869,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/insufficient-basis.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.5210921661928296,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/insufficient-neighbor-budget.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.8710798332467675,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/insufficient-clustering-sweeps.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.9057225422002375,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/insufficient-embedding-budget.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.9261243329383433,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/invalid-integration-budget.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.669182541780174,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/invalid-integration-metadata.json",
+        "--store",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/store",
+        "--output",
+        "/Users/home/numivivo-kang-stream-pca-regression-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.6499193753115833,
+      "expectedSuccess": false
+    }
+  ],
+  "qualification": "Software reconstruction and numerical convergence; not biological qualification"
+}
