@@ -320,10 +320,11 @@ The complete development objective remains open:
    biological qualification remain; labels are not authoritative.
 7. **Perturbation prediction:** [real donor-held-out response baselines](../Tools/Omics/PerturbationPrediction/README.md)
    now evaluate all eight Kang and three Hagai donors using supplied controls and
-   sealed treated outcomes. These external reference baselines do not implement
-   a native perturbation predictor. Native integration with Bayesian/mechanistic
-   owners, unseen perturbation identity, unseen cell/tissue contexts and
-   single-cell response distributions remain open.
+   sealed treated outcomes. [Native donor-response prediction](../Tools/Omics/PerturbationPrediction/NATIVE.md)
+   now fits and freezes all four baselines through streamed H5AD aggregation,
+   with reconstruction and real-data numerical agreement on all eleven folds.
+   Bayesian/mechanistic integration, unseen perturbation identity, unseen
+   cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired
    RNA/ATAC and spatial assays remain.
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped

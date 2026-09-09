@@ -1,0 +1,56 @@
+{
+  "study": "hagai",
+  "sourceSHA256": "2d0a69d121bcf6e9b63b82fafd06e597f6165a927b87b0cc51cb5c90c2caa5f5",
+  "binarySHA256": "740dee5a0a9da2517eef9df4263a8782fe395167cc43fac0eb381c83c350febb",
+  "folds": [
+    {
+      "donor": "mouse1",
+      "features": 22048,
+      "trainingDonors": [
+        "mouse2",
+        "mouse3"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 4.11226608321158e-13
+      },
+      "maximumSolveResidual": 2.220446049250313e-16,
+      "exactReplay": true
+    },
+    {
+      "donor": "mouse2",
+      "features": 22048,
+      "trainingDonors": [
+        "mouse1",
+        "mouse3"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 1.3322676295501878e-14
+      },
+      "maximumSolveResidual": 4.440892098500626e-16,
+      "exactReplay": true
+    },
+    {
+      "donor": "mouse3",
+      "features": 22048,
+      "trainingDonors": [
+        "mouse1",
+        "mouse2"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 9.592326932761353e-14
+      },
+      "maximumSolveResidual": 4.440892098500626e-16,
+      "exactReplay": true
+    }
+  ],
+  "commands": 21
+}

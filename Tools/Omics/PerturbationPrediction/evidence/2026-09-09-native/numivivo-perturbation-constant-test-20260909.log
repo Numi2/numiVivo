@@ -1,0 +1,27 @@
+[0/1] Planning build
+Building for debugging...
+[0/5] Write sources
+[1/5] Write swift-version-3CD7052B146186F2.txt
+[3/5] Compiling NumiVivoIntegrationTests SingleCellPerturbationTests.swift
+[4/5] Emitting module NumiVivoIntegrationTests
+[4/6] Write Objects.LinkFileList
+[5/6] Linking NumiVivoPackageTests
+Build complete! (3.11s)
+Test Suite 'Selected tests' started at 2026-09-09 10:14:28.150.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 10:14:28.155.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 10:14:28.155.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 10:14:28.155.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellPerturbationTests started.
+◇ Test unknownPredictionSettingsAreRejected() started.
+◇ Test constantControlsDoNotInventContextVariation() started.
+◇ Test pairedModelUsesTrainingDataAndReplays() started.
+✔ Test unknownPredictionSettingsAreRejected() passed after 0.003 seconds.
+✔ Test constantControlsDoNotInventContextVariation() passed after 0.003 seconds.
+✔ Test pairedModelUsesTrainingDataAndReplays() passed after 0.005 seconds.
+✔ Suite SingleCellPerturbationTests passed after 0.005 seconds.
+✔ Test run with 3 tests in 1 suite passed after 0.005 seconds.

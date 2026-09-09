@@ -1,7 +1,7 @@
 # Donor-held-out perturbation response baselines
 
-This is a deterministic external benchmark for the next native prediction
-implementation. It uses full, source-verified pseudobulk counts from Kang B cells
+This is a deterministic external benchmark for the [native prediction
+implementation](NATIVE.md). It uses full, source-verified pseudobulk counts from Kang B cells
 (2,651 cells, 15,706 genes, eight paired donors) and Hagai fibroblasts (13,863 cells,
 22,048 genes, three paired donors). It does not train across species. Every donor
 is held out once. Its control profile is supplied, and its treated profile is
@@ -74,15 +74,16 @@ Evidence includes all input count tables and metadata, per-fold model parameters
 feature panels, donor membership, per-gene predictions and outcomes, full metrics,
 package versions, source hashes, source reaggregation and replay checks. The
 original single-cell source identity is inherited from the existing experimental
-benchmark artifacts; this change introduces no new native executable.
+benchmark artifacts. The original external benchmark commit introduced no
+new native executable; the native owner is qualified separately.
 
 ## Native integration boundary
 
-The immediate native contract should bind a training cohort and perturbation
-identity, complete feature universe/namespace, assay units, training-only transforms,
-model parameters and allowed query inputs. Treated outcomes must remain outside
-prediction. It should reuse the Omics source/aggregation/provenance owners and
-preserve the original baseline models alongside any learned model.
+The native contract now binds a training cohort and perturbation identity,
+complete feature universe/namespace, assay units, training-only transforms, model
+parameters and allowed query inputs. Treated outcomes remain outside prediction.
+It reuses the Omics source/aggregation/provenance owners and preserves all four
+baselines. See the native qualification for the exact supported scope.
 
 The existing `Calibration/VivoPosteriorModel.swift` and
 `VivoTemperedPosteriorSampler.swift` already provide likelihood fingerprints,
@@ -95,7 +96,7 @@ sampler is automatically a hierarchical whole-transcriptome predictor. Learned
 omics-to-mechanistic parameter mappings and physical units need separate models
 and calibration. No Bayesian or mechanistic prediction is claimed here.
 
-Native perturbation prediction, unseen perturbation identities, unseen cell/tissue
+Bayesian/mechanistic prediction, unseen perturbation identities, unseen cell/tissue
 contexts, heterogeneous single-cell responses, uncertainty calibration and larger
 independent donor cohorts remain open.
 

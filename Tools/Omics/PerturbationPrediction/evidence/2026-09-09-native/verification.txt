@@ -1,0 +1,1 @@
+Local/remote owned sources match. Release binary SHA256: 740dee5a0a9da2517eef9df4263a8782fe395167cc43fac0eb381c83c350febb. codesign --verify passed. All 48 existing/new single-cell tests passed, then all 3 perturbation tests passed after adding the constant-control case (49 distinct tests total). No product sources changed after the release build.

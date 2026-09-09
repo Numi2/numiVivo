@@ -1,0 +1,776 @@
+[
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/wrong-perturbation.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/wrong-perturbation"
+    ],
+    "returncode": 65,
+    "expectedFailure": "identity, namespace or unit mismatch"
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/wrong-namespace.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/wrong-namespace"
+    ],
+    "returncode": 65,
+    "expectedFailure": "identity, namespace or unit mismatch"
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/wrong-unit.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/wrong-unit"
+    ],
+    "returncode": 65,
+    "expectedFailure": "identity, namespace or unit mismatch"
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/treated-query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/treated-query"
+    ],
+    "returncode": 65,
+    "expectedFailure": "control-only query samples"
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/wrong-organism.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/wrong-organism"
+    ],
+    "returncode": 65,
+    "expectedFailure": "feature universe, organism, cell group or donor multiplicity mismatch"
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/donor-overlap.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/donor-overlap"
+    ],
+    "returncode": 65,
+    "expectedFailure": "query donor overlaps training"
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/prediction"
+    ],
+    "returncode": 65,
+    "expectedFailure": "output already exists"
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/reordered.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/reordered"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/missing-gene.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/missing"
+    ],
+    "returncode": 65,
+    "expectedFailure": "feature universe, organism, cell group or donor multiplicity mismatch"
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_101/altered-model"
+    ],
+    "returncode": 65,
+    "expectedFailure": "perturbation model does not reconstruct"
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1015/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1016/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1039/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_107/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1244/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1256/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-kang-20260909/patient_1488/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  }
+]

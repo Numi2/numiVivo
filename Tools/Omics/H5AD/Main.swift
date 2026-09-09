@@ -12,6 +12,20 @@ import NumiVivoKit
     static func run() throws {
         let args = CommandLine.arguments
         let implementation=try VivoFingerprint(bytes: Array(repeating: 0,count: 32))
+        if args.count==5,args[1]=="perturbation-fit" {
+            let plan=try JSONDecoder().decode(VivoPerturbationPlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            _=try VivoPerturbation.fit(source: URL(fileURLWithPath: args[2]),plan: plan,implementation: implementation,to: URL(fileURLWithPath: args[4]));print("fit");return
+        }
+        if args.count==6,args[1]=="perturbation-predict" {
+            let plan=try JSONDecoder().decode(VivoPerturbationQueryPlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            _=try VivoPerturbation.map(source: URL(fileURLWithPath: args[2]),plan: plan,reference: URL(fileURLWithPath: args[4]),implementation: implementation,to: URL(fileURLWithPath: args[5]));print("mapped");return
+        }
+        if args.count==3,args[1]=="perturbation-verify" {
+            _=try VivoPerturbation.verifyModel(URL(fileURLWithPath: args[2]),implementation: implementation);print("verified");return
+        }
+        if args.count==3,args[1]=="perturbation-prediction-verify" {
+            _=try VivoPerturbation.verifyPrediction(URL(fileURLWithPath: args[2]),implementation: implementation);print("verified");return
+        }
         if args.count==5,args[1]=="reference-fit" {
             let plan=try JSONDecoder().decode(VivoSingleCellReferencePlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
             _=try VivoSingleCellReference.fit(source: URL(fileURLWithPath: args[2]),plan: plan,implementation: implementation,to: URL(fileURLWithPath: args[4]));print("fit");return

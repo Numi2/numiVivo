@@ -1,0 +1,242 @@
+[
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-hagai-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-hagai-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-hagai-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-hagai-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-hagai-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/training-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/training"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-h5ad-project",
+      "/Users/home/numivivo-hagai-r-native-current-20260909/original.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/control-projection.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/control"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-fit",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/training/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-verify",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/model"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/prediction"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "singlecell-perturbation-predict",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/control/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/model",
+      "--output",
+      "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  }
+]

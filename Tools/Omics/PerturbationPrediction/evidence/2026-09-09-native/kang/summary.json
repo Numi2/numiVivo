@@ -1,0 +1,176 @@
+{
+  "study": "kang",
+  "sourceSHA256": "6e5609e5bd0635ac1bd2a8f9a2bf98ad4fa9a012e8e4e2ad926436d073d745f0",
+  "binarySHA256": "740dee5a0a9da2517eef9df4263a8782fe395167cc43fac0eb381c83c350febb",
+  "folds": [
+    {
+      "donor": "patient_101",
+      "features": 15706,
+      "trainingDonors": [
+        "patient_1015",
+        "patient_1016",
+        "patient_1039",
+        "patient_107",
+        "patient_1244",
+        "patient_1256",
+        "patient_1488"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 4.4853010194856324e-14
+      },
+      "maximumSolveResidual": 9.48630063390965e-13,
+      "exactReplay": true
+    },
+    {
+      "donor": "patient_1015",
+      "features": 15706,
+      "trainingDonors": [
+        "patient_101",
+        "patient_1016",
+        "patient_1039",
+        "patient_107",
+        "patient_1244",
+        "patient_1256",
+        "patient_1488"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 3.552713678800501e-15
+      },
+      "maximumSolveResidual": 1.238453783969362e-13,
+      "exactReplay": true
+    },
+    {
+      "donor": "patient_1016",
+      "features": 15706,
+      "trainingDonors": [
+        "patient_101",
+        "patient_1015",
+        "patient_1039",
+        "patient_107",
+        "patient_1244",
+        "patient_1256",
+        "patient_1488"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 3.4638958368304884e-14
+      },
+      "maximumSolveResidual": 4.718447854656915e-13,
+      "exactReplay": true
+    },
+    {
+      "donor": "patient_1039",
+      "features": 15706,
+      "trainingDonors": [
+        "patient_101",
+        "patient_1015",
+        "patient_1016",
+        "patient_107",
+        "patient_1244",
+        "patient_1256",
+        "patient_1488"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 1.0436096431476471e-13
+      },
+      "maximumSolveResidual": 4.839462164341057e-13,
+      "exactReplay": true
+    },
+    {
+      "donor": "patient_107",
+      "features": 15706,
+      "trainingDonors": [
+        "patient_101",
+        "patient_1015",
+        "patient_1016",
+        "patient_1039",
+        "patient_1244",
+        "patient_1256",
+        "patient_1488"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 2.886579864025407e-15
+      },
+      "maximumSolveResidual": 1.2567724638756772e-13,
+      "exactReplay": true
+    },
+    {
+      "donor": "patient_1244",
+      "features": 15706,
+      "trainingDonors": [
+        "patient_101",
+        "patient_1015",
+        "patient_1016",
+        "patient_1039",
+        "patient_107",
+        "patient_1256",
+        "patient_1488"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 2.3092638912203256e-14
+      },
+      "maximumSolveResidual": 1.851713227196683e-13,
+      "exactReplay": true
+    },
+    {
+      "donor": "patient_1256",
+      "features": 15706,
+      "trainingDonors": [
+        "patient_101",
+        "patient_1015",
+        "patient_1016",
+        "patient_1039",
+        "patient_107",
+        "patient_1244",
+        "patient_1488"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 1.0658141036401503e-14
+      },
+      "maximumSolveResidual": 1.0014211682118912e-13,
+      "exactReplay": true
+    },
+    {
+      "donor": "patient_1488",
+      "features": 15706,
+      "trainingDonors": [
+        "patient_101",
+        "patient_1015",
+        "patient_1016",
+        "patient_1039",
+        "patient_107",
+        "patient_1244",
+        "patient_1256"
+      ],
+      "maximumPredictionErrors": {
+        "noChange": 0.0,
+        "meanResponse": 0.0,
+        "medianResponse": 0.0,
+        "contextRidge": 1.2656542480726785e-14
+      },
+      "maximumSolveResidual": 1.723066134218243e-13,
+      "exactReplay": true
+    }
+  ],
+  "commands": 66
+}

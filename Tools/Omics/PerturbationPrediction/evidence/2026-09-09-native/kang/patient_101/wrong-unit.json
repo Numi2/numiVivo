@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "mapping": {
+    "countUnit": "readCount",
+    "evidence": "measured",
+    "groupColumn": "cell_type",
+    "id": "kang2018-bcells",
+    "matrixPath": "X",
+    "mitochondrialFeatureIDs": [],
+    "sampleColumn": "native_sample",
+    "samples": [
+      {
+        "batchID": "unreported",
+        "biologicalReplicateID": "patient_101",
+        "condition": "ctrl",
+        "donorID": "patient_101",
+        "id": "patient_101__ctrl",
+        "organism": "NCBITaxon:9606"
+      }
+    ],
+    "schemaVersion": 1,
+    "sourceDescription": "Kang 2018 (doi:10.1038/nbt.4042), pertpy file 34464122; all 2651 B cells and all 15706 source genes. Batch metadata unreported; paired donor model does not adjust for batch."
+  },
+  "featureNamespace": "HUMAN_GENE_SYMBOL",
+  "perturbationID": "kang-stim"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "mapping": {
+    "barcodeColumn": "barcode",
+    "countUnit": "umiCount",
+    "evidence": "measured",
+    "id": "hagai-original-mouse-all",
+    "matrixPath": "X",
+    "mitochondrialFeatureIDs": [],
+    "sampleColumn": "sample",
+    "samples": [
+      {
+        "batchID": "unreported",
+        "biologicalReplicateID": "mouse3",
+        "condition": "unstimulated",
+        "donorID": "mouse3",
+        "id": "mouse3_unst",
+        "organism": "NCBITaxon:10090"
+      }
+    ],
+    "schemaVersion": 1,
+    "sourceDescription": "E-MTAB-6754 original author QC cluster0; mouse1/2/3 paired time courses, supported by SDRF naming and Supplementary Table 2 three individuals"
+  },
+  "featureNamespace": "MOUSE_ENSEMBL_GENE_ID",
+  "perturbationID": "hagai-LPS6"
+}
