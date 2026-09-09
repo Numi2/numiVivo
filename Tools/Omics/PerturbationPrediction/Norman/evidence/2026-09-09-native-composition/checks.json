@@ -1,0 +1,154 @@
+{
+  "status": "passed",
+  "queries": 131,
+  "features": 33694,
+  "methods": 6,
+  "exactTrainingCounts": true,
+  "trainingOrderExact": true,
+  "targetOrderExact": true,
+  "comparisons": [
+    {
+      "method": "noChange",
+      "maximumPredictionError": 0.0,
+      "maximumCPMSumError": 3.3760443329811096e-09,
+      "clipDifferences": []
+    },
+    {
+      "method": "meanSingleResponse",
+      "maximumPredictionError": 0.0,
+      "maximumCPMSumError": 5.005858838558197e-09,
+      "clipDifferences": []
+    },
+    {
+      "method": "additiveLogResponse",
+      "maximumPredictionError": 0.0,
+      "maximumCPMSumError": 1.885928213596344e-08,
+      "clipDifferences": []
+    },
+    {
+      "method": "meanConstituentLogResponse",
+      "maximumPredictionError": 0.0,
+      "maximumCPMSumError": 6.798654794692993e-08,
+      "clipDifferences": []
+    },
+    {
+      "method": "additiveCPMResponse",
+      "maximumPredictionError": 0.0,
+      "maximumCPMSumError": 1.0943040251731873e-08,
+      "clipDifferences": []
+    },
+    {
+      "method": "shuffledAdditiveLogResponse",
+      "maximumPredictionError": 0.0,
+      "maximumCPMSumError": 1.525040715932846e-08,
+      "clipDifferences": []
+    }
+  ],
+  "binarySHA256": "94f3533ddcdeeb173d9d36a4343fef11addf8656c375fd41eb665aacf511dc8d",
+  "sourceReportSHA256": "c36a13a80371e80fc5c0eb0dee598cdaed69dc955c7df312a4174588bffcee9c",
+  "nativeModelSHA256": "5901604a61417542443b2af2d2ef929b0af025ae3911ebc5ce6ecdb18ad7fac6",
+  "nativeReportSHA256": "a6bd982d4452f054f51d885a2afc2bbc236a5740198ec2fe68abf33f9e5d6dcb",
+  "commands": [
+    {
+      "name": "prepare",
+      "returnCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "name": "fit",
+      "returnCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "name": "model-verify",
+      "returnCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "name": "predict",
+      "returnCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "name": "prediction-verify",
+      "returnCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "name": "reverse-targets",
+      "returnCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "name": "reordered-training",
+      "returnCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "name": "reject-context",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-organism",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-feature-namespace",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-target-namespace",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-count-unit",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-unknown-target",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-repeated-target",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-duplicate-query",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-empty-query",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-unknown-field",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-model-overwrite",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-prediction-overwrite",
+      "returnCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "reject-rehashed-model",
+      "returnCode": 65,
+      "expectedSuccess": false
+    }
+  ],
+  "scope": "Native single-context composition baselines. No unseen-target, genetic-interaction, donor, Bayesian or mechanistic qualification."
+}

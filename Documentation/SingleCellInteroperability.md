@@ -328,8 +328,10 @@ The complete development objective remains open:
    unseen-combination and unseen-target splits.
    [External composition baselines](../Tools/Omics/PerturbationPrediction/Norman/COMBINATIONS.md)
    now score every held-out pair with sealed outcomes, exact frozen replay and
-   a target-shuffled control. A native composition predictor remains to implement;
-   neither these baselines nor the donor models qualify genetic interactions.
+   a target-shuffled control. [Native composition prediction](../Tools/Omics/PerturbationPrediction/Norman/NATIVE_COMPOSITION.md)
+   now selects verified condition counts, fits a frozen model and reproduces all
+   786 query/method vectors exactly. Neither these baselines nor the donor models
+   qualify genetic interactions.
    Bayesian/mechanistic integration, unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired

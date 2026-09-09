@@ -6,9 +6,10 @@ The paired outcomes were scored after training, prediction, frozen-model replay
 and leakage checks completed. The [protocol](COMBINATIONS_PROTOCOL.md) fixes the
 methods, transformations, panels and interpretation before scoring.
 
-These are executable **external** baseline results and a reference for the next
-native composition predictor. They do not implement that native predictor or
-qualify unseen-target genes, genetic interactions, donors, cell types, Bayesian
+These are executable **external** baseline results. The subsequent
+[native composition predictor](NATIVE_COMPOSITION.md) matches these predictions
+on all pairs and genes. Neither qualification establishes unseen-target genes,
+genetic interactions, donors, cell types, Bayesian
 uncertainty or mechanistic coupling.
 
 ## Results

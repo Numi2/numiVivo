@@ -4,7 +4,8 @@ This extends the native streaming input path to the complete published
 **filtered** scPerturb Norman 2019 release. It prepares the next perturbation
 prediction benchmark; it does not establish a fitted unseen-perturbation model.
 The subsequent [external combination baseline qualification](COMBINATIONS.md)
-now scores all 131 held-out pairs; a native composition predictor remains next.
+scores all 131 held-out pairs. The [native composition predictor](NATIVE_COMPOSITION.md)
+now reproduces those predictions through verified condition-count training artifacts.
 
 The source is [scPerturb RNA release 1.4, Zenodo 13350497](https://zenodo.org/records/13350497),
 file `NormanWeissman2019_filtered.h5ad`, from

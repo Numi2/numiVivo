@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 1,
+  "context": {
+    "id": "Norman2019-K562-pooled",
+    "organism": "NCBITaxon:9606",
+    "featureNamespace": "Ensembl-gene",
+    "perturbationNamespace": "Norman2019-guide-target",
+    "countUnit": "umiCount"
+  },
+  "controlCondition": "control",
+  "targets": [
+    {
+      "id": "AHR",
+      "condition": "AHR"
+    },
+    {
+      "id": "ARID1A",
+      "condition": "ARID1A"
+    },
+    {
+      "id": "ARRDC3",
+      "condition": "ARRDC3"
+    },
+    {
+      "id": "ATL1",
+      "condition": "ATL1"
+    },
+    {
+      "id": "BAK1",
+      "condition": "BAK1"
+    },
+    {
+      "id": "BCL2L11",
+      "condition": "BCL2L11"
+    },
+    {
+      "id": "BCORL1",
+      "condition": "BCORL1"
+    },
+    {
+      "id": "BPGM",
+      "condition": "BPGM"
+    },
+    {
+      "id": "C19orf26",
+      "condition": "C19orf26"
+    },
+    {
+      "id": "C3orf72",
+      "condition": "C3orf72"
+    },
+    {
+      "id": "CBFA2T3",
+      "condition": "CBFA2T3"
+    },
+    {
+      "id": "CBL",
+      "condition": "CBL"
+    },
+    {
+      "id": "CDKN1A",
+      "condition": "CDKN1A"
+    },
+    {
+      "id": "CDKN1B",
+      "condition": "CDKN1B"
+    },
+    {
+      "id": "CDKN1C",
+      "condition": "CDKN1C"
+    },
+    {
+      "id": "CEBPA",
+      "condition": "CEBPA"
+    },
+    {
+      "id": "CEBPB",
+      "condition": "CEBPB"
+    },
+    {
+      "id": "CEBPE",
+      "condition": "CEBPE"
+    },
+    {
+      "id": "CELF2",
+      "condition": "CELF2"
+    },
+    {
+      "id": "CITED1",
+      "condition": "CITED1"
+    },
+    {
+      "id": "CKS1B",
+      "condition": "CKS1B"
+    },
+    {
+      "id": "CLDN6",
+      "condition": "CLDN6"
+    },
+    {
+      "id": "CNN1",
+      "condition": "CNN1"
+    },
+    {
+      "id": "CNNM4",
+      "condition": "CNNM4"
+    },
+    {
+      "id": "COL1A1",
+      "condition": "COL1A1"
+    },
+    {
+      "id": "COL2A1",
+      "condition": "COL2A1"
+    },
+    {
+      "id": "CSRNP1",
+      "condition": "CSRNP1"
+    },
+    {
+      "id": "DLX2",
+      "condition": "DLX2"
+    },
+    {
+      "id": "DUSP9",
+      "condition": "DUSP9"
+    },
+    {
+      "id": "EGR1",
+      "condition": "EGR1"
+    },
+    {
+      "id": "ELMSAN1",
+      "condition": "ELMSAN1"
+    },
+    {
+      "id": "ETS2",
+      "condition": "ETS2"
+    },
+    {
+      "id": "FEV",
+      "condition": "FEV"
+    },
+    {
+      "id": "FOSB",
+      "condition": "FOSB"
+    },
+    {
+      "id": "FOXA1",
+      "condition": "FOXA1"
+    },
+    {
+      "id": "FOXA3",
+      "condition": "FOXA3"
+    },
+    {
+      "id": "FOXF1",
+      "condition": "FOXF1"
+    },
+    {
+      "id": "FOXL2",
+      "condition": "FOXL2"
+    },
+    {
+      "id": "FOXO4",
+      "condition": "FOXO4"
+    },
+    {
+      "id": "GLB1L2",
+      "condition": "GLB1L2"
+    },
+    {
+      "id": "HES7",
+      "condition": "HES7"
+    },
+    {
+      "id": "HK2",
+      "condition": "HK2"
+    },
+    {
+      "id": "HNF4A",
+      "condition": "HNF4A"
+    },
+    {
+      "id": "HOXA13",
+      "condition": "HOXA13"
+    },
+    {
+      "id": "HOXB9",
+      "condition": "HOXB9"
+    },
+    {
+      "id": "HOXC13",
+      "condition": "HOXC13"
+    },
+    {
+      "id": "IER5L",
+      "condition": "IER5L"
+    },
+    {
+      "id": "IGDCC3",
+      "condition": "IGDCC3"
+    },
+    {
+      "id": "IKZF3",
+      "condition": "IKZF3"
+    },
+    {
+      "id": "IRF1",
+      "condition": "IRF1"
+    },
+    {
+      "id": "ISL2",
+      "condition": "ISL2"
+    },
+    {
+      "id": "JUN",
+      "condition": "JUN"
+    },
+    {
+      "id": "KIAA1804",
+      "condition": "KIAA1804"
+    },
+    {
+      "id": "KIF18B",
+      "condition": "KIF18B"
+    },
+    {
+      "id": "KIF2C",
+      "condition": "KIF2C"
+    },
+    {
+      "id": "KLF1",
+      "condition": "KLF1"
+    },
+    {
+      "id": "KMT2A",
+      "condition": "KMT2A"
+    },
+    {
+      "id": "LHX1",
+      "condition": "LHX1"
+    },
+    {
+      "id": "LYL1",
+      "condition": "LYL1"
+    },
+    {
+      "id": "MAML2",
+      "condition": "MAML2"
+    },
+    {
+      "id": "MAP2K3",
+      "condition": "MAP2K3"
+    },
+    {
+      "id": "MAP2K6",
+      "condition": "MAP2K6"
+    },
+    {
+      "id": "MAP4K3",
+      "condition": "MAP4K3"
+    },
+    {
+      "id": "MAP4K5",
+      "condition": "MAP4K5"
+    },
+    {
+      "id": "MAP7D1",
+      "condition": "MAP7D1"
+    },
+    {
+      "id": "MAPK1",
+      "condition": "MAPK1"
+    },
+    {
+      "id": "MEIS1",
+      "condition": "MEIS1"
+    },
+    {
+      "id": "MIDN",
+      "condition": "MIDN"
+    },
+    {
+      "id": "NCL",
+      "condition": "NCL"
+    },
+    {
+      "id": "NIT1",
+      "condition": "NIT1"
+    },
+    {
+      "id": "OSR2",
+      "condition": "OSR2"
+    },
+    {
+      "id": "PLK4",
+      "condition": "PLK4"
+    },
+    {
+      "id": "POU3F2",
+      "condition": "POU3F2"
+    },
+    {
+      "id": "PRDM1",
+      "condition": "PRDM1"
+    },
+    {
+      "id": "PRTG",
+      "condition": "PRTG"
+    },
+    {
+      "id": "PTPN1",
+      "condition": "PTPN1"
+    },
+    {
+      "id": "PTPN12",
+      "condition": "PTPN12"
+    },
+    {
+      "id": "PTPN13",
+      "condition": "PTPN13"
+    },
+    {
+      "id": "PTPN9",
+      "condition": "PTPN9"
+    },
+    {
+      "id": "RHOXF2",
+      "condition": "RHOXF2"
+    },
+    {
+      "id": "RREB1",
+      "condition": "RREB1"
+    },
+    {
+      "id": "RUNX1T1",
+      "condition": "RUNX1T1"
+    },
+    {
+      "id": "S1PR2",
+      "condition": "S1PR2"
+    },
+    {
+      "id": "SAMD1",
+      "condition": "SAMD1"
+    },
+    {
+      "id": "SET",
+      "condition": "SET"
+    },
+    {
+      "id": "SGK1",
+      "condition": "SGK1"
+    },
+    {
+      "id": "SLC38A2",
+      "condition": "SLC38A2"
+    },
+    {
+      "id": "SLC4A1",
+      "condition": "SLC4A1"
+    },
+    {
+      "id": "SLC6A9",
+      "condition": "SLC6A9"
+    },
+    {
+      "id": "SNAI1",
+      "condition": "SNAI1"
+    },
+    {
+      "id": "SPI1",
+      "condition": "SPI1"
+    },
+    {
+      "id": "STIL",
+      "condition": "STIL"
+    },
+    {
+      "id": "TBX2",
+      "condition": "TBX2"
+    },
+    {
+      "id": "TBX3",
+      "condition": "TBX3"
+    },
+    {
+      "id": "TGFBR2",
+      "condition": "TGFBR2"
+    },
+    {
+      "id": "TMSB4X",
+      "condition": "TMSB4X"
+    },
+    {
+      "id": "TP73",
+      "condition": "TP73"
+    },
+    {
+      "id": "TSC22D1",
+      "condition": "TSC22D1"
+    },
+    {
+      "id": "UBASH3A",
+      "condition": "UBASH3A"
+    },
+    {
+      "id": "UBASH3B",
+      "condition": "UBASH3B"
+    },
+    {
+      "id": "ZBTB1",
+      "condition": "ZBTB1"
+    },
+    {
+      "id": "ZBTB10",
+      "condition": "ZBTB10"
+    },
+    {
+      "id": "ZBTB25",
+      "condition": "ZBTB25"
+    },
+    {
+      "id": "ZC3HAV1",
+      "condition": "ZC3HAV1"
+    },
+    {
+      "id": "ZNF318",
+      "condition": "ZNF318"
+    }
+  ],
+  "provenance": "Complete Norman 2019 filtered release, Zenodo 13350497. Verified native aggregates; one pooled K562 context, no independent donor/replication claim. Control and 105 declared singles only."
+}

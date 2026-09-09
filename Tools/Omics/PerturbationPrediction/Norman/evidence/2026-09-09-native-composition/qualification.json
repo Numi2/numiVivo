@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "binarySHA256": "94f3533ddcdeeb173d9d36a4343fef11addf8656c375fd41eb665aacf511dc8d",
+  "releaseBuildSeconds": 208.43,
+  "singleCellTests": 54,
+  "singleCellSuites": 15,
+  "productCommands": 23,
+  "expectedProductRejections": 15,
+  "predictionReferenceByteIdenticalToModel": true,
+  "sourceReportArchive": "../2026-09-09/report.json.gz",
+  "sourceH5AD": "https://zenodo.org/records/13350497/files/NormanWeissman2019_filtered.h5ad",
+  "sourceH5ADSHA256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc",
+  "meanSingleClippingBoundary": {
+    "featuresPerQuery": 226,
+    "maximumNegativeMagnitude": 3.469446951953614e-17,
+    "interpretation": "Floating-point roundoff, not biological suppression."
+  },
+  "checkerSources": {
+    "check_native_composition.py": "17fb5cf6fa1f48a5710966b6b541e808624c449df8ed9d138fdd9c17729c6cc9",
+    "check_native_composition_integrity.py": "9600b83e9e05091fa0458162f3904d3fefa7fb2d1b5b5ea5fedfe13b5b5d4667"
+  },
+  "scopedModelSHA256": "5901604a61417542443b2af2d2ef929b0af025ae3911ebc5ce6ecdb18ad7fac6",
+  "scopedFitAndVerifyPassed": true
+}

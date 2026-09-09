@@ -12,6 +12,23 @@ import NumiVivoKit
     static func run() throws {
         let args = CommandLine.arguments
         let implementation=try VivoFingerprint(bytes: Array(repeating: 0,count: 32))
+        if args.count==5,args[1]=="composition-prepare" {
+            let plan=try JSONDecoder().decode(VivoCompositionPreparation.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            try VivoComposition.prepare(from: URL(fileURLWithPath: args[2]),plan: plan,implementation: implementation,to: URL(fileURLWithPath: args[4]));print("prepared");return
+        }
+        if args.count==4,args[1]=="composition-fit" {
+            _=try VivoComposition.fit(source: URL(fileURLWithPath: args[2]),implementation: implementation,to: URL(fileURLWithPath: args[3]));print("fit");return
+        }
+        if args.count==5,args[1]=="composition-predict" {
+            let plan=try JSONDecoder().decode(VivoCompositionQueryPlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            _=try VivoComposition.predict(reference: URL(fileURLWithPath: args[2]),plan: plan,implementation: implementation,to: URL(fileURLWithPath: args[4]));print("predicted");return
+        }
+        if args.count==3,args[1]=="composition-verify" {
+            _=try VivoComposition.verifyModel(URL(fileURLWithPath: args[2]),implementation: implementation);print("verified");return
+        }
+        if args.count==3,args[1]=="composition-prediction-verify" {
+            _=try VivoComposition.verifyPrediction(URL(fileURLWithPath: args[2]),implementation: implementation);print("verified");return
+        }
         if args.count==5,args[1]=="perturbation-fit" {
             let plan=try JSONDecoder().decode(VivoPerturbationPlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
             _=try VivoPerturbation.fit(source: URL(fileURLWithPath: args[2]),plan: plan,implementation: implementation,to: URL(fileURLWithPath: args[4]));print("fit");return

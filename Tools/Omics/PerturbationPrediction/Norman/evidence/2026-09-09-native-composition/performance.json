@@ -1,0 +1,131 @@
+{
+  "scope": "Apple M4, macOS 26.6; native command observations, not a matched scverse speed benchmark.",
+  "commands": {
+    "reject-context": {
+      "wallSeconds": 1.75,
+      "userSeconds": 1.41,
+      "systemSeconds": 0.06,
+      "maximumResidentBytes": 570884096
+    },
+    "reject-model-overwrite": {
+      "wallSeconds": 0.02,
+      "userSeconds": 0.01,
+      "systemSeconds": 0.0,
+      "maximumResidentBytes": 60735488
+    },
+    "reject-count-unit": {
+      "wallSeconds": 1.56,
+      "userSeconds": 1.39,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 570851328
+    },
+    "aggregate": {
+      "wallSeconds": 65.99,
+      "userSeconds": 62.92,
+      "systemSeconds": 0.56,
+      "maximumResidentBytes": 1639809024
+    },
+    "reordered-training": {
+      "wallSeconds": 1.63,
+      "userSeconds": 1.4,
+      "systemSeconds": 0.06,
+      "maximumResidentBytes": 594804736
+    },
+    "reject-repeated-target": {
+      "wallSeconds": 1.53,
+      "userSeconds": 1.42,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 570851328
+    },
+    "reject-empty-query": {
+      "wallSeconds": 1.5,
+      "userSeconds": 1.4,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 570818560
+    },
+    "reject-prediction-overwrite": {
+      "wallSeconds": 0.02,
+      "userSeconds": 0.01,
+      "systemSeconds": 0.0,
+      "maximumResidentBytes": 61440000
+    },
+    "reject-unknown-target": {
+      "wallSeconds": 1.5,
+      "userSeconds": 1.41,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 570851328
+    },
+    "reverse-targets": {
+      "wallSeconds": 6.06,
+      "userSeconds": 5.75,
+      "systemSeconds": 0.21,
+      "maximumResidentBytes": 1829896192
+    },
+    "reject-organism": {
+      "wallSeconds": 1.5,
+      "userSeconds": 1.39,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 570851328
+    },
+    "fit": {
+      "wallSeconds": 1.46,
+      "userSeconds": 1.38,
+      "systemSeconds": 0.04,
+      "maximumResidentBytes": 522469376
+    },
+    "model-verify": {
+      "wallSeconds": 1.45,
+      "userSeconds": 1.38,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 571277312
+    },
+    "prediction-verify": {
+      "wallSeconds": 5.98,
+      "userSeconds": 5.76,
+      "systemSeconds": 0.19,
+      "maximumResidentBytes": 2017869824
+    },
+    "prepare": {
+      "wallSeconds": 74.68,
+      "userSeconds": 63.22,
+      "systemSeconds": 1.17,
+      "maximumResidentBytes": 2420359168
+    },
+    "predict": {
+      "wallSeconds": 6.08,
+      "userSeconds": 5.81,
+      "systemSeconds": 0.21,
+      "maximumResidentBytes": 1829896192
+    },
+    "reject-unknown-field": {
+      "wallSeconds": 0.0,
+      "userSeconds": 0.0,
+      "systemSeconds": 0.0,
+      "maximumResidentBytes": 9404416
+    },
+    "reject-rehashed-model": {
+      "wallSeconds": 1.52,
+      "userSeconds": 1.38,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 571228160
+    },
+    "reject-target-namespace": {
+      "wallSeconds": 1.52,
+      "userSeconds": 1.39,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 570851328
+    },
+    "reject-feature-namespace": {
+      "wallSeconds": 1.5,
+      "userSeconds": 1.39,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 570851328
+    },
+    "reject-duplicate-query": {
+      "wallSeconds": 1.5,
+      "userSeconds": 1.41,
+      "systemSeconds": 0.05,
+      "maximumResidentBytes": 570851328
+    }
+  }
+}

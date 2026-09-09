@@ -1,0 +1,102 @@
+[
+  {
+    "name": "prepare",
+    "returnCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "name": "fit",
+    "returnCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "name": "model-verify",
+    "returnCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "name": "predict",
+    "returnCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "name": "prediction-verify",
+    "returnCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "name": "reverse-targets",
+    "returnCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "name": "reordered-training",
+    "returnCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "name": "reject-context",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-organism",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-feature-namespace",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-target-namespace",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-count-unit",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-unknown-target",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-repeated-target",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-duplicate-query",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-empty-query",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-unknown-field",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-model-overwrite",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-prediction-overwrite",
+    "returnCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "name": "reject-rehashed-model",
+    "returnCode": 65,
+    "expectedSuccess": false
+  }
+]

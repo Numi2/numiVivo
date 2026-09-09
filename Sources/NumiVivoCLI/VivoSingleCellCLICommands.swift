@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
+        ["singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
     private func canonicalURL(_ url: URL) throws -> URL {
@@ -43,6 +43,27 @@ struct VivoSingleCellCLICommands {
                 files["analysis.json"] = try VivoCanonicalJSON.encode(VivoSingleCellExamples.pairedPlan())
                 try VivoOmicsDirectoryExport.write(files, to: destination)
                 try printJSON(["status": "written-synthetic-example", "directory": destination.path]); return 0
+            }
+            if command == "singlecell-composition-prepare" {
+                guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("singlecell-composition-prepare <pseudobulk-bundle> --plan <selection.json> --output <training.json>") }
+                let plan=try load(VivoCompositionPreparation.self,URL(fileURLWithPath: arguments[3]))
+                try VivoComposition.prepare(from: URL(fileURLWithPath: arguments[1]),plan: plan,implementation: VivoWorkflowCLIImplementation.fingerprint(),to: canonicalURL(URL(fileURLWithPath: arguments[5])))
+                try printJSON(["status":"prepared-composition-training"]);return 0
+            }
+            if command == "singlecell-composition-fit" {
+                guard arguments.count==4,arguments[2]=="--output" else { throw VivoOmicsError.invalid("singlecell-composition-fit <training.json> --output <model-bundle>") }
+                try printJSON(VivoComposition.fit(source: URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint(),to: canonicalURL(URL(fileURLWithPath: arguments[3]))));return 0
+            }
+            if command == "singlecell-composition-predict" {
+                guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("singlecell-composition-predict <model-bundle> --plan <queries.json> --output <prediction-bundle>") }
+                let plan=try load(VivoCompositionQueryPlan.self,URL(fileURLWithPath: arguments[3]))
+                try printJSON(VivoComposition.predict(reference: URL(fileURLWithPath: arguments[1]),plan: plan,implementation: VivoWorkflowCLIImplementation.fingerprint(),to: canonicalURL(URL(fileURLWithPath: arguments[5]))));return 0
+            }
+            if command == "singlecell-composition-verify" || command == "singlecell-composition-prediction-verify" {
+                guard arguments.count==2 else { throw VivoOmicsError.invalid("composition verifier requires one bundle") }
+                if command == "singlecell-composition-verify" { _=try VivoComposition.verifyModel(URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint()) }
+                else { _=try VivoComposition.verifyPrediction(URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint()) }
+                try printJSON(["status":"verified-composition-bundle"]);return 0
             }
             if command == "singlecell-perturbation-fit" {
                 guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("singlecell-perturbation-fit <training.h5ad> --plan <fit.json> --output <new-bundle>") }
@@ -251,6 +272,11 @@ struct VivoSingleCellCLICommands {
     }
     static let help = """
     NumiVivo native single-cell workflows
+      singlecell-composition-prepare <pseudobulk-bundle> --plan <selection.json> --output <training.json>
+      singlecell-composition-fit <training.json> --output <model-bundle>
+      singlecell-composition-predict <model-bundle> --plan <queries.json> --output <prediction-bundle>
+      singlecell-composition-verify <model-bundle>
+      singlecell-composition-prediction-verify <prediction-bundle>
       singlecell-perturbation-fit <training.h5ad> --plan <fit.json> --output <new-model>
       singlecell-perturbation-predict <control.h5ad> --plan <query.json> --reference <model> --output <new-bundle>
       singlecell-perturbation-verify <model>
