@@ -12,6 +12,10 @@ import NumiVivoKit
     static func run() throws {
         let args = CommandLine.arguments
         let implementation=try VivoFingerprint(bytes: Array(repeating: 0,count: 32))
+        if args.count == 5, args[1] == "multiassay-h5mu-import" {
+            let plan = try JSONDecoder().decode(VivoH5MUMultiAssayPlan.self, from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            _ = try VivoMultiAssayIO.importH5MU(source: URL(fileURLWithPath: args[2]), plan: plan, implementation: implementation, to: URL(fileURLWithPath: args[4])); print("imported"); return
+        }
         if args.count == 4, args[1] == "multiassay-write" {
             let data = try JSONDecoder().decode(VivoMultiAssayDataset.self, from: Data(contentsOf: URL(fileURLWithPath: args[2])))
             try VivoMultiAssayH5MU.write(data, to: URL(fileURLWithPath: args[3])); print("exported"); return

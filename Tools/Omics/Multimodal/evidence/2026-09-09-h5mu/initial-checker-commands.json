@@ -1,0 +1,280 @@
+[
+  {
+    "label": "native-csr",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-citeseq-product-20260909/bundle/dataset.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/native-csr-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/native-csr"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 7.288940750062466
+  },
+  {
+    "label": "native-csr-verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-h5mu-check-20260909/native-csr"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 5.967183416709304
+  },
+  {
+    "label": "mudata-csr",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/mudata-csr-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/mudata-csr"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 5.765410791616887
+  },
+  {
+    "label": "mudata-csr-verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-h5mu-check-20260909/mudata-csr"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 5.9034321662038565
+  },
+  {
+    "label": "mixed-count-layers",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/mixed-count-layers.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/mixed-count-layers-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/mixed-count-layers"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 6.151335124857724
+  },
+  {
+    "label": "mixed-count-layers-verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-h5mu-check-20260909/mixed-count-layers"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 6.717746916227043
+  },
+  {
+    "label": "repeat",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/repeat-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/repeat"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 5.539535124786198
+  },
+  {
+    "label": "overwrite",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc5k-h5mu-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/mudata-csr"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03446787502616644
+  },
+  {
+    "label": "partial-spatial",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/partial-spatial.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/partial-spatial-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/partial-spatial"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 0.043382042087614536
+  },
+  {
+    "label": "partial-verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-h5mu-check-20260909/partial-spatial"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 0.04287537466734648
+  },
+  {
+    "label": "map-out-of-range",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/map-out-of-range.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/map-out-of-range-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/map-out-of-range"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03810220817103982
+  },
+  {
+    "label": "map-wrong-identity",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/map-wrong-identity.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/map-wrong-identity-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/map-wrong-identity"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.037828958593308926
+  },
+  {
+    "label": "map-omitted-local",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/map-omitted-local.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/map-omitted-local-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/map-omitted-local"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03726500039920211
+  },
+  {
+    "label": "varmap-unmapped",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/varmap-unmapped.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/varmap-unmapped-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/varmap-unmapped"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03837637510150671
+  },
+  {
+    "label": "varmap-overlap",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/varmap-overlap.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/varmap-overlap-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/varmap-overlap"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03770070802420378
+  },
+  {
+    "label": "axis-one",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/axis-one.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/axis-one-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/axis-one"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03552204230800271
+  },
+  {
+    "label": "partial-nan",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/partial-nan.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/partial-nan-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/partial-nan"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03768699988722801
+  },
+  {
+    "label": "infinite-position",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/infinite-position.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/infinite-position-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/infinite-position"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03708670800551772
+  },
+  {
+    "label": "fractional-count",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/fractional-count.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/fractional-count-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/fractional-count"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03831383306533098
+  },
+  {
+    "label": "negative-count",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/negative-count.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/negative-count-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/negative-count"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03808091627433896
+  },
+  {
+    "label": "sample-conflict",
+    "arguments": [
+      "multiassay-h5mu-import",
+      "/Users/home/numivivo-h5mu-check-20260909/sample-conflict.h5mu",
+      "--plan",
+      "/Users/home/numivivo-h5mu-check-20260909/sample-conflict-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-check-20260909/sample-conflict"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03760325023904443
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "binarySHA256": "db41c240e1a3034d37f2782236b00e2806fcb2cef39f9a8078701ebd6c64ddbe",
+  "checkerSHA256": "06e09622871efe0b8d878396c7dc1c06b7d776f8fe12afa2f438ab465aad76be",
+  "sources": {
+    "native-csr": {
+      "path": "/Users/home/numivivo-citeseq-product-20260909/bundle/dataset.h5mu",
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    "mudata-csr": {
+      "path": "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "sha256": "7c2fe101a64d9dd3608177a32ebbd768cbaecd1d8fa64d2d0aed229da578c70f"
+    },
+    "mixed-count-layers": {
+      "path": "/Users/home/numivivo-h5mu-check-final-20260909/mixed-count-layers.h5mu",
+      "sha256": "064f1907f165ca4f8983cef31668c7310d2b8ebe1f39a8f37058a17991c07f2d"
+    }
+  },
+  "referenceDatasetSHA256": "af060c5115d2cfb75853bbad9ab3f91e28fbbd0d1d72469c625cd530504360c7",
+  "completeRealCells": 5247,
+  "rnaFeatures": 33538,
+  "antibodyFeatures": 32,
+  "fullDatasetExactAcrossLayouts": true,
+  "repeatedBundleBytesExact": true,
+  "partialMapSpatialUInt64Exact": true,
+  "commands": 32,
+  "expectedRejections": 23,
+  "packages": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "mudata": "0.4.1",
+    "anndata": "0.13.3.post0",
+    "h5py": "3.16.0"
+  },
+  "platform": "macOS-26.6-arm64-arm-64bit"
+}

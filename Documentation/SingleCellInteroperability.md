@@ -343,8 +343,10 @@ The complete development objective remains open:
    now preserve independent feature spaces, assay row maps, exact counts, genomic
    intervals and spatial frames. All 5,247 public PBMC5k cells and both RNA/protein
    assays match h5py/SciPy, Scanpy and MuData; native H5MU export preserves missing
-   assay rows. Native H5MU import, real ATAC/paired RNA-ATAC/spatial qualification,
-   continuous measurements and joint multimodal analysis remain open.
+   assay rows. Native H5MU import now preserves explicit modality maps and selected CSR/CSC/dense
+   count layers, with the full real CITE-seq dataset matching across native and
+   MuData-written sources. Real ATAC/paired RNA-ATAC/spatial qualification, continuous
+   measurements and joint multimodal analysis remain open.
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
    selected-entry PCA now pass full Baron and Hagai comparisons against Scanpy;
    see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).

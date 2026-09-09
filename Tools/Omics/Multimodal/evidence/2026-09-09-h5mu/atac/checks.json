@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "scope": "synthetic peak mapping only",
+  "checks": [
+    {
+      "name": "valid",
+      "arguments": [
+        "/Users/home/numivivo-h5mu-product-20260909/numivivo",
+        "multiassay-h5mu-import",
+        "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/evidence/2026-09-09/structural/valid-bundle/dataset.h5mu",
+        "--plan",
+        "/Users/home/numivivo-h5mu-atac-20260909/valid-plan.json",
+        "--output",
+        "/Users/home/numivivo-h5mu-atac-20260909/valid"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "name": "missing-convention",
+      "arguments": [
+        "/Users/home/numivivo-h5mu-product-20260909/numivivo",
+        "multiassay-h5mu-import",
+        "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/evidence/2026-09-09/structural/valid-bundle/dataset.h5mu",
+        "--plan",
+        "/Users/home/numivivo-h5mu-atac-20260909/missing-convention-plan.json",
+        "--output",
+        "/Users/home/numivivo-h5mu-atac-20260909/missing-convention"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "wrong-convention",
+      "arguments": [
+        "/Users/home/numivivo-h5mu-product-20260909/numivivo",
+        "multiassay-h5mu-import",
+        "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/evidence/2026-09-09/structural/valid-bundle/dataset.h5mu",
+        "--plan",
+        "/Users/home/numivivo-h5mu-atac-20260909/wrong-convention-plan.json",
+        "--output",
+        "/Users/home/numivivo-h5mu-atac-20260909/wrong-convention"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "missing-assembly",
+      "arguments": [
+        "/Users/home/numivivo-h5mu-product-20260909/numivivo",
+        "multiassay-h5mu-import",
+        "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/evidence/2026-09-09/structural/valid-bundle/dataset.h5mu",
+        "--plan",
+        "/Users/home/numivivo-h5mu-atac-20260909/missing-assembly-plan.json",
+        "--output",
+        "/Users/home/numivivo-h5mu-atac-20260909/missing-assembly"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "wrong-unit",
+      "arguments": [
+        "/Users/home/numivivo-h5mu-product-20260909/numivivo",
+        "multiassay-h5mu-import",
+        "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/evidence/2026-09-09/structural/valid-bundle/dataset.h5mu",
+        "--plan",
+        "/Users/home/numivivo-h5mu-atac-20260909/wrong-unit-plan.json",
+        "--output",
+        "/Users/home/numivivo-h5mu-atac-20260909/wrong-unit"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    }
+  ],
+  "binarySHA256": "db41c240e1a3034d37f2782236b00e2806fcb2cef39f9a8078701ebd6c64ddbe",
+  "checkerSHA256": "effc4bbbd25768fa3951d7af0d3e44f5052054f945af71799a3ea191904dc3a9",
+  "sourceSHA256": "10e5e45c09d9f194a590fb90e524ddbd5dfb031565631b828c6b915f8568cf9c"
+}

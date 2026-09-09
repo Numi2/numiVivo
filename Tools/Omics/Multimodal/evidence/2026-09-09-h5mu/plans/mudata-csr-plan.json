@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "10x-pbmc5k-citeseq",
+  "evidence": "measured",
+  "sourceDescription": "10x Genomics 5k PBMC TotalSeq-B, Cell Ranger 3.1.0, 2019-07-24; filtered full release; CC BY 4.0. One healthy donor, no independent replication.",
+  "samples": [
+    {
+      "id": "pbmc5k",
+      "biologicalReplicateID": "donor1",
+      "donorID": "donor1",
+      "condition": "healthy",
+      "batchID": "one-library",
+      "organism": "NCBITaxon:9606"
+    }
+  ],
+  "sampleColumn": "sample",
+  "barcodeColumn": "barcode",
+  "groupColumn": null,
+  "defaultObservationKind": "cell",
+  "observationKindColumn": "observation_kind",
+  "spatial": null,
+  "assays": [
+    {
+      "sourceName": "rna",
+      "id": "rna",
+      "kind": "rna",
+      "featureNamespace": "Ensembl:GRCh38-source-release",
+      "countUnit": "umiCount",
+      "genomeAssembly": "GRCh38",
+      "matrixPath": "X",
+      "featureIDColumn": null,
+      "featureNameColumn": "name",
+      "peakIDConvention": null
+    },
+    {
+      "sourceName": "protein",
+      "id": "protein",
+      "kind": "antibodyCapture",
+      "featureNamespace": "BioLegend:10x-pbmc5k-source-feature-id",
+      "countUnit": "umiCount",
+      "genomeAssembly": null,
+      "matrixPath": "X",
+      "featureIDColumn": null,
+      "featureNameColumn": "name",
+      "peakIDConvention": null
+    }
+  ]
+}

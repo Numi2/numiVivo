@@ -10,9 +10,8 @@ A missing row means unmeasured; a measured sparse zero remains zero. Duplicate
 feature IDs are allowed across spaces, but not within a space.
 
 This is a count-assay foundation, not a joint latent model or a complete
-multimodal analysis suite. Continuous protein/metabolite measurements, native
-H5MU import, joint RNA/ATAC analysis, WNN integration and real spatial/ATAC
-qualification remain open. Current native single-cell algorithms retain their
+multimodal analysis suite. Continuous protein/metabolite measurements, joint
+RNA/ATAC analysis, WNN integration and real spatial/ATAC qualification remain open. Current native single-cell algorithms retain their
 own RNA/count interfaces; this change does not silently apply RNA normalization
 or differential expression to antibody or accessibility features.
 
@@ -20,6 +19,7 @@ or differential expression to antibody or accessibility features.
 
 ```sh
 numivivo multiassay-10x-import original.h5 --plan pbmc5k-plan.json --output bundle
+numivivo multiassay-h5mu-import source.h5mu --plan pbmc5k-h5mu-plan.json --output imported
 numivivo multiassay-verify bundle
 numivivo multiassay-h5mu-write bundle/dataset.json --output exported.h5mu
 ```
@@ -56,6 +56,35 @@ fragment or read count units. Spatial observations can be cells or spots, with
 finite 2D/3D positions in named frames declaring axes and pixel/micrometer units.
 These representations are structurally tested, not biological qualifications.
 
+## Native H5MU count import
+
+`multiassay-h5mu-import` supports MuData 0.1.0 with shared observations (axis 0),
+AnnData 0.1.0 modalities and dataframe 0.2.0 axes. Each modality must be mapped
+explicitly to a feature namespace, assay kind, count unit and optional assembly.
+Select `X` or an explicit `layers/<name>` count matrix independently per modality.
+CSR, CSC and dense numeric layouts use the same exact count decoder as H5AD;
+normalized fractional values reject if selected. `raw/X` requires a different
+feature-axis model and is not accepted by this importer.
+
+Global sample/barcode/group/kind columns define observations. Selected local
+columns must agree wherever present. One-based `obsmap` and `varmap` values are
+validated against global/local names: zero means absence, each local row/feature
+must occur once, and feature spaces cannot overlap in the global variable map.
+Explicit source namespaces, assay kinds and genome annotations cannot contradict
+the plan. String, categorical and nullable-string identity columns are supported.
+
+An optional spatial mapping selects a numeric `obsm/<name>` array and declares
+its frame, axes and units. Entirely NaN rows mean missing positions; partially
+missing or infinite positions reject. Native export retains these positions in
+typed `uns` metadata as described above. It does not synthesize a standard spatial
+array. Accessibility mappings require the explicit convention
+`contig:start-end:zero-based-half-open`, an assembly, and fragment/read units.
+
+The import is a declared count/identity projection. Unselected annotations and
+other analysis objects remain in the exact retained source file. Every source
+format is retained as `original.h5`; receipts select the appropriate reconstruction
+reader. Source and projection hashes remain distinct.
+
 ## Public real-data input
 
 Use the complete filtered
@@ -82,7 +111,9 @@ oracle, Scanpy's full feature reader, and MuData for native H5MU read/roundtrip.
 
 The current model is resident after import: at most 100,000 global observations,
 16 assays, 200,000 total features and 20 million total retained/source entries.
-One source barcode's entries, indices and metadata are also resident. Sources
+One source barcode's entries, indices and metadata are also resident. H5MU
+imports additionally hold transient row dictionaries before final CSR encoding;
+dense scan work is limited to 500 million elements across all modalities. Sources
 and H5MU files are capped at 1 GiB, canonical dataset JSON at 512 MiB. This is not
 million-cell, memory-mapped multimodal execution or a CPU/GPU speed claim.
 
@@ -125,3 +156,35 @@ and `dataset.h5mu.gz` into that new bundle. Receipts bind to the recorded execut
 a rebuilt executable can create and verify its own fresh bundle. The original
 source is small enough to retain directly here under the publisher's CC BY 4.0
 license, with the attribution and source link above.
+
+## H5MU import qualification on 2026-09-09
+
+All 61 selected Swift tests in 17 suites passed with native HDF5 enabled; the
+release and scoped builds passed. The full 5,247-cell CITE-seq dataset imported
+from native CSR H5MU, independent MuData CSR H5MU, and mixed RNA CSC / protein
+dense count layers produces exactly the previously qualified dataset bytes.
+The mixed-layout source deliberately contains fractional values in unselected X.
+Repeated imports produce identical source, plan, dataset, H5MU and receipt bytes.
+
+`check_h5mu.py` passed 32 product commands, including 23 expected rejections.
+Structural controls preserve reordered partial assay rows, exact UInt64 values
+above 2^53, spots and explicit spatial positions. Invalid maps, metadata conflicts,
+count values, paths, spatial positions and rehashed output tampering reject.
+`check_h5mu_atac.py` adds six product commands for synthetic peak mapping,
+reconstruction and four expected convention/assembly/unit rejections.
+
+Shared-reader regressions passed the AnnData interoperability suite, 25 streaming
+checks, complete real PBMC3K preservation/count/QC/normalization comparisons, and
+the existing full CITE-seq 10x checker. These are interoperability and numerical
+checks, not qualification of joint multimodal inference or real spatial/ATAC biology.
+
+```sh
+python check_h5mu.py --binary /absolute/path/numivivo --citeseq qualification --out h5mu-qualification
+python check_h5mu_atac.py --binary /absolute/path/numivivo --out h5mu-atac-controls
+```
+
+Evidence is in `evidence/2026-09-09-h5mu`. The first Python checker stopped when
+its mutation helper assumed categorical storage for a nullable-string column.
+That failed log is retained. After correcting the helper, the complete checker
+passed; no native implementation change was needed. MuData's native-producer and
+cross-space duplicate-variable-name warnings remain in the logs.

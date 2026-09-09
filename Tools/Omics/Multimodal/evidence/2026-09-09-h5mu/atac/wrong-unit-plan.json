@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "structural",
+  "evidence": "synthetic",
+  "sourceDescription": "Synthetic RNA/ATAC structural fixture; no biology",
+  "samples": [
+    {
+      "batchID": "s",
+      "biologicalReplicateID": "s",
+      "condition": "fixture",
+      "id": "s",
+      "organism": "NCBITaxon:9606"
+    }
+  ],
+  "sampleColumn": "sample",
+  "barcodeColumn": "barcode",
+  "defaultObservationKind": "cell",
+  "observationKindColumn": "observation_kind",
+  "assays": [
+    {
+      "id": "rna",
+      "kind": "rna",
+      "featureNamespace": "fixture-genes",
+      "countUnit": "umiCount",
+      "genomeAssembly": "GRCh38",
+      "sourceName": "rna",
+      "matrixPath": "X",
+      "featureNameColumn": "name"
+    },
+    {
+      "id": "atac",
+      "kind": "chromatinAccessibility",
+      "featureNamespace": "fixture-peaks",
+      "countUnit": "umiCount",
+      "genomeAssembly": "GRCh38",
+      "sourceName": "atac",
+      "matrixPath": "X",
+      "featureNameColumn": "name",
+      "peakIDConvention": "contig:start-end:zero-based-half-open"
+    }
+  ]
+}

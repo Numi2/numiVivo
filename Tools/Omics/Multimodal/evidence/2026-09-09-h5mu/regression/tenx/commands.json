@@ -1,0 +1,192 @@
+[
+  {
+    "label": "import",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc5k-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/bundle"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 5.0184120000340044
+  },
+  {
+    "label": "verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/bundle"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 5.257392167113721
+  },
+  {
+    "label": "overwrite",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc5k-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/bundle"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.033078332897275686
+  },
+  {
+    "label": "repeat",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc5k-plan.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/repeat"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 4.829809790942818
+  },
+  {
+    "label": "partial-export",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/fixture.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/partial.h5mu"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 0.019354917109012604
+  },
+  {
+    "label": "export-overwrite",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/fixture.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/partial.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.01613858388736844
+  },
+  {
+    "label": "duplicate-observation",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/duplicate-observation.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/duplicate-observation.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.01005062460899353
+  },
+  {
+    "label": "out-of-range-observation",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/out-of-range-observation.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/out-of-range-observation.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.008977083023637533
+  },
+  {
+    "label": "unknown-spatial-frame",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/unknown-spatial-frame.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/unknown-spatial-frame.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.009188124909996986
+  },
+  {
+    "label": "unknown-unit",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/unknown-unit.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/unknown-unit.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.013958583120256662
+  },
+  {
+    "label": "omit-protein",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/omit-protein.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/omit-protein"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.08044408308342099
+  },
+  {
+    "label": "wrong-assembly",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/wrong-assembly.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/wrong-assembly"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.08367104176431894
+  },
+  {
+    "label": "wrong-kind",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/wrong-kind.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/wrong-kind"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.06059129210188985
+  },
+  {
+    "label": "unknown-option",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/unknown-option.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/unknown-option"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.009499541949480772
+  },
+  {
+    "label": "rehashed-dataset-tamper",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-h5mu-tenx-regression-20260909/tampered"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 5.05002066725865
+  }
+]

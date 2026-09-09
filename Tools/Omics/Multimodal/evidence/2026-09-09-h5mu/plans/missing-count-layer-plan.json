@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "partial-fixture",
+  "evidence": "synthetic",
+  "sourceDescription": "Structural control only",
+  "samples": [
+    {
+      "batchID": "one-library",
+      "biologicalReplicateID": "donor1",
+      "condition": "healthy",
+      "donorID": "donor1",
+      "id": "pbmc5k",
+      "organism": "NCBITaxon:9606"
+    }
+  ],
+  "sampleColumn": "sample",
+  "barcodeColumn": "barcode",
+  "groupColumn": null,
+  "defaultObservationKind": "cell",
+  "observationKindColumn": "observation_kind",
+  "spatial": {
+    "path": "obsm/spatial",
+    "frame": {
+      "id": "slide",
+      "unit": "micrometer",
+      "axes": [
+        "x",
+        "y"
+      ],
+      "sourceDescription": "Synthetic coordinate frame"
+    }
+  },
+  "assays": [
+    {
+      "sourceName": "rna",
+      "id": "rna",
+      "kind": "rna",
+      "featureNamespace": "fixture-rna",
+      "countUnit": "umiCount",
+      "genomeAssembly": null,
+      "matrixPath": "layers/missing",
+      "featureIDColumn": null,
+      "featureNameColumn": "name",
+      "peakIDConvention": null
+    },
+    {
+      "sourceName": "protein",
+      "id": "protein",
+      "kind": "antibodyCapture",
+      "featureNamespace": "fixture-protein",
+      "countUnit": "umiCount",
+      "genomeAssembly": null,
+      "matrixPath": "X",
+      "featureIDColumn": null,
+      "featureNameColumn": "name",
+      "peakIDConvention": null
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+[
+  {
+    "label": "native-count-import",
+    "command": [
+      "/Users/home/numivivo-h5mu-product-20260909/numivivo",
+      "singlecell-h5ad-import",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/native-annotated.h5ad",
+      "--plan",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/count-mapping.json",
+      "--output",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/imported"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 2.6613114159554243,
+    "peakResidentBytes": 524484608
+  },
+  {
+    "label": "native-counts",
+    "command": [
+      "/Users/home/numivivo-h5mu-product-20260909/numivivo",
+      "singlecell-run",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/imported/manifest.json",
+      "--store",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/store",
+      "--output",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/count-receipt.json"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 2.935695083346218,
+    "peakResidentBytes": 505905152
+  },
+  {
+    "label": "native-analysis",
+    "command": [
+      "/Users/home/numivivo-h5mu-product-20260909/numivivo",
+      "singlecell-analyze",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/count-receipt.json",
+      "--plan",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/count-analysis.json",
+      "--store",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/store",
+      "--output",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/analysis-receipt.json"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 4.909339250065386,
+    "peakResidentBytes": 1054621696
+  },
+  {
+    "label": "native-replay-export",
+    "command": [
+      "/Users/home/numivivo-h5mu-product-20260909/numivivo",
+      "singlecell-analysis-export",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/analysis-receipt.json",
+      "--store",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/store",
+      "--output",
+      "/Users/home/numivivo-h5mu-pbmc3k-20260909/native-report.json"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 6.420940625015646,
+    "peakResidentBytes": 1456373760
+  }
+]
