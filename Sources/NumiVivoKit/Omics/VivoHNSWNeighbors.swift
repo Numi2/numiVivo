@@ -40,12 +40,17 @@ public struct VivoHNSWReport: Codable, Sendable, Equatable {
 }
 
 enum VivoHNSWNeighbors {
-    static func run(source: URL, cells: [VivoOmicsCellIdentity], dimensions: Int, options: VivoSingleCellNeighborOptions,
-                    approximation: VivoHNSWOptions) throws -> (VivoSingleCellNeighborGraph, VivoHNSWReport) {
+    private final class Output {
+        let sink: (Int, [Int], [Double]) throws -> Void
+        var error: Error?
+        init(_ sink: @escaping (Int, [Int], [Double]) throws -> Void) { self.sink = sink }
+    }
+    static func stream(source: URL, rows n: Int, dimensions: Int, options: VivoSingleCellNeighborOptions,
+                       approximation: VivoHNSWOptions, sink: @escaping (Int, [Int], [Double]) throws -> Void) throws -> VivoHNSWReport {
         try options.validate(); try approximation.validate(neighbors: options.neighbors)
-        let n = cells.count, k = options.neighbors
-        guard n >= k, n <= 1_000_000, n <= 4_000_000/k, (1...64).contains(dimensions), options.representation != .integrated else {
-            throw VivoOmicsError.limit("HNSW axes, final graph-entry bound or representation")
+        let k = options.neighbors
+        guard n >= k, n <= 1_000_000, (1...64).contains(dimensions), options.representation != .integrated else {
+            throw VivoOmicsError.limit("HNSW axes or representation")
         }
         try Task.checkCancellation()
         var native = NVivoHNSWOptions()
@@ -54,10 +59,23 @@ enum VivoHNSWNeighbors {
         native.connections = UInt32(approximation.connections); native.ef_construction = UInt32(approximation.constructionWidth)
         native.ef_search = UInt32(approximation.searchWidth); native.seed = approximation.seed
         native.maximum_distance_evaluations = UInt64(approximation.maximumDistanceEvaluations); native.score_cache_bytes = UInt64(approximation.scoreCacheBytes)
-        var raw = NVivoHNSWReport(), indices = [UInt32](repeating: 0, count: n*k), distances = [Double](repeating: 0, count: n*k)
-        let status = source.path.withCString { path in indices.withUnsafeMutableBufferPointer { i in distances.withUnsafeMutableBufferPointer { d in
-            nvivo_omics_hnsw_neighbors(path, &native, i.baseAddress, d.baseAddress, UInt64(n*k), &raw, { _ in Task.isCancelled ? 1 : 0 }, nil)
-        } } }
+        var raw = NVivoHNSWReport()
+        let output = Output(sink)
+        // Retain the callback owner for the entire synchronous C invocation.
+        let status = withExtendedLifetime(output) {
+            source.path.withCString { path in
+                nvivo_omics_hnsw_neighbors_stream(path, &native, { row, indices, distances, count, opaque in
+                    guard let indices, let distances, let opaque else { return 1 }
+                    let owner = Unmanaged<Output>.fromOpaque(opaque).takeUnretainedValue()
+                    do {
+                        try owner.sink(Int(row), UnsafeBufferPointer(start: indices, count: Int(count)).map(Int.init),
+                                       Array(UnsafeBufferPointer(start: distances, count: Int(count))))
+                        return 0
+                    } catch { owner.error = error; return 1 }
+                }, &raw, { _ in Task.isCancelled ? 1 : 0 }, Unmanaged.passUnretained(output).toOpaque())
+            }
+        }
+        if let error = output.error { throw error }
         switch status {
         case 0: break
         case 2: throw VivoOmicsError.limit("HNSW distance-evaluation budget")
@@ -72,8 +90,18 @@ enum VivoHNSWNeighbors {
             constructionDistances: Int(raw.construction_distances), queryDistances: Int(raw.query_distances), scoreReadBytes: Int(raw.score_read_bytes),
             scoreReadCalls: Int(raw.score_read_calls), scoreCacheHits: Int(raw.score_cache_hits), peakCachedScoreBytes: Int(raw.peak_cached_score_bytes),
             indexStorageBytes: Int(raw.index_storage_bytes),
-            qualification: "Serial source-order HNSW construction/query with pinned seed, FP64 metric and bounded LRU score tiles. Index topology and final graph remain resident. Search is approximate; recall needs independent measurement. Index storage bytes exclude allocator, mutex and container overhead. No million-cell or biological qualification.")
-        let graph = try VivoSingleCellNeighbors.finish(indices: indices.map(Int.init), distances: distances, cells: cells, dimensions: dimensions,
+            qualification: "Serial source-order HNSW construction/query with pinned seed, FP64 metric and bounded LRU score tiles. Index topology remains resident; graph residency depends on the selected output storage. Search is approximate; recall needs independent measurement. Index storage bytes exclude allocator, mutex and container overhead. No million-cell or biological qualification.")
+        return report
+    }
+    static func run(source: URL, cells: [VivoOmicsCellIdentity], dimensions: Int, options: VivoSingleCellNeighborOptions,
+                    approximation: VivoHNSWOptions) throws -> (VivoSingleCellNeighborGraph, VivoHNSWReport) {
+        try options.validate()
+        guard cells.count <= 4_000_000/options.neighbors else { throw VivoOmicsError.limit("resident HNSW graph-entry bound") }
+        var indices: [Int] = [], distances: [Double] = []
+        let report = try stream(source: source, rows: cells.count, dimensions: dimensions, options: options, approximation: approximation) { _, i, d in
+            indices.append(contentsOf: i); distances.append(contentsOf: d)
+        }
+        let graph = try VivoSingleCellNeighbors.finish(indices: indices, distances: distances, cells: cells, dimensions: dimensions,
             options: options, distancePairs: report.constructionDistances+report.queryDistances,
             method: "approximate-HNSW-euclidean-PCA-knn-umap-fuzzy-union-v1",
             qualification: "Approximate HNSW neighbors with FP64 returned distances and the shared fuzzy graph. distancePairs counts all construction/query metric evaluations, including repeats; it is not a unique-pair count. No exact-neighbor, embedding, clustering, integration or biological qualification.")

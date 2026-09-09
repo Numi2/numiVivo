@@ -1,0 +1,257 @@
+{
+  "status": "passed",
+  "runtime": {
+    "sourceHashes": {
+      "Sources/NumiVivoCore/OmicsHNSW.cpp": "44dbd7bffe27160b214c6554b73d32f7a241bae6f6a36aee6f086e53f1be54b4",
+      "Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsHNSW.h": "dd24748433b6d9e5c928b7d03676692e030b14cbb7a96fe16bbe4f3d8da63c9c",
+      "Sources/NumiVivoKit/Omics/VivoHNSWNeighbors.swift": "f48557c2b315eafd9dcbab0d323481f77624a234cffa89b8e636199352849668",
+      "Sources/NumiVivoKit/Omics/VivoPCAGraphStore.swift": "de26752c628e86dc01dd17da021e0331db26cd30a46a0d83bb42117eaf7f7b18",
+      "Sources/NumiVivoKit/Omics/VivoPCANeighborBundle.swift": "ee3ef5859e70249505088ef08559e0c939e19d6a324bd9bc1c8c15e802dde76e",
+      "Sources/NumiVivoKit/Omics/VivoSingleCellNeighbors.swift": "25408e20ca8b03a20341ae430ff612acefda74956772056d73824bb21b1df209",
+      "Sources/NumiVivoKit/Omics/VivoWindowedPCANeighbors.swift": "1a97f7ef583df7bcf96d065496e26edac5bbfc74cafb2d85d7b480a78d8f30e0",
+      "Tests/NumiVivoIntegrationTests/SingleCellGraphStoreTests.swift": "5e076c734bd0c32300d49f2a88b583942fc7fb52a183cd8cd108e846ccbf33ee",
+      "Tools/Omics/H5AD/build.sh": "9863a3d24790471aa6c0b6e7d3e5bf7b80466822b2d86b2ffa30dc6d5647f39b"
+    },
+    "host": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6\nBuildVersion:\t\t25G72\n",
+    "chip": "Apple M4 Pro",
+    "memory": "25769803776",
+    "binarySHA256": "bd93e9330383baf1666a2c77ce7d2e4a53f8d7e5ed51b40e7c46920332f9bd6a",
+    "hdf5SHA256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e",
+    "sourceBytesMatchRemoteBuild": true,
+    "baseCommit": "85e2f23a0810bddd2a86b6c68a3b241d2683a3b0"
+  },
+  "publicationScope": {
+    "benchmarkBinarySHA256": "bd93e9330383baf1666a2c77ce7d2e4a53f8d7e5ed51b40e7c46920332f9bd6a",
+    "benchmarkBaseCommit": "85e2f23a0810bddd2a86b6c68a3b241d2683a3b0",
+    "mergedBinarySHA256": "e3fb4fc40ee336a5c7b7d1e538d52f7e10788e5b52cf9dedc36f503d9e0ded60",
+    "mergedBaseCommit": "b359e71182bda52cf13fbfaddd22ca71b22b5a46",
+    "upstreamCodeChanges": [
+      "Sources/NumiVivoCLI/main.swift"
+    ],
+    "omicsSourceBytesUnchanged": true,
+    "mergedMainSHA256": "049c8018ad26db1a815fb006a74922d8d8a582a324746fa1cdc43f834fa17b48",
+    "intentionalMixedBinaryCommand": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/fixture-inputs/reference",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/fixtures/fitted-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/mixed-binary-rejection"
+    ],
+    "intentionalMixedBinaryExitCode": 65,
+    "scope": "Full-cohort timings and 77 owner tests bind the benchmark binary; merged full-product release and fresh CLI checks qualify routing after unrelated genomic updates. Cohort receipts were not relabeled."
+  },
+  "mergedFixtures": {
+    "status": "passed",
+    "commands": 22,
+    "expectedRejections": 6,
+    "fittedAndQuery": true,
+    "exactAndHNSW": true,
+    "allBinaryNumericsExact": true,
+    "replayExact": true,
+    "allFourRehashedFilesRejected": true,
+    "binarySHA256": "e3fb4fc40ee336a5c7b7d1e538d52f7e10788e5b52cf9dedc36f503d9e0ded60"
+  },
+  "mergedQueryInputRegression": {
+    "binarySHA256": "e3fb4fc40ee336a5c7b7d1e538d52f7e10788e5b52cf9dedc36f503d9e0ded60",
+    "commands": 22,
+    "expectedRejections": 13,
+    "formats": [
+      {
+        "allBinaryCoordinatesChecked": true,
+        "cells": 16,
+        "components": 3,
+        "emptyLibraries": 1,
+        "features": 10,
+        "maximumAbsoluteScoreError": 2.6645352591003757e-15,
+        "projectionUpdates": 309,
+        "status": "passed"
+      },
+      {
+        "allBinaryCoordinatesChecked": true,
+        "cells": 16,
+        "components": 3,
+        "emptyLibraries": 1,
+        "features": 10,
+        "maximumAbsoluteScoreError": 2.6645352591003757e-15,
+        "projectionUpdates": 309,
+        "status": "passed"
+      },
+      {
+        "allBinaryCoordinatesChecked": true,
+        "cells": 16,
+        "components": 3,
+        "emptyLibraries": 1,
+        "features": 10,
+        "maximumAbsoluteScoreError": 3.552713678800501e-15,
+        "projectionUpdates": 309,
+        "status": "passed"
+      }
+    ],
+    "rehashedTamperingRejected": true,
+    "replayExact": true,
+    "status": "passed"
+  },
+  "swiftTests": 77,
+  "swiftSuites": 23,
+  "releaseBuild": "passed",
+  "scopedBuild": "passed; fresh executable completed HDF5 fixture import/export",
+  "nativeCommands": 14,
+  "fixtures": {
+    "status": "passed",
+    "commands": 22,
+    "expectedRejections": 6,
+    "fittedAndQuery": true,
+    "exactAndHNSW": true,
+    "allBinaryNumericsExact": true,
+    "replayExact": true,
+    "allFourRehashedFilesRejected": true,
+    "binarySHA256": "bd93e9330383baf1666a2c77ce7d2e4a53f8d7e5ed51b40e7c46920332f9bd6a"
+  },
+  "queryInputRegression": {
+    "binarySHA256": "bd93e9330383baf1666a2c77ce7d2e4a53f8d7e5ed51b40e7c46920332f9bd6a",
+    "commands": 22,
+    "expectedRejections": 13,
+    "formats": [
+      {
+        "allBinaryCoordinatesChecked": true,
+        "cells": 16,
+        "components": 3,
+        "emptyLibraries": 1,
+        "features": 10,
+        "maximumAbsoluteScoreError": 2.6645352591003757e-15,
+        "projectionUpdates": 309,
+        "status": "passed"
+      },
+      {
+        "allBinaryCoordinatesChecked": true,
+        "cells": 16,
+        "components": 3,
+        "emptyLibraries": 1,
+        "features": 10,
+        "maximumAbsoluteScoreError": 2.6645352591003757e-15,
+        "projectionUpdates": 309,
+        "status": "passed"
+      },
+      {
+        "allBinaryCoordinatesChecked": true,
+        "cells": 16,
+        "components": 3,
+        "emptyLibraries": 1,
+        "features": 10,
+        "maximumAbsoluteScoreError": 3.552713678800501e-15,
+        "projectionUpdates": 309,
+        "status": "passed"
+      }
+    ],
+    "rehashedTamperingRejected": true,
+    "replayExact": true,
+    "status": "passed"
+  },
+  "reference": [
+    {
+      "status": "passed",
+      "cells": 8569,
+      "dimensions": 20,
+      "neighborEntries": 128535,
+      "connectivityEntries": 176856,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "156714b59cd29cd301917d0e3f8deb77480f9ce228b077ed482645d252f9ec2f",
+      "baselineScoresSHA256": "6ea92b3e2bac881e3787cd96992424614a853b6add82174d482a64e665f55eb5",
+      "graphSHA256": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+      "binaryBytes": 5434688,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 13863,
+      "dimensions": 20,
+      "neighborEntries": 207945,
+      "connectivityEntries": 293178,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "71538896f85184e752ac790e7188fdb48b620e7c6c1b777967632706afe7e9fc",
+      "baselineScoresSHA256": "f7f2d7cfdcd0dff7b7f113570ea6bbebddd344d3516aaed81bf5a2971d2517b1",
+      "graphSHA256": "7b7bdf4fe3684158e0e2bc6401d6b99d1b266488221365fdd2f43dd60b281675",
+      "binaryBytes": 8905216,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 111445,
+      "dimensions": 20,
+      "neighborEntries": 1671675,
+      "connectivityEntries": 2513474,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "fb1ccb626b2019c3091e0f0930a4124e84619fa7a5cd799e13f7dd45a706a10b",
+      "baselineScoresSHA256": "929b8f16450653ba64e72a0c17936032f367c178bd5798951abc9560da60c26b",
+      "graphSHA256": "ed22f6db052807f02cb4b0159891ef120f9e3554fd1dae54ff2633f14f0b0fd9",
+      "binaryBytes": 74094880,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 8569,
+      "dimensions": 20,
+      "neighborEntries": 128535,
+      "connectivityEntries": 176850,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "b2d753af1463ed6f07b7b892bb52b592a762848787f23860602439fcf5889df1",
+      "baselineScoresSHA256": "6ea92b3e2bac881e3787cd96992424614a853b6add82174d482a64e665f55eb5",
+      "graphSHA256": "069460e0d7ac1aa34f3e1f114fc883dfc8ca6d98e6c45bb3a81cc3d84d4158f4",
+      "binaryBytes": 5434592,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    }
+  ],
+  "jsonBaselines": [
+    {
+      "case": "baron",
+      "graphSHA256": "156714b59cd29cd301917d0e3f8deb77480f9ce228b077ed482645d252f9ec2f",
+      "exactPriorGraphBytes": true,
+      "sameBinaryInputReceipt": true
+    },
+    {
+      "case": "hagai",
+      "graphSHA256": "71538896f85184e752ac790e7188fdb48b620e7c6c1b777967632706afe7e9fc",
+      "exactPriorGraphBytes": true,
+      "sameBinaryInputReceipt": true
+    },
+    {
+      "case": "norman",
+      "graphSHA256": "fb1ccb626b2019c3091e0f0930a4124e84619fa7a5cd799e13f7dd45a706a10b",
+      "exactPriorGraphBytes": true,
+      "sameBinaryInputReceipt": true
+    }
+  ],
+  "scriptsSHA256": {
+    "Tools/Omics/Reduction/check_graph_store.py": "342fe28ed0c1f1b7abdb9d91e89f626ee00e1b256070b637fc7777d0fe06b9fe",
+    "Tools/Omics/Reduction/check_graph_store_reference.py": "4f0203cdfaf42d0b25e2903b249e1f89b9e05206d3b20743206ecb5ccb97975c",
+    "Tools/Omics/Reduction/run_graph_store.py": "572a5da263d0b5513770f413611bbbb24f2eba8ca9957247cc61d04511583e0c"
+  },
+  "scope": "Native binary graph storage and exact preservation of independently qualified numerical graphs; no million-cell, downstream biology or Metal qualification",
+  "pythonEnvironment": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "executable": "/Users/home/numivivo-singlecell-benchmark-py/bin/python",
+    "versions": {
+      "numpy": "2.5.3",
+      "scipy": "1.18.1",
+      "scanpy": "1.12.4",
+      "anndata": "0.13.3.post0",
+      "h5py": "3.16.0",
+      "umap-learn": "0.5.12",
+      "scikit-learn": "1.9.0"
+    }
+  }
+}

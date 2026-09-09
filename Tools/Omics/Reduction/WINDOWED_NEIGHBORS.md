@@ -46,10 +46,13 @@ or failure, and the caller merges blocks in row order after each batch joins.
 Cancellation is checked between bounded parallel batches on the calling task.
 
 Worker limits are 1-16, query tiles 1-512 rows and candidate tiles 1-8192 rows.
-Final fixed-width kNN arrays are bounded to four million entries. Metadata, cell
+For default JSON output, final fixed-width kNN arrays are bounded to four million
+entries. Metadata, cell
 identities, the final fuzzy graph and its JSON encoding remain resident; input PCA
 reconstruction has its own resident fitting costs. Thus only score access and search
-tiles are bounded independently of cohort size. Graph storage is not yet out of core.
+tiles are bounded independently of cohort size. The optional [binary store](GRAPH_STORE.md) now emits search rows and constructs
+connectivity using a disk transpose and merge; it avoids these resident graph
+arrays and graph-sized JSON encoding. Exact search still has the same pair budget.
 
 Rows are independently owned to avoid cross-worker heap synchronization. This
 computes both directed distances `(i,j)` and `(j,i)`, while the resident triangular
@@ -63,8 +66,8 @@ Exact search remains quadratic. The existing maximum of 500 million unique pairs
 still applies (50 million by default), so the complete 111,445-cell Norman cohort
 and million-cell graphs are not supported by this exact route. The optional
 [HNSW route](HNSW_NEIGHBORS.md) now covers full Norman with independently measured
-sampled recall. Its final graph remains resident; million-cell qualification is
-still open. Increasing exact-mode memory bounds does not remove quadratic work.
+sampled recall. Its optional binary output also streams the final graph;
+million-cell qualification is still open. Increasing exact-mode memory bounds does not remove quadratic work.
 
 ## Artifact lifecycle
 

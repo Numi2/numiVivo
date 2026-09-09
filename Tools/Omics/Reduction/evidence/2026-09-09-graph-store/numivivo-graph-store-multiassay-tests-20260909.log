@@ -1,0 +1,32 @@
+[0/1] Planning build
+Building for debugging...
+[0/4] Write swift-version-3CD7052B146186F2.txt
+Build complete! (0.22s)
+Test Suite 'Selected tests' started at 2026-09-09 17:01:13.915.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 17:01:13.920.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 17:01:13.920.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 17:01:13.920.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite MultiAssayTests started.
+◇ Suite MultiAssayH5MUImportTests started.
+◇ Test invalidAlignmentFramesAndFeatureIdentitiesReject() started.
+◇ Test missingMeasurementsDifferFromMeasuredZerosAndNamespacesRemainSeparate() started.
+◇ Test cutSiteUnitsCannotBeAppliedToRNA() started.
+◇ Test mappingRejectsUnknownOptionsAndAmbiguousCountSelection() started.
+➜ Test nativeH5MUMapsPreservePartialRowsAndUInt64() skipped.
+➜ Test spatialArraysRoundTripPositionsAndMissingRows() skipped.
+➜ Test nativeReadPreservesPartialMapsKindsAndExactIntegers() skipped.
+➜ Test conflictingAndIncompleteObservationMapsReject() skipped.
+◇ Test accessibilityRequiresAssemblyIntervalsAndCorrectUnits() started.
+✔ Test accessibilityRequiresAssemblyIntervalsAndCorrectUnits() passed after 0.001 seconds.
+✔ Test missingMeasurementsDifferFromMeasuredZerosAndNamespacesRemainSeparate() passed after 0.001 seconds.
+✔ Test cutSiteUnitsCannotBeAppliedToRNA() passed after 0.001 seconds.
+✔ Test invalidAlignmentFramesAndFeatureIdentitiesReject() passed after 0.001 seconds.
+✔ Test mappingRejectsUnknownOptionsAndAmbiguousCountSelection() passed after 0.001 seconds.
+✔ Suite MultiAssayTests passed after 0.001 seconds.
+✔ Suite MultiAssayH5MUImportTests passed after 0.001 seconds.
+✔ Test run with 9 tests in 2 suites passed after 0.002 seconds.

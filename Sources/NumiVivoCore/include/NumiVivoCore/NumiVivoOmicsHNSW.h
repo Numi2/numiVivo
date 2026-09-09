@@ -27,6 +27,13 @@ NVIVO_EXPORT int32_t nvivo_omics_hnsw_neighbors(
     const char *score_path, const NVivoHNSWOptions *options,
     uint32_t *indices, double *distances, uint64_t output_capacity,
     NVivoHNSWReport *report, NVivoHNSWCancel cancel, void *cancel_context);
+/* Row pointers are valid only during the callback. A nonzero callback result
+ * stops the operation with status 8. No partial output is a published result. */
+typedef int32_t (*NVivoHNSWRow)(uint32_t row, const uint32_t *indices,
+    const double *distances, uint32_t count, void *context);
+NVIVO_EXPORT int32_t nvivo_omics_hnsw_neighbors_stream(
+    const char *score_path, const NVivoHNSWOptions *options, NVivoHNSWRow sink,
+    NVivoHNSWReport *report, NVivoHNSWCancel cancel, void *context);
 #ifdef __cplusplus
 }
 #endif

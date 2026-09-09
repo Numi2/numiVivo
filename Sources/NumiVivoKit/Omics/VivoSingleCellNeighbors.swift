@@ -85,7 +85,7 @@ enum VivoSingleCellNeighbors {
         // Divide before multiplying to avoid overflow on untrusted dimensions.
         let pairProduct = (n % 2 == 0 ? n/2 : n).multipliedReportingOverflow(by: n % 2 == 0 ? n-1 : (n-1)/2)
         guard !pairProduct.overflow, pairProduct.partialValue <= options.maximumDistancePairs else {
-            throw VivoOmicsError.limit("exact neighbor distance-pair budget; approximate search is not yet implemented")
+            throw VivoOmicsError.limit("exact neighbor distance-pair budget; use the PCA bundle HNSW route for approximate search")
         }
         var heaps = [[Neighbor]](repeating: [],count: n)
         for i in 0..<n {
@@ -108,8 +108,33 @@ enum VivoSingleCellNeighbors {
         }
         return try finish(indices: indices, distances: distances, cells: cells, dimensions: d, options: options, distancePairs: pairProduct.partialValue)
     }
+    static func bandwidth(row: [Double], local: Double, globalMean: Double) throws -> (rho: Double, sigma: Double, residual: Double) {
+        let k = row.count, target = log2(Double(k)), positive = row.filter { $0 > 0 }
+        let integer = Int(floor(local)), fraction = local-Double(integer)
+        var rho = 0.0
+        if Double(positive.count) >= local {
+            if integer > 0 {
+                rho = positive[integer-1]
+                if fraction > 1e-5 { rho += fraction*(positive[integer]-positive[integer-1]) }
+            } else if let first = positive.first { rho = fraction*first }
+        } else { rho = positive.last ?? 0 }
+        func mass(_ sigma: Double) -> Double {
+            row.dropFirst().reduce(0) { $0 + ($1 <= rho ? 1 : exp(-($1-rho)/sigma)) }
+        }
+        var low = 0.0, high = Double.infinity, sigma = 1.0
+        for _ in 0..<64 {
+            let sum = mass(sigma)
+            if abs(sum-target) < 1e-5 { break }
+            if sum > target { high = sigma; sigma = (low+high)/2 }
+            else { low = sigma; sigma = high.isInfinite ? sigma*2 : (low+high)/2 }
+        }
+        let mean = rho > 0 ? row.reduce(0,+)/Double(k) : globalMean
+        sigma = max(sigma, 1e-3*mean)
+        guard rho.isFinite, sigma.isFinite, sigma > 0 else { throw VivoOmicsError.invalid("nonfinite graph bandwidth") }
+        return (rho, sigma, abs(mass(sigma)-target))
+    }
     /// Shared UMAP-compatible graph construction for resident and file-backed
-    /// exact searches. Search execution settings do not alter this calculation.
+    /// exact/approximate searches. Search execution settings do not alter this calculation.
     static func finish(indices: [Int], distances: [Double], cells: [VivoOmicsCellIdentity], dimensions d: Int,
                        options: VivoSingleCellNeighborOptions, distancePairs: Int, method: String? = nil, qualification: String? = nil) throws -> VivoSingleCellNeighborGraph {
         let n = cells.count, k = options.neighbors
@@ -118,34 +143,14 @@ enum VivoSingleCellNeighbors {
               (0..<n).allSatisfy({ indices[$0*k] == $0 && distances[$0*k] == 0 }) else {
             throw VivoOmicsError.invalid("neighbor graph arrays")
         }
-        let globalMean = distances.reduce(0,+)/Double(distances.count), target = log2(Double(k))
+        let globalMean = distances.reduce(0,+)/Double(distances.count)
         var rhos = [Double](repeating: 0,count: n), sigmas = rhos, residuals = rhos
         var directed = [[Int: Double]](repeating: [:],count: n)
         for i in 0..<n {
             try Task.checkCancellation()
-            let row = Array(distances[(i*k)..<((i+1)*k)]), positive = row.filter { $0 > 0 }
-            let local = options.localConnectivity, integer = Int(floor(local)), fraction = local-Double(integer)
-            var rho = 0.0
-            if Double(positive.count) >= local {
-                if integer > 0 {
-                    rho = positive[integer-1]
-                    if fraction > 1e-5 { rho += fraction*(positive[integer]-positive[integer-1]) }
-                } else if let first = positive.first { rho = fraction*first }
-            } else { rho = positive.last ?? 0 }
-            func mass(_ sigma: Double) -> Double {
-                row.dropFirst().reduce(0) { $0 + ($1 <= rho ? 1 : exp(-($1-rho)/sigma)) }
-            }
-            var low = 0.0, high = Double.infinity, sigma = 1.0
-            for _ in 0..<64 {
-                let sum = mass(sigma)
-                if abs(sum-target) < 1e-5 { break }
-                if sum > target { high = sigma; sigma = (low+high)/2 }
-                else { low = sigma; sigma = high.isInfinite ? sigma*2 : (low+high)/2 }
-            }
-            let mean = rho > 0 ? row.reduce(0,+)/Double(k) : globalMean
-            sigma = max(sigma, 1e-3*mean)
-            guard rho.isFinite, sigma.isFinite, sigma > 0 else { throw VivoOmicsError.invalid("nonfinite graph bandwidth") }
-            rhos[i] = rho; sigmas[i] = sigma; residuals[i] = abs(mass(sigma)-target)
+            let row = Array(distances[(i*k)..<((i+1)*k)])
+            let (rho, sigma, residual) = try bandwidth(row: row, local: options.localConnectivity, globalMean: globalMean)
+            rhos[i] = rho; sigmas[i] = sigma; residuals[i] = residual
             for slot in 1..<k {
                 let delta = row[slot]-rho
                 let weight = delta <= 0 ? 1 : exp(-delta/sigma)

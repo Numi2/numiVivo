@@ -2,21 +2,24 @@ import Foundation
 
 public struct VivoPCANeighborPlan: Codable, Sendable, Equatable {
     public enum InputKind: String, Codable, Sendable { case fitted, query }
+    public enum Storage: String, Codable, Sendable { case json, binary }
     public let schemaVersion: Int
     public let inputKind: InputKind
     public let neighbors: VivoSingleCellNeighborOptions
     public let execution: VivoPCANeighborExecution
     public let approximation: VivoHNSWOptions?
-    public init(inputKind: InputKind = .fitted, neighbors: VivoSingleCellNeighborOptions = .init(), execution: VivoPCANeighborExecution = .init(), approximation: VivoHNSWOptions? = nil) {
-        schemaVersion = 1; self.inputKind = inputKind; self.neighbors = neighbors; self.execution = execution; self.approximation = approximation
+    public let storage: Storage?
+    public init(inputKind: InputKind = .fitted, neighbors: VivoSingleCellNeighborOptions = .init(), execution: VivoPCANeighborExecution = .init(), approximation: VivoHNSWOptions? = nil, storage: Storage? = nil) {
+        schemaVersion = 1; self.inputKind = inputKind; self.neighbors = neighbors; self.execution = execution; self.approximation = approximation; self.storage = storage
     }
-    private enum CodingKeys: String, CodingKey { case schemaVersion, inputKind, neighbors, execution, approximation }
+    private enum CodingKeys: String, CodingKey { case schemaVersion, inputKind, neighbors, execution, approximation, storage }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "inputKind", "neighbors", "execution", "approximation"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "inputKind", "neighbors", "execution", "approximation", "storage"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try c.decode(Int.self, forKey: .schemaVersion)
         inputKind = try c.decodeIfPresent(InputKind.self, forKey: .inputKind) ?? .fitted
         approximation = try c.decodeIfPresent(VivoHNSWOptions.self, forKey: .approximation)
+        storage = try c.decodeIfPresent(Storage.self, forKey: .storage)
         neighbors = try c.decodeIfPresent(VivoSingleCellNeighborOptions.self, forKey: .neighbors) ?? .init()
         execution = try c.decodeIfPresent(VivoPCANeighborExecution.self, forKey: .execution) ?? .init()
     }
@@ -89,28 +92,60 @@ public enum VivoPCANeighborBundle {
             dimensions = try read(VivoH5ADPCAQueryReport.self, root: source, name: "report.json", maximum: 1_048_576).components
         }
         let metadata = try read(VivoSingleCellCountMetadata.self, root: source, name: "metadata.json", maximum: 536_870_912)
-        let cells = metadata.cells.map { VivoOmicsCellIdentity(sampleID: $0.sampleID, barcode: $0.barcode) }, n = cells.count
-        let graph: VivoSingleCellNeighborGraph
+        let n = metadata.cells.count
+        let graphHash: VivoFingerprint
         var report: VivoPCANeighborExecutionReport
-        if let approximation = plan.approximation {
-            let result = try VivoHNSWNeighbors.run(source: source.appendingPathComponent("scores.bin"), cells: cells, dimensions: dimensions, options: plan.neighbors, approximation: approximation)
-            graph = result.0
-            let evaluations = result.1.constructionDistances + result.1.queryDistances
-            report = .init(method: "serial-HNSW-cached-FP64-PCA-knn-v1", cells: n, dimensions: dimensions,
-                directedDistanceEvaluations: evaluations, scalarDistanceTerms: evaluations*dimensions,
-                scoreRecordReads: result.1.scoreReadBytes/16, scoreFileBytes: n*dimensions*16, maximumMappedBytesPerWorker: 0,
-                execution: plan.execution, qualification: result.1.qualification)
-            report.hnsw = result.1
+        if plan.storage == .binary {
+            let writer = try VivoCountRecordWriter(temp.appendingPathComponent("neighbors.bin"))
+            let sink: (Int, [Int], [Double]) throws -> Void = { row, indices, distances in
+                guard indices.count == plan.neighbors.neighbors, distances.count == indices.count else { throw VivoOmicsError.invalid("neighbor stream width") }
+                for slot in indices.indices { try writer.append(row: row, feature: indices[slot], bits: distances[slot].bitPattern) }
+            }
+            let hnsw: VivoHNSWReport?
+            if let approximation = plan.approximation {
+                hnsw = try VivoHNSWNeighbors.stream(source: source.appendingPathComponent("scores.bin"), rows: n, dimensions: dimensions,
+                    options: plan.neighbors, approximation: approximation, sink: sink)
+            } else {
+                try VivoWindowedPCANeighbors.stream(source: source.appendingPathComponent("scores.bin"), rows: n, dimensions: dimensions,
+                    options: plan.neighbors, execution: plan.execution, sink: sink)
+                hnsw = nil
+            }
+            let hash = try writer.finish()
+            let work = hnsw.map { $0.constructionDistances + $0.queryDistances }
+            let stored = try VivoPCAGraphStore.build(root: temp, rows: n, dimensions: dimensions, options: plan.neighbors,
+                distancePairs: work ?? n*(n-1)/2, approximate: hnsw != nil, neighborsHash: hash)
+            report = .init(method: hnsw == nil ? "exact-row-owned-dispatch-windowed-PCA-knn-v1" : "serial-HNSW-cached-FP64-PCA-knn-v1",
+                cells: n, dimensions: dimensions, directedDistanceEvaluations: work ?? n*(n-1),
+                scalarDistanceTerms: (work ?? n*(n-1))*dimensions,
+                scoreRecordReads: hnsw.map { $0.scoreReadBytes/16 } ?? n*dimensions*((n+plan.execution.queryBlockRows-1)/plan.execution.queryBlockRows+1),
+                scoreFileBytes: n*dimensions*16, maximumMappedBytesPerWorker: hnsw == nil ? VivoWindowedCountRecords.windowBytes : 0,
+                execution: plan.execution, qualification: stored.qualification)
+            report.hnsw = hnsw
+            graphHash = try write(stored, root: temp, name: "graph.json", maximum: 65_536)
         } else {
-            graph = try VivoWindowedPCANeighbors.run(source: source.appendingPathComponent("scores.bin"), cells: cells, dimensions: dimensions, options: plan.neighbors, execution: plan.execution)
-            report = VivoPCANeighborExecutionReport(method: "exact-row-owned-dispatch-windowed-PCA-knn-v1", cells: n, dimensions: dimensions,
-            directedDistanceEvaluations: n*(n-1), scalarDistanceTerms: n*(n-1)*dimensions,
-            scoreRecordReads: n*dimensions*((n+plan.execution.queryBlockRows-1)/plan.execution.queryBlockRows+1), scoreFileBytes: n*dimensions*16,
-            maximumMappedBytesPerWorker: VivoWindowedCountRecords.windowBytes, execution: plan.execution,
-            qualification: "Independent row heaps and score readers; deterministic ordered merge, shared fuzzy graph. Exact search evaluates both directions; graph distancePairs counts unique unordered pairs. Scores use bounded tiles and 16 MiB mapping windows per worker; input reconstruction, identities and final graph remain resident. No approximate search, million-cell, Metal, embedding or biological qualification.")
+            let cells = metadata.cells.map { VivoOmicsCellIdentity(sampleID: $0.sampleID, barcode: $0.barcode) }
+            let graph: VivoSingleCellNeighborGraph
+            if let approximation = plan.approximation {
+                let result = try VivoHNSWNeighbors.run(source: source.appendingPathComponent("scores.bin"), cells: cells, dimensions: dimensions, options: plan.neighbors, approximation: approximation)
+                graph = result.0
+                let evaluations = result.1.constructionDistances + result.1.queryDistances
+                report = .init(method: "serial-HNSW-cached-FP64-PCA-knn-v1", cells: n, dimensions: dimensions,
+                    directedDistanceEvaluations: evaluations, scalarDistanceTerms: evaluations*dimensions,
+                    scoreRecordReads: result.1.scoreReadBytes/16, scoreFileBytes: n*dimensions*16, maximumMappedBytesPerWorker: 0,
+                    execution: plan.execution, qualification: result.1.qualification)
+                report.hnsw = result.1
+            } else {
+                graph = try VivoWindowedPCANeighbors.run(source: source.appendingPathComponent("scores.bin"), cells: cells, dimensions: dimensions, options: plan.neighbors, execution: plan.execution)
+                report = VivoPCANeighborExecutionReport(method: "exact-row-owned-dispatch-windowed-PCA-knn-v1", cells: n, dimensions: dimensions,
+                directedDistanceEvaluations: n*(n-1), scalarDistanceTerms: n*(n-1)*dimensions,
+                scoreRecordReads: n*dimensions*((n+plan.execution.queryBlockRows-1)/plan.execution.queryBlockRows+1), scoreFileBytes: n*dimensions*16,
+                maximumMappedBytesPerWorker: VivoWindowedCountRecords.windowBytes, execution: plan.execution,
+                qualification: "Independent row heaps and score readers; deterministic ordered merge, shared fuzzy graph. Exact search evaluates both directions; graph distancePairs counts unique unordered pairs. Scores use bounded tiles and 16 MiB mapping windows per worker; input reconstruction, identities and final graph remain resident. No approximate search, million-cell, Metal, embedding or biological qualification.")
+            }
+            graphHash = try write(graph, root: temp, name: "graph.json", maximum: 536_870_912)
         }
         let receipt = try VivoPCANeighborReceipt(schemaVersion: 1, input: inputHash,
-            plan: write(plan, root: temp, name: "plan.json", maximum: 65_536), graph: write(graph, root: temp, name: "graph.json", maximum: 536_870_912),
+            plan: write(plan, root: temp, name: "plan.json", maximum: 65_536), graph: graphHash,
             executionReport: write(report, root: temp, name: "execution.json", maximum: 65_536), implementation: implementation)
         _ = try write(receipt, root: temp, name: "receipt.json", maximum: 65_536)
         try Task.checkCancellation(); try FileManager.default.moveItem(at: temp, to: destination); return receipt
@@ -127,6 +162,14 @@ public enum VivoPCANeighborBundle {
         guard rebuilt == receipt else { throw VivoOmicsError.invalid("PCA neighbor source reconstruction differs") }
         for (name, hash, maximum) in [("plan.json", receipt.plan, 65_536), ("graph.json", receipt.graph, 536_870_912), ("execution.json", receipt.executionReport, 65_536)] {
             guard try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), maximumBytes: maximum) == hash else { throw VivoOmicsError.invalid("PCA neighbor artifact fingerprint differs") }
+        }
+        if plan.storage == .binary {
+            let graph = try read(VivoPCAGraphStoreReport.self, root: root, name: "graph.json", maximum: 65_536)
+            for (name, hash) in zip(VivoPCAGraphStore.files, [graph.neighbors, graph.bandwidths, graph.offsets, graph.edges]) {
+                guard try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), maximumBytes: 4_096_000_000) == hash else {
+                    throw VivoOmicsError.invalid("binary graph fingerprint differs")
+                }
+            }
         }
         return receipt
     }

@@ -1,0 +1,20 @@
+[0/1] Planning build
+Building for debugging...
+[0/4] Write swift-version-3CD7052B146186F2.txt
+Build complete! (0.24s)
+Test Suite 'Selected tests' started at 2026-09-09 19:46:21.752.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 19:46:21.758.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 19:46:21.758.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 19:46:21.758.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CountStoreTests started.
+◇ Test emptyRecordsAndNonRegularInputs() started.
+◇ Test windowBoundaryAndExactUInt64Records() started.
+✔ Test emptyRecordsAndNonRegularInputs() passed after 0.002 seconds.
+✔ Test windowBoundaryAndExactUInt64Records() passed after 0.160 seconds.
+✔ Suite CountStoreTests passed after 0.160 seconds.
+✔ Test run with 2 tests in 1 suite passed after 0.160 seconds.

@@ -1,0 +1,224 @@
+[
+  {
+    "label": "baron-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/baron-fit.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 6.54,
+    "maximumResidentBytes": 170917888
+  },
+  {
+    "label": "baron-binary",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/binary-plan.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/binary"
+    ],
+    "exitCode": 0,
+    "seconds": 6.82,
+    "maximumResidentBytes": 202817536
+  },
+  {
+    "label": "baron-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/binary"
+    ],
+    "exitCode": 0,
+    "seconds": 6.85,
+    "maximumResidentBytes": 204668928
+  },
+  {
+    "label": "baron-json",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/json-plan.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/json"
+    ],
+    "exitCode": 0,
+    "seconds": 6.83,
+    "maximumResidentBytes": 229736448
+  },
+  {
+    "label": "baron-exact-binary",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/exact-plan.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/exact-binary"
+    ],
+    "exitCode": 0,
+    "seconds": 6.34,
+    "maximumResidentBytes": 210468864
+  },
+  {
+    "label": "baron-exact-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/exact-binary"
+    ],
+    "exitCode": 0,
+    "seconds": 6.35,
+    "maximumResidentBytes": 197607424
+  },
+  {
+    "label": "hagai-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/hagai-fit.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 13.17,
+    "maximumResidentBytes": 200785920
+  },
+  {
+    "label": "hagai-binary",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/binary-plan.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/binary"
+    ],
+    "exitCode": 0,
+    "seconds": 14.8,
+    "maximumResidentBytes": 226689024
+  },
+  {
+    "label": "hagai-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/binary"
+    ],
+    "exitCode": 0,
+    "seconds": 14.87,
+    "maximumResidentBytes": 224559104
+  },
+  {
+    "label": "hagai-json",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/json-plan.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/json"
+    ],
+    "exitCode": 0,
+    "seconds": 14.88,
+    "maximumResidentBytes": 310018048
+  },
+  {
+    "label": "norman-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-pca-bundle-20260909/original.h5ad",
+      "--plan",
+      "/Users/n/numivivo-pca-bundle-20260909/plan.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 133.37,
+    "maximumResidentBytes": 443252736
+  },
+  {
+    "label": "norman-binary",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/pca",
+      "--plan",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/binary-plan.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/binary"
+    ],
+    "exitCode": 0,
+    "seconds": 157.97,
+    "maximumResidentBytes": 477413376
+  },
+  {
+    "label": "norman-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/binary"
+    ],
+    "exitCode": 0,
+    "seconds": 160.15,
+    "maximumResidentBytes": 468582400
+  },
+  {
+    "label": "norman-json",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-graph-store-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/pca",
+      "--plan",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/json-plan.json",
+      "--output",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/json"
+    ],
+    "exitCode": 0,
+    "seconds": 161.43,
+    "maximumResidentBytes": 1420509184
+  }
+]

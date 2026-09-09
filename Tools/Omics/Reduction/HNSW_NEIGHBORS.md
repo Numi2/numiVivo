@@ -2,6 +2,8 @@
 
 `singlecell-pca-neighbors` supports optional HNSW search over fitted or frozen-query
 PCA bundles. Omitting `approximation` retains the exact Dispatch implementation.
+Set `storage: "binary"` for the [streamed binary graph store](GRAPH_STORE.md);
+omission preserves resident JSON output.
 The native CPU implementation uses [hnswlib](https://github.com/nmslib/hnswlib)
 v0.8.0, revision `3f3429661187e4c24a490a0f148fc6bc89042b3d`, with unmodified
 Apache-2.0 headers, license and per-file hashes under `Sources/NumiVivoCore/ThirdParty/`.
@@ -56,10 +58,11 @@ mutex and container overhead.
 
 Limits are 1–64 PCs, k=2–128, connections=8–64, construction width from connections
 through 512, search width from k through 1024, and 1–2 billion metric evaluations.
-The Swift cache bound is 256 KiB–64 MiB. Fixed-width neighbors remain capped at
-four million entries. The index, identities, fuzzy graph and JSON encoding remain
-resident, as does part of input PCA reconstruction. This is bounded score access,
-not fully out-of-core graph storage or million-cell qualification.
+The Swift cache bound is 256 KiB–64 MiB. Resident JSON output remains capped at four million neighbor entries. Binary
+output emits rows and constructs connectivity through a disk transpose and merge,
+without resident neighbor/edge arrays. The HNSW index, identities, cell-scale
+bookkeeping and part of input PCA reconstruction remain resident. Neither storage
+mode establishes million-cell qualification.
 
 `maximumDistanceEvaluations` counts all construction and query metric calls,
 including repeated pairs. It is separate from exact-mode `maximumDistancePairs`.

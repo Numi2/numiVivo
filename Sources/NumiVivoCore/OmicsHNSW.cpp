@@ -103,15 +103,14 @@ class Scores final : public hnswlib::SpaceInterface<double> {
 };
 }
 
-int32_t nvivo_omics_hnsw_neighbors(const char *path, const NVivoHNSWOptions *o,
-    uint32_t *indices, double *distances, uint64_t capacity, NVivoHNSWReport *report,
-    NVivoHNSWCancel cancel, void *context) {
-    if (!path || !o || !indices || !distances || !report || o->struct_size!=sizeof(*o) || o->abi_version!=1 ||
+int32_t nvivo_omics_hnsw_neighbors_stream(const char *path, const NVivoHNSWOptions *o,
+    NVivoHNSWRow sink, NVivoHNSWReport *report, NVivoHNSWCancel cancel, void *context) {
+    if (!path || !o || !sink || !report || o->struct_size!=sizeof(*o) || o->abi_version!=1 ||
         o->rows<2 || o->rows>1'000'000 || o->dimensions<1 || o->dimensions>64 || o->neighbors<2 || o->neighbors>128 ||
         o->neighbors>o->rows || o->connections<8 || o->connections>64 || o->ef_construction<o->connections || o->ef_construction>512 ||
         o->ef_search<o->neighbors || o->ef_search>1024 || o->maximum_distance_evaluations<1 || o->maximum_distance_evaluations>2'000'000'000 ||
         o->score_cache_bytes<uint64_t(2)*tileRows*o->dimensions*8 || o->score_cache_bytes>67'108'864 ||
-        uint64_t(o->rows)*o->neighbors>4'000'000 || capacity<uint64_t(o->rows)*o->neighbors) return 1;
+        uint64_t(o->rows)*o->neighbors>128'000'000) return 1;
     *report={};
     try {
         std::unique_ptr<Scores> scores;
@@ -139,15 +138,29 @@ int32_t nvivo_omics_hnsw_neighbors(const char *path, const NVivoHNSWOptions *o,
             }
             std::sort(nearest.begin(),nearest.end());
             if (nearest.size()<o->neighbors-1) return 6;
-            const size_t offset=size_t(row)*o->neighbors;
-            indices[offset]=row; distances[offset]=0;
+            std::vector<uint32_t> indices(o->neighbors);
+            std::vector<double> distances(o->neighbors);
+            indices[0]=row; distances[0]=0;
             for (uint32_t k=1;k<o->neighbors;++k) {
                 if (k>1 && nearest[k-1].second==nearest[k-2].second) return 6;
-                indices[offset+k]=nearest[k-1].second; distances[offset+k]=std::sqrt(nearest[k-1].first);
+                indices[k]=nearest[k-1].second; distances[k]=std::sqrt(nearest[k-1].first);
             }
+            if (sink(row,indices.data(),distances.data(),o->neighbors,context)) return 8;
         }
         report->query_distances=scores->evaluations-report->construction_distances;
         return 0;
     } catch (const std::bad_alloc &) { return 7; }
       catch (...) { return 6; }
+}
+
+int32_t nvivo_omics_hnsw_neighbors(const char *path, const NVivoHNSWOptions *o,
+    uint32_t *indices, double *distances, uint64_t capacity, NVivoHNSWReport *report,
+    NVivoHNSWCancel cancel, void *context) {
+    if (!o || !indices || !distances || uint64_t(o->rows)*o->neighbors>4'000'000 ||
+        capacity<uint64_t(o->rows)*o->neighbors) return 1;
+    struct Output { uint32_t *i; double *d; NVivoHNSWCancel cancel; void *context; } output{indices,distances,cancel,context};
+    return nvivo_omics_hnsw_neighbors_stream(path,o,[](uint32_t row,const uint32_t *i,const double *d,uint32_t k,void *p)->int32_t {
+        auto &v=*static_cast<Output *>(p); const size_t start=size_t(row)*k;
+        std::copy(i,i+k,v.i+start); std::copy(d,d+k,v.d+start); return 0;
+    },report,[](void *p)->int32_t { auto &v=*static_cast<Output *>(p); return v.cancel?v.cancel(v.context):0; },&output);
 }

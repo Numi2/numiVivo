@@ -1,0 +1,22 @@
+{
+  "benchmarkBinarySHA256": "bd93e9330383baf1666a2c77ce7d2e4a53f8d7e5ed51b40e7c46920332f9bd6a",
+  "benchmarkBaseCommit": "85e2f23a0810bddd2a86b6c68a3b241d2683a3b0",
+  "mergedBinarySHA256": "e3fb4fc40ee336a5c7b7d1e538d52f7e10788e5b52cf9dedc36f503d9e0ded60",
+  "mergedBaseCommit": "b359e71182bda52cf13fbfaddd22ca71b22b5a46",
+  "upstreamCodeChanges": [
+    "Sources/NumiVivoCLI/main.swift"
+  ],
+  "omicsSourceBytesUnchanged": true,
+  "mergedMainSHA256": "049c8018ad26db1a815fb006a74922d8d8a582a324746fa1cdc43f834fa17b48",
+  "intentionalMixedBinaryCommand": [
+    "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+    "singlecell-pca-neighbors",
+    "/Users/home/numivivo-graph-store-20260909/fixture-inputs/reference",
+    "--plan",
+    "/Users/home/numivivo-graph-store-20260909/fixtures/fitted-hnsw/plan.json",
+    "--output",
+    "/Users/home/numivivo-graph-store-20260909/mixed-binary-rejection"
+  ],
+  "intentionalMixedBinaryExitCode": 65,
+  "scope": "Full-cohort timings and 77 owner tests bind the benchmark binary; merged full-product release and fresh CLI checks qualify routing after unrelated genomic updates. Cohort receipts were not relabeled."
+}

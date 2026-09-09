@@ -90,19 +90,17 @@ enum VivoWindowedPCANeighbors {
         }
         return .init(indices: indices, distances: distances)
     }
-    static func run(source: URL, cells: [VivoOmicsCellIdentity], dimensions: Int, options: VivoSingleCellNeighborOptions,
-                    execution: VivoPCANeighborExecution) throws -> VivoSingleCellNeighborGraph {
+    static func stream(source: URL, rows n: Int, dimensions: Int, options: VivoSingleCellNeighborOptions,
+                       execution: VivoPCANeighborExecution, sink: (Int, [Int], [Double]) throws -> Void) throws {
         try options.validate(); try execution.validate()
-        let n = cells.count, k = options.neighbors
-        guard n >= k, n <= 1_000_000, (1...64).contains(dimensions), n <= 4_000_000/k, options.representation != .integrated else {
+        let k = options.neighbors
+        guard n >= k, n <= 1_000_000, (1...64).contains(dimensions), options.representation != .integrated else {
             throw VivoOmicsError.limit("PCA neighbor axes, graph-entry bound or unsupported integrated representation")
         }
         let pairs = n*(n-1)/2
         guard pairs <= options.maximumDistancePairs else {
-            throw VivoOmicsError.limit("exact neighbor distance-pair budget; approximate search is not yet implemented")
+            throw VivoOmicsError.limit("exact neighbor distance-pair budget; use the PCA bundle HNSW route for approximate search")
         }
-        var indices: [Int] = [], distances: [Double] = []
-        indices.reserveCapacity(n*k); distances.reserveCapacity(n*k)
         // Cancellation is checked between bounded parallel batches on the caller
         // task. Dispatch workers own independent data and do not inherit Tasks.
         let batch = execution.workers * execution.queryBlockRows
@@ -116,10 +114,23 @@ enum VivoWindowedPCANeighbors {
                     neighbors: k, candidateRows: execution.candidateBlockRows) }, at: worker)
             }
             for worker in 0..<active {
-                let result = try results.get(worker); indices.append(contentsOf: result.indices); distances.append(contentsOf: result.distances)
+                let result = try results.get(worker)
+                for local in 0..<(result.indices.count/k) {
+                    try sink(first + worker*execution.queryBlockRows + local,
+                             Array(result.indices[(local*k)..<((local+1)*k)]), Array(result.distances[(local*k)..<((local+1)*k)]))
+                }
             }
         }
         try Task.checkCancellation()
-        return try VivoSingleCellNeighbors.finish(indices: indices, distances: distances, cells: cells, dimensions: dimensions, options: options, distancePairs: pairs)
+    }
+    static func run(source: URL, cells: [VivoOmicsCellIdentity], dimensions: Int, options: VivoSingleCellNeighborOptions,
+                    execution: VivoPCANeighborExecution) throws -> VivoSingleCellNeighborGraph {
+        try options.validate()
+        guard cells.count <= 4_000_000/options.neighbors else { throw VivoOmicsError.limit("resident exact graph-entry bound") }
+        var indices: [Int] = [], distances: [Double] = []
+        try stream(source: source, rows: cells.count, dimensions: dimensions, options: options, execution: execution) { _, i, d in
+            indices.append(contentsOf: i); distances.append(contentsOf: d)
+        }
+        return try VivoSingleCellNeighbors.finish(indices: indices, distances: distances, cells: cells, dimensions: dimensions, options: options, distancePairs: cells.count*(cells.count-1)/2)
     }
 }

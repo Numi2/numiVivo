@@ -385,8 +385,14 @@ The complete development objective remains open:
    resident and exact search remains quadratic. Optional [native HNSW](../Tools/Omics/Reduction/HNSW_NEIGHBORS.md)
    now builds the complete 111,445-cell Norman graph with a bounded score cache;
    strict mean recall is 99.9407% on 2,048 preselected exact-query checks. Complete
-   Baron/Hagai recall exceeds 99.996%. Streamed graph/integration storage,
-   million-cell qualification and downstream biological evaluation remain open.
+   Baron/Hagai recall exceeds 99.996%. A [binary graph store](../Tools/Omics/Reduction/GRAPH_STORE.md)
+   now streams exact/HNSW neighbor rows and constructs CSR connectivity through a
+   disk transpose and row merge. Graph arrays and their large JSON encoding are
+   avoided. Complete Norman construction peaks at 477 MB versus 1.421 GB for
+   same-executable JSON output, with every binary FP64 value exact to the qualified
+   graph. Input PCA state, HNSW index and cell-scale bookkeeping remain resident.
+   File-backed clustering/embedding and integration, million-cell qualification
+   and downstream biological evaluation remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

@@ -1,0 +1,278 @@
+[
+  {
+    "label": "fitted-exact-publish",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/reference",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-exact/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-exact/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-verify",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-exact/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-repeat",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/reference",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-exact/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-exact/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-json",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/reference",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-exact/json-plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-exact/json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-publish",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/reference",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-hnsw/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-verify",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-hnsw/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-repeat",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/reference",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-hnsw/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-json",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/reference",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-hnsw/json-plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-hnsw/json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-publish",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/csr",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-exact/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-exact/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-verify",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-exact/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-repeat",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/csr",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-exact/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-exact/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-json",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/csr",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-exact/json-plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-exact/json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-publish",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/csr",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-hnsw/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-verify",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-hnsw/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-repeat",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/csr",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-hnsw/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-json",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/csr",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-hnsw/json-plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/query-hnsw/json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "rehashed-neighbors",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/tamper-neighbors"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-bandwidths",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/tamper-bandwidths"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-offsets",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/tamper-offsets"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-edges",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/tamper-edges"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "overwrite",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/reference",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/fitted-hnsw/binary"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "invalid-storage",
+    "command": [
+      "/Users/home/numivivo-graph-store-20260909/numivivo-merged",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixture-inputs/reference",
+      "--plan",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/invalid-storage.json",
+      "--output",
+      "/Users/home/numivivo-graph-store-20260909/merged-fixtures/invalid-output"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  }
+]
