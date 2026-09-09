@@ -1,0 +1,129 @@
+{
+  "status": "passed",
+  "checks": [
+    "count publication",
+    "reduction publication",
+    "native reconstruction",
+    "report export",
+    "deterministic receipt",
+    "controlled unconverged rejection without receipt",
+    "controlled neighbor work-budget rejection without receipt",
+    "controlled unconverged clustering rejection without receipt"
+  ],
+  "binarySHA256": "960119d5692a5856aab2e75f30d7adc2d38a9676fc4a48282942ec93d342e600",
+  "commands": [
+    {
+      "arguments": [
+        "singlecell-run",
+        "/Users/home/numivivo-pbmc3k-count-qualified-v2-20260909/imported/manifest.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/counts.json"
+      ],
+      "exitCode": 0,
+      "seconds": 2.9319878751412034,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/plan.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/analysis.json"
+      ],
+      "exitCode": 0,
+      "seconds": 5.468337167054415,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analysis-verify",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/store"
+      ],
+      "exitCode": 0,
+      "seconds": 4.93117883335799,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analysis-export",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/report.json"
+      ],
+      "exitCode": 0,
+      "seconds": 6.859365500044078,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/plan.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/repeat.json"
+      ],
+      "exitCode": 0,
+      "seconds": 5.325490375049412,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/insufficient-basis.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 3.0782197918742895,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/insufficient-neighbor-budget.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 3.282490166835487,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/insufficient-clustering-sweeps.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-clustering-product-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 3.217650375328958,
+      "expectedSuccess": false
+    }
+  ],
+  "qualification": "Software reconstruction and numerical convergence; not biological qualification"
+}

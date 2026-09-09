@@ -271,8 +271,12 @@ The complete development objective remains open:
    route; see [reduction evidence](../Tools/Omics/Reduction/README.md).
    Exact PCA kNN and UMAP-compatible fuzzy connectivity now have full real-data
    reference checks; see [neighbor graph](../Tools/Omics/Reduction/NEIGHBORS.md).
-   Native UMAP coordinate optimization and clustering remain. Never densify
-   cells × genes; resident limits and an explicit pair-work budget still apply.
+   Sparse multilevel Louvain now has independent objective, connectivity and
+   three-seed heuristic reference comparisons on both datasets;
+   [clustering limits](../Tools/Omics/Reduction/CLUSTERING.md) remain explicit.
+   Native UMAP coordinate optimization, partition stability and biological
+   validation remain. Never densify cells × genes; resident limits and an
+   explicit pair-work budget still apply.
 5. **Batch integration:** donor/batch-aware methods and biological-signal
    preservation evaluation remain.
 6. **Annotation:** deterministic marker/program scoring with provenance, then

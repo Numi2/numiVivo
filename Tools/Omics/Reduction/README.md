@@ -81,3 +81,5 @@ binary identities, dataset reports for reference versions, and preserved stderr
 for the intentional insufficient-basis rejections.
 
 For the next stage, see [exact neighbors and fuzzy connectivity](NEIGHBORS.md).
+
+[Multilevel Louvain clustering](CLUSTERING.md) consumes the verified sparse graph.

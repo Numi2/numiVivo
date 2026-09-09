@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "reportSHA256": "16a894395b15e2affab999b8b7a97929ea409d6caefe17c145cd0d07ad1336a2",
+  "cells": 2651,
+  "clusters": 8,
+  "nativeModularity": 0.6196693195723375,
+  "independentModularity": 0.6196693195723434,
+  "disconnectedCommunities": 0,
+  "referenceMaximumModularityGap": -0.0015363787515516591,
+  "references": [
+    {
+      "seed": 7,
+      "clusters": 8,
+      "modularity": 0.6159536327170945,
+      "adjustedRand": 0.5629881154472611
+    },
+    {
+      "seed": 19,
+      "clusters": 8,
+      "modularity": 0.6181329408207917,
+      "adjustedRand": 0.6699732092897016
+    },
+    {
+      "seed": 41,
+      "clusters": 8,
+      "modularity": 0.6107162227711946,
+      "adjustedRand": 0.5892120926538162
+    }
+  ],
+  "metadataAssociations": {
+    "condition": {
+      "status": "descriptive",
+      "adjustedRand": 0.33530315740195304
+    },
+    "donor": {
+      "status": "descriptive",
+      "adjustedRand": 0.015321859760691121
+    }
+  },
+  "qualification": "Objective and heuristic reference comparison; not ground-truth cell annotation, donor integration or biological validation",
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "networkx": "3.6.1",
+    "scikit-learn": "1.9.0"
+  }
+}

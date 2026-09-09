@@ -1,0 +1,12 @@
+{
+  "testedReleaseBase": "97c6f03f3f4d4645dd5ef664a427add35a43873e",
+  "publicationBase": "35a49ad23e30bf0e91b99258cbd18c845adb67ea",
+  "upstreamFilesAddedAfterReleaseCheck": [
+    "Sources/NumiVivoCLI/VivoGenomicEvidenceCLICommands.swift",
+    "Sources/NumiVivoKit/Neoantigen/VivoGenomicEvidenceArtifacts.swift",
+    "Sources/NumiVivoKit/Neoantigen/VivoGenomicEvidenceExample.swift",
+    "Sources/NumiVivoKit/Neoantigen/VivoGenomicEvidenceHTML.swift"
+  ],
+  "sourceScope": "Clustering owner and its existing Omics/artifact dependencies are unchanged by these upstream additions.",
+  "limitation": "A full-product rebuild including these later unrelated genomic-tooling additions was not performed in this qualification. The recorded release binary and tests use testedReleaseBase plus the fingerprinted clustering changes."
+}
