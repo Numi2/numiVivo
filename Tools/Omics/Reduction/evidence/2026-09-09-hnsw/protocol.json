@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "parameters": {
+    "connections": 16,
+    "constructionWidth": 200,
+    "searchWidth": 128,
+    "seed": 7
+  },
+  "recallNeighborsExcludingSelf": 14,
+  "minimumMeanStrictRecall": 0.95,
+  "minimumFifthPercentileStrictRecall": 0.85,
+  "smallCohorts": "Every Baron and Hagai cell against archived independently qualified exact graph",
+  "norman": {
+    "uniformSampleCells": 2048,
+    "seed": 20260909,
+    "exactSearch": "Every sampled query against all 111445 cells using SciPy cdist and distance/index sorting",
+    "scope": "Sampled recall, not an exhaustive all-cell recall claim"
+  },
+  "fuzzyReference": "umap-learn using returned approximate neighbors; validates fuzzy construction, not exact topology",
+  "biology": "No biological generalization claim"
+}

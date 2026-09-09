@@ -61,9 +61,10 @@ triangular resident implementation.
 
 Exact search remains quadratic. The existing maximum of 500 million unique pairs
 still applies (50 million by default), so the complete 111,445-cell Norman cohort
-and million-cell graphs are not supported by this exact route. Approximate search
-with measured recall is required for that scale; increasing memory bounds does
-not remove this computational limitation.
+and million-cell graphs are not supported by this exact route. The optional
+[HNSW route](HNSW_NEIGHBORS.md) now covers full Norman with independently measured
+sampled recall. Its final graph remains resident; million-cell qualification is
+still open. Increasing exact-mode memory bounds does not remove quadratic work.
 
 ## Artifact lifecycle
 

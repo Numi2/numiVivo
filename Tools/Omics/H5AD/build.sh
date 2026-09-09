@@ -5,15 +5,16 @@ ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
 OUT="${1:?output directory}"
 mkdir -p "$OUT"
 FILES=()
-for name in VivoSparseCounts VivoOmicsFileSnapshot VivoH5ADCountStore VivoMultiAssay VivoH5ADCountAccess VivoMultiAssayH5MUImport VivoMultiAssayTenX VivoMultiAssayH5MU VivoMultiAssayIO VivoMatrixMarketCounts VivoOmicsLinearStatistics VivoOmicsNegativeBinomial VivoOmicsNBCohort VivoOmicsNBSupport VivoOmicsSourceDecoder VivoPseudobulkDifferentialExpression VivoSingleCellAnalysis VivoSingleCellArtifacts VivoSingleCellCampaign VivoSingleCellCampaignIO VivoSingleCellReduction VivoSingleCellPrograms VivoSingleCellReference VivoSingleCellReferenceIO VivoPerturbation VivoPerturbationIO VivoComposition VivoCompositionIO VivoH5ADReduction VivoH5ADPCA VivoFrozenPCAProjection VivoH5ADPCAQuery VivoWindowedPCANeighbors VivoPCANeighborBundle VivoSingleCellNeighbors VivoSingleCellClustering VivoSingleCellEmbedding VivoSingleCellIntegration VivoSingleCellCohortAnalysis VivoSingleCellExamples VivoSingleCellExchange VivoSingleCellProcessing VivoHDF5 VivoSingleCellH5AD VivoH5ADPseudobulk VivoH5ADElements VivoH5ADAnnotations VivoH5ADProjectionIO VivoH5ADProjection; do
+for name in VivoSparseCounts VivoOmicsFileSnapshot VivoH5ADCountStore VivoMultiAssay VivoH5ADCountAccess VivoMultiAssayH5MUImport VivoMultiAssayTenX VivoMultiAssayH5MU VivoMultiAssayIO VivoMatrixMarketCounts VivoOmicsLinearStatistics VivoOmicsNegativeBinomial VivoOmicsNBCohort VivoOmicsNBSupport VivoOmicsSourceDecoder VivoPseudobulkDifferentialExpression VivoSingleCellAnalysis VivoSingleCellArtifacts VivoSingleCellCampaign VivoSingleCellCampaignIO VivoSingleCellReduction VivoSingleCellPrograms VivoSingleCellReference VivoSingleCellReferenceIO VivoPerturbation VivoPerturbationIO VivoComposition VivoCompositionIO VivoH5ADReduction VivoH5ADPCA VivoFrozenPCAProjection VivoH5ADPCAQuery VivoWindowedPCANeighbors VivoHNSWNeighbors VivoPCANeighborBundle VivoSingleCellNeighbors VivoSingleCellClustering VivoSingleCellEmbedding VivoSingleCellIntegration VivoSingleCellCohortAnalysis VivoSingleCellExamples VivoSingleCellExchange VivoSingleCellProcessing VivoHDF5 VivoSingleCellH5AD VivoH5ADPseudobulk VivoH5ADElements VivoH5ADAnnotations VivoH5ADProjectionIO VivoH5ADProjection; do
   FILES+=("$ROOT/Sources/NumiVivoKit/Omics/$name.swift")
 done
 for name in VivoArtifactPrimitives CanonicalArtifact VivoArtifactStore VivoRootedFileStore; do
   FILES+=("$ROOT/Sources/NumiVivoKit/Artifacts/$name.swift")
 done
-shasum -a 256 "${FILES[@]}" "$ROOT/Tools/Omics/H5AD/Main.swift" > "$OUT/sources.sha256"
+xcrun clang++ -std=c++23 -O3 -I "$ROOT/Sources/NumiVivoCore/include" -c "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" -o "$OUT/OmicsHNSW.o"
+shasum -a 256 "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsHNSW.h" "$ROOT/Sources/NumiVivoCore/ThirdParty/hnswlib/"*.h "${FILES[@]}" "$ROOT/Tools/Omics/H5AD/Main.swift" > "$OUT/sources.sha256"
 swiftc -swift-version 6 -O -parse-as-library -enable-testing -module-name NumiVivoKit \
-  -I "$ROOT/Sources/CNumiVivoZlib" -emit-module -emit-library -static "${FILES[@]}" \
+  -I "$ROOT/Sources/CNumiVivoZlib" -I "$ROOT/Sources/NumiVivoCore/include" -emit-module -emit-library -static "${FILES[@]}" \
   -emit-module-path "$OUT/NumiVivoKit.swiftmodule" -o "$OUT/libNumiVivoKit.a"
-swiftc -swift-version 6 -O -parse-as-library -I "$OUT" -I "$ROOT/Sources/CNumiVivoZlib" -L "$OUT" -lNumiVivoKit \
-  "$ROOT/Tools/Omics/H5AD/Main.swift" -o "$OUT/h5ad-check"
+swiftc -swift-version 6 -O -parse-as-library -I "$OUT" -I "$ROOT/Sources/CNumiVivoZlib" -I "$ROOT/Sources/NumiVivoCore/include" -L "$OUT" -lNumiVivoKit \
+  "$ROOT/Tools/Omics/H5AD/Main.swift" "$OUT/OmicsHNSW.o" -lc++ -o "$OUT/h5ad-check"

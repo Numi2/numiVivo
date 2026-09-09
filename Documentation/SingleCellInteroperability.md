@@ -382,8 +382,11 @@ The complete development objective remains open:
    now use independent Dispatch workers and bounded score tiles. Complete Baron,
    Hagai and held-out human3 graphs match SciPy membership/distances and umap-learn
    topology, with identical serial/parallel graph bytes. Final graph arrays remain
-   resident and exact search remains quadratic. Approximate search with measured
-   recall, streamed graph/integration storage and million-cell qualification remain open.
+   resident and exact search remains quadratic. Optional [native HNSW](../Tools/Omics/Reduction/HNSW_NEIGHBORS.md)
+   now builds the complete 111,445-cell Norman graph with a bounded score cache;
+   strict mean recall is 99.9407% on 2,048 preselected exact-query checks. Complete
+   Baron/Hagai recall exceeds 99.996%. Streamed graph/integration storage,
+   million-cell qualification and downstream biological evaluation remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

@@ -1,0 +1,82 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "name": "baron",
+      "cells": 8569,
+      "graphSHA256": "156714b59cd29cd301917d0e3f8deb77480f9ce228b077ed482645d252f9ec2f",
+      "distanceEvaluations": 13399038,
+      "hnsw": {
+        "constructionDistances": 8376577,
+        "implementation": "hnswlib-0.8.0-3f3429661187e4c24a490a0f148fc6bc89042b3d-fp64-id-space-v1",
+        "indexStorageBytes": 1306048,
+        "options": {
+          "connections": 16,
+          "constructionWidth": 200,
+          "maximumDistanceEvaluations": 500000000,
+          "scoreCacheBytes": 33554432,
+          "searchWidth": 128,
+          "seed": 7
+        },
+        "peakCachedScoreBytes": 1371040,
+        "qualification": "Serial source-order HNSW construction/query with pinned seed, FP64 metric and bounded LRU score tiles. Index topology and final graph remain resident. Search is approximate; recall needs independent measurement. Index storage bytes exclude allocator, mutex and container overhead. No million-cell or biological qualification.",
+        "queryDistances": 5022461,
+        "scoreCacheHits": 26798042,
+        "scoreReadBytes": 2742080,
+        "scoreReadCalls": 34
+      }
+    },
+    {
+      "name": "hagai",
+      "cells": 13863,
+      "graphSHA256": "71538896f85184e752ac790e7188fdb48b620e7c6c1b777967632706afe7e9fc",
+      "distanceEvaluations": 30931858,
+      "hnsw": {
+        "constructionDistances": 18196889,
+        "implementation": "hnswlib-0.8.0-3f3429661187e4c24a490a0f148fc6bc89042b3d-fp64-id-space-v1",
+        "indexStorageBytes": 2112544,
+        "options": {
+          "connections": 16,
+          "constructionWidth": 200,
+          "maximumDistanceEvaluations": 500000000,
+          "scoreCacheBytes": 33554432,
+          "searchWidth": 128,
+          "seed": 7
+        },
+        "peakCachedScoreBytes": 2218080,
+        "qualification": "Serial source-order HNSW construction/query with pinned seed, FP64 metric and bounded LRU score tiles. Index topology and final graph remain resident. Search is approximate; recall needs independent measurement. Index storage bytes exclude allocator, mutex and container overhead. No million-cell or biological qualification.",
+        "queryDistances": 12734969,
+        "scoreCacheHits": 61863661,
+        "scoreReadBytes": 4436160,
+        "scoreReadCalls": 55
+      }
+    },
+    {
+      "name": "norman",
+      "cells": 111445,
+      "graphSHA256": "fb1ccb626b2019c3091e0f0930a4124e84619fa7a5cd799e13f7dd45a706a10b",
+      "distanceEvaluations": 467109415,
+      "hnsw": {
+        "constructionDistances": 277231835,
+        "implementation": "hnswlib-0.8.0-3f3429661187e4c24a490a0f148fc6bc89042b3d-fp64-id-space-v1",
+        "indexStorageBytes": 16998788,
+        "options": {
+          "connections": 16,
+          "constructionWidth": 200,
+          "maximumDistanceEvaluations": 500000000,
+          "scoreCacheBytes": 33554432,
+          "searchWidth": 128,
+          "seed": 7
+        },
+        "peakCachedScoreBytes": 17831200,
+        "qualification": "Serial source-order HNSW construction/query with pinned seed, FP64 metric and bounded LRU score tiles. Index topology and final graph remain resident. Search is approximate; recall needs independent measurement. Index storage bytes exclude allocator, mutex and container overhead. No million-cell or biological qualification.",
+        "queryDistances": 189877580,
+        "scoreCacheHits": 934218394,
+        "scoreReadBytes": 35662400,
+        "scoreReadCalls": 436
+      }
+    }
+  ],
+  "commands": 9,
+  "scope": "Native lifecycle only; independent recall checks required"
+}

@@ -1,0 +1,143 @@
+[
+  {
+    "label": "baron-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-hnsw-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/baron-fit.json",
+      "--output",
+      "/Users/n/numivivo-hnsw-20260909/real/baron/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 6.67,
+    "maximumResidentBytes": 160186368
+  },
+  {
+    "label": "baron-hnsw",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-hnsw-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-hnsw-20260909/real/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/real/baron/plan.json",
+      "--output",
+      "/Users/n/numivivo-hnsw-20260909/real/baron/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 6.85,
+    "maximumResidentBytes": 222674944
+  },
+  {
+    "label": "baron-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-hnsw-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-hnsw-20260909/real/baron/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 6.89,
+    "maximumResidentBytes": 229638144
+  },
+  {
+    "label": "hagai-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-hnsw-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/hagai-fit.json",
+      "--output",
+      "/Users/n/numivivo-hnsw-20260909/real/hagai/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 13.35,
+    "maximumResidentBytes": 202915840
+  },
+  {
+    "label": "hagai-hnsw",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-hnsw-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-hnsw-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/real/hagai/plan.json",
+      "--output",
+      "/Users/n/numivivo-hnsw-20260909/real/hagai/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 15.11,
+    "maximumResidentBytes": 300728320
+  },
+  {
+    "label": "hagai-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-hnsw-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-hnsw-20260909/real/hagai/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 15.18,
+    "maximumResidentBytes": 301973504
+  },
+  {
+    "label": "norman-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-hnsw-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-pca-bundle-20260909/original.h5ad",
+      "--plan",
+      "/Users/n/numivivo-pca-bundle-20260909/plan.json",
+      "--output",
+      "/Users/n/numivivo-hnsw-20260909/real/norman/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 135.86,
+    "maximumResidentBytes": 444760064
+  },
+  {
+    "label": "norman-hnsw",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-hnsw-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-hnsw-20260909/real/norman/pca",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/real/norman/plan.json",
+      "--output",
+      "/Users/n/numivivo-hnsw-20260909/real/norman/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 161.56,
+    "maximumResidentBytes": 1357234176
+  },
+  {
+    "label": "norman-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-hnsw-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-hnsw-20260909/real/norman/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 162.54,
+    "maximumResidentBytes": 1353629696
+  }
+]

@@ -1,0 +1,82 @@
+import Foundation
+import NumiVivoCore
+
+public struct VivoHNSWOptions: Codable, Sendable, Equatable {
+    public var connections: Int = 16
+    public var constructionWidth: Int = 200
+    public var searchWidth: Int = 128
+    public var seed: UInt64 = 7
+    public var maximumDistanceEvaluations: Int = 500_000_000
+    public var scoreCacheBytes: Int = 33_554_432
+    public init() {}
+    private enum CodingKeys: String, CodingKey { case connections, constructionWidth, searchWidth, seed, maximumDistanceEvaluations, scoreCacheBytes }
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["connections", "constructionWidth", "searchWidth", "seed", "maximumDistanceEvaluations", "scoreCacheBytes"])
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        connections = try c.decodeIfPresent(Int.self, forKey: .connections) ?? 16
+        constructionWidth = try c.decodeIfPresent(Int.self, forKey: .constructionWidth) ?? 200
+        searchWidth = try c.decodeIfPresent(Int.self, forKey: .searchWidth) ?? 128
+        seed = try c.decodeIfPresent(UInt64.self, forKey: .seed) ?? 7
+        maximumDistanceEvaluations = try c.decodeIfPresent(Int.self, forKey: .maximumDistanceEvaluations) ?? 500_000_000
+        scoreCacheBytes = try c.decodeIfPresent(Int.self, forKey: .scoreCacheBytes) ?? 33_554_432
+    }
+    public func validate(neighbors: Int) throws {
+        guard (8...64).contains(connections), (connections...512).contains(constructionWidth),
+              (neighbors...1024).contains(searchWidth), (1...2_000_000_000).contains(maximumDistanceEvaluations),
+              (262_144...67_108_864).contains(scoreCacheBytes) else { throw VivoOmicsError.invalid("HNSW options or resource bounds") }
+    }
+}
+public struct VivoHNSWReport: Codable, Sendable, Equatable {
+    public let implementation: String
+    public let options: VivoHNSWOptions
+    public let constructionDistances: Int
+    public let queryDistances: Int
+    public let scoreReadBytes: Int
+    public let scoreReadCalls: Int
+    public let scoreCacheHits: Int
+    public let peakCachedScoreBytes: Int
+    public let indexStorageBytes: Int
+    public let qualification: String
+}
+
+enum VivoHNSWNeighbors {
+    static func run(source: URL, cells: [VivoOmicsCellIdentity], dimensions: Int, options: VivoSingleCellNeighborOptions,
+                    approximation: VivoHNSWOptions) throws -> (VivoSingleCellNeighborGraph, VivoHNSWReport) {
+        try options.validate(); try approximation.validate(neighbors: options.neighbors)
+        let n = cells.count, k = options.neighbors
+        guard n >= k, n <= 1_000_000, n <= 4_000_000/k, (1...64).contains(dimensions), options.representation != .integrated else {
+            throw VivoOmicsError.limit("HNSW axes, final graph-entry bound or representation")
+        }
+        try Task.checkCancellation()
+        var native = NVivoHNSWOptions()
+        native.struct_size = UInt32(MemoryLayout<NVivoHNSWOptions>.size); native.abi_version = 1
+        native.rows = UInt32(n); native.dimensions = UInt32(dimensions); native.neighbors = UInt32(k)
+        native.connections = UInt32(approximation.connections); native.ef_construction = UInt32(approximation.constructionWidth)
+        native.ef_search = UInt32(approximation.searchWidth); native.seed = approximation.seed
+        native.maximum_distance_evaluations = UInt64(approximation.maximumDistanceEvaluations); native.score_cache_bytes = UInt64(approximation.scoreCacheBytes)
+        var raw = NVivoHNSWReport(), indices = [UInt32](repeating: 0, count: n*k), distances = [Double](repeating: 0, count: n*k)
+        let status = source.path.withCString { path in indices.withUnsafeMutableBufferPointer { i in distances.withUnsafeMutableBufferPointer { d in
+            nvivo_omics_hnsw_neighbors(path, &native, i.baseAddress, d.baseAddress, UInt64(n*k), &raw, { _ in Task.isCancelled ? 1 : 0 }, nil)
+        } } }
+        switch status {
+        case 0: break
+        case 2: throw VivoOmicsError.limit("HNSW distance-evaluation budget")
+        case 3: throw VivoOmicsError.invalid("HNSW score file, coordinates or values")
+        case 4: throw VivoOmicsError.invalid("HNSW nonfinite distance")
+        case 5: throw CancellationError()
+        case 7: throw VivoOmicsError.limit("HNSW allocation failed")
+        default: throw VivoOmicsError.invalid("HNSW native arguments or index failure: \(status)")
+        }
+        try Task.checkCancellation()
+        let report = VivoHNSWReport(implementation: "hnswlib-0.8.0-3f3429661187e4c24a490a0f148fc6bc89042b3d-fp64-id-space-v1", options: approximation,
+            constructionDistances: Int(raw.construction_distances), queryDistances: Int(raw.query_distances), scoreReadBytes: Int(raw.score_read_bytes),
+            scoreReadCalls: Int(raw.score_read_calls), scoreCacheHits: Int(raw.score_cache_hits), peakCachedScoreBytes: Int(raw.peak_cached_score_bytes),
+            indexStorageBytes: Int(raw.index_storage_bytes),
+            qualification: "Serial source-order HNSW construction/query with pinned seed, FP64 metric and bounded LRU score tiles. Index topology and final graph remain resident. Search is approximate; recall needs independent measurement. Index storage bytes exclude allocator, mutex and container overhead. No million-cell or biological qualification.")
+        let graph = try VivoSingleCellNeighbors.finish(indices: indices.map(Int.init), distances: distances, cells: cells, dimensions: dimensions,
+            options: options, distancePairs: report.constructionDistances+report.queryDistances,
+            method: "approximate-HNSW-euclidean-PCA-knn-umap-fuzzy-union-v1",
+            qualification: "Approximate HNSW neighbors with FP64 returned distances and the shared fuzzy graph. distancePairs counts all construction/query metric evaluations, including repeats; it is not a unique-pair count. No exact-neighbor, embedding, clustering, integration or biological qualification.")
+        return (graph, report)
+    }
+}

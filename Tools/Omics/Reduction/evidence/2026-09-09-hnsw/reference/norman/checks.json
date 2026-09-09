@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "case": "norman",
+  "cells": 111445,
+  "dimensions": 20,
+  "queryCells": 2048,
+  "allCellRecall": false,
+  "meanStrictRecall": 0.9994070870535714,
+  "fifthPercentileStrictRecall": 1.0,
+  "minimumStrictRecall": 0.8571428571428571,
+  "meanTieAwareRecall": 0.9994070870535714,
+  "maximumReturnedDistanceError": 1.7763568394002505e-15,
+  "maximumFuzzyWeightError": 7.5638577766712345e-06,
+  "fuzzyTopologyExact": true,
+  "connectivityEntries": 2513474,
+  "connectedComponents": 1,
+  "distanceEvaluations": 467109415,
+  "peakCachedScoreBytes": 17831200,
+  "indexStorageBytes": 16998788,
+  "protocolSHA256": "b854e3e925f535f3235e275b72437ed023092a80ff36596507a331ae94c01be1",
+  "graphSHA256": "fb1ccb626b2019c3091e0f0930a4124e84619fa7a5cd799e13f7dd45a706a10b",
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "umap-learn": "0.5.12"
+  },
+  "scope": "Numerical returned-distance/fuzzy-graph and declared exact-query recall checks; no biological generalization or million-cell qualification"
+}
