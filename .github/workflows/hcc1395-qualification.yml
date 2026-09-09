@@ -1,85 +1,18 @@
-name: HCC1395 real-data qualification
+name: HCC1395 native reconstruction runtime
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - .github/workflows/hcc1395-qualification.yml
-      - Tools/Neoantigen/HCC1395/**
+      - Sources/NumiVivoCLI/main.swift
+      - Sources/NumiVivoCLI/VivoGenomicEvidenceCLICommands.swift
 permissions:
   contents: read
 concurrency:
   group: hcc1395-qualification-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
-  source-inventory:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Inspect public reference sources and configured Atlas access
-        env:
-          ALPHAGENOME_API_KEY: ${{ secrets.ALPHAGENOME_API_KEY }}
-          ALPHAGENOME_USAGE_JSON: ${{ vars.ALPHAGENOME_USAGE_JSON }}
-        run: |
-          mkdir -p qualification
-          python3 - <<'PY' | tee qualification/source-inventory.log
-          import concurrent.futures, hashlib, io, json, os, re, urllib.request, zipfile
-          print(json.dumps({'atlasKeyConfigured': bool(os.getenv('ALPHAGENOME_API_KEY')), 'atlasUsageDeclarationConfigured': bool(os.getenv('ALPHAGENOME_USAGE_JSON')), 'qualification': 'not-yet-executed'}))
-          urls = [
-            'https://genomedata.org/hcc1395/',
-            'https://genomedata.org/pmbio-workshop/',
-            'https://genomedata.org/pmbio-workshop/results/',
-            'https://zenodo.org/api/records/17809276',
-            'https://api.github.com/repos/griffithlab/pVACtools_Intro_Course/commits/main',
-            'https://api.github.com/repos/griffithlab/regtools/commits/master',
-            'https://api.github.com/repos/griffithlab/pVACtools/commits/v7.1.3',
-          ]
-          def inspect(url):
-            try:
-              with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'NumiVivo-public-reference-qualification'}), timeout=40) as r:
-                data = r.read(2 * 1024 * 1024)
-              text = data.decode('utf-8')
-              if 'api/records' in url:
-                value = json.loads(text)
-                body = [{'key': x['key'], 'size': x['size'], 'checksum': x.get('checksum'), 'links': x['links']} for x in value['files']]
-              elif '/commits/' in url:
-                value = json.loads(text); body = {'sha': value.get('sha'), 'message': value.get('commit', {}).get('message')}
-              else:
-                body = re.findall(r'href="([^"]+)"', text)[:150]
-              return {'url': url, 'result': body}
-            except Exception as e:
-              return {'url': url, 'error': type(e).__name__, 'detail': str(e)[:300]}
-          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
-            for item in pool.map(inspect, urls): print(json.dumps(item))
-          url = 'https://raw.githubusercontent.com/griffithlab/pVACtools_Intro_Course/main/HCC1395_inputs.zip'
-          try:
-            with urllib.request.urlopen(url, timeout=90) as r:
-              data = r.read(180 * 1024 * 1024 + 1)
-            if len(data) > 180 * 1024 * 1024: raise ValueError('Course archive exceeds bounded download size')
-            open('qualification/HCC1395_inputs.zip', 'wb').write(data)
-            z = zipfile.ZipFile(io.BytesIO(data))
-            print(json.dumps({'courseArchiveSHA256': hashlib.sha256(data).hexdigest(), 'bytes': len(data), 'files': [{'name': f.filename, 'bytes': f.file_size} for f in z.infolist()]}))
-            for name in z.namelist():
-              if name.endswith('splice_junctions.tsv'):
-                rows = z.read(name).decode().splitlines()
-                print('UPSTREAM_JUNCTION_HEADER', rows[0]); print('UPSTREAM_JUNCTION_EXAMPLES', '\n'.join(rows[1:8]))
-          except Exception as e:
-            print(json.dumps({'courseArchiveError': type(e).__name__, 'detail': str(e)[:300]}))
-          PY
-      - name: Inspect the official pVACtools execution image
-        run: |
-          docker pull griffithlab/pvactools:7.1.3
-          docker image inspect griffithlab/pvactools:7.1.3 --format '{{json .RepoDigests}}' | tee qualification/pvactools-image-digests.json
-          docker run --rm --entrypoint /bin/bash griffithlab/pvactools:7.1.3 -lc 'python3 --version; pvacsplice --version; command -v regtools samtools; ls /opt; du -sh /opt/iedb 2>/dev/null || true' | tee qualification/tool-inventory.log
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: hcc1395-source-inventory
-          path: qualification/
-          retention-days: 7
   native-build:
     runs-on: macos-15
     timeout-minutes: 30
@@ -87,18 +20,38 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Build the real NumiVivo executable
+      - uses: actions/cache@v4
+        with:
+          path: .build
+          key: hcc1395-native-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Package.swift', 'Sources/**') }}
+          restore-keys: hcc1395-native-${{ runner.os }}-${{ runner.arch }}-
+      - name: Build and exercise the actual NumiVivo command routes
         run: |
-          set -o pipefail
+          set -euo pipefail
           mkdir -p qualification
           swift --version | tee qualification/swift-version.txt
           swift build -c release --product numivivo 2>&1 | tee qualification/native-build.log
-          .build/release/numivivo neoantigen-evidence-help | tee qualification/native-help.txt
+          BIN=$(swift build -c release --show-bin-path)/numivivo
+          "$BIN" neoantigen-evidence-help | tee qualification/native-help.txt
+          "$BIN" neoantigen-help | tee qualification/parent-help.txt
+          "$BIN" neoantigen-evidence-example --store "$RUNNER_TEMP/neo-store" --output "$RUNNER_TEMP/neo-demo" | tee qualification/synthetic-command-regression.json
+          set +e
+          "$BIN" neoantigen-evidence-verify "$RUNNER_TEMP/neo-demo/receipt.json" --store "$RUNNER_TEMP/neo-store" > qualification/synthetic-reconstruction.json 2> qualification/synthetic-reconstruction.stderr
+          STATUS=$?
+          set -e
+          test "$STATUS" -eq 2
+          grep -q 'verified-and-reconstructed' qualification/synthetic-reconstruction.json
+          mkdir -p qualification/runtime
+          cp "$BIN" qualification/runtime/numivivo
+          BIN_DIR=$(dirname "$BIN")
+          find "$BIN_DIR" -maxdepth 1 -name '*.bundle' -exec cp -R '{}' qualification/runtime/ \;
+          shasum -a 256 qualification/runtime/numivivo | tee qualification/native-executable.sha256
+          git rev-parse HEAD > qualification/source-commit.txt
+          tar -czf qualification/native-runtime.tar.gz -C qualification/runtime .
+          rm -rf qualification/runtime
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: hcc1395-native-build
-          path: |
-            qualification/
-            .build/release/numivivo
-          retention-days: 7
+          name: hcc1395-native-runtime
+          path: qualification/
+          retention-days: 14
