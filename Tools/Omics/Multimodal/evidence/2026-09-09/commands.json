@@ -1,0 +1,192 @@
+[
+  {
+    "label": "import",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc5k-plan.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/bundle"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 5.419730250257999
+  },
+  {
+    "label": "verify",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-citeseq-product-20260909/bundle"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 4.7819027081131935
+  },
+  {
+    "label": "overwrite",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc5k-plan.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/bundle"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.031130416318774223
+  },
+  {
+    "label": "repeat",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/pbmc5k-plan.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/repeat"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 4.90147858299315
+  },
+  {
+    "label": "partial-export",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-citeseq-product-20260909/fixture.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/partial.h5mu"
+    ],
+    "expectedSuccess": true,
+    "exitCode": 0,
+    "seconds": 0.02075441600754857
+  },
+  {
+    "label": "export-overwrite",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-citeseq-product-20260909/fixture.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/partial.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.015416041947901249
+  },
+  {
+    "label": "duplicate-observation",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-citeseq-product-20260909/duplicate-observation.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/duplicate-observation.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.009200583212077618
+  },
+  {
+    "label": "out-of-range-observation",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-citeseq-product-20260909/out-of-range-observation.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/out-of-range-observation.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.008553457912057638
+  },
+  {
+    "label": "unknown-spatial-frame",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-citeseq-product-20260909/unknown-spatial-frame.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/unknown-spatial-frame.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.008506958838552237
+  },
+  {
+    "label": "unknown-unit",
+    "arguments": [
+      "multiassay-h5mu-write",
+      "/Users/home/numivivo-citeseq-product-20260909/unknown-unit.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/unknown-unit.h5mu"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.007891249842941761
+  },
+  {
+    "label": "omit-protein",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-citeseq-product-20260909/omit-protein.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/omit-protein"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.07747245812788606
+  },
+  {
+    "label": "wrong-assembly",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-citeseq-product-20260909/wrong-assembly.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/wrong-assembly"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.0724461660720408
+  },
+  {
+    "label": "wrong-kind",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-citeseq-product-20260909/wrong-kind.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/wrong-kind"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.03177408408373594
+  },
+  {
+    "label": "unknown-option",
+    "arguments": [
+      "multiassay-10x-import",
+      "/Users/home/numivivo-citeseq-20260909/original.h5",
+      "--plan",
+      "/Users/home/numivivo-citeseq-product-20260909/unknown-option.json",
+      "--output",
+      "/Users/home/numivivo-citeseq-product-20260909/unknown-option"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 0.00879491725936532
+  },
+  {
+    "label": "rehashed-dataset-tamper",
+    "arguments": [
+      "multiassay-verify",
+      "/Users/home/numivivo-citeseq-product-20260909/tampered"
+    ],
+    "expectedSuccess": false,
+    "exitCode": 65,
+    "seconds": 4.44987583393231
+  }
+]

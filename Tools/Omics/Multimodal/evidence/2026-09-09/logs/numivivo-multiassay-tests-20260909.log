@@ -1,0 +1,434 @@
+[0/1] Planning build
+Building for debugging...
+[0/9] Write sources
+[3/9] Write swift-version-3CD7052B146186F2.txt
+[5/15] Compiling NumiVivoKit VivoMultiAssayH5MU.swift
+[6/15] Emitting module NumiVivoKit
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Omics/VivoMultiAssayH5MU.swift:16:17: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+ 14 |                 let g = try h.projectionGroup(parent, name)
+ 15 |                 do { if let encoding { try h.encoding(g, encoding, encoding == "dict" ? "0.1.0" : "0.2.0") }; return g }
+ 16 |                 catch { h.close(g, "H5Gclose"); throw error }
+    |                 `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+ 17 |             }
+ 18 |             func raw(_ parent: Int64, _ name: String, type: Int64, shape: [UInt64], buffer: UnsafeRawPointer?) throws {
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Surrogates/VivoReactiveMetalBackend.swift:54:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 52 |         coefficients = try buffer(payload.coefficientsKJPerMol.flatMap { $0 })
+ 53 |         scales = try buffer(payload.configuration.features.map { 1/($0.scaleNM*$0.scaleNM) })
+ 54 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 55 |         let library = try device.makeLibrary(source: Self.source,options: options)
+ 56 |         guard let function = library.makeFunction(name: "vivo_reactive_delta") else { throw VivoChemistryError.invalid("missing reactive Metal kernel") }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[7/15] Compiling NumiVivoKit VivoMultiAssay.swift
+[8/15] Compiling NumiVivoKit VivoMultiAssayIO.swift
+[9/15] Compiling NumiVivoKit VivoSparseCounts.swift
+[10/15] Compiling NumiVivoKit VivoMultiAssayTenX.swift
+[11/48] Compiling NumiVivoKit VivoSingleCellAnalysis.swift
+[12/48] Compiling NumiVivoKit VivoSingleCellArtifacts.swift
+[13/48] Compiling NumiVivoKit VivoSingleCellCampaign.swift
+[14/48] Compiling NumiVivoKit VivoSingleCellEmbedding.swift
+[15/48] Compiling NumiVivoKit VivoSingleCellExamples.swift
+[16/48] Compiling NumiVivoKit VivoSingleCellExchange.swift
+[17/48] Compiling NumiVivoKit VivoSingleCellCampaignIO.swift
+[18/48] Compiling NumiVivoKit VivoSingleCellClustering.swift
+[19/48] Compiling NumiVivoKit VivoSingleCellCohortAnalysis.swift
+[20/48] Compiling NumiVivoKit VivoSingleCellReferenceIO.swift
+[21/48] Compiling NumiVivoKit VivoPlatformOmicsOperations.swift
+[22/48] Compiling NumiVivoKit VivoSingleCellReduction.swift
+[23/48] Compiling NumiVivoKit VivoSingleCellReference.swift
+[24/48] Compiling NumiVivoKit VivoSingleCellProcessing.swift
+[25/48] Compiling NumiVivoKit VivoSingleCellPrograms.swift
+[26/48] Compiling NumiVivoKit VivoMatrixMarketCounts.swift
+[27/48] Compiling NumiVivoKit VivoOmicsNBCohort.swift
+[28/48] Compiling NumiVivoKit VivoOmicsNBSupport.swift
+[29/48] Compiling NumiVivoKit VivoComposition.swift
+[30/48] Compiling NumiVivoKit VivoCompositionIO.swift
+[31/48] Compiling NumiVivoKit VivoH5ADAnnotations.swift
+[32/48] Compiling NumiVivoKit VivoH5ADPseudobulk.swift
+[33/48] Compiling NumiVivoKit VivoH5ADReduction.swift
+[34/48] Compiling NumiVivoKit VivoHDF5.swift
+[35/48] Compiling NumiVivoKit VivoH5ADElements.swift
+[36/48] Compiling NumiVivoKit VivoH5ADProjection.swift
+[37/48] Compiling NumiVivoKit VivoH5ADProjectionIO.swift
+[38/48] Compiling NumiVivoKit VivoPerturbation.swift
+[39/48] Compiling NumiVivoKit VivoPerturbationIO.swift
+[40/48] Compiling NumiVivoKit VivoPseudobulkDifferentialExpression.swift
+[41/48] Compiling NumiVivoKit VivoSingleCellH5AD.swift
+[42/48] Compiling NumiVivoKit VivoSingleCellIntegration.swift
+[43/48] Compiling NumiVivoKit VivoSingleCellNeighbors.swift
+[44/159] Compiling NumiVivoIntegrationTests MDTrajectoryArchiveValidationTests.swift
+[45/159] Compiling NumiVivoIntegrationTests MechanismCandidateEnumerationTests.swift
+[46/159] Compiling NumiVivoIntegrationTests MetalSamplingIdentityTests.swift
+[47/161] Compiling NumiVivoCLI VivoWorkflowCLISupport.swift
+[48/161] Compiling NumiVivoCLI main.swift
+[49/161] Emitting module NumiVivoCLI
+[50/161] Compiling NumiVivoIntegrationTests AdaptiveQMMMHamiltonianTests.swift
+[51/161] Compiling NumiVivoIntegrationTests AdaptiveRefinementWorkflowTests.swift
+[52/161] Compiling NumiVivoIntegrationTests AppleExecutionTests.swift
+[53/161] Compiling NumiVivoIntegrationTests PlatformQMMMWorkflowTests.swift
+[54/161] Compiling NumiVivoIntegrationTests PlatformSnapshotMappingHelperTests.swift
+[55/161] Compiling NumiVivoIntegrationTests PlatformSnapshotTests.swift
+[56/161] Compiling NumiVivoIntegrationTests PropertyRefinementWorkflowTests.swift
+[57/161] Compiling NumiVivoIntegrationTests QMMMChemicalExchangeNetworkTests.swift
+[58/161] Compiling NumiVivoIntegrationTests MolecularMultistateRefinementWorkflowTests.swift
+[59/161] Compiling NumiVivoIntegrationTests NCMCProtocolKernelTests.swift
+[60/161] Compiling NumiVivoIntegrationTests NuclearMetalResourceTests.swift
+[61/161] Compiling NumiVivoIntegrationTests PeriodicQMMMHamiltonianTests.swift
+[62/161] Compiling NumiVivoIntegrationTests PlatformMechanismWorkflowTests.swift
+[63/161] Compiling NumiVivoIntegrationTests QMMMChemicalQualificationTests.swift
+[64/161] Compiling NumiVivoIntegrationTests QMMMChemicalStateThermodynamicsTests.swift
+[65/161] Compiling NumiVivoIntegrationTests QMMMFreeEnergyArchiveIdentityTests.swift
+[66/161] Compiling NumiVivoIntegrationTests MDProtocolResumeTests.swift
+[67/161] Compiling NumiVivoIntegrationTests MDQMMMInterfaceTests.swift
+[68/161] Compiling NumiVivoIntegrationTests BarrierConvergenceTests.swift
+[69/161] Compiling NumiVivoIntegrationTests BarrierTunnellingTests.swift
+[70/161] Compiling NumiVivoIntegrationTests ChemicalStateAlchemicalFreeEnergyTests.swift
+[71/161] Compiling NumiVivoIntegrationTests ChemicalStateCatalogTests.swift
+[72/161] Compiling NumiVivoIntegrationTests ChemicalStateEnumerationTests.swift
+[73/161] Compiling NumiVivoIntegrationTests MDBondedForceConformanceTests.swift
+[74/161] Compiling NumiVivoIntegrationTests MDCompensatedPositionTests.swift
+[74/161] Write Objects.LinkFileList
+[76/161] Compiling NumiVivoIntegrationTests SingleCellIntegrationTests.swift
+[77/161] Compiling NumiVivoIntegrationTests SingleCellInterchangeTests.swift
+[78/161] Compiling NumiVivoIntegrationTests SingleCellMappedReductionTests.swift
+[79/161] Compiling NumiVivoIntegrationTests SingleCellNBCohortTests.swift
+[80/161] Compiling NumiVivoIntegrationTests SingleCellNBSupportTests.swift
+[81/161] Compiling NumiVivoIntegrationTests SingleCellNegativeBinomialTests.swift
+[82/161] Compiling NumiVivoIntegrationTests SingleCellNeighborTests.swift
+[90/168] Linking numivivo
+[91/168] Applying numivivo
+[93/168] Emitting module NumiVivoIntegrationTests
+[94/168] Compiling NumiVivoIntegrationTests ConstantPHReplicaExchangeTests.swift
+[95/168] Compiling NumiVivoIntegrationTests ECCSolventClosureTests.swift
+[96/168] Compiling NumiVivoIntegrationTests GlobalJointUncertaintyTests.swift
+[97/168] Compiling NumiVivoIntegrationTests GlobalKineticUncertaintyTests.swift
+[98/168] Compiling NumiVivoIntegrationTests HybridRuntimeTests.swift
+[99/168] Compiling NumiVivoIntegrationTests KineticsPreparedOutputTests.swift
+[100/168] Compiling NumiVivoIntegrationTests LatentProtonTopologyTests.swift
+[101/168] Compiling NumiVivoIntegrationTests MDBenchmarkTests.swift
+[102/168] Compiling NumiVivoIntegrationTests PlatformWorkflowTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[103/168] Compiling NumiVivoIntegrationTests PolarizableQMMMTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[104/168] Compiling NumiVivoIntegrationTests PrecisionMetalSamplingTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[105/168] Compiling NumiVivoIntegrationTests PrecisionPlatformTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[106/168] Compiling NumiVivoIntegrationTests PrecisionSamplingFixtures.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[107/168] Compiling NumiVivoIntegrationTests PreparedMolecularWorkflowTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[108/168] Compiling NumiVivoIntegrationTests PreparedReactionFullRouteTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[109/168] Compiling NumiVivoIntegrationTests QMMMPathCoordinateTests.swift
+[110/168] Compiling NumiVivoIntegrationTests QMMMReactionCoordinateTests.swift
+[111/168] Compiling NumiVivoIntegrationTests QMMMStringRefinementTests.swift
+[112/168] Compiling NumiVivoIntegrationTests QMMMTransmissionTests.swift
+[113/168] Compiling NumiVivoIntegrationTests ReactionConnectivityTests.swift
+[114/168] Compiling NumiVivoIntegrationTests ReactiveSurrogateTests.swift
+[115/168] Compiling NumiVivoIntegrationTests RingPolymerSamplingTests.swift
+[116/168] Compiling NumiVivoIntegrationTests SamplingReactionSeedTests.swift
+[117/168] Compiling NumiVivoIntegrationTests ScientificClosureTests.swift
+[118/168] Compiling NumiVivoIntegrationTests SelectedCITests.swift
+[119/168] Compiling NumiVivoIntegrationTests SingleCellClusteringTests.swift
+[120/168] Compiling NumiVivoIntegrationTests SingleCellCohortTests.swift
+[121/168] Compiling NumiVivoIntegrationTests SingleCellCompositionTests.swift
+[122/168] Compiling NumiVivoIntegrationTests SingleCellEmbeddingTests.swift
+[123/168] Compiling NumiVivoIntegrationTests SingleCellPerturbationTests.swift
+[124/168] Compiling NumiVivoIntegrationTests SingleCellProgramTests.swift
+[125/168] Compiling NumiVivoIntegrationTests SingleCellReductionTests.swift
+[126/168] Compiling NumiVivoIntegrationTests SingleCellReferenceTests.swift
+[127/168] Compiling NumiVivoIntegrationTests SolventPromotionTests.swift
+[128/168] Compiling NumiVivoIntegrationTests VivoNeoantigenIntegrationTests.swift
+[129/168] Compiling NumiVivoIntegrationTests WorkflowCancellationTests.swift
+[145/168] Compiling NumiVivoIntegrationTests ClassicalNPTTransitionTests.swift
+[146/168] Compiling NumiVivoIntegrationTests ClassicalPMEConformanceTests.swift
+[147/168] Compiling NumiVivoIntegrationTests ClassicalThermalConformanceTests.swift
+[148/168] Compiling NumiVivoIntegrationTests ConditionalEncounterTests.swift
+[149/168] Compiling NumiVivoIntegrationTests ConstantPHDiscreteMDTests.swift
+[150/168] Compiling NumiVivoIntegrationTests ConstantPHMetalAdapterTests.swift
+[151/168] Compiling NumiVivoIntegrationTests ConstantPHNCMCMetalTests.swift
+[152/168] Compiling NumiVivoIntegrationTests ConstantPHNCMCTests.swift
+[153/168] Compiling NumiVivoIntegrationTests MolecularSamplingArchiveReaderTests.swift
+[154/168] Compiling NumiVivoIntegrationTests MolecularSamplingExporterTests.swift
+[155/168] Compiling NumiVivoIntegrationTests MolecularSamplingNativeBridgeTests.swift
+[156/168] Compiling NumiVivoIntegrationTests MultiAssayTests.swift
+[157/168] Compiling NumiVivoIntegrationTests MultipolePMETests.swift
+[158/168] Compiling NumiVivoIntegrationTests MultistateMBARTests.swift
+[159/168] Compiling NumiVivoIntegrationTests MultistateReducedPotentialArchiveTests.swift
+[166/168] Write Objects.LinkFileList
+[167/168] Linking NumiVivoPackageTests
+Build complete! (14.80s)
+Test Suite 'Selected tests' started at 2026-09-09 12:31:26.727.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 12:31:26.732.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 12:31:26.732.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 12:31:26.732.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellNBCohortTests started.
+◇ Suite SingleCellMappedReductionTests started.
+◇ Suite SingleCellPerturbationTests started.
+◇ Suite SingleCellInterchangeTests started.
+◇ Suite SingleCellNBSupportTests started.
+◇ Suite SingleCellProgramTests started.
+◇ Suite SingleCellClusteringTests started.
+◇ Suite MultiAssayTests started.
+◇ Suite SingleCellNeighborTests started.
+◇ Suite SingleCellIntegrationTests started.
+◇ Suite SingleCellCohortTests started.
+◇ Suite SingleCellReductionTests started.
+◇ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() started.
+◇ Suite SingleCellReferenceTests started.
+◇ Suite SingleCellCompositionTests started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Suite SingleCellNegativeBinomialTests started.
+◇ Test replicationSeparationAndBatchConfoundingRemainRejected() started.
+◇ Test parametricTrendRecoversDeclaredMeanRelationship() started.
+◇ Test unknownPredictionSettingsAreRejected() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test pairedModelUsesTrainingDataAndReplays() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test cohortPreservesPriorAndFullSupportFitsWhileRecordingNewDesign() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() started.
+◇ Suite SingleCellEmbeddingTests started.
+◇ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() started.
+◇ Test malformedCachesAndBudgetsAreRejected() started.
+◇ Test constantControlsDoNotInventContextVariation() started.
+◇ Test optionsCannotBeSilentlyAppliedToWrongModel() started.
+◇ Test nativeH5MUMapsPreservePartialRowsAndUInt64() started.
+◇ Test missingFeaturesRequireExplicitCoverageAndChangeTheFingerprint() started.
+◇ Test sourceOrganismBudgetsAndInvalidDefinitionsFailClosed() started.
+◇ Test missingMeasurementsDifferFromMeasuredZerosAndNamespacesRemainSeparate() started.
+◇ Test invalidAlignmentFramesAndFeatureIdentitiesReject() started.
+◇ Test signedScoresSeparateAbsentExpressionFromEmptyLibraries() started.
+◇ Test accessibilityRequiresAssemblyIntervalsAndCorrectUnits() started.
+◇ Test aggregationKeepsInternalEdgesInObjective() started.
+◇ Test mappedProductsMatchExplicitMatrixAndAdjoint() started.
+◇ Test resolutionAndInsufficientIterationLimitsAreExplicit() started.
+◇ Test invalidInputsAndWorkBudgetFailBeforePublication() started.
+◇ Test heapRecoversKnownNearestNeighborsAndDisconnectedGraph() started.
+◇ Test tiesAndDuplicateCellsPreserveSelfAndDeterminism() started.
+◇ Test separatedComponentsHaveAnalyticalModularity() started.
+◇ Test finiteWeightScalingAndMemberOrderDoNotChangeScores() started.
+◇ Test fullSparseBasisRecoversRepeatedSpectrum() started.
+◇ Test correctionIsReproducibleAndRejectsUnavailableMetadata() started.
+◇ Test representationDependenciesAreExplicit() started.
+◇ Test qualitySelectionPreservesCountsAndSourceIdentity() started.
+◇ Test centeredScoresRecoverVarianceAndRepeatExactly() started.
+◇ Test incompletePairsAndConfoundedBatchAreRejected() started.
+◇ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() started.
+◇ Test undefinedDispersionAndRepeatedProjectedEigenvalues() started.
+◇ Test ridgeMatchesIndependentDenseNormalSolve() started.
+◇ Test unknownScientificOptionsCannotBeIgnored() started.
+◇ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() started.
+◇ Test invalidOptionsAndLegacyEncoding() started.
+◇ Test unknownSettingsAndTargetsAreRejectedBeforePrediction() started.
+◇ Test queryStorageBudgetRejectsBeforeAllocatingOutput() started.
+◇ Test trainingExcludesPairedOutcomesAndCompositionReplays() started.
+◇ Test bundlesReconstructAndRejectRehashedModelTampering() started.
+◇ Test emptyInexactAndOverflowingLibrariesAreRejected() started.
+◇ Test exactReferenceNeighborsPreserveDistanceAndIndexTies() started.
+◇ Test interceptHasAnalyticMeanAndInformation() started.
+◇ Test projectionCentersAreOptInAndReproduceSparseTrainingScores() started.
+◇ Test logMassMatchesHighPrecisionReference() started.
+◇ Test offsetReparameterizationPreservesFit() started.
+◇ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() started.
+◇ Test profileAndExplicitPriorAreDistinct() started.
+◇ Test zeroOnlyCovariateSupportDoesNotProduceInference() started.
+✘ Test nativeH5MUMapsPreservePartialRowsAndUInt64() recorded an issue at MultiAssayTests.swift:52:6: Caught error: .invalid("H5AD requires native HDF5; install hdf5 or set NUMIVIVO_HDF5_LIBRARY")
+◇ Test sparseOptimizationIsDeterministicAndBudgeted() started.
+◇ Test attractionAndRegularizedRepulsionMatchFiniteDifferences() started.
+◇ Test curveFitMatchesIndependentDefaultAndScaleCases() started.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.013 seconds.
+✔ Test parametricTrendRecoversDeclaredMeanRelationship() passed after 0.013 seconds.
+✔ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() passed after 0.013 seconds.
+✔ Test baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() passed after 0.013 seconds.
+✔ Test optionsCannotBeSilentlyAppliedToWrongModel() passed after 0.013 seconds.
+✔ Test replicationSeparationAndBatchConfoundingRemainRejected() passed after 0.013 seconds.
+✔ Test malformedCachesAndBudgetsAreRejected() passed after 0.013 seconds.
+✔ Test missingFeaturesRequireExplicitCoverageAndChangeTheFingerprint() passed after 0.020 seconds.
+✔ Test sourceOrganismBudgetsAndInvalidDefinitionsFailClosed() passed after 0.020 seconds.
+✔ Test signedScoresSeparateAbsentExpressionFromEmptyLibraries() passed after 0.020 seconds.
+✔ Test invalidAlignmentFramesAndFeatureIdentitiesReject() passed after 0.020 seconds.
+✘ Test nativeH5MUMapsPreservePartialRowsAndUInt64() failed after 0.022 seconds with 1 issue.
+✔ Test accessibilityRequiresAssemblyIntervalsAndCorrectUnits() passed after 0.022 seconds.
+✔ Test unknownPredictionSettingsAreRejected() passed after 0.022 seconds.
+✔ Test aggregationKeepsInternalEdgesInObjective() passed after 0.022 seconds.
+✔ Test mappedProductsMatchExplicitMatrixAndAdjoint() passed after 0.022 seconds.
+✔ Test heapRecoversKnownNearestNeighborsAndDisconnectedGraph() passed after 0.022 seconds.
+✔ Test invalidInputsAndWorkBudgetFailBeforePublication() passed after 0.022 seconds.
+✔ Test resolutionAndInsufficientIterationLimitsAreExplicit() passed after 0.022 seconds.
+✔ Test missingMeasurementsDifferFromMeasuredZerosAndNamespacesRemainSeparate() passed after 0.022 seconds.
+✔ Test separatedComponentsHaveAnalyticalModularity() passed after 0.022 seconds.
+✔ Test finiteWeightScalingAndMemberOrderDoNotChangeScores() passed after 0.022 seconds.
+✔ Test constantControlsDoNotInventContextVariation() passed after 0.022 seconds.
+✔ Test representationDependenciesAreExplicit() passed after 0.022 seconds.
+✔ Test tiesAndDuplicateCellsPreserveSelfAndDeterminism() passed after 0.022 seconds.
+✔ Test pairedModelUsesTrainingDataAndReplays() passed after 0.022 seconds.
+✔ Test undefinedDispersionAndRepeatedProjectedEigenvalues() passed after 0.024 seconds.
+✔ Test ridgeMatchesIndependentDenseNormalSolve() passed after 0.024 seconds.
+✔ Test unknownScientificOptionsCannotBeIgnored() passed after 0.025 seconds.
+✔ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() passed after 0.025 seconds.
+✔ Test fullSparseBasisRecoversRepeatedSpectrum() passed after 0.026 seconds.
+✔ Test qualitySelectionPreservesCountsAndSourceIdentity() passed after 0.026 seconds.
+✔ Test unknownSettingsAndTargetsAreRejectedBeforePrediction() passed after 0.023 seconds.
+✔ Test trainingExcludesPairedOutcomesAndCompositionReplays() passed after 0.023 seconds.
+✔ Test incompletePairsAndConfoundedBatchAreRejected() passed after 0.026 seconds.
+✔ Test emptyInexactAndOverflowingLibrariesAreRejected() passed after 0.023 seconds.
+✔ Test exactReferenceNeighborsPreserveDistanceAndIndexTies() passed after 0.023 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.026 seconds.
+✔ Test interceptHasAnalyticMeanAndInformation() passed after 0.022 seconds.
+✔ Test logMassMatchesHighPrecisionReference() passed after 0.022 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.026 seconds.
+✔ Test offsetReparameterizationPreservesFit() passed after 0.022 seconds.
+✔ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() passed after 0.022 seconds.
+✔ Test invalidOptionsAndLegacyEncoding() passed after 0.026 seconds.
+✔ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() passed after 0.026 seconds.
+✔ Test attractionAndRegularizedRepulsionMatchFiniteDifferences() passed after 0.016 seconds.
+✔ Test bundlesReconstructAndRejectRehashedModelTampering() passed after 0.023 seconds.
+✔ Suite SingleCellMappedReductionTests passed after 0.027 seconds.
+✔ Suite SingleCellProgramTests passed after 0.027 seconds.
+✘ Suite MultiAssayTests failed after 0.027 seconds with 1 issue.
+✔ Suite SingleCellPerturbationTests passed after 0.027 seconds.
+✔ Suite SingleCellClusteringTests passed after 0.027 seconds.
+✔ Suite SingleCellNeighborTests passed after 0.027 seconds.
+✔ Suite SingleCellCohortTests passed after 0.027 seconds.
+✔ Test zeroOnlyCovariateSupportDoesNotProduceInference() passed after 0.023 seconds.
+✔ Test correctionIsReproducibleAndRejectsUnavailableMetadata() passed after 0.029 seconds.
+✔ Suite SingleCellIntegrationTests passed after 0.030 seconds.
+✔ Test projectionCentersAreOptInAndReproduceSparseTrainingScores() passed after 0.027 seconds.
+✔ Suite SingleCellReferenceTests passed after 0.032 seconds.
+✔ Test queryStorageBudgetRejectsBeforeAllocatingOutput() passed after 0.031 seconds.
+✔ Suite SingleCellCompositionTests passed after 0.035 seconds.
+✔ Test sparseOptimizationIsDeterministicAndBudgeted() passed after 0.026 seconds.
+✔ Test curveFitMatchesIndependentDefaultAndScaleCases() passed after 0.027 seconds.
+✔ Suite SingleCellEmbeddingTests passed after 0.037 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.039 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.039 seconds.
+✔ Test profileAndExplicitPriorAreDistinct() passed after 0.037 seconds.
+✔ Suite SingleCellNegativeBinomialTests passed after 0.042 seconds.
+✔ Test centeredScoresRecoverVarianceAndRepeatExactly() passed after 0.086 seconds.
+✔ Suite SingleCellReductionTests passed after 0.086 seconds.
+✔ Test cohortPreservesPriorAndFullSupportFitsWhileRecordingNewDesign() passed after 23.806 seconds.
+✔ Suite SingleCellNBSupportTests passed after 23.806 seconds.
+✔ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() passed after 24.457 seconds.
+✔ Suite SingleCellNBCohortTests passed after 24.457 seconds.
+✘ Test run with 58 tests in 16 suites failed after 24.457 seconds with 1 issue.

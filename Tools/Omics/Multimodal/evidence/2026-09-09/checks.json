@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "sourceSHA256": "3b290ad9605b96974c9c16e5ae3427e5e5c496a66e55223df135b388b6d61417",
+  "binarySHA256": "ffdeb0f87b008faa546862af2be6ee26941dd7a22272b90ecc5927aa032512d0",
+  "protocol": "complete-source-exact-count-and-alignment",
+  "assays": [
+    {
+      "assay": "rna",
+      "cells": 5247,
+      "features": 33538,
+      "nonzeros": 9250566,
+      "totalCounts": 32173181,
+      "sourceCountsExact": true,
+      "scanpyCountsExact": true,
+      "mudataCountsExact": true
+    },
+    {
+      "assay": "protein",
+      "cells": 5247,
+      "features": 32,
+      "nonzeros": 155429,
+      "totalCounts": 16081143,
+      "sourceCountsExact": true,
+      "scanpyCountsExact": true,
+      "mudataCountsExact": true
+    }
+  ],
+  "repeatBytesExact": true,
+  "mudataRoundtripExact": true,
+  "partialAssayMapExact": true,
+  "aboveFloatIntegerPrecisionPreserved": true,
+  "spatialMetadataPreserved": true,
+  "commands": 15,
+  "expectedRejections": 11,
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "packages": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "mudata": "0.4.1",
+    "h5py": "3.16.0"
+  },
+  "implementationSHA256": "6df3f37c177dec37b4cbc2713ea7a03b9c79d168d971d358760a0dc28eb4d931",
+  "planSHA256": "aea33d55f991caf90326049b33102380b463f1883b968b982ca6f62ae4c01be2"
+}

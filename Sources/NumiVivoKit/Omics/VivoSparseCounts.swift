@@ -202,6 +202,19 @@ public struct VivoSingleCellCountMetadata: Codable, Sendable, Equatable {
               !samples.isEmpty, samples.count <= limits.maximumCells,
               cells.count <= limits.maximumCells,
               !features.isEmpty, features.count <= limits.maximumFeatures else { throw VivoOmicsError.invalid("count metadata bounds") }
+        try vivoOmicsValidateIdentities(samples: samples, cells: cells)
+        var featureIDs = Set<String>()
+        for feature in features {
+            guard vivoOmicsID(feature.id), vivoOmicsID(feature.name), featureIDs.insert(feature.id).inserted else {
+                throw VivoOmicsError.invalid("invalid or duplicate feature ID; duplicate names are permitted")
+            }
+        }
+
+    }
+}
+
+/// Shared observation/sample identity validation, independent of assay units or features.
+func vivoOmicsValidateIdentities(samples: [VivoOmicsSample], cells: [VivoOmicsCell]) throws {
         var sampleByID: [String: VivoOmicsSample] = [:]
         var replicateByID: [String: VivoOmicsSample] = [:]
         for sample in samples {
@@ -214,12 +227,6 @@ public struct VivoSingleCellCountMetadata: Codable, Sendable, Equatable {
             }
             replicateByID[sample.biologicalReplicateID] = sample
         }
-        var featureIDs = Set<String>()
-        for feature in features {
-            guard vivoOmicsID(feature.id), vivoOmicsID(feature.name), featureIDs.insert(feature.id).inserted else {
-                throw VivoOmicsError.invalid("invalid or duplicate feature ID; duplicate names are permitted")
-            }
-        }
         struct Identity: Hashable { let sample: String; let barcode: String }
         var identities = Set<Identity>()
         for cell in cells {
@@ -229,5 +236,4 @@ public struct VivoSingleCellCountMetadata: Codable, Sendable, Equatable {
                 throw VivoOmicsError.invalid("cell identity, sample reference or group")
             }
         }
-    }
 }

@@ -1,0 +1,28 @@
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Omics/VivoMultiAssayH5MU.swift:16:17: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+ 14 |                 let g = try h.projectionGroup(parent, name)
+ 15 |                 do { if let encoding { try h.encoding(g, encoding, encoding == "dict" ? "0.1.0" : "0.2.0") }; return g }
+ 16 |                 catch { h.close(g, "H5Gclose"); throw error }
+    |                 `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+ 17 |             }
+ 18 |             func raw(_ parent: Int64, _ name: String, type: Int64, shape: [UInt64], buffer: UnsafeRawPointer?) throws {
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Omics/VivoMultiAssayIO.swift:52:41: error: call can throw but is not marked with 'try'
+50 |         let planBytes = try read(directory, "plan.json", maximum: 131_072)
+51 |         let datasetBytes = try read(directory, "dataset.json", maximum: 536_870_912)
+52 |         guard source == receipt.source, VivoCanonicalJSON.fingerprint(planBytes) == receipt.plan,
+   |                                         |- error: call can throw but is not marked with 'try'
+   |                                         |- note: did you mean to use 'try'?
+   |                                         |- note: did you mean to handle error as optional value?
+   |                                         `- note: did you mean to disable error propagation?
+53 |               VivoCanonicalJSON.fingerprint(datasetBytes) == receipt.dataset,
+54 |               try VivoH5ADPseudobulk.fingerprint(directory.appendingPathComponent("dataset.h5mu")) == receipt.h5mu else { throw VivoOmicsError.invalid("multi-assay artifact fingerprint") }
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Omics/VivoMultiAssayIO.swift:53:15: error: call can throw but is not marked with 'try'
+51 |         let datasetBytes = try read(directory, "dataset.json", maximum: 536_870_912)
+52 |         guard source == receipt.source, VivoCanonicalJSON.fingerprint(planBytes) == receipt.plan,
+53 |               VivoCanonicalJSON.fingerprint(datasetBytes) == receipt.dataset,
+   |               |- error: call can throw but is not marked with 'try'
+   |               |- note: did you mean to use 'try'?
+   |               |- note: did you mean to handle error as optional value?
+   |               `- note: did you mean to disable error propagation?
+54 |               try VivoH5ADPseudobulk.fingerprint(directory.appendingPathComponent("dataset.h5mu")) == receipt.h5mu else { throw VivoOmicsError.invalid("multi-assay artifact fingerprint") }
+55 |         let plan = try VivoCanonicalJSON.decode(VivoTenXMultiAssayPlan.self, from: planBytes)

@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
+        ["multiassay-h5mu-write", "multiassay-10x-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
     private func canonicalURL(_ url: URL) throws -> URL {
@@ -43,6 +43,21 @@ struct VivoSingleCellCLICommands {
                 files["analysis.json"] = try VivoCanonicalJSON.encode(VivoSingleCellExamples.pairedPlan())
                 try VivoOmicsDirectoryExport.write(files, to: destination)
                 try printJSON(["status": "written-synthetic-example", "directory": destination.path]); return 0
+            }
+            if command == "multiassay-h5mu-write" {
+                guard arguments.count == 4, arguments[2] == "--output" else { throw VivoOmicsError.invalid("multiassay-h5mu-write <dataset.json> --output <new.h5mu>") }
+                let bytes = try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[1]), maximumBytes: 536_870_912)
+                let data = try VivoCanonicalJSON.decode(VivoMultiAssayDataset.self, from: bytes)
+                try VivoMultiAssayH5MU.write(data, to: URL(fileURLWithPath: arguments[3])); try printJSON(["status": "exported-h5mu"]); return 0
+            }
+            if command == "multiassay-10x-import" {
+                guard arguments.count == 6, arguments[2] == "--plan", arguments[4] == "--output" else { throw VivoOmicsError.invalid("multiassay-10x-import <matrix.h5> --plan <plan.json> --output <new-bundle>") }
+                let plan = try load(VivoTenXMultiAssayPlan.self, URL(fileURLWithPath: arguments[3]))
+                try printJSON(VivoMultiAssayIO.importTenX(source: URL(fileURLWithPath: arguments[1]), plan: plan, implementation: VivoWorkflowCLIImplementation.fingerprint(), to: canonicalURL(URL(fileURLWithPath: arguments[5])))); return 0
+            }
+            if command == "multiassay-verify" {
+                guard arguments.count == 2 else { throw VivoOmicsError.invalid("multiassay-verify <bundle>") }
+                try printJSON(VivoMultiAssayIO.verify(URL(fileURLWithPath: arguments[1]), implementation: VivoWorkflowCLIImplementation.fingerprint())); return 0
             }
             if command == "singlecell-composition-prepare" {
                 guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("singlecell-composition-prepare <pseudobulk-bundle> --plan <selection.json> --output <training.json>") }
@@ -272,6 +287,9 @@ struct VivoSingleCellCLICommands {
     }
     static let help = """
     NumiVivo native single-cell workflows
+      multiassay-h5mu-write <dataset.json> --output <new.h5mu>
+      multiassay-10x-import <matrix.h5> --plan <plan.json> --output <new-bundle>
+      multiassay-verify <bundle>
       singlecell-composition-prepare <pseudobulk-bundle> --plan <selection.json> --output <training.json>
       singlecell-composition-fit <training.json> --output <model-bundle>
       singlecell-composition-predict <model-bundle> --plan <queries.json> --output <prediction-bundle>

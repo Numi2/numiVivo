@@ -1,0 +1,26 @@
+/Users/home/numivivo-singlecell-benchmark-py/lib/python3.12/site-packages/scanpy/readwrite.py:322: UserWarning: Variable names are not unique. To make them unique, call `.var_names_make_unique`.
+  return AnnData(matrix, obs=obs_dict, var=var_dict)
+/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/check_citeseq.py:62: UserWarning: The HDF5 file was not created by muon/mudata, we can't guarantee that everything will work correctly
+  mu=mudata.read_h5mu(bundle/'dataset.h5mu')
+/Users/home/numivivo-single-cell-20260909/Tools/Omics/Multimodal/check_citeseq.py:100: UserWarning: The HDF5 file was not created by muon/mudata, we can't guarantee that everything will work correctly
+  partial=mudata.read_h5mu(a.out/'partial.h5mu')
+/Users/home/numivivo-singlecell-benchmark-py/lib/python3.12/site-packages/mudata/_core/mudata.py:988: UserWarning: var_names are not unique. To make them unique, call `.var_names_make_unique`.
+  self._update_attr("var", axis=1, join_common=join_common)
+       26.50 real        22.91 user         1.39 sys
+          2006007808  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              676516  page reclaims
+                2332  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                5888  voluntary context switches
+                3152  involuntary context switches
+        134114303109  instructions retired
+         25816983309  cycles elapsed
+          1944225736  peak memory footprint

@@ -1,0 +1,110 @@
+{
+  "status": "passed",
+  "scope": "synthetic structural controls only",
+  "commands": [
+    {
+      "name": "valid",
+      "arguments": [
+        "multiassay-10x-import",
+        "/Users/home/numivivo-multiassay-structural-20260909/valid.h5",
+        "--plan",
+        "/Users/home/numivivo-multiassay-structural-20260909/plan.json",
+        "--output",
+        "/Users/home/numivivo-multiassay-structural-20260909/valid-bundle"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "name": "fractional",
+      "arguments": [
+        "multiassay-10x-import",
+        "/Users/home/numivivo-multiassay-structural-20260909/fractional.h5",
+        "--plan",
+        "/Users/home/numivivo-multiassay-structural-20260909/plan.json",
+        "--output",
+        "/Users/home/numivivo-multiassay-structural-20260909/fractional-bundle"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "negative",
+      "arguments": [
+        "multiassay-10x-import",
+        "/Users/home/numivivo-multiassay-structural-20260909/negative.h5",
+        "--plan",
+        "/Users/home/numivivo-multiassay-structural-20260909/plan.json",
+        "--output",
+        "/Users/home/numivivo-multiassay-structural-20260909/negative-bundle"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "feature-index",
+      "arguments": [
+        "multiassay-10x-import",
+        "/Users/home/numivivo-multiassay-structural-20260909/feature-index.h5",
+        "--plan",
+        "/Users/home/numivivo-multiassay-structural-20260909/plan.json",
+        "--output",
+        "/Users/home/numivivo-multiassay-structural-20260909/feature-index-bundle"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "offsets",
+      "arguments": [
+        "multiassay-10x-import",
+        "/Users/home/numivivo-multiassay-structural-20260909/offsets.h5",
+        "--plan",
+        "/Users/home/numivivo-multiassay-structural-20260909/plan.json",
+        "--output",
+        "/Users/home/numivivo-multiassay-structural-20260909/offsets-bundle"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "peak-interval",
+      "arguments": [
+        "multiassay-10x-import",
+        "/Users/home/numivivo-multiassay-structural-20260909/peak-interval.h5",
+        "--plan",
+        "/Users/home/numivivo-multiassay-structural-20260909/plan.json",
+        "--output",
+        "/Users/home/numivivo-multiassay-structural-20260909/peak-interval-bundle"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "unmapped-type",
+      "arguments": [
+        "multiassay-10x-import",
+        "/Users/home/numivivo-multiassay-structural-20260909/unmapped-type.h5",
+        "--plan",
+        "/Users/home/numivivo-multiassay-structural-20260909/plan.json",
+        "--output",
+        "/Users/home/numivivo-multiassay-structural-20260909/unmapped-type-bundle"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "name": "verify",
+      "arguments": [
+        "multiassay-verify",
+        "/Users/home/numivivo-multiassay-structural-20260909/valid-bundle"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    }
+  ],
+  "integerImportAboveFloatPrecisionExact": true,
+  "peakIntervalExact": true,
+  "assayUnitsPreserved": true,
+  "implementationSHA256": "4c68a9bf31fc5b6d58010aeee32ae7c24022599f7c26ca7b2852975605f9164e"
+}

@@ -339,8 +339,12 @@ The complete development objective remains open:
    covers 97 targets but also fails to beat the mean-response baseline.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
-8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired
-   RNA/ATAC and spatial assays remain.
+8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)
+   now preserve independent feature spaces, assay row maps, exact counts, genomic
+   intervals and spatial frames. All 5,247 public PBMC5k cells and both RNA/protein
+   assays match h5py/SciPy, Scanpy and MuData; native H5MU export preserves missing
+   assay rows. Native H5MU import, real ATAC/paired RNA-ATAC/spatial qualification,
+   continuous measurements and joint multimodal analysis remain open.
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
    selected-entry PCA now pass full Baron and Hagai comparisons against Scanpy;
    see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).

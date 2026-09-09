@@ -1,0 +1,7 @@
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Omics/VivoMultiAssayH5MU.swift:16:17: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+ 14 |                 let g = try h.projectionGroup(parent, name)
+ 15 |                 do { if let encoding { try h.encoding(g, encoding, encoding == "dict" ? "0.1.0" : "0.2.0") }; return g }
+ 16 |                 catch { h.close(g, "H5Gclose"); throw error }
+    |                 `- warning: 'catch' block is unreachable because no errors are thrown in 'do' block
+ 17 |             }
+ 18 |             func raw(_ parent: Int64, _ name: String, type: Int64, shape: [UInt64], buffer: UnsafeRawPointer?) throws {
