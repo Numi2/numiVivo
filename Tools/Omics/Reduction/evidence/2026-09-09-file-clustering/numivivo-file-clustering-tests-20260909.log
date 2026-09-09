@@ -1,0 +1,230 @@
+[0/1] Planning build
+Building for debugging...
+[0/6] Write sources
+[1/6] Write swift-version-3CD7052B146186F2.txt
+[3/13] Compiling NumiVivoIntegrationTests SingleCellFileClusteringTests.swift
+[4/13] Compiling NumiVivoIntegrationTests SingleCellGraphStoreTests.swift
+[5/13] Compiling NumiVivoIntegrationTests SingleCellHNSWTests.swift
+[6/13] Compiling NumiVivoIntegrationTests SingleCellCompositionTests.swift
+[7/13] Compiling NumiVivoIntegrationTests SingleCellClusteringTests.swift
+[8/13] Compiling NumiVivoIntegrationTests SingleCellIntegrationTests.swift
+[9/13] Compiling NumiVivoIntegrationTests SingleCellCohortTests.swift
+[10/13] Compiling NumiVivoIntegrationTests SingleCellEmbeddingTests.swift
+[11/13] Emitting module NumiVivoIntegrationTests
+[11/13] Write Objects.LinkFileList
+[12/13] Linking NumiVivoPackageTests
+Build complete! (3.52s)
+Test Suite 'Selected tests' started at 2026-09-09 20:20:20.498.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 20:20:20.504.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 20:20:20.504.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 20:20:20.504.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite MultiAssayTests started.
+◇ Suite SingleCellPCAQueryTests started.
+◇ Suite SingleCellFileClusteringTests started.
+◇ Suite SingleCellPerturbationTests started.
+◇ Suite SingleCellNBCohortTests started.
+◇ Suite SingleCellReductionTests started.
+◇ Suite SingleCellNegativeBinomialTests started.
+◇ Suite SingleCellClusteringTests started.
+◇ Suite SingleCellIntegrationTests started.
+◇ Suite SingleCellProgramTests started.
+◇ Suite SingleCellNBSupportTests started.
+◇ Suite SingleCellHNSWTests started.
+◇ Suite SingleCellWindowedNeighborTests started.
+◇ Suite SingleCellPCABundleTests started.
+◇ Suite SingleCellInterchangeTests started.
+◇ Suite SingleCellEmbeddingTests started.
+◇ Suite CountStoreTests started.
+◇ Suite SingleCellReferenceTests started.
+◇ Suite MultiAssayH5MUImportTests started.
+◇ Suite SingleCellNeighborTests started.
+◇ Suite SingleCellMappedReductionTests started.
+◇ Suite SingleCellGraphStoreTests started.
+◇ Suite SingleCellCompositionTests started.
+◇ Suite SingleCellCohortTests started.
+◇ Test invalidAlignmentFramesAndFeatureIdentitiesReject() started.
+◇ Test missingMeasurementsDifferFromMeasuredZerosAndNamespacesRemainSeparate() started.
+◇ Test cutSiteUnitsCannotBeAppliedToRNA() started.
+◇ Test accessibilityRequiresAssemblyIntervalsAndCorrectUnits() started.
+◇ Test fullSparseBasisRecoversRepeatedSpectrum() started.
+◇ Test constantControlsDoNotInventContextVariation() started.
+➜ Test nativeH5MUMapsPreservePartialRowsAndUInt64() skipped.
+◇ Test malformedCSRAndExhaustedWorkAreRejected() started.
+◇ Test diskAggregationPreservesSummationOrderAndDiagonalMass() started.
+◇ Test parametricTrendRecoversDeclaredMeanRelationship() started.
+◇ Test centeredScoresRecoverVarianceAndRepeatExactly() started.
+◇ Test undefinedDispersionAndRepeatedProjectedEigenvalues() started.
+◇ Test zeroOnlyCovariateSupportDoesNotProduceInference() started.
+◇ Test unknownPredictionSettingsAreRejected() started.
+◇ Test scoreWindowsPreserveEveryValueAcrossRewindsAndPageBoundaries() started.
+◇ Test invalidOptionsAndLegacyEncoding() started.
+◇ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() started.
+◇ Test optionsCannotBeSilentlyAppliedToWrongModel() started.
+◇ Test pairedModelUsesTrainingDataAndReplays() started.
+◇ Test ridgeMatchesIndependentDenseNormalSolve() started.
+◇ Test interceptHasAnalyticMeanAndInformation() started.
+◇ Test frozenProjectionUsesTrainingCentersAndAllGeneTotals() started.
+◇ Test finiteWeightScalingAndMemberOrderDoNotChangeScores() started.
+◇ Test correctionIsReproducibleAndRejectsUnavailableMetadata() started.
+◇ Test signedScoresSeparateAbsentExpressionFromEmptyLibraries() started.
+◇ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() started.
+◇ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() started.
+◇ Test parallelTilesMatchResidentGraphIncludingDistanceTies() started.
+◇ Test profileAndExplicitPriorAreDistinct() started.
+◇ Test aggregationKeepsInternalEdgesInObjective() started.
+◇ Test representationDependenciesAreExplicit() started.
+◇ Test offsetReparameterizationPreservesFit() started.
+◇ Test resolutionAndInsufficientIterationLimitsAreExplicit() started.
+◇ Test baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() started.
+◇ Test separatedComponentsHaveAnalyticalModularity() started.
+◇ Test fileAndResidentResultsMatchAndScratchIsRemoved() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test replicationSeparationAndBatchConfoundingRemainRejected() started.
+◇ Test sourceOrganismBudgetsAndInvalidDefinitionsFailClosed() started.
+◇ Test logMassMatchesHighPrecisionReference() started.
+◇ Test exhaustiveSmallSearchMatchesExactAndEvictsScoreTiles() started.
+◇ Test approximatePlanHasExplicitSerialAndResourceContract() started.
+◇ Test sharedStreamedQualityMatchesResidentQuality() started.
+◇ Test missingFeaturesRequireExplicitCoverageAndChangeTheFingerprint() started.
+◇ Test curveFitMatchesIndependentDefaultAndScaleCases() started.
+◇ Test cohortPreservesPriorAndFullSupportFitsWhileRecordingNewDesign() started.
+◇ Test standalonePlanRequiresProjectionCenters() started.
+◇ Test sparseOptimizationIsDeterministicAndBudgeted() started.
+◇ Test projectionCentersAreOptInAndReproduceSparseTrainingScores() started.
+◇ Test scoreTilesCrossMappingBoundaryAndRewind() started.
+◇ Test attractionAndRegularizedRepulsionMatchFiniteDifferences() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test windowBoundaryAndExactUInt64Records() started.
+◇ Test exactReferenceNeighborsPreserveDistanceAndIndexTies() started.
+◇ Test densePCARecordsRetainSignedAndExtremeFiniteValues() started.
+➜ Test spatialArraysRoundTripPositionsAndMissingRows() skipped.
+◇ Test emptyRecordsAndNonRegularInputs() started.
+◇ Test malformedCachesAndBudgetsAreRejected() started.
+◇ Test mappedProductsMatchExplicitMatrixAndAdjoint() started.
+➜ Test conflictingAndIncompleteObservationMapsReject() skipped.
+➜ Test nativeReadPreservesPartialMapsKindsAndExactIntegers() skipped.
+◇ Test invalidInputsAndWorkBudgetFailBeforePublication() started.
+◇ Test repeatedProductsCrossMappingWindows() started.
+◇ Test mappingRejectsUnknownOptionsAndAmbiguousCountSelection() started.
+◇ Test heapRecoversKnownNearestNeighborsAndDisconnectedGraph() started.
+◇ Test tiesAndDuplicateCellsPreserveSelfAndDeterminism() started.
+◇ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() started.
+◇ Test bundlesReconstructAndRejectRehashedModelTampering() started.
+◇ Test streamingExactAndHNSWPropagateSinkFailure() started.
+◇ Test unknownScientificOptionsCannotBeIgnored() started.
+◇ Test unknownSettingsAndTargetsAreRejectedBeforePrediction() started.
+◇ Test binaryTransposeMatchesResidentWithTiesAndDisconnectedComponents() started.
+◇ Test trainingExcludesPairedOutcomesAndCompositionReplays() started.
+◇ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() started.
+◇ Test emptyInexactAndOverflowingLibrariesAreRejected() started.
+◇ Test incompletePairsAndConfoundedBatchAreRejected() started.
+◇ Test qualitySelectionPreservesCountsAndSourceIdentity() started.
+◇ Test queryStorageBudgetRejectsBeforeAllocatingOutput() started.
+✔ Test parametricTrendRecoversDeclaredMeanRelationship() passed after 0.058 seconds.
+✔ Test undefinedDispersionAndRepeatedProjectedEigenvalues() passed after 0.060 seconds.
+✔ Test accessibilityRequiresAssemblyIntervalsAndCorrectUnits() passed after 0.060 seconds.
+✔ Test missingMeasurementsDifferFromMeasuredZerosAndNamespacesRemainSeparate() passed after 0.060 seconds.
+✔ Test malformedCSRAndExhaustedWorkAreRejected() passed after 0.060 seconds.
+✔ Test invalidAlignmentFramesAndFeatureIdentitiesReject() passed after 0.060 seconds.
+✔ Test optionsCannotBeSilentlyAppliedToWrongModel() passed after 0.060 seconds.
+✔ Test ridgeMatchesIndependentDenseNormalSolve() passed after 0.060 seconds.
+✔ Test cutSiteUnitsCannotBeAppliedToRNA() passed after 0.060 seconds.
+✔ Test frozenProjectionUsesTrainingCentersAndAllGeneTotals() passed after 0.060 seconds.
+✔ Test diskAggregationPreservesSummationOrderAndDiagonalMass() passed after 0.060 seconds.
+✔ Test interceptHasAnalyticMeanAndInformation() passed after 0.060 seconds.
+✔ Test signedScoresSeparateAbsentExpressionFromEmptyLibraries() passed after 0.060 seconds.
+✔ Test finiteWeightScalingAndMemberOrderDoNotChangeScores() passed after 0.060 seconds.
+✔ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() passed after 0.060 seconds.
+✔ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() passed after 0.060 seconds.
+✔ Test constantControlsDoNotInventContextVariation() passed after 0.060 seconds.
+✔ Test aggregationKeepsInternalEdgesInObjective() passed after 0.060 seconds.
+✔ Test representationDependenciesAreExplicit() passed after 0.060 seconds.
+✔ Test unknownPredictionSettingsAreRejected() passed after 0.060 seconds.
+✔ Test offsetReparameterizationPreservesFit() passed after 0.060 seconds.
+✔ Test resolutionAndInsufficientIterationLimitsAreExplicit() passed after 0.067 seconds.
+✔ Test baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() passed after 0.067 seconds.
+✔ Test separatedComponentsHaveAnalyticalModularity() passed after 0.067 seconds.
+✔ Test fullSparseBasisRecoversRepeatedSpectrum() passed after 0.067 seconds.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.067 seconds.
+✔ Test zeroOnlyCovariateSupportDoesNotProduceInference() passed after 0.072 seconds.
+✔ Test replicationSeparationAndBatchConfoundingRemainRejected() passed after 0.072 seconds.
+✔ Test pairedModelUsesTrainingDataAndReplays() passed after 0.076 seconds.
+✔ Test sourceOrganismBudgetsAndInvalidDefinitionsFailClosed() passed after 0.076 seconds.
+✔ Test logMassMatchesHighPrecisionReference() passed after 0.076 seconds.
+✔ Test invalidOptionsAndLegacyEncoding() passed after 0.076 seconds.
+✔ Test approximatePlanHasExplicitSerialAndResourceContract() passed after 0.076 seconds.
+✔ Test missingFeaturesRequireExplicitCoverageAndChangeTheFingerprint() passed after 0.076 seconds.
+✔ Test sharedStreamedQualityMatchesResidentQuality() passed after 0.076 seconds.
+✔ Test correctionIsReproducibleAndRejectsUnavailableMetadata() passed after 0.076 seconds.
+✔ Test standalonePlanRequiresProjectionCenters() passed after 0.076 seconds.
+✔ Test fileAndResidentResultsMatchAndScratchIsRemoved() passed after 0.076 seconds.
+✔ Test curveFitMatchesIndependentDefaultAndScaleCases() passed after 0.076 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.076 seconds.
+✔ Test attractionAndRegularizedRepulsionMatchFiniteDifferences() passed after 0.076 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.076 seconds.
+✔ Test profileAndExplicitPriorAreDistinct() passed after 0.076 seconds.
+✔ Test exactReferenceNeighborsPreserveDistanceAndIndexTies() passed after 0.076 seconds.
+✔ Test densePCARecordsRetainSignedAndExtremeFiniteValues() passed after 0.076 seconds.
+✔ Test projectionCentersAreOptInAndReproduceSparseTrainingScores() passed after 0.076 seconds.
+✔ Test emptyRecordsAndNonRegularInputs() passed after 0.076 seconds.
+✔ Test mappedProductsMatchExplicitMatrixAndAdjoint() passed after 0.076 seconds.
+✔ Test invalidInputsAndWorkBudgetFailBeforePublication() passed after 0.075 seconds.
+✔ Test malformedCachesAndBudgetsAreRejected() passed after 0.076 seconds.
+✔ Test mappingRejectsUnknownOptionsAndAmbiguousCountSelection() passed after 0.074 seconds.
+✔ Test heapRecoversKnownNearestNeighborsAndDisconnectedGraph() passed after 0.074 seconds.
+✔ Test tiesAndDuplicateCellsPreserveSelfAndDeterminism() passed after 0.074 seconds.
+✔ Test sparseOptimizationIsDeterministicAndBudgeted() passed after 0.076 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.076 seconds.
+✔ Test streamingExactAndHNSWPropagateSinkFailure() passed after 0.069 seconds.
+✔ Test unknownScientificOptionsCannotBeIgnored() passed after 0.067 seconds.
+✔ Test unknownSettingsAndTargetsAreRejectedBeforePrediction() passed after 0.066 seconds.
+✔ Test binaryTransposeMatchesResidentWithTiesAndDisconnectedComponents() passed after 0.066 seconds.
+✔ Test trainingExcludesPairedOutcomesAndCompositionReplays() passed after 0.066 seconds.
+✔ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() passed after 0.066 seconds.
+✔ Test emptyInexactAndOverflowingLibrariesAreRejected() passed after 0.066 seconds.
+✔ Test bundlesReconstructAndRejectRehashedModelTampering() passed after 0.069 seconds.
+✔ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() passed after 0.070 seconds.
+✔ Test qualitySelectionPreservesCountsAndSourceIdentity() passed after 0.064 seconds.
+✔ Suite MultiAssayTests passed after 0.077 seconds.
+✔ Suite SingleCellFileClusteringTests passed after 0.077 seconds.
+✔ Suite SingleCellIntegrationTests passed after 0.077 seconds.
+✔ Suite SingleCellNegativeBinomialTests passed after 0.077 seconds.
+✔ Suite SingleCellProgramTests passed after 0.077 seconds.
+✔ Suite SingleCellPerturbationTests passed after 0.077 seconds.
+✔ Suite SingleCellClusteringTests passed after 0.077 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.077 seconds.
+✔ Suite SingleCellPCABundleTests passed after 0.077 seconds.
+✔ Suite SingleCellEmbeddingTests passed after 0.077 seconds.
+✔ Suite SingleCellReferenceTests passed after 0.077 seconds.
+✔ Suite SingleCellNeighborTests passed after 0.077 seconds.
+✔ Suite MultiAssayH5MUImportTests passed after 0.077 seconds.
+✔ Suite SingleCellGraphStoreTests passed after 0.077 seconds.
+✔ Test incompletePairsAndConfoundedBatchAreRejected() passed after 0.067 seconds.
+✔ Suite SingleCellCohortTests passed after 0.079 seconds.
+✔ Test queryStorageBudgetRejectsBeforeAllocatingOutput() passed after 0.077 seconds.
+✔ Suite SingleCellCompositionTests passed after 0.090 seconds.
+✔ Test centeredScoresRecoverVarianceAndRepeatExactly() passed after 0.128 seconds.
+✔ Suite SingleCellReductionTests passed after 0.128 seconds.
+✔ Test parallelTilesMatchResidentGraphIncludingDistanceTies() passed after 0.203 seconds.
+✔ Test scoreTilesCrossMappingBoundaryAndRewind() passed after 0.269 seconds.
+✔ Suite SingleCellWindowedNeighborTests passed after 0.270 seconds.
+✔ Test windowBoundaryAndExactUInt64Records() passed after 0.305 seconds.
+✔ Suite CountStoreTests passed after 0.306 seconds.
+✔ Test repeatedProductsCrossMappingWindows() passed after 1.236 seconds.
+✔ Suite SingleCellMappedReductionTests passed after 1.237 seconds.
+✔ Test scoreWindowsPreserveEveryValueAcrossRewindsAndPageBoundaries() passed after 1.590 seconds.
+✔ Suite SingleCellPCAQueryTests passed after 1.590 seconds.
+✔ Test cohortPreservesPriorAndFullSupportFitsWhileRecordingNewDesign() passed after 26.301 seconds.
+✔ Suite SingleCellNBSupportTests passed after 26.301 seconds.
+✔ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() passed after 27.086 seconds.
+✔ Suite SingleCellNBCohortTests passed after 27.087 seconds.
+✔ Test exhaustiveSmallSearchMatchesExactAndEvictsScoreTiles() passed after 29.826 seconds.
+✔ Suite SingleCellHNSWTests passed after 29.827 seconds.
+✔ Test run with 80 tests in 24 suites passed after 29.827 seconds.

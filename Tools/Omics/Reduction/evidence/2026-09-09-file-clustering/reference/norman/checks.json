@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "cells": 111445,
+  "clusters": 17,
+  "allFrozenLegacyResultBytesExact": null,
+  "nativeModularity": 0.7484923738671839,
+  "independentModularity": 0.7484923738671503,
+  "disconnectedCommunities": 0,
+  "referenceMaximumModularityGap": -0.0040461305880958864,
+  "references": [
+    {
+      "seed": 7,
+      "clusters": 17,
+      "modularity": 0.7444462432790544,
+      "adjustedRand": 0.4524347819424644
+    },
+    {
+      "seed": 19,
+      "clusters": 17,
+      "modularity": 0.7343715994701044,
+      "adjustedRand": 0.4857515811492443
+    },
+    {
+      "seed": 41,
+      "clusters": 16,
+      "modularity": 0.7407900751924308,
+      "adjustedRand": 0.430965295339945
+    }
+  ],
+  "referencePairwiseARI": [
+    0.47988693031709656,
+    0.5060483135752081,
+    0.4553738479683618
+  ],
+  "metadataAssociations": {
+    "annotatedCellGroup": {
+      "status": "missing-or-single-level",
+      "complete": true,
+      "levels": 1
+    },
+    "donor": {
+      "status": "missing-or-single-level",
+      "complete": false,
+      "levels": 1
+    },
+    "condition": {
+      "status": "descriptive",
+      "complete": true,
+      "levels": 237,
+      "adjustedRand": 0.02404193602807416,
+      "adjustedMutualInformation": 0.13653522161136247,
+      "homogeneity": 0.10581829771378419,
+      "completeness": 0.20895251848127327,
+      "vMeasure": 0.1404895159975352
+    }
+  },
+  "resultSHA256": "67bed918491386d42ed8188c87cbd5bbed8dccf5542168afcf18a64c7686ff7b",
+  "graphSHA256": "ed22f6db052807f02cb4b0159891ef120f9e3554fd1dae54ff2633f14f0b0fd9",
+  "protocolSHA256": "8573386db7affed99a6d59e3ca4c85bd4586862cfb474ae3fd3686bb1523334a",
+  "edgeVisits": 140896484,
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "networkx": "3.6.1",
+    "scikit-learn": "1.9.0"
+  },
+  "scope": "Full graph numerical objective, connectivity and heuristic comparison; descriptive metadata association is not authoritative cell annotation, donor integration or biological qualification"
+}

@@ -66,7 +66,7 @@ public enum VivoPCANeighborBundle {
         try bytes.write(to: root.appendingPathComponent(name), options: .withoutOverwriting)
         return try VivoCanonicalJSON.fingerprint(bytes)
     }
-    private static func snapshot(_ input: URL, kind: VivoPCANeighborPlan.InputKind, to output: URL) throws {
+    static func snapshot(_ input: URL, kind: VivoPCANeighborPlan.InputKind, to output: URL) throws {
         if kind == .fitted { try VivoH5ADPCAQuery.snapshotReference(input, to: output); return }
         try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         try VivoH5ADPCAQuery.snapshotReference(input.appendingPathComponent("reference"), to: output.appendingPathComponent("reference"))

@@ -57,15 +57,30 @@ enum VivoSingleCellClustering {
         if total == 0 { return 0 }
         return internalWeight/total-resolution*volume.reduce(0) { $0+pow($1/total,2) }
     }
-    static func run(_ graph: VivoSingleCellNeighborGraph,options: VivoSingleCellClusteringOptions) throws -> VivoSingleCellClusteringResult {
+    static func modularity(_ graph: any VivoClusteringGraph, labels: [Int], resolution: Double) throws -> Double {
+        var volume = [Double](repeating: 0, count: graph.count), internalWeight = 0.0, total = 0.0
+        for i in 0..<graph.count { try graph.forEachEdge(in: i) { edge in
+            total += edge.weight; volume[labels[i]] += edge.weight
+            if labels[i] == labels[edge.column] { internalWeight += edge.weight }
+        } }
+        if total == 0 { return 0 }
+        return internalWeight/total-resolution*volume.reduce(0) { $0+pow($1/total,2) }
+    }
+    static func run(_ graph: VivoSingleCellNeighborGraph, options: VivoSingleCellClusteringOptions) throws -> VivoSingleCellClusteringResult {
         try options.validate()
-        let n = graph.cells.count
-        var rows = (0..<n).map { i in
-            (graph.rowOffsets[i]..<graph.rowOffsets[i+1]).map { Edge(column: graph.columnIndices[$0],weight: graph.weights[$0]) }
+        let rows = (0..<graph.cells.count).map { i in
+            (graph.rowOffsets[i]..<graph.rowOffsets[i+1]).map { Edge(column: graph.columnIndices[$0], weight: graph.weights[$0]) }
         }
-        let original = rows
+        return try run(original: VivoResidentClusteringGraph(rows), cells: graph.cells, options: options, scratch: nil)
+    }
+    static func run(original: any VivoClusteringGraph, cells: [VivoOmicsCellIdentity], options: VivoSingleCellClusteringOptions,
+                    scratch: URL?) throws -> VivoSingleCellClusteringResult {
+        try options.validate()
+        let n = cells.count
+        guard n > 0, n == original.count else { throw VivoOmicsError.invalid("clustering cell axes") }
+        var rows: any VivoClusteringGraph = original
         var labels = Array(0..<n), levels: [VivoSingleCellClusteringLevel] = [], state = options.seed
-        var previous = modularity(rows,labels: labels,resolution: options.resolution), termination: String?
+        var previous = try modularity(rows,labels: labels,resolution: options.resolution), termination: String?
         func random() -> UInt64 {
             state &+= 0x9E3779B97F4A7C15; var z = state
             z = (z^(z>>30)) &* 0xBF58476D1CE4E5B9
@@ -74,7 +89,9 @@ enum VivoSingleCellClustering {
         }
         for _ in 0..<options.maximumLevels {
             try Task.checkCancellation()
-            let count = rows.count, degrees = rows.map { $0.reduce(0) { $0+$1.weight } }
+            let count = rows.count
+            var degrees = [Double](repeating: 0, count: count)
+            for i in 0..<count { try rows.forEachEdge(in: i) { degrees[i] += $0.weight } }
             let total = degrees.reduce(0,+)
             if total == 0 { termination = "edgeless graph"; break }
             var community = Array(0..<count), totals = degrees, order = Array(0..<count)
@@ -85,7 +102,10 @@ enum VivoSingleCellClustering {
                 for i in order {
                     let old = community[i], degree = degrees[i]
                     var incident: [Int: Double] = [:]
-                    for edge in rows[i] where edge.column != i { incident[community[edge.column],default: 0] += edge.weight }
+                    try rows.forEachEdge(in: i) { edge in
+                        if edge.column != i { incident[community[edge.column],default: 0] += edge.weight }
+                    }
+                    rows.work.map(incident.count)
                     totals[old] -= degree
                     let removal = -(incident[old] ?? 0)+options.resolution*degree*totals[old]/total
                     var best = old, bestGain = 1e-12
@@ -106,7 +126,7 @@ enum VivoSingleCellClustering {
             for value in sourceLabels where mapping[value] == nil { mapping[value] = mapping.count }
             labels = sourceLabels.map { mapping[$0]! }
             let compact = community.map { mapping[$0]! }, groups = mapping.count
-            let objective = modularity(original,labels: labels,resolution: options.resolution)
+            let objective = try modularity(original,labels: labels,resolution: options.resolution)
             guard objective.isFinite,objective+1e-10 >= previous else { throw VivoOmicsError.invalid("Louvain objective decreased") }
             levels.append(.init(vertices: count,communities: groups,sweeps: sweeps,moves: moves,modularity: objective))
             if groups == count || groups == 1 || objective-previous <= options.levelTolerance {
@@ -114,11 +134,7 @@ enum VivoSingleCellClustering {
                 previous = objective; break
             }
             previous = objective
-            var aggregated = [[Int: Double]](repeating: [:],count: groups)
-            for i in rows.indices { for edge in rows[i] {
-                aggregated[compact[i]][compact[edge.column],default: 0] += edge.weight
-            } }
-            rows = aggregated.map { row in row.keys.sorted().map { Edge(column: $0,weight: row[$0]!) } }
+            rows = try rows.aggregate(labels: compact, groups: groups, scratch: scratch)
         }
         guard let termination else { throw VivoOmicsError.invalid("Louvain level limit before convergence") }
         let clusters = (labels.max() ?? -1)+1
@@ -129,12 +145,14 @@ enum VivoSingleCellClustering {
             var queue = [i], cursor = 0
             while cursor < queue.count {
                 let row = queue[cursor]; cursor += 1
-                for edge in original[row] where labels[edge.column] == label && !visited[edge.column] {
-                    visited[edge.column] = true; queue.append(edge.column)
+                try original.forEachEdge(in: row) { edge in
+                    if labels[edge.column] == label && !visited[edge.column] {
+                        visited[edge.column] = true; queue.append(edge.column)
+                    }
                 }
             }
         }
-        return .init(method: "seeded-multilevel-Louvain-fuzzy-modularity-v1",options: options,cells: graph.cells,labels: labels,
+        return .init(method: "seeded-multilevel-Louvain-fuzzy-modularity-v1",options: options,cells: cells,labels: labels,
             clusterSizes: sizes,modularity: previous,levels: levels,disconnectedCommunities: components.filter { $0>1 }.count,
             termination: termination,qualification: "Descriptive Louvain communities; connectivity diagnostics retained, not Leiden refinement, cell types, donor integration or biological validation")
     }

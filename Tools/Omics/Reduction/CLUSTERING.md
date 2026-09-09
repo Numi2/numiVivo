@@ -58,8 +58,10 @@ The real-data scope is the complete previously qualified Kang B-cell cohort
 15-neighbor graph. Count provenance, graph checks and resident/pair-work bounds
 remain those of the existing benchmark and reduction owners.
 [Native UMAP coordinates](EMBEDDING.md) now have separate reference checks.
-Stronger partition stability/biological evaluation, Leiden refinement, donor-aware
-integration and out-of-core execution remain open.
+The [file-backed graph route](FILE_CLUSTERING.md) uses this same solver with
+original and aggregated edges in windowed CSR files. Stronger partition
+stability/biological evaluation, Leiden refinement, donor-aware integration and
+million-cell execution remain open.
 
 The seeded visit order is tied to the retained graph row order. Permuting rows
 can lead to another local optimum; cell identities must be used when comparing

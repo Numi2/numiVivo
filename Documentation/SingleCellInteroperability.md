@@ -295,6 +295,8 @@ The complete development objective remains open:
    Sparse multilevel Louvain now has independent objective, connectivity and
    three-seed heuristic reference comparisons on both datasets;
    [clustering limits](../Tools/Omics/Reduction/CLUSTERING.md) remain explicit.
+   [File-backed clustering](../Tools/Omics/Reduction/FILE_CLUSTERING.md) shares
+   that solver and stores original and aggregated edges in windowed CSR files.
    Native fixed-epoch UMAP-compatible optimization now has curve, gradient,
    schedule and real-data neighborhood-preservation checks;
    [embedding limits](../Tools/Omics/Reduction/EMBEDDING.md) remain explicit.
@@ -391,8 +393,10 @@ The complete development objective remains open:
    avoided. Complete Norman construction peaks at 477 MB versus 1.421 GB for
    same-executable JSON output, with every binary FP64 value exact to the qualified
    graph. Input PCA state, HNSW index and cell-scale bookkeeping remain resident.
-   File-backed clustering/embedding and integration, million-cell qualification
-   and downstream biological evaluation remain open.
+   File-backed Louvain now consumes this graph and writes each aggregated level
+   through stable disk scatter, preserving the previous solver's summation order.
+   File-backed embedding and integration, million-cell qualification and
+   downstream biological evaluation remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

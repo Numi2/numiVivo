@@ -1,0 +1,236 @@
+[
+  {
+    "label": "baron-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/baron-fit.json",
+      "--output",
+      "/Users/n/numivivo-file-clustering-20260909/real/baron/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 7.05,
+    "maximumResidentBytes": 174260224
+  },
+  {
+    "label": "baron-graph",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-file-clustering-20260909/real/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-file-clustering-20260909/real/baron/graph-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-clustering-20260909/real/baron/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 6.94,
+    "maximumResidentBytes": 203145216
+  },
+  {
+    "label": "baron-cluster",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/n/numivivo-file-clustering-20260909/real/baron/graph",
+      "--plan",
+      "/Users/n/numivivo-file-clustering-20260909/real/clustering-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-clustering-20260909/real/baron/cluster"
+    ],
+    "exitCode": 0,
+    "seconds": 7.38,
+    "maximumResidentBytes": 205389824
+  },
+  {
+    "label": "baron-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/n/numivivo-file-clustering-20260909/real/baron/cluster"
+    ],
+    "exitCode": 0,
+    "seconds": 7.39,
+    "maximumResidentBytes": 207683584
+  },
+  {
+    "label": "baron-legacy-oracle",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/legacy-clustering",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/json/graph.json",
+      "/Users/n/numivivo-file-clustering-20260909/real/legacy-options.json",
+      "/Users/n/numivivo-file-clustering-20260909/real/baron/legacy-result.json"
+    ],
+    "exitCode": 0,
+    "seconds": 0.46,
+    "maximumResidentBytes": 56049664
+  },
+  {
+    "label": "hagai-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/hagai-fit.json",
+      "--output",
+      "/Users/n/numivivo-file-clustering-20260909/real/hagai/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 13.47,
+    "maximumResidentBytes": 200540160
+  },
+  {
+    "label": "hagai-graph",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-file-clustering-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-file-clustering-20260909/real/hagai/graph-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-clustering-20260909/real/hagai/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 15.15,
+    "maximumResidentBytes": 226344960
+  },
+  {
+    "label": "hagai-cluster",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/n/numivivo-file-clustering-20260909/real/hagai/graph",
+      "--plan",
+      "/Users/n/numivivo-file-clustering-20260909/real/clustering-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-clustering-20260909/real/hagai/cluster"
+    ],
+    "exitCode": 0,
+    "seconds": 16.19,
+    "maximumResidentBytes": 224493568
+  },
+  {
+    "label": "hagai-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/n/numivivo-file-clustering-20260909/real/hagai/cluster"
+    ],
+    "exitCode": 0,
+    "seconds": 16.07,
+    "maximumResidentBytes": 221118464
+  },
+  {
+    "label": "hagai-legacy-oracle",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/legacy-clustering",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/json/graph.json",
+      "/Users/n/numivivo-file-clustering-20260909/real/legacy-options.json",
+      "/Users/n/numivivo-file-clustering-20260909/real/hagai/legacy-result.json"
+    ],
+    "exitCode": 0,
+    "seconds": 0.54,
+    "maximumResidentBytes": 84738048
+  },
+  {
+    "label": "norman-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-pca-bundle-20260909/original.h5ad",
+      "--plan",
+      "/Users/n/numivivo-pca-bundle-20260909/plan.json",
+      "--output",
+      "/Users/n/numivivo-file-clustering-20260909/real/norman/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 137.15,
+    "maximumResidentBytes": 445972480
+  },
+  {
+    "label": "norman-graph",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-file-clustering-20260909/real/norman/pca",
+      "--plan",
+      "/Users/n/numivivo-file-clustering-20260909/real/norman/graph-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-clustering-20260909/real/norman/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 165.64,
+    "maximumResidentBytes": 481673216
+  },
+  {
+    "label": "norman-cluster",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/n/numivivo-file-clustering-20260909/real/norman/graph",
+      "--plan",
+      "/Users/n/numivivo-file-clustering-20260909/real/clustering-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-clustering-20260909/real/norman/cluster"
+    ],
+    "exitCode": 0,
+    "seconds": 264.95,
+    "maximumResidentBytes": 482918400
+  },
+  {
+    "label": "norman-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/n/numivivo-file-clustering-20260909/real/norman/cluster"
+    ],
+    "exitCode": 0,
+    "seconds": 261.68,
+    "maximumResidentBytes": 475971584
+  },
+  {
+    "label": "norman-legacy-oracle",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-clustering-20260909/legacy-clustering",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/json/graph.json",
+      "/Users/n/numivivo-file-clustering-20260909/real/legacy-options.json",
+      "/Users/n/numivivo-file-clustering-20260909/real/norman/legacy-result.json"
+    ],
+    "exitCode": 0,
+    "seconds": 4.96,
+    "maximumResidentBytes": 542490624
+  }
+]

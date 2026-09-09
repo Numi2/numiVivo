@@ -96,11 +96,12 @@ record, FP64 bit, cell identity and PCA score against the previously independent
 qualified full-cohort graphs. Real measurements are recorded in the accompanying
 evidence archive and table below.
 
-The existing resident clustering and embedding owners do not yet consume this
-binary store directly. Their file-backed execution, million-cell end-to-end
-qualification, biological stability and Metal/scverse performance comparisons
-remain separate required work. This store removes graph materialization from
-construction/publication; it does not complete the full single-cell roadmap.
+[File-backed clustering](FILE_CLUSTERING.md) consumes this binary store directly,
+including windowed edges at every aggregation level. File-backed embedding,
+million-cell end-to-end qualification, biological stability and Metal/scverse
+performance comparisons remain separate required work. This store removes graph
+materialization from construction/publication; it does not complete the full
+single-cell roadmap.
 
 ## Full-cohort measurements
 

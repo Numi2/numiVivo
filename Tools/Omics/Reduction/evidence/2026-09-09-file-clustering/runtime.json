@@ -1,0 +1,23 @@
+{
+  "baseCommit": "8635cfb734f8ffb6562cba083a0f4347ece35811",
+  "binarySHA256": "f05de2f9884ce4b8e825f4ac7aa5f95849c9620c3b48119a8de61bd321312b51",
+  "oracleSHA256": "665d76b3375d41da9a1375276efd5e7eb6e2520a3a334d5f4a2ae34af3464438",
+  "oracleBodyAndResultShapesExactToCommittedSource": true,
+  "nativeHost": {
+    "machine": "Apple M4 Pro",
+    "memoryBytes": 25769803776,
+    "os": "macOS 26.6 (25G72)",
+    "route": "ssh macmini"
+  },
+  "referenceHost": {
+    "machine": "arm64",
+    "os": "macOS-26.6-arm64-arm-64bit"
+  },
+  "measurement": "Single run /usr/bin/time -l native lifecycle; clustering publication and verification include full parent graph and PCA reconstruction. Oracle parses an existing JSON graph and has a different workload; its timing is not a speed comparison.",
+  "concurrency": "No competing native build or benchmark. Completed graph and cluster artifacts were copied while later native work ran; independent reference checks ran on the laptop, including Norman concurrently with native verification.",
+  "qualificationFailures": [
+    "Initial Swift test expression exceeded type-check time; split into explicit typed loop and 80 tests subsequently passed. Original failure log retained.",
+    "An ad hoc oracle shape check searched for a comment excluded from the frozen source and failed before writing evidence. Corrected section boundaries verify both shapes and entire algorithm exactly."
+  ],
+  "referenceSeparation": "Norman NetworkX checks omit the optional frozen-oracle argument while native replay runs; that field remains null. The completed native runner separately requires all frozen result bytes exact, and archival checks bind both results to the same result SHA256."
+}

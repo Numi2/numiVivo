@@ -1,0 +1,18 @@
+baron-fit passed
+baron-graph passed
+baron-cluster passed
+baron-verify passed
+baron-legacy-oracle passed
+{"case": "baron", "cells": 8569, "clusters": 19, "modularity": 0.8728444955018704, "levels": [{"communities": 322, "modularity": 0.6733134584371773, "moves": 15497, "sweeps": 29, "vertices": 8569}, {"communities": 35, "modularity": 0.8589840045122198, "moves": 378, "sweeps": 6, "vertices": 322}, {"communities": 19, "modularity": 0.8728444955018704, "moves": 18, "sweeps": 3, "vertices": 35}, {"communities": 19, "modularity": 0.8728444955018704, "moves": 0, "sweeps": 1, "vertices": 19}], "disconnectedCommunities": 0, "allLegacyResultBytesExact": true, "resultSHA256": "5f2f55adf8fa01dea6e9024862be72af5b012944ab4b9937e7e4f59082e7e282"}
+hagai-fit passed
+hagai-graph passed
+hagai-cluster passed
+hagai-verify passed
+hagai-legacy-oracle passed
+{"case": "hagai", "cells": 13863, "clusters": 11, "modularity": 0.80013993106474, "levels": [{"communities": 588, "modularity": 0.6148342424398991, "moves": 26606, "sweeps": 39, "vertices": 13863}, {"communities": 20, "modularity": 0.7816360018384894, "moves": 785, "sweeps": 6, "vertices": 588}, {"communities": 11, "modularity": 0.80013993106474, "moves": 9, "sweeps": 2, "vertices": 20}, {"communities": 11, "modularity": 0.80013993106474, "moves": 0, "sweeps": 1, "vertices": 11}], "disconnectedCommunities": 0, "allLegacyResultBytesExact": true, "resultSHA256": "9b0fa1461bcded95541eb7d246c24073ebc568b53ca1e57e47837e3d85259cd1"}
+norman-fit passed
+norman-graph passed
+norman-cluster passed
+norman-verify passed
+norman-legacy-oracle passed
+{"case": "norman", "cells": 111445, "clusters": 17, "modularity": 0.7484923738671839, "levels": [{"communities": 604, "modularity": 0.7184698142310447, "moves": 253596, "sweeps": 45, "vertices": 111445}, {"communities": 26, "modularity": 0.7478502458853226, "moves": 756, "sweeps": 6, "vertices": 604}, {"communities": 18, "modularity": 0.7484658339405597, "moves": 11, "sweeps": 3, "vertices": 26}, {"communities": 17, "modularity": 0.7484923738671839, "moves": 1, "sweeps": 2, "vertices": 18}, {"communities": 17, "modularity": 0.7484923738671839, "moves": 0, "sweeps": 1, "vertices": 17}], "disconnectedCommunities": 0, "allLegacyResultBytesExact": true, "resultSHA256": "67bed918491386d42ed8188c87cbd5bbed8dccf5542168afcf18a64c7686ff7b"}

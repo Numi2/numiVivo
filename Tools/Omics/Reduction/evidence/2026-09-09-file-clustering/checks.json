@@ -1,0 +1,499 @@
+{
+  "status": "passed",
+  "runtime": {
+    "baseCommit": "8635cfb734f8ffb6562cba083a0f4347ece35811",
+    "binarySHA256": "f05de2f9884ce4b8e825f4ac7aa5f95849c9620c3b48119a8de61bd321312b51",
+    "oracleSHA256": "665d76b3375d41da9a1375276efd5e7eb6e2520a3a334d5f4a2ae34af3464438",
+    "oracleBodyAndResultShapesExactToCommittedSource": true,
+    "nativeHost": {
+      "machine": "Apple M4 Pro",
+      "memoryBytes": 25769803776,
+      "os": "macOS 26.6 (25G72)",
+      "route": "ssh macmini"
+    },
+    "referenceHost": {
+      "machine": "arm64",
+      "os": "macOS-26.6-arm64-arm-64bit"
+    },
+    "measurement": "Single run /usr/bin/time -l native lifecycle; clustering publication and verification include full parent graph and PCA reconstruction. Oracle parses an existing JSON graph and has a different workload; its timing is not a speed comparison.",
+    "concurrency": "No competing native build or benchmark. Completed graph and cluster artifacts were copied while later native work ran; independent reference checks ran on the laptop, including Norman concurrently with native verification.",
+    "qualificationFailures": [
+      "Initial Swift test expression exceeded type-check time; split into explicit typed loop and 80 tests subsequently passed. Original failure log retained.",
+      "An ad hoc oracle shape check searched for a comment excluded from the frozen source and failed before writing evidence. Corrected section boundaries verify both shapes and entire algorithm exactly."
+    ],
+    "referenceSeparation": "Norman NetworkX checks omit the optional frozen-oracle argument while native replay runs; that field remains null. The completed native runner separately requires all frozen result bytes exact, and archival checks bind both results to the same result SHA256."
+  },
+  "swiftTests": 80,
+  "swiftSuites": 24,
+  "swiftFilter": "SingleCell|MultiAssay|CountStore",
+  "releaseBuild": "passed",
+  "scopedBuild": "passed; frozen oracle linked successfully",
+  "native": {
+    "status": "passed",
+    "commands": 15,
+    "cases": [
+      {
+        "case": "baron",
+        "cells": 8569,
+        "clusters": 19,
+        "modularity": 0.8728444955018704,
+        "levels": [
+          {
+            "communities": 322,
+            "modularity": 0.6733134584371773,
+            "moves": 15497,
+            "sweeps": 29,
+            "vertices": 8569
+          },
+          {
+            "communities": 35,
+            "modularity": 0.8589840045122198,
+            "moves": 378,
+            "sweeps": 6,
+            "vertices": 322
+          },
+          {
+            "communities": 19,
+            "modularity": 0.8728444955018704,
+            "moves": 18,
+            "sweeps": 3,
+            "vertices": 35
+          },
+          {
+            "communities": 19,
+            "modularity": 0.8728444955018704,
+            "moves": 0,
+            "sweeps": 1,
+            "vertices": 19
+          }
+        ],
+        "disconnectedCommunities": 0,
+        "allLegacyResultBytesExact": true,
+        "resultSHA256": "5f2f55adf8fa01dea6e9024862be72af5b012944ab4b9937e7e4f59082e7e282"
+      },
+      {
+        "case": "hagai",
+        "cells": 13863,
+        "clusters": 11,
+        "modularity": 0.80013993106474,
+        "levels": [
+          {
+            "communities": 588,
+            "modularity": 0.6148342424398991,
+            "moves": 26606,
+            "sweeps": 39,
+            "vertices": 13863
+          },
+          {
+            "communities": 20,
+            "modularity": 0.7816360018384894,
+            "moves": 785,
+            "sweeps": 6,
+            "vertices": 588
+          },
+          {
+            "communities": 11,
+            "modularity": 0.80013993106474,
+            "moves": 9,
+            "sweeps": 2,
+            "vertices": 20
+          },
+          {
+            "communities": 11,
+            "modularity": 0.80013993106474,
+            "moves": 0,
+            "sweeps": 1,
+            "vertices": 11
+          }
+        ],
+        "disconnectedCommunities": 0,
+        "allLegacyResultBytesExact": true,
+        "resultSHA256": "9b0fa1461bcded95541eb7d246c24073ebc568b53ca1e57e47837e3d85259cd1"
+      },
+      {
+        "case": "norman",
+        "cells": 111445,
+        "clusters": 17,
+        "modularity": 0.7484923738671839,
+        "levels": [
+          {
+            "communities": 604,
+            "modularity": 0.7184698142310447,
+            "moves": 253596,
+            "sweeps": 45,
+            "vertices": 111445
+          },
+          {
+            "communities": 26,
+            "modularity": 0.7478502458853226,
+            "moves": 756,
+            "sweeps": 6,
+            "vertices": 604
+          },
+          {
+            "communities": 18,
+            "modularity": 0.7484658339405597,
+            "moves": 11,
+            "sweeps": 3,
+            "vertices": 26
+          },
+          {
+            "communities": 17,
+            "modularity": 0.7484923738671839,
+            "moves": 1,
+            "sweeps": 2,
+            "vertices": 18
+          },
+          {
+            "communities": 17,
+            "modularity": 0.7484923738671839,
+            "moves": 0,
+            "sweeps": 1,
+            "vertices": 17
+          }
+        ],
+        "disconnectedCommunities": 0,
+        "allLegacyResultBytesExact": true,
+        "resultSHA256": "67bed918491386d42ed8188c87cbd5bbed8dccf5542168afcf18a64c7686ff7b"
+      }
+    ],
+    "scope": "Native lifecycle and exact frozen algorithm comparison; independent graph/partition qualification remains separate"
+  },
+  "fixtures": {
+    "status": "passed",
+    "commands": 22,
+    "expectedRejections": 6,
+    "fittedAndQuery": true,
+    "exactAndHNSW": true,
+    "allFrozenOracleBytesExact": true,
+    "replayExact": true,
+    "rehashedResultWorkAndParentRejected": true,
+    "failedStagingRemoved": true,
+    "binarySHA256": "f05de2f9884ce4b8e825f4ac7aa5f95849c9620c3b48119a8de61bd321312b51",
+    "oracleSHA256": "665d76b3375d41da9a1375276efd5e7eb6e2520a3a334d5f4a2ae34af3464438"
+  },
+  "queryInputRegression": {
+    "binarySHA256": "f05de2f9884ce4b8e825f4ac7aa5f95849c9620c3b48119a8de61bd321312b51",
+    "commands": 22,
+    "expectedRejections": 13,
+    "formats": [
+      {
+        "allBinaryCoordinatesChecked": true,
+        "cells": 16,
+        "components": 3,
+        "emptyLibraries": 1,
+        "features": 10,
+        "maximumAbsoluteScoreError": 2.6645352591003757e-15,
+        "projectionUpdates": 309,
+        "status": "passed"
+      },
+      {
+        "allBinaryCoordinatesChecked": true,
+        "cells": 16,
+        "components": 3,
+        "emptyLibraries": 1,
+        "features": 10,
+        "maximumAbsoluteScoreError": 2.6645352591003757e-15,
+        "projectionUpdates": 309,
+        "status": "passed"
+      },
+      {
+        "allBinaryCoordinatesChecked": true,
+        "cells": 16,
+        "components": 3,
+        "emptyLibraries": 1,
+        "features": 10,
+        "maximumAbsoluteScoreError": 3.552713678800501e-15,
+        "projectionUpdates": 309,
+        "status": "passed"
+      }
+    ],
+    "rehashedTamperingRejected": true,
+    "replayExact": true,
+    "status": "passed"
+  },
+  "graphRegression": {
+    "status": "passed",
+    "commands": 22,
+    "expectedRejections": 6,
+    "fittedAndQuery": true,
+    "exactAndHNSW": true,
+    "allBinaryNumericsExact": true,
+    "replayExact": true,
+    "allFourRehashedFilesRejected": true,
+    "binarySHA256": "f05de2f9884ce4b8e825f4ac7aa5f95849c9620c3b48119a8de61bd321312b51"
+  },
+  "reference": [
+    {
+      "status": "passed",
+      "cells": 8569,
+      "clusters": 19,
+      "allFrozenLegacyResultBytesExact": true,
+      "nativeModularity": 0.8728444955018704,
+      "independentModularity": 0.8728444955018703,
+      "disconnectedCommunities": 0,
+      "referenceMaximumModularityGap": 0.00033958218814067465,
+      "references": [
+        {
+          "seed": 7,
+          "clusters": 19,
+          "modularity": 0.8731840776900109,
+          "adjustedRand": 0.8674561761182729
+        },
+        {
+          "seed": 19,
+          "clusters": 19,
+          "modularity": 0.8729882745564179,
+          "adjustedRand": 0.936491205886814
+        },
+        {
+          "seed": 41,
+          "clusters": 19,
+          "modularity": 0.8720448314372375,
+          "adjustedRand": 0.9491168880149328
+        }
+      ],
+      "referencePairwiseARI": [
+        0.9017863863670672,
+        0.8720495289464986,
+        0.9394650944450872
+      ],
+      "metadataAssociations": {
+        "annotatedCellGroup": {
+          "status": "descriptive",
+          "complete": true,
+          "levels": 14,
+          "adjustedRand": 0.4957740135115846,
+          "adjustedMutualInformation": 0.776178024082298,
+          "homogeneity": 0.9467338150439081,
+          "completeness": 0.6596333865732886,
+          "vMeasure": 0.7775273697970865
+        },
+        "donor": {
+          "status": "descriptive",
+          "complete": true,
+          "levels": 4,
+          "adjustedRand": 0.18190441105620275,
+          "adjustedMutualInformation": 0.2971445728003436,
+          "homogeneity": 0.457091899134018,
+          "completeness": 0.22133810734077225,
+          "vMeasure": 0.2982528923236303
+        },
+        "condition": {
+          "status": "descriptive",
+          "complete": true,
+          "levels": 2,
+          "adjustedRand": 0.02778241803505798,
+          "adjustedMutualInformation": 0.10555864298034891,
+          "homogeneity": 0.38980887126050595,
+          "completeness": 0.061448487977277394,
+          "vMeasure": 0.10616188411662228
+        }
+      },
+      "resultSHA256": "5f2f55adf8fa01dea6e9024862be72af5b012944ab4b9937e7e4f59082e7e282",
+      "graphSHA256": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+      "protocolSHA256": "8573386db7affed99a6d59e3ca4c85bd4586862cfb474ae3fd3686bb1523334a",
+      "edgeVisits": 6955729,
+      "versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "networkx": "3.6.1",
+        "scikit-learn": "1.9.0"
+      },
+      "scope": "Full graph numerical objective, connectivity and heuristic comparison; descriptive metadata association is not authoritative cell annotation, donor integration or biological qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 13863,
+      "clusters": 11,
+      "allFrozenLegacyResultBytesExact": true,
+      "nativeModularity": 0.80013993106474,
+      "independentModularity": 0.800139931064728,
+      "disconnectedCommunities": 0,
+      "referenceMaximumModularityGap": 0.002965046310392183,
+      "references": [
+        {
+          "seed": 7,
+          "clusters": 11,
+          "modularity": 0.800358695320961,
+          "adjustedRand": 0.7113313406496925
+        },
+        {
+          "seed": 19,
+          "clusters": 11,
+          "modularity": 0.8012952228594401,
+          "adjustedRand": 0.7644048847559269
+        },
+        {
+          "seed": 41,
+          "clusters": 13,
+          "modularity": 0.8031049773751202,
+          "adjustedRand": 0.759374543340494
+        }
+      ],
+      "referencePairwiseARI": [
+        0.7795552148190841,
+        0.7968533274936269,
+        0.8030299499126756
+      ],
+      "metadataAssociations": {
+        "annotatedCellGroup": {
+          "status": "missing-or-single-level",
+          "complete": false,
+          "levels": 1
+        },
+        "donor": {
+          "status": "missing-or-single-level",
+          "complete": false,
+          "levels": 1
+        },
+        "condition": {
+          "status": "descriptive",
+          "complete": true,
+          "levels": 2,
+          "adjustedRand": 0.20953383954304836,
+          "adjustedMutualInformation": 0.4588779808471701,
+          "homogeneity": 0.9924502854885761,
+          "completeness": 0.29854689339056095,
+          "vMeasure": 0.45901409301984014
+        }
+      },
+      "resultSHA256": "9b0fa1461bcded95541eb7d246c24073ebc568b53ca1e57e47837e3d85259cd1",
+      "graphSHA256": "7b7bdf4fe3684158e0e2bc6401d6b99d1b266488221365fdd2f43dd60b281675",
+      "protocolSHA256": "8573386db7affed99a6d59e3ca4c85bd4586862cfb474ae3fd3686bb1523334a",
+      "edgeVisits": 14541940,
+      "versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "networkx": "3.6.1",
+        "scikit-learn": "1.9.0"
+      },
+      "scope": "Full graph numerical objective, connectivity and heuristic comparison; descriptive metadata association is not authoritative cell annotation, donor integration or biological qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 111445,
+      "clusters": 17,
+      "allFrozenLegacyResultBytesExact": null,
+      "nativeModularity": 0.7484923738671839,
+      "independentModularity": 0.7484923738671503,
+      "disconnectedCommunities": 0,
+      "referenceMaximumModularityGap": -0.0040461305880958864,
+      "references": [
+        {
+          "seed": 7,
+          "clusters": 17,
+          "modularity": 0.7444462432790544,
+          "adjustedRand": 0.4524347819424644
+        },
+        {
+          "seed": 19,
+          "clusters": 17,
+          "modularity": 0.7343715994701044,
+          "adjustedRand": 0.4857515811492443
+        },
+        {
+          "seed": 41,
+          "clusters": 16,
+          "modularity": 0.7407900751924308,
+          "adjustedRand": 0.430965295339945
+        }
+      ],
+      "referencePairwiseARI": [
+        0.47988693031709656,
+        0.5060483135752081,
+        0.4553738479683618
+      ],
+      "metadataAssociations": {
+        "annotatedCellGroup": {
+          "status": "missing-or-single-level",
+          "complete": true,
+          "levels": 1
+        },
+        "donor": {
+          "status": "missing-or-single-level",
+          "complete": false,
+          "levels": 1
+        },
+        "condition": {
+          "status": "descriptive",
+          "complete": true,
+          "levels": 237,
+          "adjustedRand": 0.02404193602807416,
+          "adjustedMutualInformation": 0.13653522161136247,
+          "homogeneity": 0.10581829771378419,
+          "completeness": 0.20895251848127327,
+          "vMeasure": 0.1404895159975352
+        }
+      },
+      "resultSHA256": "67bed918491386d42ed8188c87cbd5bbed8dccf5542168afcf18a64c7686ff7b",
+      "graphSHA256": "ed22f6db052807f02cb4b0159891ef120f9e3554fd1dae54ff2633f14f0b0fd9",
+      "protocolSHA256": "8573386db7affed99a6d59e3ca4c85bd4586862cfb474ae3fd3686bb1523334a",
+      "edgeVisits": 140896484,
+      "versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "networkx": "3.6.1",
+        "scikit-learn": "1.9.0"
+      },
+      "scope": "Full graph numerical objective, connectivity and heuristic comparison; descriptive metadata association is not authoritative cell annotation, donor integration or biological qualification"
+    }
+  ],
+  "graphReference": [
+    {
+      "status": "passed",
+      "cells": 8569,
+      "dimensions": 20,
+      "neighborEntries": 128535,
+      "connectivityEntries": 176856,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "156714b59cd29cd301917d0e3f8deb77480f9ce228b077ed482645d252f9ec2f",
+      "baselineScoresSHA256": "6ea92b3e2bac881e3787cd96992424614a853b6add82174d482a64e665f55eb5",
+      "graphSHA256": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+      "binaryBytes": 5434688,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 13863,
+      "dimensions": 20,
+      "neighborEntries": 207945,
+      "connectivityEntries": 293178,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "71538896f85184e752ac790e7188fdb48b620e7c6c1b777967632706afe7e9fc",
+      "baselineScoresSHA256": "f7f2d7cfdcd0dff7b7f113570ea6bbebddd344d3516aaed81bf5a2971d2517b1",
+      "graphSHA256": "7b7bdf4fe3684158e0e2bc6401d6b99d1b266488221365fdd2f43dd60b281675",
+      "binaryBytes": 8905216,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 111445,
+      "dimensions": 20,
+      "neighborEntries": 1671675,
+      "connectivityEntries": 2513474,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "fb1ccb626b2019c3091e0f0930a4124e84619fa7a5cd799e13f7dd45a706a10b",
+      "baselineScoresSHA256": "929b8f16450653ba64e72a0c17936032f367c178bd5798951abc9560da60c26b",
+      "graphSHA256": "ed22f6db052807f02cb4b0159891ef120f9e3554fd1dae54ff2633f14f0b0fd9",
+      "binaryBytes": 74094880,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    }
+  ],
+  "scriptsSHA256": {
+    "Tools/Omics/Reduction/check_clustering.py": "ee2b6b714eb82d308e8879c5d03e619df7057567f3d5d3130c1a53535177d517",
+    "Tools/Omics/Reduction/run_file_clustering.py": "07d523f859ed10748610d5293939793fd336c94b36007b411d87fe123ec29efa",
+    "Tools/Omics/Reduction/check_file_clustering_reference.py": "3c0035256af2a5c22725d807747a246b061b33ba8972c0dd560853cc5ca1f32e",
+    "Tools/Omics/Reduction/check_file_clustering.py": "15f627b1542a90d350bfa7ab18d336d248e287c86d4a3ed516519cdfc9a43805"
+  },
+  "scope": "File-backed Louvain preserves the frozen algorithm on complete qualified graphs; independent objective/connectivity and heuristic comparison are not biological or million-cell qualification"
+}
