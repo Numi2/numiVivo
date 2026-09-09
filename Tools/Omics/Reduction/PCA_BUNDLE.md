@@ -90,3 +90,9 @@ aligned relative score error 1.0971e-12. Scores occupy 35,662,400 binary bytes
 and loadings 640,000 bytes. The gate also passed 69 Swift tests in 19 suites,
 12 standalone CLI commands with 7 expected rejections, and existing streamed
 H5AD/legacy CSR/CSC regression checks.
+
+## Applying a training fit
+
+[Windowed frozen query projection](PCA_QUERY.md) uses the retained centers and
+binary loadings on disjoint new cells. Fits intended for this route must declare
+`featureNamespace`; complete feature IDs, organism and count units must match.

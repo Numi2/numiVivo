@@ -1,0 +1,85 @@
+{
+  "status": "passed",
+  "baseCommit": "78751d751b0b5079a5138513d0af67a3ad151e09",
+  "nativeSourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoH5ADPCA.swift": "7d55d3b9b508ca38b12c7599dd24a131e3946812532e07689d235ba555e16d1f",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellReference.swift": "78933d5ed107081547a29b514b8f7176f93765ebf40800f5f95ab42bca472bec",
+    "Sources/NumiVivoKit/Omics/VivoFrozenPCAProjection.swift": "1ff57a66c491b8c084241e6a95ba2e8faa5320642cdad67fcbdf1f8a65cf3ccb",
+    "Sources/NumiVivoKit/Omics/VivoH5ADPCAQuery.swift": "a3ae741a2def2176f5514f9618dae87eef55ec218723c4bb9902cdd6191d2ddb",
+    "Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift": "adbe2f4dfd0854558b542c6e43dc227b3b6e2913cb93b7557a4f8660a9bce8b4",
+    "Tests/NumiVivoIntegrationTests/SingleCellPCAQueryTests.swift": "cd428f8f131ce2dfdb3235122247310f2bb9fce0716c92566f2b837a8efa429c",
+    "Tools/Omics/H5AD/build.sh": "99b2a1a9ea813224d1e8beba30e721fbb9515d951c2edd78a83ce60baef2073a"
+  },
+  "localRemoteBytesExact": true,
+  "binarySHA256": "daec2880352c9503838f90ed301b0537b73bad462c2ebfe2781d4ed027e688b6",
+  "referenceToolSHA256": {
+    "Tools/Omics/Reduction/check_pca_query.py": "5eb2076fc2f06db26864d5cc8667243aca50f05ab141bae1224d87f514ae4650",
+    "Tools/Omics/Reduction/pca_query_reference.py": "717793c474c3d68a2e3b5cc5953c8e30721a3ae6d966952bc38c6d4b77243d0f",
+    "Tools/Omics/Reduction/check_pca_query_baron.py": "179319ffba7865d181867068cb52369f59d228580e80ee8465b355334291afac",
+    "Tools/Omics/Reduction/run_pca_query_baron.py": "5d1646cb40d231ec4d3730653e77047cf47b025997ae2e9f2851d8710540d3e9",
+    "Tools/Omics/Reduction/pca_bundle_reference.py": "3526b632171544deb1d3d600f77a1e75d9141627becdf4866b22c9a5c69e16e1"
+  },
+  "inputs": {
+    "human1/train": {
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021",
+      "bytes": 151078925,
+      "localSource": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/train/projected.h5ad"
+    },
+    "human1/query": {
+      "sha256": "0470e885de71dbb059214ad139a6d6afd5ac4477da6f591babf0e9db38821068",
+      "bytes": 46084599,
+      "localSource": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad"
+    },
+    "human2/train": {
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a",
+      "bytes": 156629090,
+      "localSource": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human2/train/projected.h5ad"
+    },
+    "human2/query": {
+      "sha256": "1abdf51a69fea56c9c24124f5130cceefeda26a3b6ca31ca16036e47e3be1a87",
+      "bytes": 40527116,
+      "localSource": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human2/query/projected.h5ad"
+    },
+    "human3/train": {
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56",
+      "bytes": 119954222,
+      "localSource": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human3/train/projected.h5ad"
+    },
+    "human3/query": {
+      "sha256": "67d3b382b09f836fc4f3c5e865747a67744516a27a2da5a5e1a15c3b17143c23",
+      "bytes": 77218952,
+      "localSource": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human3/query/projected.h5ad"
+    },
+    "human4/train": {
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147",
+      "bytes": 161400364,
+      "localSource": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human4/train/projected.h5ad"
+    },
+    "human4/query": {
+      "sha256": "a5bccfd97bf44a84645b8ba332a48fc725dc7522d0df917d2342ee8e2594e2e7",
+      "bytes": 35761795,
+      "localSource": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human4/query/projected.h5ad"
+    }
+  },
+  "baselineDecompressedSHA256": {
+    "Tools/Omics/ReferenceMapping/evidence/2026-09-09-native/human1/reference/model.json.gz": "56fb244b65f0d83c26cf96ac1ba36df146bfa1eee3095ab8e38cc00ca9ab1f58",
+    "Tools/Omics/ReferenceMapping/evidence/2026-09-09-native/human1/mapped/report.json.gz": "54c9273d085beb247f3b317f47a83a2cca16f6d2812248e8bacbc5dc6b585f81",
+    "Tools/Omics/ReferenceMapping/evidence/2026-09-09-native/human2/reference/model.json.gz": "858ee154abf37719153eaf976974a39849b346cbc4d5bad4ad593623264a2954",
+    "Tools/Omics/ReferenceMapping/evidence/2026-09-09-native/human2/mapped/report.json.gz": "2aaf254abdd8ddc56817a6d45fc0f759af5e1f8c59ba3dd652f4cd35fb0a5e0a",
+    "Tools/Omics/ReferenceMapping/evidence/2026-09-09-native/human3/reference/model.json.gz": "7ebcd7a4921b847a708b8c5a2c7e47c765bff52d1284c07156354c62a11d52db",
+    "Tools/Omics/ReferenceMapping/evidence/2026-09-09-native/human3/mapped/report.json.gz": "46b8ee368cb1d636b31859b0ed8d8c1cf6345cf0bab3f84a5902d32366c9e90f",
+    "Tools/Omics/ReferenceMapping/evidence/2026-09-09-native/human4/reference/model.json.gz": "576ee15386798dab17ec6de70bdc7d0398935bad2aa9bc62d55c54663e73d3c2",
+    "Tools/Omics/ReferenceMapping/evidence/2026-09-09-native/human4/mapped/report.json.gz": "0227d1a466cabe7ca886535e36b44a936694c52ddaf58b7d6a62cd6a45c1e44e"
+  },
+  "cells": 8569,
+  "donorFolds": 4,
+  "maximumAbsoluteScoreError": 2.842170943040401e-14,
+  "allNativeTrainingNumericsExact": true,
+  "allLegacyQueryReportsBytesExact": true,
+  "nativeCommands": 20,
+  "fixtureCommands": 22,
+  "fixtureExpectedRejections": 13,
+  "swiftTests": 71,
+  "swiftSuites": 20,
+  "scope": "Frozen training-only projection and binary artifact reconstruction on complete Baron donor splits; no biological prediction, million-cell or Metal qualification"
+}

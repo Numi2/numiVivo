@@ -374,8 +374,11 @@ The complete development objective remains open:
    import, normalization and reconstruction verification each stay below 286 MB
    maximum resident memory on 111,445 cells. Every raw record matches SciPy and
    every normalized record matches Scanpy within 8.9e-16 absolute error.
-   Metadata, moments, basis, scores and
-   reports remain resident. Streaming downstream graphs/integration, parallel
+   [Frozen query projection](../Tools/Omics/Reduction/PCA_QUERY.md) now applies
+   training-only centers/loadings with query scores in 16 MiB file windows. All
+   8,569 Baron cells pass donor-held-out projection checks against Scanpy/SciPy;
+   existing label-reference reports remain exact. Training metadata, moments,
+   basis and fitted scores still remain resident. Streaming downstream graphs/integration, parallel
    kernels and million-cell qualification remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.

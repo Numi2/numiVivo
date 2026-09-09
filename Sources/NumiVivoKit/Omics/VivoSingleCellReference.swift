@@ -139,17 +139,16 @@ public enum VivoSingleCellReference {
             metadata=value;totals=Array(repeating: 0,count: n)
         },onEntry: { row,_,count in totals[row]=try vivoOmicsSum(totals[row],count) })
         guard let metadata else { throw VivoOmicsError.invalid("query metadata absent") }
-        var shift=[Double](repeating: 0,count: d)
-        for j in centers.indices { for c in 0..<d { shift[c]+=centers[j]*reduction.loadings[j][c] } }
-        var scores=Array(repeating: shift.map { -$0 },count: metadata.cells.count),updates=0
+        let projection = try VivoFrozenPCAProjection(centers: centers, loadings: reduction.loadings, target: model.plan.reduction.normalizationTarget)
+        var scores=Array(repeating: projection.initial,count: metadata.cells.count),updates=0
         _=try VivoSingleCellH5AD.scanSnapshot(snapshot,plan: plan.mapping,limits: VivoH5ADPseudobulk.sourceLimits,onMetadata: {
             guard $0==metadata else { throw VivoOmicsError.invalid("query metadata changed between passes") }
         },onEntry: { row,j,count in
             let selected=local[j];if selected<0 { return }
             guard updates<=plan.maximumProjectionUpdates-d else { throw VivoOmicsError.limit("reference projection-update budget") }
-            let log=log1p(Double(count)/Double(totals[row])*model.plan.reduction.normalizationTarget)
-            guard log.isFinite,log>0 else { throw VivoOmicsError.invalid("reference normalization overflow/underflow") }
-            for c in 0..<d { scores[row][c]+=log*reduction.loadings[selected][c] };updates+=d
+            try scores[row].withUnsafeMutableBufferPointer { values in
+                try projection.add(count: count, total: totals[row], selected: selected, to: values)
+            };updates+=d
         })
         let labelIndex=Dictionary(uniqueKeysWithValues: model.classes.enumerated().map { ($0.element,$0.offset) })
         var predictions: [VivoSingleCellReferencePrediction]=[]

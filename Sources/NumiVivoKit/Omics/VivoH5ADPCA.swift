@@ -4,21 +4,24 @@ public struct VivoH5ADPCAPlan: Codable, Sendable, Equatable {
     public let schemaVersion: Int
     public let mapping: VivoH5ADImportPlan
     public var reduction: VivoH5ADReductionOptions
-    public init(mapping: VivoH5ADImportPlan, reduction: VivoH5ADReductionOptions = .init()) {
-        schemaVersion = 1; self.mapping = mapping; self.reduction = reduction
+    public let featureNamespace: String?
+    public init(mapping: VivoH5ADImportPlan, reduction: VivoH5ADReductionOptions = .init(), featureNamespace: String? = nil) {
+        schemaVersion = 1; self.mapping = mapping; self.reduction = reduction; self.featureNamespace = featureNamespace
         if self.reduction.pca.retainProjectionCenters == nil { self.reduction.pca.retainProjectionCenters = true }
     }
-    private enum CodingKeys: String, CodingKey { case schemaVersion, mapping, reduction }
+    private enum CodingKeys: String, CodingKey { case schemaVersion, mapping, reduction, featureNamespace }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "mapping", "reduction"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "mapping", "reduction", "featureNamespace"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try c.decode(Int.self, forKey: .schemaVersion)
         mapping = try c.decode(VivoH5ADImportPlan.self, forKey: .mapping)
+        featureNamespace = try c.decodeIfPresent(String.self, forKey: .featureNamespace)
         reduction = try c.decodeIfPresent(VivoH5ADReductionOptions.self, forKey: .reduction) ?? .init()
         if reduction.pca.retainProjectionCenters == nil { reduction.pca.retainProjectionCenters = true }
     }
     public func validate() throws {
-        guard schemaVersion == 1, reduction.pca.retainProjectionCenters == true else {
+        guard schemaVersion == 1, reduction.pca.retainProjectionCenters == true,
+              featureNamespace.map(vivoOmicsID) ?? true else {
             throw VivoOmicsError.invalid("standalone PCA schema or required projection centers")
         }
         try reduction.validate()
