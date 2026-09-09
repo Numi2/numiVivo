@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Reduction/check_integration.py", line 227, in <module>
+    main()
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Reduction/check_integration.py", line 114, in main
+    raise ValueError('Benchmark requires at least three known donors and two conditions')
+ValueError: Benchmark requires at least three known donors and two conditions

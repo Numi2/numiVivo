@@ -1,15 +1,18 @@
 import Foundation
 
 public struct VivoSingleCellNeighborOptions: Codable, Sendable, Equatable {
+    public enum Representation: String, Codable, Sendable { case pca, integrated }
+    public var representation: Representation? = nil
     /// Includes the cell itself in slot zero, as in UMAP's reference convention.
     public var neighbors: Int = 15
     public var localConnectivity: Double = 1
     public var maximumDistancePairs: Int = 50_000_000
     public init() {}
-    private enum CodingKeys: String, CodingKey { case neighbors, localConnectivity, maximumDistancePairs }
+    private enum CodingKeys: String, CodingKey { case neighbors, localConnectivity, maximumDistancePairs, representation }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["neighbors", "localConnectivity", "maximumDistancePairs"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["neighbors", "localConnectivity", "maximumDistancePairs", "representation"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
+        representation = try c.decodeIfPresent(Representation.self,forKey: .representation)
         neighbors = try c.decodeIfPresent(Int.self, forKey: .neighbors) ?? 15
         localConnectivity = try c.decodeIfPresent(Double.self, forKey: .localConnectivity) ?? 1
         maximumDistancePairs = try c.decodeIfPresent(Int.self, forKey: .maximumDistancePairs) ?? 50_000_000
@@ -162,10 +165,10 @@ enum VivoSingleCellNeighbors {
                 }
             }
         }
-        return .init(method: "exact-euclidean-PCA-knn-umap-fuzzy-union-v1",options: options,cells: cells,dimensions: d,
+        return .init(method: options.representation == .integrated ? "exact-euclidean-integrated-knn-umap-fuzzy-union-v1" : "exact-euclidean-PCA-knn-umap-fuzzy-union-v1",options: options,cells: cells,dimensions: d,
             neighborIndices: indices,neighborDistances: distances,rhos: rhos,sigmas: sigmas,kernelMassResiduals: residuals,
             rowOffsets: offsets,columnIndices: columns,weights: weights,connectedComponents: components,
             isolatedCells: (0..<n).filter { offsets[$0] == offsets[$0+1] }.count,distancePairs: pairProduct.partialValue,
-            qualification: "Exact PCA neighbors and UMAP-compatible fuzzy graph; not an embedding, clustering, integration or biological qualification")
+            qualification: "Exact neighbors in the declared representation and UMAP-compatible fuzzy graph; not an embedding, clustering, integration or biological qualification")
     }
 }

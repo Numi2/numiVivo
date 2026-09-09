@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "sparse-reduction-qualification",
+  "normalizationTarget": 10000,
+  "filter": {
+    "minimumCounts": 1,
+    "minimumDetectedFeatures": 1
+  },
+  "contrasts": [],
+  "reduction": {
+    "highlyVariableFeatures": 2000,
+    "meanBins": 20,
+    "components": 20,
+    "maximumBasis": 128,
+    "relativeResidualTolerance": 1e-06,
+    "seed": 7
+  },
+  "neighbors": {
+    "neighbors": 15,
+    "localConnectivity": 1,
+    "maximumDistancePairs": 50000000,
+    "representation": "integrated"
+  },
+  "clustering": {
+    "resolution": 1,
+    "seed": 7,
+    "maximumSweeps": 100,
+    "maximumLevels": 32,
+    "levelTolerance": 1e-07
+  },
+  "embedding": {
+    "dimensions": 2,
+    "epochs": 500,
+    "minimumDistance": 0.1,
+    "spread": 1,
+    "learningRate": 1,
+    "negativeSampleRate": 5,
+    "repulsionStrength": 1,
+    "seed": 7,
+    "maximumUpdates": 200000000
+  },
+  "integration": {
+    "covariate": "donor",
+    "clusters": 88,
+    "seed": 7
+  }
+}

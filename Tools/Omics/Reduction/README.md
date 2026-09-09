@@ -85,3 +85,7 @@ For the next stage, see [exact neighbors and fuzzy connectivity](NEIGHBORS.md).
 [Multilevel Louvain clustering](CLUSTERING.md) consumes the verified sparse graph.
 
 [Native UMAP-compatible coordinates](EMBEDDING.md) optimize the same sparse graph.
+
+[Donor/batch integration](INTEGRATION.md) retains original PCA and requires an
+explicit corrected representation for downstream graphs. Its real-data checks
+measure donor mixing and response preservation separately.

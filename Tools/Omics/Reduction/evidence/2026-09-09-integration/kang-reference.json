@@ -1,0 +1,1274 @@
+{
+  "schemaVersion": 1,
+  "status": "native-and-reference-measured",
+  "reportSHA256": "77a9624aeb00a37b8478decf7cffc746d0356c33a87313341a30ccbe3c6cdf4e",
+  "cells": 2651,
+  "dimensions": 20,
+  "composition": {
+    "patient_101": {
+      "ctrl": 106,
+      "stim": 141
+    },
+    "patient_1015": {
+      "ctrl": 459,
+      "stim": 366
+    },
+    "patient_1016": {
+      "ctrl": 125,
+      "stim": 123
+    },
+    "patient_1039": {
+      "ctrl": 26,
+      "stim": 41
+    },
+    "patient_107": {
+      "ctrl": 44,
+      "stim": 60
+    },
+    "patient_1244": {
+      "ctrl": 118,
+      "stim": 96
+    },
+    "patient_1256": {
+      "ctrl": 218,
+      "stim": 219
+    },
+    "patient_1488": {
+      "ctrl": 220,
+      "stim": 289
+    }
+  },
+  "options": {
+    "theta": 2,
+    "lamb": 1,
+    "sigma": 0.1,
+    "nclust": 88,
+    "tau": 0,
+    "block_size": 0.05,
+    "max_iter_harmony": 10,
+    "max_iter_kmeans": 4,
+    "epsilon_cluster": 0.001,
+    "epsilon_harmony": 0.01,
+    "alpha": 0.2,
+    "batch_prop_cutoff": 1e-05,
+    "ncores": 1
+  },
+  "evaluationNeighbors": 30,
+  "gateMargins": {
+    "maximumConditionAccuracyLoss": 0.02,
+    "maximumProgramCorrelationLoss": 0.05,
+    "minimumErasureControlAccuracyLoss": 0.1
+  },
+  "program": {
+    "featureIDs": [
+      "IFI6",
+      "IFIT1",
+      "ISG15",
+      "MX1",
+      "ISG20"
+    ],
+    "definition": "Unweighted mean of retained log-normalized RNA; no fitted weights"
+  },
+  "baseline": {
+    "conditionStratifiedDonorEntropy": 0.801480575011198,
+    "conditionStratifiedSameDonorFraction": 0.1532193139714068,
+    "compositionExpectedSameDonorFraction": 0.12588559555218648,
+    "sameDonorExcess": 0.027333718419220318,
+    "conditionNeighborPurity": 0.9811368799590062,
+    "leaveOneDonorOutBalancedAccuracy": 0.9919838153480768,
+    "donorFolds": [
+      {
+        "donor": "patient_101",
+        "cells": 247,
+        "balancedAccuracy": 0.9964539007092199,
+        "solverIterations": 12
+      },
+      {
+        "donor": "patient_1015",
+        "cells": 825,
+        "balancedAccuracy": 0.9901960784313726,
+        "solverIterations": 12
+      },
+      {
+        "donor": "patient_1016",
+        "cells": 248,
+        "balancedAccuracy": 0.9919349593495934,
+        "solverIterations": 11
+      },
+      {
+        "donor": "patient_1039",
+        "cells": 67,
+        "balancedAccuracy": 0.9807692307692308,
+        "solverIterations": 12
+      },
+      {
+        "donor": "patient_107",
+        "cells": 104,
+        "balancedAccuracy": 1.0,
+        "solverIterations": 12
+      },
+      {
+        "donor": "patient_1244",
+        "cells": 214,
+        "balancedAccuracy": 0.9947916666666667,
+        "solverIterations": 11
+      },
+      {
+        "donor": "patient_1256",
+        "cells": 437,
+        "balancedAccuracy": 0.9817246868585312,
+        "solverIterations": 11
+      },
+      {
+        "donor": "patient_1488",
+        "cells": 509,
+        "balancedAccuracy": 1.0,
+        "solverIterations": 11
+      }
+    ],
+    "programNeighborSpearman": 0.8957807666715127,
+    "programDonorCorrelations": [
+      {
+        "donor": "patient_101",
+        "spearman": 0.8841397044318808
+      },
+      {
+        "donor": "patient_1015",
+        "spearman": 0.9119247343735712
+      },
+      {
+        "donor": "patient_1016",
+        "spearman": 0.9144527381138621
+      },
+      {
+        "donor": "patient_1039",
+        "spearman": 0.8456934315749212
+      },
+      {
+        "donor": "patient_107",
+        "spearman": 0.9121760476704392
+      },
+      {
+        "donor": "patient_1244",
+        "spearman": 0.9040218998338032
+      },
+      {
+        "donor": "patient_1256",
+        "spearman": 0.9070998055011477
+      },
+      {
+        "donor": "patient_1488",
+        "spearman": 0.8867377718724765
+      }
+    ],
+    "withinConditionProgramSpearman": 0.5843227687510596,
+    "withinConditionProgramCorrelations": [
+      {
+        "donor": "patient_101",
+        "condition": "ctrl",
+        "spearman": 0.7148934696267069
+      },
+      {
+        "donor": "patient_101",
+        "condition": "stim",
+        "spearman": 0.4824435977567532
+      },
+      {
+        "donor": "patient_1015",
+        "condition": "ctrl",
+        "spearman": 0.7560536336374248
+      },
+      {
+        "donor": "patient_1015",
+        "condition": "stim",
+        "spearman": 0.4485104185342398
+      },
+      {
+        "donor": "patient_1016",
+        "condition": "ctrl",
+        "spearman": 0.8010322530866665
+      },
+      {
+        "donor": "patient_1016",
+        "condition": "stim",
+        "spearman": 0.499426036037198
+      },
+      {
+        "donor": "patient_1039",
+        "condition": "ctrl",
+        "spearman": 0.38926512785328443
+      },
+      {
+        "donor": "patient_1039",
+        "condition": "stim",
+        "spearman": 0.40993031358885024
+      },
+      {
+        "donor": "patient_107",
+        "condition": "ctrl",
+        "spearman": 0.6221100466583399
+      },
+      {
+        "donor": "patient_107",
+        "condition": "stim",
+        "spearman": 0.6764656849124758
+      },
+      {
+        "donor": "patient_1244",
+        "condition": "ctrl",
+        "spearman": 0.6213014026978713
+      },
+      {
+        "donor": "patient_1244",
+        "condition": "stim",
+        "spearman": 0.5346717308735757
+      },
+      {
+        "donor": "patient_1256",
+        "condition": "ctrl",
+        "spearman": 0.7756273055760844
+      },
+      {
+        "donor": "patient_1256",
+        "condition": "stim",
+        "spearman": 0.4721217452900249
+      },
+      {
+        "donor": "patient_1488",
+        "condition": "ctrl",
+        "spearman": 0.6408023265534089
+      },
+      {
+        "donor": "patient_1488",
+        "condition": "stim",
+        "spearman": 0.5045092073340492
+      }
+    ]
+  },
+  "conditionErasureControl": {
+    "conditionStratifiedDonorEntropy": 0.801480575011198,
+    "conditionStratifiedSameDonorFraction": 0.1532193139714068,
+    "compositionExpectedSameDonorFraction": 0.12588559555218648,
+    "sameDonorExcess": 0.027333718419220318,
+    "conditionNeighborPurity": 0.6454340942478636,
+    "leaveOneDonorOutBalancedAccuracy": 0.3533684940466071,
+    "donorFolds": [
+      {
+        "donor": "patient_101",
+        "cells": 247,
+        "balancedAccuracy": 0.3469824702261475,
+        "solverIterations": 4
+      },
+      {
+        "donor": "patient_1015",
+        "cells": 825,
+        "balancedAccuracy": 0.3431193971213258,
+        "solverIterations": 5
+      },
+      {
+        "donor": "patient_1016",
+        "cells": 248,
+        "balancedAccuracy": 0.3546666666666667,
+        "solverIterations": 4
+      },
+      {
+        "donor": "patient_1039",
+        "cells": 67,
+        "balancedAccuracy": 0.3405253283302064,
+        "solverIterations": 3
+      },
+      {
+        "donor": "patient_107",
+        "cells": 104,
+        "balancedAccuracy": 0.24696969696969695,
+        "solverIterations": 3
+      },
+      {
+        "donor": "patient_1244",
+        "cells": 214,
+        "balancedAccuracy": 0.4099576271186441,
+        "solverIterations": 3
+      },
+      {
+        "donor": "patient_1256",
+        "cells": 437,
+        "balancedAccuracy": 0.3913011604038373,
+        "solverIterations": 3
+      },
+      {
+        "donor": "patient_1488",
+        "cells": 509,
+        "balancedAccuracy": 0.39342560553633216,
+        "solverIterations": 4
+      }
+    ],
+    "programNeighborSpearman": 0.6821971148958356,
+    "programDonorCorrelations": [
+      {
+        "donor": "patient_101",
+        "spearman": 0.6702093802500597
+      },
+      {
+        "donor": "patient_1015",
+        "spearman": 0.6821855873565257
+      },
+      {
+        "donor": "patient_1016",
+        "spearman": 0.6379495486413228
+      },
+      {
+        "donor": "patient_1039",
+        "spearman": 0.6797991139003926
+      },
+      {
+        "donor": "patient_107",
+        "spearman": 0.7024473310566477
+      },
+      {
+        "donor": "patient_1244",
+        "spearman": 0.7176498588675178
+      },
+      {
+        "donor": "patient_1256",
+        "spearman": 0.6632797015539991
+      },
+      {
+        "donor": "patient_1488",
+        "spearman": 0.7040563975402192
+      }
+    ],
+    "withinConditionProgramSpearman": 0.5843227687510596,
+    "withinConditionProgramCorrelations": [
+      {
+        "donor": "patient_101",
+        "condition": "ctrl",
+        "spearman": 0.7148934696267069
+      },
+      {
+        "donor": "patient_101",
+        "condition": "stim",
+        "spearman": 0.4824435977567532
+      },
+      {
+        "donor": "patient_1015",
+        "condition": "ctrl",
+        "spearman": 0.7560536336374248
+      },
+      {
+        "donor": "patient_1015",
+        "condition": "stim",
+        "spearman": 0.4485104185342398
+      },
+      {
+        "donor": "patient_1016",
+        "condition": "ctrl",
+        "spearman": 0.8010322530866665
+      },
+      {
+        "donor": "patient_1016",
+        "condition": "stim",
+        "spearman": 0.499426036037198
+      },
+      {
+        "donor": "patient_1039",
+        "condition": "ctrl",
+        "spearman": 0.38926512785328443
+      },
+      {
+        "donor": "patient_1039",
+        "condition": "stim",
+        "spearman": 0.40993031358885024
+      },
+      {
+        "donor": "patient_107",
+        "condition": "ctrl",
+        "spearman": 0.6221100466583399
+      },
+      {
+        "donor": "patient_107",
+        "condition": "stim",
+        "spearman": 0.6764656849124758
+      },
+      {
+        "donor": "patient_1244",
+        "condition": "ctrl",
+        "spearman": 0.6213014026978713
+      },
+      {
+        "donor": "patient_1244",
+        "condition": "stim",
+        "spearman": 0.5346717308735757
+      },
+      {
+        "donor": "patient_1256",
+        "condition": "ctrl",
+        "spearman": 0.7756273055760844
+      },
+      {
+        "donor": "patient_1256",
+        "condition": "stim",
+        "spearman": 0.4721217452900249
+      },
+      {
+        "donor": "patient_1488",
+        "condition": "ctrl",
+        "spearman": 0.6408023265534089
+      },
+      {
+        "donor": "patient_1488",
+        "condition": "stim",
+        "spearman": 0.5045092073340492
+      }
+    ]
+  },
+  "references": [
+    {
+      "seed": 7,
+      "metrics": {
+        "conditionStratifiedDonorEntropy": 0.8585708054246497,
+        "conditionStratifiedSameDonorFraction": 0.11039553699417914,
+        "compositionExpectedSameDonorFraction": 0.12588559555218648,
+        "sameDonorExcess": -0.015490058558007367,
+        "conditionNeighborPurity": 0.9839609275828526,
+        "leaveOneDonorOutBalancedAccuracy": 0.9912914834173827,
+        "donorFolds": [
+          {
+            "donor": "patient_101",
+            "cells": 247,
+            "balancedAccuracy": 0.9964539007092199,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1015",
+            "cells": 825,
+            "balancedAccuracy": 0.9901960784313726,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1016",
+            "cells": 248,
+            "balancedAccuracy": 0.9879349593495934,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1039",
+            "cells": 67,
+            "balancedAccuracy": 0.9685741088180113,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_107",
+            "cells": 104,
+            "balancedAccuracy": 1.0,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1244",
+            "cells": 214,
+            "balancedAccuracy": 0.9957627118644068,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1256",
+            "cells": 437,
+            "balancedAccuracy": 0.9931402119726865,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1488",
+            "cells": 509,
+            "balancedAccuracy": 0.9982698961937716,
+            "solverIterations": 12
+          }
+        ],
+        "programNeighborSpearman": 0.8881685823978054,
+        "programDonorCorrelations": [
+          {
+            "donor": "patient_101",
+            "spearman": 0.8752060109518325
+          },
+          {
+            "donor": "patient_1015",
+            "spearman": 0.9112987770961504
+          },
+          {
+            "donor": "patient_1016",
+            "spearman": 0.9074887035857391
+          },
+          {
+            "donor": "patient_1039",
+            "spearman": 0.8272340927585358
+          },
+          {
+            "donor": "patient_107",
+            "spearman": 0.8998588845562057
+          },
+          {
+            "donor": "patient_1244",
+            "spearman": 0.899732705767356
+          },
+          {
+            "donor": "patient_1256",
+            "spearman": 0.9066498067943148
+          },
+          {
+            "donor": "patient_1488",
+            "spearman": 0.8778796776723092
+          }
+        ],
+        "withinConditionProgramSpearman": 0.553650745106143,
+        "withinConditionProgramCorrelations": [
+          {
+            "donor": "patient_101",
+            "condition": "ctrl",
+            "spearman": 0.6873052719172278
+          },
+          {
+            "donor": "patient_101",
+            "condition": "stim",
+            "spearman": 0.432111819855302
+          },
+          {
+            "donor": "patient_1015",
+            "condition": "ctrl",
+            "spearman": 0.73573227090531
+          },
+          {
+            "donor": "patient_1015",
+            "condition": "stim",
+            "spearman": 0.5102399814961104
+          },
+          {
+            "donor": "patient_1016",
+            "condition": "ctrl",
+            "spearman": 0.799690689106315
+          },
+          {
+            "donor": "patient_1016",
+            "condition": "stim",
+            "spearman": 0.4521288258889992
+          },
+          {
+            "donor": "patient_1039",
+            "condition": "ctrl",
+            "spearman": 0.17700217024360107
+          },
+          {
+            "donor": "patient_1039",
+            "condition": "stim",
+            "spearman": 0.40540069686411156
+          },
+          {
+            "donor": "patient_107",
+            "condition": "ctrl",
+            "spearman": 0.565016975834866
+          },
+          {
+            "donor": "patient_107",
+            "condition": "stim",
+            "spearman": 0.6302306196165604
+          },
+          {
+            "donor": "patient_1244",
+            "condition": "ctrl",
+            "spearman": 0.6387529216219532
+          },
+          {
+            "donor": "patient_1244",
+            "condition": "stim",
+            "spearman": 0.47276180141074337
+          },
+          {
+            "donor": "patient_1256",
+            "condition": "ctrl",
+            "spearman": 0.7755601158664203
+          },
+          {
+            "donor": "patient_1256",
+            "condition": "stim",
+            "spearman": 0.4850583248597576
+          },
+          {
+            "donor": "patient_1488",
+            "condition": "ctrl",
+            "spearman": 0.614321933924091
+          },
+          {
+            "donor": "patient_1488",
+            "condition": "stim",
+            "spearman": 0.47709750228691883
+          }
+        ]
+      },
+      "gates": {
+        "mixingImproved": true,
+        "conditionPreserved": true,
+        "programPreserved": true,
+        "withinConditionProgramPreserved": true
+      },
+      "objectiveHarmony": [
+        745.481689453125,
+        737.3031616210938,
+        640.80615234375,
+        635.1054077148438
+      ],
+      "objectiveClustering": [
+        745.481689453125,
+        736.921875,
+        737.3980712890625,
+        737.3062133789062,
+        737.3031616210938,
+        640.6857299804688,
+        640.8383178710938,
+        640.8038330078125,
+        640.80615234375,
+        634.9705200195312,
+        635.151611328125,
+        635.0986328125,
+        635.1054077148438
+      ],
+      "clusteringRounds": [
+        4,
+        4,
+        4
+      ],
+      "coordinateFile": "reference-seed7.npz",
+      "coordinateSHA256": "13326bf1a37580cb46ff23a8496c60e089fc92b932cfed3db23aaf842dbb3d58"
+    },
+    {
+      "seed": 19,
+      "metrics": {
+        "conditionStratifiedDonorEntropy": 0.8594131523789507,
+        "conditionStratifiedSameDonorFraction": 0.11173317270419103,
+        "compositionExpectedSameDonorFraction": 0.12588559555218648,
+        "sameDonorExcess": -0.01415242284799547,
+        "conditionNeighborPurity": 0.984458961246002,
+        "leaveOneDonorOutBalancedAccuracy": 0.9928873961775623,
+        "donorFolds": [
+          {
+            "donor": "patient_101",
+            "cells": 247,
+            "balancedAccuracy": 0.9929078014184397,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1015",
+            "cells": 825,
+            "balancedAccuracy": 0.9912854030501089,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1016",
+            "cells": 248,
+            "balancedAccuracy": 0.9919349593495934,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1039",
+            "cells": 67,
+            "balancedAccuracy": 0.9807692307692308,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_107",
+            "cells": 104,
+            "balancedAccuracy": 1.0,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1244",
+            "cells": 214,
+            "balancedAccuracy": 0.9947916666666667,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1256",
+            "cells": 437,
+            "balancedAccuracy": 0.9931402119726865,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1488",
+            "cells": 509,
+            "balancedAccuracy": 0.9982698961937716,
+            "solverIterations": 12
+          }
+        ],
+        "programNeighborSpearman": 0.8870941013496357,
+        "programDonorCorrelations": [
+          {
+            "donor": "patient_101",
+            "spearman": 0.8741741849522567
+          },
+          {
+            "donor": "patient_1015",
+            "spearman": 0.9126580120722432
+          },
+          {
+            "donor": "patient_1016",
+            "spearman": 0.9071659040906612
+          },
+          {
+            "donor": "patient_1039",
+            "spearman": 0.8283528405655893
+          },
+          {
+            "donor": "patient_107",
+            "spearman": 0.8911946187094585
+          },
+          {
+            "donor": "patient_1244",
+            "spearman": 0.899944319208026
+          },
+          {
+            "donor": "patient_1256",
+            "spearman": 0.903537393876018
+          },
+          {
+            "donor": "patient_1488",
+            "spearman": 0.8797255373228325
+          }
+        ],
+        "withinConditionProgramSpearman": 0.5423844486127894,
+        "withinConditionProgramCorrelations": [
+          {
+            "donor": "patient_101",
+            "condition": "ctrl",
+            "spearman": 0.6939217362264751
+          },
+          {
+            "donor": "patient_101",
+            "condition": "stim",
+            "spearman": 0.436063187636457
+          },
+          {
+            "donor": "patient_1015",
+            "condition": "ctrl",
+            "spearman": 0.7462938839749814
+          },
+          {
+            "donor": "patient_1015",
+            "condition": "stim",
+            "spearman": 0.494751785374462
+          },
+          {
+            "donor": "patient_1016",
+            "condition": "ctrl",
+            "spearman": 0.7887460229596341
+          },
+          {
+            "donor": "patient_1016",
+            "condition": "stim",
+            "spearman": 0.4644916227057565
+          },
+          {
+            "donor": "patient_1039",
+            "condition": "ctrl",
+            "spearman": 0.12114349718842125
+          },
+          {
+            "donor": "patient_1039",
+            "condition": "stim",
+            "spearman": 0.4332752613240419
+          },
+          {
+            "donor": "patient_107",
+            "condition": "ctrl",
+            "spearman": 0.46083307293832193
+          },
+          {
+            "donor": "patient_107",
+            "condition": "stim",
+            "spearman": 0.6337315921089193
+          },
+          {
+            "donor": "patient_1244",
+            "condition": "ctrl",
+            "spearman": 0.6435628257191499
+          },
+          {
+            "donor": "patient_1244",
+            "condition": "stim",
+            "spearman": 0.4273060227889311
+          },
+          {
+            "donor": "patient_1256",
+            "condition": "ctrl",
+            "spearman": 0.76239271656987
+          },
+          {
+            "donor": "patient_1256",
+            "condition": "stim",
+            "spearman": 0.47069132953260145
+          },
+          {
+            "donor": "patient_1488",
+            "condition": "ctrl",
+            "spearman": 0.603241494081192
+          },
+          {
+            "donor": "patient_1488",
+            "condition": "stim",
+            "spearman": 0.4977051266754166
+          }
+        ]
+      },
+      "gates": {
+        "mixingImproved": true,
+        "conditionPreserved": true,
+        "programPreserved": true,
+        "withinConditionProgramPreserved": true
+      },
+      "objectiveHarmony": [
+        740.4999389648438,
+        732.421630859375,
+        636.8837890625,
+        632.233154296875
+      ],
+      "objectiveClustering": [
+        740.4999389648438,
+        732.100341796875,
+        732.4885864257812,
+        732.3723754882812,
+        732.421630859375,
+        636.703369140625,
+        636.8978271484375,
+        636.904541015625,
+        636.8837890625,
+        632.1380004882812,
+        632.3436889648438,
+        632.2645874023438,
+        632.233154296875
+      ],
+      "clusteringRounds": [
+        4,
+        4,
+        4
+      ],
+      "coordinateFile": "reference-seed19.npz",
+      "coordinateSHA256": "a97c406f4b5b0ee361d9be91b38bf200f25409304a0c270a20f7b7dd91bd0711"
+    },
+    {
+      "seed": 41,
+      "metrics": {
+        "conditionStratifiedDonorEntropy": 0.8612344956031148,
+        "conditionStratifiedSameDonorFraction": 0.11131329109257096,
+        "compositionExpectedSameDonorFraction": 0.12588559555218648,
+        "sameDonorExcess": -0.014572304459615552,
+        "conditionNeighborPurity": 0.9842916293849001,
+        "leaveOneDonorOutBalancedAccuracy": 0.9937770373351751,
+        "donorFolds": [
+          {
+            "donor": "patient_101",
+            "cells": 247,
+            "balancedAccuracy": 1.0,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1015",
+            "cells": 825,
+            "balancedAccuracy": 0.9923747276688453,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1016",
+            "cells": 248,
+            "balancedAccuracy": 0.9879349593495934,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1039",
+            "cells": 67,
+            "balancedAccuracy": 0.9807692307692308,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_107",
+            "cells": 104,
+            "balancedAccuracy": 1.0,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1244",
+            "cells": 214,
+            "balancedAccuracy": 1.0,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1256",
+            "cells": 437,
+            "balancedAccuracy": 0.9931402119726865,
+            "solverIterations": 12
+          },
+          {
+            "donor": "patient_1488",
+            "cells": 509,
+            "balancedAccuracy": 0.9959971689210443,
+            "solverIterations": 12
+          }
+        ],
+        "programNeighborSpearman": 0.8898878638831813,
+        "programDonorCorrelations": [
+          {
+            "donor": "patient_101",
+            "spearman": 0.8722393112367731
+          },
+          {
+            "donor": "patient_1015",
+            "spearman": 0.912208377621796
+          },
+          {
+            "donor": "patient_1016",
+            "spearman": 0.9035023860116016
+          },
+          {
+            "donor": "patient_1039",
+            "spearman": 0.8464525818725647
+          },
+          {
+            "donor": "patient_107",
+            "spearman": 0.8988052670427432
+          },
+          {
+            "donor": "patient_1244",
+            "spearman": 0.9020468410542157
+          },
+          {
+            "donor": "patient_1256",
+            "spearman": 0.9035543436590129
+          },
+          {
+            "donor": "patient_1488",
+            "spearman": 0.8802938025667436
+          }
+        ],
+        "withinConditionProgramSpearman": 0.556745933587822,
+        "withinConditionProgramCorrelations": [
+          {
+            "donor": "patient_101",
+            "condition": "ctrl",
+            "spearman": 0.6840237621548062
+          },
+          {
+            "donor": "patient_101",
+            "condition": "stim",
+            "spearman": 0.4351984245900937
+          },
+          {
+            "donor": "patient_1015",
+            "condition": "ctrl",
+            "spearman": 0.7410638842989554
+          },
+          {
+            "donor": "patient_1015",
+            "condition": "stim",
+            "spearman": 0.5052434417968843
+          },
+          {
+            "donor": "patient_1016",
+            "condition": "ctrl",
+            "spearman": 0.7902747819139881
+          },
+          {
+            "donor": "patient_1016",
+            "condition": "stim",
+            "spearman": 0.43468419083979315
+          },
+          {
+            "donor": "patient_1039",
+            "condition": "ctrl",
+            "spearman": 0.21331030772946796
+          },
+          {
+            "donor": "patient_1039",
+            "condition": "stim",
+            "spearman": 0.4510452961672475
+          },
+          {
+            "donor": "patient_107",
+            "condition": "ctrl",
+            "spearman": 0.5740700970396112
+          },
+          {
+            "donor": "patient_107",
+            "condition": "stim",
+            "spearman": 0.620172270075021
+          },
+          {
+            "donor": "patient_1244",
+            "condition": "ctrl",
+            "spearman": 0.643476934574557
+          },
+          {
+            "donor": "patient_1244",
+            "condition": "stim",
+            "spearman": 0.45575149213239285
+          },
+          {
+            "donor": "patient_1256",
+            "condition": "ctrl",
+            "spearman": 0.7659311764124425
+          },
+          {
+            "donor": "patient_1256",
+            "condition": "stim",
+            "spearman": 0.48818078992767955
+          },
+          {
+            "donor": "patient_1488",
+            "condition": "ctrl",
+            "spearman": 0.6109976872431219
+          },
+          {
+            "donor": "patient_1488",
+            "condition": "stim",
+            "spearman": 0.494510400509088
+          }
+        ]
+      },
+      "gates": {
+        "mixingImproved": true,
+        "conditionPreserved": true,
+        "programPreserved": true,
+        "withinConditionProgramPreserved": true
+      },
+      "objectiveHarmony": [
+        748.0162963867188,
+        739.7008056640625,
+        642.8809814453125,
+        635.53955078125,
+        633.3740844726562
+      ],
+      "objectiveClustering": [
+        748.0162963867188,
+        739.4265747070312,
+        739.808349609375,
+        739.6751708984375,
+        739.7008056640625,
+        642.752197265625,
+        642.9262084960938,
+        642.8826904296875,
+        642.8809814453125,
+        635.416748046875,
+        635.5825805664062,
+        635.5355224609375,
+        635.53955078125,
+        633.2484741210938,
+        633.3892822265625,
+        633.3624877929688,
+        633.3740844726562
+      ],
+      "clusteringRounds": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "coordinateFile": "reference-seed41.npz",
+      "coordinateSHA256": "f5c7d3fcb0e141f5caa5a4d614368c28be647b90f93a23915d697e1519a3bd7d"
+    }
+  ],
+  "controlDetectsLoss": true,
+  "qualification": "One paired B-cell cohort; independent native initialization, not coordinate identity with Harmony. Transductive integration sees all unlabeled cells. Donor-held-out classifier is not prospective perturbation prediction or multi-cell-type preservation proof.",
+  "versions": {
+    "harmonypy": "2.0.0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0"
+  },
+  "native": {
+    "metrics": {
+      "conditionStratifiedDonorEntropy": 0.860630145370542,
+      "conditionStratifiedSameDonorFraction": 0.11035213890432415,
+      "compositionExpectedSameDonorFraction": 0.12588559555218648,
+      "sameDonorExcess": -0.015533456647862362,
+      "conditionNeighborPurity": 0.9829023814584432,
+      "leaveOneDonorOutBalancedAccuracy": 0.9944688689733926,
+      "donorFolds": [
+        {
+          "donor": "patient_101",
+          "cells": 247,
+          "balancedAccuracy": 0.9917369195771444,
+          "solverIterations": 12
+        },
+        {
+          "donor": "patient_1015",
+          "cells": 825,
+          "balancedAccuracy": 0.9912854030501089,
+          "solverIterations": 12
+        },
+        {
+          "donor": "patient_1016",
+          "cells": 248,
+          "balancedAccuracy": 0.9919349593495934,
+          "solverIterations": 12
+        },
+        {
+          "donor": "patient_1039",
+          "cells": 67,
+          "balancedAccuracy": 1.0,
+          "solverIterations": 12
+        },
+        {
+          "donor": "patient_107",
+          "cells": 104,
+          "balancedAccuracy": 0.9916666666666667,
+          "solverIterations": 12
+        },
+        {
+          "donor": "patient_1244",
+          "cells": 214,
+          "balancedAccuracy": 1.0,
+          "solverIterations": 12
+        },
+        {
+          "donor": "patient_1256",
+          "cells": 437,
+          "balancedAccuracy": 0.9908571069498555,
+          "solverIterations": 12
+        },
+        {
+          "donor": "patient_1488",
+          "cells": 509,
+          "balancedAccuracy": 0.9982698961937716,
+          "solverIterations": 12
+        }
+      ],
+      "programNeighborSpearman": 0.8882509177645912,
+      "programDonorCorrelations": [
+        {
+          "donor": "patient_101",
+          "spearman": 0.8763626159094966
+        },
+        {
+          "donor": "patient_1015",
+          "spearman": 0.9110158832922081
+        },
+        {
+          "donor": "patient_1016",
+          "spearman": 0.9055495417838054
+        },
+        {
+          "donor": "patient_1039",
+          "spearman": 0.8275137797102993
+        },
+        {
+          "donor": "patient_107",
+          "spearman": 0.908753127829749
+        },
+        {
+          "donor": "patient_1244",
+          "spearman": 0.8993552665895527
+        },
+        {
+          "donor": "patient_1256",
+          "spearman": 0.8995084665214771
+        },
+        {
+          "donor": "patient_1488",
+          "spearman": 0.8779486604801413
+        }
+      ],
+      "withinConditionProgramSpearman": 0.5516495101858062,
+      "withinConditionProgramCorrelations": [
+        {
+          "donor": "patient_101",
+          "condition": "ctrl",
+          "spearman": 0.7141238647312855
+        },
+        {
+          "donor": "patient_101",
+          "condition": "stim",
+          "spearman": 0.4398732822466715
+        },
+        {
+          "donor": "patient_1015",
+          "condition": "ctrl",
+          "spearman": 0.7403500149819693
+        },
+        {
+          "donor": "patient_1015",
+          "condition": "stim",
+          "spearman": 0.494632097517456
+        },
+        {
+          "donor": "patient_1016",
+          "condition": "ctrl",
+          "spearman": 0.7784315798920951
+        },
+        {
+          "donor": "patient_1016",
+          "condition": "stim",
+          "spearman": 0.4676000567514931
+        },
+        {
+          "donor": "patient_1039",
+          "condition": "ctrl",
+          "spearman": 0.15396046760833937
+        },
+        {
+          "donor": "patient_1039",
+          "condition": "stim",
+          "spearman": 0.4123693379790942
+        },
+        {
+          "donor": "patient_107",
+          "condition": "ctrl",
+          "spearman": 0.5769904587185612
+        },
+        {
+          "donor": "patient_107",
+          "condition": "stim",
+          "spearman": 0.6666851903306475
+        },
+        {
+          "donor": "patient_1244",
+          "condition": "ctrl",
+          "spearman": 0.6364963270049243
+        },
+        {
+          "donor": "patient_1244",
+          "condition": "stim",
+          "spearman": 0.4504205100379816
+        },
+        {
+          "donor": "patient_1256",
+          "condition": "ctrl",
+          "spearman": 0.7668456699829143
+        },
+        {
+          "donor": "patient_1256",
+          "condition": "stim",
+          "spearman": 0.45620779873639
+        },
+        {
+          "donor": "patient_1488",
+          "condition": "ctrl",
+          "spearman": 0.5760136478840909
+        },
+        {
+          "donor": "patient_1488",
+          "condition": "stim",
+          "spearman": 0.49539185856898543
+        }
+      ]
+    },
+    "gates": {
+      "mixingImproved": true,
+      "conditionPreserved": true,
+      "programPreserved": true,
+      "withinConditionProgramPreserved": true
+    },
+    "stoppingReason": "relative-objective-tolerance",
+    "objectives": [
+      743.4420858717668,
+      734.7684428795327,
+      638.426705317948,
+      632.191497888196
+    ],
+    "maximumRidgeResidual": 1.1157176820310113e-15,
+    "independentObjective": 632.1914978883154,
+    "independentCorrectionMaximumError": 2.1760371282653068e-14
+  }
+}

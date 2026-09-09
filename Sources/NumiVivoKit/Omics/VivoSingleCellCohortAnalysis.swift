@@ -6,24 +6,26 @@ public struct VivoSingleCellAnalysisPlan: Codable, Sendable, Equatable {
     public var filter: VivoSingleCellFilterPolicy
     public var normalizationTarget: Double
     public var contrasts: [VivoOmicsExpressionContrast]
+    public var integration: VivoSingleCellIntegrationOptions?
     public var embedding: VivoSingleCellEmbeddingOptions?
     public var clustering: VivoSingleCellClusteringOptions?
     public var neighbors: VivoSingleCellNeighborOptions?
     public var reduction: VivoSingleCellReductionOptions?
     public init(id: String, filter: VivoSingleCellFilterPolicy = .init(), normalizationTarget: Double = 10_000,
-                contrasts: [VivoOmicsExpressionContrast] = [],reduction: VivoSingleCellReductionOptions? = nil, neighbors: VivoSingleCellNeighborOptions? = nil, clustering: VivoSingleCellClusteringOptions? = nil, embedding: VivoSingleCellEmbeddingOptions? = nil) {
+                contrasts: [VivoOmicsExpressionContrast] = [],reduction: VivoSingleCellReductionOptions? = nil, neighbors: VivoSingleCellNeighborOptions? = nil, clustering: VivoSingleCellClusteringOptions? = nil, embedding: VivoSingleCellEmbeddingOptions? = nil, integration: VivoSingleCellIntegrationOptions? = nil) {
         schemaVersion = 1; self.id = id; self.filter = filter
         self.normalizationTarget = normalizationTarget; self.contrasts = contrasts
-        self.reduction = reduction; self.neighbors = neighbors; self.clustering = clustering; self.embedding = embedding
+        self.reduction = reduction; self.neighbors = neighbors; self.clustering = clustering; self.embedding = embedding; self.integration = integration
     }
-    private enum CodingKeys: String, CodingKey { case schemaVersion, id, filter, normalizationTarget, contrasts, reduction, neighbors, clustering, embedding }
+    private enum CodingKeys: String, CodingKey { case schemaVersion, id, filter, normalizationTarget, contrasts, reduction, neighbors, clustering, embedding, integration }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "filter", "normalizationTarget", "contrasts", "reduction", "neighbors", "clustering", "embedding"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "filter", "normalizationTarget", "contrasts", "reduction", "neighbors", "clustering", "embedding", "integration"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try c.decode(Int.self, forKey: .schemaVersion); id = try c.decode(String.self, forKey: .id)
         filter = try c.decodeIfPresent(VivoSingleCellFilterPolicy.self, forKey: .filter) ?? .init()
         normalizationTarget = try c.decodeIfPresent(Double.self, forKey: .normalizationTarget) ?? 10_000
         contrasts = try c.decodeIfPresent([VivoOmicsExpressionContrast].self, forKey: .contrasts) ?? []
+        integration = try c.decodeIfPresent(VivoSingleCellIntegrationOptions.self,forKey: .integration)
         embedding = try c.decodeIfPresent(VivoSingleCellEmbeddingOptions.self,forKey: .embedding)
         clustering = try c.decodeIfPresent(VivoSingleCellClusteringOptions.self,forKey: .clustering)
         neighbors = try c.decodeIfPresent(VivoSingleCellNeighborOptions.self,forKey: .neighbors)
@@ -35,6 +37,9 @@ public struct VivoSingleCellAnalysisPlan: Codable, Sendable, Equatable {
             throw VivoOmicsError.invalid("analysis plan schema, identity, normalization or contrast count")
         }
         try filter.validate()
+        try integration?.validate()
+        guard integration == nil || reduction != nil else { throw VivoOmicsError.invalid("integration requires PCA") }
+        guard neighbors?.representation != .integrated || integration != nil else { throw VivoOmicsError.invalid("integrated neighbors require integration") }
         try reduction?.validate()
         try neighbors?.validate()
         try clustering?.validate()
@@ -51,6 +56,7 @@ public struct VivoSingleCellCohortReport: Codable, Sendable, Equatable {
     public let plan: VivoSingleCellAnalysisPlan
     public let processed: VivoSingleCellProcessed
     public let contrasts: [VivoOmicsExpressionResult]
+    public var integration: VivoSingleCellIntegrationResult? = nil
     public var reduction: VivoSingleCellReductionResult? = nil
     public var neighbors: VivoSingleCellNeighborGraph? = nil
     public var clustering: VivoSingleCellClusteringResult? = nil
@@ -67,10 +73,12 @@ public enum VivoSingleCellCohortAnalysis {
         }
         try Task.checkCancellation()
         let reduction=try plan.reduction.map { try VivoSingleCellReduction.run(processed,options: $0) }
-        let neighbors = try plan.neighbors.map { try VivoSingleCellNeighbors.run(scores: reduction!.scores, cells: reduction!.cells, options: $0) }
+        let integration = try plan.integration.map { try VivoSingleCellIntegration.run(reduction!,samples: processed.dataset.samples,options: $0) }
+        let graphScores = plan.neighbors?.representation == .integrated ? integration?.scores : reduction?.scores
+        let neighbors = try plan.neighbors.map { try VivoSingleCellNeighbors.run(scores: graphScores!, cells: reduction!.cells, options: $0) }
         let clustering = try plan.clustering.map { try VivoSingleCellClustering.run(neighbors!,options: $0) }
-        let embedding = try plan.embedding.map { try VivoSingleCellEmbedding.run(neighbors!,scores: reduction!.scores,options: $0) }
-        return .init(schemaVersion: 1, method: "native-count-quality-and-donor-expression-v1", plan: plan, processed: processed, contrasts: results,reduction: reduction,neighbors: neighbors,clustering: clustering,embedding: embedding)
+        let embedding = try plan.embedding.map { try VivoSingleCellEmbedding.run(neighbors!,scores: graphScores!,options: $0) }
+        return .init(schemaVersion: 1, method: "native-count-quality-and-donor-expression-v1", plan: plan, processed: processed, contrasts: results,integration: integration,reduction: reduction,neighbors: neighbors,clustering: clustering,embedding: embedding)
     }
 }
 

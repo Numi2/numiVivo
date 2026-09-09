@@ -11,7 +11,7 @@ p.add_argument('--report',type=Path,required=True)
 p.add_argument('--out',type=Path,required=True)
 a=p.parse_args()
 r=json.loads(a.report.read_text()); e=r['embedding']; g=r['neighbors']; o=e['options']
-x=np.asarray(r['reduction']['scores']); y=np.asarray(e['coordinates']); initial=np.asarray(e['initialCoordinates'])
+x=np.asarray(r['integration']['scores'] if g['options'].get('representation') == 'integrated' else r['reduction']['scores']); y=np.asarray(e['coordinates']); initial=np.asarray(e['initialCoordinates'])
 n=len(x); k=15
 assert e['cells']==g['cells']==r['reduction']['cells']
 assert y.shape==initial.shape==(n,o['dimensions']) and np.isfinite(y).all()

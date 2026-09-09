@@ -13,6 +13,7 @@ p.add_argument('--out', type=Path, required=True)
 p.add_argument('--neighbors', action='store_true')
 p.add_argument('--clustering', action='store_true')
 p.add_argument('--embedding', action='store_true')
+p.add_argument('--integration', action='store_true')
 a = p.parse_args()
 a.out.mkdir(parents=True, exist_ok=False)
 commands = []
@@ -34,12 +35,15 @@ receipt = a.out / 'analysis.json'
 plan = dict(schemaVersion=1, id='sparse-reduction-qualification', normalizationTarget=10000,
             filter=dict(minimumCounts=1,minimumDetectedFeatures=1), contrasts=[],
             reduction=dict(highlyVariableFeatures=2000,meanBins=20,components=20,maximumBasis=128,relativeResidualTolerance=1e-6,seed=7))
-if a.neighbors or a.clustering or a.embedding:
+if a.neighbors or a.clustering or a.embedding or a.integration:
     plan['neighbors'] = dict(neighbors=15,localConnectivity=1,maximumDistancePairs=50000000)
 if a.clustering:
     plan['clustering'] = dict(resolution=1,seed=7,maximumSweeps=100,maximumLevels=32,levelTolerance=1e-7)
 if a.embedding:
     plan['embedding'] = dict(dimensions=2,epochs=500,minimumDistance=0.1,spread=1,learningRate=1,negativeSampleRate=5,repulsionStrength=1,seed=7,maximumUpdates=200000000)
+if a.integration:
+    plan['integration'] = dict(covariate='donor',clusters=88,seed=7)
+    plan['neighbors']['representation'] = 'integrated'
 plan_path = a.out / 'plan.json'
 plan_path.write_text(json.dumps(plan,indent=2)+'\n')
 run('singlecell-run', a.imported / 'manifest.json', '--store', store, '--output', counts)
@@ -56,7 +60,7 @@ failure = run('singlecell-analyze', counts, '--plan', short, '--store', store, '
 assert 'residual' in failure.stderr.lower(), failure.stderr
 assert not rejected.exists()
 extra_checks = []
-if a.neighbors or a.clustering or a.embedding:
+if a.neighbors or a.clustering or a.embedding or a.integration:
     plan['reduction']['maximumBasis'] = 128
     plan['neighbors']['maximumDistancePairs'] = 1
     budget = a.out / 'insufficient-neighbor-budget.json'
@@ -85,6 +89,16 @@ if a.embedding:
     assert 'umap update budget' in failure.stderr.lower(), failure.stderr
     assert not rejected.exists()
     extra_checks.append('controlled embedding work-budget rejection without receipt')
+if a.integration:
+    for name, change, expected in [('budget', {'maximumWork':1}, 'integration work budget'), ('metadata', {'covariate':'batch'}, 'known selected covariate')]:
+        bad = json.loads(plan_path.read_text())
+        bad['integration'].update(change)
+        limit = a.out / f'invalid-integration-{name}.json'
+        limit.write_text(json.dumps(bad,indent=2)+'\n')
+        failure = run('singlecell-analyze', counts, '--plan', limit, '--store', store, '--output', rejected, success=False)
+        assert expected in failure.stderr.lower(), failure.stderr
+        assert not rejected.exists()
+        extra_checks.append(f'controlled integration {name} rejection without receipt')
 result = dict(status='passed', checks=['count publication','reduction publication','native reconstruction','report export','deterministic receipt','controlled unconverged rejection without receipt']+extra_checks,
               binarySHA256=hashlib.sha256(a.binary.read_bytes()).hexdigest(), commands=commands,
               qualification='Software reconstruction and numerical convergence; not biological qualification')

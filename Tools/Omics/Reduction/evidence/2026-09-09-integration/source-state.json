@@ -1,0 +1,28 @@
+{
+  "baseCommit": "eb149bd77ebebe8077f212da27f639d49316c756",
+  "nativeFiles": {
+    "Sources/NumiVivoKit/Omics/VivoSingleCellIntegration.swift": "910e3372ebd57d44eb07bac3dbfae9e8db73a92342e2c8750cb606ae15a57164",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellCohortAnalysis.swift": "e5a5f95dbaf9e8ce52f13d0be4ec8871928206a67a4770932651db40babc88bf",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellNeighbors.swift": "e53cdadfec64698928a4052d555aaacd3f578b18d513f3c8f8549cf65d770072",
+    "Tests/NumiVivoIntegrationTests/SingleCellIntegrationTests.swift": "958fb98991e526dfb6db89f3a69f68ecc5ea9ca09c66cf17cff65bef96f85f40"
+  },
+  "referenceInputReportSHA256": "63ab4893b44ab6bdd5fbae1af2af04558d557d6e0878c54c78fe160ff8df77d0",
+  "referenceSource": "harmonypy-source.json",
+  "initialFailure": "initial-test-compile-failure.log: Swift fixture expression exceeded type-check budget; split into explicit cells and scores; final 35 tests passed",
+  "scope": "Native integration and explicit downstream representation; no GPU/performance, prospective prediction or multi-study biological qualification",
+  "transferObservation": {
+    "partialCopyProbe": "Existing CLI probe started before executable copy completed; exit -9, local codesign reported incomplete format. No native validation attributed to that probe.",
+    "action": "Verified scp progress about 100 KB/s; stopped owned transfer and parent pipeline, preserved partial file, switched to gzip transport. Complete executable must match remote SHA256 before retry.",
+    "expectedBinarySHA256": "d696896b1c87b0eab2c71923928015234e2f0cb049d259b08ca6c98f876ff6b8"
+  },
+  "binarySHA256": "d696896b1c87b0eab2c71923928015234e2f0cb049d259b08ca6c98f876ff6b8",
+  "binaryBytes": 48032968,
+  "reportSHA256": "77a9624aeb00a37b8478decf7cffc746d0356c33a87313341a30ccbe3c6cdf4e",
+  "reportLocation": "/Users/home/numivivo-kang-integration-product-20260909/report.json",
+  "artifactStoreLocation": "/Users/home/numivivo-kang-integration-product-20260909/store",
+  "completedBinarySignature": "valid on disk; satisfies designated requirement",
+  "nativeTests": "35 tests in 9 suites",
+  "workflowChecks": 11,
+  "existingCLIChecks": 18,
+  "nativeFilesMatchTestedRemote": true
+}

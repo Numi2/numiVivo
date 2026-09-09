@@ -16,7 +16,9 @@ a = p.parse_args()
 r = json.loads(a.report.read_text())
 g, reduction = r['neighbors'], r['reduction']
 assert g['cells'] == reduction['cells']
-x = np.asarray(reduction['scores'], dtype=np.float64)
+representation = r['integration'] if g['options'].get('representation') == 'integrated' else reduction
+assert representation['cells'] == g['cells']
+x = np.asarray(representation['scores'], dtype=np.float64)
 n, dimensions = x.shape
 assert g['dimensions'] == dimensions
 k = g['options']['neighbors']

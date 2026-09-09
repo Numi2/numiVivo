@@ -279,8 +279,14 @@ The complete development objective remains open:
    [embedding limits](../Tools/Omics/Reduction/EMBEDDING.md) remain explicit.
    Partition/embedding stability and biological validation remain. Never densify
    cells × genes; resident, pair-work and embedding-update limits still apply.
-5. **Batch integration:** donor/batch-aware methods and biological-signal
-   preservation evaluation remain.
+5. **Batch integration:** native single-covariate donor/batch correction now
+   preserves original PCA and explicitly selects corrected downstream coordinates.
+   [Kang qualification](../Tools/Omics/Reduction/INTEGRATION.md) compares donor
+   mixing, cross-donor condition accuracy, and measured RNA program preservation
+   with three pinned Harmony reference runs and a response-erasure control.
+   Multiple independent donor studies, diverse cell types, rare states, multiple
+   simultaneous covariates and prospective mapping remain unqualified. This does
+   not yet establish competitive general multi-donor integration.
 6. **Annotation:** deterministic marker/program scoring with provenance, then
    learned reference mapping; automatic labels must not become authoritative.
 7. **Perturbation prediction:** held-out perturbation/donor/context experiments,
