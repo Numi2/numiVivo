@@ -1,0 +1,22 @@
+{
+  "unsuccessfulChecks": [
+    {
+      "kind": "reference assertion",
+      "detail": "The checker initially expected int64 sparse structural indices inside copied uns; corrected to preserve unstructured dtypes."
+    },
+    {
+      "kind": "reference assertion",
+      "detail": "The count reimport checker used cell.id instead of the actual cell.barcode field; corrected to the native schema."
+    },
+    {
+      "kind": "native defect",
+      "detail": "Zero-element arrays incorrectly consumed the work allowance through a nonzero dimension bound; fixed and covered by the empty-budget case."
+    }
+  ],
+  "additionalGates": [
+    "Dataset allocation checked before creation",
+    "Malformed dataframe column rank rejected",
+    "Published report bounded to replay reader allowance"
+  ],
+  "qualification": "No unsuccessful check is reclassified as passing. Scoped output is test infrastructure; release-product results are recorded separately."
+}

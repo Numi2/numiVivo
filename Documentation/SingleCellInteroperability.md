@@ -14,7 +14,14 @@ numivivo singlecell-run imported/manifest.json --store artifacts --output receip
 numivivo singlecell-analyze receipt.json --plan analysis.json --store artifacts --output analysis-receipt.json
 numivivo singlecell-h5ad-write imported/dataset.json --output counts.h5ad
 numivivo singlecell-h5ad-annotate imported/original.h5ad --plan annotations.json --output annotated.h5ad
+numivivo singlecell-h5ad-project experiment.h5ad --plan projection.json --output projected
+numivivo singlecell-h5ad-project-verify projected
 ```
+
+[Axis projection](../Tools/Omics/H5AD/Projection/README.md) selects/reorders cells
+and features across supported aligned AnnData slots, preserving raw's independent
+feature axis and copying unstructured data. Its source-bound plan is distinct
+from the count-import mapping below; it does not infer which matrix is raw counts.
 
 The import mapping explicitly names the count array and experimental design.
 AnnData does not standardize which layer contains raw counts or which columns
@@ -83,9 +90,10 @@ identities are explicit, never inferred from names.
   indices coexist with original barcode/sample columns. Use `barcodeColumn:
   "barcode"`, `sampleColumn: "sample"`, `groupColumn: "group"`, and
   `featureNameColumn: "name"` when importing native output again.
-- Publication refuses existing destinations. The current source limit is 64 MiB;
-  count processing remains bounded at 100,000 cells/features and 5 million
-  nonzeros by default. This is not out-of-core execution. HDF5 itself may retain
+- Publication refuses existing destinations. Resident count import and annotation
+  editing use a 64 MiB source limit; resident count processing is bounded at
+  100,000 cells/features and 5 million nonzeros by default. Streaming processing
+  and axis projection have separate routes and limits. HDF5 itself may retain
   decompression and variable-string buffers beyond the Swift sparse arrays.
 
 ## Editing an existing AnnData object
@@ -241,9 +249,12 @@ multi-donor experimental benchmark requirement.
 The complete development objective remains open:
 
 1. **AnnData/H5AD:** native count exchange, raw-axis import, explicit feature IDs
-   and source-preserving annotation edits implemented. Axis-changing operations
-   (cell/feature filtering/reordering with every aligned slot), direct legacy
-   encoding support, and general aligned projections remain. Full PBMC3K count/QC
+   and source-preserving annotation edits implemented. Native
+   [axis projection](../Tools/Omics/H5AD/Projection/README.md) now filters/reorders
+   unique cell/feature indices across supported aligned AnnData slots, retains
+   raw's independent feature axis, and binds source/output/replay provenance.
+   General legacy encodings, ragged/structured aligned formats, duplicated axes
+   and files beyond the explicit storage/work bounds remain. Full PBMC3K count/QC
    and annotation preservation now pass; this single library is not a donor-DE benchmark.
 2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber

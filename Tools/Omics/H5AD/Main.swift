@@ -11,6 +11,16 @@ import NumiVivoKit
     }
     static func run() throws {
         let args = CommandLine.arguments
+        if args.count == 5,args[1] == "project" {
+            let plan=try JSONDecoder().decode(VivoH5ADProjectionPlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            let implementation=try VivoFingerprint(bytes: Array(repeating: 0,count: 32))
+            let receipt=try VivoH5ADProjection.publish(source: URL(fileURLWithPath: args[2]),plan: plan,implementation: implementation,to: URL(fileURLWithPath: args[4]))
+            FileHandle.standardOutput.write(try VivoCanonicalJSON.encode(receipt));return
+        }
+        if args.count == 3,args[1] == "verify-project" {
+            let implementation=try VivoFingerprint(bytes: Array(repeating: 0,count: 32))
+            _=try VivoH5ADProjection.verify(URL(fileURLWithPath: args[2]),implementation: implementation);print("verified");return
+        }
         if args.count == 5, args[1] == "aggregate" {
             let plan = try JSONDecoder().decode(VivoH5ADPseudobulkPlan.self, from: Data(contentsOf: URL(fileURLWithPath: args[3])))
             let implementation = try VivoFingerprint(bytes: Array(repeating: 0, count: 32))

@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/H5AD/Projection/check.py", line 141, in <module>
+    case(kind+'-reorder',source,[5,1,6,0],[8,2,0,6], 'format-regression')
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/H5AD/Projection/check.py", line 104, in case
+    check=compare(source,dest/'projected.h5ad',rows,cols)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/H5AD/Projection/check.py", line 98, in compare
+    dst.visititems(visit)
+  File "/Users/home/numivivo-singlecell-benchmark-py/lib/python3.12/site-packages/h5py/_hl/group.py", line 771, in visititems
+    return h5o.visit(self.id, proxy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5o.pyx", line 420, in h5py.h5o.visit
+  File "h5py/h5o.pyx", line 367, in h5py.h5o.cb_obj_simple
+  File "/Users/home/numivivo-singlecell-benchmark-py/lib/python3.12/site-packages/h5py/_hl/group.py", line 770, in proxy
+    return func(name, self[name])
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/H5AD/Projection/check.py", line 82, in visit
+    assert obj.dtype==np.dtype('int64');return
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

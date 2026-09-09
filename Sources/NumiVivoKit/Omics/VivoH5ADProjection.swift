@@ -1,0 +1,329 @@
+import Foundation
+
+public struct VivoH5ADProjectionPlan: Codable, Sendable, Equatable {
+    public let schemaVersion: Int
+    public let source: VivoFingerprint
+    public let provenance: String
+    /// nil keeps the complete axis; [] selects an empty axis. Indices address
+    /// the fingerprinted source order and must be unique (no duplicated axes).
+    public let observationIndices: [Int]?
+    public let featureIndices: [Int]?
+    public let maximumElementVisits: Int
+    public init(source: VivoFingerprint,provenance: String,observationIndices: [Int]? = nil,featureIndices: [Int]? = nil,maximumElementVisits: Int = 500_000_000) {
+        schemaVersion=1;self.source=source;self.provenance=provenance;self.observationIndices=observationIndices
+        self.featureIndices=featureIndices;self.maximumElementVisits=maximumElementVisits
+    }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,source,provenance,observationIndices,featureIndices,maximumElementVisits }
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","source","provenance","observationIndices","featureIndices","maximumElementVisits"])
+        let c=try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);source=try c.decode(VivoFingerprint.self,forKey: .source)
+        provenance=try c.decode(String.self,forKey: .provenance)
+        observationIndices=try c.decodeIfPresent([Int].self,forKey: .observationIndices)
+        featureIndices=try c.decodeIfPresent([Int].self,forKey: .featureIndices)
+        maximumElementVisits=try c.decodeIfPresent(Int.self,forKey: .maximumElementVisits) ?? 500_000_000
+    }
+    func validate() throws {
+        guard schemaVersion==1,!provenance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,provenance.utf8.count<=16_384,
+              (1...2_000_000_000).contains(maximumElementVisits) else { throw VivoOmicsError.invalid("projection schema, provenance or work allowance") }
+        for indices in [observationIndices,featureIndices].compactMap({ $0 }) {
+            guard indices.count<=2_000_000,indices.allSatisfy({ (0..<2_000_000).contains($0) }),Set(indices).count==indices.count else {
+                throw VivoOmicsError.invalid("projection indices must be unique, nonnegative and bounded")
+            }
+        }
+    }
+}
+public struct VivoH5ADProjectedField: Codable,Sendable,Equatable {
+    public let path: String
+    public let encoding: String
+    public let sourceShape: [Int]
+    public let outputShape: [Int]
+}
+public struct VivoH5ADProjectionReport: Codable,Sendable,Equatable {
+    public let method: String
+    public let sourceShape: [Int]
+    public let outputShape: [Int]
+    public let elementVisits: Int
+    public let fields: [VivoH5ADProjectedField]
+    public let hdf5Version: String
+    public let qualification: String
+}
+public struct VivoH5ADProjectionReceipt: Codable,Sendable,Equatable {
+    public let schemaVersion: Int
+    public let source: VivoFingerprint
+    public let plan: VivoFingerprint
+    public let output: VivoFingerprint
+    public let report: VivoFingerprint
+    public let implementation: VivoFingerprint
+}
+
+private final class VivoH5ADProjector {
+    let h: VivoHDF5
+    var remaining: Int
+    var remainingStorage=1_073_741_824
+    var fields: [VivoH5ADProjectedField]=[]
+    init(_ h: VivoHDF5,limit: Int) { self.h=h;remaining=limit }
+    func consume(_ count: Int) throws {
+        try Task.checkCancellation()
+        guard count>=0,count<=remaining else { throw VivoOmicsError.limit("H5AD projection element visits") };remaining-=count
+    }
+    func reserveStorage(_ bytes: Int,output: Int64) throws {
+        guard bytes>=0,bytes<=remainingStorage else { throw VivoOmicsError.limit("projection output allocation exceeds 1 GiB") }
+        try h.projectionStorageLimit(output,reserving: bytes);remainingStorage-=bytes
+    }
+    func typeWidth(_ type: Int64) throws -> Int {
+        let size: @convention(c) (Int64) -> Int = try h.symbol("H5Tget_size")
+        let width=size(type);guard (1...65_536).contains(width) else { throw VivoOmicsError.limit("projection datatype width") };return width
+    }
+    func encoding(_ object: Int64,_ kind: String,_ version: String) throws {
+        guard try h.text(object,"encoding-type")==kind,try h.text(object,"encoding-version")==version else { throw VivoOmicsError.invalid("unsupported projection encoding: "+kind) }
+    }
+    func frameLength(_ frame: Int64) throws -> Int {
+        try encoding(frame,"dataframe","0.2.0")
+        let name=try h.text(frame,"_index");try vivoH5ADComponent(name)
+        let obj=try h.object(frame,name);defer { h.close(obj,"H5Oclose") }
+        let kind=try h.text(obj,"encoding-type"),path: String
+        switch kind {
+        case "string-array":path=name
+        case "nullable-string-array":path=name+"/values"
+        case "categorical":path=name+"/codes"
+        default:throw VivoOmicsError.invalid("unsupported projection dataframe index")
+        }
+        let d=try h.dataset(frame,path);defer { h.close(d,"H5Dclose") }
+        let shape=try h.projectionShape(d)
+        guard shape.count==1,shape[0]<=2_000_000 else { throw VivoOmicsError.limit("projection dataframe axis") }
+        return Int(shape[0])
+    }
+    func indices(_ selection: [Int]?,length: Int) throws -> [Int] {
+        let value=selection ?? Array(0..<length)
+        guard value.allSatisfy({ $0<length }) else { throw VivoOmicsError.invalid("projection index outside source axis") }
+        return value
+    }
+    func rawArray(_ source: Int64,_ destination: Int64,_ name: String,selections: [[Int]?],expected: [Int?],path: String,kind: String) throws {
+        let dims=try h.projectionShape(source)
+        guard dims.count>=selections.count,dims.count>=expected.count,!dims.isEmpty,dims.allSatisfy({ $0<=2_000_000 }) else { throw VivoOmicsError.invalid("projected array rank or axis bound: "+path) }
+        let shape=dims.map(Int.init)
+        if ["categorical","nullable-integer","nullable-boolean","nullable-string-array"].contains(kind) {
+            guard shape.count==1 else { throw VivoOmicsError.invalid("encoded column components must be vectors") }
+        }
+        if path=="X" || path=="raw/X" || path.hasPrefix("layers/") {
+            guard shape.count==2 else { throw VivoOmicsError.invalid("expression matrix must have two axes") }
+        }
+        for (i,n) in expected.enumerated() { if let n { guard shape[i]==n else { throw VivoOmicsError.invalid("misaligned array: "+path) } } }
+        var axes=[[Int]?](repeating: nil,count: dims.count)
+        for (i,s) in selections.enumerated() { if let s { axes[i]=try indices(s,length: shape[i]) } }
+        let outputShape=shape.indices.map { axes[$0]?.count ?? shape[$0] }
+        let count=outputShape.contains(0) ? 0 : try h.count(outputShape.map(UInt64.init),maximum: remaining)
+        try consume(count)
+        let type=try h.type(source,attribute: false);defer { h.close(type,"H5Tclose") }
+        try reserveStorage(count*typeWidth(type),output: destination)
+        let output=try h.projectionDataset(destination,name,type: type,shape: outputShape.map(UInt64.init));defer { h.close(output,"H5Dclose") }
+        try h.projectionAttributes(source,output)
+        fields.append(.init(path: path,encoding: kind,sourceShape: shape,outputShape: outputShape))
+        guard count>0 else { return }
+        let rank=shape.count,last=rank-1,width=outputShape[last],outer=count/width
+        for row in 0..<outer {
+            try Task.checkCancellation()
+            var prefix=[Int](repeating: 0,count: rank),q=row
+            if rank>1 { for j in stride(from: last-1,through: 0,by: -1) { prefix[j]=q%outputShape[j];q/=outputShape[j] } }
+            for start in stride(from: 0,to: width,by: 65_536) {
+                let length=min(65_536,width-start)
+                var coordinates=[UInt64]();coordinates.reserveCapacity(length*rank)
+                for k in start..<(start+length) {
+                    for j in 0..<rank { let index=j==last ? k : prefix[j];coordinates.append(UInt64(axes[j]?[index] ?? index)) }
+                }
+                var origin=prefix.map(UInt64.init);origin[last]=UInt64(start)
+                var extent=[UInt64](repeating: 1,count: rank);extent[last]=UInt64(length)
+                try h.projectionTransfer(source,output,type: type,coordinates: coordinates,count: length,outputStart: origin,outputCount: extent,
+                    reserveVariableBytes: { try self.reserveStorage($0,output: output) })
+            }
+        }
+    }
+    func frame(_ source: Int64,_ destination: Int64,_ name: String,selection: [Int]?,length: Int,path: String) throws {
+        guard try frameLength(source)==length else { throw VivoOmicsError.invalid("misaligned dataframe: "+path) }
+        let index=try h.text(source,"_index"),attribute=try h.attribute(source,"column-order");defer { h.close(attribute,"H5Aclose") }
+        guard try h.projectionShape(attribute,attribute: true).count==1 else { throw VivoOmicsError.invalid("dataframe column-order must be a vector") }
+        let columns=try h.strings(attribute,attribute: true,maximum: 100_000)
+        guard Set(columns).count==columns.count,!columns.contains(index),Set(try h.projectionNames(source))==Set(columns+[index]) else { throw VivoOmicsError.invalid("dataframe columns disagree: "+path) }
+        let group=try h.projectionGroup(destination,name);defer { h.close(group,"H5Gclose") }
+        try h.projectionAttributes(source,group)
+        for column in [index]+columns {
+            try element(source,column,group,selections: [selection],expected: [length],path: path+"/"+column,frameAllowed: false)
+        }
+    }
+    func sparse(_ source: Int64,_ destination: Int64,_ name: String,selections: [[Int]?],expected: [Int?],path: String,kind: String) throws {
+        try encoding(source,kind,"0.1.0")
+        guard Set(try h.projectionNames(source))==["data","indices","indptr"] else { throw VivoOmicsError.invalid("unknown sparse components") }
+        let attr=try h.attribute(source,"shape");defer { h.close(attr,"H5Aclose") }
+        let dims=try h.integers(attr,attribute: true,maximum: 2)
+        guard dims.count==2,dims.allSatisfy({ $0<=2_000_000 }),selections.count<=2 else { throw VivoOmicsError.invalid("sparse projection shape") }
+        let shape=dims.map(Int.init)
+        for (i,n) in expected.enumerated() { guard i<2 else { throw VivoOmicsError.invalid("sparse rank") };if let n { guard shape[i]==n else { throw VivoOmicsError.invalid("misaligned sparse field: "+path) } } }
+        let rows=try indices(selections.first ?? nil,length: shape[0]),cols=try indices(selections.count>1 ? selections[1] : nil,length: shape[1])
+        let csr=kind=="csr_matrix",major=csr ? rows : cols,minor=csr ? cols : rows
+        let majorLength=csr ? shape[0] : shape[1],minorLength=csr ? shape[1] : shape[0]
+        var majorMap=[Int](repeating: -1,count: majorLength),minorMap=[Int](repeating: -1,count: minorLength)
+        for (i,k) in major.enumerated() { majorMap[k]=i };for (i,k) in minor.enumerated() { minorMap[k]=i }
+        let data=try h.dataset(source,"data");defer { h.close(data,"H5Dclose") }
+        let ii=try h.dataset(source,"indices");defer { h.close(ii,"H5Dclose") }
+        let pp=try h.dataset(source,"indptr");defer { h.close(pp,"H5Dclose") }
+        let ds=try h.shape(data,attribute: false),is_=try h.shape(ii,attribute: false)
+        guard ds.count==1,ds==is_,ds[0]<=100_000_000,try h.shape(pp,attribute: false)==[UInt64(majorLength+1)] else { throw VivoOmicsError.invalid("sparse component dimensions") }
+        let ptr=try h.integers(pp,maximum: 2_000_001),nnz=Int(ds[0])
+        guard ptr.first==0,ptr.last==ds[0],zip(ptr,ptr.dropFirst()).allSatisfy({ $0<=$1 }) else { throw VivoOmicsError.invalid("sparse offset domain") }
+        try consume(nnz)
+        var counts=[Int](repeating: 0,count: major.count),sourceMajor=0
+        for start in stride(from: 0,to: nnz,by: 65_536) {
+            try Task.checkCancellation()
+            let values=try h.integers(ii,maximum: 65_536,range: start..<min(start+65_536,nnz))
+            for (j,index) in values.enumerated() {
+                guard index<UInt64(minorLength) else { throw VivoOmicsError.invalid("sparse index outside axis") }
+                while sourceMajor<majorLength && UInt64(start+j)>=ptr[sourceMajor+1] { sourceMajor+=1 }
+                guard sourceMajor<majorLength else { throw VivoOmicsError.invalid("sparse offset coverage") }
+                if majorMap[sourceMajor]>=0,minorMap[Int(index)]>=0 { counts[majorMap[sourceMajor]]+=1 }
+            }
+        }
+        var outputPtr: [Int64]=[0]
+        for count in counts { outputPtr.append(outputPtr.last!+Int64(count)) }
+        let total=Int(outputPtr.last!)
+        let scanned=major.reduce(0) { $0+Int(ptr[$1+1]-ptr[$1]) }
+        try consume(scanned+total)
+        let group=try h.projectionGroup(destination,name);defer { h.close(group,"H5Gclose") }
+        try h.projectionAttributes(source,group,excluding: ["shape"])
+        try h.writeIntegers(group,"shape",[UInt64(rows.count),UInt64(cols.count)],attribute: true)
+        let type=try h.type(data,attribute: false);defer { h.close(type,"H5Tclose") }
+        try reserveStorage(total*(typeWidth(type)+8)+outputPtr.count*8,output: group)
+        let od=try h.projectionDataset(group,"data",type: type,shape: [UInt64(total)]);defer { h.close(od,"H5Dclose") }
+        let oi=try h.projectionDataset(group,"indices",type: h.native("NATIVE_LLONG"),shape: [UInt64(total)]);defer { h.close(oi,"H5Dclose") }
+        let op=try h.projectionDataset(group,"indptr",type: h.native("NATIVE_LLONG"),shape: [UInt64(outputPtr.count)]);defer { h.close(op,"H5Dclose") }
+        try h.projectionAttributes(data,od);try h.projectionAttributes(ii,oi);try h.projectionAttributes(pp,op)
+        try h.projectionIntegers(op,values: outputPtr)
+        var cursor=0
+        for row in major {
+            for start in stride(from: Int(ptr[row]),to: Int(ptr[row+1]),by: 65_536) {
+                try Task.checkCancellation()
+                let values=try h.integers(ii,maximum: 65_536,range: start..<min(start+65_536,Int(ptr[row+1])))
+                var positions: [UInt64]=[],mapped: [Int64]=[]
+                for (j,index) in values.enumerated() where minorMap[Int(index)]>=0 { positions.append(UInt64(start+j));mapped.append(Int64(minorMap[Int(index)])) }
+                try h.projectionTransfer(data,od,type: type,coordinates: positions,count: positions.count,outputStart: [UInt64(cursor)],outputCount: [UInt64(positions.count)],
+                    reserveVariableBytes: { try self.reserveStorage($0,output: od) })
+                try h.projectionIntegers(oi,values: mapped,offset: cursor);cursor+=mapped.count
+            }
+        }
+        guard cursor==total else { throw VivoOmicsError.invalid("projection sparse pass disagreement") }
+        fields.append(.init(path: path,encoding: kind,sourceShape: shape,outputShape: [rows.count,cols.count]))
+    }
+    func element(_ source: Int64,_ name: String,_ destination: Int64,selections: [[Int]?],expected: [Int?],path: String,frameAllowed: Bool = true) throws {
+        guard fields.count<100_000 else { throw VivoOmicsError.limit("projection field count") }
+        let object=try h.object(source,name);defer { h.close(object,"H5Oclose") }
+        let kind=try h.text(object,"encoding-type")
+        switch kind {
+        case "array","string-array":
+            try encoding(object,kind,"0.2.0")
+            let dataset=try h.dataset(source,name);defer { h.close(dataset,"H5Dclose") }
+            if !frameAllowed,selections.count==1 {
+                guard try h.projectionShape(dataset).count==1 else { throw VivoOmicsError.invalid("dataframe columns must be vectors") }
+            }
+            try rawArray(dataset,destination,name,selections: selections,expected: expected,path: path,kind: kind)
+        case "csr_matrix","csc_matrix":try sparse(object,destination,name,selections: selections,expected: expected,path: path,kind: kind)
+        case "dataframe" where frameAllowed:
+            guard selections.count==1,expected.count==1,let n=expected[0] else { throw VivoOmicsError.invalid("dataframe projection context") }
+            try frame(object,destination,name,selection: selections[0],length: n,path: path)
+        case "categorical","nullable-integer","nullable-boolean","nullable-string-array":
+            guard selections.count==1,expected.count==1 else { throw VivoOmicsError.invalid("column projection context") }
+            try encoding(object,kind,kind=="categorical" ? "0.2.0" : "0.1.0")
+            let children=try h.projectionNames(object)
+            guard Set(children)==(kind=="categorical" ? Set(["codes","categories"]) : Set(["values","mask"])) else { throw VivoOmicsError.invalid("unknown encoded column components") }
+            let group=try h.projectionGroup(destination,name);defer { h.close(group,"H5Gclose") }
+            try h.projectionAttributes(object,group)
+            for child in children {
+                if child=="categories" { try h.projectionCopy(object,child,group,child);continue }
+                let dataset=try h.dataset(object,child);defer { h.close(dataset,"H5Dclose") }
+                try rawArray(dataset,group,child,selections: selections,expected: expected,path: path+"/"+child,kind: kind)
+            }
+        default:throw VivoOmicsError.invalid("unsupported aligned encoding at "+path+": "+kind)
+        }
+    }
+    func mapping(_ source: Int64,_ destination: Int64,_ name: String,selections: [[Int]?],expected: [Int?],path: String) throws {
+        guard try h.exists(source,name) else { return }
+        let input=try h.object(source,name);defer { h.close(input,"H5Oclose") };try encoding(input,"dict","0.1.0")
+        let output=try h.projectionGroup(destination,name);defer { h.close(output,"H5Gclose") };try h.projectionAttributes(input,output)
+        for key in try h.projectionNames(input) { try element(input,key,output,selections: selections,expected: expected,path: path+"/"+key) }
+    }
+}
+
+public enum VivoH5ADProjection {
+    static func evaluate(_ source: URL,plan: VivoH5ADProjectionPlan,to output: URL) throws -> VivoH5ADProjectionReport {
+        try plan.validate()
+        return try VivoHDF5.lock.withLock {
+            let h=try VivoHDF5(),input=try h.file(source.path);defer { h.close(input,"H5Fclose") }
+            let engine=VivoH5ADProjector(h,limit: plan.maximumElementVisits)
+            try engine.encoding(input,"anndata","0.1.0");try h.validateAnnotationStorage(input)
+            let children=Set(try h.projectionNames(input))
+            guard children.isSubset(of: ["X","obs","var","layers","obsm","varm","obsp","varp","raw","uns"]) else { throw VivoOmicsError.invalid("unknown AnnData root fields cannot be aligned") }
+            let obs=try h.object(input,"obs");defer { h.close(obs,"H5Oclose") }
+            let vars=try h.object(input,"var");defer { h.close(vars,"H5Oclose") }
+            let n=try engine.frameLength(obs),p=try engine.frameLength(vars)
+            let oi=try engine.indices(plan.observationIndices,length: n),vi=try engine.indices(plan.featureIndices,length: p)
+            let out=try h.projectionFile(output.path);defer { h.close(out,"H5Fclose") }
+            try h.projectionAttributes(input,out)
+            try engine.frame(obs,out,"obs",selection: oi,length: n,path: "obs")
+            try engine.frame(vars,out,"var",selection: vi,length: p,path: "var")
+            if children.contains("X") { try engine.element(input,"X",out,selections: [oi,vi],expected: [n,p],path: "X",frameAllowed: false) }
+            try engine.mapping(input,out,"layers",selections: [oi,vi],expected: [n,p],path: "layers")
+            try engine.mapping(input,out,"obsm",selections: [oi],expected: [n],path: "obsm")
+            try engine.mapping(input,out,"varm",selections: [vi],expected: [p],path: "varm")
+            try engine.mapping(input,out,"obsp",selections: [oi,oi],expected: [n,n],path: "obsp")
+            try engine.mapping(input,out,"varp",selections: [vi,vi],expected: [p,p],path: "varp")
+            if children.contains("raw") {
+                let raw=try h.object(input,"raw");defer { h.close(raw,"H5Oclose") }
+                try engine.encoding(raw,"raw","0.1.0")
+                guard Set(try h.projectionNames(raw)).isSubset(of: ["X","var","varm"]) else { throw VivoOmicsError.invalid("unknown raw fields") }
+                let rg=try h.projectionGroup(out,"raw");defer { h.close(rg,"H5Gclose") };try h.projectionAttributes(raw,rg)
+                let rv=try h.object(raw,"var");defer { h.close(rv,"H5Oclose") };let rawP=try engine.frameLength(rv)
+                try engine.frame(rv,rg,"var",selection: nil,length: rawP,path: "raw/var")
+                if try h.exists(raw,"X") { try engine.element(raw,"X",rg,selections: [oi,nil],expected: [n,rawP],path: "raw/X",frameAllowed: false) }
+                try engine.mapping(raw,rg,"varm",selections: [nil],expected: [rawP],path: "raw/varm")
+            }
+            if children.contains("uns") { try h.projectionCopy(input,"uns",out,"uns") }
+            return try .init(method: "native-H5AD-axis-projection-v1",sourceShape: [n,p],outputShape: [oi.count,vi.count],elementVisits: plan.maximumElementVisits-engine.remaining,
+                fields: engine.fields,hdf5Version: h.version(),qualification: "Unique cell/feature selection and reordering; raw retains its feature axis. Stored values/datatypes and categories retained; sparse structural indices become int64. Unstructured data copied without inferred axis semantics. No biological validation claim.")
+        }
+    }
+    public static func publish(source: URL,plan: VivoH5ADProjectionPlan,implementation: VivoFingerprint,to destination: URL) throws -> VivoH5ADProjectionReceipt {
+        try plan.validate();let bytes=try VivoCanonicalJSON.encode(plan)
+        guard bytes.count<=64*1_024*1_024 else { throw VivoOmicsError.limit("projection plan bytes") }
+        guard !FileManager.default.fileExists(atPath: destination.path) else { throw VivoOmicsError.invalid("projection output exists") }
+        let staging=destination.deletingLastPathComponent().appendingPathComponent(".numivivo-project-"+UUID().uuidString)
+        try FileManager.default.createDirectory(at: staging,withIntermediateDirectories: false,attributes: [.posixPermissions: 0o700])
+        defer { try? FileManager.default.removeItem(at: staging) }
+        let snapshot=staging.appendingPathComponent("original.h5ad"),output=staging.appendingPathComponent("projected.h5ad")
+        guard try VivoH5ADPseudobulk.fingerprint(source,copyTo: snapshot)==plan.source else { throw VivoOmicsError.invalid("projection source fingerprint mismatch") }
+        let report=try evaluate(snapshot,plan: plan,to: output),reportBytes=try VivoCanonicalJSON.encode(report)
+        guard reportBytes.count<=64*1_024*1_024 else { throw VivoOmicsError.limit("projection report exceeds replay allowance") }
+        let receipt=try VivoH5ADProjectionReceipt(schemaVersion: 1,source: plan.source,plan: VivoCanonicalJSON.fingerprint(bytes),output: VivoH5ADPseudobulk.fingerprint(output),
+            report: VivoCanonicalJSON.fingerprint(reportBytes),implementation: implementation)
+        try bytes.write(to: staging.appendingPathComponent("plan.json"),options: .withoutOverwriting)
+        try reportBytes.write(to: staging.appendingPathComponent("report.json"),options: .withoutOverwriting)
+        try VivoCanonicalJSON.encode(receipt).write(to: staging.appendingPathComponent("receipt.json"),options: .withoutOverwriting)
+        try Task.checkCancellation();try FileManager.default.moveItem(at: staging,to: destination);return receipt
+    }
+    public static func verify(_ directory: URL,implementation: VivoFingerprint) throws -> VivoH5ADProjectionReport {
+        let receipt=try VivoCanonicalJSON.decode(VivoH5ADProjectionReceipt.self,from: VivoSingleCellCampaignIO.readDocument(directory.appendingPathComponent("receipt.json"),maximumBytes: 65_536))
+        let bytes=try VivoSingleCellCampaignIO.readDocument(directory.appendingPathComponent("plan.json"),maximumBytes: 64*1_024*1_024)
+        let reportBytes=try VivoSingleCellCampaignIO.readDocument(directory.appendingPathComponent("report.json"),maximumBytes: 64*1_024*1_024)
+        guard receipt.schemaVersion==1,receipt.implementation==implementation,try VivoCanonicalJSON.fingerprint(bytes)==receipt.plan,
+              try VivoCanonicalJSON.fingerprint(reportBytes)==receipt.report,try VivoH5ADPseudobulk.fingerprint(directory.appendingPathComponent("projected.h5ad"))==receipt.output else {
+            throw VivoOmicsError.invalid("projection output, plan, report or implementation changed")
+        }
+        let temporary=FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-project-verify-"+UUID().uuidString)
+        try FileManager.default.createDirectory(at: temporary,withIntermediateDirectories: false,attributes: [.posixPermissions: 0o700]);defer { try? FileManager.default.removeItem(at: temporary) }
+        let snapshot=temporary.appendingPathComponent("original.h5ad"),output=temporary.appendingPathComponent("projected.h5ad")
+        guard try VivoH5ADPseudobulk.fingerprint(directory.appendingPathComponent("original.h5ad"),copyTo: snapshot)==receipt.source else { throw VivoOmicsError.invalid("projection original changed") }
+        let plan=try VivoCanonicalJSON.decode(VivoH5ADProjectionPlan.self,from: bytes)
+        guard plan.source==receipt.source else { throw VivoOmicsError.invalid("projection plan source differs") }
+        let report=try evaluate(snapshot,plan: plan,to: output)
+        guard try VivoCanonicalJSON.encode(report)==reportBytes,try VivoH5ADPseudobulk.fingerprint(output)==receipt.output else { throw VivoOmicsError.invalid("projection does not reconstruct") }
+        return report
+    }
+}

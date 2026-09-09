@@ -1,0 +1,517 @@
+{
+  "status": "passed-H5AD-projection-interoperability",
+  "binarySHA256": "a04a01f9b09af2676d87df5d9ac413ea3b94d0a99f94fc47de0fe40fd04e9427",
+  "cases": [
+    {
+      "name": "csr-reorder",
+      "kind": "format-regression",
+      "sourceSHA256": "0178516b9bb5eea45184a82b9f6f0a935d077821c40f6711617e51279f8dc283",
+      "outputSHA256": "db433f162a13ee79f392b6476c58ead8de855c536984a2a2a89433375c5f9f52",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/csr-source.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/csr-reorder-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/csr-reorder"
+        ],
+        "exitCode": 0,
+        "seconds": 0.4793562078848481
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/csr-reorder"
+        ],
+        "exitCode": 0,
+        "seconds": 0.019914499949663877
+      },
+      "sourceShape": [
+        7,
+        9
+      ],
+      "outputShape": [
+        4,
+        4
+      ],
+      "rawShape": [
+        4,
+        12
+      ],
+      "storedDatasetDtypesChecked": 40,
+      "allAnnDataSlotsEqual": true
+    },
+    {
+      "name": "csc-reorder",
+      "kind": "format-regression",
+      "sourceSHA256": "e98fd3c654b0b2946470fb55b1d783c631a5aba2cc811f06367c4e4dec3e0018",
+      "outputSHA256": "ccf66234d83f08aed0606100c3b65b48d5d014ab0e8347137e7b34b1e231cb97",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/csc-source.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/csc-reorder-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/csc-reorder"
+        ],
+        "exitCode": 0,
+        "seconds": 0.019260750152170658
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/csc-reorder"
+        ],
+        "exitCode": 0,
+        "seconds": 0.01742437481880188
+      },
+      "sourceShape": [
+        7,
+        9
+      ],
+      "outputShape": [
+        4,
+        4
+      ],
+      "rawShape": [
+        4,
+        12
+      ],
+      "storedDatasetDtypesChecked": 40,
+      "allAnnDataSlotsEqual": true
+    },
+    {
+      "name": "dense-reorder",
+      "kind": "format-regression",
+      "sourceSHA256": "6846a3260c07feb712f0e4624a022a6257766c379319a964abbb9478b6302394",
+      "outputSHA256": "1b4a82abee0a3070910742d63f44a12ba252677299359048a84b5e2676274d9a",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/dense-source.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/dense-reorder-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/dense-reorder"
+        ],
+        "exitCode": 0,
+        "seconds": 0.01756229205057025
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/dense-reorder"
+        ],
+        "exitCode": 0,
+        "seconds": 0.017910665832459927
+      },
+      "sourceShape": [
+        7,
+        9
+      ],
+      "outputShape": [
+        4,
+        4
+      ],
+      "rawShape": [
+        4,
+        12
+      ],
+      "storedDatasetDtypesChecked": 38,
+      "allAnnDataSlotsEqual": true
+    },
+    {
+      "name": "empty-cells",
+      "kind": "format-regression",
+      "sourceSHA256": "6846a3260c07feb712f0e4624a022a6257766c379319a964abbb9478b6302394",
+      "outputSHA256": "f2b8fb11e30016b2f822a6cb31ddc942759c05c168ae2575b7c2b7e8c699fb1c",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/dense-source.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-cells-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-cells"
+        ],
+        "exitCode": 0,
+        "seconds": 0.015490999910980463
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-cells"
+        ],
+        "exitCode": 0,
+        "seconds": 0.016654333099722862
+      },
+      "sourceShape": [
+        7,
+        9
+      ],
+      "outputShape": [
+        0,
+        2
+      ],
+      "rawShape": [
+        0,
+        12
+      ],
+      "storedDatasetDtypesChecked": 38,
+      "allAnnDataSlotsEqual": true
+    },
+    {
+      "name": "empty-features",
+      "kind": "format-regression",
+      "sourceSHA256": "6846a3260c07feb712f0e4624a022a6257766c379319a964abbb9478b6302394",
+      "outputSHA256": "f6c21c0e60fcdf8fad5b19f6e6450934e4dde6f65f9e3577f3cd6584fdd114fe",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/dense-source.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-features-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-features"
+        ],
+        "exitCode": 0,
+        "seconds": 0.01594041706994176
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-features"
+        ],
+        "exitCode": 0,
+        "seconds": 0.017139167059212923
+      },
+      "sourceShape": [
+        7,
+        9
+      ],
+      "outputShape": [
+        2,
+        0
+      ],
+      "rawShape": [
+        2,
+        12
+      ],
+      "storedDatasetDtypesChecked": 38,
+      "allAnnDataSlotsEqual": true
+    },
+    {
+      "name": "identity",
+      "kind": "format-regression",
+      "sourceSHA256": "6846a3260c07feb712f0e4624a022a6257766c379319a964abbb9478b6302394",
+      "outputSHA256": "135e3f8c6d1b02dfa4f1076ade77c7583b853687e06dcfb3a17b1cf6b551e9e9",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/dense-source.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/identity-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/identity"
+        ],
+        "exitCode": 0,
+        "seconds": 0.016761708073318005
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/identity"
+        ],
+        "exitCode": 0,
+        "seconds": 0.018095333129167557
+      },
+      "sourceShape": [
+        7,
+        9
+      ],
+      "outputShape": [
+        7,
+        9
+      ],
+      "rawShape": [
+        7,
+        12
+      ],
+      "storedDatasetDtypesChecked": 38,
+      "allAnnDataSlotsEqual": true
+    },
+    {
+      "name": "empty-budget",
+      "kind": "format-regression",
+      "sourceSHA256": "6a1ad73a4bada047f8ce2fa19ddc007499a4e6cb0c29b78c3ccbeff35d1d6f1a",
+      "outputSHA256": "40dc476cc3cbf50c7f24e708f80b418299d2e08239bcda3a966ae1dfc7a69de2",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-budget-source.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-budget-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-budget"
+        ],
+        "exitCode": 0,
+        "seconds": 0.011518250219523907
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/empty-budget"
+        ],
+        "exitCode": 0,
+        "seconds": 0.01292687514796853
+      },
+      "sourceShape": [
+        2,
+        3
+      ],
+      "outputShape": [
+        0,
+        0
+      ],
+      "rawShape": null,
+      "storedDatasetDtypesChecked": 6,
+      "allAnnDataSlotsEqual": true
+    },
+    {
+      "name": "sparse-duplicates",
+      "kind": "format-regression",
+      "sourceSHA256": "6d45c1e947dc79902c03fcc6a36492e0dce0fc937994f314f8204e257644f5a0",
+      "outputSHA256": "f4578c3ff0d415bad2bbc86e60ee5ca5bdcf34531e8b27ca7e8b7a1a360918d1",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/duplicates-source.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/sparse-duplicates-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/sparse-duplicates"
+        ],
+        "exitCode": 0,
+        "seconds": 0.01685204217210412
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/sparse-duplicates"
+        ],
+        "exitCode": 0,
+        "seconds": 0.0182540831156075
+      },
+      "sourceShape": [
+        7,
+        9
+      ],
+      "outputShape": [
+        3,
+        4
+      ],
+      "rawShape": [
+        3,
+        12
+      ],
+      "storedDatasetDtypesChecked": 40,
+      "allAnnDataSlotsEqual": true
+    },
+    {
+      "name": "real-0",
+      "kind": "real-data-interoperability",
+      "sourceSHA256": "6e5609e5bd0635ac1bd2a8f9a2bf98ad4fa9a012e8e4e2ad926436d073d745f0",
+      "outputSHA256": "541e69708389f853aee24423ec327e29687ccc97cd936c18142210ea6c1bb442",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-0-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-0"
+        ],
+        "exitCode": 0,
+        "seconds": 0.09616725007072091
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-0"
+        ],
+        "exitCode": 0,
+        "seconds": 0.10114604094997048
+      },
+      "sourceShape": [
+        2651,
+        15706
+      ],
+      "outputShape": [
+        1326,
+        5236
+      ],
+      "rawShape": null,
+      "storedDatasetDtypesChecked": 32,
+      "allAnnDataSlotsEqual": true,
+      "nativeCountReimport": {
+        "exactCounts": true,
+        "exactAxes": true,
+        "exactOriginalH5AD": true,
+        "nonzeros": 258746,
+        "command": [
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-0/projected.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-0-mapping.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-0-import"
+        ]
+      }
+    },
+    {
+      "name": "real-1",
+      "kind": "real-data-interoperability",
+      "sourceSHA256": "388db742dba45eeaea98217161ed7193e104d1188df99142a5eb56ba33226df8",
+      "outputSHA256": "7c54c89fb9ebf0b063a014885aaac136a7fb23aea836fabec26e60187aedde1f",
+      "run": {
+        "command": [
+          "project",
+          "/Users/home/numivivo-baron-programs-product-20260909/bundle/original.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-1-plan.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-1"
+        ],
+        "exitCode": 0,
+        "seconds": 0.6164358328096569
+      },
+      "verify": {
+        "command": [
+          "verify-project",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-1"
+        ],
+        "exitCode": 0,
+        "seconds": 0.6484629171900451
+      },
+      "sourceShape": [
+        8569,
+        20125
+      ],
+      "outputShape": [
+        4285,
+        6709
+      ],
+      "rawShape": null,
+      "storedDatasetDtypesChecked": 19,
+      "allAnnDataSlotsEqual": true,
+      "nativeCountReimport": {
+        "exactCounts": true,
+        "exactAxes": true,
+        "exactOriginalH5AD": true,
+        "nonzeros": 2660360,
+        "command": [
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-1/projected.h5ad",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-1-mapping.json",
+          "/Users/home/numivivo-projection-reference-complete-20260909/real-1-import"
+        ]
+      }
+    }
+  ],
+  "negativeCases": [
+    {
+      "name": "duplicate",
+      "command": [
+        "project",
+        "/Users/home/numivivo-baron-programs-product-20260909/bundle/original.h5ad",
+        "/Users/home/numivivo-projection-reference-complete-20260909/duplicate-plan.json",
+        "/Users/home/numivivo-projection-reference-complete-20260909/duplicate"
+      ],
+      "exitCode": 65,
+      "seconds": 0.008500874973833561
+    },
+    {
+      "name": "out-of-bounds",
+      "command": [
+        "project",
+        "/Users/home/numivivo-baron-programs-product-20260909/bundle/original.h5ad",
+        "/Users/home/numivivo-projection-reference-complete-20260909/out-of-bounds-plan.json",
+        "/Users/home/numivivo-projection-reference-complete-20260909/out-of-bounds"
+      ],
+      "exitCode": 65,
+      "seconds": 0.040004790760576725
+    },
+    {
+      "name": "work-limit",
+      "command": [
+        "project",
+        "/Users/home/numivivo-baron-programs-product-20260909/bundle/original.h5ad",
+        "/Users/home/numivivo-projection-reference-complete-20260909/work-limit-plan.json",
+        "/Users/home/numivivo-projection-reference-complete-20260909/work-limit"
+      ],
+      "exitCode": 65,
+      "seconds": 0.040554292034357786
+    },
+    {
+      "name": "wrong-source",
+      "command": [
+        "project",
+        "/Users/home/numivivo-baron-programs-product-20260909/bundle/original.h5ad",
+        "/Users/home/numivivo-projection-reference-complete-20260909/wrong-source-plan.json",
+        "/Users/home/numivivo-projection-reference-complete-20260909/wrong-source"
+      ],
+      "exitCode": 65,
+      "seconds": 0.036480207927525043
+    },
+    {
+      "name": "unknown-encoding",
+      "command": [
+        "project",
+        "/Users/home/numivivo-projection-reference-complete-20260909/unknown-encoding.h5ad",
+        "/Users/home/numivivo-projection-reference-complete-20260909/unknown-plan.json",
+        "/Users/home/numivivo-projection-reference-complete-20260909/unknown"
+      ],
+      "exitCode": 65,
+      "seconds": 0.015723874792456627
+    },
+    {
+      "name": "misaligned",
+      "command": [
+        "project",
+        "/Users/home/numivivo-projection-reference-complete-20260909/misaligned.h5ad",
+        "/Users/home/numivivo-projection-reference-complete-20260909/misaligned-plan.json",
+        "/Users/home/numivivo-projection-reference-complete-20260909/misaligned-output"
+      ],
+      "exitCode": 65,
+      "seconds": 0.016264332924038172
+    },
+    {
+      "name": "matrix-dataframe-column",
+      "command": [
+        "project",
+        "/Users/home/numivivo-projection-reference-complete-20260909/matrix-column.h5ad",
+        "/Users/home/numivivo-projection-reference-complete-20260909/matrix-column-plan.json",
+        "/Users/home/numivivo-projection-reference-complete-20260909/matrix-column-output"
+      ],
+      "exitCode": 65,
+      "seconds": 0.014185875188559294
+    },
+    {
+      "name": "output-allocation-limit",
+      "command": [
+        "project",
+        "/Users/home/numivivo-projection-reference-complete-20260909/oversized-dense.h5ad",
+        "/Users/home/numivivo-projection-reference-complete-20260909/oversized-plan.json",
+        "/Users/home/numivivo-projection-reference-complete-20260909/oversized-output"
+      ],
+      "exitCode": 65,
+      "seconds": 0.04183120792731643
+    },
+    {
+      "name": "no-overwrite",
+      "command": [
+        "project",
+        "/Users/home/numivivo-projection-reference-complete-20260909/csr-source.h5ad",
+        "/Users/home/numivivo-projection-reference-complete-20260909/csr-reorder-plan.json",
+        "/Users/home/numivivo-projection-reference-complete-20260909/csr-reorder"
+      ],
+      "exitCode": 65,
+      "seconds": 0.006908915936946869
+    },
+    {
+      "name": "tampered-output",
+      "command": [
+        "verify-project",
+        "/Users/home/numivivo-projection-reference-complete-20260909/tampered"
+      ],
+      "exitCode": 65,
+      "seconds": 0.008732832968235016
+    }
+  ],
+  "versions": {
+    "anndata": "0.13.3.post0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "h5py": "3.16.0"
+  },
+  "qualification": "Exact interoperability on declared real files plus storage fixtures; no biological or million-cell qualification."
+}

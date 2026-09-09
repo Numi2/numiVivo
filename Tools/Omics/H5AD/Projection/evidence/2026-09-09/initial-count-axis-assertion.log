@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/H5AD/Projection/check.py", line 173, in <module>
+    assert [c['id'] for c in dataset['cells']]==list(expected.obs_names)
+            ~^^^^^^
+KeyError: 'id'
