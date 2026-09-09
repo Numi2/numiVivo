@@ -1,0 +1,75 @@
+Another instance of SwiftPM (PID: 64686) is already running using '/Users/n/numivivo-h5ad-20260909/.build', waiting until that process has finished execution...[0/1] Planning build
+Building for debugging...
+[0/5] Write sources
+[1/5] Write swift-version-3CD7052B146186F2.txt
+[3/5] Emitting module NumiVivoIntegrationTests
+[4/5] Compiling NumiVivoIntegrationTests SingleCellReductionTests.swift
+[4/6] Write Objects.LinkFileList
+[5/6] Linking NumiVivoPackageTests
+Build complete! (3.07s)
+Test Suite 'Selected tests' started at 2026-09-09 05:17:49.428.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 05:17:49.433.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 05:17:49.433.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 05:17:49.433.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellReductionTests started.
+◇ Suite SingleCellNegativeBinomialTests started.
+◇ Suite SingleCellNBCohortTests started.
+◇ Suite SingleCellInterchangeTests started.
+◇ Test invalidOptionsAndLegacyEncoding() started.
+◇ Test centeredScoresRecoverVarianceAndRepeatExactly() started.
+◇ Test undefinedDispersionAndRepeatedProjectedEigenvalues() started.
+◇ Suite SingleCellCohortTests started.
+◇ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() started.
+◇ Test profileAndExplicitPriorAreDistinct() started.
+◇ Test zeroOnlyCovariateSupportDoesNotProduceInference() started.
+◇ Test interceptHasAnalyticMeanAndInformation() started.
+◇ Test parametricTrendRecoversDeclaredMeanRelationship() started.
+◇ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test optionsCannotBeSilentlyAppliedToWrongModel() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test logMassMatchesHighPrecisionReference() started.
+◇ Test fullSparseBasisRecoversRepeatedSpectrum() started.
+◇ Test offsetReparameterizationPreservesFit() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() started.
+◇ Test unknownScientificOptionsCannotBeIgnored() started.
+◇ Test qualitySelectionPreservesCountsAndSourceIdentity() started.
+◇ Test incompletePairsAndConfoundedBatchAreRejected() started.
+◇ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() started.
+✔ Test interceptHasAnalyticMeanAndInformation() passed after 0.008 seconds.
+✔ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() passed after 0.009 seconds.
+✔ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() passed after 0.008 seconds.
+✔ Test logMassMatchesHighPrecisionReference() passed after 0.009 seconds.
+✔ Test optionsCannotBeSilentlyAppliedToWrongModel() passed after 0.008 seconds.
+✔ Test undefinedDispersionAndRepeatedProjectedEigenvalues() passed after 0.009 seconds.
+✔ Test parametricTrendRecoversDeclaredMeanRelationship() passed after 0.009 seconds.
+✔ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() passed after 0.008 seconds.
+✔ Test offsetReparameterizationPreservesFit() passed after 0.008 seconds.
+✔ Test unknownScientificOptionsCannotBeIgnored() passed after 0.008 seconds.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.008 seconds.
+✔ Test qualitySelectionPreservesCountsAndSourceIdentity() passed after 0.008 seconds.
+✔ Test invalidOptionsAndLegacyEncoding() passed after 0.011 seconds.
+✔ Test fullSparseBasisRecoversRepeatedSpectrum() passed after 0.011 seconds.
+✔ Test zeroOnlyCovariateSupportDoesNotProduceInference() passed after 0.011 seconds.
+✔ Test incompletePairsAndConfoundedBatchAreRejected() passed after 0.012 seconds.
+✔ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() passed after 0.014 seconds.
+✔ Suite SingleCellCohortTests passed after 0.015 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.018 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.021 seconds.
+✔ Test profileAndExplicitPriorAreDistinct() passed after 0.022 seconds.
+✔ Suite SingleCellNegativeBinomialTests passed after 0.022 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.033 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.033 seconds.
+✔ Test centeredScoresRecoverVarianceAndRepeatExactly() passed after 0.069 seconds.
+✔ Suite SingleCellReductionTests passed after 0.069 seconds.
+✔ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() passed after 24.086 seconds.
+✔ Suite SingleCellNBCohortTests passed after 24.086 seconds.
+✔ Test run with 23 tests in 5 suites passed after 24.086 seconds.

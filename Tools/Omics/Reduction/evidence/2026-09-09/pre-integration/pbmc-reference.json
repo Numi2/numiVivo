@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "qualification": "Numerical agreement on these count axes; no biological or integration qualification",
+  "datasetSHA256": "4e6cde262b2d1e37288e50ca9a84025ca3fe63826555438ac3ac7b69f22a1c99",
+  "reportSHA256": "5da804669a03ce209e4b486140264c7423d9bc5ee245137712936a2221f02b9a",
+  "cells": 2700,
+  "features": 32738,
+  "sourceNonzeros": 2286884,
+  "selectedFeatures": 2000,
+  "components": 20,
+  "featureMaximumAbsoluteErrors": {
+    "logMeanForBinning": 5.329070518200751e-15,
+    "logDispersion": 6.661338147750939e-15,
+    "normalizedDispersion": 2.3785244440688302e-07
+  },
+  "minimumSubspaceCosine": 0.9999999999999972,
+  "alignedRelativeScoreError": 6.9059461257329824e-12,
+  "maximumNativeResidual": 7.572075866783881e-12,
+  "maximumVarianceRelativeError": 3.6637359812630166e-15,
+  "versions": {
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1"
+  }
+}

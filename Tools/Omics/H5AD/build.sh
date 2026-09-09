@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
 OUT="${1:?output directory}"
 mkdir -p "$OUT"
 FILES=()
-for name in VivoSparseCounts VivoMatrixMarketCounts VivoOmicsLinearStatistics VivoOmicsNegativeBinomial VivoOmicsNBCohort VivoOmicsSourceDecoder VivoPseudobulkDifferentialExpression VivoSingleCellAnalysis VivoSingleCellArtifacts VivoSingleCellCampaign VivoSingleCellCampaignIO VivoSingleCellCohortAnalysis VivoSingleCellExamples VivoSingleCellExchange VivoSingleCellProcessing VivoHDF5 VivoSingleCellH5AD VivoH5ADPseudobulk VivoH5ADElements VivoH5ADAnnotations; do
+for name in VivoSparseCounts VivoMatrixMarketCounts VivoOmicsLinearStatistics VivoOmicsNegativeBinomial VivoOmicsNBCohort VivoOmicsSourceDecoder VivoPseudobulkDifferentialExpression VivoSingleCellAnalysis VivoSingleCellArtifacts VivoSingleCellCampaign VivoSingleCellCampaignIO VivoSingleCellReduction VivoSingleCellCohortAnalysis VivoSingleCellExamples VivoSingleCellExchange VivoSingleCellProcessing VivoHDF5 VivoSingleCellH5AD VivoH5ADPseudobulk VivoH5ADElements VivoH5ADAnnotations; do
   FILES+=("$ROOT/Sources/NumiVivoKit/Omics/$name.swift")
 done
 for name in VivoArtifactPrimitives CanonicalArtifact VivoArtifactStore VivoRootedFileStore; do

@@ -1,0 +1,13 @@
+{
+  "baseCommit": "53a2ddd86e3b9506bc04c1b2fe1adc4a4fbfaf4e",
+  "files": {
+    "Sources/NumiVivoKit/Omics/VivoSingleCellReduction.swift": "f00aa9238ee26bce2690398204adfa299738f1b14c3fdfaec4058849c319b2bd",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellCohortAnalysis.swift": "24bd1fd99c1bee1de25f9ce8aa014d93b2d290cdf47a0595cb83508e2818e4e1",
+    "Sources/NumiVivoKit/Neoantigen/VivoAtlasEvidence.swift": "65c923a6748b5918b2b66045e6c8c591e4b7a8a44843c6096b15515ce124d20b",
+    "Tests/NumiVivoIntegrationTests/SingleCellReductionTests.swift": "379914b79e764f27cfa2f8421d2bac18f5c9458d872f02e58d7666fe6d91cd52",
+    "Tools/Omics/Reduction/check_cli.py": "3c030e73b34a6bf5a95e4f57d19bdea2f4150f840b87e163b54c5b7a64d957e0",
+    "Tools/Omics/Reduction/check_reference.py": "b1c4fc3f3e3ad7ac6629fb36ff4e9ac171b94ab15e26a0c6c2f7ccafba2b90d0"
+  },
+  "binarySHA256": "4faf913d38c5b48825e6e6d705bf5a0a3441921199de7864b2775fbb87f2aa0a",
+  "scope": "Base commit plus the listed reduction owner changes; source hashes must match the published tree. Documents and evidence are not compiler inputs."
+}

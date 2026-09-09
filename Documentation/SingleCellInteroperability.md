@@ -265,7 +265,12 @@ The complete development objective remains open:
    remains available with unchanged defaults; neither is promoted by correlation
    alone.
 4. **Sparse feature selection/PCA/kNN/UMAP-compatible embeddings/clustering:**
-   implementation and reference comparisons remain; never densify cells × genes.
+   sparse Seurat-style HVG selection and centered matrix-free PCA now have exact
+   selected-gene agreement and numerical PCA agreement with Scanpy on full Kang
+   B-cell and PBMC3k matrices. Results use the existing analysis/replay artifact
+   route; see [reduction evidence](../Tools/Omics/Reduction/README.md).
+   kNN graphs, UMAP-compatible embeddings and clustering remain. Never densify
+   cells × genes; resident limits still apply to this PCA implementation.
 5. **Batch integration:** donor/batch-aware methods and biological-signal
    preservation evaluation remain.
 6. **Annotation:** deterministic marker/program scoring with provenance, then

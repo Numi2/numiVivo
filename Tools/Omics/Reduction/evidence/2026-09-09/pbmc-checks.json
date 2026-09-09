@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "checks": [
+    "count publication",
+    "reduction publication",
+    "native reconstruction",
+    "report export",
+    "deterministic receipt",
+    "controlled unconverged rejection without receipt"
+  ],
+  "binarySHA256": "4faf913d38c5b48825e6e6d705bf5a0a3441921199de7864b2775fbb87f2aa0a",
+  "commands": [
+    {
+      "arguments": [
+        "singlecell-run",
+        "/Users/home/numivivo-pbmc3k-count-qualified-v2-20260909/imported/manifest.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/counts.json"
+      ],
+      "exitCode": 0,
+      "seconds": 3.2298822081647813,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/plan.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/analysis.json"
+      ],
+      "exitCode": 0,
+      "seconds": 5.335650667082518,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analysis-verify",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/store"
+      ],
+      "exitCode": 0,
+      "seconds": 4.937547499779612,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analysis-export",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/analysis.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/report.json"
+      ],
+      "exitCode": 0,
+      "seconds": 7.109285625163466,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/plan.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/repeat.json"
+      ],
+      "exitCode": 0,
+      "seconds": 5.275464833248407,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "singlecell-analyze",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/counts.json",
+        "--plan",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/insufficient-basis.json",
+        "--store",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/store",
+        "--output",
+        "/Users/home/numivivo-pbmc-reduction-integrated-20260909/rejected.json"
+      ],
+      "exitCode": 65,
+      "seconds": 2.9865530002862215,
+      "expectedSuccess": false
+    }
+  ],
+  "qualification": "Software reconstruction and numerical convergence; not biological qualification"
+}

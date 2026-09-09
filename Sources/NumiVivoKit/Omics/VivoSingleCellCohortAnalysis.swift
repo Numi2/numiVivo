@@ -6,19 +6,22 @@ public struct VivoSingleCellAnalysisPlan: Codable, Sendable, Equatable {
     public var filter: VivoSingleCellFilterPolicy
     public var normalizationTarget: Double
     public var contrasts: [VivoOmicsExpressionContrast]
+    public var reduction: VivoSingleCellReductionOptions?
     public init(id: String, filter: VivoSingleCellFilterPolicy = .init(), normalizationTarget: Double = 10_000,
-                contrasts: [VivoOmicsExpressionContrast] = []) {
+                contrasts: [VivoOmicsExpressionContrast] = [],reduction: VivoSingleCellReductionOptions? = nil) {
         schemaVersion = 1; self.id = id; self.filter = filter
         self.normalizationTarget = normalizationTarget; self.contrasts = contrasts
+        self.reduction = reduction
     }
-    private enum CodingKeys: String, CodingKey { case schemaVersion, id, filter, normalizationTarget, contrasts }
+    private enum CodingKeys: String, CodingKey { case schemaVersion, id, filter, normalizationTarget, contrasts, reduction }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "filter", "normalizationTarget", "contrasts"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "filter", "normalizationTarget", "contrasts", "reduction"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try c.decode(Int.self, forKey: .schemaVersion); id = try c.decode(String.self, forKey: .id)
         filter = try c.decodeIfPresent(VivoSingleCellFilterPolicy.self, forKey: .filter) ?? .init()
         normalizationTarget = try c.decodeIfPresent(Double.self, forKey: .normalizationTarget) ?? 10_000
         contrasts = try c.decodeIfPresent([VivoOmicsExpressionContrast].self, forKey: .contrasts) ?? []
+        reduction = try c.decodeIfPresent(VivoSingleCellReductionOptions.self,forKey: .reduction)
     }
     public func validate() throws {
         guard schemaVersion == 1, vivoOmicsID(id), normalizationTarget.isFinite, normalizationTarget > 0,
@@ -26,6 +29,7 @@ public struct VivoSingleCellAnalysisPlan: Codable, Sendable, Equatable {
             throw VivoOmicsError.invalid("analysis plan schema, identity, normalization or contrast count")
         }
         try filter.validate()
+        try reduction?.validate()
         for contrast in contrasts { try contrast.validate() }
     }
 }
@@ -35,6 +39,7 @@ public struct VivoSingleCellCohortReport: Codable, Sendable, Equatable {
     public let plan: VivoSingleCellAnalysisPlan
     public let processed: VivoSingleCellProcessed
     public let contrasts: [VivoOmicsExpressionResult]
+    public var reduction: VivoSingleCellReductionResult? = nil
 }
 public enum VivoSingleCellCohortAnalysis {
     public static func run(_ dataset: VivoSingleCellDataset, plan: VivoSingleCellAnalysisPlan) throws -> VivoSingleCellCohortReport {
@@ -46,7 +51,8 @@ public enum VivoSingleCellCohortAnalysis {
             results.append(try VivoPseudobulkDifferentialExpression.evaluate(processed.dataset, bulk: processed.pseudobulk, contrast: contrast))
         }
         try Task.checkCancellation()
-        return .init(schemaVersion: 1, method: "native-count-quality-and-donor-expression-v1", plan: plan, processed: processed, contrasts: results)
+        let reduction=try plan.reduction.map { try VivoSingleCellReduction.run(processed,options: $0) }
+        return .init(schemaVersion: 1, method: "native-count-quality-and-donor-expression-v1", plan: plan, processed: processed, contrasts: results,reduction: reduction)
     }
 }
 

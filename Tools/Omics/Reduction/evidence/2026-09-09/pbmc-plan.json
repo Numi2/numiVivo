@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "sparse-reduction-qualification",
+  "normalizationTarget": 10000,
+  "filter": {
+    "minimumCounts": 1,
+    "minimumDetectedFeatures": 1
+  },
+  "contrasts": [],
+  "reduction": {
+    "highlyVariableFeatures": 2000,
+    "meanBins": 20,
+    "components": 20,
+    "maximumBasis": 128,
+    "relativeResidualTolerance": 1e-06,
+    "seed": 7
+  }
+}
