@@ -1,0 +1,34 @@
+name: AlphaGenome adapter checks
+
+on:
+  push:
+    paths:
+      - "ReferenceAdapters/AlphaGenomeAtlas/**"
+      - "Sources/NumiVivoKit/Neoantigen/**"
+      - "Sources/NumiVivoCLI/VivoGenomicEvidenceCLICommands.swift"
+      - ".github/workflows/alphagenome-adapters.yml"
+  pull_request:
+    paths:
+      - "ReferenceAdapters/AlphaGenomeAtlas/**"
+      - "Sources/NumiVivoKit/Neoantigen/**"
+      - "Sources/NumiVivoCLI/VivoGenomicEvidenceCLICommands.swift"
+      - ".github/workflows/alphagenome-adapters.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  adapters:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile adapters
+        working-directory: ReferenceAdapters/AlphaGenomeAtlas
+        run: python -m py_compile atlas_bridge.py run_pvacsplice.py test_atlas_bridge.py test_splice_runner.py
+      - name: Run contract tests
+        working-directory: ReferenceAdapters/AlphaGenomeAtlas
+        run: python -m unittest -v
