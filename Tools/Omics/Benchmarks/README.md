@@ -78,6 +78,24 @@ pseudobulk is densified for PyDESeq2.
 Several independent studies with verified donor structures and raw counts,
 additional cell types/perturbations, robust reference sensitivity, explicit
 competitive acceptance criteria and R edgeR/limma/DESeq2 comparisons remain.
-Native negative-binomial DE is the next algorithmic step. The count default is
+The [native NB cohort method](../NegativeBinomial/README.md) now has a full Kang
+CLI comparison and independent calculation checks. It remains experimental;
+old plans retain the log-linear baseline. The count default is
 now five million nonzeros; this is still bounded in-memory execution, not
 million-cell or out-of-core qualification.
+
+## Original Hagai count recovery
+
+The normalized pertpy release remains ineligible for count DE. Separately,
+[the original author release E-MTAB-6754](https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-6754)
+provides integer UMI matrices after the authors' QC/cluster selection. The
+[audit](evidence/2026-09-09/hagai-original-audit.json) pins six source files for
+mouse sample groups 1–3, unstimulated versus six-hour LPS: 13,863 cells,
+22,048 common genes and 32,848,185 nonzeros. This is acquisition and count-axis
+evidence, not a completed donor-DE benchmark. Donor mapping must be finalized
+from original sample metadata, and native capacity must support the full
+scope without outcome-based or capacity-driven subsetting.
+
+`audit_hagai_original.py --source-dir /path/to/files --out /tmp/hagai-audit.json`
+checks the pinned downloads using one gene row at a time. File URLs and hashes
+are in the report. Do not invert the normalized H5AD to reconstruct these counts.

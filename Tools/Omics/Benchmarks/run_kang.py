@@ -28,7 +28,12 @@ p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--binary', type=Path, required=True)
 p.add_argument('--source', type=Path, required=True)
 p.add_argument('--out', type=Path, required=True)
+p.add_argument('--model', choices=['logLinear','negativeBinomial'], default='logLinear')
+p.add_argument('--nb-trend', choices=['parametric','mean'])
+p.add_argument('--nb-cooks-threshold', type=float)
 a = p.parse_args()
+if a.model == 'logLinear' and (a.nb_trend is not None or a.nb_cooks_threshold is not None):
+    p.error('NB options require --model negativeBinomial')
 a.out.mkdir(parents=True, exist_ok=False)
 commands = []
 
@@ -87,6 +92,17 @@ save('design-and-acceptance.json', dict(schemaVersion=1, sourceSHA256=SOURCE_SHA
     comparisonThreshold='No parity/competitiveness threshold; different count models are compared descriptively',
     referencePolicy=dict(refitCooks=False, cooksFilter=False, independentFiltering=False,
         reason='Controlled same-count, same-filter comparison; robust-reference sensitivity is not qualified by this run')))
+if a.model == 'negativeBinomial':
+    specification = json.loads(analysis_path.read_text())
+    specification['contrasts'][0]['model'] = 'negativeBinomial'
+    options = dict(trend=a.nb_trend or 'parametric')
+    if a.nb_cooks_threshold is not None:
+        options['maximumCooksDistance'] = a.nb_cooks_threshold
+    specification['contrasts'][0]['negativeBinomialOptions'] = options
+    save('analysis.json', specification)
+    acceptance = json.loads((a.out/'design-and-acceptance.json').read_text())
+    acceptance['nativeModel'] = dict(model=a.model, options=options, qualification='experimental NB cohort; asymptotic Wald inference, no multi-study calibration')
+    save('design-and-acceptance.json', acceptance)
 imported, store = a.out / 'imported', a.out / 'store'
 run('native-import', 'singlecell-h5ad-import', prepared_path, '--plan', map_path, '--output', imported)
 run('native-counts', 'singlecell-run', imported/'manifest.json', '--store', store, '--output', a.out/'count-receipt.json')
@@ -146,22 +162,30 @@ comparison = native_de.join(reference,how='inner',rsuffix='_reference')
 finite = comparison[(comparison.status=='tested') & np.isfinite(comparison.log2FoldChange) & np.isfinite(comparison.log2FoldChange_reference)]
 native_top = set(finite.nsmallest(50,'adjustedPValue').index)
 reference_top = set(finite.nsmallest(50,'padj').index)
-biology = {g:dict(nativeLog2Effect=float(native_de.loc[g,'log2FoldChange']), referenceLog2Effect=float(reference.loc[g,'log2FoldChange']),
-    nativeBH=float(native_de.loc[g,'adjustedPValue']), referenceBH=float(reference.loc[g,'padj'])) for g in EXPECTED}
-positive = sum(v['nativeLog2Effect']>0 and v['referenceLog2Effect']>0 for v in biology.values())
+def optional_number(value):
+    return float(value) if pd.notna(value) and np.isfinite(value) else None
+biology = {g:dict(nativeStatus=str(native_de.loc[g,'status']), nativeLog2Effect=optional_number(native_de.loc[g,'log2FoldChange']), referenceLog2Effect=optional_number(reference.loc[g,'log2FoldChange']),
+    nativeBH=optional_number(native_de.loc[g,'adjustedPValue']), referenceBH=optional_number(reference.loc[g,'padj'])) for g in EXPECTED}
+positive = sum(v['nativeStatus']=='tested' and v['nativeLog2Effect'] is not None and v['referenceLog2Effect'] is not None and v['nativeLog2Effect']>0 and v['referenceLog2Effect']>0 for v in biology.values())
 versions = {x:version(x) for x in ['scanpy','anndata','pydeseq2','numpy','scipy','pandas','h5py']}
 report = dict(schemaVersion=1,status='completed-real-data-comparison',sourceSHA256=SOURCE_SHA,
     binarySHA256=hashlib.sha256(a.binary.read_bytes()).hexdigest(),versions=versions,platform=platform.platform(),
     cells=len(rows),genes=counts.shape[1],nonzeros=counts.nnz,donors=8,pseudobulks=16,
     integrity=dict(exactImportedCounts=True,exactPseudobulkCounts=True,exactScanpyQC=True,maxLogNormalizationError=normal_error),
-    modelComparison=dict(native='moderated log-linear baseline, not native NB',reference='PyDESeq2 negative binomial',
+    modelComparison=dict(native='moderated log-linear baseline' if a.model=='logLinear' else 'experimental NB2 adjusted-profile dispersion with log-prior shrinkage and Wald inference',reference='PyDESeq2 negative binomial',
         eligibleGenes=int(eligible.sum()),nativeTested=int((native_de.status=='tested').sum()),referenceFinite=int(np.isfinite(reference.pvalue).sum()),
         commonFiniteGenes=len(finite),effectSpearman=float(stats.spearmanr(finite.log2FoldChange,finite.log2FoldChange_reference).statistic),
         effectSignAgreement=float(np.mean(np.sign(finite.log2FoldChange)==np.sign(finite.log2FoldChange_reference))),
         top50BHOverlap=len(native_top&reference_top),referenceFitSeconds=reference_seconds, referenceDiagnostics=reference_diagnostics),
     expectedBiology=dict(status='passed' if positive>=4 else 'failed',positiveInBoth=positive,required=4,genes=biology),
-    qualificationBoundary='One predefined B-cell IFNB contrast in one real paired-donor study; not multi-dataset competitiveness, causal proof or native NB qualification',
+    qualificationBoundary='One predefined B-cell IFNB contrast in one real paired-donor study; not multi-dataset competitiveness, causal proof or production NB calibration',
     nativeCommands=commands)
+if a.model == 'negativeBinomial':
+    diagnostics = native['contrasts'][0]['negativeBinomial']
+    report['nativeNBDiagnostics'] = dict(trend=diagnostics['trend'],
+        statuses={str(k):int(v) for k,v in native_de.status.value_counts().items()},
+        dispersionOutliers=sum(d.get('dispersionOutlier',False) for d in diagnostics['features']),
+        numericalFailures=[dict(featureID=str(native_de.index[d['featureIndex']]),error=d['error']) for d in diagnostics['features'] if 'error' in d and native_de.iloc[d['featureIndex']].status=='numericalFailure'])
 save('report.json',report)
 print(json.dumps({k:v for k,v in report.items() if k!='nativeCommands'},indent=2))
 if positive<4: raise SystemExit(1)

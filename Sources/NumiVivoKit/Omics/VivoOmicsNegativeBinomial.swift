@@ -17,7 +17,8 @@ public struct VivoOmicsNBFit: Codable, Sendable, Equatable {
     public let maximumScaledScore: Double
     public let pearsonResiduals: [Double]
     public let leverage: [Double]
-    public let cooksDistances: [Double]
+    /// Unavailable on deficient support or unit-leverage observations.
+    public let cooksDistances: [Double]?
 }
 public struct VivoOmicsNBDispersionFit: Codable, Sendable, Equatable {
     public let fit: VivoOmicsNBFit
@@ -53,6 +54,13 @@ public enum VivoOmicsNegativeBinomial {
         } else { ratio = lgamma(r+y) - lgamma(r) - y * log(r) }
         return ratio - lgamma(y+1) + y * log(mu) - (y+r) * log1p(a*mu)
     }
+    /// Call only after response/design dimensions have been validated.
+    static func positiveSupportIsRankDeficient(counts: [UInt64],design: [[Double]]) -> Bool {
+        let p = design[0].count
+        let support = counts.indices.filter { counts[$0] > 0 }.map { design[$0] }
+        let rows = support.count == p ? support + [support[0]] : support
+        return support.count < p || (try? VivoOmicsQR(design: rows)) == nil
+    }
     public static func fit(counts: [UInt64], design: [[Double]], offsets: [Double],
                            contrast: [Double], dispersion: Double, maximumIterations: Int = 100) throws -> VivoOmicsNBFit {
         let base = try VivoOmicsQR(design: design)
@@ -63,11 +71,7 @@ public enum VivoOmicsNegativeBinomial {
               dispersion.isFinite, (1e-8...100).contains(dispersion), (1...1000).contains(maximumIterations) else {
             throw VivoOmicsStatisticsError.invalid("NB response, offsets, contrast or iteration domain")
         }
-        let support = counts.indices.filter { counts[$0] > 0 }.map { design[$0] }
-        // Rank on positive-count support is a conservative existence diagnostic.
-        // Zero-only covariate directions can run toward an infinite coefficient.
-        let supportRows = support.count == p ? support + [support[0]] : support
-        let deficient = support.count < p || (try? VivoOmicsQR(design: supportRows)) == nil
+        let deficient = positiveSupportIsRankDeficient(counts: counts,design: design)
         let y = counts.map { Double($0) }
         // Pseudocount is initialization only; the fitted likelihood uses raw y.
         var beta = try base.fit(y.indices.map { log(y[$0]+0.5)-offsets[$0] }, contrast: contrast).coefficients
@@ -98,8 +102,16 @@ public enum VivoOmicsNegativeBinomial {
             try Task.checkCancellation()
             iterations = iteration
             if score(mu) <= 1e-7 { converged = true; break }
-            let (qr,roots) = try weighted(mu)
-            let response = (0..<n).map { i in (log(mu[i])-offsets[i]+(y[i]-mu[i])/mu[i])*roots[i] }
+            // Observed-information Newton steps converge at high dispersion
+            // where Fisher scoring can stall. Final covariance still uses
+            // expected Fisher information, not this optimization curvature.
+            let curvature = (0..<n).map { i in (1+dispersion*y[i])*mu[i]/pow(1+dispersion*mu[i],2) }
+            let roots = curvature.map(sqrt)
+            let qr = try VivoOmicsQR(design: (0..<n).map { i in design[i].map { $0*roots[i] } })
+            let response = (0..<n).map { i in
+                let score = (y[i]-mu[i])/(1+dispersion*mu[i])
+                return (log(mu[i])-offsets[i]+score/curvature[i])*roots[i]
+            }
             let proposed = try qr.fit(response, contrast: contrast).coefficients
             var fraction = 1.0, accepted = false
             for _ in 0..<30 {
@@ -120,8 +132,9 @@ public enum VivoOmicsNegativeBinomial {
         let covariance = try qr.fit([Double](repeating: 0,count: n),contrast: contrast).contrastVarianceScale
         let h = qr.leverage
         let residuals = (0..<n).map { (y[$0]-mu[$0]) * roots[$0] / mu[$0] }
-        let cooks = (0..<n).map { residuals[$0]*residuals[$0]*h[$0] / (Double(p)*pow(1-h[$0],2)) }
-        guard covariance.isFinite, cooks.allSatisfy(\.isFinite), scaledScore.isFinite else {
+        let rawCooks = (0..<n).map { residuals[$0]*residuals[$0]*h[$0] / (Double(p)*pow(1-h[$0],2)) }
+        let cooks = !deficient && h.allSatisfy({ $0 < 1 }) && rawCooks.allSatisfy(\.isFinite) ? rawCooks : nil
+        guard covariance.isFinite, scaledScore.isFinite else {
             throw VivoOmicsStatisticsError.invalid("nonfinite NB information or influence diagnostics")
         }
         return .init(coefficients: beta, means: mu, effect: deficient ? nil : zip(beta,contrast).reduce(0) { $0+$1.0*$1.1 },
@@ -145,7 +158,7 @@ public enum VivoOmicsNegativeBinomial {
         var evaluations = 0
         func evaluate(_ t: Double) throws -> (VivoOmicsNBFit, Double) {
             let fit = try fit(counts: counts, design: design, offsets: offsets, contrast: contrast, dispersion: min(upper,max(lower,exp(t))))
-            guard fit.converged else { throw VivoOmicsStatisticsError.invalid("NB dispersion profile contains an unconverged coefficient fit") }
+            guard fit.converged else { throw VivoOmicsStatisticsError.invalid("NB dispersion profile contains an unconverged coefficient fit at alpha=\(fit.dispersion), scaledScore=\(fit.maximumScaledScore), iterations=\(fit.iterations)") }
             guard let adjusted = fit.coxReidLogLikelihood else {
                 throw VivoOmicsStatisticsError.invalid("NB positive-count support is rank deficient; dispersion profile is not identified")
             }
@@ -173,9 +186,12 @@ public enum VivoOmicsNegativeBinomial {
             }
         }
         if fx.1 > result.1 { result = fx }; if fz.1 > result.1 { result = fz }
+        // Values within 0.01% on the log scale are conservatively labeled
+        // boundary estimates: likelihood rounding can shift a near-Poisson
+        // optimum by more than the 1e-6 scalar-search stopping width.
         return .init(fit: result.0, objective: result.1,
-            lowerBoundary: abs(log(result.0.dispersion)-lo) < 1e-6,
-            upperBoundary: abs(log(result.0.dispersion)-hi) < 1e-6,
+            lowerBoundary: abs(log(result.0.dispersion)-lo) < 1e-4,
+            upperBoundary: abs(log(result.0.dispersion)-hi) < 1e-4,
             profileEvaluations: evaluations, logPriorMean: logPriorMean, logPriorVariance: logPriorVariance)
     }
 }

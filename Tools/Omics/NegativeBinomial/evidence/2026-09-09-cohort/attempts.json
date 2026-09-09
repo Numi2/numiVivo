@@ -1,0 +1,103 @@
+{
+  "initialCohortStatuses": {
+    "filteredLowExpression": 6812,
+    "tested": 5380,
+    "rankDeficientSupport": 3493,
+    "numericalFailure": 21
+  },
+  "initialFailures": [
+    {
+      "featureID": "ANKRD36",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "FASTKD1",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "AFF1",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "SGTB",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "ARSK",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "SLC17A5",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "CDK6",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "TFPI2",
+      "error": "omics statistics: nonfinite NB information or influence diagnostics"
+    },
+    {
+      "featureID": "RPS6KA3",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "PHF8",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "ZDHHC5",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "MAP4K2",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "SLC11A2",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "TMEM120B",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "BRI3BP",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "NAA16",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "NUDT14",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "HBA1",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "ZNF747",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "MVD",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    },
+    {
+      "featureID": "ARMC7",
+      "error": "omics statistics: NB dispersion profile contains an unconverged coefficient fit"
+    }
+  ],
+  "repairs": [
+    "Observed-information Newton optimization replaced slow high-dispersion Fisher scoring, retaining expected-information covariance and the same score tolerance",
+    "Positive-support rank rejection moved before coefficient fitting; unavailable influence is explicit",
+    "Near-boundary classification uses a conservative 1e-4 log distance; original estimates remain recorded",
+    "Reference near-Poisson profiles are recorded as unqualified instead of assuming every estimate below 1e-5 is exactly at the lower bound"
+  ],
+  "releaseHistory": "Initial release was superseded after scientific failures; second release build was intentionally stopped for the boundary classification correction; final release and 18 tests passed",
+  "finalNumericalFailures": 0,
+  "baselineCLI": "13 assertions and 20 commands passed, including common workflow reconstruction"
+}

@@ -119,7 +119,7 @@ public enum VivoOmicsLinearStatistics {
         let t = 1 / (x * x)
         return result + log(x) - 0.5 / x - t * (1.0 / 12 - t * (1.0 / 120 - t * (1.0 / 252 - t / 240)))
     }
-    private static func trigamma(_ input: Double) -> Double {
+    static func trigamma(_ input: Double) -> Double {
         var x = input, result = 0.0
         while x < 12 { result += 1 / (x * x); x += 1 }
         let a = 1 / x, t = a * a

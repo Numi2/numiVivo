@@ -20,6 +20,13 @@ struct ProfileAttempt: Encodable {
 @main struct Main {
     static func main() throws {
         let args = CommandLine.arguments
+        if args.count == 5, args[1] == "cohort" {
+            let data = try JSONDecoder().decode(VivoSingleCellDataset.self,from: Data(contentsOf: URL(fileURLWithPath: args[2])))
+            let plan = try JSONDecoder().decode(VivoSingleCellAnalysisPlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            let report = try VivoSingleCellCohortAnalysis.run(data,plan: plan)
+            try VivoCanonicalJSON.encode(report).write(to: URL(fileURLWithPath: args[4]),options: .atomic)
+            return
+        }
         guard args.count == 3 else { throw NSError(domain: "usage: nb-check input.json output.json",code: 1) }
         let input = try JSONDecoder().decode(Request.self,from: Data(contentsOf: URL(fileURLWithPath: args[1])))
         guard (0...input.counts.count).contains(input.profileCount) else { throw NSError(domain: "profile count",code: 1) }

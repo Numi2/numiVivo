@@ -1,0 +1,154 @@
+{
+  "status": "passed-native-cohort-calculations",
+  "testedGenes": 5400,
+  "trendMethod": "parametric",
+  "trendReferenceGenes": 2823,
+  "trendObjectiveGap": 4.547473508864641e-13,
+  "priorLogVariance": 1.2097094592187967,
+  "maxWaldErrors": {
+    "effect": 1.1179715892040143e-05,
+    "standardError": 5.779874749922698e-07,
+    "z": 8.922239713382574e-06,
+    "p": 5.727996376769795e-06
+  },
+  "mapChecks": [
+    {
+      "gene": "NOC2L",
+      "objectiveError": 1.7053025658242404e-13
+    },
+    {
+      "gene": "HES4",
+      "objectiveError": 9.947598300641403e-14
+    },
+    {
+      "gene": "ISG15",
+      "objectiveError": 3.140598892059643e-12
+    },
+    {
+      "gene": "TNFRSF18",
+      "objectiveError": 5.968558980384842e-13
+    },
+    {
+      "gene": "SDF4",
+      "objectiveError": 1.1368683772161603e-13
+    },
+    {
+      "gene": "UBE2J2",
+      "objectiveError": 4.263256414560601e-14
+    },
+    {
+      "gene": "CPSF3L",
+      "objectiveError": 4.121147867408581e-13
+    },
+    {
+      "gene": "GLTPD1",
+      "objectiveError": 1.4210854715202004e-14
+    },
+    {
+      "gene": "AURKAIP1",
+      "objectiveError": 6.679101716144942e-13
+    },
+    {
+      "gene": "CCNL2",
+      "objectiveError": 7.105427357601002e-14
+    },
+    {
+      "gene": "RP4-758J18.2",
+      "objectiveError": 0.0
+    },
+    {
+      "gene": "MRPL20",
+      "objectiveError": 1.5631940186722204e-12
+    },
+    {
+      "gene": "ATAD3B",
+      "objectiveError": 3.552713678800501e-15
+    },
+    {
+      "gene": "ATAD3A",
+      "objectiveError": 7.105427357601002e-14
+    },
+    {
+      "gene": "SSU72",
+      "objectiveError": 9.094947017729282e-13
+    },
+    {
+      "gene": "MIB2",
+      "objectiveError": 2.1316282072803006e-14
+    },
+    {
+      "gene": "CDK11B",
+      "objectiveError": 2.4868995751603507e-14
+    },
+    {
+      "gene": "CDK11A",
+      "objectiveError": 1.4921397450962104e-13
+    },
+    {
+      "gene": "NADK",
+      "objectiveError": 1.4210854715202004e-14
+    },
+    {
+      "gene": "C1orf86",
+      "objectiveError": 7.460698725481052e-13
+    },
+    {
+      "gene": "RER1",
+      "objectiveError": 2.4868995751603507e-13
+    },
+    {
+      "gene": "PEX10",
+      "objectiveError": 1.4210854715202004e-14
+    },
+    {
+      "gene": "TNFRSF14",
+      "objectiveError": 1.3500311979441904e-13
+    },
+    {
+      "gene": "WRAP73",
+      "objectiveError": 0.0
+    },
+    {
+      "gene": "RPL22",
+      "objectiveError": 1.3642420526593924e-12
+    },
+    {
+      "gene": "NOL9",
+      "objectiveError": 3.552713678800501e-15
+    },
+    {
+      "gene": "ZBTB48",
+      "objectiveError": 1.7763568394002505e-14
+    },
+    {
+      "gene": "THAP3",
+      "objectiveError": 4.973799150320701e-14
+    },
+    {
+      "gene": "CAMTA1",
+      "objectiveError": 1.3500311979441904e-13
+    },
+    {
+      "gene": "VAMP3",
+      "objectiveError": 7.105427357601002e-15
+    },
+    {
+      "gene": "PARK7",
+      "objectiveError": 2.5721647034515627e-12
+    },
+    {
+      "gene": "RERE",
+      "objectiveError": 1.4210854715202004e-14
+    }
+  ],
+  "referenceWarnings": [],
+  "exactBH": true,
+  "sourceReportSHA256": "8471433e911e788d26c2b5f6364cee7cb2d7ffc16a684ced600a7ff78c97492d",
+  "versions": {
+    "statsmodels": "0.15.0",
+    "scipy": "1.18.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5"
+  },
+  "boundary": "Numerical checks conditional on the native model and one real study; not independent biological validity or repeated-sampling calibration"
+}

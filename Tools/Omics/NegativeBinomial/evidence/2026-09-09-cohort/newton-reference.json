@@ -1,0 +1,1937 @@
+{
+  "status": "passed-conditioned-NB-numerics",
+  "genes": 8894,
+  "fullPositiveSupportGenes": 5400,
+  "rankDeficientSupportGenes": 3494,
+  "referenceWarnings": [
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CYP2J2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC017076.5",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "AC104655.3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "IL1RN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TNFAIP6",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ZNF804A",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DNASE1L3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "LAMP3",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL9",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CXCL11",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "VCAN",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HLA-DQB2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SOBP",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "DLL1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "PHTF2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC25A40",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TFPI2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "CALD1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ENPP2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "TTC39B",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "ASCL2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "MS4A12",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "HRASLS2",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "BCL2L14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "SLC24A1",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "KLHL14",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "RP5-1103G7.4",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    },
+    {
+      "gene": "USP18",
+      "message": "Perfect separation or prediction detected, parameter may not be identified",
+      "category": "PerfectSeparationWarning"
+    }
+  ],
+  "profileRejections": [
+    {
+      "gene": "TNFRSF4",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "B3GALT6",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "ACAP3",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "PUSL1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "RP11-345P4.9",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "SLC35E2B",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "GNB1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "PRKCZ",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "SKI",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "PANK4",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "RP3-395M20.12",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "FAM213B",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "TPRG1L",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "TP73-AS1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "LRRC47",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "CEP104",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "C1orf174",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "KCNAB2",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "ICMT",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "TNFRSF25",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "KLHL21",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "PHF13",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "DNAJC11",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "TNFRSF9",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "H6PD",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "SPSB1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "PIK3CD",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "CLSTN1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "NMNAT1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "UBE4B",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "FBXO44",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "AGTRAP",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "MTHFR",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "KIAA2013",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "MFN2",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "VPS13D",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "EFHD2",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "CASP9",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "AGMAT",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "DDI2",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "RP11-169K16.9",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "ARHGEF19",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "FBXO42",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "NBPF1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "CROCCP2",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "RP11-108M9.4",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "EMC1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "TMCO4",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "MUL1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "PINK1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "EIF4G3",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "LINC00339",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "ZBTB40",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "LUZP1",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    },
+    {
+      "gene": "RP5-886K2.3",
+      "reason": "omics statistics: NB positive-count support is rank deficient; dispersion profile is not identified"
+    }
+  ],
+  "nearPoissonUnqualified": [
+    {
+      "gene": "NOC2L",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "HES4",
+      "dispersion": 1.0000023814029208e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "TNFRSF18",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "SDF4",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "UBE2J2",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "CPSF3L",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "GLTPD1",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "RP4-758J18.2",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "MRPL20",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "ATAD3B",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "MIB2",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "C1orf86",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "RER1",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "TNFRSF14",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "RPL22",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "NOL9",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "SLC2A5",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "LZIC",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "PGD",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "APITD1",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "PEX14",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "TARDBP",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "SRM",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "MIIP",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "PRDM2",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "SPEN",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "SDHB",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "RCC2",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "AKR7A2",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "MINOS1",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "HP1BP3",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "ECE1",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "CDC42",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "KDM1A",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    },
+    {
+      "gene": "PITHD1",
+      "dispersion": 1e-08,
+      "lowerBoundary": true,
+      "reason": "Reference log-gamma precision does not qualify this near-Poisson profile"
+    }
+  ],
+  "observations": 16,
+  "designColumns": 9,
+  "fixedDispersion": 0.15,
+  "maxErrors": {
+    "effect": 1.9879418232671142e-06,
+    "standardError": 1.0106723014047247e-07,
+    "logLikelihood": 8.731149137020111e-11,
+    "meansRelative": 1.975061536580208e-06,
+    "coxReid": 1.8666275991563452e-07
+  },
+  "acceptance": {
+    "effect": 2e-05,
+    "standardError": 2e-05,
+    "logLikelihood": 1e-05,
+    "meansRelative": 2e-05,
+    "coxReid": 1e-05
+  },
+  "profileGenes": 128,
+  "interiorProfileComparisons": 38,
+  "maxInteriorProfileObjectiveError": 7.627094333884088e-08,
+  "nativeSeconds": 1.989042124710977,
+  "versions": {
+    "statsmodels": "0.15.0",
+    "scipy": "1.18.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5"
+  },
+  "inputSHA256": "7238e495b2dfbba0bb85c34346b569c99b3c7c17da527a407067af9cd846ebf8",
+  "binarySHA256": "17fa9a6bd7b7207050603362cb31af778bdadf666a4f386341b1ba7df365e252",
+  "qualificationBoundary": "Conditional GLM numerical qualification on real pseudobulks; no learned dispersion trend, cohort NB DE, Wald calibration or biological model qualification"
+}

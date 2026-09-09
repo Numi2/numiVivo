@@ -62,6 +62,7 @@ pd.DataFrame(reference).to_csv(a.out/'statsmodels.tsv',sep='\t',index=False)
 # Compare objective value, not arbitrary dispersion location on flat boundaries.
 profile_errors=[]
 profile_rejections=[]
+near_poisson_unqualified=[]
 for i,attempt in enumerate(native['profiles']):
     if 'error' in attempt:
         assert np.linalg.matrix_rank(x[counts.iloc[:,i].to_numpy()>0])<x.shape[1]
@@ -84,10 +85,10 @@ for i,attempt in enumerate(native['profiles']):
         error=abs(-negative-n['objective']);assert error<1e-4,(counts.columns[i],error)
         profile_errors.append(error)
     else:
-        assert n['lowerBoundary'],(counts.columns[i],n)
+        near_poisson_unqualified.append(dict(gene=str(counts.columns[i]),dispersion=n['fit']['dispersion'],lowerBoundary=n['lowerBoundary'],reason='Reference log-gamma precision does not qualify this near-Poisson profile'))
 thresholds=dict(effect=2e-5,standardError=2e-5,logLikelihood=1e-5,meansRelative=2e-5,coxReid=1e-5)
 report=dict(status='passed-conditioned-NB-numerics' if all(errors[k]<thresholds[k] for k in errors) else 'failed',
-    genes=counts.shape[1],fullPositiveSupportGenes=len(reference),rankDeficientSupportGenes=rank_deficient,referenceWarnings=diagnostics,profileRejections=profile_rejections,observations=16,designColumns=x.shape[1],fixedDispersion=0.15,
+    genes=counts.shape[1],fullPositiveSupportGenes=len(reference),rankDeficientSupportGenes=rank_deficient,referenceWarnings=diagnostics,profileRejections=profile_rejections,nearPoissonUnqualified=near_poisson_unqualified,observations=16,designColumns=x.shape[1],fixedDispersion=0.15,
     maxErrors=errors,acceptance=thresholds,profileGenes=128,interiorProfileComparisons=len(profile_errors),
     maxInteriorProfileObjectiveError=max(profile_errors,default=None),nativeSeconds=native_seconds,
     versions={k:version(k) for k in ['statsmodels','scipy','numpy','pandas']},

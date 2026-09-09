@@ -1,0 +1,224 @@
+import Foundation
+
+public enum VivoOmicsNBTrendMethod: String, Codable, Sendable { case parametric, mean }
+public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
+    public var trend: VivoOmicsNBTrendMethod = .parametric
+    public var minimumTrendGenes: Int = 20
+    public var minimumPriorVariance: Double = 0.25
+    public var outlierStandardDeviations: Double = 2
+    /// nil reports influence without excluding observations or genes.
+    public var maximumCooksDistance: Double?
+    public init() {}
+    private enum CodingKeys: String, CodingKey {
+        case trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance
+    }
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance"])
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        trend = try c.decodeIfPresent(VivoOmicsNBTrendMethod.self, forKey: .trend) ?? .parametric
+        minimumTrendGenes = try c.decodeIfPresent(Int.self, forKey: .minimumTrendGenes) ?? 20
+        minimumPriorVariance = try c.decodeIfPresent(Double.self, forKey: .minimumPriorVariance) ?? 0.25
+        outlierStandardDeviations = try c.decodeIfPresent(Double.self, forKey: .outlierStandardDeviations) ?? 2
+        maximumCooksDistance = try c.decodeIfPresent(Double.self, forKey: .maximumCooksDistance)
+    }
+    public func validate() throws {
+        guard (20...100_000).contains(minimumTrendGenes), minimumPriorVariance.isFinite,
+              (0.01...10).contains(minimumPriorVariance), outlierStandardDeviations.isFinite,
+              (1...10).contains(outlierStandardDeviations),
+              maximumCooksDistance.map({ $0.isFinite && $0 > 0 }) ?? true else {
+            throw VivoOmicsError.invalid("NB trend, prior or influence options")
+        }
+    }
+}
+public struct VivoOmicsNBTrend: Codable, Sendable, Equatable {
+    public let method: VivoOmicsNBTrendMethod
+    public let intercept: Double
+    public let inverseMeanCoefficient: Double
+    public let referenceFeatureIndices: [Int]
+    public let robustLogResidualVariance: Double
+    public let samplingLogVariance: Double
+    public let priorLogVariance: Double
+    public let priorVarianceFloorReached: Bool
+    public let iterations: Int
+    public func dispersion(mean: Double) -> Double { intercept + inverseMeanCoefficient / mean }
+}
+public struct VivoOmicsNBFeatureDiagnostics: Codable, Sendable, Equatable {
+    public let featureIndex: Int
+    public var geneWiseDispersion: Double?
+    public var geneWiseLowerBoundary: Bool?
+    public var geneWiseUpperBoundary: Bool?
+    public var trendDispersion: Double?
+    public var dispersionOutlier: Bool?
+    public var finalDispersion: Double?
+    public var finalFit: VivoOmicsNBFit?
+    public var error: String?
+}
+public struct VivoOmicsNBCohortDiagnostics: Codable, Sendable, Equatable {
+    public let trend: VivoOmicsNBTrend
+    public let features: [VivoOmicsNBFeatureDiagnostics]
+    public let qualification: String
+}
+
+public enum VivoOmicsNBCohort {
+    /// Robust log-residual fit of alpha = a0 + a1 / mean. A named mean-only
+    /// alternative is explicit; failed parametric fits do not switch methods.
+    public static func fitTrend(means: [Double], dispersions: [Double], featureIndices: [Int],
+                                residualDF: Int, options: VivoOmicsNBCohortOptions) throws -> VivoOmicsNBTrend {
+        try options.validate()
+        guard means.count == dispersions.count, means.count == featureIndices.count,
+              means.count >= options.minimumTrendGenes, residualDF > 0,
+              means.allSatisfy({ $0.isFinite && $0 > 0 }),
+              dispersions.allSatisfy({ $0.isFinite && $0 > 1e-8 && $0 < 100 }) else {
+            throw VivoOmicsError.invalid("NB trend needs sufficient interior gene-wise estimates")
+        }
+        let logs = dispersions.map(log), scale = try VivoOmicsLinearStatistics.median(means)
+        let x = means.map { scale / $0 }
+        var a = exp(try VivoOmicsLinearStatistics.median(logs)), b = 0.0, iterations = 0
+        if options.trend == .parametric {
+            b = a * 0.1
+            func objective(_ a: Double, _ b: Double) -> Double {
+                zip(x,logs).reduce(0) { sum, pair in
+                    let prediction = a + b * pair.0
+                    if prediction <= 0 { return .infinity }
+                    let r = abs(pair.1-log(prediction))
+                    return sum + (r <= 1.345 ? r*r/2 : 1.345*(r-1.345/2))
+                }
+            }
+            var converged = false
+            for iteration in 1...200 {
+                iterations = iteration
+                var h00 = 0.0, h01 = 0.0, h11 = 0.0, g0 = 0.0, g1 = 0.0
+                for i in x.indices {
+                    let mu = a+b*x[i], r = logs[i]-log(mu), w = min(1,1.345/max(abs(r),1e-100))
+                    let d0 = 1/mu, d1 = x[i]/mu
+                    h00 += w*d0*d0; h01 += w*d0*d1; h11 += w*d1*d1
+                    g0 += w*d0*r; g1 += w*d1*r
+                }
+                let det = h00*h11-h01*h01
+                guard det.isFinite, det > 1e-12*h00*h11 else { throw VivoOmicsError.invalid("NB parametric trend is not identifiable") }
+                let da = (h11*g0-h01*g1)/det, db = (h00*g1-h01*g0)/det
+                let before = objective(a,b)
+                var fraction = 1.0, accepted = false
+                for _ in 0..<40 {
+                    let aa = max(0,a+fraction*da), bb = max(0,b+fraction*db)
+                    let after = objective(aa,bb)
+                    if after.isFinite && after <= before {
+                        let change = x.map { abs((aa+bb*$0)/(a+b*$0)-1) }.max()!
+                        a = aa; b = bb; accepted = true
+                        if change < 1e-7 { converged = true }
+                        break
+                    }
+                    fraction *= 0.5
+                }
+                if converged { break }
+                if !accepted { throw VivoOmicsError.invalid("NB parametric trend step did not improve") }
+            }
+            guard converged else { throw VivoOmicsError.invalid("NB parametric trend did not converge") }
+        }
+        let residuals = x.indices.map { logs[$0]-log(a+b*x[$0]) }
+        let center = try VivoOmicsLinearStatistics.median(residuals)
+        let mad = try VivoOmicsLinearStatistics.median(residuals.map { abs($0-center) }) / 0.6744897501960817
+        let sampling = VivoOmicsLinearStatistics.trigamma(Double(residualDF)/2)
+        let excess = mad*mad-sampling
+        return .init(method: options.trend, intercept: a, inverseMeanCoefficient: b*scale,
+            referenceFeatureIndices: featureIndices, robustLogResidualVariance: mad*mad,
+            samplingLogVariance: sampling, priorLogVariance: max(options.minimumPriorVariance,excess),
+            priorVarianceFloorReached: excess <= options.minimumPriorVariance, iterations: iterations)
+    }
+    static func evaluate(dataset: VivoSingleCellDataset, entries: [[(row: Int,count: UInt64)]],
+                         design: VivoOmicsDesignMatrix, request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
+        let options = request.negativeBinomialOptions ?? .init()
+        let n = design.rows.count, offsets = design.sizeFactorValues.map(log)
+        let count = entries.count
+        var totals = [UInt64](repeating: 0,count: count), means = [Double](repeating: 0,count: count)
+        var profiles = [VivoOmicsNBDispersionFit?](repeating: nil,count: count)
+        var diagnostics = entries.indices.map { VivoOmicsNBFeatureDiagnostics(featureIndex: $0) }
+        var statuses = [VivoOmicsExpressionStatus](repeating: .filteredLowExpression,count: count)
+        func response(_ gene: Int) -> [UInt64] {
+            var y = [UInt64](repeating: 0,count: n)
+            for entry in entries[gene] { y[entry.row] = entry.count }
+            return y
+        }
+        for gene in entries.indices {
+            try Task.checkCancellation()
+            for entry in entries[gene] {
+                totals[gene] = try vivoOmicsSum(totals[gene],entry.count)
+                means[gene] += Double(entry.count)/design.sizeFactorValues[entry.row]/Double(n)
+            }
+            if totals[gene] < request.minimumFeatureCounts || entries[gene].count < request.minimumExpressingPseudobulks { continue }
+            let y = response(gene)
+            do {
+                if VivoOmicsNegativeBinomial.positiveSupportIsRankDeficient(counts: y,design: design.rows) {
+                    statuses[gene] = .rankDeficientSupport
+                    diagnostics[gene].error = "Positive-count support is rank deficient; no inferential fit"
+                    continue
+                }
+                let profile = try VivoOmicsNegativeBinomial.estimateDispersion(counts: y,design: design.rows,offsets: offsets,contrast: design.contrast)
+                profiles[gene] = profile
+                diagnostics[gene].geneWiseDispersion = profile.fit.dispersion
+                diagnostics[gene].geneWiseLowerBoundary = profile.lowerBoundary
+                diagnostics[gene].geneWiseUpperBoundary = profile.upperBoundary
+                statuses[gene] = .tested
+            } catch is CancellationError { throw CancellationError() }
+            catch { statuses[gene] = .numericalFailure; diagnostics[gene].error = error.localizedDescription }
+        }
+        let reference = entries.indices.filter { profiles[$0].map { !$0.lowerBoundary && !$0.upperBoundary } ?? false }
+        let trend = try fitTrend(means: reference.map { means[$0] },dispersions: reference.map { profiles[$0]!.fit.dispersion },
+                                 featureIndices: reference,residualDF: design.residualDegreesOfFreedom,options: options)
+        var low = 0.0, high = 10.0
+        for _ in 0..<80 {
+            let mid = (low+high)/2
+            if erfc(mid/sqrt(2)) > 1-request.intervalCoverage { low = mid } else { high = mid }
+        }
+        let critical = (low+high)/2
+        var features: [VivoOmicsExpressionFeature] = [], tested: [Int] = [], probabilities: [Double] = []
+        for gene in entries.indices {
+            try Task.checkCancellation()
+            var result = VivoOmicsExpressionFeature(featureIndex: gene,featureID: dataset.features[gene].id,status: statuses[gene],
+                totalCounts: totals[gene],expressingPseudobulks: entries[gene].count,meanNormalizedCount: means[gene],
+                log2FoldChange: nil,residualVariance: nil,posteriorVariance: nil,standardError: nil,tStatistic: nil,
+                degreesOfFreedom: nil,intervalLower: nil,intervalUpper: nil,pValue: nil,adjustedPValue: nil)
+            if let profile = profiles[gene] {
+                do {
+                    let target = trend.dispersion(mean: means[gene])
+                    guard target.isFinite, (1e-8...100).contains(target) else { throw VivoOmicsError.invalid("NB trend prediction outside dispersion bounds") }
+                    diagnostics[gene].trendDispersion = target
+                    let outlier = log(profile.fit.dispersion/target) > options.outlierStandardDeviations * sqrt(trend.robustLogResidualVariance)
+                    diagnostics[gene].dispersionOutlier = outlier
+                    let final = outlier ? profile : try VivoOmicsNegativeBinomial.estimateDispersion(counts: response(gene),design: design.rows,
+                        offsets: offsets,contrast: design.contrast,logPriorMean: log(target),logPriorVariance: trend.priorLogVariance)
+                    diagnostics[gene].finalDispersion = final.fit.dispersion
+                    diagnostics[gene].finalFit = final.fit
+                    guard let cooks = final.fit.cooksDistances else { throw VivoOmicsError.invalid("NB influence unavailable on unit-leverage design") }
+                    let status: VivoOmicsExpressionStatus
+                    if final.lowerBoundary || final.upperBoundary { status = .dispersionBoundary }
+                    else if let threshold = options.maximumCooksDistance, cooks.contains(where: { $0 > threshold }) { status = .influentialObservation }
+                    else { status = .tested }
+                    guard let effect = final.fit.effect, let error = final.fit.standardError, error > 0 else { throw VivoOmicsError.invalid("NB final fit lacks identified effect/information") }
+                    let z = effect/error, probability = erfc(abs(z)/sqrt(2))
+                    result = .init(featureIndex: gene,featureID: dataset.features[gene].id,status: status,totalCounts: totals[gene],
+                        expressingPseudobulks: entries[gene].count,meanNormalizedCount: means[gene],
+                        log2FoldChange: effect/log(2),residualVariance: nil,posteriorVariance: nil,standardError: error/log(2),tStatistic: nil,
+                        degreesOfFreedom: nil,intervalLower: status == .tested ? (effect-critical*error)/log(2) : nil,
+                        intervalUpper: status == .tested ? (effect+critical*error)/log(2) : nil,pValue: status == .tested ? probability : nil,
+                        adjustedPValue: nil,zStatistic: status == .tested ? z : nil)
+                    if status == .tested { tested.append(gene); probabilities.append(probability) }
+                } catch is CancellationError { throw CancellationError() }
+                catch {
+                    diagnostics[gene].error = error.localizedDescription
+                    result = .init(featureIndex: gene,featureID: dataset.features[gene].id,status: .numericalFailure,totalCounts: totals[gene],
+                        expressingPseudobulks: entries[gene].count,meanNormalizedCount: means[gene],log2FoldChange: nil,residualVariance: nil,
+                        posteriorVariance: nil,standardError: nil,tStatistic: nil,degreesOfFreedom: nil,intervalLower: nil,intervalUpper: nil,pValue: nil,adjustedPValue: nil)
+                }
+            }
+            features.append(result)
+        }
+        let adjusted = try VivoOmicsLinearStatistics.benjaminiHochberg(probabilities)
+        for (i,gene) in tested.enumerated() { features[gene].adjustedPValue = adjusted[i] }
+        return .init(method: "donor-aware-NB2-adjusted-profile-log-prior-Wald-v1",request: request,evidence: dataset.evidence,design: design,
+            variancePrior: nil,features: features,testedFeatures: tested.count,
+            multiplicityScope: "BH across available NB Wald tests within this contrast; no selection-adjusted or cross-contrast calibration claim",
+            negativeBinomial: .init(trend: trend,features: diagnostics,
+                qualification: "Experimental NB cohort method; asymptotic Wald intervals, heuristic influence gate if requested, no count replacement; multi-study calibration remains open"))
+    }
+}

@@ -119,17 +119,17 @@ public enum VivoSingleCellAnalysisTables {
                       number(row.meanLogNormalized), number(row.varianceLogNormalized)], to: &features)
         }
         result["feature-statistics.tsv"] = features
-        struct ContrastFile: Codable { let id: String; let statistics: String; let design: String }
+        struct ContrastFile: Codable { let id: String; let method: String; let statistics: String; let design: String; let diagnostics: String? }
         var contrastFiles: [ContrastFile] = []
         for (index, contrast) in report.contrasts.enumerated() {
             try Task.checkCancellation()
             let prefix = String(format: "contrast-%04d", index)
             var statistics = Data(), design = Data()
-            try line(["feature_index", "feature_id", "status", "counts", "expressing_pseudobulks", "mean_normalized_count", "log2_effect", "standard_error", "t", "df", "interval_lower", "interval_upper", "p_value", "BH_adjusted_p"], to: &statistics)
+            try line(["feature_index", "feature_id", "status", "counts", "expressing_pseudobulks", "mean_normalized_count", "log2_effect", "standard_error", "t", "df", "interval_lower", "interval_upper", "p_value", "BH_adjusted_p"] + (contrast.negativeBinomial == nil ? [] : ["z"]), to: &statistics)
             for row in contrast.features {
                 try line([String(row.featureIndex), row.featureID, row.status.rawValue, String(row.totalCounts), String(row.expressingPseudobulks),
                     String(row.meanNormalizedCount), number(row.log2FoldChange), number(row.standardError), number(row.tStatistic),
-                    number(row.degreesOfFreedom), number(row.intervalLower), number(row.intervalUpper), number(row.pValue), number(row.adjustedPValue)], to: &statistics)
+                    number(row.degreesOfFreedom), number(row.intervalLower), number(row.intervalUpper), number(row.pValue), number(row.adjustedPValue)] + (contrast.negativeBinomial == nil ? [] : [number(row.zStatistic)]), to: &statistics)
             }
             try line(["source_pseudobulk", "replicate", "donor", "condition", "size_factor", "library_counts"] + contrast.design.columnNames, to: &design)
             for (row, observation) in contrast.design.observations.enumerated() {
@@ -138,7 +138,11 @@ public enum VivoSingleCellAnalysisTables {
                     contrast.design.rows[row].map { String($0) }, to: &design)
             }
             result[prefix + ".tsv"] = statistics; result[prefix + "-design.tsv"] = design
-            contrastFiles.append(.init(id: contrast.request.id, statistics: prefix + ".tsv", design: prefix + "-design.tsv"))
+            let diagnosticsPath = contrast.negativeBinomial.map { _ in prefix + "-nb-diagnostics.json" }
+            if let diagnostics = contrast.negativeBinomial, let path = diagnosticsPath {
+                result[path] = try VivoCanonicalJSON.encode(diagnostics)
+            }
+            contrastFiles.append(.init(id: contrast.request.id, method: contrast.method, statistics: prefix + ".tsv", design: prefix + "-design.tsv", diagnostics: diagnosticsPath))
         }
         struct Index: Codable {
             let schema: String

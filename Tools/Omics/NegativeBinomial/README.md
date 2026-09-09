@@ -1,83 +1,139 @@
-# Native negative-binomial numerical owner
+# Native negative-binomial cohort analysis
 
-`VivoOmicsNegativeBinomial` implements a Swift NB2 likelihood with variance
-`mu + alpha * mu^2`, a log-link GLM with explicit offsets and arbitrary bounded
-full-rank covariates, weighted QR Fisher scoring with likelihood step halving,
-and Cox–Reid adjusted dispersion profiling. An optional explicit Gaussian prior
-on log dispersion supports MAP optimization. No dense cells-by-genes matrix is
-used: one gene's donor-level response is fitted at a time.
+The actual `singlecell-analyze` route now supports an explicit
+`"model": "negativeBinomial"` contrast. It uses the existing sample selection,
+paired-donor/independent-replicate checks, batch design, sparse pseudobulk and
+size-factor authority. Old plans without a model retain the log-linear baseline.
+The NB method remains experimental pending multi-study calibration and broader
+reference coverage; enabling it does not claim production qualification.
 
-The cohort CLI still uses the existing log-linear baseline. This numerical
-owner is a step toward native NB DE, not a completed replacement. Cohort trend
-estimation, empirical dispersion shrinkage/outlier handling, integration with
-donor/batch metadata, multiple-testing inference, effect shrinkage and robust
-scientific qualification remain.
+## Model and diagnostics
 
-## Diagnostics and inference boundary
+`VivoOmicsNegativeBinomial` implements NB2 with variance
+`mu + alpha * mu^2`, explicit log size-factor offsets and a log-link GLM.
+Observed-information Newton steps use weighted QR and likelihood step halving;
+final covariance uses expected Fisher information. Coefficient convergence,
+fitted means, Pearson residuals, leverage and available Cook's distances are
+retained. Core coefficients use natural logs; cohort effects, standard errors
+and intervals use log2 units.
 
-A fit records score convergence, iterations, fitted means, Pearson residuals,
-leverage and Cook's distances. Nonconvergence is explicit. Rank-deficient
-positive-count support is detected independently of score convergence; effects,
-standard errors and adjusted profile likelihood are omitted for these fits.
-Dispersion profiling rejects them. This is a conservative support-rank gate,
-not a claim to solve every separation or identification case.
+Gene-wise dispersion maximizes the Cox–Reid adjusted profile likelihood.
+A robust Huber fit of log-dispersion residuals estimates the parametric trend
+`alpha = a0 + a1 / mean`, with nonnegative coefficients. The explicit `mean`
+alternative uses the median log dispersion and never activates as a silent
+fallback. Only interior gene-wise estimates enter trend fitting.
 
-Candidate coefficient values and fitted means remain available for numerical
-diagnostics; they must not become inferential results when the rank gate fails
-or convergence is false. Cook's distances are diagnostic values, without an
-outlier threshold, automatic replacement or robustness qualification. The owner
-returns no p-values. All coefficient/effect units are **natural logs**.
+The log-normal prior variance is the squared scaled MAD of trend residuals
+minus `trigamma(residualDF / 2)`, floored by the declared minimum. MAP estimation
+then refits each gene's adjusted profile with this prior. High positive
+log-dispersion residuals beyond the declared outlier threshold retain their
+gene-wise estimate. The trend, reference genes, prior, outliers, original/final
+dispersions and per-gene failures are all present in the report.
 
-Dispersion is bounded to [1e-8, 100]. A 25-point log grid locates a bracket,
-followed by golden-section refinement. Lower/upper boundary estimates are
-explicit. This search is not a proof of global optimality for every arbitrary
-input. Inference on raw counts outside the exact FP64 integer range is rejected;
-raw exchange retains its separate UInt64 authority.
+Normal Wald probabilities and intervals condition on the final dispersion;
+they do not integrate all uncertainty in trend/prior estimation. BH adjustment
+uses only the available tests within a contrast. Repeated-sampling calibration,
+selection-adjusted FDR and cross-contrast guarantees are not established.
+Very small probabilities can underflow to zero in FP64; zero is not a claim
+of mathematical impossibility. The recorded native and PyDESeq2 p-values
+sometimes differ by many orders of magnitude.
 
-The adjusted profile method follows the likelihood/information construction
-in the [DESeq2 methods documentation](https://www.bioconductor.org/packages/release/bioc/manuals/DESeq2/man/DESeq2.pdf).
-It does not reproduce DESeq2's full dispersion-estimation pipeline.
+Positive-count support rank deficiency withholds inference, even if candidate
+coefficient optimization reports score convergence. This conservative gate
+currently excludes 3,494 Kang genes and is not a complete treatment of every
+gene-specific nuisance-parameter or separation case. Failed fits, final boundary
+estimates and genes excluded by an explicitly requested influence threshold
+receive no p-value. Cook's distances are unavailable for deficient support or
+unit leverage; they are never replaced with fabricated zeros. No count
+replacement or automatic donor removal occurs.
 
-## Evidence on real counts
+Dispersion search is bounded to [1e-8, 100], using a 25-point log grid and
+refinement. Estimates within 1e-4 log units of an endpoint are conservatively
+flagged as boundary estimates, without replacing their recorded values. This
+accounts for near-Poisson likelihood rounding beyond the scalar search width.
+The search is not a global-optimality proof for arbitrary inputs.
 
-[Recorded evidence](evidence/2026-09-09/reference.json) uses the unchanged Kang
-pseudobulks from the experimental benchmark: 8,894 eligible genes, 16 donor ×
-condition observations and nine design columns. Dispersion **0.15 is supplied
-for numerical validation**, not estimated or biologically qualified.
+The adjusted-profile construction is described in the
+[DESeq2 methods documentation](https://www.bioconductor.org/packages/release/bioc/manuals/DESeq2/man/DESeq2.pdf).
+Our robust trend, optimization, rank gate and diagnostics are explicitly
+reported choices; this is not a reproduction of the entire DESeq2 pipeline.
 
-Independent statsmodels GLM fits agree on all 5,400 genes with full-rank
-positive-count support. Maximum absolute natural-log effect error was 1.79e-6,
-standard-error error 9.97e-8 and log-likelihood error 5.00e-11. The other 3,494
-genes are explicitly flagged; they are not counted as successful inferential
-fits. NumPy's independent rank check matches every flag. All 293 reference
-warnings are retained in the report.
+## Native plan
 
-For the first 128 source-order eligible genes, 55 dispersion profiles are
-rejected by the support-rank gate, 35 reach the lower bound and 38 interior
-profiles agree with an independent SciPy optimizer/statsmodels refit to maximum
-objective error 9.80e-8. Near-Poisson boundary optima are **not** claimed to match
-that reference: its direct log-gamma subtraction loses precision there.
+Add these fields to an otherwise complete existing contrast:
 
-Fifteen Swift tests passed, including six new tests: analytic intercept mean
-and information, offset reparameterization, invalid/nonconverged inputs,
-zero-only covariate support, explicit-prior behavior, and eight log masses
-calculated independently with mpmath 1.3.0 at 80 digits. Failed development
-attempts and their corrections remain in `attempts.json`.
+```json
+{
+  "model": "negativeBinomial",
+  "negativeBinomialOptions": {
+    "trend": "parametric",
+    "minimumTrendGenes": 20,
+    "minimumPriorVariance": 0.25,
+    "outlierStandardDeviations": 2
+  }
+}
+```
+
+An optional positive `maximumCooksDistance` excludes genes above that declared
+threshold. Omission reports influence without exclusion. No universal threshold
+or robustness guarantee is asserted. Overrides of the log-linear `variance`
+and `priorCount` options are rejected for NB rather than silently applied.
+
+`singlecell-analysis-export` reconstructs the complete NB result from its
+count/plan receipts. `singlecell-analysis-tables` exports an NB diagnostics JSON
+and a `z` column, leaving `t` and `df` empty. Its index identifies the actual
+method. Filtered/unavailable probabilities remain empty, not zero.
+
+## Real-data evidence
+
+The [cohort evidence](evidence/2026-09-09-cohort) records a full optimized CLI
+run on all 2,651 Kang B cells, all 15,706 source genes and eight paired donors.
+Counts, pseudobulks and Scanpy QC match exactly; normalization error is below
+1e-10. Of 8,894 expression-eligible genes, 5,400 are tested and 3,494 fail the
+positive-support rank gate. There are no numerical failures. The parametric
+trend uses 2,823 interior genes; 37 dispersion outliers retain gene-wise fits.
+
+On the 5,400 common tested genes, native versus PyDESeq2 effect Spearman
+correlation is 0.99907, sign agreement is 99%, and 43 of the top 50 BH-ranked
+genes overlap. All five declared interferon genes pass the direction check.
+These are descriptive results on one selected cell type in one study, not
+competitiveness or calibration gates. PyDESeq2's mean-trend fallback warning
+and disabled Cook's/independent-filtering policy remain explicit.
+
+Independent SciPy/statsmodels checks cover the actual fitted trend, prior,
+all 5,400 available Wald tests, 32 MAP profiles and BH calculation. Maximum
+log2 effect difference is 1.12e-5 and MAP objective difference is 3.15e-12.
+The complete CLI also passed NB table/diagnostic checks, 18 Swift tests and
+13 baseline CLI assertions across 20 commands, including workflow replay.
+Failed development attempts remain in `attempts.json`.
+
+The [earlier conditional-owner evidence](evidence/2026-09-09) and fresh
+`newton-reference.json` isolate numerical fitting at supplied dispersion 0.15;
+that supplied value is not a biological estimate. Near-Poisson reference
+profiles remain explicitly unqualified because of reference log-gamma precision.
 
 ## Reproduction
 
-First reproduce the [Kang benchmark](../Benchmarks/README.md), then use its
-output directory as `--kang-result`. The scoped executable calls the actual
-Swift numerical owner; it is not a replacement implementation or product CLI.
+Use Python 3.12 and the pinned requirements. Fresh output directories are
+required; run Python without `-O` so integrity assertions remain enabled.
 
 ```sh
 python -m pip install -r Tools/Omics/NegativeBinomial/requirements.txt
-bash Tools/Omics/NegativeBinomial/build.sh /tmp/numivivo-nb-build
-python Tools/Omics/NegativeBinomial/check_reference.py --binary /tmp/numivivo-nb-build/nb-check --kang-result /tmp/kang-result --out /tmp/nb-reference
+python Tools/Omics/Benchmarks/run_kang.py --binary /path/to/numivivo --source kang_2018.h5ad --model negativeBinomial --nb-trend parametric --out /tmp/kang-nb
+python Tools/Omics/NegativeBinomial/check_cohort.py --kang-result /tmp/kang-nb --out /tmp/kang-nb-reference
+/path/to/numivivo singlecell-analysis-tables /tmp/kang-nb/analysis-receipt.json --store /tmp/kang-nb/store --output /tmp/kang-nb-tables
+python Tools/Omics/NegativeBinomial/check_tables.py --report /tmp/kang-nb/native-report.json --tables /tmp/kang-nb-tables --out /tmp/kang-nb-tables-check.json
 ```
 
-Run Python without `-O`; output directories must be new. The full native input
-and output, reference coefficients and warnings are retained locally. The
-committed report hashes the executable and exact numerical input. The recorded
-native timing is a scoped optimized numerical run, not end-to-end DE throughput
-or a speed comparison with Scanpy/PyDESeq2.
+For isolated numerical development, `build.sh` creates `nb-check` from the actual
+owners. Its `cohort dataset.json plan.json report.json` mode is a scoped harness,
+not the product CLI. No Python implementation supplies native fitting.
+
+## Remaining work
+
+Multi-study calibration, robust reference sensitivity, gene-specific nuisance
+handling, effect shrinkage and comparisons with R edgeR/limma/DESeq2 remain.
+Do not promote the default on effect correlation alone. Original Hagai UMI
+matrices have now been audited, but the 32.85-million-nonzero declared scope
+exceeds the current five-million count bound. That capacity and its actual
+benchmark must be addressed without dropping data merely to pass the limit.

@@ -1,0 +1,78 @@
+{
+  "status": "original-UMI-matrices-audited-not-benchmarked",
+  "study": "E-MTAB-6754",
+  "studyURL": "https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-6754",
+  "scope": "Mouse source groups 1-3, unstimulated versus six-hour LPS; author QC and cluster0 selection retained",
+  "files": [
+    {
+      "file": "mouse1_unst_filtered_by_cell_cluster0.txt.gz",
+      "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-6754/mouse1_unst_filtered_by_cell_cluster0.txt.gz",
+      "sha256": "6d534e16cc4b4c3a81ad64d93548c2f3ec9742bae45b568c1ad06463204ddf45",
+      "cells": 2126,
+      "features": 22048,
+      "featureAxisSHA256": "2211d44655ea0244a4e4b65c7f7a472570d3898d318dff8e0094450b919f0826",
+      "nonzeros": 4229413,
+      "totalUMIs": 13442595,
+      "maximumUMI": 2357
+    },
+    {
+      "file": "mouse2_unst_filtered_by_cell_cluster0.txt.gz",
+      "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-6754/mouse2_unst_filtered_by_cell_cluster0.txt.gz",
+      "sha256": "90ef0c28b5112c55ee034565b3f54aa013c470d64b2e3a9d29f1305e0ebb95b5",
+      "cells": 3519,
+      "features": 22048,
+      "featureAxisSHA256": "2211d44655ea0244a4e4b65c7f7a472570d3898d318dff8e0094450b919f0826",
+      "nonzeros": 8158003,
+      "totalUMIs": 30201173,
+      "maximumUMI": 3477
+    },
+    {
+      "file": "mouse3_unst_filtered_by_cell_cluster0.txt.gz",
+      "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-6754/mouse3_unst_filtered_by_cell_cluster0.txt.gz",
+      "sha256": "41f1c0c65d969f59b2acb17f8d655939e7a534d9dbc92293af0afa2e97cc28b5",
+      "cells": 2936,
+      "features": 22048,
+      "featureAxisSHA256": "2211d44655ea0244a4e4b65c7f7a472570d3898d318dff8e0094450b919f0826",
+      "nonzeros": 7322495,
+      "totalUMIs": 29485144,
+      "maximumUMI": 3306
+    },
+    {
+      "file": "mouse1_lps6_filtered_by_cell_cluster0.txt.gz",
+      "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-6754/mouse1_lps6_filtered_by_cell_cluster0.txt.gz",
+      "sha256": "f3272d159b54e3ef4bbffbb3655fbed762152ef043ebf16a02285f95517c3bd3",
+      "cells": 1703,
+      "features": 22048,
+      "featureAxisSHA256": "2211d44655ea0244a4e4b65c7f7a472570d3898d318dff8e0094450b919f0826",
+      "nonzeros": 3415661,
+      "totalUMIs": 13160185,
+      "maximumUMI": 2289
+    },
+    {
+      "file": "mouse2_lps6_filtered_by_cell_cluster0.txt.gz",
+      "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-6754/mouse2_lps6_filtered_by_cell_cluster0.txt.gz",
+      "sha256": "29ec96593aab0cae453e7e9ae6312ea3edd5d48c9af1c9f5444072bc38fbede1",
+      "cells": 2126,
+      "features": 22048,
+      "featureAxisSHA256": "2211d44655ea0244a4e4b65c7f7a472570d3898d318dff8e0094450b919f0826",
+      "nonzeros": 5603282,
+      "totalUMIs": 25065242,
+      "maximumUMI": 3438
+    },
+    {
+      "file": "mouse3_lps6_filtered_by_cell_cluster0.txt.gz",
+      "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-6754/mouse3_lps6_filtered_by_cell_cluster0.txt.gz",
+      "sha256": "f2305a30632a598843637f077dc1b586ed8998ebc11013e39d8e5b6a7250890c",
+      "cells": 1453,
+      "features": 22048,
+      "featureAxisSHA256": "2211d44655ea0244a4e4b65c7f7a472570d3898d318dff8e0094450b919f0826",
+      "nonzeros": 4119331,
+      "totalUMIs": 20916823,
+      "maximumUMI": 3251
+    }
+  ],
+  "cells": 13863,
+  "nonzeros": 32848185,
+  "donorMapping": "Source mouse1, mouse2 and mouse3 prefixes; verify sample metadata when preparing benchmark",
+  "qualification": "Integer UMI/axis inventory only. Native import, count-size capacity, donor inference and expected-biology comparisons remain unqualified."
+}

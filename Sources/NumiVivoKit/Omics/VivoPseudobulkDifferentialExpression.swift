@@ -1,10 +1,13 @@
 import Foundation
 
+public enum VivoOmicsExpressionModel: String, Codable, Sendable { case logLinear, negativeBinomial }
 public enum VivoOmicsReplicationDesign: String, Codable, Sendable { case independentReplicates, pairedDonors }
 public enum VivoOmicsSizeFactorMethod: String, Codable, Sendable { case librarySize, medianRatio }
 public enum VivoOmicsVarianceMethod: String, Codable, Sendable { case ordinary, empiricalBayes }
 public struct VivoOmicsExpressionContrast: Codable, Sendable, Equatable {
     public var id: String
+    public var model: VivoOmicsExpressionModel = .logLinear
+    public var negativeBinomialOptions: VivoOmicsNBCohortOptions?
     public var controlCondition: String
     public var treatmentCondition: String
     public var cellGroup: String?
@@ -26,16 +29,18 @@ public struct VivoOmicsExpressionContrast: Codable, Sendable, Equatable {
         self.cellGroup = cellGroup; self.design = design
     }
     private enum CodingKeys: String, CodingKey {
-        case id, controlCondition, treatmentCondition, cellGroup, design, sizeFactors, variance, adjustForBatch
+        case id, model, negativeBinomialOptions, controlCondition, treatmentCondition, cellGroup, design, sizeFactors, variance, adjustForBatch
         case minimumCellsPerPseudobulk, minimumReplicatesPerCondition, minimumFeatureCounts
         case minimumExpressingPseudobulks, minimumReferenceFeatures, priorCount, intervalCoverage, includedDonorIDs
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["id", "controlCondition", "treatmentCondition", "cellGroup", "design",
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["id", "model", "negativeBinomialOptions", "controlCondition", "treatmentCondition", "cellGroup", "design",
             "sizeFactors", "variance", "adjustForBatch", "minimumCellsPerPseudobulk", "minimumReplicatesPerCondition",
             "minimumFeatureCounts", "minimumExpressingPseudobulks", "minimumReferenceFeatures", "priorCount", "intervalCoverage", "includedDonorIDs"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(String.self, forKey: .id)
+        model = try c.decodeIfPresent(VivoOmicsExpressionModel.self, forKey: .model) ?? .logLinear
+        negativeBinomialOptions = try c.decodeIfPresent(VivoOmicsNBCohortOptions.self, forKey: .negativeBinomialOptions)
         controlCondition = try c.decode(String.self, forKey: .controlCondition)
         treatmentCondition = try c.decode(String.self, forKey: .treatmentCondition)
         cellGroup = try c.decodeIfPresent(String.self, forKey: .cellGroup)
@@ -61,6 +66,14 @@ public struct VivoOmicsExpressionContrast: Codable, Sendable, Equatable {
               intervalCoverage.isFinite, intervalCoverage >= 0.5, intervalCoverage <= 0.9999 else {
             throw VivoOmicsError.invalid("expression contrast identity, replication or numerical settings")
         }
+        if model == .negativeBinomial {
+            guard variance == .empiricalBayes, priorCount == 0.5 else {
+                throw VivoOmicsError.invalid("NB does not accept overridden log-linear variance/priorCount settings")
+            }
+            try (negativeBinomialOptions ?? .init()).validate()
+        } else if negativeBinomialOptions != nil {
+            throw VivoOmicsError.invalid("NB options require negativeBinomial model")
+        }
         if let ids = includedDonorIDs {
             guard !ids.isEmpty, ids.count <= 512, Set(ids).count == ids.count, ids.allSatisfy(vivoOmicsID) else {
                 throw VivoOmicsError.invalid("contrast donor subset")
@@ -82,7 +95,7 @@ public struct VivoOmicsDesignMatrix: Codable, Sendable, Equatable {
     public let libraryCounts: [UInt64]
     public let referenceFeatureIndices: [Int]
 }
-public enum VivoOmicsExpressionStatus: String, Codable, Sendable { case tested, filteredLowExpression, zeroResidualVariance }
+public enum VivoOmicsExpressionStatus: String, Codable, Sendable { case tested, filteredLowExpression, zeroResidualVariance, rankDeficientSupport, numericalFailure, dispersionBoundary, influentialObservation }
 public struct VivoOmicsExpressionFeature: Codable, Sendable, Equatable {
     public let featureIndex: Int
     public let featureID: String
@@ -100,6 +113,7 @@ public struct VivoOmicsExpressionFeature: Codable, Sendable, Equatable {
     public let intervalUpper: Double?
     public let pValue: Double?
     public var adjustedPValue: Double?
+    public var zStatistic: Double? = nil
 }
 public struct VivoOmicsExpressionResult: Codable, Sendable, Equatable {
     public let method: String
@@ -110,6 +124,7 @@ public struct VivoOmicsExpressionResult: Codable, Sendable, Equatable {
     public let features: [VivoOmicsExpressionFeature]
     public let testedFeatures: Int
     public let multiplicityScope: String
+    public var negativeBinomial: VivoOmicsNBCohortDiagnostics? = nil
 }
 
 public enum VivoPseudobulkDifferentialExpression {
@@ -209,6 +224,9 @@ public enum VivoPseudobulkDifferentialExpression {
             observations: observations, excludedSmallPseudobulkIndices: excluded, controlReplicates: controlCount,
             treatmentReplicates: treatmentCount, residualDegreesOfFreedom: df, sizeFactorValues: factors,
             libraryCounts: libraries, referenceFeatureIndices: referenceFeatures)
+        if request.model == .negativeBinomial {
+            return try VivoOmicsNBCohort.evaluate(dataset: dataset, entries: entries, design: matrix, request: request)
+        }
         var fits = [VivoOmicsLinearFit?](repeating: nil, count: entries.count)
         var totals = [UInt64](repeating: 0, count: entries.count), means = [Double](repeating: 0, count: entries.count)
         var modelWork = 0
