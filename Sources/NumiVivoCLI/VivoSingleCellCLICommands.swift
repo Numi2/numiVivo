@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["singlecell-h5ad-store", "singlecell-count-store-verify", "singlecell-count-store-normalize", "singlecell-count-store-normalize-verify", "multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
+        ["singlecell-h5ad-pca", "singlecell-h5ad-pca-verify", "singlecell-h5ad-store", "singlecell-count-store-verify", "singlecell-count-store-normalize", "singlecell-count-store-normalize-verify", "multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
     private func canonicalURL(_ url: URL) throws -> URL {
@@ -148,6 +148,16 @@ struct VivoSingleCellCLICommands {
                 guard arguments.count==2 else { throw VivoOmicsError.invalid("singlecell-h5ad-project-verify <bundle-directory>") }
                 let report=try VivoH5ADProjection.verify(URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint())
                 try printJSON(report);return 0
+            }
+            if command == "singlecell-h5ad-pca" {
+                guard arguments.count == 6, arguments[2] == "--plan", arguments[4] == "--output" else { throw VivoOmicsError.invalid("singlecell-h5ad-pca <source.h5ad> --plan <plan.json> --output <new-bundle>") }
+                let bytes = try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[3]), maximumBytes: 2_097_152)
+                let plan = try VivoCanonicalJSON.decode(VivoH5ADPCAPlan.self, from: bytes)
+                try printJSON(VivoH5ADPCA.publish(source: URL(fileURLWithPath: arguments[1]), plan: plan, implementation: VivoWorkflowCLIImplementation.fingerprint(), to: canonicalURL(URL(fileURLWithPath: arguments[5])))); return 0
+            }
+            if command == "singlecell-h5ad-pca-verify" {
+                guard arguments.count == 2 else { throw VivoOmicsError.invalid("singlecell-h5ad-pca-verify <bundle>") }
+                try printJSON(VivoH5ADPCA.verify(URL(fileURLWithPath: arguments[1]), implementation: VivoWorkflowCLIImplementation.fingerprint())); return 0
             }
             if command == "singlecell-h5ad-pseudobulk-verify" {
                 guard arguments.count == 2 else { throw VivoOmicsError.invalid("singlecell-h5ad-pseudobulk-verify <bundle-directory>") }
@@ -331,6 +341,8 @@ struct VivoSingleCellCLICommands {
       singlecell-reference-map <query.h5ad> --plan <query.json> --reference <reference> --output <new-bundle>
       singlecell-reference-verify <reference>
       singlecell-reference-map-verify <mapping-bundle>
+      singlecell-h5ad-pca <source.h5ad> --plan <plan.json> --output <new-bundle>
+      singlecell-h5ad-pca-verify <bundle>
       singlecell-h5ad-pseudobulk <source.h5ad> --plan <stream-plan.json> --output <new-bundle-directory>
       singlecell-h5ad-project <source.h5ad> --plan <projection.json> --output <new-directory>
       singlecell-h5ad-project-verify <bundle-directory>

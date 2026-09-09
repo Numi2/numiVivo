@@ -99,6 +99,8 @@ for native, reference in [('logMeanForBinning', 'means'), ('logDispersion', 'dis
     np.testing.assert_allclose(lhs, rhs, rtol=tolerance, atol=tolerance, equal_nan=True)
     errors[native] = float(np.max(np.abs(lhs[valid] - rhs[valid])))
 c = b[:, selected].copy()
+if r.get('projectionCenters') is not None:
+    np.testing.assert_allclose(r['projectionCenters'],np.asarray(c.X.mean(axis=0)).ravel(),rtol=1e-12,atol=1e-12)
 del b
 sc.pp.pca(c, n_comps=o['components'], zero_center=True, svd_solver='arpack', dtype='float64', random_state=7)
 assert sparse.issparse(c.X)

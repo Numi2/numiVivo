@@ -170,3 +170,7 @@ The roughly 118 MiB native JSON report, aggregates and metadata remain resident;
 report materialization is still a scale bottleneck. Million-cell, downstream
 streaming graph/integration, parallel-kernel and Metal qualification remain open.
 Native and reference hosts differ, so their timings are not a speed comparison.
+
+The [standalone PCA bundle](PCA_BUNDLE.md) now separates this algorithm from
+pseudobulk aggregation and stores scores/loadings as binary records. It shares
+cell-quality accumulation and the same PCA engine with the legacy route.

@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "baseCommit": "416fc6c2588184ad5c0b7ce3060312d01edfeceb",
+  "nativeSourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoH5ADPCA.swift": "96122987fd8ee69ebe9a3e8e28e92cfd3b07a2720ff6c5e52161b4ab2f0a4053",
+    "Sources/NumiVivoKit/Omics/VivoH5ADPseudobulk.swift": "c70857ecc1a32fef46270a8f12b98fdc0b61684a7469bb2cfc287357005f4666",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellAnalysis.swift": "23d0d228f450fc441252e200e8c905a72f360011f778b6e317c45cf3b348ecb9",
+    "Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift": "c4f596a55833841450b804af657b581ab1021e5a5c78200e1b71004a82954a4c",
+    "Tests/NumiVivoIntegrationTests/SingleCellPCABundleTests.swift": "3c893be975a560a671f3437113d76f477a84da00c8a2c12e865775d53fa4086b",
+    "Tools/Omics/H5AD/build.sh": "e46a95b66900c67acd18f7379b621af0ba90a4218353938ddec31e95e3094f73"
+  },
+  "localRemoteBytesExact": true,
+  "binarySHA256": "1906b32e4b5ff4b23118e2ffe088d6f5f256756518debe5e336180cd37b8f0dd",
+  "sourceSHA256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc",
+  "legacyReportSHA256": "34f2c84f9b6631eab683617fd36c60cf949f48904e40fd898221f1f58c7337e5",
+  "legacyReportBytesUnchanged": true,
+  "cells": 111445,
+  "features": 33694,
+  "sourceNonzeros": 361582621,
+  "selectedFeatures": 2000,
+  "components": 20,
+  "nativeCommands": [
+    {
+      "label": "publish",
+      "exitCode": 0,
+      "seconds": 136.11,
+      "maximumResidentBytes": 443203584
+    },
+    {
+      "label": "verify",
+      "exitCode": 0,
+      "seconds": 137.46,
+      "maximumResidentBytes": 443432960
+    },
+    {
+      "label": "legacy",
+      "exitCode": 0,
+      "seconds": 158.85,
+      "maximumResidentBytes": 1386496000
+    }
+  ],
+  "allScoresLoadingsQCAndFeatureStatisticsExact": true,
+  "projectionCentersIndependentlyChecked": true,
+  "alignedRelativeScoreError": 1.0971089948646915e-12,
+  "referenceToolSHA256": {
+    "Tools/Omics/Reduction/check_reference.py": "46a4c0415206b3e4126cc75cf9271ea992a4f8ff8bbcab5aa23be942b50adc46",
+    "Tools/Omics/Reduction/pca_bundle_reference.py": "3526b632171544deb1d3d600f77a1e75d9141627becdf4866b22c9a5c69e16e1",
+    "Tools/Omics/Reduction/check_pca_bundle.py": "32956be3c2de2ffe755b0266f94ce7a91b46ba5445195a25201edc550d7adcf3"
+  },
+  "scope": "Complete Norman cohort, standalone artifact lifecycle and unchanged legacy result; resident fitted arrays/metadata remain; no million-cell, parallel, GPU or held-out biological qualification"
+}

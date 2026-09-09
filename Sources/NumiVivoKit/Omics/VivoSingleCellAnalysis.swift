@@ -10,6 +10,33 @@ public struct VivoCellQuality: Codable, Sendable, Equatable {
     /// Nil for an empty cell or absent feature annotations, not a fabricated zero percent.
     public let mitochondrialFraction: Double?
 }
+/// Cell-only QC shared by streamed PCA and pseudobulk; no group aggregation.
+final class VivoSingleCellQualityAccumulator {
+    let metadata: VivoSingleCellCountMetadata
+    private var totals: [UInt64], mitochondrial: [UInt64], detected: [Int]
+    private(set) var nonzeros = 0
+    init(_ metadata: VivoSingleCellCountMetadata) {
+        self.metadata = metadata
+        totals = .init(repeating: 0, count: metadata.cells.count)
+        mitochondrial = totals; detected = .init(repeating: 0, count: metadata.cells.count)
+    }
+    func add(row: Int, feature: Int, count: UInt64) throws {
+        totals[row] = try vivoOmicsSum(totals[row], count)
+        detected[row] += 1; nonzeros += 1
+        if metadata.features[feature].mitochondrial {
+            mitochondrial[row] = try vivoOmicsSum(mitochondrial[row], count)
+        }
+    }
+    func finish() -> [VivoCellQuality] {
+        let mitoFeatures = metadata.features.filter(\.mitochondrial).count
+        return metadata.cells.indices.map { i in
+            .init(sampleID: metadata.cells[i].sampleID, barcode: metadata.cells[i].barcode,
+                totalCounts: totals[i], detectedFeatures: detected[i], mitochondrialCounts: mitochondrial[i],
+                mitochondrialFeatureCount: mitoFeatures,
+                mitochondrialFraction: totals[i] == 0 || mitoFeatures == 0 ? nil : Double(mitochondrial[i]) / Double(totals[i]))
+        }
+    }
+}
 public struct VivoLogNormalizedCounts: Codable, Sendable, Equatable {
     public let method: String
     public let targetSum: Double

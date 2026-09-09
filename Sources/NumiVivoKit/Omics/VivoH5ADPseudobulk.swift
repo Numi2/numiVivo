@@ -69,8 +69,9 @@ public enum VivoH5ADPseudobulk {
         let groups: [VivoPseudobulkGroup]
         let groupForRow: [Int]
         var sums: [[Int: UInt64]]
-        var totals: [UInt64], mitochondrial: [UInt64], detected: [Int]
-        var nonzeros=0, aggregateNonzeros=0
+        let quality: VivoSingleCellQualityAccumulator
+        var nonzeros: Int { quality.nonzeros }
+        var aggregateNonzeros=0
         init(_ metadata: VivoSingleCellCountMetadata) throws {
             self.metadata=metadata
             let samples=Dictionary(uniqueKeysWithValues: metadata.samples.map { ($0.id,$0) })
@@ -95,12 +96,10 @@ public enum VivoH5ADPseudobulk {
                     batchIDs: Set(ids.map { samples[$0]!.batchID }).sorted(),sourceCellIndices: rows))
             }
             self.groups=groups; groupForRow=assignment; sums=Array(repeating: [:],count: groups.count)
-            totals=Array(repeating: 0,count: metadata.cells.count)
-            mitochondrial=totals; detected=Array(repeating: 0,count: metadata.cells.count)
+            quality = VivoSingleCellQualityAccumulator(metadata)
         }
         func add(row: Int,feature: Int,count: UInt64) throws {
-            totals[row]=try vivoOmicsSum(totals[row],count); detected[row]+=1; nonzeros+=1
-            if metadata.features[feature].mitochondrial { mitochondrial[row]=try vivoOmicsSum(mitochondrial[row],count) }
+            try quality.add(row: row, feature: feature, count: count)
             let group=groupForRow[row]
             if sums[group][feature] == nil {
                 guard aggregateNonzeros < maximumAggregateNonzeros else { throw VivoOmicsError.limit("streamed aggregate exceeds five million nonzeros") }
@@ -109,12 +108,7 @@ public enum VivoH5ADPseudobulk {
             sums[group][feature]=try vivoOmicsSum(sums[group][feature] ?? 0,count)
         }
         func finish(version: String,contrasts: [VivoOmicsExpressionContrast]) throws -> VivoH5ADPseudobulkReport {
-            let mitoFeatures=metadata.features.filter(\.mitochondrial).count
-            let quality=metadata.cells.indices.map { i in
-                VivoCellQuality(sampleID: metadata.cells[i].sampleID,barcode: metadata.cells[i].barcode,totalCounts: totals[i],
-                    detectedFeatures: detected[i],mitochondrialCounts: mitochondrial[i],mitochondrialFeatureCount: mitoFeatures,
-                    mitochondrialFraction: totals[i] == 0 || mitoFeatures == 0 ? nil : Double(mitochondrial[i])/Double(totals[i]))
-            }
+            let quality = self.quality.finish()
             var offsets=[0],columns: [Int]=[],counts: [UInt64]=[]
             for group in sums {
                 for feature in group.keys.sorted() { columns.append(feature); counts.append(group[feature]!) }

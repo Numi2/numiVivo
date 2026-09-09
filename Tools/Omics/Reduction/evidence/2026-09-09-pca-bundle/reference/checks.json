@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "qualification": "Numerical agreement on these count axes; no biological or integration qualification",
+  "datasetSHA256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc",
+  "reportSHA256": "8a6646a135a0d3c347d2e1986a8b87e929d5f439811f76644ea820dc306902d0",
+  "cells": 111445,
+  "features": 33694,
+  "sourceNonzeros": 361582621,
+  "selectedFeatures": 2000,
+  "components": 20,
+  "featureMaximumAbsoluteErrors": {
+    "meanNormalized": 2.1316282072803006e-12,
+    "varianceNormalized": 7.421476766467094e-10,
+    "logMeanForBinning": 2.842170943040401e-14,
+    "logDispersion": 1.9562129693895258e-13,
+    "normalizedDispersion": 6.918434642955162e-07
+  },
+  "minimumSubspaceCosine": 0.9999999999999983,
+  "alignedRelativeScoreError": 1.0971089948646915e-12,
+  "maximumNativeResidual": 3.0564949097155397e-12,
+  "maximumVarianceRelativeError": 6.328271240363392e-15,
+  "versions": {
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5"
+  },
+  "streamedStorage": {
+    "cacheBytes": 293664560,
+    "cacheFingerprint": {
+      "bytes": [
+        93,
+        125,
+        111,
+        28,
+        101,
+        13,
+        194,
+        204,
+        136,
+        55,
+        109,
+        244,
+        20,
+        165,
+        169,
+        57,
+        27,
+        212,
+        129,
+        86,
+        120,
+        247,
+        109,
+        93,
+        229,
+        84,
+        106,
+        176,
+        199,
+        100,
+        168,
+        176
+      ]
+    },
+    "entryVisits": 5799875060,
+    "method": "three-source-passes-windowed-selected-COO-v2",
+    "options": {
+      "maximumCacheBytes": 2000000000,
+      "maximumEntryVisits": 20000000000,
+      "normalizationTarget": 10000,
+      "pca": {
+        "components": 20,
+        "highlyVariableFeatures": 2000,
+        "maximumBasis": 128,
+        "meanBins": 20,
+        "relativeResidualTolerance": 1e-06,
+        "retainProjectionCenters": true,
+        "seed": 7
+      }
+    },
+    "qualification": "HDF5 slices, bounded write buffer and 16 MiB POSIX mapping windows for selected expression; metadata, moments, Krylov basis, scores and report remain resident. No million-cell or GPU performance qualification.",
+    "selectedEntries": 18354035,
+    "sourcePasses": 3
+  }
+}
