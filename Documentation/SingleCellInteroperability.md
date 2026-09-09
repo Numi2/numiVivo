@@ -311,6 +311,11 @@ The complete development objective remains open:
    matches the previous numerical solver exactly across three seeds on Kang and
    independent Hagai. Hagai passes its response-preservation margins; full Kang
    fails NK-cell recall preservation in both native and reference Harmony runs.
+   The opt-in [native scale-aware MNN method](../Tools/Omics/Reduction/MNN_INTEGRATION.md)
+   now passes the available preservation margins on full Kang, Hagai and Ding,
+   with independent anchor, coordinate and neighbor agreement. It remains a
+   development result on already inspected cohorts; untouched-study validation
+   and Ding's partial source-label coverage remain open.
    Missing rare-type strata and the insensitive original Kang erasure control
    remain explicit. Full Baron is rejected for confounding. Multiple covariates,
    prospective mapping and general multi-donor competitiveness remain open.
@@ -343,6 +348,9 @@ The complete development objective remains open:
    co-response ridge model underperforms the mean-single baseline; this does not
    qualify a native unseen-target predictor. A [control-only descriptor follow-up](../Tools/Omics/PerturbationPrediction/Norman/CONTROL_DESCRIPTORS.md)
    covers 97 targets but also fails to beat the mean-response baseline.
+   A [GO-informed target-kernel experiment](../Tools/Omics/PerturbationPrediction/Norman/GO_TRANSFER.md)
+   covers 101 targets: fixed regularization modestly improves matched mean and
+   shuffled baselines, while nested selection fails the primary all-gene comparison.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)

@@ -1,0 +1,126 @@
+[
+  {
+    "method": "goRidgeFixed",
+    "panel": "allGenes",
+    "targets": 101,
+    "comparisons": [
+      {
+        "comparator": "meanSingleResponse",
+        "meanRMSEDifference": -0.0007371066129186841,
+        "betterTargets": 59,
+        "worseTargets": 42
+      },
+      {
+        "comparator": "meanSupportedResponse",
+        "meanRMSEDifference": -0.0007497548228009699,
+        "betterTargets": 58,
+        "worseTargets": 43
+      },
+      {
+        "comparator": "shuffledGoRidgeNested",
+        "meanRMSEDifference": -0.0005205613366205889,
+        "betterTargets": 53,
+        "worseTargets": 48
+      },
+      {
+        "comparator": "shuffledGoRidgeFixed",
+        "meanRMSEDifference": -0.0008889173250406346,
+        "betterTargets": 57,
+        "worseTargets": 44
+      }
+    ]
+  },
+  {
+    "method": "goRidgeFixed",
+    "panel": "trainingTop1000",
+    "targets": 101,
+    "comparisons": [
+      {
+        "comparator": "meanSingleResponse",
+        "meanRMSEDifference": -0.0036469829209155175,
+        "betterTargets": 65,
+        "worseTargets": 36
+      },
+      {
+        "comparator": "meanSupportedResponse",
+        "meanRMSEDifference": -0.0036631515648317234,
+        "betterTargets": 64,
+        "worseTargets": 37
+      },
+      {
+        "comparator": "shuffledGoRidgeNested",
+        "meanRMSEDifference": -0.0030237036553669556,
+        "betterTargets": 61,
+        "worseTargets": 40
+      },
+      {
+        "comparator": "shuffledGoRidgeFixed",
+        "meanRMSEDifference": -0.0023025836278442848,
+        "betterTargets": 63,
+        "worseTargets": 38
+      }
+    ]
+  },
+  {
+    "method": "goRidgeNested",
+    "panel": "allGenes",
+    "targets": 101,
+    "comparisons": [
+      {
+        "comparator": "meanSingleResponse",
+        "meanRMSEDifference": 9.80820153515957e-05,
+        "betterTargets": 59,
+        "worseTargets": 42
+      },
+      {
+        "comparator": "meanSupportedResponse",
+        "meanRMSEDifference": 8.543380546930992e-05,
+        "betterTargets": 58,
+        "worseTargets": 43
+      },
+      {
+        "comparator": "shuffledGoRidgeNested",
+        "meanRMSEDifference": 0.0003146272916496909,
+        "betterTargets": 53,
+        "worseTargets": 48
+      },
+      {
+        "comparator": "shuffledGoRidgeFixed",
+        "meanRMSEDifference": -5.372869677035483e-05,
+        "betterTargets": 51,
+        "worseTargets": 50
+      }
+    ]
+  },
+  {
+    "method": "goRidgeNested",
+    "panel": "trainingTop1000",
+    "targets": 101,
+    "comparisons": [
+      {
+        "comparator": "meanSingleResponse",
+        "meanRMSEDifference": -0.001992529195097334,
+        "betterTargets": 65,
+        "worseTargets": 36
+      },
+      {
+        "comparator": "meanSupportedResponse",
+        "meanRMSEDifference": -0.00200869783901354,
+        "betterTargets": 64,
+        "worseTargets": 37
+      },
+      {
+        "comparator": "shuffledGoRidgeNested",
+        "meanRMSEDifference": -0.0013692499295487725,
+        "betterTargets": 61,
+        "worseTargets": 40
+      },
+      {
+        "comparator": "shuffledGoRidgeFixed",
+        "meanRMSEDifference": -0.0006481299020261015,
+        "betterTargets": 54,
+        "worseTargets": 47
+      }
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "allPreparationsAndPredictionsByteExact": true,
+  "folds": 105,
+  "supportedTargets": 101,
+  "allFoldMembershipsAndUnsupportedOutputsChecked": true,
+  "realExplicitLOORefits": 30,
+  "maximumLOOError": 2.1371793224034263e-15,
+  "excludedOutcomeMutationRefits": [
+    "AHR",
+    "IER5L",
+    "KIAA1804",
+    "ZNF318"
+  ],
+  "predictionsSHA256": "cb7e7ec6c41f5322c1bb4cbcd91d4151e5c4d2676f7c4e71eb0d1e3fb0fb8ec9",
+  "descriptorSHA256": "f50f9f60dbfb96a926ca957af3da1a0470342b328dd5a1fe1c25b7928da8b43d",
+  "implementationSHA256": "61e652751ed03de2b9b0fc1a346412b0b778fdc3cceb8bbdd4bb57a5ffc4975d",
+  "qualification": "Numerical, source identity and outcome isolation evidence; independent biological validation remains separate."
+}
