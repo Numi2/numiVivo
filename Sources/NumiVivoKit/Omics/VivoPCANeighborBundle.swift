@@ -1,7 +1,7 @@
 import Foundation
 
 public struct VivoPCANeighborPlan: Codable, Sendable, Equatable {
-    public enum InputKind: String, Codable, Sendable { case fitted, query }
+    public enum InputKind: String, Codable, Sendable { case fitted, query, integrated }
     public enum Storage: String, Codable, Sendable { case json, binary }
     public let schemaVersion: Int
     public let inputKind: InputKind
@@ -27,7 +27,7 @@ public struct VivoPCANeighborPlan: Codable, Sendable, Equatable {
         try neighbors.validate(); try execution.validate()
         try approximation?.validate(neighbors: neighbors.neighbors)
         guard approximation == nil || execution.workers == 1 else { throw VivoOmicsError.invalid("HNSW currently requires one serial worker") }
-        guard schemaVersion == 1, neighbors.representation != .integrated else { throw VivoOmicsError.invalid("PCA neighbor plan schema or representation") }
+        guard schemaVersion == 1, (inputKind == .integrated) == (neighbors.representation == .integrated) else { throw VivoOmicsError.invalid("PCA neighbor plan schema or representation") }
     }
 }
 public struct VivoPCANeighborExecutionReport: Codable, Sendable, Equatable {
@@ -67,6 +67,7 @@ public enum VivoPCANeighborBundle {
         return try VivoCanonicalJSON.fingerprint(bytes)
     }
     static func snapshot(_ input: URL, kind: VivoPCANeighborPlan.InputKind, to output: URL) throws {
+        if kind == .integrated { try VivoPCAIntegration.snapshot(input, to: output); return }
         if kind == .fitted { try VivoH5ADPCAQuery.snapshotReference(input, to: output); return }
         try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         try VivoH5ADPCAQuery.snapshotReference(input.appendingPathComponent("reference"), to: output.appendingPathComponent("reference"))
@@ -99,6 +100,10 @@ public enum VivoPCANeighborBundle {
             let receipt = try VivoH5ADPCA.verify(source, implementation: implementation)
             inputHash = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(receipt))
             dimensions = try read(VivoH5ADPCAModel.self, root: source, name: "model.json", maximum: 67_108_864).options.components
+        case .integrated:
+            let receipt = try VivoPCAIntegration.verify(source, implementation: implementation)
+            inputHash = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(receipt))
+            dimensions = try read(VivoPCAIntegrationReport.self, root: source, name: "report.json", maximum: 16_777_216).components
         case .query:
             let receipt = try VivoH5ADPCAQuery.verify(source, implementation: implementation)
             inputHash = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(receipt))

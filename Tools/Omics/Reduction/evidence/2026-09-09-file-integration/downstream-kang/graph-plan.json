@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "inputKind": "integrated",
+  "neighbors": {
+    "neighbors": 15,
+    "representation": "integrated"
+  },
+  "execution": {
+    "workers": 1
+  },
+  "approximation": {
+    "connections": 16,
+    "constructionWidth": 200,
+    "searchWidth": 128,
+    "seed": 7,
+    "maximumDistanceEvaluations": 500000000,
+    "scoreCacheBytes": 33554432
+  },
+  "storage": "binary"
+}

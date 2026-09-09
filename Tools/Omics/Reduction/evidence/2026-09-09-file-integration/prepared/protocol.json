@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "cohorts": {
+    "kang": 24673,
+    "hagai": 13863,
+    "baron": 8569
+  },
+  "seeds": [
+    7,
+    19,
+    41
+  ],
+  "integration": {
+    "covariate": "donor",
+    "clusters": 100,
+    "diversity": 2,
+    "ridge": 1,
+    "temperature": 0.1,
+    "maximumIterations": 10,
+    "relativeTolerance": 0.01,
+    "maximumWork": 1000000000
+  },
+  "evaluationNeighbors": 30,
+  "gateMargins": {
+    "maximumCellTypeBalancedAccuracyLoss": 0.02,
+    "maximumPerTypeRecallLoss": 0.05,
+    "maximumConditionBalancedAccuracyLoss": 0.02,
+    "maximumProgramSpearmanLoss": 0.05,
+    "minimumNegativeControlAccuracyLoss": 0.1
+  },
+  "program": {
+    "kang": [
+      "IFI6",
+      "IFIT1",
+      "ISG15",
+      "MX1",
+      "ISG20"
+    ],
+    "hagai": [
+      "ENSMUSG00000025225",
+      "ENSMUSG00000021025",
+      "ENSMUSG00000034855",
+      "ENSMUSG00000035692",
+      "ENSMUSG00000024401"
+    ]
+  },
+  "scope": "Full cohorts, all genes at import; PCA selects 2000 variable genes and 20 components using the existing fixed fit plan. Mixing evaluated within source cell type and condition. Every donor held out for classifier fitting, while integration is transductive on all cells. No prospective prediction claim.",
+  "rareTypeRule": "Evaluate every source type; rare means <1 percent of the full source cohort, defined before correction. Per-type recall retained. Missing donor/type/condition strata explicitly reported, never filled or silently pooled.",
+  "controlRule": "Condition-centered and cell-type-centered PCA are label-informed erasure controls, never candidate corrections.",
+  "rejectionRule": "Full Baron donor-vs-disease design is disconnected and must be rejected; never subset to force eligibility.",
+  "status": "predeclared-before-integration-and-reference-outputs"
+}

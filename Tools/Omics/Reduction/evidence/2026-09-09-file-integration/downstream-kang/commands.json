@@ -1,0 +1,92 @@
+[
+  {
+    "label": "graph",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/seed-7",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/graph-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 16.79,
+    "maximumResidentBytes": 286998528
+  },
+  {
+    "label": "graph-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 16.93,
+    "maximumResidentBytes": 284016640
+  },
+  {
+    "label": "cluster",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/graph",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/cluster-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/cluster"
+    ],
+    "exitCode": 0,
+    "seconds": 18.69,
+    "maximumResidentBytes": 277807104
+  },
+  {
+    "label": "cluster-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/cluster"
+    ],
+    "exitCode": 0,
+    "seconds": 18.75,
+    "maximumResidentBytes": 283607040
+  },
+  {
+    "label": "embed",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-graph-embed",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/graph",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/embed-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/embed"
+    ],
+    "exitCode": 0,
+    "seconds": 35.88,
+    "maximumResidentBytes": 284196864
+  },
+  {
+    "label": "embed-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/n/numivivo-file-integration-20260909/downstream-kang/embed"
+    ],
+    "exitCode": 0,
+    "seconds": 36.08,
+    "maximumResidentBytes": 279281664
+  }
+]

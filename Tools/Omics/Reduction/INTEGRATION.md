@@ -59,9 +59,12 @@ The preflight work index is `cells * clusters * dimensions * (maximumIterations 
 10)`, capped by `maximumWork` (default 200 million). It bounds problem dimensions;
 it is not a measured instruction count or performance guarantee. Dense storage
 is limited to scores, memberships, centers and small batch systems, never a
-cells-by-genes expression matrix. This remains a bounded resident implementation,
-with one categorical correction covariate, at most 100 clusters and 128 levels.
-It is not out-of-core integration or an unseen-donor transform.
+cells-by-genes expression matrix. The original analysis route remains resident.
+[File-backed integration](FILE_INTEGRATION.md) now shares the same solver with
+bounded latent-matrix mappings and explicit integrated graph inputs. Both use
+one categorical correction covariate, at most 100 clusters and 128 levels;
+neither is an unseen-donor transform. An explicit work maximum up to 100 billion
+is supported, with the unchanged 200-million default.
 
 ## Experimental benchmark
 
@@ -134,7 +137,9 @@ mixing unchanged but lowers cross-donor classification accuracy to 0.353368.
 The native objective reached its relative tolerance after three corrections;
 independent objective reconstruction gives 632.191497888315 versus native
 632.191497888196. Independent ridge correction has maximum coordinate error
-2.176e-14. Native initialization sensitivity beyond seed 7 remains unqualified.
+2.176e-14. This older B-cell run tested native seed 7 only. The newer
+[full-cohort evaluation](FILE_INTEGRATION.md) tests three native and reference
+seeds on full Kang and independent Hagai, retaining the Kang NK-cell failure.
 
 The integrated 15-slot neighbor graph has exact independently verified membership
 and ordering, 55,508 fuzzy connectivity entries and one connected component.

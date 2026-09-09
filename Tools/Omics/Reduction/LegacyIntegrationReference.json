@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "f129080a6abcd711b109a18c958fa0ef4baa5b61",
+  "sourcePath": "Sources/NumiVivoKit/Omics/VivoSingleCellIntegration.swift",
+  "sourceSHA256": "910e3372ebd57d44eb07bac3dbfae9e8db73a92342e2c8750cb606ae15a57164",
+  "adaptations": [
+    "Import NumiVivoKit",
+    "Rename owner enum",
+    "Replace reduction argument type with cells/scores wrapper; numerical body unchanged",
+    "Copy and rename result type to retain its original memberwise initializer"
+  ],
+  "qualification": "Frozen numerical trajectory, not old CLI admission; public options validation is supplied by the linked library"
+}

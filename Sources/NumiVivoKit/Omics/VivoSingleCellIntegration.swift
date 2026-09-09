@@ -30,7 +30,7 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
         guard (2...100).contains(clusters), diversity.isFinite, (0...10).contains(diversity),
               ridge.isFinite, (0.001...100).contains(ridge), temperature.isFinite, (0.01...1).contains(temperature),
               (2...100).contains(maximumIterations), relativeTolerance.isFinite, (1e-8...0.05).contains(relativeTolerance),
-              (1...1_000_000_000).contains(maximumWork) else { throw VivoOmicsError.invalid("integration options") }
+              (1...100_000_000_000).contains(maximumWork) else { throw VivoOmicsError.invalid("integration options") }
     }
 }
 
@@ -81,19 +81,35 @@ enum VivoSingleCellIntegration {
     }
 
     static func run(_ reduction: VivoSingleCellReductionResult, samples: [VivoOmicsSample], options o: VivoSingleCellIntegrationOptions) throws -> VivoSingleCellIntegrationResult {
+        let n = reduction.scores.count, d = reduction.scores.first?.count ?? 0
+        try validateAxes(rows: n, columns: d, options: o)
+        guard n == reduction.cells.count else { throw VivoOmicsError.invalid("integration PCA axes") }
+        let x = try VivoIntegrationMatrix(rows: n, columns: d)
+        for i in 0..<n { try x.setRow(i, reduction.scores[i]) }
+        let result = try run(cells: reduction.cells, x: x, samples: samples, options: o) { rows, columns in
+            try VivoIntegrationMatrix(rows: rows, columns: columns)
+        }
+        return try result.materialize(cells: reduction.cells, options: o)
+    }
+    static func validateAxes(rows n: Int, columns d: Int, options o: VivoSingleCellIntegrationOptions) throws {
         try o.validate()
-        let x = reduction.scores, n = x.count, d = x.first?.count ?? 0, k = o.clusters
-        guard n >= k, n == reduction.cells.count, (1...64).contains(d), x.allSatisfy({ $0.count == d && $0.allSatisfy(\.isFinite) }) else { throw VivoOmicsError.invalid("integration PCA axes") }
-        // Bounds memberships and arithmetic before allocating N*K, not N*genes.
+        guard (o.clusters...1_000_000).contains(n), (1...64).contains(d) else { throw VivoOmicsError.invalid("integration PCA axes") }
+        // An explicit work index, not an instruction count. Check before allocation.
         var work = n
-        for factor in [k,d,o.maximumIterations+10] {
+        for factor in [o.clusters, d, o.maximumIterations + 10] {
             let product = work.multipliedReportingOverflow(by: factor)
             guard !product.overflow, product.partialValue <= o.maximumWork else { throw VivoOmicsError.limit("integration work budget") }
             work = product.partialValue
         }
+    }
+    static func run(cells: [VivoOmicsCellIdentity], x: VivoIntegrationMatrix, samples: [VivoOmicsSample],
+                    options o: VivoSingleCellIntegrationOptions, matrix: (Int, Int) throws -> VivoIntegrationMatrix) throws -> VivoIntegrationSolution {
+        let n = x.rows, d = x.columns, k = o.clusters
+        try validateAxes(rows: n, columns: d, options: o)
+        guard cells.count == n else { throw VivoOmicsError.invalid("integration PCA identities") }
         guard Set(samples.map(\.id)).count == samples.count else { throw VivoOmicsError.invalid("duplicate integration sample identities") }
         let lookup = Dictionary(uniqueKeysWithValues: samples.map { ($0.id,$0) })
-        let names = try reduction.cells.map { cell -> String in
+        let names = try cells.map { cell -> String in
             guard let sample = lookup[cell.sampleID], let value = o.covariate == .donor ? sample.donorID : sample.batchID,
                   !value.isEmpty, value != "unreported" else { throw VivoOmicsError.invalid("integration requires known selected covariate") }
             return value
@@ -105,7 +121,7 @@ enum VivoSingleCellIntegration {
         // Reject disconnected designs in which condition and covariate cannot be
         // separated. This eligibility check does not feed labels into correction.
         var conditionLevels: [String:Set<Int>] = [:]
-        for (i,cell) in reduction.cells.enumerated() { conditionLevels[lookup[cell.sampleID]!.condition,default: []].insert(batch[i]) }
+        for (i,cell) in cells.enumerated() { conditionLevels[lookup[cell.sampleID]!.condition,default: []].insert(batch[i]) }
         var reachable: Set<Int> = [0]
         for _ in 0..<bCount {
             let before = reachable.count
@@ -125,43 +141,54 @@ enum VivoSingleCellIntegration {
             rows.map { row in let norm = sqrt(row.reduce(0) { $0+$1*$1 }); return norm > 0 ? row.map { $0/norm } : row }
         }
         func distance(_ a: [Double],_ b: [Double]) -> Double { zip(a,b).reduce(0) { $0+($1.0-$1.1)*($1.0-$1.1) } }
-        let unit = normalized(x)
+        let unit = try matrix(n, d)
+        try unit.copy(from: x, normalize: true)
         // Independent seeded kmeans++ and Lloyd initialization. Reference uses a
         // different random generator/initializer; coordinate identity is not claimed.
-        var centers = [unit[min(n-1,Int(uniform()*Double(n)))]]
+        var centers = [try unit.row(min(n-1,Int(uniform()*Double(n))))]
         var nearest = [Double](repeating: .infinity,count: n)
         while centers.count < k {
-            for i in 0..<n { nearest[i] = min(nearest[i],distance(unit[i],centers.last!)) }
+            for i in 0..<n { nearest[i] = min(nearest[i],distance(try unit.row(i),centers.last!)) }
             let total = nearest.reduce(0,+)
             guard total > 1e-14 else { throw VivoOmicsError.invalid("integration cluster count exceeds distinct PCA directions") }
             var threshold = uniform()*total, selected = n-1
             for i in 0..<n { threshold -= nearest[i]; if threshold <= 0 { selected = i; break } }
-            centers.append(unit[selected])
+            centers.append(try unit.row(selected))
         }
         for _ in 0..<10 {
             var sums = [[Double]](repeating: [Double](repeating: 0,count: d),count: k), counts = [Int](repeating: 0,count: k)
             for i in 0..<n {
-                let c = (0..<k).min { distance(unit[i],centers[$0]) < distance(unit[i],centers[$1]) }!
-                counts[c] += 1; for j in 0..<d { sums[c][j] += unit[i][j] }
+                let row = try unit.row(i)
+                let c = (0..<k).min { distance(row,centers[$0]) < distance(row,centers[$1]) }!
+                counts[c] += 1; for j in 0..<d { sums[c][j] += row[j] }
             }
             for c in 0..<k where counts[c] > 0 { centers[c] = sums[c].map { $0/Double(counts[c]) } }
         }
         centers = normalized(centers)
-        var scores = x, r = [Double](repeating: 0,count: n*k), distances = r
+        let scores = try matrix(n, d), r = try matrix(n, k), distances = try matrix(n, k)
+        let assignmentScores = try matrix(n, d)
+        try scores.copy(from: x)
         var observed = [Double](repeating: 0,count: k*bCount), masses = [Double](repeating: 0,count: k)
-        func setProbabilities(_ i: Int,_ diversity: Bool) {
+        func setProbabilities(_ i: Int,_ diversity: Bool) throws {
+            let row = try distances.row(i)
             var logits = [Double](repeating: 0,count: k)
             for c in 0..<k {
                 let expected = max(0,masses[c])*sizes[batch[i]]/Double(n), obs = max(0,observed[c*bCount+batch[i]])
-                logits[c] = -distances[i*k+c]/o.temperature + (diversity ? o.diversity*log((2*expected+1)/(obs+expected+1)) : 0)
+                logits[c] = -row[c]/o.temperature + (diversity ? o.diversity*log((2*expected+1)/(obs+expected+1)) : 0)
             }
             let peak = logits.max()!, weights = logits.map { exp($0-peak) }, total = weights.reduce(0,+)
-            for c in 0..<k { r[i*k+c] = weights[c]/total }
+            try r.setRow(i, weights.map { $0 / total })
         }
-        func add(_ i: Int,_ sign: Double) { for c in 0..<k { let value = sign*r[i*k+c]; masses[c] += value; observed[c*bCount+batch[i]] += value } }
-        func objective() -> Double {
+        func add(_ i: Int,_ sign: Double) throws {
+            let row = try r.row(i)
+            for c in 0..<k { let value = sign*row[c]; masses[c] += value; observed[c*bCount+batch[i]] += value }
+        }
+        func objective() throws -> Double {
             var result = 0.0
-            for i in r.indices where r[i] > 0 { result += r[i]*distances[i]+o.temperature*r[i]*log(r[i]) }
+            for i in 0..<n {
+                let row = try r.row(i), distance = try distances.row(i)
+                for c in 0..<k where row[c] > 0 { result += row[c]*distance[c]+o.temperature*row[c]*log(row[c]) }
+            }
             for c in 0..<k { for b in 0..<bCount {
                 let obs = max(0,observed[c*bCount+b]), expected = max(0,masses[c])*sizes[b]/Double(n)
                 result += o.temperature*o.diversity*obs*log((obs+expected+1)/(2*expected+1))
@@ -169,17 +196,18 @@ enum VivoSingleCellIntegration {
             return result*2000/Double(n)
         }
         var objectives: [Double] = [], improvements: [Double] = [], maxResidual = 0.0, stopping = "iteration-limit"
-        var assignmentScores: [[Double]] = [], assignmentCenters: [[Double]] = []
+        var assignmentCenters: [[Double]] = []
         for iteration in 0..<o.maximumIterations {
             try Task.checkCancellation()
-            let current = normalized(scores)
-            assignmentScores = current; assignmentCenters = centers
+            try assignmentScores.copy(from: scores, normalize: true)
+            assignmentCenters = centers
             observed = observed.map { _ in 0 }; masses = masses.map { _ in 0 }
             for i in 0..<n {
-                for c in 0..<k { distances[i*k+c] = 2*(1-zip(current[i],centers[c]).reduce(0) { $0+$1.0*$1.1 }) }
-                setProbabilities(i,false); add(i,1)
+                let current = try assignmentScores.row(i)
+                try distances.setRow(i, (0..<k).map { c in 2*(1-zip(current,centers[c]).reduce(0) { $0+$1.0*$1.1 }) })
+                try setProbabilities(i,false); try add(i,1)
             }
-            if iteration == 0 { objectives.append(objective()) }
+            if iteration == 0 { objectives.append(try objective()) }
             // Four block-coordinate sweeps; block fraction .05, as the pinned reference.
             for _ in 0..<4 {
                 var order = Array(0..<n)
@@ -188,34 +216,61 @@ enum VivoSingleCellIntegration {
                 for block in 0..<20 {
                     let start = block*blockSize, end = block == 19 ? n : min(n,start+blockSize)
                     if start >= n { break }
-                    for t in start..<end { add(order[t],-1) }
-                    for t in start..<end { setProbabilities(order[t],true) }
-                    for t in start..<end { add(order[t],1) }
+                    for t in start..<end { try add(order[t],-1) }
+                    for t in start..<end { try setProbabilities(order[t],true) }
+                    for t in start..<end { try add(order[t],1) }
                 }
             }
-            let value = objective()
+            let value = try objective()
             guard value.isFinite else { throw VivoOmicsError.invalid("integration objective nonfinite") }
             let previous = objectives.last!, improvement = (previous-value)/max(abs(previous),1e-12)
             objectives.append(value); improvements.append(improvement)
             // Every correction is fitted to and subtracted from original PCA.
-            scores = x
+            try scores.copy(from: x)
             for c in 0..<k {
                 let active = (0..<bCount).filter { observed[c*bCount+$0]/sizes[$0] > 1e-5 }
                 if active.count < 2 { continue }
                 var sums = [[Double]](repeating: [Double](repeating: 0,count: d),count: bCount)
-                for i in 0..<n { for j in 0..<d { sums[batch[i]][j] += r[i*k+c]*x[i][j] } }
+                for i in 0..<n {
+                    let weight = try r.value(i, c), row = try x.row(i)
+                    for j in 0..<d { sums[batch[i]][j] += weight*row[j] }
+                }
                 let fit = try ridgeFit(masses: active.map { max(0,observed[c*bCount+$0]) },sums: active.map { sums[$0] },ridge: o.ridge)
                 maxResidual = max(maxResidual,fit.residual); centers[c] = fit.intercept
-                for (slot,b) in active.enumerated() { for i in 0..<n where batch[i] == b { for j in 0..<d { scores[i][j] -= r[i*k+c]*fit.effects[slot][j] } } }
+                for (slot,b) in active.enumerated() { for i in 0..<n where batch[i] == b {
+                    let weight = try r.value(i, c); var row = try scores.row(i)
+                    for j in 0..<d { row[j] -= weight*fit.effects[slot][j] }
+                    try scores.setRow(i, row)
+                } }
             }
             centers = normalized(centers)
-            guard scores.allSatisfy({ $0.allSatisfy(\.isFinite) }) else { throw VivoOmicsError.invalid("integration corrected scores nonfinite") }
+            // Each matrix row write rejects nonfinite corrected values.
             if improvement < 0 { stopping = "objective-increase"; break }
             if improvement < o.relativeTolerance { stopping = "relative-objective-tolerance"; break }
         }
-        return .init(method: "diversity-soft-clustering-categorical-ridge-Double-v1",options: o,cells: reduction.cells,levels: levels,cellLevels: batch,scores: scores,
-            memberships: (0..<n).map { Array(r[($0*k)..<(($0+1)*k)]) },assignmentScores: assignmentScores,assignmentCenters: assignmentCenters,
-            objectives: objectives,relativeImprovements: improvements,stoppingReason: stopping,maximumRidgeResidual: maxResidual,
-            qualification: "Transductive single-covariate PCA correction with Harmony2 objective and intercept centers; independent initialization. Original counts/PCA preserved. Stopping diagnostics are not biological preservation or prospective prediction evidence.")
+        return .init(levels: levels, cellLevels: batch, scores: scores, memberships: r,
+            assignmentScores: assignmentScores, assignmentCenters: assignmentCenters, objectives: objectives,
+            relativeImprovements: improvements, stoppingReason: stopping, maximumRidgeResidual: maxResidual)
+    }
+}
+
+struct VivoIntegrationSolution {
+    static let method = "diversity-soft-clustering-categorical-ridge-Double-v1"
+    static let qualification = "Transductive single-covariate PCA correction with Harmony2 objective and intercept centers; independent initialization. Original counts/PCA preserved. Stopping diagnostics are not biological preservation or prospective prediction evidence."
+    let levels: [String]
+    let cellLevels: [Int]
+    let scores: VivoIntegrationMatrix
+    let memberships: VivoIntegrationMatrix
+    let assignmentScores: VivoIntegrationMatrix
+    let assignmentCenters: [[Double]]
+    let objectives: [Double]
+    let relativeImprovements: [Double]
+    let stoppingReason: String
+    let maximumRidgeResidual: Double
+    func materialize(cells: [VivoOmicsCellIdentity], options: VivoSingleCellIntegrationOptions) throws -> VivoSingleCellIntegrationResult {
+        try .init(method: Self.method, options: options, cells: cells, levels: levels, cellLevels: cellLevels,
+            scores: scores.materialize(), memberships: memberships.materialize(), assignmentScores: assignmentScores.materialize(),
+            assignmentCenters: assignmentCenters, objectives: objectives, relativeImprovements: relativeImprovements,
+            stoppingReason: stoppingReason, maximumRidgeResidual: maximumRidgeResidual, qualification: Self.qualification)
     }
 }

@@ -94,7 +94,7 @@ enum VivoWindowedPCANeighbors {
                        execution: VivoPCANeighborExecution, sink: (Int, [Int], [Double]) throws -> Void) throws {
         try options.validate(); try execution.validate()
         let k = options.neighbors
-        guard n >= k, n <= 1_000_000, (1...64).contains(dimensions), options.representation != .integrated else {
+        guard n >= k, n <= 1_000_000, (1...64).contains(dimensions) else {
             throw VivoOmicsError.limit("PCA neighbor axes, graph-entry bound or unsupported integrated representation")
         }
         let pairs = n*(n-1)/2

@@ -24,6 +24,9 @@ numivivo singlecell-pca-neighbors-verify graph
 For exact search omit `approximation` and choose the Dispatch worker count and
 pair-work budget explicitly. `inputKind: "query"` supports frozen query bundles.
 These are graphs among query cells, not cross-reference annotation.
+[File-backed integration](FILE_INTEGRATION.md) adds `inputKind: "integrated"`
+paired with `neighbors.representation: "integrated"`. Both declarations are
+required; parent correction is reconstructed before graph construction.
 
 ## Record contract
 

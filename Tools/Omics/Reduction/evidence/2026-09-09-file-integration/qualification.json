@@ -1,0 +1,30 @@
+{
+  "status": "file-storage-qualified-biological-preservation-partial",
+  "baseCommit": "f129080a6abcd711b109a18c958fa0ef4baa5b61",
+  "binarySHA256": "875342497c2874036a521310d290bfceadd578b4d88337389ea4e56f21d69b07",
+  "oracleSHA256": "980a20e41e27bb537bc5c563c94d565fa36864e15cbc800f4a863f4ffbc8e225",
+  "productionSourceHashesMatched": 505,
+  "fullCohortCells": {
+    "kang": 24673,
+    "hagai": 13863,
+    "baron": 8569
+  },
+  "swiftTests": 86,
+  "swiftSuites": 26,
+  "finalIntegrationCLIChecks": 54,
+  "finalIntegrationExpectedRejections": 14,
+  "rawGraphRegressionChecks": 22,
+  "rawGraphRegressionExpectedRejections": 6,
+  "fullCohortCommands": 22,
+  "fullCohortExpectedRejections": 1,
+  "integratedDownstreamCommands": 6,
+  "sixFullCohortTrajectoriesBitExact": true,
+  "independentObjectiveAndRidgeReconstruction": true,
+  "biologicalStatus": {
+    "hagai": "All three native seeds pass applicable preservation and original control gates",
+    "kang": "All three native and reference seeds fail NK-cell recall preservation; four treatment folds and ten program strata unavailable; original global condition-erasure control fails",
+    "baron": "Full donor/disease design rejected as confounded"
+  },
+  "supplementaryKangControl": "Type-condition erasure detects 0.628288 condition accuracy loss; original failed gates unchanged",
+  "qualification": "No general integration competitiveness, prospective correction, million-cell or Metal qualification. Overall twelve-item goal remains active."
+}

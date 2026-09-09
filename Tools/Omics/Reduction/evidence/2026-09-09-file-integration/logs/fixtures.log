@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Reduction/check_file_integration.py", line 23, in <module>
+    write(a.out/'query.json',dict(schemaVersion=1,featureNamespace='fixture-genes',mapping=mapping));run('query',['singlecell-h5ad-pca-query',source,'--plan',a.out/'query.json','--reference',a.out/'fitted','--output',a.out/'query'])
+                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Reduction/check_file_integration.py", line 16, in run
+    assert r.returncode==(0 if ok else 65),(label,r.stderr);return r
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('query', 'numivivo singlecell: invalid("PCA query overlaps training cell identities")\n')

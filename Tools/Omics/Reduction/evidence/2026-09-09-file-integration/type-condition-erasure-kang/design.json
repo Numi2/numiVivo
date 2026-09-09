@@ -1,0 +1,7 @@
+{
+  "reason": "Global condition centering did not meet the original 0.10 accuracy-loss control requirement in mixed-cell-type Kang. Remove cell-type/condition means to represent cell-type-specific responses.",
+  "operation": "For every source cell-type/condition group, subtract its full-cohort PCA mean. Labels are deliberately used only by this destructive control.",
+  "minimumRequiredAccuracyLoss": 0.1,
+  "originalAcceptanceResultsUnchanged": true,
+  "originalReferenceSHA256": "4a454c9ac4543590333c80b3b76cedba7935bb7af32e3d1e194fe2c503ae4ce7"
+}

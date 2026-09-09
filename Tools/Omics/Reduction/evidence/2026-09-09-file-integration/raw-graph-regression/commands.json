@@ -1,0 +1,278 @@
+[
+  {
+    "label": "fitted-exact-publish",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/fitted",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-exact/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-exact/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-verify",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-exact/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-repeat",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/fitted",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-exact/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-exact/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-json",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/fitted",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-exact/json-plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-exact/json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-publish",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/fitted",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-hnsw/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-verify",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-hnsw/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-repeat",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/fitted",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-hnsw/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-json",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/fitted",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-hnsw/json-plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-hnsw/json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-publish",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/query",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-exact/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-exact/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-verify",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-exact/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-repeat",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/query",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-exact/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-exact/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-json",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/query",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-exact/json-plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-exact/json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-publish",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/query",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-hnsw/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-verify",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-hnsw/binary"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-repeat",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/query",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-hnsw/repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-json",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/query",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-hnsw/json-plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/query-hnsw/json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "rehashed-neighbors",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/tamper-neighbors"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-bandwidths",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/tamper-bandwidths"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-offsets",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/tamper-offsets"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-edges",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors-verify",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/tamper-edges"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "overwrite",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/fitted",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-hnsw/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/fitted-hnsw/binary"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "invalid-storage",
+    "command": [
+      "/Users/home/numivivo-file-integration-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/home/numivivo-file-integration-20260909/fixtures-v2/fitted",
+      "--plan",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/invalid-storage.json",
+      "--output",
+      "/Users/home/numivivo-file-integration-20260909/raw-graph-regression/invalid-output"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  }
+]

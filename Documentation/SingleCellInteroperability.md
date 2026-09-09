@@ -307,9 +307,13 @@ The complete development objective remains open:
    [Kang qualification](../Tools/Omics/Reduction/INTEGRATION.md) compares donor
    mixing, cross-donor condition accuracy, and measured RNA program preservation
    with three pinned Harmony reference runs and a response-erasure control.
-   Multiple independent donor studies, diverse cell types, rare states, multiple
-   simultaneous covariates and prospective mapping remain unqualified. This does
-   not yet establish competitive general multi-donor integration.
+   [Full-cohort file integration](../Tools/Omics/Reduction/FILE_INTEGRATION.md) now
+   matches the previous numerical solver exactly across three seeds on Kang and
+   independent Hagai. Hagai passes its response-preservation margins; full Kang
+   fails NK-cell recall preservation in both native and reference Harmony runs.
+   Missing rare-type strata and the insensitive original Kang erasure control
+   remain explicit. Full Baron is rejected for confounding. Multiple covariates,
+   prospective mapping and general multi-donor competitiveness remain open.
 6. **Annotation:** [native fixed marker/program scoring](../Tools/Omics/Programs/README.md)
    now shares sparse arithmetic between resident and streamed H5AD routes, with
    exact IDs, signed weights, definition fingerprints, missing-gene coverage and
@@ -397,8 +401,9 @@ The complete development objective remains open:
    through stable disk scatter, preserving the previous solver's summation order.
    [File-backed embedding](../Tools/Omics/Reduction/FILE_EMBEDDING.md) now stores
    mutable edge schedules in a 16 MiB mapping window and reads only the requested
-   PCA initialization columns into resident arrays. File-backed integration,
-   million-cell qualification and downstream biological evaluation remain open.
+   PCA initialization columns into resident arrays. File-backed integration now
+   keeps latent matrices in bounded mappings and is measured on full Kang/Hagai;
+   million-cell qualification and general biological preservation remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

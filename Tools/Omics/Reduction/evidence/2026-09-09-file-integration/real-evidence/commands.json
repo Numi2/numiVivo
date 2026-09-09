@@ -1,0 +1,362 @@
+[
+  {
+    "label": "kang-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-file-integration-20260909/prepared/kang.h5ad",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/prepared/kang-fit.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/pca"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 7.33,
+    "maximumResidentBytes": 178372608
+  },
+  {
+    "label": "kang-7-integrate",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/pca",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/plan-7.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/seed-7"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 13.4,
+    "maximumResidentBytes": 265388032
+  },
+  {
+    "label": "kang-7-legacy",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-integration-scoped-20260909/legacy-integration",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/pca",
+      "20",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/options-7.json",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/legacy-7.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 4.99,
+    "maximumResidentBytes": 562282496
+  },
+  {
+    "label": "kang-7-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate-verify",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/seed-7"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 13.5,
+    "maximumResidentBytes": 283377664
+  },
+  {
+    "label": "kang-19-integrate",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/pca",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/plan-19.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/seed-19"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 12.8,
+    "maximumResidentBytes": 265814016
+  },
+  {
+    "label": "kang-19-legacy",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-integration-scoped-20260909/legacy-integration",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/pca",
+      "20",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/options-19.json",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/legacy-19.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 4.21,
+    "maximumResidentBytes": 562233344
+  },
+  {
+    "label": "kang-19-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate-verify",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/seed-19"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 12.7,
+    "maximumResidentBytes": 265961472
+  },
+  {
+    "label": "kang-41-integrate",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/pca",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/plan-41.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/seed-41"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 12.71,
+    "maximumResidentBytes": 266600448
+  },
+  {
+    "label": "kang-41-legacy",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-integration-scoped-20260909/legacy-integration",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/pca",
+      "20",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/options-41.json",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/legacy-41.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 4.36,
+    "maximumResidentBytes": 562233344
+  },
+  {
+    "label": "kang-41-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate-verify",
+      "/Users/n/numivivo-file-integration-20260909/real/kang/seed-41"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 12.94,
+    "maximumResidentBytes": 265748480
+  },
+  {
+    "label": "hagai-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/prepared/hagai-fit.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/pca"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 13.79,
+    "maximumResidentBytes": 201113600
+  },
+  {
+    "label": "hagai-7-integrate",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/plan-7.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/seed-7"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 17.33,
+    "maximumResidentBytes": 264323072
+  },
+  {
+    "label": "hagai-7-legacy",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-integration-scoped-20260909/legacy-integration",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/pca",
+      "20",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/options-7.json",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/legacy-7.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 2.26,
+    "maximumResidentBytes": 321290240
+  },
+  {
+    "label": "hagai-7-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate-verify",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/seed-7"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 17.23,
+    "maximumResidentBytes": 259342336
+  },
+  {
+    "label": "hagai-19-integrate",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/plan-19.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/seed-19"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 17.34,
+    "maximumResidentBytes": 261144576
+  },
+  {
+    "label": "hagai-19-legacy",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-integration-scoped-20260909/legacy-integration",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/pca",
+      "20",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/options-19.json",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/legacy-19.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 2.28,
+    "maximumResidentBytes": 321273856
+  },
+  {
+    "label": "hagai-19-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate-verify",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/seed-19"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 17.36,
+    "maximumResidentBytes": 264273920
+  },
+  {
+    "label": "hagai-41-integrate",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/plan-41.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/seed-41"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 17.33,
+    "maximumResidentBytes": 259260416
+  },
+  {
+    "label": "hagai-41-legacy",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-integration-scoped-20260909/legacy-integration",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/pca",
+      "20",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/options-41.json",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/legacy-41.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 2.26,
+    "maximumResidentBytes": 323993600
+  },
+  {
+    "label": "hagai-41-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate-verify",
+      "/Users/n/numivivo-file-integration-20260909/real/hagai/seed-41"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 17.35,
+    "maximumResidentBytes": 261226496
+  },
+  {
+    "label": "baron-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/prepared/baron-fit.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/baron/pca"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true,
+    "seconds": 6.27,
+    "maximumResidentBytes": 172965888
+  },
+  {
+    "label": "baron-7-integrate",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-h5ad-20260909/.build/release/numivivo",
+      "singlecell-pca-integrate",
+      "/Users/n/numivivo-file-integration-20260909/real/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-file-integration-20260909/real/baron/plan-7.json",
+      "--output",
+      "/Users/n/numivivo-file-integration-20260909/real/baron/seed-7"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false,
+    "seconds": 6.4,
+    "maximumResidentBytes": 201883648
+  }
+]

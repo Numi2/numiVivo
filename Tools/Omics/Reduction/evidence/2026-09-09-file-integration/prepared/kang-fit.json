@@ -1,0 +1,157 @@
+{
+  "mapping": {
+    "schemaVersion": 1,
+    "id": "kang2018-all-cells",
+    "evidence": "measured",
+    "countUnit": "umiCount",
+    "matrixPath": "X",
+    "sourceDescription": "Kang 2018 doi:10.1038/nbt.4042, pertpy file 34464122; all 24673 cells and 15706 genes in source order. Eight paired donors, eight source-annotated cell types. Batch unreported.",
+    "sampleColumn": "native_sample",
+    "groupColumn": "cell_type",
+    "mitochondrialFeatureIDs": [],
+    "samples": [
+      {
+        "id": "patient_101__ctrl",
+        "biologicalReplicateID": "patient_101",
+        "donorID": "patient_101",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_101__stim",
+        "biologicalReplicateID": "patient_101",
+        "donorID": "patient_101",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1015__ctrl",
+        "biologicalReplicateID": "patient_1015",
+        "donorID": "patient_1015",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1015__stim",
+        "biologicalReplicateID": "patient_1015",
+        "donorID": "patient_1015",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1016__ctrl",
+        "biologicalReplicateID": "patient_1016",
+        "donorID": "patient_1016",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1016__stim",
+        "biologicalReplicateID": "patient_1016",
+        "donorID": "patient_1016",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1039__ctrl",
+        "biologicalReplicateID": "patient_1039",
+        "donorID": "patient_1039",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1039__stim",
+        "biologicalReplicateID": "patient_1039",
+        "donorID": "patient_1039",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_107__ctrl",
+        "biologicalReplicateID": "patient_107",
+        "donorID": "patient_107",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_107__stim",
+        "biologicalReplicateID": "patient_107",
+        "donorID": "patient_107",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1244__ctrl",
+        "biologicalReplicateID": "patient_1244",
+        "donorID": "patient_1244",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1244__stim",
+        "biologicalReplicateID": "patient_1244",
+        "donorID": "patient_1244",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1256__ctrl",
+        "biologicalReplicateID": "patient_1256",
+        "donorID": "patient_1256",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1256__stim",
+        "biologicalReplicateID": "patient_1256",
+        "donorID": "patient_1256",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1488__ctrl",
+        "biologicalReplicateID": "patient_1488",
+        "donorID": "patient_1488",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1488__stim",
+        "biologicalReplicateID": "patient_1488",
+        "donorID": "patient_1488",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      }
+    ]
+  },
+  "reduction": {
+    "maximumCacheBytes": 2000000000,
+    "maximumEntryVisits": 2000000000,
+    "normalizationTarget": 10000,
+    "pca": {
+      "components": 20,
+      "highlyVariableFeatures": 2000,
+      "maximumBasis": 128,
+      "meanBins": 20,
+      "relativeResidualTolerance": 1e-06,
+      "seed": 7
+    }
+  },
+  "schemaVersion": 1
+}

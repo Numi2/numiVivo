@@ -1,0 +1,758 @@
+{
+  "sourceURL": "https://ndownloader.figshare.com/files/34464122",
+  "sourceSHA256": "e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830",
+  "preparedSHA256": "1d48c1ff10bcfad7c1bc75863ce702a491c6c71b08e921a5e9754a986a9d19f3",
+  "cells": 24673,
+  "features": 15706,
+  "nonzeros": 14184532,
+  "allCountValuesExact": true,
+  "allCellFeatureIdentitiesExact": true,
+  "composition": [
+    {
+      "replicate": "patient_101",
+      "cell_type": "CD4 T cells",
+      "label": "ctrl",
+      "cells": 353
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "CD4 T cells",
+      "label": "stim",
+      "cells": 467
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "CD14+ Monocytes",
+      "label": "ctrl",
+      "cells": 207
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "CD14+ Monocytes",
+      "label": "stim",
+      "cells": 269
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "B cells",
+      "label": "ctrl",
+      "cells": 106
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "B cells",
+      "label": "stim",
+      "cells": 141
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "NK cells",
+      "label": "ctrl",
+      "cells": 65
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "NK cells",
+      "label": "stim",
+      "cells": 84
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "CD8 T cells",
+      "label": "ctrl",
+      "cells": 29
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "CD8 T cells",
+      "label": "stim",
+      "cells": 54
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "ctrl",
+      "cells": 72
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "stim",
+      "cells": 112
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "Dendritic cells",
+      "label": "ctrl",
+      "cells": 25
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "Dendritic cells",
+      "label": "stim",
+      "cells": 39
+    },
+    {
+      "replicate": "patient_101",
+      "cell_type": "Megakaryocytes",
+      "label": "ctrl",
+      "cells": 1
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "CD4 T cells",
+      "label": "ctrl",
+      "cells": 180
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "CD4 T cells",
+      "label": "stim",
+      "cells": 199
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "CD14+ Monocytes",
+      "label": "ctrl",
+      "cells": 210
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "CD14+ Monocytes",
+      "label": "stim",
+      "cells": 179
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "B cells",
+      "label": "ctrl",
+      "cells": 44
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "B cells",
+      "label": "stim",
+      "cells": 60
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "NK cells",
+      "label": "ctrl",
+      "cells": 37
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "NK cells",
+      "label": "stim",
+      "cells": 40
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "CD8 T cells",
+      "label": "ctrl",
+      "cells": 8
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "CD8 T cells",
+      "label": "stim",
+      "cells": 10
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "ctrl",
+      "cells": 24
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "stim",
+      "cells": 20
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "Dendritic cells",
+      "label": "ctrl",
+      "cells": 14
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "Dendritic cells",
+      "label": "stim",
+      "cells": 16
+    },
+    {
+      "replicate": "patient_107",
+      "cell_type": "Megakaryocytes",
+      "label": "stim",
+      "cells": 1
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "CD4 T cells",
+      "label": "ctrl",
+      "cells": 951
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "CD4 T cells",
+      "label": "stim",
+      "cells": 835
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "CD14+ Monocytes",
+      "label": "ctrl",
+      "cells": 859
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "CD14+ Monocytes",
+      "label": "stim",
+      "cells": 718
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "B cells",
+      "label": "ctrl",
+      "cells": 459
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "B cells",
+      "label": "stim",
+      "cells": 366
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "NK cells",
+      "label": "ctrl",
+      "cells": 179
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "NK cells",
+      "label": "stim",
+      "cells": 175
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "CD8 T cells",
+      "label": "ctrl",
+      "cells": 85
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "CD8 T cells",
+      "label": "stim",
+      "cells": 60
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "ctrl",
+      "cells": 164
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "stim",
+      "cells": 159
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "Dendritic cells",
+      "label": "ctrl",
+      "cells": 40
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "Dendritic cells",
+      "label": "stim",
+      "cells": 36
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "Megakaryocytes",
+      "label": "ctrl",
+      "cells": 1
+    },
+    {
+      "replicate": "patient_1015",
+      "cell_type": "Megakaryocytes",
+      "label": "stim",
+      "cells": 3
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "CD4 T cells",
+      "label": "ctrl",
+      "cells": 502
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "CD4 T cells",
+      "label": "stim",
+      "cells": 461
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "CD14+ Monocytes",
+      "label": "ctrl",
+      "cells": 393
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "CD14+ Monocytes",
+      "label": "stim",
+      "cells": 355
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "B cells",
+      "label": "ctrl",
+      "cells": 125
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "B cells",
+      "label": "stim",
+      "cells": 123
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "NK cells",
+      "label": "ctrl",
+      "cells": 90
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "NK cells",
+      "label": "stim",
+      "cells": 98
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "CD8 T cells",
+      "label": "ctrl",
+      "cells": 504
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "CD8 T cells",
+      "label": "stim",
+      "cells": 489
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "ctrl",
+      "cells": 81
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "stim",
+      "cells": 89
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "Dendritic cells",
+      "label": "ctrl",
+      "cells": 27
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "Dendritic cells",
+      "label": "stim",
+      "cells": 20
+    },
+    {
+      "replicate": "patient_1016",
+      "cell_type": "Megakaryocytes",
+      "label": "ctrl",
+      "cells": 1
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "CD4 T cells",
+      "label": "ctrl",
+      "cells": 201
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "CD4 T cells",
+      "label": "stim",
+      "cells": 302
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "CD14+ Monocytes",
+      "label": "ctrl",
+      "cells": 126
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "CD14+ Monocytes",
+      "label": "stim",
+      "cells": 164
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "B cells",
+      "label": "ctrl",
+      "cells": 26
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "B cells",
+      "label": "stim",
+      "cells": 41
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "NK cells",
+      "label": "ctrl",
+      "cells": 21
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "NK cells",
+      "label": "stim",
+      "cells": 22
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "CD8 T cells",
+      "label": "ctrl",
+      "cells": 9
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "CD8 T cells",
+      "label": "stim",
+      "cells": 11
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "ctrl",
+      "cells": 15
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "stim",
+      "cells": 25
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "Dendritic cells",
+      "label": "ctrl",
+      "cells": 10
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "Dendritic cells",
+      "label": "stim",
+      "cells": 18
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "Megakaryocytes",
+      "label": "ctrl",
+      "cells": 53
+    },
+    {
+      "replicate": "patient_1039",
+      "cell_type": "Megakaryocytes",
+      "label": "stim",
+      "cells": 58
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "CD4 T cells",
+      "label": "ctrl",
+      "cells": 1108
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "CD4 T cells",
+      "label": "stim",
+      "cells": 892
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "CD14+ Monocytes",
+      "label": "ctrl",
+      "cells": 418
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "CD14+ Monocytes",
+      "label": "stim",
+      "cells": 300
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "B cells",
+      "label": "ctrl",
+      "cells": 118
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "B cells",
+      "label": "stim",
+      "cells": 96
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "NK cells",
+      "label": "ctrl",
+      "cells": 102
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "NK cells",
+      "label": "stim",
+      "cells": 107
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "CD8 T cells",
+      "label": "ctrl",
+      "cells": 29
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "CD8 T cells",
+      "label": "stim",
+      "cells": 12
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "ctrl",
+      "cells": 41
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "stim",
+      "cells": 17
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "Dendritic cells",
+      "label": "ctrl",
+      "cells": 62
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "Dendritic cells",
+      "label": "stim",
+      "cells": 37
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "Megakaryocytes",
+      "label": "ctrl",
+      "cells": 1
+    },
+    {
+      "replicate": "patient_1244",
+      "cell_type": "Megakaryocytes",
+      "label": "stim",
+      "cells": 3
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "CD4 T cells",
+      "label": "ctrl",
+      "cells": 1049
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "CD4 T cells",
+      "label": "stim",
+      "cells": 993
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "CD14+ Monocytes",
+      "label": "ctrl",
+      "cells": 402
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "CD14+ Monocytes",
+      "label": "stim",
+      "cells": 387
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "B cells",
+      "label": "ctrl",
+      "cells": 218
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "B cells",
+      "label": "stim",
+      "cells": 219
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "NK cells",
+      "label": "ctrl",
+      "cells": 242
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "NK cells",
+      "label": "stim",
+      "cells": 186
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "CD8 T cells",
+      "label": "ctrl",
+      "cells": 114
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "CD8 T cells",
+      "label": "stim",
+      "cells": 132
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "ctrl",
+      "cells": 47
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "stim",
+      "cells": 57
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "Dendritic cells",
+      "label": "ctrl",
+      "cells": 34
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "Dendritic cells",
+      "label": "stim",
+      "cells": 48
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "Megakaryocytes",
+      "label": "ctrl",
+      "cells": 2
+    },
+    {
+      "replicate": "patient_1256",
+      "cell_type": "Megakaryocytes",
+      "label": "stim",
+      "cells": 4
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "CD4 T cells",
+      "label": "ctrl",
+      "cells": 1216
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "CD4 T cells",
+      "label": "stim",
+      "cells": 1529
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "CD14+ Monocytes",
+      "label": "ctrl",
+      "cells": 317
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "CD14+ Monocytes",
+      "label": "stim",
+      "cells": 393
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "B cells",
+      "label": "ctrl",
+      "cells": 220
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "B cells",
+      "label": "stim",
+      "cells": 289
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "NK cells",
+      "label": "ctrl",
+      "cells": 119
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "NK cells",
+      "label": "stim",
+      "cells": 149
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "CD8 T cells",
+      "label": "ctrl",
+      "cells": 33
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "CD8 T cells",
+      "label": "stim",
+      "cells": 42
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "ctrl",
+      "cells": 76
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "FCGR3A+ Monocytes",
+      "label": "stim",
+      "cells": 90
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "Dendritic cells",
+      "label": "ctrl",
+      "cells": 46
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "Dendritic cells",
+      "label": "stim",
+      "cells": 57
+    },
+    {
+      "replicate": "patient_1488",
+      "cell_type": "Megakaryocytes",
+      "label": "ctrl",
+      "cells": 4
+    }
+  ],
+  "hagaiDesignSource": "Tools/Omics/Benchmarks/evidence/2026-09-09-hagai-nb/plan.json",
+  "hagaiPairing": "Prefixes mouse1/2/3 identify paired timecourses; Supplementary Table 2 supports three individuals, no prefix-to-table-row mapping claimed"
+}

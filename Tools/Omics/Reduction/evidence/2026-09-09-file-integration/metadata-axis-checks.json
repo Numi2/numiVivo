@@ -1,0 +1,18 @@
+[
+  {
+    "cohort": "kang",
+    "sourceGroupLabelsExact": true,
+    "sourceDonorConditionColumnsExact": true,
+    "hagaiDonorProvenance": null,
+    "metadataSHA256": "7c963578630cf4210d1311bc3934a31d1e8de5961cbd6da059d21882ff9f9121"
+  },
+  {
+    "cohort": "hagai",
+    "sourceGroupLabelsExact": null,
+    "sourceDonorConditionColumnsExact": null,
+    "hagaiDonorProvenance": "retained SDRF and supplement mapping",
+    "metadataSHA256": "4916e0d99308f241d4e024f29fcdda2e22dd043828765719e257201b45311bd1",
+    "sourceGroupLabelStatus": "No per-cell group column mapped; source cohort is the deposited author QC cluster0. No inferred cell types.",
+    "donorConditionStatus": "Sample prefixes and retained SDRF/supplement design provide pairing; no independent per-cell replicate/label columns asserted."
+  }
+]

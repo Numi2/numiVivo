@@ -1,0 +1,59 @@
+{
+  "binarySHA256": "875342497c2874036a521310d290bfceadd578b4d88337389ea4e56f21d69b07",
+  "oracleSHA256": "980a20e41e27bb537bc5c563c94d565fa36864e15cbc800f4a863f4ffbc8e225",
+  "hdf5SHA256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e",
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "sourceFiles": 505,
+  "commands": [
+    {
+      "command": [
+        "sw_vers"
+      ],
+      "output": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6\nBuildVersion:\t\t25G72"
+    },
+    {
+      "command": [
+        "xcrun",
+        "swift",
+        "--version"
+      ],
+      "output": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: arm64-apple-macosx26.0"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "hw.model"
+      ],
+      "output": "Mac16,11"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "output": "25769803776"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/n/numivivo-h5ad-20260909",
+        "rev-parse",
+        "HEAD"
+      ],
+      "output": "f129080a6abcd711b109a18c958fa0ef4baa5b61"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/n/numivivo-h5ad-20260909",
+        "status",
+        "--short"
+      ],
+      "output": "M Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift\n M Sources/NumiVivoKit/Omics/VivoHNSWNeighbors.swift\n M Sources/NumiVivoKit/Omics/VivoPCANeighborBundle.swift\n M Sources/NumiVivoKit/Omics/VivoSingleCellIntegration.swift\n M Sources/NumiVivoKit/Omics/VivoWindowedPCANeighbors.swift\n M Tools/Omics/H5AD/build.sh\n?? Sources/NumiVivoKit/Omics/VivoIntegrationMatrix.swift\n?? Sources/NumiVivoKit/Omics/VivoPCAIntegration.swift\n?? Tests/NumiVivoIntegrationTests/SingleCellFileIntegrationTests.swift\n?? Tools/Omics/Reduction/LegacyIntegrationMain.swift\n?? Tools/Omics/Reduction/LegacyIntegrationReference.swift\n?? Tools/Omics/Reduction/build_legacy_integration.sh\n?? Tools/Omics/Reduction/run_file_integration.py\n?? Tools/Omics/Reduction/run_integrated_graph.py"
+    }
+  ]
+}
