@@ -1,0 +1,129 @@
+name: HCC1395 measured-chain execution
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/hcc1395-chain.yml
+      - Tools/Neoantigen/HCC1395/qualify_inputs.py
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: hcc1395-measured-chain-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  real-rna-and-prediction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    env:
+      PVAC_IMAGE: griffithlab/pvactools@sha256:0297856ce7a9dec7339f3405f92fcfb37be48a6a2b06ec809270b93c7a81f25c
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            Tools/Neoantigen/HCC1395
+            ReferenceAdapters/AlphaGenomeAtlas
+      - uses: actions/download-artifact@v4
+        with:
+          name: hcc1395-regtools-binary
+          run-id: 34382407760
+          github-token: ${{ github.token }}
+          path: provisioned
+      - name: Provision execution dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y samtools hisat2
+          chmod +x provisioned/regtools
+          sha256sum provisioned/regtools
+          df -h .
+      - name: Download and hash real public chromosome-scoped inputs
+        run: |
+          set -o pipefail
+          python3 -u Tools/Neoantigen/HCC1395/qualify_inputs.py --output "$PWD/qualification" 2>&1 | tee prepare.log
+      - name: Verify references and align actual RNA reads
+        run: |
+          set -euo pipefail
+          python3 -u - <<'PY' 2>&1 | tee qualification/evidence/alignment.log
+          import hashlib,json,pathlib,subprocess,time
+          root=pathlib.Path('qualification').resolve(); p=json.loads((root/'alignment-plan.json').read_text())
+          def run(args,**kw):
+            print('EXEC',json.dumps(args),flush=True); return subprocess.run(args,check=True,**kw)
+          run(['samtools','faidx',p['referenceFASTA']])
+          with (root/'index-reference.fa').open('w') as out:run(['hisat2-inspect','-f',p['hisatIndex']],stdout=out)
+          def sequences(path):
+            result={}; name=None; sha=None; length=0
+            with open(path) as f:
+              for line in f:
+                if line.startswith('>'):
+                  if name is not None:result[name]={'length':length,'sha256':sha.hexdigest()}
+                  name=line[1:].split()[0];sha=hashlib.sha256();length=0
+                else:
+                  seq=line.strip().upper().encode();sha.update(seq);length+=len(seq)
+            if name is not None:result[name]={'length':length,'sha256':sha.hexdigest()}
+            return result
+          original=sequences(p['referenceFASTA']); indexed=sequences(root/'index-reference.fa')
+          if original!=indexed:raise ValueError('HISAT index and actual reference sequences differ')
+          print('REFERENCE_SEQUENCE_IDENTITY',json.dumps(original),flush=True)
+          (root/'index-reference.fa').unlink()
+          for variant in json.loads((root/'evidence/selected-variants.json').read_text()):
+            region=f"{variant['chromosome']}:{variant['position1']}-{variant['position1']+len(variant['reference'])-1}"
+            observed=''.join(subprocess.check_output(['samtools','faidx',p['referenceFASTA'],region],text=True).splitlines()[1:]).upper()
+            if observed!=variant['reference']:raise ValueError('Actual VCF REF differs from GRCh38: '+region)
+          command=['hisat2','--rna-strandness','RF','-p','4','-x',p['hisatIndex'],'-1',','.join(p['read1']),'-2',','.join(p['read2'])]
+          print('EXEC',json.dumps(command),flush=True)
+          with (root/'evidence/hisat2.stderr').open('w') as err:
+            proc=subprocess.Popen(command,stdout=subprocess.PIPE,stderr=err)
+            try:run(['samtools','sort','-@','2','-o',str(root/'aligned.bam'),'-'],stdin=proc.stdout)
+            finally:proc.stdout.close()
+            if proc.wait()!=0:raise RuntimeError('HISAT2 RNA alignment failed')
+          run(['samtools','index',str(root/'aligned.bam')])
+          with (root/'evidence/alignment-flagstat.txt').open('w') as out:run(['samtools','flagstat',str(root/'aligned.bam')],stdout=out)
+          (root/'loci.bed').write_text('chr6\t43100000\t43250000\nchr6\t44100000\t44250000\n')
+          run(['samtools','view','-bh','-M','-L',str(root/'loci.bed'),'-o',str(root/'rna.bam'),str(root/'aligned.bam')])
+          run(['samtools','index',str(root/'rna.bam')])
+          print('REAL_ALIGNMENT_COMPLETE',flush=True)
+          PY
+      - name: Execute real pinned RegTools
+        run: |
+          set -euo pipefail
+          provisioned/regtools cis-splice-effects identify -o qualification/regtools.tsv -s RF qualification/splice.vcf qualification/rna.bam qualification/reference.fa qualification/annotation.gtf > qualification/evidence/regtools.stdout 2> qualification/evidence/regtools.stderr
+          wc -l qualification/regtools.tsv
+          head -n 8 qualification/regtools.tsv
+          sha256sum qualification/{splice.vcf,rna.bam,rna.bam.bai,reference.fa,reference.fa.fai,annotation.gtf,regtools.tsv} | tee qualification/evidence/real-input-hashes.txt
+      - name: Execute actual local pVACseq and pVACsplice models without network
+        run: |
+          set -euo pipefail
+          docker pull "$PVAC_IMAGE"
+          docker image inspect "$PVAC_IMAGE" --format '{{json .RepoDigests}}' > qualification/evidence/pvac-image.json
+          docker run --rm --network none -e OMP_NUM_THREADS=2 -e TF_NUM_INTRAOP_THREADS=2 -e TF_NUM_INTEROP_THREADS=2 -v "$PWD/qualification:/work" -w /work --entrypoint /bin/bash "$PVAC_IMAGE" -lc '
+            set -euo pipefail
+            python3 -c "import importlib.metadata,json;print(json.dumps({p:importlib.metadata.version(p) for p in [\"pvactools\",\"mhcflurry\",\"tensorflow\"]}))" | tee evidence/predictor-versions.json
+            sha256sum "$(command -v pvacseq)" "$(command -v pvacsplice)" > evidence/pvac-executable-hashes.txt
+            pvacseq run parent.vcf HCC1395_TUMOR_DNA HLA-A*29:02 MHCflurry pvacseq --normal-sample-name HCC1395_NORMAL_DNA --class-i-epitope-length 9 --n-threads 1 --keep-tmp-files > evidence/pvacseq.stdout 2> evidence/pvacseq.stderr
+            pvacsplice run regtools.tsv HCC1395_TUMOR_DNA HLA-A*29:02 MHCflurry pvacsplice splice.vcf reference.fa annotation.gtf --normal-sample-name HCC1395_NORMAL_DNA --class-i-epitope-length 9 --n-threads 1 --junction-score 1 --variant-distance 2000 --expn-val 1.0 --keep-tmp-files > evidence/pvacsplice.stdout 2> evidence/pvacsplice.stderr
+          '
+          sudo chown -R "$(id -u):$(id -g)" qualification
+          find qualification/pvacseq qualification/pvacsplice -type f -printf '%P %s bytes\n' | tee qualification/evidence/prediction-outputs.txt
+      - name: Preserve small reproducible handoff and actual logs
+        if: always()
+        run: |
+          mkdir -p handoff
+          cp prepare.log handoff/ 2>/dev/null || true
+          if [ -d qualification/evidence ]; then cp -r qualification/evidence handoff/; fi
+          for f in parent.vcf splice.vcf regtools.tsv rna.bam rna.bam.bai annotation.gtf alignment-plan.json; do
+            if [ -f "qualification/$f" ]; then cp "qualification/$f" handoff/; fi
+          done
+          if [ -d qualification/pvacseq ]; then sudo cp -r qualification/pvacseq handoff/; fi
+          if [ -d qualification/pvacsplice ]; then sudo cp -r qualification/pvacsplice handoff/; fi
+          if [ -f qualification/reference.fa ]; then gzip -c qualification/reference.fa > handoff/reference.fa.gz; fi
+          sudo chown -R "$(id -u):$(id -g)" handoff
+          du -sh handoff
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hcc1395-measured-chain
+          path: handoff/
+          retention-days: 14
