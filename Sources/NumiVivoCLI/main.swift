@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoSingleCellCLICommands.handles(arguments.first) {
+if VivoNeoantigenCLICommands.handles(arguments.first) {
+    status = await VivoNeoantigenCLICommands().run(arguments: arguments)
+} else if VivoSingleCellCLICommands.handles(arguments.first) {
     status = await VivoSingleCellCLICommands().run(arguments: arguments)
 } else if VivoWorkflowCLICommands.handles(arguments.first) {
     status = await VivoWorkflowCLICommands().run(arguments: arguments)
@@ -47,6 +49,7 @@ if VivoSingleCellCLICommands.handles(arguments.first) {
 } else {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
+        FileHandle.standardOutput.write(Data("\nNeoantigen research review: neoantigen-example, neoantigen-import, neoantigen-verify, neoantigen-review, neoantigen-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nSingle-cell counts: singlecell-run, singlecell-verify, singlecell-export, singlecell-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nGeneral workflows: workflow-catalog, workflow-template, workflow-plan, workflow-run, workflow-import, workflow-export, workflow-verify, workflow-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nQM/MM free energy and chemical qualification: qmmm-free-energy-analyze, qmmm-transmission-analyze, qmmm-transmission-apply, qmmm-free-energy-rate, qmmm-free-energy-replicated-rate, qmmm-chemical-qualify, qmmm-chemical-state-populations, qmmm-chemical-state-network, qmmm-chemical-exchange-network, qmmm-chemical-exchange-validate, qmmm-free-energy-help.\n".utf8))
