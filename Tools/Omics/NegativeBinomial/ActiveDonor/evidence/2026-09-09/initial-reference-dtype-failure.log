@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/NegativeBinomial/ActiveDonor/check.py", line 42, in <module>
+    assert np.issubdtype(yall.dtype,np.integer) and np.all(yall>=0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

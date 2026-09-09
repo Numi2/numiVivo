@@ -1,0 +1,133 @@
+{
+  "status": "completed-descriptive-R-comparison",
+  "results": {
+    "native_size_factors-edgeR-QL": {
+      "joint": {
+        "features": 12426,
+        "effectSpearman": 0.9947060910793315,
+        "effectSignAgreement": 0.9910671173346209,
+        "medianAbsoluteEffectDifference": 0.0011730582991708212,
+        "nativePublishedBHBelow005": 4827,
+        "referencePublishedBHBelow005": 4944,
+        "subsetRecomputedBHBelow005": {
+          "native": 4827,
+          "reference": 4955
+        }
+      },
+      "recovered": {
+        "features": 0
+      },
+      "referenceSignificantAmongNativeUnavailable": 56,
+      "nativePublishedFamily": 12426,
+      "referencePublishedFamily": 12673,
+      "referenceSHA256": "2f5b71f524d27d9195fa73d758b117cd3da8332e7b69b911f907956c13188e06"
+    },
+    "native_size_factors-limma-voom": {
+      "joint": {
+        "features": 12426,
+        "effectSpearman": 0.9947002379345189,
+        "effectSignAgreement": 0.9842266215998713,
+        "medianAbsoluteEffectDifference": 0.015287629836273825,
+        "nativePublishedBHBelow005": 4827,
+        "referencePublishedBHBelow005": 5039,
+        "subsetRecomputedBHBelow005": {
+          "native": 4827,
+          "reference": 5043
+        }
+      },
+      "recovered": {
+        "features": 0
+      },
+      "referenceSignificantAmongNativeUnavailable": 68,
+      "nativePublishedFamily": 12426,
+      "referencePublishedFamily": 12673,
+      "referenceSHA256": "249984a907b32cc4426023215f232c99b8bc0f772f18bc51ce28ff29233f5211"
+    },
+    "native_size_factors-DESeq2": {
+      "joint": {
+        "features": 12426,
+        "effectSpearman": 0.9998081151121232,
+        "effectSignAgreement": 0.9979880894897795,
+        "medianAbsoluteEffectDifference": 0.0005957503418609067,
+        "nativePublishedBHBelow005": 4827,
+        "referencePublishedBHBelow005": 4478,
+        "subsetRecomputedBHBelow005": {
+          "native": 4827,
+          "reference": 4487
+        }
+      },
+      "recovered": {
+        "features": 0
+      },
+      "referenceSignificantAmongNativeUnavailable": 40,
+      "nativePublishedFamily": 12426,
+      "referencePublishedFamily": 12673,
+      "referenceSHA256": "3c819055aa74171f4c792214e69f6ab416dc91ac04ce5012cab7f18abd38984f"
+    },
+    "package_normalization-edgeR-QL": {
+      "joint": {
+        "features": 12426,
+        "effectSpearman": 0.9946737916352264,
+        "effectSignAgreement": 0.9801223241590215,
+        "medianAbsoluteEffectDifference": 0.023083320850504758,
+        "nativePublishedBHBelow005": 4827,
+        "referencePublishedBHBelow005": 4923,
+        "subsetRecomputedBHBelow005": {
+          "native": 4827,
+          "reference": 4938
+        }
+      },
+      "recovered": {
+        "features": 0
+      },
+      "referenceSignificantAmongNativeUnavailable": 56,
+      "nativePublishedFamily": 12426,
+      "referencePublishedFamily": 12673,
+      "referenceSHA256": "afd6586f21fe7af5d9368c0238abb597bdb139536ae15b2670f26736ef2b2225"
+    },
+    "package_normalization-limma-voom": {
+      "joint": {
+        "features": 12426,
+        "effectSpearman": 0.9947158982699175,
+        "effectSignAgreement": 0.9791566071141156,
+        "medianAbsoluteEffectDifference": 0.02592123275537176,
+        "nativePublishedBHBelow005": 4827,
+        "referencePublishedBHBelow005": 5042,
+        "subsetRecomputedBHBelow005": {
+          "native": 4827,
+          "reference": 5056
+        }
+      },
+      "recovered": {
+        "features": 0
+      },
+      "referenceSignificantAmongNativeUnavailable": 68,
+      "nativePublishedFamily": 12426,
+      "referencePublishedFamily": 12673,
+      "referenceSHA256": "3d5ba0bbf9311c9b188daf92471a8e8c47bea8bbcc47507546e5a990ce00c434"
+    },
+    "package_normalization-DESeq2": {
+      "joint": {
+        "features": 12426,
+        "effectSpearman": 0.9998048764033907,
+        "effectSignAgreement": 0.9979880894897795,
+        "medianAbsoluteEffectDifference": 0.0006070088882314043,
+        "nativePublishedBHBelow005": 4827,
+        "referencePublishedBHBelow005": 4475,
+        "subsetRecomputedBHBelow005": {
+          "native": 4827,
+          "reference": 4480
+        }
+      },
+      "recovered": {
+        "features": 0
+      },
+      "referenceSignificantAmongNativeUnavailable": 40,
+      "nativePublishedFamily": 12426,
+      "referencePublishedFamily": 12673,
+      "referenceSHA256": "1fc19dff494ab44a3aa68c1081259494d28b899249085ff7f71d1464e1dd4354"
+    }
+  },
+  "sourceReportSHA256": "2f2e112dbde53a950e27b85290578775619236cb58885adcd025b30a69db87ad",
+  "qualification": "Distinct active-donor native profiles and full-donor R methods. Published-family BH and descriptive subset-recomputed BH are separate; no calibrated FDR or biological truth claim."
+}

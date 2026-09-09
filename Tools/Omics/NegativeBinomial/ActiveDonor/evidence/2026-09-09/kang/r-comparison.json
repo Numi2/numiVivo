@@ -1,0 +1,187 @@
+{
+  "status": "completed-descriptive-R-comparison",
+  "results": {
+    "native_size_factors-edgeR-QL": {
+      "joint": {
+        "features": 8829,
+        "effectSpearman": 0.9837430370665043,
+        "effectSignAgreement": 0.961717068750708,
+        "medianAbsoluteEffectDifference": 0.04401642243851733,
+        "nativePublishedBHBelow005": 815,
+        "referencePublishedBHBelow005": 1089,
+        "subsetRecomputedBHBelow005": {
+          "native": 815,
+          "reference": 1084
+        }
+      },
+      "recovered": {
+        "features": 3429,
+        "effectSpearman": 0.977563012277122,
+        "effectSignAgreement": 0.9489647127442403,
+        "medianAbsoluteEffectDifference": 0.11153062886650345,
+        "nativePublishedBHBelow005": 49,
+        "referencePublishedBHBelow005": 106,
+        "subsetRecomputedBHBelow005": {
+          "native": 15,
+          "reference": 58
+        }
+      },
+      "referenceSignificantAmongNativeUnavailable": 29,
+      "nativePublishedFamily": 8829,
+      "referencePublishedFamily": 8894,
+      "referenceSHA256": "76056b4a861c6d03e34251f1240618b7103760a68b30fa40da61d2217ed543fd"
+    },
+    "native_size_factors-limma-voom": {
+      "joint": {
+        "features": 8829,
+        "effectSpearman": 0.9798256773699614,
+        "effectSignAgreement": 0.9497111790689773,
+        "medianAbsoluteEffectDifference": 0.06770705598166582,
+        "nativePublishedBHBelow005": 815,
+        "referencePublishedBHBelow005": 1059,
+        "subsetRecomputedBHBelow005": {
+          "native": 815,
+          "reference": 1055
+        }
+      },
+      "recovered": {
+        "features": 3429,
+        "effectSpearman": 0.9802745901969789,
+        "effectSignAgreement": 0.9233012540099155,
+        "medianAbsoluteEffectDifference": 0.2117827333456287,
+        "nativePublishedBHBelow005": 49,
+        "referencePublishedBHBelow005": 137,
+        "subsetRecomputedBHBelow005": {
+          "native": 15,
+          "reference": 58
+        }
+      },
+      "referenceSignificantAmongNativeUnavailable": 23,
+      "nativePublishedFamily": 8829,
+      "referencePublishedFamily": 8894,
+      "referenceSHA256": "ca241cdfadd609f7418d4274575860354213333a919228780c2354d03a0d2c07"
+    },
+    "native_size_factors-DESeq2": {
+      "joint": {
+        "features": 8829,
+        "effectSpearman": 0.9910098198726157,
+        "effectSignAgreement": 0.9722505379997735,
+        "medianAbsoluteEffectDifference": 0.02717259015524992,
+        "nativePublishedBHBelow005": 815,
+        "referencePublishedBHBelow005": 670,
+        "subsetRecomputedBHBelow005": {
+          "native": 815,
+          "reference": 670
+        }
+      },
+      "recovered": {
+        "features": 3429,
+        "effectSpearman": 0.9858406406840894,
+        "effectSignAgreement": 0.9501312335958005,
+        "medianAbsoluteEffectDifference": 0.08969289314710172,
+        "nativePublishedBHBelow005": 49,
+        "referencePublishedBHBelow005": 29,
+        "subsetRecomputedBHBelow005": {
+          "native": 15,
+          "reference": 7
+        }
+      },
+      "referenceSignificantAmongNativeUnavailable": 6,
+      "nativePublishedFamily": 8829,
+      "referencePublishedFamily": 8894,
+      "referenceSHA256": "75e42ca98eaa01d9c8a88c0eae56ae9ef2f716dab16aad09e142b2e23b183e06"
+    },
+    "package_normalization-edgeR-QL": {
+      "joint": {
+        "features": 8829,
+        "effectSpearman": 0.9837323918344543,
+        "effectSignAgreement": 0.9597915958772227,
+        "medianAbsoluteEffectDifference": 0.044049051325666055,
+        "nativePublishedBHBelow005": 815,
+        "referencePublishedBHBelow005": 1083,
+        "subsetRecomputedBHBelow005": {
+          "native": 815,
+          "reference": 1078
+        }
+      },
+      "recovered": {
+        "features": 3429,
+        "effectSpearman": 0.9775379972462126,
+        "effectSignAgreement": 0.9492563429571304,
+        "medianAbsoluteEffectDifference": 0.11319654625750339,
+        "nativePublishedBHBelow005": 49,
+        "referencePublishedBHBelow005": 104,
+        "subsetRecomputedBHBelow005": {
+          "native": 15,
+          "reference": 57
+        }
+      },
+      "referenceSignificantAmongNativeUnavailable": 29,
+      "nativePublishedFamily": 8829,
+      "referencePublishedFamily": 8894,
+      "referenceSHA256": "aff35f96516788e77cd66619d81e82af6587dccd4073c299d1a6c188288e561c"
+    },
+    "package_normalization-limma-voom": {
+      "joint": {
+        "features": 8829,
+        "effectSpearman": 0.9797625230328976,
+        "effectSignAgreement": 0.9507305470608223,
+        "medianAbsoluteEffectDifference": 0.06780298206648794,
+        "nativePublishedBHBelow005": 815,
+        "referencePublishedBHBelow005": 1049,
+        "subsetRecomputedBHBelow005": {
+          "native": 815,
+          "reference": 1036
+        }
+      },
+      "recovered": {
+        "features": 3429,
+        "effectSpearman": 0.9801822759319613,
+        "effectSignAgreement": 0.9276757072032663,
+        "medianAbsoluteEffectDifference": 0.21146120433491516,
+        "nativePublishedBHBelow005": 49,
+        "referencePublishedBHBelow005": 137,
+        "subsetRecomputedBHBelow005": {
+          "native": 15,
+          "reference": 56
+        }
+      },
+      "referenceSignificantAmongNativeUnavailable": 23,
+      "nativePublishedFamily": 8829,
+      "referencePublishedFamily": 8894,
+      "referenceSHA256": "d105d1b70072c26b63fcc0bd6270d932a98e67af951240d58f3434ec2157d4b1"
+    },
+    "package_normalization-DESeq2": {
+      "joint": {
+        "features": 8829,
+        "effectSpearman": 0.991027741057619,
+        "effectSignAgreement": 0.9723638011099784,
+        "medianAbsoluteEffectDifference": 0.02719427801919297,
+        "nativePublishedBHBelow005": 815,
+        "referencePublishedBHBelow005": 669,
+        "subsetRecomputedBHBelow005": {
+          "native": 815,
+          "reference": 669
+        }
+      },
+      "recovered": {
+        "features": 3429,
+        "effectSpearman": 0.9858787738213837,
+        "effectSignAgreement": 0.9504228638086906,
+        "medianAbsoluteEffectDifference": 0.08962256189916773,
+        "nativePublishedBHBelow005": 49,
+        "referencePublishedBHBelow005": 29,
+        "subsetRecomputedBHBelow005": {
+          "native": 15,
+          "reference": 7
+        }
+      },
+      "referenceSignificantAmongNativeUnavailable": 6,
+      "nativePublishedFamily": 8829,
+      "referencePublishedFamily": 8894,
+      "referenceSHA256": "34c60705c4638d8abe81eb0addeada978546b602f513ba166f5a986d17ef5065"
+    }
+  },
+  "sourceReportSHA256": "ca8414d37c47aeba00922dea873211ae6f6e2c1f891a62bd25b6f82bff8d66de",
+  "qualification": "Distinct active-donor native profiles and full-donor R methods. Published-family BH and descriptive subset-recomputed BH are separate; no calibrated FDR or biological truth claim."
+}

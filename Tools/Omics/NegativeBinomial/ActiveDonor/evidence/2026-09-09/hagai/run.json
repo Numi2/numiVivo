@@ -1,0 +1,47 @@
+{
+  "binarySHA256": "cfceb150c729995af90858c8f2ae382d13bd8b5a0081eb958b7e5c2478396a94",
+  "sourceSHA256": "2d0a69d121bcf6e9b63b82fafd06e597f6165a927b87b0cc51cb5c90c2caa5f5",
+  "runs": [
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/home/numivivo-hagai-r-native-current-20260909/original.h5ad",
+        "--plan",
+        "/Users/home/numivivo-hagai-nb-support-20260909/default-plan.json",
+        "--output",
+        "/Users/home/numivivo-hagai-nb-support-20260909/default"
+      ],
+      "seconds": 19.826726667117327,
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/home/numivivo-hagai-nb-support-20260909/default"
+      ],
+      "seconds": 18.98791866702959,
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/home/numivivo-hagai-r-native-current-20260909/original.h5ad",
+        "--plan",
+        "/Users/home/numivivo-hagai-nb-support-20260909/active-plan.json",
+        "--output",
+        "/Users/home/numivivo-hagai-nb-support-20260909/active"
+      ],
+      "seconds": 19.009494500234723,
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/home/numivivo-hagai-nb-support-20260909/active"
+      ],
+      "seconds": 19.115617458242923,
+      "exitCode": 0
+    }
+  ],
+  "exactDefaultReport": true
+}

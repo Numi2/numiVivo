@@ -1,0 +1,47 @@
+{
+  "binarySHA256": "cfceb150c729995af90858c8f2ae382d13bd8b5a0081eb958b7e5c2478396a94",
+  "sourceSHA256": "6e5609e5bd0635ac1bd2a8f9a2bf98ad4fa9a012e8e4e2ad926436d073d745f0",
+  "runs": [
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+        "--plan",
+        "/Users/home/numivivo-kang-nb-support-20260909/default-plan.json",
+        "--output",
+        "/Users/home/numivivo-kang-nb-support-20260909/default"
+      ],
+      "seconds": 27.970100542064756,
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/home/numivivo-kang-nb-support-20260909/default"
+      ],
+      "seconds": 27.137598750181496,
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/home/numivivo-kang-r-native-current-20260909/original.h5ad",
+        "--plan",
+        "/Users/home/numivivo-kang-nb-support-20260909/active-plan.json",
+        "--output",
+        "/Users/home/numivivo-kang-nb-support-20260909/active"
+      ],
+      "seconds": 38.614185750018805,
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/home/numivivo-kang-nb-support-20260909/active"
+      ],
+      "seconds": 38.007513457909226,
+      "exitCode": 0
+    }
+  ],
+  "exactDefaultReport": true
+}

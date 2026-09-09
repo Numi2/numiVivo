@@ -1,7 +1,9 @@
 import Foundation
 
+public enum VivoOmicsNBZeroDonorPolicy: String, Codable, Sendable { case activeDonorProfile }
 public enum VivoOmicsNBTrendMethod: String, Codable, Sendable { case parametric, mean, gammaParametric }
 public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
+    public var zeroTotalDonorPolicy: VivoOmicsNBZeroDonorPolicy?
     public var trend: VivoOmicsNBTrendMethod = .parametric
     public var minimumTrendGenes: Int = 20
     public var minimumPriorVariance: Double = 0.25
@@ -10,11 +12,12 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     public var maximumCooksDistance: Double?
     public init() {}
     private enum CodingKeys: String, CodingKey {
-        case trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance
+        case zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
+        zeroTotalDonorPolicy = try c.decodeIfPresent(VivoOmicsNBZeroDonorPolicy.self,forKey: .zeroTotalDonorPolicy)
         trend = try c.decodeIfPresent(VivoOmicsNBTrendMethod.self, forKey: .trend) ?? .parametric
         minimumTrendGenes = try c.decodeIfPresent(Int.self, forKey: .minimumTrendGenes) ?? 20
         minimumPriorVariance = try c.decodeIfPresent(Double.self, forKey: .minimumPriorVariance) ?? 0.25
@@ -46,6 +49,7 @@ public struct VivoOmicsNBTrend: Codable, Sendable, Equatable {
 }
 public struct VivoOmicsNBFeatureDiagnostics: Codable, Sendable, Equatable {
     public let featureIndex: Int
+    public var supportResolution: VivoOmicsNBSupportResolution?
     public var geneWiseDispersion: Double?
     public var geneWiseLowerBoundary: Bool?
     public var geneWiseUpperBoundary: Bool?
@@ -184,6 +188,9 @@ public enum VivoOmicsNBCohort {
     static func evaluate(metadata: VivoSingleCellCountMetadata, entries: [[(row: Int,count: UInt64)]],
                          design: VivoOmicsDesignMatrix, request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
         let options = request.negativeBinomialOptions ?? .init()
+        guard options.zeroTotalDonorPolicy == nil || request.design == .pairedDonors else {
+            throw VivoOmicsError.invalid("NB zero-total donor policy requires paired donors")
+        }
         let n = design.rows.count, offsets = design.sizeFactorValues.map(log)
         let count = entries.count
         var totals = [UInt64](repeating: 0,count: count), means = [Double](repeating: 0,count: count)
@@ -204,12 +211,24 @@ public enum VivoOmicsNBCohort {
             if totals[gene] < request.minimumFeatureCounts || entries[gene].count < request.minimumExpressingPseudobulks { continue }
             let y = response(gene)
             do {
-                if VivoOmicsNegativeBinomial.positiveSupportIsRankDeficient(counts: y,design: design.rows) {
+                if options.zeroTotalDonorPolicy != nil {
+                    diagnostics[gene].supportResolution = try VivoOmicsNBSupport.resolve(counts: y,design: design,request: request)
+                    if let resolution=diagnostics[gene].supportResolution,resolution.outcome != .ready {
+                        statuses[gene] = resolution.outcome == .insufficientReplication ? .insufficientActiveDonors : .rankDeficientSupport
+                        diagnostics[gene].error = "Active-donor profile unavailable: " + resolution.outcome.rawValue
+                        continue
+                    }
+                }
+                let resolution=diagnostics[gene].supportResolution
+                let rows=resolution?.retainedObservationIndices ?? Array(0..<n)
+                let matrix=resolution?.rows ?? design.rows, contrast=resolution?.contrast ?? design.contrast
+                let counts=rows.map { y[$0] }, localOffsets=rows.map { offsets[$0] }
+                if VivoOmicsNegativeBinomial.positiveSupportIsRankDeficient(counts: counts,design: matrix) {
                     statuses[gene] = .rankDeficientSupport
                     diagnostics[gene].error = "Positive-count support is rank deficient; no inferential fit"
                     continue
                 }
-                let profile = try VivoOmicsNegativeBinomial.estimateDispersion(counts: y,design: design.rows,offsets: offsets,contrast: design.contrast)
+                let profile = try VivoOmicsNegativeBinomial.estimateDispersion(counts: counts,design: matrix,offsets: localOffsets,contrast: contrast)
                 profiles[gene] = profile
                 diagnostics[gene].geneWiseDispersion = profile.fit.dispersion
                 diagnostics[gene].geneWiseLowerBoundary = profile.lowerBoundary
@@ -218,7 +237,10 @@ public enum VivoOmicsNBCohort {
             } catch is CancellationError { throw CancellationError() }
             catch { statuses[gene] = .numericalFailure; diagnostics[gene].error = error.localizedDescription }
         }
-        let reference = entries.indices.filter { profiles[$0].map { !$0.lowerBoundary && !$0.upperBoundary } ?? false }
+        // Keep the original full-design reference cohort and its sampling variance.
+        // Gene-specific profiles borrow this prior; they do not mix residual DFs
+        // into the full-cohort prior-variance estimate.
+        let reference = entries.indices.filter { diagnostics[$0].supportResolution == nil && (profiles[$0].map { !$0.lowerBoundary && !$0.upperBoundary } ?? false) }
         let trend = try fitTrend(means: reference.map { means[$0] },dispersions: reference.map { profiles[$0]!.fit.dispersion },
                                  featureIndices: reference,residualDF: design.residualDegreesOfFreedom,options: options)
         var low = 0.0, high = 10.0
@@ -236,13 +258,16 @@ public enum VivoOmicsNBCohort {
                 degreesOfFreedom: nil,intervalLower: nil,intervalUpper: nil,pValue: nil,adjustedPValue: nil)
             if let profile = profiles[gene] {
                 do {
-                    let target = trend.dispersion(mean: means[gene])
+                    let resolution=diagnostics[gene].supportResolution
+                    let rows=resolution?.retainedObservationIndices ?? Array(0..<n)
+                    let y=response(gene)
+                    let target = trend.dispersion(mean: resolution?.meanNormalizedCount ?? means[gene])
                     guard target.isFinite, (1e-8...100).contains(target) else { throw VivoOmicsError.invalid("NB trend prediction outside dispersion bounds") }
                     diagnostics[gene].trendDispersion = target
                     let outlier = log(profile.fit.dispersion/target) > options.outlierStandardDeviations * sqrt(trend.robustLogResidualVariance)
                     diagnostics[gene].dispersionOutlier = outlier
-                    let final = outlier ? profile : try VivoOmicsNegativeBinomial.estimateDispersion(counts: response(gene),design: design.rows,
-                        offsets: offsets,contrast: design.contrast,logPriorMean: log(target),logPriorVariance: trend.priorLogVariance)
+                    let final = outlier ? profile : try VivoOmicsNegativeBinomial.estimateDispersion(counts: rows.map { y[$0] },design: resolution?.rows ?? design.rows,
+                        offsets: rows.map { offsets[$0] },contrast: resolution?.contrast ?? design.contrast,logPriorMean: log(target),logPriorVariance: trend.priorLogVariance)
                     diagnostics[gene].finalDispersion = final.fit.dispersion
                     diagnostics[gene].finalFit = final.fit
                     guard let cooks = final.fit.cooksDistances else { throw VivoOmicsError.invalid("NB influence unavailable on unit-leverage design") }
@@ -271,7 +296,7 @@ public enum VivoOmicsNBCohort {
         }
         let adjusted = try VivoOmicsLinearStatistics.benjaminiHochberg(probabilities)
         for (i,gene) in tested.enumerated() { features[gene].adjustedPValue = adjusted[i] }
-        return .init(method: "donor-aware-NB2-adjusted-profile-log-prior-Wald-v1",request: request,evidence: metadata.evidence,design: design,
+        return .init(method: options.zeroTotalDonorPolicy == nil ? "donor-aware-NB2-adjusted-profile-log-prior-Wald-v1" : "donor-aware-NB2-active-donor-adjusted-profile-log-prior-Wald-v1",request: request,evidence: metadata.evidence,design: design,
             variancePrior: nil,features: features,testedFeatures: tested.count,
             multiplicityScope: "BH across available NB Wald tests within this contrast; no selection-adjusted or cross-contrast calibration claim",
             negativeBinomial: .init(trend: trend,features: diagnostics,

@@ -1,5 +1,11 @@
 # Native negative-binomial cohort analysis
 
+The optional [active-donor profile policy](ActiveDonor/README.md) now handles
+complete zero-total donor pairs with recorded gene-specific designs, retaining
+replication/rank gates and the original full-support dispersion-prior cohort.
+Full Kang/Hagai checks add 3,429 Kang tests while preserving default outputs.
+Selection-adjusted FDR and broader scientific calibration remain unqualified.
+
 The actual `singlecell-analyze` route now supports an explicit
 `"model": "negativeBinomial"` contrast. It uses the existing sample selection,
 paired-donor/independent-replicate checks, batch design, sparse pseudobulk and

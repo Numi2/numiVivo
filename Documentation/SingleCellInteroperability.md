@@ -251,9 +251,13 @@ The complete development objective remains open:
    reference sensitivity and calibration remain. Direct
    [R edgeR/limma-voom/DESeq2 comparisons](../Tools/Omics/Bioconductor/README.md)
    now cover the same Kang/Hagai counts and paired designs under fixed native
-   and package normalization. Native support-rank rejection still withholds
-   3,494 Kang and 247 Hagai eligible genes; correlation on tested intersections
-   does not close that coverage gap.
+   and package normalization. Default native support-rank rejection withholds
+   3,494 Kang and 247 Hagai eligible genes. The explicit experimental
+   [active-donor NB policy](../Tools/Omics/NegativeBinomial/ActiveDonor/README.md)
+   adds 3,429 Kang tests with independently checked gene-specific designs and
+   uncertainty. It retains minimum replication and rank gates, leaving 65 Kang
+   and 247 Hagai eligible genes untested. Correlation and numerical agreement
+   do not establish selection-adjusted FDR or close broader calibration gaps.
    Full-scope original Hagai mouse count/QC, pseudobulks and a predeclared NB
    comparison now pass through the streaming route. Its three donor pairs are
    inferred explicitly from deposited sample prefixes, supported by the primary

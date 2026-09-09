@@ -1,0 +1,763 @@
+[0/1] Planning build
+Building for debugging...
+[0/8] Write sources
+[2/8] Write swift-version-3CD7052B146186F2.txt
+[4/12] Emitting module NumiVivoKit
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Surrogates/VivoReactiveMetalBackend.swift:54:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 52 |         coefficients = try buffer(payload.coefficientsKJPerMol.flatMap { $0 })
+ 53 |         scales = try buffer(payload.configuration.features.map { 1/($0.scaleNM*$0.scaleNM) })
+ 54 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 55 |         let library = try device.makeLibrary(source: Self.source,options: options)
+ 56 |         guard let function = library.makeFunction(name: "vivo_reactive_delta") else { throw VivoChemistryError.invalid("missing reactive Metal kernel") }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[5/12] Compiling NumiVivoKit VivoOmicsNBCohort.swift
+[6/12] Compiling NumiVivoKit VivoOmicsNBSupport.swift
+[7/12] Compiling NumiVivoKit VivoPseudobulkDifferentialExpression.swift
+[8/17] Compiling NumiVivoKit VivoSingleCellExamples.swift
+[9/17] Compiling NumiVivoKit VivoSingleCellExchange.swift
+[10/17] Compiling NumiVivoKit VivoPlatformOmicsOperations.swift
+[11/17] Compiling NumiVivoKit VivoH5ADPseudobulk.swift
+[12/17] Compiling NumiVivoKit VivoSingleCellCohortAnalysis.swift
+[13/105] Emitting module NumiVivoCLI
+[14/105] Compiling NumiVivoIntegrationTests AdaptiveQMMMHamiltonianTests.swift
+[15/105] Compiling NumiVivoIntegrationTests AdaptiveRefinementWorkflowTests.swift
+[16/105] Compiling NumiVivoIntegrationTests AppleExecutionTests.swift
+[17/105] Compiling NumiVivoIntegrationTests BarrierConvergenceTests.swift
+[18/105] Compiling NumiVivoIntegrationTests BarrierTunnellingTests.swift
+[19/105] Compiling NumiVivoIntegrationTests ChemicalStateAlchemicalFreeEnergyTests.swift
+[20/105] Compiling NumiVivoIntegrationTests ChemicalStateCatalogTests.swift
+[21/105] Compiling NumiVivoIntegrationTests ChemicalStateEnumerationTests.swift
+[22/105] Compiling NumiVivoIntegrationTests ClassicalNPTTransitionTests.swift
+[23/105] Compiling NumiVivoIntegrationTests ClassicalPMEConformanceTests.swift
+[24/105] Compiling NumiVivoIntegrationTests ClassicalThermalConformanceTests.swift
+[25/105] Compiling NumiVivoIntegrationTests ConditionalEncounterTests.swift
+[26/105] Compiling NumiVivoIntegrationTests ConstantPHDiscreteMDTests.swift
+[27/105] Compiling NumiVivoIntegrationTests ConstantPHMetalAdapterTests.swift
+[28/105] Compiling NumiVivoIntegrationTests ConstantPHNCMCMetalTests.swift
+[29/105] Compiling NumiVivoIntegrationTests ConstantPHNCMCTests.swift
+[30/105] Compiling NumiVivoIntegrationTests ConstantPHReplicaExchangeTests.swift
+[31/105] Compiling NumiVivoIntegrationTests ECCSolventClosureTests.swift
+[32/105] Compiling NumiVivoIntegrationTests GlobalJointUncertaintyTests.swift
+[33/105] Compiling NumiVivoIntegrationTests GlobalKineticUncertaintyTests.swift
+[34/105] Compiling NumiVivoIntegrationTests HybridRuntimeTests.swift
+[35/105] Compiling NumiVivoIntegrationTests KineticsPreparedOutputTests.swift
+[36/105] Compiling NumiVivoIntegrationTests LatentProtonTopologyTests.swift
+[37/112] Compiling NumiVivoCLI VivoStructurePrepCLICommands.swift
+[38/112] Compiling NumiVivoCLI VivoTargetEngagementCLICommands.swift
+[39/112] Compiling NumiVivoCLI VivoWorkflowCLICommands.swift
+[40/112] Compiling NumiVivoCLI VivoWorkflowCLIDocumentPaths.swift
+[41/112] Compiling NumiVivoCLI VivoWorkflowCLIImplementation.swift
+[42/112] Compiling NumiVivoCLI VivoWorkflowCLISupport.swift
+[43/112] Compiling NumiVivoCLI main.swift
+[43/112] Write Objects.LinkFileList
+[45/112] Emitting module NumiVivoIntegrationTests
+[45/133] Linking numivivo
+[46/133] Applying numivivo
+[48/133] Compiling NumiVivoIntegrationTests PlatformQMMMWorkflowTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[49/133] Compiling NumiVivoIntegrationTests PlatformSnapshotMappingHelperTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[50/133] Compiling NumiVivoIntegrationTests PlatformSnapshotTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[51/133] Compiling NumiVivoIntegrationTests PlatformWorkflowTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[52/133] Compiling NumiVivoIntegrationTests PolarizableQMMMTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[53/133] Compiling NumiVivoIntegrationTests PrecisionMetalSamplingTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[54/133] Compiling NumiVivoIntegrationTests PrecisionPlatformTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[55/133] Compiling NumiVivoIntegrationTests PrecisionSamplingFixtures.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[56/133] Compiling NumiVivoIntegrationTests PreparedMolecularWorkflowTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[57/133] Compiling NumiVivoIntegrationTests PreparedReactionFullRouteTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[58/133] Compiling NumiVivoIntegrationTests PropertyRefinementWorkflowTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[59/133] Compiling NumiVivoIntegrationTests QMMMChemicalExchangeNetworkTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[60/133] Compiling NumiVivoIntegrationTests QMMMChemicalQualificationTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[61/133] Compiling NumiVivoIntegrationTests QMMMChemicalStateThermodynamicsTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[62/133] Compiling NumiVivoIntegrationTests QMMMFreeEnergyArchiveIdentityTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[63/133] Compiling NumiVivoIntegrationTests QMMMFreeEnergyTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[64/133] Compiling NumiVivoIntegrationTests QMMMPathBiasTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[65/133] Compiling NumiVivoIntegrationTests QMMMPathCoordinateTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[66/133] Compiling NumiVivoIntegrationTests QMMMReactionCoordinateTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[67/133] Compiling NumiVivoIntegrationTests QMMMStringRefinementTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[68/133] Compiling NumiVivoIntegrationTests QMMMTransmissionTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[69/133] Compiling NumiVivoIntegrationTests ReactionConnectivityTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[70/133] Compiling NumiVivoIntegrationTests ReactiveSurrogateTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[71/133] Compiling NumiVivoIntegrationTests RingPolymerSamplingTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[72/133] Compiling NumiVivoIntegrationTests SamplingReactionSeedTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[73/133] Compiling NumiVivoIntegrationTests ScientificClosureTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[74/133] Compiling NumiVivoIntegrationTests SelectedCITests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[75/133] Compiling NumiVivoIntegrationTests SingleCellClusteringTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[76/133] Compiling NumiVivoIntegrationTests SingleCellCohortTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[77/133] Compiling NumiVivoIntegrationTests SingleCellEmbeddingTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[78/133] Compiling NumiVivoIntegrationTests SingleCellIntegrationTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[79/133] Compiling NumiVivoIntegrationTests SingleCellInterchangeTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[80/133] Compiling NumiVivoIntegrationTests SingleCellMappedReductionTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[81/133] Compiling NumiVivoIntegrationTests SingleCellNBCohortTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[82/133] Compiling NumiVivoIntegrationTests SingleCellNBSupportTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[83/133] Compiling NumiVivoIntegrationTests SingleCellNegativeBinomialTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[84/133] Compiling NumiVivoIntegrationTests SingleCellNeighborTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[85/133] Compiling NumiVivoIntegrationTests SingleCellProgramTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[86/133] Compiling NumiVivoIntegrationTests SingleCellReductionTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[87/133] Compiling NumiVivoIntegrationTests SolventPromotionTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[88/133] Compiling NumiVivoIntegrationTests VivoNeoantigenIntegrationTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[89/133] Compiling NumiVivoIntegrationTests WorkflowCancellationTests.swift
+macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled
+`- /Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift:25:87: note: expanded code originates here
+23 |     @Test func baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() throws {
+24 |         let (d,r)=try Self.design(),y: [UInt64]=[0,0,20,40,30,60,50,100]
+25 |         let s=try #require(VivoOmicsNBSupport.resolve(counts: y,design: d,request: r))
+   |                   `- note: in expansion of macro 'require' here
+   +--- macro expansion #require ---------------------------------------
+   |1 | Testing.__checkFunctionCall(VivoOmicsNBSupport.self,calling: {
+   |2 |   $0.resolve(counts: $1,design: $2,request: $3)
+   |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled
+   |3 | },y,d,r,expression: .__fromFunctionCall(.__fromSyntaxNode("VivoOmicsNBSupport"),"resolve",("counts",.__fromSyntaxNode("y")),("design",.__fromSyntaxNode("d")),("request",.__fromSyntaxNode("r"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+   +--------------------------------------------------------------------
+26 |         #expect(s.outcome == .ready && s.excludedObservationIndices==[0,1])
+27 |         #expect(s.columnNames==["intercept","treatment-minus-control","donor:d2","donor:d3"])
+[99/133] Compiling NumiVivoIntegrationTests MetalSamplingIdentityTests.swift
+[100/133] Compiling NumiVivoIntegrationTests MolecularMultistateRefinementWorkflowTests.swift
+[101/133] Compiling NumiVivoIntegrationTests MolecularSamplingArchiveReaderTests.swift
+[102/133] Compiling NumiVivoIntegrationTests MolecularSamplingExporterTests.swift
+[103/133] Compiling NumiVivoIntegrationTests MolecularSamplingNativeBridgeTests.swift
+[104/133] Compiling NumiVivoIntegrationTests MultipolePMETests.swift
+[105/133] Compiling NumiVivoIntegrationTests MultistateMBARTests.swift
+[106/133] Compiling NumiVivoIntegrationTests MultistateReducedPotentialArchiveTests.swift
+[107/133] Compiling NumiVivoIntegrationTests NCMCProtocolKernelTests.swift
+[108/133] Compiling NumiVivoIntegrationTests NuclearMetalResourceTests.swift
+[109/133] Compiling NumiVivoIntegrationTests PeriodicQMMMHamiltonianTests.swift
+[110/133] Compiling NumiVivoIntegrationTests PlatformMechanismWorkflowTests.swift
+error: fatalError

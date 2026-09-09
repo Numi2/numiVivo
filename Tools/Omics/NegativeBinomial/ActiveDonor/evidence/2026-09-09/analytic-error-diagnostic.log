@@ -1,0 +1,24 @@
+[0/1] Planning build
+Building for debugging...
+[0/5] Write sources
+[1/5] Write swift-version-3CD7052B146186F2.txt
+[3/5] Compiling NumiVivoIntegrationTests SingleCellNBSupportTests.swift
+[4/5] Emitting module NumiVivoIntegrationTests
+[4/6] Write Objects.LinkFileList
+[5/6] Linking NumiVivoPackageTests
+Build complete! (3.02s)
+Test Suite 'Selected tests' started at 2026-09-09 08:22:44.690.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 08:22:44.696.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 08:22:44.696.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 08:22:44.696.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellNBSupportTests started.
+◇ Test baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() started.
+✘ Test baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() recorded an issue at SingleCellNBSupportTests.swift:33:9: Expectation failed: (effectError → 2.8753671665882052e-09) < (1e-9 → 1e-09)
+✘ Test baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() failed after 0.001 seconds with 1 issue.
+✘ Suite SingleCellNBSupportTests failed after 0.001 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.001 seconds with 1 issue.

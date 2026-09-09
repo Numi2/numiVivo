@@ -1,0 +1,42 @@
+{
+  "status": "passed-active-donor-numerical-checks",
+  "originalStatusCounts": {
+    "tested": 12426,
+    "filteredLowExpression": 9375,
+    "rankDeficientSupport": 247
+  },
+  "activeStatusCounts": {
+    "tested": 12426,
+    "filteredLowExpression": 9375,
+    "insufficientActiveDonors": 169,
+    "rankDeficientSupport": 78
+  },
+  "exactSourceCounts": true,
+  "exactGlobalDesign": true,
+  "exactFullSupportPrior": true,
+  "fullSupportFitsUnchanged": 12426,
+  "independentFitsChecked": 0,
+  "supportOutcomes": {
+    "insufficientReplication": 169
+  },
+  "activeDonorCounts": {
+    "2": 169
+  },
+  "maxErrors": {},
+  "profileChecks": [],
+  "referenceWarnings": [],
+  "testedGenes": 12426,
+  "exactBH": true,
+  "sourceHashes": {
+    "baseline": "e48207360053c8eba01a2fa3527ec3e673757d14d29cc6c6d392b0ecd6ad893a",
+    "active": "2f2e112dbde53a950e27b85290578775619236cb58885adcd025b30a69db87ad",
+    "counts": "fab83116ed02d61841c6641f9149c7c7cd9531b00bce02994b5b4176533bea0d"
+  },
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "boundary": "Conditional numerical and bookkeeping checks on these studies; no selection-adjusted FDR, biological ground truth or generalization qualification"
+}

@@ -1,0 +1,208 @@
+{
+  "status": "passed-active-donor-numerical-checks",
+  "originalStatusCounts": {
+    "filteredLowExpression": 6812,
+    "tested": 5400,
+    "rankDeficientSupport": 3494
+  },
+  "activeStatusCounts": {
+    "filteredLowExpression": 6812,
+    "tested": 8829,
+    "rankDeficientSupport": 62,
+    "insufficientActiveDonors": 3
+  },
+  "exactSourceCounts": true,
+  "exactGlobalDesign": true,
+  "exactFullSupportPrior": true,
+  "fullSupportFitsUnchanged": 5400,
+  "independentFitsChecked": 3429,
+  "supportOutcomes": {
+    "ready": 3429,
+    "rankDeficientPositiveSupport": 56,
+    "insufficientReplication": 3
+  },
+  "activeDonorCounts": {
+    "7": 1637,
+    "6": 1009,
+    "5": 564,
+    "4": 228,
+    "3": 47,
+    "2": 3
+  },
+  "maxErrors": {
+    "effect": 7.477636508657071e-06,
+    "standardError": 5.446985116286385e-07,
+    "relativeMeans": 7.623878404070454e-06,
+    "leverage": 6.227753301946137e-07,
+    "relativeCooks": 3.8080579525206626e-06,
+    "z": 6.317077395845416e-06,
+    "p": 4.095215004218389e-06
+  },
+  "profileChecks": [
+    {
+      "featureID": "TNFRSF4",
+      "activeDonors": 7,
+      "objectiveGap": 1.0658141036401503e-14
+    },
+    {
+      "featureID": "B3GALT6",
+      "activeDonors": 7,
+      "objectiveGap": 3.552713678800501e-15
+    },
+    {
+      "featureID": "ACAP3",
+      "activeDonors": 6,
+      "objectiveGap": 7.105427357601002e-15
+    },
+    {
+      "featureID": "PUSL1",
+      "activeDonors": 6,
+      "objectiveGap": 1.0658141036401503e-14
+    },
+    {
+      "featureID": "RP11-345P4.9",
+      "activeDonors": 6,
+      "objectiveGap": 1.4210854715202004e-14
+    },
+    {
+      "featureID": "SLC35E2B",
+      "activeDonors": 7,
+      "objectiveGap": 7.105427357601002e-15
+    },
+    {
+      "featureID": "GNB1",
+      "activeDonors": 6,
+      "objectiveGap": 0.0
+    },
+    {
+      "featureID": "PRKCZ",
+      "activeDonors": 7,
+      "objectiveGap": 1.4210854715202004e-14
+    },
+    {
+      "featureID": "SKI",
+      "activeDonors": 5,
+      "objectiveGap": 5.329070518200751e-15
+    },
+    {
+      "featureID": "PANK4",
+      "activeDonors": 7,
+      "objectiveGap": 2.4868995751603507e-14
+    },
+    {
+      "featureID": "RP3-395M20.12",
+      "activeDonors": 6,
+      "objectiveGap": 2.5579538487363607e-13
+    },
+    {
+      "featureID": "FAM213B",
+      "activeDonors": 5,
+      "objectiveGap": 1.7763568394002505e-15
+    },
+    {
+      "featureID": "TPRG1L",
+      "activeDonors": 7,
+      "objectiveGap": 2.1316282072803006e-14
+    },
+    {
+      "featureID": "TP73-AS1",
+      "activeDonors": 4,
+      "objectiveGap": 8.764544645600836e-12
+    },
+    {
+      "featureID": "ICMT",
+      "activeDonors": 6,
+      "objectiveGap": 1.0302869668521453e-13
+    },
+    {
+      "featureID": "PHF13",
+      "activeDonors": 4,
+      "objectiveGap": 8.881784197001252e-15
+    },
+    {
+      "featureID": "NMNAT1",
+      "activeDonors": 5,
+      "objectiveGap": 3.907985046680551e-14
+    },
+    {
+      "featureID": "MTHFR",
+      "activeDonors": 5,
+      "objectiveGap": 2.3092638912203256e-13
+    },
+    {
+      "featureID": "MFN2",
+      "activeDonors": 5,
+      "objectiveGap": 5.329070518200751e-15
+    },
+    {
+      "featureID": "VPS13D",
+      "activeDonors": 5,
+      "objectiveGap": 0.0
+    },
+    {
+      "featureID": "LINC00339",
+      "activeDonors": 4,
+      "objectiveGap": 3.197442310920451e-14
+    },
+    {
+      "featureID": "ZBTB40",
+      "activeDonors": 4,
+      "objectiveGap": 0.0
+    },
+    {
+      "featureID": "LDLRAP1",
+      "activeDonors": 4,
+      "objectiveGap": 1.0658141036401503e-14
+    },
+    {
+      "featureID": "HYI",
+      "activeDonors": 4,
+      "objectiveGap": 5.329070518200751e-15
+    },
+    {
+      "featureID": "FAM73A",
+      "activeDonors": 3,
+      "objectiveGap": 5.329070518200751e-15
+    },
+    {
+      "featureID": "SLC41A1",
+      "activeDonors": 3,
+      "objectiveGap": 2.3803181647963356e-13
+    },
+    {
+      "featureID": "DISP1",
+      "activeDonors": 3,
+      "objectiveGap": 1.4210854715202004e-14
+    },
+    {
+      "featureID": "CD8B",
+      "activeDonors": 3,
+      "objectiveGap": 1.3375967000683886e-12
+    },
+    {
+      "featureID": "FBLN7",
+      "activeDonors": 3,
+      "objectiveGap": 3.0730973321624333e-13
+    },
+    {
+      "featureID": "SCRN3",
+      "activeDonors": 3,
+      "objectiveGap": 0.0
+    }
+  ],
+  "referenceWarnings": [],
+  "testedGenes": 8829,
+  "exactBH": true,
+  "sourceHashes": {
+    "baseline": "3f0389df9dd6b178f11c25608555daf60d66e895bc5b6b5ea9c50238fb5fd562",
+    "active": "ca8414d37c47aeba00922dea873211ae6f6e2c1f891a62bd25b6f82bff8d66de",
+    "counts": "13f3c6da9f2c01050c7ce6808ab8ae86f0006f30f35c7900c2201a28b5425f8b"
+  },
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "boundary": "Conditional numerical and bookkeeping checks on these studies; no selection-adjusted FDR, biological ground truth or generalization qualification"
+}

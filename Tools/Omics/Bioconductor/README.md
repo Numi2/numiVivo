@@ -134,3 +134,10 @@ reduced fit or inference is qualified by that rank check. For Hagai, 169 rejecte
 genes would retain only two donors, below the declared three-donor minimum,
 and 78 remain rank deficient with all three donors. Neither category authorizes
 relaxing the inference or replication gates. Per-gene classifications are retained.
+
+Subsequent native work implements an explicit experimental
+[active-donor profile policy](../NegativeBinomial/ActiveDonor/README.md), with
+independent fits and expanded-family BH checks for all 3,429 Kang candidates.
+That policy preserves the original default reports and these original R fits.
+Its new descriptive comparisons account for the changed native tested family;
+they do not establish selection-adjusted FDR or equivalence to full-donor R methods.

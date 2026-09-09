@@ -74,6 +74,9 @@ public struct VivoOmicsExpressionContrast: Codable, Sendable, Equatable {
         } else if negativeBinomialOptions != nil {
             throw VivoOmicsError.invalid("NB options require negativeBinomial model")
         }
+        if negativeBinomialOptions?.zeroTotalDonorPolicy != nil, design != .pairedDonors {
+            throw VivoOmicsError.invalid("NB zero-total donor policy requires paired donors")
+        }
         if let ids = includedDonorIDs {
             guard !ids.isEmpty, ids.count <= 512, Set(ids).count == ids.count, ids.allSatisfy(vivoOmicsID) else {
                 throw VivoOmicsError.invalid("contrast donor subset")
@@ -95,7 +98,7 @@ public struct VivoOmicsDesignMatrix: Codable, Sendable, Equatable {
     public let libraryCounts: [UInt64]
     public let referenceFeatureIndices: [Int]
 }
-public enum VivoOmicsExpressionStatus: String, Codable, Sendable { case tested, filteredLowExpression, zeroResidualVariance, rankDeficientSupport, numericalFailure, dispersionBoundary, influentialObservation }
+public enum VivoOmicsExpressionStatus: String, Codable, Sendable { case tested, filteredLowExpression, zeroResidualVariance, rankDeficientSupport, insufficientActiveDonors, numericalFailure, dispersionBoundary, influentialObservation }
 public struct VivoOmicsExpressionFeature: Codable, Sendable, Equatable {
     public let featureIndex: Int
     public let featureID: String
@@ -128,37 +131,10 @@ public struct VivoOmicsExpressionResult: Codable, Sendable, Equatable {
 }
 
 public enum VivoPseudobulkDifferentialExpression {
-    public static func run(_ dataset: VivoSingleCellDataset, contrast: VivoOmicsExpressionContrast,
-                           limits: VivoOmicsLimits = .init()) throws -> VivoOmicsExpressionResult {
-        try dataset.validate(limits: limits)
-        return try evaluate(dataset, bulk: VivoSingleCellAnalysis.pseudobulk(dataset, limits: limits), contrast: contrast)
-    }
-    /// The shared processing route calls this only with a freshly computed bulk.
-    static func evaluate(_ dataset: VivoSingleCellDataset, bulk: VivoPseudobulkCounts,
-                         contrast request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
-        try evaluate(metadata: dataset.metadata,bulk: bulk,contrast: request)
-    }
-    static func evaluate(metadata: VivoSingleCellCountMetadata,bulk: VivoPseudobulkCounts,
-                         contrast request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
-        try request.validate()
-        let donorSubset = request.includedDonorIDs.map { Set($0) }
-        let knownDonors = Set(bulk.groups.compactMap(\.donorID))
-        guard donorSubset.map({ $0.isSubset(of: knownDonors) }) ?? true else { throw VivoOmicsError.invalid("unknown selected donor") }
-        var indices: [Int] = [], excluded: [Int] = []
-        for (i, group) in bulk.groups.enumerated() where group.cellGroup == request.cellGroup &&
-            [request.controlCondition, request.treatmentCondition].contains(group.condition) {
-            if let donors = donorSubset, !(group.donorID.map(donors.contains) ?? false) { continue }
-            if group.sourceCellIndices.count < request.minimumCellsPerPseudobulk { excluded.append(i) }
-            else { indices.append(i) }
-        }
-        guard indices.count <= 512 else { throw VivoOmicsError.limit("at most 512 pseudobulk observations per contrast") }
-        let observations = indices.map { bulk.groups[$0] }, n = observations.count
-        guard Set(observations.map(\.organism)).count == 1 else { throw VivoOmicsError.invalid("contrast must contain exactly one organism") }
-        let controlCount = observations.filter { $0.condition == request.controlCondition }.count, treatmentCount = n - controlCount
-        guard controlCount >= request.minimumReplicatesPerCondition, treatmentCount >= request.minimumReplicatesPerCondition,
-              request.minimumExpressingPseudobulks <= n else {
-            throw VivoOmicsError.invalid("insufficient biological replication after selection; cells are not independent replicates")
-        }
+    /// One owner for the full and gene-specific paired/batch design conventions.
+    static func makeDesign(observations: [VivoPseudobulkGroup],request: VivoOmicsExpressionContrast) throws
+        -> (columnNames: [String],rows: [[Double]],contrast: [Double],qr: VivoOmicsQR) {
+        let n=observations.count
         var names = ["intercept", "treatment-minus-control"]
         var design = observations.map { [1.0, $0.condition == request.treatmentCondition ? 1.0 : 0.0] }
         if request.design == .pairedDonors {
@@ -192,6 +168,41 @@ public enum VivoPseudobulkDifferentialExpression {
         }
         let qr = try VivoOmicsQR(design: design)
         var c = [Double](repeating: 0, count: names.count); c[1] = 1
+        return (names,design,c,qr)
+    }
+    public static func run(_ dataset: VivoSingleCellDataset, contrast: VivoOmicsExpressionContrast,
+                           limits: VivoOmicsLimits = .init()) throws -> VivoOmicsExpressionResult {
+        try dataset.validate(limits: limits)
+        return try evaluate(dataset, bulk: VivoSingleCellAnalysis.pseudobulk(dataset, limits: limits), contrast: contrast)
+    }
+    /// The shared processing route calls this only with a freshly computed bulk.
+    static func evaluate(_ dataset: VivoSingleCellDataset, bulk: VivoPseudobulkCounts,
+                         contrast request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
+        try evaluate(metadata: dataset.metadata,bulk: bulk,contrast: request)
+    }
+    static func evaluate(metadata: VivoSingleCellCountMetadata,bulk: VivoPseudobulkCounts,
+                         contrast request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
+        try request.validate()
+        let donorSubset = request.includedDonorIDs.map { Set($0) }
+        let knownDonors = Set(bulk.groups.compactMap(\.donorID))
+        guard donorSubset.map({ $0.isSubset(of: knownDonors) }) ?? true else { throw VivoOmicsError.invalid("unknown selected donor") }
+        var indices: [Int] = [], excluded: [Int] = []
+        for (i, group) in bulk.groups.enumerated() where group.cellGroup == request.cellGroup &&
+            [request.controlCondition, request.treatmentCondition].contains(group.condition) {
+            if let donors = donorSubset, !(group.donorID.map(donors.contains) ?? false) { continue }
+            if group.sourceCellIndices.count < request.minimumCellsPerPseudobulk { excluded.append(i) }
+            else { indices.append(i) }
+        }
+        guard indices.count <= 512 else { throw VivoOmicsError.limit("at most 512 pseudobulk observations per contrast") }
+        let observations = indices.map { bulk.groups[$0] }, n = observations.count
+        guard Set(observations.map(\.organism)).count == 1 else { throw VivoOmicsError.invalid("contrast must contain exactly one organism") }
+        let controlCount = observations.filter { $0.condition == request.controlCondition }.count, treatmentCount = n - controlCount
+        guard controlCount >= request.minimumReplicatesPerCondition, treatmentCount >= request.minimumReplicatesPerCondition,
+              request.minimumExpressingPseudobulks <= n else {
+            throw VivoOmicsError.invalid("insufficient biological replication after selection; cells are not independent replicates")
+        }
+        let built = try makeDesign(observations: observations,request: request)
+        let names=built.columnNames, design=built.rows, qr=built.qr, c=built.contrast
         // Sparse feature-major access, built once. No genes-by-cells dense matrix.
         var entries = [[(row: Int, count: UInt64)]](repeating: [], count: metadata.features.count)
         var libraries = [UInt64](repeating: 0, count: n)
