@@ -63,7 +63,8 @@ objective deficit is 0.02. Different heuristic partitions can pass this numerica
 comparison. Metadata associations remain descriptive, with absent or single-level
 annotations reported explicitly.
 
-File-backed embedding and integration, million-cell execution, partition
+[File-backed embedding](FILE_EMBEDDING.md) now shares the binary graph input.
+File-backed integration, million-cell execution, partition
 stability across resolutions, stronger biological evaluation, Leiden refinement
 and Metal/scverse end-to-end comparisons remain open.
 

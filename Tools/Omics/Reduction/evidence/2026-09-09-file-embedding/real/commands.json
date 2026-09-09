@@ -1,0 +1,239 @@
+[
+  {
+    "label": "baron-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/baron-fit.json",
+      "--output",
+      "/Users/n/numivivo-file-embedding-20260909/real/baron/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 6.69,
+    "maximumResidentBytes": 173064192
+  },
+  {
+    "label": "baron-graph",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-file-embedding-20260909/real/baron/pca",
+      "--plan",
+      "/Users/n/numivivo-file-embedding-20260909/real/baron/graph-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-embedding-20260909/real/baron/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 6.87,
+    "maximumResidentBytes": 204898304
+  },
+  {
+    "label": "baron-embed",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/n/numivivo-file-embedding-20260909/real/baron/graph",
+      "--plan",
+      "/Users/n/numivivo-file-embedding-20260909/real/embedding-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-embedding-20260909/real/baron/embedding"
+    ],
+    "exitCode": 0,
+    "seconds": 12.88,
+    "maximumResidentBytes": 210239488
+  },
+  {
+    "label": "baron-legacy-oracle",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/legacy-embedding",
+      "/Users/n/numivivo-graph-store-20260909/real/baron/json/graph.json",
+      "/Users/n/numivivo-file-clustering-20260909/real/baron/cluster/input/input/scores.bin",
+      "/Users/n/numivivo-file-embedding-20260909/real/legacy-options.json",
+      "/Users/n/numivivo-file-embedding-20260909/real/baron/legacy-result.json"
+    ],
+    "exitCode": 0,
+    "seconds": 5.4,
+    "maximumResidentBytes": 73121792
+  },
+  {
+    "label": "baron-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/n/numivivo-file-embedding-20260909/real/baron/embedding"
+    ],
+    "exitCode": 0,
+    "seconds": 12.97,
+    "maximumResidentBytes": 212156416
+  },
+  {
+    "label": "hagai-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-hnsw-20260909/hagai-fit.json",
+      "--output",
+      "/Users/n/numivivo-file-embedding-20260909/real/hagai/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 13.5,
+    "maximumResidentBytes": 201015296
+  },
+  {
+    "label": "hagai-graph",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-file-embedding-20260909/real/hagai/pca",
+      "--plan",
+      "/Users/n/numivivo-file-embedding-20260909/real/hagai/graph-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-embedding-20260909/real/hagai/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 15.17,
+    "maximumResidentBytes": 226705408
+  },
+  {
+    "label": "hagai-embed",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/n/numivivo-file-embedding-20260909/real/hagai/graph",
+      "--plan",
+      "/Users/n/numivivo-file-embedding-20260909/real/embedding-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-embedding-20260909/real/hagai/embedding"
+    ],
+    "exitCode": 0,
+    "seconds": 25.38,
+    "maximumResidentBytes": 231096320
+  },
+  {
+    "label": "hagai-legacy-oracle",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/legacy-embedding",
+      "/Users/n/numivivo-graph-store-20260909/real/hagai/json/graph.json",
+      "/Users/n/numivivo-file-clustering-20260909/real/hagai/cluster/input/input/scores.bin",
+      "/Users/n/numivivo-file-embedding-20260909/real/legacy-options.json",
+      "/Users/n/numivivo-file-embedding-20260909/real/hagai/legacy-result.json"
+    ],
+    "exitCode": 0,
+    "seconds": 8.51,
+    "maximumResidentBytes": 118177792
+  },
+  {
+    "label": "hagai-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/n/numivivo-file-embedding-20260909/real/hagai/embedding"
+    ],
+    "exitCode": 0,
+    "seconds": 25.53,
+    "maximumResidentBytes": 228786176
+  },
+  {
+    "label": "norman-fit",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-h5ad-pca",
+      "/Users/n/numivivo-pca-bundle-20260909/original.h5ad",
+      "--plan",
+      "/Users/n/numivivo-pca-bundle-20260909/plan.json",
+      "--output",
+      "/Users/n/numivivo-file-embedding-20260909/real/norman/pca"
+    ],
+    "exitCode": 0,
+    "seconds": 137.28,
+    "maximumResidentBytes": 448118784
+  },
+  {
+    "label": "norman-graph",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-pca-neighbors",
+      "/Users/n/numivivo-file-embedding-20260909/real/norman/pca",
+      "--plan",
+      "/Users/n/numivivo-file-embedding-20260909/real/norman/graph-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-embedding-20260909/real/norman/graph"
+    ],
+    "exitCode": 0,
+    "seconds": 162.41,
+    "maximumResidentBytes": 486211584
+  },
+  {
+    "label": "norman-embed",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/n/numivivo-file-embedding-20260909/real/norman/graph",
+      "--plan",
+      "/Users/n/numivivo-file-embedding-20260909/real/embedding-plan.json",
+      "--output",
+      "/Users/n/numivivo-file-embedding-20260909/real/norman/embedding"
+    ],
+    "exitCode": 0,
+    "seconds": 254.56,
+    "maximumResidentBytes": 486113280
+  },
+  {
+    "label": "norman-legacy-oracle",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/legacy-embedding",
+      "/Users/n/numivivo-graph-store-20260909/real/norman/json/graph.json",
+      "/Users/n/numivivo-file-clustering-20260909/real/norman/cluster/input/input/scores.bin",
+      "/Users/n/numivivo-file-embedding-20260909/real/legacy-options.json",
+      "/Users/n/numivivo-file-embedding-20260909/real/norman/legacy-result.json"
+    ],
+    "exitCode": 0,
+    "seconds": 74.76,
+    "maximumResidentBytes": 844234752
+  },
+  {
+    "label": "norman-verify",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/n/numivivo-file-embedding-20260909/real/norman/embedding"
+    ],
+    "exitCode": 0,
+    "seconds": 256.77,
+    "maximumResidentBytes": 482230272
+  }
+]

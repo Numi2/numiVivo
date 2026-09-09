@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "cells": 8569,
+  "dimensions": 2,
+  "epochs": 500,
+  "allFrozenLegacyResultBytesExact": true,
+  "resultSHA256": "00f589e07104a6cd82150cd419c61ac56fba2b6e8512192dc4c53e5bffb0c7ab",
+  "graphSHA256": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+  "protocolSHA256": "a6fe58cf11883e059e4da68b3bff66dcacdb33c10dda8ee760e80e0c55ec5182",
+  "curveA": 1.5769436134595154,
+  "curveB": 0.8950607192931058,
+  "curveSquaredError": 0.07863531806579335,
+  "edgeVisits": 88366000,
+  "attractiveUpdates": 27916768,
+  "negativeSamples": 139452370,
+  "qualityQueries": 8569,
+  "candidateCells": 8569,
+  "qualityScope": "complete",
+  "initial": {
+    "trustworthiness": 0.8026593546487546,
+    "continuity": 0.9240405352543936,
+    "neighborRecall": 0.05462325436651496
+  },
+  "native": {
+    "trustworthiness": 0.9834299827237241,
+    "continuity": 0.9880712536752928,
+    "neighborRecall": 0.28919749484576185
+  },
+  "references": [
+    {
+      "seed": 7,
+      "trustworthiness": 0.9830662480770467,
+      "continuity": 0.988009272362198,
+      "neighborRecall": 0.2865445209476018
+    },
+    {
+      "seed": 19,
+      "trustworthiness": 0.9827590616831775,
+      "continuity": 0.9879937970619616,
+      "neighborRecall": 0.2858832224685883
+    },
+    {
+      "seed": 41,
+      "trustworthiness": 0.9829467699104704,
+      "continuity": 0.9879970315899773,
+      "neighborRecall": 0.28491850468743923
+    }
+  ],
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "umap-learn": "0.5.12"
+  },
+  "qualification": "Full-cohort trajectories and exact schedule counts; neighborhood preservation uses the declared query scope. Not optimizer convergence, density preservation, cell labels, donor integration or biological qualification"
+}

@@ -97,7 +97,8 @@ qualified full-cohort graphs. Real measurements are recorded in the accompanying
 evidence archive and table below.
 
 [File-backed clustering](FILE_CLUSTERING.md) consumes this binary store directly,
-including windowed edges at every aggregation level. File-backed embedding,
+including windowed edges at every aggregation level. [File-backed embedding](FILE_EMBEDDING.md)
+also consumes this store with a windowed mutable schedule. File-backed integration,
 million-cell end-to-end qualification, biological stability and Metal/scverse
 performance comparisons remain separate required work. This store removes graph
 materialization from construction/publication; it does not complete the full

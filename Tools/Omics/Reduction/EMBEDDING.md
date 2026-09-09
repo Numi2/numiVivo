@@ -70,8 +70,10 @@ python check_embedding.py --report /new/native/report.json --out /new/reference.
 
 The initial scope is all 2,651 Kang B cells and all 2,700 PBMC3k cells from the
 previous count/graph qualifications. The analysis still inherits resident count
-limits and the exact-neighbor pair budget. Spectral initialization, transformation
-of unseen cells, densMAP, integration and out-of-core execution remain open.
+limits and the exact-neighbor pair budget. The [file-backed graph route](FILE_EMBEDDING.md)
+uses the same optimizer with a windowed mutable schedule and streamed PCA input.
+Spectral initialization, transformation of unseen cells, densMAP, file-backed
+integration and million-cell execution remain open.
 Biological preservation and cross-seed/donor robustness need further evaluation.
 Use stored cell identities when mapping coordinates back to AnnData axes.
 

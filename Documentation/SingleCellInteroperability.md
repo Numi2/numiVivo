@@ -395,8 +395,10 @@ The complete development objective remains open:
    graph. Input PCA state, HNSW index and cell-scale bookkeeping remain resident.
    File-backed Louvain now consumes this graph and writes each aggregated level
    through stable disk scatter, preserving the previous solver's summation order.
-   File-backed embedding and integration, million-cell qualification and
-   downstream biological evaluation remain open.
+   [File-backed embedding](../Tools/Omics/Reduction/FILE_EMBEDDING.md) now stores
+   mutable edge schedules in a 16 MiB mapping window and reads only the requested
+   PCA initialization columns into resident arrays. File-backed integration,
+   million-cell qualification and downstream biological evaluation remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

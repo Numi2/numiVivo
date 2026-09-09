@@ -1,0 +1,19 @@
+Full schedule and frozen trajectory checks passed
+Full optimizer seed 7 passed
+Full optimizer seed 19 passed
+Full optimizer seed 41 passed
+Quality queries 64/13863
+Quality queries 1088/13863
+Quality queries 2112/13863
+Quality queries 3136/13863
+Quality queries 4160/13863
+Quality queries 5184/13863
+Quality queries 6208/13863
+Quality queries 7232/13863
+Quality queries 8256/13863
+Quality queries 9280/13863
+Quality queries 10304/13863
+Quality queries 11328/13863
+Quality queries 12352/13863
+Quality queries 13376/13863
+{"status": "passed", "cells": 13863, "dimensions": 2, "epochs": 500, "allFrozenLegacyResultBytesExact": true, "resultSHA256": "4cc4b0b44e42655f796a84edc7059515a2b2fb97f4be9a6eb5bcc9001b358081", "graphSHA256": "7b7bdf4fe3684158e0e2bc6401d6b99d1b266488221365fdd2f43dd60b281675", "protocolSHA256": "a6fe58cf11883e059e4da68b3bff66dcacdb33c10dda8ee760e80e0c55ec5182", "curveA": 1.5769436134595154, "curveB": 0.8950607192931058, "curveSquaredError": 0.07863531806579335, "edgeVisits": 146525000, "attractiveUpdates": 45702494, "negativeSamples": 228291318, "qualityQueries": 13863, "candidateCells": 13863, "qualityScope": "complete", "initial": {"trustworthiness": 0.9160427942887855, "continuity": 0.9597222375108359, "neighborRecall": 0.036778955973935414}, "native": {"trustworthiness": 0.9646081691648957, "continuity": 0.9840313815472271, "neighborRecall": 0.13928683065233596}, "references": [{"seed": 7, "trustworthiness": 0.9652776127302448, "continuity": 0.9838788331507734, "neighborRecall": 0.1407102839693188}, {"seed": 19, "trustworthiness": 0.9647235009062674, "continuity": 0.9840671190289451, "neighborRecall": 0.14034480271225563}, {"seed": 41, "trustworthiness": 0.9646477107316477, "continuity": 0.9839841324344184, "neighborRecall": 0.14080646324749332}], "versions": {"numpy": "2.5.3", "scipy": "1.18.1", "umap-learn": "0.5.12"}, "qualification": "Full-cohort trajectories and exact schedule counts; neighborhood preservation uses the declared query scope. Not optimizer convergence, density preservation, cell labels, donor integration or biological qualification"}

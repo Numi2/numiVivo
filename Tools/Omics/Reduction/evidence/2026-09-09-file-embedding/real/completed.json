@@ -1,0 +1,38 @@
+[
+  {
+    "case": "baron",
+    "cells": 8569,
+    "dimensions": 2,
+    "epochs": 500,
+    "retainedDirectedEdges": 176732,
+    "edgeVisits": 88366000,
+    "attractiveUpdates": 27916768,
+    "negativeSamples": 139452370,
+    "allLegacyResultBytesExact": true,
+    "resultSHA256": "00f589e07104a6cd82150cd419c61ac56fba2b6e8512192dc4c53e5bffb0c7ab"
+  },
+  {
+    "case": "hagai",
+    "cells": 13863,
+    "dimensions": 2,
+    "epochs": 500,
+    "retainedDirectedEdges": 293050,
+    "edgeVisits": 146525000,
+    "attractiveUpdates": 45702494,
+    "negativeSamples": 228291318,
+    "allLegacyResultBytesExact": true,
+    "resultSHA256": "4cc4b0b44e42655f796a84edc7059515a2b2fb97f4be9a6eb5bcc9001b358081"
+  },
+  {
+    "case": "norman",
+    "cells": 111445,
+    "dimensions": 2,
+    "epochs": 500,
+    "retainedDirectedEdges": 2512376,
+    "edgeVisits": 1256188000,
+    "attractiveUpdates": 378522850,
+    "negativeSamples": 1890658520,
+    "allLegacyResultBytesExact": true,
+    "resultSHA256": "f1388045d182acafddc35bdb0144a32c215ad3b411c1adce2f1c0de46a075b78"
+  }
+]

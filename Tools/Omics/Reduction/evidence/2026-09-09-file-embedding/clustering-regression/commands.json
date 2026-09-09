@@ -1,0 +1,270 @@
+[
+  {
+    "label": "fitted-exact-publish",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-exact/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/fitted-exact"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-verify",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/fitted-exact"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-repeat",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-exact/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/fitted-exact-repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-legacy",
+    "command": [
+      "/Users/home/numivivo-file-clustering-20260909/legacy-clustering",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-exact/json/graph.json",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/legacy-options.json",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/fitted-exact-legacy.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-publish",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/fitted-hnsw"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-verify",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/fitted-hnsw"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-repeat",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/fitted-hnsw-repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-legacy",
+    "command": [
+      "/Users/home/numivivo-file-clustering-20260909/legacy-clustering",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/json/graph.json",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/legacy-options.json",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/fitted-hnsw-legacy.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-publish",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-exact/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/query-exact"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-verify",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/query-exact"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-repeat",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-exact/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/query-exact-repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-legacy",
+    "command": [
+      "/Users/home/numivivo-file-clustering-20260909/legacy-clustering",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-exact/json/graph.json",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/legacy-options.json",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/query-exact-legacy.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-publish",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/query-hnsw"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-verify",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/query-hnsw"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-repeat",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/query-hnsw-repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-legacy",
+    "command": [
+      "/Users/home/numivivo-file-clustering-20260909/legacy-clustering",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-hnsw/json/graph.json",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/legacy-options.json",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/query-hnsw-legacy.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "rehashed-result",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/tamper-result"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-executionReport",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/tamper-executionReport"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-parent",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster-verify",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/tamper-parent"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "low-work",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/low-work.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/rejected-work"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "resident-input",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/json",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/rejected-storage"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "overwrite",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-cluster",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/clustering-regression/fitted-hnsw"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  }
+]

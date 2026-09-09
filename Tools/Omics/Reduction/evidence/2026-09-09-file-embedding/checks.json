@@ -1,0 +1,376 @@
+{
+  "status": "passed",
+  "runtime": {
+    "baseCommit": "36ccd858504ed643b21f2b622d81a3b261fc0950",
+    "binarySHA256": "64abbdafc33343348fe8eafae382fd2031aed947214c712b4519cb8bd9c20293",
+    "oracleSHA256": "ef01e37cdc1c3c7b48b29c233fd66764a9efa7294e3aa8434a37d172c99d7485",
+    "oracleBodyAndResultShapeExact": true,
+    "oracleOptionsAdmission": "Uses current public options decoder/validation, including the explicit 20-billion work cap. The numerical algorithm body and result shape are unchanged; equality does not imply the old CLI admitted enlarged-budget plans.",
+    "nativeHost": {
+      "machine": "Apple M4 Pro",
+      "memoryBytes": 25769803776,
+      "os": "macOS 26.6 (25G72)"
+    },
+    "referenceHost": "Apple M4 / 24 GiB / macOS 26.6 laptop",
+    "measurement": "Single-run native CPU lifecycle, including full PCA/graph reconstruction; frozen oracle parses existing graph/scores and is not a comparable workflow timing. No same-host scverse or GPU comparison.",
+    "concurrency": "Native commands sequential, no competing native build or benchmark. Completed artifacts may be copied for independent laptop checks during subsequent native work.",
+    "validation": "83 Swift tests in 25 SingleCell/MultiAssay/CountStore suites; full release and scoped builds; 88 CLI fixture commands including 31 expected exit-65 rejections.",
+    "swiftCompiler": "Apple Swift 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101), swift-driver 1.148.6, arm64-apple-macosx26.0",
+    "referencePython": "3.12.14",
+    "hdf5LibrarySHA256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e"
+  },
+  "swiftTests": 83,
+  "swiftSuites": 25,
+  "swiftFilter": "SingleCell|MultiAssay|CountStore",
+  "releaseBuild": "passed",
+  "scopedBuild": "passed; frozen numerical oracle linked successfully",
+  "native": {
+    "status": "passed",
+    "commands": 15,
+    "cases": [
+      {
+        "case": "baron",
+        "cells": 8569,
+        "dimensions": 2,
+        "epochs": 500,
+        "retainedDirectedEdges": 176732,
+        "edgeVisits": 88366000,
+        "attractiveUpdates": 27916768,
+        "negativeSamples": 139452370,
+        "allLegacyResultBytesExact": true,
+        "resultSHA256": "00f589e07104a6cd82150cd419c61ac56fba2b6e8512192dc4c53e5bffb0c7ab"
+      },
+      {
+        "case": "hagai",
+        "cells": 13863,
+        "dimensions": 2,
+        "epochs": 500,
+        "retainedDirectedEdges": 293050,
+        "edgeVisits": 146525000,
+        "attractiveUpdates": 45702494,
+        "negativeSamples": 228291318,
+        "allLegacyResultBytesExact": true,
+        "resultSHA256": "4cc4b0b44e42655f796a84edc7059515a2b2fb97f4be9a6eb5bcc9001b358081"
+      },
+      {
+        "case": "norman",
+        "cells": 111445,
+        "dimensions": 2,
+        "epochs": 500,
+        "retainedDirectedEdges": 2512376,
+        "edgeVisits": 1256188000,
+        "attractiveUpdates": 378522850,
+        "negativeSamples": 1890658520,
+        "allLegacyResultBytesExact": true,
+        "resultSHA256": "f1388045d182acafddc35bdb0144a32c215ad3b411c1adce2f1c0de46a075b78"
+      }
+    ],
+    "scope": "Native lifecycle and exact frozen trajectory preservation; independent graph and embedding quality qualification remains separate"
+  },
+  "reference": [
+    {
+      "status": "passed",
+      "cells": 8569,
+      "dimensions": 2,
+      "epochs": 500,
+      "allFrozenLegacyResultBytesExact": true,
+      "resultSHA256": "00f589e07104a6cd82150cd419c61ac56fba2b6e8512192dc4c53e5bffb0c7ab",
+      "graphSHA256": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+      "protocolSHA256": "a6fe58cf11883e059e4da68b3bff66dcacdb33c10dda8ee760e80e0c55ec5182",
+      "curveA": 1.5769436134595154,
+      "curveB": 0.8950607192931058,
+      "curveSquaredError": 0.07863531806579335,
+      "edgeVisits": 88366000,
+      "attractiveUpdates": 27916768,
+      "negativeSamples": 139452370,
+      "qualityQueries": 8569,
+      "candidateCells": 8569,
+      "qualityScope": "complete",
+      "initial": {
+        "trustworthiness": 0.8026593546487546,
+        "continuity": 0.9240405352543936,
+        "neighborRecall": 0.05462325436651496
+      },
+      "native": {
+        "trustworthiness": 0.9834299827237241,
+        "continuity": 0.9880712536752928,
+        "neighborRecall": 0.28919749484576185
+      },
+      "references": [
+        {
+          "seed": 7,
+          "trustworthiness": 0.9830662480770467,
+          "continuity": 0.988009272362198,
+          "neighborRecall": 0.2865445209476018
+        },
+        {
+          "seed": 19,
+          "trustworthiness": 0.9827590616831775,
+          "continuity": 0.9879937970619616,
+          "neighborRecall": 0.2858832224685883
+        },
+        {
+          "seed": 41,
+          "trustworthiness": 0.9829467699104704,
+          "continuity": 0.9879970315899773,
+          "neighborRecall": 0.28491850468743923
+        }
+      ],
+      "versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "umap-learn": "0.5.12"
+      },
+      "qualification": "Full-cohort trajectories and exact schedule counts; neighborhood preservation uses the declared query scope. Not optimizer convergence, density preservation, cell labels, donor integration or biological qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 13863,
+      "dimensions": 2,
+      "epochs": 500,
+      "allFrozenLegacyResultBytesExact": true,
+      "resultSHA256": "4cc4b0b44e42655f796a84edc7059515a2b2fb97f4be9a6eb5bcc9001b358081",
+      "graphSHA256": "7b7bdf4fe3684158e0e2bc6401d6b99d1b266488221365fdd2f43dd60b281675",
+      "protocolSHA256": "a6fe58cf11883e059e4da68b3bff66dcacdb33c10dda8ee760e80e0c55ec5182",
+      "curveA": 1.5769436134595154,
+      "curveB": 0.8950607192931058,
+      "curveSquaredError": 0.07863531806579335,
+      "edgeVisits": 146525000,
+      "attractiveUpdates": 45702494,
+      "negativeSamples": 228291318,
+      "qualityQueries": 13863,
+      "candidateCells": 13863,
+      "qualityScope": "complete",
+      "initial": {
+        "trustworthiness": 0.9160427942887855,
+        "continuity": 0.9597222375108359,
+        "neighborRecall": 0.036778955973935414
+      },
+      "native": {
+        "trustworthiness": 0.9646081691648957,
+        "continuity": 0.9840313815472271,
+        "neighborRecall": 0.13928683065233596
+      },
+      "references": [
+        {
+          "seed": 7,
+          "trustworthiness": 0.9652776127302448,
+          "continuity": 0.9838788331507734,
+          "neighborRecall": 0.1407102839693188
+        },
+        {
+          "seed": 19,
+          "trustworthiness": 0.9647235009062674,
+          "continuity": 0.9840671190289451,
+          "neighborRecall": 0.14034480271225563
+        },
+        {
+          "seed": 41,
+          "trustworthiness": 0.9646477107316477,
+          "continuity": 0.9839841324344184,
+          "neighborRecall": 0.14080646324749332
+        }
+      ],
+      "versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "umap-learn": "0.5.12"
+      },
+      "qualification": "Full-cohort trajectories and exact schedule counts; neighborhood preservation uses the declared query scope. Not optimizer convergence, density preservation, cell labels, donor integration or biological qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 111445,
+      "dimensions": 2,
+      "epochs": 500,
+      "allFrozenLegacyResultBytesExact": true,
+      "resultSHA256": "f1388045d182acafddc35bdb0144a32c215ad3b411c1adce2f1c0de46a075b78",
+      "graphSHA256": "ed22f6db052807f02cb4b0159891ef120f9e3554fd1dae54ff2633f14f0b0fd9",
+      "protocolSHA256": "a6fe58cf11883e059e4da68b3bff66dcacdb33c10dda8ee760e80e0c55ec5182",
+      "curveA": 1.5769436134595154,
+      "curveB": 0.8950607192931058,
+      "curveSquaredError": 0.07863531806579335,
+      "edgeVisits": 1256188000,
+      "attractiveUpdates": 378522850,
+      "negativeSamples": 1890658520,
+      "qualityQueries": 2048,
+      "candidateCells": 111445,
+      "qualityScope": "fixed sampled queries against all cells",
+      "initial": {
+        "trustworthiness": 0.793295420740892,
+        "continuity": 0.9520038810314989,
+        "neighborRecall": 0.00625
+      },
+      "native": {
+        "trustworthiness": 0.9149739095440644,
+        "continuity": 0.9577233514883169,
+        "neighborRecall": 0.039876302083333336
+      },
+      "references": [
+        {
+          "seed": 7,
+          "trustworthiness": 0.9154335225702547,
+          "continuity": 0.9579619283837573,
+          "neighborRecall": 0.03990885416666667
+        },
+        {
+          "seed": 19,
+          "trustworthiness": 0.9153719388268812,
+          "continuity": 0.957689301545214,
+          "neighborRecall": 0.0412109375
+        },
+        {
+          "seed": 41,
+          "trustworthiness": 0.9163260600161062,
+          "continuity": 0.9575694067374486,
+          "neighborRecall": 0.04013671875
+        }
+      ],
+      "versions": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "umap-learn": "0.5.12"
+      },
+      "qualification": "Full-cohort trajectories and exact schedule counts; neighborhood preservation uses the declared query scope. Not optimizer convergence, density preservation, cell labels, donor integration or biological qualification"
+    }
+  ],
+  "graphReference": [
+    {
+      "status": "passed",
+      "cells": 8569,
+      "dimensions": 20,
+      "neighborEntries": 128535,
+      "connectivityEntries": 176856,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "156714b59cd29cd301917d0e3f8deb77480f9ce228b077ed482645d252f9ec2f",
+      "baselineScoresSHA256": "6ea92b3e2bac881e3787cd96992424614a853b6add82174d482a64e665f55eb5",
+      "graphSHA256": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+      "binaryBytes": 5434688,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 13863,
+      "dimensions": 20,
+      "neighborEntries": 207945,
+      "connectivityEntries": 293178,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "71538896f85184e752ac790e7188fdb48b620e7c6c1b777967632706afe7e9fc",
+      "baselineScoresSHA256": "f7f2d7cfdcd0dff7b7f113570ea6bbebddd344d3516aaed81bf5a2971d2517b1",
+      "graphSHA256": "7b7bdf4fe3684158e0e2bc6401d6b99d1b266488221365fdd2f43dd60b281675",
+      "binaryBytes": 8905216,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    },
+    {
+      "status": "passed",
+      "cells": 111445,
+      "dimensions": 20,
+      "neighborEntries": 1671675,
+      "connectivityEntries": 2513474,
+      "allBinaryCoordinatesAndFP64BitsExact": true,
+      "allInputScoreBytesExact": true,
+      "allCellIdentitiesExact": true,
+      "components": 1,
+      "baselineGraphSHA256": "fb1ccb626b2019c3091e0f0930a4124e84619fa7a5cd799e13f7dd45a706a10b",
+      "baselineScoresSHA256": "929b8f16450653ba64e72a0c17936032f367c178bd5798951abc9560da60c26b",
+      "graphSHA256": "ed22f6db052807f02cb4b0159891ef120f9e3554fd1dae54ff2633f14f0b0fd9",
+      "binaryBytes": 74094880,
+      "scope": "Every record equals previously independently qualified full graph; preserves its recall scope, not new biological or million-cell qualification"
+    }
+  ],
+  "fixtureSuites": {
+    "fixtures": {
+      "status": "passed",
+      "commands": 22,
+      "expectedRejections": 6,
+      "fittedAndQuery": true,
+      "exactAndHNSW": true,
+      "twoAndThreeDimensions": true,
+      "allFrozenOracleBytesExact": true,
+      "replayExact": true,
+      "rehashedResultWorkAndParentRejected": true,
+      "failedStagingRemoved": true,
+      "binarySHA256": "64abbdafc33343348fe8eafae382fd2031aed947214c712b4519cb8bd9c20293",
+      "oracleSHA256": "ef01e37cdc1c3c7b48b29c233fd66764a9efa7294e3aa8434a37d172c99d7485"
+    },
+    "fixture-inputs": {
+      "binarySHA256": "64abbdafc33343348fe8eafae382fd2031aed947214c712b4519cb8bd9c20293",
+      "commands": 22,
+      "expectedRejections": 13,
+      "formats": [
+        {
+          "allBinaryCoordinatesChecked": true,
+          "cells": 16,
+          "components": 3,
+          "emptyLibraries": 1,
+          "features": 10,
+          "maximumAbsoluteScoreError": 2.6645352591003757e-15,
+          "projectionUpdates": 309,
+          "status": "passed"
+        },
+        {
+          "allBinaryCoordinatesChecked": true,
+          "cells": 16,
+          "components": 3,
+          "emptyLibraries": 1,
+          "features": 10,
+          "maximumAbsoluteScoreError": 2.6645352591003757e-15,
+          "projectionUpdates": 309,
+          "status": "passed"
+        },
+        {
+          "allBinaryCoordinatesChecked": true,
+          "cells": 16,
+          "components": 3,
+          "emptyLibraries": 1,
+          "features": 10,
+          "maximumAbsoluteScoreError": 3.552713678800501e-15,
+          "projectionUpdates": 309,
+          "status": "passed"
+        }
+      ],
+      "rehashedTamperingRejected": true,
+      "replayExact": true,
+      "status": "passed"
+    },
+    "graph-fixtures": {
+      "status": "passed",
+      "commands": 22,
+      "expectedRejections": 6,
+      "fittedAndQuery": true,
+      "exactAndHNSW": true,
+      "allBinaryNumericsExact": true,
+      "replayExact": true,
+      "allFourRehashedFilesRejected": true,
+      "binarySHA256": "64abbdafc33343348fe8eafae382fd2031aed947214c712b4519cb8bd9c20293"
+    },
+    "clustering-regression": {
+      "status": "passed",
+      "commands": 22,
+      "expectedRejections": 6,
+      "fittedAndQuery": true,
+      "exactAndHNSW": true,
+      "allFrozenOracleBytesExact": true,
+      "replayExact": true,
+      "rehashedResultWorkAndParentRejected": true,
+      "failedStagingRemoved": true,
+      "binarySHA256": "64abbdafc33343348fe8eafae382fd2031aed947214c712b4519cb8bd9c20293",
+      "oracleSHA256": "665d76b3375d41da9a1375276efd5e7eb6e2520a3a334d5f4a2ae34af3464438"
+    }
+  },
+  "scriptsSHA256": {
+    "Tools/Omics/Reduction/check_embedding.py": "49511a9895b346d04f4f973aecdf2cfa05af1f4b3be069cc0ec0e926bda65733",
+    "Tools/Omics/Reduction/check_file_embedding.py": "4ab1ef77c1a2a50b49d8c6fb44d2a223611204a03970e859dfe188fc450c0990",
+    "Tools/Omics/Reduction/plot_embedding.py": "cd133911a785b2133d3ba39db1742a3abc5f83fc3494de7664fc8b2b7602bf15",
+    "Tools/Omics/Reduction/plot_file_embedding.py": "a505bb8d67bdcc311a4de795732e7a195da36e1a6ff91bbfbc752483d5ebd7d1",
+    "Tools/Omics/Reduction/check_file_embedding_reference.py": "a94ae2eeae21e69fd8029f3b83481be727e69c80c408948386bbc69292f81db8",
+    "Tools/Omics/Reduction/run_file_embedding.py": "1967de805bb3011ebfb42e26848fd06478657fd840f3baa48b8821ccb4dc6b57"
+  },
+  "scope": "Full-cohort file-backed UMAP trajectories and exact frozen algorithm preservation; complete Baron/Hagai and sampled Norman neighborhood-preservation qualification. Not convergence, biological, million-cell or GPU/scverse performance qualification."
+}

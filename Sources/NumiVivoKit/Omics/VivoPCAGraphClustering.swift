@@ -52,24 +52,11 @@ public enum VivoPCAGraphClustering {
         let root = parent.appendingPathComponent(".numivivo-graph-clustering-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700]); return root
     }
-    private static func snapshot(_ input: URL, to output: URL) throws {
-        let plan = try read(VivoPCANeighborPlan.self, input, "plan.json", maximum: 65_536)
-        try plan.validate()
-        guard plan.storage == .binary else { throw VivoOmicsError.invalid("file-backed clustering requires a binary graph store") }
-        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
-        try VivoPCANeighborBundle.snapshot(input.appendingPathComponent("input"), kind: plan.inputKind, to: output.appendingPathComponent("input"))
-        for name in ["plan.json", "graph.json", "receipt.json", "execution.json"] {
-            _ = try VivoOmicsFileSnapshot.fingerprint(input.appendingPathComponent(name), copyTo: output.appendingPathComponent(name), maximumBytes: 65_536)
-        }
-        for name in VivoPCAGraphStore.files {
-            _ = try VivoOmicsFileSnapshot.fingerprint(input.appendingPathComponent(name), copyTo: output.appendingPathComponent(name), maximumBytes: 4_096_000_000)
-        }
-    }
     public static func publish(input: URL, plan: VivoPCAGraphClusteringPlan, implementation: VivoFingerprint, to destination: URL) throws -> VivoPCAGraphClusteringReceipt {
         try plan.validate(); try VivoH5ADCountStore.requireNew(destination)
         let temp = try staging(destination.deletingLastPathComponent()); defer { try? FileManager.default.removeItem(at: temp) }
         let source = temp.appendingPathComponent("input")
-        try snapshot(input, to: source)
+        try VivoPCANeighborBundle.snapshotGraph(input, to: source)
         let parent = try VivoPCANeighborBundle.verify(source, implementation: implementation)
         let graph = try read(VivoPCAGraphStoreReport.self, source, "graph.json", maximum: 65_536)
         let metadata = try read(VivoSingleCellCountMetadata.self, source.appendingPathComponent("input"), "metadata.json", maximum: 536_870_912)

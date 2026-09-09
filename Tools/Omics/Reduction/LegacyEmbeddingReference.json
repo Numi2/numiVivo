@@ -1,0 +1,7 @@
+{
+  "commit": "36ccd858504ed643b21f2b622d81a3b261fc0950",
+  "source": "Sources/NumiVivoKit/Omics/VivoSingleCellEmbedding.swift",
+  "sourceSHA256": "ac9f240acad1061ce360d133d08f4f7920771c5b751e7b55daae7d79037263b9",
+  "transformation": "Copy result shape and original algorithm; rename only enum, import public input models. Not linked into production.",
+  "optionsAdmission": "Uses current public options decoder/validation, including the explicit 20-billion work cap. The numerical algorithm body and result shape are unchanged; equality does not imply the old CLI admitted enlarged-budget plans."
+}

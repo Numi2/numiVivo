@@ -1,0 +1,274 @@
+[
+  {
+    "label": "fitted-exact-publish",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-exact/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/fitted-exact"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-verify",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/fitted-exact"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-repeat",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-exact/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/fitted-exact-repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-exact-legacy",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/legacy-embedding",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-exact/json/graph.json",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-exact/json/input/scores.bin",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/legacy-options.json",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/fitted-exact-legacy.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-publish",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/fitted-hnsw"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-verify",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/fitted-hnsw"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-repeat",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/fitted-hnsw-repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "fitted-hnsw-legacy",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/legacy-embedding",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/json/graph.json",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/json/input/scores.bin",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/legacy-options.json",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/fitted-hnsw-legacy.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-publish",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-exact/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/query-exact"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-verify",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/query-exact"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-repeat",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-exact/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/query-exact-repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-exact-legacy",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/legacy-embedding",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-exact/json/graph.json",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-exact/json/input/scores.bin",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/legacy-options.json",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/query-exact-legacy.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-publish",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/query-hnsw"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-verify",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/query-hnsw"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-repeat",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/query-hnsw-repeat"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "query-hnsw-legacy",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/legacy-embedding",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-hnsw/json/graph.json",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/query-hnsw/json/input/scores.bin",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/legacy-options.json",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/query-hnsw-legacy.json"
+    ],
+    "exitCode": 0,
+    "expectedSuccess": true
+  },
+  {
+    "label": "rehashed-result",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/tamper-result"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-executionReport",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/tamper-executionReport"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "rehashed-parent",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed-verify",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/tamper-parent"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "low-work",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/low-work.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/rejected-work"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "resident-input",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/json",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/rejected-storage"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  },
+  {
+    "label": "overwrite",
+    "command": [
+      "/Users/home/numivivo-file-embedding-20260909/numivivo",
+      "singlecell-graph-embed",
+      "/Users/home/numivivo-file-embedding-20260909/graph-fixtures/fitted-hnsw/binary",
+      "--plan",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/plan.json",
+      "--output",
+      "/Users/home/numivivo-file-embedding-20260909/fixtures/fitted-hnsw"
+    ],
+    "exitCode": 65,
+    "expectedSuccess": false
+  }
+]

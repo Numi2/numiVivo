@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "cohorts": {
+    "baron": 8569,
+    "hagai": 13863,
+    "norman": 111445
+  },
+  "embedding": {
+    "dimensions": 2,
+    "epochs": 500,
+    "minimumDistance": 0.1,
+    "spread": 1,
+    "learningRate": 1,
+    "negativeSampleRate": 5,
+    "repulsionStrength": 1,
+    "seed": 7,
+    "maximumUpdates": 5000000000
+  },
+  "referenceSeeds": [
+    7,
+    19,
+    41
+  ],
+  "evaluationNeighbors": 15,
+  "qualityQueries": {
+    "baron": "all",
+    "hagai": "all",
+    "norman": {
+      "count": 2048,
+      "seed": 20260909,
+      "selection": "numpy default_rng choice without replacement, sorted; same rows for initialization, native and all references; all 111445 candidate cells"
+    }
+  },
+  "minimumTrustworthiness": 0.9,
+  "maximumTrustworthinessDeficitFromWorstReference": 0.02,
+  "maximumRecallDeficitFromWorstReference": 0.05,
+  "legacy": "All result JSON bytes equal frozen 36ccd85 embedding algorithm on the identical graph and PCA scores",
+  "graph": "Every graph coordinate/FP64 bit and PCA score byte equals the previous qualified HNSW graph",
+  "scope": "Full-cohort optimization; full Baron/Hagai and sampled Norman neighborhood-preservation checks. Engineering comparison, not convergence or biological qualification."
+}

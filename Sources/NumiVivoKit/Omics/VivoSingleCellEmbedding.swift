@@ -29,7 +29,7 @@ public struct VivoSingleCellEmbeddingOptions: Codable, Sendable, Equatable {
         guard (2...3).contains(dimensions),(20...2000).contains(epochs),spread.isFinite,(0.01...10).contains(spread),
               minimumDistance.isFinite,(0...spread).contains(minimumDistance),learningRate.isFinite,(0.01...10).contains(learningRate),
               (1...20).contains(negativeSampleRate),repulsionStrength.isFinite,(0.01...10).contains(repulsionStrength),
-              (1...1_000_000_000).contains(maximumUpdates) else { throw VivoOmicsError.invalid("embedding options") }
+              (1...20_000_000_000).contains(maximumUpdates) else { throw VivoOmicsError.invalid("embedding options") }
     }
 }
 public struct VivoSingleCellEmbeddingResult: Codable, Sendable, Equatable {
@@ -87,8 +87,14 @@ enum VivoSingleCellEmbedding {
     }
     static func run(_ graph: VivoSingleCellNeighborGraph,scores: [[Double]],options: VivoSingleCellEmbeddingOptions) throws -> VivoSingleCellEmbeddingResult {
         try options.validate()
-        let n=graph.cells.count,d=options.dimensions
-        guard scores.count==n,scores.allSatisfy({ $0.count>=d }),graph.weights.max() != nil else {
+        let schedule = try VivoResidentEmbeddingSchedule(graph: graph, options: options)
+        return try run(cells: graph.cells, scores: scores, schedule: schedule, options: options)
+    }
+    static func run(cells: [VivoOmicsCellIdentity], scores: [[Double]], schedule: any VivoEmbeddingSchedule,
+                    options: VivoSingleCellEmbeddingOptions) throws -> VivoSingleCellEmbeddingResult {
+        try options.validate()
+        let n = cells.count, d = options.dimensions
+        guard n > 0, scores.count == n, scores.allSatisfy({ $0.count >= d }), schedule.count > 0 else {
             throw VivoOmicsError.invalid("embedding needs a nonempty graph and sufficient PCA dimensions")
         }
         let curve=try fitCurve(spread: options.spread,minimumDistance: options.minimumDistance)
@@ -104,44 +110,34 @@ enum VivoSingleCellEmbedding {
             guard high>low,low.isFinite,high.isFinite else { throw VivoOmicsError.invalid("embedding initialization has zero or nonfinite range") }
             for i in 0..<n { coordinates[i][f]=10*(scores[i][f]-low)/(high-low)+(Double(random()>>11)/9_007_199_254_740_992-0.5)*2e-4 }
         }
-        let initial=coordinates,maximum=graph.weights.max()!
-        var heads: [Int]=[],tails: [Int]=[],intervals: [Double]=[],bound=0.0
-        for i in 0..<n { for edge in graph.rowOffsets[i]..<graph.rowOffsets[i+1] where graph.weights[edge]>=maximum/Double(options.epochs) {
-            let interval=maximum/graph.weights[edge]
-            heads.append(i);tails.append(graph.columnIndices[edge]);intervals.append(interval)
-            bound += ceil(Double(options.epochs)/interval)*Double(1+options.negativeSampleRate)
-        } }
-        guard bound<=Double(options.maximumUpdates),Double(heads.count)*Double(options.epochs)<=Double(options.maximumUpdates) else { throw VivoOmicsError.limit("UMAP update budget before optimization") }
-        let negativeIntervals=intervals.map { $0/Double(options.negativeSampleRate) }
-        var nextPositive=intervals,nextNegative=negativeIntervals,attractive=0,negative=0,alpha=options.learningRate
+        let initial = coordinates
+        var attractive = 0, negative = 0, alpha = options.learningRate
         func distance(_ i: Int,_ j: Int) -> Double {
             var value=0.0;for f in 0..<d { let delta=coordinates[i][f]-coordinates[j][f];value += delta*delta };return value
         }
         for epoch in 0..<options.epochs {
             try Task.checkCancellation()
-            for edge in heads.indices where nextPositive[edge]<=Double(epoch) {
-                let i=heads[edge],j=tails[edge],coefficient=attractiveCoefficient(squaredDistance: distance(i,j),a: curve.a,b: curve.b)
+            try schedule.visit(epoch: epoch) { i, j, samples in
+                let coefficient=attractiveCoefficient(squaredDistance: distance(i,j),a: curve.a,b: curve.b)
                 for f in 0..<d {
                     let gradient=max(-4,min(4,coefficient*(coordinates[i][f]-coordinates[j][f])))
                     coordinates[i][f] += alpha*gradient;coordinates[j][f] -= alpha*gradient
                 }
-                attractive += 1;nextPositive[edge] += intervals[edge]
-                let samples=max(0,Int((Double(epoch)-nextNegative[edge])/negativeIntervals[edge]))
+                attractive += 1
                 for _ in 0..<samples {
                     let other=Int(random()%UInt64(n));negative += 1
                     if other==i { continue }
                     let coefficient=repulsiveCoefficient(squaredDistance: distance(i,other),a: curve.a,b: curve.b,strength: options.repulsionStrength)
                     for f in 0..<d { coordinates[i][f] += alpha*max(-4,min(4,coefficient*(coordinates[i][f]-coordinates[other][f]))) }
                 }
-                nextNegative[edge] += Double(samples)*negativeIntervals[edge]
                 guard attractive+negative<=options.maximumUpdates else { throw VivoOmicsError.limit("UMAP update budget during optimization") }
             }
             guard coordinates.allSatisfy({ $0.allSatisfy(\.isFinite) }) else { throw VivoOmicsError.invalid("nonfinite embedding coordinates") }
             alpha=options.learningRate*(1-Double(epoch)/Double(options.epochs))
         }
-        return .init(method: "sparse-UMAP-negative-sampling-Double-SplitMix64-v1",options: options,cells: graph.cells,
+        return .init(method: "sparse-UMAP-negative-sampling-Double-SplitMix64-v1",options: options,cells: cells,
             initialCoordinates: initial,coordinates: coordinates,curveA: curve.a,curveB: curve.b,curveSquaredError: curve.error,
-            retainedDirectedEdges: heads.count,discardedDirectedEdges: graph.weights.count-heads.count,edgeVisits: heads.count*options.epochs,attractiveUpdates: attractive,
+            retainedDirectedEdges: schedule.count,discardedDirectedEdges: schedule.discarded,edgeVisits: schedule.count*options.epochs,attractiveUpdates: attractive,
             negativeSamples: negative,maximumCoordinateMagnitude: coordinates.flatMap { $0 }.map(abs).max() ?? 0,
             qualification: "Fixed-epoch descriptive UMAP-compatible coordinates; not optimizer convergence, clustering, donor integration or biological validation")
     }
