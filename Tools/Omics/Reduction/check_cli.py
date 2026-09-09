@@ -10,6 +10,7 @@ p = argparse.ArgumentParser()
 p.add_argument('--binary', type=Path, required=True)
 p.add_argument('--imported', type=Path, required=True)
 p.add_argument('--out', type=Path, required=True)
+p.add_argument('--neighbors', action='store_true')
 a = p.parse_args()
 a.out.mkdir(parents=True, exist_ok=False)
 commands = []
@@ -31,6 +32,8 @@ receipt = a.out / 'analysis.json'
 plan = dict(schemaVersion=1, id='sparse-reduction-qualification', normalizationTarget=10000,
             filter=dict(minimumCounts=1,minimumDetectedFeatures=1), contrasts=[],
             reduction=dict(highlyVariableFeatures=2000,meanBins=20,components=20,maximumBasis=128,relativeResidualTolerance=1e-6,seed=7))
+if a.neighbors:
+    plan['neighbors'] = dict(neighbors=15,localConnectivity=1,maximumDistancePairs=50000000)
 plan_path = a.out / 'plan.json'
 plan_path.write_text(json.dumps(plan,indent=2)+'\n')
 run('singlecell-run', a.imported / 'manifest.json', '--store', store, '--output', counts)
@@ -46,7 +49,17 @@ rejected = a.out / 'rejected.json'
 failure = run('singlecell-analyze', counts, '--plan', short, '--store', store, '--output', rejected, success=False)
 assert 'residual' in failure.stderr.lower(), failure.stderr
 assert not rejected.exists()
-result = dict(status='passed', checks=['count publication','reduction publication','native reconstruction','report export','deterministic receipt','controlled unconverged rejection without receipt'],
+extra_checks = []
+if a.neighbors:
+    plan['reduction']['maximumBasis'] = 128
+    plan['neighbors']['maximumDistancePairs'] = 1
+    budget = a.out / 'insufficient-neighbor-budget.json'
+    budget.write_text(json.dumps(plan,indent=2)+'\n')
+    failure = run('singlecell-analyze', counts, '--plan', budget, '--store', store, '--output', rejected, success=False)
+    assert 'distance-pair budget' in failure.stderr.lower(), failure.stderr
+    assert not rejected.exists()
+    extra_checks.append('controlled neighbor work-budget rejection without receipt')
+result = dict(status='passed', checks=['count publication','reduction publication','native reconstruction','report export','deterministic receipt','controlled unconverged rejection without receipt']+extra_checks,
               binarySHA256=hashlib.sha256(a.binary.read_bytes()).hexdigest(), commands=commands,
               qualification='Software reconstruction and numerical convergence; not biological qualification')
 (a.out / 'checks.json').write_text(json.dumps(result,indent=2)+'\n')

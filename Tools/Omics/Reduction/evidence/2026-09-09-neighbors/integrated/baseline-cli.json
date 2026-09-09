@@ -1,0 +1,315 @@
+{
+  "schema": "numivivo.org/singlecell-cli-checks/v1",
+  "passed": true,
+  "checks": [
+    "help exposes supported workflow",
+    "verified native reconstruction",
+    "source evidence not promoted",
+    "expected dimensions and replicate groups",
+    "exact raw source counts",
+    "exact per-cell totals",
+    "empty-cell mitochondrial fraction remains missing",
+    "pseudobulk retains replicate counts",
+    "normalized view separate and scale invariant",
+    "cell identities retained",
+    "repeat run has stable content identities",
+    "receipt not overwritten",
+    "output cannot enter store through symlink",
+    "general workflow executed",
+    "general workflow and dedicated command agree",
+    "validated cache reuse",
+    "changed source cannot reuse old input identity",
+    "primary stored source preserved"
+  ],
+  "commands": [
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-help"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/receipt.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/receipt.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-export",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/receipt.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/report.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/repeat.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/receipt.json"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--normalise",
+        "1"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store/forbidden.json"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store-alias/forbidden.json"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/inputs/unknown.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/wrong-implementation.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/wrong-input.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "artifact-show",
+        "277e49058883191dcb5e132d244e55448a3adbb977a0e618e31f741a416ea8e7",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "artifact-put",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/false-result.json",
+        "--kind",
+        "vivo.singlecell-stored-result-v1",
+        "--media-type",
+        "application/json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/false-receipt.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "workflow-plan",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/workflow.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "workflow-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/workflow.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/workflow-run.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "workflow-export",
+        "f0a62db434bdc487e376a8ad619ae4c64d8cd20dbb7dfb9372e9d6bf3cf6aa68",
+        "--name",
+        "report",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/workflow-report.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "workflow-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/workflow.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/workflow-repeat.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/receipt.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-run",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/inputs/manifest.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store",
+        "--output",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/changed.json"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "artifact-show",
+        "4983dbd6a66e2abc719394d6fb5c1297468f11c96b4dfc60fafef052b96708c5",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/damaged-store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "singlecell-verify",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/receipt.json",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/damaged-store"
+      ],
+      "exitCode": 65,
+      "expectedSuccess": false
+    },
+    {
+      "arguments": [
+        "/Users/home/numivivo-neighbors-integrated-product-20260909/numivivo",
+        "artifact-show",
+        "4983dbd6a66e2abc719394d6fb5c1297468f11c96b4dfc60fafef052b96708c5",
+        "--store",
+        "/Users/home/numivivo-neighbors-integrated-baseline-cli-20260909/store"
+      ],
+      "exitCode": 0,
+      "expectedSuccess": true
+    }
+  ],
+  "binarySHA256": "95cbbdf89bfba9f9282e5585f783c877479e052f66598b3379254b31cd043acd",
+  "scope": "Synthetic native CLI, artifact integrity, reconstruction and existing workflow composition; not biological validation."
+}

@@ -1,0 +1,12 @@
+{
+  "baseCommit": "70f5e1e556bec40fa10d1c9756b2f5a0dde97582",
+  "files": {
+    "Sources/NumiVivoKit/Omics/VivoSingleCellNeighbors.swift": "09014d5de17aeb27ea5bbad180fc6ade59a0ef72cd5b448a45ee9e2844506c3b",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellCohortAnalysis.swift": "72dfc902486dec20db31130f34003af455784fdd34fbca4fecedfad8cc233039",
+    "Tests/NumiVivoIntegrationTests/SingleCellNeighborTests.swift": "60d0a1e9e502c77d87f6a150b0318c0bbc4bd6c09f26d13f16f2ae3779cdc3fc",
+    "Tools/Omics/Reduction/check_cli.py": "976b7c4e3610ce58b1e190c2fb3b9e259ef7ffe84c81789b2e5f125fc5e3cf52",
+    "Tools/Omics/Reduction/check_neighbors.py": "58ef4e895083f928fcbf04f8a298b83ff221032640011dc1c26674205f750abd"
+  },
+  "binarySHA256": "95cbbdf89bfba9f9282e5585f783c877479e052f66598b3379254b31cd043acd",
+  "scope": "Base commit plus the listed neighbor owner changes; source hashes must match the published tree."
+}

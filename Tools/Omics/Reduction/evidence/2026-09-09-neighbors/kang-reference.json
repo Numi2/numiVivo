@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "reportSHA256": "7aac868410dd25c4de5e077a59b6e760e44b042a0c2af4743e9c55a7e990a973",
+  "cells": 2651,
+  "dimensions": 20,
+  "neighborsIncludingSelf": 15,
+  "distancePairs": 3512575,
+  "connectivityEntries": 56420,
+  "connectedComponents": 1,
+  "exactNeighborMembershipAndOrder": true,
+  "maximumDistanceError": 0.0,
+  "maximumConnectivityError": 5.704221439473134e-06,
+  "maximumSigmaError": 3.814697265625e-06,
+  "maximumKernelMassResidual": 9.999129439108856e-06,
+  "qualification": "Numerical exact-neighbor and fuzzy-graph agreement; no embedding, clustering or biological validation",
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "umap-learn": "0.5.12"
+  }
+}

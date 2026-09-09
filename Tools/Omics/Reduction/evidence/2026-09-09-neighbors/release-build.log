@@ -1,0 +1,136 @@
+[0/1] Planning build
+Building for production...
+[0/4] Write sources
+[1/4] Write swift-version-3CD7052B146186F2.txt
+[3/5] Compiling NumiVivoKit VivoAdaptiveRefinementPolicy.swift
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Artifacts/VivoStateCheckpointEnvelope.swift:118:13: warning: variable 'littleEndian' was never mutated; consider changing to 'let' constant
+116 | 
+117 |     public static func float32(id: String, values: [Float]) -> Self {
+118 |         var littleEndian = values.map { $0.bitPattern.littleEndian }
+    |             `- warning: variable 'littleEndian' was never mutated; consider changing to 'let' constant
+119 |         return littleEndian.withUnsafeBytes { bytes in
+120 |             .init(
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Artifacts/VivoStateCheckpointEnvelope.swift:131:13: warning: variable 'littleEndian' was never mutated; consider changing to 'let' constant
+129 | 
+130 |     public static func uint32(id: String, values: [UInt32]) -> Self {
+131 |         var littleEndian = values.map(\.littleEndian)
+    |             `- warning: variable 'littleEndian' was never mutated; consider changing to 'let' constant
+132 |         return littleEndian.withUnsafeBytes { bytes in
+133 |             .init(
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Calibration/VivoMetalTargetLikelihoodScreen.swift:138:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+136 |             if name == "NumiVivoTargetLikelihood" { scoringSource = text }
+137 |         }
+138 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+139 |         let library = try await device.makeLibrary(source: scoringSource, options: options)
+140 |         guard let expose = library.makeFunction(name: "nvivo_target_likelihood_expose"),
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Interop/Amber/VivoAmberImporter.swift:120:13: warning: variable 'structure' was never mutated; consider changing to 'let' constant
+118 |             }
+119 |         }
+120 |         var structure = try builder.makeStructure(
+    |             `- warning: variable 'structure' was never mutated; consider changing to 'let' constant
+121 |             identifier: identifier, bonds: structureBonds,
+122 |             conformers: restart == nil ? [] : [.init(identifier: "amber-restart", positionsNM: builder.positions)],
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/MD/VivoMDBenchmark.swift:123:16: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+121 |     public let observations: [VivoMDObservables]?
+122 |     /// This short trajectory is execution evidence, not an equilibrium gate.
+123 |     public let ensembleOutcome: VivoBenchmarkOutcome = .inconclusive
+    |                |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |                |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'ensembleOutcome' case to silence this warning
+    |                `- note: make the property mutable instead
+124 | }
+125 | 
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/MD/VivoMDBenchmark.swift:127:16: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+125 | 
+126 | public struct VivoMDBenchmarkReport: Codable, Sendable {
+127 |     public let schema: String = "numivivo.org/md-benchmark-report/v1"
+    |                |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |                |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |                `- note: make the property mutable instead
+128 |     public let requestFingerprint: VivoFingerprint
+129 |     public let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Physiology/VivoPhysiologyCompiler.swift:237:13: warning: variable 'initialState' was never mutated; consider changing to 'let' constant
+235 |             diagnostics: &diagnostics
+236 |         )
+237 |         var initialState = preparedAnalytes.state
+    |             `- warning: variable 'initialState' was never mutated; consider changing to 'let' constant
+238 | 
+239 |         var sparse = [[UInt32: Double]](repeating: [:], count: pairCount)
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/QM/VivoQMDenseAlgebra.swift:49:9: warning: 'cblas_dgemm' was deprecated in macOS 13.3: An updated CBLAS interface supporting ILP64 is available.  Please compile with -DACCELERATE_NEW_LAPACK to access the new headers and -DACCELERATE_LAPACK_ILP64 for ILP64 support. [#DeprecatedDeclaration]
+ 47 |         if rows == 0 || columns == 0 || b.columns == 0 { return out }
+ 48 |         #if canImport(Accelerate)
+ 49 |         cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,
+    |         `- warning: 'cblas_dgemm' was deprecated in macOS 13.3: An updated CBLAS interface supporting ILP64 is available.  Please compile with -DACCELERATE_NEW_LAPACK to access the new headers and -DACCELERATE_LAPACK_ILP64 for ILP64 support. [#DeprecatedDeclaration]
+ 50 |                     Int32(rows), Int32(b.columns), Int32(columns), 1,
+ 51 |                     values, Int32(columns), b.values, Int32(b.columns), 0, &out.values, Int32(b.columns))
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/QMEnv/VivoQMMMDynamicsProvider.swift:128:30: warning: no calls to throwing functions occur within 'try' expression
+126 |                     }
+127 |                     for i in physical.indices { virial(physical[i],cluster.particlePositionsNM[i]/VivoAtomicUnits.bohrInNM,-1) }
+128 |                     affine = try strain.scaled(VivoAtomicUnits.hartreeInKJPerMol)
+    |                              `- warning: no calls to throwing functions occur within 'try' expression
+129 |                 }
+130 |                 let factor = VivoAtomicUnits.hartreeInKJPerMol/VivoAtomicUnits.bohrInNM
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Runtime/MetalCapabilities.swift:102:35: warning: 'mac1' was deprecated in macOS 13.0: renamed to 'MTLGPUFamily.mac2' [#DeprecatedDeclaration]
+100 |         if device.supportsFamily(.apple1) { return .apple1 }
+101 |         if device.supportsFamily(.mac2) { return .mac2 }
+102 |         if device.supportsFamily(.mac1) { return .mac1 }
+    |                                   |- warning: 'mac1' was deprecated in macOS 13.0: renamed to 'MTLGPUFamily.mac2' [#DeprecatedDeclaration]
+    |                                   `- note: use 'MTLGPUFamily.mac2' instead
+103 |         return .unknown
+104 |     }
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Structure/Formats/VivoMMCIF.swift:175:17: warning: variable 'line' was never mutated; consider changing to 'let' constant
+173 |         var lineIndex = 0
+174 |         while lineIndex < lines.count {
+175 |             var line = lines[lineIndex]
+    |                 `- warning: variable 'line' was never mutated; consider changing to 'let' constant
+176 |             if line.hasPrefix(";") {
+177 |                 var block = String(line.dropFirst())
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Structure/VivoStructureNormalization.swift:160:13: warning: variable 'rewrite' was never mutated; consider changing to 'let' constant
+158 |                                             conformers: conformers, periodicCell: source.periodicCell,
+159 |                                             metadata: source.metadata)
+160 |         var rewrite = VivoStructureRewrite(structure: output, oldToNew: oldToNew, newToOld: unique)
+    |             `- warning: variable 'rewrite' was never mutated; consider changing to 'let' constant
+161 |         try rewrite.validate(originalAtomCount: source.atoms.count)
+162 |         return rewrite
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Surrogates/VivoReactiveMetalBackend.swift:54:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 52 |         coefficients = try buffer(payload.coefficientsKJPerMol.flatMap { $0 })
+ 53 |         scales = try buffer(payload.configuration.features.map { 1/($0.scaleNM*$0.scaleNM) })
+ 54 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 55 |         let library = try device.makeLibrary(source: Self.source,options: options)
+ 56 |         guard let function = library.makeFunction(name: "vivo_reactive_delta") else { throw VivoChemistryError.invalid("missing reactive Metal kernel") }
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Workflow/VivoAdvancedChemistryOperations.swift:169:42: warning: capture of non-Sendable type 'T.Type' in an isolated local function [#SendableMetatypes]
+167 |         @Sendable func read<T: Decodable>(_ type: T.Type, _ name: String, _ inputs: [String:Data]) throws -> T {
+168 |             guard let data = inputs[name] else { throw VivoChemistryError.invalid("missing RI Hamiltonian slot \(name)") }
+169 |             return try VivoCanonicalJSON.decode(type,from:data)
+    |                                          `- warning: capture of non-Sendable type 'T.Type' in an isolated local function [#SendableMetatypes]
+170 |         }
+171 |         return .init(identifier:"vivo.native.ri-active-hamiltonian",version:"1",implementationFingerprint:id,
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Calibration/VivoMetalTargetLikelihoodScreen.swift:342:26: warning: forming 'UnsafeRawPointer' to a variable of type 'T'; this is likely incorrect because 'T' may contain an object reference.
+340 |         encoder.setComputePipelineState(pipeline)
+341 |         for (index, buffer) in buffers.enumerated() { encoder.setBuffer(buffer, offset: 0, index: index) }
+342 |         encoder.setBytes(&uniform, length: MemoryLayout<T>.stride, index: buffers.count)
+    |                          `- warning: forming 'UnsafeRawPointer' to a variable of type 'T'; this is likely incorrect because 'T' may contain an object reference.
+343 |         encoder.dispatchThreads(.init(width: count, height: 1, depth: 1),
+344 |             threadsPerThreadgroup: .init(width: max(1, min(pipeline.threadExecutionWidth * 4, pipeline.maxTotalThreadsPerThreadgroup)), height: 1, depth: 1))
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[#SendableMetatypes]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-metatypes>
+[4/6] Compiling NumiVivoCLI VivoAmberCLICommands.swift
+[4/6] Write Objects.LinkFileList
+[5/6] Linking numivivo
+Build of product 'numivivo' complete! (202.15s)

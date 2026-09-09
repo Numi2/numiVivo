@@ -79,3 +79,5 @@ Scanpy stores normalized dispersions in float32, which determines their explicit
 comparison tolerance. See `evidence/2026-09-09/source-state.json` for source and
 binary identities, dataset reports for reference versions, and preserved stderr
 for the intentional insufficient-basis rejections.
+
+For the next stage, see [exact neighbors and fuzzy connectivity](NEIGHBORS.md).
