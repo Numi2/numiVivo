@@ -319,3 +319,6 @@ The complete development objective remains open:
 12. **Cross-scale biology:** variant → regulation → RNA/cell state → protein and
     molecular mechanism → reaction/kinetics → cellular phenotype → tissue
     prediction requires executable, independently qualified links at each boundary.
+    [AlphaGenome Atlas integration assessment](AlphaGenomeAtlas.md) identifies
+    a candidate external prediction source for the variant/regulation/RNA link;
+    no adapter or biological qualification is claimed.
