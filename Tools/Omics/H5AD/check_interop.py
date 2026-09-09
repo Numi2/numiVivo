@@ -75,6 +75,35 @@ for name, value in [('negative', -1.0), ('nan', float('nan')), ('infinity', floa
     obj.write_h5ad(invalid)
     run('reject-' + name, invalid, plan, False)
 
+# raw has its own feature dictionary and width; never reuse current var.
+raw_source = a.out / 'raw-axis.h5ad'
+raw_counts = sparse.csr_matrix(np.array([[1,0,0,0,9],[0,2,0,0,0],[0,0,3,0,0],[0,0,0,4,0]], dtype=np.uint64))
+raw_var = pd.DataFrame({'name': np.array(['a','b','c','d','e'], dtype=object)}, index=pd.Index(['r1','r2','r3','r4','r5'], dtype=object))
+obj.raw = ad.AnnData(X=raw_counts, var=raw_var, obs=obj.obs.copy())
+obj.write_h5ad(raw_source)
+raw_out = run('raw-independent-feature-axis', raw_source, dict(plan, matrixPath='raw/X', mitochondrialFeatureIDs=['r5']))
+raw_data = json.loads((raw_out / 'dataset.json').read_text())
+assert [g['id'] for g in raw_data['features']] == ['r1','r2','r3','r4','r5']
+assert raw_data['matrix']['counts'] == [1,9,2,3,4]
+assert raw_data['features'][4]['mitochondrial']
+unsigned_source = a.out / 'unsigned-categorical.h5ad'
+shutil.copyfile(source, unsigned_source)
+with h5py.File(unsigned_source, 'r+') as f:
+    codes = f['obs/sample/codes'][()].astype(np.uint8)
+    del f['obs/sample/codes']
+    f['obs/sample'].create_dataset('codes', data=codes)
+run('unsigned-categorical-codes', unsigned_source, plan)
+duplicate_symbols = a.out / 'duplicate-symbols.h5ad'
+identity_obj = ad.read_h5ad(source)
+identity_obj.var_names = ['same','same','third']
+identity_obj.var['gene_id'] = ['ENSG1','ENSG2','ENSG3']
+identity_obj.write_h5ad(duplicate_symbols)
+identity_out = run('explicit-feature-identity-column', duplicate_symbols,
+    dict(plan, featureIDColumn='gene_id', featureNameColumn=None, mitochondrialFeatureIDs=['ENSG1']))
+identity_data = json.loads((identity_out / 'dataset.json').read_text())
+assert [g['id'] for g in identity_data['features']] == ['ENSG1','ENSG2','ENSG3']
+assert [g['name'] for g in identity_data['features']] == ['same','same','third']
+
 run('reject-plan-version', source, dict(plan, schemaVersion=2), False)
 run('reject-unknown-plan-field', source, dict(plan, sampleColum='sample'), False)
 run('reject-normalized-X', source, dict(plan, matrixPath='X'), False)

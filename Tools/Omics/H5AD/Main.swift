@@ -11,6 +11,14 @@ import NumiVivoKit
     }
     static func run() throws {
         let args = CommandLine.arguments
+        if args.count == 5, args[1] == "annotate" {
+            let plan = try JSONDecoder().decode(VivoH5ADAnnotationPlan.self, from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            let implementation = try VivoFingerprint(bytes: Array(repeating: 0, count: 32))
+            let receipt = try VivoSingleCellH5AD.annotate(URL(fileURLWithPath: args[2]), plan: plan, implementation: implementation,
+                                                        to: URL(fileURLWithPath: args[4]))
+            FileHandle.standardOutput.write(try VivoCanonicalJSON.encode(receipt))
+            return
+        }
         let source = URL(fileURLWithPath: args[1]), planURL = URL(fileURLWithPath: args[2])
         let plan = try JSONDecoder().decode(VivoH5ADImportPlan.self, from: Data(contentsOf: planURL))
         let document = try VivoSingleCellH5AD.read(source, plan: plan)

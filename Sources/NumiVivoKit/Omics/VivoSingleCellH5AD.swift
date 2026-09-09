@@ -13,11 +13,12 @@ public struct VivoH5ADImportPlan: Codable, Sendable, Equatable {
     public let sampleColumn: String
     public let barcodeColumn: String?
     public let groupColumn: String?
+    public let featureIDColumn: String?
     public let featureNameColumn: String?
     public let mitochondrialFeatureIDs: [String]
-    private enum CodingKeys: String, CodingKey { case schemaVersion, id, evidence, sourceDescription, countUnit, matrixPath, samples, sampleColumn, barcodeColumn, groupColumn, featureNameColumn, mitochondrialFeatureIDs }
+    private enum CodingKeys: String, CodingKey { case schemaVersion, id, evidence, sourceDescription, countUnit, matrixPath, samples, sampleColumn, barcodeColumn, groupColumn, featureIDColumn, featureNameColumn, mitochondrialFeatureIDs }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "evidence", "sourceDescription", "countUnit", "matrixPath", "samples", "sampleColumn", "barcodeColumn", "groupColumn", "featureNameColumn", "mitochondrialFeatureIDs"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "evidence", "sourceDescription", "countUnit", "matrixPath", "samples", "sampleColumn", "barcodeColumn", "groupColumn", "featureIDColumn", "featureNameColumn", "mitochondrialFeatureIDs"])
         let values = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try values.decode(Int.self, forKey: .schemaVersion)
         id = try values.decode(String.self, forKey: .id)
@@ -29,15 +30,16 @@ public struct VivoH5ADImportPlan: Codable, Sendable, Equatable {
         sampleColumn = try values.decode(String.self, forKey: .sampleColumn)
         barcodeColumn = try values.decodeIfPresent(String.self, forKey: .barcodeColumn)
         groupColumn = try values.decodeIfPresent(String.self, forKey: .groupColumn)
+        featureIDColumn = try values.decodeIfPresent(String.self, forKey: .featureIDColumn)
         featureNameColumn = try values.decodeIfPresent(String.self, forKey: .featureNameColumn)
         mitochondrialFeatureIDs = try values.decodeIfPresent([String].self, forKey: .mitochondrialFeatureIDs) ?? []
     }
     public init(id: String, evidence: VivoOmicsEvidence, sourceDescription: String, countUnit: VivoOmicsCountUnit,
                 matrixPath: String, samples: [VivoOmicsSample], sampleColumn: String, barcodeColumn: String? = nil,
-                groupColumn: String? = nil, featureNameColumn: String? = nil, mitochondrialFeatureIDs: [String] = []) {
+                groupColumn: String? = nil, featureIDColumn: String? = nil, featureNameColumn: String? = nil, mitochondrialFeatureIDs: [String] = []) {
         self.schemaVersion = 1; self.id = id; self.evidence = evidence; self.sourceDescription = sourceDescription; self.countUnit = countUnit
         self.matrixPath = matrixPath; self.samples = samples; self.sampleColumn = sampleColumn; self.barcodeColumn = barcodeColumn
-        self.groupColumn = groupColumn; self.featureNameColumn = featureNameColumn; self.mitochondrialFeatureIDs = mitochondrialFeatureIDs
+        self.groupColumn = groupColumn; self.featureIDColumn = featureIDColumn; self.featureNameColumn = featureNameColumn; self.mitochondrialFeatureIDs = mitochondrialFeatureIDs
     }
 }
 
@@ -129,17 +131,25 @@ public enum VivoSingleCellH5AD {
                 }
                 return try required(column(frame, h.text(group, "_index"), maximum: maximum))
             }
-            let obs = try index("obs", maximum: limits.maximumCells), features = try index("var", maximum: limits.maximumFeatures)
+            let featureFrame = plan.matrixPath == "raw/X" ? "raw/var" : "var"
+            if plan.matrixPath == "raw/X" {
+                let raw = try h.object(file, "raw"); defer { h.close(raw, "H5Oclose") }
+                guard try h.text(raw, "encoding-type") == "raw", try h.text(raw, "encoding-version") == "0.1.0" else {
+                    throw VivoOmicsError.invalid("unsupported AnnData raw encoding")
+                }
+            }
+            let obs = try index("obs", maximum: limits.maximumCells), featureIndex = try index(featureFrame, maximum: limits.maximumFeatures)
+            let features = try plan.featureIDColumn.map { try required(column(featureFrame, $0, maximum: limits.maximumFeatures)) } ?? featureIndex
             let sampleIDs = try required(column("obs", plan.sampleColumn, maximum: limits.maximumCells))
             let barcodes = try plan.barcodeColumn.map { try required(column("obs", $0, maximum: limits.maximumCells)) } ?? obs
             let groups = try plan.groupColumn.map { try column("obs", $0, maximum: limits.maximumCells) }
-            let names = try plan.featureNameColumn.map { try required(column("var", $0, maximum: limits.maximumFeatures)) } ?? features
+            let names = try plan.featureNameColumn.map { try required(column(featureFrame, $0, maximum: limits.maximumFeatures)) } ?? featureIndex
             guard sampleIDs.count == obs.count, barcodes.count == obs.count, groups == nil || groups!.count == obs.count,
-                  names.count == features.count else { throw VivoOmicsError.invalid("AnnData annotation dimensions disagree") }
-            guard plan.matrixPath == "X" || (plan.matrixPath.hasPrefix("layers/") && plan.matrixPath.split(separator: "/", omittingEmptySubsequences: false).count == 2) else {
-                throw VivoOmicsError.invalid("select X or layers/<name> explicitly")
+                  names.count == features.count, features.count == featureIndex.count else { throw VivoOmicsError.invalid("AnnData annotation dimensions disagree") }
+            guard plan.matrixPath == "X" || plan.matrixPath == "raw/X" || (plan.matrixPath.hasPrefix("layers/") && plan.matrixPath.split(separator: "/", omittingEmptySubsequences: false).count == 2) else {
+                throw VivoOmicsError.invalid("select X, raw/X or layers/<name> explicitly")
             }
-            if plan.matrixPath != "X" { _ = try component(String(plan.matrixPath.dropFirst(7))) }
+            if plan.matrixPath.hasPrefix("layers/") { _ = try component(String(plan.matrixPath.dropFirst(7))) }
             let matrix = try h.object(file, plan.matrixPath); defer { h.close(matrix, "H5Oclose") }
             let encoding = try h.text(matrix, "encoding-type")
             var rows = [[Int: UInt64]](repeating: [:], count: obs.count)

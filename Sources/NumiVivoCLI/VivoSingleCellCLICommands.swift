@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
+        ["singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
     private func canonicalURL(_ url: URL) throws -> URL {
@@ -43,6 +43,17 @@ struct VivoSingleCellCLICommands {
                 files["analysis.json"] = try VivoCanonicalJSON.encode(VivoSingleCellExamples.pairedPlan())
                 try VivoOmicsDirectoryExport.write(files, to: destination)
                 try printJSON(["status": "written-synthetic-example", "directory": destination.path]); return 0
+            }
+            if command == "singlecell-h5ad-annotate" {
+                guard arguments.count == 6, arguments[2] == "--plan", arguments[4] == "--output" else {
+                    throw VivoOmicsError.invalid("singlecell-h5ad-annotate <source.h5ad> --plan <annotations.json> --output <new.h5ad>")
+                }
+                let bytes = try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[3]), maximumBytes: 64 * 1_024 * 1_024)
+                let plan = try VivoCanonicalJSON.decode(VivoH5ADAnnotationPlan.self, from: bytes)
+                let destination = try canonicalURL(URL(fileURLWithPath: arguments[5]))
+                try printJSON(VivoSingleCellH5AD.annotate(URL(fileURLWithPath: arguments[1]), plan: plan,
+                    implementation: VivoWorkflowCLIImplementation.fingerprint(), to: destination))
+                return 0
             }
             if command == "singlecell-h5ad-import" || command == "singlecell-h5ad-write" {
                 let importing = command == "singlecell-h5ad-import"
@@ -179,6 +190,7 @@ struct VivoSingleCellCLICommands {
     }
     static let help = """
     NumiVivo native single-cell workflows
+      singlecell-h5ad-annotate <source.h5ad> --plan <annotations.json> --output <new.h5ad>
       singlecell-h5ad-import <source.h5ad> --plan <mapping.json> --output <new-directory>
       singlecell-h5ad-write <dataset.json> --output <new.h5ad>
       singlecell-example --output <new-example-directory>
@@ -197,7 +209,7 @@ struct VivoSingleCellCLICommands {
     Expression uses explicit biological replicates/paired donors, not cells as independent samples.
     The moderated log-expression model is untrended: no voom weights, mixed model, or NB fit is claimed.
     Replay requires the recorded executable/OS. Regenerate count receipts after rebuilding the executable.
-    H5AD uses native HDF5 (install hdf5 or set NUMIVIVO_HDF5_LIBRARY), with explicit count-layer/design mapping; CSR/CSC and row-wise dense reads.
+    H5AD uses native HDF5 (install hdf5 or set NUMIVIVO_HDF5_LIBRARY), with explicit X/raw/X/layer and design mapping; CSR/CSC and row-wise dense reads.
     Import retains original.h5ad unchanged alongside the count projection and MEX manifest; no ancillary AnnData fields are discarded.
     H5AD write creates a new count object from dataset.json; it does not copy source embeddings onto changed cells.
     No doublet correction, inferred cell annotation or biological calibration is performed.

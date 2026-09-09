@@ -13,6 +13,7 @@ numivivo singlecell-h5ad-import experiment.h5ad --plan mapping.json --output imp
 numivivo singlecell-run imported/manifest.json --store artifacts --output receipt.json
 numivivo singlecell-analyze receipt.json --plan analysis.json --store artifacts --output analysis-receipt.json
 numivivo singlecell-h5ad-write imported/dataset.json --output counts.h5ad
+numivivo singlecell-h5ad-annotate imported/original.h5ad --plan annotations.json --output annotated.h5ad
 ```
 
 The import mapping explicitly names the count array and experimental design.
@@ -46,8 +47,10 @@ identify biological replicates. For example:
 
 Supply every actual sample, with the study's actual replicate structure.
 `barcodeColumn` is optional; otherwise the observation index supplies barcodes.
-`groupColumn` and `featureNameColumn` are optional. Missing group annotations are
-preserved; missing selected design identities are rejected. Mitochondrial feature
+`groupColumn`, `featureIDColumn` and `featureNameColumn` are optional.
+Use `featureIDColumn` for stable gene IDs when the AnnData index contains
+nonunique gene symbols; the index remains the default display name. Missing
+group annotations are preserved; missing selected design identities are rejected. Mitochondrial feature
 identities are explicit, never inferred from names.
 
 ## Preservation contract
@@ -55,7 +58,9 @@ identities are explicit, never inferred from names.
 - Import publishes the **unchanged original.h5ad**, a native `dataset.json`, the
   mapping, a source/dataset/mapping fingerprint receipt with executable identity
   and HDF5 version, and a MEX manifest usable by the existing replayable workflow.
-- The count projection reads X or a named layer. It supports CSR, CSC, and dense
+- The count projection reads X, raw/X or a named layer. Raw import uses
+  raw/var and its independent feature axis, not the current var dictionary.
+  It supports CSR, CSC, and dense
   arrays read through one-row HDF5 hyperslabs. It never allocates cells × genes.
   Sparse duplicates are summed with checked UInt64 arithmetic, indices sorted,
   and explicit zero entries removed. The original representation stays in the
@@ -64,12 +69,14 @@ identities are explicit, never inferred from names.
   nonnegative, integral, and no larger than 2^53. Selecting normalized fractional
   data fails instead of converting it to counts.
 - Selected metadata columns support strings, categorical strings, and nullable
-  strings. Root, dataframe, and array encoding versions are checked against the
+  strings, including unsigned categorical codes. Root, dataframe, and array
+  encoding versions are checked against the
   [AnnData on-disk specification](https://anndata.readthedocs.io/en/stable/fileformat-prose.html).
 - Source raw, additional layers, nullable/numeric metadata, category order,
-  embeddings, graphs and uns are retained in the original file. These are **not
-  yet editable native AnnData fields**. Exporting that source returns the original
-  object; it does not claim to include later filtering or analysis.
+  embeddings, graphs and uns are retained in the original file. Exporting that
+  source returns the original object. The separate native annotation command
+  adds or explicitly replaces derived fields in a new copy, preserving untouched
+  datasets, dtypes, categories and nullable metadata.
 - Writing `dataset.json` creates a **new count AnnData object**, with CSR X,
   observation design columns, nullable donor/group columns, feature names,
   mitochondrial annotations and native metadata in uns. Unique generated obs
@@ -80,6 +87,73 @@ identities are explicit, never inferred from names.
   count processing remains bounded at 100,000 cells/features and 2 million
   nonzeros by default. This is not out-of-core execution. HDF5 itself may retain
   decompression and variable-string buffers beyond the Swift sparse arrays.
+
+## Editing an existing AnnData object
+
+`singlecell-h5ad-annotate` uses a versioned `VivoH5ADAnnotationPlan` with the
+SHA-256 of the exact source, required provenance text, and explicit `add` or
+`replace` edits. It keeps the original cell/feature order. It cannot change X,
+raw, observation/feature indices or delete fields. Each output embeds an immutable
+plan/source/implementation record in `uns/numivivo_edits`; stdout includes the
+output fingerprint. Neither free-form labels nor the provenance text establish
+biological authority.
+
+Supported destinations are columns in obs/var; numeric embeddings in obsm/varm;
+sparse matrices in obsp/varp/layers; and typed values or nested dictionaries in
+uns. Supported values include Float64, exact Int64/UInt64, booleans, UTF-8 strings,
+ordered/unordered string categories with missing codes, nullable columns, and
+CSR matrices. Missing floating results are written as ordinary NumPy NaNs; other
+nullable types retain explicit masks. Supplied nonfinite floating values fail.
+
+Source fingerprints prevent applying a result to another ordering or dataset.
+Column and matrix dimensions must match the source axes. Embeddings have at most
+256 dense components; graph/layer edits must be sparse. Edits are bounded to 256
+fields, 2 million payload elements, 64 MiB of string content and 16 nesting levels.
+Annotation edits require HDF5 1.12 or newer. Storage metadata is inspected
+without reading matrix values; soft/external links, virtual/external datasets and
+object references are rejected because their meaning may change during copying.
+Existing destinations and conflicting add/replace modes fail. Failures and
+cancellation before publication leave no output. Edited parent groups are copied
+before mutation so hard-linked backups retain their old values.
+
+A complete executable authoring/verification example is provided by
+`Tools/Omics/H5AD/check_annotations.py`. Its JSON value syntax follows the typed
+Swift enum, for example:
+
+```json
+{
+  "path": "obs/native_score",
+  "mode": "add",
+  "value": {"nullableFloat64": {"values": [0.5, null, -0.5, 0]}}
+}
+```
+
+Place edits in a plan with `schemaVersion: 1`, the source fingerprint's existing
+`{"bytes": [32 byte values]}` representation, and `provenance`. The example above
+requires exactly four source observations; it is not a command to annotate an
+arbitrary dataset. Annotation execution itself is native Swift/HDF5, with no
+Python subprocess.
+
+## Public-file check
+
+`Tools/Omics/H5AD/check_public_data.py` downloads the full public
+[PBMC3K dataset used by Scanpy](https://scanpy.readthedocs.io/en/latest/generated/scanpy.datasets.pbmc3k.html)
+from its pinned URL and verifies SHA-256 before use. It retains the download,
+re-encodes the legacy H5AD through current AnnData, adds provenance annotations
+natively and checks all original datasets/dtypes/attributes in the result. No
+cells or features are dropped: 2,700 cells, 32,738 features and 2,286,884 nonzeros.
+The required reference re-encoding is recorded explicitly; direct native legacy
+import is not qualified.
+
+This check qualifies **annotation preservation**, not the count-analysis route:
+the complete matrix exceeds that route's current 2-million-nonzero default. It
+also supplies no donor-aware DE, expected-biology or integration benchmark result.
+The multi-dataset benchmark requirement remains open.
+
+```
+python Tools/Omics/H5AD/check_annotations.py --binary /path/to/numivivo --full-product --out /tmp/annotation-checks
+python Tools/Omics/H5AD/check_public_data.py --binary /path/to/numivivo --full-product --out /tmp/public-file-check
+```
 
 ## Validation
 
@@ -104,13 +178,23 @@ checks cover count exchange and existing workflow regression, not a whole-suite
 scientific qualification. The test harness requires controlled error exits for
 invalid inputs; crashes do not count as successful rejection.
 
+The follow-up qualification passed 27 count-interoperability cases and 26
+annotation cases, including controlled rejection of storage dependencies and
+reference types. The six count CLI checks and nine existing single-cell tests
+also passed. The full `numivivo` executable passed the annotation suite and
+full-file PBMC3K preservation check with AnnData 0.13.3.post0, h5py 3.16.0 and
+HDF5 2.2.0. This adds real-file preservation evidence; it does not satisfy the
+multi-donor experimental benchmark requirement.
+
 ## Required development order and remaining evidence
 
 The complete development objective remains open:
 
-1. **AnnData/H5AD:** native count exchange implemented; native editing/round-trip
-   of general annotated objects, raw-axis selection, broader encoding coverage,
-   and large real-file qualification remain.
+1. **AnnData/H5AD:** native count exchange, raw-axis import, explicit feature IDs
+   and source-preserving annotation edits implemented. Axis-changing operations
+   (cell/feature filtering/reordering with every aligned slot), direct legacy
+   encoding support, and larger count projections remain. Full PBMC3K annotation
+   preservation is a real-file interoperability check, not a biology benchmark.
 2. **Experimental benchmarks:** several public datasets with known donors,
    perturbations and expected biology; same-data Scanpy and edgeR/limma/DESeq2
    comparisons remain to be implemented and run.

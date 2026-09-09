@@ -43,13 +43,13 @@ final class VivoHDF5 {
     func close(_ value: ID, _ name: String) {
         if let function: @convention(c) (ID) -> Int32 = try? symbol(name) { _ = function(value) }
     }
-    func file(_ path: String, create: Bool = false) throws -> ID {
+    func file(_ path: String, create: Bool = false, writable: Bool = false) throws -> ID {
         if create {
             let fn: @convention(c) (UnsafePointer<CChar>, UInt32, ID, ID) -> ID = try symbol("H5Fcreate")
             return try id(fn(path, 4, 0, 0), "create exclusive file")
         }
         let fn: @convention(c) (UnsafePointer<CChar>, UInt32, ID) -> ID = try symbol("H5Fopen")
-        return try id(fn(path, 0, 0), "open file")
+        return try id(fn(path, writable ? 1 : 0, 0), "open file")
     }
     func object(_ file: ID, _ path: String) throws -> ID {
         let fn: @convention(c) (ID, UnsafePointer<CChar>, ID) -> ID = try symbol("H5Oopen")
@@ -132,6 +132,9 @@ final class VivoHDF5 {
     }
     func strings(_ value: ID, attribute: Bool = false, maximum: Int) throws -> [String] {
         let n = try count(shape(value, attribute: attribute), maximum: maximum)
+        // AnnData/h5py encode an empty dataframe column-order as an empty
+        // numeric attribute. There are no values to coerce in this case.
+        if n == 0 { return [] }
         let t = try type(value, attribute: attribute); defer { close(t, "H5Tclose") }
         let kind: @convention(c) (ID) -> Int32 = try symbol("H5Tget_class")
         guard kind(t) == 3 else { throw VivoOmicsError.invalid("expected HDF5 strings") }
@@ -220,7 +223,7 @@ extension VivoHDF5 {
             try check(fn(d, type, 0, 0, 0, buffer), "write dataset")
         }
     }
-    func writeStrings(_ object: ID, _ name: String, _ values: [String], attribute: Bool = false, scalar: Bool = false) throws {
+    func writeStrings(_ object: ID, _ name: String, _ values: [String], attribute: Bool = false, scalar: Bool = false, dimensions: [UInt64]? = nil) throws {
         guard !scalar || values.count == 1, values.allSatisfy({ !$0.contains("\0") }) else { throw VivoOmicsError.invalid("invalid string write") }
         let copy: @convention(c) (ID) -> ID = try symbol("H5Tcopy")
         let t = try id(copy(native("C_S1")), "copy string type"); defer { close(t, "H5Tclose") }
@@ -230,7 +233,7 @@ extension VivoHDF5 {
         let pointers = values.map { strdup($0) }
         defer { pointers.forEach { free($0) } }
         guard pointers.allSatisfy({ $0 != nil }) else { throw VivoOmicsError.limit("string allocation failed") }
-        try pointers.withUnsafeBytes { try write(object, name, type: t, dimensions: scalar ? [] : [UInt64(values.count)], attribute: attribute, buffer: $0.baseAddress) }
+        try pointers.withUnsafeBytes { try write(object, name, type: t, dimensions: dimensions ?? (scalar ? [] : [UInt64(values.count)]), attribute: attribute, buffer: $0.baseAddress) }
     }
     func encoding(_ object: ID, _ type: String, _ version: String) throws {
         try writeStrings(object, "encoding-type", [type], attribute: true, scalar: true)
@@ -247,7 +250,13 @@ extension VivoHDF5 {
         let kind: @convention(c) (ID) -> Int32 = try symbol("H5Tget_class")
         let sign: @convention(c) (ID) -> Int32 = try symbol("H5Tget_sign")
         let size: @convention(c) (ID) -> Int = try symbol("H5Tget_size")
-        guard kind(t) == 0, sign(t) == 1, size(t) <= 8 else { throw VivoOmicsError.invalid("categorical codes must be signed integers") }
+        guard kind(t) == 0, size(t) <= 8 else { throw VivoOmicsError.invalid("categorical codes must be integers") }
+        if sign(t) == 0 {
+            return try integers(value, maximum: maximum).map {
+                guard let code = Int64(exactly: $0) else { throw VivoOmicsError.invalid("categorical code exceeds signed index range") }
+                return code
+            }
+        }
         var values = [Int64](repeating: 0, count: try count(shape(value, attribute: false), maximum: maximum))
         try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_LLONG"), attribute: false, into: $0.baseAddress) }
         return values
