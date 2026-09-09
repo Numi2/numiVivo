@@ -1,0 +1,11 @@
+{
+  "testedNativeCommit": "6a8658cf3d8da07d9c071982a60c05233dfe41b7",
+  "binarySHA256": "d696896b1c87b0eab2c71923928015234e2f0cb049d259b08ca6c98f876ff6b8",
+  "nativeSourceChanges": false,
+  "preparedH5ADLocation": "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+  "nativeBundleLocation": "/Users/home/numivivo-baron-qualified-v2-20260909/bundle",
+  "reportSHA256": "52dd3c8e39562fcf4a0b2b59475f79a5e7e7a567973bb96d5f9498c928697572",
+  "checks": "Full source comparison, Scanpy QC, 56 pseudobulks, native reconstruction and exact repeat; controlled resident-size and unreplicated disease rejection.",
+  "initialHarnessFailure": "Expected generic word limit, but native correctly returned exit 65 with malformed or oversized sparse array lengths. Updated the expected diagnostic, retained initial log; final harness passes.",
+  "scope": "No streamed PCA, multi-cell-type integration, disease DE or performance qualification is claimed."
+}

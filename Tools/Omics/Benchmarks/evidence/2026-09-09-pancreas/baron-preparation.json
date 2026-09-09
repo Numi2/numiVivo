@@ -1,0 +1,134 @@
+{
+  "status": "count-source-qualified-analysis-incomplete",
+  "archiveURL": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE84nnn/GSE84133/suppl/GSE84133_RAW.tar",
+  "archiveSHA256": "aed2d208d47a36658aa0e63629afe5d4144ef465a8e3d9a0f377422b1f1073dc",
+  "metadataURL": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE84nnn/GSE84133/soft/GSE84133_family.soft.gz",
+  "metadataSHA256": "d630e7e35aa7e98d78a23b5304ecf54d65e5c3bebf2568be386fe6d3d6f09eb9",
+  "preparedSHA256": "388db742dba45eeaea98217161ed7193e104d1188df99142a5eb56ba33226df8",
+  "preparedBytes": 37693743,
+  "cells": 8569,
+  "features": 20125,
+  "nonzeros": 16171764,
+  "totalUMIs": 49942062,
+  "zeroCountCells": 0,
+  "members": [
+    {
+      "name": "GSM2230757_human1_umifm_counts.csv.gz",
+      "sha256": "6fdee6c7f0c2c3098f851c761d7fafa4f9a359af200703258f7fda255ddd3e69",
+      "cells": 1937,
+      "accession": "GSM2230757",
+      "condition": "nonT2D"
+    },
+    {
+      "name": "GSM2230758_human2_umifm_counts.csv.gz",
+      "sha256": "376bbea51a35096b56e3e30b36e33b8a43ead9abcf5c5c87b4fcbfd04e76d5d7",
+      "cells": 1724,
+      "accession": "GSM2230758",
+      "condition": "nonT2D"
+    },
+    {
+      "name": "GSM2230759_human3_umifm_counts.csv.gz",
+      "sha256": "187c77c0914043e2d56253a634b8cad5194ef87a64109e4f824df303ff5c215f",
+      "cells": 3605,
+      "accession": "GSM2230759",
+      "condition": "nonT2D"
+    },
+    {
+      "name": "GSM2230760_human4_umifm_counts.csv.gz",
+      "sha256": "fd54cc3d83e213ac473632b2b938f608d48378c48fb1e0d0f7919cf2efa41e86",
+      "cells": 1303,
+      "accession": "GSM2230760",
+      "condition": "T2D"
+    }
+  ],
+  "cellTypesByDonor": {
+    "acinar": {
+      "human1": 110,
+      "human2": 3,
+      "human3": 843,
+      "human4": 2
+    },
+    "activated_stellate": {
+      "human1": 51,
+      "human2": 81,
+      "human3": 100,
+      "human4": 52
+    },
+    "alpha": {
+      "human1": 236,
+      "human2": 676,
+      "human3": 1130,
+      "human4": 284
+    },
+    "beta": {
+      "human1": 872,
+      "human2": 371,
+      "human3": 787,
+      "human4": 495
+    },
+    "delta": {
+      "human1": 214,
+      "human2": 125,
+      "human3": 161,
+      "human4": 101
+    },
+    "ductal": {
+      "human1": 120,
+      "human2": 301,
+      "human3": 376,
+      "human4": 280
+    },
+    "endothelial": {
+      "human1": 130,
+      "human2": 23,
+      "human3": 92,
+      "human4": 7
+    },
+    "epsilon": {
+      "human1": 13,
+      "human2": 2,
+      "human3": 2,
+      "human4": 1
+    },
+    "gamma": {
+      "human1": 70,
+      "human2": 86,
+      "human3": 36,
+      "human4": 63
+    },
+    "macrophage": {
+      "human1": 14,
+      "human2": 17,
+      "human3": 14,
+      "human4": 10
+    },
+    "mast": {
+      "human1": 8,
+      "human2": 9,
+      "human3": 7,
+      "human4": 1
+    },
+    "quiescent_stellate": {
+      "human1": 92,
+      "human2": 22,
+      "human3": 54,
+      "human4": 5
+    },
+    "schwann": {
+      "human1": 5,
+      "human2": 6,
+      "human3": 1,
+      "human4": 1
+    },
+    "t_cell": {
+      "human1": 2,
+      "human2": 2,
+      "human3": 2,
+      "human4": 1
+    }
+  },
+  "residentNonzeroLimit": 5000000,
+  "residentEligible": false,
+  "integrationEligibility": "Current native donor integration rejects disconnected donor/condition design; the single T2D donor cannot establish a replicated disease effect. Do not relabel disease as unreported to bypass this gate.",
+  "remaining": "Full-cohort streamed reduction and biologically justified integration evaluation; no analysis or competitiveness claim from preparation alone"
+}

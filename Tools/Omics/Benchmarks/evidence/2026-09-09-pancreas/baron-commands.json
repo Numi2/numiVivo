@@ -1,0 +1,63 @@
+[
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-prepared-20260909/stream-plan.json",
+      "--output",
+      "/Users/home/numivivo-baron-qualified-v2-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 2.634906416758895,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk-verify",
+      "/Users/home/numivivo-baron-qualified-v2-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 2.6007566251792014,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-prepared-20260909/stream-plan.json",
+      "--output",
+      "/Users/home/numivivo-baron-qualified-v2-20260909/repeat"
+    ],
+    "exitCode": 0,
+    "seconds": 2.615952624939382,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-import",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-prepared-20260909/mapping.json",
+      "--output",
+      "/Users/home/numivivo-baron-qualified-v2-20260909/resident-rejected"
+    ],
+    "exitCode": 65,
+    "seconds": 0.05643879109993577,
+    "expectedFailure": "oversized sparse array lengths"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-qualified-v2-20260909/unreplicated-disease-plan.json",
+      "--output",
+      "/Users/home/numivivo-baron-qualified-v2-20260909/disease-rejected"
+    ],
+    "exitCode": 65,
+    "seconds": 2.417271917220205,
+    "expectedFailure": "insufficient biological replication"
+  }
+]

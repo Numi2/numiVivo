@@ -155,7 +155,8 @@ donor-aware DE or integration result.
 
 The [experimental benchmark suite](../Tools/Omics/Benchmarks/README.md) records
 paired-donor Kang and original-count Hagai NB comparisons, Haber count/QC
-checks and a rejected normalized Hagai input. The broader benchmark and
+checks, full-source Baron streaming QC/pseudobulks, and rejected normalized Hagai
+and fractional Muraro inputs. The broader benchmark and
 cross-study calibration requirements remain open.
 
 ```

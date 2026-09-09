@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Benchmarks/check_baron_cli.py", line 43, in <module>
+    run(['singlecell-h5ad-import', source, '--plan', a.prepared/'mapping.json', '--output', resident], 'limit')
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Benchmarks/check_baron_cli.py", line 31, in run
+    assert result.returncode > 0 and expected in result.stderr.lower(), result.stderr
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: numivivo singlecell: invalid("malformed or oversized sparse array lengths")
+

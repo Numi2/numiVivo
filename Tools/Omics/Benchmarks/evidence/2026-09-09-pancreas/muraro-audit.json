@@ -1,0 +1,34 @@
+{
+  "status": "ineligible-for-integer-count-analysis",
+  "sourceSHA256": "2f253ffb1f6d54f6bb259e862195f5c20ea3f13e00471b9864ff92773658f513",
+  "sourceURL": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE85nnn/GSE85241/suppl/GSE85241_cellsystems_dataset_4donors_updated.csv.gz",
+  "cells": 3072,
+  "features": 19140,
+  "nonzeros": 12442034,
+  "fractionalEntries": 12442034,
+  "invalidEntries": 0,
+  "cellPrefixCountsNotDonorVerification": {
+    "D28": 768,
+    "D29": 768,
+    "D31": 768,
+    "D30": 768
+  },
+  "fractionalExamples": [
+    {
+      "feature": "A1BG-AS1__chr19",
+      "cell": "D28-8_16",
+      "value": 1.0019582262109
+    },
+    {
+      "feature": "A1BG__chr19",
+      "cell": "D28-1_3",
+      "value": 1.0019582262109
+    },
+    {
+      "feature": "A1CF__chr10",
+      "cell": "D28-1_1",
+      "value": 6.07143081403291
+    }
+  ],
+  "decision": "No rounding, inverse correction, cell/feature subset or synthetic fallback. This release cannot qualify the native integer-count path; retaining continuous expression requires a separately typed assay path."
+}

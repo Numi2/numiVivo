@@ -1,5 +1,10 @@
 # Real experimental single-cell comparisons
 
+The [full-source pancreas benchmark](PANCREAS.md) adds all four Baron human
+donors and 14 author-assigned cell types, with native streamed QC/pseudobulk
+checks against every original source row and Scanpy. It also retains the rejected
+fractional Muraro release and the unresolved streaming-PCA/integration scope.
+
 These scripts run the actual native product commands and replay their receipts.
 Python supplies public-data preparation and independent Scanpy/PyDESeq2
 references. It is not a dependency of native NumiVivo count execution.
