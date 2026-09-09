@@ -23,6 +23,23 @@ A robust Huber fit of log-dispersion residuals estimates the parametric trend
 alternative uses the median log dispersion and never activates as a silent
 fallback. Only interior gene-wise estimates enter trend fitting.
 
+The explicit `gammaParametric` alternative fits the same mean curve using
+the Gamma identity-link objective `sum(alphaGene / fitted + log(fitted))`.
+Positive coefficients are fitted by Fisher scoring with a checked line search.
+After each fit, genes with observed/fitted dispersion below 1e-4 or at least
+15 are excluded from the next trend fit. Identifiability, positive coefficients,
+minimum retained genes, inner stationarity and outer convergence are required;
+failure does not switch methods. `trendFitFeatureIndices` records the retained
+subset, while `referenceFeatureIndices` still records the full interior cohort
+used for the prior variance calculation. Existing `parametric` and `mean`
+plans retain their previous semantics and omit the new optional field.
+
+This separates a Gamma mean trend from the robust trend of log dispersions.
+It does not reproduce the entire DESeq2 procedure: native gene-wise dispersion
+refits coefficients along the profile, whereas the tested PyDESeq2 version
+uses its preliminary fitted means during dispersion estimation. Prior estimation
+and feature admission also remain explicit native choices.
+
 The log-normal prior variance is the squared scaled MAD of trend residuals
 minus `trigamma(residualDF / 2)`, floored by the declared minimum. MAP estimation
 then refits each gene's adjusted profile with this prior. High positive
@@ -148,3 +165,33 @@ report with one source sample per pseudobulk and checks sample ordering before
 independent fitting; `--kang-result` remains supported for the resident route.
 `compare_dispersions.py` records estimator differences and reference convergence
 flags without excluding inconvenient genes or retuning either estimator.
+
+## Explicit Gamma trend qualification
+
+Use `negativeBinomialOptions: {"trend": "gammaParametric"}` in a contrast, or
+`--nb-trend gammaParametric` in the Kang/Hagai benchmark scripts. The default
+remains the previously recorded robust log trend. The
+[Gamma evidence](evidence/2026-09-09-gamma/) holds both original and candidate
+comparisons rather than replacing the earlier results.
+
+| Complete experimental scope | Robust log trend | Gamma trend |
+| --- | --- | --- |
+| Kang, 5,400 tested genes | Effect correlation 0.999067; top-50 overlap 43; 964 BH values below 0.05 | Correlation 0.999331; overlap 44; 850 BH values below 0.05 |
+| Hagai, 12,426 tested genes | Effect correlation 0.999190; top-50 overlap 39; 6,283 BH values below 0.05 | Correlation 0.999869; overlap 45; 4,827 BH values below 0.05 |
+
+Correlations and top-50 overlaps compare each native choice to the same
+PyDESeq2 reference on commonly tested genes. Significance counts are descriptive
+within each native hypothesis family, not false-discovery calibration. Counts,
+QC, metadata, experimental design and every contrast option except the trend
+are identical across native comparisons. Both Gamma runs retain all five
+preselected positive response genes and have zero numerical failures.
+
+Hagai's Gamma trend retains 9,312 of 9,377 interior estimates for curve fitting.
+Its intercept is 0.0332723 and inverse-mean coefficient 2.90502. The median
+native/PyDESeq2 final-dispersion ratio increases from 0.37368 to 0.72605;
+remaining disagreement is recorded. Nineteen Swift tests and the existing CLI
+suite pass. Independent statsmodels/SciPy checks cover all 17,826 tested Wald
+fits, both trend objectives and priors, 64 MAP objectives and both BH results.
+Full-product report hashes match those independently checked reports, and both
+bundles reconstruct. This adds an explicit estimator choice with experimental
+and numerical evidence; calibrated FDR and production promotion remain open.

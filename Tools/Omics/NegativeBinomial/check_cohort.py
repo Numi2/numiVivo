@@ -44,11 +44,20 @@ assert abs(robust-trend['robustLogResidualVariance'])<1e-10
 assert abs(sampling-trend['samplingLogVariance'])<1e-10
 assert abs(prior-trend['priorLogVariance'])<1e-10
 trend_gap=None
-if trend['method']=='parametric':
+if trend['method'] in ['parametric','gammaParametric']:
     scale=np.median(means);inv=scale/means
+    selected=np.ones(len(means),dtype=bool)
+    if trend['method']=='gammaParametric':
+        retained=trend['trendFitFeatureIndices']
+        assert len(retained)==len(set(retained)) and set(retained)<=set(indices)
+        selected=np.isin(indices,retained)
+        assert selected.sum()>=c['request']['negativeBinomialOptions'].get('minimumTrendGenes',20)
+        ratios=alpha[selected]/target[selected]
+        assert (ratios>=1e-4).all() and (ratios<15).all()
     def loss(theta):
         t=theta[0]+theta[1]*inv
         if np.any(t<=0):return np.inf
+        if trend['method']=='gammaParametric':return float(np.sum(alpha[selected]/t[selected]+np.log(t[selected])))
         r=abs(np.log(alpha/t))
         return float(np.sum(np.where(r<=1.345,r*r/2,1.345*(r-1.345/2))))
     initial=np.array([np.exp(np.median(np.log(alpha))),np.exp(np.median(np.log(alpha)))*.1])

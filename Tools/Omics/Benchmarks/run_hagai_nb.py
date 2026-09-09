@@ -19,6 +19,7 @@ SUPPLEMENT_SHA='dde588efff9da9febb2d882713759ccb71c75642ae4d3fb83902cc23c6787974
 SDRF_SHA='79e2a16fbe5d3248343bcb493c03f787a8a740dbedc546a72c1f98adf2b9fd63'
 p=argparse.ArgumentParser(description=__doc__)
 for name in ['binary','prepared','sdrf','supplement','out']:p.add_argument('--'+name,type=Path,required=True)
+p.add_argument('--nb-trend',choices=['parametric','gammaParametric'],default='parametric')
 a=p.parse_args();a.out.mkdir(parents=True,exist_ok=False)
 def save(name,value):
     path=a.out/name;path.write_text(json.dumps(value,indent=2,allow_nan=False)+'\n');return path
@@ -39,7 +40,7 @@ for sample in mapping['samples']:
     sample.update(biologicalReplicateID=donor,donorID=donor)
     identities.append(dict(sampleID=sid,donorID=donor,sourceName=row[0],enaSample=row[header.index('Comment[ENA_SAMPLE]')]))
 mapping['sourceDescription']='E-MTAB-6754 original author QC cluster0; mouse1/2/3 paired time courses, supported by SDRF naming and Supplementary Table 2 three individuals'
-contrast=dict(id='LPS6-vs-unstimulated',controlCondition='unstimulated',treatmentCondition='LPS6',design='pairedDonors',sizeFactors='medianRatio',variance='empiricalBayes',adjustForBatch=False,minimumCellsPerPseudobulk=10,minimumReplicatesPerCondition=3,minimumFeatureCounts=10,minimumExpressingPseudobulks=3,minimumReferenceFeatures=10,priorCount=0.5,model='negativeBinomial',negativeBinomialOptions=dict(trend='parametric'))
+contrast=dict(id='LPS6-vs-unstimulated',controlCondition='unstimulated',treatmentCondition='LPS6',design='pairedDonors',sizeFactors='medianRatio',variance='empiricalBayes',adjustForBatch=False,minimumCellsPerPseudobulk=10,minimumReplicatesPerCondition=3,minimumFeatureCounts=10,minimumExpressingPseudobulks=3,minimumReferenceFeatures=10,priorCount=0.5,model='negativeBinomial',negativeBinomialOptions=dict(trend=a.nb_trend))
 plan=save('plan.json',dict(schemaVersion=1,mapping=mapping,contrasts=[contrast]))
 save('design-and-acceptance.json',dict(scope='All six author-filtered mouse source files, LPS6 versus unstimulated',sourcePreparation=preparation,
     donorEvidence=dict(supplementURL='https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6347972/supplementaryFiles',supplementSHA256=SUPPLEMENT_SHA,pdfPage=12,table=2,sdrfSHA256=sha(a.sdrf),samples=identities,

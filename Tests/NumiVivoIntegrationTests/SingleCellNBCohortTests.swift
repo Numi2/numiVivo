@@ -3,6 +3,16 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellNBCohortTests {
+    @Test func gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() throws {
+        let means=(0..<64).map { exp(Double($0)/10+1) }
+        let values=means.map { 0.04+2/$0 }
+        var options=VivoOmicsNBCohortOptions();options.trend = .gammaParametric
+        let fit=try VivoOmicsNBCohort.fitTrend(means: means,dispersions: values,featureIndices: Array(0..<64),residualDF: 7,options: options)
+        #expect(abs(fit.intercept-0.04)<1e-7)
+        #expect(abs(fit.inverseMeanCoefficient-2)<1e-6)
+        #expect(fit.trendFitFeatureIndices == Array(0..<64))
+        #expect(throws: (any Error).self) { try VivoOmicsNBCohort.fitTrend(means: Array(repeating: 10,count: 64),dispersions: values,featureIndices: Array(0..<64),residualDF: 7,options: options) }
+    }
     @Test func parametricTrendRecoversDeclaredMeanRelationship() throws {
         let means = (0..<64).map { exp(Double($0)/10+1) }
         let dispersions = means.map { 0.04 + 2.0/$0 }

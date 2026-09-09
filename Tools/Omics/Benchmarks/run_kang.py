@@ -29,7 +29,7 @@ p.add_argument('--binary', type=Path, required=True)
 p.add_argument('--source', type=Path, required=True)
 p.add_argument('--out', type=Path, required=True)
 p.add_argument('--model', choices=['logLinear','negativeBinomial'], default='logLinear')
-p.add_argument('--nb-trend', choices=['parametric','mean'])
+p.add_argument('--nb-trend', choices=['parametric','mean','gammaParametric'])
 p.add_argument('--nb-cooks-threshold', type=float)
 a = p.parse_args()
 if a.model == 'logLinear' and (a.nb_trend is not None or a.nb_cooks_threshold is not None):

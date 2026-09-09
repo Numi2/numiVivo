@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "mapping": {
+    "schemaVersion": 1,
+    "id": "hagai-original-mouse-all",
+    "evidence": "measured",
+    "sourceDescription": "E-MTAB-6754 original author QC cluster0; mouse1/2/3 paired time courses, supported by SDRF naming and Supplementary Table 2 three individuals",
+    "countUnit": "umiCount",
+    "matrixPath": "X",
+    "samples": [
+      {
+        "id": "mouse1_unst",
+        "biologicalReplicateID": "mouse1",
+        "condition": "unstimulated",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090",
+        "donorID": "mouse1"
+      },
+      {
+        "id": "mouse2_unst",
+        "biologicalReplicateID": "mouse2",
+        "condition": "unstimulated",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090",
+        "donorID": "mouse2"
+      },
+      {
+        "id": "mouse3_unst",
+        "biologicalReplicateID": "mouse3",
+        "condition": "unstimulated",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090",
+        "donorID": "mouse3"
+      },
+      {
+        "id": "mouse1_lps6",
+        "biologicalReplicateID": "mouse1",
+        "condition": "LPS6",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090",
+        "donorID": "mouse1"
+      },
+      {
+        "id": "mouse2_lps6",
+        "biologicalReplicateID": "mouse2",
+        "condition": "LPS6",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090",
+        "donorID": "mouse2"
+      },
+      {
+        "id": "mouse3_lps6",
+        "biologicalReplicateID": "mouse3",
+        "condition": "LPS6",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:10090",
+        "donorID": "mouse3"
+      }
+    ],
+    "sampleColumn": "sample",
+    "barcodeColumn": "barcode",
+    "mitochondrialFeatureIDs": []
+  },
+  "contrasts": [
+    {
+      "id": "LPS6-vs-unstimulated",
+      "controlCondition": "unstimulated",
+      "treatmentCondition": "LPS6",
+      "design": "pairedDonors",
+      "sizeFactors": "medianRatio",
+      "variance": "empiricalBayes",
+      "adjustForBatch": false,
+      "minimumCellsPerPseudobulk": 10,
+      "minimumReplicatesPerCondition": 3,
+      "minimumFeatureCounts": 10,
+      "minimumExpressingPseudobulks": 3,
+      "minimumReferenceFeatures": 10,
+      "priorCount": 0.5,
+      "model": "negativeBinomial",
+      "negativeBinomialOptions": {
+        "trend": "gammaParametric"
+      }
+    }
+  ]
+}

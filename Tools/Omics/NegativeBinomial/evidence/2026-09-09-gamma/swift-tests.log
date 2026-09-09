@@ -1,0 +1,60 @@
+[0/1] Planning build
+Building for debugging...
+[0/4] Write swift-version-3CD7052B146186F2.txt
+Build complete! (0.21s)
+Test Suite 'Selected tests' started at 2026-09-09 04:53:06.880.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 04:53:06.885.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 04:53:06.885.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 04:53:06.885.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellInterchangeTests started.
+◇ Suite SingleCellNBCohortTests started.
+◇ Suite SingleCellCohortTests started.
+◇ Suite SingleCellNegativeBinomialTests started.
+◇ Test optionsCannotBeSilentlyAppliedToWrongModel() started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() started.
+◇ Test qualitySelectionPreservesCountsAndSourceIdentity() started.
+◇ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() started.
+◇ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() started.
+◇ Test parametricTrendRecoversDeclaredMeanRelationship() started.
+◇ Test offsetReparameterizationPreservesFit() started.
+◇ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() started.
+◇ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() started.
+◇ Test unknownScientificOptionsCannotBeIgnored() started.
+◇ Test interceptHasAnalyticMeanAndInformation() started.
+◇ Test profileAndExplicitPriorAreDistinct() started.
+◇ Test zeroOnlyCovariateSupportDoesNotProduceInference() started.
+◇ Test logMassMatchesHighPrecisionReference() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test incompletePairsAndConfoundedBatchAreRejected() started.
+✔ Test optionsCannotBeSilentlyAppliedToWrongModel() passed after 0.003 seconds.
+✔ Test unknownScientificOptionsCannotBeIgnored() passed after 0.003 seconds.
+✔ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() passed after 0.003 seconds.
+✔ Test interceptHasAnalyticMeanAndInformation() passed after 0.003 seconds.
+✔ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() passed after 0.003 seconds.
+✔ Test offsetReparameterizationPreservesFit() passed after 0.003 seconds.
+✔ Test logMassMatchesHighPrecisionReference() passed after 0.003 seconds.
+✔ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() passed after 0.003 seconds.
+✔ Test parametricTrendRecoversDeclaredMeanRelationship() passed after 0.003 seconds.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.003 seconds.
+✔ Test qualitySelectionPreservesCountsAndSourceIdentity() passed after 0.006 seconds.
+✔ Test zeroOnlyCovariateSupportDoesNotProduceInference() passed after 0.007 seconds.
+✔ Test incompletePairsAndConfoundedBatchAreRejected() passed after 0.009 seconds.
+✔ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() passed after 0.012 seconds.
+✔ Suite SingleCellCohortTests passed after 0.012 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.015 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.016 seconds.
+✔ Test profileAndExplicitPriorAreDistinct() passed after 0.019 seconds.
+✔ Suite SingleCellNegativeBinomialTests passed after 0.020 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.029 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.029 seconds.
+✔ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() passed after 23.049 seconds.
+✔ Suite SingleCellNBCohortTests passed after 23.050 seconds.
+✔ Test run with 19 tests in 4 suites passed after 23.050 seconds.

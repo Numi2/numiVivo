@@ -1,0 +1,53 @@
+{
+  "status": "descriptive-estimator-differences",
+  "commonTestedGenes": 12426,
+  "nativeOverReferenceFinalDispersionQuantiles": {
+    "0": 0.29847099898677554,
+    "0.1": 0.6471596924507563,
+    "0.5": 0.7260459873996823,
+    "0.9": 0.9810942611193854,
+    "1": 15.510663114276666
+  },
+  "responseGenes": {
+    "ENSMUSG00000025225": {
+      "nativeFinal": 0.021228085886705883,
+      "referenceFinal": 0.0302094393559124,
+      "nativeTrend": 0.03439741182259544,
+      "referenceTrend": 0.0378052511293045
+    },
+    "ENSMUSG00000021025": {
+      "nativeFinal": 0.019441287689362874,
+      "referenceFinal": 0.0286237151739131,
+      "nativeTrend": 0.03353177067235031,
+      "referenceTrend": 0.0365812417428665
+    },
+    "ENSMUSG00000034855": {
+      "nativeFinal": 0.03836976742935485,
+      "referenceFinal": 0.0449317351506998,
+      "nativeTrend": 0.03338296497900074,
+      "referenceTrend": 0.0363708198552753
+    },
+    "ENSMUSG00000035692": {
+      "nativeFinal": 0.02542270670725454,
+      "referenceFinal": 0.0314791297254401,
+      "nativeTrend": 0.03338597052916273,
+      "referenceTrend": 0.0363750776121156
+    },
+    "ENSMUSG00000024401": {
+      "nativeFinal": 0.05519959238774541,
+      "referenceFinal": 0.0490067027646251,
+      "nativeTrend": 0.03344946031495211,
+      "referenceTrend": 0.0364648597748298
+    }
+  },
+  "referenceNonconverged": {
+    "_genewise_converged": 28,
+    "_MAP_converged": 12,
+    "_LFC_converged": 0
+  },
+  "sourceSHA256": {
+    "/Users/home/numivivo-hagai-gamma-product-20260909/native/report.json": "e48207360053c8eba01a2fa3527ec3e673757d14d29cc6c6d392b0ecd6ad893a",
+    "/Users/home/numivivo-hagai-gamma-product-20260909/reference-gene-diagnostics.tsv": "826a6ed5f2b50e2437abc3020f6ca3ea5b9c755cae939a711e5c1ad74e58e73a"
+  },
+  "boundary": "Differences in fitted dispersions explain a source of Wald uncertainty differences; neither agreement nor disagreement establishes calibration. No estimator retuned to these results."
+}

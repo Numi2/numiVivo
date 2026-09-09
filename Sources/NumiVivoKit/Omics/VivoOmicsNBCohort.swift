@@ -1,6 +1,6 @@
 import Foundation
 
-public enum VivoOmicsNBTrendMethod: String, Codable, Sendable { case parametric, mean }
+public enum VivoOmicsNBTrendMethod: String, Codable, Sendable { case parametric, mean, gammaParametric }
 public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     public var trend: VivoOmicsNBTrendMethod = .parametric
     public var minimumTrendGenes: Int = 20
@@ -40,6 +40,8 @@ public struct VivoOmicsNBTrend: Codable, Sendable, Equatable {
     public let priorLogVariance: Double
     public let priorVarianceFloorReached: Bool
     public let iterations: Int
+    /// Gamma trend rejection subset; prior variance still uses the full interior cohort.
+    public var trendFitFeatureIndices: [Int]? = nil
     public func dispersion(mean: Double) -> Double { intercept + inverseMeanCoefficient / mean }
 }
 public struct VivoOmicsNBFeatureDiagnostics: Codable, Sendable, Equatable {
@@ -74,6 +76,60 @@ public enum VivoOmicsNBCohort {
         let logs = dispersions.map(log), scale = try VivoOmicsLinearStatistics.median(means)
         let x = means.map { scale / $0 }
         var a = exp(try VivoOmicsLinearStatistics.median(logs)), b = 0.0, iterations = 0
+        var gammaReferences: [Int]?
+        if options.trend == .gammaParametric {
+            var selected=Array(x.indices), outerConverged=false
+            b=a*0.1
+            for _ in 0..<50 {
+                let oldA=a,oldB=b
+                func loss(_ aa: Double,_ bb: Double) -> Double {
+                    selected.reduce(0) { sum,i in
+                        let mu=aa+bb*x[i]
+                        return sum+dispersions[i]/mu+log(mu)
+                    }
+                }
+                var converged=false
+                for _ in 0..<200 {
+                    iterations+=1
+                    var h00=0.0,h01=0.0,h11=0.0,g0=0.0,g1=0.0
+                    for i in selected {
+                        let mu=a+b*x[i],r=dispersions[i]/mu-1,d0=1/mu,d1=x[i]/mu
+                        h00+=d0*d0;h01+=d0*d1;h11+=d1*d1;g0+=d0*r;g1+=d1*r
+                    }
+                    let determinant=h00*h11-h01*h01
+                    guard determinant.isFinite,determinant>1e-12*h00*h11 else {
+                        throw VivoOmicsError.invalid("NB Gamma trend is not identifiable")
+                    }
+                    let da=(h11*g0-h01*g1)/determinant,db=(h00*g1-h01*g0)/determinant,before=loss(a,b)
+                    var fraction=1.0,accepted=false
+                    for _ in 0..<50 {
+                        let aa=a+fraction*da,bb=b+fraction*db
+                        if aa>1e-12,bb>1e-12 {
+                            let after=loss(aa,bb)
+                            if after.isFinite,after<=before+1e-12*max(1,abs(before)) {
+                                let change=max(abs(aa/a-1),abs(bb/b-1))
+                                a=aa;b=bb;accepted=true
+                                converged=change<1e-8 && max(abs(g0)/sqrt(h00),abs(g1)/sqrt(h11))<1e-6
+                                break
+                            }
+                        }
+                        fraction*=0.5
+                    }
+                    guard accepted else { throw VivoOmicsError.invalid("NB Gamma trend failed to improve") }
+                    if converged { break }
+                }
+                guard converged,a>1e-10,b/scale>1e-10 else { throw VivoOmicsError.invalid("NB Gamma trend did not converge to positive coefficients") }
+                let retained=selected.filter { i in
+                    let ratio=dispersions[i]/(a+b*x[i]);return ratio>=1e-4 && ratio<15
+                }
+                guard retained.count>=options.minimumTrendGenes else { throw VivoOmicsError.invalid("NB Gamma trend has too few retained genes") }
+                let unchanged=retained==selected
+                selected=retained
+                if unchanged,pow(log(a/oldA),2)+pow(log(b/oldB),2)<1e-6 { outerConverged=true;break }
+            }
+            guard outerConverged else { throw VivoOmicsError.invalid("NB Gamma trend rejection did not converge") }
+            gammaReferences=selected.map { featureIndices[$0] }
+        }
         if options.trend == .parametric {
             b = a * 0.1
             func objective(_ a: Double, _ b: Double) -> Double {
@@ -123,7 +179,7 @@ public enum VivoOmicsNBCohort {
         return .init(method: options.trend, intercept: a, inverseMeanCoefficient: b*scale,
             referenceFeatureIndices: featureIndices, robustLogResidualVariance: mad*mad,
             samplingLogVariance: sampling, priorLogVariance: max(options.minimumPriorVariance,excess),
-            priorVarianceFloorReached: excess <= options.minimumPriorVariance, iterations: iterations)
+            priorVarianceFloorReached: excess <= options.minimumPriorVariance, iterations: iterations,trendFitFeatureIndices: gammaReferences)
     }
     static func evaluate(metadata: VivoSingleCellCountMetadata, entries: [[(row: Int,count: UInt64)]],
                          design: VivoOmicsDesignMatrix, request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {

@@ -1,0 +1,99 @@
+{
+  "status": "passed-predeclared-descriptive-comparison",
+  "cells": 13863,
+  "genes": 22048,
+  "nonzeros": 32848185,
+  "donors": 3,
+  "pseudobulks": 6,
+  "residualDF": 2,
+  "binarySHA256": "4c2bae3a1378a037166974523629483b1a100a26b6f8244b3828a701bae1bbc2",
+  "sourceSHA256": "2d0a69d121bcf6e9b63b82fafd06e597f6165a927b87b0cc51cb5c90c2caa5f5",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "pydeseq2": "0.5.4"
+  },
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "exactSourceQCAndPseudobulks": true,
+  "nativeStatuses": {
+    "tested": 12426,
+    "filteredLowExpression": 9375,
+    "rankDeficientSupport": 247
+  },
+  "eligibleGenes": 12673,
+  "commonFiniteGenes": 12426,
+  "effectSpearman": 0.9998694375148901,
+  "effectSignAgreement": 0.9980685659101883,
+  "top50BHOverlap": 45,
+  "nativeTrend": {
+    "intercept": 0.03327226595008975,
+    "inverseMeanCoefficient": 2.905021352372063,
+    "iterations": 34,
+    "method": "gammaParametric",
+    "priorLogVariance": 0.566908980962628,
+    "priorVarianceFloorReached": false,
+    "robustLogResidualVariance": 2.211843047810755,
+    "samplingLogVariance": 1.644934066848127,
+    "referenceFeatureIndicesCount": 9377,
+    "referenceFeatureIndicesSHA256": "7fd33521f21035afb2eea16be0fe65846e645bca5e810850f8b12f2f0e2eee6f",
+    "trendFitFeatureIndicesCount": 9312,
+    "trendFitFeatureIndicesSHA256": "5cdb0f25eca030ab30509861b6b9c7b886fa5bbfce501b5050ccfcfca439eebd"
+  },
+  "nativeNumericalFailures": 0,
+  "referenceWarnings": [
+    {
+      "category": "UserWarning",
+      "message": "As the residual degrees of freedom is less than 3, the distribution of log dispersions is especially asymmetric and likely to be poorly estimated by the MAD."
+    }
+  ],
+  "referenceSeconds": 6.483325083274394,
+  "expectedBiology": {
+    "positiveInBoth": 5,
+    "required": 4,
+    "genes": {
+      "Nfkb2": {
+        "featureID": "ENSMUSG00000025225",
+        "nativeStatus": "tested",
+        "nativeLog2Effect": 4.365330888474644,
+        "referenceLog2Effect": 4.364761932752367,
+        "nativeBH": 4.583675563359693e-128,
+        "referenceBH": 2.8581144782992706e-92
+      },
+      "Nfkbia": {
+        "featureID": "ENSMUSG00000021025",
+        "nativeStatus": "tested",
+        "nativeLog2Effect": 3.904421088463612,
+        "referenceLog2Effect": 3.9045819228558276,
+        "nativeBH": 3.358497186844969e-120,
+        "referenceBH": 4.601819680673495e-82
+      },
+      "Cxcl10": {
+        "featureID": "ENSMUSG00000034855",
+        "nativeStatus": "tested",
+        "nativeLog2Effect": 11.4623679520682,
+        "referenceLog2Effect": 11.445570983601721,
+        "nativeBH": 4.527117380807807e-225,
+        "referenceBH": 8.952523408586098e-207
+      },
+      "Isg15": {
+        "featureID": "ENSMUSG00000035692",
+        "nativeStatus": "tested",
+        "nativeLog2Effect": 6.765899209014401,
+        "referenceLog2Effect": 6.765918186755087,
+        "nativeBH": 4.2132973852670927e-269,
+        "referenceBH": 3.618930051149159e-219
+      },
+      "Tnf": {
+        "featureID": "ENSMUSG00000024401",
+        "nativeStatus": "tested",
+        "nativeLog2Effect": 8.055766180465211,
+        "referenceLog2Effect": 8.051133884627534,
+        "nativeBH": 2.6482063311659375e-170,
+        "referenceBH": 6.049732616044722e-190
+      }
+    }
+  },
+  "qualification": "Predeclared descriptive real-study comparison; no causal, calibrated-FDR, multi-study competitiveness or clinical claim; source-prefix donor pairing inference explicit in design",
+  "summaryBoundary": "Index arrays summarized by count and digest here; complete arrays remain in the fingerprinted native report."
+}

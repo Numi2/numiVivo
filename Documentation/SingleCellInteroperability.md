@@ -260,6 +260,10 @@ The complete development objective remains open:
    remain distinct from multi-study calibration and production qualification.
    Old plans retain the log-linear baseline. Effect shrinkage, fuller nuisance
    handling and robust cross-study qualification remain.
+   An explicit Gamma dispersion-trend option now passes controlled Kang/Hagai
+   comparisons and independent numerical checks. The earlier robust log trend
+   remains available with unchanged defaults; neither is promoted by correlation
+   alone.
 4. **Sparse feature selection/PCA/kNN/UMAP-compatible embeddings/clustering:**
    implementation and reference comparisons remain; never densify cells × genes.
 5. **Batch integration:** donor/batch-aware methods and biological-signal

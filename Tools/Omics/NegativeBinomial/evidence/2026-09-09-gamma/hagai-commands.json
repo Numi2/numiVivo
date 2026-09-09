@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "/Users/home/numivivo-gamma-product-20260909/numivivo",
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-hagai-stream-compatible-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-hagai-gamma-product-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-hagai-gamma-product-20260909/native"
+    ],
+    "returncode": 0,
+    "seconds": 18.584259416908026
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-gamma-product-20260909/numivivo",
+      "singlecell-h5ad-pseudobulk-verify",
+      "/Users/home/numivivo-hagai-gamma-product-20260909/native"
+    ],
+    "returncode": 0,
+    "seconds": 18.426634958945215
+  }
+]

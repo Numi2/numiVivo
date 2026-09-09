@@ -1,0 +1,25 @@
+{
+  "baseCommit": "7ad8b63c76049946654189b51203151c1532bc4d",
+  "binarySHA256": "4c2bae3a1378a037166974523629483b1a100a26b6f8244b3828a701bae1bbc2",
+  "sources": {
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBCohort.swift": "e9ebaacbb40f0b208285c5c3ebc55900354de85c4f61e936834614e2f7f86ab4",
+    "Tests/NumiVivoIntegrationTests/SingleCellNBCohortTests.swift": "c34426a0d60c9981fc4592f785604efd9a709b48f84b1410c396c5683b268ccb",
+    "Tools/Omics/Benchmarks/run_hagai_nb.py": "3c38f82f35be37af1456fed7d27bb3728a6c0a6240b703b57dc4b2dab69221ef",
+    "Tools/Omics/Benchmarks/run_kang.py": "c0aa17361086d356af727a31a9c86a7611e9c40c8783a7ffbe7f5893505689a7",
+    "Tools/Omics/NegativeBinomial/check_cohort.py": "2ee74bd1db446eb4cb93a4d6b766348ac0404ba5dfedb0d0a06b7bc0c2636268",
+    "Tools/Omics/NegativeBinomial/compare_trends.py": "5d04240d6db509f02714e1362b7ce4cffc68cf6f24d679fd61ed089272ee52ed"
+  },
+  "fullProductReportsMatchIndependentlyCheckedReports": {
+    "kang": true,
+    "hagai": true
+  },
+  "artifacts": {
+    "/Users/home/numivivo-kang-gamma-product-20260909/report.json": "3f0389df9dd6b178f11c25608555daf60d66e895bc5b6b5ea9c50238fb5fd562",
+    "/Users/home/numivivo-hagai-gamma-product-20260909/native/report.json": "e48207360053c8eba01a2fa3527ec3e673757d14d29cc6c6d392b0ecd6ad893a"
+  },
+  "baselineCLI": {
+    "status": "passed",
+    "assertions": 18,
+    "commands": 24
+  }
+}

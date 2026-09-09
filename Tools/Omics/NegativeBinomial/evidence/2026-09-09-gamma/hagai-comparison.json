@@ -1,0 +1,87 @@
+{
+  "status": "completed-controlled-trend-comparison",
+  "cells": 13863,
+  "features": 22048,
+  "nonzeros": 32848185,
+  "identicalCountsQCMetadataAndDesign": true,
+  "baseline": {
+    "method": "parametric",
+    "testedGenes": 12426,
+    "numericalFailures": 0,
+    "effectSpearman": 0.9991895473560829,
+    "effectSignAgreement": 0.994608079832609,
+    "top50BHOverlap": 39,
+    "nativeBHBelow005": 6283,
+    "nativeZeroPValues": 16,
+    "expectedGenes": {
+      "ENSMUSG00000025225": {
+        "nativeStatus": "tested",
+        "nativeEffect": 4.367988741338434,
+        "referenceEffect": 4.364761932752367
+      },
+      "ENSMUSG00000021025": {
+        "nativeStatus": "tested",
+        "nativeEffect": 3.9039653155910066,
+        "referenceEffect": 3.904581922855827
+      },
+      "ENSMUSG00000034855": {
+        "nativeStatus": "tested",
+        "nativeEffect": 11.570811556545962,
+        "referenceEffect": 11.44557098360172
+      },
+      "ENSMUSG00000035692": {
+        "nativeStatus": "tested",
+        "nativeEffect": 6.76619571941747,
+        "referenceEffect": 6.765918186755087
+      },
+      "ENSMUSG00000024401": {
+        "nativeStatus": "tested",
+        "nativeEffect": 8.029035914386771,
+        "referenceEffect": 8.051133884627534
+      }
+    }
+  },
+  "candidate": {
+    "method": "gammaParametric",
+    "testedGenes": 12426,
+    "numericalFailures": 0,
+    "effectSpearman": 0.9998694375148901,
+    "effectSignAgreement": 0.9980685659101883,
+    "top50BHOverlap": 45,
+    "nativeBHBelow005": 4827,
+    "nativeZeroPValues": 0,
+    "expectedGenes": {
+      "ENSMUSG00000025225": {
+        "nativeStatus": "tested",
+        "nativeEffect": 4.365330888474644,
+        "referenceEffect": 4.364761932752367
+      },
+      "ENSMUSG00000021025": {
+        "nativeStatus": "tested",
+        "nativeEffect": 3.904421088463612,
+        "referenceEffect": 3.904581922855827
+      },
+      "ENSMUSG00000034855": {
+        "nativeStatus": "tested",
+        "nativeEffect": 11.4623679520682,
+        "referenceEffect": 11.44557098360172
+      },
+      "ENSMUSG00000035692": {
+        "nativeStatus": "tested",
+        "nativeEffect": 6.765899209014401,
+        "referenceEffect": 6.765918186755087
+      },
+      "ENSMUSG00000024401": {
+        "nativeStatus": "tested",
+        "nativeEffect": 8.055766180465211,
+        "referenceEffect": 8.051133884627534
+      }
+    }
+  },
+  "inputs": {
+    "/Users/home/numivivo-hagai-nb-diagnostics-20260909/native/report.json": "6a26ba707fa188e658fd36271247e0e590e248587127c4ee871d2c5fcfe6dbb6",
+    "/Users/home/numivivo-hagai-gamma-product-20260909/native/report.json": "e48207360053c8eba01a2fa3527ec3e673757d14d29cc6c6d392b0ecd6ad893a",
+    "/Users/home/numivivo-hagai-nb-diagnostics-20260909/pydeseq2.tsv": "f7ce6e45e5d8bd29cc101c04e97ca83ca2fa8a9e5dffa8554a0a446f6ccb3da6"
+  },
+  "boundary": "Same observed data and experimental design; significance counts and reference agreement are descriptive, not FDR calibration or evidence for promoting either method."
+}
