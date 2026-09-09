@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "mapping": {
+    "countUnit": "umiCount",
+    "evidence": "measured",
+    "id": "baron2016-all-human",
+    "matrixPath": "X",
+    "mitochondrialFeatureIDs": [],
+    "sampleColumn": "native_sample",
+    "samples": [
+      {
+        "batchID": "unreported",
+        "biologicalReplicateID": "human1",
+        "condition": "nonT2D",
+        "donorID": "human1",
+        "id": "human1",
+        "organism": "NCBITaxon:9606"
+      }
+    ],
+    "schemaVersion": 1,
+    "sourceDescription": "Baron 2016 GSE84133 original unnormalized UMI counts, all four human donors and source genes; author cell-type assignments retained. Human4 is T2D, human1-3 nonT2D. Disease is confounded with donor; no disease DE qualification.",
+    "groupColumn": "cell_type"
+  },
+  "featureNamespace": "HUMAN_GENE_SYMBOL"
+}

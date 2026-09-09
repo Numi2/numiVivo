@@ -1,0 +1,429 @@
+[
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-fit",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/train/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/mapped"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/mapped"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/label-leak.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/label-leak"
+    ],
+    "returncode": 65,
+    "expectedFailure": "query label mapping is prohibited"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/namespace.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/namespace"
+    ],
+    "returncode": 65,
+    "expectedFailure": "namespace or count unit mismatch"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/count-unit.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/count-unit"
+    ],
+    "returncode": 65,
+    "expectedFailure": "namespace or count unit mismatch"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/distance-budget.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/distance-budget"
+    ],
+    "returncode": 65,
+    "expectedFailure": "distance-operation budget"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/projection-budget.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/projection-budget"
+    ],
+    "returncode": 65,
+    "expectedFailure": "projection-update budget"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/organism.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/organism"
+    ],
+    "returncode": 65,
+    "expectedFailure": "gene universe and organism"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/mapped"
+    ],
+    "returncode": 65,
+    "expectedFailure": "output already exists"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reordered-unlabelled.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reordered"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/empty-library.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/empty"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/missing-gene.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/missing"
+    ],
+    "returncode": 65,
+    "expectedFailure": "gene universe and organism"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/train/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/overlap.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/overlap"
+    ],
+    "returncode": 65,
+    "expectedFailure": "overlaps reference cell identities"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/tampered-reference"
+    ],
+    "returncode": 65,
+    "expectedFailure": "bundle hash, schema or implementation mismatch"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human1/tampered-reference"
+    ],
+    "returncode": 65,
+    "expectedFailure": "reference model does not reconstruct"
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-fit",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human2/train/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/reference"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/reference"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human2/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/mapped"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/mapped"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human2/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human2/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-fit",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human3/train/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/reference"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/reference"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human3/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/mapped"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/mapped"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human3/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human3/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-fit",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human4/train/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/fit.json",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/reference"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/reference"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human4/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/mapped"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map-verify",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/mapped"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-reference-product-20260909/numivivo",
+      "singlecell-reference-map",
+      "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human4/query/projected.h5ad",
+      "--plan",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/query.json",
+      "--reference",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/reference",
+      "--output",
+      "/Users/home/numivivo-native-reference-product-20260909/human4/repeat"
+    ],
+    "returncode": 0,
+    "expectedFailure": null
+  }
+]

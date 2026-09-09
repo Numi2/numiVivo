@@ -1,0 +1,1 @@
+The first scoped real-data run passed human1 score/neighbor/label/replay checks, then failed the empty-library distanceOperations assertion. The initial scoped binary counted all query rows; source was corrected to count nonempty query rows before the release build. Full product verification uses the corrected build.

@@ -7,12 +7,13 @@ public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
     public var maximumBasis: Int = 128
     public var relativeResidualTolerance: Double = 1e-6
     public var seed: UInt64 = 7
+    public var retainProjectionCenters: Bool? = nil
     public init() {}
     private enum CodingKeys: String,CodingKey {
-        case highlyVariableFeatures,meanBins,components,maximumBasis,relativeResidualTolerance,seed
+        case highlyVariableFeatures,meanBins,components,maximumBasis,relativeResidualTolerance,seed,retainProjectionCenters
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["highlyVariableFeatures","meanBins","components","maximumBasis","relativeResidualTolerance","seed"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["highlyVariableFeatures","meanBins","components","maximumBasis","relativeResidualTolerance","seed","retainProjectionCenters"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         highlyVariableFeatures=try c.decodeIfPresent(Int.self,forKey: .highlyVariableFeatures) ?? 2_000
         meanBins=try c.decodeIfPresent(Int.self,forKey: .meanBins) ?? 20
@@ -20,6 +21,7 @@ public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
         maximumBasis=try c.decodeIfPresent(Int.self,forKey: .maximumBasis) ?? 128
         relativeResidualTolerance=try c.decodeIfPresent(Double.self,forKey: .relativeResidualTolerance) ?? 1e-6
         seed=try c.decodeIfPresent(UInt64.self,forKey: .seed) ?? 7
+        retainProjectionCenters=try c.decodeIfPresent(Bool.self,forKey: .retainProjectionCenters)
     }
     public func validate() throws {
         guard (1...10_000).contains(highlyVariableFeatures),(1...128).contains(meanBins),
@@ -55,6 +57,7 @@ public struct VivoSingleCellReductionResult: Codable, Sendable, Equatable {
     public let maximumLoadingOrthogonalityError: Double
     public let basisSize: Int
     public let qualification: String
+    public var projectionCenters: [Double]? = nil
 }
 
 /// Called only with the freshly validated common processing result. Neither
@@ -231,7 +234,8 @@ enum VivoSingleCellReduction {
             selectedFeatureIndices: selected,cells: cells,scores: embedding,
             loadings: loadings,explainedVariance: variances,explainedVarianceRatio: variances.map { $0/totalVariance },
             relativeResiduals: residuals,maximumLoadingOrthogonalityError: orthogonality,basisSize: capacity,
-            qualification: "Descriptive unscaled log-normalized PCA; residual-qualified components, not donor integration or biological validation")
+            qualification: "Descriptive unscaled log-normalized PCA; residual-qualified components, not donor integration or biological validation",
+            projectionCenters: options.retainProjectionCenters == true ? centers : nil)
     }
     /// Only the bounded Krylov projection is dense, never cells by genes or the full covariance.
     static func symmetricEigen(_ input: [Double],n: Int) throws -> (values: [Double],vectors: [Double],order: [Int]) {

@@ -2,10 +2,10 @@
 
 This benchmark combines native H5AD projection and training-only native sparse
 PCA with two external scikit-learn reference classifiers. It establishes a target
-for native learned annotation; the native model export/inference API is still open.
-The native PCA report currently omits its training centers, so this reference
-runner independently reconstructs them from training counts and verifies that
-frozen projection reproduces native training scores.
+for [native frozen reference mapping](NATIVE.md). The original reference runner
+independently reconstructs training centers from counts and verifies that frozen
+projection reproduces native training scores. Native fitting now retains those
+centers explicitly.
 
 The [predeclared protocol](PROTOCOL.md) specifies the four Baron folds and fixed
 parameters. All 8,569 cells and 20,125 source features are retained across the
@@ -56,4 +56,4 @@ API references: [Scanpy HVG](https://scanpy.readthedocs.io/en/stable/generated/s
 Corrected full-run replay passed all 32 comparisons: exact frozen/model arrays,
 per-cell probabilities, metrics, native reports and projected H5AD bytes across
 the four folds. Training HVG membership and PCA eigenvalue checks against
-Scanpy passed in every fold. No Swift runtime source changed in this commit.
+Scanpy passed in every fold. No Swift runtime source changed in the original benchmark commit `110e89d`.

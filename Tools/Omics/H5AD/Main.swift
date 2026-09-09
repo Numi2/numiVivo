@@ -11,6 +11,21 @@ import NumiVivoKit
     }
     static func run() throws {
         let args = CommandLine.arguments
+        let implementation=try VivoFingerprint(bytes: Array(repeating: 0,count: 32))
+        if args.count==5,args[1]=="reference-fit" {
+            let plan=try JSONDecoder().decode(VivoSingleCellReferencePlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            _=try VivoSingleCellReference.fit(source: URL(fileURLWithPath: args[2]),plan: plan,implementation: implementation,to: URL(fileURLWithPath: args[4]));print("fit");return
+        }
+        if args.count==6,args[1]=="reference-map" {
+            let plan=try JSONDecoder().decode(VivoSingleCellReferenceQueryPlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
+            _=try VivoSingleCellReference.map(source: URL(fileURLWithPath: args[2]),plan: plan,reference: URL(fileURLWithPath: args[4]),implementation: implementation,to: URL(fileURLWithPath: args[5]));print("mapped");return
+        }
+        if args.count==3,args[1]=="reference-verify" {
+            _=try VivoSingleCellReference.verifyReference(URL(fileURLWithPath: args[2]),implementation: implementation);print("verified");return
+        }
+        if args.count==3,args[1]=="reference-map-verify" {
+            _=try VivoSingleCellReference.verifyMapping(URL(fileURLWithPath: args[2]),implementation: implementation);print("verified");return
+        }
         if args.count == 5,args[1] == "project" {
             let plan=try JSONDecoder().decode(VivoH5ADProjectionPlan.self,from: Data(contentsOf: URL(fileURLWithPath: args[3])))
             let implementation=try VivoFingerprint(bytes: Array(repeating: 0,count: 32))

@@ -1,0 +1,68 @@
+{
+  "folds": [
+    {
+      "donor": "human1",
+      "cells": 1937,
+      "maximumFrozenScoreError": 2.1316282072803006e-14,
+      "exactNeighborIndicesAndLabels": true,
+      "replay": true
+    },
+    {
+      "donor": "human2",
+      "cells": 1724,
+      "maximumFrozenScoreError": 2.842170943040401e-14,
+      "exactNeighborIndicesAndLabels": true,
+      "replay": true
+    },
+    {
+      "donor": "human3",
+      "cells": 3605,
+      "maximumFrozenScoreError": 2.220446049250313e-14,
+      "exactNeighborIndicesAndLabels": true,
+      "replay": true
+    },
+    {
+      "donor": "human4",
+      "cells": 1303,
+      "maximumFrozenScoreError": 2.0872192862952943e-14,
+      "exactNeighborIndicesAndLabels": true,
+      "replay": true
+    }
+  ],
+  "checks": [
+    "human1/fit.log",
+    "human1/verify-reference.log",
+    "human1/map.log",
+    "human1/verify-map.log",
+    "human1/repeat.log",
+    "human1/label-leak.log",
+    "human1/namespace.log",
+    "human1/count-unit.log",
+    "human1/distance-budget.log",
+    "human1/projection-budget.log",
+    "human1/organism.log",
+    "human1/overwrite.log",
+    "human1/reordered.log",
+    "human1/empty.log",
+    "human1/missing.log",
+    "human1/overlap.log",
+    "human1/tamper.log",
+    "human1/tamper-rehashed.log",
+    "human2/fit.log",
+    "human2/verify-reference.log",
+    "human2/map.log",
+    "human2/verify-map.log",
+    "human2/repeat.log",
+    "human3/fit.log",
+    "human3/verify-reference.log",
+    "human3/map.log",
+    "human3/verify-map.log",
+    "human3/repeat.log",
+    "human4/fit.log",
+    "human4/verify-reference.log",
+    "human4/map.log",
+    "human4/verify-map.log",
+    "human4/repeat.log"
+  ],
+  "binarySHA256": "9572c83f844029eabad13adbdc65b8075605e51edfed9049a4cd06c08b4066cf"
+}
