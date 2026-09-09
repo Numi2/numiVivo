@@ -10,16 +10,17 @@ public struct VivoSingleCellAnalysisPlan: Codable, Sendable, Equatable {
     public var embedding: VivoSingleCellEmbeddingOptions?
     public var clustering: VivoSingleCellClusteringOptions?
     public var neighbors: VivoSingleCellNeighborOptions?
+    public var programs: VivoSingleCellProgramOptions?
     public var reduction: VivoSingleCellReductionOptions?
     public init(id: String, filter: VivoSingleCellFilterPolicy = .init(), normalizationTarget: Double = 10_000,
-                contrasts: [VivoOmicsExpressionContrast] = [],reduction: VivoSingleCellReductionOptions? = nil, neighbors: VivoSingleCellNeighborOptions? = nil, clustering: VivoSingleCellClusteringOptions? = nil, embedding: VivoSingleCellEmbeddingOptions? = nil, integration: VivoSingleCellIntegrationOptions? = nil) {
+                contrasts: [VivoOmicsExpressionContrast] = [],reduction: VivoSingleCellReductionOptions? = nil, neighbors: VivoSingleCellNeighborOptions? = nil, clustering: VivoSingleCellClusteringOptions? = nil, embedding: VivoSingleCellEmbeddingOptions? = nil, integration: VivoSingleCellIntegrationOptions? = nil, programs: VivoSingleCellProgramOptions? = nil) {
         schemaVersion = 1; self.id = id; self.filter = filter
         self.normalizationTarget = normalizationTarget; self.contrasts = contrasts
-        self.reduction = reduction; self.neighbors = neighbors; self.clustering = clustering; self.embedding = embedding; self.integration = integration
+        self.programs=programs; self.reduction = reduction; self.neighbors = neighbors; self.clustering = clustering; self.embedding = embedding; self.integration = integration
     }
-    private enum CodingKeys: String, CodingKey { case schemaVersion, id, filter, normalizationTarget, contrasts, reduction, neighbors, clustering, embedding, integration }
+    private enum CodingKeys: String, CodingKey { case schemaVersion, id, filter, normalizationTarget, contrasts, reduction, neighbors, clustering, embedding, integration, programs }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "filter", "normalizationTarget", "contrasts", "reduction", "neighbors", "clustering", "embedding", "integration"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "filter", "normalizationTarget", "contrasts", "reduction", "neighbors", "clustering", "embedding", "integration", "programs"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try c.decode(Int.self, forKey: .schemaVersion); id = try c.decode(String.self, forKey: .id)
         filter = try c.decodeIfPresent(VivoSingleCellFilterPolicy.self, forKey: .filter) ?? .init()
@@ -29,6 +30,7 @@ public struct VivoSingleCellAnalysisPlan: Codable, Sendable, Equatable {
         embedding = try c.decodeIfPresent(VivoSingleCellEmbeddingOptions.self,forKey: .embedding)
         clustering = try c.decodeIfPresent(VivoSingleCellClusteringOptions.self,forKey: .clustering)
         neighbors = try c.decodeIfPresent(VivoSingleCellNeighborOptions.self,forKey: .neighbors)
+        programs = try c.decodeIfPresent(VivoSingleCellProgramOptions.self,forKey: .programs)
         reduction = try c.decodeIfPresent(VivoSingleCellReductionOptions.self,forKey: .reduction)
     }
     public func validate() throws {
@@ -36,6 +38,7 @@ public struct VivoSingleCellAnalysisPlan: Codable, Sendable, Equatable {
               contrasts.count <= 32, Set(contrasts.map(\.id)).count == contrasts.count else {
             throw VivoOmicsError.invalid("analysis plan schema, identity, normalization or contrast count")
         }
+        try programs?.validate()
         try filter.validate()
         try integration?.validate()
         guard integration == nil || reduction != nil else { throw VivoOmicsError.invalid("integration requires PCA") }
@@ -56,6 +59,7 @@ public struct VivoSingleCellCohortReport: Codable, Sendable, Equatable {
     public let plan: VivoSingleCellAnalysisPlan
     public let processed: VivoSingleCellProcessed
     public let contrasts: [VivoOmicsExpressionResult]
+    public var programs: VivoSingleCellProgramResult? = nil
     public var integration: VivoSingleCellIntegrationResult? = nil
     public var reduction: VivoSingleCellReductionResult? = nil
     public var neighbors: VivoSingleCellNeighborGraph? = nil
@@ -72,13 +76,14 @@ public enum VivoSingleCellCohortAnalysis {
             results.append(try VivoPseudobulkDifferentialExpression.evaluate(processed.dataset, bulk: processed.pseudobulk, contrast: contrast))
         }
         try Task.checkCancellation()
+        let programs=try plan.programs.map { try VivoSingleCellPrograms.run(processed,options: $0) }
         let reduction=try plan.reduction.map { try VivoSingleCellReduction.run(processed,options: $0) }
         let integration = try plan.integration.map { try VivoSingleCellIntegration.run(reduction!,samples: processed.dataset.samples,options: $0) }
         let graphScores = plan.neighbors?.representation == .integrated ? integration?.scores : reduction?.scores
         let neighbors = try plan.neighbors.map { try VivoSingleCellNeighbors.run(scores: graphScores!, cells: reduction!.cells, options: $0) }
         let clustering = try plan.clustering.map { try VivoSingleCellClustering.run(neighbors!,options: $0) }
         let embedding = try plan.embedding.map { try VivoSingleCellEmbedding.run(neighbors!,scores: graphScores!,options: $0) }
-        return .init(schemaVersion: 1, method: "native-count-quality-and-donor-expression-v1", plan: plan, processed: processed, contrasts: results,integration: integration,reduction: reduction,neighbors: neighbors,clustering: clustering,embedding: embedding)
+        return .init(schemaVersion: 1, method: "native-count-quality-and-donor-expression-v1", plan: plan, processed: processed, contrasts: results,programs: programs,integration: integration,reduction: reduction,neighbors: neighbors,clustering: clustering,embedding: embedding)
     }
 }
 

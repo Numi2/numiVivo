@@ -1,0 +1,115 @@
+[
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-programs-product-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-baron-programs-product-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 9.651490208227187,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk-verify",
+      "/Users/home/numivivo-baron-programs-product-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 9.058238833211362,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-programs-product-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-baron-programs-product-20260909/repeat"
+    ],
+    "exitCode": 0,
+    "seconds": 8.878542250022292,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-programs-product-20260909/bad-missing.json",
+      "--output",
+      "/Users/home/numivivo-baron-programs-product-20260909/rejected-missing"
+    ],
+    "exitCode": 65,
+    "seconds": 2.4348694998770952,
+    "expectedFailure": "missing-feature"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-programs-product-20260909/bad-organism.json",
+      "--output",
+      "/Users/home/numivivo-baron-programs-product-20260909/rejected-organism"
+    ],
+    "exitCode": 65,
+    "seconds": 2.4450787911191583,
+    "expectedFailure": "organism"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-programs-product-20260909/bad-score-budget.json",
+      "--output",
+      "/Users/home/numivivo-baron-programs-product-20260909/rejected-score-budget"
+    ],
+    "exitCode": 65,
+    "seconds": 2.4305210416205227,
+    "expectedFailure": "score-value budget"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-programs-product-20260909/bad-update-budget.json",
+      "--output",
+      "/Users/home/numivivo-baron-programs-product-20260909/rejected-update-budget"
+    ],
+    "exitCode": 65,
+    "seconds": 2.4943632911890745,
+    "expectedFailure": "sparse-update budget"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-programs-product-20260909/bad-duplicate.json",
+      "--output",
+      "/Users/home/numivivo-baron-programs-product-20260909/rejected-duplicate"
+    ],
+    "exitCode": 65,
+    "seconds": 0.031190000008791685,
+    "expectedFailure": "program definition"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-baron-prepared-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-baron-programs-product-20260909/bad-provenance.json",
+      "--output",
+      "/Users/home/numivivo-baron-programs-product-20260909/rejected-provenance"
+    ],
+    "exitCode": 65,
+    "seconds": 0.03083587484434247,
+    "expectedFailure": "program definition"
+  }
+]

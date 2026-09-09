@@ -89,3 +89,8 @@ resident. This route currently stops at PCA; streamed graph/integration wiring,
 million-cell execution, parallel kernels and GPU performance remain unqualified.
 Numerical agreement on these matrices does not establish cell annotation,
 biological preservation, disease effects or held-out perturbation prediction.
+
+Optional [fixed expression programs](../Programs/README.md) share the archived
+source and add one separate scan. When programs and PCA are enabled together,
+there are four scans in total; the reduction component still accounts for its
+three scans, including QC.

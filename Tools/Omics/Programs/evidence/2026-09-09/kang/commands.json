@@ -1,0 +1,167 @@
+[
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-kang-native-nb-qualified-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-kang-programs-product-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 1.9490742906928062,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk-verify",
+      "/Users/home/numivivo-kang-programs-product-20260909/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 1.2690495001152158,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-kang-native-nb-qualified-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-kang-programs-product-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/repeat"
+    ],
+    "exitCode": 0,
+    "seconds": 1.2719606659375131,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-run",
+      "/Users/home/numivivo-kang-native-nb-qualified-20260909/imported/manifest.json",
+      "--store",
+      "/Users/home/numivivo-kang-programs-product-20260909/store",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/counts.json"
+    ],
+    "exitCode": 0,
+    "seconds": 2.504579917062074,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-analyze",
+      "/Users/home/numivivo-kang-programs-product-20260909/counts.json",
+      "--plan",
+      "/Users/home/numivivo-kang-programs-product-20260909/resident-plan.json",
+      "--store",
+      "/Users/home/numivivo-kang-programs-product-20260909/store",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/analysis.json"
+    ],
+    "exitCode": 0,
+    "seconds": 3.7299700002186,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-analysis-verify",
+      "/Users/home/numivivo-kang-programs-product-20260909/analysis.json",
+      "--store",
+      "/Users/home/numivivo-kang-programs-product-20260909/store"
+    ],
+    "exitCode": 0,
+    "seconds": 3.5050358748994768,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-analysis-export",
+      "/Users/home/numivivo-kang-programs-product-20260909/analysis.json",
+      "--store",
+      "/Users/home/numivivo-kang-programs-product-20260909/store",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/resident-report.json"
+    ],
+    "exitCode": 0,
+    "seconds": 4.77083129202947,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-kang-native-nb-qualified-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-kang-programs-product-20260909/bad-missing.json",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/rejected-missing"
+    ],
+    "exitCode": 65,
+    "seconds": 0.3045650408603251,
+    "expectedFailure": "missing-feature"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-kang-native-nb-qualified-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-kang-programs-product-20260909/bad-organism.json",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/rejected-organism"
+    ],
+    "exitCode": 65,
+    "seconds": 0.3043919997289777,
+    "expectedFailure": "organism"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-kang-native-nb-qualified-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-kang-programs-product-20260909/bad-score-budget.json",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/rejected-score-budget"
+    ],
+    "exitCode": 65,
+    "seconds": 0.305114459246397,
+    "expectedFailure": "score-value budget"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-kang-native-nb-qualified-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-kang-programs-product-20260909/bad-update-budget.json",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/rejected-update-budget"
+    ],
+    "exitCode": 65,
+    "seconds": 0.32462737523019314,
+    "expectedFailure": "sparse-update budget"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-kang-native-nb-qualified-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-kang-programs-product-20260909/bad-duplicate.json",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/rejected-duplicate"
+    ],
+    "exitCode": 65,
+    "seconds": 0.03139812499284744,
+    "expectedFailure": "program definition"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-kang-native-nb-qualified-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-kang-programs-product-20260909/bad-provenance.json",
+      "--output",
+      "/Users/home/numivivo-kang-programs-product-20260909/rejected-provenance"
+    ],
+    "exitCode": 65,
+    "seconds": 0.03112162509933114,
+    "expectedFailure": "program definition"
+  }
+]

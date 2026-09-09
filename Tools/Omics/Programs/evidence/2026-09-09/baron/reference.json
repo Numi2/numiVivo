@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "numericalAgreement": true,
+  "expectedDirectionObserved": true,
+  "cells": 8569,
+  "programs": [
+    {
+      "id": "HALLMARK_PANCREAS_BETA_CELLS",
+      "requested": 40,
+      "matched": 40,
+      "missing": [],
+      "maximumAbsoluteScoreError": 8.881784197001252e-16
+    }
+  ],
+  "maximumAbsoluteScoreError": 8.881784197001252e-16,
+  "descriptiveBiology": [
+    {
+      "donor": "human1",
+      "betaCells": 872,
+      "otherCells": 1065,
+      "meanDifference": 0.44654817677695224,
+      "authorLabelAUC": 0.8827615540336822
+    },
+    {
+      "donor": "human2",
+      "betaCells": 371,
+      "otherCells": 1353,
+      "meanDifference": 0.5291053518137627,
+      "authorLabelAUC": 0.9483428061430823
+    },
+    {
+      "donor": "human3",
+      "betaCells": 787,
+      "otherCells": 2818,
+      "meanDifference": 0.4011403277025552,
+      "authorLabelAUC": 0.8628714661510729
+    },
+    {
+      "donor": "human4",
+      "betaCells": 495,
+      "otherCells": 808,
+      "meanDifference": 0.5146935655433897,
+      "authorLabelAUC": 0.9183818381838184
+    }
+  ],
+  "sourceSHA256": "388db742dba45eeaea98217161ed7193e104d1188df99142a5eb56ba33226df8",
+  "reportSHA256": "719f7bcdaaf933f2850fbca164dd93da3d7eca2bd67e2e67cc11fdd7ae2d4cf5",
+  "versions": {
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "numpy": "2.5.3"
+  },
+  "qualification": "Fixed expression-score agreement and within-donor descriptive observations. No automatic labels, inferred pathway activity, independent cell-type ground truth, held-out prediction or cross-study biological calibration."
+}

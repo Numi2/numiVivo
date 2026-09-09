@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "checks": [
+    "streamed programs with PCA",
+    "native reconstruction",
+    "exact repeat",
+    "resident and streamed scores/detection exactly equal by cell identity",
+    "controlled missing rejection",
+    "controlled organism rejection",
+    "controlled score-budget rejection",
+    "controlled update-budget rejection",
+    "controlled duplicate rejection",
+    "controlled provenance rejection",
+    "failed publication leaves no staging bundle"
+  ],
+  "binarySHA256": "f337e6940030a2d40ab618e01a05b37bec79dd70dedbee0822a76c1f35177956",
+  "qualification": "Software scoring and replay; biological observations are evaluated separately"
+}

@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "checks": [
+    "exact CSR/CSC program result",
+    "signed L1 score with all-gene denominator",
+    "zero-expression score distinct from missing empty-library score",
+    "explicit missing-feature coverage"
+  ],
+  "qualification": "Numerical fixture only"
+}

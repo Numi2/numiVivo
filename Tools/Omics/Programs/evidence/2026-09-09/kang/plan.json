@@ -1,0 +1,580 @@
+{
+  "schemaVersion": 1,
+  "mapping": {
+    "schemaVersion": 1,
+    "id": "kang2018-bcells",
+    "evidence": "measured",
+    "countUnit": "umiCount",
+    "matrixPath": "X",
+    "sourceDescription": "Kang 2018 (doi:10.1038/nbt.4042), pertpy file 34464122; all 2651 B cells and all 15706 source genes. Batch metadata unreported; paired donor model does not adjust for batch.",
+    "sampleColumn": "native_sample",
+    "groupColumn": "cell_type",
+    "samples": [
+      {
+        "id": "patient_101__ctrl",
+        "biologicalReplicateID": "patient_101",
+        "donorID": "patient_101",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_101__stim",
+        "biologicalReplicateID": "patient_101",
+        "donorID": "patient_101",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1015__ctrl",
+        "biologicalReplicateID": "patient_1015",
+        "donorID": "patient_1015",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1015__stim",
+        "biologicalReplicateID": "patient_1015",
+        "donorID": "patient_1015",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1016__ctrl",
+        "biologicalReplicateID": "patient_1016",
+        "donorID": "patient_1016",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1016__stim",
+        "biologicalReplicateID": "patient_1016",
+        "donorID": "patient_1016",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1039__ctrl",
+        "biologicalReplicateID": "patient_1039",
+        "donorID": "patient_1039",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1039__stim",
+        "biologicalReplicateID": "patient_1039",
+        "donorID": "patient_1039",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_107__ctrl",
+        "biologicalReplicateID": "patient_107",
+        "donorID": "patient_107",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_107__stim",
+        "biologicalReplicateID": "patient_107",
+        "donorID": "patient_107",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1244__ctrl",
+        "biologicalReplicateID": "patient_1244",
+        "donorID": "patient_1244",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1244__stim",
+        "biologicalReplicateID": "patient_1244",
+        "donorID": "patient_1244",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1256__ctrl",
+        "biologicalReplicateID": "patient_1256",
+        "donorID": "patient_1256",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1256__stim",
+        "biologicalReplicateID": "patient_1256",
+        "donorID": "patient_1256",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1488__ctrl",
+        "biologicalReplicateID": "patient_1488",
+        "donorID": "patient_1488",
+        "condition": "ctrl",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "id": "patient_1488__stim",
+        "biologicalReplicateID": "patient_1488",
+        "donorID": "patient_1488",
+        "condition": "stim",
+        "batchID": "unreported",
+        "organism": "NCBITaxon:9606"
+      }
+    ],
+    "mitochondrialFeatureIDs": []
+  },
+  "contrasts": [],
+  "programs": {
+    "definitions": [
+      {
+        "id": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+        "organism": "NCBITaxon:9606",
+        "featureNamespace": "HUMAN_GENE_SYMBOL",
+        "sourceURI": "https://www.gsea-msigdb.org/gsea/msigdb/human/geneset/HALLMARK_INTERFERON_ALPHA_RESPONSE",
+        "sourceVersion": "retrieved-2026-09-09-sha256:2a3d93f3170bc9866ced1135bdde9870f18294f7ad3ae6cb3732dc3680483455",
+        "sourceDescription": "MSigDB Hallmark, Liberzon et al., PMID 26771021. All downloaded geneSymbols retained; no fitted weights or aliases.",
+        "members": [
+          {
+            "featureID": "ADAR",
+            "weight": 1
+          },
+          {
+            "featureID": "B2M",
+            "weight": 1
+          },
+          {
+            "featureID": "BATF2",
+            "weight": 1
+          },
+          {
+            "featureID": "BST2",
+            "weight": 1
+          },
+          {
+            "featureID": "C1S",
+            "weight": 1
+          },
+          {
+            "featureID": "CASP1",
+            "weight": 1
+          },
+          {
+            "featureID": "CASP8",
+            "weight": 1
+          },
+          {
+            "featureID": "CCRL2",
+            "weight": 1
+          },
+          {
+            "featureID": "CD47",
+            "weight": 1
+          },
+          {
+            "featureID": "CD74",
+            "weight": 1
+          },
+          {
+            "featureID": "CMPK2",
+            "weight": 1
+          },
+          {
+            "featureID": "CMTR1",
+            "weight": 1
+          },
+          {
+            "featureID": "CNP",
+            "weight": 1
+          },
+          {
+            "featureID": "CSF1",
+            "weight": 1
+          },
+          {
+            "featureID": "CXCL10",
+            "weight": 1
+          },
+          {
+            "featureID": "CXCL11",
+            "weight": 1
+          },
+          {
+            "featureID": "DDX60",
+            "weight": 1
+          },
+          {
+            "featureID": "DHX58",
+            "weight": 1
+          },
+          {
+            "featureID": "EIF2AK2",
+            "weight": 1
+          },
+          {
+            "featureID": "ELF1",
+            "weight": 1
+          },
+          {
+            "featureID": "EPSTI1",
+            "weight": 1
+          },
+          {
+            "featureID": "GBP2",
+            "weight": 1
+          },
+          {
+            "featureID": "GBP4",
+            "weight": 1
+          },
+          {
+            "featureID": "GMPR",
+            "weight": 1
+          },
+          {
+            "featureID": "HELZ2",
+            "weight": 1
+          },
+          {
+            "featureID": "HERC6",
+            "weight": 1
+          },
+          {
+            "featureID": "HLA-C",
+            "weight": 1
+          },
+          {
+            "featureID": "IFI27",
+            "weight": 1
+          },
+          {
+            "featureID": "IFI30",
+            "weight": 1
+          },
+          {
+            "featureID": "IFI35",
+            "weight": 1
+          },
+          {
+            "featureID": "IFI44",
+            "weight": 1
+          },
+          {
+            "featureID": "IFI44L",
+            "weight": 1
+          },
+          {
+            "featureID": "IFIH1",
+            "weight": 1
+          },
+          {
+            "featureID": "IFIT2",
+            "weight": 1
+          },
+          {
+            "featureID": "IFIT3",
+            "weight": 1
+          },
+          {
+            "featureID": "IFITM1",
+            "weight": 1
+          },
+          {
+            "featureID": "IFITM2",
+            "weight": 1
+          },
+          {
+            "featureID": "IFITM3",
+            "weight": 1
+          },
+          {
+            "featureID": "IL15",
+            "weight": 1
+          },
+          {
+            "featureID": "IL4R",
+            "weight": 1
+          },
+          {
+            "featureID": "IL7",
+            "weight": 1
+          },
+          {
+            "featureID": "IRF1",
+            "weight": 1
+          },
+          {
+            "featureID": "IRF2",
+            "weight": 1
+          },
+          {
+            "featureID": "IRF7",
+            "weight": 1
+          },
+          {
+            "featureID": "IRF9",
+            "weight": 1
+          },
+          {
+            "featureID": "ISG15",
+            "weight": 1
+          },
+          {
+            "featureID": "ISG20",
+            "weight": 1
+          },
+          {
+            "featureID": "LAMP3",
+            "weight": 1
+          },
+          {
+            "featureID": "LAP3",
+            "weight": 1
+          },
+          {
+            "featureID": "LGALS3BP",
+            "weight": 1
+          },
+          {
+            "featureID": "LPAR6",
+            "weight": 1
+          },
+          {
+            "featureID": "LY6E",
+            "weight": 1
+          },
+          {
+            "featureID": "MOV10",
+            "weight": 1
+          },
+          {
+            "featureID": "MVB12A",
+            "weight": 1
+          },
+          {
+            "featureID": "MX1",
+            "weight": 1
+          },
+          {
+            "featureID": "NCOA7",
+            "weight": 1
+          },
+          {
+            "featureID": "NMI",
+            "weight": 1
+          },
+          {
+            "featureID": "NUB1",
+            "weight": 1
+          },
+          {
+            "featureID": "OAS1",
+            "weight": 1
+          },
+          {
+            "featureID": "OASL",
+            "weight": 1
+          },
+          {
+            "featureID": "OGFR",
+            "weight": 1
+          },
+          {
+            "featureID": "PARP12",
+            "weight": 1
+          },
+          {
+            "featureID": "PARP14",
+            "weight": 1
+          },
+          {
+            "featureID": "PARP9",
+            "weight": 1
+          },
+          {
+            "featureID": "PLSCR1",
+            "weight": 1
+          },
+          {
+            "featureID": "PNPT1",
+            "weight": 1
+          },
+          {
+            "featureID": "PROCR",
+            "weight": 1
+          },
+          {
+            "featureID": "PSMA3",
+            "weight": 1
+          },
+          {
+            "featureID": "PSMB8",
+            "weight": 1
+          },
+          {
+            "featureID": "PSMB9",
+            "weight": 1
+          },
+          {
+            "featureID": "PSME1",
+            "weight": 1
+          },
+          {
+            "featureID": "PSME2",
+            "weight": 1
+          },
+          {
+            "featureID": "RIPK2",
+            "weight": 1
+          },
+          {
+            "featureID": "RNF31",
+            "weight": 1
+          },
+          {
+            "featureID": "RSAD2",
+            "weight": 1
+          },
+          {
+            "featureID": "RTP4",
+            "weight": 1
+          },
+          {
+            "featureID": "SAMD9",
+            "weight": 1
+          },
+          {
+            "featureID": "SAMD9L",
+            "weight": 1
+          },
+          {
+            "featureID": "SELL",
+            "weight": 1
+          },
+          {
+            "featureID": "SLC25A28",
+            "weight": 1
+          },
+          {
+            "featureID": "SP110",
+            "weight": 1
+          },
+          {
+            "featureID": "STAT2",
+            "weight": 1
+          },
+          {
+            "featureID": "TAP1",
+            "weight": 1
+          },
+          {
+            "featureID": "TDRD7",
+            "weight": 1
+          },
+          {
+            "featureID": "TENT5A",
+            "weight": 1
+          },
+          {
+            "featureID": "TMEM140",
+            "weight": 1
+          },
+          {
+            "featureID": "TRAFD1",
+            "weight": 1
+          },
+          {
+            "featureID": "TRIM14",
+            "weight": 1
+          },
+          {
+            "featureID": "TRIM21",
+            "weight": 1
+          },
+          {
+            "featureID": "TRIM25",
+            "weight": 1
+          },
+          {
+            "featureID": "TRIM26",
+            "weight": 1
+          },
+          {
+            "featureID": "TRIM5",
+            "weight": 1
+          },
+          {
+            "featureID": "TXNIP",
+            "weight": 1
+          },
+          {
+            "featureID": "UBA7",
+            "weight": 1
+          },
+          {
+            "featureID": "UBE2L6",
+            "weight": 1
+          },
+          {
+            "featureID": "USP18",
+            "weight": 1
+          },
+          {
+            "featureID": "WARS1",
+            "weight": 1
+          }
+        ],
+        "minimumWeightCoverage": 0.8
+      },
+      {
+        "id": "integration-ifn-five",
+        "organism": "NCBITaxon:9606",
+        "featureNamespace": "HUMAN_GENE_SYMBOL",
+        "sourceURI": "urn:numivivo:integration-program:6a8658cf3d8da07d9c071982a60c05233dfe41b7",
+        "sourceVersion": "1",
+        "sourceDescription": "Previously declared descriptive integration program, not the complete MSigDB hallmark or independent biological ground truth.",
+        "members": [
+          {
+            "featureID": "IFI6",
+            "weight": 1
+          },
+          {
+            "featureID": "IFIT1",
+            "weight": 1
+          },
+          {
+            "featureID": "ISG15",
+            "weight": 1
+          },
+          {
+            "featureID": "MX1",
+            "weight": 1
+          },
+          {
+            "featureID": "ISG20",
+            "weight": 1
+          }
+        ],
+        "minimumWeightCoverage": 1
+      }
+    ]
+  },
+  "reduction": {}
+}

@@ -5,16 +5,18 @@ public struct VivoH5ADPseudobulkPlan: Codable, Sendable, Equatable {
     public let schemaVersion: Int
     public let mapping: VivoH5ADImportPlan
     public let contrasts: [VivoOmicsExpressionContrast]
+    public var programs: VivoSingleCellProgramOptions? = nil
     public var reduction: VivoH5ADReductionOptions? = nil
-    public init(mapping: VivoH5ADImportPlan,contrasts: [VivoOmicsExpressionContrast] = [],reduction: VivoH5ADReductionOptions? = nil) {
-        schemaVersion=1; self.mapping=mapping; self.contrasts=contrasts;self.reduction=reduction
+    public init(mapping: VivoH5ADImportPlan,contrasts: [VivoOmicsExpressionContrast] = [],reduction: VivoH5ADReductionOptions? = nil,programs: VivoSingleCellProgramOptions? = nil) {
+        schemaVersion=1; self.mapping=mapping; self.contrasts=contrasts;self.reduction=reduction;self.programs=programs
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,contrasts,reduction }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,contrasts,reduction,programs }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","contrasts","reduction"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","contrasts","reduction","programs"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion)
         mapping=try c.decode(VivoH5ADImportPlan.self,forKey: .mapping)
+        programs=try c.decodeIfPresent(VivoSingleCellProgramOptions.self,forKey: .programs)
         reduction=try c.decodeIfPresent(VivoH5ADReductionOptions.self,forKey: .reduction)
         contrasts=try c.decodeIfPresent([VivoOmicsExpressionContrast].self,forKey: .contrasts) ?? []
     }
@@ -22,6 +24,7 @@ public struct VivoH5ADPseudobulkPlan: Codable, Sendable, Equatable {
         guard schemaVersion == 1, contrasts.count <= 32, Set(contrasts.map(\.id)).count == contrasts.count else {
             throw VivoOmicsError.invalid("streamed pseudobulk plan schema or contrasts")
         }
+        try programs?.validate()
         try reduction?.validate()
         for contrast in contrasts { try contrast.validate() }
     }
@@ -35,6 +38,7 @@ public struct VivoH5ADPseudobulkReport: Codable, Sendable, Equatable {
     public let canonicalNonzeros: Int
     public let hdf5Version: String
     public let contrasts: [VivoOmicsExpressionResult]
+    public var programs: VivoSingleCellProgramResult? = nil
     public var reduction: VivoSingleCellReductionResult? = nil
     public var reductionStorage: VivoH5ADReductionStorage? = nil
 }
@@ -134,6 +138,9 @@ public enum VivoH5ADPseudobulk {
         })
         guard let accumulator else { throw VivoOmicsError.invalid("stream has no metadata") }
         var report=try accumulator.finish(version: version,contrasts: plan.contrasts)
+        if let options=plan.programs {
+            report.programs=try VivoSingleCellPrograms.run(snapshot: url,mapping: plan.mapping,metadata: report.metadata,quality: report.quality,normalizationTarget: plan.reduction?.normalizationTarget ?? 10_000,options: options)
+        }
         if let options=plan.reduction {
             let (reduction,storage)=try VivoH5ADReduction.run(snapshot: url,mapping: plan.mapping,metadata: report.metadata,quality: report.quality,options: options)
             report.reduction=reduction;report.reductionStorage=storage

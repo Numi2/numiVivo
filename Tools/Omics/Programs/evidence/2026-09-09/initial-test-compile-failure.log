@@ -1,0 +1,606 @@
+[0/1] Planning build
+Building for debugging...
+[0/8] Write sources
+[2/8] Write swift-version-3CD7052B146186F2.txt
+[4/12] Compiling NumiVivoKit VivoSingleCellPrograms.swift
+[5/12] Compiling NumiVivoKit VivoH5ADPseudobulk.swift
+[6/12] Emitting module NumiVivoKit
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Surrogates/VivoReactiveMetalBackend.swift:54:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 52 |         coefficients = try buffer(payload.coefficientsKJPerMol.flatMap { $0 })
+ 53 |         scales = try buffer(payload.configuration.features.map { 1/($0.scaleNM*$0.scaleNM) })
+ 54 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 55 |         let library = try device.makeLibrary(source: Self.source,options: options)
+ 56 |         guard let function = library.makeFunction(name: "vivo_reactive_delta") else { throw VivoChemistryError.invalid("missing reactive Metal kernel") }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[7/12] Compiling NumiVivoKit VivoSingleCellCohortAnalysis.swift
+[8/15] Compiling NumiVivoKit VivoSingleCellExamples.swift
+[9/15] Compiling NumiVivoKit VivoPlatformOmicsOperations.swift
+[10/15] Compiling NumiVivoKit VivoSingleCellExchange.swift
+[11/103] Compiling NumiVivoIntegrationTests PreparedMolecularWorkflowTests.swift
+[12/103] Compiling NumiVivoIntegrationTests PreparedReactionFullRouteTests.swift
+[13/103] Compiling NumiVivoIntegrationTests PropertyRefinementWorkflowTests.swift
+[14/103] Compiling NumiVivoIntegrationTests QMMMChemicalExchangeNetworkTests.swift
+[15/103] Compiling NumiVivoIntegrationTests QMMMChemicalQualificationTests.swift
+[16/103] Compiling NumiVivoIntegrationTests QMMMChemicalStateThermodynamicsTests.swift
+[17/103] Compiling NumiVivoIntegrationTests QMMMFreeEnergyArchiveIdentityTests.swift
+[18/103] Compiling NumiVivoIntegrationTests QMMMFreeEnergyTests.swift
+[19/110] Compiling NumiVivoIntegrationTests QMMMPathBiasTests.swift
+[20/110] Compiling NumiVivoIntegrationTests QMMMPathCoordinateTests.swift
+[21/110] Compiling NumiVivoIntegrationTests QMMMReactionCoordinateTests.swift
+[22/110] Compiling NumiVivoIntegrationTests QMMMStringRefinementTests.swift
+[23/110] Compiling NumiVivoIntegrationTests QMMMTransmissionTests.swift
+[24/110] Compiling NumiVivoIntegrationTests KineticsPreparedOutputTests.swift
+[25/110] Compiling NumiVivoIntegrationTests LatentProtonTopologyTests.swift
+[26/110] Emitting module NumiVivoCLI
+[27/110] Compiling NumiVivoIntegrationTests PlatformQMMMWorkflowTests.swift
+[28/110] Compiling NumiVivoIntegrationTests PlatformSnapshotMappingHelperTests.swift
+[29/110] Compiling NumiVivoIntegrationTests PlatformSnapshotTests.swift
+[30/110] Compiling NumiVivoIntegrationTests PlatformWorkflowTests.swift
+[31/110] Compiling NumiVivoIntegrationTests PolarizableQMMMTests.swift
+[32/110] Compiling NumiVivoIntegrationTests PrecisionMetalSamplingTests.swift
+[33/110] Compiling NumiVivoIntegrationTests PrecisionPlatformTests.swift
+[34/110] Compiling NumiVivoIntegrationTests PrecisionSamplingFixtures.swift
+[35/110] Compiling NumiVivoCLI VivoStructurePrepCLICommands.swift
+[36/110] Compiling NumiVivoCLI VivoTargetEngagementCLICommands.swift
+[37/110] Compiling NumiVivoCLI VivoWorkflowCLICommands.swift
+[38/110] Compiling NumiVivoCLI VivoWorkflowCLIDocumentPaths.swift
+[39/110] Compiling NumiVivoCLI VivoWorkflowCLIImplementation.swift
+[40/110] Compiling NumiVivoCLI VivoWorkflowCLISupport.swift
+[41/110] Compiling NumiVivoCLI main.swift
+[41/110] Write Objects.LinkFileList
+[42/110] Linking numivivo
+[43/110] Applying numivivo
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:54:13: warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+ 52 |     }
+ 53 |     private struct Implementation: Codable {
+ 54 |         let schema = "numivivo.org/test-evidence/prepared-reaction-implementation/v1"
+    |             |- warning: immutable property will not be decoded because it is declared with an initial value which cannot be overwritten
+    |             |- note: set the initial value via the initializer or explicitly define a CodingKeys enum including a 'schema' case to silence this warning
+    |             `- note: make the property mutable instead
+ 55 |         let sourceCommit: String
+ 56 |         let numericalContract: String
+
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/PreparedReactionFullRouteTests.swift:139:43: warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+137 |         try #require(compiled.system.bonds[0].forceConstant == 1000 && compiled.system.bonds[0].lengthNM == 0.125)
+138 |         var missing = request
+139 |         missing.forceField = try #require(request.forceField)
+    |                                           `- warning: '#require(_:_:)' is redundant because 'request.forceField' never equals 'nil' (from macro 'require')
+140 |         missing.forceField!.bondParameters = []
+141 |         var rejected = false
+[75/130] Compiling NumiVivoIntegrationTests MetalSamplingIdentityTests.swift
+[76/130] Compiling NumiVivoIntegrationTests MolecularMultistateRefinementWorkflowTests.swift
+[77/130] Compiling NumiVivoIntegrationTests MolecularSamplingArchiveReaderTests.swift
+[78/130] Compiling NumiVivoIntegrationTests MolecularSamplingExporterTests.swift
+[79/130] Compiling NumiVivoIntegrationTests MolecularSamplingNativeBridgeTests.swift
+[80/130] Compiling NumiVivoIntegrationTests MultipolePMETests.swift
+[81/130] Compiling NumiVivoIntegrationTests MultistateMBARTests.swift
+[82/130] Compiling NumiVivoIntegrationTests MultistateReducedPotentialArchiveTests.swift
+[83/130] Compiling NumiVivoIntegrationTests NCMCProtocolKernelTests.swift
+[84/130] Compiling NumiVivoIntegrationTests NuclearMetalResourceTests.swift
+[85/130] Compiling NumiVivoIntegrationTests PeriodicQMMMHamiltonianTests.swift
+[86/130] Compiling NumiVivoIntegrationTests PlatformMechanismWorkflowTests.swift
+[87/130] Emitting module NumiVivoIntegrationTests
+[88/130] Compiling NumiVivoIntegrationTests AdaptiveQMMMHamiltonianTests.swift
+[89/130] Compiling NumiVivoIntegrationTests AdaptiveRefinementWorkflowTests.swift
+[90/130] Compiling NumiVivoIntegrationTests AppleExecutionTests.swift
+[91/130] Compiling NumiVivoIntegrationTests BarrierConvergenceTests.swift
+[92/130] Compiling NumiVivoIntegrationTests BarrierTunnellingTests.swift
+[93/130] Compiling NumiVivoIntegrationTests ChemicalStateAlchemicalFreeEnergyTests.swift
+[94/130] Compiling NumiVivoIntegrationTests ChemicalStateCatalogTests.swift
+[95/130] Compiling NumiVivoIntegrationTests ChemicalStateEnumerationTests.swift
+[96/130] Compiling NumiVivoIntegrationTests ClassicalNPTTransitionTests.swift
+[97/130] Compiling NumiVivoIntegrationTests ClassicalPMEConformanceTests.swift
+[98/130] Compiling NumiVivoIntegrationTests ClassicalThermalConformanceTests.swift
+[99/130] Compiling NumiVivoIntegrationTests ConditionalEncounterTests.swift
+[100/130] Compiling NumiVivoIntegrationTests ConstantPHDiscreteMDTests.swift
+[101/130] Compiling NumiVivoIntegrationTests ConstantPHMetalAdapterTests.swift
+[102/130] Compiling NumiVivoIntegrationTests ConstantPHNCMCMetalTests.swift
+[103/130] Compiling NumiVivoIntegrationTests ConstantPHNCMCTests.swift
+[104/130] Compiling NumiVivoIntegrationTests ConstantPHReplicaExchangeTests.swift
+[105/130] Compiling NumiVivoIntegrationTests ECCSolventClosureTests.swift
+[106/130] Compiling NumiVivoIntegrationTests GlobalJointUncertaintyTests.swift
+[107/130] Compiling NumiVivoIntegrationTests GlobalKineticUncertaintyTests.swift
+[108/130] Compiling NumiVivoIntegrationTests HybridRuntimeTests.swift
+[109/130] Compiling NumiVivoIntegrationTests ReactionConnectivityTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[110/130] Compiling NumiVivoIntegrationTests ReactiveSurrogateTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[111/130] Compiling NumiVivoIntegrationTests RingPolymerSamplingTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[112/130] Compiling NumiVivoIntegrationTests SamplingReactionSeedTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[113/130] Compiling NumiVivoIntegrationTests ScientificClosureTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[114/130] Compiling NumiVivoIntegrationTests SelectedCITests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[115/130] Compiling NumiVivoIntegrationTests SingleCellClusteringTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[116/130] Compiling NumiVivoIntegrationTests SingleCellCohortTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[117/130] Compiling NumiVivoIntegrationTests SingleCellEmbeddingTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[118/130] Compiling NumiVivoIntegrationTests SingleCellIntegrationTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[119/130] Compiling NumiVivoIntegrationTests SingleCellInterchangeTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[120/130] Compiling NumiVivoIntegrationTests SingleCellMappedReductionTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[121/130] Compiling NumiVivoIntegrationTests SingleCellNBCohortTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[122/130] Compiling NumiVivoIntegrationTests SingleCellNegativeBinomialTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[123/130] Compiling NumiVivoIntegrationTests SingleCellNeighborTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[124/130] Compiling NumiVivoIntegrationTests SingleCellProgramTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[125/130] Compiling NumiVivoIntegrationTests SingleCellReductionTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[126/130] Compiling NumiVivoIntegrationTests SolventPromotionTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[127/130] Compiling NumiVivoIntegrationTests VivoNeoantigenIntegrationTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+[128/130] Compiling NumiVivoIntegrationTests WorkflowCancellationTests.swift
+/Users/n/numivivo-h5ad-20260909/Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift:13:21: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+11 |         let features=["A","B","C"].map { VivoOmicsFeature(id: $0,name: $0) }
+12 |         let cells=(0..<3).map { VivoOmicsCell(barcode: String($0),sampleID: "s") }
+13 |         let quality=(0..<3).map { VivoCellQuality(sampleID: "s",barcode: String($0),totalCounts: $0==2 ? 0 : 10,
+   |                     `- error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions
+14 |             detectedFeatures: $0==2 ? 0 : 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil) }
+15 |         return try .init(features: features,cells: cells,samples: [.init(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: organism)],
+error: fatalError

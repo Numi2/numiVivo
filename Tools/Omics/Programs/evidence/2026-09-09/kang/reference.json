@@ -1,0 +1,148 @@
+{
+  "status": "passed",
+  "numericalAgreement": true,
+  "expectedDirectionObserved": true,
+  "cells": 2651,
+  "programs": [
+    {
+      "id": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+      "requested": 97,
+      "matched": 95,
+      "missing": [
+        "TENT5A",
+        "WARS1"
+      ],
+      "maximumAbsoluteScoreError": 1.3322676295501878e-15
+    },
+    {
+      "id": "integration-ifn-five",
+      "requested": 5,
+      "matched": 5,
+      "missing": [],
+      "maximumAbsoluteScoreError": 1.3322676295501878e-15
+    }
+  ],
+  "maximumAbsoluteScoreError": 1.3322676295501878e-15,
+  "descriptiveBiology": [
+    {
+      "program": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+      "donor": "patient_101",
+      "controlCells": 106,
+      "stimulatedCells": 141,
+      "meanDifference": 0.6537405311724268
+    },
+    {
+      "program": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+      "donor": "patient_1015",
+      "controlCells": 459,
+      "stimulatedCells": 366,
+      "meanDifference": 0.6621927772485116
+    },
+    {
+      "program": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+      "donor": "patient_1016",
+      "controlCells": 125,
+      "stimulatedCells": 123,
+      "meanDifference": 0.6156784174507369
+    },
+    {
+      "program": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+      "donor": "patient_1039",
+      "controlCells": 26,
+      "stimulatedCells": 41,
+      "meanDifference": 0.6079987129318829
+    },
+    {
+      "program": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+      "donor": "patient_107",
+      "controlCells": 44,
+      "stimulatedCells": 60,
+      "meanDifference": 0.6362171861424906
+    },
+    {
+      "program": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+      "donor": "patient_1244",
+      "controlCells": 118,
+      "stimulatedCells": 96,
+      "meanDifference": 0.6048175512236351
+    },
+    {
+      "program": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+      "donor": "patient_1256",
+      "controlCells": 218,
+      "stimulatedCells": 219,
+      "meanDifference": 0.6075939962116669
+    },
+    {
+      "program": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+      "donor": "patient_1488",
+      "controlCells": 220,
+      "stimulatedCells": 289,
+      "meanDifference": 0.6446599640942585
+    },
+    {
+      "program": "integration-ifn-five",
+      "donor": "patient_101",
+      "controlCells": 106,
+      "stimulatedCells": 141,
+      "meanDifference": 2.977348313798544
+    },
+    {
+      "program": "integration-ifn-five",
+      "donor": "patient_1015",
+      "controlCells": 459,
+      "stimulatedCells": 366,
+      "meanDifference": 2.9171166033155678
+    },
+    {
+      "program": "integration-ifn-five",
+      "donor": "patient_1016",
+      "controlCells": 125,
+      "stimulatedCells": 123,
+      "meanDifference": 2.8270417984529455
+    },
+    {
+      "program": "integration-ifn-five",
+      "donor": "patient_1039",
+      "controlCells": 26,
+      "stimulatedCells": 41,
+      "meanDifference": 2.775843714801996
+    },
+    {
+      "program": "integration-ifn-five",
+      "donor": "patient_107",
+      "controlCells": 44,
+      "stimulatedCells": 60,
+      "meanDifference": 2.892081855015884
+    },
+    {
+      "program": "integration-ifn-five",
+      "donor": "patient_1244",
+      "controlCells": 118,
+      "stimulatedCells": 96,
+      "meanDifference": 2.8004606231478744
+    },
+    {
+      "program": "integration-ifn-five",
+      "donor": "patient_1256",
+      "controlCells": 218,
+      "stimulatedCells": 219,
+      "meanDifference": 2.8804077935502472
+    },
+    {
+      "program": "integration-ifn-five",
+      "donor": "patient_1488",
+      "controlCells": 220,
+      "stimulatedCells": 289,
+      "meanDifference": 2.939105158021277
+    }
+  ],
+  "sourceSHA256": "6e5609e5bd0635ac1bd2a8f9a2bf98ad4fa9a012e8e4e2ad926436d073d745f0",
+  "reportSHA256": "0600f68a3062f94c4fefb96282f0394d82620e52dcb8efa4997522616af38c0f",
+  "versions": {
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "numpy": "2.5.3"
+  },
+  "qualification": "Fixed expression-score agreement and within-donor descriptive observations. No automatic labels, inferred pathway activity, independent cell-type ground truth, held-out prediction or cross-study biological calibration."
+}

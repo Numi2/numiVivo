@@ -288,8 +288,14 @@ The complete development objective remains open:
    Multiple independent donor studies, diverse cell types, rare states, multiple
    simultaneous covariates and prospective mapping remain unqualified. This does
    not yet establish competitive general multi-donor integration.
-6. **Annotation:** deterministic marker/program scoring with provenance, then
-   learned reference mapping; automatic labels must not become authoritative.
+6. **Annotation:** [native fixed marker/program scoring](../Tools/Omics/Programs/README.md)
+   now shares sparse arithmetic between resident and streamed H5AD routes, with
+   exact IDs, signed weights, definition fingerprints, missing-gene coverage and
+   null scores for empty libraries. Full Kang and Baron comparisons pass against
+   independent sparse Scanpy-normalized products, with descriptive within-donor
+   response observations. Learned reference mapping, calibrated annotation and
+   independent multi-study biological qualification remain; scores do not assign
+   authoritative labels.
 7. **Perturbation prediction:** held-out perturbation/donor/context experiments,
    connection to Bayesian/mechanistic owners and real-data evaluation remain.
 8. **Multimodal:** multiple feature spaces per cell for ATAC, CITE-seq, paired

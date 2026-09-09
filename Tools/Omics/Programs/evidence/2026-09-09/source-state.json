@@ -1,0 +1,35 @@
+{
+  "baseCommit": "dece15816e92778fefce453aa56f1d4d8546d5d2",
+  "sourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoSingleCellPrograms.swift": "e1033782f5241dbcc2a0cf1f89aaf51c9d4b0f1df25bb97f7eba0822c84368a3",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellCohortAnalysis.swift": "1c31572c44058040158fa8c24be26364fcaa5b42763543ced2309f8af4a66fc4",
+    "Sources/NumiVivoKit/Omics/VivoH5ADPseudobulk.swift": "5d33b53c97edd8fbec522d27ffd351db3e21b39f61505ee72e08bf18d7e88643",
+    "Tests/NumiVivoIntegrationTests/SingleCellProgramTests.swift": "5fa19553dbc36ac6dd41f2912068e1a38ecbefb8ec9b92e3831611adb9e1973e",
+    "Tools/Omics/H5AD/build.sh": "4af54e299ec4b39db957b4651d4d1608064c3e5a3bdd8ce826ba8360c98fdc45"
+  },
+  "remoteTestedSourcesMatchLocal": true,
+  "buildHost": "macmini:/Users/n/numivivo-h5ad-20260909",
+  "executionHost": "Darwin Ts-MacBook-Air.local 25.6.0 Darwin Kernel Version 25.6.0: Fri May 15 01:56:36 PDT 2026; root:xnu-12377.160.49.0.1~42/RELEASE_ARM64_T8132 arm64",
+  "binary": "/Users/home/numivivo-programs-product-20260909/numivivo",
+  "binarySHA256": "f337e6940030a2d40ab618e01a05b37bec79dd70dedbee0822a76c1f35177956",
+  "artifacts": {
+    "kang": {
+      "directory": "/Users/home/numivivo-kang-programs-product-20260909",
+      "reportSHA256": "0600f68a3062f94c4fefb96282f0394d82620e52dcb8efa4997522616af38c0f",
+      "referenceSHA256": "c88730d97612e64df602a15a4af2ecb662075d6d7b1f414420611e91cf53af67",
+      "actualStagingPrefixAbsent": true
+    },
+    "baron": {
+      "directory": "/Users/home/numivivo-baron-programs-product-20260909",
+      "reportSHA256": "719f7bcdaaf933f2850fbca164dd93da3d7eca2bd67e2e67cc11fdd7ae2d4cf5",
+      "referenceSHA256": "e805e538f940d8ff188c190b7a0a1772bd3de0a8c44e781212df537b76fc707a",
+      "actualStagingPrefixAbsent": true
+    }
+  },
+  "sourceSnapshots": {
+    "interferon-alpha.json": "2a3d93f3170bc9866ced1135bdde9870f18294f7ad3ae6cb3732dc3680483455",
+    "pancreas-beta.json": "39315326866c1902a63efea1c93928828124df9136c1180671c52c5e07e3de4c"
+  },
+  "qualification": "CPU fixed expression programs, sparse numerical agreement and within-donor descriptive associations. No learned labels, calibrated pathway activity, prospective prediction, million-cell or GPU qualification.",
+  "verificationCorrection": "Initial harness used an incorrect staging glob; corrected to .numivivo-stream-* and checked directly on both complete output directories."
+}
