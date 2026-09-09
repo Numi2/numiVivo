@@ -2,6 +2,9 @@ import Foundation
 
 public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     public enum Covariate: String, Codable, Sendable { case donor, batch }
+    public enum RidgeScaling: String, Codable, Sendable { case expectedClusterBatchMass }
+    /// Nil preserves the original fixed penalty; otherwise ridge is the expected-mass coefficient.
+    public var ridgeScaling: RidgeScaling? = nil
     public var covariate: Covariate = .donor
     public var clusters: Int = 88
     public var diversity: Double = 2
@@ -12,14 +15,15 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     public var seed: UInt64 = 7
     public var maximumWork: Int = 200_000_000
     public init() {}
-    private enum CodingKeys: String, CodingKey { case covariate, clusters, diversity, ridge, temperature, maximumIterations, relativeTolerance, seed, maximumWork }
+    private enum CodingKeys: String, CodingKey { case covariate, clusters, diversity, ridge, ridgeScaling, temperature, maximumIterations, relativeTolerance, seed, maximumWork }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["covariate","clusters","diversity","ridge","temperature","maximumIterations","relativeTolerance","seed","maximumWork"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["covariate","clusters","diversity","ridge","ridgeScaling","temperature","maximumIterations","relativeTolerance","seed","maximumWork"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         covariate = try c.decodeIfPresent(Covariate.self,forKey: .covariate) ?? .donor
         clusters = try c.decodeIfPresent(Int.self,forKey: .clusters) ?? 88
         diversity = try c.decodeIfPresent(Double.self,forKey: .diversity) ?? 2
         ridge = try c.decodeIfPresent(Double.self,forKey: .ridge) ?? 1
+        ridgeScaling = try c.decodeIfPresent(RidgeScaling.self, forKey: .ridgeScaling)
         temperature = try c.decodeIfPresent(Double.self,forKey: .temperature) ?? 0.1
         maximumIterations = try c.decodeIfPresent(Int.self,forKey: .maximumIterations) ?? 10
         relativeTolerance = try c.decodeIfPresent(Double.self,forKey: .relativeTolerance) ?? 0.01
@@ -51,6 +55,8 @@ public struct VivoSingleCellIntegrationResult: Codable, Sendable, Equatable {
     public let stoppingReason: String
     public let maximumRidgeResidual: Double
     public let qualification: String
+    /// Final cluster-by-level penalties; absent for the original fixed-ridge mode.
+    public var ridgePenalties: [[Double]]? = nil
 }
 
 enum VivoSingleCellIntegration {
@@ -78,6 +84,33 @@ enum VivoSingleCellIntegration {
         }
         guard residual < 1e-10, intercept.allSatisfy(\.isFinite), effects.allSatisfy({ $0.allSatisfy(\.isFinite) }) else { throw VivoOmicsError.invalid("integration ridge normal-equation residual") }
         return (intercept,effects,residual)
+    }
+
+    /// Categorical ridge with independently specified positive penalties. The
+    /// unpenalized intercept uses the same positive Schur complement as fixed ridge.
+    static func ridgeFit(masses: [Double], sums: [[Double]], penalties: [Double]) throws -> (intercept: [Double], effects: [[Double]], residual: Double) {
+        let d = sums.first?.count ?? 0
+        guard d > 0, masses.count >= 2, masses.count == sums.count, masses.count == penalties.count,
+              masses.allSatisfy({ $0.isFinite && $0 >= 0 }), penalties.allSatisfy({ $0.isFinite && $0 > 0 }),
+              sums.allSatisfy({ $0.count == d && $0.allSatisfy(\.isFinite) }) else { throw VivoOmicsError.invalid("integration adaptive ridge inputs") }
+        var denominator = 0.0
+        for b in masses.indices { denominator += masses[b] * penalties[b] / (masses[b] + penalties[b]) }
+        guard denominator > 1e-14 else { throw VivoOmicsError.invalid("integration cluster has no effective mass") }
+        var intercept = [Double](repeating: 0, count: d)
+        for b in masses.indices { for j in 0..<d { intercept[j] += sums[b][j] * penalties[b] / (masses[b] + penalties[b]) / denominator } }
+        var effects = sums, residual = 0.0
+        for b in masses.indices { for j in 0..<d {
+            effects[b][j] = (sums[b][j] - masses[b] * intercept[j]) / (masses[b] + penalties[b])
+            let error = masses[b] * intercept[j] + (masses[b] + penalties[b]) * effects[b][j] - sums[b][j]
+            residual = max(residual, abs(error) / (1 + abs(sums[b][j])))
+        } }
+        for j in 0..<d {
+            var error = 0.0, scale = 1.0
+            for b in masses.indices { error += masses[b] * (intercept[j] + effects[b][j]) - sums[b][j]; scale += abs(sums[b][j]) }
+            residual = max(residual, abs(error) / scale)
+        }
+        guard residual < 1e-10, intercept.allSatisfy(\.isFinite), effects.allSatisfy({ $0.allSatisfy(\.isFinite) }) else { throw VivoOmicsError.invalid("integration adaptive ridge normal-equation residual") }
+        return (intercept, effects, residual)
     }
 
     static func run(_ reduction: VivoSingleCellReductionResult, samples: [VivoOmicsSample], options o: VivoSingleCellIntegrationOptions) throws -> VivoSingleCellIntegrationResult {
@@ -197,6 +230,7 @@ enum VivoSingleCellIntegration {
         }
         var objectives: [Double] = [], improvements: [Double] = [], maxResidual = 0.0, stopping = "iteration-limit"
         var assignmentCenters: [[Double]] = []
+        var ridgePenalties: [[Double]]? = o.ridgeScaling == nil ? nil : [[Double]](repeating: [Double](repeating: 0, count: bCount), count: k)
         for iteration in 0..<o.maximumIterations {
             try Task.checkCancellation()
             try assignmentScores.copy(from: scores, normalize: true)
@@ -228,6 +262,12 @@ enum VivoSingleCellIntegration {
             // Every correction is fitted to and subtracted from original PCA.
             try scores.copy(from: x)
             for c in 0..<k {
+                if o.ridgeScaling == .expectedClusterBatchMass {
+                    ridgePenalties![c] = sizes.map { size in
+                        let expected = max(0, masses[c]) * size / Double(n)
+                        return o.ridge * expected
+                    }
+                }
                 let active = (0..<bCount).filter { observed[c*bCount+$0]/sizes[$0] > 1e-5 }
                 if active.count < 2 { continue }
                 var sums = [[Double]](repeating: [Double](repeating: 0,count: d),count: bCount)
@@ -235,7 +275,12 @@ enum VivoSingleCellIntegration {
                     let weight = try r.value(i, c), row = try x.row(i)
                     for j in 0..<d { sums[batch[i]][j] += weight*row[j] }
                 }
-                let fit = try ridgeFit(masses: active.map { max(0,observed[c*bCount+$0]) },sums: active.map { sums[$0] },ridge: o.ridge)
+                let fit: (intercept: [Double], effects: [[Double]], residual: Double)
+                if let ridgePenalties {
+                    fit = try ridgeFit(masses: active.map { max(0, observed[c*bCount+$0]) }, sums: active.map { sums[$0] }, penalties: active.map { ridgePenalties[c][$0] })
+                } else {
+                    fit = try ridgeFit(masses: active.map { max(0,observed[c*bCount+$0]) },sums: active.map { sums[$0] },ridge: o.ridge)
+                }
                 maxResidual = max(maxResidual,fit.residual); centers[c] = fit.intercept
                 for (slot,b) in active.enumerated() { for i in 0..<n where batch[i] == b {
                     let weight = try r.value(i, c); var row = try scores.row(i)
@@ -250,12 +295,14 @@ enum VivoSingleCellIntegration {
         }
         return .init(levels: levels, cellLevels: batch, scores: scores, memberships: r,
             assignmentScores: assignmentScores, assignmentCenters: assignmentCenters, objectives: objectives,
-            relativeImprovements: improvements, stoppingReason: stopping, maximumRidgeResidual: maxResidual)
+            relativeImprovements: improvements, stoppingReason: stopping, maximumRidgeResidual: maxResidual, ridgePenalties: ridgePenalties)
     }
 }
 
 struct VivoIntegrationSolution {
-    static let method = "diversity-soft-clustering-categorical-ridge-Double-v1"
+    static func method(options: VivoSingleCellIntegrationOptions) -> String {
+        options.ridgeScaling == nil ? "diversity-soft-clustering-categorical-ridge-Double-v1" : "diversity-soft-clustering-expected-mass-ridge-Double-v1"
+    }
     static let qualification = "Transductive single-covariate PCA correction with Harmony2 objective and intercept centers; independent initialization. Original counts/PCA preserved. Stopping diagnostics are not biological preservation or prospective prediction evidence."
     let levels: [String]
     let cellLevels: [Int]
@@ -267,10 +314,11 @@ struct VivoIntegrationSolution {
     let relativeImprovements: [Double]
     let stoppingReason: String
     let maximumRidgeResidual: Double
+    let ridgePenalties: [[Double]]?
     func materialize(cells: [VivoOmicsCellIdentity], options: VivoSingleCellIntegrationOptions) throws -> VivoSingleCellIntegrationResult {
-        try .init(method: Self.method, options: options, cells: cells, levels: levels, cellLevels: cellLevels,
+        try .init(method: Self.method(options: options), options: options, cells: cells, levels: levels, cellLevels: cellLevels,
             scores: scores.materialize(), memberships: memberships.materialize(), assignmentScores: assignmentScores.materialize(),
             assignmentCenters: assignmentCenters, objectives: objectives, relativeImprovements: relativeImprovements,
-            stoppingReason: stoppingReason, maximumRidgeResidual: maximumRidgeResidual, qualification: Self.qualification)
+            stoppingReason: stoppingReason, maximumRidgeResidual: maximumRidgeResidual, qualification: Self.qualification, ridgePenalties: ridgePenalties)
     }
 }

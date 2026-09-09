@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "status": "declared-before-adaptive-reference-or-native-results",
+  "method": "Expected cluster/batch mass ridge penalties lambda[c,b] = alpha * sum_i R[i,c] * N_b/N",
+  "alpha": 0.2,
+  "source": "harmonypy 2.0.0 default automatic lambda, verified sdist sha256 98c18954781aec9a82aaec3cde3764d89fd2ef93e84ece6724bc0f25b37244ed, harmony.hpp find_lambda and harmony.cpp correction",
+  "nativeOptions": {
+    "covariate": "donor",
+    "clusters": 100,
+    "diversity": 2,
+    "ridge": 0.2,
+    "ridgeScaling": "expectedClusterBatchMass",
+    "temperature": 0.1,
+    "maximumIterations": 10,
+    "relativeTolerance": 0.01,
+    "maximumWork": 2000000000
+  },
+  "seeds": [
+    7,
+    19,
+    41
+  ],
+  "reference": "harmonypy 2.0.0 lamb=None alpha=0.2, all other options fixed to the prior benchmark; no grid search",
+  "dataRoles": {
+    "kang": "Previously inspected development/diagnostic cohort, not unseen validation",
+    "hagai": "Previously inspected response regression cohort, not unseen validation",
+    "ding": "Independent GSE132044 PBMC methodology study. Retain every UMI-method cell and all source genes; Smart-seq2 read-count cells remain a separate incompatible-unit source, not relabeled UMI. Require verified original cell-label alignment and source metadata before biological evaluation. No new automatic labels."
+  },
+  "preservation": "Retain all original fixed-ridge gates and failures. Apply the same .02 accuracy / .05 per-type recall and program-correlation margins to adaptive runs. Report exact donor-held-out 30NN and balanced-classifier diagnostics separately; do not substitute these for the original failed gate.",
+  "negativeControls": "Keep original global-centering failure and supplementary type/condition erasure evidence. All label-informed controls are diagnostic only.",
+  "qualification": "Candidate algorithm extension using an externally defined default, not proof that adaptation fixes NK loss or generalizes. No final competitiveness or million-cell claim."
+}

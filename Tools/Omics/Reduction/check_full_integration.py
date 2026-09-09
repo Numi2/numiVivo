@@ -95,10 +95,16 @@ def independent(root,x,donors):
  objective=(np.sum(r*distances)+options['temperature']*np.sum(r[r>0]*np.log(r[r>0]))+options['temperature']*options['diversity']*np.sum(observed*np.log((observed+expected+1)/(2*expected+1))))*2000/n
  np.testing.assert_allclose(objective,report['objectives'][-1],rtol=1e-10,atol=1e-10)
  reconstructed=x.copy()
+ adaptive=options.get('ridgeScaling')=='expectedClusterBatchMass'
+ assert options.get('ridgeScaling') in [None,'expectedClusterBatchMass']
+ penalties=options['ridge']*expected if adaptive else np.full_like(expected,options['ridge'])
+ if adaptive:
+  np.testing.assert_allclose(report['ridgePenalties'],penalties,rtol=1e-10,atol=1e-10)
+ else:assert report.get('ridgePenalties') is None
  for c in range(r.shape[1]):
   active=np.flatnonzero(observed[c]/sizes>1e-5)
   if len(active)<2:continue
-  masses=observed[c,active];sums=np.stack([r[batch==b,c]@x[batch==b] for b in active]);normal=np.diag(np.r_[masses.sum(),masses+options['ridge']]);normal[0,1:]=masses;normal[1:,0]=masses
+  masses=observed[c,active];sums=np.stack([r[batch==b,c]@x[batch==b] for b in active]);normal=np.diag(np.r_[masses.sum(),masses+penalties[c,active]]);normal[0,1:]=masses;normal[1:,0]=masses
   beta=np.linalg.solve(normal,np.vstack([sums.sum(axis=0),sums]))
   for slot,b in enumerate(active):
    mask=batch==b;reconstructed[mask]-=r[mask,c,None]*beta[slot+1]

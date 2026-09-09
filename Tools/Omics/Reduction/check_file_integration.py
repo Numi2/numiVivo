@@ -35,6 +35,12 @@ for kind in ['fitted','query']:
  run(kind+'-batch-publish',['singlecell-pca-integrate',a.out/kind,'--plan',batch_plan,'--output',batch_root]);run(kind+'-batch-verify',['singlecell-pca-integrate-verify',batch_root])
  assert json.loads((batch_root/'report.json').read_text())['levels']==['b0','b1']
  for filename in ['scores.bin','memberships.bin','assignment-scores.bin']:assert (batch_root/filename).read_bytes()==(root/filename).read_bytes()
+ adaptive_plan=a.out/(kind+'-adaptive-plan.json');write(adaptive_plan,dict(schemaVersion=1,inputKind=kind,integration=dict(options,ridge=.2,ridgeScaling='expectedClusterBatchMass')));adaptive=a.out/(kind+'-adaptive')
+ run(kind+'-adaptive-publish',['singlecell-pca-integrate',a.out/kind,'--plan',adaptive_plan,'--output',adaptive]);run(kind+'-adaptive-verify',['singlecell-pca-integrate-verify',adaptive])
+ report=json.loads((adaptive/'report.json').read_text());assert report['method']=='diversity-soft-clustering-expected-mass-ridge-Double-v1' and len(report['ridgePenalties'])==3
+ tampered=a.out/(kind+'-adaptive-penalties-tamper');shutil.copytree(adaptive,tampered);report['ridgePenalties'][0][0]+=1;write(tampered/'report.json',report)
+ receipt=json.loads((tampered/'receipt.json').read_text());receipt['report']=dict(bytes=list(hashlib.sha256((tampered/'report.json').read_bytes()).digest()));write(tampered/'receipt.json',receipt)
+ run(kind+'-adaptive-rehashed-penalties',['singlecell-pca-integrate-verify',tampered],False)
  for mode in ['exact','hnsw']:
   gp=dict(schemaVersion=1,inputKind='integrated',neighbors=dict(neighbors=5,representation='integrated'),execution=dict(workers=1),storage='binary')
   if mode=='hnsw':gp['approximation']=dict(connections=8,constructionWidth=64,searchWidth=64)
@@ -67,5 +73,5 @@ for label,edit in [('confounded',lambda m:[s.update(condition=s['donorID']) for 
 for kind,representation in [('fitted','integrated'),('integrated','pca')]:
  plan=dict(schemaVersion=1,inputKind=kind,neighbors=dict(neighbors=5,representation=representation));path=a.out/(kind+'-mismatch.json');write(path,plan);run(kind+'-mismatch',['singlecell-pca-neighbors',base,'--plan',path,'--output',a.out/(kind+'-rejected-graph')],False)
 assert not any(p.name.startswith(('.integration-matrix-','.numivivo-integration-')) for p in a.out.rglob('*'))
-summary=dict(status='passed',commands=len(commands),expectedRejections=sum(not c['expectedSuccess'] for c in commands),allFrozenMatrixBitsExact=True,repeatedReceiptsExact=True,fittedAndQuery=True,donorAndBatch=True,exactAndHNSWDownstreamClusteringEmbedding=True,rehashedOutputsAndParentRejected=True,confoundedAndUnknownCovariateRejected=True,recursiveAndRepresentationMismatchRejected=True,scratchRemoved=True,binarySHA256=hashlib.sha256(a.binary.read_bytes()).hexdigest())
+summary=dict(status='passed',commands=len(commands),expectedRejections=sum(not c['expectedSuccess'] for c in commands),allFrozenMatrixBitsExact=True,repeatedReceiptsExact=True,fittedAndQuery=True,donorAndBatch=True,adaptiveFittedAndQuery=True,rehashedAdaptivePenaltiesRejected=True,exactAndHNSWDownstreamClusteringEmbedding=True,rehashedOutputsAndParentRejected=True,confoundedAndUnknownCovariateRejected=True,recursiveAndRepresentationMismatchRejected=True,scratchRemoved=True,binarySHA256=hashlib.sha256(a.binary.read_bytes()).hexdigest())
 write(a.out/'checks.json',summary);print(json.dumps(summary),flush=True)

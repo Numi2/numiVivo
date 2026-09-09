@@ -6,6 +6,9 @@ Biological preservation is a separate result: the independent Hagai cohort passe
 its declared margins, while full Kang fails NK-cell preservation. This does not
 qualify general multi-donor integration.
 
+The optional [expected-mass ridge mode](ADAPTIVE_INTEGRATION.md) has a separate
+protocol and evaluation. This page retains the original fixed-ridge results.
+
 ![Measured preservation across three seeds](evidence/2026-09-09-file-integration/figure/preservation.png)
 
 ## Use and ownership

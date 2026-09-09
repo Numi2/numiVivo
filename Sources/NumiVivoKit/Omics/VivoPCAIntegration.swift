@@ -36,6 +36,7 @@ public struct VivoPCAIntegrationReport: Codable, Sendable, Equatable {
     public let maximumMappedBytesPerMatrix: Int
     public let maximumSimultaneousMatrices: Int
     public let qualification: String
+    public var ridgePenalties: [[Double]]? = nil
 }
 public struct VivoPCAIntegrationReceipt: Codable, Sendable, Equatable {
     public let schemaVersion: Int
@@ -108,12 +109,12 @@ public enum VivoPCAIntegration {
         }
         let cells = metadata.cells.map { VivoOmicsCellIdentity(sampleID: $0.sampleID, barcode: $0.barcode) }
         let result = try VivoSingleCellIntegration.run(cells: cells, x: x, samples: metadata.samples, options: plan.integration, matrix: matrix)
-        let report = VivoPCAIntegrationReport(method: VivoIntegrationSolution.method, cells: n, components: dimensions, clusters: plan.integration.clusters,
+        let report = VivoPCAIntegrationReport(method: VivoIntegrationSolution.method(options: plan.integration), cells: n, components: dimensions, clusters: plan.integration.clusters,
             levels: result.levels, cellLevels: result.cellLevels, assignmentCenters: result.assignmentCenters, objectives: result.objectives,
             relativeImprovements: result.relativeImprovements, stoppingReason: result.stoppingReason, maximumRidgeResidual: result.maximumRidgeResidual,
             scratchBytes: matrices.reduce(0) { $0 + $1.fileBytes }, maximumMappedBytesPerMatrix: VivoIntegrationMatrix.maximumWindowBytes,
             maximumSimultaneousMatrices: matrices.count,
-            qualification: VivoIntegrationSolution.qualification + " Latent matrices use private row-major f64 scratch with one 64 MiB mapping per matrix; cell identities, covariate indices, permutations and cluster statistics remain resident. Count and PCA parent reconstruction is included. Final matrices use complete row-major u32-row/u32-column/f64 little-endian records. Work budget is an admission index, not an operation counter. No million-cell, Metal or biological qualification follows from file storage.")
+            qualification: VivoIntegrationSolution.qualification + " Latent matrices use private row-major f64 scratch with one 64 MiB mapping per matrix; cell identities, covariate indices, permutations and cluster statistics remain resident. Count and PCA parent reconstruction is included. Final matrices use complete row-major u32-row/u32-column/f64 little-endian records. Work budget is an admission index, not an operation counter. No million-cell, Metal or biological qualification follows from file storage.", ridgePenalties: result.ridgePenalties)
         let receipt = try VivoPCAIntegrationReceipt(schemaVersion: 1, input: parent,
             plan: write(plan, temp, "plan.json", maximum: 65_536),
             metadata: VivoOmicsFileSnapshot.fingerprint(source.appendingPathComponent("metadata.json"), copyTo: temp.appendingPathComponent("metadata.json"), maximumBytes: 536_870_912),

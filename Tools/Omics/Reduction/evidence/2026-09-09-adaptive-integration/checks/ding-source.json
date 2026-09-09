@@ -1,0 +1,46 @@
+{
+  "status": "raw-source-acquired-annotation-gate-pending",
+  "header": "%%MatrixMarket matrix coordinate integer general",
+  "shape": "33694 44615 39622839",
+  "cells": 44615,
+  "features": 33694,
+  "uniqueCells": 44615,
+  "uniqueFeatures": 33694,
+  "libraryCells": {
+    "PBMC1.Smart-seq2": 311,
+    "PBMC1.CEL-Seq2": 257,
+    "PBMC1.10x-Chromium-v2-A": 5172,
+    "PBMC1.10x-Chromium-v2-B": 3057,
+    "PBMC1.10x-Chromium-v3": 4033,
+    "PBMC1.Drop-seq": 4683,
+    "PBMC1.Seq-Well": 5125,
+    "PBMC1.inDrops": 6184,
+    "PBMC2.Smart-seq2": 273,
+    "PBMC2.CEL-Seq2": 307,
+    "PBMC2.10x-Chromium-v2": 3362,
+    "PBMC2.Drop-seq": 6412,
+    "PBMC2.Seq-Well": 913,
+    "PBMC2.inDrops": 4526
+  },
+  "files": [
+    {
+      "file": "cells.tsv.gz",
+      "bytes": 212165,
+      "sha256": "1011261d57c4a8c694e6c6ddebfd7107603d3789f6d5bc7ce30d91f8ecea3900"
+    },
+    {
+      "file": "counts.mtx.gz",
+      "bytes": 127509347,
+      "sha256": "e057891069195275e89f00c6b852380e9515367122fec06a0e563942901f09cb"
+    },
+    {
+      "file": "genes.tsv.gz",
+      "bytes": 238709,
+      "sha256": "ddb188e8fd1331d0098067273a882ed98bac7679a763701d838e6ff08898c00f"
+    }
+  ],
+  "annotationGate": "SCP424 download requires sign-in; original per-cell annotations not acquired. No biological evaluation or author-label reconstruction claimed.",
+  "source": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE132nnn/GSE132044/suppl/",
+  "unitBoundary": "Smart-seq2 read counts must remain separate from UMI-method counts.",
+  "experimentalDesign": "PBMC1/PBMC2 are experiments, one biological sample per experiment. Individual donor identity not established by this check."
+}

@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "cohort": "kang",
+      "seed": 7,
+      "allFixedMatrixAndReportBytesExact": true
+    },
+    {
+      "cohort": "kang",
+      "seed": 19,
+      "allFixedMatrixAndReportBytesExact": true
+    },
+    {
+      "cohort": "kang",
+      "seed": 41,
+      "allFixedMatrixAndReportBytesExact": true
+    },
+    {
+      "cohort": "hagai",
+      "seed": 7,
+      "allFixedMatrixAndReportBytesExact": true
+    },
+    {
+      "cohort": "hagai",
+      "seed": 19,
+      "allFixedMatrixAndReportBytesExact": true
+    },
+    {
+      "cohort": "hagai",
+      "seed": 41,
+      "allFixedMatrixAndReportBytesExact": true
+    },
+    {
+      "cohort": "baron",
+      "mode": "fixed",
+      "fullCohortConfoundingRejected": true
+    },
+    {
+      "cohort": "baron",
+      "mode": "adaptive",
+      "fullCohortConfoundingRejected": true
+    }
+  ],
+  "commands": 29,
+  "binarySHA256": "a56a056349aac2d2463ad56b5a8260257186cf6388a021f77d5bb0bc38566c8d",
+  "protocolSHA256": "770e7b649dc4a7c8f74b1510cf1223a844afd245b46a53fb688445b76e600047",
+  "qualification": "Fresh binary-bound inputs. Frozen outputs are byte comparison oracles only. Adaptive biological preservation requires separate evaluation."
+}
