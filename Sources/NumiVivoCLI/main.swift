@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoNeoantigenCLICommands.handles(arguments.first) {
+if VivoGenomicEvidenceCLICommands.handles(arguments.first) {
+    status = await VivoGenomicEvidenceCLICommands().run(arguments: arguments)
+} else if VivoNeoantigenCLICommands.handles(arguments.first) {
     status = await VivoNeoantigenCLICommands().run(arguments: arguments)
 } else if VivoSingleCellCLICommands.handles(arguments.first) {
     status = await VivoSingleCellCLICommands().run(arguments: arguments)
@@ -49,11 +51,12 @@ if VivoNeoantigenCLICommands.handles(arguments.first) {
 } else {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
+        FileHandle.standardOutput.write(Data("\nGenomic evidence: neoantigen-atlas-request, neoantigen-splice-job, neoantigen-evidence-import, neoantigen-evidence-verify, neoantigen-evidence-review, neoantigen-evidence-example, neoantigen-evidence-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nNeoantigen research review: neoantigen-example, neoantigen-import, neoantigen-verify, neoantigen-review, neoantigen-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nSingle-cell counts: singlecell-run, singlecell-verify, singlecell-export, singlecell-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nGeneral workflows: workflow-catalog, workflow-template, workflow-plan, workflow-run, workflow-import, workflow-export, workflow-verify, workflow-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nQM/MM free energy and chemical qualification: qmmm-free-energy-analyze, qmmm-transmission-analyze, qmmm-transmission-apply, qmmm-free-energy-rate, qmmm-free-energy-replicated-rate, qmmm-chemical-qualify, qmmm-chemical-state-populations, qmmm-chemical-state-network, qmmm-chemical-exchange-network, qmmm-chemical-exchange-validate, qmmm-free-energy-help.\n".utf8))
-        FileHandle.standardOutput.write(Data("\nPrepared molecular workflows: molecule-prepare-template, molecule-prepare, molecule-sampling-template, molecule-sampling-run, molecule-sampling-analyze, molecule-sampling-export, molecule-sampling-export-verify, molecule-rate, molecule-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("\nPrepared molecular workflows: molecule-prepare-template, molecule-prepare, molecule-sampling-template, molecule-sampling-run, molecule-sampling-analyze, molecule-sampling-export, molecule-rate, molecule-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nReaction qualification: reaction-template, reaction-run, reaction-help, reaction-seed, reaction-seed-verify, reaction-encounter-request, reaction-seed-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nShared-orbital ECC paths: chemistry-path-template, chemistry-path-run, chemistry-path-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nMetal-screened inference: engagement-screen-check, engagement-fit-screened, screening-help.\n".utf8))
