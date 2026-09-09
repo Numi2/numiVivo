@@ -29,7 +29,9 @@ full feature covariance matrix is materialized.
 
 The private cache uses 16-byte little-endian records: UInt32 row, UInt32 selected
 column and Float64 log-normalized value. Writes use a buffer capped at 1 MiB;
-PCA reads an explicit POSIX read-only private mmap. File size, bounds and values
+PCA reads through 16 MiB POSIX read-only private mapping windows, unmapping
+the previous window during each complete operator pass. It shares the count-store
+record window primitive; arithmetic still uses Float64 log values. File size, bounds and values
 are checked before arithmetic traversal. Scratch creation is exclusive, rejects
 symlinks and uses mode 0600. Normal completion and thrown errors unlink scratch;
 the existing publication owner cleans rejected staging. Abrupt process death
@@ -40,11 +42,11 @@ and actual PCA entry visits. Before cache writing, byte and work bounds reject
 oversized requests. Visits equal selected entries times
 `2 * min(maximumBasis, selectedFeatures) + 3 * components`. PCA rank, residual
 and orthogonality gates remain unchanged. The source scanner retains its
-1 GiB / 100 million nonzero bounds; the resident count projection retains its
+1 GiB / one billion nonzero bounds; the resident count projection retains its
 five-million-entry default. Cache bytes are capped at two billion and the
 entry-visit default is two billion (configurable up to twenty billion).
 
-## Full experimental matrix qualification
+## Original full experimental matrix qualification
 
 Both prepared sources retain the complete deposited count scope established by
 the existing [benchmark suite](../Benchmarks/README.md). Reference code uses
@@ -94,3 +96,42 @@ Optional [fixed expression programs](../Programs/README.md) share the archived
 source and add one separate scan. When programs and PCA are enabled together,
 there are four scans in total; the reduction component still accounts for its
 three scans, including QC.
+
+## Windowed PCA follow-up
+
+The v2 storage method `three-source-passes-windowed-selected-COO-v2` replaces the
+whole-file map with the shared 16 MiB window reader. File format, source traversal
+order, HVG selection, arithmetic accumulation order and PCA algorithm are retained.
+Validation and every forward/transpose traversal use windows, including rewinding
+from the final window to the first. Input vector dimensions reject explicitly.
+
+A new numerical control crosses a window boundary, repeats both operators three
+times, and checks exact products and visit accounting. This complements the
+complete Baron and Hagai cache sizes, which both exceed one window. Source
+reconstruction and resident metadata/score/report limits remain unchanged.
+
+`VivoOmicsFileSnapshot` now owns shared POSIX snapshot copying/hashing for this
+path and the persistent count store. Each caller keeps its existing byte cap.
+This also removes the Foundation read-buffer retention found in the prior
+count-store benchmark. Snapshot tests check exact multi-buffer copies, rejection
+before creation when oversized, and refusal to overwrite an existing snapshot.
+
+The final release passes 66 Swift tests in 18 suites, the count-store and streamed
+H5AD regression checks, H5AD projection controls, and CSR/CSC/implicit-zero PCA
+controls. Both complete real cohorts pass all eight workflow assertions and
+retain every native PCA field exactly relative to the published product.
+Independent Scanpy comparisons retain the original aligned score errors
+(Baron `2.780e-12`, Hagai `1.515e-11`) and exact 2,000-gene selections.
+
+Same-host publication observations on Apple M4 Pro / macOS 26.6:
+
+| Cohort | Prior seconds | Windowed seconds | Prior resident MB | Windowed resident MB |
+| --- | ---: | ---: | ---: | ---: |
+| Baron | 6.72 | 7.68 | 302.42 | 264.60 |
+| Hagai | 13.83 | 15.00 | 345.28 | 274.53 |
+
+These are single-run observations (decimal MB): memory decreased and wall time
+increased. Verification/repeat timings and memory are retained separately. This
+change does not claim a throughput improvement. The snapshot helper and mapping
+changes are measured together. [Full evidence](evidence/2026-09-09-windowed/README.md)
+binds source, product, baseline, complete reports, references and retained failures.

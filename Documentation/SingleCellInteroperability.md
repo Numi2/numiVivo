@@ -356,6 +356,9 @@ The complete development objective remains open:
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
    selected-entry PCA now pass full Baron and Hagai comparisons against Scanpy;
    see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).
+   Selected-entry PCA now uses 16 MiB mapping windows with a shared fixed-buffer
+   snapshot reader, replacing the whole-cache map. Full Baron/Hagai native PCA
+   outputs remain exact; independent Scanpy comparisons pass.
    Full Norman count aggregation now exercises 361.6 million source entries
    through bounded slices, with 3.58 million aggregate nonzeros.
    A [persistent count store with windowed normalization](../Tools/Omics/CountStore/README.md)

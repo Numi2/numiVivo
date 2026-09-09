@@ -13,7 +13,13 @@ import Testing
         for i in 0..<n { try writer.append(row: i % 100, feature: i % 50, bits: UInt64.max - UInt64(i)) }
         let hash = try writer.finish()
         #expect(try VivoH5ADCountStore.fingerprint(url) == hash)
-        let mapped = try VivoWindowedCountRecords(url, entries: n)
+        let snapshot = dir.appendingPathComponent("snapshot")
+        #expect(throws: (any Error).self) { try VivoOmicsFileSnapshot.fingerprint(url, copyTo: snapshot, maximumBytes: 10) }
+        #expect(!FileManager.default.fileExists(atPath: snapshot.path))
+        #expect(try VivoOmicsFileSnapshot.fingerprint(url, copyTo: snapshot, maximumBytes: n * 16) == hash)
+        #expect(try VivoH5ADCountStore.fingerprint(snapshot) == hash)
+        #expect(throws: (any Error).self) { try VivoOmicsFileSnapshot.fingerprint(url, copyTo: snapshot, maximumBytes: n * 16) }
+        let mapped = try VivoWindowedCountRecords(snapshot, entries: n)
         for i in [0,n-2,n-1,1] {
             let value = try mapped.record(i)
             #expect(value.row == i % 100 && value.feature == i % 50 && value.bits == UInt64.max - UInt64(i))

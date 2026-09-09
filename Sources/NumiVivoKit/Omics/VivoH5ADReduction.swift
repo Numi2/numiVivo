@@ -44,61 +44,50 @@ public struct VivoH5ADReductionStorage: Codable, Sendable, Equatable {
 /// 16-byte little-endian record is UInt32 row, UInt32 selected-column, Float64
 /// log-normalized value. It is not a new public count format or a second engine.
 final class VivoMappedReductionEntries {
-    let address: UnsafeMutableRawPointer
+    private let records: VivoWindowedCountRecords
+    private let rowCount: Int
+    private let columnCount: Int
     let byteCount: Int
     let count: Int
-    private(set) var visits=0
-    init(url: URL,expectedEntries: Int,rows: Int,columns: Int) throws {
-        let fd=open(url.path,O_RDONLY|O_NOFOLLOW)
-        guard fd>=0 else { throw VivoOmicsError.invalid("cannot open reduction cache") }
-        defer { _ = close(fd) }
-        var info=stat()
-        guard fstat(fd,&info)==0, (info.st_mode & mode_t(S_IFMT))==mode_t(S_IFREG),
-              expectedEntries>0, expectedEntries<=125_000_000,
-              info.st_size==expectedEntries*16 else { throw VivoOmicsError.invalid("reduction cache size/type") }
-        let length=expectedEntries*16
-        let mapped=mmap(nil,length,PROT_READ,MAP_PRIVATE,fd,0)
-        guard mapped != MAP_FAILED,let mapped else { throw VivoOmicsError.limit("cannot memory-map reduction cache") }
-        var valid=false
-        defer { if !valid { _ = munmap(mapped,length) } }
-        // Validate before unchecked repeated arithmetic traversal. Metadata limits
-        // and exact file size bound every access. The owner never mutates a map.
-        for i in 0..<expectedEntries {
-            if i%65_536==0 { try Task.checkCancellation() }
-            let offset=i*16
-            let row=Int(UInt32(littleEndian: mapped.load(fromByteOffset: offset,as: UInt32.self)))
-            let column=Int(UInt32(littleEndian: mapped.load(fromByteOffset: offset+4,as: UInt32.self)))
-            let value=Double(bitPattern: UInt64(littleEndian: mapped.load(fromByteOffset: offset+8,as: UInt64.self)))
-            if row>=rows || column>=columns || !value.isFinite || value<=0 {
+    private(set) var visits = 0
+    init(url: URL, expectedEntries: Int, rows: Int, columns: Int) throws {
+        guard expectedEntries > 0, expectedEntries <= 125_000_000, rows > 0, columns > 0 else {
+            throw VivoOmicsError.invalid("reduction cache dimensions")
+        }
+        records = try VivoWindowedCountRecords(url, entries: expectedEntries)
+        rowCount = rows; columnCount = columns
+        byteCount = expectedEntries * 16; count = expectedEntries
+        // The owner retains an immutable private scratch file. Validate the
+        // complete stream once, using the same bounded window as later passes.
+        for i in 0..<count {
+            let record = try records.record(i)
+            let value = Double(bitPattern: record.bits)
+            guard record.row < rows, record.feature < columns, value.isFinite, value > 0 else {
                 throw VivoOmicsError.invalid("reduction cache record")
             }
         }
-        byteCount=length;count=expectedEntries;address=mapped;valid=true
     }
-    deinit { _ = munmap(address,byteCount) }
-    func project(_ vector: [Double],shift: Double,rows: Int) throws -> [Double] {
-        var result=[Double](repeating: -shift,count: rows)
-        for i in 0..<count {
-            if i%65_536==0 { try Task.checkCancellation() }
-            let offset=i*16
-            let row=Int(UInt32(littleEndian: address.load(fromByteOffset: offset,as: UInt32.self)))
-            let column=Int(UInt32(littleEndian: address.load(fromByteOffset: offset+4,as: UInt32.self)))
-            let value=Double(bitPattern: UInt64(littleEndian: address.load(fromByteOffset: offset+8,as: UInt64.self)))
-            result[row]+=value*vector[column]
+    func project(_ vector: [Double], shift: Double, rows: Int) throws -> [Double] {
+        guard vector.count == columnCount, rows == rowCount else {
+            throw VivoOmicsError.invalid("reduction projection dimensions")
         }
-        visits+=count;return result
+        var result = [Double](repeating: -shift, count: rows)
+        for i in 0..<count {
+            let record = try records.record(i)
+            result[record.row] += Double(bitPattern: record.bits) * vector[record.feature]
+        }
+        visits += count; return result
     }
-    func transpose(_ vector: [Double],initial: [Double]) throws -> [Double] {
-        var result=initial
-        for i in 0..<count {
-            if i%65_536==0 { try Task.checkCancellation() }
-            let offset=i*16
-            let row=Int(UInt32(littleEndian: address.load(fromByteOffset: offset,as: UInt32.self)))
-            let column=Int(UInt32(littleEndian: address.load(fromByteOffset: offset+4,as: UInt32.self)))
-            let value=Double(bitPattern: UInt64(littleEndian: address.load(fromByteOffset: offset+8,as: UInt64.self)))
-            result[column]+=value*vector[row]
+    func transpose(_ vector: [Double], initial: [Double]) throws -> [Double] {
+        guard vector.count == rowCount, initial.count == columnCount else {
+            throw VivoOmicsError.invalid("reduction transpose dimensions")
         }
-        visits+=count;return result
+        var result = initial
+        for i in 0..<count {
+            let record = try records.record(i)
+            result[record.feature] += Double(bitPattern: record.bits) * vector[record.row]
+        }
+        visits += count; return result
     }
 }
 
@@ -168,8 +157,8 @@ enum VivoH5ADReduction {
             selected: selected,centers: centers,totalVariance: totalVariance,options: options.pca,
             project: { try cache.project($0,shift: $1,rows: n) },transpose: { try cache.transpose($0,initial: $1) })
         guard cache.visits==work.partialValue else { throw VivoOmicsError.invalid("streamed PCA entry-visit accounting") }
-        return (result,.init(method: "three-source-passes-memory-mapped-selected-COO-v1",options: options,sourcePasses: 3,
+        return (result,.init(method: "three-source-passes-windowed-selected-COO-v2",options: options,sourcePasses: 3,
             selectedEntries: written,cacheBytes: written*16,cacheFingerprint: fingerprint,entryVisits: cache.visits,
-            qualification: "HDF5 slices, bounded write buffer and explicit POSIX mmap for selected expression; metadata, moments, Krylov basis, scores and report remain resident. No million-cell or GPU performance qualification."))
+            qualification: "HDF5 slices, bounded write buffer and 16 MiB POSIX mapping windows for selected expression; metadata, moments, Krylov basis, scores and report remain resident. No million-cell or GPU performance qualification."))
     }
 }

@@ -153,23 +153,7 @@ public enum VivoH5ADPseudobulk {
     /// Hash/copy in 1 MiB blocks, independent of matrix size. The copied bytes,
     /// not a subsequently reread live path, are the authority for computation.
     static func fingerprint(_ source: URL,copyTo destination: URL? = nil) throws -> VivoFingerprint {
-        let attrs=try FileManager.default.attributesOfItem(atPath: source.path)
-        guard attrs[.type] as? FileAttributeType == .typeRegular else { throw VivoOmicsError.invalid("source must be a regular file") }
-        let input=try FileHandle(forReadingFrom: source); defer { try? input.close() }
-        var output: FileHandle?
-        if let destination {
-            guard FileManager.default.createFile(atPath: destination.path,contents: nil,attributes: [.posixPermissions: 0o600]) else { throw VivoOmicsError.invalid("cannot create source snapshot") }
-            output=try FileHandle(forWritingTo: destination)
-        }
-        defer { try? output?.close() }
-        var hasher=SHA256(), count=0
-        while let block=try input.read(upToCount: 1_048_576), !block.isEmpty {
-            try Task.checkCancellation()
-            guard block.count <= sourceLimits.maximumInputBytes-count else { throw VivoOmicsError.limit("H5AD snapshot exceeds 1 GiB") }
-            count+=block.count; hasher.update(data: block); try output?.write(contentsOf: block)
-        }
-        try output?.synchronize()
-        return try VivoFingerprint(bytes: Array(hasher.finalize()))
+        try VivoOmicsFileSnapshot.fingerprint(source, copyTo: destination, maximumBytes: sourceLimits.maximumInputBytes)
     }
     public static func publish(source: URL,plan: VivoH5ADPseudobulkPlan,implementation: VivoFingerprint,to destination: URL) throws -> VivoH5ADPseudobulkReceipt {
         try plan.validate()

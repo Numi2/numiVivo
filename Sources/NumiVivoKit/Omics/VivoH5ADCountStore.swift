@@ -125,56 +125,8 @@ public enum VivoH5ADCountStore {
     static func requireNew(_ url: URL) throws {
         guard url.isFileURL, (try? FileManager.default.attributesOfItem(atPath: url.path)) == nil else { throw VivoOmicsError.invalid("count store destination exists or is not local") }
     }
-    /// Bounded snapshot copying, using descriptors to reject non-regular files.
     static func fingerprint(_ source: URL, copyTo destination: URL? = nil) throws -> VivoFingerprint {
-        let fd = open(source.path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK)
-        guard fd >= 0 else { throw VivoOmicsError.invalid("cannot open count store input") }
-        defer { _ = close(fd) }
-        var info = stat()
-        guard fstat(fd, &info) == 0, (info.st_mode & mode_t(S_IFMT)) == mode_t(S_IFREG), info.st_size >= 0,
-              info.st_size <= maximumFileBytes else { throw VivoOmicsError.limit("count store input type or bytes") }
-        var output: Int32 = -1
-        if let destination {
-            output = open(destination.path, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW, 0o600)
-            guard output >= 0 else { throw VivoOmicsError.invalid("cannot create count store snapshot") }
-        }
-        defer { if output >= 0 { _ = close(output) } }
-        var hash = SHA256(), bytes = 0
-        var buffer = [UInt8](repeating: 0, count: 1_048_576)
-        while true {
-            try Task.checkCancellation()
-            let count = buffer.withUnsafeMutableBytes { p in
-                #if canImport(Darwin)
-                Darwin.read(fd, p.baseAddress, p.count)
-                #else
-                Glibc.read(fd, p.baseAddress, p.count)
-                #endif
-            }
-            if count < 0 { if errno == EINTR { continue }; throw VivoOmicsError.invalid("count store snapshot read") }
-            if count == 0 { break }
-            guard count <= maximumFileBytes - bytes else { throw VivoOmicsError.limit("count store input bytes") }
-            bytes += count
-            try buffer.withUnsafeBytes { full in
-                let block = UnsafeRawBufferPointer(rebasing: full[..<count])
-                hash.update(bufferPointer: block)
-                if output >= 0 {
-                    var written = 0
-                    while written < count {
-                        #if canImport(Darwin)
-                        let n = Darwin.write(output, block.baseAddress!.advanced(by: written), count - written)
-                        #else
-                        let n = Glibc.write(output, block.baseAddress!.advanced(by: written), count - written)
-                        #endif
-                        if n < 0, errno == EINTR { continue }
-                        guard n > 0 else { throw VivoOmicsError.invalid("count store snapshot write") }
-                        written += n
-                    }
-                }
-            }
-        }
-        guard bytes == info.st_size else { throw VivoOmicsError.invalid("count store input changed size during snapshot") }
-        if output >= 0 { guard fsync(output) == 0 else { throw VivoOmicsError.invalid("count store snapshot sync") } }
-        return try VivoFingerprint(bytes: Array(hash.finalize()))
+        try VivoOmicsFileSnapshot.fingerprint(source, copyTo: destination, maximumBytes: maximumFileBytes)
     }
     static func read(_ root: URL, _ name: String, maximum: Int) throws -> Data {
         try VivoSingleCellCampaignIO.readDocument(root.appendingPathComponent(name), maximumBytes: maximum)

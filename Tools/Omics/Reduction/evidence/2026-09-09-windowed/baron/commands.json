@@ -1,0 +1,88 @@
+[
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-window-pca-20260909/baron/plan.json",
+      "--output",
+      "/Users/n/numivivo-window-pca-20260909/baron/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 7.679053875,
+    "maximumResidentBytes": 264601600,
+    "peakFootprintBytes": 251708184,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk-verify",
+      "/Users/n/numivivo-window-pca-20260909/baron/bundle"
+    ],
+    "exitCode": 0,
+    "seconds": 6.971211209,
+    "maximumResidentBytes": 295370752,
+    "peakFootprintBytes": 282297136,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-window-pca-20260909/baron/plan.json",
+      "--output",
+      "/Users/n/numivivo-window-pca-20260909/baron/repeat"
+    ],
+    "exitCode": 0,
+    "seconds": 7.0043812920000015,
+    "maximumResidentBytes": 279674880,
+    "peakFootprintBytes": 266781464,
+    "expectedFailure": null
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-window-pca-20260909/baron/insufficient-cache.json",
+      "--output",
+      "/Users/n/numivivo-window-pca-20260909/baron/rejected-cache"
+    ],
+    "exitCode": 65,
+    "seconds": 3.9872232919999995,
+    "maximumResidentBytes": 151519232,
+    "peakFootprintBytes": 138756768,
+    "expectedFailure": "cache-byte budget"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-window-pca-20260909/baron/insufficient-work.json",
+      "--output",
+      "/Users/n/numivivo-window-pca-20260909/baron/rejected-work"
+    ],
+    "exitCode": 65,
+    "seconds": 3.9883551250000018,
+    "maximumResidentBytes": 134086656,
+    "peakFootprintBytes": 121324192,
+    "expectedFailure": "entry-visit budget"
+  },
+  {
+    "arguments": [
+      "singlecell-h5ad-pseudobulk",
+      "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+      "--plan",
+      "/Users/n/numivivo-window-pca-20260909/baron/insufficient-basis.json",
+      "--output",
+      "/Users/n/numivivo-window-pca-20260909/baron/rejected-basis"
+    ],
+    "exitCode": 65,
+    "seconds": 5.748666790999998,
+    "maximumResidentBytes": 152469504,
+    "peakFootprintBytes": 123044512,
+    "expectedFailure": "residual"
+  }
+]

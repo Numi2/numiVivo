@@ -1,0 +1,373 @@
+{
+  "status": "passed",
+  "binarySHA256": "71c4fd3c1e9279d98b09def064f3582daf16a246b63c53857a5e034091b1a799",
+  "baselineSHA256": "ab43b10b5b4761afe0d56769f3f794e8a074a51c030f9564d2196d27cd6aa70b",
+  "checkerSHA256": "43271274fde99f4d90671d9291bdcf26536909a8994ad2dace4fa5659b1f21ad",
+  "cohorts": {
+    "baron": {
+      "status": "passed",
+      "sourceSHA256": "388db742dba45eeaea98217161ed7193e104d1188df99142a5eb56ba33226df8",
+      "cells": 8569,
+      "features": 20125,
+      "allPCAFieldsExactlyUnchanged": true,
+      "allSourceStatisticsExactlyUnchanged": true,
+      "storage": {
+        "cacheBytes": 18358208,
+        "cacheFingerprint": {
+          "bytes": [
+            239,
+            95,
+            13,
+            98,
+            201,
+            199,
+            31,
+            184,
+            228,
+            41,
+            138,
+            35,
+            141,
+            92,
+            208,
+            21,
+            29,
+            159,
+            64,
+            93,
+            169,
+            245,
+            200,
+            244,
+            2,
+            74,
+            29,
+            196,
+            247,
+            92,
+            199,
+            184
+          ]
+        },
+        "entryVisits": 362574608,
+        "method": "three-source-passes-windowed-selected-COO-v2",
+        "options": {
+          "maximumCacheBytes": 2000000000,
+          "maximumEntryVisits": 2000000000,
+          "normalizationTarget": 10000,
+          "pca": {
+            "components": 20,
+            "highlyVariableFeatures": 2000,
+            "maximumBasis": 128,
+            "meanBins": 20,
+            "relativeResidualTolerance": 1e-06,
+            "seed": 7
+          }
+        },
+        "qualification": "HDF5 slices, bounded write buffer and 16 MiB POSIX mapping windows for selected expression; metadata, moments, Krylov basis, scores and report remain resident. No million-cell or GPU performance qualification.",
+        "selectedEntries": 1147388,
+        "sourcePasses": 3
+      },
+      "baseline": {
+        "arguments": [
+          "/Users/n/numivivo-count-store-final-20260909/numivivo",
+          "singlecell-h5ad-pseudobulk",
+          "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+          "--plan",
+          "/Users/n/numivivo-window-pca-20260909/baron-baseline/plan.json",
+          "--output",
+          "/Users/n/numivivo-window-pca-20260909/baron-baseline/bundle"
+        ],
+        "exitCode": 0,
+        "seconds": 6.718719,
+        "maximumResidentBytes": 302415872
+      },
+      "windowed": {
+        "status": "passed",
+        "binarySHA256": "71c4fd3c1e9279d98b09def064f3582daf16a246b63c53857a5e034091b1a799",
+        "checks": [
+          "full-source streamed PCA publication",
+          "native reconstruction",
+          "exact repeat",
+          "scratch cache absent from published bundle",
+          "cache budget rejection",
+          "entry visit budget rejection",
+          "unconverged PCA rejection",
+          "staging cleanup after failure"
+        ],
+        "commands": [
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/baron/plan.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/baron/bundle"
+            ],
+            "exitCode": 0,
+            "seconds": 7.679053875,
+            "maximumResidentBytes": 264601600,
+            "peakFootprintBytes": 251708184,
+            "expectedFailure": null
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk-verify",
+              "/Users/n/numivivo-window-pca-20260909/baron/bundle"
+            ],
+            "exitCode": 0,
+            "seconds": 6.971211209,
+            "maximumResidentBytes": 295370752,
+            "peakFootprintBytes": 282297136,
+            "expectedFailure": null
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/baron/plan.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/baron/repeat"
+            ],
+            "exitCode": 0,
+            "seconds": 7.0043812920000015,
+            "maximumResidentBytes": 279674880,
+            "peakFootprintBytes": 266781464,
+            "expectedFailure": null
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/baron/insufficient-cache.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/baron/rejected-cache"
+            ],
+            "exitCode": 65,
+            "seconds": 3.9872232919999995,
+            "maximumResidentBytes": 151519232,
+            "peakFootprintBytes": 138756768,
+            "expectedFailure": "cache-byte budget"
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/baron/insufficient-work.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/baron/rejected-work"
+            ],
+            "exitCode": 65,
+            "seconds": 3.9883551250000018,
+            "maximumResidentBytes": 134086656,
+            "peakFootprintBytes": 121324192,
+            "expectedFailure": "entry-visit budget"
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/baron-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/baron/insufficient-basis.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/baron/rejected-basis"
+            ],
+            "exitCode": 65,
+            "seconds": 5.748666790999998,
+            "maximumResidentBytes": 152469504,
+            "peakFootprintBytes": 123044512,
+            "expectedFailure": "residual"
+          }
+        ],
+        "qualification": "CPU workflow and storage/numerical checks; not biological integration or million-cell performance"
+      }
+    },
+    "hagai": {
+      "status": "passed",
+      "sourceSHA256": "2d0a69d121bcf6e9b63b82fafd06e597f6165a927b87b0cc51cb5c90c2caa5f5",
+      "cells": 13863,
+      "features": 22048,
+      "allPCAFieldsExactlyUnchanged": true,
+      "allSourceStatisticsExactlyUnchanged": true,
+      "storage": {
+        "cacheBytes": 53794864,
+        "cacheFingerprint": {
+          "bytes": [
+            178,
+            58,
+            216,
+            179,
+            247,
+            97,
+            189,
+            147,
+            169,
+            119,
+            249,
+            182,
+            251,
+            125,
+            62,
+            154,
+            130,
+            147,
+            115,
+            93,
+            19,
+            37,
+            108,
+            182,
+            170,
+            10,
+            225,
+            254,
+            72,
+            12,
+            230,
+            78
+          ]
+        },
+        "entryVisits": 1062448564,
+        "method": "three-source-passes-windowed-selected-COO-v2",
+        "options": {
+          "maximumCacheBytes": 2000000000,
+          "maximumEntryVisits": 2000000000,
+          "normalizationTarget": 10000,
+          "pca": {
+            "components": 20,
+            "highlyVariableFeatures": 2000,
+            "maximumBasis": 128,
+            "meanBins": 20,
+            "relativeResidualTolerance": 1e-06,
+            "seed": 7
+          }
+        },
+        "qualification": "HDF5 slices, bounded write buffer and 16 MiB POSIX mapping windows for selected expression; metadata, moments, Krylov basis, scores and report remain resident. No million-cell or GPU performance qualification.",
+        "selectedEntries": 3362179,
+        "sourcePasses": 3
+      },
+      "baseline": {
+        "arguments": [
+          "/Users/n/numivivo-count-store-final-20260909/numivivo",
+          "singlecell-h5ad-pseudobulk",
+          "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+          "--plan",
+          "/Users/n/numivivo-window-pca-20260909/hagai-baseline/plan.json",
+          "--output",
+          "/Users/n/numivivo-window-pca-20260909/hagai-baseline/bundle"
+        ],
+        "exitCode": 0,
+        "seconds": 13.830098917,
+        "maximumResidentBytes": 345276416
+      },
+      "windowed": {
+        "status": "passed",
+        "binarySHA256": "71c4fd3c1e9279d98b09def064f3582daf16a246b63c53857a5e034091b1a799",
+        "checks": [
+          "full-source streamed PCA publication",
+          "native reconstruction",
+          "exact repeat",
+          "scratch cache absent from published bundle",
+          "cache budget rejection",
+          "entry visit budget rejection",
+          "unconverged PCA rejection",
+          "staging cleanup after failure"
+        ],
+        "commands": [
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/hagai/plan.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/hagai/bundle"
+            ],
+            "exitCode": 0,
+            "seconds": 14.996438165999999,
+            "maximumResidentBytes": 274530304,
+            "peakFootprintBytes": 261620504,
+            "expectedFailure": null
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk-verify",
+              "/Users/n/numivivo-window-pca-20260909/hagai/bundle"
+            ],
+            "exitCode": 0,
+            "seconds": 15.004396958000001,
+            "maximumResidentBytes": 286130176,
+            "peakFootprintBytes": 273007360,
+            "expectedFailure": null
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/hagai/plan.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/hagai/repeat"
+            ],
+            "exitCode": 0,
+            "seconds": 15.110852583,
+            "maximumResidentBytes": 274792448,
+            "peakFootprintBytes": 261882648,
+            "expectedFailure": null
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/hagai/insufficient-cache.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/hagai/rejected-cache"
+            ],
+            "exitCode": 65,
+            "seconds": 8.246575708999998,
+            "maximumResidentBytes": 142311424,
+            "peakFootprintBytes": 129532552,
+            "expectedFailure": "cache-byte budget"
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/hagai/insufficient-work.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/hagai/rejected-work"
+            ],
+            "exitCode": 65,
+            "seconds": 8.240973582999999,
+            "maximumResidentBytes": 134938624,
+            "peakFootprintBytes": 122159752,
+            "expectedFailure": "entry-visit budget"
+          },
+          {
+            "arguments": [
+              "singlecell-h5ad-pseudobulk",
+              "/Users/n/numivivo-window-pca-20260909/hagai-input/prepared.h5ad",
+              "--plan",
+              "/Users/n/numivivo-window-pca-20260909/hagai/insufficient-basis.json",
+              "--output",
+              "/Users/n/numivivo-window-pca-20260909/hagai/rejected-basis"
+            ],
+            "exitCode": 65,
+            "seconds": 12.128483707999997,
+            "maximumResidentBytes": 172261376,
+            "peakFootprintBytes": 142787232,
+            "expectedFailure": "residual"
+          }
+        ],
+        "qualification": "CPU workflow and storage/numerical checks; not biological integration or million-cell performance"
+      }
+    }
+  },
+  "qualification": "Two complete real cohorts; same-host single-run timing observations, not a general speedup or million-cell qualification"
+}

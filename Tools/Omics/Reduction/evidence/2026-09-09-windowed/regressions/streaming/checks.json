@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "fullProduct": true,
+  "checks": [
+    "csr",
+    "csr-verify",
+    "csr-overwrite",
+    "csc",
+    "csc-verify",
+    "csc-overwrite",
+    "dense",
+    "dense-verify",
+    "dense-overwrite",
+    "boundary",
+    "boundary-csc",
+    "empty",
+    "reject-oversized-plan",
+    "reject-negative",
+    "reject-nan",
+    "reject-infinity",
+    "reject-fractional",
+    "reject-float-outside-exact-range",
+    "reject-oversized-source",
+    "reject-tampered-plan",
+    "reject-tampered-report",
+    "reject-tampered-source",
+    "reject-tampered-implementation",
+    "reject-overflow",
+    "reject-index-after-slice-boundary"
+  ]
+}
