@@ -77,8 +77,32 @@ public enum VivoSingleCellH5AD {
         defer { try? FileManager.default.removeItem(at: directory) }
         let snapshot = directory.appendingPathComponent("source.h5ad")
         try bytes.write(to: snapshot, options: .withoutOverwriting)
+        var metadata: VivoSingleCellCountMetadata?
+        var rows: [[Int: UInt64]] = []
+        let version = try scanSnapshot(snapshot,plan: plan,limits: limits,onMetadata: {
+            metadata = $0; rows = Array(repeating: [:],count: $0.cells.count)
+        },onEntry: { row,feature,count in rows[row][feature] = count })
+        guard let metadata else { throw VivoOmicsError.invalid("missing count metadata") }
+        var offsets = [0], columns: [Int] = [], counts: [UInt64] = []
+        for row in rows {
+            for feature in row.keys.sorted() { columns.append(feature); counts.append(row[feature]!) }
+            offsets.append(counts.count)
+        }
+        let result = VivoSingleCellDataset(id: metadata.id,evidence: metadata.evidence,sourceDescription: metadata.sourceDescription,
+            countUnit: metadata.countUnit,samples: metadata.samples,features: metadata.features,cells: metadata.cells,
+            matrix: .init(cellCount: metadata.cells.count,featureCount: metadata.features.count,rowOffsets: offsets,featureIndices: columns,counts: counts))
+        try result.validate(limits: limits)
+        return .init(source: bytes,hdf5Version: version,dataset: result,plan: plan)
+    }
+    /// The caller owns an immutable source snapshot. Sparse arrays are read in
+    /// bounded slices and duplicate coordinates merged per major segment.
+    static func scanSnapshot(_ url: URL,plan: VivoH5ADImportPlan,limits: VivoOmicsLimits,
+        onMetadata: (VivoSingleCellCountMetadata) throws -> Void,
+        onEntry: (Int,Int,UInt64) throws -> Void) throws -> String {
+        try limits.validate()
+        guard plan.schemaVersion == 1 else { throw VivoOmicsError.invalid("unsupported H5AD mapping schema") }
         return try VivoHDF5.lock.withLock {
-            let h = try VivoHDF5(), file = try h.file(snapshot.path)
+            let h = try VivoHDF5(), file = try h.file(url.path)
             defer { h.close(file, "H5Fclose") }
             guard try h.text(file, "encoding-type") == "anndata", try h.text(file, "encoding-version") == "0.1.0" else {
                 throw VivoOmicsError.invalid("unsupported AnnData root encoding")
@@ -152,7 +176,14 @@ public enum VivoSingleCellH5AD {
             if plan.matrixPath.hasPrefix("layers/") { _ = try component(String(plan.matrixPath.dropFirst(7))) }
             let matrix = try h.object(file, plan.matrixPath); defer { h.close(matrix, "H5Oclose") }
             let encoding = try h.text(matrix, "encoding-type")
-            var rows = [[Int: UInt64]](repeating: [:], count: obs.count)
+            let mitochondrial = Set(plan.mitochondrialFeatureIDs)
+            guard mitochondrial.isSubset(of: Set(features)) else { throw VivoOmicsError.invalid("unknown mitochondrial feature ID") }
+            let metadata = VivoSingleCellCountMetadata(id: plan.id,evidence: plan.evidence,sourceDescription: plan.sourceDescription,
+                countUnit: plan.countUnit,samples: plan.samples,
+                features: features.enumerated().map { .init(id: $0.element,name: names[$0.offset],mitochondrial: mitochondrial.contains($0.element)) },
+                cells: obs.indices.map { .init(barcode: barcodes[$0],sampleID: sampleIDs[$0],group: groups?[$0]) })
+            try metadata.validate(limits: limits)
+            try onMetadata(metadata)
             if encoding == "array" {
                 guard try h.text(matrix, "encoding-version") == "0.2.0" else { throw VivoOmicsError.invalid("unsupported dense encoding") }
                 let d = try h.dataset(file, plan.matrixPath); defer { h.close(d, "H5Dclose") }
@@ -165,7 +196,7 @@ public enum VivoSingleCellH5AD {
                     let values = try h.integers(d, maximum: limits.maximumFeatures, allowFloat: true, row: row)
                     for (feature, count) in values.enumerated() where count > 0 {
                         guard retained < limits.maximumNonzeros else { throw VivoOmicsError.limit("dense input exceeds sparse nonzero allowance") }
-                        rows[row][feature] = count; retained += 1
+                        try onEntry(row,feature,count); retained += 1
                     }
                 }
             } else {
@@ -184,37 +215,42 @@ public enum VivoSingleCellH5AD {
                 let major = encoding == "csr_matrix" ? obs.count : features.count
                 let minor = encoding == "csr_matrix" ? features.count : obs.count
                 let offsets = try integers("indptr", maximum: major + 1)
-                let indices = try integers("indices", maximum: limits.maximumNonzeros)
-                let counts = try integers("data", maximum: limits.maximumNonzeros, counts: true)
-                guard offsets.count == major + 1, offsets.first == 0, offsets.last == UInt64(counts.count), indices.count == counts.count else {
-                    throw VivoOmicsError.invalid("malformed sparse array lengths")
+                let indexDataset = try h.dataset(file,plan.matrixPath+"/indices")
+                defer { h.close(indexDataset,"H5Dclose") }
+                let countDataset = try h.dataset(file,plan.matrixPath+"/data")
+                defer { h.close(countDataset,"H5Dclose") }
+                let dimensions = try h.shape(countDataset,attribute: false)
+                guard dimensions.count == 1, dimensions[0] <= UInt64(limits.maximumNonzeros),
+                      try h.shape(indexDataset,attribute: false) == dimensions,
+                      offsets.count == major+1, offsets.first == 0, offsets.last == dimensions[0] else {
+                    throw VivoOmicsError.invalid("malformed or oversized sparse array lengths")
                 }
-                // Canonicalize unsorted indices, duplicate entries and explicit zeros
-                // using O(cells + nnz) storage; never allocate cells x genes.
                 for i in 0..<major {
                     try Task.checkCancellation()
-                    guard offsets[i] <= offsets[i + 1], offsets[i + 1] <= counts.count else { throw VivoOmicsError.invalid("malformed sparse offsets") }
-                    for k in Int(offsets[i])..<Int(offsets[i + 1]) {
-                        guard indices[k] < minor else { throw VivoOmicsError.invalid("sparse index out of range") }
-                        let row = encoding == "csr_matrix" ? i : Int(indices[k]), feature = encoding == "csr_matrix" ? Int(indices[k]) : i
-                        if counts[k] > 0 { rows[row][feature] = try vivoOmicsSum(rows[row][feature] ?? 0, counts[k]) }
+                    guard offsets[i] <= offsets[i+1], offsets[i+1] <= dimensions[0] else { throw VivoOmicsError.invalid("malformed sparse offsets") }
+                    var canonical: [Int: UInt64] = [:]
+                    var cursor = Int(offsets[i])
+                    let end = Int(offsets[i+1])
+                    while cursor < end {
+                        try Task.checkCancellation()
+                        let next = min(end,cursor+65_536)
+                        let indices = try h.integers(indexDataset,maximum: 65_536,range: cursor..<next)
+                        let counts = try h.integers(countDataset,maximum: 65_536,allowFloat: true,range: cursor..<next)
+                        for k in indices.indices {
+                            guard indices[k] < minor else { throw VivoOmicsError.invalid("sparse index out of range") }
+                            if counts[k] > 0 {
+                                let index = Int(indices[k])
+                                canonical[index] = try vivoOmicsSum(canonical[index] ?? 0,counts[k])
+                            }
+                        }
+                        cursor = next
+                    }
+                    for j in canonical.keys.sorted() {
+                        try onEntry(encoding == "csr_matrix" ? i : j,encoding == "csr_matrix" ? j : i,canonical[j]!)
                     }
                 }
             }
-            var rowOffsets = [0], featureIndices: [Int] = [], values: [UInt64] = []
-            for row in rows {
-                for feature in row.keys.sorted() { featureIndices.append(feature); values.append(row[feature]!) }
-                rowOffsets.append(values.count)
-            }
-            let mitochondrial = Set(plan.mitochondrialFeatureIDs)
-            guard mitochondrial.isSubset(of: Set(features)) else { throw VivoOmicsError.invalid("unknown mitochondrial feature ID") }
-            let result = VivoSingleCellDataset(id: plan.id, evidence: plan.evidence, sourceDescription: plan.sourceDescription,
-                countUnit: plan.countUnit, samples: plan.samples,
-                features: features.enumerated().map { .init(id: $0.element, name: names[$0.offset], mitochondrial: mitochondrial.contains($0.element)) },
-                cells: obs.indices.map { .init(barcode: barcodes[$0], sampleID: sampleIDs[$0], group: groups?[$0]) },
-                matrix: .init(cellCount: obs.count, featureCount: features.count, rowOffsets: rowOffsets, featureIndices: featureIndices, counts: values))
-            try result.validate(limits: limits)
-            return try .init(source: bytes, hdf5Version: h.version(), dataset: result, plan: plan)
+            return try h.version()
         }
     }
 }

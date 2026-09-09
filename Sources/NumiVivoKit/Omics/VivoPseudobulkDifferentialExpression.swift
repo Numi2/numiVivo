@@ -136,6 +136,10 @@ public enum VivoPseudobulkDifferentialExpression {
     /// The shared processing route calls this only with a freshly computed bulk.
     static func evaluate(_ dataset: VivoSingleCellDataset, bulk: VivoPseudobulkCounts,
                          contrast request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
+        try evaluate(metadata: dataset.metadata,bulk: bulk,contrast: request)
+    }
+    static func evaluate(metadata: VivoSingleCellCountMetadata,bulk: VivoPseudobulkCounts,
+                         contrast request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
         try request.validate()
         let donorSubset = request.includedDonorIDs.map { Set($0) }
         let knownDonors = Set(bulk.groups.compactMap(\.donorID))
@@ -189,7 +193,7 @@ public enum VivoPseudobulkDifferentialExpression {
         let qr = try VivoOmicsQR(design: design)
         var c = [Double](repeating: 0, count: names.count); c[1] = 1
         // Sparse feature-major access, built once. No genes-by-cells dense matrix.
-        var entries = [[(row: Int, count: UInt64)]](repeating: [], count: dataset.features.count)
+        var entries = [[(row: Int, count: UInt64)]](repeating: [], count: metadata.features.count)
         var libraries = [UInt64](repeating: 0, count: n)
         for (row, sourceRow) in indices.enumerated() {
             for k in bulk.matrix.rowOffsets[sourceRow]..<bulk.matrix.rowOffsets[sourceRow + 1] {
@@ -225,7 +229,7 @@ public enum VivoPseudobulkDifferentialExpression {
             treatmentReplicates: treatmentCount, residualDegreesOfFreedom: df, sizeFactorValues: factors,
             libraryCounts: libraries, referenceFeatureIndices: referenceFeatures)
         if request.model == .negativeBinomial {
-            return try VivoOmicsNBCohort.evaluate(dataset: dataset, entries: entries, design: matrix, request: request)
+            return try VivoOmicsNBCohort.evaluate(metadata: metadata, entries: entries, design: matrix, request: request)
         }
         var fits = [VivoOmicsLinearFit?](repeating: nil, count: entries.count)
         var totals = [UInt64](repeating: 0, count: entries.count), means = [Double](repeating: 0, count: entries.count)
@@ -252,14 +256,14 @@ public enum VivoPseudobulkDifferentialExpression {
         var features: [VivoOmicsExpressionFeature] = [], tested: [Int] = [], probabilities: [Double] = []
         for feature in entries.indices {
             guard let fit = fits[feature] else {
-                features.append(.init(featureIndex: feature, featureID: dataset.features[feature].id, status: .filteredLowExpression,
+                features.append(.init(featureIndex: feature, featureID: metadata.features[feature].id, status: .filteredLowExpression,
                     totalCounts: totals[feature], expressingPseudobulks: entries[feature].count, meanNormalizedCount: means[feature],
                     log2FoldChange: nil, residualVariance: nil, posteriorVariance: nil, standardError: nil, tStatistic: nil,
                     degreesOfFreedom: nil, intervalLower: nil, intervalUpper: nil, pValue: nil, adjustedPValue: nil)); continue
             }
             let posterior = prior.map { (Double(df) * fit.residualVariance + $0.degreesOfFreedom * $0.variance) / (Double(df) + $0.degreesOfFreedom) } ?? fit.residualVariance
             if posterior <= 1e-24 {
-                features.append(.init(featureIndex: feature, featureID: dataset.features[feature].id, status: .zeroResidualVariance,
+                features.append(.init(featureIndex: feature, featureID: metadata.features[feature].id, status: .zeroResidualVariance,
                     totalCounts: totals[feature], expressingPseudobulks: entries[feature].count, meanNormalizedCount: means[feature],
                     log2FoldChange: fit.effect, residualVariance: fit.residualVariance, posteriorVariance: posterior, standardError: nil,
                     tStatistic: nil, degreesOfFreedom: totalDF, intervalLower: nil, intervalUpper: nil, pValue: nil, adjustedPValue: nil)); continue
@@ -267,7 +271,7 @@ public enum VivoPseudobulkDifferentialExpression {
             let error = sqrt(posterior * fit.contrastVarianceScale), t = fit.effect / error
             let probability = try VivoOmicsLinearStatistics.studentTwoSidedP(t: t, degreesOfFreedom: totalDF)
             tested.append(feature); probabilities.append(probability)
-            features.append(.init(featureIndex: feature, featureID: dataset.features[feature].id, status: .tested,
+            features.append(.init(featureIndex: feature, featureID: metadata.features[feature].id, status: .tested,
                 totalCounts: totals[feature], expressingPseudobulks: entries[feature].count, meanNormalizedCount: means[feature],
                 log2FoldChange: fit.effect, residualVariance: fit.residualVariance, posteriorVariance: posterior, standardError: error,
                 tStatistic: t, degreesOfFreedom: totalDF, intervalLower: fit.effect - critical * error, intervalUpper: fit.effect + critical * error,
@@ -276,7 +280,7 @@ public enum VivoPseudobulkDifferentialExpression {
         let adjusted = try VivoOmicsLinearStatistics.benjaminiHochberg(probabilities)
         for (index, feature) in tested.enumerated() { features[feature].adjustedPValue = adjusted[index] }
         return .init(method: "donor-aware-log2-normalized-pseudobulk-linear-model-v1", request: request,
-            evidence: dataset.evidence, design: matrix, variancePrior: prior, features: features, testedFeatures: tested.count,
+            evidence: metadata.evidence, design: matrix, variancePrior: prior, features: features, testedFeatures: tested.count,
             multiplicityScope: "Benjamini-Hochberg across tested features in this contrast only; no across-contrast or selective-inference guarantee")
     }
 }

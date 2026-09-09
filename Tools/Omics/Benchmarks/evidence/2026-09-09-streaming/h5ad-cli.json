@@ -1,0 +1,13 @@
+{
+  "status": "passed-full-product-H5AD-CLI",
+  "checks": [
+    "import",
+    "refuse-import-overwrite",
+    "export",
+    "refuse-export-overwrite",
+    "count-campaign",
+    "count-replay"
+  ],
+  "binarySHA256": "a7131c30eb05d91a14b26b9d9d61aa0007dfd56289eabfa926493d7fc393ddca",
+  "hdf5Version": "2.2.0"
+}

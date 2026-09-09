@@ -101,13 +101,25 @@ final class VivoHDF5 {
         try check(extent(space, &dims, nil), "get dimensions")
         return dims
     }
-    func read(_ value: ID, type: ID, attribute: Bool, into buffer: UnsafeMutableRawPointer?, row: Int? = nil) throws {
+    func read(_ value: ID, type: ID, attribute: Bool, into buffer: UnsafeMutableRawPointer?, row: Int? = nil, range: Range<Int>? = nil) throws {
         if attribute {
             let fn: @convention(c) (ID, ID, UnsafeMutableRawPointer?) -> Int32 = try symbol("H5Aread")
             try check(fn(value, type, buffer), "read attribute")
         } else {
             let fn: @convention(c) (ID, ID, ID, ID, ID, UnsafeMutableRawPointer?) -> Int32 = try symbol("H5Dread")
-            if let row {
+            if let range {
+                let dimensions = try shape(value,attribute: false)
+                guard row == nil, dimensions.count == 1, range.lowerBound >= 0, UInt64(range.upperBound) <= dimensions[0] else {
+                    throw VivoOmicsError.invalid("vector slice selection")
+                }
+                if range.isEmpty { return }
+                let get: @convention(c) (ID) -> ID = try symbol("H5Dget_space")
+                let fileSpace = try id(get(value),"vector dataspace"); defer { close(fileSpace,"H5Sclose") }
+                let memorySpace = try space([UInt64(range.count)]); defer { close(memorySpace,"H5Sclose") }
+                let select: @convention(c) (ID,Int32,UnsafePointer<UInt64>,UnsafePointer<UInt64>?,UnsafePointer<UInt64>,UnsafePointer<UInt64>?) -> Int32 = try symbol("H5Sselect_hyperslab")
+                try check(select(fileSpace,0,[UInt64(range.lowerBound)],nil,[UInt64(range.count)],nil),"select vector slice")
+                try check(fn(value,type,memorySpace,fileSpace,0,buffer),"read vector slice")
+            } else if let row {
                 let dimensions = try shape(value, attribute: false)
                 guard dimensions.count == 2, row >= 0, UInt64(row) < dimensions[0] else { throw VivoOmicsError.invalid("dense row selection") }
                 let get: @convention(c) (ID) -> ID = try symbol("H5Dget_space")
@@ -166,17 +178,22 @@ final class VivoHDF5 {
         guard try shape(a, attribute: true).isEmpty else { throw VivoOmicsError.invalid("expected scalar attribute \(name)") }
         return try strings(a, attribute: true, maximum: 1)[0]
     }
-    func integers(_ value: ID, attribute: Bool = false, maximum: Int, allowFloat: Bool = false, row: Int? = nil) throws -> [UInt64] {
+    func integers(_ value: ID, attribute: Bool = false, maximum: Int, allowFloat: Bool = false, row: Int? = nil, range: Range<Int>? = nil) throws -> [UInt64] {
         let dimensions = try shape(value, attribute: attribute)
         if row != nil && (attribute || dimensions.count != 2) { throw VivoOmicsError.invalid("dense row requires a matrix dataset") }
-        let n = try count(row == nil ? dimensions : [dimensions[1]], maximum: maximum)
+        if let range {
+            guard !attribute, row == nil, dimensions.count == 1, range.lowerBound >= 0,
+                  UInt64(range.upperBound) <= dimensions[0] else { throw VivoOmicsError.invalid("integer vector slice") }
+        }
+        let selected = range.map { [UInt64($0.count)] } ?? (row == nil ? dimensions : [dimensions[1]])
+        let n = try count(selected,maximum: maximum)
         let t = try type(value, attribute: attribute); defer { close(t, "H5Tclose") }
         let kind: @convention(c) (ID) -> Int32 = try symbol("H5Tget_class")
         let size: @convention(c) (ID) -> Int = try symbol("H5Tget_size")
         if kind(t) == 1 && allowFloat {
             guard size(t) <= 8 else { throw VivoOmicsError.invalid("unsupported floating count precision") }
             var values = [Double](repeating: 0, count: n)
-            try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_DOUBLE"), attribute: attribute, into: $0.baseAddress, row: row) }
+            try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_DOUBLE"), attribute: attribute, into: $0.baseAddress, row: row, range: range) }
             return try values.map {
                 guard $0.isFinite, $0 >= 0, $0.rounded(.towardZero) == $0, $0 <= 9_007_199_254_740_992,
                       let count = UInt64(exactly: $0) else { throw VivoOmicsError.invalid("selected count matrix contains fractional, negative, nonfinite or inexact floating counts") }
@@ -187,11 +204,11 @@ final class VivoHDF5 {
         let sign: @convention(c) (ID) -> Int32 = try symbol("H5Tget_sign")
         if sign(t) == 1 {
             var values = [Int64](repeating: 0, count: n)
-            try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_LLONG"), attribute: attribute, into: $0.baseAddress, row: row) }
+            try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_LLONG"), attribute: attribute, into: $0.baseAddress, row: row, range: range) }
             return try values.map { guard $0 >= 0 else { throw VivoOmicsError.invalid("negative integer") }; return UInt64($0) }
         }
         var values = [UInt64](repeating: 0, count: n)
-        try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_ULLONG"), attribute: attribute, into: $0.baseAddress, row: row) }
+        try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_ULLONG"), attribute: attribute, into: $0.baseAddress, row: row, range: range) }
         return values
     }
 }

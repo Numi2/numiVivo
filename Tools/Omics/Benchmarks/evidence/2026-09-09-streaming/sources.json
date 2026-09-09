@@ -1,0 +1,20 @@
+{
+  "baseCommit": "60b34fd4651208d704151616b28dc30409e00b12",
+  "fullExecutableSHA256": "a7131c30eb05d91a14b26b9d9d61aa0007dfd56289eabfa926493d7fc393ddca",
+  "sources": {
+    "Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift": "495a3559aa7ef4b9e0f83d99035aa7ce0578447ceaf6b0905b1ddcd4953baddf",
+    "Sources/NumiVivoKit/Omics/VivoH5ADPseudobulk.swift": "5d6a8f3678c579ea3af2c03c75c6f2763a4ffce2f355f6206ff3e28d0b78a1a4",
+    "Sources/NumiVivoKit/Omics/VivoHDF5.swift": "f5ca39abf3e80d0da2883f42d71173b1864fc37a4acc3cf9114716c789f8fe7d",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBCohort.swift": "1c72f862638f4d6be2d8d5c8499f4ac4410549eb07f2f3806685330cba433015",
+    "Sources/NumiVivoKit/Omics/VivoPseudobulkDifferentialExpression.swift": "e33b2bf8284c7afddf0438840e47a96747ce18496474561603d6728bac571974",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellH5AD.swift": "0179c5a4703222ff600583e0bec221359a7a8882fbce0905caf2950124316dfd",
+    "Sources/NumiVivoKit/Omics/VivoSparseCounts.swift": "a50f829dcedc9233931bfd4f31be3a09466c7961255b282da3551d2ef4296926",
+    "Tools/Omics/Benchmarks/check_hagai_stream.py": "ab8651472ffc8ec49f3a4c38009d2e8bcc55f0881fec7ad4e7d6434f4df1c625",
+    "Tools/Omics/Benchmarks/check_streamed_de.py": "44dacca94d46c7122aac7f1ee2312f56731bdd0aebfd01ed48fc465a19e320ed",
+    "Tools/Omics/Benchmarks/prepare_hagai_stream.py": "9d97ae4c07f9501ca45a56dfe66a0f374896ca24d1677cae14b0d0ac0f0f6dc9",
+    "Tools/Omics/H5AD/Main.swift": "76397d827b7607561076d7d9379e5b1e81aaa8f2bfc82775189f9812f840cdb7",
+    "Tools/Omics/H5AD/build.sh": "7243655e8bcd6d3032c1fa7ab29d5fbad2a94b312ed6ae2a6c61f16fda7c6aef",
+    "Tools/Omics/H5AD/check_streaming.py": "17fce18cb6408157a21b9e4e628e662be461d323f323621f2ebe52015432a9e8"
+  },
+  "timingQualification": "Single full-product runs on local Mac; overlapping validation work, no cold-cache or performance superiority claim. Includes source copy/hash and report serialization. No million-cell qualification."
+}

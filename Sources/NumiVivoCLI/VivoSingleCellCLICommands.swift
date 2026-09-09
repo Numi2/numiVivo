@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
+        ["singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
     private func canonicalURL(_ url: URL) throws -> URL {
@@ -43,6 +43,21 @@ struct VivoSingleCellCLICommands {
                 files["analysis.json"] = try VivoCanonicalJSON.encode(VivoSingleCellExamples.pairedPlan())
                 try VivoOmicsDirectoryExport.write(files, to: destination)
                 try printJSON(["status": "written-synthetic-example", "directory": destination.path]); return 0
+            }
+            if command == "singlecell-h5ad-pseudobulk-verify" {
+                guard arguments.count == 2 else { throw VivoOmicsError.invalid("singlecell-h5ad-pseudobulk-verify <bundle-directory>") }
+                let report=try VivoH5ADPseudobulk.verify(URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint())
+                try printJSON(["status":"verified-streamed-pseudobulk","sourceCells":String(report.metadata.cells.count),"nonzeros":String(report.canonicalNonzeros)])
+                return 0
+            }
+            if command == "singlecell-h5ad-pseudobulk" {
+                guard arguments.count == 6, arguments[2] == "--plan", arguments[4] == "--output" else {
+                    throw VivoOmicsError.invalid("singlecell-h5ad-pseudobulk <source.h5ad> --plan <stream-plan.json> --output <new-bundle-directory>")
+                }
+                let plan=try load(VivoH5ADPseudobulkPlan.self,URL(fileURLWithPath: arguments[3]))
+                let receipt=try VivoH5ADPseudobulk.publish(source: URL(fileURLWithPath: arguments[1]),plan: plan,
+                    implementation: VivoWorkflowCLIImplementation.fingerprint(),to: canonicalURL(URL(fileURLWithPath: arguments[5])))
+                try printJSON(receipt); return 0
             }
             if command == "singlecell-h5ad-annotate" {
                 guard arguments.count == 6, arguments[2] == "--plan", arguments[4] == "--output" else {
@@ -190,6 +205,8 @@ struct VivoSingleCellCLICommands {
     }
     static let help = """
     NumiVivo native single-cell workflows
+      singlecell-h5ad-pseudobulk <source.h5ad> --plan <stream-plan.json> --output <new-bundle-directory>
+      singlecell-h5ad-pseudobulk-verify <bundle-directory>
       singlecell-h5ad-annotate <source.h5ad> --plan <annotations.json> --output <new.h5ad>
       singlecell-h5ad-import <source.h5ad> --plan <mapping.json> --output <new-directory>
       singlecell-h5ad-write <dataset.json> --output <new.h5ad>

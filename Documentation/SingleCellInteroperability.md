@@ -162,7 +162,47 @@ python Tools/Omics/H5AD/check_annotations.py --binary /path/to/numivivo --full-p
 python Tools/Omics/H5AD/check_public_data.py --binary /path/to/numivivo --full-product --out /tmp/public-file-check
 ```
 
-## Validation
+## Streaming raw counts into pseudobulks
+
+```
+numivivo singlecell-h5ad-pseudobulk experiment.h5ad --plan stream-plan.json --output streamed
+numivivo singlecell-h5ad-pseudobulk-verify streamed
+```
+
+The plan has `schemaVersion: 1`, `mapping` containing the H5AD import mapping
+above, and `contrasts` containing the existing expression contrast definitions
+(an empty list requests QC and aggregation only). The command retains every
+source cell. It does not silently apply a resident-analysis filter. The native
+NB cohort evaluator consumes the resulting pseudobulks with the original
+sample, donor, cell and feature metadata.
+
+The shared native reader now reads sparse indices/counts in slices of at most
+65,536 elements. It canonicalizes duplicate coordinates within each CSR row or
+CSC column and checks every UInt64 accumulation. Dense inputs use one row at
+a time. The streaming route retains metadata, per-cell QC and grouped count
+sums; it does not construct the complete resident sparse cell matrix. It copies
+and hashes the H5AD source in 1 MiB blocks before analysis.
+
+The output is an exchange bundle containing `original.h5ad`, `plan.json`,
+`report.json` and `receipt.json`. Verification copies the source to a private
+snapshot, checks source/plan/report/executable fingerprints and reconstructs
+the report. Existing destinations are refused. This route uses the common
+fingerprint types but does not yet publish its report into the artifact-store
+DAG. It is not a substitute for general chunked transforms or sparse PCA.
+
+Explicit limits are 1 GiB source bytes, 1 million cell identities, 100,000
+features, 100 million source sparse entries, 5 million aggregate nonzeros,
+2 MiB encoded plan and 512 MiB encoded report. The CLI's common plan reader
+has a tighter 128 KiB input limit. These are bounds, not demonstrated scale:
+metadata, group membership and JSON reports remain resident. Compression
+depends on the installed HDF5 filters; gzip is qualified, while LZF was rejected
+on the tested host because no native LZF filter was installed.
+
+The [full Hagai streaming comparison](../Tools/Omics/Benchmarks/README.md#full-hagai-streaming-comparison)
+retains all 32.85 million source nonzeros. The existing five-million resident
+matrix limit is unchanged.
+
+## Validation commands
 
 ```
 bash Tools/Omics/H5AD/build.sh /tmp/numivivo-h5ad-build
@@ -207,6 +247,8 @@ The complete development objective remains open:
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
    tuft-cell count/QC passes. Several independent donor-resolved studies, robust
    reference sensitivity and R edgeR/limma/DESeq2 comparisons remain.
+   Full-scope original Hagai mouse count/QC and pseudobulks now pass through the
+   streaming route; donor pairing and biological DE qualification remain open.
 3. **Negative-binomial DE:** an explicit native NB cohort model now runs through
    the count/analysis/replay/table CLI, with adjusted dispersion estimation,
    robust trend, prior shrinkage, offsets, shared paired/batch designs and

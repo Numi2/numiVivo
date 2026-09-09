@@ -125,7 +125,7 @@ public enum VivoOmicsNBCohort {
             samplingLogVariance: sampling, priorLogVariance: max(options.minimumPriorVariance,excess),
             priorVarianceFloorReached: excess <= options.minimumPriorVariance, iterations: iterations)
     }
-    static func evaluate(dataset: VivoSingleCellDataset, entries: [[(row: Int,count: UInt64)]],
+    static func evaluate(metadata: VivoSingleCellCountMetadata, entries: [[(row: Int,count: UInt64)]],
                          design: VivoOmicsDesignMatrix, request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
         let options = request.negativeBinomialOptions ?? .init()
         let n = design.rows.count, offsets = design.sizeFactorValues.map(log)
@@ -174,7 +174,7 @@ public enum VivoOmicsNBCohort {
         var features: [VivoOmicsExpressionFeature] = [], tested: [Int] = [], probabilities: [Double] = []
         for gene in entries.indices {
             try Task.checkCancellation()
-            var result = VivoOmicsExpressionFeature(featureIndex: gene,featureID: dataset.features[gene].id,status: statuses[gene],
+            var result = VivoOmicsExpressionFeature(featureIndex: gene,featureID: metadata.features[gene].id,status: statuses[gene],
                 totalCounts: totals[gene],expressingPseudobulks: entries[gene].count,meanNormalizedCount: means[gene],
                 log2FoldChange: nil,residualVariance: nil,posteriorVariance: nil,standardError: nil,tStatistic: nil,
                 degreesOfFreedom: nil,intervalLower: nil,intervalUpper: nil,pValue: nil,adjustedPValue: nil)
@@ -196,7 +196,7 @@ public enum VivoOmicsNBCohort {
                     else { status = .tested }
                     guard let effect = final.fit.effect, let error = final.fit.standardError, error > 0 else { throw VivoOmicsError.invalid("NB final fit lacks identified effect/information") }
                     let z = effect/error, probability = erfc(abs(z)/sqrt(2))
-                    result = .init(featureIndex: gene,featureID: dataset.features[gene].id,status: status,totalCounts: totals[gene],
+                    result = .init(featureIndex: gene,featureID: metadata.features[gene].id,status: status,totalCounts: totals[gene],
                         expressingPseudobulks: entries[gene].count,meanNormalizedCount: means[gene],
                         log2FoldChange: effect/log(2),residualVariance: nil,posteriorVariance: nil,standardError: error/log(2),tStatistic: nil,
                         degreesOfFreedom: nil,intervalLower: status == .tested ? (effect-critical*error)/log(2) : nil,
@@ -206,7 +206,7 @@ public enum VivoOmicsNBCohort {
                 } catch is CancellationError { throw CancellationError() }
                 catch {
                     diagnostics[gene].error = error.localizedDescription
-                    result = .init(featureIndex: gene,featureID: dataset.features[gene].id,status: .numericalFailure,totalCounts: totals[gene],
+                    result = .init(featureIndex: gene,featureID: metadata.features[gene].id,status: .numericalFailure,totalCounts: totals[gene],
                         expressingPseudobulks: entries[gene].count,meanNormalizedCount: means[gene],log2FoldChange: nil,residualVariance: nil,
                         posteriorVariance: nil,standardError: nil,tStatistic: nil,degreesOfFreedom: nil,intervalLower: nil,intervalUpper: nil,pValue: nil,adjustedPValue: nil)
                 }
@@ -215,7 +215,7 @@ public enum VivoOmicsNBCohort {
         }
         let adjusted = try VivoOmicsLinearStatistics.benjaminiHochberg(probabilities)
         for (i,gene) in tested.enumerated() { features[gene].adjustedPValue = adjusted[i] }
-        return .init(method: "donor-aware-NB2-adjusted-profile-log-prior-Wald-v1",request: request,evidence: dataset.evidence,design: design,
+        return .init(method: "donor-aware-NB2-adjusted-profile-log-prior-Wald-v1",request: request,evidence: metadata.evidence,design: design,
             variancePrior: nil,features: features,testedFeatures: tested.count,
             multiplicityScope: "BH across available NB Wald tests within this contrast; no selection-adjusted or cross-contrast calibration claim",
             negativeBinomial: .init(trend: trend,features: diagnostics,

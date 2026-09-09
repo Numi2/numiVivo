@@ -1,0 +1,74 @@
+[0/1] Planning build
+Building for debugging...
+[0/5] Write sources
+[1/5] Write swift-version-3CD7052B146186F2.txt
+[3/7] Compiling NumiVivoKit VivoH5ADPseudobulk.swift
+[4/7] Emitting module NumiVivoKit
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Surrogates/VivoReactiveMetalBackend.swift:54:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 52 |         coefficients = try buffer(payload.coefficientsKJPerMol.flatMap { $0 })
+ 53 |         scales = try buffer(payload.configuration.features.map { 1/($0.scaleNM*$0.scaleNM) })
+ 54 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 55 |         let library = try device.makeLibrary(source: Self.source,options: options)
+ 56 |         guard let function = library.makeFunction(name: "vivo_reactive_delta") else { throw VivoChemistryError.invalid("missing reactive Metal kernel") }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[4/9] Write Objects.LinkFileList
+[6/9] Linking numivivo
+[7/9] Applying numivivo
+[8/9] Linking NumiVivoPackageTests
+Build complete! (6.79s)
+Test Suite 'Selected tests' started at 2026-09-09 04:27:59.011.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 04:27:59.016.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 04:27:59.016.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 04:27:59.016.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellCohortTests started.
+◇ Suite SingleCellNegativeBinomialTests started.
+◇ Suite SingleCellNBCohortTests started.
+◇ Suite SingleCellInterchangeTests started.
+◇ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() started.
+◇ Test parametricTrendRecoversDeclaredMeanRelationship() started.
+◇ Test logMassMatchesHighPrecisionReference() started.
+◇ Test interceptHasAnalyticMeanAndInformation() started.
+◇ Test optionsCannotBeSilentlyAppliedToWrongModel() started.
+◇ Test incompletePairsAndConfoundedBatchAreRejected() started.
+◇ Test qualitySelectionPreservesCountsAndSourceIdentity() started.
+◇ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() started.
+◇ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() started.
+◇ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() started.
+◇ Test offsetReparameterizationPreservesFit() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test zeroOnlyCovariateSupportDoesNotProduceInference() started.
+◇ Test profileAndExplicitPriorAreDistinct() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test unknownScientificOptionsCannotBeIgnored() started.
+✔ Test logMassMatchesHighPrecisionReference() passed after 0.002 seconds.
+✔ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() passed after 0.002 seconds.
+✔ Test interceptHasAnalyticMeanAndInformation() passed after 0.002 seconds.
+✔ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() passed after 0.002 seconds.
+✔ Test offsetReparameterizationPreservesFit() passed after 0.002 seconds.
+✔ Test optionsCannotBeSilentlyAppliedToWrongModel() passed after 0.002 seconds.
+✔ Test unknownScientificOptionsCannotBeIgnored() passed after 0.002 seconds.
+✔ Test parametricTrendRecoversDeclaredMeanRelationship() passed after 0.002 seconds.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.003 seconds.
+✔ Test zeroOnlyCovariateSupportDoesNotProduceInference() passed after 0.006 seconds.
+✔ Test qualitySelectionPreservesCountsAndSourceIdentity() passed after 0.007 seconds.
+✔ Test incompletePairsAndConfoundedBatchAreRejected() passed after 0.009 seconds.
+✔ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() passed after 0.011 seconds.
+✔ Suite SingleCellCohortTests passed after 0.011 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.015 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.016 seconds.
+✔ Test profileAndExplicitPriorAreDistinct() passed after 0.019 seconds.
+✔ Suite SingleCellNegativeBinomialTests passed after 0.019 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.028 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.029 seconds.
+✔ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() passed after 23.382 seconds.
+✔ Suite SingleCellNBCohortTests passed after 23.382 seconds.
+✔ Test run with 18 tests in 4 suites passed after 23.383 seconds.

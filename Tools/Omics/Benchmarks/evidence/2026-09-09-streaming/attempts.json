@@ -1,0 +1,23 @@
+[
+  {
+    "status": "rejected",
+    "stage": "native source read",
+    "reason": "h5py LZF was unavailable in native HDF5; original attempt retained in failed-lzf.txt",
+    "sourceSHA256": "e51267a9f0030ae7f7a54cfeaa751f1819abe45a4e3d1eb17e13ad80d956065b"
+  },
+  {
+    "status": "reference-failed",
+    "stage": "Scanpy QC",
+    "reason": "Prepared CSC used Int32 indices with Int64 indptr; scipy eliminate_zeros raised ValueError: Output dtype not compatible with inputs. Regenerated both arrays as Int32; all source counts and gene identities rechecked."
+  },
+  {
+    "status": "passed",
+    "stage": "full executable source/Scanpy comparison",
+    "reason": "gzip and matching sparse-index widths; complete source scope, no donor inference"
+  },
+  {
+    "status": "resolved",
+    "stage": "Kang report comparison",
+    "reason": "Raw row-index comparison differed because MEX reorders cells by sample. Cell memberships compared by sample/barcode/group; all remaining design, statistical and diagnostic fields exactly equal."
+  }
+]

@@ -170,12 +170,38 @@ public struct VivoSingleCellDataset: Codable, Sendable, Equatable {
         self.schemaVersion = 1; self.id = id; self.evidence = evidence; self.sourceDescription = sourceDescription
         self.countUnit = countUnit; self.samples = samples; self.features = features; self.cells = cells; self.matrix = matrix
     }
+    public var metadata: VivoSingleCellCountMetadata {
+        .init(id: id,evidence: evidence,sourceDescription: sourceDescription,countUnit: countUnit,samples: samples,features: features,cells: cells)
+    }
     public func validate(limits: VivoOmicsLimits = .init()) throws {
         try matrix.validate(limits: limits)
-        guard schemaVersion == 1, vivoOmicsID(id), !sourceDescription.isEmpty,
-              sourceDescription.utf8.count <= 16_384, !samples.isEmpty,
-              samples.count <= limits.maximumCells, cells.count == matrix.cellCount,
-              features.count == matrix.featureCount else { throw VivoOmicsError.invalid("dataset schema or shape") }
+        guard schemaVersion == 1, cells.count == matrix.cellCount, features.count == matrix.featureCount else {
+            throw VivoOmicsError.invalid("dataset schema or shape")
+        }
+        try metadata.validate(limits: limits)
+    }
+}
+
+/// Count-axis identities, independent of whether the matrix is resident or streamed.
+public struct VivoSingleCellCountMetadata: Codable, Sendable, Equatable {
+    public let id: String
+    public let evidence: VivoOmicsEvidence
+    public let sourceDescription: String
+    public let countUnit: VivoOmicsCountUnit
+    public let samples: [VivoOmicsSample]
+    public let features: [VivoOmicsFeature]
+    public let cells: [VivoOmicsCell]
+    public init(id: String,evidence: VivoOmicsEvidence,sourceDescription: String,countUnit: VivoOmicsCountUnit,
+                samples: [VivoOmicsSample],features: [VivoOmicsFeature],cells: [VivoOmicsCell]) {
+        self.id=id; self.evidence=evidence; self.sourceDescription=sourceDescription; self.countUnit=countUnit
+        self.samples=samples; self.features=features; self.cells=cells
+    }
+    public func validate(limits: VivoOmicsLimits = .init()) throws {
+        try limits.validate()
+        guard vivoOmicsID(id), !sourceDescription.isEmpty, sourceDescription.utf8.count <= 16_384,
+              !samples.isEmpty, samples.count <= limits.maximumCells,
+              cells.count <= limits.maximumCells,
+              !features.isEmpty, features.count <= limits.maximumFeatures else { throw VivoOmicsError.invalid("count metadata bounds") }
         var sampleByID: [String: VivoOmicsSample] = [:]
         var replicateByID: [String: VivoOmicsSample] = [:]
         for sample in samples {
