@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
+        ["singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
     private func canonicalURL(_ url: URL) throws -> URL {
@@ -43,6 +43,42 @@ struct VivoSingleCellCLICommands {
                 files["analysis.json"] = try VivoCanonicalJSON.encode(VivoSingleCellExamples.pairedPlan())
                 try VivoOmicsDirectoryExport.write(files, to: destination)
                 try printJSON(["status": "written-synthetic-example", "directory": destination.path]); return 0
+            }
+            if command == "singlecell-h5ad-import" || command == "singlecell-h5ad-write" {
+                let importing = command == "singlecell-h5ad-import"
+                guard arguments.count == (importing ? 6 : 4), arguments[2] == (importing ? "--plan" : "--output"),
+                      !importing || arguments[4] == "--output" else {
+                    throw VivoOmicsError.invalid("singlecell-h5ad-import <source.h5ad> --plan <mapping.json> --output <new-directory>; singlecell-h5ad-write <dataset.json> --output <new.h5ad>")
+                }
+                let source = URL(fileURLWithPath: arguments[1])
+                let destination = try canonicalURL(URL(fileURLWithPath: arguments[importing ? 5 : 3]))
+                if importing {
+                    let plan = try load(VivoH5ADImportPlan.self, URL(fileURLWithPath: arguments[3]))
+                    let document = try VivoSingleCellH5AD.read(source, plan: plan)
+                    var files = try VivoSingleCellMEXExchange.files(document.dataset)
+                    files["original.h5ad"] = document.source
+                    files["dataset.json"] = try VivoCanonicalJSON.encode(document.dataset)
+                    files["h5ad-mapping.json"] = try VivoCanonicalJSON.encode(plan)
+                    struct ImportReceipt: Encodable {
+                        let schema = "numivivo.org/h5ad-import/v1"
+                        let source: VivoFingerprint; let dataset: VivoFingerprint; let mapping: VivoFingerprint
+                        let implementation: VivoFingerprint
+                        let hdf5Version: String
+                    }
+                    files["h5ad-import.json"] = try VivoCanonicalJSON.encode(ImportReceipt(
+                        source: VivoCanonicalJSON.fingerprint(document.source),
+                        dataset: VivoCanonicalJSON.fingerprint(files["dataset.json"]!),
+                        mapping: VivoCanonicalJSON.fingerprint(files["h5ad-mapping.json"]!),
+                        implementation: VivoWorkflowCLIImplementation.fingerprint(), hdf5Version: document.hdf5Version))
+                    try VivoOmicsDirectoryExport.write(files, to: destination)
+                    try printJSON(["status": "imported-count-projection-with-original-anndata", "directory": destination.path])
+                } else {
+                    let bytes = try VivoSingleCellCampaignIO.readDocument(source, maximumBytes: 128 * 1_024 * 1_024)
+                    let dataset = try VivoCanonicalJSON.decode(VivoSingleCellDataset.self, from: bytes)
+                    try VivoSingleCellH5AD.write(dataset, to: destination)
+                    try printJSON(["status": "written-native-count-anndata", "file": destination.path])
+                }
+                return 0
             }
             guard arguments.count >= 4, !arguments[1].hasPrefix("--"), arguments[1] != "-" else {
                 throw VivoOmicsError.invalid("one manifest/receipt file and --store <directory> are required")
@@ -143,6 +179,8 @@ struct VivoSingleCellCLICommands {
     }
     static let help = """
     NumiVivo native single-cell workflows
+      singlecell-h5ad-import <source.h5ad> --plan <mapping.json> --output <new-directory>
+      singlecell-h5ad-write <dataset.json> --output <new.h5ad>
       singlecell-example --output <new-example-directory>
       singlecell-run <manifest.json> --store <directory> [--output <new-receipt.json|->]
       singlecell-verify <receipt.json> --store <directory>
@@ -159,6 +197,9 @@ struct VivoSingleCellCLICommands {
     Expression uses explicit biological replicates/paired donors, not cells as independent samples.
     The moderated log-expression model is untrended: no voom weights, mixed model, or NB fit is claimed.
     Replay requires the recorded executable/OS. Regenerate count receipts after rebuilding the executable.
-    No doublet correction, inferred cell annotation, HDF5/AnnData or biological calibration is performed.
+    H5AD uses native HDF5 (install hdf5 or set NUMIVIVO_HDF5_LIBRARY), with explicit count-layer/design mapping; CSR/CSC and row-wise dense reads.
+    Import retains original.h5ad unchanged alongside the count projection and MEX manifest; no ancillary AnnData fields are discarded.
+    H5AD write creates a new count object from dataset.json; it does not copy source embeddings onto changed cells.
+    No doublet correction, inferred cell annotation or biological calibration is performed.
     """ + "\n"
 }
