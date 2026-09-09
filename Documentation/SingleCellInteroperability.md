@@ -207,9 +207,12 @@ The complete development objective remains open:
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
    tuft-cell count/QC passes. Several independent donor-resolved studies, robust
    reference sensitivity and R edgeR/limma/DESeq2 comparisons remain.
-3. **Negative-binomial DE:** likelihood, dispersion estimation and shrinkage,
-   offsets, paired/batch designs and diagnostics remain. Existing moderated
-   log-linear DE is a baseline, not a production NB method.
+3. **Negative-binomial DE:** the [native NB numerical owner](../Tools/Omics/NegativeBinomial/README.md)
+   now provides likelihood, offset GLMs, adjusted dispersion profiling, explicit
+   prior MAP and influence/rank diagnostics with conditional reference checks.
+   Learned dispersion trends/shrinkage, cohort integration, calibrated inference
+   and robust scientific qualification remain. Existing moderated log-linear DE
+   is still the product baseline, not a production NB method.
 4. **Sparse feature selection/PCA/kNN/UMAP-compatible embeddings/clustering:**
    implementation and reference comparisons remain; never densify cells × genes.
 5. **Batch integration:** donor/batch-aware methods and biological-signal

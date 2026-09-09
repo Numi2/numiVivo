@@ -1,0 +1,55 @@
+[0/1] Planning build
+Building for debugging...
+[0/5] Write sources
+[1/5] Write swift-version-3CD7052B146186F2.txt
+[3/5] Emitting module NumiVivoIntegrationTests
+[4/5] Compiling NumiVivoIntegrationTests SingleCellNegativeBinomialTests.swift
+[4/6] Write Objects.LinkFileList
+[5/6] Linking NumiVivoPackageTests
+Build complete! (2.87s)
+Test Suite 'Selected tests' started at 2026-09-09 03:22:08.158.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-09 03:22:08.163.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-09 03:22:08.163.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-09 03:22:08.163.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.006) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellInterchangeTests started.
+◇ Suite SingleCellCohortTests started.
+◇ Suite SingleCellNegativeBinomialTests started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test incompletePairsAndConfoundedBatchAreRejected() started.
+◇ Test qualitySelectionPreservesCountsAndSourceIdentity() started.
+◇ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test profileAndExplicitPriorAreDistinct() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() started.
+◇ Test unknownScientificOptionsCannotBeIgnored() started.
+◇ Test zeroOnlyCovariateSupportDoesNotProduceInference() started.
+◇ Test logMassMatchesHighPrecisionReference() started.
+◇ Test offsetReparameterizationPreservesFit() started.
+◇ Test interceptHasAnalyticMeanAndInformation() started.
+◇ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() started.
+✔ Test logMassMatchesHighPrecisionReference() passed after 0.002 seconds.
+✔ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() passed after 0.003 seconds.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.003 seconds.
+✔ Test interceptHasAnalyticMeanAndInformation() passed after 0.002 seconds.
+✔ Test offsetReparameterizationPreservesFit() passed after 0.003 seconds.
+✔ Test unknownScientificOptionsCannotBeIgnored() passed after 0.003 seconds.
+✔ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() passed after 0.003 seconds.
+✔ Test qualitySelectionPreservesCountsAndSourceIdentity() passed after 0.006 seconds.
+✔ Test zeroOnlyCovariateSupportDoesNotProduceInference() passed after 0.006 seconds.
+✔ Test incompletePairsAndConfoundedBatchAreRejected() passed after 0.009 seconds.
+✔ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() passed after 0.011 seconds.
+✔ Suite SingleCellCohortTests passed after 0.011 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.015 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.016 seconds.
+✔ Test profileAndExplicitPriorAreDistinct() passed after 0.019 seconds.
+✔ Suite SingleCellNegativeBinomialTests passed after 0.019 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.027 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.028 seconds.
+✔ Test run with 15 tests in 3 suites passed after 0.028 seconds.

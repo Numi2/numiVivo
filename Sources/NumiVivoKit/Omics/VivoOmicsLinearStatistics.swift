@@ -47,6 +47,13 @@ public struct VivoOmicsQR: Sendable {
         observationCount = n; coefficientCount = p
         self.design = design; q = columns; r = triangular
     }
+    /// Information determinant and leverage of this (possibly weighted) design.
+    public var logInformationDeterminant: Double {
+        2 * r.indices.reduce(0.0) { $0 + log(r[$1][$1]) }
+    }
+    public var leverage: [Double] {
+        (0..<observationCount).map { row in q.reduce(0.0) { $0 + $1[row] * $1[row] } }
+    }
     private static func dot(_ a: [Double], _ b: [Double]) -> Double {
         var total = 0.0, correction = 0.0
         for i in a.indices {

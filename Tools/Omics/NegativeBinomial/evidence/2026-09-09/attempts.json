@@ -1,0 +1,28 @@
+{
+  "attempts": [
+    {
+      "status": "failed",
+      "scope": "initial analytic test",
+      "reason": "counts.map(Double.init) resolved to the UInt64 bit-pattern initializer",
+      "repair": "Explicit Double($0) numeric conversion; analytic mean/information tests passed on the corrected code"
+    },
+    {
+      "status": "failed",
+      "scope": "initial real profile reference comparison",
+      "reason": "TNFRSF4 adjusted profile differed by 4.777 because positive-count support was rank deficient",
+      "repair": "Report positive-support rank deficiency, withhold effect/SE/adjusted profile and reject dispersion inference; independent numpy rank checks agree on all 3494 affected genes"
+    },
+    {
+      "status": "compile-failed",
+      "scope": "optional standard-error assertion",
+      "reason": "Swift type-checker complexity limit for nested numeric expression",
+      "repair": "Split explicitly typed expected error from assertion; fresh 15-test run passed"
+    },
+    {
+      "status": "passed-narrow",
+      "scope": "first corrected profile comparison",
+      "reason": "Only one interior optimum among 12 source-order genes",
+      "repair": "Expanded to 128 source-order genes: 38 interior comparisons, 35 lower-boundary fits, 55 controlled support-rank rejections"
+    }
+  ]
+}
