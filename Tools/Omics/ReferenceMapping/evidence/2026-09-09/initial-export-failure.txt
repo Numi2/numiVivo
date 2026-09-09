@@ -1,0 +1,2 @@
+Initial replay failed loading referenceLabels: ValueError: Object arrays cannot be loaded when allow_pickle=False.
+Corrected by explicitly exporting labels as NumPy Unicode arrays; full benchmark rerun.

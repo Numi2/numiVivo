@@ -1,0 +1,728 @@
+{
+  "heldOutDonor": "human1",
+  "trainingCells": 6632,
+  "queryCells": 1937,
+  "absentTrainingLabels": [],
+  "models": {
+    "knn15": {
+      "accuracy": 0.9628291171915333,
+      "balancedAccuracy": 0.8035802402010821,
+      "macroF1": 0.7981317684328741,
+      "perLabel": {
+        "acinar": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 110.0
+        },
+        "activated_stellate": {
+          "precision": 0.6363636363636364,
+          "recall": 0.9607843137254902,
+          "f1-score": 0.765625,
+          "support": 51.0
+        },
+        "alpha": {
+          "precision": 0.9549180327868853,
+          "recall": 0.9872881355932204,
+          "f1-score": 0.9708333333333333,
+          "support": 236.0
+        },
+        "beta": {
+          "precision": 0.9885452462772051,
+          "recall": 0.9896788990825688,
+          "f1-score": 0.9891117478510029,
+          "support": 872.0
+        },
+        "delta": {
+          "precision": 0.9181034482758621,
+          "recall": 0.9953271028037384,
+          "f1-score": 0.9551569506726457,
+          "support": 214.0
+        },
+        "ductal": {
+          "precision": 0.9915254237288136,
+          "recall": 0.975,
+          "f1-score": 0.9831932773109243,
+          "support": 120.0
+        },
+        "endothelial": {
+          "precision": 1.0,
+          "recall": 0.9538461538461539,
+          "f1-score": 0.9763779527559056,
+          "support": 130.0
+        },
+        "epsilon": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 13.0
+        },
+        "gamma": {
+          "precision": 1.0,
+          "recall": 0.9857142857142858,
+          "f1-score": 0.9928057553956835,
+          "support": 70.0
+        },
+        "macrophage": {
+          "precision": 1.0,
+          "recall": 0.9285714285714286,
+          "f1-score": 0.9629629629629629,
+          "support": 14.0
+        },
+        "mast": {
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1-score": 0.8888888888888888,
+          "support": 8.0
+        },
+        "quiescent_stellate": {
+          "precision": 0.9841269841269841,
+          "recall": 0.6739130434782609,
+          "f1-score": 0.8,
+          "support": 92.0
+        },
+        "schwann": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1-score": 0.8888888888888888,
+          "support": 5.0
+        },
+        "t_cell": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 2.0
+        },
+        "accuracy": 0.9628291171915333,
+        "macro avg": {
+          "precision": 0.8052559122542419,
+          "recall": 0.8035802402010821,
+          "f1-score": 0.7981317684328741,
+          "support": 1937.0
+        },
+        "weighted avg": {
+          "precision": 0.9608794668374537,
+          "recall": 0.9628291171915333,
+          "f1-score": 0.9592763759870939,
+          "support": 1937.0
+        }
+      },
+      "classOrder": [
+        "acinar",
+        "activated_stellate",
+        "alpha",
+        "beta",
+        "delta",
+        "ductal",
+        "endothelial",
+        "epsilon",
+        "gamma",
+        "macrophage",
+        "mast",
+        "quiescent_stellate",
+        "schwann",
+        "t_cell"
+      ],
+      "confusion": [
+        [
+          110,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          49,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          233,
+          1,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          3,
+          863,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          213,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          2,
+          0,
+          117,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          5,
+          0,
+          0,
+          124,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          5,
+          0,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          69,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          13,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          8,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          28,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          62,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "warnings": [],
+      "parameters": {
+        "algorithm": "brute",
+        "leaf_size": 30,
+        "metric": "minkowski",
+        "metric_params": null,
+        "n_jobs": null,
+        "n_neighbors": 15,
+        "p": 2,
+        "weights": "uniform"
+      }
+    },
+    "balancedLogistic": {
+      "accuracy": 0.9762519359834796,
+      "balancedAccuracy": 0.9197381501681152,
+      "macroF1": 0.9193780272292792,
+      "perLabel": {
+        "acinar": {
+          "precision": 1.0,
+          "recall": 0.990909090909091,
+          "f1-score": 0.9954337899543378,
+          "support": 110.0
+        },
+        "activated_stellate": {
+          "precision": 0.8727272727272727,
+          "recall": 0.9411764705882353,
+          "f1-score": 0.9056603773584906,
+          "support": 51.0
+        },
+        "alpha": {
+          "precision": 0.9913793103448276,
+          "recall": 0.9745762711864406,
+          "f1-score": 0.9829059829059829,
+          "support": 236.0
+        },
+        "beta": {
+          "precision": 0.9941860465116279,
+          "recall": 0.9805045871559633,
+          "f1-score": 0.9872979214780601,
+          "support": 872.0
+        },
+        "delta": {
+          "precision": 0.902542372881356,
+          "recall": 0.9953271028037384,
+          "f1-score": 0.9466666666666667,
+          "support": 214.0
+        },
+        "ductal": {
+          "precision": 0.9916666666666667,
+          "recall": 0.9916666666666667,
+          "f1-score": 0.9916666666666667,
+          "support": 120.0
+        },
+        "endothelial": {
+          "precision": 1.0,
+          "recall": 0.9846153846153847,
+          "f1-score": 0.9922480620155039,
+          "support": 130.0
+        },
+        "epsilon": {
+          "precision": 0.8,
+          "recall": 0.6153846153846154,
+          "f1-score": 0.6956521739130435,
+          "support": 13.0
+        },
+        "gamma": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "macrophage": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 14.0
+        },
+        "mast": {
+          "precision": 0.8888888888888888,
+          "recall": 1.0,
+          "f1-score": 0.9411764705882353,
+          "support": 8.0
+        },
+        "quiescent_stellate": {
+          "precision": 0.9651162790697675,
+          "recall": 0.9021739130434783,
+          "f1-score": 0.9325842696629213,
+          "support": 92.0
+        },
+        "schwann": {
+          "precision": 0.7142857142857143,
+          "recall": 1.0,
+          "f1-score": 0.8333333333333334,
+          "support": 5.0
+        },
+        "t_cell": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1-score": 0.6666666666666666,
+          "support": 2.0
+        },
+        "accuracy": 0.9762519359834796,
+        "macro avg": {
+          "precision": 0.9371994679554373,
+          "recall": 0.9197381501681152,
+          "f1-score": 0.9193780272292792,
+          "support": 1937.0
+        },
+        "weighted avg": {
+          "precision": 0.9775023984833137,
+          "recall": 0.9762519359834796,
+          "f1-score": 0.9762651281353573,
+          "support": 1937.0
+        }
+      },
+      "classOrder": [
+        "acinar",
+        "activated_stellate",
+        "alpha",
+        "beta",
+        "delta",
+        "ductal",
+        "endothelial",
+        "epsilon",
+        "gamma",
+        "macrophage",
+        "mast",
+        "quiescent_stellate",
+        "schwann",
+        "t_cell"
+      ],
+      "confusion": [
+        [
+          109,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          48,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          230,
+          1,
+          2,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          855,
+          13,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          213,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          119,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          128,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          70,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          14,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          8,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          7,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          83,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "warnings": [],
+      "parameters": {
+        "C": 1,
+        "class_weight": "balanced",
+        "dual": false,
+        "fit_intercept": true,
+        "intercept_scaling": 1,
+        "l1_ratio": 0.0,
+        "max_iter": 2000,
+        "n_jobs": null,
+        "penalty": "deprecated",
+        "random_state": null,
+        "solver": "lbfgs",
+        "tol": 1e-06,
+        "verbose": 0,
+        "warm_start": false
+      }
+    }
+  }
+}
