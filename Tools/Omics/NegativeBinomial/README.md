@@ -149,7 +149,9 @@ not the product CLI. No Python implementation supplies native fitting.
 ## Remaining work
 
 Multi-study calibration, robust reference sensitivity, gene-specific nuisance
-handling, effect shrinkage and comparisons with R edgeR/limma/DESeq2 remain.
+handling and effect shrinkage remain. [Direct Bioconductor comparisons](../Bioconductor/README.md)
+now cover Kang and Hagai with fixed native and independent package normalization.
+Native support-rank coverage and calibrated significance remain open.
 Do not promote the default on effect correlation alone. The original Hagai
 32.85-million-nonzero scope now passes through the streaming count route and a
 [three-pair LPS6 benchmark](../Benchmarks/README.md#hagai-paired-negative-binomial-comparison).

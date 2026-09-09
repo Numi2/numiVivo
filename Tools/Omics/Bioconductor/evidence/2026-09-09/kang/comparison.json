@@ -1,0 +1,1199 @@
+{
+  "status": "completed-descriptive-comparison",
+  "input": {
+    "schemaVersion": 1,
+    "contrast": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "minimumFeatureCounts": 10,
+    "minimumExpressingPseudobulks": 3,
+    "expectedGenes": [
+      "ISG15",
+      "IFIT1",
+      "IFIT3",
+      "MX1",
+      "OAS1"
+    ],
+    "observations": 16,
+    "features": 15706,
+    "eligibleFeatures": 8894,
+    "nativeTrend": "gammaParametric",
+    "sourceReport": "/Users/home/numivivo-kang-gamma-product-20260909/report.json",
+    "sourceReportSHA256": "3f0389df9dd6b178f11c25608555daf60d66e895bc5b6b5ea9c50238fb5fd562",
+    "independentCounts": "/Users/home/numivivo-kang-native-nb-qualified-20260909/reference-pseudobulk.tsv",
+    "independentCountsSHA256": "e38b6ca90cea7fdfb666ce60c0b0134f2bd9ac2f29518889c50a8b7d4bf2d2f4",
+    "sourceH5AD": "/Users/home/numivivo-kang-gamma-product-20260909/original.h5ad",
+    "sourceH5ADSHA256": "6e5609e5bd0635ac1bd2a8f9a2bf98ad4fa9a012e8e4e2ad926436d073d745f0",
+    "exactCountsAndAxes": true,
+    "design": "Exact native numeric matrix with paired donor fixed effects; no invented batch covariate",
+    "qualification": "Two public study contrasts; comparison does not calibrate FDR or establish biological truth"
+  },
+  "results": {
+    "native_size_factors-edgeR-QL": {
+      "referenceFeatures": 8894,
+      "nativeMultiplicityFeatures": 5400,
+      "referenceMultiplicityFeatures": 8894,
+      "jointUniverseRecomputedBH": {
+        "features": 5400,
+        "nativeBelow005": 850,
+        "referenceBelow005": 1054,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 135,
+      "nativeStatusCounts": {
+        "filteredLowExpression": 6812,
+        "tested": 5400,
+        "rankDeficientSupport": 3494
+      },
+      "jointlyTestedEffects": 5400,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.990167543406142,
+      "effectSignAgreement": 0.9698148148148148,
+      "medianAbsoluteEffectDifference": 0.021767484952249574,
+      "nativeBHBelow005": 850,
+      "referenceBHBelow005": 1118,
+      "nativeZeroPValues": 2,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 85,
+      "expectedGenes": {
+        "ISG15": {
+          "status": "jointly testable",
+          "nativeEffect": 5.577967239025178,
+          "referenceEffect": 5.57606949984217,
+          "nativeBH": 0.0,
+          "referenceBH": 6.6962726082114e-226
+        },
+        "IFIT1": {
+          "status": "jointly testable",
+          "nativeEffect": 6.9446630092454615,
+          "referenceEffect": 6.54101152744143,
+          "nativeBH": 7.978741271368496e-31,
+          "referenceBH": 6.28147609713315e-51
+        },
+        "IFIT3": {
+          "status": "jointly testable",
+          "nativeEffect": 7.326227974849837,
+          "referenceEffect": 6.87715439486208,
+          "nativeBH": 2.2678799784335244e-46,
+          "referenceBH": 1.47596827052732e-111
+        },
+        "MX1": {
+          "status": "jointly testable",
+          "nativeEffect": 5.330509316535603,
+          "referenceEffect": 4.75910107741833,
+          "nativeBH": 3.232632523746273e-27,
+          "referenceBH": 6.71388096547608e-07
+        },
+        "OAS1": {
+          "status": "jointly testable",
+          "nativeEffect": 4.431836636449206,
+          "referenceEffect": 4.39461288924774,
+          "nativeBH": 5.833843117345539e-81,
+          "referenceBH": 1.92102729928984e-114
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "RSAD2",
+          "nativeEffect": 7.944273294518532,
+          "referenceEffect": 5.50094645648383,
+          "nativeMeanNormalizedCount": 39.250631450511996
+        },
+        {
+          "featureID": "DERL3",
+          "nativeEffect": -1.3607901521536447,
+          "referenceEffect": 0.202488449782301,
+          "nativeMeanNormalizedCount": 6.180266775150972
+        },
+        {
+          "featureID": "OASL",
+          "nativeEffect": 6.464887615622439,
+          "referenceEffect": 4.95442014409253,
+          "nativeMeanNormalizedCount": 34.49634112643316
+        },
+        {
+          "featureID": "APOL1",
+          "nativeEffect": 4.586779151961913,
+          "referenceEffect": 3.51022406598092,
+          "nativeMeanNormalizedCount": 1.414622679562044
+        },
+        {
+          "featureID": "SLFN12",
+          "nativeEffect": 4.126443177419566,
+          "referenceEffect": 3.05514660303071,
+          "nativeMeanNormalizedCount": 1.0410088718400878
+        },
+        {
+          "featureID": "FKBPL",
+          "nativeEffect": -1.7977407109338568,
+          "referenceEffect": -0.733689076717928,
+          "nativeMeanNormalizedCount": 2.054200660241161
+        },
+        {
+          "featureID": "BDH1",
+          "nativeEffect": -3.8072202124440198,
+          "referenceEffect": -2.75354891956337,
+          "nativeMeanNormalizedCount": 0.9280638317430319
+        },
+        {
+          "featureID": "HBB",
+          "nativeEffect": 0.4847122331741248,
+          "referenceEffect": 1.42436085799719,
+          "nativeMeanNormalizedCount": 365.1223415212871
+        },
+        {
+          "featureID": "E2F5",
+          "nativeEffect": 5.6768362008712785,
+          "referenceEffect": 4.77023552628023,
+          "nativeMeanNormalizedCount": 2.254184607676209
+        },
+        {
+          "featureID": "HBA1",
+          "nativeEffect": 0.8226141987671594,
+          "referenceEffect": -0.0198500935173295,
+          "nativeMeanNormalizedCount": 36.32876911812996
+        },
+        {
+          "featureID": "TMCC3",
+          "nativeEffect": 2.320614344240116,
+          "referenceEffect": 1.636413046536,
+          "nativeMeanNormalizedCount": 0.8795823085751122
+        },
+        {
+          "featureID": "CCDC71L",
+          "nativeEffect": 1.8396154092450006,
+          "referenceEffect": 1.17793196012533,
+          "nativeMeanNormalizedCount": 1.2092243085834697
+        },
+        {
+          "featureID": "IFI44",
+          "nativeEffect": 4.29419905082001,
+          "referenceEffect": 3.64381714515771,
+          "nativeMeanNormalizedCount": 22.398482871945124
+        },
+        {
+          "featureID": "DYX1C1",
+          "nativeEffect": -3.136673949775966,
+          "referenceEffect": -2.50698935507523,
+          "nativeMeanNormalizedCount": 1.2188150021349804
+        },
+        {
+          "featureID": "BBC3",
+          "nativeEffect": -2.815225893689984,
+          "referenceEffect": -2.20527168266585,
+          "nativeMeanNormalizedCount": 1.3216475805581103
+        },
+        {
+          "featureID": "HDAC8",
+          "nativeEffect": 1.0178368177604007,
+          "referenceEffect": 0.428190569291018,
+          "nativeMeanNormalizedCount": 1.6607400733812023
+        },
+        {
+          "featureID": "CCL8",
+          "nativeEffect": 6.807842495875876,
+          "referenceEffect": 6.22817189827097,
+          "nativeMeanNormalizedCount": 14.113456474864908
+        },
+        {
+          "featureID": "LINC00094",
+          "nativeEffect": -2.9709006921324828,
+          "referenceEffect": -2.39848245073923,
+          "nativeMeanNormalizedCount": 1.2469268231035306
+        },
+        {
+          "featureID": "MX1",
+          "nativeEffect": 5.330509316535603,
+          "referenceEffect": 4.75910107741833,
+          "nativeMeanNormalizedCount": 168.7053003722001
+        },
+        {
+          "featureID": "SLC39A10",
+          "nativeEffect": -1.726922975157486,
+          "referenceEffect": -1.17009985754533,
+          "nativeMeanNormalizedCount": 1.2886042434748302
+        }
+      ],
+      "referenceBetaNonconvergence": null,
+      "referenceDispersionOutliers": null,
+      "referenceSHA256": "76056b4a861c6d03e34251f1240618b7103760a68b30fa40da61d2217ed543fd"
+    },
+    "native_size_factors-limma-voom": {
+      "referenceFeatures": 8894,
+      "nativeMultiplicityFeatures": 5400,
+      "referenceMultiplicityFeatures": 8894,
+      "jointUniverseRecomputedBH": {
+        "features": 5400,
+        "nativeBelow005": 850,
+        "referenceBelow005": 1009,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 160,
+      "nativeStatusCounts": {
+        "filteredLowExpression": 6812,
+        "tested": 5400,
+        "rankDeficientSupport": 3494
+      },
+      "jointlyTestedEffects": 5400,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9897086778211328,
+      "effectSignAgreement": 0.9664814814814815,
+      "medianAbsoluteEffectDifference": 0.03536172273694005,
+      "nativeBHBelow005": 850,
+      "referenceBHBelow005": 1082,
+      "nativeZeroPValues": 2,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 85,
+      "expectedGenes": {
+        "ISG15": {
+          "status": "jointly testable",
+          "nativeEffect": 5.577967239025178,
+          "referenceEffect": 5.51080222125398,
+          "nativeBH": 0.0,
+          "referenceBH": 5.73883403426326e-51
+        },
+        "IFIT1": {
+          "status": "jointly testable",
+          "nativeEffect": 6.9446630092454615,
+          "referenceEffect": 6.66953546117788,
+          "nativeBH": 7.978741271368496e-31,
+          "referenceBH": 7.27689819257619e-23
+        },
+        "IFIT3": {
+          "status": "jointly testable",
+          "nativeEffect": 7.326227974849837,
+          "referenceEffect": 6.94331031599745,
+          "nativeBH": 2.2678799784335244e-46,
+          "referenceBH": 2.90682111690945e-32
+        },
+        "MX1": {
+          "status": "jointly testable",
+          "nativeEffect": 5.330509316535603,
+          "referenceEffect": 4.7589008266546,
+          "nativeBH": 3.232632523746273e-27,
+          "referenceBH": 6.71942167734269e-08
+        },
+        "OAS1": {
+          "status": "jointly testable",
+          "nativeEffect": 4.431836636449206,
+          "referenceEffect": 4.36933794192236,
+          "nativeBH": 5.833843117345539e-81,
+          "referenceBH": 2.26205949507299e-26
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "E2F5",
+          "nativeEffect": 5.6768362008712785,
+          "referenceEffect": 3.0560383484584,
+          "nativeMeanNormalizedCount": 2.254184607676209
+        },
+        {
+          "featureID": "APOL1",
+          "nativeEffect": 4.586779151961913,
+          "referenceEffect": 2.03215034866604,
+          "nativeMeanNormalizedCount": 1.414622679562044
+        },
+        {
+          "featureID": "SLFN12",
+          "nativeEffect": 4.126443177419566,
+          "referenceEffect": 1.87590600506655,
+          "nativeMeanNormalizedCount": 1.0410088718400878
+        },
+        {
+          "featureID": "HBA1",
+          "nativeEffect": 0.8226141987671594,
+          "referenceEffect": -1.21219714133067,
+          "nativeMeanNormalizedCount": 36.32876911812996
+        },
+        {
+          "featureID": "RSAD2",
+          "nativeEffect": 7.944273294518532,
+          "referenceEffect": 5.9366061470498,
+          "nativeMeanNormalizedCount": 39.250631450511996
+        },
+        {
+          "featureID": "BDH1",
+          "nativeEffect": -3.8072202124440198,
+          "referenceEffect": -1.86528826402799,
+          "nativeMeanNormalizedCount": 0.9280638317430319
+        },
+        {
+          "featureID": "CCL8",
+          "nativeEffect": 6.807842495875876,
+          "referenceEffect": 5.08769758032905,
+          "nativeMeanNormalizedCount": 14.113456474864908
+        },
+        {
+          "featureID": "ATF3",
+          "nativeEffect": 3.9964113342698004,
+          "referenceEffect": 2.35628866201113,
+          "nativeMeanNormalizedCount": 2.1402203408037237
+        },
+        {
+          "featureID": "HBA2",
+          "nativeEffect": 0.8225592150390677,
+          "referenceEffect": -0.795718631347496,
+          "nativeMeanNormalizedCount": 88.83372686970401
+        },
+        {
+          "featureID": "JUP",
+          "nativeEffect": 4.050887280965833,
+          "referenceEffect": 2.43488484819195,
+          "nativeMeanNormalizedCount": 2.0613956237431794
+        },
+        {
+          "featureID": "IGLL5",
+          "nativeEffect": 0.5086728153968201,
+          "referenceEffect": 2.08497942616033,
+          "nativeMeanNormalizedCount": 698.0941657713099
+        },
+        {
+          "featureID": "TNKS2-AS1",
+          "nativeEffect": 3.4188113339563393,
+          "referenceEffect": 1.88097689893828,
+          "nativeMeanNormalizedCount": 1.367185672099399
+        },
+        {
+          "featureID": "ETV7",
+          "nativeEffect": 5.492120515772351,
+          "referenceEffect": 4.0427705290958,
+          "nativeMeanNormalizedCount": 6.280696617225793
+        },
+        {
+          "featureID": "CACNA1A",
+          "nativeEffect": 4.8178719177723375,
+          "referenceEffect": 3.40333811639819,
+          "nativeMeanNormalizedCount": 3.7737383899794956
+        },
+        {
+          "featureID": "SPATS2L",
+          "nativeEffect": 5.11153546511835,
+          "referenceEffect": 3.73126281902609,
+          "nativeMeanNormalizedCount": 5.60861331400705
+        },
+        {
+          "featureID": "ZCCHC2",
+          "nativeEffect": 3.291380453712736,
+          "referenceEffect": 1.91318517349006,
+          "nativeMeanNormalizedCount": 1.3149955968818259
+        },
+        {
+          "featureID": "DYX1C1",
+          "nativeEffect": -3.136673949775966,
+          "referenceEffect": -1.76565899569092,
+          "nativeMeanNormalizedCount": 1.2188150021349804
+        },
+        {
+          "featureID": "MOV10",
+          "nativeEffect": 3.8213862034385495,
+          "referenceEffect": 2.60030784707868,
+          "nativeMeanNormalizedCount": 2.4564581903796485
+        },
+        {
+          "featureID": "TMCC3",
+          "nativeEffect": 2.320614344240116,
+          "referenceEffect": 1.135685392345,
+          "nativeMeanNormalizedCount": 0.8795823085751122
+        },
+        {
+          "featureID": "APOL6",
+          "nativeEffect": 4.949267845816906,
+          "referenceEffect": 3.79696572740619,
+          "nativeMeanNormalizedCount": 6.245144634762339
+        }
+      ],
+      "referenceBetaNonconvergence": null,
+      "referenceDispersionOutliers": null,
+      "referenceSHA256": "ca241cdfadd609f7418d4274575860354213333a919228780c2354d03a0d2c07"
+    },
+    "native_size_factors-DESeq2": {
+      "referenceFeatures": 8894,
+      "nativeMultiplicityFeatures": 5400,
+      "referenceMultiplicityFeatures": 8894,
+      "jointUniverseRecomputedBH": {
+        "features": 5400,
+        "nativeBelow005": 850,
+        "referenceBelow005": 700,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 35,
+      "nativeStatusCounts": {
+        "filteredLowExpression": 6812,
+        "tested": 5400,
+        "rankDeficientSupport": 3494
+      },
+      "jointlyTestedEffects": 5400,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9985310925422186,
+      "effectSignAgreement": 0.9862962962962963,
+      "medianAbsoluteEffectDifference": 0.01584907141344356,
+      "nativeBHBelow005": 850,
+      "referenceBHBelow005": 676,
+      "nativeZeroPValues": 2,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 96,
+      "expectedGenes": {
+        "ISG15": {
+          "status": "jointly testable",
+          "nativeEffect": 5.577967239025178,
+          "referenceEffect": 5.59099355361513,
+          "nativeBH": 0.0,
+          "referenceBH": 1.03818792748425e-239
+        },
+        "IFIT1": {
+          "status": "jointly testable",
+          "nativeEffect": 6.9446630092454615,
+          "referenceEffect": 7.00336511688015,
+          "nativeBH": 7.978741271368496e-31,
+          "referenceBH": 9.2801521315982e-26
+        },
+        "IFIT3": {
+          "status": "jointly testable",
+          "nativeEffect": 7.326227974849837,
+          "referenceEffect": 7.38909270130396,
+          "nativeBH": 2.2678799784335244e-46,
+          "referenceBH": 1.84088936468823e-37
+        },
+        "MX1": {
+          "status": "jointly testable",
+          "nativeEffect": 5.330509316535603,
+          "referenceEffect": 5.36624426881118,
+          "nativeBH": 3.232632523746273e-27,
+          "referenceBH": 8.57017288717079e-24
+        },
+        "OAS1": {
+          "status": "jointly testable",
+          "nativeEffect": 4.431836636449206,
+          "referenceEffect": 4.54136100691774,
+          "nativeBH": 5.833843117345539e-81,
+          "referenceBH": 1.70658074907135e-45
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "APOL1",
+          "nativeEffect": 4.586779151961913,
+          "referenceEffect": 3.0155868405241,
+          "nativeMeanNormalizedCount": 1.414622679562044
+        },
+        {
+          "featureID": "E2F5",
+          "nativeEffect": 5.6768362008712785,
+          "referenceEffect": 4.14221415321439,
+          "nativeMeanNormalizedCount": 2.254184607676209
+        },
+        {
+          "featureID": "SLFN12",
+          "nativeEffect": 4.126443177419566,
+          "referenceEffect": 2.82678491036581,
+          "nativeMeanNormalizedCount": 1.0410088718400878
+        },
+        {
+          "featureID": "BDH1",
+          "nativeEffect": -3.8072202124440198,
+          "referenceEffect": -2.69678535318905,
+          "nativeMeanNormalizedCount": 0.9280638317430319
+        },
+        {
+          "featureID": "RSAD2",
+          "nativeEffect": 7.944273294518532,
+          "referenceEffect": 7.16839564636412,
+          "nativeMeanNormalizedCount": 39.250631450511996
+        },
+        {
+          "featureID": "JUP",
+          "nativeEffect": 4.050887280965833,
+          "referenceEffect": 3.3017518275099,
+          "nativeMeanNormalizedCount": 2.0613956237431794
+        },
+        {
+          "featureID": "ATF3",
+          "nativeEffect": 3.9964113342698004,
+          "referenceEffect": 3.3335744002708,
+          "nativeMeanNormalizedCount": 2.1402203408037237
+        },
+        {
+          "featureID": "DYX1C1",
+          "nativeEffect": -3.136673949775966,
+          "referenceEffect": -2.49995434142486,
+          "nativeMeanNormalizedCount": 1.2188150021349804
+        },
+        {
+          "featureID": "TNKS2-AS1",
+          "nativeEffect": 3.4188113339563393,
+          "referenceEffect": 2.79406024332784,
+          "nativeMeanNormalizedCount": 1.367185672099399
+        },
+        {
+          "featureID": "CCL8",
+          "nativeEffect": 6.807842495875876,
+          "referenceEffect": 6.19796455978523,
+          "nativeMeanNormalizedCount": 14.113456474864908
+        },
+        {
+          "featureID": "CACNA1A",
+          "nativeEffect": 4.8178719177723375,
+          "referenceEffect": 4.29279034652693,
+          "nativeMeanNormalizedCount": 3.7737383899794956
+        },
+        {
+          "featureID": "SPATS2L",
+          "nativeEffect": 5.11153546511835,
+          "referenceEffect": 4.60159399587389,
+          "nativeMeanNormalizedCount": 5.60861331400705
+        },
+        {
+          "featureID": "ETV7",
+          "nativeEffect": 5.492120515772351,
+          "referenceEffect": 4.98993396690013,
+          "nativeMeanNormalizedCount": 6.280696617225793
+        },
+        {
+          "featureID": "ZCCHC2",
+          "nativeEffect": 3.291380453712736,
+          "referenceEffect": 2.7960711026111,
+          "nativeMeanNormalizedCount": 1.3149955968818259
+        },
+        {
+          "featureID": "TMCC3",
+          "nativeEffect": 2.320614344240116,
+          "referenceEffect": 1.90412929485991,
+          "nativeMeanNormalizedCount": 0.8795823085751122
+        },
+        {
+          "featureID": "AC009133.12",
+          "nativeEffect": 2.717652394757335,
+          "referenceEffect": 2.31378098650059,
+          "nativeMeanNormalizedCount": 1.1085756938338576
+        },
+        {
+          "featureID": "MOV10",
+          "nativeEffect": 3.8213862034385495,
+          "referenceEffect": 3.41904202709191,
+          "nativeMeanNormalizedCount": 2.4564581903796485
+        },
+        {
+          "featureID": "ADAM19",
+          "nativeEffect": 2.5616358898035427,
+          "referenceEffect": 2.18863667803041,
+          "nativeMeanNormalizedCount": 1.1259940682764236
+        },
+        {
+          "featureID": "LINC00094",
+          "nativeEffect": -2.9709006921324828,
+          "referenceEffect": -2.62575139588876,
+          "nativeMeanNormalizedCount": 1.2469268231035306
+        },
+        {
+          "featureID": "MAN1A1",
+          "nativeEffect": 2.378573033105188,
+          "referenceEffect": 2.04423635081156,
+          "nativeMeanNormalizedCount": 1.480677742275396
+        }
+      ],
+      "referenceBetaNonconvergence": 0,
+      "referenceDispersionOutliers": 32,
+      "referenceSHA256": "75e42ca98eaa01d9c8a88c0eae56ae9ef2f716dab16aad09e142b2e23b183e06",
+      "DESeq2DefaultResultPolicy": {
+        "missingPValues": 0,
+        "missingAdjustedPValues": 2242,
+        "BHBelow005": 719
+      }
+    },
+    "package_normalization-edgeR-QL": {
+      "referenceFeatures": 8894,
+      "nativeMultiplicityFeatures": 5400,
+      "referenceMultiplicityFeatures": 8894,
+      "jointUniverseRecomputedBH": {
+        "features": 5400,
+        "nativeBelow005": 850,
+        "referenceBelow005": 1049,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 133,
+      "nativeStatusCounts": {
+        "filteredLowExpression": 6812,
+        "tested": 5400,
+        "rankDeficientSupport": 3494
+      },
+      "jointlyTestedEffects": 5400,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9901869552342729,
+      "effectSignAgreement": 0.9664814814814815,
+      "medianAbsoluteEffectDifference": 0.023713095885533497,
+      "nativeBHBelow005": 850,
+      "referenceBHBelow005": 1112,
+      "nativeZeroPValues": 2,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 85,
+      "expectedGenes": {
+        "ISG15": {
+          "status": "jointly testable",
+          "nativeEffect": 5.577967239025178,
+          "referenceEffect": 5.58604499434971,
+          "nativeBH": 0.0,
+          "referenceBH": 8.4432833858398e-241
+        },
+        "IFIT1": {
+          "status": "jointly testable",
+          "nativeEffect": 6.9446630092454615,
+          "referenceEffect": 6.55113801979878,
+          "nativeBH": 7.978741271368496e-31,
+          "referenceBH": 1.58007398336366e-94
+        },
+        "IFIT3": {
+          "status": "jointly testable",
+          "nativeEffect": 7.326227974849837,
+          "referenceEffect": 6.8866717805739,
+          "nativeBH": 2.2678799784335244e-46,
+          "referenceBH": 1.01065466044526e-107
+        },
+        "MX1": {
+          "status": "jointly testable",
+          "nativeEffect": 5.330509316535603,
+          "referenceEffect": 4.76877412135853,
+          "nativeBH": 3.232632523746273e-27,
+          "referenceBH": 3.71937772849213e-07
+        },
+        "OAS1": {
+          "status": "jointly testable",
+          "nativeEffect": 4.431836636449206,
+          "referenceEffect": 4.40605596958556,
+          "nativeBH": 5.833843117345539e-81,
+          "referenceBH": 3.20381886847572e-115
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "RSAD2",
+          "nativeEffect": 7.944273294518532,
+          "referenceEffect": 5.50918239288198,
+          "nativeMeanNormalizedCount": 39.250631450511996
+        },
+        {
+          "featureID": "DERL3",
+          "nativeEffect": -1.3607901521536447,
+          "referenceEffect": 0.212214679341869,
+          "nativeMeanNormalizedCount": 6.180266775150972
+        },
+        {
+          "featureID": "OASL",
+          "nativeEffect": 6.464887615622439,
+          "referenceEffect": 4.96445227489074,
+          "nativeMeanNormalizedCount": 34.49634112643316
+        },
+        {
+          "featureID": "FKBPL",
+          "nativeEffect": -1.7977407109338568,
+          "referenceEffect": -0.715305498012818,
+          "nativeMeanNormalizedCount": 2.054200660241161
+        },
+        {
+          "featureID": "APOL1",
+          "nativeEffect": 4.586779151961913,
+          "referenceEffect": 3.51860475103329,
+          "nativeMeanNormalizedCount": 1.414622679562044
+        },
+        {
+          "featureID": "BDH1",
+          "nativeEffect": -3.8072202124440198,
+          "referenceEffect": -2.74539383603843,
+          "nativeMeanNormalizedCount": 0.9280638317430319
+        },
+        {
+          "featureID": "SLFN12",
+          "nativeEffect": 4.126443177419566,
+          "referenceEffect": 3.0656599019168,
+          "nativeMeanNormalizedCount": 1.0410088718400878
+        },
+        {
+          "featureID": "HBB",
+          "nativeEffect": 0.4847122331741248,
+          "referenceEffect": 1.42514482121266,
+          "nativeMeanNormalizedCount": 365.1223415212871
+        },
+        {
+          "featureID": "E2F5",
+          "nativeEffect": 5.6768362008712785,
+          "referenceEffect": 4.78004072078004,
+          "nativeMeanNormalizedCount": 2.254184607676209
+        },
+        {
+          "featureID": "HBA1",
+          "nativeEffect": 0.8226141987671594,
+          "referenceEffect": -0.00683630276044507,
+          "nativeMeanNormalizedCount": 36.32876911812996
+        },
+        {
+          "featureID": "TMCC3",
+          "nativeEffect": 2.320614344240116,
+          "referenceEffect": 1.64217077909653,
+          "nativeMeanNormalizedCount": 0.8795823085751122
+        },
+        {
+          "featureID": "CCDC71L",
+          "nativeEffect": 1.8396154092450006,
+          "referenceEffect": 1.19012661106368,
+          "nativeMeanNormalizedCount": 1.2092243085834697
+        },
+        {
+          "featureID": "DYX1C1",
+          "nativeEffect": -3.136673949775966,
+          "referenceEffect": -2.48817785760547,
+          "nativeMeanNormalizedCount": 1.2188150021349804
+        },
+        {
+          "featureID": "IFI44",
+          "nativeEffect": 4.29419905082001,
+          "referenceEffect": 3.65428507134727,
+          "nativeMeanNormalizedCount": 22.398482871945124
+        },
+        {
+          "featureID": "BBC3",
+          "nativeEffect": -2.815225893689984,
+          "referenceEffect": -2.18685434796896,
+          "nativeMeanNormalizedCount": 1.3216475805581103
+        },
+        {
+          "featureID": "HDAC8",
+          "nativeEffect": 1.0178368177604007,
+          "referenceEffect": 0.434105312613096,
+          "nativeMeanNormalizedCount": 1.6607400733812023
+        },
+        {
+          "featureID": "LINC00094",
+          "nativeEffect": -2.9709006921324828,
+          "referenceEffect": -2.39244597684665,
+          "nativeMeanNormalizedCount": 1.2469268231035306
+        },
+        {
+          "featureID": "SLC39A10",
+          "nativeEffect": -1.726922975157486,
+          "referenceEffect": -1.15351260847879,
+          "nativeMeanNormalizedCount": 1.2886042434748302
+        },
+        {
+          "featureID": "CCL8",
+          "nativeEffect": 6.807842495875876,
+          "referenceEffect": 6.23929144020259,
+          "nativeMeanNormalizedCount": 14.113456474864908
+        },
+        {
+          "featureID": "MX1",
+          "nativeEffect": 5.330509316535603,
+          "referenceEffect": 4.76877412135853,
+          "nativeMeanNormalizedCount": 168.7053003722001
+        }
+      ],
+      "referenceBetaNonconvergence": null,
+      "referenceDispersionOutliers": null,
+      "referenceSHA256": "aff35f96516788e77cd66619d81e82af6587dccd4073c299d1a6c188288e561c"
+    },
+    "package_normalization-limma-voom": {
+      "referenceFeatures": 8894,
+      "nativeMultiplicityFeatures": 5400,
+      "referenceMultiplicityFeatures": 8894,
+      "jointUniverseRecomputedBH": {
+        "features": 5400,
+        "nativeBelow005": 850,
+        "referenceBelow005": 998,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 160,
+      "nativeStatusCounts": {
+        "filteredLowExpression": 6812,
+        "tested": 5400,
+        "rankDeficientSupport": 3494
+      },
+      "jointlyTestedEffects": 5400,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9897521406331705,
+      "effectSignAgreement": 0.9653703703703703,
+      "medianAbsoluteEffectDifference": 0.03582888061203099,
+      "nativeBHBelow005": 850,
+      "referenceBHBelow005": 1072,
+      "nativeZeroPValues": 2,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 86,
+      "expectedGenes": {
+        "ISG15": {
+          "status": "jointly testable",
+          "nativeEffect": 5.577967239025178,
+          "referenceEffect": 5.52206353705746,
+          "nativeBH": 0.0,
+          "referenceBH": 1.09625595536772e-50
+        },
+        "IFIT1": {
+          "status": "jointly testable",
+          "nativeEffect": 6.9446630092454615,
+          "referenceEffect": 6.68124028000436,
+          "nativeBH": 7.978741271368496e-31,
+          "referenceBH": 7.5462351944269e-23
+        },
+        "IFIT3": {
+          "status": "jointly testable",
+          "nativeEffect": 7.326227974849837,
+          "referenceEffect": 6.955209711986,
+          "nativeBH": 2.2678799784335244e-46,
+          "referenceBH": 2.35868836386687e-32
+        },
+        "MX1": {
+          "status": "jointly testable",
+          "nativeEffect": 5.330509316535603,
+          "referenceEffect": 4.76949375013806,
+          "nativeBH": 3.232632523746273e-27,
+          "referenceBH": 1.89227577798611e-07
+        },
+        "OAS1": {
+          "status": "jointly testable",
+          "nativeEffect": 4.431836636449206,
+          "referenceEffect": 4.38268466109033,
+          "nativeBH": 5.833843117345539e-81,
+          "referenceBH": 2.69799309970253e-26
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "E2F5",
+          "nativeEffect": 5.6768362008712785,
+          "referenceEffect": 3.06544127214897,
+          "nativeMeanNormalizedCount": 2.254184607676209
+        },
+        {
+          "featureID": "APOL1",
+          "nativeEffect": 4.586779151961913,
+          "referenceEffect": 2.04258568220158,
+          "nativeMeanNormalizedCount": 1.414622679562044
+        },
+        {
+          "featureID": "SLFN12",
+          "nativeEffect": 4.126443177419566,
+          "referenceEffect": 1.88597156839529,
+          "nativeMeanNormalizedCount": 1.0410088718400878
+        },
+        {
+          "featureID": "HBA1",
+          "nativeEffect": 0.8226141987671594,
+          "referenceEffect": -1.18339068957257,
+          "nativeMeanNormalizedCount": 36.32876911812996
+        },
+        {
+          "featureID": "RSAD2",
+          "nativeEffect": 7.944273294518532,
+          "referenceEffect": 5.94771442584381,
+          "nativeMeanNormalizedCount": 39.250631450511996
+        },
+        {
+          "featureID": "BDH1",
+          "nativeEffect": -3.8072202124440198,
+          "referenceEffect": -1.85545127195699,
+          "nativeMeanNormalizedCount": 0.9280638317430319
+        },
+        {
+          "featureID": "CCL8",
+          "nativeEffect": 6.807842495875876,
+          "referenceEffect": 5.09711873003124,
+          "nativeMeanNormalizedCount": 14.113456474864908
+        },
+        {
+          "featureID": "ATF3",
+          "nativeEffect": 3.9964113342698004,
+          "referenceEffect": 2.36653335734244,
+          "nativeMeanNormalizedCount": 2.1402203408037237
+        },
+        {
+          "featureID": "JUP",
+          "nativeEffect": 4.050887280965833,
+          "referenceEffect": 2.44358688878728,
+          "nativeMeanNormalizedCount": 2.0613956237431794
+        },
+        {
+          "featureID": "IGLL5",
+          "nativeEffect": 0.5086728153968201,
+          "referenceEffect": 2.09179674396066,
+          "nativeMeanNormalizedCount": 698.0941657713099
+        },
+        {
+          "featureID": "HBA2",
+          "nativeEffect": 0.8225592150390677,
+          "referenceEffect": -0.759275841151277,
+          "nativeMeanNormalizedCount": 88.83372686970401
+        },
+        {
+          "featureID": "TNKS2-AS1",
+          "nativeEffect": 3.4188113339563393,
+          "referenceEffect": 1.8924904032681,
+          "nativeMeanNormalizedCount": 1.367185672099399
+        },
+        {
+          "featureID": "ETV7",
+          "nativeEffect": 5.492120515772351,
+          "referenceEffect": 4.05141234492186,
+          "nativeMeanNormalizedCount": 6.280696617225793
+        },
+        {
+          "featureID": "CACNA1A",
+          "nativeEffect": 4.8178719177723375,
+          "referenceEffect": 3.41184365342671,
+          "nativeMeanNormalizedCount": 3.7737383899794956
+        },
+        {
+          "featureID": "DYX1C1",
+          "nativeEffect": -3.136673949775966,
+          "referenceEffect": -1.75556836409441,
+          "nativeMeanNormalizedCount": 1.2188150021349804
+        },
+        {
+          "featureID": "SPATS2L",
+          "nativeEffect": 5.11153546511835,
+          "referenceEffect": 3.73904111546115,
+          "nativeMeanNormalizedCount": 5.60861331400705
+        },
+        {
+          "featureID": "ZCCHC2",
+          "nativeEffect": 3.291380453712736,
+          "referenceEffect": 1.92210901485497,
+          "nativeMeanNormalizedCount": 1.3149955968818259
+        },
+        {
+          "featureID": "MOV10",
+          "nativeEffect": 3.8213862034385495,
+          "referenceEffect": 2.61126031532618,
+          "nativeMeanNormalizedCount": 2.4564581903796485
+        },
+        {
+          "featureID": "TMCC3",
+          "nativeEffect": 2.320614344240116,
+          "referenceEffect": 1.14713911049839,
+          "nativeMeanNormalizedCount": 0.8795823085751122
+        },
+        {
+          "featureID": "APOL6",
+          "nativeEffect": 4.949267845816906,
+          "referenceEffect": 3.80579449926905,
+          "nativeMeanNormalizedCount": 6.245144634762339
+        }
+      ],
+      "referenceBetaNonconvergence": null,
+      "referenceDispersionOutliers": null,
+      "referenceSHA256": "d105d1b70072c26b63fcc0bd6270d932a98e67af951240d58f3434ec2157d4b1"
+    },
+    "package_normalization-DESeq2": {
+      "referenceFeatures": 8894,
+      "nativeMultiplicityFeatures": 5400,
+      "referenceMultiplicityFeatures": 8894,
+      "jointUniverseRecomputedBH": {
+        "features": 5400,
+        "nativeBelow005": 850,
+        "referenceBelow005": 700,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 35,
+      "nativeStatusCounts": {
+        "filteredLowExpression": 6812,
+        "tested": 5400,
+        "rankDeficientSupport": 3494
+      },
+      "jointlyTestedEffects": 5400,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9985284662656462,
+      "effectSignAgreement": 0.9862962962962963,
+      "medianAbsoluteEffectDifference": 0.015934803651567114,
+      "nativeBHBelow005": 850,
+      "referenceBHBelow005": 675,
+      "nativeZeroPValues": 2,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 96,
+      "expectedGenes": {
+        "ISG15": {
+          "status": "jointly testable",
+          "nativeEffect": 5.577967239025178,
+          "referenceEffect": 5.59116876296186,
+          "nativeBH": 0.0,
+          "referenceBH": 4.43762784839244e-238
+        },
+        "IFIT1": {
+          "status": "jointly testable",
+          "nativeEffect": 6.9446630092454615,
+          "referenceEffect": 7.00336574482293,
+          "nativeBH": 7.978741271368496e-31,
+          "referenceBH": 9.28351346266206e-26
+        },
+        "IFIT3": {
+          "status": "jointly testable",
+          "nativeEffect": 7.326227974849837,
+          "referenceEffect": 7.38909535334095,
+          "nativeBH": 2.2678799784335244e-46,
+          "referenceBH": 1.8415681458047e-37
+        },
+        "MX1": {
+          "status": "jointly testable",
+          "nativeEffect": 5.330509316535603,
+          "referenceEffect": 5.36614027412673,
+          "nativeBH": 3.232632523746273e-27,
+          "referenceBH": 8.71197676292428e-24
+        },
+        "OAS1": {
+          "status": "jointly testable",
+          "nativeEffect": 4.431836636449206,
+          "referenceEffect": 4.5413875599548,
+          "nativeBH": 5.833843117345539e-81,
+          "referenceBH": 1.73080290906418e-45
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "APOL1",
+          "nativeEffect": 4.586779151961913,
+          "referenceEffect": 3.01559352111228,
+          "nativeMeanNormalizedCount": 1.414622679562044
+        },
+        {
+          "featureID": "E2F5",
+          "nativeEffect": 5.6768362008712785,
+          "referenceEffect": 4.1422848011156,
+          "nativeMeanNormalizedCount": 2.254184607676209
+        },
+        {
+          "featureID": "SLFN12",
+          "nativeEffect": 4.126443177419566,
+          "referenceEffect": 2.82676091877839,
+          "nativeMeanNormalizedCount": 1.0410088718400878
+        },
+        {
+          "featureID": "BDH1",
+          "nativeEffect": -3.8072202124440198,
+          "referenceEffect": -2.69673705998139,
+          "nativeMeanNormalizedCount": 0.9280638317430319
+        },
+        {
+          "featureID": "RSAD2",
+          "nativeEffect": 7.944273294518532,
+          "referenceEffect": 7.16822995551101,
+          "nativeMeanNormalizedCount": 39.250631450511996
+        },
+        {
+          "featureID": "JUP",
+          "nativeEffect": 4.050887280965833,
+          "referenceEffect": 3.30178751733556,
+          "nativeMeanNormalizedCount": 2.0613956237431794
+        },
+        {
+          "featureID": "ATF3",
+          "nativeEffect": 3.9964113342698004,
+          "referenceEffect": 3.3335588738539,
+          "nativeMeanNormalizedCount": 2.1402203408037237
+        },
+        {
+          "featureID": "DYX1C1",
+          "nativeEffect": -3.136673949775966,
+          "referenceEffect": -2.49993959315593,
+          "nativeMeanNormalizedCount": 1.2188150021349804
+        },
+        {
+          "featureID": "TNKS2-AS1",
+          "nativeEffect": 3.4188113339563393,
+          "referenceEffect": 2.7940470998333,
+          "nativeMeanNormalizedCount": 1.367185672099399
+        },
+        {
+          "featureID": "CCL8",
+          "nativeEffect": 6.807842495875876,
+          "referenceEffect": 6.19796646844889,
+          "nativeMeanNormalizedCount": 14.113456474864908
+        },
+        {
+          "featureID": "CACNA1A",
+          "nativeEffect": 4.8178719177723375,
+          "referenceEffect": 4.29276867503052,
+          "nativeMeanNormalizedCount": 3.7737383899794956
+        },
+        {
+          "featureID": "SPATS2L",
+          "nativeEffect": 5.11153546511835,
+          "referenceEffect": 4.60165587617352,
+          "nativeMeanNormalizedCount": 5.60861331400705
+        },
+        {
+          "featureID": "ETV7",
+          "nativeEffect": 5.492120515772351,
+          "referenceEffect": 4.98961575062001,
+          "nativeMeanNormalizedCount": 6.280696617225793
+        },
+        {
+          "featureID": "ZCCHC2",
+          "nativeEffect": 3.291380453712736,
+          "referenceEffect": 2.79604224652631,
+          "nativeMeanNormalizedCount": 1.3149955968818259
+        },
+        {
+          "featureID": "TMCC3",
+          "nativeEffect": 2.320614344240116,
+          "referenceEffect": 1.90345328418327,
+          "nativeMeanNormalizedCount": 0.8795823085751122
+        },
+        {
+          "featureID": "AC009133.12",
+          "nativeEffect": 2.717652394757335,
+          "referenceEffect": 2.31380338678472,
+          "nativeMeanNormalizedCount": 1.1085756938338576
+        },
+        {
+          "featureID": "MOV10",
+          "nativeEffect": 3.8213862034385495,
+          "referenceEffect": 3.41904653790483,
+          "nativeMeanNormalizedCount": 2.4564581903796485
+        },
+        {
+          "featureID": "ADAM19",
+          "nativeEffect": 2.5616358898035427,
+          "referenceEffect": 2.18862936697497,
+          "nativeMeanNormalizedCount": 1.1259940682764236
+        },
+        {
+          "featureID": "LINC00094",
+          "nativeEffect": -2.9709006921324828,
+          "referenceEffect": -2.62575976254912,
+          "nativeMeanNormalizedCount": 1.2469268231035306
+        },
+        {
+          "featureID": "MAN1A1",
+          "nativeEffect": 2.378573033105188,
+          "referenceEffect": 2.04432695177783,
+          "nativeMeanNormalizedCount": 1.480677742275396
+        }
+      ],
+      "referenceBetaNonconvergence": 0,
+      "referenceDispersionOutliers": 30,
+      "referenceSHA256": "34c60705c4638d8abe81eb0addeada978546b602f513ba166f5a986d17ef5065",
+      "DESeq2DefaultResultPolicy": {
+        "missingPValues": 0,
+        "missingAdjustedPValues": 2069,
+        "BHBelow005": 713
+      }
+    }
+  },
+  "independentBHVerified": true,
+  "qualification": "Same real pseudobulk observations, prefilter and paired donor design. Native support rejections reduce its tested multiplicity family; raw and intersection-recomputed BH summaries are distinct. Different estimators and tests are retained, not forced into numerical equality. No calibrated FDR, causal truth or general competitive claim."
+}

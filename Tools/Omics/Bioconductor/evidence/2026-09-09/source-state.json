@@ -1,0 +1,71 @@
+{
+  "baseCommit": "1dd2b28f021271235e456d22ea735f0f6f3325c0",
+  "nativeBinary": "/Users/home/numivivo-programs-product-20260909/numivivo",
+  "nativeBinarySHA256": "f337e6940030a2d40ab618e01a05b37bec79dd70dedbee0822a76c1f35177956",
+  "RVersion": "4.6.1",
+  "BioconductorVersion": "3.23",
+  "RLibrary": "/Users/home/numivivo-r-library-20260909",
+  "artifacts": {
+    "kang": {
+      "input": "/Users/home/numivivo-kang-r-input-v3-20260909",
+      "reference": "/Users/home/numivivo-kang-r-reference-20260909",
+      "repeat": "/Users/home/numivivo-kang-r-reference-repeat-20260909",
+      "currentNativeBundle": "/Users/home/numivivo-kang-r-native-current-20260909",
+      "reportSHA256": "3f0389df9dd6b178f11c25608555daf60d66e895bc5b6b5ea9c50238fb5fd562",
+      "previousReportSHA256": "3f0389df9dd6b178f11c25608555daf60d66e895bc5b6b5ea9c50238fb5fd562",
+      "exactNativeReportReproduction": true,
+      "exactReferenceTableRepeat": true,
+      "referenceTableSHA256": {
+        "native_size_factors-limma-voom.tsv": "ca241cdfadd609f7418d4274575860354213333a919228780c2354d03a0d2c07",
+        "native_size_factors-edgeR-normalization.tsv": "b8fde2f95bec3f758d6fdf99503a18729d135eb9fb9c4f564542009cdb12fa8c",
+        "package_normalization-limma-voom.tsv": "d105d1b70072c26b63fcc0bd6270d932a98e67af951240d58f3434ec2157d4b1",
+        "package_normalization-DESeq2-default-results.tsv": "afba7b216530faf9958b9360025040bd13830a5b376d40b32d8df8e0efebd2a2",
+        "package_normalization-edgeR-QL.tsv": "aff35f96516788e77cd66619d81e82af6587dccd4073c299d1a6c188288e561c",
+        "native_size_factors-DESeq2-default-results.tsv": "faec8d4763b68a42997c8e67653e0f5ec55143b899ef6fda57102db10cacf0bf",
+        "package_normalization-edgeR-normalization.tsv": "29081137b953446a91c1cab59d8e46da69c4b6367ada715438987a99cf13eaf8",
+        "package_normalization-DESeq2.tsv": "34c60705c4638d8abe81eb0addeada978546b602f513ba166f5a986d17ef5065",
+        "tested-features.tsv": "67f9c49aa79b04446c66dac3042e0a91f96546b90feb78621bdc1b098d738ece",
+        "native_size_factors-DESeq2-normalization.tsv": "1732b13ae089a010eb5ac307a1b330492581706749de06649797f63866dc5feb",
+        "native_size_factors-edgeR-QL.tsv": "76056b4a861c6d03e34251f1240618b7103760a68b30fa40da61d2217ed543fd",
+        "native_size_factors-DESeq2.tsv": "75e42ca98eaa01d9c8a88c0eae56ae9ef2f716dab16aad09e142b2e23b183e06",
+        "package_normalization-DESeq2-normalization.tsv": "e21a19a24fa6f2d77864f74090486cbcde96523d3e21df7e4b7dadc2774af693"
+      }
+    },
+    "hagai": {
+      "input": "/Users/home/numivivo-hagai-r-input-v3-20260909",
+      "reference": "/Users/home/numivivo-hagai-r-reference-20260909",
+      "repeat": "/Users/home/numivivo-hagai-r-reference-repeat-20260909",
+      "currentNativeBundle": "/Users/home/numivivo-hagai-r-native-current-20260909",
+      "reportSHA256": "e48207360053c8eba01a2fa3527ec3e673757d14d29cc6c6d392b0ecd6ad893a",
+      "previousReportSHA256": "e48207360053c8eba01a2fa3527ec3e673757d14d29cc6c6d392b0ecd6ad893a",
+      "exactNativeReportReproduction": true,
+      "exactReferenceTableRepeat": true,
+      "referenceTableSHA256": {
+        "native_size_factors-limma-voom.tsv": "249984a907b32cc4426023215f232c99b8bc0f772f18bc51ce28ff29233f5211",
+        "native_size_factors-edgeR-normalization.tsv": "ffc9f369ca5c3ca78b172984b79eee0f2cf1845b1b18be0e0056fbd85be6aefa",
+        "package_normalization-limma-voom.tsv": "3d5ba0bbf9311c9b188daf92471a8e8c47bea8bbcc47507546e5a990ce00c434",
+        "package_normalization-DESeq2-default-results.tsv": "221d81980aaeefe8292fca6263aac4926930f2502896d6d28bebe9ca39c7f8b3",
+        "package_normalization-edgeR-QL.tsv": "afd6586f21fe7af5d9368c0238abb597bdb139536ae15b2670f26736ef2b2225",
+        "native_size_factors-DESeq2-default-results.tsv": "0f76d9c6e0b09cf57f0fb5cf7e1fb885a8de960f2abab1f5f9e9fa259b546014",
+        "package_normalization-edgeR-normalization.tsv": "9f959c59cbb184580bd871201511ac00bd02843b7fc975ef719b9a67a69b660a",
+        "package_normalization-DESeq2.tsv": "1fc19dff494ab44a3aa68c1081259494d28b899249085ff7f71d1464e1dd4354",
+        "tested-features.tsv": "573d1c52dd9b84eeb7c2abbbecad5672e651f267f23cef3d4c167a0241671eee",
+        "native_size_factors-DESeq2-normalization.tsv": "cc7a3ec44fc72fc7b1bedfe62b501988023c87d9806a476092a192b8d3dd55cc",
+        "native_size_factors-edgeR-QL.tsv": "2f5b71f524d27d9195fa73d758b117cd3da8332e7b69b911f907956c13188e06",
+        "native_size_factors-DESeq2.tsv": "3c819055aa74171f4c792214e69f6ab416dc91ac04ce5012cab7f18abd38984f",
+        "package_normalization-DESeq2-normalization.tsv": "806d1994532e5fb64611440cb18b54fab83686d3c7ed267008a7c787da51e594"
+      }
+    }
+  },
+  "installationLogs": {
+    "/Users/home/numivivo-r-install-20260909.log": "5935c07b5d78e886e2aaeafe1ea73cacc3ee6db5d9de512319b713245acc3b36",
+    "/Users/home/numivivo-r-packages-20260909.log": "67d27750848f8cba4650ac7ac0bad78c8e868cd59388cd6c61a8554b4edbdc44"
+  },
+  "qualification": "Direct two-study paired pseudobulk reference comparisons; native support rejections and unequal multiplicity families retained. No FDR calibration, causal, general competitive or performance claim.",
+  "referenceSourceSHA256": {
+    "audit_support.py": "84fc953b3ba699a7ac8bcb13d41e39acaa889020d38bec0aae81c0b9effcba41",
+    "run.R": "7645aac93c484d283c2c613a4cefe0f465ae5dedb0b74d5cc30597c64069e61d",
+    "compare.py": "2ed591b43a27f29d4a7f267c5f510e7c96d7ec00cd29ae4b467bdd5483ab158f",
+    "prepare.py": "9dc5ed09423b62a031d301f195a8fc1d453a3a2a8e7ae8b994c098f032a30cd0"
+  }
+}

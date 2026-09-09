@@ -1,0 +1,50 @@
+{
+  "native_size_factors-edgeR-QL": {
+    "effectSpearman": 0.990167543406142,
+    "effectSignAgreement": 0.9698148148148148,
+    "nativeBHBelow005": 850,
+    "referenceBHBelow005": 1118,
+    "topKBHOverlap": 85,
+    "referenceBetaNonconvergence": null
+  },
+  "native_size_factors-limma-voom": {
+    "effectSpearman": 0.9897086778211328,
+    "effectSignAgreement": 0.9664814814814815,
+    "nativeBHBelow005": 850,
+    "referenceBHBelow005": 1082,
+    "topKBHOverlap": 85,
+    "referenceBetaNonconvergence": null
+  },
+  "native_size_factors-DESeq2": {
+    "effectSpearman": 0.9985310925422186,
+    "effectSignAgreement": 0.9862962962962963,
+    "nativeBHBelow005": 850,
+    "referenceBHBelow005": 676,
+    "topKBHOverlap": 96,
+    "referenceBetaNonconvergence": 0
+  },
+  "package_normalization-edgeR-QL": {
+    "effectSpearman": 0.9901869552342729,
+    "effectSignAgreement": 0.9664814814814815,
+    "nativeBHBelow005": 850,
+    "referenceBHBelow005": 1112,
+    "topKBHOverlap": 85,
+    "referenceBetaNonconvergence": null
+  },
+  "package_normalization-limma-voom": {
+    "effectSpearman": 0.9897521406331705,
+    "effectSignAgreement": 0.9653703703703703,
+    "nativeBHBelow005": 850,
+    "referenceBHBelow005": 1072,
+    "topKBHOverlap": 86,
+    "referenceBetaNonconvergence": null
+  },
+  "package_normalization-DESeq2": {
+    "effectSpearman": 0.9985284662656462,
+    "effectSignAgreement": 0.9862962962962963,
+    "nativeBHBelow005": 850,
+    "referenceBHBelow005": 675,
+    "topKBHOverlap": 96,
+    "referenceBetaNonconvergence": 0
+  }
+}

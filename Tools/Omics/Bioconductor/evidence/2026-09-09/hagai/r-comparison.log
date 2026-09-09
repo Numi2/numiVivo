@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Bioconductor/compare.py", line 19, in <module>
+    check_bh(ref)
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Bioconductor/compare.py", line 14, in check_bh
+    np.testing.assert_allclose(multipletests(values,method='fdr_bh')[1],t.loc[mask,'adjustedPValue'],rtol=2e-13,atol=1e-15)
+  File "/Users/home/numivivo-singlecell-benchmark-py/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 1780, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+  File "/Users/home/numivivo-singlecell-benchmark-py/lib/python3.12/site-packages/numpy/testing/_private/utils.py", line 988, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=2e-13, atol=1e-15
+
+Mismatched elements: 1 / 12673 (0.00789%)
+Mismatch at index:
+ [6819]: 0.0014991132088592561 (ACTUAL), 0.0014991132088606 (DESIRED)
+Max absolute difference among violations: 1.34397701e-15
+Max relative difference among violations: 8.9651469e-13
+ ACTUAL: array([0.999691, 0.007419, 0.075585, ..., 0.656957, 0.045554, 0.030206],
+      shape=(12673,))
+ DESIRED: array([0.999691, 0.007419, 0.075585, ..., 0.656957, 0.045554, 0.030206],
+      shape=(12673,))

@@ -83,7 +83,10 @@ pseudobulk is densified for PyDESeq2.
 
 Several independent studies with verified donor structures and raw counts,
 additional cell types/perturbations, robust reference sensitivity, explicit
-competitive acceptance criteria and R edgeR/limma/DESeq2 comparisons remain.
+competitive acceptance criteria and significance calibration remain.
+[Direct R edgeR/limma-voom/DESeq2 comparisons](../Bioconductor/README.md) now cover
+both Kang and Hagai under common count filters and paired designs. Native support
+rejections and different multiple-testing families remain explicit.
 The [native NB cohort method](../NegativeBinomial/README.md) now has a full Kang
 CLI comparison and independent calculation checks. It remains experimental;
 old plans retain the log-linear baseline. The count default is

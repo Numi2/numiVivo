@@ -248,7 +248,12 @@ The complete development objective remains open:
 2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
    tuft-cell count/QC passes. Several independent donor-resolved studies, robust
-   reference sensitivity and R edgeR/limma/DESeq2 comparisons remain.
+   reference sensitivity and calibration remain. Direct
+   [R edgeR/limma-voom/DESeq2 comparisons](../Tools/Omics/Bioconductor/README.md)
+   now cover the same Kang/Hagai counts and paired designs under fixed native
+   and package normalization. Native support-rank rejection still withholds
+   3,494 Kang and 247 Hagai eligible genes; correlation on tested intersections
+   does not close that coverage gap.
    Full-scope original Hagai mouse count/QC, pseudobulks and a predeclared NB
    comparison now pass through the streaming route. Its three donor pairs are
    inferred explicitly from deposited sample prefixes, supported by the primary

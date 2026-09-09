@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Bioconductor/prepare.py", line 32, in <module>
+    y=(aggregate@raw).toarray();assert y.max()<=np.iinfo(np.int32).max()
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'int' object is not callable

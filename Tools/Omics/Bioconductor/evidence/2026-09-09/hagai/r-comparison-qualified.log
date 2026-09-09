@@ -1,0 +1,50 @@
+{
+  "native_size_factors-edgeR-QL": {
+    "effectSpearman": 0.9947060910793315,
+    "effectSignAgreement": 0.9910671173346209,
+    "nativeBHBelow005": 4827,
+    "referenceBHBelow005": 5000,
+    "topKBHOverlap": 75,
+    "referenceBetaNonconvergence": null
+  },
+  "native_size_factors-limma-voom": {
+    "effectSpearman": 0.9947002379345189,
+    "effectSignAgreement": 0.9842266215998713,
+    "nativeBHBelow005": 4827,
+    "referenceBHBelow005": 5107,
+    "topKBHOverlap": 80,
+    "referenceBetaNonconvergence": null
+  },
+  "native_size_factors-DESeq2": {
+    "effectSpearman": 0.9998081151121232,
+    "effectSignAgreement": 0.9979880894897795,
+    "nativeBHBelow005": 4827,
+    "referenceBHBelow005": 4518,
+    "topKBHOverlap": 93,
+    "referenceBetaNonconvergence": 0
+  },
+  "package_normalization-edgeR-QL": {
+    "effectSpearman": 0.9946737916352264,
+    "effectSignAgreement": 0.9801223241590215,
+    "nativeBHBelow005": 4827,
+    "referenceBHBelow005": 4979,
+    "topKBHOverlap": 75,
+    "referenceBetaNonconvergence": null
+  },
+  "package_normalization-limma-voom": {
+    "effectSpearman": 0.9947158982699175,
+    "effectSignAgreement": 0.9791566071141156,
+    "nativeBHBelow005": 4827,
+    "referenceBHBelow005": 5110,
+    "topKBHOverlap": 79,
+    "referenceBetaNonconvergence": null
+  },
+  "package_normalization-DESeq2": {
+    "effectSpearman": 0.9998048764033907,
+    "effectSignAgreement": 0.9979880894897795,
+    "nativeBHBelow005": 4827,
+    "referenceBHBelow005": 4515,
+    "topKBHOverlap": 94,
+    "referenceBetaNonconvergence": 0
+  }
+}
