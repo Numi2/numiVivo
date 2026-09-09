@@ -1,0 +1,2408 @@
+{
+  "status": "full-cohort-measured",
+  "cohort": "ding",
+  "protocolSHA256": "fabbebb6ad31ce4fcbab2d267ceb0a735b2307fd8027d239f3316b3d77872308",
+  "inputSHA256": "e25668d96ba9cbee7ef2fa0796d71a1ad5cea3ce9e40a242e6a5ec15543af769",
+  "metadataSHA256": "faff58b0697ce3e278f032a7617aaeeb3c5de05439041f06bd425a926610480f",
+  "scoresSHA256": "e2b3c07cbccae9d1828a2f65f9094c2535e2efcaee23c6a42658b769eaaa86c5",
+  "cells": 44031,
+  "components": 20,
+  "versions": {
+    "scanorama": "1.7.4",
+    "scanpy": "1.12.4",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "anndata": "0.13.3.post0",
+    "annoy": "1.17.3",
+    "fbpca": "1.0",
+    "geosketch": "1.3",
+    "intervaltree": "3.2.1",
+    "sortedcontainers": "2.4.0"
+  },
+  "integrationSeconds": 31.07202862529084,
+  "inputScale": "median-norm",
+  "scaleValue": 7.222172338941521,
+  "baseline": {
+    "sameMethodExcess": 0.7042314597493456,
+    "methodEntropy": 0.10038688599149138,
+    "mixingFolds": [
+      {
+        "experiment": "pbmc1",
+        "method": "10x Chromium (v2) A",
+        "cells": 3182,
+        "sameMethodExcess": 0.5716617401845555,
+        "entropy": 0.23607090540969475
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "10x Chromium (v2) B",
+        "cells": 3044,
+        "sameMethodExcess": 0.6800106155514608,
+        "entropy": 0.13579325376381143
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "10x Chromium (v3)",
+        "cells": 3215,
+        "sameMethodExcess": 0.7393797064030971,
+        "entropy": 0.07821697418519336
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "CEL-Seq2",
+        "cells": 251,
+        "sameMethodExcess": 0.8138336323313785,
+        "entropy": 0.15494026476713707
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "Drop-seq",
+        "cells": 2873,
+        "sameMethodExcess": 0.7987343150481017,
+        "entropy": 0.027271154255303916
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "Seq-Well",
+        "cells": 3176,
+        "sameMethodExcess": 0.6681532677531831,
+        "entropy": 0.12380625463764071
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "inDrops",
+        "cells": 3222,
+        "sameMethodExcess": 0.6260509823077147,
+        "entropy": 0.17965364779961868
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "10x Chromium (v2)",
+        "cells": 3362,
+        "sameMethodExcess": 0.6235279736947131,
+        "entropy": 0.05569153454567203
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "CEL-Seq2",
+        "cells": 273,
+        "sameMethodExcess": 0.9427653688042033,
+        "entropy": 0.023754684888987573
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "Drop-seq",
+        "cells": 3358,
+        "sameMethodExcess": 0.6203117747797013,
+        "entropy": 0.016473598309085243
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "Seq-Well",
+        "cells": 549,
+        "sameMethodExcess": 0.806046729993229,
+        "entropy": 0.12311591480607541
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "inDrops",
+        "cells": 2906,
+        "sameMethodExcess": 0.5512168505219729,
+        "entropy": 0.11643851678052233
+      }
+    ],
+    "cellTypeBalancedAccuracy": 0.6609018863602716,
+    "cellTypeRecall": {
+      "B cell": 0.9400322658157394,
+      "CD14+ monocyte": 0.8559768112559598,
+      "CD16+ monocyte": 0.7435123859806256,
+      "CD4+ T cell": 0.5831475667660102,
+      "Cytotoxic T cell": 0.6734736725717739,
+      "Dendritic cell": 0.47352472089314196,
+      "Megakaryocyte": 0.9619200244200243,
+      "Natural killer cell": 0.34679311038134175,
+      "Plasmacytoid dendritic cell": 0.36973641915782707
+    },
+    "classifiers": {
+      "original": {
+        "balancedAccuracy": 0.6609018863602716,
+        "recalls": {
+          "B cell": 0.9400322658157394,
+          "CD14+ monocyte": 0.8559768112559598,
+          "CD16+ monocyte": 0.7435123859806256,
+          "CD4+ T cell": 0.5831475667660102,
+          "Cytotoxic T cell": 0.6734736725717739,
+          "Dendritic cell": 0.47352472089314196,
+          "Megakaryocyte": 0.9619200244200243,
+          "Natural killer cell": 0.34679311038134175,
+          "Plasmacytoid dendritic cell": 0.36973641915782707
+        },
+        "folds": [
+          {
+            "experiment": "pbmc1",
+            "cells": 18963,
+            "balancedAccuracy": 0.6802543957390301,
+            "recalls": {
+              "B cell": 0.8868339938353148,
+              "CD14+ monocyte": 0.8397626112759644,
+              "CD16+ monocyte": 0.7078039927404719,
+              "CD4+ T cell": 0.6483709273182957,
+              "Cytotoxic T cell": 0.6153612629022465,
+              "Dendritic cell": 0.4258373205741627,
+              "Megakaryocyte": 0.9793956043956044,
+              "Natural killer cell": 0.5581395348837209,
+              "Plasmacytoid dendritic cell": 0.46078431372549017
+            },
+            "confusion": [
+              [
+                2014,
+                34,
+                1,
+                105,
+                87,
+                5,
+                3,
+                0,
+                22
+              ],
+              [
+                15,
+                3113,
+                74,
+                298,
+                125,
+                68,
+                5,
+                2,
+                7
+              ],
+              [
+                0,
+                105,
+                390,
+                18,
+                33,
+                4,
+                1,
+                0,
+                0
+              ],
+              [
+                5,
+                21,
+                4,
+                2587,
+                1327,
+                1,
+                5,
+                40,
+                0
+              ],
+              [
+                15,
+                64,
+                1,
+                1867,
+                4054,
+                3,
+                7,
+                570,
+                7
+              ],
+              [
+                0,
+                105,
+                0,
+                4,
+                2,
+                89,
+                1,
+                0,
+                8
+              ],
+              [
+                1,
+                0,
+                1,
+                7,
+                3,
+                0,
+                713,
+                2,
+                1
+              ],
+              [
+                2,
+                0,
+                0,
+                4,
+                354,
+                0,
+                1,
+                456,
+                0
+              ],
+              [
+                25,
+                7,
+                0,
+                8,
+                13,
+                1,
+                1,
+                0,
+                47
+              ]
+            ]
+          },
+          {
+            "experiment": "pbmc2",
+            "cells": 10448,
+            "balancedAccuracy": 0.6415493769815129,
+            "recalls": {
+              "B cell": 0.993230537796164,
+              "CD14+ monocyte": 0.8721910112359551,
+              "CD16+ monocyte": 0.7792207792207793,
+              "CD4+ T cell": 0.5179242062137248,
+              "Cytotoxic T cell": 0.7315860822413014,
+              "Dendritic cell": 0.5212121212121212,
+              "Megakaryocyte": 0.9444444444444444,
+              "Natural killer cell": 0.13544668587896252,
+              "Plasmacytoid dendritic cell": 0.2786885245901639
+            },
+            "confusion": [
+              [
+                2641,
+                7,
+                0,
+                5,
+                3,
+                1,
+                0,
+                0,
+                2
+              ],
+              [
+                43,
+                1242,
+                34,
+                10,
+                19,
+                70,
+                0,
+                0,
+                6
+              ],
+              [
+                9,
+                19,
+                180,
+                3,
+                15,
+                2,
+                3,
+                0,
+                0
+              ],
+              [
+                74,
+                35,
+                1,
+                1517,
+                1298,
+                1,
+                3,
+                0,
+                0
+              ],
+              [
+                63,
+                20,
+                2,
+                506,
+                1619,
+                0,
+                0,
+                3,
+                0
+              ],
+              [
+                10,
+                58,
+                1,
+                0,
+                4,
+                86,
+                0,
+                0,
+                6
+              ],
+              [
+                0,
+                1,
+                0,
+                2,
+                0,
+                1,
+                68,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                0,
+                1,
+                596,
+                0,
+                0,
+                94,
+                0
+              ],
+              [
+                34,
+                1,
+                0,
+                2,
+                1,
+                6,
+                0,
+                0,
+                17
+              ]
+            ]
+          }
+        ]
+      },
+      "balanced": {
+        "balancedAccuracy": 0.7463850426208964,
+        "recalls": {
+          "B cell": 0.8887115019750476,
+          "CD14+ monocyte": 0.727798039239459,
+          "CD16+ monocyte": 0.8149331007770209,
+          "CD4+ T cell": 0.633049378310919,
+          "Cytotoxic T cell": 0.5122216556633526,
+          "Dendritic cell": 0.6660287081339713,
+          "Megakaryocyte": 0.9826770451770452,
+          "Natural killer cell": 0.7997444435430108,
+          "Plasmacytoid dendritic cell": 0.6923015107682418
+        },
+        "folds": [
+          {
+            "experiment": "pbmc1",
+            "cells": 18963,
+            "balancedAccuracy": 0.7214306529131129,
+            "recalls": {
+              "B cell": 0.8071334214002642,
+              "CD14+ monocyte": 0.7828432694901538,
+              "CD16+ monocyte": 0.764065335753176,
+              "CD4+ T cell": 0.556641604010025,
+              "Cytotoxic T cell": 0.5544930176077717,
+              "Dendritic cell": 0.5502392344497608,
+              "Megakaryocyte": 0.9931318681318682,
+              "Natural killer cell": 0.7882496940024479,
+              "Plasmacytoid dendritic cell": 0.696078431372549
+            },
+            "confusion": [
+              [
+                1833,
+                27,
+                3,
+                79,
+                91,
+                15,
+                7,
+                2,
+                214
+              ],
+              [
+                7,
+                2902,
+                108,
+                219,
+                112,
+                157,
+                88,
+                14,
+                100
+              ],
+              [
+                1,
+                75,
+                421,
+                11,
+                32,
+                8,
+                1,
+                0,
+                2
+              ],
+              [
+                4,
+                23,
+                7,
+                2221,
+                1611,
+                7,
+                8,
+                95,
+                14
+              ],
+              [
+                10,
+                48,
+                10,
+                1489,
+                3653,
+                17,
+                27,
+                1265,
+                69
+              ],
+              [
+                0,
+                67,
+                0,
+                4,
+                1,
+                115,
+                1,
+                0,
+                21
+              ],
+              [
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                723,
+                1,
+                2
+              ],
+              [
+                2,
+                0,
+                0,
+                2,
+                167,
+                0,
+                2,
+                644,
+                0
+              ],
+              [
+                10,
+                5,
+                0,
+                4,
+                10,
+                1,
+                1,
+                0,
+                71
+              ]
+            ]
+          },
+          {
+            "experiment": "pbmc2",
+            "cells": 10448,
+            "balancedAccuracy": 0.77133943232868,
+            "recalls": {
+              "B cell": 0.9702895825498308,
+              "CD14+ monocyte": 0.672752808988764,
+              "CD16+ monocyte": 0.8658008658008658,
+              "CD4+ T cell": 0.7094571526118129,
+              "Cytotoxic T cell": 0.4699502937189336,
+              "Dendritic cell": 0.7818181818181819,
+              "Megakaryocyte": 0.9722222222222222,
+              "Natural killer cell": 0.8112391930835735,
+              "Plasmacytoid dendritic cell": 0.6885245901639344
+            },
+            "confusion": [
+              [
+                2580,
+                5,
+                1,
+                5,
+                0,
+                2,
+                1,
+                0,
+                65
+              ],
+              [
+                27,
+                958,
+                97,
+                10,
+                4,
+                289,
+                1,
+                0,
+                38
+              ],
+              [
+                8,
+                2,
+                200,
+                3,
+                4,
+                9,
+                2,
+                0,
+                3
+              ],
+              [
+                99,
+                17,
+                29,
+                2078,
+                676,
+                4,
+                7,
+                2,
+                17
+              ],
+              [
+                75,
+                7,
+                27,
+                876,
+                1040,
+                4,
+                6,
+                161,
+                17
+              ],
+              [
+                3,
+                7,
+                7,
+                0,
+                1,
+                129,
+                0,
+                0,
+                18
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                2,
+                70,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                1,
+                3,
+                124,
+                0,
+                0,
+                563,
+                0
+              ],
+              [
+                11,
+                0,
+                0,
+                1,
+                0,
+                7,
+                0,
+                0,
+                42
+              ]
+            ]
+          }
+        ]
+      },
+      "neighbors": {
+        "balancedAccuracy": 0.5948333297594964,
+        "recalls": {
+          "B cell": 0.9241027167108078,
+          "CD14+ monocyte": 0.8382884036578232,
+          "CD16+ monocyte": 0.6762713995018895,
+          "CD4+ T cell": 0.6489568492758013,
+          "Cytotoxic T cell": 0.5867337840014201,
+          "Dendritic cell": 0.44130781499202554,
+          "Megakaryocyte": 0.86492673992674,
+          "Natural killer cell": 0.23220187725529895,
+          "Plasmacytoid dendritic cell": 0.1407103825136612
+        },
+        "folds": [
+          {
+            "experiment": "pbmc1",
+            "cells": 18963,
+            "balancedAccuracy": 0.6214308900344243,
+            "recalls": {
+              "B cell": 0.8643769264641127,
+              "CD14+ monocyte": 0.7917453466414891,
+              "CD16+ monocyte": 0.720508166969147,
+              "CD4+ T cell": 0.7741854636591479,
+              "Cytotoxic T cell": 0.44414086217364906,
+              "Dendritic cell": 0.44019138755980863,
+              "Megakaryocyte": 0.9381868131868132,
+              "Natural killer cell": 0.4528763769889841,
+              "Plasmacytoid dendritic cell": 0.16666666666666666
+            },
+            "confusion": [
+              [
+                1963,
+                18,
+                0,
+                208,
+                81,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                18,
+                2935,
+                59,
+                521,
+                140,
+                20,
+                1,
+                13,
+                0
+              ],
+              [
+                1,
+                59,
+                397,
+                74,
+                18,
+                1,
+                0,
+                1,
+                0
+              ],
+              [
+                5,
+                16,
+                1,
+                3089,
+                842,
+                1,
+                2,
+                34,
+                0
+              ],
+              [
+                21,
+                38,
+                0,
+                2770,
+                2926,
+                0,
+                0,
+                832,
+                1
+              ],
+              [
+                2,
+                99,
+                1,
+                1,
+                8,
+                92,
+                0,
+                0,
+                6
+              ],
+              [
+                1,
+                5,
+                0,
+                31,
+                6,
+                0,
+                683,
+                1,
+                1
+              ],
+              [
+                2,
+                0,
+                0,
+                11,
+                434,
+                0,
+                0,
+                370,
+                0
+              ],
+              [
+                56,
+                2,
+                0,
+                19,
+                6,
+                2,
+                0,
+                0,
+                17
+              ]
+            ]
+          },
+          {
+            "experiment": "pbmc2",
+            "cells": 10448,
+            "balancedAccuracy": 0.5682357694845686,
+            "recalls": {
+              "B cell": 0.9838285069575028,
+              "CD14+ monocyte": 0.8848314606741573,
+              "CD16+ monocyte": 0.6320346320346321,
+              "CD4+ T cell": 0.5237282348924548,
+              "Cytotoxic T cell": 0.7293267058291911,
+              "Dendritic cell": 0.44242424242424244,
+              "Megakaryocyte": 0.7916666666666666,
+              "Natural killer cell": 0.011527377521613832,
+              "Plasmacytoid dendritic cell": 0.11475409836065574
+            },
+            "confusion": [
+              [
+                2616,
+                4,
+                0,
+                9,
+                29,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                33,
+                1260,
+                19,
+                5,
+                45,
+                62,
+                0,
+                0,
+                0
+              ],
+              [
+                9,
+                51,
+                146,
+                4,
+                16,
+                5,
+                0,
+                0,
+                0
+              ],
+              [
+                46,
+                8,
+                1,
+                1534,
+                1340,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                37,
+                2,
+                2,
+                557,
+                1614,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                9,
+                79,
+                0,
+                0,
+                4,
+                73,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                6,
+                0,
+                2,
+                6,
+                0,
+                57,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                0,
+                3,
+                680,
+                0,
+                0,
+                8,
+                0
+              ],
+              [
+                41,
+                5,
+                0,
+                1,
+                5,
+                2,
+                0,
+                0,
+                7
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    "programs": {
+      "NK-associated": {
+        "spearman": 0.727307782930207,
+        "withinStratumSpearman": 0.3981470499487007,
+        "experiments": [
+          {
+            "experiment": "pbmc1",
+            "spearman": 0.8093768874748226,
+            "cells": 28511
+          },
+          {
+            "experiment": "pbmc2",
+            "spearman": 0.6452386783855913,
+            "cells": 15520
+          }
+        ],
+        "strata": [
+          {
+            "stratum": [
+              "pbmc1",
+              "B cell"
+            ],
+            "spearman": 0.6046113830423963,
+            "cells": 2271
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD14+ monocyte"
+            ],
+            "spearman": 0.5214032782491852,
+            "cells": 3707
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD16+ monocyte"
+            ],
+            "spearman": 0.6045870882764653,
+            "cells": 551
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD4+ T cell"
+            ],
+            "spearman": 0.7050169543347021,
+            "cells": 3990
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Cytotoxic T cell"
+            ],
+            "spearman": 0.8294808474013088,
+            "cells": 6588
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Dendritic cell"
+            ],
+            "spearman": 0.5230294462134183,
+            "cells": 209
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Megakaryocyte"
+            ],
+            "spearman": 0.39833871987376457,
+            "cells": 728
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Natural killer cell"
+            ],
+            "spearman": 0.3274287791027745,
+            "cells": 817
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Plasmacytoid dendritic cell"
+            ],
+            "spearman": 0.37720024701699556,
+            "cells": 102
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "B cell"
+            ],
+            "spearman": 0.3213346631371259,
+            "cells": 2659
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD14+ monocyte"
+            ],
+            "spearman": 0.2621879029214284,
+            "cells": 1424
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD16+ monocyte"
+            ],
+            "spearman": 0.07883039483937922,
+            "cells": 231
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD4+ T cell"
+            ],
+            "spearman": 0.31468346323521684,
+            "cells": 2929
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Cytotoxic T cell"
+            ],
+            "spearman": 0.6768422691729806,
+            "cells": 2213
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Dendritic cell"
+            ],
+            "spearman": 0.24984092437684435,
+            "cells": 165
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Megakaryocyte"
+            ],
+            "spearman": 0.15102835382155033,
+            "cells": 72
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Natural killer cell"
+            ],
+            "spearman": 0.3868083167359597,
+            "cells": 694
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Plasmacytoid dendritic cell"
+            ],
+            "spearman": -0.16600613267488332,
+            "cells": 61
+          }
+        ]
+      },
+      "T-receptor": {
+        "spearman": 0.7215048834920076,
+        "withinStratumSpearman": 0.20172202097808956,
+        "experiments": [
+          {
+            "experiment": "pbmc1",
+            "spearman": 0.7071863850785537,
+            "cells": 28511
+          },
+          {
+            "experiment": "pbmc2",
+            "spearman": 0.7358233819054615,
+            "cells": 15520
+          }
+        ],
+        "strata": [
+          {
+            "stratum": [
+              "pbmc1",
+              "B cell"
+            ],
+            "spearman": 0.2877326463135837,
+            "cells": 2271
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD14+ monocyte"
+            ],
+            "spearman": 0.22118387027441777,
+            "cells": 3707
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD16+ monocyte"
+            ],
+            "spearman": 0.3118402288545971,
+            "cells": 551
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD4+ T cell"
+            ],
+            "spearman": 0.5227081506670673,
+            "cells": 3990
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Cytotoxic T cell"
+            ],
+            "spearman": 0.5567856245756028,
+            "cells": 6588
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Dendritic cell"
+            ],
+            "spearman": 0.22543792498317172,
+            "cells": 209
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Megakaryocyte"
+            ],
+            "spearman": 0.264238715293377,
+            "cells": 728
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Natural killer cell"
+            ],
+            "spearman": 0.2696788927798696,
+            "cells": 817
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Plasmacytoid dendritic cell"
+            ],
+            "spearman": 0.22841261899164667,
+            "cells": 102
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "B cell"
+            ],
+            "spearman": 0.2432929652821342,
+            "cells": 2659
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD14+ monocyte"
+            ],
+            "spearman": 0.17966765597785614,
+            "cells": 1424
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD16+ monocyte"
+            ],
+            "spearman": 0.05134713802186614,
+            "cells": 231
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD4+ T cell"
+            ],
+            "spearman": 0.3005320825440258,
+            "cells": 2929
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Cytotoxic T cell"
+            ],
+            "spearman": 0.421628731349489,
+            "cells": 2213
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Dendritic cell"
+            ],
+            "spearman": -0.21201975365304837,
+            "cells": 165
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Megakaryocyte"
+            ],
+            "spearman": -0.12519261130282922,
+            "cells": 72
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Natural killer cell"
+            ],
+            "spearman": 0.13291169268408046,
+            "cells": 694
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Plasmacytoid dendritic cell"
+            ],
+            "spearman": -0.24919019603129536,
+            "cells": 61
+          }
+        ]
+      }
+    },
+    "nkSameTypeFractionAmongAllNeighbors": 0.31658945510699316,
+    "nkNeighborSourceLabelCoverage": 0.7380763291418486,
+    "missingMixingStrata": [],
+    "missingTrainingClasses": [],
+    "missingProgramStrata": [],
+    "evaluationSeconds": 8.615235875360668,
+    "executionWorkers": 4
+  },
+  "metrics": {
+    "sameMethodExcess": 0.43675088513912946,
+    "methodEntropy": 0.32169587200417427,
+    "mixingFolds": [
+      {
+        "experiment": "pbmc1",
+        "method": "10x Chromium (v2) A",
+        "cells": 3182,
+        "sameMethodExcess": 0.19212057110850275,
+        "entropy": 0.46805012000859414
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "10x Chromium (v2) B",
+        "cells": 3044,
+        "sameMethodExcess": 0.3916948030240846,
+        "entropy": 0.37256924412855763
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "10x Chromium (v3)",
+        "cells": 3215,
+        "sameMethodExcess": 0.5699758702185456,
+        "entropy": 0.30435714183093376
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "CEL-Seq2",
+        "cells": 251,
+        "sameMethodExcess": 0.3742585991308473,
+        "entropy": 0.4262015537883817
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "Drop-seq",
+        "cells": 2873,
+        "sameMethodExcess": 0.6702623345399221,
+        "entropy": 0.1692076931609772
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "Seq-Well",
+        "cells": 3176,
+        "sameMethodExcess": 0.3169672895835777,
+        "entropy": 0.4207965236895865
+      },
+      {
+        "experiment": "pbmc1",
+        "method": "inDrops",
+        "cells": 3222,
+        "sameMethodExcess": 0.3575324637891961,
+        "entropy": 0.4459819343713978
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "10x Chromium (v2)",
+        "cells": 3362,
+        "sameMethodExcess": 0.4304385428004043,
+        "entropy": 0.23333402392149624
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "CEL-Seq2",
+        "cells": 273,
+        "sameMethodExcess": 0.7063795324183669,
+        "entropy": 0.3066325856630911
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "Drop-seq",
+        "cells": 3358,
+        "sameMethodExcess": 0.4998829480971523,
+        "entropy": 0.14108821087912557
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "Seq-Well",
+        "cells": 549,
+        "sameMethodExcess": 0.38006008761314397,
+        "entropy": 0.37098626674404706
+      },
+      {
+        "experiment": "pbmc2",
+        "method": "inDrops",
+        "cells": 2906,
+        "sameMethodExcess": 0.2987392180374582,
+        "entropy": 0.30265748213510524
+      }
+    ],
+    "cellTypeBalancedAccuracy": 0.6546715472749496,
+    "cellTypeRecall": {
+      "B cell": 0.9546691288312551,
+      "CD14+ monocyte": 0.8177970693161738,
+      "CD16+ monocyte": 0.741905704700623,
+      "CD4+ T cell": 0.5766759849435812,
+      "Cytotoxic T cell": 0.6302503065316692,
+      "Dendritic cell": 0.5460925039872409,
+      "Megakaryocyte": 0.9192612942612943,
+      "Natural killer cell": 0.3764784002765442,
+      "Plasmacytoid dendritic cell": 0.3289135326261652
+    },
+    "classifiers": {
+      "original": {
+        "balancedAccuracy": 0.6546715472749496,
+        "recalls": {
+          "B cell": 0.9546691288312551,
+          "CD14+ monocyte": 0.8177970693161738,
+          "CD16+ monocyte": 0.741905704700623,
+          "CD4+ T cell": 0.5766759849435812,
+          "Cytotoxic T cell": 0.6302503065316692,
+          "Dendritic cell": 0.5460925039872409,
+          "Megakaryocyte": 0.9192612942612943,
+          "Natural killer cell": 0.3764784002765442,
+          "Plasmacytoid dendritic cell": 0.3289135326261652
+        },
+        "folds": [
+          {
+            "experiment": "pbmc1",
+            "cells": 18963,
+            "balancedAccuracy": 0.6751115982562714,
+            "recalls": {
+              "B cell": 0.9225011008366358,
+              "CD14+ monocyte": 0.7774480712166172,
+              "CD16+ monocyte": 0.7132486388384754,
+              "CD4+ T cell": 0.6115288220551378,
+              "Cytotoxic T cell": 0.5777170613236187,
+              "Dendritic cell": 0.5406698564593302,
+              "Megakaryocyte": 0.907967032967033,
+              "Natural killer cell": 0.6621787025703795,
+              "Plasmacytoid dendritic cell": 0.3627450980392157
+            },
+            "confusion": [
+              [
+                2095,
+                23,
+                2,
+                67,
+                67,
+                4,
+                1,
+                0,
+                12
+              ],
+              [
+                50,
+                2882,
+                100,
+                372,
+                188,
+                92,
+                3,
+                14,
+                6
+              ],
+              [
+                1,
+                89,
+                393,
+                22,
+                40,
+                5,
+                1,
+                0,
+                0
+              ],
+              [
+                9,
+                22,
+                7,
+                2440,
+                1452,
+                1,
+                2,
+                54,
+                3
+              ],
+              [
+                41,
+                51,
+                4,
+                1743,
+                3806,
+                2,
+                5,
+                933,
+                3
+              ],
+              [
+                2,
+                78,
+                2,
+                5,
+                2,
+                113,
+                1,
+                0,
+                6
+              ],
+              [
+                1,
+                2,
+                41,
+                15,
+                4,
+                0,
+                661,
+                2,
+                2
+              ],
+              [
+                2,
+                1,
+                0,
+                3,
+                269,
+                0,
+                1,
+                541,
+                0
+              ],
+              [
+                35,
+                5,
+                0,
+                9,
+                11,
+                4,
+                1,
+                0,
+                37
+              ]
+            ]
+          },
+          {
+            "experiment": "pbmc2",
+            "cells": 10448,
+            "balancedAccuracy": 0.6342314962936277,
+            "recalls": {
+              "B cell": 0.9868371568258744,
+              "CD14+ monocyte": 0.8581460674157303,
+              "CD16+ monocyte": 0.7705627705627706,
+              "CD4+ T cell": 0.5418231478320246,
+              "Cytotoxic T cell": 0.6827835517397198,
+              "Dendritic cell": 0.5515151515151515,
+              "Megakaryocyte": 0.9305555555555556,
+              "Natural killer cell": 0.09077809798270893,
+              "Plasmacytoid dendritic cell": 0.29508196721311475
+            },
+            "confusion": [
+              [
+                2624,
+                9,
+                0,
+                10,
+                5,
+                1,
+                0,
+                0,
+                10
+              ],
+              [
+                44,
+                1222,
+                69,
+                11,
+                12,
+                61,
+                0,
+                1,
+                4
+              ],
+              [
+                8,
+                20,
+                178,
+                4,
+                13,
+                5,
+                3,
+                0,
+                0
+              ],
+              [
+                65,
+                98,
+                4,
+                1587,
+                1168,
+                1,
+                5,
+                0,
+                1
+              ],
+              [
+                49,
+                55,
+                1,
+                594,
+                1511,
+                0,
+                0,
+                3,
+                0
+              ],
+              [
+                12,
+                55,
+                3,
+                0,
+                3,
+                91,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                1,
+                1,
+                1,
+                0,
+                1,
+                67,
+                1,
+                0
+              ],
+              [
+                2,
+                1,
+                0,
+                2,
+                626,
+                0,
+                0,
+                63,
+                0
+              ],
+              [
+                32,
+                1,
+                0,
+                2,
+                1,
+                7,
+                0,
+                0,
+                18
+              ]
+            ]
+          }
+        ]
+      },
+      "balanced": {
+        "balancedAccuracy": 0.7442583801128448,
+        "recalls": {
+          "B cell": 0.8843052574036749,
+          "CD14+ monocyte": 0.7228079544317916,
+          "CD16+ monocyte": 0.8219097901493546,
+          "CD4+ T cell": 0.6270049055722269,
+          "Cytotoxic T cell": 0.45655772686155743,
+          "Dendritic cell": 0.7511961722488039,
+          "Megakaryocyte": 0.9613095238095238,
+          "Natural killer cell": 0.8070495839491497,
+          "Plasmacytoid dendritic cell": 0.6661845065895211
+        },
+        "folds": [
+          {
+            "experiment": "pbmc1",
+            "cells": 18963,
+            "balancedAccuracy": 0.7218493260504167,
+            "recalls": {
+              "B cell": 0.8317921620431528,
+              "CD14+ monocyte": 0.7286215268411114,
+              "CD16+ monocyte": 0.8039927404718693,
+              "CD4+ T cell": 0.531578947368421,
+              "Cytotoxic T cell": 0.5132058287795993,
+              "Dendritic cell": 0.6842105263157895,
+              "Megakaryocyte": 0.9642857142857143,
+              "Natural killer cell": 0.8115055079559363,
+              "Plasmacytoid dendritic cell": 0.6274509803921569
+            },
+            "confusion": [
+              [
+                1889,
+                26,
+                3,
+                67,
+                79,
+                15,
+                2,
+                2,
+                188
+              ],
+              [
+                26,
+                2701,
+                184,
+                280,
+                162,
+                235,
+                41,
+                27,
+                51
+              ],
+              [
+                1,
+                49,
+                443,
+                12,
+                29,
+                7,
+                2,
+                1,
+                7
+              ],
+              [
+                7,
+                24,
+                22,
+                2121,
+                1662,
+                8,
+                8,
+                123,
+                15
+              ],
+              [
+                28,
+                54,
+                26,
+                1427,
+                3381,
+                21,
+                14,
+                1594,
+                43
+              ],
+              [
+                0,
+                37,
+                4,
+                5,
+                2,
+                143,
+                1,
+                0,
+                17
+              ],
+              [
+                0,
+                1,
+                12,
+                7,
+                2,
+                0,
+                702,
+                2,
+                2
+              ],
+              [
+                2,
+                1,
+                0,
+                3,
+                146,
+                0,
+                2,
+                663,
+                0
+              ],
+              [
+                11,
+                6,
+                1,
+                3,
+                13,
+                3,
+                1,
+                0,
+                64
+              ]
+            ]
+          },
+          {
+            "experiment": "pbmc2",
+            "cells": 10448,
+            "balancedAccuracy": 0.766667434175273,
+            "recalls": {
+              "B cell": 0.9368183527641971,
+              "CD14+ monocyte": 0.7169943820224719,
+              "CD16+ monocyte": 0.8398268398268398,
+              "CD4+ T cell": 0.7224308637760328,
+              "Cytotoxic T cell": 0.39990962494351556,
+              "Dendritic cell": 0.8181818181818182,
+              "Megakaryocyte": 0.9583333333333334,
+              "Natural killer cell": 0.8025936599423631,
+              "Plasmacytoid dendritic cell": 0.7049180327868853
+            },
+            "confusion": [
+              [
+                2491,
+                5,
+                0,
+                11,
+                1,
+                6,
+                0,
+                0,
+                145
+              ],
+              [
+                33,
+                1021,
+                103,
+                9,
+                4,
+                221,
+                0,
+                2,
+                31
+              ],
+              [
+                10,
+                4,
+                194,
+                3,
+                1,
+                14,
+                2,
+                1,
+                2
+              ],
+              [
+                88,
+                63,
+                40,
+                2116,
+                558,
+                1,
+                5,
+                2,
+                56
+              ],
+              [
+                61,
+                25,
+                26,
+                945,
+                885,
+                2,
+                0,
+                193,
+                76
+              ],
+              [
+                4,
+                11,
+                3,
+                1,
+                0,
+                135,
+                0,
+                0,
+                11
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                2,
+                69,
+                1,
+                0
+              ],
+              [
+                1,
+                1,
+                0,
+                5,
+                127,
+                1,
+                0,
+                557,
+                2
+              ],
+              [
+                9,
+                0,
+                1,
+                0,
+                0,
+                8,
+                0,
+                0,
+                43
+              ]
+            ]
+          }
+        ]
+      },
+      "neighbors": {
+        "balancedAccuracy": 0.642472525443726,
+        "recalls": {
+          "B cell": 0.9495324984031865,
+          "CD14+ monocyte": 0.8184458002321753,
+          "CD16+ monocyte": 0.7333891154217833,
+          "CD4+ T cell": 0.7408885392039333,
+          "Cytotoxic T cell": 0.5052709866163156,
+          "Dendritic cell": 0.5800637958532695,
+          "Megakaryocyte": 0.9204059829059829,
+          "Natural killer cell": 0.3067568139570157,
+          "Plasmacytoid dendritic cell": 0.22749919639987143
+        },
+        "folds": [
+          {
+            "experiment": "pbmc1",
+            "cells": 18963,
+            "balancedAccuracy": 0.6563710142170979,
+            "recalls": {
+              "B cell": 0.924262439453985,
+              "CD14+ monocyte": 0.7766387914755867,
+              "CD16+ monocyte": 0.7005444646098004,
+              "CD4+ T cell": 0.7972431077694235,
+              "Cytotoxic T cell": 0.3919247115968427,
+              "Dendritic cell": 0.5358851674641149,
+              "Megakaryocyte": 0.9519230769230769,
+              "Natural killer cell": 0.6034271725826194,
+              "Plasmacytoid dendritic cell": 0.22549019607843138
+            },
+            "confusion": [
+              [
+                2099,
+                15,
+                1,
+                103,
+                49,
+                2,
+                1,
+                0,
+                1
+              ],
+              [
+                51,
+                2879,
+                82,
+                482,
+                142,
+                60,
+                1,
+                10,
+                0
+              ],
+              [
+                3,
+                60,
+                386,
+                69,
+                27,
+                5,
+                0,
+                1,
+                0
+              ],
+              [
+                14,
+                19,
+                4,
+                3181,
+                689,
+                2,
+                2,
+                79,
+                0
+              ],
+              [
+                50,
+                38,
+                3,
+                2709,
+                2582,
+                1,
+                1,
+                1203,
+                1
+              ],
+              [
+                1,
+                81,
+                2,
+                5,
+                2,
+                112,
+                0,
+                0,
+                6
+              ],
+              [
+                2,
+                13,
+                0,
+                16,
+                2,
+                0,
+                693,
+                2,
+                0
+              ],
+              [
+                2,
+                0,
+                0,
+                14,
+                308,
+                0,
+                0,
+                493,
+                0
+              ],
+              [
+                58,
+                2,
+                1,
+                6,
+                9,
+                2,
+                1,
+                0,
+                23
+              ]
+            ]
+          },
+          {
+            "experiment": "pbmc2",
+            "cells": 10448,
+            "balancedAccuracy": 0.628574036670354,
+            "recalls": {
+              "B cell": 0.9748025573523881,
+              "CD14+ monocyte": 0.860252808988764,
+              "CD16+ monocyte": 0.7662337662337663,
+              "CD4+ T cell": 0.6845339706384431,
+              "Cytotoxic T cell": 0.6186172616357886,
+              "Dendritic cell": 0.6242424242424243,
+              "Megakaryocyte": 0.8888888888888888,
+              "Natural killer cell": 0.010086455331412104,
+              "Plasmacytoid dendritic cell": 0.22950819672131148
+            },
+            "confusion": [
+              [
+                2592,
+                6,
+                0,
+                26,
+                34,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                23,
+                1225,
+                73,
+                9,
+                20,
+                74,
+                0,
+                0,
+                0
+              ],
+              [
+                8,
+                20,
+                177,
+                3,
+                13,
+                8,
+                1,
+                0,
+                1
+              ],
+              [
+                47,
+                11,
+                2,
+                2005,
+                861,
+                1,
+                2,
+                0,
+                0
+              ],
+              [
+                29,
+                2,
+                2,
+                811,
+                1369,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                7,
+                47,
+                4,
+                0,
+                3,
+                103,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                5,
+                0,
+                2,
+                1,
+                0,
+                64,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                0,
+                5,
+                679,
+                0,
+                0,
+                7,
+                0
+              ],
+              [
+                35,
+                2,
+                0,
+                3,
+                2,
+                5,
+                0,
+                0,
+                14
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    "programs": {
+      "NK-associated": {
+        "spearman": 0.7145024296032383,
+        "withinStratumSpearman": 0.38126516890967854,
+        "experiments": [
+          {
+            "experiment": "pbmc1",
+            "spearman": 0.7905613588181087,
+            "cells": 28511
+          },
+          {
+            "experiment": "pbmc2",
+            "spearman": 0.638443500388368,
+            "cells": 15520
+          }
+        ],
+        "strata": [
+          {
+            "stratum": [
+              "pbmc1",
+              "B cell"
+            ],
+            "spearman": 0.575544655805766,
+            "cells": 2271
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD14+ monocyte"
+            ],
+            "spearman": 0.49130270467054615,
+            "cells": 3707
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD16+ monocyte"
+            ],
+            "spearman": 0.5516062994047211,
+            "cells": 551
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD4+ T cell"
+            ],
+            "spearman": 0.6969781862813937,
+            "cells": 3990
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Cytotoxic T cell"
+            ],
+            "spearman": 0.8160445601629412,
+            "cells": 6588
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Dendritic cell"
+            ],
+            "spearman": 0.4683396001492637,
+            "cells": 209
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Megakaryocyte"
+            ],
+            "spearman": 0.26520460345171404,
+            "cells": 728
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Natural killer cell"
+            ],
+            "spearman": 0.2797272242848952,
+            "cells": 817
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Plasmacytoid dendritic cell"
+            ],
+            "spearman": 0.43464794799637974,
+            "cells": 102
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "B cell"
+            ],
+            "spearman": 0.28687637874769656,
+            "cells": 2659
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD14+ monocyte"
+            ],
+            "spearman": 0.221162593341035,
+            "cells": 1424
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD16+ monocyte"
+            ],
+            "spearman": 0.1500381783550475,
+            "cells": 231
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD4+ T cell"
+            ],
+            "spearman": 0.2920759167460277,
+            "cells": 2929
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Cytotoxic T cell"
+            ],
+            "spearman": 0.6676191898711812,
+            "cells": 2213
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Dendritic cell"
+            ],
+            "spearman": 0.24512773458873674,
+            "cells": 165
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Megakaryocyte"
+            ],
+            "spearman": 0.08600299985120781,
+            "cells": 72
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Natural killer cell"
+            ],
+            "spearman": 0.2852939056741433,
+            "cells": 694
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Plasmacytoid dendritic cell"
+            ],
+            "spearman": 0.049180360991518034,
+            "cells": 61
+          }
+        ]
+      },
+      "T-receptor": {
+        "spearman": 0.7074185222735896,
+        "withinStratumSpearman": 0.17304806419945737,
+        "experiments": [
+          {
+            "experiment": "pbmc1",
+            "spearman": 0.6912618443367735,
+            "cells": 28511
+          },
+          {
+            "experiment": "pbmc2",
+            "spearman": 0.7235752002104058,
+            "cells": 15520
+          }
+        ],
+        "strata": [
+          {
+            "stratum": [
+              "pbmc1",
+              "B cell"
+            ],
+            "spearman": 0.20802589497111915,
+            "cells": 2271
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD14+ monocyte"
+            ],
+            "spearman": 0.14148502747689048,
+            "cells": 3707
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD16+ monocyte"
+            ],
+            "spearman": 0.18615443998157788,
+            "cells": 551
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "CD4+ T cell"
+            ],
+            "spearman": 0.4937389523887399,
+            "cells": 3990
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Cytotoxic T cell"
+            ],
+            "spearman": 0.5280785277531544,
+            "cells": 6588
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Dendritic cell"
+            ],
+            "spearman": 0.07180147287528163,
+            "cells": 209
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Megakaryocyte"
+            ],
+            "spearman": 0.14744770739775276,
+            "cells": 728
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Natural killer cell"
+            ],
+            "spearman": 0.2706109000438128,
+            "cells": 817
+          },
+          {
+            "stratum": [
+              "pbmc1",
+              "Plasmacytoid dendritic cell"
+            ],
+            "spearman": 0.16753372543633285,
+            "cells": 102
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "B cell"
+            ],
+            "spearman": 0.2243870145072654,
+            "cells": 2659
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD14+ monocyte"
+            ],
+            "spearman": 0.11238307316945895,
+            "cells": 1424
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD16+ monocyte"
+            ],
+            "spearman": 0.021751439223801565,
+            "cells": 231
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "CD4+ T cell"
+            ],
+            "spearman": 0.2705215988355727,
+            "cells": 2929
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Cytotoxic T cell"
+            ],
+            "spearman": 0.4084982001373142,
+            "cells": 2213
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Dendritic cell"
+            ],
+            "spearman": -0.10155261256079669,
+            "cells": 165
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Megakaryocyte"
+            ],
+            "spearman": 0.0716811614146553,
+            "cells": 72
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Natural killer cell"
+            ],
+            "spearman": 0.12756264958655109,
+            "cells": 694
+          },
+          {
+            "stratum": [
+              "pbmc2",
+              "Plasmacytoid dendritic cell"
+            ],
+            "spearman": -0.23524401704825204,
+            "cells": 61
+          }
+        ]
+      }
+    },
+    "nkSameTypeFractionAmongAllNeighbors": 0.27396867416721815,
+    "nkNeighborSourceLabelCoverage": 0.7243767924112067,
+    "missingMixingStrata": [],
+    "missingTrainingClasses": [],
+    "missingProgramStrata": [],
+    "evaluationSeconds": 10.064458584412932,
+    "executionWorkers": 4
+  },
+  "gates": {
+    "mixingImproved": true,
+    "cellTypesPreserved": true,
+    "everyTypeRecallPreserved": true,
+    "programsPreserved": true,
+    "withinStratumProgramsPreserved": true
+  },
+  "allMeasuredGatesPassed": true,
+  "qualification": "Scale audit on already observed reference failures. Original raw-scale outcomes retained. Same gamma=0.5*sigma and same margins. Uniform scale preserves baseline geometry mathematically; evaluate all original rows and explicitly verify baseline metrics. This is not independent biological validation or a native method."
+}

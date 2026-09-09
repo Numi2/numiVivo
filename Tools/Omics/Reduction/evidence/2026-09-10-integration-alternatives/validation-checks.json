@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "scripts": [
+    {
+      "path": "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Reduction/evaluate_rigid_integration.py",
+      "bytes": 7575,
+      "sha256": "3535da5e050c6ecff1627cf1dc4ee186afbe38123c2e4d2ea0b98bcc41a4f6de"
+    },
+    {
+      "path": "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Reduction/evaluate_scanorama_integration.py",
+      "bytes": 6788,
+      "sha256": "d0c06bc69465e4305f87a44b1d2cc25681f62b94ad2ac1e501840b52b2849414"
+    },
+    {
+      "path": "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Reduction/check_integration_scale_baseline.py",
+      "bytes": 2376,
+      "sha256": "0439396fa819bda8aa540ac49f817d19e5cea8d0efc2cdefda6d59109988a858"
+    },
+    {
+      "path": "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Reduction/verify_scanorama_integration.py",
+      "bytes": 2490,
+      "sha256": "27394b945a8642f5b612ca8c081629be5f1339bdd9a1cd693b68822b25082fbe"
+    },
+    {
+      "path": "/Users/home/numivivo-single-cell-20260909/Tools/Omics/Reduction/plot_integration_alternatives.py",
+      "bytes": 2510,
+      "sha256": "50b7124d999b3086d41042e15eb6caf760b13d0d0d07aea7ae642ce833f9f841"
+    }
+  ],
+  "productionCodeUnchanged": true,
+  "allScriptsCompile": true,
+  "rigidRuns": 18,
+  "scanoramaConfigurations": 6,
+  "allSixScanpyDirectAssemblyReplaysExact": true,
+  "allThreeScaleBaselinesExactNeighborsAndMetricsAt1eMinus12": true,
+  "allThreeScalesRetainIdenticalAnchors": true
+}

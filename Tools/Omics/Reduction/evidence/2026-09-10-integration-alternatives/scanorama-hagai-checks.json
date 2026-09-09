@@ -1,0 +1,231 @@
+{
+  "status": "full-cohort-measured",
+  "cohort": "hagai",
+  "protocolSHA256": "dae6462c78fe067ff3cf06042162a976bc17909f4d7a8b941034a68f86192ff7",
+  "inputSHA256": "fe2922ae46f261bcde4fbfdacdd941e50f65bc3710cc5eaf34a57ed582582f7c",
+  "metadataSHA256": "4916e0d99308f241d4e024f29fcdda2e22dd043828765719e257201b45311bd1",
+  "scoresSHA256": "1fcaa4318e442be1f9435ef040efbf7b3535fa642998fae0eb3a7b551468350a",
+  "cells": 13863,
+  "components": 20,
+  "versions": {
+    "scanorama": "1.7.4",
+    "scanpy": "1.12.4",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "anndata": "0.13.3.post0",
+    "annoy": "1.17.3",
+    "fbpca": "1.0",
+    "geosketch": "1.3",
+    "intervaltree": "3.2.1",
+    "sortedcontainers": "2.4.0"
+  },
+  "integrationSeconds": 2.657880541868508,
+  "baseline": {
+    "sameDonorExcess": 0.48737179549631565,
+    "donorEntropy": 0.2831573366388491,
+    "cellTypeBalancedAccuracy": null,
+    "cellTypeRecall": {},
+    "cellTypeFolds": [],
+    "conditionBalancedAccuracy": 0.9814664125034231,
+    "conditionAccuracyByType": {
+      "unreported": 0.9814664125034231
+    },
+    "conditionFolds": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "cells": 3829,
+        "balancedAccuracy": 0.945684086905461,
+        "iterations": 13
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "cells": 5645,
+        "balancedAccuracy": 0.9990592662276576,
+        "iterations": 11
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "cells": 4389,
+        "balancedAccuracy": 0.9996558843771508,
+        "iterations": 12
+      }
+    ],
+    "missingClassifierStrata": [],
+    "programSpearman": 0.8198073699947588,
+    "withinStratumProgramSpearman": 0.4836822858747261,
+    "programDonorCorrelations": [
+      {
+        "donor": "mouse1",
+        "spearman": 0.8416828987765006
+      },
+      {
+        "donor": "mouse2",
+        "spearman": 0.8156591224627779
+      },
+      {
+        "donor": "mouse3",
+        "spearman": 0.8020800887449978
+      }
+    ],
+    "programStratumCorrelations": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1703,
+        "spearman": 0.6350679635705088
+      },
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2126,
+        "spearman": 0.21487159741923717
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 2126,
+        "spearman": 0.7394890272572402
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 3519,
+        "spearman": 0.2510830764947122
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1453,
+        "spearman": 0.7002058998051817
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2936,
+        "spearman": 0.3613761507014766
+      }
+    ],
+    "unavailableProgramStrata": [],
+    "sameDonorExcessByType": {
+      "unreported": 0.48737179549631565
+    },
+    "evaluationSeconds": 4.758842958137393
+  },
+  "metrics": {
+    "sameDonorExcess": 0.17849650047557986,
+    "donorEntropy": 0.6796455541396402,
+    "cellTypeBalancedAccuracy": null,
+    "cellTypeRecall": {},
+    "cellTypeFolds": [],
+    "conditionBalancedAccuracy": 0.9997306617064633,
+    "conditionAccuracyByType": {
+      "unreported": 0.9997306617064633
+    },
+    "conditionFolds": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "cells": 3829,
+        "balancedAccuracy": 0.9997064004697592,
+        "iterations": 11
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "cells": 5645,
+        "balancedAccuracy": 1.0,
+        "iterations": 11
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "cells": 4389,
+        "balancedAccuracy": 0.9994855846496303,
+        "iterations": 11
+      }
+    ],
+    "missingClassifierStrata": [],
+    "programSpearman": 0.8057646046657302,
+    "withinStratumProgramSpearman": 0.41223533541972207,
+    "programDonorCorrelations": [
+      {
+        "donor": "mouse1",
+        "spearman": 0.8166907627764062
+      },
+      {
+        "donor": "mouse2",
+        "spearman": 0.8114793519793067
+      },
+      {
+        "donor": "mouse3",
+        "spearman": 0.7891236992414776
+      }
+    ],
+    "programStratumCorrelations": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1703,
+        "spearman": 0.4416429690932666
+      },
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2126,
+        "spearman": 0.1679162854130231
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 2126,
+        "spearman": 0.6887225953044173
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 3519,
+        "spearman": 0.24392747574236917
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1453,
+        "spearman": 0.6008343740802944
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2936,
+        "spearman": 0.3303683128849618
+      }
+    ],
+    "unavailableProgramStrata": [],
+    "sameDonorExcessByType": {
+      "unreported": 0.17849650047557986
+    }
+  },
+  "gates": {
+    "mixingImproved": true,
+    "conditionPreserved": true,
+    "programPreserved": true,
+    "withinStratumProgramPreserved": false,
+    "completeClassifierStrata": true
+  },
+  "allMeasuredGatesPassed": false,
+  "qualification": "Independent reference method, same previously inspected cohorts and original margins; not a native implementation, new held-out study or prospective predictor. Default scientific parameters, exact-neighbor path and smaller memory batch. All source rows retained. Partial Ding annotations and unavailable Kang strata remain explicit. No parameter search."
+}

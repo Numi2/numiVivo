@@ -1,0 +1,233 @@
+{
+  "status": "full-cohort-measured",
+  "cohort": "hagai",
+  "protocolSHA256": "fabbebb6ad31ce4fcbab2d267ceb0a735b2307fd8027d239f3316b3d77872308",
+  "inputSHA256": "fe2922ae46f261bcde4fbfdacdd941e50f65bc3710cc5eaf34a57ed582582f7c",
+  "metadataSHA256": "4916e0d99308f241d4e024f29fcdda2e22dd043828765719e257201b45311bd1",
+  "scoresSHA256": "5db5e2012785ba36a353d6b7cd8294ffaaca893182b42d46e12ec86589b7fb08",
+  "cells": 13863,
+  "components": 20,
+  "versions": {
+    "scanorama": "1.7.4",
+    "scanpy": "1.12.4",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "anndata": "0.13.3.post0",
+    "annoy": "1.17.3",
+    "fbpca": "1.0",
+    "geosketch": "1.3",
+    "intervaltree": "3.2.1",
+    "sortedcontainers": "2.4.0"
+  },
+  "integrationSeconds": 2.691241499967873,
+  "inputScale": "median-norm",
+  "scaleValue": 10.245999524159041,
+  "baseline": {
+    "sameDonorExcess": 0.48737179549631565,
+    "donorEntropy": 0.2831573366388491,
+    "cellTypeBalancedAccuracy": null,
+    "cellTypeRecall": {},
+    "cellTypeFolds": [],
+    "conditionBalancedAccuracy": 0.9814664125034231,
+    "conditionAccuracyByType": {
+      "unreported": 0.9814664125034231
+    },
+    "conditionFolds": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "cells": 3829,
+        "balancedAccuracy": 0.945684086905461,
+        "iterations": 13
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "cells": 5645,
+        "balancedAccuracy": 0.9990592662276576,
+        "iterations": 11
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "cells": 4389,
+        "balancedAccuracy": 0.9996558843771508,
+        "iterations": 12
+      }
+    ],
+    "missingClassifierStrata": [],
+    "programSpearman": 0.8198073699947588,
+    "withinStratumProgramSpearman": 0.4836822858747261,
+    "programDonorCorrelations": [
+      {
+        "donor": "mouse1",
+        "spearman": 0.8416828987765006
+      },
+      {
+        "donor": "mouse2",
+        "spearman": 0.8156591224627779
+      },
+      {
+        "donor": "mouse3",
+        "spearman": 0.8020800887449978
+      }
+    ],
+    "programStratumCorrelations": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1703,
+        "spearman": 0.6350679635705088
+      },
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2126,
+        "spearman": 0.21487159741923717
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 2126,
+        "spearman": 0.7394890272572402
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 3519,
+        "spearman": 0.2510830764947122
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1453,
+        "spearman": 0.7002058998051817
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2936,
+        "spearman": 0.3613761507014766
+      }
+    ],
+    "unavailableProgramStrata": [],
+    "sameDonorExcessByType": {
+      "unreported": 0.48737179549631565
+    },
+    "evaluationSeconds": 4.758842958137393
+  },
+  "metrics": {
+    "sameDonorExcess": 0.2814476908064119,
+    "donorEntropy": 0.5878722552457851,
+    "cellTypeBalancedAccuracy": null,
+    "cellTypeRecall": {},
+    "cellTypeFolds": [],
+    "conditionBalancedAccuracy": 0.9997874282823034,
+    "conditionAccuracyByType": {
+      "unreported": 0.9997874282823034
+    },
+    "conditionFolds": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "cells": 3829,
+        "balancedAccuracy": 0.9997064004697592,
+        "iterations": 12
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "cells": 5645,
+        "balancedAccuracy": 1.0,
+        "iterations": 12
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "cells": 4389,
+        "balancedAccuracy": 0.9996558843771508,
+        "iterations": 12
+      }
+    ],
+    "missingClassifierStrata": [],
+    "programSpearman": 0.8203588029844929,
+    "withinStratumProgramSpearman": 0.48232781871999414,
+    "programDonorCorrelations": [
+      {
+        "donor": "mouse1",
+        "spearman": 0.842918220081707
+      },
+      {
+        "donor": "mouse2",
+        "spearman": 0.8170614257583505
+      },
+      {
+        "donor": "mouse3",
+        "spearman": 0.8010967631134213
+      }
+    ],
+    "programStratumCorrelations": [
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1703,
+        "spearman": 0.625599117536637
+      },
+      {
+        "donor": "mouse1",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2126,
+        "spearman": 0.2290161612428497
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 2126,
+        "spearman": 0.7256579989024645
+      },
+      {
+        "donor": "mouse2",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 3519,
+        "spearman": 0.2604401103365512
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "LPS6",
+        "cells": 1453,
+        "spearman": 0.6940462195941258
+      },
+      {
+        "donor": "mouse3",
+        "cellType": "unreported",
+        "condition": "unstimulated",
+        "cells": 2936,
+        "spearman": 0.35920730470733625
+      }
+    ],
+    "unavailableProgramStrata": [],
+    "sameDonorExcessByType": {
+      "unreported": 0.2814476908064119
+    }
+  },
+  "gates": {
+    "mixingImproved": true,
+    "conditionPreserved": true,
+    "programPreserved": true,
+    "withinStratumProgramPreserved": true,
+    "completeClassifierStrata": true
+  },
+  "allMeasuredGatesPassed": true,
+  "qualification": "Scale audit on already observed reference failures. Original raw-scale outcomes retained. Same gamma=0.5*sigma and same margins. Uniform scale preserves baseline geometry mathematically; evaluate all original rows and explicitly verify baseline metrics. This is not independent biological validation or a native method."
+}

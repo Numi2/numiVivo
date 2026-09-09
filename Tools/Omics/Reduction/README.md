@@ -95,3 +95,7 @@ measure donor mixing and response preservation separately.
 The [independent Ding benchmark](DING_INTEGRATION.md) evaluates all 44,031 source
 UMI-method cells against the fixed/adaptive integration candidates and harmonypy.
 Numerical replay passes; rare-cell and local-program preservation gates fail.
+
+[Geometry and reference-scale experiments](INTEGRATION_ALTERNATIVES.md) retain
+failed constrained candidates and identify a scale-aware mutual-neighbor reference
+that passes measured preservation margins; native implementation remains open.
