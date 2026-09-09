@@ -1,0 +1,84 @@
+{
+  "status": "passed",
+  "sourceSHA256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc",
+  "native": {
+    "status": "passed-native-reconstruction",
+    "binarySHA256": "ab43b10b5b4761afe0d56769f3f794e8a074a51c030f9564d2196d27cd6aa70b",
+    "sourceSHA256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc",
+    "planSHA256": "cdc45a959178361fc825a8ab4e38025a9f32b27d7eaf84fe93823941e91b6342",
+    "entries": 361582621,
+    "countBytes": 5785321936,
+    "normalizedBytes": 5785321936,
+    "windowBytes": 16777216,
+    "writeBufferBytes": 1048576,
+    "maximumResidentBytes": 285065216,
+    "commands": [
+      {
+        "label": "import",
+        "arguments": [
+          "singlecell-h5ad-store",
+          "/Users/n/numivivo-count-store-final-20260909/original.h5ad",
+          "--plan",
+          "/Users/n/numivivo-count-store-final-20260909/plan.json",
+          "--output",
+          "/Users/n/numivivo-count-store-final-20260909/store"
+        ],
+        "exitCode": 0,
+        "seconds": 41.241118,
+        "maximumResidentBytes": 254754816
+      },
+      {
+        "label": "normalize",
+        "arguments": [
+          "singlecell-count-store-normalize",
+          "/Users/n/numivivo-count-store-final-20260909/store",
+          "--target",
+          "10000",
+          "--output",
+          "/Users/n/numivivo-count-store-final-20260909/normalized"
+        ],
+        "exitCode": 0,
+        "seconds": 64.350872916,
+        "maximumResidentBytes": 281919488
+      },
+      {
+        "label": "normalize-verify",
+        "arguments": [
+          "singlecell-count-store-normalize-verify",
+          "/Users/n/numivivo-count-store-final-20260909/normalized",
+          "--store",
+          "/Users/n/numivivo-count-store-final-20260909/store"
+        ],
+        "exitCode": 0,
+        "seconds": 70.086380041,
+        "maximumResidentBytes": 285065216
+      }
+    ],
+    "checkerSHA256": "347d145058cfbcea8ca8d6af6a0f6c4f767f4af782705f9b490a162061a5d30a"
+  },
+  "raw": {
+    "entriesCompared": 361582621,
+    "sha256": "77135b8d983e6302ce13cdd1ec2503ce6d6d84be2af52e003ccea9d5270fed2e",
+    "maximumAbsoluteError": 0.0
+  },
+  "normalized": {
+    "entriesCompared": 361582621,
+    "sha256": "66336f23b26f7c23c2bfd357c95142c948de9a4768ec48a5dd1ce90925e42821",
+    "maximumAbsoluteError": 8.881784197001252e-16
+  },
+  "transport": "gzip over SSH; digests and comparisons use every uncompressed record",
+  "allMetadataAxesExact": true,
+  "allCountMarginalsExact": true,
+  "scanpyFloat64NormalizationTolerance": 1e-12,
+  "referenceSeconds": 717.4350472078659,
+  "referencePlatform": "macOS-26.6-arm64-arm-64bit",
+  "packages": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "h5py": "3.16.0"
+  },
+  "checkerSHA256": "de95a77ccf4470e95ef6b02434ce8fabefa96997cc67054bdfa10e4c0fa1428c",
+  "scope": "Full 111445-cell source; no million-cell, parallel-kernel or GPU qualification; hosts differ so no speedup claim"
+}

@@ -1,0 +1,55 @@
+{
+  "status": "passed-native-reconstruction",
+  "binarySHA256": "1d5606e0fc9e7fa92babf77dbc1d9ea1285d5117aa1da9039d94fa5f0b79f030",
+  "sourceSHA256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc",
+  "planSHA256": "cdc45a959178361fc825a8ab4e38025a9f32b27d7eaf84fe93823941e91b6342",
+  "entries": 361582621,
+  "countBytes": 5785321936,
+  "normalizedBytes": 5785321936,
+  "windowBytes": 16777216,
+  "writeBufferBytes": 1048576,
+  "maximumResidentBytes": 12584484864,
+  "commands": [
+    {
+      "label": "import",
+      "arguments": [
+        "singlecell-h5ad-store",
+        "/Users/n/numivivo-count-store-20260909/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-count-store-20260909/plan.json",
+        "--output",
+        "/Users/n/numivivo-count-store-20260909/store"
+      ],
+      "exitCode": 0,
+      "seconds": 40.495652041999996,
+      "maximumResidentBytes": 966049792
+    },
+    {
+      "label": "normalize",
+      "arguments": [
+        "singlecell-count-store-normalize",
+        "/Users/n/numivivo-count-store-20260909/store",
+        "--target",
+        "10000",
+        "--output",
+        "/Users/n/numivivo-count-store-20260909/normalized"
+      ],
+      "exitCode": 0,
+      "seconds": 64.50722383300001,
+      "maximumResidentBytes": 6793134080
+    },
+    {
+      "label": "normalize-verify",
+      "arguments": [
+        "singlecell-count-store-normalize-verify",
+        "/Users/n/numivivo-count-store-20260909/normalized",
+        "--store",
+        "/Users/n/numivivo-count-store-20260909/store"
+      ],
+      "exitCode": 0,
+      "seconds": 64.07253641700001,
+      "maximumResidentBytes": 12584484864
+    }
+  ],
+  "checkerSHA256": "13ca7a4f5b6d1561f5f5dc9b88051bf32861a7e34cf55b3e1cb3e28d193355dd"
+}

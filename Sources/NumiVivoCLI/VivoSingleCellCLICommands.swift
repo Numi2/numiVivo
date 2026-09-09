@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
+        ["singlecell-h5ad-store", "singlecell-count-store-verify", "singlecell-count-store-normalize", "singlecell-count-store-normalize-verify", "multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
     private func canonicalURL(_ url: URL) throws -> URL {
@@ -43,6 +43,23 @@ struct VivoSingleCellCLICommands {
                 files["analysis.json"] = try VivoCanonicalJSON.encode(VivoSingleCellExamples.pairedPlan())
                 try VivoOmicsDirectoryExport.write(files, to: destination)
                 try printJSON(["status": "written-synthetic-example", "directory": destination.path]); return 0
+            }
+            if command == "singlecell-h5ad-store" {
+                guard arguments.count == 6, arguments[2] == "--plan", arguments[4] == "--output" else { throw VivoOmicsError.invalid("singlecell-h5ad-store <source.h5ad> --plan <mapping.json> --output <new-store>") }
+                let plan = try VivoCanonicalJSON.decode(VivoH5ADImportPlan.self, from: VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[3]), maximumBytes: 2_097_152))
+                try printJSON(VivoH5ADCountStore.publish(source: URL(fileURLWithPath: arguments[1]), plan: plan, implementation: VivoWorkflowCLIImplementation.fingerprint(), to: canonicalURL(URL(fileURLWithPath: arguments[5])))); return 0
+            }
+            if command == "singlecell-count-store-verify" {
+                guard arguments.count == 2 else { throw VivoOmicsError.invalid("singlecell-count-store-verify <store>") }
+                try printJSON(VivoH5ADCountStore.verify(URL(fileURLWithPath: arguments[1]), implementation: VivoWorkflowCLIImplementation.fingerprint())); return 0
+            }
+            if command == "singlecell-count-store-normalize" {
+                guard arguments.count == 6, arguments[2] == "--target", arguments[4] == "--output", let target = Double(arguments[3]) else { throw VivoOmicsError.invalid("singlecell-count-store-normalize <store> --target <positive-total> --output <new-directory>") }
+                try printJSON(VivoH5ADCountStore.normalize(URL(fileURLWithPath: arguments[1]), target: target, implementation: VivoWorkflowCLIImplementation.fingerprint(), to: canonicalURL(URL(fileURLWithPath: arguments[5])))); return 0
+            }
+            if command == "singlecell-count-store-normalize-verify" {
+                guard arguments.count == 4, arguments[2] == "--store" else { throw VivoOmicsError.invalid("singlecell-count-store-normalize-verify <normalized> --store <raw-store>") }
+                try printJSON(VivoH5ADCountStore.verifyNormalization(URL(fileURLWithPath: arguments[1]), store: URL(fileURLWithPath: arguments[3]), implementation: VivoWorkflowCLIImplementation.fingerprint())); return 0
             }
             if command == "multiassay-h5mu-import" {
                 guard arguments.count == 6, arguments[2] == "--plan", arguments[4] == "--output" else { throw VivoOmicsError.invalid("multiassay-h5mu-import <source.h5mu> --plan <mapping.json> --output <new-bundle>") }
@@ -293,7 +310,11 @@ struct VivoSingleCellCLICommands {
     }
     static let help = """
     NumiVivo native single-cell workflows
-      multiassay-h5mu-import <source.h5mu> --plan <mapping.json> --output <new-bundle>
+      singlecell-h5ad-store <source.h5ad> --plan <mapping.json> --output <new-store>
+    singlecell-count-store-verify <store>
+    singlecell-count-store-normalize <store> --target <positive-total> --output <new-directory>
+    singlecell-count-store-normalize-verify <normalized> --store <raw-store>
+    multiassay-h5mu-import <source.h5mu> --plan <mapping.json> --output <new-bundle>
       multiassay-h5mu-write <dataset.json> --output <new.h5mu>
       multiassay-10x-import <matrix.h5> --plan <plan.json> --output <new-bundle>
       multiassay-verify <bundle>

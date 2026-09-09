@@ -358,9 +358,14 @@ The complete development objective remains open:
    see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).
    Full Norman count aggregation now exercises 361.6 million source entries
    through bounded slices, with 3.58 million aggregate nonzeros.
-   Metadata, moments, basis, scores and report remain resident. Streaming
-   downstream graphs/integration, parallel kernels and million-cell qualification
-   remain open.
+   A [persistent count store with windowed normalization](../Tools/Omics/CountStore/README.md)
+   now retains all 361.6 million Norman entries as exact binary records. Native
+   import, normalization and reconstruction verification each stay below 286 MB
+   maximum resident memory on 111,445 cells. Every raw record matches SciPy and
+   every normalized record matches Scanpy within 8.9e-16 absolute error.
+   Metadata, moments, basis, scores and
+   reports remain resident. Streaming downstream graphs/integration, parallel
+   kernels and million-cell qualification remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

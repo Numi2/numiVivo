@@ -1,0 +1,42 @@
+[
+  {
+    "label": "import",
+    "arguments": [
+      "singlecell-h5ad-store",
+      "/Users/n/numivivo-count-store-20260909/original.h5ad",
+      "--plan",
+      "/Users/n/numivivo-count-store-20260909/plan.json",
+      "--output",
+      "/Users/n/numivivo-count-store-20260909/store"
+    ],
+    "exitCode": 0,
+    "seconds": 40.495652041999996,
+    "maximumResidentBytes": 966049792
+  },
+  {
+    "label": "normalize",
+    "arguments": [
+      "singlecell-count-store-normalize",
+      "/Users/n/numivivo-count-store-20260909/store",
+      "--target",
+      "10000",
+      "--output",
+      "/Users/n/numivivo-count-store-20260909/normalized"
+    ],
+    "exitCode": 0,
+    "seconds": 64.50722383300001,
+    "maximumResidentBytes": 6793134080
+  },
+  {
+    "label": "normalize-verify",
+    "arguments": [
+      "singlecell-count-store-normalize-verify",
+      "/Users/n/numivivo-count-store-20260909/normalized",
+      "--store",
+      "/Users/n/numivivo-count-store-20260909/store"
+    ],
+    "exitCode": 0,
+    "seconds": 64.07253641700001,
+    "maximumResidentBytes": 12584484864
+  }
+]

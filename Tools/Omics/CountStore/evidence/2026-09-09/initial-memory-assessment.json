@@ -1,0 +1,6 @@
+{
+  "status": "failed-memory-gate",
+  "maximumResidentBytesLimit": 1073741824,
+  "initialMaximumResidentBytes": 12584484864,
+  "explanation": "Initial reconstruction completed, but normalization and normalization verification exceeded the subsequently enforced 1 GiB gate. Original logs and ungated runner are retained unchanged. Fixed snapshot copy uses a 1 MiB POSIX buffer."
+}

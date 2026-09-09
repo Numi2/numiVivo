@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/CountStore/check_norman.py", line 75, in <module>
+    raw=compare('store/counts.bin',matrix,False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/CountStore/check_norman.py", line 54, in compare
+    block=proc.stdout.read(remaining)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+time: command terminated abnormally
+      204.58 real        12.41 user         6.19 sys
+          7370768384  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              987830  page reclaims
+                  47  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                7544  messages sent
+               43079  messages received
+                   2  signals received
+               66796  voluntary context switches
+               12876  involuntary context switches
+        139109983462  instructions retired
+         49948224259  cycles elapsed
+          7586715576  peak memory footprint
