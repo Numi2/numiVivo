@@ -154,8 +154,9 @@ This is not an out-of-core implementation, and the full replay/export peaked at
 donor-aware DE or integration result.
 
 The [experimental benchmark suite](../Tools/Omics/Benchmarks/README.md) records
-one paired-donor Kang comparison, Haber count/QC checks and a rejected
-non-count Hagai input. The multi-dataset donor-DE requirement remains open.
+paired-donor Kang and original-count Hagai NB comparisons, Haber count/QC
+checks and a rejected normalized Hagai input. The broader benchmark and
+cross-study calibration requirements remain open.
 
 ```
 python Tools/Omics/H5AD/check_annotations.py --binary /path/to/numivivo --full-product --out /tmp/annotation-checks
@@ -247,8 +248,10 @@ The complete development objective remains open:
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
    tuft-cell count/QC passes. Several independent donor-resolved studies, robust
    reference sensitivity and R edgeR/limma/DESeq2 comparisons remain.
-   Full-scope original Hagai mouse count/QC and pseudobulks now pass through the
-   streaming route; donor pairing and biological DE qualification remain open.
+   Full-scope original Hagai mouse count/QC, pseudobulks and a predeclared NB
+   comparison now pass through the streaming route. Its three donor pairs are
+   inferred explicitly from deposited sample prefixes, supported by the primary
+   individual table. Cross-study FDR calibration remains open.
 3. **Negative-binomial DE:** an explicit native NB cohort model now runs through
    the count/analysis/replay/table CLI, with adjusted dispersion estimation,
    robust trend, prior shrinkage, offsets, shared paired/batch designs and

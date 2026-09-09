@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "/Users/home/numivivo-stream-product-20260909/numivivo",
+      "singlecell-h5ad-pseudobulk",
+      "/Users/home/numivivo-hagai-stream-compatible-20260909/prepared.h5ad",
+      "--plan",
+      "/Users/home/numivivo-hagai-nb-diagnostics-20260909/plan.json",
+      "--output",
+      "/Users/home/numivivo-hagai-nb-diagnostics-20260909/native"
+    ],
+    "returncode": 0,
+    "seconds": 17.82212720764801
+  },
+  {
+    "command": [
+      "/Users/home/numivivo-stream-product-20260909/numivivo",
+      "singlecell-h5ad-pseudobulk-verify",
+      "/Users/home/numivivo-hagai-nb-diagnostics-20260909/native"
+    ],
+    "returncode": 0,
+    "seconds": 18.154509542044252
+  }
+]

@@ -133,7 +133,18 @@ not the product CLI. No Python implementation supplies native fitting.
 
 Multi-study calibration, robust reference sensitivity, gene-specific nuisance
 handling, effect shrinkage and comparisons with R edgeR/limma/DESeq2 remain.
-Do not promote the default on effect correlation alone. Original Hagai UMI
-matrices have now been audited, but the 32.85-million-nonzero declared scope
-exceeds the current five-million count bound. That capacity and its actual
-benchmark must be addressed without dropping data merely to pass the limit.
+Do not promote the default on effect correlation alone. The original Hagai
+32.85-million-nonzero scope now passes through the streaming count route and a
+[three-pair LPS6 benchmark](../Benchmarks/README.md#hagai-paired-negative-binomial-comparison).
+All 12,426 tested native Wald fits, the trend/prior, 32 MAP objectives and BH
+arithmetic passed independent checks. Native/reference final dispersions have a
+median ratio of 0.37368, despite effect correlation 0.99919. The resulting
+significance differences and the two residual degrees of freedom make this
+direct evidence for further calibration work, not permission to promote the
+experimental model. Source-prefix donor pairing is explicitly documented.
+
+`check_cohort.py --cohort-report ... --counts ... --out ...` accepts a streaming
+report with one source sample per pseudobulk and checks sample ordering before
+independent fitting; `--kang-result` remains supported for the resident route.
+`compare_dispersions.py` records estimator differences and reference convergence
+flags without excluding inconvenient genes or retuning either estimator.

@@ -1,0 +1,19 @@
+{
+  "nativeCommit": "8ebf4c49f4948605cbddcdd4405aec690f0e5526",
+  "nativeExecutableSHA256": "a7131c30eb05d91a14b26b9d9d61aa0007dfd56289eabfa926493d7fc393ddca",
+  "scripts": {
+    "Tools/Omics/Benchmarks/run_hagai_nb.py": "d0bf2b8381009b59e2bec9434e2b818f59e957ca258437377e2f6d06a3aee0f5",
+    "Tools/Omics/NegativeBinomial/check_cohort.py": "2292eadf4e3536db9b4360e4dfa0761e96b684f9f88a4c4f8fd33ab4cec94f6d",
+    "Tools/Omics/NegativeBinomial/compare_dispersions.py": "a90869a26f46aad08ed7a1ea6a3e329b9c3c2e14903460d2b1e1daa918865be5"
+  },
+  "artifacts": {
+    "reference-pseudobulk.tsv": "207cdba697820212726ecc20cfcaafc6c95207b8390be026c3d8523f48a87f4c",
+    "reference-gene-diagnostics.tsv": "826a6ed5f2b50e2437abc3020f6ca3ea5b9c755cae939a711e5c1ad74e58e73a",
+    "native-de.tsv": "40888d1da689386ac0fe122c2dd88a6e31f3bbbda354a1df00d4bfaace622e12",
+    "pydeseq2.tsv": "f7ce6e45e5d8bd29cc101c04e97ca83ca2fa8a9e5dffa8554a0a446f6ccb3da6",
+    "native/report.json": "6a26ba707fa188e658fd36271247e0e590e248587127c4ee871d2c5fcfe6dbb6",
+    "native/receipt.json": "4b60bc7b3b1d8581ecf4c368f2cd49a686ac11a90509da1efcfe485c8dd92529"
+  },
+  "artifactDirectory": "/Users/home/numivivo-hagai-nb-diagnostics-20260909",
+  "independentSourceMatches": true
+}

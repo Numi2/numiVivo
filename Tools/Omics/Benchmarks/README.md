@@ -13,10 +13,11 @@ committed. Paths in these measured receipts identify the original local run.
 
 | Public release and declared scope | Result | Remaining boundary |
 | --- | --- | --- |
-| [Kang 2018](https://doi.org/10.1038/nbt.4042), all 2,651 annotated B cells and all 15,706 source genes | Exact native counts, 16 pseudobulks and Scanpy QC; normalization max error 8.88e-16. Eight paired donors, IFNB versus control, 8,894 eligible/tested genes. | One cell type and contrast; no multi-study competitiveness or native NB claim. |
+| [Kang 2018](https://doi.org/10.1038/nbt.4042), all 2,651 annotated B cells and all 15,706 source genes | Exact native counts, 16 pseudobulks and Scanpy QC. Eight paired donors, IFNB versus control: baseline 8,894 tested; native NB 5,400 tested and 3,494 support-rank rejections. NB effect correlation 0.99907 versus PyDESeq2. | One cell type and contrast; no calibrated significance or production claim. |
 | [PBMC3K](https://scanpy.readthedocs.io/en/latest/generated/scanpy.datasets.pbmc3k.html), all 2,700 cells and 32,738 genes | Annotation preservation, full 2,286,884-nonzero native count/replay route, exact Scanpy QC; normalization max error 8.88e-16. | One library, no donor inference. Legacy source requires current AnnData re-encoding. |
 | [Haber 2017](https://doi.org/10.1038/nature24489), all 409 annotated tuft cells and 15,215 source genes | Exact native count/replay and Scanpy QC; normalization max error 8.88e-16. Source dense counts read in 64-row blocks into sparse storage. | Individual donor IDs unavailable in this release; only two batch labels per treatment. No donor-DE claim and no invented donors. |
-| [Hagai 2018](https://doi.org/10.1038/s41586-018-0657-2), supplied pertpy release | Ineligible for count DE: fractional X and no raw/counts layer. | Original counts must be acquired. No rounding or inverse-normalization reconstruction. |
+| [Hagai 2018](https://doi.org/10.1038/s41586-018-0657-2), supplied pertpy release | Ineligible for count DE: fractional X and no raw/counts layer. | Remains ineligible; original author counts are a separate release below. |
+| Hagai original E-MTAB-6754, all six mouse unstimulated/LPS6 files | 13,863 cells, 22,048 genes, 32.85M nonzeros; exact source/Scanpy QC and pseudobulks. Native NB/PyDESeq2 comparison on three source-derived donor pairs; 12,426 tested, correlation 0.99919, five expected genes positive in both. | Pairing inference from source prefixes is explicit. Two residual degrees of freedom; substantial p-value differences; six-hour contrast is not the paper's four-hour DE reproduction. |
 
 Dataset download IDs follow the [official pertpy data definitions](https://pertpy.readthedocs.io/en/1.0.2/_modules/pertpy/data/_datasets.html).
 Checksums in the scripts bind the exact releases, not every dataset associated
@@ -92,8 +93,8 @@ provides integer UMI matrices after the authors' QC/cluster selection. The
 [audit](evidence/2026-09-09/hagai-original-audit.json) pins six source files for
 mouse sample groups 1–3, unstimulated versus six-hour LPS: 13,863 cells,
 22,048 common genes and 32,848,185 nonzeros. This is acquisition and count-axis
-evidence, not a completed donor-DE benchmark. Donor mapping must be finalized
-from original sample metadata. The streaming route below now supports this
+evidence. The later NB comparison below records the primary individual table
+and deposited sample identities. The streaming route supports this
 complete source scope without outcome-based or capacity-driven subsetting.
 
 `audit_hagai_original.py --source-dir /path/to/files --out /tmp/hagai-audit.json`
@@ -121,9 +122,8 @@ the source/Scanpy QC and exact six-pseudobulk comparison. Source row membership
 and ordered gene identities are also checked. Mitochondrial annotation is
 unavailable in this preparation and remains missing. The source uses six-hour
 LPS; the original paper's cross-species DE used four hours, so this is not a
-reproduction of that DE result. Individual donor mapping requires Supplementary
-Table 2, identified by the [primary methods](https://www.hagailab.org/wp-content/uploads/2019/06/Hagai-Nature-2018.pdf).
-The preparation leaves donor IDs unset, uses source sample IDs for grouping,
+reproduction of that DE result. The count-only preparation leaves donor IDs
+unset, uses source sample IDs for grouping,
 and requests no DE contrast. This qualifies count processing, not independent
 replication or expected biological effects.
 
@@ -143,3 +143,51 @@ competitive performance benchmark. The complete executable passed 24 streaming
 checks and six existing H5AD CLI checks; 27 import checks, 26 annotation checks
 and 18 Swift tests also passed. The existing single-cell CLI suite passed
 18 assertions across 24 commands.
+
+## Hagai paired negative-binomial comparison
+
+`run_hagai_nb.py` requires the exact supplementary PDF and SDRF before assigning
+donors. Supplementary Table 2 (PDF page 12) explicitly lists three individual
+eight-week-old female C57BL/6 mice with single-cell time courses. The SDRF names
+the corresponding `mouse1`, `mouse2`, `mouse3` time courses and identifies each
+library by an ENA accession. Pairing unstimulated and LPS6 libraries by those
+prefixes is an explicit inference from the deposited naming, not a direct
+prefix-to-table-row crosswalk. No mapping to table rows 4/5/6 or technical batch
+is invented. The [supplement download](https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6347972/supplementaryFiles)
+and its member PDF are hash-pinned in the design evidence.
+
+Before fitting, the script records a paired `~ donor + condition` design,
+median-ratio offsets, parametric NB dispersion trends, no batch adjustment,
+and a descriptive acceptance rule: effect correlation at least 0.95, zero native
+numerical failures, and at least four of Nfkb2/Nfkbia/Cxcl10/Isg15/Tnf positive
+in both methods. All six source samples and all genes remain in native input;
+the declared gene-level count/support filter defines inference eligibility.
+PyDESeq2 Cooks refitting/filtering and independent filtering are explicitly off.
+
+The [recorded result](evidence/2026-09-09-hagai-nb/report.json) passes those
+criteria: 12,673 eligible genes, 12,426 tested and 247 rejected for insufficient
+positive-count design support, no numerical failures, effect Spearman
+0.99918955, sign agreement 99.46%, and 39 common genes in the top 50 BH lists.
+All five preselected response genes are positive in both methods. This is a
+second experimental NB comparison after Kang, not repeated-sampling calibration.
+PyDESeq2 warns that dispersion estimation with only two residual degrees of
+freedom is unreliable. Native and reference p-values differ by many orders of
+magnitude; native machine-zero tail probabilities remain visible.
+The [dispersion comparison](evidence/2026-09-09-hagai-nb/dispersions.json) finds
+a median native/reference final dispersion ratio of 0.37368 across tested genes.
+For Nfkb2, final dispersions are 0.00849 versus 0.03021. The different trend and
+shrinkage estimates therefore supply a concrete source of uncertainty differences.
+PyDESeq2 reports 28 false gene-wise and 12 false MAP convergence flags (zero
+false coefficient-convergence flags); these are retained without discarding
+their genes or claiming that one estimator is calibrated better.
+
+Independent statsmodels/SciPy checks cover all 12,426 native Wald fits, 32 MAP
+objectives, the trend objective, prior variance and BH arithmetic. Maximum
+absolute log2-effect error is 1.9911e-5; maximum MAP objective error is 5.12e-11.
+These validate calculations conditional on the chosen model, not biological
+truth or FDR calibration.
+
+```
+python Tools/Omics/Benchmarks/run_hagai_nb.py --binary /path/to/numivivo --prepared /tmp/hagai-prepared --sdrf /path/to/E-MTAB-6754.sdrf.txt --supplement /path/to/NIHMS79113-supplement-Supplementary_Information.pdf --out /tmp/hagai-nb
+python Tools/Omics/NegativeBinomial/check_cohort.py --cohort-report /tmp/hagai-nb/native/report.json --counts /tmp/hagai-nb/reference-pseudobulk.tsv --out /tmp/hagai-independent
+```

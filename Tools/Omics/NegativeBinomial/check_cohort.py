@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Independent checks of native cohort trend, MAP and Wald calculations.
 
-Consumes the full real Kang CLI benchmark, not synthetic scientific evidence.
+Consumes a real resident or streaming CLI benchmark, not synthetic evidence.
 Statsmodels supplies coefficient fits; SciPy supplies a separate MAP optimizer.
 """
 import argparse,hashlib,json,warnings
@@ -13,14 +13,25 @@ import statsmodels.api as sm
 from scipy.optimize import minimize,minimize_scalar
 from scipy.special import polygamma,erfc
 p=argparse.ArgumentParser(description=__doc__)
-p.add_argument('--kang-result',type=Path,required=True)
+source=p.add_mutually_exclusive_group(required=True)
+source.add_argument('--kang-result',type=Path)
+source.add_argument('--cohort-report',type=Path)
+p.add_argument('--counts',type=Path)
 p.add_argument('--out',type=Path,required=True)
-a=p.parse_args();a.out.mkdir(parents=True,exist_ok=False)
-report=json.loads((a.kang_result/'native-report.json').read_text())
+a=p.parse_args()
+if a.cohort_report is not None and a.counts is None:p.error('--cohort-report requires --counts')
+if a.kang_result is not None and a.counts is not None:p.error('--counts is only for --cohort-report')
+a.out.mkdir(parents=True,exist_ok=False)
+report_path=a.cohort_report or a.kang_result/'native-report.json'
+counts_path=a.counts or a.kang_result/'reference-pseudobulk.tsv'
+report=json.loads(report_path.read_text())
 c=report['contrasts'][0];d=c['design'];nb=c['negativeBinomial'];trend=nb['trend']
 x=np.asarray(d['rows']);offset=np.log(d['sizeFactorValues']);contrast=np.asarray(d['contrast'])
-counts=pd.read_csv(a.kang_result/'reference-pseudobulk.tsv',sep='\t',index_col=0)
-assert list(counts.index)==[o['donorID']+'__'+o['condition'] for o in d['observations']]
+counts=pd.read_csv(counts_path,sep='\t',index_col=0)
+if a.cohort_report is not None:
+    assert all(len(o['sampleIDs'])==1 for o in d['observations'])
+    assert list(counts.index)==[o['sampleIDs'][0] for o in d['observations']]
+else:assert list(counts.index)==[o['donorID']+'__'+o['condition'] for o in d['observations']]
 features=c['features'];diagnostics=nb['features'];indices=trend['referenceFeatureIndices']
 means=np.array([features[i]['meanNormalizedCount'] for i in indices])
 alpha=np.array([diagnostics[i]['geneWiseDispersion'] for i in indices])
@@ -85,7 +96,8 @@ assert np.max(abs(q-[f['adjustedPValue'] for f in rows]))<1e-12
 summary=dict(status='passed-native-cohort-calculations',testedGenes=tested,trendMethod=trend['method'],
     trendReferenceGenes=len(indices),trendObjectiveGap=trend_gap,priorLogVariance=prior,maxWaldErrors=errors,
     mapChecks=profile_errors,referenceWarnings=reference_warnings,exactBH=True,
-    sourceReportSHA256=hashlib.sha256((a.kang_result/'native-report.json').read_bytes()).hexdigest(),
+    sourceReportSHA256=hashlib.sha256(report_path.read_bytes()).hexdigest(),
+    sourceCountsSHA256=hashlib.sha256(counts_path.read_bytes()).hexdigest(),
     versions={k:version(k) for k in ['statsmodels','scipy','numpy','pandas']},
     boundary='Numerical checks conditional on the native model and one real study; not independent biological validity or repeated-sampling calibration')
 (a.out/'report.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary,indent=2))

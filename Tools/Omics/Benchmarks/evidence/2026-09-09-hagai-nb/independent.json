@@ -1,0 +1,155 @@
+{
+  "status": "passed-native-cohort-calculations",
+  "testedGenes": 12426,
+  "trendMethod": "parametric",
+  "trendReferenceGenes": 9377,
+  "trendObjectiveGap": 7.275957614183426e-12,
+  "priorLogVariance": 0.523943513370503,
+  "maxWaldErrors": {
+    "effect": 1.9910075099716096e-05,
+    "standardError": 4.994226455057316e-06,
+    "z": 4.6150223509400234e-06,
+    "p": 2.1599905856151125e-06
+  },
+  "mapChecks": [
+    {
+      "gene": "ENSMUSG00000021186",
+      "objectiveError": 3.552713678800501e-15
+    },
+    {
+      "gene": "ENSMUSG00000047409",
+      "objectiveError": 1.2434497875801753e-13
+    },
+    {
+      "gene": "ENSMUSG00000049106",
+      "objectiveError": 6.110667527536862e-13
+    },
+    {
+      "gene": "ENSMUSG00000024425",
+      "objectiveError": 2.0605739337042905e-13
+    },
+    {
+      "gene": "ENSMUSG00000038206",
+      "objectiveError": 1.5774048733874224e-12
+    },
+    {
+      "gene": "ENSMUSG00000021819",
+      "objectiveError": 2.0605739337042905e-13
+    },
+    {
+      "gene": "ENSMUSG00000049323",
+      "objectiveError": 6.821210263296962e-13
+    },
+    {
+      "gene": "ENSMUSG00000000399",
+      "objectiveError": 3.140598892059643e-12
+    },
+    {
+      "gene": "ENSMUSG00000026933",
+      "objectiveError": 6.252776074688882e-13
+    },
+    {
+      "gene": "ENSMUSG00000057762",
+      "objectiveError": 0.0
+    },
+    {
+      "gene": "ENSMUSG00000026878",
+      "objectiveError": 5.1102233555866405e-11
+    },
+    {
+      "gene": "ENSMUSG00000031352",
+      "objectiveError": 1.4921397450962104e-13
+    },
+    {
+      "gene": "ENSMUSG00000029075",
+      "objectiveError": 0.0
+    },
+    {
+      "gene": "ENSMUSG00000023755",
+      "objectiveError": 2.4158453015843406e-13
+    },
+    {
+      "gene": "ENSMUSG00000032481",
+      "objectiveError": 6.608047442568932e-13
+    },
+    {
+      "gene": "ENSMUSG00000048439",
+      "objectiveError": 3.197442310920451e-14
+    },
+    {
+      "gene": "ENSMUSG00000031983",
+      "objectiveError": 6.110667527536862e-13
+    },
+    {
+      "gene": "ENSMUSG00000006299",
+      "objectiveError": 1.1318945780658396e-11
+    },
+    {
+      "gene": "ENSMUSG00000052137",
+      "objectiveError": 1.4921397450962104e-13
+    },
+    {
+      "gene": "ENSMUSG00000036748",
+      "objectiveError": 7.368328169832239e-12
+    },
+    {
+      "gene": "ENSMUSG00000040102",
+      "objectiveError": 4.263256414560601e-14
+    },
+    {
+      "gene": "ENSMUSG00000057234",
+      "objectiveError": 8.881784197001252e-14
+    },
+    {
+      "gene": "ENSMUSG00000034317",
+      "objectiveError": 1.7763568394002505e-14
+    },
+    {
+      "gene": "ENSMUSG00000037994",
+      "objectiveError": 3.552713678800501e-15
+    },
+    {
+      "gene": "ENSMUSG00000032834",
+      "objectiveError": 1.4210854715202004e-13
+    },
+    {
+      "gene": "ENSMUSG00000024847",
+      "objectiveError": 3.424815986363683e-12
+    },
+    {
+      "gene": "ENSMUSG00000001964",
+      "objectiveError": 2.1387336346379016e-12
+    },
+    {
+      "gene": "ENSMUSG00000031004",
+      "objectiveError": 1.1297629498585593e-12
+    },
+    {
+      "gene": "ENSMUSG00000062931",
+      "objectiveError": 1.3145040611561853e-12
+    },
+    {
+      "gene": "ENSMUSG00000021203",
+      "objectiveError": 1.0658141036401503e-14
+    },
+    {
+      "gene": "ENSMUSG00000025466",
+      "objectiveError": 5.968558980384842e-13
+    },
+    {
+      "gene": "ENSMUSG00000059588",
+      "objectiveError": 2.2026824808563106e-13
+    }
+  ],
+  "referenceWarnings": [],
+  "exactBH": true,
+  "sourceReportSHA256": "6a26ba707fa188e658fd36271247e0e590e248587127c4ee871d2c5fcfe6dbb6",
+  "sourceCountsSHA256": "207cdba697820212726ecc20cfcaafc6c95207b8390be026c3d8523f48a87f4c",
+  "versions": {
+    "statsmodels": "0.15.0",
+    "scipy": "1.18.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5"
+  },
+  "boundary": "Numerical checks conditional on the native model and one real study; not independent biological validity or repeated-sampling calibration"
+}

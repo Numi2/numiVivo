@@ -1,0 +1,53 @@
+{
+  "status": "descriptive-estimator-differences",
+  "commonTestedGenes": 12426,
+  "nativeOverReferenceFinalDispersionQuantiles": {
+    "0": 0.2133587495590966,
+    "0.1": 0.2948203861886845,
+    "0.5": 0.37367725340979696,
+    "0.9": 0.5659137330168942,
+    "1": 15.510663114276666
+  },
+  "responseGenes": {
+    "ENSMUSG00000025225": {
+      "nativeFinal": 0.008485140813092566,
+      "referenceFinal": 0.0302094393559124,
+      "nativeTrend": 0.01209779870787854,
+      "referenceTrend": 0.0378052511293045
+    },
+    "ENSMUSG00000021025": {
+      "nativeFinal": 0.007324143682817895,
+      "referenceFinal": 0.0286237151739131,
+      "nativeTrend": 0.011630452917899579,
+      "referenceTrend": 0.0365812417428665
+    },
+    "ENSMUSG00000034855": {
+      "nativeFinal": 0.013570375052888665,
+      "referenceFinal": 0.0449317351506998,
+      "nativeTrend": 0.011550115107835757,
+      "referenceTrend": 0.0363708198552753
+    },
+    "ENSMUSG00000035692": {
+      "nativeFinal": 0.011819107142728607,
+      "referenceFinal": 0.0314791297254401,
+      "nativeTrend": 0.011551737756221148,
+      "referenceTrend": 0.0363750776121156
+    },
+    "ENSMUSG00000024401": {
+      "nativeFinal": 0.030722216101192943,
+      "referenceFinal": 0.0490067027646251,
+      "nativeTrend": 0.011586014874501553,
+      "referenceTrend": 0.0364648597748298
+    }
+  },
+  "referenceNonconverged": {
+    "_genewise_converged": 28,
+    "_MAP_converged": 12,
+    "_LFC_converged": 0
+  },
+  "sourceSHA256": {
+    "/Users/home/numivivo-hagai-nb-diagnostics-20260909/native/report.json": "6a26ba707fa188e658fd36271247e0e590e248587127c4ee871d2c5fcfe6dbb6",
+    "/Users/home/numivivo-hagai-nb-diagnostics-20260909/reference-gene-diagnostics.tsv": "826a6ed5f2b50e2437abc3020f6ca3ea5b9c755cae939a711e5c1ad74e58e73a"
+  },
+  "boundary": "Differences in fitted dispersions explain a source of Wald uncertainty differences; neither agreement nor disagreement establishes calibration. No estimator retuned to these results."
+}
