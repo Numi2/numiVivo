@@ -32,6 +32,11 @@ and reconciliation of its guide roster before fitting. [AlphaGenome Atlas](Docum
 can supply variant-level molecular hypotheses; its predictions do not establish
 NumiVivo's downstream cellular or tissue outcomes.
 
+The [HIRISA preparation-transfer test](Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
+now has a frozen donor-excluded split covering 705,365 cells, with independently
+verified sparse counts. Native aggregation and prediction are pending; this
+preparation does not yet add a predictive result.
+
 The [single-cell program](Documentation/SingleCellInteroperability.md) now includes
 native H5AD interchange, negative-binomial DE, sparse PCA/neighbors/clustering,
 integration, marker scoring and multimodal count interchange. The complete

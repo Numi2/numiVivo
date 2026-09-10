@@ -150,9 +150,10 @@ Lower donor-associated variance also does not isolate technical batch removal.
 3. Resolve Adamson controls and its 94-versus-93 guide roster from primary records, then execute the
    frozen independent-study target-prediction protocol with coverage, all
    failures and matched simple/shuffled baselines. Do not tune it on test scores.
-4. Freeze a cross-preparation/context split before fitting. HIRISA PBMC transfer
-   remains unfrozen. Preserve complete source cohorts and explicitly account for
-   every unmatched or unavailable evaluation stratum.
+4. Execute the [frozen HIRISA preparation-transfer split](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md):
+   sixty cross-preparation folds and sixty matched within-preparation references.
+   Membership and independent sparse counts pass; native aggregation and
+   predictions remain pending. All source cells and excluded strata are retained.
 5. Establish predictive interval coverage and useful improvements over simple
    baselines on independent biological replicates before promoting a predictor.
    Connecting expression to a measured phenotype requires its own model,
