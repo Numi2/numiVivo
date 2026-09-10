@@ -217,10 +217,13 @@ admission mismatch; streamed PCA reference/query snapshots now share the same
 64 GiB copy ceiling. That ceiling is capacity admission, not demonstrated scale.
 
 The [complete HIRISA release](../Tools/Omics/Benchmarks/HIRISA/README.md) now
-provides a verified 1,612,594-cell, 3.846-billion-entry AnnData input and exact
-source QC/library aggregates. Those are Python/scverse interoperability checks;
-native execution is pending. This complete source exceeds the cell/entry limits
-below and does not yet qualify their removal or million-cell native analysis.
+passes native publication/reconstruction on all 1,612,594 cells and 3.846 billion
+entries. An independent streaming audit verifies every cell identity/QC value,
+all 131 library aggregates and all sixteen inference-cohort memberships/counts.
+Release publication/reconstruction take 280.00/285.23 seconds, peaking at
+4.43/4.96 GB RSS. The 526.5 MB JSON report nearly reaches its 512 MiB limit;
+this qualifies complete-source ingestion, not general million-cell PCA, graph,
+integration or out-of-core execution. DE and held-out prediction remain ongoing.
 
 The output is an exchange bundle containing `original.h5ad`, `plan.json`,
 `report.json` and `receipt.json`. Verification copies the source to a private
@@ -229,13 +232,15 @@ the report. Existing destinations are refused. This route uses the common
 fingerprint types but does not yet publish its report into the artifact-store
 DAG. It is not a substitute for general chunked transforms or sparse PCA.
 
-Explicit limits are 64 GiB source bytes, 1 million cell identities, 100,000
-features, 1 billion source sparse entries, 5 million aggregate nonzeros,
+Explicit limits are 64 GiB source bytes, 2 million cell identities, 100,000
+features, 4 billion source sparse entries, 5 million aggregate nonzeros,
 2 MiB encoded plan and 512 MiB encoded report. The pseudobulk CLI now uses
 the same 2 MiB input-plan allowance; a complete Adamson mapping with 1,106
 guide/GEM sample identities exposed the former 128 KiB CLI mismatch. These
-are bounds, not demonstrated scale:
-metadata, group membership and JSON reports remain resident. Compression
+are admission bounds; the complete HIRISA input demonstrates the scope above.
+Metadata, group membership and JSON reports remain resident. APFS snapshot
+cloning preserves separate content ownership and avoids allocating another full
+source payload; other filesystems use bounded descriptor copying. Compression
 depends on the installed HDF5 filters; gzip is qualified, while LZF was rejected
 on the tested host because no native LZF filter was installed.
 
@@ -550,7 +555,7 @@ The complete development objective remains open:
    mutable edge schedules in a 16 MiB mapping window and reads only the requested
    PCA initialization columns into resident arrays. File-backed integration now
    keeps latent matrices in bounded mappings and is measured on full Kang/Hagai;
-   million-cell qualification and general biological preservation remain open.
+   million-cell graph/integration qualification and general biological preservation remain open.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

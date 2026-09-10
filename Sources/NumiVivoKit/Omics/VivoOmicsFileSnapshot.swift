@@ -18,21 +18,45 @@ enum VivoOmicsFileSnapshot {
         var info = stat()
         guard fstat(fd, &info) == 0, (info.st_mode & mode_t(S_IFMT)) == mode_t(S_IFREG), info.st_size >= 0,
               info.st_size <= maximumBytes else { throw VivoOmicsError.limit("omics input type or bytes") }
-        var output: Int32 = -1
-        if let destination {
-            output = open(destination.path, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW, 0o600)
-            guard output >= 0 else { throw VivoOmicsError.invalid("cannot create omics snapshot") }
+        var output: Int32 = -1, cloned: Int32 = -1
+        var input = fd
+        defer {
+            if output >= 0 { _ = close(output) }
+            if cloned >= 0 { _ = close(cloned) }
         }
-        defer { if output >= 0 { _ = close(output) } }
+        if let destination {
+            try Task.checkCancellation()
+            #if canImport(Darwin)
+            // APFS copy-on-write snapshots retain separate inode/content
+            // ownership without allocating another full atlas payload. Hash
+            // the clone itself so subsequent source writes cannot change the
+            // bytes identified by this snapshot. Unsupported filesystems fall
+            // back to the same bounded descriptor-copy path below.
+            if fclonefileat(fd, AT_FDCWD, destination.path, 0) == 0 {
+                cloned = open(destination.path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK)
+                guard cloned >= 0 else { throw VivoOmicsError.invalid("cannot open cloned omics snapshot") }
+                var cloneInfo = stat()
+                guard fstat(cloned, &cloneInfo) == 0,
+                      (cloneInfo.st_mode & mode_t(S_IFMT)) == mode_t(S_IFREG),
+                      cloneInfo.st_size == info.st_size,
+                      fchmod(cloned, 0o600) == 0 else { throw VivoOmicsError.invalid("cloned omics snapshot type, bytes or permissions") }
+                input = cloned
+            }
+            #endif
+            if cloned < 0 {
+                output = open(destination.path, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW, 0o600)
+                guard output >= 0 else { throw VivoOmicsError.invalid("cannot create omics snapshot") }
+            }
+        }
         var hash = SHA256(), bytes = 0
         var buffer = [UInt8](repeating: 0, count: 1_048_576)
         while true {
             try Task.checkCancellation()
             let count = buffer.withUnsafeMutableBytes { p in
                 #if canImport(Darwin)
-                Darwin.read(fd, p.baseAddress, p.count)
+                Darwin.read(input, p.baseAddress, p.count)
                 #else
-                Glibc.read(fd, p.baseAddress, p.count)
+                Glibc.read(input, p.baseAddress, p.count)
                 #endif
             }
             if count < 0 { if errno == EINTR { continue }; throw VivoOmicsError.invalid("omics snapshot read") }
@@ -59,6 +83,7 @@ enum VivoOmicsFileSnapshot {
         }
         guard bytes == info.st_size else { throw VivoOmicsError.invalid("omics input changed size during snapshot") }
         if output >= 0 { guard fsync(output) == 0 else { throw VivoOmicsError.invalid("omics snapshot sync") } }
+        if cloned >= 0 { guard fsync(cloned) == 0 else { throw VivoOmicsError.invalid("cloned omics snapshot sync") } }
         return try VivoFingerprint(bytes: Array(hash.finalize()))
     }
 }

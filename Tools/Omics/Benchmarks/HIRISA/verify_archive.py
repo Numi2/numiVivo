@@ -7,6 +7,13 @@ import json
 from pathlib import Path
 
 
+def identity(stream):
+    count = 0;sha = hashlib.sha256()
+    for block in iter(lambda: stream.read(1_048_576), b''):
+        count += len(block);sha.update(block)
+    return count, sha.hexdigest()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('archive', type=Path)
@@ -20,12 +27,11 @@ def main():
         seen.add(name)
         path = root / name
         assert path.resolve().is_relative_to(root.resolve()) and not path.is_symlink()
-        stored = path.read_bytes()
-        assert len(stored) == record['storedBytes']
-        assert hashlib.sha256(stored).hexdigest() == record['storedSHA256']
-        decoded = gzip.decompress(stored) if record['gzipEncoded'] else stored
-        assert len(decoded) == record['sourceBytes']
-        assert hashlib.sha256(decoded).hexdigest() == record['sourceSHA256']
+        with path.open('rb') as stream:
+            assert identity(stream) == (record['storedBytes'], record['storedSHA256'])
+        opener = gzip.open if record['gzipEncoded'] else open
+        with opener(path, 'rb') as stream:
+            assert identity(stream) == (record['sourceBytes'], record['sourceSHA256'])
     actual = {str(p.relative_to(root)) for p in root.rglob('*') if p.is_file()}
     assert actual == seen | {'manifest.json'}
     print(json.dumps({'status': 'passed', 'members': len(seen)}))

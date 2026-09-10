@@ -35,6 +35,30 @@ for layout in ['csr','csc','dense']:
     run(layout+'-verify',['verify-aggregate',dest])
     run(layout+'-overwrite',['aggregate',a.interop/(layout+'.h5ad'),plan,dest],False)
 
+# One-slice fast emission and canonical fallback must have the same exact
+# count semantics, including zeros, unsorted duplicates, and UInt64 overflow.
+for name,columns,values in [
+    ('one-slice-sorted',[0,1,2],[3,0,12]),
+    ('one-slice-unsorted',[2,0,2,1],[7,3,5,0]),
+]:
+    source=a.out/(name+'.h5ad');shutil.copyfile(a.interop/'csr.h5ad',source)
+    with h5py.File(source,'r+') as f:
+        g=f['layers/counts']
+        for key in ['data','indices','indptr']:del g[key]
+        g.create_dataset('data',data=np.array(values,dtype=np.uint64))
+        g.create_dataset('indices',data=np.array(columns,dtype=np.int32))
+        g.create_dataset('indptr',data=np.array([0,len(values),len(values),len(values),len(values)],dtype=np.int64))
+    run(name,['aggregate',source,plan,a.out/name])
+    r=json.loads((a.out/name/'report.json').read_text())
+    assert r['canonicalNonzeros']==2 and r['quality'][0]['totalCounts']==15
+    assert r['quality'][0]['detectedFeatures']==2 and r['pseudobulk']['matrix']['counts']==[3,12]
+    run(name+'-verify',['verify-aggregate',a.out/name])
+    if name=='one-slice-sorted':
+        with h5py.File(source,'r+') as f:
+            f['layers/counts/data'][:]=np.array([np.iinfo(np.uint64).max,1,0],dtype=np.uint64)
+        run(name+'-overflow',['aggregate',source,plan,a.out/(name+'-overflow')],False)
+        assert not (a.out/(name+'-overflow')).exists()
+
 # Duplicates crossing the HDF5 slice boundary must merge once per coordinate.
 source=a.out/'boundary.h5ad';shutil.copyfile(a.interop/'csr.h5ad',source)
 with h5py.File(source,'r+') as f:
@@ -71,10 +95,10 @@ with h5py.File(oversized_source,'r+') as f:
     g=f['layers/counts']
     for key in ['data','indices','indptr']:del g[key]
     # Unallocated chunked arrays declare excessive scan work without creating a
-    # billion-entry fixture or reading any of its values before rejection.
-    g.create_dataset('data',shape=(1_000_000_001,),dtype=np.uint64,chunks=(65_536,))
-    g.create_dataset('indices',shape=(1_000_000_001,),dtype=np.int32,chunks=(65_536,))
-    g.create_dataset('indptr',data=np.array([0,1_000_000_001,1_000_000_001,1_000_000_001,1_000_000_001],dtype=np.int64))
+    # four-billion-entry fixture or reading any of its values before rejection.
+    g.create_dataset('data',shape=(4_000_000_001,),dtype=np.uint64,chunks=(65_536,))
+    g.create_dataset('indices',shape=(4_000_000_001,),dtype=np.int32,chunks=(65_536,))
+    g.create_dataset('indptr',data=np.array([0,4_000_000_001,4_000_000_001,4_000_000_001,4_000_000_001],dtype=np.int64))
 run('reject-oversized-source',['aggregate',oversized_source,plan,a.out/'oversized-source'],False)
 assert not (a.out/'oversized-source').exists()
 for field in ['plan','report','source','implementation']:

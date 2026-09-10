@@ -19,8 +19,8 @@ public struct VivoH5ADCellSelection: Codable, Sendable, Equatable {
         provenance=try c.decode(String.self,forKey: .provenance)
     }
     func validate() throws {
-        guard !observationIndices.isEmpty, observationIndices.count<=1_000_000,
-              observationIndices.allSatisfy({ (0..<1_000_000).contains($0) }),
+        guard !observationIndices.isEmpty, observationIndices.count<=VivoH5ADPseudobulk.sourceLimits.maximumCells,
+              observationIndices.allSatisfy({ (0..<VivoH5ADPseudobulk.sourceLimits.maximumCells).contains($0) }),
               Set(observationIndices).count==observationIndices.count,
               !provenance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               provenance.utf8.count<=16_384 else { throw VivoOmicsError.invalid("streamed cell selection indices or provenance") }
@@ -90,11 +90,11 @@ public struct VivoH5ADPseudobulkReceipt: Codable, Sendable, Equatable {
 public enum VivoH5ADPseudobulk {
     static var sourceLimits: VivoOmicsLimits {
         var limits=VivoOmicsLimits()
-        limits.maximumCells=1_000_000; limits.maximumFeatures=100_000
+        limits.maximumCells=2_000_000; limits.maximumFeatures=100_000
         // Source entry count bounds scan work, not resident matrix allocation:
         // the reader keeps at most one sparse major segment and 65,536-entry
         // input slices. The separate aggregate allowance remains unchanged.
-        limits.maximumNonzeros=1_000_000_000
+        limits.maximumNonzeros=4_000_000_000
         // Source snapshots use fixed 1 MiB I/O, independently of the retained
         // report/plan bounds below. Match the existing count-store file ceiling
         // so complete atlas files also enter streamed aggregation and PCA.

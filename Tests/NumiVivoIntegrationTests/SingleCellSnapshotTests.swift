@@ -51,6 +51,27 @@ import Testing
         }
         #expect(try Data(contentsOf: copy) == bytes)
     }
+    @Test func snapshotHasIndependentContentAndPrivatePermissions() throws {
+        let root=FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root,withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source=root.appendingPathComponent("source"),copy=root.appendingPathComponent("copy")
+        let original=Data(repeating: 17,count: 16_384)
+        try original.write(to: source)
+        try FileManager.default.setAttributes([.posixPermissions: 0o400],ofItemAtPath: source.path)
+        let fingerprint=try VivoOmicsFileSnapshot.fingerprint(source,copyTo: copy,maximumBytes: original.count)
+        #expect(fingerprint == (try VivoCanonicalJSON.fingerprint(original)))
+        #expect((try FileManager.default.attributesOfItem(atPath: copy.path)[.posixPermissions] as? NSNumber)?.intValue == 0o600)
+        try FileManager.default.setAttributes([.posixPermissions: 0o600],ofItemAtPath: source.path)
+        let changed=Data(repeating: 29,count: original.count)
+        let writer=try FileHandle(forWritingTo: source)
+        try writer.write(contentsOf: changed);try writer.close()
+        #expect(try Data(contentsOf: copy) == original)
+        let copyWriter=try FileHandle(forWritingTo: copy)
+        try copyWriter.write(contentsOf: Data([99]));try copyWriter.close()
+        #expect(try Data(contentsOf: source) == changed)
+        #expect(try VivoOmicsFileSnapshot.fingerprint(copy,maximumBytes: original.count) != fingerprint)
+    }
     @Test func oversizedSparseSourceIsRejectedBeforeCopying() throws {
         let root=FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: root,withIntermediateDirectories: false)

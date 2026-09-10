@@ -88,8 +88,9 @@ enum VivoH5ADCountReader {
             guard try h.shape(d, attribute: false).count == 1 else { throw VivoOmicsError.invalid("sparse arrays must be vectors") }
             return try h.integers(d, maximum: maximum, allowFloat: counts)
         }
-        let major = encoding == "csr_matrix" ? rows : features
-        let minor = encoding == "csr_matrix" ? features : rows
+        let isCSR = encoding == "csr_matrix"
+        let major = isCSR ? rows : features
+        let minor = isCSR ? features : rows
         let offsets = try integers("indptr", maximum: major + 1)
         let indexDataset = try h.dataset(file,path+"/indices")
         defer { h.close(indexDataset,"H5Dclose") }
@@ -107,6 +108,32 @@ enum VivoH5ADCountReader {
             var canonical: [Int: UInt64] = [:]
             var cursor = Int(offsets[i])
             let end = Int(offsets[i+1])
+            // Typical cell-major inputs already have strictly increasing feature
+            // indices and fit in one bounded read. Emit those validated entries
+            // directly; retain the canonicalization path for unsorted/duplicate
+            // coordinates and major segments crossing the slice boundary.
+            if cursor == end { continue }
+            if end - cursor <= 65_536 {
+                let indices = try h.integers(indexDataset,maximum: 65_536,range: cursor..<end)
+                let counts = try h.integers(countDataset,maximum: 65_536,allowFloat: true,range: cursor..<end)
+                var increasing = true
+                for k in indices.indices {
+                    guard indices[k] < minor else { throw VivoOmicsError.invalid("sparse index out of range") }
+                    if k > 0, indices[k] <= indices[k-1] { increasing = false }
+                }
+                if increasing {
+                    for k in indices.indices where counts[k] > 0 {
+                        let index = Int(indices[k])
+                        try onEntry(isCSR ? i : index,isCSR ? index : i,counts[k])
+                    }
+                    continue
+                }
+                for k in indices.indices where counts[k] > 0 {
+                    let index = Int(indices[k])
+                    canonical[index] = try vivoOmicsSum(canonical[index] ?? 0,counts[k])
+                }
+                cursor = end
+            }
             while cursor < end {
                 try Task.checkCancellation()
                 let next = min(end,cursor+65_536)
@@ -122,7 +149,7 @@ enum VivoH5ADCountReader {
                 cursor = next
             }
             for j in canonical.keys.sorted() {
-                try onEntry(encoding == "csr_matrix" ? i : j,encoding == "csr_matrix" ? j : i,canonical[j]!)
+                try onEntry(isCSR ? i : j,isCSR ? j : i,canonical[j]!)
             }
         }
     }

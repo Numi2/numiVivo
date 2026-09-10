@@ -11,8 +11,11 @@ references. It is not a dependency of native NumiVivo count execution.
 
 The [complete HIRISA source benchmark](HIRISA/README.md) adds all 131 deposited
 libraries: 1,612,594 cells and 3.846 billion count entries, with exact source and
-backed AnnData checks. Donor/batch control matching is frozen before modeling.
-Native execution, DE references and held-out prediction remain pending.
+backed AnnData checks. Native release ingestion/reconstruction and independent
+verification of every cell/QC value and all library aggregates now pass. Peak
+RSS remains 4.43/4.96 GB; metadata/report storage is still resident. Donor/batch
+matching is frozen, reference DE runs are complete, and native QL comparisons
+remain active. All 79 held-out prediction folds are frozen and unfitted.
 
 ## Recorded scope
 
