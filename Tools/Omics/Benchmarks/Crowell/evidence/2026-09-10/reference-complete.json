@@ -1,0 +1,218 @@
+{
+  "status": "all-available-populations-attempted",
+  "runs": [
+    {
+      "case": "00",
+      "cellGroup": "Astrocytes",
+      "stage": "reference",
+      "exitCode": 0,
+      "seconds": 7.220234916079789,
+      "command": [
+        "/opt/homebrew/bin/Rscript",
+        "Tools/Omics/Bioconductor/run.R",
+        "/Users/home/numivivo-crowell-20260910/00/reference-input",
+        "/Users/home/numivivo-crowell-20260910/00/reference"
+      ]
+    },
+    {
+      "case": "00",
+      "cellGroup": "Astrocytes",
+      "stage": "compare",
+      "exitCode": 0,
+      "seconds": 0.6840375000610948,
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-py/bin/python",
+        "Tools/Omics/Bioconductor/compare.py",
+        "--input",
+        "/Users/home/numivivo-crowell-20260910/00/reference-input",
+        "--reference",
+        "/Users/home/numivivo-crowell-20260910/00/reference",
+        "--out",
+        "/Users/home/numivivo-crowell-20260910/00/comparison.json"
+      ]
+    },
+    {
+      "case": "01",
+      "cellGroup": "Endothelial",
+      "stage": "reference",
+      "exitCode": 0,
+      "seconds": 7.0937971249222755,
+      "command": [
+        "/opt/homebrew/bin/Rscript",
+        "Tools/Omics/Bioconductor/run.R",
+        "/Users/home/numivivo-crowell-20260910/01/reference-input",
+        "/Users/home/numivivo-crowell-20260910/01/reference"
+      ]
+    },
+    {
+      "case": "01",
+      "cellGroup": "Endothelial",
+      "stage": "compare",
+      "exitCode": 0,
+      "seconds": 0.6754008331336081,
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-py/bin/python",
+        "Tools/Omics/Bioconductor/compare.py",
+        "--input",
+        "/Users/home/numivivo-crowell-20260910/01/reference-input",
+        "--reference",
+        "/Users/home/numivivo-crowell-20260910/01/reference",
+        "--out",
+        "/Users/home/numivivo-crowell-20260910/01/comparison.json"
+      ]
+    },
+    {
+      "case": "02",
+      "cellGroup": "Microglia",
+      "stage": "reference",
+      "exitCode": 0,
+      "seconds": 6.681797583121806,
+      "command": [
+        "/opt/homebrew/bin/Rscript",
+        "Tools/Omics/Bioconductor/run.R",
+        "/Users/home/numivivo-crowell-20260910/02/reference-input",
+        "/Users/home/numivivo-crowell-20260910/02/reference"
+      ]
+    },
+    {
+      "case": "02",
+      "cellGroup": "Microglia",
+      "stage": "compare",
+      "exitCode": 0,
+      "seconds": 0.679694666992873,
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-py/bin/python",
+        "Tools/Omics/Bioconductor/compare.py",
+        "--input",
+        "/Users/home/numivivo-crowell-20260910/02/reference-input",
+        "--reference",
+        "/Users/home/numivivo-crowell-20260910/02/reference",
+        "--out",
+        "/Users/home/numivivo-crowell-20260910/02/comparison.json"
+      ]
+    },
+    {
+      "case": "03",
+      "cellGroup": "Oligodendrocytes",
+      "stage": "reference",
+      "exitCode": 0,
+      "seconds": 6.9525773748755455,
+      "command": [
+        "/opt/homebrew/bin/Rscript",
+        "Tools/Omics/Bioconductor/run.R",
+        "/Users/home/numivivo-crowell-20260910/03/reference-input",
+        "/Users/home/numivivo-crowell-20260910/03/reference"
+      ]
+    },
+    {
+      "case": "03",
+      "cellGroup": "Oligodendrocytes",
+      "stage": "compare",
+      "exitCode": 0,
+      "seconds": 0.6540698753669858,
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-py/bin/python",
+        "Tools/Omics/Bioconductor/compare.py",
+        "--input",
+        "/Users/home/numivivo-crowell-20260910/03/reference-input",
+        "--reference",
+        "/Users/home/numivivo-crowell-20260910/03/reference",
+        "--out",
+        "/Users/home/numivivo-crowell-20260910/03/comparison.json"
+      ]
+    },
+    {
+      "case": "04",
+      "cellGroup": "OPC",
+      "stage": "reference",
+      "exitCode": 0,
+      "seconds": 6.884159457869828,
+      "command": [
+        "/opt/homebrew/bin/Rscript",
+        "Tools/Omics/Bioconductor/run.R",
+        "/Users/home/numivivo-crowell-20260910/04/reference-input",
+        "/Users/home/numivivo-crowell-20260910/04/reference"
+      ]
+    },
+    {
+      "case": "04",
+      "cellGroup": "OPC",
+      "stage": "compare",
+      "exitCode": 0,
+      "seconds": 0.6566291656345129,
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-py/bin/python",
+        "Tools/Omics/Bioconductor/compare.py",
+        "--input",
+        "/Users/home/numivivo-crowell-20260910/04/reference-input",
+        "--reference",
+        "/Users/home/numivivo-crowell-20260910/04/reference",
+        "--out",
+        "/Users/home/numivivo-crowell-20260910/04/comparison.json"
+      ]
+    },
+    {
+      "case": "06",
+      "cellGroup": "Excit. Neuron",
+      "stage": "reference",
+      "exitCode": 0,
+      "seconds": 6.835357458330691,
+      "command": [
+        "/opt/homebrew/bin/Rscript",
+        "Tools/Omics/Bioconductor/run.R",
+        "/Users/home/numivivo-crowell-20260910/06/reference-input",
+        "/Users/home/numivivo-crowell-20260910/06/reference"
+      ]
+    },
+    {
+      "case": "06",
+      "cellGroup": "Excit. Neuron",
+      "stage": "compare",
+      "exitCode": 0,
+      "seconds": 0.6766507499851286,
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-py/bin/python",
+        "Tools/Omics/Bioconductor/compare.py",
+        "--input",
+        "/Users/home/numivivo-crowell-20260910/06/reference-input",
+        "--reference",
+        "/Users/home/numivivo-crowell-20260910/06/reference",
+        "--out",
+        "/Users/home/numivivo-crowell-20260910/06/comparison.json"
+      ]
+    },
+    {
+      "case": "07",
+      "cellGroup": "Inhib. Neuron",
+      "stage": "reference",
+      "exitCode": 0,
+      "seconds": 6.9485355843789876,
+      "command": [
+        "/opt/homebrew/bin/Rscript",
+        "Tools/Omics/Bioconductor/run.R",
+        "/Users/home/numivivo-crowell-20260910/07/reference-input",
+        "/Users/home/numivivo-crowell-20260910/07/reference"
+      ]
+    },
+    {
+      "case": "07",
+      "cellGroup": "Inhib. Neuron",
+      "stage": "compare",
+      "exitCode": 0,
+      "seconds": 0.6636838749982417,
+      "command": [
+        "/Users/home/numivivo-singlecell-benchmark-py/bin/python",
+        "Tools/Omics/Bioconductor/compare.py",
+        "--input",
+        "/Users/home/numivivo-crowell-20260910/07/reference-input",
+        "--reference",
+        "/Users/home/numivivo-crowell-20260910/07/reference",
+        "--out",
+        "/Users/home/numivivo-crowell-20260910/07/comparison.json"
+      ]
+    }
+  ],
+  "failures": 0,
+  "runnerSHA256": "7645aac93c484d283c2c613a4cefe0f465ae5dedb0b74d5cc30597c64069e61d",
+  "comparisonSHA256": "52caa77087bf9ee30860027cf433ac3b4073e36f508a51ac3140b4b65970663c"
+}

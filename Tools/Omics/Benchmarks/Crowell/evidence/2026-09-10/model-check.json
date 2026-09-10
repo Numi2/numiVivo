@@ -1,0 +1,259 @@
+{
+  "cases": [
+    {
+      "case": "00",
+      "cellGroup": "Astrocytes",
+      "conditionalFits": 21300,
+      "failures": [],
+      "independentBHVerified": true,
+      "maximumErrors": {
+        "effect": 3.5082070581893277e-07,
+        "logLikelihood": 2.1824168072726025e-07,
+        "pValue": 7.493051079610069e-08,
+        "relativeMean": 3.5082076736062766e-07,
+        "scaledScore": 9.984651905697924e-08,
+        "standardError": 1.6643153211148842e-07
+      },
+      "referenceUnsuccessfulFlags": 0,
+      "testedGenes": 10650
+    },
+    {
+      "case": "01",
+      "cellGroup": "Endothelial",
+      "conditionalFits": 20280,
+      "failures": [
+        {
+          "failed": [
+            "pValue"
+          ],
+          "featureID": "ENSMUSG00000027433",
+          "kind": "MLE",
+          "metrics": {
+            "effect": 6.190272555661736e-08,
+            "logLikelihood": 1.4210854715202004e-14,
+            "pValue": 1.0800288102741362e-07,
+            "relativeMean": 4.1729368479222873e-08,
+            "scaledScore": 9.699842773879178e-08,
+            "standardError": 1.4017831340140674e-09
+          }
+        },
+        {
+          "failed": [
+            "pValue"
+          ],
+          "featureID": "ENSMUSG00000036466",
+          "kind": "MLE",
+          "metrics": {
+            "effect": 9.697945801967478e-08,
+            "logLikelihood": 8.881784197001252e-15,
+            "pValue": 1.0047243137467632e-07,
+            "relativeMean": 5.986513432835242e-08,
+            "scaledScore": 6.69698926576396e-08,
+            "standardError": 2.8351578862384486e-09
+          }
+        },
+        {
+          "failed": [
+            "pValue"
+          ],
+          "featureID": "ENSMUSG00000042761",
+          "kind": "MLE",
+          "metrics": {
+            "effect": 1.8323566003397573e-07,
+            "logLikelihood": 3.197442310920451e-14,
+            "pValue": 1.497391561300354e-07,
+            "relativeMean": 1.435553182124685e-07,
+            "scaledScore": 9.73291857022233e-08,
+            "standardError": 1.8187349515308426e-08
+          }
+        },
+        {
+          "failed": [
+            "pValue"
+          ],
+          "featureID": "ENSMUSG00000032606",
+          "kind": "MLE",
+          "metrics": {
+            "effect": 7.347462903373181e-08,
+            "logLikelihood": 1.4210854715202004e-14,
+            "pValue": 1.2305602947737526e-07,
+            "relativeMean": 4.613562600480263e-08,
+            "scaledScore": 9.21172884898829e-08,
+            "standardError": 1.7955268383218481e-09
+          }
+        },
+        {
+          "failed": [
+            "pValue"
+          ],
+          "featureID": "ENSMUSG00000042050",
+          "kind": "MLE",
+          "metrics": {
+            "effect": 1.3213640559506246e-07,
+            "logLikelihood": 2.842170943040401e-14,
+            "pValue": 1.8317656635957746e-07,
+            "relativeMean": 9.985472600080247e-08,
+            "scaledScore": 9.206451167671042e-08,
+            "standardError": 6.755011328074545e-09
+          }
+        },
+        {
+          "failed": [
+            "pValue"
+          ],
+          "featureID": "ENSMUSG00000022711",
+          "kind": "MLE",
+          "metrics": {
+            "effect": 6.476944302419296e-08,
+            "logLikelihood": 3.552713678800501e-15,
+            "pValue": 1.1211627692908621e-07,
+            "relativeMean": 4.034834183005577e-08,
+            "scaledScore": 8.100186746706888e-08,
+            "standardError": 1.3281041266743898e-09
+          }
+        }
+      ],
+      "independentBHVerified": true,
+      "maximumErrors": {
+        "effect": 2.8157045584009666e-07,
+        "logLikelihood": 3.0421877994513125e-07,
+        "pValue": 1.8317656635957746e-07,
+        "relativeMean": 2.8157049584721463e-07,
+        "scaledScore": 9.997814367009166e-08,
+        "standardError": 1.2705953000846648e-07
+      },
+      "referenceUnsuccessfulFlags": 1,
+      "testedGenes": 10140
+    },
+    {
+      "case": "02",
+      "cellGroup": "Microglia",
+      "conditionalFits": 18870,
+      "failures": [],
+      "independentBHVerified": true,
+      "maximumErrors": {
+        "effect": 3.4571426610341405e-07,
+        "logLikelihood": 3.547934639414052e-07,
+        "pValue": 8.90939161890536e-08,
+        "relativeMean": 3.457143267627647e-07,
+        "scaledScore": 9.994485997122589e-08,
+        "standardError": 1.5805006237101793e-07
+      },
+      "referenceUnsuccessfulFlags": 0,
+      "testedGenes": 9435
+    },
+    {
+      "case": "03",
+      "cellGroup": "Oligodendrocytes",
+      "conditionalFits": 20774,
+      "failures": [],
+      "independentBHVerified": true,
+      "maximumErrors": {
+        "effect": 2.6948161169215723e-07,
+        "logLikelihood": 1.5813750664506188e-07,
+        "pValue": 7.783793276594508e-08,
+        "relativeMean": 2.6948164815333917e-07,
+        "scaledScore": 9.989973400476426e-08,
+        "standardError": 1.2606023402916833e-07
+      },
+      "referenceUnsuccessfulFlags": 0,
+      "testedGenes": 10387
+    },
+    {
+      "case": "04",
+      "cellGroup": "OPC",
+      "conditionalFits": 20148,
+      "failures": [
+        {
+          "failed": [
+            "pValue"
+          ],
+          "featureID": "ENSMUSG00000055401",
+          "kind": "MLE",
+          "metrics": {
+            "effect": 1.0345662573851833e-07,
+            "logLikelihood": 1.0658141036401503e-14,
+            "pValue": 1.0146302176217148e-07,
+            "relativeMean": 6.316172233257375e-08,
+            "scaledScore": 7.271368921597214e-08,
+            "standardError": 2.875997440199285e-09
+          }
+        }
+      ],
+      "independentBHVerified": true,
+      "maximumErrors": {
+        "effect": 2.4089351713385554e-07,
+        "logLikelihood": 1.0122919213984005e-07,
+        "pValue": 1.0146302176217148e-07,
+        "relativeMean": 2.4089354579553973e-07,
+        "scaledScore": 9.979160111013437e-08,
+        "standardError": 1.1256188892083685e-07
+      },
+      "referenceUnsuccessfulFlags": 0,
+      "testedGenes": 10074
+    },
+    {
+      "case": "06",
+      "cellGroup": "Excit. Neuron",
+      "conditionalFits": 22140,
+      "failures": [],
+      "independentBHVerified": true,
+      "maximumErrors": {
+        "effect": 6.241434369336218e-08,
+        "logLikelihood": 1.0870600597456814e-07,
+        "pValue": 7.749140029655877e-08,
+        "relativeMean": 7.079758381271633e-08,
+        "scaledScore": 9.98716485152915e-08,
+        "standardError": 2.2864146576040412e-08
+      },
+      "referenceUnsuccessfulFlags": 0,
+      "testedGenes": 11070
+    },
+    {
+      "case": "07",
+      "cellGroup": "Inhib. Neuron",
+      "conditionalFits": 21966,
+      "failures": [
+        {
+          "failed": [
+            "pValue"
+          ],
+          "featureID": "ENSMUSG00000027947",
+          "kind": "MLE",
+          "metrics": {
+            "effect": 1.578060774831691e-07,
+            "logLikelihood": 1.9539925233402755e-14,
+            "pValue": 1.2406013905064128e-07,
+            "relativeMean": 1.0469292671631138e-07,
+            "scaledScore": 9.810865357361907e-08,
+            "standardError": 9.727474381548973e-11
+          }
+        }
+      ],
+      "independentBHVerified": true,
+      "maximumErrors": {
+        "effect": 2.2950874623006712e-07,
+        "logLikelihood": 8.466768619541654e-08,
+        "pValue": 1.2406013905064128e-07,
+        "relativeMean": 2.2950877260001904e-07,
+        "scaledScore": 9.992018901779335e-08,
+        "standardError": 1.0513444403947858e-07
+      },
+      "referenceUnsuccessfulFlags": 0,
+      "testedGenes": 10983
+    }
+  ],
+  "checkerSHA256": "cef283e330e0509eba0e35adaa54fea083df5592caf49f53b1cb53cf5fd89109",
+  "failedFits": 8,
+  "qualification": "Fixed final dispersion coefficient/information/MAP and Wald/BH arithmetic checks, not dispersion calibration, posterior coverage or FDR qualification",
+  "seconds": 25.249793583061546,
+  "status": "failed",
+  "tolerances": {
+    "effect": 2e-06,
+    "logLikelihood": 2e-05,
+    "pValue": 1e-07,
+    "relativeMean": 2e-06,
+    "scaledScore": 1e-07,
+    "standardError": 2e-06
+  }
+}

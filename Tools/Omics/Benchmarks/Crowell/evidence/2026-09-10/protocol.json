@@ -1,0 +1,200 @@
+{
+  "allRowAndColumnMetadataExact": true,
+  "cases": [
+    {
+      "cellGroup": "Astrocytes",
+      "cells": 1740,
+      "expectedReplicationGate": "ready",
+      "id": "00",
+      "planSHA256": "e91650fb66b416c336b987e53badb1070adebf68dedcf9b7d45a09049f8f43fe",
+      "replicatesAfterCellGate": {
+        "LPS": 4,
+        "Vehicle": 4
+      },
+      "sampleCellCounts": {
+        "LC016": 151,
+        "LC017": 105,
+        "LC019": 231,
+        "LC020": 299,
+        "LC022": 270,
+        "LC023": 209,
+        "LC025": 114,
+        "LC026": 361
+      }
+    },
+    {
+      "cellGroup": "Endothelial",
+      "cells": 743,
+      "expectedReplicationGate": "ready",
+      "id": "01",
+      "planSHA256": "16743a32c85aef88547bb670588d152c6d65d3271b156687b732f545217d1b59",
+      "replicatesAfterCellGate": {
+        "LPS": 4,
+        "Vehicle": 4
+      },
+      "sampleCellCounts": {
+        "LC016": 49,
+        "LC017": 42,
+        "LC019": 101,
+        "LC020": 170,
+        "LC022": 63,
+        "LC023": 76,
+        "LC025": 51,
+        "LC026": 191
+      }
+    },
+    {
+      "cellGroup": "Microglia",
+      "cells": 416,
+      "expectedReplicationGate": "ready",
+      "id": "02",
+      "planSHA256": "9abcfa340fdab941f54fea20b3e5991d001a1d8b9073de5ad9dd4d725af03552",
+      "replicatesAfterCellGate": {
+        "LPS": 4,
+        "Vehicle": 4
+      },
+      "sampleCellCounts": {
+        "LC016": 19,
+        "LC017": 34,
+        "LC019": 32,
+        "LC020": 112,
+        "LC022": 47,
+        "LC023": 36,
+        "LC025": 36,
+        "LC026": 100
+      }
+    },
+    {
+      "cellGroup": "Oligodendrocytes",
+      "cells": 1492,
+      "expectedReplicationGate": "ready",
+      "id": "03",
+      "planSHA256": "f330e0fdb5e334bd54eee7b255094fc883b71ccff53b07d6721b09ac74419b25",
+      "replicatesAfterCellGate": {
+        "LPS": 4,
+        "Vehicle": 4
+      },
+      "sampleCellCounts": {
+        "LC016": 141,
+        "LC017": 64,
+        "LC019": 202,
+        "LC020": 294,
+        "LC022": 345,
+        "LC023": 139,
+        "LC025": 122,
+        "LC026": 185
+      }
+    },
+    {
+      "cellGroup": "OPC",
+      "cells": 729,
+      "expectedReplicationGate": "ready",
+      "id": "04",
+      "planSHA256": "2ef19a1d5e8f3776bdc02a67cffa7179e35823965515ec53e625b67d2db74fc1",
+      "replicatesAfterCellGate": {
+        "LPS": 4,
+        "Vehicle": 4
+      },
+      "sampleCellCounts": {
+        "LC016": 88,
+        "LC017": 37,
+        "LC019": 78,
+        "LC020": 87,
+        "LC022": 115,
+        "LC023": 110,
+        "LC025": 55,
+        "LC026": 159
+      }
+    },
+    {
+      "cellGroup": "CPE cells",
+      "cells": 100,
+      "expectedReplicationGate": "insufficient",
+      "id": "05",
+      "planSHA256": "299edc5f0be6aaa1cbbe778d1bbc36887eaa03896cec83e363ec068f43e9f53a",
+      "replicatesAfterCellGate": {
+        "LPS": 2,
+        "Vehicle": 2
+      },
+      "sampleCellCounts": {
+        "LC016": 0,
+        "LC017": 3,
+        "LC019": 8,
+        "LC020": 21,
+        "LC022": 25,
+        "LC023": 11,
+        "LC025": 25,
+        "LC026": 7
+      }
+    },
+    {
+      "cellGroup": "Excit. Neuron",
+      "cells": 16622,
+      "expectedReplicationGate": "ready",
+      "id": "06",
+      "planSHA256": "db02c4155e632a4d4481261f1f7d1bfcec36877286cd47dcfda916d0a698d05a",
+      "replicatesAfterCellGate": {
+        "LPS": 4,
+        "Vehicle": 4
+      },
+      "sampleCellCounts": {
+        "LC016": 2867,
+        "LC017": 1448,
+        "LC019": 1459,
+        "LC020": 2009,
+        "LC022": 1953,
+        "LC023": 2104,
+        "LC025": 1858,
+        "LC026": 2924
+      }
+    },
+    {
+      "cellGroup": "Inhib. Neuron",
+      "cells": 3382,
+      "expectedReplicationGate": "ready",
+      "id": "07",
+      "planSHA256": "714c59da092610503f1146358a119d7f3c24fe546b97d7d9ecfab7bc9f3bf7bd",
+      "replicatesAfterCellGate": {
+        "LPS": 4,
+        "Vehicle": 4
+      },
+      "sampleCellCounts": {
+        "LC016": 558,
+        "LC017": 278,
+        "LC019": 229,
+        "LC020": 310,
+        "LC022": 439,
+        "LC023": 411,
+        "LC025": 586,
+        "LC026": 571
+      }
+    }
+  ],
+  "cells": 25224,
+  "countsRoundTripExact": true,
+  "expectedBiology": {
+    "hypothesis": "LPS-associated immune response across endothelial and glial populations; source analysis reports stronger effects outside neurons.",
+    "panelRole": "Descriptive positive-direction hypotheses; all missing, unavailable and opposing effects retained. Neither author labels nor reference calls are independent biological truth.",
+    "predeclaredGeneSymbols": [
+      "Stat1",
+      "Irf7",
+      "Isg15",
+      "B2m",
+      "H2-D1"
+    ],
+    "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7705760/"
+  },
+  "features": 11076,
+  "nonzeros": 38142743,
+  "scope": "All 25224 deposited post-QC nuclei and 11076 deposited genes; no new gene/cell subset. CPE replication failures retained; no pairing or batch inferred. Only pseudobulk is dense.",
+  "software": {
+    "anndata": "0.13.3.post0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scanpy": "1.12.4"
+  },
+  "sourceH5ADBytes": 83274468,
+  "sourceH5ADSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+  "sourceRdaSHA256": "3193a33fa7acb650fdb1e682822705d7c68057aba93d84dac63a364e40fdb1fe",
+  "umiTotal": 67349705
+}

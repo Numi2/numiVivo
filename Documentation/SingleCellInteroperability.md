@@ -276,8 +276,16 @@ The complete development objective remains open:
    and annotation preservation now pass; this single library is not a donor-DE benchmark.
 2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
-   tuft-cell count/QC passes. Several independent donor-resolved studies, robust
-   reference sensitivity and calibration remain. Direct
+   tuft-cell count/QC passes. A third treatment study,
+   [Crowell cortex](../Tools/Omics/Benchmarks/Crowell/README.md), now adds all
+   25,224 deposited nuclei from eight independent mice: seven population
+   analyses/replays and 42 direct R fits. Full count/QC and offset checks pass;
+   CPE correctly remains unavailable for insufficient animal replication.
+   Eight strict conditional-refit p-value checks remain failed (maximum 1.84e-7);
+   a stopping-tolerance diagnostic verifies stored Wald arithmetic and finds no
+   changed BH<0.05 decisions. Large reference significance disagreements remain,
+   especially excitatory neurons. Three donor-resolved treatment studies are
+   now represented; broader reference sensitivity and calibration remain. Direct
    [R edgeR/limma-voom/DESeq2 comparisons](../Tools/Omics/Bioconductor/README.md)
    now cover the same Kang/Hagai counts and paired designs under fixed native
    and package normalization. Default native support-rank rejection withholds

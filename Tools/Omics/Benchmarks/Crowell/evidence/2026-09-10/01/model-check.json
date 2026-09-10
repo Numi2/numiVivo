@@ -1,0 +1,108 @@
+{
+  "case": "01",
+  "cellGroup": "Endothelial",
+  "conditionalFits": 20280,
+  "failures": [
+    {
+      "failed": [
+        "pValue"
+      ],
+      "featureID": "ENSMUSG00000027433",
+      "kind": "MLE",
+      "metrics": {
+        "effect": 6.190272555661736e-08,
+        "logLikelihood": 1.4210854715202004e-14,
+        "pValue": 1.0800288102741362e-07,
+        "relativeMean": 4.1729368479222873e-08,
+        "scaledScore": 9.699842773879178e-08,
+        "standardError": 1.4017831340140674e-09
+      }
+    },
+    {
+      "failed": [
+        "pValue"
+      ],
+      "featureID": "ENSMUSG00000036466",
+      "kind": "MLE",
+      "metrics": {
+        "effect": 9.697945801967478e-08,
+        "logLikelihood": 8.881784197001252e-15,
+        "pValue": 1.0047243137467632e-07,
+        "relativeMean": 5.986513432835242e-08,
+        "scaledScore": 6.69698926576396e-08,
+        "standardError": 2.8351578862384486e-09
+      }
+    },
+    {
+      "failed": [
+        "pValue"
+      ],
+      "featureID": "ENSMUSG00000042761",
+      "kind": "MLE",
+      "metrics": {
+        "effect": 1.8323566003397573e-07,
+        "logLikelihood": 3.197442310920451e-14,
+        "pValue": 1.497391561300354e-07,
+        "relativeMean": 1.435553182124685e-07,
+        "scaledScore": 9.73291857022233e-08,
+        "standardError": 1.8187349515308426e-08
+      }
+    },
+    {
+      "failed": [
+        "pValue"
+      ],
+      "featureID": "ENSMUSG00000032606",
+      "kind": "MLE",
+      "metrics": {
+        "effect": 7.347462903373181e-08,
+        "logLikelihood": 1.4210854715202004e-14,
+        "pValue": 1.2305602947737526e-07,
+        "relativeMean": 4.613562600480263e-08,
+        "scaledScore": 9.21172884898829e-08,
+        "standardError": 1.7955268383218481e-09
+      }
+    },
+    {
+      "failed": [
+        "pValue"
+      ],
+      "featureID": "ENSMUSG00000042050",
+      "kind": "MLE",
+      "metrics": {
+        "effect": 1.3213640559506246e-07,
+        "logLikelihood": 2.842170943040401e-14,
+        "pValue": 1.8317656635957746e-07,
+        "relativeMean": 9.985472600080247e-08,
+        "scaledScore": 9.206451167671042e-08,
+        "standardError": 6.755011328074545e-09
+      }
+    },
+    {
+      "failed": [
+        "pValue"
+      ],
+      "featureID": "ENSMUSG00000022711",
+      "kind": "MLE",
+      "metrics": {
+        "effect": 6.476944302419296e-08,
+        "logLikelihood": 3.552713678800501e-15,
+        "pValue": 1.1211627692908621e-07,
+        "relativeMean": 4.034834183005577e-08,
+        "scaledScore": 8.100186746706888e-08,
+        "standardError": 1.3281041266743898e-09
+      }
+    }
+  ],
+  "independentBHVerified": true,
+  "maximumErrors": {
+    "effect": 2.8157045584009666e-07,
+    "logLikelihood": 3.0421877994513125e-07,
+    "pValue": 1.8317656635957746e-07,
+    "relativeMean": 2.8157049584721463e-07,
+    "scaledScore": 9.997814367009166e-08,
+    "standardError": 1.2705953000846648e-07
+  },
+  "referenceUnsuccessfulFlags": 1,
+  "testedGenes": 10140
+}

@@ -1,0 +1,33 @@
+{
+  "case": "07",
+  "cellGroup": "Inhib. Neuron",
+  "conditionalFits": 21966,
+  "failures": [
+    {
+      "failed": [
+        "pValue"
+      ],
+      "featureID": "ENSMUSG00000027947",
+      "kind": "MLE",
+      "metrics": {
+        "effect": 1.578060774831691e-07,
+        "logLikelihood": 1.9539925233402755e-14,
+        "pValue": 1.2406013905064128e-07,
+        "relativeMean": 1.0469292671631138e-07,
+        "scaledScore": 9.810865357361907e-08,
+        "standardError": 9.727474381548973e-11
+      }
+    }
+  ],
+  "independentBHVerified": true,
+  "maximumErrors": {
+    "effect": 2.2950874623006712e-07,
+    "logLikelihood": 8.466768619541654e-08,
+    "pValue": 1.2406013905064128e-07,
+    "relativeMean": 2.2950877260001904e-07,
+    "scaledScore": 9.992018901779335e-08,
+    "standardError": 1.0513444403947858e-07
+  },
+  "referenceUnsuccessfulFlags": 0,
+  "testedGenes": 10983
+}

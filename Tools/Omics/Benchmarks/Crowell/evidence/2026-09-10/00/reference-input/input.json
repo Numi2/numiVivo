@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "contrast": [
+    0,
+    1
+  ],
+  "minimumFeatureCounts": 10,
+  "minimumExpressingPseudobulks": 3,
+  "expectedGenes": [
+    "ENSMUSG00000026104",
+    "ENSMUSG00000060802",
+    "ENSMUSG00000035692",
+    "ENSMUSG00000025498",
+    "ENSMUSG00000073411"
+  ],
+  "observations": 8,
+  "features": 11076,
+  "eligibleFeatures": 10675,
+  "nativeTrend": "gammaParametric",
+  "sourceReportSHA256": "f84c4129187ebbe58375ec19da916fb69c1c4858d2b5b04ddcbf03ce322ef544",
+  "sourceH5ADSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+  "exactCountsAndAxes": true,
+  "design": "Eight independent animals: intercept plus LPS-minus-Vehicle. No donor pairing or batch covariate.",
+  "qualification": "Third public treatment study; descriptive reference comparison, not FDR or causal qualification"
+}

@@ -1,0 +1,1170 @@
+{
+  "status": "completed-descriptive-comparison",
+  "input": {
+    "schemaVersion": 1,
+    "contrast": [
+      0,
+      1
+    ],
+    "minimumFeatureCounts": 10,
+    "minimumExpressingPseudobulks": 3,
+    "expectedGenes": [
+      "ENSMUSG00000026104",
+      "ENSMUSG00000060802",
+      "ENSMUSG00000035692",
+      "ENSMUSG00000025498",
+      "ENSMUSG00000073411"
+    ],
+    "observations": 8,
+    "features": 11076,
+    "eligibleFeatures": 10090,
+    "nativeTrend": "gammaParametric",
+    "sourceReportSHA256": "e5eef16c39e8f6232e6ae367aa205ef84d358ca4afc59b3d6d8cce55732cf583",
+    "sourceH5ADSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+    "exactCountsAndAxes": true,
+    "design": "Eight independent animals: intercept plus LPS-minus-Vehicle. No donor pairing or batch covariate.",
+    "qualification": "Third public treatment study; descriptive reference comparison, not FDR or causal qualification"
+  },
+  "results": {
+    "native_size_factors-edgeR-QL": {
+      "referenceFeatures": 10090,
+      "nativeMultiplicityFeatures": 10074,
+      "referenceMultiplicityFeatures": 10090,
+      "jointUniverseRecomputedBH": {
+        "features": 10074,
+        "nativeBelow005": 97,
+        "referenceBelow005": 147,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 16,
+      "nativeStatusCounts": {
+        "tested": 10074,
+        "filteredLowExpression": 986,
+        "rankDeficientSupport": 16
+      },
+      "jointlyTestedEffects": 10074,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.994178444986227,
+      "effectSignAgreement": 0.9799483819733968,
+      "medianAbsoluteEffectDifference": 0.019391401717534493,
+      "nativeBHBelow005": 97,
+      "referenceBHBelow005": 169,
+      "nativeZeroPValues": 0,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 87,
+      "expectedGenes": {
+        "ENSMUSG00000026104": {
+          "status": "jointly testable",
+          "nativeEffect": 2.892629002824214,
+          "referenceEffect": 2.79905295256668,
+          "nativeBH": 0.0006231911364530808,
+          "referenceBH": 3.79790274232139e-05
+        },
+        "ENSMUSG00000060802": {
+          "status": "jointly testable",
+          "nativeEffect": 1.2597265324893185,
+          "referenceEffect": 1.23692878456113,
+          "nativeBH": 0.08431492746485716,
+          "referenceBH": 0.0237883570829487
+        },
+        "ENSMUSG00000035692": {
+          "status": "not jointly testable",
+          "nativeStatus": "rankDeficientSupport"
+        },
+        "ENSMUSG00000025498": {
+          "status": "jointly testable",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 2.63866122460401,
+          "nativeBH": 0.814591911876684,
+          "referenceBH": 0.305550443142112
+        },
+        "ENSMUSG00000073411": {
+          "status": "jointly testable",
+          "nativeEffect": 1.307911063570861,
+          "referenceEffect": 1.30632215858765,
+          "nativeBH": 0.007103697498117548,
+          "referenceBH": 0.00577467569844343
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "ENSMUSG00000059406",
+          "nativeEffect": -0.19819180660951996,
+          "referenceEffect": -1.09847653991286,
+          "nativeMeanNormalizedCount": 1.9661683226679962
+        },
+        {
+          "featureID": "ENSMUSG00000020400",
+          "nativeEffect": 3.334154364435052,
+          "referenceEffect": 2.64599622709958,
+          "nativeMeanNormalizedCount": 1.5419756890103367
+        },
+        {
+          "featureID": "ENSMUSG00000035873",
+          "nativeEffect": 3.4839188040221623,
+          "referenceEffect": 2.79833337037647,
+          "nativeMeanNormalizedCount": 1.6688136273595005
+        },
+        {
+          "featureID": "ENSMUSG00000101621",
+          "nativeEffect": 0.2544144496508561,
+          "referenceEffect": 0.917309189566138,
+          "nativeMeanNormalizedCount": 4.535825473088117
+        },
+        {
+          "featureID": "ENSMUSG00000020542",
+          "nativeEffect": -1.8348136238136188,
+          "referenceEffect": -1.17274002289299,
+          "nativeMeanNormalizedCount": 1.961877690097394
+        },
+        {
+          "featureID": "ENSMUSG00000025498",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 2.63866122460401,
+          "nativeMeanNormalizedCount": 1.3269901536427917
+        },
+        {
+          "featureID": "ENSMUSG00000036422",
+          "nativeEffect": -3.5403097324227715,
+          "referenceEffect": -2.89597931140227,
+          "nativeMeanNormalizedCount": 1.3441941808283064
+        },
+        {
+          "featureID": "ENSMUSG00000064280",
+          "nativeEffect": 0.6310906388724564,
+          "referenceEffect": 0.0245442618578089,
+          "nativeMeanNormalizedCount": 3.603134053373613
+        },
+        {
+          "featureID": "ENSMUSG00000028864",
+          "nativeEffect": 3.7346438583937305,
+          "referenceEffect": 3.13541572932726,
+          "nativeMeanNormalizedCount": 1.8417108306293561
+        },
+        {
+          "featureID": "ENSMUSG00000048001",
+          "nativeEffect": -5.944295098797766,
+          "referenceEffect": -5.35019881981933,
+          "nativeMeanNormalizedCount": 6.512807581563105
+        },
+        {
+          "featureID": "ENSMUSG00000037820",
+          "nativeEffect": 4.093265026177534,
+          "referenceEffect": 3.50523119735817,
+          "nativeMeanNormalizedCount": 2.2056243196079355
+        },
+        {
+          "featureID": "ENSMUSG00000039831",
+          "nativeEffect": -1.7022384462138132,
+          "referenceEffect": -1.12017572855255,
+          "nativeMeanNormalizedCount": 5.172888931233791
+        },
+        {
+          "featureID": "ENSMUSG00000032058",
+          "nativeEffect": -4.193266506894619,
+          "referenceEffect": -3.61443270461498,
+          "nativeMeanNormalizedCount": 1.9493553955085716
+        },
+        {
+          "featureID": "ENSMUSG00000021203",
+          "nativeEffect": 0.03597872556695071,
+          "referenceEffect": -0.539579990562907,
+          "nativeMeanNormalizedCount": 2.3794221858489824
+        },
+        {
+          "featureID": "ENSMUSG00000075010",
+          "nativeEffect": 3.4086516766316666,
+          "referenceEffect": 2.83584485445834,
+          "nativeMeanNormalizedCount": 2.6665484573762614
+        },
+        {
+          "featureID": "ENSMUSG00000002325",
+          "nativeEffect": 4.55998625784787,
+          "referenceEffect": 3.98738639289058,
+          "nativeMeanNormalizedCount": 2.8787983666881614
+        },
+        {
+          "featureID": "ENSMUSG00000031310",
+          "nativeEffect": -3.2986649385762536,
+          "referenceEffect": -2.73451439200184,
+          "nativeMeanNormalizedCount": 1.0573579316437665
+        },
+        {
+          "featureID": "ENSMUSG00000033658",
+          "nativeEffect": 3.5520465930014398,
+          "referenceEffect": 3.00726143834868,
+          "nativeMeanNormalizedCount": 1.4766479600602493
+        },
+        {
+          "featureID": "ENSMUSG00000038059",
+          "nativeEffect": 3.5094136466777224,
+          "referenceEffect": 2.99312953779402,
+          "nativeMeanNormalizedCount": 1.4044629525880177
+        },
+        {
+          "featureID": "ENSMUSG00000034459",
+          "nativeEffect": 4.065151890639273,
+          "referenceEffect": 3.55069739631305,
+          "nativeMeanNormalizedCount": 1.9451699350164358
+        }
+      ],
+      "referenceBetaNonconvergence": null,
+      "referenceDispersionOutliers": null,
+      "referenceSHA256": "af8dbf55fc7a9c6a2bbf8d37cb4c4c7de1f1a0458811fa423642b651375368d7"
+    },
+    "native_size_factors-limma-voom": {
+      "referenceFeatures": 10090,
+      "nativeMultiplicityFeatures": 10074,
+      "referenceMultiplicityFeatures": 10090,
+      "jointUniverseRecomputedBH": {
+        "features": 10074,
+        "nativeBelow005": 97,
+        "referenceBelow005": 125,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 10,
+      "nativeStatusCounts": {
+        "tested": 10074,
+        "filteredLowExpression": 986,
+        "rankDeficientSupport": 16
+      },
+      "jointlyTestedEffects": 10074,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9499353214125906,
+      "effectSignAgreement": 0.9263450466547548,
+      "medianAbsoluteEffectDifference": 0.07039001750632634,
+      "nativeBHBelow005": 97,
+      "referenceBHBelow005": 142,
+      "nativeZeroPValues": 0,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 90,
+      "expectedGenes": {
+        "ENSMUSG00000026104": {
+          "status": "jointly testable",
+          "nativeEffect": 2.892629002824214,
+          "referenceEffect": 2.75789863903197,
+          "nativeBH": 0.0006231911364530808,
+          "referenceBH": 0.00180995544212611
+        },
+        "ENSMUSG00000060802": {
+          "status": "jointly testable",
+          "nativeEffect": 1.2597265324893185,
+          "referenceEffect": 1.21455025946914,
+          "nativeBH": 0.08431492746485716,
+          "referenceBH": 0.0472676698013687
+        },
+        "ENSMUSG00000035692": {
+          "status": "not jointly testable",
+          "nativeStatus": "rankDeficientSupport"
+        },
+        "ENSMUSG00000025498": {
+          "status": "jointly testable",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 1.67807160147239,
+          "nativeBH": 0.814591911876684,
+          "referenceBH": 0.427483407409365
+        },
+        "ENSMUSG00000073411": {
+          "status": "jointly testable",
+          "nativeEffect": 1.307911063570861,
+          "referenceEffect": 1.27846560871705,
+          "nativeBH": 0.007103697498117548,
+          "referenceBH": 0.0110403658889546
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "ENSMUSG00000069516",
+          "nativeEffect": -4.15361060411807,
+          "referenceEffect": -1.37663869375508,
+          "nativeMeanNormalizedCount": 2.3407579417332465
+        },
+        {
+          "featureID": "ENSMUSG00000075010",
+          "nativeEffect": 3.4086516766316666,
+          "referenceEffect": 1.25944420115203,
+          "nativeMeanNormalizedCount": 2.6665484573762614
+        },
+        {
+          "featureID": "ENSMUSG00000048001",
+          "nativeEffect": -5.944295098797766,
+          "referenceEffect": -4.17716096644382,
+          "nativeMeanNormalizedCount": 6.512807581563105
+        },
+        {
+          "featureID": "ENSMUSG00000036422",
+          "nativeEffect": -3.5403097324227715,
+          "referenceEffect": -1.80426116018285,
+          "nativeMeanNormalizedCount": 1.3441941808283064
+        },
+        {
+          "featureID": "ENSMUSG00000039167",
+          "nativeEffect": -2.9630916859477616,
+          "referenceEffect": -1.27286950848128,
+          "nativeMeanNormalizedCount": 1.3931854774635375
+        },
+        {
+          "featureID": "ENSMUSG00000020400",
+          "nativeEffect": 3.334154364435052,
+          "referenceEffect": 1.69920556218714,
+          "nativeMeanNormalizedCount": 1.5419756890103367
+        },
+        {
+          "featureID": "ENSMUSG00000035873",
+          "nativeEffect": 3.4839188040221623,
+          "referenceEffect": 1.87070916635644,
+          "nativeMeanNormalizedCount": 1.6688136273595005
+        },
+        {
+          "featureID": "ENSMUSG00000025498",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 1.67807160147239,
+          "nativeMeanNormalizedCount": 1.3269901536427917
+        },
+        {
+          "featureID": "ENSMUSG00000032058",
+          "nativeEffect": -4.193266506894619,
+          "referenceEffect": -2.5896217923679,
+          "nativeMeanNormalizedCount": 1.9493553955085716
+        },
+        {
+          "featureID": "ENSMUSG00000101621",
+          "nativeEffect": 0.2544144496508561,
+          "referenceEffect": 1.8540886634814,
+          "nativeMeanNormalizedCount": 4.535825473088117
+        },
+        {
+          "featureID": "ENSMUSG00000029561",
+          "nativeEffect": 3.532059857564288,
+          "referenceEffect": 1.93964888352039,
+          "nativeMeanNormalizedCount": 1.1964922979233485
+        },
+        {
+          "featureID": "ENSMUSG00000021067",
+          "nativeEffect": 3.532525870890249,
+          "referenceEffect": 1.98300239962508,
+          "nativeMeanNormalizedCount": 2.950779060773449
+        },
+        {
+          "featureID": "ENSMUSG00000002325",
+          "nativeEffect": 4.55998625784787,
+          "referenceEffect": 3.09292339538082,
+          "nativeMeanNormalizedCount": 2.8787983666881614
+        },
+        {
+          "featureID": "ENSMUSG00000031310",
+          "nativeEffect": -3.2986649385762536,
+          "referenceEffect": -1.84108832103595,
+          "nativeMeanNormalizedCount": 1.0573579316437665
+        },
+        {
+          "featureID": "ENSMUSG00000037820",
+          "nativeEffect": 4.093265026177534,
+          "referenceEffect": 2.64319709709485,
+          "nativeMeanNormalizedCount": 2.2056243196079355
+        },
+        {
+          "featureID": "ENSMUSG00000028864",
+          "nativeEffect": 3.7346438583937305,
+          "referenceEffect": 2.32967606577084,
+          "nativeMeanNormalizedCount": 1.8417108306293561
+        },
+        {
+          "featureID": "ENSMUSG00000021264",
+          "nativeEffect": -0.7610848393583496,
+          "referenceEffect": 0.616153249653647,
+          "nativeMeanNormalizedCount": 2.7576504078823354
+        },
+        {
+          "featureID": "ENSMUSG00000033059",
+          "nativeEffect": -0.6556498696358658,
+          "referenceEffect": -2.03123800613898,
+          "nativeMeanNormalizedCount": 4.867967355740275
+        },
+        {
+          "featureID": "ENSMUSG00000047904",
+          "nativeEffect": -1.7966964975308457,
+          "referenceEffect": -0.430658554504391,
+          "nativeMeanNormalizedCount": 1.0101260690443605
+        },
+        {
+          "featureID": "ENSMUSG00000046000",
+          "nativeEffect": 2.8182477328202866,
+          "referenceEffect": 1.47404374494975,
+          "nativeMeanNormalizedCount": 0.7301542791351407
+        }
+      ],
+      "referenceBetaNonconvergence": null,
+      "referenceDispersionOutliers": null,
+      "referenceSHA256": "3f39b3cd9d2a4de820d1b65044bd54908a6683fafd03e09c191c79a23ea6bcb5"
+    },
+    "native_size_factors-DESeq2": {
+      "referenceFeatures": 10090,
+      "nativeMultiplicityFeatures": 10074,
+      "referenceMultiplicityFeatures": 10090,
+      "jointUniverseRecomputedBH": {
+        "features": 10074,
+        "nativeBelow005": 97,
+        "referenceBelow005": 63,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 5,
+      "nativeStatusCounts": {
+        "tested": 10074,
+        "filteredLowExpression": 986,
+        "rankDeficientSupport": 16
+      },
+      "jointlyTestedEffects": 10074,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9989895132204764,
+      "effectSignAgreement": 0.9876910859638673,
+      "medianAbsoluteEffectDifference": 0.012669871247683798,
+      "nativeBHBelow005": 97,
+      "referenceBHBelow005": 69,
+      "nativeZeroPValues": 0,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 96,
+      "expectedGenes": {
+        "ENSMUSG00000026104": {
+          "status": "jointly testable",
+          "nativeEffect": 2.892629002824214,
+          "referenceEffect": 2.91435041418228,
+          "nativeBH": 0.0006231911364530808,
+          "referenceBH": 0.00195383108047578
+        },
+        "ENSMUSG00000060802": {
+          "status": "jointly testable",
+          "nativeEffect": 1.2597265324893185,
+          "referenceEffect": 1.27296289608099,
+          "nativeBH": 0.08431492746485716,
+          "referenceBH": 0.178722616467989
+        },
+        "ENSMUSG00000035692": {
+          "status": "not jointly testable",
+          "nativeStatus": "rankDeficientSupport"
+        },
+        "ENSMUSG00000025498": {
+          "status": "jointly testable",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 2.98600799677713,
+          "nativeBH": 0.814591911876684,
+          "referenceBH": 0.922883088697138
+        },
+        "ENSMUSG00000073411": {
+          "status": "jointly testable",
+          "nativeEffect": 1.307911063570861,
+          "referenceEffect": 1.32307292951249,
+          "nativeBH": 0.007103697498117548,
+          "referenceBH": 0.0488931093989836
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "ENSMUSG00000031310",
+          "nativeEffect": -3.2986649385762536,
+          "referenceEffect": -2.70675192105787,
+          "nativeMeanNormalizedCount": 1.0573579316437665
+        },
+        {
+          "featureID": "ENSMUSG00000032058",
+          "nativeEffect": -4.193266506894619,
+          "referenceEffect": -3.61731374576671,
+          "nativeMeanNormalizedCount": 1.9493553955085716
+        },
+        {
+          "featureID": "ENSMUSG00000036422",
+          "nativeEffect": -3.5403097324227715,
+          "referenceEffect": -2.9750955239862,
+          "nativeMeanNormalizedCount": 1.3441941808283064
+        },
+        {
+          "featureID": "ENSMUSG00000048001",
+          "nativeEffect": -5.944295098797766,
+          "referenceEffect": -5.37951716682647,
+          "nativeMeanNormalizedCount": 6.512807581563105
+        },
+        {
+          "featureID": "ENSMUSG00000098087",
+          "nativeEffect": -3.711107552091944,
+          "referenceEffect": -3.16207999228106,
+          "nativeMeanNormalizedCount": 1.537435811006671
+        },
+        {
+          "featureID": "ENSMUSG00000024301",
+          "nativeEffect": -3.185285373962624,
+          "referenceEffect": -2.6370807806782,
+          "nativeMeanNormalizedCount": 1.1170959196056955
+        },
+        {
+          "featureID": "ENSMUSG00000069516",
+          "nativeEffect": -4.15361060411807,
+          "referenceEffect": -3.67088628859004,
+          "nativeMeanNormalizedCount": 2.3407579417332465
+        },
+        {
+          "featureID": "ENSMUSG00000026728",
+          "nativeEffect": -3.1643251979476217,
+          "referenceEffect": -2.71033395471539,
+          "nativeMeanNormalizedCount": 1.455295535868487
+        },
+        {
+          "featureID": "ENSMUSG00000046000",
+          "nativeEffect": 2.8182477328202866,
+          "referenceEffect": 2.41667857999345,
+          "nativeMeanNormalizedCount": 0.7301542791351407
+        },
+        {
+          "featureID": "ENSMUSG00000021998",
+          "nativeEffect": 3.102103572334914,
+          "referenceEffect": 2.71889210984525,
+          "nativeMeanNormalizedCount": 0.9261979300850636
+        },
+        {
+          "featureID": "ENSMUSG00000020000",
+          "nativeEffect": 3.2818988564112623,
+          "referenceEffect": 2.91432688195675,
+          "nativeMeanNormalizedCount": 1.0654828879445302
+        },
+        {
+          "featureID": "ENSMUSG00000029561",
+          "nativeEffect": 3.532059857564288,
+          "referenceEffect": 3.1762474201454,
+          "nativeMeanNormalizedCount": 1.1964922979233485
+        },
+        {
+          "featureID": "ENSMUSG00000021203",
+          "nativeEffect": 0.03597872556695071,
+          "referenceEffect": 0.391532175868796,
+          "nativeMeanNormalizedCount": 2.3794221858489824
+        },
+        {
+          "featureID": "ENSMUSG00000021009",
+          "nativeEffect": 3.3079437648831043,
+          "referenceEffect": 2.95740061129567,
+          "nativeMeanNormalizedCount": 1.2191334850257363
+        },
+        {
+          "featureID": "ENSMUSG00000010358",
+          "nativeEffect": 3.1315333150355014,
+          "referenceEffect": 2.78538732034284,
+          "nativeMeanNormalizedCount": 1.1059313330918887
+        },
+        {
+          "featureID": "ENSMUSG00000034459",
+          "nativeEffect": 4.065151890639273,
+          "referenceEffect": 3.72473553757585,
+          "nativeMeanNormalizedCount": 1.9451699350164358
+        },
+        {
+          "featureID": "ENSMUSG00000033377",
+          "nativeEffect": 3.0028141688367556,
+          "referenceEffect": 2.66501651993186,
+          "nativeMeanNormalizedCount": 1.0428058668390912
+        },
+        {
+          "featureID": "ENSMUSG00000038059",
+          "nativeEffect": 3.5094136466777224,
+          "referenceEffect": 3.17328198353866,
+          "nativeMeanNormalizedCount": 1.4044629525880177
+        },
+        {
+          "featureID": "ENSMUSG00000033658",
+          "nativeEffect": 3.5520465930014398,
+          "referenceEffect": 3.2324253221005,
+          "nativeMeanNormalizedCount": 1.4766479600602493
+        },
+        {
+          "featureID": "ENSMUSG00000000881",
+          "nativeEffect": 0.2080003650072653,
+          "referenceEffect": 0.527116734071145,
+          "nativeMeanNormalizedCount": 3.3732975019500113
+        }
+      ],
+      "referenceBetaNonconvergence": 0,
+      "referenceDispersionOutliers": 45,
+      "referenceSHA256": "55a6d17e8aa0042b4ea183e173e201b2936cc5d7bf11bf36c350ca8a97bb9ab1",
+      "DESeq2DefaultResultPolicy": {
+        "missingPValues": 1,
+        "missingAdjustedPValues": 2936,
+        "BHBelow005": 77
+      }
+    },
+    "package_normalization-edgeR-QL": {
+      "referenceFeatures": 10090,
+      "nativeMultiplicityFeatures": 10074,
+      "referenceMultiplicityFeatures": 10090,
+      "jointUniverseRecomputedBH": {
+        "features": 10074,
+        "nativeBelow005": 97,
+        "referenceBelow005": 150,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 16,
+      "nativeStatusCounts": {
+        "tested": 10074,
+        "filteredLowExpression": 986,
+        "rankDeficientSupport": 16
+      },
+      "jointlyTestedEffects": 10074,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9939080492822833,
+      "effectSignAgreement": 0.9767718880285885,
+      "medianAbsoluteEffectDifference": 0.02180920184915422,
+      "nativeBHBelow005": 97,
+      "referenceBHBelow005": 169,
+      "nativeZeroPValues": 0,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 86,
+      "expectedGenes": {
+        "ENSMUSG00000026104": {
+          "status": "jointly testable",
+          "nativeEffect": 2.892629002824214,
+          "referenceEffect": 2.80112445294647,
+          "nativeBH": 0.0006231911364530808,
+          "referenceBH": 3.63336215430908e-05
+        },
+        "ENSMUSG00000060802": {
+          "status": "jointly testable",
+          "nativeEffect": 1.2597265324893185,
+          "referenceEffect": 1.23736899718971,
+          "nativeBH": 0.08431492746485716,
+          "referenceBH": 0.0241128054722911
+        },
+        "ENSMUSG00000035692": {
+          "status": "not jointly testable",
+          "nativeStatus": "rankDeficientSupport"
+        },
+        "ENSMUSG00000025498": {
+          "status": "jointly testable",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 2.646241995886,
+          "nativeBH": 0.814591911876684,
+          "referenceBH": 0.300981822171043
+        },
+        "ENSMUSG00000073411": {
+          "status": "jointly testable",
+          "nativeEffect": 1.307911063570861,
+          "referenceEffect": 1.30860668267495,
+          "nativeBH": 0.007103697498117548,
+          "referenceBH": 0.00576360592470974
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "ENSMUSG00000059406",
+          "nativeEffect": -0.19819180660951996,
+          "referenceEffect": -1.08979174976839,
+          "nativeMeanNormalizedCount": 1.9661683226679962
+        },
+        {
+          "featureID": "ENSMUSG00000020400",
+          "nativeEffect": 3.334154364435052,
+          "referenceEffect": 2.65390130348763,
+          "nativeMeanNormalizedCount": 1.5419756890103367
+        },
+        {
+          "featureID": "ENSMUSG00000035873",
+          "nativeEffect": 3.4839188040221623,
+          "referenceEffect": 2.80530140121908,
+          "nativeMeanNormalizedCount": 1.6688136273595005
+        },
+        {
+          "featureID": "ENSMUSG00000101621",
+          "nativeEffect": 0.2544144496508561,
+          "referenceEffect": 0.931650616105195,
+          "nativeMeanNormalizedCount": 4.535825473088117
+        },
+        {
+          "featureID": "ENSMUSG00000020542",
+          "nativeEffect": -1.8348136238136188,
+          "referenceEffect": -1.15810615665026,
+          "nativeMeanNormalizedCount": 1.961877690097394
+        },
+        {
+          "featureID": "ENSMUSG00000036422",
+          "nativeEffect": -3.5403097324227715,
+          "referenceEffect": -2.88398470039549,
+          "nativeMeanNormalizedCount": 1.3441941808283064
+        },
+        {
+          "featureID": "ENSMUSG00000025498",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 2.646241995886,
+          "nativeMeanNormalizedCount": 1.3269901536427917
+        },
+        {
+          "featureID": "ENSMUSG00000048001",
+          "nativeEffect": -5.944295098797766,
+          "referenceEffect": -5.33697931332224,
+          "nativeMeanNormalizedCount": 6.512807581563105
+        },
+        {
+          "featureID": "ENSMUSG00000064280",
+          "nativeEffect": 0.6310906388724564,
+          "referenceEffect": 0.03103302817866,
+          "nativeMeanNormalizedCount": 3.603134053373613
+        },
+        {
+          "featureID": "ENSMUSG00000039831",
+          "nativeEffect": -1.7022384462138132,
+          "referenceEffect": -1.10446933652958,
+          "nativeMeanNormalizedCount": 5.172888931233791
+        },
+        {
+          "featureID": "ENSMUSG00000028864",
+          "nativeEffect": 3.7346438583937305,
+          "referenceEffect": 3.14292558681004,
+          "nativeMeanNormalizedCount": 1.8417108306293561
+        },
+        {
+          "featureID": "ENSMUSG00000032058",
+          "nativeEffect": -4.193266506894619,
+          "referenceEffect": -3.60259016332313,
+          "nativeMeanNormalizedCount": 1.9493553955085716
+        },
+        {
+          "featureID": "ENSMUSG00000037820",
+          "nativeEffect": 4.093265026177534,
+          "referenceEffect": 3.51220314933545,
+          "nativeMeanNormalizedCount": 2.2056243196079355
+        },
+        {
+          "featureID": "ENSMUSG00000031310",
+          "nativeEffect": -3.2986649385762536,
+          "referenceEffect": -2.72318338937393,
+          "nativeMeanNormalizedCount": 1.0573579316437665
+        },
+        {
+          "featureID": "ENSMUSG00000075010",
+          "nativeEffect": 3.4086516766316666,
+          "referenceEffect": 2.84019473051825,
+          "nativeMeanNormalizedCount": 2.6665484573762614
+        },
+        {
+          "featureID": "ENSMUSG00000021203",
+          "nativeEffect": 0.03597872556695071,
+          "referenceEffect": -0.530890440226734,
+          "nativeMeanNormalizedCount": 2.3794221858489824
+        },
+        {
+          "featureID": "ENSMUSG00000002325",
+          "nativeEffect": 4.55998625784787,
+          "referenceEffect": 3.99349259406612,
+          "nativeMeanNormalizedCount": 2.8787983666881614
+        },
+        {
+          "featureID": "ENSMUSG00000033658",
+          "nativeEffect": 3.5520465930014398,
+          "referenceEffect": 3.01551361643228,
+          "nativeMeanNormalizedCount": 1.4766479600602493
+        },
+        {
+          "featureID": "ENSMUSG00000038059",
+          "nativeEffect": 3.5094136466777224,
+          "referenceEffect": 3.00218790093617,
+          "nativeMeanNormalizedCount": 1.4044629525880177
+        },
+        {
+          "featureID": "ENSMUSG00000034459",
+          "nativeEffect": 4.065151890639273,
+          "referenceEffect": 3.55936375572078,
+          "nativeMeanNormalizedCount": 1.9451699350164358
+        }
+      ],
+      "referenceBetaNonconvergence": null,
+      "referenceDispersionOutliers": null,
+      "referenceSHA256": "e55e2a06d3fa828c7ceb6e8c402577d479edbbcc74d332dbc281aa19dea105fc"
+    },
+    "package_normalization-limma-voom": {
+      "referenceFeatures": 10090,
+      "nativeMultiplicityFeatures": 10074,
+      "referenceMultiplicityFeatures": 10090,
+      "jointUniverseRecomputedBH": {
+        "features": 10074,
+        "nativeBelow005": 97,
+        "referenceBelow005": 125,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 10,
+      "nativeStatusCounts": {
+        "tested": 10074,
+        "filteredLowExpression": 986,
+        "rankDeficientSupport": 16
+      },
+      "jointlyTestedEffects": 10074,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9506934292843777,
+      "effectSignAgreement": 0.9247567996823506,
+      "medianAbsoluteEffectDifference": 0.07080286927030993,
+      "nativeBHBelow005": 97,
+      "referenceBHBelow005": 141,
+      "nativeZeroPValues": 0,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 89,
+      "expectedGenes": {
+        "ENSMUSG00000026104": {
+          "status": "jointly testable",
+          "nativeEffect": 2.892629002824214,
+          "referenceEffect": 2.77771443774208,
+          "nativeBH": 0.0006231911364530808,
+          "referenceBH": 0.0017898684617073
+        },
+        "ENSMUSG00000060802": {
+          "status": "jointly testable",
+          "nativeEffect": 1.2597265324893185,
+          "referenceEffect": 1.22351022314847,
+          "nativeBH": 0.08431492746485716,
+          "referenceBH": 0.0453646760224885
+        },
+        "ENSMUSG00000035692": {
+          "status": "not jointly testable",
+          "nativeStatus": "rankDeficientSupport"
+        },
+        "ENSMUSG00000025498": {
+          "status": "jointly testable",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 1.70084859357669,
+          "nativeBH": 0.814591911876684,
+          "referenceBH": 0.4205836469886
+        },
+        "ENSMUSG00000073411": {
+          "status": "jointly testable",
+          "nativeEffect": 1.307911063570861,
+          "referenceEffect": 1.28382566702298,
+          "nativeBH": 0.007103697498117548,
+          "referenceBH": 0.01045099794839
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "ENSMUSG00000069516",
+          "nativeEffect": -4.15361060411807,
+          "referenceEffect": -1.3723360666009,
+          "nativeMeanNormalizedCount": 2.3407579417332465
+        },
+        {
+          "featureID": "ENSMUSG00000075010",
+          "nativeEffect": 3.4086516766316666,
+          "referenceEffect": 1.29534526921988,
+          "nativeMeanNormalizedCount": 2.6665484573762614
+        },
+        {
+          "featureID": "ENSMUSG00000048001",
+          "nativeEffect": -5.944295098797766,
+          "referenceEffect": -4.18389659736143,
+          "nativeMeanNormalizedCount": 6.512807581563105
+        },
+        {
+          "featureID": "ENSMUSG00000036422",
+          "nativeEffect": -3.5403097324227715,
+          "referenceEffect": -1.81775555963497,
+          "nativeMeanNormalizedCount": 1.3441941808283064
+        },
+        {
+          "featureID": "ENSMUSG00000039167",
+          "nativeEffect": -2.9630916859477616,
+          "referenceEffect": -1.27187914801145,
+          "nativeMeanNormalizedCount": 1.3931854774635375
+        },
+        {
+          "featureID": "ENSMUSG00000020400",
+          "nativeEffect": 3.334154364435052,
+          "referenceEffect": 1.72484069996878,
+          "nativeMeanNormalizedCount": 1.5419756890103367
+        },
+        {
+          "featureID": "ENSMUSG00000029561",
+          "nativeEffect": 3.532059857564288,
+          "referenceEffect": 1.93352595942206,
+          "nativeMeanNormalizedCount": 1.1964922979233485
+        },
+        {
+          "featureID": "ENSMUSG00000032058",
+          "nativeEffect": -4.193266506894619,
+          "referenceEffect": -2.59822138371158,
+          "nativeMeanNormalizedCount": 1.9493553955085716
+        },
+        {
+          "featureID": "ENSMUSG00000025498",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 1.70084859357669,
+          "nativeMeanNormalizedCount": 1.3269901536427917
+        },
+        {
+          "featureID": "ENSMUSG00000035873",
+          "nativeEffect": 3.4839188040221623,
+          "referenceEffect": 1.90054106219189,
+          "nativeMeanNormalizedCount": 1.6688136273595005
+        },
+        {
+          "featureID": "ENSMUSG00000101621",
+          "nativeEffect": 0.2544144496508561,
+          "referenceEffect": 1.83321644935446,
+          "nativeMeanNormalizedCount": 4.535825473088117
+        },
+        {
+          "featureID": "ENSMUSG00000021067",
+          "nativeEffect": 3.532525870890249,
+          "referenceEffect": 2.00328516742851,
+          "nativeMeanNormalizedCount": 2.950779060773449
+        },
+        {
+          "featureID": "ENSMUSG00000031310",
+          "nativeEffect": -3.2986649385762536,
+          "referenceEffect": -1.84836837434567,
+          "nativeMeanNormalizedCount": 1.0573579316437665
+        },
+        {
+          "featureID": "ENSMUSG00000002325",
+          "nativeEffect": 4.55998625784787,
+          "referenceEffect": 3.11191974186187,
+          "nativeMeanNormalizedCount": 2.8787983666881614
+        },
+        {
+          "featureID": "ENSMUSG00000037820",
+          "nativeEffect": 4.093265026177534,
+          "referenceEffect": 2.66477147075821,
+          "nativeMeanNormalizedCount": 2.2056243196079355
+        },
+        {
+          "featureID": "ENSMUSG00000021264",
+          "nativeEffect": -0.7610848393583496,
+          "referenceEffect": 0.621988740350407,
+          "nativeMeanNormalizedCount": 2.7576504078823354
+        },
+        {
+          "featureID": "ENSMUSG00000028864",
+          "nativeEffect": 3.7346438583937305,
+          "referenceEffect": 2.35330881080527,
+          "nativeMeanNormalizedCount": 1.8417108306293561
+        },
+        {
+          "featureID": "ENSMUSG00000046000",
+          "nativeEffect": 2.8182477328202866,
+          "referenceEffect": 1.46474123425503,
+          "nativeMeanNormalizedCount": 0.7301542791351407
+        },
+        {
+          "featureID": "ENSMUSG00000047904",
+          "nativeEffect": -1.7966964975308457,
+          "referenceEffect": -0.447733105924096,
+          "nativeMeanNormalizedCount": 1.0101260690443605
+        },
+        {
+          "featureID": "ENSMUSG00000098087",
+          "nativeEffect": -3.711107552091944,
+          "referenceEffect": -2.3756686934428,
+          "nativeMeanNormalizedCount": 1.537435811006671
+        }
+      ],
+      "referenceBetaNonconvergence": null,
+      "referenceDispersionOutliers": null,
+      "referenceSHA256": "7626bab046ba56c6db790a3d561e307e7cc5f3d263ae3975dd77ab806ec4d94d"
+    },
+    "package_normalization-DESeq2": {
+      "referenceFeatures": 10090,
+      "nativeMultiplicityFeatures": 10074,
+      "referenceMultiplicityFeatures": 10090,
+      "jointUniverseRecomputedBH": {
+        "features": 10074,
+        "nativeBelow005": 97,
+        "referenceBelow005": 62,
+        "qualification": "Descriptive sensitivity on the intersection, not the native or reference published multiplicity family"
+      },
+      "referenceSignificantAmongNativeUnavailable": 5,
+      "nativeStatusCounts": {
+        "tested": 10074,
+        "filteredLowExpression": 986,
+        "rankDeficientSupport": 16
+      },
+      "jointlyTestedEffects": 10074,
+      "referenceMissingPValues": 0,
+      "referenceMissingEffects": 0,
+      "effectSpearman": 0.9989197809285271,
+      "effectSignAgreement": 0.9869962279134405,
+      "medianAbsoluteEffectDifference": 0.01316680206678611,
+      "nativeBHBelow005": 97,
+      "referenceBHBelow005": 68,
+      "nativeZeroPValues": 0,
+      "referenceZeroPValues": 0,
+      "topK": 100,
+      "topKBHOverlap": 96,
+      "expectedGenes": {
+        "ENSMUSG00000026104": {
+          "status": "jointly testable",
+          "nativeEffect": 2.892629002824214,
+          "referenceEffect": 2.91521785771945,
+          "nativeBH": 0.0006231911364530808,
+          "referenceBH": 0.00205801127691759
+        },
+        "ENSMUSG00000060802": {
+          "status": "jointly testable",
+          "nativeEffect": 1.2597265324893185,
+          "referenceEffect": 1.27348635876858,
+          "nativeBH": 0.08431492746485716,
+          "referenceBH": 0.184652307780527
+        },
+        "ENSMUSG00000035692": {
+          "status": "not jointly testable",
+          "nativeStatus": "rankDeficientSupport"
+        },
+        "ENSMUSG00000025498": {
+          "status": "jointly testable",
+          "nativeEffect": 3.2860667393544145,
+          "referenceEffect": 2.98728926376508,
+          "nativeBH": 0.814591911876684,
+          "referenceBH": 0.936890194322322
+        },
+        "ENSMUSG00000073411": {
+          "status": "jointly testable",
+          "nativeEffect": 1.307911063570861,
+          "referenceEffect": 1.32339025375956,
+          "nativeBH": 0.007103697498117548,
+          "referenceBH": 0.0510221548327255
+        }
+      },
+      "largestEffectDisagreements": [
+        {
+          "featureID": "ENSMUSG00000031310",
+          "nativeEffect": -3.2986649385762536,
+          "referenceEffect": -2.70678374442486,
+          "nativeMeanNormalizedCount": 1.0573579316437665
+        },
+        {
+          "featureID": "ENSMUSG00000032058",
+          "nativeEffect": -4.193266506894619,
+          "referenceEffect": -3.61730785539624,
+          "nativeMeanNormalizedCount": 1.9493553955085716
+        },
+        {
+          "featureID": "ENSMUSG00000048001",
+          "nativeEffect": -5.944295098797766,
+          "referenceEffect": -5.37944267926095,
+          "nativeMeanNormalizedCount": 6.512807581563105
+        },
+        {
+          "featureID": "ENSMUSG00000036422",
+          "nativeEffect": -3.5403097324227715,
+          "referenceEffect": -2.9761684353734,
+          "nativeMeanNormalizedCount": 1.3441941808283064
+        },
+        {
+          "featureID": "ENSMUSG00000098087",
+          "nativeEffect": -3.711107552091944,
+          "referenceEffect": -3.16107301074809,
+          "nativeMeanNormalizedCount": 1.537435811006671
+        },
+        {
+          "featureID": "ENSMUSG00000024301",
+          "nativeEffect": -3.185285373962624,
+          "referenceEffect": -2.63611741795568,
+          "nativeMeanNormalizedCount": 1.1170959196056955
+        },
+        {
+          "featureID": "ENSMUSG00000069516",
+          "nativeEffect": -4.15361060411807,
+          "referenceEffect": -3.67088650253527,
+          "nativeMeanNormalizedCount": 2.3407579417332465
+        },
+        {
+          "featureID": "ENSMUSG00000026728",
+          "nativeEffect": -3.1643251979476217,
+          "referenceEffect": -2.71005593887474,
+          "nativeMeanNormalizedCount": 1.455295535868487
+        },
+        {
+          "featureID": "ENSMUSG00000046000",
+          "nativeEffect": 2.8182477328202866,
+          "referenceEffect": 2.41377899732099,
+          "nativeMeanNormalizedCount": 0.7301542791351407
+        },
+        {
+          "featureID": "ENSMUSG00000021998",
+          "nativeEffect": 3.102103572334914,
+          "referenceEffect": 2.71712897017531,
+          "nativeMeanNormalizedCount": 0.9261979300850636
+        },
+        {
+          "featureID": "ENSMUSG00000020000",
+          "nativeEffect": 3.2818988564112623,
+          "referenceEffect": 2.91290502594594,
+          "nativeMeanNormalizedCount": 1.0654828879445302
+        },
+        {
+          "featureID": "ENSMUSG00000029561",
+          "nativeEffect": 3.532059857564288,
+          "referenceEffect": 3.1736522655337,
+          "nativeMeanNormalizedCount": 1.1964922979233485
+        },
+        {
+          "featureID": "ENSMUSG00000021203",
+          "nativeEffect": 0.03597872556695071,
+          "referenceEffect": 0.391527539710406,
+          "nativeMeanNormalizedCount": 2.3794221858489824
+        },
+        {
+          "featureID": "ENSMUSG00000021009",
+          "nativeEffect": 3.3079437648831043,
+          "referenceEffect": 2.95707062776394,
+          "nativeMeanNormalizedCount": 1.2191334850257363
+        },
+        {
+          "featureID": "ENSMUSG00000010358",
+          "nativeEffect": 3.1315333150355014,
+          "referenceEffect": 2.78499160215354,
+          "nativeMeanNormalizedCount": 1.1059313330918887
+        },
+        {
+          "featureID": "ENSMUSG00000034459",
+          "nativeEffect": 4.065151890639273,
+          "referenceEffect": 3.72434862852688,
+          "nativeMeanNormalizedCount": 1.9451699350164358
+        },
+        {
+          "featureID": "ENSMUSG00000033377",
+          "nativeEffect": 3.0028141688367556,
+          "referenceEffect": 2.66489186619028,
+          "nativeMeanNormalizedCount": 1.0428058668390912
+        },
+        {
+          "featureID": "ENSMUSG00000038059",
+          "nativeEffect": 3.5094136466777224,
+          "referenceEffect": 3.17332330368252,
+          "nativeMeanNormalizedCount": 1.4044629525880177
+        },
+        {
+          "featureID": "ENSMUSG00000033658",
+          "nativeEffect": 3.5520465930014398,
+          "referenceEffect": 3.23276973541683,
+          "nativeMeanNormalizedCount": 1.4766479600602493
+        },
+        {
+          "featureID": "ENSMUSG00000000881",
+          "nativeEffect": 0.2080003650072653,
+          "referenceEffect": 0.527116357958252,
+          "nativeMeanNormalizedCount": 3.3732975019500113
+        }
+      ],
+      "referenceBetaNonconvergence": 0,
+      "referenceDispersionOutliers": 43,
+      "referenceSHA256": "5c553f6695af254b2abcb2782ac02a6131b423060bebc2bf99e26269a7cd226c",
+      "DESeq2DefaultResultPolicy": {
+        "missingPValues": 1,
+        "missingAdjustedPValues": 3131,
+        "BHBelow005": 77
+      }
+    }
+  },
+  "independentBHVerified": true,
+  "qualification": "Same real pseudobulk observations and prefilter. Eight independent animals: intercept plus LPS-minus-Vehicle. No donor pairing or batch covariate. Native support rejections reduce its tested multiplicity family; raw and intersection-recomputed BH summaries are distinct. Different estimators and tests are retained, not forced into numerical equality. No calibrated FDR, causal truth or general competitive claim."
+}

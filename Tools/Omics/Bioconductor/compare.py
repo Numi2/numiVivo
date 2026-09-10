@@ -37,6 +37,6 @@ for name,run in runs.items():
  if name.endswith('DESeq2'):
   default=pd.read_csv(a.reference/(name+'-default-results.tsv'),sep='\t',float_precision='round_trip')
   results[name]['DESeq2DefaultResultPolicy']=dict(missingPValues=int(default.pvalue.isna().sum()),missingAdjustedPValues=int(default.padj.isna().sum()),BHBelow005=int((default.padj<.05).sum()))
-out=dict(status='completed-descriptive-comparison',input=meta,results=results,independentBHVerified=True,qualification='Same real pseudobulk observations, prefilter and paired donor design. Native support rejections reduce its tested multiplicity family; raw and intersection-recomputed BH summaries are distinct. Different estimators and tests are retained, not forced into numerical equality. No calibrated FDR, causal truth or general competitive claim.')
+out=dict(status='completed-descriptive-comparison',input=meta,results=results,independentBHVerified=True,qualification='Same real pseudobulk observations and prefilter. '+meta['design']+' Native support rejections reduce its tested multiplicity family; raw and intersection-recomputed BH summaries are distinct. Different estimators and tests are retained, not forced into numerical equality. No calibrated FDR, causal truth or general competitive claim.')
 a.out.write_text(json.dumps(out,indent=2,allow_nan=False)+'\n')
 print(json.dumps({k:{f:v[f] for f in ['effectSpearman','effectSignAgreement','nativeBHBelow005','referenceBHBelow005','topKBHOverlap','referenceBetaNonconvergence']} for k,v in results.items()},indent=2))

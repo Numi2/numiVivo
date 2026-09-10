@@ -1,0 +1,25 @@
+{
+  "commands": 15,
+  "replicationGateFailures": [
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-crowell-20260910/05/plan.json",
+        "--output",
+        "/Users/n/numivivo-crowell-20260910/05/native"
+      ],
+      "case": "05",
+      "cellGroup": "CPE cells",
+      "exitCode": 65,
+      "expectedReplicationGate": "insufficient",
+      "seconds": 5.3416704589999995,
+      "stage": "publish"
+    }
+  ],
+  "status": "all-declared-populations-attempted",
+  "successfulPublications": 7,
+  "successfulReplays": 7,
+  "unexpectedFailures": []
+}

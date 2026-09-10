@@ -1,0 +1,33 @@
+{
+  "case": "04",
+  "cellGroup": "OPC",
+  "conditionalFits": 20148,
+  "failures": [
+    {
+      "failed": [
+        "pValue"
+      ],
+      "featureID": "ENSMUSG00000055401",
+      "kind": "MLE",
+      "metrics": {
+        "effect": 1.0345662573851833e-07,
+        "logLikelihood": 1.0658141036401503e-14,
+        "pValue": 1.0146302176217148e-07,
+        "relativeMean": 6.316172233257375e-08,
+        "scaledScore": 7.271368921597214e-08,
+        "standardError": 2.875997440199285e-09
+      }
+    }
+  ],
+  "independentBHVerified": true,
+  "maximumErrors": {
+    "effect": 2.4089351713385554e-07,
+    "logLikelihood": 1.0122919213984005e-07,
+    "pValue": 1.0146302176217148e-07,
+    "relativeMean": 2.4089354579553973e-07,
+    "scaledScore": 9.979160111013437e-08,
+    "standardError": 1.1256188892083685e-07
+  },
+  "referenceUnsuccessfulFlags": 0,
+  "testedGenes": 10074
+}

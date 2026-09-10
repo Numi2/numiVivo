@@ -1,0 +1,92 @@
+[
+  {
+    "case": "00",
+    "cellGroup": "Astrocytes",
+    "status": "all-source-QC-counts-and-axes-exact",
+    "sourceCells": 25224,
+    "sourceGenes": 11076,
+    "pseudobulkGroups": 63,
+    "caseCells": 1740,
+    "eligibleFeatures": 10675,
+    "nativeTested": 10650,
+    "maximumSizeFactorDifference": 4.440892098500626e-16
+  },
+  {
+    "case": "01",
+    "cellGroup": "Endothelial",
+    "status": "all-source-QC-counts-and-axes-exact",
+    "sourceCells": 25224,
+    "sourceGenes": 11076,
+    "pseudobulkGroups": 63,
+    "caseCells": 743,
+    "eligibleFeatures": 10162,
+    "nativeTested": 10140,
+    "maximumSizeFactorDifference": 4.440892098500626e-16
+  },
+  {
+    "case": "02",
+    "cellGroup": "Microglia",
+    "status": "all-source-QC-counts-and-axes-exact",
+    "sourceCells": 25224,
+    "sourceGenes": 11076,
+    "pseudobulkGroups": 63,
+    "caseCells": 416,
+    "eligibleFeatures": 9470,
+    "nativeTested": 9435,
+    "maximumSizeFactorDifference": 2.220446049250313e-16
+  },
+  {
+    "case": "03",
+    "cellGroup": "Oligodendrocytes",
+    "status": "all-source-QC-counts-and-axes-exact",
+    "sourceCells": 25224,
+    "sourceGenes": 11076,
+    "pseudobulkGroups": 63,
+    "caseCells": 1492,
+    "eligibleFeatures": 10394,
+    "nativeTested": 10387,
+    "maximumSizeFactorDifference": 4.440892098500626e-16
+  },
+  {
+    "case": "04",
+    "cellGroup": "OPC",
+    "status": "all-source-QC-counts-and-axes-exact",
+    "sourceCells": 25224,
+    "sourceGenes": 11076,
+    "pseudobulkGroups": 63,
+    "caseCells": 729,
+    "eligibleFeatures": 10090,
+    "nativeTested": 10074,
+    "maximumSizeFactorDifference": 1.7763568394002505e-15
+  },
+  {
+    "case": "05",
+    "cellGroup": "CPE cells",
+    "status": "native-unavailable",
+    "expectedReplicationGate": "insufficient"
+  },
+  {
+    "case": "06",
+    "cellGroup": "Excit. Neuron",
+    "status": "all-source-QC-counts-and-axes-exact",
+    "sourceCells": 25224,
+    "sourceGenes": 11076,
+    "pseudobulkGroups": 63,
+    "caseCells": 16622,
+    "eligibleFeatures": 11075,
+    "nativeTested": 11070,
+    "maximumSizeFactorDifference": 6.661338147750939e-16
+  },
+  {
+    "case": "07",
+    "cellGroup": "Inhib. Neuron",
+    "status": "all-source-QC-counts-and-axes-exact",
+    "sourceCells": 25224,
+    "sourceGenes": 11076,
+    "pseudobulkGroups": 63,
+    "caseCells": 3382,
+    "eligibleFeatures": 10993,
+    "nativeTested": 10983,
+    "maximumSizeFactorDifference": 5.551115123125783e-16
+  }
+]

@@ -1,0 +1,164 @@
+{
+  "cases": [
+    {
+      "case": "00",
+      "cellGroup": "Astrocytes",
+      "changedBH005Decisions": 0,
+      "maximumRefitBHDifference": 1.3512513208358e-07,
+      "maximumRefitPValueDifference": 7.493051079610069e-08,
+      "maximumStoredArithmeticError": 2.7755575615628914e-16,
+      "referenceUnsuccessfulFlags": [],
+      "strictExceptions": [],
+      "testedGenes": 10650
+    },
+    {
+      "case": "01",
+      "cellGroup": "Endothelial",
+      "changedBH005Decisions": 0,
+      "maximumRefitBHDifference": 2.4132082776517905e-07,
+      "maximumRefitPValueDifference": 1.8317656635957746e-07,
+      "maximumStoredArithmeticError": 2.7755575615628914e-16,
+      "referenceUnsuccessfulFlags": [
+        {
+          "featureID": "ENSMUSG00000036941",
+          "nativeP": 0.9475165063940273,
+          "referenceMessage": "The iteration is not making good progress, as measured by the \n improvement from the last ten iterations.",
+          "referenceScaledScore": 1.452922602985463e-16,
+          "referenceSuccess": false,
+          "refitP": 0.9475165063940164,
+          "storedArithmeticError": 0.0
+        }
+      ],
+      "strictExceptions": [
+        {
+          "featureID": "ENSMUSG00000027433",
+          "firstOrderNewtonChange": -1.0800290405081234e-07,
+          "firstOrderResidual": 2.318993217378443e-14,
+          "nativeP": 0.3833766507012443,
+          "observedChange": -1.0800288086088017e-07,
+          "refitP": 0.3833765426983633
+        },
+        {
+          "featureID": "ENSMUSG00000036466",
+          "firstOrderNewtonChange": 1.0047243091702697e-07,
+          "firstOrderResidual": 4.576493470677669e-16,
+          "nativeP": 0.9250786964344124,
+          "observedChange": 1.0047243137467632e-07,
+          "refitP": 0.9250787969068438
+        },
+        {
+          "featureID": "ENSMUSG00000042761",
+          "firstOrderNewtonChange": -1.4973917026261205e-07,
+          "firstOrderResidual": 1.4299110095531304e-14,
+          "nativeP": 0.48680742685288386,
+          "observedChange": -1.4973915596350196e-07,
+          "refitP": 0.48680727711372773
+        },
+        {
+          "featureID": "ENSMUSG00000032606",
+          "firstOrderNewtonChange": -1.2305603157930015e-07,
+          "firstOrderResidual": 2.212947187158932e-15,
+          "nativeP": 0.8317915254691032,
+          "observedChange": -1.2305602936635296e-07,
+          "refitP": 0.8317914024130737
+        },
+        {
+          "featureID": "ENSMUSG00000042050",
+          "firstOrderNewtonChange": -1.8317657594869751e-07,
+          "firstOrderResidual": 9.58912005014118e-15,
+          "nativeP": 0.7086451168031456,
+          "observedChange": -1.8317656635957746e-07,
+          "refitP": 0.7086449336265792
+        },
+        {
+          "featureID": "ENSMUSG00000022711",
+          "firstOrderNewtonChange": 1.1211627696040087e-07,
+          "firstOrderResidual": 3.1314662476203674e-17,
+          "nativeP": 0.923323256503005,
+          "observedChange": 1.1211627692908621e-07,
+          "refitP": 0.9233233686192819
+        }
+      ],
+      "testedGenes": 10140
+    },
+    {
+      "case": "02",
+      "cellGroup": "Microglia",
+      "changedBH005Decisions": 0,
+      "maximumRefitBHDifference": 1.6059584961869433e-07,
+      "maximumRefitPValueDifference": 8.90939161890536e-08,
+      "maximumStoredArithmeticError": 3.3306690738754696e-16,
+      "referenceUnsuccessfulFlags": [],
+      "strictExceptions": [],
+      "testedGenes": 9435
+    },
+    {
+      "case": "03",
+      "cellGroup": "Oligodendrocytes",
+      "changedBH005Decisions": 0,
+      "maximumRefitBHDifference": 1.9904414338967058e-07,
+      "maximumRefitPValueDifference": 7.783793276594508e-08,
+      "maximumStoredArithmeticError": 3.3306690738754696e-16,
+      "referenceUnsuccessfulFlags": [],
+      "strictExceptions": [],
+      "testedGenes": 10387
+    },
+    {
+      "case": "04",
+      "cellGroup": "OPC",
+      "changedBH005Decisions": 0,
+      "maximumRefitBHDifference": 1.676396981231676e-07,
+      "maximumRefitPValueDifference": 1.0146302176217148e-07,
+      "maximumStoredArithmeticError": 2.7755575615628914e-16,
+      "referenceUnsuccessfulFlags": [],
+      "strictExceptions": [
+        {
+          "featureID": "ENSMUSG00000055401",
+          "firstOrderNewtonChange": -1.0146302279893778e-07,
+          "firstOrderResidual": 1.1477886049636397e-15,
+          "nativeP": 0.8906620056869227,
+          "observedChange": -1.0146302165114918e-07,
+          "refitP": 0.8906619042239009
+        }
+      ],
+      "testedGenes": 10074
+    },
+    {
+      "case": "06",
+      "cellGroup": "Excit. Neuron",
+      "changedBH005Decisions": 0,
+      "maximumRefitBHDifference": 1.213848601633316e-07,
+      "maximumRefitPValueDifference": 7.749140029655877e-08,
+      "maximumStoredArithmeticError": 2.7755575615628914e-16,
+      "referenceUnsuccessfulFlags": [],
+      "strictExceptions": [],
+      "testedGenes": 11070
+    },
+    {
+      "case": "07",
+      "cellGroup": "Inhib. Neuron",
+      "changedBH005Decisions": 0,
+      "maximumRefitBHDifference": 2.099460461035818e-07,
+      "maximumRefitPValueDifference": 1.2406013905064128e-07,
+      "maximumStoredArithmeticError": 2.7755575615628914e-16,
+      "referenceUnsuccessfulFlags": [],
+      "strictExceptions": [
+        {
+          "featureID": "ENSMUSG00000027947",
+          "firstOrderNewtonChange": -1.2406014366087533e-07,
+          "firstOrderResidual": 4.7212563512122145e-15,
+          "nativeP": 0.5954314441336488,
+          "observedChange": -1.2406013893961898e-07,
+          "refitP": 0.5954313200735097
+        }
+      ],
+      "testedGenes": 10983
+    }
+  ],
+  "diagnosticSHA256": "ffebc73dba80ba528eaadc5b3d7dec3e5c8dfbfa5e34a27e0af3d0234d5083de",
+  "originalCheckSHA256": "582d62e6e7227f7fe07fc36a48a9aefbb9ee1f3d280ab71b88b82431b52f696b",
+  "originalFailedFits": 8,
+  "originalStrictGateStatus": "failed",
+  "qualification": "Stored-parameter Wald arithmetic and conditional optimization sensitivity; no FDR calibration claim.",
+  "status": "diagnostic-only-original-strict-gate-retained"
+}

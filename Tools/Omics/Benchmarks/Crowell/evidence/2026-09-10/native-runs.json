@@ -1,0 +1,219 @@
+{
+  "binarySHA256": "2d9e524cbb1cdd552fc9f52a1c5237cc904f9faec6eb6bc30b7f49d479ee5433",
+  "hdf5SHA256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e",
+  "runs": [
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-crowell-20260910/00/plan.json",
+        "--output",
+        "/Users/n/numivivo-crowell-20260910/00/native"
+      ],
+      "case": "00",
+      "cellGroup": "Astrocytes",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.025400833,
+      "stage": "publish"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-crowell-20260910/00/native"
+      ],
+      "case": "00",
+      "cellGroup": "Astrocytes",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.474267042,
+      "stage": "replay"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-crowell-20260910/01/plan.json",
+        "--output",
+        "/Users/n/numivivo-crowell-20260910/01/native"
+      ],
+      "case": "01",
+      "cellGroup": "Endothelial",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.196632542000003,
+      "stage": "publish"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-crowell-20260910/01/native"
+      ],
+      "case": "01",
+      "cellGroup": "Endothelial",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.491015042,
+      "stage": "replay"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-crowell-20260910/02/plan.json",
+        "--output",
+        "/Users/n/numivivo-crowell-20260910/02/native"
+      ],
+      "case": "02",
+      "cellGroup": "Microglia",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 12.818016334000006,
+      "stage": "publish"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-crowell-20260910/02/native"
+      ],
+      "case": "02",
+      "cellGroup": "Microglia",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.026646250000013,
+      "stage": "replay"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-crowell-20260910/03/plan.json",
+        "--output",
+        "/Users/n/numivivo-crowell-20260910/03/native"
+      ],
+      "case": "03",
+      "cellGroup": "Oligodendrocytes",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.297216167000002,
+      "stage": "publish"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-crowell-20260910/03/native"
+      ],
+      "case": "03",
+      "cellGroup": "Oligodendrocytes",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.500990458000004,
+      "stage": "replay"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-crowell-20260910/04/plan.json",
+        "--output",
+        "/Users/n/numivivo-crowell-20260910/04/native"
+      ],
+      "case": "04",
+      "cellGroup": "OPC",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.120531084000007,
+      "stage": "publish"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-crowell-20260910/04/native"
+      ],
+      "case": "04",
+      "cellGroup": "OPC",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.487197417000004,
+      "stage": "replay"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-crowell-20260910/05/plan.json",
+        "--output",
+        "/Users/n/numivivo-crowell-20260910/05/native"
+      ],
+      "case": "05",
+      "cellGroup": "CPE cells",
+      "exitCode": 65,
+      "expectedReplicationGate": "insufficient",
+      "seconds": 5.3416704589999995,
+      "stage": "publish"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-crowell-20260910/06/plan.json",
+        "--output",
+        "/Users/n/numivivo-crowell-20260910/06/native"
+      ],
+      "case": "06",
+      "cellGroup": "Excit. Neuron",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.653572916999991,
+      "stage": "publish"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-crowell-20260910/06/native"
+      ],
+      "case": "06",
+      "cellGroup": "Excit. Neuron",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.545467000000002,
+      "stage": "replay"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-crowell-20260910/07/plan.json",
+        "--output",
+        "/Users/n/numivivo-crowell-20260910/07/native"
+      ],
+      "case": "07",
+      "cellGroup": "Inhib. Neuron",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.494872708000003,
+      "stage": "publish"
+    },
+    {
+      "arguments": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-crowell-20260910/07/native"
+      ],
+      "case": "07",
+      "cellGroup": "Inhib. Neuron",
+      "exitCode": 0,
+      "expectedReplicationGate": "ready",
+      "seconds": 13.808183041999996,
+      "stage": "replay"
+    }
+  ],
+  "sourceSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66"
+}
