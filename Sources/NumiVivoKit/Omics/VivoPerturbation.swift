@@ -105,8 +105,12 @@ public enum VivoPerturbation {
         return (counts,logs,totals)
     }
     static func model(_ report: VivoH5ADPseudobulkReport,plan: VivoPerturbationPlan,source: VivoFingerprint) throws -> VivoPerturbationModel {
+        try model(report.pseudobulk,plan: plan,source: source)
+    }
+    /// The caller validates and isolates aggregate membership before fitting.
+    static func model(_ bulk: VivoPseudobulkCounts,plan: VivoPerturbationPlan,source: VivoFingerprint) throws -> VivoPerturbationModel {
         try plan.validate()
-        let bulk=report.pseudobulk,m=bulk.featureIDs.count,groups=bulk.groups
+        let m=bulk.featureIDs.count,groups=bulk.groups
         let organisms=Set(groups.map(\.organism)),cellGroups=Set(groups.map(\.cellGroup))
         guard organisms.count==1,cellGroups.count==1,groups.allSatisfy({ $0.donorID != nil }),
               groups.allSatisfy({ $0.condition==plan.controlCondition || $0.condition==plan.treatmentCondition }) else {
@@ -176,13 +180,20 @@ public enum VivoPerturbation {
             maximumSolveResidual: maximumResidual,qualification: "Known perturbation donor-response baselines, equal donor weighting; no Bayesian uncertainty, unseen-perturbation or mechanistic qualification.")
     }
     static func evaluate(snapshot: URL,plan: VivoPerturbationQueryPlan,model: VivoPerturbationModel) throws -> VivoPerturbationReport {
+        try validateQuery(plan,model: model)
+        let report=try VivoH5ADPseudobulk.evaluateSnapshot(snapshot,plan: .init(mapping: plan.mapping))
+        return try evaluate(report.pseudobulk,plan: plan,model: model)
+    }
+    private static func validateQuery(_ plan: VivoPerturbationQueryPlan,model: VivoPerturbationModel) throws {
         try plan.validate()
         guard plan.featureNamespace==model.plan.featureNamespace,plan.perturbationID==model.plan.perturbationID,
               plan.mapping.countUnit==model.plan.mapping.countUnit else { throw VivoOmicsError.invalid("perturbation query identity, namespace or unit mismatch") }
         guard plan.mapping.samples.allSatisfy({ $0.condition==model.plan.controlCondition }) else {
             throw VivoOmicsError.invalid("perturbation prediction accepts control-only query samples")
         }
-        let report=try VivoH5ADPseudobulk.evaluateSnapshot(snapshot,plan: .init(mapping: plan.mapping)),bulk=report.pseudobulk
+    }
+    static func evaluate(_ bulk: VivoPseudobulkCounts,plan: VivoPerturbationQueryPlan,model: VivoPerturbationModel) throws -> VivoPerturbationReport {
+        try validateQuery(plan,model: model)
         guard Set(bulk.featureIDs)==Set(model.featureIDs),bulk.featureIDs.count==model.featureIDs.count,
               bulk.groups.allSatisfy({ $0.organism==model.organism && $0.cellGroup==model.cellGroup && $0.donorID != nil && $0.condition==model.plan.controlCondition }),
               Set(bulk.groups.compactMap(\.donorID)).count==bulk.groups.count else {

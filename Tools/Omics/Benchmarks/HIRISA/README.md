@@ -3,10 +3,12 @@
 The complete deposited GSE306664 release is acquired, audited and available as
 one verified AnnData source: **1,612,594 unique cells, 18,082 genes,
 3,845,991,249 nonzero count entries and 7,700,096,227 UMIs**. All 131 original H5
-files are retained unchanged. Paired DE is running under a separate frozen
-execution specification. Complete native ingestion/replay and independent
-cell/QC/aggregate checks pass. DE-family completion and held-out prediction
-remain pending; this is not a completed biological or full million-cell analysis benchmark.
+files are retained unchanged. All 48 native and 48 reference paired DE runs
+are complete under the frozen execution specification. Complete native
+ingestion/replay and independent cell/QC/aggregate and conditional DE numerical
+checks pass. All 79 frozen donor-held-out prediction folds also pass native
+replay and independent numerical checks, with [complete empirical results](PREDICTION_RESULTS.md).
+This is not a completed biological or full million-cell analysis benchmark.
 
 The [protocol](PROTOCOL.md) was frozen before count inspection, fitting or
 prediction. Its SHA256 is
@@ -100,7 +102,9 @@ Complete ingestion succeeded against immutable debug executable SHA256
 `d0cff005cc279fa7094232f1794bd1070b1c1d0c6d622c1ea3258d081b5e0a3e`,
 in 1,630.69 seconds with 4,484,775,936 bytes maximum RSS. Its report is
 526,518,683 bytes, close to the existing 512 MiB ceiling. Debug replay was
-observed active at archive capture. Metadata/report residency, PCA/graph scale and full out-of-core
+observed active at the original archive capture and subsequently passed in
+1,667.41 seconds. The terminal receipt is in the inference archive; the earlier
+archive's live observation remains unchanged. Metadata/report residency, PCA/graph scale and full out-of-core
 qualification remain unresolved.
 
 The same Omics source also built in release mode (271.29 seconds). Immutable
@@ -110,8 +114,8 @@ passed all 30 reader checks, then complete publication and reconstruction in
 280.00 and 285.23 seconds, with 4,433,625,088 and 4,962,074,624 bytes maximum RSS.
 Direct blockwise comparison proves the debug and release reports and plans are
 byte-identical. Timings from these concurrently active runs are observations,
-not a controlled native/scverse speed comparison. Inspect live processes before
-retrying the separately retained debug replay.
+not a controlled native/scverse speed comparison. Both retained native replay
+runs are now terminal successes.
 
 `prepare_native_qc.py` independently reconstructs mitochondrial counts from the
 complete backed sparse H5AD and rechecks every cell's UMI/detected-gene totals.
@@ -132,18 +136,48 @@ The [inference execution specification](INFERENCE_EXECUTION.md) froze all 48
 requests before fitting. Native Wald/LRT/adjusted QL use exact Python-prepared
 source aggregates; the complete independent check now links those counts and
 cell memberships to native ingestion. The matched edgeR/limma/DESeq2 runs and
-native Wald/LRT runs are complete; native QL is still running. Their output
-families, numerical checkpoints and comparison results remain external until
-the separate inference archive is complete. Retain rank-deficient support
-statuses, method-specific tested families, reference warnings and failed attempts.
+native Wald/LRT/QL runs are all complete. Independent checks pass for all 48
+native cases: counts/designs, offsets, fitted means, conditional scores,
+likelihoods, information, effects, tails and BH arithmetic. QL tail checks use
+the reported denominator degrees of freedom; they do not independently
+requalify the moment/DF estimator on this experiment.
+
+Across 144 native/reference comparisons, jointly tested effect-rank Spearman
+correlation ranges from 0.954757 to 0.999573. Significant-call counts differ.
+For example, the first Bcell IFNa contrast has 15,608 genes tested by all six
+methods: BH 0.05 calls are 8,163/8,157/8,178 for native Wald/LRT/QL and
+8,487/8,481/7,248 for edgeR QL/limma voom/DESeq2. Preserve rank-deficient support
+statuses and each method's full tested family; do not interpret concordance as
+ground truth, FDR control, power or interval coverage.
+
+The [complete inference archive](evidence/2026-09-10-inference) contains 573
+members and 750,221,134 stored bytes, including every native output and gene-level
+numerical check, exact inputs, all reference tables/default DESeq2 filtering,
+warnings, versions and the terminal debug replay. Its manifest SHA256 is
+`c9d83cc81fd6ddd58ae598a06ede8c088297ec7e0be0447ddfeefe460b2cc2d1`.
 
 The [prediction execution specification](PREDICTION_EXECUTION.md) and
 `freeze_prediction.py` fix all 79 donor-held-out folds, the existing alpha-one
 response model, training-only feature selection, and scoring against no-change
-and training-response baselines. No HIRISA response model has been fitted yet.
+and training-response baselines. The [transport supplement](PREDICTION_TRANSPORT.md)
+qualifies the native aggregate batch route without changing those model settings
+or folds. All 79 donor-held-out fits completed; every output was frozen before
+scoring. Complete raw-source reconstruction plus fitting took 271.56 seconds,
+and native byte-exact replay took 276.32 seconds. Independent NumPy checks pass
+for every fold, with maximum ridge prediction error 1.5954e-13. All four methods
+are scored on the full and training-selected gene families. Mean, median and
+ridge each improve contrast RMSE over no-change in 14 of 16 contrasts; ridge
+improves on the simpler mean response in only four. Monocyte IFN-L1 and NK IFNg
+remain worse than no-change for every learned baseline. See the full tables
+and [prediction archive](evidence/2026-09-10-prediction), including the interrupted
+provenance-correction attempt. No model settings were tuned from these outcomes.
 The separate PBMC annotation/transfer mapping remains unfrozen. No production
 default, biological calibration, million-cell full analysis or Metal speed claim
 follows from these checks.
+
+The 79-fold enriched-population experiment is complete at this stated scope.
+Cross-preparation PBMC transfer and the million-cell PCA/graph/integration
+pipeline remain separate, incomplete parts of the broader objective.
 
 ## Reproduction and evidence
 
@@ -181,6 +215,23 @@ archive's pending-transfer record is historical; the newer archive records
 completed release publication/replay and the independent full-source audit.
 It retains the observed-live debug replay snapshot rather than inventing a
 terminal result. Full DE output families and prediction remain separate gates.
+
+The complete inference archive is verified with
+`python verify_archive.py evidence/2026-09-10-inference`. Rebuild it from the
+terminal external run using `archive_inference.py --root /absolute/path/hirisa
+--output /absolute/path/new-inference-archive`. The new archive includes the
+later terminal debug replay rather than changing the historical ingestion archive.
+
+For prediction, preserve the original frozen fold manifest and transport receipt.
+`prepare_prediction_batch.py --root /absolute/path/hirisa --repo /absolute/path/numivivo`
+binds those folds to native group indices. Run the two native batch commands in
+the [product documentation](../../PerturbationPrediction/NATIVE.md), then run
+`score_prediction_batch.py --root /absolute/path/hirisa` only after all outputs
+are frozen. `report_prediction.py` renders both complete contrast tables.
+Archive with `archive_prediction.py` and verify every member with
+`python verify_archive.py evidence/2026-09-10-prediction`. Large original source
+and report payloads are shared through the earlier ingestion archive and external
+source identity rather than duplicated per fold.
 
 Sources: [GEO GSE306664](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE306664),
 [author resource](https://apps.allenimmunology.org/aifi/resources/ifn-response/),

@@ -223,7 +223,14 @@ all 131 library aggregates and all sixteen inference-cohort memberships/counts.
 Release publication/reconstruction take 280.00/285.23 seconds, peaking at
 4.43/4.96 GB RSS. The 526.5 MB JSON report nearly reaches its 512 MiB limit;
 this qualifies complete-source ingestion, not general million-cell PCA, graph,
-integration or out-of-core execution. DE and held-out prediction remain ongoing.
+integration or out-of-core execution. All 48 native and 48 reference DE runs are
+complete; every native case passes independent conditional numerical checks.
+The full inference archive retains each method's gene family, diagnostics and
+warnings. All 79 frozen held-out prediction folds through the new aggregate
+batch API pass native replay and independent NumPy reconstruction. Complete
+results retain both gene families and weaker cases; ridge improves contrast
+RMSE over the training-mean baseline in only four of sixteen contrasts. The
+separate PBMC transfer and million-cell PCA/graph/integration remain incomplete.
 
 The output is an exchange bundle containing `original.h5ad`, `plan.json`,
 `report.json` and `receipt.json`. Verification copies the source to a private

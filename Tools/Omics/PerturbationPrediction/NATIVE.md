@@ -56,7 +56,9 @@ model/result and implementation hashes are bound; recomputing a receipt after
 altering a fitted model does not bypass reconstruction. Existing outputs are
 refused and failed staging directories removed.
 
-Bounds: existing H5AD streaming source limits apply (1 GiB and 1 billion nonzeros).
+Bounds: existing H5AD streaming source limits apply (64 GiB, two million cells
+and four billion stored entries; five million canonical aggregate entries and
+a 512 MiB source report).
 Training supports 2-64 donors, at most 2 million donor-gene values and 100 million
 fit work units (`donors² × genes`). Pseudobulk materialization is limited to 128
 groups and 4 million group-gene values. Encoded model/prediction documents are
@@ -93,3 +95,42 @@ and control inputs. Verification of an archived receipt requires its qualified
 implementation identity; a rebuilt runtime must regenerate evidence instead of
 rewriting the old implementation hash. Fit/query examples are preserved beside
 the reports, along with all expected-rejection logs.
+
+## Aggregate batch publication
+
+```sh
+numivivo singlecell-perturbation-batch source-pseudobulk --plan batch.json --output batch
+numivivo singlecell-perturbation-batch-verify batch
+```
+
+The batch plan declares `schemaVersion=1`, the exact `sourceReport` fingerprint,
+`featureNamespace`, `provenance` and 1–128 uniquely named `folds`. Each fold gives
+`id`, `perturbationID`, `controlCondition`, `treatmentCondition`, `cellGroup`,
+`trainingGroupIndices` and `queryGroupIndices`. Indices address the source
+report's pseudobulk groups. The explicit cell group relabels selected aggregates;
+it does not select cells from author annotations. Original counts, sample IDs,
+donors, batches and global source-cell indices are retained.
+
+Publication snapshots and reconstructs the entire original source once, then
+fits isolated training aggregates and predicts isolated control-only query
+aggregates. Training/query donor, sample and source-cell overlap fail before
+fitting. The numerical owner and all four baselines are shared with the original
+commands. A fold's model source fingerprint identifies its training aggregate;
+the batch receipt links it to the original source, report and publisher receipt.
+This is a distinct bundle format from an individual H5AD model bundle.
+
+An older source publisher's receipt remains unchanged. Current code actually
+reconstructs its raw source and entire report; accepting the old publisher
+identity alone is insufficient. The new batch receipt binds the current binary.
+Verification repeats source reconstruction and each complete model/prediction,
+including failed-fold receipts. Rehashed tampered source reports and models
+cannot pass reconstruction. Failed folds retain their failure and omit model
+and prediction files; inspect fold statuses even if batch publication exits zero.
+
+All seven focused Swift tests pass. `check_aggregate_batch.py` passes ten product
+checks in debug and release, including independent count/membership and NumPy
+oracles, cross-build source reconstruction, exact repetition and tampering
+rejections. These synthetic checks establish software behavior. HIRISA uses the
+[frozen real-data transport supplement](../Benchmarks/HIRISA/PREDICTION_TRANSPORT.md)
+for the separate 79-fold empirical experiment. Whole-source metadata/report
+residency remains an outstanding out-of-core limitation.

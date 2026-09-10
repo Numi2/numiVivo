@@ -14,8 +14,14 @@ libraries: 1,612,594 cells and 3.846 billion count entries, with exact source an
 backed AnnData checks. Native release ingestion/reconstruction and independent
 verification of every cell/QC value and all library aggregates now pass. Peak
 RSS remains 4.43/4.96 GB; metadata/report storage is still resident. Donor/batch
-matching is frozen, reference DE runs are complete, and native QL comparisons
-remain active. All 79 held-out prediction folds are frozen and unfitted.
+matching is frozen. All 48 native and 48 reference DE runs are complete, and
+independent conditional numerical checks pass for every native case. The full
+573-member inference archive preserves all diagnostics and method families.
+All 79 frozen held-out prediction folds now pass native replay and independent
+NumPy reconstruction. [Complete results](HIRISA/PREDICTION_RESULTS.md) retain
+both gene families and every baseline: ridge improves on the simple training
+mean in only four of sixteen contrasts. PBMC transfer and million-cell
+PCA/graph/integration remain open.
 
 ## Recorded scope
 
