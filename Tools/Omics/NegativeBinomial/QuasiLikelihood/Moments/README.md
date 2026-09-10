@@ -5,6 +5,11 @@ and adjusted QL residuals in Swift. It uses the previously qualified native
 unit-deviance calculation. It does not estimate the global QL scale, fit a
 robust prior, or perform a QL cohort test. Existing Wald/LRT plans remain unchanged.
 
+The subsequently qualified [explicit adaptive method](Adaptive/README.md) closes
+the twenty measured work-limit failures and covers all 3,940,972 moments across
+the same 58 arms. Direct summation remains the default. The direct-method
+measurements and failures below are retained as their original qualification.
+
 ## Method
 
 `moments(mean:dispersion:relativeTolerance:maximumTerms:)` starts at the count
@@ -85,9 +90,9 @@ relative moment error is 1.57e-9, and the largest completed moment uses
 9,384,448 support evaluations. Hagai feature index 19389 under the edgeR trend
 still exhausts ten million evaluations. Its entire six-observation residual
 result remains unavailable. The sensitivity does not change the default limit
-or replace failed primary receipts. This demonstrates the need for an
-accelerated evaluator qualified against the direct moment engine before
-full-family native QL integration.
+or replace failed primary receipts. These failures motivated the separately
+qualified adaptive evaluator linked above; the original direct work limits and
+results remain unchanged.
 
 The study is deliberately `completed-with-resource-limit-failures`. It is not
 a native QL cohort method, posterior calibration, power evidence or FDR-control

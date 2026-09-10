@@ -1,5 +1,20 @@
 import Foundation
 
+public enum VivoOmicsNBMomentMethod: String, Codable, Sendable {
+    case direct, adaptive
+}
+
+public struct VivoOmicsNBMomentSummation: Codable, Sendable, Equatable {
+    public let method: VivoOmicsNBMomentMethod
+    public let coveredCounts: UInt64
+    public let acceptedBlocks: Int
+    public let probabilityErrorBound: Double
+    public let firstRawMomentErrorBound: Double
+    public let secondRawMomentErrorBound: Double
+    public let meanErrorBound: Double
+    public let varianceErrorBound: Double
+}
+
 public struct VivoOmicsNBDevianceMoments: Codable, Sendable, Equatable {
     public let mean: Double
     public let variance: Double
@@ -11,6 +26,9 @@ public struct VivoOmicsNBDevianceMoments: Codable, Sendable, Equatable {
     public let omittedProbabilityBound: Double
     public let meanTruncationBound: Double
     public let varianceTruncationBound: Double
+    /// Absent for the original direct evaluator. Together with truncation
+    /// bounds, these bound analytic approximation, not floating rounding.
+    public internal(set) var summation: VivoOmicsNBMomentSummation? = nil
 }
 
 public struct VivoOmicsNBAdjustedResiduals: Codable, Sendable, Equatable {
@@ -40,7 +58,8 @@ public enum VivoOmicsNBResidualAdjustment {
         static let unbounded = Tail(mass: .infinity,first: .infinity,second: .infinity)
     }
     public static func moments(mean mu: Double, dispersion a: Double,
-        relativeTolerance: Double = 1e-10, maximumTerms: Int = 1_000_000) throws -> VivoOmicsNBDevianceMoments {
+        relativeTolerance: Double = 1e-10, maximumTerms: Int = 1_000_000,
+        method: VivoOmicsNBMomentMethod = .direct) throws -> VivoOmicsNBDevianceMoments {
         guard mu.isFinite, mu >= 0, a.isFinite, a == 0 || (1e-8...100).contains(a),
               relativeTolerance.isFinite, (1e-13...1e-3).contains(relativeTolerance),
               (1...10_000_000).contains(maximumTerms), mu <= 9_007_199_254_740_992-Double(maximumTerms) else {
@@ -50,6 +69,10 @@ public enum VivoOmicsNBResidualAdjustment {
             return .init(mean: 0,variance: 0,devianceScale: 0,degreesOfFreedom: 0,
                 firstCount: 0,lastCount: 0,evaluatedCounts: 1,omittedProbabilityBound: 0,
                 meanTruncationBound: 0,varianceTruncationBound: 0)
+        }
+        if method == .adaptive, mu >= 10_000, a > 0 {
+            return try VivoOmicsNBAdaptiveMoments.evaluate(mean: mu,dispersion: a,
+                relativeTolerance: relativeTolerance,maximumTerms: maximumTerms)
         }
         let r = a == 0 ? 0 : 1/a, q = a == 0 ? 0 : mu/(mu+r)
         let mode = UInt64(floor(a == 0 ? mu : max(0,mu*(1-a))))
@@ -135,7 +158,7 @@ public enum VivoOmicsNBResidualAdjustment {
     /// No new mean, trend, average scale, prior or hypothesis test is estimated.
     public static func adjustedResiduals(counts: [UInt64], means: [Double], design: [[Double]],
         dispersion: Double, averageQuasiDispersion: Double, relativeTolerance: Double = 1e-10,
-        maximumTerms: Int = 1_000_000) throws -> VivoOmicsNBAdjustedResiduals {
+        maximumTerms: Int = 1_000_000, method: VivoOmicsNBMomentMethod = .direct) throws -> VivoOmicsNBAdjustedResiduals {
         guard counts.count == means.count, counts.count == design.count,
               counts.allSatisfy({ $0 <= 9_007_199_254_740_992 }),
               means.allSatisfy({ $0.isFinite && $0 > 0 }), dispersion.isFinite, dispersion >= 0,
@@ -156,7 +179,7 @@ public enum VivoOmicsNBResidualAdjustment {
         var deviance = Sum(), degrees = Sum()
         for i in counts.indices {
             let m = try moments(mean: scaledMeans[i],dispersion: dispersion,
-                relativeTolerance: relativeTolerance,maximumTerms: maximumTerms)
+                relativeTolerance: relativeTolerance,maximumTerms: maximumTerms,method: method)
             let complement = 1-leverage[i]
             let d: Double, df: Double
             if complement < 1e-4 { d = 0; df = 0 }

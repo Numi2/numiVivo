@@ -356,9 +356,12 @@ The complete development objective remains open:
    available default-budget moments across 58 attempted real-data arms. Twenty
    gene/arm fits exhaust the declared work limit; a separately declared larger
    budget resolves nineteen, leaving one Hagai fit unavailable. The positive-mean
-   scaling-underflow defect and its verified repair are retained. Full-family
-   coverage needs an accelerated moment evaluator qualified against direct
-   summation. Global QL scale/refit, robust QL prior fitting and cohort integration
+   scaling-underflow defect and its verified repair are retained. The subsequent
+   [explicit adaptive evaluator](../Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Adaptive/README.md)
+   resolves all twenty original work-limit failures and passes all 58 arms and
+   3,940,972 moments, including independent checks of the 124 recovered moments.
+   Its 28 focused native tests pass; direct summation remains the default and
+   the earlier failures remain recorded. Global QL scale/refit, robust QL prior fitting and cohort integration
    remain unimplemented. QL is not a demonstrated calibration fix:
    the native-trend adjusted reference yields 39 Hagai sham calls versus Wald's
    20 on the same default families. Active-donor QL borrowing remains separate.

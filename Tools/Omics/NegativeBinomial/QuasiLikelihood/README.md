@@ -90,8 +90,10 @@ conditional unit-deviance moments and leverage-dependent residual DF at supplied
 means, trend dispersion and average QL scale. All 3,940,848 available default-budget
 moments pass independent checks. Twenty gene/arm fits exhaust the default work
 limit; a separate higher-work sensitivity resolves nineteen, leaving one Hagai
-fit unavailable. An accelerated evaluator qualified against direct summation is
-needed for full-family coverage.
+fit unavailable. The subsequent [explicit adaptive evaluator](Moments/Adaptive/README.md)
+closes all twenty measured work-limit failures: all 58 arms and 3,940,972 moments
+pass, including independent checks of the 124 recovered moments. Direct remains
+the default, and the original failures remain retained.
 
 A native QL cohort method still needs the global QL scale/refit, robust abundance-
 dependent prior estimation for unequal residual DF, and constrained-test

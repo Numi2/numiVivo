@@ -17,7 +17,9 @@ high-precision boundary cases. The subsequent [native conditional moments and
 adjusted residuals](QuasiLikelihood/Moments/README.md) pass 3,940,848 independent
 default-budget moment checks, with twenty explicit work-limit failures. A
 separate larger-budget check resolves nineteen of those fits; one remains
-unavailable. Global QL scale/refit, robust moderation and cohort inference remain
+unavailable under direct summation. The [explicit adaptive method](QuasiLikelihood/Moments/Adaptive/README.md)
+now resolves all twenty and passes the complete 58-arm, 3,940,972-moment family.
+Global QL scale/refit, robust moderation and cohort inference remain
 unimplemented; neither stage establishes improved calibration.
 
 Optional [count-likelihood effect shrinkage](EffectShrinkage/README.md) now adds

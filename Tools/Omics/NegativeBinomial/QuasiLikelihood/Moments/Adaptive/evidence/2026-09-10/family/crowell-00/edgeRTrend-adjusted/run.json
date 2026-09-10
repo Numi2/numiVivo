@@ -1,0 +1,33 @@
+{
+  "adaptiveMoments": 6,
+  "binarySHA256": "c4759843fbe6e061621b2d2d032892c04ea114ab3e94a71c1ef85e9bccb1820e",
+  "case": "crowell-00",
+  "evaluatedCounts": 12039656,
+  "failures": [],
+  "genes": 10650,
+  "inputSHA256": "e8990706862e88e8f7062e3e6e034c8c9bdf4bd046df9621c70a6d6cf9c85ca4",
+  "logicalSHA256": "cfe3d0d1a43ca76852425a643ab5d9b9c4b8582894578977948ccf68f8455700",
+  "maximumLeverageError": 1.8041124150158794e-15,
+  "maximumRelativeCombinedBound": 9.999614454639377e-11,
+  "method": "edgeRTrend-adjusted",
+  "moments": 85200,
+  "outputSHA256": "e29a45b4ca6d913358668b41df7b3cfd2d648147254a1e95419af8e7ae5cbf39",
+  "referenceSHA256": "4ff67281f44eb49548581ffb770070ae394d0238af02801c4609272a9ee9c248",
+  "relativeDFDifferenceQuantiles": [
+    3.3419254042591956e-09,
+    1.0899140063786204e-05,
+    4.188172514471356e-05,
+    5.5966462748387825e-05,
+    6.270012841324845e-05
+  ],
+  "relativeDevianceDifferenceQuantiles": [
+    1.3686442602579024e-09,
+    8.709398381750628e-05,
+    0.00020067263574539485,
+    0.00031225480554851617,
+    0.001137028618712162
+  ],
+  "requestSHA256": "4a004aeeb74d291eadf28ab60c69ab1467051c526f7616e5b28576e3d8ee755b",
+  "seconds": 6.831710791680962,
+  "status": "passed-conditional-stage"
+}

@@ -1,0 +1,281 @@
+{
+  "checks": [
+    {
+      "combinedRelativeBound": 1.0957458175086018e-14,
+      "coveredCounts": 17661,
+      "evaluatedCounts": 5158,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 10000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0000000191515697,
+        "devianceScale": 0.9998318610585951,
+        "mean": 1.000168186371653,
+        "variance": 2.0006727637438995
+      },
+      "referenceMass": 0.9999999999995752,
+      "relativeErrors": {
+        "degreesOfFreedom": 4.640732242933154e-13,
+        "devianceScale": 6.237232952344129e-13,
+        "mean": 1.596500709410975e-13,
+        "variance": 7.833733661755105e-13
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 1.5164680741973816e-13,
+      "coveredCounts": 32670,
+      "evaluatedCounts": 18018,
+      "input": {
+        "dispersion": 0.03,
+        "mean": 10000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0000256275959185,
+        "devianceScale": 0.995050760948003,
+        "mean": 1.0049996109175132,
+        "variance": 2.019996668230336
+      },
+      "referenceMass": 1.0000000000044282,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.056044141023449e-12,
+        "devianceScale": 1.234568003383174e-12,
+        "mean": 2.290390099801698e-12,
+        "variance": 3.524958103184872e-12
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 9.215848095243229e-14,
+      "coveredCounts": 90558,
+      "evaluatedCounts": 25049,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 10000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0003002417383433,
+        "devianceScale": 0.9839179085249629,
+        "mean": 1.0166501016715306,
+        "variance": 2.066534398577292
+      },
+      "referenceMass": 1.0000000000000002,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.0436096431476471e-14,
+        "devianceScale": 2.1316282072803006e-14,
+        "mean": 1.0658141036401503e-14,
+        "variance": 3.197442310920451e-14
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 3.430832162202821e-14,
+      "coveredCounts": 175478,
+      "evaluatedCounts": 32774,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 100000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.000000027706583,
+        "devianceScale": 0.999833372279807,
+        "mean": 1.0001666832008178,
+        "variance": 2.0006667329382113
+      },
+      "referenceMass": 1.000000000000025,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.3304912727107876e-12,
+        "devianceScale": 8.761880110341735e-13,
+        "mean": 4.545253062815391e-13,
+        "variance": 4.2177372705509697e-13
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 2.6548776539229203e-13,
+      "coveredCounts": 326465,
+      "evaluatedCounts": 36686,
+      "input": {
+        "dispersion": 0.03,
+        "mean": 100000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0000256382840973,
+        "devianceScale": 0.9950508310724178,
+        "mean": 1.0049995508333156,
+        "variance": 2.0199964051086226
+      },
+      "referenceMass": 0.999999999953409,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.6158185900394528e-12,
+        "devianceScale": 3.300182349619263e-11,
+        "mean": 3.138589388385071e-11,
+        "variance": 6.438760635774088e-11
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 1.5086648950007807e-13,
+      "coveredCounts": 905293,
+      "evaluatedCounts": 36449,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 100000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0003002570205852,
+        "devianceScale": 0.9839179457133923,
+        "mean": 1.0166500787779766,
+        "variance": 2.0665342739345034
+      },
+      "referenceMass": 0.9999999999999956,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.3322676295501878e-14,
+        "devianceScale": 1.3766765505351941e-14,
+        "mean": 2.708944180085382e-14,
+        "variance": 4.085620730620576e-14
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 5.331183486110791e-14,
+      "coveredCounts": 1753612,
+      "evaluatedCounts": 43478,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 1000000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0000000278010668,
+        "devianceScale": 0.9998333887525158,
+        "mean": 1.0001666668171172,
+        "variance": 2.000666667203457
+      },
+      "referenceMass": 1.0000000000002385,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.6364687382974807e-13,
+        "devianceScale": 4.929390229335695e-14,
+        "mean": 1.1435297153639112e-13,
+        "variance": 6.505906924303417e-14
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 3.3119820031101074e-13,
+      "coveredCounts": 3264416,
+      "evaluatedCounts": 38724,
+      "input": {
+        "dispersion": 0.03,
+        "mean": 1000000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0000256381948927,
+        "devianceScale": 0.9950508317389972,
+        "mean": 1.0049995500704232,
+        "variance": 2.0199964022220636
+      },
+      "referenceMass": 0.999999999934172,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.980289265901547e-10,
+        "devianceScale": 7.031841775528846e-11,
+        "mean": 1.2771050883486623e-10,
+        "variance": 5.739231312418269e-11
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 1.464711851099776e-13,
+      "coveredCounts": 9052645,
+      "evaluatedCounts": 45189,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 1000000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.000300257173494,
+        "devianceScale": 0.9839179460855852,
+        "mean": 1.01665007854881,
+        "variance": 2.0665342726869573
+      },
+      "referenceMass": 0.9999999999999789,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.9968028886505635e-14,
+        "devianceScale": 4.3520742565306136e-14,
+        "mean": 3.4416913763379853e-15,
+        "variance": 4.6851411639181606e-14
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 1.265846444377307e-13,
+      "coveredCounts": 347760,
+      "evaluatedCounts": 22490,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 10000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0170095900791576,
+        "devianceScale": 0.9146688364390075,
+        "mean": 1.1118883136311755,
+        "variance": 2.4312369009093686
+      },
+      "referenceMass": 1.0000000000001392,
+      "relativeErrors": {
+        "degreesOfFreedom": 5.079270337660091e-12,
+        "devianceScale": 2.7711166694643907e-12,
+        "mean": 2.3081536681957004e-12,
+        "variance": 4.629630012686903e-13
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 1.4284737703436458e-13,
+      "coveredCounts": 400024,
+      "evaluatedCounts": 21248,
+      "input": {
+        "dispersion": 1,
+        "mean": 10000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.03338861851014,
+        "devianceScale": 0.8951495064432904,
+        "mean": 1.1544313112746014,
+        "variance": 2.579303910609344
+      },
+      "referenceMass": 0.9999999999999993,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.7763568394002505e-15,
+        "devianceScale": 9.325873406851315e-15,
+        "mean": 7.66053886991358e-15,
+        "variance": 1.709743457922741e-14
+      },
+      "status": "passed"
+    },
+    {
+      "combinedRelativeBound": 1.5144795551392028e-13,
+      "coveredCounts": 1440032,
+      "evaluatedCounts": 21239,
+      "input": {
+        "dispersion": 4,
+        "mean": 10000
+      },
+      "reference": {
+        "degreesOfFreedom": 1.5250687897432844,
+        "devianceScale": 1.1304458834318576,
+        "mean": 1.3490860660338848,
+        "variance": 2.3868211398820254
+      },
+      "referenceMass": 1.0000000000000087,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.5765166949677223e-14,
+        "devianceScale": 9.992007221626409e-16,
+        "mean": 1.687538997430238e-14,
+        "variance": 1.7763568394002505e-14
+      },
+      "status": "passed"
+    }
+  ],
+  "status": "passed"
+}

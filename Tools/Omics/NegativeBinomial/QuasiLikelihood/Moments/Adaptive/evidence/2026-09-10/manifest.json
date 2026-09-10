@@ -1,0 +1,1946 @@
+{
+  "entries": [
+    {
+      "bytes": 577,
+      "logicalSHA256": "5f2cdaea76d0e96ccb250432f48bc9c3b2bd9c41fc0011eabec9ca3b9ac04a95",
+      "path": "build-attempt-1.log.gz",
+      "sha256": "00ea9216b5230e8880e99d31905bf91068864549110d50f64180e18bfd53551c"
+    },
+    {
+      "bytes": 479,
+      "logicalSHA256": "86f1f917960a6b1515cae409f62415f772543674ab0d643648af523442b570a1",
+      "path": "build-attempt-2.log.gz",
+      "sha256": "91a435d00678d46e2729e510a36c8f0aa87b737297adf03d08d29cdad4311719"
+    },
+    {
+      "bytes": 20,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "build.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "bytes": 4633,
+      "path": "derivative-reference.json",
+      "sha256": "f5545dca5f38d353f82cca1f4b44c21fefc26c31f146e117f8d4444816987506"
+    },
+    {
+      "bytes": 4843,
+      "path": "execution.json",
+      "sha256": "3dd36918d591c71cbee3e3fd46c95e266e3bc74f8b13d99a59ca562cd11d3db9"
+    },
+    {
+      "bytes": 8299,
+      "path": "extended-grid-checks.json",
+      "sha256": "33f8335b2644bbd5619b5814c08f17a4aa89c1759769361b4bed39773e4f02e2"
+    },
+    {
+      "bytes": 411,
+      "path": "extended-grid-input.json",
+      "sha256": "7fe97a0e2fd478dff077bf9f7e5d27af78cc88f5375b3ae45634a372aedf0578"
+    },
+    {
+      "bytes": 7718,
+      "path": "extended-grid-native.json",
+      "sha256": "f27d2020c9120f4fdb038d10cd294e62e9de6469b595dc557c13702cd2e0450a"
+    },
+    {
+      "bytes": 280,
+      "logicalSHA256": "d289343b6a240e16d926d04ed2f55edea3f0b4cb6adc3ed909d9880e1f041c11",
+      "path": "extended-grid-native.log.gz",
+      "sha256": "008758310b902286cdf309cc19a53cde571b2d9f4d172157f360ac0b78545d3c"
+    },
+    {
+      "bytes": 19649,
+      "logicalSHA256": "7b7947047fff5b4e0767f2637bf4b864fe3de300805bac2013688c469ed64529",
+      "path": "family/complete.json.gz",
+      "sha256": "ad0683dcadf977761ed45513a35da292cc3f055a3c39a0d5b5315b0d108adfe4"
+    },
+    {
+      "bytes": 32215,
+      "logicalSHA256": "79fc7833dd7b6254095198800d5bd44f02a6da049de6afbd66c4ac4a9a35d471",
+      "path": "family/crowell-00/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "e5b41e37b47118bf72e5718bd3e7dd94bf38f26bde4921b8df29442607a7aa6b"
+    },
+    {
+      "bytes": 303503,
+      "logicalSHA256": "b852310f11b410fc283dcbef21c86afb868fad54ce5dc44c91fa6d86f7984183",
+      "path": "family/crowell-00/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "1ebca6de4c0028030b082986bf36fabc095f34bbc08b5053c2541f5d992ab68d"
+    },
+    {
+      "bytes": 1235,
+      "path": "family/crowell-00/edgeRTrend-adjusted/run.json",
+      "sha256": "002a854a6a6343ff49b0bf342625ded0bf5fcb95297eace12323910b033e1063"
+    },
+    {
+      "bytes": 292,
+      "logicalSHA256": "83105c208053fb51906066acd9a6d8802921d82adfa75fdba618982b5ba44900",
+      "path": "family/crowell-00/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "42774990344ccafc5c5cda2f5c8f9fedc21ec0eb8fa06eabcd677251d9c59aa4"
+    },
+    {
+      "bytes": 32208,
+      "logicalSHA256": "3944aa103b9f110fef87d25f9d65cdf2d1258ee0ebaf76d2d9ca8f037be34b6b",
+      "path": "family/crowell-00/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "eb55af86e5527d0e2f8b4c66b54ca2f4c9b0a802c3aff26e12c9538303b3f669"
+    },
+    {
+      "bytes": 301292,
+      "logicalSHA256": "df46828f68c6294129fdc1e346dfe9929683825743c779eae4fc56c2841a5437",
+      "path": "family/crowell-00/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "24f15034aa98524775cafe9d93ba688264362ab1c5156ff6fb69c0c6990ae850"
+    },
+    {
+      "bytes": 1232,
+      "path": "family/crowell-00/nativeTrend-adjusted/run.json",
+      "sha256": "9df16baf88706684e7c84a533d4ca8f5882c3bad6ee2cfc9aa967d5466ce188f"
+    },
+    {
+      "bytes": 292,
+      "logicalSHA256": "8ce8fac00da30373fd0d69f41b2246e7421727b1b9e52f8da4f727081c10628c",
+      "path": "family/crowell-00/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "2a9c6dc80c6ec904157dd7e2d4dbb4927ad07514b90fa97a898a65fd055e6a28"
+    },
+    {
+      "bytes": 30933,
+      "logicalSHA256": "daaf8641f09bb379389d08e5fc03bdc267a55ff3631f9dd919c7af5fbfb69b4d",
+      "path": "family/crowell-01/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "eb00bb06b7f569a67131877a6eefb151d76c1a78929aae33f5d0ff5206db04c3"
+    },
+    {
+      "bytes": 288471,
+      "logicalSHA256": "14a5f8a59563a7e725bc3c94309d8058faa222661396ed02fcd8a20bc97640e4",
+      "path": "family/crowell-01/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "4fb6940cd76606832cc0f89824c33aa2c20abf31e5defc70290300d850e4fe4e"
+    },
+    {
+      "bytes": 1231,
+      "path": "family/crowell-01/edgeRTrend-adjusted/run.json",
+      "sha256": "4c2024280ef48f7d7de03dfea4a7306bc6660f11c84b152a30a8dcfc9593aabe"
+    },
+    {
+      "bytes": 292,
+      "logicalSHA256": "134d07573b319b72083cbdf13ccf69521b14536704ab92e182c3aeabde0f841d",
+      "path": "family/crowell-01/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "b33b8bbba26aa838482ca1aec3ec4b7ca57acb545649d8de52c30f181cc85579"
+    },
+    {
+      "bytes": 30931,
+      "logicalSHA256": "993f8d4297f1c193c2272f76b36a21ae1adb1184dd7149a807421096eb44063a",
+      "path": "family/crowell-01/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "82c499f03080e27832f860f877dca22b3aebfc85c89a88b160dbe33b83e562ac"
+    },
+    {
+      "bytes": 287157,
+      "logicalSHA256": "e8107df9ce24c447ce20bd377b7275361d3188271fd1e336f8b606439fd707f1",
+      "path": "family/crowell-01/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "e2a6c3456c1538d0318c846b4e2abd3210b723d28d773e0015bbb160312bc3c3"
+    },
+    {
+      "bytes": 1233,
+      "path": "family/crowell-01/nativeTrend-adjusted/run.json",
+      "sha256": "e10d12d6ae433e3e37e7a3e9b97f8db79db8f47371f62de3e5dd74fe37f32ea6"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "91195223d44704b3d7a52efc7f9f3517da495e739ec65ea629c67e621a710243",
+      "path": "family/crowell-01/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "2e22a5186363d3a5f23c8eb77de21782b48f2e51c18b82c5e0b393b4637c9929"
+    },
+    {
+      "bytes": 28332,
+      "logicalSHA256": "fbf48d10a421b5be8ce399517c12eceb28b63063daf9d9e4000b98beae1a7121",
+      "path": "family/crowell-02/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "2ce541fc15042b624a978bddb350278758bfdd541dadebe7529341e9b6a2b6e5"
+    },
+    {
+      "bytes": 267559,
+      "logicalSHA256": "9491bad5028ed0e71270d1e2d57435ffb789a71a24549ea18a7167649cb1ecc0",
+      "path": "family/crowell-02/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "2936df38d0b6550a840da805c4847eec00bd7ecd2b8154f4817008864eefce43"
+    },
+    {
+      "bytes": 1229,
+      "path": "family/crowell-02/edgeRTrend-adjusted/run.json",
+      "sha256": "6f822a72daad2bff77a3ff30048cfb7823c0f2fad14d1e7ca7a0e45d73340afa"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "7cd0211bca73abbd2fa0eae3bcfe7ce2e27982f907f9a6d6e3a1955d756a8343",
+      "path": "family/crowell-02/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "43e69154689ebd86af50b1dd3898f249f7b399daec1d6ab3933b5c42b38203c4"
+    },
+    {
+      "bytes": 28332,
+      "logicalSHA256": "fbf48d10a421b5be8ce399517c12eceb28b63063daf9d9e4000b98beae1a7121",
+      "path": "family/crowell-02/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "2ce541fc15042b624a978bddb350278758bfdd541dadebe7529341e9b6a2b6e5"
+    },
+    {
+      "bytes": 266579,
+      "logicalSHA256": "a9759e106f4978b9d5f12051f65806665079083f7bff7876790cd5f6279502d4",
+      "path": "family/crowell-02/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "0b2ecc73f295839c2ad45c7969619aee5f5db33b5810aea9712db18af662f9eb"
+    },
+    {
+      "bytes": 1229,
+      "path": "family/crowell-02/nativeTrend-adjusted/run.json",
+      "sha256": "61ea04ca711dada83f76d746b49b07dd5112e334f7af3e2c93c83b3692368526"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "82d57cbfe964aa1333688d049663eb25d086bed8c60c1e40e93072b92635dd5b",
+      "path": "family/crowell-02/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "a72c3fd739386787967f5bdf911a3ce274b18436435c562be45dae56783402d3"
+    },
+    {
+      "bytes": 31501,
+      "logicalSHA256": "2366179d2af73b737d99a337c6ab54d287a84a57099b785c224304031f82c265",
+      "path": "family/crowell-03/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "8d6e8b91b0be586f8e0d9193bdaf47d70fdbb18d29a8b8e5b815231a5fb57e71"
+    },
+    {
+      "bytes": 294474,
+      "logicalSHA256": "14cc08c07e39241b640bbe8171a421be099c49066eb5624ccfa48fa3902d3e8f",
+      "path": "family/crowell-03/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "3561b8c3b6789fbfebe0a079add8c3d0a3729eea276d19286ec42b4f6c868077"
+    },
+    {
+      "bytes": 1235,
+      "path": "family/crowell-03/edgeRTrend-adjusted/run.json",
+      "sha256": "c94e0ef4e344b0024c60cc53d35cfce5402fce925b825e5c869f8946254ae70b"
+    },
+    {
+      "bytes": 289,
+      "logicalSHA256": "1bcd77489316339f80e2257f314615261dc906e2e15ef1fee5401be2f73ad2ab",
+      "path": "family/crowell-03/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "4a52d76f062358191e50180b590166401f2904223debc4fdd0d3fa0a081c4cc1"
+    },
+    {
+      "bytes": 31496,
+      "logicalSHA256": "c54a2b21490ab8dfd093b7a7da9fb9b6609effb7b6156edad73937ad52e3038d",
+      "path": "family/crowell-03/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "b3ecb6db5f1cab62d3e0834a594f137d839f2f390da6abff322dcfcc591e4923"
+    },
+    {
+      "bytes": 293525,
+      "logicalSHA256": "2bb7f0430df14a35cec782877fbdfb91df217487ab2bc20079ae904ef144513c",
+      "path": "family/crowell-03/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "ea065a9d600e554684c24d4d8a64601350e46807007aa3a1c0dbe04d10afd6b1"
+    },
+    {
+      "bytes": 1231,
+      "path": "family/crowell-03/nativeTrend-adjusted/run.json",
+      "sha256": "0aadfbeecc9cd1a28a45a4756c427f7536b52ba509a30da6a56dfe78d2cac968"
+    },
+    {
+      "bytes": 292,
+      "logicalSHA256": "b5491175f0c138f2f2c3d15761de1ba96fe537944bd70a085cf1440c39d84ba2",
+      "path": "family/crowell-03/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "ba7a71f1b58793f37b81b9f476070d0f38fa74b3af34b66dbdbeca3fdf6083a0"
+    },
+    {
+      "bytes": 30786,
+      "logicalSHA256": "4f398ca14f3e21f797b7d316b936af0b426d4799cdec00b74cbbddde297514a0",
+      "path": "family/crowell-04/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "de8fbc964b97e71311cce7d96ca1e91c3ea79eeadbdae0eb48fa7a3c213200be"
+    },
+    {
+      "bytes": 281107,
+      "logicalSHA256": "ada4ea75ca6387a1649f047726f2aeb201f93e572190c26202961d5bc5a30d69",
+      "path": "family/crowell-04/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "535bd1a4b7472b3a82e26f5a2c79df474b9072bcd769b5bc01a6b12bf2b35163"
+    },
+    {
+      "bytes": 1231,
+      "path": "family/crowell-04/edgeRTrend-adjusted/run.json",
+      "sha256": "c003311804f98c57849ddf3aa063301822ce25c31872c371fd7440409ee7d786"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "6e177c5e58602cd989213af0f0d35b0cf52e495ee40c2f7734eeba5d8d18985c",
+      "path": "family/crowell-04/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "b2c77a0a44ee42e7eb288c0437af4603e7ea87e5f89e2bb9982958c04260bf16"
+    },
+    {
+      "bytes": 30784,
+      "logicalSHA256": "f31e1d5ee910c00582d124d178688489d1d731a5bb7110ba2501a51838088265",
+      "path": "family/crowell-04/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "4a37ed0fd5beb66c2058c65e58cce9e92794e8d7dc8024ee02604d841aaa60be"
+    },
+    {
+      "bytes": 281715,
+      "logicalSHA256": "50ae37f2e5b32ff7566d049bc009d8e8e15827c9f4a0d77286c88b3e886f8890",
+      "path": "family/crowell-04/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "6ba34f3aae965823a8ecc0264022dc01cb85093c1ff15dd2cdf6df34b59e11b4"
+    },
+    {
+      "bytes": 1230,
+      "path": "family/crowell-04/nativeTrend-adjusted/run.json",
+      "sha256": "e1148d6da80a0f70fe10967abbe5177fa9cb34370b97c0fbe7602da4d21c0879"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "0fe1e18d0a25aecf01ff89a13e927806a3ea3402693d0ea7280ffc497319f4ec",
+      "path": "family/crowell-04/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "2a72a7b1d256c127bb3d13200e2362c48911ba9a96e90e5529bc345400c083e8"
+    },
+    {
+      "bytes": 41514,
+      "logicalSHA256": "2eb7486455f09e03fad9fc4afb3d1919a2b947764721913b09285eeb193a3af3",
+      "path": "family/crowell-06/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "c8368614816ecacc388ecfaa8f2ff0bc573ddc70dc0780345843aa04c2710889"
+    },
+    {
+      "bytes": 324688,
+      "logicalSHA256": "78d315cb72b2f94245c55b48fdcfbd1061254c90e66ab972d0d4d79f048abdfa",
+      "path": "family/crowell-06/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "de9c15fe0e62f735f35af96cf6ac9952b49bb6e79b64fc6ec8e3f57749fb2076"
+    },
+    {
+      "bytes": 1230,
+      "path": "family/crowell-06/edgeRTrend-adjusted/run.json",
+      "sha256": "4a0f28beec22717daf906541ba14858a57ce66bc4a3dccb7a9cc54b2c0045d1f"
+    },
+    {
+      "bytes": 297,
+      "logicalSHA256": "e3b557247ea9af8140c0b0645a9305df3bec2d3c53e47476d2c4723ec379729d",
+      "path": "family/crowell-06/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "1eadcfb6bdcabc8919ed275d2831d52f642ebee10af12a8de1d0b8165d1edf58"
+    },
+    {
+      "bytes": 41494,
+      "logicalSHA256": "3ae4fd386d2e0e1aad4c066e291c858d8aa942c19165a8807b444c3f04162763",
+      "path": "family/crowell-06/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "68f3cd85a8b328e852c08328589c342fbb46caa6524461cab64bf7e8a3b76413"
+    },
+    {
+      "bytes": 324995,
+      "logicalSHA256": "17444b6416cb6cbf0349fdf4a37623b8326a761869552c15ef06583d28e17499",
+      "path": "family/crowell-06/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "5bbdde2af108b16fb17402cab54f6ff880397ba803578605c898298f41ba5bb8"
+    },
+    {
+      "bytes": 1240,
+      "path": "family/crowell-06/nativeTrend-adjusted/run.json",
+      "sha256": "79766a3da3c132ae4a519616c7f24e89146ab33660d3a85f62cb05450586dca0"
+    },
+    {
+      "bytes": 298,
+      "logicalSHA256": "4f4ca7c391d0d35b532d8a3b29c37002c4534b087b336b2e85b976550c1cc773",
+      "path": "family/crowell-06/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "ea5ccb22053202c151ddd5838070691bdf9e1a47f9761dc0fe0250862ed9ddd5"
+    },
+    {
+      "bytes": 33658,
+      "logicalSHA256": "aed64a08baf77e969bb61ec76d1a6dd78b9d36692aea3ad42a6e2d5dac2a278b",
+      "path": "family/crowell-07/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "0a46e724f45f29e6cbd8a9075c5d493f007e594fbfa838085398f0b733627092"
+    },
+    {
+      "bytes": 315837,
+      "logicalSHA256": "5136b47c84a3f205917f00a07f415b5d0f529842ba00b7f3306a3641fcdaf7e5",
+      "path": "family/crowell-07/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "f484a6fcc9b2ad489e78da3bbaa53b02dc54cdd2baf7dde32564dbabab215c8e"
+    },
+    {
+      "bytes": 1233,
+      "path": "family/crowell-07/edgeRTrend-adjusted/run.json",
+      "sha256": "0776b4aeb6e03951cc96fe9eb6e15d041bf6bf37760b2a734e01426086469f5f"
+    },
+    {
+      "bytes": 292,
+      "logicalSHA256": "8af09d13fa4fd9307a06107bccb7671ca123eaa12b8b334a810d5d0e17cbe37b",
+      "path": "family/crowell-07/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "43340559c819157b689becd5c59d86ef55185b2038896a6440d0d91771acde2d"
+    },
+    {
+      "bytes": 33667,
+      "logicalSHA256": "9d0c19f43c1f235886087cca28bd726cfb983a391e2a71e2a8df16d018165bf7",
+      "path": "family/crowell-07/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "fa1adf09733ecbca47ff3c6894947707872b6bcc585848fdc95a432fbe9fb133"
+    },
+    {
+      "bytes": 317757,
+      "logicalSHA256": "49b0944571b1383c21502c23deeb4286661eb53971717a5ca1a8a0427f770e09",
+      "path": "family/crowell-07/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "3eb3358135e61aa9e6cbc5a681a20c863909617273541e46f92d69bfd3587570"
+    },
+    {
+      "bytes": 1234,
+      "path": "family/crowell-07/nativeTrend-adjusted/run.json",
+      "sha256": "99c285351f90501c6e6aef7227af8eedeeea89975b918d2a21a776341da8072a"
+    },
+    {
+      "bytes": 295,
+      "logicalSHA256": "f76251a7826dc05932d155cba35e4cce322b46d1ef9b4863ef6fae897af3dd36",
+      "path": "family/crowell-07/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "022c1d7d65db5635d5f235f47dd52790919a6c6f8ec0f3cb39108054ad442118"
+    },
+    {
+      "bytes": 75286,
+      "logicalSHA256": "a254ef6cbd67f5517af9ff239199797e564f6ecbec34a43bcb290b7dd3ab7f11",
+      "path": "family/hagai-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "2ed312654221a6fd24da839f5f9f25e1ec2b6ac4c64723011eb693ec1eb257aa"
+    },
+    {
+      "bytes": 364486,
+      "logicalSHA256": "68861e9c92aa262ea5b85f16897cead18085ad05283fcf5a51999546f8e5be7c",
+      "path": "family/hagai-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "6e0d2a23bc6f40d14fbe8b5ff06f579ed1f9aa1b634a2d44a66a6c06977ed4e5"
+    },
+    {
+      "bytes": 1242,
+      "path": "family/hagai-default/edgeRTrend-adjusted/run.json",
+      "sha256": "8f81d4885c2d36df90fd9e98e0c516513a2be81d4e873c00b04410026414b980"
+    },
+    {
+      "bytes": 295,
+      "logicalSHA256": "b814ed6d411117d87adacb043fe4d8584d806add53168cdb4b39d625b03120b4",
+      "path": "family/hagai-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "c6d24895cf2695bae143018a640bfb41c720b8871b958e34b4d3d3bfe4776bb1"
+    },
+    {
+      "bytes": 75324,
+      "logicalSHA256": "8e9b1bd540dd3ba2b51db859c547705086d34d9f1742d4f6cff1e19fa9fad830",
+      "path": "family/hagai-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "6e05ce83d36fa3c208b711a6d6a1850f63639e6632f756a6929cbac593c43f5a"
+    },
+    {
+      "bytes": 365012,
+      "logicalSHA256": "2eb5b1195668a3084f94fb456cf686937277ee8c57c383563a1e13f05c96a49c",
+      "path": "family/hagai-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "94c241ec6b287b111e4a98a5e43a4c1b80aa98534a5ca1f1de9134046609f6bf"
+    },
+    {
+      "bytes": 1243,
+      "path": "family/hagai-default/nativeTrend-adjusted/run.json",
+      "sha256": "715938aac9e471c1f3a098c6c8b1fd1f734dba889b07447aced6dd002f4e75fa"
+    },
+    {
+      "bytes": 297,
+      "logicalSHA256": "cc14b98a05450caa4bbc93da70536b3867ba1622d06bd4f343f9f51be28b4c30",
+      "path": "family/hagai-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "8155f599556983193d5f40a2b1c0bdea3d89413c8897822b5b8ea5ea9fffd54f"
+    },
+    {
+      "bytes": 49372,
+      "logicalSHA256": "ad34baec386f797e1774a91801499d71707c7eea6d32b13769840cf6f9c16370",
+      "path": "family/hagai-null-01-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "af8e08f286d373cc77309a7c4d78930f637de552b978966aee2bc8a034776361"
+    },
+    {
+      "bytes": 335651,
+      "logicalSHA256": "af305132e4ef1f323f2a50c00a14ac81e3fd318c573ef67bedcbf3cc6fe50ace",
+      "path": "family/hagai-null-01-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "8bda5c97ddb2affa108075bc3cf82fea2800748b5ed8d5bde5a79c24d8a23812"
+    },
+    {
+      "bytes": 1246,
+      "path": "family/hagai-null-01-default/edgeRTrend-adjusted/run.json",
+      "sha256": "3fdaf4c34f575777308de7446ea0d1779ed6ddc6fd3a4bd2ac0997ae576f795a"
+    },
+    {
+      "bytes": 293,
+      "logicalSHA256": "caf5a43fe81ddd95443586db5df8ec2dcad4706ee6294bce8cdf7a50bdd12f67",
+      "path": "family/hagai-null-01-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "0db3306349e67c4fe85a1bdb7907951f299024db5b901325a653a2fe997b29d4"
+    },
+    {
+      "bytes": 49132,
+      "logicalSHA256": "901c2919d637f256752e695075ff55d438825ed340e457a494942aa4fc034b29",
+      "path": "family/hagai-null-01-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "bfe78713fc6738af2f96b663c1d54a5f4f1be2b9da4f7f183fed8e7b43647955"
+    },
+    {
+      "bytes": 344482,
+      "logicalSHA256": "2698d6f8c64e62d9ea70bf7387297bf1efd40a27299b98f97f5a735714268954",
+      "path": "family/hagai-null-01-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "f8b4ebe1d1b3ef33f2765e82d7c5ee378a73458648efb5127acd389516b446ae"
+    },
+    {
+      "bytes": 1247,
+      "path": "family/hagai-null-01-default/nativeTrend-adjusted/run.json",
+      "sha256": "6bdd07f73d68dee55c445f3b5311bdb31dc4101b9a1d5340dbdd51bf802e48d2"
+    },
+    {
+      "bytes": 293,
+      "logicalSHA256": "40f42a06585369dd3bfddae122cc49676c8940411399c6cab497946cc564c52f",
+      "path": "family/hagai-null-01-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "cfeb56443c5308989b4ece47b2c4f2d7b3378ad99d156b1c05231593a7ab5154"
+    },
+    {
+      "bytes": 49433,
+      "logicalSHA256": "46f37ae3bfdebc0aac3c5dec5bf3bd129140d0661f385f694aa97953c75e4568",
+      "path": "family/hagai-null-02-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "39b1845928431908b4674066900973d1b6933318dfe513c998d47e2edc72df01"
+    },
+    {
+      "bytes": 334930,
+      "logicalSHA256": "14c5bf816bc4b97f24bfc4dc2546f2032491222b7c65c5128093ab8506f5ef6c",
+      "path": "family/hagai-null-02-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "b9888d96abe05d8356b57bc6802b0ae37bb846b34c8ce42880229660d03bd052"
+    },
+    {
+      "bytes": 1241,
+      "path": "family/hagai-null-02-default/edgeRTrend-adjusted/run.json",
+      "sha256": "e34e65aa1b6fe3be3f7408bec396f74f62e07b5610d4ae7b56fc01910d36fc0b"
+    },
+    {
+      "bytes": 295,
+      "logicalSHA256": "e967c5886639fbd057febef66cc3b329f1fc0749d9336c57149c1a4917e4a81f",
+      "path": "family/hagai-null-02-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "1055100cbd4da74eae775b778d9775a1df115f07b31a1d72cc10770455eb3704"
+    },
+    {
+      "bytes": 49228,
+      "logicalSHA256": "a00fe898a46c862ed4dc189942f6bedf681aeeb87c509204e036d1f2a06786a7",
+      "path": "family/hagai-null-02-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "4703099b1efd9d65d8b9eaa9732cdbe4def85a1d5c87f435cbc540393f2799a8"
+    },
+    {
+      "bytes": 344233,
+      "logicalSHA256": "7bebd161473afaae7daedae993dc6e06134ab36192002fd8c9d23d7876fca4b9",
+      "path": "family/hagai-null-02-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "3d8dce63c0fd206505cd92c2d68dfa5f26ea8697a97049395f151b6a60792795"
+    },
+    {
+      "bytes": 1247,
+      "path": "family/hagai-null-02-default/nativeTrend-adjusted/run.json",
+      "sha256": "b3cfbc3b28c7e9fef53becfb4270b2bfec7e330e2eb9bf93f645891c393b7ec1"
+    },
+    {
+      "bytes": 295,
+      "logicalSHA256": "3577f010ba52ea65ec5e26c4eb525397d10c7a56c1ef79d3e8dd1409340b0d1d",
+      "path": "family/hagai-null-02-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "d7f5c4ecf6213f0cc116fa3df6c5ca47bd814f46131e800865cbbd0ecdd9797b"
+    },
+    {
+      "bytes": 49694,
+      "logicalSHA256": "23177278378276e91e702ea4b75013c74dfb438d60df0490367216d491685c89",
+      "path": "family/hagai-null-03-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "bef81b4c4307a084799c59a7bc2cc53f4c42ca18f33d84ddac7653cafb785dfd"
+    },
+    {
+      "bytes": 334530,
+      "logicalSHA256": "51035ee2c0035ba02420aacee97a2cc7fec37f6ab64b1e66209ec897625fe3b3",
+      "path": "family/hagai-null-03-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "e52de72564da2350334615d63881f7fc190110d8e017b4c25ac7b219ce92216c"
+    },
+    {
+      "bytes": 1245,
+      "path": "family/hagai-null-03-default/edgeRTrend-adjusted/run.json",
+      "sha256": "0b43cb470e07ac371987acbb68a342a72da135d2de241ba185f6ab8262add630"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "5fdffb046b029bd4429b058870d4b867363bef3e7c7dbe14f6f2239bf0a5ddd5",
+      "path": "family/hagai-null-03-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "3a8cd9bc4a37c7aafb790a3843395e03d1a3e553e887855d72920992ade3a398"
+    },
+    {
+      "bytes": 49132,
+      "logicalSHA256": "9f050a938924e13bdbdedfc39581e1f8c960fc80a0cfbe6a385d172707686099",
+      "path": "family/hagai-null-03-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "d4517dc25af828b0fd3bcf5d2b2f134e5588d11fb6bc1020206d85d5787ce5ae"
+    },
+    {
+      "bytes": 344490,
+      "logicalSHA256": "280e9d81cbdaa75a499e53214411ee09071389e5af1b24075259dd43ca49ab99",
+      "path": "family/hagai-null-03-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "9582bff78e72633d2f2f81358eb4dffc9e2e9ea7924eaa54ffb587098e4b4ce8"
+    },
+    {
+      "bytes": 1245,
+      "path": "family/hagai-null-03-default/nativeTrend-adjusted/run.json",
+      "sha256": "80c180aae4db2bb32802821e7cf5e064460bf7de8384774c90939bbbef2bde53"
+    },
+    {
+      "bytes": 296,
+      "logicalSHA256": "616f33146086666d1dd197c695b75d946b1468b76e32c901dfe958ea9f1290ea",
+      "path": "family/hagai-null-03-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "de52a8e6fd2c48e2b612ebb7f31077ad8ebb7c0f93a0831a3c4686f26be1b9e3"
+    },
+    {
+      "bytes": 49902,
+      "logicalSHA256": "2a2df9ed1e60b4f2131e15d0e4f7055cc586e9280fdaf900709fe7394d52eb1e",
+      "path": "family/hagai-null-04-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "962d4db9024002cd65fb571912ba497fdd31710b77d5f2394f35775afefdc383"
+    },
+    {
+      "bytes": 336855,
+      "logicalSHA256": "bddecb055a024054e02641f2ad2680267f279fd07dce5bc4e86dfe853821f616",
+      "path": "family/hagai-null-04-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "9592c6eb3ee6a2e143b5ed3453bb31c79987c01d3bb3f0713408ad4dd28a0b73"
+    },
+    {
+      "bytes": 1244,
+      "path": "family/hagai-null-04-default/edgeRTrend-adjusted/run.json",
+      "sha256": "ee53f9dd10f4c8a759b9000bad6dbceda18f7c1e2446afac89834251a7408d31"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "2298bc50000277be7f6e8bdb483f7c4b3b198980b395d14433bb00be24fdb0ee",
+      "path": "family/hagai-null-04-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "f4345296e5228df7635642d623ebfb6258506395d681373155267a2557184f98"
+    },
+    {
+      "bytes": 49708,
+      "logicalSHA256": "5190a4278cf5a3960be0492e0ec99c466c3f218dd4d9deb6214d8c23481e1a02",
+      "path": "family/hagai-null-04-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "52855a7312617d0b1c5dd405fc6ce9fdf0005ab6b7cf802e491f9f9f92fa8327"
+    },
+    {
+      "bytes": 344864,
+      "logicalSHA256": "4ebb9abb5b9ff37265425984a033d8fcb6e16d302f2e0b9e413977a0db89b488",
+      "path": "family/hagai-null-04-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "5fbb1ded9a061a6830427011a078593ff062912684d8e29f639d995462f9fb59"
+    },
+    {
+      "bytes": 1246,
+      "path": "family/hagai-null-04-default/nativeTrend-adjusted/run.json",
+      "sha256": "84f29a0ad823930f0cc7ded86ae22ed9eac56d31d2758cbc08af778b659850d1"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "b343a8b68dbf6bc579b794d78c5a3ca582b94815d3773098b23207716c1db7a3",
+      "path": "family/hagai-null-04-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "cef91357deca5c38ae69e5d2fc8e28e5b80df48f83c0d869a75983945adf96ae"
+    },
+    {
+      "bytes": 49716,
+      "logicalSHA256": "da0937c06662baac9f2b769ccc83d5ece17c3af01fcfc43277d513462e537903",
+      "path": "family/hagai-null-05-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "77d131706d0f46976cab286a84f042cd6f53f91078d7317455baad484ecdaf37"
+    },
+    {
+      "bytes": 336081,
+      "logicalSHA256": "053b3825d66b0873b145b95e9ee8868916b87b2b401f567170cc1a2e7d645a1a",
+      "path": "family/hagai-null-05-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "7ad17f47a63ac2fb912d28add2eef2ba36fc728576708f365435f73f5da7ccd2"
+    },
+    {
+      "bytes": 1245,
+      "path": "family/hagai-null-05-default/edgeRTrend-adjusted/run.json",
+      "sha256": "36ed9c6a8e42ca7418650ddf2f37f6b8e1e635f74809d80e60ed433d84fa547c"
+    },
+    {
+      "bytes": 297,
+      "logicalSHA256": "8b88028b61d4352148e14b18a90331ebad046a3634d9f92c307dd2cbe7b83caa",
+      "path": "family/hagai-null-05-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "3b80d7acfab1a7a46a87e6e25885b186db2ffa6f88827459ca5f113e4c6e02c2"
+    },
+    {
+      "bytes": 49679,
+      "logicalSHA256": "e0f11a6e1d51ea35f66b0b257bb9afd767978ca062df7c74b20c01cc6022e9af",
+      "path": "family/hagai-null-05-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "16b7e0c448b1e67be1677a05a887a6b55794f9b4fcd90b35b4ca96258308edfd"
+    },
+    {
+      "bytes": 344136,
+      "logicalSHA256": "e58a3204698ad9f0cdaeae995cd8f5d80255043433aa07e76c9e221587637c0a",
+      "path": "family/hagai-null-05-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "555a5eb96e3e56aafcfb95e3dc2a0d73bddbba0389d762381f293f8b4ab741ac"
+    },
+    {
+      "bytes": 1246,
+      "path": "family/hagai-null-05-default/nativeTrend-adjusted/run.json",
+      "sha256": "139eac26470aa128dc32506f185a2dbb3b86afe31ca46f75e413c47638562ccf"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "47684fe818c08b045a475ed7f0592d54b4ce7415257f03d220e74863f3c22c11",
+      "path": "family/hagai-null-05-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "85c8d47d381ae9cd46f27fcdc5e12173e35e5a9b40de1af444079ba25649805b"
+    },
+    {
+      "bytes": 49802,
+      "logicalSHA256": "34bbca8cf39dd66a0118b162f03386d3f53b643ea4e1ee7151d250812f42fa1f",
+      "path": "family/hagai-null-06-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "e5b984738d8e967ef0af9484e3bd7212a1f2367f6e910d6ece15a74db134a36c"
+    },
+    {
+      "bytes": 335007,
+      "logicalSHA256": "c33567f1e329cc386fe99e7dff22d9f782fb7ce5e778252c83b8cf4ead08ef69",
+      "path": "family/hagai-null-06-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "41f43e98b9875a285f81800d90ef3470f77b0e782acf827f2b62b1ce8ae5ecde"
+    },
+    {
+      "bytes": 1243,
+      "path": "family/hagai-null-06-default/edgeRTrend-adjusted/run.json",
+      "sha256": "bd2e1bc4e928cf73a345c59c3db774f3cb03fd90f1c069dac9cb832efb171a51"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "665a93c682ec4e1638c1cb6559289522d0b41d61e7d2788b360f1f8b4865a479",
+      "path": "family/hagai-null-06-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "38faf04694d5ef97d966e1ca23327702bf091fee648b7c384b75332edd851986"
+    },
+    {
+      "bytes": 49812,
+      "logicalSHA256": "9b15f180bcd9d8c8f7dab0ac507c4997d469b66ac15b0518ca4077d8d4be1aa4",
+      "path": "family/hagai-null-06-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "2a90e5e7423a37f96aea0a26e021b8e257472b7a051414cb40f450294262ec2a"
+    },
+    {
+      "bytes": 344548,
+      "logicalSHA256": "f538a9c588817dc16c570046c6d5279a2ffbe1d9629202d9640354f2eb8459d4",
+      "path": "family/hagai-null-06-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "ee23547dc753eaeb7b2252144b8649c8e5c159f5c9b3ad68ca0063b8f61fd561"
+    },
+    {
+      "bytes": 1246,
+      "path": "family/hagai-null-06-default/nativeTrend-adjusted/run.json",
+      "sha256": "d66c1fabc2b534aac5fc1dd350df716a5a1b2f1e5d0b49632f85d455e0f7170f"
+    },
+    {
+      "bytes": 296,
+      "logicalSHA256": "eca248535a87184f516141841b70f43a80020b179ab4abdae8dd70f791e197aa",
+      "path": "family/hagai-null-06-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "a99308d62f98b989bfc044863426372135c5c0fb2e1b5ed357dbb9eb06ab1015"
+    },
+    {
+      "bytes": 49695,
+      "logicalSHA256": "4b4b3b0d21f6263c689780cafe15e1a14726719a25fe2ddfba4cd9803452c24b",
+      "path": "family/hagai-null-07-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "f7d6011c480f1cfbc1bf2e79134cd3b6eada1c2cd86a26827cfcda1f0a901331"
+    },
+    {
+      "bytes": 334669,
+      "logicalSHA256": "1de9c70e8d34a31d683c2d1bd336283957f50844840a0a9484680f84a75bd82d",
+      "path": "family/hagai-null-07-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "1c595ebfe49149aa974f866dce120f8de848809cc38bc48bcfb0bb018d1b7337"
+    },
+    {
+      "bytes": 1247,
+      "path": "family/hagai-null-07-default/edgeRTrend-adjusted/run.json",
+      "sha256": "6cdf41b9f55e9f11b6c779496d8857ae2c7f7e66fd3471ee1870199693d63493"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "2a6d8e71271bb4d429038fb1d79acb170263406510682d9c765a9143c7ec50c9",
+      "path": "family/hagai-null-07-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "f5fa469a59e1c587180ec23955548848725a0f24f3cc3908d80ac2e10b8fdc3f"
+    },
+    {
+      "bytes": 49511,
+      "logicalSHA256": "173fd8b463bd22afc3569e8bdf23f9540084928ee62f0b501d2b33d866aa7094",
+      "path": "family/hagai-null-07-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "2109953b20876c9c479a1da59acde4d06451d9e0f76dd2b4b0b0cafd9f207135"
+    },
+    {
+      "bytes": 345043,
+      "logicalSHA256": "9e71fdc17297ba67558e66dd0c895cfdef31aae7d6f5a3c3cac3f6a337202348",
+      "path": "family/hagai-null-07-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "f7ffcfea2eac2e9ce0a12f2fafa6d5f6094ebf9e2fb744201282ec3e425d64be"
+    },
+    {
+      "bytes": 1247,
+      "path": "family/hagai-null-07-default/nativeTrend-adjusted/run.json",
+      "sha256": "2100b1bae977c85223b595ee99d2b480ce49c6ac62a455ff354bb27c9d0fa34f"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "9116ac6925c7429e4c93c44c51ffe073ad192d1c02327a876f24469bfff68a31",
+      "path": "family/hagai-null-07-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "a24fc59dd7a7dfd1919d7db0649dc4daf400cf774a29c704262d570aa1fb204b"
+    },
+    {
+      "bytes": 49281,
+      "logicalSHA256": "4482638ecd10b0b9b0cd603d7df83a2a2b2036d91266a72da689aa2c29037c97",
+      "path": "family/hagai-null-08-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "4a879f67bafa1758328b1c704ac51e70eeac52990f872f97b6b9a3a90bafde5c"
+    },
+    {
+      "bytes": 336469,
+      "logicalSHA256": "6f7096c48736ecddaef74330b543ef71945a4eb6a0a9f69d36401e43d7e05a00",
+      "path": "family/hagai-null-08-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "f0a86126b8a0b5f17aae14aa0f67bd38eb9eecd2e6236053dfd8558ba80a62f9"
+    },
+    {
+      "bytes": 1245,
+      "path": "family/hagai-null-08-default/edgeRTrend-adjusted/run.json",
+      "sha256": "0b9b4d82dd482523b6ce58c91ec16d736276a0be1129bd4a34c72bd88ef8e55a"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "006a419b863c0862f65888d4d861fee9cd4ed9b3dd42b18bdef9de9cedb29755",
+      "path": "family/hagai-null-08-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "a8dc76c58d5d6927127daf7f5fb4b4a05daa6ab53858d4487b3d3226e6960ba3"
+    },
+    {
+      "bytes": 48964,
+      "logicalSHA256": "d9a204163e8038afe960e077b1e0113c052ffe3997531a07b7a6d51bd4a632b7",
+      "path": "family/hagai-null-08-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "4a8364b176a15a0fa05c5e82bcfe0d4bdbbfc2d7805c10ec43767c4d7fe68692"
+    },
+    {
+      "bytes": 344330,
+      "logicalSHA256": "e18645d17ba04b3e1ac264abec507a230dd4bac088f61b3fc3d089597135c6cd",
+      "path": "family/hagai-null-08-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "dfc6119b3378defbe166381d70047621c8b7c857b29fd72544d6f65c104f545e"
+    },
+    {
+      "bytes": 1244,
+      "path": "family/hagai-null-08-default/nativeTrend-adjusted/run.json",
+      "sha256": "1ba7a3e12a6590f9c9a73fa59078968f07519d9df4dd9167e691175199f2d674"
+    },
+    {
+      "bytes": 296,
+      "logicalSHA256": "9d6ed6f3b6cac6481be64e5a2d15ea74aa9c33b36bbb10309e67e641d436007c",
+      "path": "family/hagai-null-08-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "cc87b1274038b622b7124b154d877a0ef79cedbde9faf1d89c91bafcffc07181"
+    },
+    {
+      "bytes": 49348,
+      "logicalSHA256": "73c431ca44e537a342270e87d572acd8c23d73e30aa3c2bb8c4834c8d7e04473",
+      "path": "family/hagai-null-09-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "ff39b3138a2dcbb7981a1757cbdd1431630ea529f16fee891a2fc6c24aafdd88"
+    },
+    {
+      "bytes": 335402,
+      "logicalSHA256": "c47ba0ff8d8df56a6ae5bf17a3a71e910da333ef8596cbdc11a6e5e3a29c83d1",
+      "path": "family/hagai-null-09-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "782b34ce1961804273c280f0e78eec7995ca588e96979f8dde0265527a15ebc4"
+    },
+    {
+      "bytes": 1244,
+      "path": "family/hagai-null-09-default/edgeRTrend-adjusted/run.json",
+      "sha256": "617649d3fe15e2aefb3dd531fa281147300ea5fc48a7eb3a9f3d8f19a6da2781"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "1298947ae91c5713d41d891b220873ed43b6e83e17e421f7889c61b6773b3a26",
+      "path": "family/hagai-null-09-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "54c38bf06e75100997e9a7a8fe2ac54b10fd697e87d10eea0bde6fbf7bf8f3d3"
+    },
+    {
+      "bytes": 49231,
+      "logicalSHA256": "d664dcffd42f84477abb5501562b0d790007a9b15cc7a6e7ce7a2b996190cea9",
+      "path": "family/hagai-null-09-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "7d7126fff477c36bde45c3f0ea2f124ef21d3bed95988cc6cbff26dbc19f9604"
+    },
+    {
+      "bytes": 344480,
+      "logicalSHA256": "2daea870ae1b83353a427c992ddef640e1f89bd46d26d9be6a92848a1388f447",
+      "path": "family/hagai-null-09-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "82909e3664983ed1a8e7bf15ec01b915d2100b13d76a97be6f3b70644bd388d3"
+    },
+    {
+      "bytes": 1246,
+      "path": "family/hagai-null-09-default/nativeTrend-adjusted/run.json",
+      "sha256": "05d6604f8913123e00f4dfec182c8b74e0a4f19eba8ada16fa5ee6ac8c8824b0"
+    },
+    {
+      "bytes": 295,
+      "logicalSHA256": "1037f33aa458113800e0e4eb9392b1b6dec5f662291532b3f6fb0b3bf7ae6953",
+      "path": "family/hagai-null-09-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "2032003f1bf67eb693ef4473f7ad91ca3bb7dbd978b6ce5d1f02443334cccdbf"
+    },
+    {
+      "bytes": 49689,
+      "logicalSHA256": "227b7c4d683445b99b7a84750bdd5ba0a838608c8445fcf391fbec04b85bf987",
+      "path": "family/hagai-null-10-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "43181d854c244be349c631565ea35713c3ff6c26ab313c19164892714a278274"
+    },
+    {
+      "bytes": 337114,
+      "logicalSHA256": "a81bac6372ff41eddd861dc57dc75f0b8781e0a42d04fd1b36be27fc6915c12d",
+      "path": "family/hagai-null-10-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "f8593bcf04649466f2f868a39128fbc170255eee1286e962ec8f46ddec88bcc0"
+    },
+    {
+      "bytes": 1246,
+      "path": "family/hagai-null-10-default/edgeRTrend-adjusted/run.json",
+      "sha256": "1fdae58ded7718d9385cbad9d5376eb834402395b415c74778f6c31dc1677cd8"
+    },
+    {
+      "bytes": 296,
+      "logicalSHA256": "9cf5f8fe6315b604091fcbdf3df3ee352390067705637cdfc20ed3cbe64ff65e",
+      "path": "family/hagai-null-10-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "1bcd0733c55ddfadb6480cbd9e3a3c00ac9a3367adb74451c6d4210d42ffb07e"
+    },
+    {
+      "bytes": 49670,
+      "logicalSHA256": "d05752a0d34fec4b2534c2e7c147ed9b8eb32066189bd98f0d55f4a7b3336278",
+      "path": "family/hagai-null-10-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "5d4856336b1857d36d5306a4c5956b2dd400f36ffc46e66a2279811ad87d4725"
+    },
+    {
+      "bytes": 344676,
+      "logicalSHA256": "036cae7bd3b631287830a131f22c6426faa724f7188a93c4bc84bf41b19d08a9",
+      "path": "family/hagai-null-10-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "0c905b2173f93cc6e6346c942e71389236eb1712c3cfee323a258491f523377f"
+    },
+    {
+      "bytes": 1247,
+      "path": "family/hagai-null-10-default/nativeTrend-adjusted/run.json",
+      "sha256": "35646af6d61bab7f097ef3af122df70938b2717393cb508f4329cabb4ee1689b"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "7b6fb2c9930f7a20b31224e28293c8ac9099d57c5850f5760a264ccf06d0983d",
+      "path": "family/hagai-null-10-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "0a906eaf1939153337d980c5fbf0727cd73c9a6d95ed4de019352c285fd40ec2"
+    },
+    {
+      "bytes": 17192,
+      "logicalSHA256": "d3ab8eaa6f2c7790ef2c81f93f5d94a6074c66ec9c7dbb3760683022dcb0ba50",
+      "path": "family/kang-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "0c71d11c3f3a8944604ba69b4f7b7a2ac6621e18b32c0a242612140868b15629"
+    },
+    {
+      "bytes": 158085,
+      "logicalSHA256": "6770f3d92d9c84a99e96692f2d51e81fd7e7764aeb1219fc8c38fa26d6a8725e",
+      "path": "family/kang-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "1924f19d4bf4dc10a5fb2096484420b7f7e647369b71b672b907d77736be1028"
+    },
+    {
+      "bytes": 1236,
+      "path": "family/kang-default/edgeRTrend-adjusted/run.json",
+      "sha256": "7fed03a147602eed8b67fef079eaa61a484a537ba9a133f54e550b2129c3bca4"
+    },
+    {
+      "bytes": 295,
+      "logicalSHA256": "13e07976097e161db30b3daa41e21cae74ae26e0215dfdd9995a780ef02207a3",
+      "path": "family/kang-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "20c8d925bb7a172c4ce9d78277d1ddebeb370fd5c0a9e2feb4bb7508242f8617"
+    },
+    {
+      "bytes": 17209,
+      "logicalSHA256": "d8c5a6abf977bacbfd74335165bc53dc2a05d47b803bbf3c7d3af9c6a533cd07",
+      "path": "family/kang-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "79cd27170307f86e98a8aa1cc4907c69910bd2125471cdcd25b8f6b783bca8fe"
+    },
+    {
+      "bytes": 158794,
+      "logicalSHA256": "add740154f14875bbfc1d96684807e6c58a7e4572b25c58e2cfcdba2e4a367ea",
+      "path": "family/kang-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "ca4f909b4493ff032a5435e4f89f1806f38db46718a48253a60ca4deae9807c6"
+    },
+    {
+      "bytes": 1233,
+      "path": "family/kang-default/nativeTrend-adjusted/run.json",
+      "sha256": "cfe9b33d58b8fe96fcde4993fd1712a87ef13f23752b26a347dacd21b820f78c"
+    },
+    {
+      "bytes": 294,
+      "logicalSHA256": "8e8ccc1165182620b456465bdb7b2d859410c6bc85e4d8ea2724c1ce3e5f22f2",
+      "path": "family/kang-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "b1405069a0b2d5270deec148a6c95f3b8f85ba8b5d5928757ba4af2745b52956"
+    },
+    {
+      "bytes": 10277,
+      "logicalSHA256": "9ecf37557a2f7b51cae51374a629d9baa6b85231186f08a1379dbaf4632d1655",
+      "path": "family/kang-null-01-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "725e933694190483593c90823ddd4bf5637fed28de9236edff81d659d39585ed"
+    },
+    {
+      "bytes": 93737,
+      "logicalSHA256": "6d080a911c1227f7f3f706e92aad353c861c2b1f4f332e2072d22bf31204f7d0",
+      "path": "family/kang-null-01-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "d1e23de1b384dc8b743d3933fbc5278b1f96a817fa23abcd35485a5d14ef92b0"
+    },
+    {
+      "bytes": 1243,
+      "path": "family/kang-null-01-default/edgeRTrend-adjusted/run.json",
+      "sha256": "d175cb2752391a8c5e2a2195da8005263e0668bec5f8e9d9aee68830d10d9c9b"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "1a9343ced6438d5b55d5fb4dd660e973b7bc8333807d6aa81660407dd20bd68d",
+      "path": "family/kang-null-01-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "04fc40dfbe114d69e889e2f3e95df9ebceef87e7d20b6aa11985557850df189f"
+    },
+    {
+      "bytes": 10274,
+      "logicalSHA256": "97086e32463a33866b640d99ec7bcbdadd4cc1a84f5310849cb06277c8c4a944",
+      "path": "family/kang-null-01-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "5e87bd4c05908028bde46034b40713f48882d09687f63ab6cc4c259c6c0e87c4"
+    },
+    {
+      "bytes": 94274,
+      "logicalSHA256": "c729bc2fc13668131296aac50265cc01753ca1e0bd2e54949dca721529a9f406",
+      "path": "family/kang-null-01-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "f255db44fe95ce89eabe5ee6be50cf12ece7940d67eb34c60f7344f99d80fbbb"
+    },
+    {
+      "bytes": 1244,
+      "path": "family/kang-null-01-default/nativeTrend-adjusted/run.json",
+      "sha256": "2150ae1fbd0ec771416302158fd327fe9d7d3478c8cd01decbaf8bd970ef5313"
+    },
+    {
+      "bytes": 290,
+      "logicalSHA256": "3d761d77710eeed1709bfdd62a6a9e2559816aab0509de381dcafaa0a6758f9f",
+      "path": "family/kang-null-01-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "b091fd8bd5a724749ff8a0088566d70cfcf6b0cbc5b30806d3be2407a8bb943d"
+    },
+    {
+      "bytes": 10273,
+      "logicalSHA256": "6f119aba5e1d8d147ba6556865597378a9f3a7aab5e4cda304582abd38fb0108",
+      "path": "family/kang-null-02-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "b1998cc99ff5d30d7f20deb0ef16713ccb9116de92d66e916f5f42a542fde879"
+    },
+    {
+      "bytes": 93977,
+      "logicalSHA256": "7f7f080504f2604ff565bbe3d35e215a77f1d20d6e97443b59b437911e440ada",
+      "path": "family/kang-null-02-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "ddbcbcacc8d5d50fd413e1cba5f2a2e1d67ae7e714a3069ea4907348fbf1b7e2"
+    },
+    {
+      "bytes": 1244,
+      "path": "family/kang-null-02-default/edgeRTrend-adjusted/run.json",
+      "sha256": "f9ec140748d1138408c8561ce402499f9b963850954c7deeaf0a2c09a978ec76"
+    },
+    {
+      "bytes": 292,
+      "logicalSHA256": "f2912ad969111a0398b469c35baa66f6cc8be65acea1ec0c6d1dafa60c87a123",
+      "path": "family/kang-null-02-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "0740b0544bb7896c69ea29c2c10783e097f303b72ebef73297a0e07b689d1f87"
+    },
+    {
+      "bytes": 10277,
+      "logicalSHA256": "567e221c4d79c9d6c0616dda866f9bdbcb8e8f02928c4bdf93a3a0b9ed3fb257",
+      "path": "family/kang-null-02-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "d9b90cae599643f72dec86ef07552840528a9af5be035480a7e4eca2d4426d85"
+    },
+    {
+      "bytes": 94127,
+      "logicalSHA256": "12c5d9e7f693e59d5d15ceada846091d3d14074f9b4329102fe87738f6b03236",
+      "path": "family/kang-null-02-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "60ea506b7862e283c9141fafe7cbf0043c2f6a9be8fd3261a9676ea847c03bae"
+    },
+    {
+      "bytes": 1241,
+      "path": "family/kang-null-02-default/nativeTrend-adjusted/run.json",
+      "sha256": "de7d6861db0ec23b8678f0a6a147973675042e8ec60014ed9d099b25f989fd1b"
+    },
+    {
+      "bytes": 290,
+      "logicalSHA256": "cc6f6e5beac7d2a6a6dcd3c0b4b1d6d4131458daffc952f7c4ce3651301150f0",
+      "path": "family/kang-null-02-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "e100b4b888a9d3c97bc0b49339e92ea1d8ef4ee463d40baaa7b693279fa9f328"
+    },
+    {
+      "bytes": 10273,
+      "logicalSHA256": "388c4ec2aa2e51ab7bba1f52d3725904141d591f3491ec643069fb91e220a3f8",
+      "path": "family/kang-null-03-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "964c539c10e9ff80e47704bb1e1c45eee1500aa1c3b48289218878d9198062f5"
+    },
+    {
+      "bytes": 93816,
+      "logicalSHA256": "60b923fe6a04d0e753f030b5706f11887d3a0de175b2c6f54cc37cd09cfc2cea",
+      "path": "family/kang-null-03-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "9eeef569c3941343e0038ffd55ad9c031e9acf26e0ba8f2a56618dd5c33a1be0"
+    },
+    {
+      "bytes": 1243,
+      "path": "family/kang-null-03-default/edgeRTrend-adjusted/run.json",
+      "sha256": "39eb7adad4eed34e02693561d4006da3b4be757832cb29d8cfba1d7a77f5c365"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "a4042f2181a228eb1d78d4af8488ed85fd8160dd2aa7e766ce3ba3b5c1b64f27",
+      "path": "family/kang-null-03-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "4c3dd839ae914c01aaaf4f3ac5139cc9a3bcd1e130b5f62cd7c91ac84c74adc7"
+    },
+    {
+      "bytes": 10276,
+      "logicalSHA256": "e98770b078226e1a807fd118a9612c2adf515031910250a9216de773c5e9beb7",
+      "path": "family/kang-null-03-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "23110dc29181a811ea02c366a7cd1217089a330510be7f2e3fbe1695acaeb5de"
+    },
+    {
+      "bytes": 94294,
+      "logicalSHA256": "72ea1f1236db9cc5c68523183b81440504ce55dbe50a57ba959a7b4b2c691ace",
+      "path": "family/kang-null-03-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "985afe173190564caeb04fcc60f70e2efa8c22be800ba7ca351db9196c893031"
+    },
+    {
+      "bytes": 1242,
+      "path": "family/kang-null-03-default/nativeTrend-adjusted/run.json",
+      "sha256": "5419e4e93d67a2b47309b2c803d06f3712ce9860d37fe539e5db45c6ee67c93b"
+    },
+    {
+      "bytes": 290,
+      "logicalSHA256": "36fccb3117979038a187ae0d9b05bb2b6435e1fd05a7052ae0fa249bcd8db28d",
+      "path": "family/kang-null-03-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "64dc87252efab47c19cf4606bc6ceabea9cb10d44368d99005cedb51f0db6576"
+    },
+    {
+      "bytes": 10276,
+      "logicalSHA256": "381210b4f4469ad8c2c0b5ee83d0409697cb119c99151d0b4bd062e28f4a0f4f",
+      "path": "family/kang-null-04-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "e306b81cfae1e196277d6a25fd51f18bea055618865711eb93cd4c7fb9f8bfff"
+    },
+    {
+      "bytes": 94070,
+      "logicalSHA256": "b63f2735a78371eae124f2283783d3c5d8340d9f8542e1ab1b6f661a1ff556e8",
+      "path": "family/kang-null-04-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "660cf236d2a1af1bd998ee12cf5413f581171144dcd0e5ed5e82d560baaaa419"
+    },
+    {
+      "bytes": 1240,
+      "path": "family/kang-null-04-default/edgeRTrend-adjusted/run.json",
+      "sha256": "4e21d549d22f5da36881e02574197ef6c9b8408f02dbc7e39fe52c78762ac313"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "949fa64703d299abe06b05021bd358ee84fbd764059bf11a9470ba208d1fa971",
+      "path": "family/kang-null-04-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "4c36b8f3f6f5b0b3d65c6ac08cb2bd661c76f1211120656b947e8e67bb18d543"
+    },
+    {
+      "bytes": 10277,
+      "logicalSHA256": "c9675ce6fb48f80412dc494870da57bd270f40520d45b2160a2f3fcb9f808219",
+      "path": "family/kang-null-04-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "d9f7bc8fd041c5d4369564ef53251957fac83fea267637a79c9fc5775bd64f48"
+    },
+    {
+      "bytes": 94306,
+      "logicalSHA256": "7819ac74823a2762b996cb796d62e138266b615ab678cd1289d4276e91e7f67d",
+      "path": "family/kang-null-04-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "08979e9c8f184236ebc901a075eeb3fea92faeb25d95caf9a68f036a9be51240"
+    },
+    {
+      "bytes": 1243,
+      "path": "family/kang-null-04-default/nativeTrend-adjusted/run.json",
+      "sha256": "9018ddfe3b3a97234fd8730a8cd247deb039dd83348acbd90f2e8e6ede61624b"
+    },
+    {
+      "bytes": 292,
+      "logicalSHA256": "ae2c88898d8913cef295632e4e0b8674e59ecea8c4d62bd5caa431daf7d1b01e",
+      "path": "family/kang-null-04-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "029b13304fc9e8f83bfa4ddd5f07a9cbcc10fe3b3fa2a718f579415f138b11c0"
+    },
+    {
+      "bytes": 10274,
+      "logicalSHA256": "9e26b5080cdd47633aab8b4a2efb43a02d96f110d3775fdbf941c5e3837c75a8",
+      "path": "family/kang-null-05-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "3e8a19c72853680713166e8446979c9d0a947c7823d879734d11d7a850640a49"
+    },
+    {
+      "bytes": 94188,
+      "logicalSHA256": "743d4294e269701a3b9d2b864d6aba9b7b4f28498f06bd92e2fb30b74c95edb8",
+      "path": "family/kang-null-05-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "cef9c9adb336643949927bf7396055a2c12aeb85d66cb931ae9e8e4c4b02cdbe"
+    },
+    {
+      "bytes": 1241,
+      "path": "family/kang-null-05-default/edgeRTrend-adjusted/run.json",
+      "sha256": "4661d34a214dc1e80f1c04e1ec5f018fa624eb3ed7297b79b504b02ff2ceef7b"
+    },
+    {
+      "bytes": 289,
+      "logicalSHA256": "7562b617f14530fbce4bd4e98bcf659782ea60184b4b34a6b309549ccfd9eb4c",
+      "path": "family/kang-null-05-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "6eccc0e58984ea2d9a7b3df01f8341b290596b7bb052a2c9af8bebd4447ef509"
+    },
+    {
+      "bytes": 10261,
+      "logicalSHA256": "f2f1e5378fa3d38ef5e2ac5700c6555fdb234a192c6f48a988feb3d7d017a111",
+      "path": "family/kang-null-05-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "2688ba7432c0d38217268f7d985e700538bb0a23fd579a308be3bccffc0f076d"
+    },
+    {
+      "bytes": 94081,
+      "logicalSHA256": "e65e105c827a74526355e585fa534370abb5a51abf44742a87b351c3132e240c",
+      "path": "family/kang-null-05-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "1f64dc17a82fbcc259711238117d5bf0f908496a98c59c66608bb779d69d9473"
+    },
+    {
+      "bytes": 1241,
+      "path": "family/kang-null-05-default/nativeTrend-adjusted/run.json",
+      "sha256": "37ab4076fbc0d4864975b9df5cf901820032ee55ff458f9b7e061c9c71beff2a"
+    },
+    {
+      "bytes": 290,
+      "logicalSHA256": "01a2d990124ae04d402db955e9e4c4a460287e3ccbefa435b7cada6a9312f5d5",
+      "path": "family/kang-null-05-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "4b833f179ef3c26853d38d711b4815ffc4317a2d8a317e45db75b7284a053a55"
+    },
+    {
+      "bytes": 10283,
+      "logicalSHA256": "5d04e4d9d327e53e0e9faf8a4bdafaa3907a408ed99de711662a35dc18c07ca0",
+      "path": "family/kang-null-06-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "e526189b0862784f42f5f02e28e1277e9d94d5bb4b7a2a99811aea0e9a2ea0f1"
+    },
+    {
+      "bytes": 93864,
+      "logicalSHA256": "e0c9eb4725b31e75dc58af43b0f27f517397cc8561427550b189ab3657cfa2a6",
+      "path": "family/kang-null-06-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "28b97314c2786ecd67b273544498aa21de9b76e54f329f443cfb67ce9d5e637b"
+    },
+    {
+      "bytes": 1242,
+      "path": "family/kang-null-06-default/edgeRTrend-adjusted/run.json",
+      "sha256": "9e85d65d492a5547b89970ff8435308bfdb2685e0d3d0ad5e739b33895c754e4"
+    },
+    {
+      "bytes": 290,
+      "logicalSHA256": "2671d0bed6f3ace2a0b8bcd1fcbe1b8b21e0249424928051a6f1c6c447293101",
+      "path": "family/kang-null-06-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "81557b65a0637c04bd0f16f9e042768b944a6e898666fef712f2deb915150b28"
+    },
+    {
+      "bytes": 10279,
+      "logicalSHA256": "918a1bfdf84e04305c92323223263fffb8fffa8ff4ee7d92ef9f7f0a0e1037e5",
+      "path": "family/kang-null-06-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "3661664775390067d3f762bb95bef4b314175d998515d0fe7c88e4bfe23328bc"
+    },
+    {
+      "bytes": 94193,
+      "logicalSHA256": "001a46a71dc7f10ef4b5969edef100fbf015888b87a45648d438c1b6f3c0268d",
+      "path": "family/kang-null-06-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "87bb8bc625e0d8a15c86f31e39de75d570e3087b1b817fd7c39e06bc415c4955"
+    },
+    {
+      "bytes": 1242,
+      "path": "family/kang-null-06-default/nativeTrend-adjusted/run.json",
+      "sha256": "d01ebdb57bafa3f6175ec7f7357bc3fa54d6be6751fe98e87b325610b928adc0"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "58c0be0f1fb3b5d3455ac1d726b350421fd729ed3506160b81afb25965ef8bdc",
+      "path": "family/kang-null-06-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "dc0c6ea626c5a424888d0339d8a472a7c86fd537f1b1f21264019c326be2d237"
+    },
+    {
+      "bytes": 10274,
+      "logicalSHA256": "098ad3cd8e08e8698352f84f0cf32da17779735646fd4745b35e79e4faf0ea60",
+      "path": "family/kang-null-07-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "3d15794cec105652f2b9a8108da2ba7901db92bcac9d24a9f896ccf93cbf35d2"
+    },
+    {
+      "bytes": 93643,
+      "logicalSHA256": "131223c8fecb856affeaf2dfc6467e5d9180e0ea561932ca6e91b6ed73709626",
+      "path": "family/kang-null-07-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "bb492a769bf8c3ccc178029c0872024a03eaacfbcda19ae910c2139b741918ac"
+    },
+    {
+      "bytes": 1238,
+      "path": "family/kang-null-07-default/edgeRTrend-adjusted/run.json",
+      "sha256": "c3d1a35496b06782733a898847caf257ea2668aed884b433d1f222d334ab4b91"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "d4f1c86bc37a1038c41a9895a2735050500cc01a23145b3839247f63a22c513c",
+      "path": "family/kang-null-07-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "4013bab00d027abcc1754ef0ac1133759d809be29754469c7a0766b8ffb36c93"
+    },
+    {
+      "bytes": 10276,
+      "logicalSHA256": "f9d0c6eb4a4a8eb4ad7b6d156b44c1209b985298166e6acb03f03c9661cd19f3",
+      "path": "family/kang-null-07-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "7a735e70fb5f8568e2e51e172eb99eb236bc6cdb530a41d5ea97685e68ba2d63"
+    },
+    {
+      "bytes": 94073,
+      "logicalSHA256": "64fd2321fa5d5f1af75e9c38db8e1b21476136aeb05d43521c09e8e311d1cce7",
+      "path": "family/kang-null-07-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "432fb586283ca9b50514b7bc16fdf61a0845eebb70532ac69ab47c808dfcd492"
+    },
+    {
+      "bytes": 1241,
+      "path": "family/kang-null-07-default/nativeTrend-adjusted/run.json",
+      "sha256": "0472efa569226fe1975353b0af4f2f1b63c1d391331fce2155e5df522508db1b"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "399f0b48d230e34c5c436c129b4fac8a6c247136bed76e7ccf9779c8063b2dc4",
+      "path": "family/kang-null-07-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "7f178af0001fc5df3b70ed47baf2b6c3c2838ae5ba75b450757335ce716eecc1"
+    },
+    {
+      "bytes": 10275,
+      "logicalSHA256": "83d700f4bd2182126f9b8a74a888abe8cf6e14d27f8680b83b860f7750a5f9d6",
+      "path": "family/kang-null-08-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "c3f953aead8e658f0f6f8069dde32844870bfc84e8bc92668625d868d4c8f963"
+    },
+    {
+      "bytes": 93502,
+      "logicalSHA256": "db17b0224dfcd3cf52d4009323cb4ab15d5fccad3e27a7a412256f3c06340242",
+      "path": "family/kang-null-08-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "b6819be5d6acbb1a18e91555fa491f0182f0fa4b7ac5d7fd25b67765bbf47a4f"
+    },
+    {
+      "bytes": 1242,
+      "path": "family/kang-null-08-default/edgeRTrend-adjusted/run.json",
+      "sha256": "1dff1b997c84c091ee7f4301aad816a9f74b1f5785dd96fb063fcfc5f6e87d61"
+    },
+    {
+      "bytes": 288,
+      "logicalSHA256": "89823d7cad16bb0a07fcb0bf727c71d7f19f531806a062992240c07e5f4b0b11",
+      "path": "family/kang-null-08-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "ae9427ce004dcfe99dedfd5a3a6e62886c3821479d11f8a000095b2c84c73be5"
+    },
+    {
+      "bytes": 10259,
+      "logicalSHA256": "0fa118bb1283818f44eec52ae1720eeaa8e52ad7f6b3fbc94c8e74f74b283ff2",
+      "path": "family/kang-null-08-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "492452cebbf14a19b29616c02f9afdb1e8b1dd517001ef5a223515cc8ea157c8"
+    },
+    {
+      "bytes": 94119,
+      "logicalSHA256": "fbc6fab3bc607669de812ec35acfc8da7e92bb7441d89822b88a1a294384705c",
+      "path": "family/kang-null-08-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "137b4b36a8adc9c59fda3399184567270b968e900acf89f384861079c4dca338"
+    },
+    {
+      "bytes": 1241,
+      "path": "family/kang-null-08-default/nativeTrend-adjusted/run.json",
+      "sha256": "840ef456a3fb12915d8624ba7efb068a18a2bf46f372b3f0c4863da8d4e2339b"
+    },
+    {
+      "bytes": 292,
+      "logicalSHA256": "fff2347adaaeeed4b27f8e5184ff8422a37436281720efb5be25c74ccd3b4bea",
+      "path": "family/kang-null-08-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "8d03b8712d760e11a104572a285717df80216f3c7fce3acaaf3586a476761a5a"
+    },
+    {
+      "bytes": 10278,
+      "logicalSHA256": "016b13fc1b6de58d8290f261b27d0e6b745f9d02cb9c00b0db86def92484bc70",
+      "path": "family/kang-null-09-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "0a84a9b1d3e7f928e0dc841e5e95c87bb2d1710c5ee820a8b6a3bb69b56c97d9"
+    },
+    {
+      "bytes": 94079,
+      "logicalSHA256": "7bfc30c28fba4a3042aa15d38b836fb238fb20c813131f0c41a0c8e6ae681eae",
+      "path": "family/kang-null-09-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "1c390c6b8ce697b082202806f45ca4437404286563cfd1b317f74738117ac6ed"
+    },
+    {
+      "bytes": 1241,
+      "path": "family/kang-null-09-default/edgeRTrend-adjusted/run.json",
+      "sha256": "1dd58d52cb6151d807fbe6866ba727bbb20fe336001b7e8df34e144ae85e510a"
+    },
+    {
+      "bytes": 288,
+      "logicalSHA256": "89eb2273ba413d85fe44ee5be1ba5fb8f82069a94f7f74635de85beb922dbb1d",
+      "path": "family/kang-null-09-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "5ed47d9a1505336fd33543d5aa109d5e603e84ed4d3c82b6ab9cb528b2c13817"
+    },
+    {
+      "bytes": 10275,
+      "logicalSHA256": "f7f1fb213f2f6161c2a5285af5829e40d561587e41511dad84f0484b97781336",
+      "path": "family/kang-null-09-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "b68dd9f2139bfaa21d2a65636296a2c7dfc92ea477b8a34083bdaa3f642279bf"
+    },
+    {
+      "bytes": 94095,
+      "logicalSHA256": "4043145322ca5fa7c7a32bc965c209333bddef9748d1e04517480f01c85dbcc0",
+      "path": "family/kang-null-09-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "54bdb878a24640b4538cf0f143bd08305c57a21094bb0c9f3ee99725a02fb815"
+    },
+    {
+      "bytes": 1243,
+      "path": "family/kang-null-09-default/nativeTrend-adjusted/run.json",
+      "sha256": "f2131821c63056b8a13616a5fbab1702e498c19bfd2f90b248b5dce144734d09"
+    },
+    {
+      "bytes": 289,
+      "logicalSHA256": "8b8d005e920b91a00537bc3abc0c25f7c11b5a9394ea840cb7d69f70a14dfc32",
+      "path": "family/kang-null-09-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "519d54187880cb9d5030e70c667e31f3d4be0ee6fbffd609cef077801f535007"
+    },
+    {
+      "bytes": 10277,
+      "logicalSHA256": "fcc3b645324f831c7571338c2994e6dd72ef1a7c431eb3eab6fd606bcf7d3dd2",
+      "path": "family/kang-null-10-default/edgeRTrend-adjusted/comparison.json.gz",
+      "sha256": "07124c54043aea4af1a6c71b01a89238c88a62758842505b483eb436dc1f3b91"
+    },
+    {
+      "bytes": 93956,
+      "logicalSHA256": "cd40cf1e801c00669b9d1763941721d78eb74d446dec86bfb53d861378447729",
+      "path": "family/kang-null-10-default/edgeRTrend-adjusted/gene-checks.json.gz",
+      "sha256": "f0e826ed0304106f6ee1d06fded911512684aa8ab5dc8f1cb282a739c04adb5f"
+    },
+    {
+      "bytes": 1240,
+      "path": "family/kang-null-10-default/edgeRTrend-adjusted/run.json",
+      "sha256": "0b56fc42e58a06d0dec1d61505a8ac653138b2ddd4ad1b560f68a12ed2c4e666"
+    },
+    {
+      "bytes": 291,
+      "logicalSHA256": "91850d66efac03ebffbe42b2ce28524cd1e735881cc3fca48fea3eea9c44494a",
+      "path": "family/kang-null-10-default/edgeRTrend-adjusted/stderr.log.gz",
+      "sha256": "9bd7d08755f0d86e3b1f4199c30e106966db973414d0ad11d9231a5381fe7155"
+    },
+    {
+      "bytes": 10275,
+      "logicalSHA256": "5b14ec7e0227f8384bb4322aa39de6b69736cf624e3eb1b97814b1af75c8f665",
+      "path": "family/kang-null-10-default/nativeTrend-adjusted/comparison.json.gz",
+      "sha256": "40bdc59581745d9a2a45feb1b85ce7a9e88d76df9c943c2f2c1dcdc457a5eb2e"
+    },
+    {
+      "bytes": 94207,
+      "logicalSHA256": "1b0d404e2e386eedb0e0a0241f16950c0d28833290b21df5988df32c19cf0d14",
+      "path": "family/kang-null-10-default/nativeTrend-adjusted/gene-checks.json.gz",
+      "sha256": "6798502a5cee004ac126ff59b81ac72aabf43b4be3c0ac0cab7da61e6a0bf28f"
+    },
+    {
+      "bytes": 1241,
+      "path": "family/kang-null-10-default/nativeTrend-adjusted/run.json",
+      "sha256": "a922de6e74994ef02161c7a7444c66c89883676d2a1e85472bc367be6ac6edf4"
+    },
+    {
+      "bytes": 292,
+      "logicalSHA256": "9e3a24cbfb4877e1e7e45873720483a45ed8d14dbc35f414c67ba6eba72e587f",
+      "path": "family/kang-null-10-default/nativeTrend-adjusted/stderr.log.gz",
+      "sha256": "78ee6a2a550c975199cbe5d93a43c17e5d124b9d2f24dc949cba6c53d9a528ac"
+    },
+    {
+      "bytes": 11087,
+      "path": "family/protocol.json",
+      "sha256": "014e8b50b53a4fb0d69a54a2c552e7c4cec7294a21f77d7797a9d4c6168d642c"
+    },
+    {
+      "bytes": 2624,
+      "path": "family/selected-complete.json",
+      "sha256": "0036ed70b012ac086d41eeb4b9f9e3a99eb823d194e0dba04b3e52e3b168eea4"
+    },
+    {
+      "bytes": 10841,
+      "logicalSHA256": "7c1dc031e966f7dc3e358f1ba4d0469a16a2bb3be049195fe92db782057a53b7",
+      "path": "family-comparison.json.gz",
+      "sha256": "4601c90423e0648397f48d16ae2d34d3e1be8b21f5a61e95e3e4b960f900cbac"
+    },
+    {
+      "bytes": 584,
+      "logicalSHA256": "5325eeb452486b19e78b5b5042979602188db4c4b3a9ade1e485e73b45d37bc2",
+      "path": "family-comparison.log.gz",
+      "sha256": "32ccc340ce7f8cea0b686984eb472800f5f21d0eb00993338b3ad9e13fe27739"
+    },
+    {
+      "bytes": 19212,
+      "logicalSHA256": "42254a5e553b2be48c2aa6c94e2a3bd1d416df8e87ddeed053ebfb98144e428d",
+      "path": "family-run.log.gz",
+      "sha256": "cbf7c98d7d81350c0fcb1ff8c0fbf9cefdbc56a866e345513f65552f371835dc"
+    },
+    {
+      "bytes": 12084,
+      "logicalSHA256": "27cf6e66a52993b21250044d7703ff785fa5707a320054c3a159a4a933632a70",
+      "path": "grid/grid-check.json.gz",
+      "sha256": "cc45ce2e9e3b1e0042b46c62468ea8033a662cb943d602470b2d4624225e772d"
+    },
+    {
+      "bytes": 2308,
+      "path": "grid/grid-input.json",
+      "sha256": "e7e2a739f08f4df0a18f2d0da48aec44bdbb3fa95780886a65389b17996842bd"
+    },
+    {
+      "bytes": 6592,
+      "logicalSHA256": "aa7b02fdbe4144a734757e196530a50a53d3c7f42d07996059ef89118eaf5c1d",
+      "path": "grid/grid-native.json.gz",
+      "sha256": "8bb59853ab424387752edaf0869dfa9fd3702264db6baf9e82f0878e036d4a0a"
+    },
+    {
+      "bytes": 20,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "grid/grid-native.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "bytes": 342,
+      "logicalSHA256": "ed8ddc7c1caabc4cde32ce5e572f14ea19de97fba143901eef90897093f099ab",
+      "path": "grid.log.gz",
+      "sha256": "ac16dc3be2c804b44d653b7a09c6b907d39d65b4295f15fc82b38c65c5f130ff"
+    },
+    {
+      "bytes": 336,
+      "logicalSHA256": "fb2fe58870c236ea021ffeca8f0087174cf6086780a4bf529974f9f48155659f",
+      "path": "independent-check.log.gz",
+      "sha256": "1d3a8fd2b29c3ccb4662344d605a82aef0ac37bd95424bb2fa6aa95f13927dc9"
+    },
+    {
+      "bytes": 157,
+      "logicalSHA256": "b04d98ab1be8107c7dfc55a5d9f91099ca1240a2e7f02fd0f2f0fe9f1254f0b0",
+      "path": "native-environment.txt.gz",
+      "sha256": "6d6c044b6477da3f94ac5643bfb653b01b8e74c19916bf3cc7b1a17faa688267"
+    },
+    {
+      "bytes": 3365,
+      "logicalSHA256": "256ea863a6ff998e55d9e103890220fa5ce8416bc00d18417db46f1676e4a8a3",
+      "path": "owner-compile-attempt-1.swift.gz",
+      "sha256": "51c9bed881f7d40d50b3997c3163d7170aba92a6852c3e06e277d0d1bcad12c7"
+    },
+    {
+      "bytes": 3368,
+      "logicalSHA256": "ec75046484765c43764ca411b55398c672b89bedfff6eb1c77576db3ebb478a4",
+      "path": "owner-compile-attempt-2.swift.gz",
+      "sha256": "7313e14fe5ac45c7767819a5e3d026a30ef1cd867c9c93f158d895bac92b26ec"
+    },
+    {
+      "bytes": 20049,
+      "logicalSHA256": "ea86ac6a48695fbf6977157ac29705e9866dc638b4946485a7e64e2e064b02e3",
+      "path": "pilot-sample.txt.gz",
+      "sha256": "a45467eaefa706346eeb66914452b5936b07007228897f146e85797da4b29597"
+    },
+    {
+      "bytes": 1714,
+      "path": "sources.sha256",
+      "sha256": "4fab0bd2485caba76214adf8d450810a7830b21e88fee074689dcb716b81fed8"
+    },
+    {
+      "bytes": 2668,
+      "logicalSHA256": "de6031807e1de40ecc0cec1d2697106c66b0be215420615ad9271f1e8b124270",
+      "path": "test-compile-attempt-1.swift.gz",
+      "sha256": "81da8842e7717f447fea79b94f9f176952709eb8492e04d40db6308dc75245a9"
+    },
+    {
+      "bytes": 5585,
+      "logicalSHA256": "7e1852a8a0f1b5172933d7f408f6fa5cde25dea5c5a5bee118f60c1a0427bf7e",
+      "path": "tests-compile-attempt-1.log.gz",
+      "sha256": "30da2f768892606183837de96f1f8cb03191b7cd2e7904b8221aed0ef5441d8f"
+    },
+    {
+      "bytes": 2046,
+      "logicalSHA256": "6038ae1ffcbee3a1cb3c370538b663057a75e6a763828cd4486669cc4c487021",
+      "path": "tests.log.gz",
+      "sha256": "49d0fdd3a573e5ad11868d1abee1e1e0c91fa2d1d15b1539eb6eecd49f3451d8"
+    },
+    {
+      "bytes": 18628,
+      "logicalSHA256": "ffb5d695e508b85fb5309ab42cfbf6245f247abf16af1fc8554cb3735449bf78",
+      "path": "twenty-checks.json.gz",
+      "sha256": "3ea0ef4d068ef0d9716d2282f4568de1e023d6744d53696aa58e90a2007e6d3e"
+    },
+    {
+      "bytes": 6170,
+      "path": "twenty-input.json",
+      "sha256": "56ba12d5c5c9539373d541fe272611a0bc9aa9495588620ef6ffdd139fdec8e3"
+    },
+    {
+      "bytes": 20883,
+      "logicalSHA256": "b1d24ecfeb5fc4cf5505a83da9e763f9f5cf20564a88a8d925618922061dcf86",
+      "path": "twenty-native.json.gz",
+      "sha256": "819f0f1144037b608ceca9af5a66a9ad5c1a6de70cd611d101637fe503f3652d"
+    },
+    {
+      "bytes": 284,
+      "logicalSHA256": "cd97e0f1f9324ca13d856a4f1446f997070925f5d92702ae8b9b2a3c77c8ed1b",
+      "path": "twenty-native.log.gz",
+      "sha256": "d8c3ec0b8e52481f08260631de4366eb7e1b2d61d134c73523cce30e02558f97"
+    }
+  ],
+  "external": [
+    {
+      "bytes": 9306488,
+      "logicalSHA256": "cfe3d0d1a43ca76852425a643ab5d9b9c4b8582894578977948ccf68f8455700",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-00/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "e29a45b4ca6d913358668b41df7b3cfd2d648147254a1e95419af8e7ae5cbf39"
+    },
+    {
+      "bytes": 9307083,
+      "logicalSHA256": "7abccf072edd2fff0a909b9f07cc523df31ab9afc4f52c187c289e8bb30017bd",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-00/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "ed3af0ae1c095eacc1f480dc11a287cdb51695c81840b576d510a55a08471eba"
+    },
+    {
+      "bytes": 8941417,
+      "logicalSHA256": "03b3ea9efd6bdab48e49e420c97b56b66f439099fe1d090b6b050a19892c806c",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-01/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "9ee961d12154effc25fe15dba6397f861a360f1540fda972b0c461ba1519bceb"
+    },
+    {
+      "bytes": 8950103,
+      "logicalSHA256": "e2d061ddb644d462ccea876567a0c144bd30ecf9131709bfa97ce6e85b46c325",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-01/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "d3d521cc3547a87282bccb265fa1d52d8a6618e9eb6fad84e00222d3d911fd19"
+    },
+    {
+      "bytes": 8330041,
+      "logicalSHA256": "628bf29387a918c2ca9013e3347a953718423d816d18448fe1df0dd263d60fe7",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-02/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "cab14b3191122631b4b0de27577fe278124f96f191a3779a08dc3864d29c26e2"
+    },
+    {
+      "bytes": 8335220,
+      "logicalSHA256": "ee5cb894645d0145c862c454148432be7300cd6777eb71a2f5397c32a8e065f7",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-02/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "094a1d13ad73648da00fa301737103770fd6706737fe91751dc358865f434f80"
+    },
+    {
+      "bytes": 9079037,
+      "logicalSHA256": "1e829e0a19a40777a5356fb2e5c7f70eebe8dc9239d663841ba78a73caba410c",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-03/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "89869366132f6e5a4861e5a23cad2c379fc084706bdeae88350824e20f0add5d"
+    },
+    {
+      "bytes": 9078874,
+      "logicalSHA256": "dc2ef72c22ce7b1bd1fbe3eeaf61137577e0994257ff7da09229d7d4546bfcb4",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-03/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "6cafa8b561256242a3cb9d17a3bbf727cf8c7b0e806338f3b43e5a66ead768da"
+    },
+    {
+      "bytes": 8850745,
+      "logicalSHA256": "21b4804e5dd01f058150f347b048194b5535223c09618fcf7766a44f90ef3c95",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-04/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "f2fc2b2f79402d65868c390aa4c96e47fe34766cc840db5f203115c84fd072d6"
+    },
+    {
+      "bytes": 8850041,
+      "logicalSHA256": "6859fb1acb244f0c8effc4c7d500b317a2dfcf7d771386c449eb58b8c92615b3",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-04/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "d29914e33a47f498c2df364c819f1345c5675dfaf45a60c60c92e479a06e2b26"
+    },
+    {
+      "bytes": 9630565,
+      "logicalSHA256": "b363842a43e91cd1549a55fd9adeb81fc61e6013ce0eff51a9ec1dc1f65272b3",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-06/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "42f6a9b37fc8a9e79569b058f69069b4894d46bbce3545bdcb0f077922e02957"
+    },
+    {
+      "bytes": 9631570,
+      "logicalSHA256": "a4c87954231214ff29cbc2b6812d5823a072fed597815a00e057ee19d1c5aa1f",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-06/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "e3cc612f754adb0ea47104d40c4316ec4f16cefa7574ee1dbdfa01967a006b7a"
+    },
+    {
+      "bytes": 9528687,
+      "logicalSHA256": "52812d81d912117dd23e2047d78ab56ed64f29e70069e0d4bcf64bc89c6b3c62",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-07/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "c3ab4912ce7ca3361ace05c3550ecf71f18d9b40ae369bae4386830f03aa6106"
+    },
+    {
+      "bytes": 9536712,
+      "logicalSHA256": "0914dc919cbb888c3688319745fc9b9280f01b2efc1bd2fc23de767a096dd370",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/crowell-07/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "81fa2d21237d0e1c76c240245de74c90a54deade85cb79652ca8ea9bc6b0e429"
+    },
+    {
+      "bytes": 8545044,
+      "logicalSHA256": "26aacf80e513f9f653d752c82652b0efc3f3ff8e70d8d958bd8e49e8353f3321",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "78aba475f0e57f2bf4911b13aaa8eca43e95e894fb12765298250f23a9412a64"
+    },
+    {
+      "bytes": 8555055,
+      "logicalSHA256": "77851854a0aa759ec2b7e0290acd7ec75eb48fc54e89db945e2ba4b195284733",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "862a1fe5833fa82c48d78f796cbb196b0ef32e0e06d102f12833e8c2d7ec2c35"
+    },
+    {
+      "bytes": 8088261,
+      "logicalSHA256": "95e7a56e120f4fe1c3a4b8eb46c3a462f1696d2c6ab249e00be802a65ba1d4d3",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-01-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "c9170078c302fdfcdbdac974c9ca9392861b398b3392d5b1abd30b567e120d81"
+    },
+    {
+      "bytes": 8082644,
+      "logicalSHA256": "ae20568c14d1971d5c8a56feab0a98d7f35c4c4f58eba10154c5db2d9973dfa7",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-01-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "eb82231e15992bf22ace487d8d995a0655642b4f3e4dd0c93e0ae127a3b227e4"
+    },
+    {
+      "bytes": 8093908,
+      "logicalSHA256": "f4aada37f6f5d0ba655c72329927b0643e44eb722b3903a138e592791293f486",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-02-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "f6f2ca5db60d9472b88df813922561745e7559efa0e765ba511d0bc88e08ab52"
+    },
+    {
+      "bytes": 8085082,
+      "logicalSHA256": "c4f61c4d6dc6797c4de9578f71a9ce08b1eefe206dd1f34a3ca7c202f79dffed",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-02-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "45f92abf9eedf578bee9f8e8fc415acacedf5efe21f90fed688552a45d48bd61"
+    },
+    {
+      "bytes": 8099252,
+      "logicalSHA256": "51048b6a7ae7b3f1806b4dca95f7b5323777670e55b41b407fbce168076a9a1e",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-03-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "94ee801f7e0c06aa4418b1d9edb83bd760abb768b8f3d7bca0374c35e9fd8a87"
+    },
+    {
+      "bytes": 8090019,
+      "logicalSHA256": "325d7aebef462404ea315a02c0e21306764e7477126b1a0d7167da5ed8a6f73a",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-03-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "d8592505c12240734e3cf516ab8f8a25bc31e3987ea5f2b46e910e3e83a458a5"
+    },
+    {
+      "bytes": 8097130,
+      "logicalSHA256": "e7515145a676f95dc97a3fae435a7e0bdc56569b470932e4e38cf44c722a7658",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-04-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "4f0a7c28515cffe61982021eba3fe8951d84313429d5a1a89e6fa5193aa5d36d"
+    },
+    {
+      "bytes": 8087655,
+      "logicalSHA256": "3c4cf79eb2ccf4310ae44827fc6732294877126243b946db6ad69b967319e2cc",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-04-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "6f02e6931725593b506a44c35240869b3cd7555425cd41d91365dd199db4f685"
+    },
+    {
+      "bytes": 8098313,
+      "logicalSHA256": "038db49cb1bca89a65bc1554d868596d5efae866cbed82fd695b56d0b76fe25c",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-05-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "0783bf369205683d895a38c7a766393759756f9c6e3da95a9f8c9d19321e0c3b"
+    },
+    {
+      "bytes": 8089875,
+      "logicalSHA256": "8d922840d888d4d170a18b1ee0e60265f1b0e160d541c2c5db1758b40492abcd",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-05-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "2b92c5a3d5177a1ea5af0f063c6c486e57a12296d30d829e77391804c79a553c"
+    },
+    {
+      "bytes": 8100657,
+      "logicalSHA256": "a07e22bf14bb7d1e986af479254e193fac5043b5634923344471e7676383b679",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-06-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "c4c06e1a67770f63ed591a45ec17654581a66ddf9d76b9ea05fbb1cf5b3b8873"
+    },
+    {
+      "bytes": 8092385,
+      "logicalSHA256": "cc442ddbc53cda0b71aa1213702daeafeedf7057b1951e2ea3f4a220ae17cf97",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-06-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "6e8f1dd3f6edd7e3f4ac7facc8e250eb1e16566a781fb37dd23eeb270ac2c44e"
+    },
+    {
+      "bytes": 8101481,
+      "logicalSHA256": "40289a44089db47b922ffefdfe673c2b7529137457a78010922e77eda9df8c7b",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-07-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "0d8a2d9e05d846a2e74e98d66e457fce8247aba357ceaf32e8b94314a638dada"
+    },
+    {
+      "bytes": 8089998,
+      "logicalSHA256": "ee8f8d5087711f482e3149090d1552348fe9f88cfb5af958450781fde1e81547",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-07-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "942ace7e26b0e656033f49edc7e6334892fb4a5c218121f2305e9b1897d4dd8f"
+    },
+    {
+      "bytes": 8087487,
+      "logicalSHA256": "7da29cf0318457099a54afe2c248270c3f38493a9fcc7141bb68e13957c47fa0",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-08-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "1a7903479b31f96a4f53661b8a0f3f2a461f5c9123f84cf64ce5023c207989b6"
+    },
+    {
+      "bytes": 8084940,
+      "logicalSHA256": "34340d370a984e5afa958f5b2905cc04702f4e2f1e8aa113e100171687a2157c",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-08-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "c6b9038f61005a478bff189585e0d6625f045024e7c24f167077cc9245f547ce"
+    },
+    {
+      "bytes": 8088495,
+      "logicalSHA256": "f9d2bab5e078fa44a9589c7ed1a693ae2f48cca7a7d3bfa93d320ad7770854b5",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-09-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "c29af572e419a6123576b0ede0a1bcb69ddd4f6dab05302e76e1cad3e0a13127"
+    },
+    {
+      "bytes": 8086168,
+      "logicalSHA256": "40b9e474451ff065546904cc6162c1133d820296678ece714617c221a7476906",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-09-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "3d0609d1e12194c128d7b86a0c9167c6cce22226332de37c3609c1cf67d49e90"
+    },
+    {
+      "bytes": 8094358,
+      "logicalSHA256": "37b715f3e0f15d4623a73820165ea82b42ad15d36b5b78b8dde75698d18140b4",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-10-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "fd26eedacfe35058e3ad397e6b1d0550cafa070c416b8710495463e4b78beaca"
+    },
+    {
+      "bytes": 8084638,
+      "logicalSHA256": "10fb27529e27fe86ff8f2c69ed628fc51ac904150651f46c3312a1358fea1d0a",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/hagai-null-10-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "f844718528cbdb806c2bd14687e93dac4024638d65dc4bf29c3178b53546fe97"
+    },
+    {
+      "bytes": 9351804,
+      "logicalSHA256": "ac5ea720ac9547aa95da3f33458507e98e95298ac902be54fdc804cd8aa9be04",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "7114107644be26660afb12d9b6b8c51ccddcde6a042fedc95f9a9621cc5ee205"
+    },
+    {
+      "bytes": 9335931,
+      "logicalSHA256": "1182c5e2bf1ab50cc5f8572a1946633fd48ae1d1dd383e52cd03e1e0751fa313",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "2351700c8bc05a3caaf5c649bd6d577acd92e0ec0ff54414bc7067755b410a76"
+    },
+    {
+      "bytes": 5539253,
+      "logicalSHA256": "39116d0f85600a4ba63c63c81270a28f749d53522bdbe9b2ebf7e4ebde77d775",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-01-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "6cc21654c50a313eeb5de1a5161799e003181bcaada317bb81ab5a0019f557aa"
+    },
+    {
+      "bytes": 5531267,
+      "logicalSHA256": "607df45a3108e5a367cd207f8d892f691d6ea5a98f43dddf1322d38207dfcc5c",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-01-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "fa911caa5b70e0ca394011200f95f022856e1dd45d4c3a215770f4eb6b2ac03a"
+    },
+    {
+      "bytes": 5539916,
+      "logicalSHA256": "20b82a97e4f99c8097020bd05053453cb58009d442b60d6536e46a284788f5d8",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-02-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "74351dea5fae7e3a29f9635de1f7be5bfbc28b2e060e3ded05d25de0e3fd3040"
+    },
+    {
+      "bytes": 5529399,
+      "logicalSHA256": "29a3cafb96bc29c1a1e3b26fe77b76586b2470cdbe7678a4f3d340ed038ec0f6",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-02-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "1c0e35fb34218a6558169780457a7d4f10ef4d32d1e47e7c2abdedc5c630767c"
+    },
+    {
+      "bytes": 5540434,
+      "logicalSHA256": "afbeacb198efed17e7d8cdf9af1a6c54561ea53357af8ae232a731866214393a",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-03-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "a37a4e60092cea6513ec7943db6ea691e7c22b2fca1df2009a001c5422149164"
+    },
+    {
+      "bytes": 5528815,
+      "logicalSHA256": "b1657c6212319a053dc234656535ec4fde9aa2147d811d88087fded5a7d885ec",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-03-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "15c33dee6a0eb0ba333b10846f53f5dfb4c2bb01405b5f42ce4c459c9a29b5be"
+    },
+    {
+      "bytes": 5542214,
+      "logicalSHA256": "7796d9d47f1a66760e354518df591162f0fd27b0a869fd6370bb2bf5cc24c5eb",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-04-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "1f32b2d82b9c47bbed4421d01871bb673b21077a9fa163ab642258a1a55bda30"
+    },
+    {
+      "bytes": 5532336,
+      "logicalSHA256": "f0377838cdde7378df9f0ba7857b0dbe1a928072b6303adcb599f4e44c80aa47",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-04-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "531ca690017738da22b3e09986c4e0aeeac1fd59191b094cf0cc0dffb5ce3807"
+    },
+    {
+      "bytes": 5536927,
+      "logicalSHA256": "94477e31a600207d75a4bb17e2136ae448618e3eb9bb8efc6d1e23ab46945d62",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-05-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "2b154e7a8e27a3521567e1ba9ba33c9d09f451285e4c5a6ec07f37f8d690517e"
+    },
+    {
+      "bytes": 5528374,
+      "logicalSHA256": "7499935a6ce53251b1b1ebfc4f5c187678003e0431a290b27fe2eb3c1f073981",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-05-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "13ba384b712afe49f510751ac9e3736f01164916987a388ce7dc97ded81c6dea"
+    },
+    {
+      "bytes": 5543101,
+      "logicalSHA256": "4362980cbdd14c44913b33138e128fa8bdcfde0fe86e511411dec20399e22b1d",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-06-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "742bee47a18a3434d56d67db9c616fcf796f7e76b38a7339125e86087a8abdcb"
+    },
+    {
+      "bytes": 5533821,
+      "logicalSHA256": "027f023f8c17442ae590a37fbe1b071925b3ce157acf1d300d71fbaabf21cd29",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-06-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "3cb087eed961b09ab496e4460127b5c971ad0e24b6376510b6158b3bf13a3e08"
+    },
+    {
+      "bytes": 5538470,
+      "logicalSHA256": "28a0bd34726e8442edd924aa144e51bcfaf134a1b913c07a40929628742ca4c8",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-07-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "a719faf9a5fcc9f179e5f412b5974c3faf9b6e81f62563bc75a6cb87b7c6665a"
+    },
+    {
+      "bytes": 5528031,
+      "logicalSHA256": "8b7fa998b716766b03fda745f3af48645bc1817d21fc83e1fcd04a0b401f13d9",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-07-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "660d4932ec6de52f558e287d5771c6016622ba467d043290895e8e7f14e48762"
+    },
+    {
+      "bytes": 5537335,
+      "logicalSHA256": "3dbc98fed06a4130d686dfc2413f492c8a1dc8d12e9a4199fff2da108ba9d9e1",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-08-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "c53c1a4bd5802b13b9c82e876aaa6418fc51a028fb474f93f113c45601ec36a0"
+    },
+    {
+      "bytes": 5527428,
+      "logicalSHA256": "e480449db79b65c6f6f0a4fafca805af144c67ef7102e9896b82e6cc2cfafbbc",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-08-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "9010d49a5b1cbaee9c6483f8e942b93dcad07a1146e067e7ee45324e85ef0009"
+    },
+    {
+      "bytes": 5536367,
+      "logicalSHA256": "4a1266bf5cf3d60cdc4dfe8ad720820e93c1fd83cf31d572241c58b9b1d4b487",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-09-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "1d9ee7d6a7dafa216f8991232a4f1eaef804770aa71a19d7279062238fa462bf"
+    },
+    {
+      "bytes": 5530267,
+      "logicalSHA256": "d470325e273721c33f400365527e52e6d51031dc35bc8c7b0643ae4012eba4b3",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-09-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "3b62608df5b997d405f05e67a6868f184b871bf58f0b12a7ff627448ce241acc"
+    },
+    {
+      "bytes": 5537944,
+      "logicalSHA256": "125d987316826e38bf6289087a17bbdad0d976884b16e9b95772233f071209f5",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-10-default/edgeRTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "a4a8f535979d19058799c76d837783f753ff7015125628a32e93b4e676a41f1f"
+    },
+    {
+      "bytes": 5530481,
+      "logicalSHA256": "bbfb545bbc81f498847297c6d43805c5f5a62f178024ec370a7704aace13da3f",
+      "path": "/Users/home/numivivo-ql-adaptive-20260910/family/kang-null-10-default/nativeTrend-adjusted/native.json.gz",
+      "role": "Full adaptive family moment/residual output",
+      "sha256": "3fae36000421bd4208226f0b03a6fd9e25ad0f91696abc2a1f3b7f7458e59cc2"
+    },
+    {
+      "path": "/Users/n/numivivo-ql-adaptive-20260910/build/nb-adaptive-moments",
+      "role": "Qualified native CPU FP64 executable on macmini",
+      "sha256": "c4759843fbe6e061621b2d2d032892c04ea114ab3e94a71c1ef85e9bccb1820e"
+    },
+    {
+      "path": "/Users/n/numivivo-ql-adaptive-20260910/build-attempt-1/nb-adaptive-moments",
+      "role": "Unqualified compilation-warning attempt; not used for numerical results",
+      "sha256": "e8c8e7743c7c17087b1ff523d2908c13a6f9af39cc4c85947a4e994eda54035e"
+    }
+  ],
+  "protocolSHA256": "f030962f97f32413901f2bf17cf528e67f64d43a64ba24636f0a72df6f248c64",
+  "qualification": "Complete native adaptive family, prior direct comparisons, 124 independent recovered moments, extended and legacy grids, derivative reference, native logs and retained compilation/transport observations. Bulk arrays remain external; parent direct evidence retains original resource failures."
+}

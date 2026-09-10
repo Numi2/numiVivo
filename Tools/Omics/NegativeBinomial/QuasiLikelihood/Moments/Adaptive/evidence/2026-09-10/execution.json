@@ -1,0 +1,64 @@
+{
+  "baseCommit": "7c713b8f8a84d09d2dc41bf86cfcd198220c11c6",
+  "boundary": "Conditional moments/residuals only; global QL scale, robust prior, cohort inference and scientific calibration remain open",
+  "compiledSourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoOmicsLinearStatistics.swift": "b072cd8d6816541c7570187c99664d82ebbf26a127583cae8aba6eefb9d58664",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBAdaptiveMoments.swift": "a571308fbcdef31d32e19684e6540f37ad397ed132a37f7a0d0f9c44e88a99e5",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBCohort.swift": "40df22acb83708eeb515d996b3157d91808dfd68c2171fbbe2217b9f796f4e8f",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBDevianceMoments.swift": "5fa8b8705c7b8eaaca53fc512cbf88ac4644236ba949301d3794fe5c44711084",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBSupport.swift": "410fa18fb3979d3cd99de75ca59f9d2ccfbae30a23a35809e211f044538d48e7",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNegativeBinomial.swift": "319fb8b89272ad118a44da7d1affc84fb6f22901a9f589e59ebd4364b67e8171",
+    "Sources/NumiVivoKit/Omics/VivoOmicsSourceDecoder.swift": "9f07ae764bb71f57be6319fd43debb1594fee886dd2198a152edc499210687b3",
+    "Sources/NumiVivoKit/Omics/VivoPseudobulkDifferentialExpression.swift": "cc50a437bd4a9b43147e88fec8d502a3ace584de961411fa51edb0ca78d1ca18",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellAnalysis.swift": "23d0d228f450fc441252e200e8c905a72f360011f778b6e317c45cf3b348ecb9",
+    "Sources/NumiVivoKit/Omics/VivoSparseCounts.swift": "69ac2a3f26c36a6beb5cc2d0b4e26c8f4d129a091361314fc2ba0b1348bdbbad",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Adaptive/Main.swift": "127ee95bccac8d9e770dc5cd2edf589cdb1aa1bfe4c8398d91b5cf23e077c281"
+  },
+  "externalExecutables": [
+    {
+      "path": "/Users/n/numivivo-ql-adaptive-20260910/build/nb-adaptive-moments",
+      "role": "Qualified native CPU FP64 executable on macmini",
+      "sha256": "c4759843fbe6e061621b2d2d032892c04ea114ab3e94a71c1ef85e9bccb1820e"
+    },
+    {
+      "path": "/Users/n/numivivo-ql-adaptive-20260910/build-attempt-1/nb-adaptive-moments",
+      "role": "Unqualified compilation-warning attempt; not used for numerical results",
+      "sha256": "e8c8e7743c7c17087b1ff523d2908c13a6f9af39cc4c85947a4e994eda54035e"
+    }
+  ],
+  "nativeEvidenceSHA256": {
+    "derivative-reference.json": "f5545dca5f38d353f82cca1f4b44c21fefc26c31f146e117f8d4444816987506",
+    "extended-grid-checks.json": "33f8335b2644bbd5619b5814c08f17a4aa89c1759769361b4bed39773e4f02e2",
+    "family-comparison.json": "7c1dc031e966f7dc3e358f1ba4d0469a16a2bb3be049195fe92db782057a53b7",
+    "grid/grid-check.json": "27cf6e66a52993b21250044d7703ff785fa5707a320054c3a159a4a933632a70",
+    "twenty-checks.json": "ffb5d695e508b85fb5309ab42cfbf6245f247abf16af1fc8554cb3735449bf78",
+    "twenty-input.json": "56ba12d5c5c9539373d541fe272611a0bc9aa9495588620ef6ffdd139fdec8e3",
+    "twenty-native.json": "b1d24ecfeb5fc4cf5505a83da9e763f9f5cf20564a88a8d925618922061dcf86"
+  },
+  "pilotTransportObservation": "First arm wall time 170.64 seconds; retained live process sample shows blocked Foundation output writing. This timing is not treated as compute-only performance.",
+  "protocolSHA256": "f030962f97f32413901f2bf17cf528e67f64d43a64ba24636f0a72df6f248c64",
+  "retainedAttempts": [
+    "owner-compile-attempt-1.swift",
+    "build-attempt-1.log",
+    "owner-compile-attempt-2.swift",
+    "build-attempt-2.log",
+    "test-compile-attempt-1.swift",
+    "tests-compile-attempt-1.log"
+  ],
+  "testReproductionCommand": "swift test -c release --filter \"SingleCell(NegativeBinomial|NBCohort|NBSupport|NBDevianceMoments|NBAdaptiveMoments)Tests\"",
+  "tests": {
+    "log": "tests.log",
+    "passed": 28,
+    "scope": "Focused native NB, cohort, support, direct and adaptive moments",
+    "suites": 5
+  },
+  "toolAndTestSHA256": {
+    "Tests/NumiVivoIntegrationTests/SingleCellNBAdaptiveMomentsTests.swift": "2c78e190b8184049096e09124c8c0095e1cfdbcb7b899b0c92d681a9e8a353a8",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Adaptive/archive.py": "12fd1fc2cfd2296ce863340f14f71e7d8b189fc84e966a35327c0869f535711e",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Adaptive/build.sh": "2b6b8bb479d7bdf7f18ae75b78642f97611ae07329fba3b67fe7bf751e441526",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Adaptive/check.py": "e81fe8e206821ce0cf32a082610e54fad9b0ec4473aa0d3b056538c46f43ae64",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Adaptive/check_grid.py": "cfaba4f10ac811b86f874182766910acca9e920878172c64008ffefd22e0ce26",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Adaptive/compare_family.py": "9a5905950398eb86363c4c8cf6ec8493958e6a932f3b3ba8a699e0ec2e3557df",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Adaptive/run.py": "b115617707c5c7bfaa37f2b9cdb63f3b22e7dde530ed8109531e5cbdc8c24e5c"
+  }
+}
