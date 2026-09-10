@@ -10,6 +10,12 @@ checks pass. All 79 frozen donor-held-out prediction folds also pass native
 replay and independent numerical checks, with [complete empirical results](PREDICTION_RESULTS.md).
 This is not a completed biological or full million-cell analysis benchmark.
 
+The [streamed integration-response diagnostic](INTEGRATION_RESPONSE.md) now has
+a complete original-cohort baseline and identity/mean-erasure controls across
+the same 79 matched donor-held-out folds. Four treatment contrasts have
+insufficient classification-control sensitivity. Evaluation of the running full
+native integration output and broader biological preservation remain pending.
+
 The [protocol](PROTOCOL.md) was frozen before count inspection, fitting or
 prediction. Its SHA256 is
 `24680681c348a92f75308225d6c162f20c7e9be8191c19a1339ab54c499ee10d`.
