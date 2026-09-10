@@ -1,5 +1,10 @@
 # Complete native HIRISA integration result
 
+The [protected-stratum regression follow-up](PROTECTED_REGRESSION.md) tests one
+conditional donor correction on all original cells with frozen native memberships.
+It leaves 37/146 annotation failures, with four resolved and four introduced;
+no native solver change is promoted.
+
 The subsequent [complete annotation-retention diagnostic](ANNOTATION_RETENTION.md)
 finds 37 native failures among 146 supported, control-sensitive comparisons,
 including ten rare-label failures. All three Harmony references also fail.

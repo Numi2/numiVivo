@@ -1,0 +1,700 @@
+{
+  "completeSHA256": "49162d320173917ce325c5c5e160f6e1b6237b9a7306dc0426b66fbd4416889f",
+  "externalInputs": {
+    "memberships": {
+      "SHA256": "18db5218064ccc3297787b8461349ea3654423ab9cb80f2513b683ee4f13573e",
+      "path": "integration-full/native/memberships.bin"
+    },
+    "native": {
+      "SHA256": "51a37c9f2184ebf706348cacf4142d8cf005ca69e4fd5bdb4fd81c1e9601c756",
+      "path": "integration-full/native/scores.bin"
+    },
+    "original": {
+      "SHA256": "62e6b0644e2c954749b77946ba748e184c33580614f5756b1bc1b0980df86296",
+      "path": "integration-full/pca/scores.bin"
+    }
+  },
+  "externalOutputs": {
+    "legacy-reconstructed.bin": {
+      "SHA256": "b5ac524ab722aa442431d95b1958bb11423dedf2003c712b8782892916692e5c",
+      "bytes": 516030080,
+      "path": "protected-regression/legacy-reconstructed.bin"
+    },
+    "protected.bin": {
+      "SHA256": "35ab3be48ebdd0dbcf9ecea9aee6f2097a528dc35af62ce8741604d00a6f07b3",
+      "bytes": 516030080,
+      "path": "protected-regression/protected.bin"
+    }
+  },
+  "records": [
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 608,
+      "sourcePath": "study/baseline-annotation-oracle-process.json",
+      "sourceSHA256": "d20afa4aec4667e2b9e905fc4ea651829746e56077e93185d896900da2623e2d",
+      "storedBytes": 257,
+      "storedPath": "study/baseline-annotation-oracle-process.json.gz",
+      "storedSHA256": "4afdddfe67f79c38c23282d0783265f66d4721aed438fcc5a92f0ec47b3b70d9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 94,
+      "sourcePath": "study/baseline-annotation-oracle-status.json",
+      "sourceSHA256": "cb4fd70ccff2ed4cb1010ebcf369e7bce868abd3a9c3598427748badee505def",
+      "storedBytes": 105,
+      "storedPath": "study/baseline-annotation-oracle-status.json.gz",
+      "storedSHA256": "931b8793d629aa05d824d1501fb4ddfbaade0eb9f2e56d639efd4e3cf7004f3f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 125,
+      "sourcePath": "study/baseline-annotation-oracle.log",
+      "sourceSHA256": "e50e0e7e849b023ca309890252a067a3792a22742108bfd5637dac9e07324491",
+      "storedBytes": 123,
+      "storedPath": "study/baseline-annotation-oracle.log.gz",
+      "storedSHA256": "cc425faf66480efea8336ed965a088f534e6f268239d837b2e8c67b514fbe08c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 524,
+      "sourcePath": "study/baseline-annotation-process.json",
+      "sourceSHA256": "5ac7e5bee1695205d92e964d12c52fb226a02fed166c77df9763323cfdfb774b",
+      "storedBytes": 253,
+      "storedPath": "study/baseline-annotation-process.json.gz",
+      "storedSHA256": "8401bb9ab76d2c6df6b0da3835b2f1ee11bb91095521683a0dff9d20fed4a152"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 88,
+      "sourcePath": "study/baseline-annotation-status.json",
+      "sourceSHA256": "6ca1723dd7ec6f766b1319f80e3a61c30ddfd1de6f7e607aaf5306fe393df628",
+      "storedBytes": 99,
+      "storedPath": "study/baseline-annotation-status.json.gz",
+      "storedSHA256": "b5c11aa4108a3da39d1c4ae31b4857c39a6b1e074e096622ca94eaea4e32f7db"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 156,
+      "sourcePath": "study/baseline-annotation.log",
+      "sourceSHA256": "fb25c39563e63adb9c1fae37889a935eda3745feeecab137870cbfd4ac90e1cd",
+      "storedBytes": 139,
+      "storedPath": "study/baseline-annotation.log.gz",
+      "storedSHA256": "700937ded096c79fa6d05516b0fa744b2c3fdd817c93cf05b5e6c64a3787cf78"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 7618,
+      "sourcePath": "study/check_annotation_retention.py",
+      "sourceSHA256": "233db3151b174690de47f069a328ce9286bf49efecf03f5de1779983d28c2645",
+      "storedBytes": 2783,
+      "storedPath": "study/check_annotation_retention.py.gz",
+      "storedSHA256": "74449d7276eef1d1c6b2ca527c0079170e74cc3da99eb6edc0fb37210d2d1d65"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4239,
+      "sourcePath": "study/check_annotation_retention_oracle.py",
+      "sourceSHA256": "d338ee23486ae7bd7e958bfaba941ee180e1068ed5fe6e5ae66a4724eab8a239",
+      "storedBytes": 1692,
+      "storedPath": "study/check_annotation_retention_oracle.py.gz",
+      "storedSHA256": "019cc6181d2f67b24749c88e4d0614fb11bd13ff5469db15e9a0110ece62e7c2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6354,
+      "sourcePath": "study/check_calibration_dense_oracle.py",
+      "sourceSHA256": "2b5d8422821774e5ca567db6bd7b6553c02241363a90bcba67ac15b32c8ff779",
+      "storedBytes": 2388,
+      "storedPath": "study/check_calibration_dense_oracle.py.gz",
+      "storedSHA256": "458ef5dc15431e0abb561a3b54c8609562781e809905dcfaf5b23d8163ed0ef7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 12737,
+      "sourcePath": "study/check_integration_programs.py",
+      "sourceSHA256": "185efec462fafa15b3645304db63a02432eaa417d8d9800d4108f606b319f211",
+      "storedBytes": 3824,
+      "storedPath": "study/check_integration_programs.py.gz",
+      "storedSHA256": "9bdd62d0ba3aa9f12e8a89d16978527c4a1d8fec4518c94db5688ecf27d878f9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 16062,
+      "sourcePath": "study/check_integration_response.py",
+      "sourceSHA256": "5f081709d5f8ccdc2c55b0788a75a94c48f93e9a89398ef14593d7ec68287db1",
+      "storedBytes": 5066,
+      "storedPath": "study/check_integration_response.py.gz",
+      "storedSHA256": "8c0a9b5cc541955d62204369e10c88d8560306b0f4d642608472aeaa4fa1a2f4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 7428,
+      "sourcePath": "study/check_program_calibration.py",
+      "sourceSHA256": "e8e6a9bf9da3229558829529f32bd8cb678d578c8d6b8346b08b4e26dab339ff",
+      "storedBytes": 2644,
+      "storedPath": "study/check_program_calibration.py.gz",
+      "storedSHA256": "525fa48bce90cb1f9d5e8b0f5f4096deb58b79389faf3fbc39cd11452df15958"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2538,
+      "sourcePath": "study/complete.json",
+      "sourceSHA256": "49162d320173917ce325c5c5e160f6e1b6237b9a7306dc0426b66fbd4416889f",
+      "storedBytes": 1036,
+      "storedPath": "study/complete.json.gz",
+      "storedSHA256": "24cf41ef856a999eb74741398b5eee87ea8fda6dceece806e3d3a6830f5ca90d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 5236,
+      "sourcePath": "study/evaluate_protected_regression.py",
+      "sourceSHA256": "4f8d6be53db9fe6e12ce99780fb2c193ae0c98d77559f48b34a0358d9eb42d36",
+      "storedBytes": 1976,
+      "storedPath": "study/evaluate_protected_regression.py.gz",
+      "storedSHA256": "241791a34f143d35dc01709c9d4eae0bc9af486bd1ac08c45981997e8020cfca"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1328,
+      "sourcePath": "study/evaluation-execution-freeze.json",
+      "sourceSHA256": "6e434dbf839f256672a4838a055c167acecdfca5020b8a39c5046e55e74f77a0",
+      "storedBytes": 716,
+      "storedPath": "study/evaluation-execution-freeze.json.gz",
+      "storedSHA256": "b0f456fbdd5f3e04be56fa66dfdbbb7dd3f502e3c1742163b338730e010ff335"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 22951,
+      "sourcePath": "study/evaluation/baseline-oracle.json",
+      "sourceSHA256": "581ec552b7134ddc959b6c895a330c31ff21c4569b68f44c984f24d922a1822f",
+      "storedBytes": 3082,
+      "storedPath": "study/evaluation/baseline-oracle.json.gz",
+      "storedSHA256": "6b834c95d9c3e4f65cb297670d59b34432c111445f841e2db424152716eee77b"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4981757,
+      "sourcePath": "study/evaluation/baseline.json",
+      "sourceSHA256": "e11d2e9e84c6c3c47df6d28e17456eb3ee44b6125c1702f20b6967e807a4b703",
+      "storedBytes": 770506,
+      "storedPath": "study/evaluation/baseline.json.gz",
+      "storedSHA256": "af40218373c52bfeab793a0223975cbe38a7e9ba99772b014c16407b26e66678"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2245,
+      "sourcePath": "study/evaluation/freeze.json",
+      "sourceSHA256": "505bbd8cb6da99a8671701111a8033035d43ee728947c7b35c751f3b27409812",
+      "storedBytes": 1104,
+      "storedPath": "study/evaluation/freeze.json.gz",
+      "storedSHA256": "1f3697d16b1c2b3be043875a3a6f3553abaecf3064a9ab49fce3c844798ce927"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 68575,
+      "sourcePath": "study/evaluation/ledger.json",
+      "sourceSHA256": "1ab6a26d26b7e82acbd2c57829f710a5c633dec82ddb0cc8b7f475052cf72464",
+      "storedBytes": 7104,
+      "storedPath": "study/evaluation/ledger.json.gz",
+      "storedSHA256": "2fc812492185c0521ac46b11dadf903bd171255889d1f1657e2bd04770b8d734"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 22939,
+      "sourcePath": "study/evaluation/legacy-reconstructed-oracle.json",
+      "sourceSHA256": "6913f52f7744665b59b85f4ef6e21cdcbbe3826986a95fba1002e806c68cce1f",
+      "storedBytes": 3070,
+      "storedPath": "study/evaluation/legacy-reconstructed-oracle.json.gz",
+      "storedSHA256": "5b319e25dc00240862d2d478a5d7351454f7db293b73ce7755c84d2203826ab0"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4990680,
+      "sourcePath": "study/evaluation/legacy-reconstructed.json",
+      "sourceSHA256": "694a5820939f60b603084194cb5e98750a427a85b391c2f7a8bcee73e6d0e3b6",
+      "storedBytes": 784064,
+      "storedPath": "study/evaluation/legacy-reconstructed.json.gz",
+      "storedSHA256": "28888109058f7ab2c6e167673013298ed80bc3a7e8c9c996d0510c9faeede449"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2382315,
+      "sourcePath": "study/evaluation/mixed-programs.json",
+      "sourceSHA256": "21c6e9d79e3e0dbb8e5e3e9fa3a91e3b784f491792f51e1d1bd200b6aa829a42",
+      "storedBytes": 523596,
+      "storedPath": "study/evaluation/mixed-programs.json.gz",
+      "storedSHA256": "02d2e40eae849daca06f6b84f7ac1522c04d9137ddd18c1aea5b8389529766cb"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 22948,
+      "sourcePath": "study/evaluation/protected-oracle.json",
+      "sourceSHA256": "b23f361b58d2cf54ea1539496ce7eaf42acd9ff89b54986c5fc7e3578cf29efe",
+      "storedBytes": 3038,
+      "storedPath": "study/evaluation/protected-oracle.json.gz",
+      "storedSHA256": "3e8a3f31c6bb54629bcd8f0fdcb6b41f4f36b891b2b3b14d0871f07b117ab926"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4990261,
+      "sourcePath": "study/evaluation/protected.json",
+      "sourceSHA256": "80a764e1913c6b32c4efcf73968f21689e9649d6bee33feb9432c426b48f5600",
+      "storedBytes": 783645,
+      "storedPath": "study/evaluation/protected.json.gz",
+      "storedSHA256": "338c03252f9d5cca6014e7e1ef9ea2cbb5904c86762ff74cfcb2d4d8c77b8145"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 3302,
+      "sourcePath": "study/evaluation/protocol.md",
+      "sourceSHA256": "2ea388506056c6f11c8dc34406e22180d104221322ec8111dc5f68e1dcf6c38e",
+      "storedBytes": 1633,
+      "storedPath": "study/evaluation/protocol.md.gz",
+      "storedSHA256": "5ca24ac036c9c7a5feb79503c1d8bf918afd8f99c07fcac4fb8fa03daa2da837"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 219604,
+      "sourcePath": "study/evaluation/response.json",
+      "sourceSHA256": "a46cef47fd1699371493a1b116ef9c8c873065143e43d62759b93a5af1f8530d",
+      "storedBytes": 59810,
+      "storedPath": "study/evaluation/response.json.gz",
+      "storedSHA256": "aed4acdca0fdf9c45c310e22bcb4c9d57ab42dfce5f570e840303ca47f04f6d2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 533418,
+      "sourcePath": "study/evaluation/rows.npz",
+      "sourceSHA256": "e4d9a1cbe5c048efd15523f6a5a67a9574b35af3aeed1e2638332dec96fd13f2",
+      "storedBytes": 524002,
+      "storedPath": "study/evaluation/rows.npz.gz",
+      "storedSHA256": "fc2513bed485bfd5af8e85e0f483a52d34a8c34834bb82bf44079b0d411afb6d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 770,
+      "sourcePath": "study/evaluation/within-programs-oracle.json",
+      "sourceSHA256": "b134be4be2a56cfcdf21c95481506372df6602487eff618dea60a12756e9ff37",
+      "storedBytes": 503,
+      "storedPath": "study/evaluation/within-programs-oracle.json.gz",
+      "storedSHA256": "cd2c864e55312be7bfc82b6b59361911e02cf24b170238c8775941454ae8f919"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2382264,
+      "sourcePath": "study/evaluation/within-programs.json",
+      "sourceSHA256": "b7881095dd622f802ba8319e04a71c31f28f45f1dbac69d36c8b8c3e7d866a6c",
+      "storedBytes": 522979,
+      "storedPath": "study/evaluation/within-programs.json.gz",
+      "storedSHA256": "3e54d9c1e83d6bd46efff1f486f6bb73cb418f76185dc29c52e51ea3e2ac0cbc"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2638,
+      "sourcePath": "study/execution-freeze.json",
+      "sourceSHA256": "f141ebce515199b42d920ed546a6e4dfbc7428b48ef1943ea36ebf585c624336",
+      "storedBytes": 727,
+      "storedPath": "study/execution-freeze.json.gz",
+      "storedSHA256": "3a74caaf566dec80a5a6edbb498aad15913c4ea886c4264dc6f7820414f387d4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6952,
+      "sourcePath": "study/fit_protected_regression.py",
+      "sourceSHA256": "cccf6c4fd973770e54ee6fced01be8e44937be4d9d5c57ddd641b4b63f4d2c4a",
+      "storedBytes": 2773,
+      "storedPath": "study/fit_protected_regression.py.gz",
+      "storedSHA256": "ca4b73d705fc2f3cae01ac62b5d32937457aa8bbd3038661511a92584b3b2e53"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 632,
+      "sourcePath": "study/legacy-reconstructed-annotation-oracle-process.json",
+      "sourceSHA256": "7c44b01f354e5372d3f5fe4534fdf6790c09e66c1223fe698d966794126c6184",
+      "storedBytes": 265,
+      "storedPath": "study/legacy-reconstructed-annotation-oracle-process.json.gz",
+      "storedSHA256": "71f3a82db06286427e7875ade1d432a604ba227db2654913ab111538b7af6c4f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 105,
+      "sourcePath": "study/legacy-reconstructed-annotation-oracle-status.json",
+      "sourceSHA256": "ae449a03787f737ccadce802a67d40f5effe324b43b05b19e17fabcea9390669",
+      "storedBytes": 113,
+      "storedPath": "study/legacy-reconstructed-annotation-oracle-status.json.gz",
+      "storedSHA256": "01aac6cad5774863712f709c47a158a2183e647914119a74a7cc022b7221ca89"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 125,
+      "sourcePath": "study/legacy-reconstructed-annotation-oracle.log",
+      "sourceSHA256": "cb81c2506374adc23c9749e9e46a8d66441db021497edb9bce23001b9bed0c33",
+      "storedBytes": 123,
+      "storedPath": "study/legacy-reconstructed-annotation-oracle.log.gz",
+      "storedSHA256": "e749a043ef101dc4983bfecf4b1804649a4b23a9d4c1db4d504aa95c9b6929fb"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 653,
+      "sourcePath": "study/legacy-reconstructed-annotation-process.json",
+      "sourceSHA256": "81818f9ec2189393883f587eb416bece8c0367d51e931ffd8ed33a993f244d3a",
+      "storedBytes": 273,
+      "storedPath": "study/legacy-reconstructed-annotation-process.json.gz",
+      "storedSHA256": "26e5b4f3fac6530b406c25ea3d1ea37152c77e84e452ef0a6ce6c92aa6276845"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 99,
+      "sourcePath": "study/legacy-reconstructed-annotation-status.json",
+      "sourceSHA256": "61a38263550f61e04d2c2364ee16fe573eccc6f3de6044b851dce19ce2348ff5",
+      "storedBytes": 107,
+      "storedPath": "study/legacy-reconstructed-annotation-status.json.gz",
+      "storedSHA256": "c4d934158a16d83e6817ce4ae359ae09113697689d9ba8bd11edd723398a5094"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 169,
+      "sourcePath": "study/legacy-reconstructed-annotation.log",
+      "sourceSHA256": "39b1ef63865d96f2b9dbbffcb7ff965ce61e1cf423b616c4af9d4bd063f0b99a",
+      "storedBytes": 148,
+      "storedPath": "study/legacy-reconstructed-annotation.log.gz",
+      "storedSHA256": "d28f260343848900a18d87863a9b7d4ac73950431177fb77de0bd923b511b9f5"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 985,
+      "sourcePath": "study/mixed-programs-process.json",
+      "sourceSHA256": "a2fda9b51906345472e0cebeb45b45d3f3994eeea6a09c023b58ee434c017c29",
+      "storedBytes": 333,
+      "storedPath": "study/mixed-programs-process.json.gz",
+      "storedSHA256": "b93827531e39b10fa7d10a13cfbc01d1274c9098be2ba58fac781f10a5eebc86"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 80,
+      "sourcePath": "study/mixed-programs-status.json",
+      "sourceSHA256": "c146d69cf10ca848445876334050ffd56d19d81c220593daae8cda010e9508e9",
+      "storedBytes": 91,
+      "storedPath": "study/mixed-programs-status.json.gz",
+      "storedSHA256": "3368d17d5c6585053f3a3ee2604434069c76493c9593510a261c7a569490a365"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 140,
+      "sourcePath": "study/mixed-programs.log",
+      "sourceSHA256": "4262340ca015978ee9947ba197d86807f318358c434933f81144920cbe1537aa",
+      "storedBytes": 141,
+      "storedPath": "study/mixed-programs.log.gz",
+      "storedSHA256": "116fb0f8976ffa6ff75728a0a46db3b82105922164a23388c459a47325a94e30"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 10086672,
+      "sourcePath": "study/models.json",
+      "sourceSHA256": "625867fa7b62e5cac794e0b393a52b74e7ac32653c8675f4a243379cd7b2b115",
+      "storedBytes": 3255213,
+      "storedPath": "study/models.json.gz",
+      "storedSHA256": "f635f2935b0d66127a5d4e9025f55af7c2f05088d4bcbe5d6625b16edf4cccc8"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 714,
+      "sourcePath": "study/output-freeze.json",
+      "sourceSHA256": "453201d1a6b1551af9a5dcf98f1e94e49e525e870f9c13a8a8d8b220b35b127f",
+      "storedBytes": 476,
+      "storedPath": "study/output-freeze.json.gz",
+      "storedSHA256": "df0fd67f79c45aeb6d8ee2b1da07369a1dc47560ae5cbc66d65a6b3a1836f9d7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 3789,
+      "sourcePath": "study/prepare_annotation_retention.py",
+      "sourceSHA256": "1abf818efb07b353ed1f6d924812517c3cba73d6789e21ca88638e81cdcb411b",
+      "storedBytes": 1770,
+      "storedPath": "study/prepare_annotation_retention.py.gz",
+      "storedSHA256": "bd07b4de1439d94c20d17a85e7fe857ca0a9178d69781fe9fa21f9ed91d71acb"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 611,
+      "sourcePath": "study/protected-annotation-oracle-process.json",
+      "sourceSHA256": "1e2520d04ecba07c981b00ca716a198312bc85d3aa6850965ca977b90c397482",
+      "storedBytes": 254,
+      "storedPath": "study/protected-annotation-oracle-process.json.gz",
+      "storedSHA256": "0f56ceeff9fc62a0ccc41668c7ce38a0c02fe7316c8d67e6f1be459d8b38b528"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 96,
+      "sourcePath": "study/protected-annotation-oracle-status.json",
+      "sourceSHA256": "68c2a1c845575c1a06a4f58efe732030ee54ee843220f152d8ce595766cd49a5",
+      "storedBytes": 105,
+      "storedPath": "study/protected-annotation-oracle-status.json.gz",
+      "storedSHA256": "9b72742c172a2b36fa64de8d8298d680d4de27935c4ed485818ffbb9efec34af"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 125,
+      "sourcePath": "study/protected-annotation-oracle.log",
+      "sourceSHA256": "83b0acabca148b657b7f323938026431b374cb061f05bc5fa58486f49ead8a3b",
+      "storedBytes": 123,
+      "storedPath": "study/protected-annotation-oracle.log.gz",
+      "storedSHA256": "86393000ea9d48f3d0f033a5382cab3866b7949ad1d225aa391ac77d01cbe9a3"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 631,
+      "sourcePath": "study/protected-annotation-process.json",
+      "sourceSHA256": "b890ec6731eaa9517ab9ca8e3c95ff7f42d20916fbe673b26d63b18bc3226bc2",
+      "storedBytes": 263,
+      "storedPath": "study/protected-annotation-process.json.gz",
+      "storedSHA256": "2e59c9fc6df132dc176c5cfa7426b987288934bad432dba146b75f3990a7faf8"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 89,
+      "sourcePath": "study/protected-annotation-status.json",
+      "sourceSHA256": "53a8a940e87d3c701136a718e0b6c34c768c533a1789bcd309c209cc8d6db3b2",
+      "storedBytes": 100,
+      "storedPath": "study/protected-annotation-status.json.gz",
+      "storedSHA256": "29c46bd6e6596f4c9cd9744827c76da820bddd070189bc41a3b81f478a6d1fab"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 158,
+      "sourcePath": "study/protected-annotation.log",
+      "sourceSHA256": "0bc66b7bfb35c0a1266eaa3b121da6ed8e4c782ea1297e3c30efa72f79664a0b",
+      "storedBytes": 140,
+      "storedPath": "study/protected-annotation.log.gz",
+      "storedSHA256": "b18dda56b8799893c2dd283b927acd0ac702c81f584a6d96e92890e651970358"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2760,
+      "sourcePath": "study/protocol.md",
+      "sourceSHA256": "523693ae692660dc1314810f58d31e624b4a57b37642cbb482440f98d407bd2d",
+      "storedBytes": 1375,
+      "storedPath": "study/protocol.md.gz",
+      "storedSHA256": "47450759295b2986c8deb700cf4aca6e52942c9e12b0a6cbcf900cf2905bd885"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 742,
+      "sourcePath": "study/publication-attempts.json",
+      "sourceSHA256": "2051c38f230c3b47feb983de329da2c6df9e4f7a294a1daa47ac2b66adc48131",
+      "storedBytes": 334,
+      "storedPath": "study/publication-attempts.json.gz",
+      "storedSHA256": "fa2279a8f8ba5e84cf2a36a835e0921ffe9e105dbca1064908e32d316ee8269e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 887,
+      "sourcePath": "study/response-process.json",
+      "sourceSHA256": "d27fa97c7702f9a11d4f349b5d1ee0333f76bf4579b20dfa48a80042e9953f01",
+      "storedBytes": 324,
+      "storedPath": "study/response-process.json.gz",
+      "storedSHA256": "acfebf9b546ba5fdaccd7fc51d4ae427d0eff6e353f5c11fb6046f5ea699f966"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 76,
+      "sourcePath": "study/response-status.json",
+      "sourceSHA256": "828ec431229719ccc362670772cbf8e732c4999ac59ff11b663e511187bc62bb",
+      "storedBytes": 87,
+      "storedPath": "study/response-status.json.gz",
+      "storedSHA256": "d8dd8cd2f7fd0e177cc751d74c8d3a8eb88f6eff471b955a15c90bc4a396c461"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 246,
+      "sourcePath": "study/response.log",
+      "sourceSHA256": "06f26b91184b8426eba1badf2bcadcf648eed74ebb57557b9e8008805a428be9",
+      "storedBytes": 200,
+      "storedPath": "study/response.log.gz",
+      "storedSHA256": "d7dfd856d638efd78c9be194c119b6b1f048e747012c82c27da3a15753e23934"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4302,
+      "sourcePath": "study/summary.json",
+      "sourceSHA256": "62234621a0f6659f1ea664bf4069a4c47dac805801a6f9c1647c055da121637a",
+      "storedBytes": 1424,
+      "storedPath": "study/summary.json.gz",
+      "storedSHA256": "2f2f385974d158d5ee71c1b10d81bf704067e3c94d57103365ae2659199c7b59"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1347,
+      "sourcePath": "study/test_protected_regression.py",
+      "sourceSHA256": "b58de46020ee7ee430a0c159fdd8befad2548a72cfe025b5ac597ac4f5f8e777",
+      "storedBytes": 638,
+      "storedPath": "study/test_protected_regression.py.gz",
+      "storedSHA256": "ae8defb4ab9721de361b3c54954712cb0f02ad1ea5ec998db72aacbf91f9e559"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 249,
+      "sourcePath": "study/tests-process.json",
+      "sourceSHA256": "3e5431b671040420dac9c013ef43b2852641b381cf2463e9d6152e1803917222",
+      "storedBytes": 192,
+      "storedPath": "study/tests-process.json.gz",
+      "storedSHA256": "04d658fa41db02b1bbfd1619a7d3297f118a6dbb3cabd32cf7f5337130cdb576"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 75,
+      "sourcePath": "study/tests-status.json",
+      "sourceSHA256": "14388988adeffc75093b81e6c6beaab5e3987285338722e9896aa61d55e071d3",
+      "storedBytes": 85,
+      "storedPath": "study/tests-status.json.gz",
+      "storedSHA256": "67961aa690d6af944546f6970197cc5afb304c48e5f9997b1d358450f4d33a25"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 101,
+      "sourcePath": "study/tests.log",
+      "sourceSHA256": "869ea8047d0ae89dddb808470175fa3bdce5d6007a92e195f2d7e7e762e1f49f",
+      "storedBytes": 54,
+      "storedPath": "study/tests.log.gz",
+      "storedSHA256": "9053408bd5c9cc5a9720b994f048b447c1fc5c5ba6d1f09715a2b4912e438cde"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1119,
+      "sourcePath": "study/within-programs-oracle-process.json",
+      "sourceSHA256": "ee2b9aa46e99afb7273d4611b4379c57665f4c6e5858ccf45a5129f7bc982248",
+      "storedBytes": 354,
+      "storedPath": "study/within-programs-oracle-process.json.gz",
+      "storedSHA256": "d926a4d1bb6f45437449ece3e98100db69355a1a0d2de13c35a2110fdbcd4eaf"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 91,
+      "sourcePath": "study/within-programs-oracle-status.json",
+      "sourceSHA256": "277a2f01a39065748277cc1f5934dc9a302c2df738327652e0aa0ee044ba77b8",
+      "storedBytes": 102,
+      "storedPath": "study/within-programs-oracle-status.json.gz",
+      "storedSHA256": "90589425e97469925fdf4444d65908b6191569e78334bdef1c5b8073be3238db"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 728,
+      "sourcePath": "study/within-programs-oracle.log",
+      "sourceSHA256": "c6c71b8b8379c00a7adbbf2d50aa1ba78bb636386615e74977bbb050300c4a1e",
+      "storedBytes": 491,
+      "storedPath": "study/within-programs-oracle.log.gz",
+      "storedSHA256": "b6f9d06156cf1d3555c00ffc9fa2132d6cd3809f0574c8a5a0e13af52e574e86"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2780,
+      "sourcePath": "tools/archive_protected_regression.py",
+      "sourceSHA256": "9d85d0593a35a28bbbad6e01df219a6ed1e03a739cbdc302f097ca28b180763e",
+      "storedBytes": 1326,
+      "storedPath": "tools/archive_protected_regression.py.gz",
+      "storedSHA256": "142c729501d98ea01bf13f2f3691367eeb5a58b37e6060bb6e201da63233e1f5"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 7618,
+      "sourcePath": "tools/check_annotation_retention.py",
+      "sourceSHA256": "233db3151b174690de47f069a328ce9286bf49efecf03f5de1779983d28c2645",
+      "storedBytes": 2783,
+      "storedPath": "tools/check_annotation_retention.py.gz",
+      "storedSHA256": "74449d7276eef1d1c6b2ca527c0079170e74cc3da99eb6edc0fb37210d2d1d65"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4239,
+      "sourcePath": "tools/check_annotation_retention_oracle.py",
+      "sourceSHA256": "d338ee23486ae7bd7e958bfaba941ee180e1068ed5fe6e5ae66a4724eab8a239",
+      "storedBytes": 1692,
+      "storedPath": "tools/check_annotation_retention_oracle.py.gz",
+      "storedSHA256": "019cc6181d2f67b24749c88e4d0614fb11bd13ff5469db15e9a0110ece62e7c2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6354,
+      "sourcePath": "tools/check_calibration_dense_oracle.py",
+      "sourceSHA256": "2b5d8422821774e5ca567db6bd7b6553c02241363a90bcba67ac15b32c8ff779",
+      "storedBytes": 2388,
+      "storedPath": "tools/check_calibration_dense_oracle.py.gz",
+      "storedSHA256": "458ef5dc15431e0abb561a3b54c8609562781e809905dcfaf5b23d8163ed0ef7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 12737,
+      "sourcePath": "tools/check_integration_programs.py",
+      "sourceSHA256": "185efec462fafa15b3645304db63a02432eaa417d8d9800d4108f606b319f211",
+      "storedBytes": 3824,
+      "storedPath": "tools/check_integration_programs.py.gz",
+      "storedSHA256": "9bdd62d0ba3aa9f12e8a89d16978527c4a1d8fec4518c94db5688ecf27d878f9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 16062,
+      "sourcePath": "tools/check_integration_response.py",
+      "sourceSHA256": "5f081709d5f8ccdc2c55b0788a75a94c48f93e9a89398ef14593d7ec68287db1",
+      "storedBytes": 5066,
+      "storedPath": "tools/check_integration_response.py.gz",
+      "storedSHA256": "8c0a9b5cc541955d62204369e10c88d8560306b0f4d642608472aeaa4fa1a2f4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 7428,
+      "sourcePath": "tools/check_program_calibration.py",
+      "sourceSHA256": "e8e6a9bf9da3229558829529f32bd8cb678d578c8d6b8346b08b4e26dab339ff",
+      "storedBytes": 2644,
+      "storedPath": "tools/check_program_calibration.py.gz",
+      "storedSHA256": "525fa48bce90cb1f9d5e8b0f5f4096deb58b79389faf3fbc39cd11452df15958"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 5236,
+      "sourcePath": "tools/evaluate_protected_regression.py",
+      "sourceSHA256": "4f8d6be53db9fe6e12ce99780fb2c193ae0c98d77559f48b34a0358d9eb42d36",
+      "storedBytes": 1976,
+      "storedPath": "tools/evaluate_protected_regression.py.gz",
+      "storedSHA256": "241791a34f143d35dc01709c9d4eae0bc9af486bd1ac08c45981997e8020cfca"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6952,
+      "sourcePath": "tools/fit_protected_regression.py",
+      "sourceSHA256": "cccf6c4fd973770e54ee6fced01be8e44937be4d9d5c57ddd641b4b63f4d2c4a",
+      "storedBytes": 2773,
+      "storedPath": "tools/fit_protected_regression.py.gz",
+      "storedSHA256": "ca4b73d705fc2f3cae01ac62b5d32937457aa8bbd3038661511a92584b3b2e53"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 3789,
+      "sourcePath": "tools/prepare_annotation_retention.py",
+      "sourceSHA256": "1abf818efb07b353ed1f6d924812517c3cba73d6789e21ca88638e81cdcb411b",
+      "storedBytes": 1770,
+      "storedPath": "tools/prepare_annotation_retention.py.gz",
+      "storedSHA256": "bd07b4de1439d94c20d17a85e7fe857ca0a9178d69781fe9fa21f9ed91d71acb"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4410,
+      "sourcePath": "tools/summarize_protected_regression.py",
+      "sourceSHA256": "f0f5c8396e7de80a23c3bf2b20cbba740bbae191d777d58b9e4a88550e42a58e",
+      "storedBytes": 1748,
+      "storedPath": "tools/summarize_protected_regression.py.gz",
+      "storedSHA256": "78f2fc5588734489d08a9c17626d3bbf2734a25034c66e6aa7cf98ba95f6c776"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1347,
+      "sourcePath": "tools/test_protected_regression.py",
+      "sourceSHA256": "b58de46020ee7ee430a0c159fdd8befad2548a72cfe025b5ac597ac4f5f8e777",
+      "storedBytes": 638,
+      "storedPath": "tools/test_protected_regression.py.gz",
+      "storedSHA256": "ae8defb4ab9721de361b3c54954712cb0f02ad1ea5ec998db72aacbf91f9e559"
+    }
+  ],
+  "schemaVersion": 1,
+  "scope": "All models, frozen protocol, original-row metadata, evaluator sources, results and independent checks archived. Original source and full coordinate inputs/outputs remain external and hash-bound; restore under the recorded study-relative paths. Failed biological preservation retained; no native promotion.",
+  "summarySHA256": "62234621a0f6659f1ea664bf4069a4c47dac805801a6f9c1647c055da121637a"
+}

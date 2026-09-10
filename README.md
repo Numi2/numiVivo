@@ -56,7 +56,9 @@ The new [annotation-retention diagnostic](Tools/Omics/Benchmarks/HIRISA/ANNOTATI
 finds native losses beyond its margins in **37/146** supported, sensitive
 comparisons, including **10/29 rare-label comparisons**. All three Harmony
 references also fail the complete gate. Broader biological preservation remains
-unqualified.
+unqualified. A single [protected-stratum regression experiment](Tools/Omics/Benchmarks/HIRISA/PROTECTED_REGRESSION.md)
+retains 37/146 failures: four resolve and four new failures appear. This candidate
+has not been promoted into the native solver.
 
 ## One scientific question, several scales
 

@@ -1,5 +1,10 @@
 # HIRISA complete-source experimental benchmark
 
+The [protected-stratum regression follow-up](PROTECTED_REGRESSION.md) tests one
+conditional donor correction on all original cells with frozen native memberships.
+It leaves 37/146 annotation failures, with four resolved and four introduced;
+no native solver change is promoted.
+
 A subsequent [within-library decoder development experiment](PROGRAM_CALIBRATION.md)
 meets the unchanged program-loss margins with 28/32 sensitive controls, four
 insufficient. It identifies objective dependence without replacing the original

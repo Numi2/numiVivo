@@ -166,6 +166,13 @@ preservation, and native multi-seed robustness remains open. Full-cohort [cluste
 partition checks](../Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md) now
 pass for all original cells; graph communities are not validated cell types.
 
+A subsequent [protected-stratum regression experiment](../Tools/Omics/Benchmarks/HIRISA/PROTECTED_REGRESSION.md)
+conditions donor effects on known preparation/treatment strata with the same
+frozen native memberships. It retains 37/146 annotation failures, resolving four
+and introducing four; rare failures fall from 10 to 8. Response and program
+gates are unchanged. The modest average recall improvement does not repair
+complete preservation, and no native solver change is promoted.
+
 Integration classifiers use full-cohort preprocessing and assess retained
 information. They are not prospective prediction of an unseen donor's treated
 outcome. Donor-response prediction above uses the separate frozen count-based
