@@ -237,3 +237,7 @@ remain separate gates.
 The [bounded row-batch qualification](../Benchmarks/HIRISA/TILED_INTEGRATION.md)
 records exact trajectories across tile boundaries, complete Kang/Hagai numerical
 regressions, native replay and the separate full-shape storage measurements.
+
+The [streamed independent checker](STREAMED_INTEGRATION_CHECK.md) validates every
+final matrix record, objective and ridge correction using bounded row batches.
+It complements native replay; biological preservation remains a separate gate.
