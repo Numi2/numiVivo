@@ -57,6 +57,15 @@ public struct VivoPCAIntegrationReceipt: Codable, Sendable, Equatable {
     public var anchors: VivoFingerprint? = nil
 }
 
+/// Output record bounds follow the same cell and method axes admitted by the
+/// solvers. Every membership/anchor witness is one 16-byte coordinate/value record.
+/// MNN keeps at most k upper-level candidates per source row, so mutual anchors
+/// are a subset of rows * k even when there are more than two covariate levels.
+enum VivoIntegrationStorageLimits {
+    static let maximumMembershipBytes = VivoPCAStorageLimits.maximumRows * VivoSingleCellIntegrationOptions.maximumClusters * 16
+    static let maximumAnchorBytes = VivoPCAStorageLimits.maximumRows * VivoMNNIntegrationOptions.maximumNeighbors * 16
+}
+
 public enum VivoPCAIntegration {
     static func components(_ root: URL) throws -> Int {
         struct Dimensions: Decodable { let components: Int }
@@ -80,7 +89,7 @@ public enum VivoPCAIntegration {
         try plan.validate()
         try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         try VivoPCANeighborBundle.snapshot(input.appendingPathComponent("input"), kind: plan.inputKind, to: output.appendingPathComponent("input"))
-        let witnesses = plan.mnn == nil ? [("assignment-scores.bin", VivoPCAStorageLimits.maximumBytes), ("memberships.bin", 1_600_000_000)] : [("anchors.bin", 1_600_000_000)]
+        let witnesses = plan.mnn == nil ? [("assignment-scores.bin", VivoPCAStorageLimits.maximumBytes), ("memberships.bin", VivoIntegrationStorageLimits.maximumMembershipBytes)] : [("anchors.bin", VivoIntegrationStorageLimits.maximumAnchorBytes)]
         for (name, limit) in [("plan.json", 65_536), ("receipt.json", 65_536), ("report.json", 16_777_216), ("metadata.json", 536_870_912),
             ("scores.bin", VivoPCAStorageLimits.maximumBytes)] + witnesses {
             _ = try VivoOmicsFileSnapshot.fingerprint(input.appendingPathComponent(name), copyTo: output.appendingPathComponent(name), maximumBytes: limit)
@@ -153,7 +162,7 @@ public enum VivoPCAIntegration {
         guard rebuilt == receipt else { throw VivoOmicsError.invalid("integration reconstruction differs") }
         for (name, hash, limit) in [("plan.json", receipt.plan, 65_536), ("metadata.json", receipt.metadata, 536_870_912),
             ("report.json", receipt.report, 16_777_216), ("scores.bin", receipt.scores, VivoPCAStorageLimits.maximumBytes),
-            ("assignment-scores.bin", receipt.assignmentScores!, VivoPCAStorageLimits.maximumBytes), ("memberships.bin", receipt.memberships!, 1_600_000_000)] {
+            ("assignment-scores.bin", receipt.assignmentScores!, VivoPCAStorageLimits.maximumBytes), ("memberships.bin", receipt.memberships!, VivoIntegrationStorageLimits.maximumMembershipBytes)] {
             guard try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), maximumBytes: limit) == hash else { throw VivoOmicsError.invalid("integration artifact fingerprint differs") }
         }
         return receipt

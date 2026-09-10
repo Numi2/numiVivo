@@ -1,6 +1,7 @@
 import Foundation
 
 public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
+    static let maximumClusters = 100
     public enum Covariate: String, Codable, Sendable { case donor, batch }
     public enum RidgeScaling: String, Codable, Sendable { case expectedClusterBatchMass }
     /// Nil preserves the original fixed penalty; otherwise ridge is the expected-mass coefficient.
@@ -31,7 +32,7 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
         maximumWork = try c.decodeIfPresent(Int.self,forKey: .maximumWork) ?? 200_000_000
     }
     public func validate() throws {
-        guard (2...100).contains(clusters), diversity.isFinite, (0...10).contains(diversity),
+        guard (2...Self.maximumClusters).contains(clusters), diversity.isFinite, (0...10).contains(diversity),
               ridge.isFinite, (0.001...100).contains(ridge), temperature.isFinite, (0.01...1).contains(temperature),
               (2...100).contains(maximumIterations), relativeTolerance.isFinite, (1e-8...0.05).contains(relativeTolerance),
               (1...100_000_000_000).contains(maximumWork) else { throw VivoOmicsError.invalid("integration options") }

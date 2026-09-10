@@ -4,6 +4,7 @@ import Foundation
 /// see Documentation/ThirdParty/Scanorama-LICENSE.txt. Native matching has explicit
 /// grouped-source-index ties, and native reductions use deterministic scalar sums.
 public struct VivoMNNIntegrationOptions: Codable, Sendable, Equatable {
+    static let maximumNeighbors = 100
     public var covariate: VivoSingleCellIntegrationOptions.Covariate = .donor
     public var neighbors: Int = 20
     public var sigma: Double = 15
@@ -23,7 +24,7 @@ public struct VivoMNNIntegrationOptions: Codable, Sendable, Equatable {
         maximumResidentBytes = try c.decodeIfPresent(Int.self, forKey: .maximumResidentBytes) ?? 536_870_912
     }
     public func validate() throws {
-        guard (1...100).contains(neighbors), sigma.isFinite, (0.001...1000).contains(sigma),
+        guard (1...Self.maximumNeighbors).contains(neighbors), sigma.isFinite, (0.001...1000).contains(sigma),
               minimumAlignment.isFinite, (0...1).contains(minimumAlignment),
               (1...10_000_000_000_000).contains(maximumWork),
               (1...4_294_967_296).contains(maximumResidentBytes) else { throw VivoOmicsError.invalid("MNN options") }

@@ -86,7 +86,10 @@ parent does not make them valid. New binaries require fresh PCA inputs.
 The admission index remains `N * K * D * (maximumIterations + 10)` with an
 unchanged default maximum of 200 million. An explicit maximum up to 100 billion
 is now accepted. Axes are at most two million cells, 64 PCs, 100 clusters and
-128 covariate levels. These are bounds, not million-cell qualification or a
+128 covariate levels. Membership snapshot/replay bounds derive from supported
+rows × clusters × 16 bytes (3,200,000,000 bytes), matching publication rather
+than the stale one-million-row ceiling. Complete HIRISA at 100 clusters needs
+2,580,150,400 membership bytes. These are bounds, not million-cell qualification or a
 measured operation count. File-backed random block sweeps above the mapping
 window have not received a million-cell throughput measurement. This is CPU
 execution; no Metal or same-host scverse performance claim.
@@ -204,3 +207,8 @@ Reproduction entry points: `prepare_full_integration.py`,
 coordinates, matrix records, receipts, immutable plans, per-cell neighbors,
 folds, controls, timings and source hashes. Large files use deterministic gzip;
 real original H5AD files remain externally pinned rather than copied into Git.
+
+The [HIRISA witness-admission repair](../Benchmarks/HIRISA/INTEGRATION_ADMISSION.md)
+passes native boundary/trajectory tests, release build and 105 ridge/MNN lifecycle
+commands. Full-cohort execution, mapping-access cost and biological preservation
+remain separate gates.

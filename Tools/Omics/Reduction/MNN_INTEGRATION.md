@@ -220,3 +220,8 @@ the fixture lifecycle using Scanorama 1.7.4; the preceding reference report
 records its isolated dependency installation. `check_file_integration.py` retains
 the unchanged legacy oracle checks. All scripts expose their required paths
 through `--help`.
+
+Anchor publication, snapshot and replay share a row/neighbor-derived bound of
+3,200,000,000 bytes: at most `maximumRows × maximumNeighbors` mutual anchors,
+with one 16-byte record each. This removes the stale one-million-row artifact
+ceiling without changing exact matching, work/memory limits or biological gates.

@@ -3,6 +3,49 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellFileIntegrationTests {
+    @Test func completeCohortWitnessAdmissionUsesSupportedAxes() throws {
+        var options = VivoSingleCellIntegrationOptions()
+        options.clusters = VivoSingleCellIntegrationOptions.maximumClusters
+        options.maximumWork = 100_000_000_000
+        try VivoSingleCellIntegration.validateAxes(rows: 1_612_594, columns: 20, options: options)
+        #expect(1_612_594 * options.clusters * 16 <= VivoIntegrationStorageLimits.maximumMembershipBytes)
+        #expect(VivoIntegrationStorageLimits.maximumMembershipBytes == 3_200_000_000)
+        #expect(VivoIntegrationStorageLimits.maximumAnchorBytes == 3_200_000_000)
+        options.clusters += 1
+        #expect(throws: (any Error).self) { try options.validate() }
+        var mnn = VivoMNNIntegrationOptions()
+        mnn.neighbors = VivoMNNIntegrationOptions.maximumNeighbors + 1
+        #expect(throws: (any Error).self) { try mnn.validate() }
+
+        // Exercise the real bounded snapshot reader beyond the previous ceiling
+        // without allocating a resident multi-gigabyte fixture. APFS keeps the
+        // zero-filled source and its immutable clone sparse.
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = root.appendingPathComponent("memberships.bin")
+        #expect(FileManager.default.createFile(atPath: source.path, contents: nil))
+        let handle = try FileHandle(forWritingTo: source)
+        try handle.truncate(atOffset: 1_600_000_016)
+        try handle.close()
+        #expect(throws: (any Error).self) {
+            try VivoOmicsFileSnapshot.fingerprint(source, maximumBytes: 1_600_000_000)
+        }
+        let clone = root.appendingPathComponent("snapshot.bin")
+        let copied = try VivoOmicsFileSnapshot.fingerprint(source, copyTo: clone,
+            maximumBytes: VivoIntegrationStorageLimits.maximumMembershipBytes)
+        #expect(copied == (try VivoOmicsFileSnapshot.fingerprint(clone,
+            maximumBytes: VivoIntegrationStorageLimits.maximumAnchorBytes)))
+        #expect((try clone.resourceValues(forKeys: [.fileSizeKey])).fileSize == 1_600_000_016)
+        let oversized = try FileHandle(forWritingTo: source)
+        try oversized.truncate(atOffset: UInt64(VivoIntegrationStorageLimits.maximumMembershipBytes + 16))
+        try oversized.close()
+        #expect(throws: (any Error).self) {
+            try VivoOmicsFileSnapshot.fingerprint(source,
+                maximumBytes: VivoIntegrationStorageLimits.maximumMembershipBytes)
+        }
+    }
+
     @Test func mappedRowsSurviveWindowChangesAndRejectInvalidAccess() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)

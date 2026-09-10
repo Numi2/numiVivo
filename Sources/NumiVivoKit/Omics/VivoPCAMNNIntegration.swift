@@ -45,7 +45,7 @@ enum VivoPCAMNNIntegration {
             scores: VivoOmicsFileSnapshot.fingerprint(temp.appendingPathComponent("scores.bin"), maximumBytes: VivoPCAStorageLimits.maximumBytes),
             memberships: nil, assignmentScores: nil,
             report: VivoPCAIntegration.write(result.report, temp, "report.json", maximum: 16_777_216), implementation: implementation,
-            anchors: VivoOmicsFileSnapshot.fingerprint(temp.appendingPathComponent("anchors.bin"), maximumBytes: 1_600_000_000))
+            anchors: VivoOmicsFileSnapshot.fingerprint(temp.appendingPathComponent("anchors.bin"), maximumBytes: VivoIntegrationStorageLimits.maximumAnchorBytes))
         _ = try VivoPCAIntegration.write(receipt, temp, "receipt.json", maximum: 65_536)
         try Task.checkCancellation(); try FileManager.default.moveItem(at: temp, to: destination)
         return receipt
@@ -57,7 +57,7 @@ enum VivoPCAMNNIntegration {
         let rebuilt = try publish(input: root.appendingPathComponent("input"), plan: plan, implementation: implementation, to: temp.appendingPathComponent("rebuilt"))
         guard rebuilt == receipt else { throw VivoOmicsError.invalid("MNN integration reconstruction differs") }
         for (name, hash, limit) in [("plan.json",receipt.plan,65_536), ("metadata.json",receipt.metadata,536_870_912),
-            ("report.json",receipt.report,16_777_216), ("scores.bin",receipt.scores,VivoPCAStorageLimits.maximumBytes), ("anchors.bin",anchors,1_600_000_000)] {
+            ("report.json",receipt.report,16_777_216), ("scores.bin",receipt.scores,VivoPCAStorageLimits.maximumBytes), ("anchors.bin",anchors,VivoIntegrationStorageLimits.maximumAnchorBytes)] {
             guard try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), maximumBytes: limit) == hash else { throw VivoOmicsError.invalid("MNN artifact fingerprint differs") }
         }
         return receipt

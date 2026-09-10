@@ -255,6 +255,11 @@ identities, regressions, independent checks and transfer adjustments. Verify wit
 `python verify_archive.py evidence/2026-09-10-graph`. Clustering, integration,
 biological preservation and Metal performance have their own acceptance gates.
 
+The [integration witness repair](INTEGRATION_ADMISSION.md) removes the stale
+1.6 GB artifact ceiling and passes native boundary tests plus 105 lifecycle
+commands. This is prerequisite storage compatibility; complete HIRISA integration
+and biological preservation remain open.
+
 Sources: [GEO GSE306664](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE306664),
 [author resource](https://apps.allenimmunology.org/aifi/resources/ifn-response/),
 [experimental methods](https://apps.allenimmunology.org/aifi/resources/ifn-response/methods/),
