@@ -2,6 +2,8 @@ import Foundation
 import NumiVivoCore
 
 public struct VivoHNSWOptions: Codable, Sendable, Equatable {
+    public static let maximumSupportedDistanceEvaluations = Int(NVIVO_OMICS_HNSW_MAXIMUM_DISTANCE_EVALUATIONS)
+    public static let maximumSupportedCacheBytes = Int(NVIVO_OMICS_HNSW_MAXIMUM_CACHE_BYTES)
     public var connections: Int = 16
     public var constructionWidth: Int = 200
     public var searchWidth: Int = 128
@@ -22,8 +24,8 @@ public struct VivoHNSWOptions: Codable, Sendable, Equatable {
     }
     public func validate(neighbors: Int) throws {
         guard (8...64).contains(connections), (connections...512).contains(constructionWidth),
-              (neighbors...1024).contains(searchWidth), (1...2_000_000_000).contains(maximumDistanceEvaluations),
-              (262_144...67_108_864).contains(scoreCacheBytes) else { throw VivoOmicsError.invalid("HNSW options or resource bounds") }
+              (neighbors...1024).contains(searchWidth), (1...Self.maximumSupportedDistanceEvaluations).contains(maximumDistanceEvaluations),
+              (262_144...Self.maximumSupportedCacheBytes).contains(scoreCacheBytes) else { throw VivoOmicsError.invalid("HNSW options or resource bounds") }
     }
 }
 public struct VivoHNSWReport: Codable, Sendable, Equatable {

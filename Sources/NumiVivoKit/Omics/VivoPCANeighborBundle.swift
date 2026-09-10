@@ -86,7 +86,7 @@ public enum VivoPCANeighborBundle {
             _ = try VivoOmicsFileSnapshot.fingerprint(input.appendingPathComponent(name), copyTo: output.appendingPathComponent(name), maximumBytes: 65_536)
         }
         for name in VivoPCAGraphStore.files {
-            _ = try VivoOmicsFileSnapshot.fingerprint(input.appendingPathComponent(name), copyTo: output.appendingPathComponent(name), maximumBytes: 4_096_000_000)
+            _ = try VivoOmicsFileSnapshot.fingerprint(input.appendingPathComponent(name), copyTo: output.appendingPathComponent(name), maximumBytes: VivoPCAStorageLimits.maximumGraphBytes)
         }
     }
     public static func publish(input: URL, plan: VivoPCANeighborPlan, implementation: VivoFingerprint, to destination: URL) throws -> VivoPCANeighborReceipt {
@@ -184,7 +184,7 @@ public enum VivoPCANeighborBundle {
         if plan.storage == .binary {
             let graph = try read(VivoPCAGraphStoreReport.self, root: root, name: "graph.json", maximum: 65_536)
             for (name, hash) in zip(VivoPCAGraphStore.files, [graph.neighbors, graph.bandwidths, graph.offsets, graph.edges]) {
-                guard try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), maximumBytes: 4_096_000_000) == hash else {
+                guard try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), maximumBytes: VivoPCAStorageLimits.maximumGraphBytes) == hash else {
                     throw VivoOmicsError.invalid("binary graph fingerprint differs")
                 }
             }

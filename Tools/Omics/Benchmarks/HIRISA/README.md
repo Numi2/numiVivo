@@ -238,10 +238,22 @@ compares every score to a frozen file-backed sparse reference. Native publicatio
 independent comparison and source reconstruction pass with unchanged numerical
 settings. The selected cache is 2,263,542,272 bytes; QC JSON is 345,933,053 bytes.
 These measurements drove shared storage-limit repairs. Metadata and fitted arrays
-remain resident, and million-cell graphs/integration are separate open gates.
+remain resident; complete graph results are recorded below and integration
+remains a separate open gate.
 Verify the full score/metadata/QC archive with `python verify_archive.py
 evidence/2026-09-10-pca`; its chunk manifest checks complete reconstructed hashes
 as well as every stored member. Earlier failed and interrupted runs are retained.
+
+The [complete graph qualification](GRAPH_RESULTS.md) now passes native publication
+and reconstruction on all 1,612,594 cells. Every returned distance and all
+34,707,084 fuzzy edge records pass independent numerical checks. The fixed
+2,048-query panel achieves mean strict recall 0.9997209821 against the complete
+candidate universe; fifth-percentile recall is 1.0. Publication uses 6,963,750,537
+metric evaluations and peaks at 4,360,978,432 resident bytes. The
+[frozen protocol](GRAPH_EXECUTION.md) and 691-member archive retain source/runtime
+identities, regressions, independent checks and transfer adjustments. Verify with
+`python verify_archive.py evidence/2026-09-10-graph`. Clustering, integration,
+biological preservation and Metal performance have their own acceptance gates.
 
 Sources: [GEO GSE306664](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE306664),
 [author resource](https://apps.allenimmunology.org/aifi/resources/ifn-response/),

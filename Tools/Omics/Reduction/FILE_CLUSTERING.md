@@ -45,7 +45,7 @@ file mode. Private level files are removed on success and failure.
 It includes repeated graph reads and temporary aggregation-record visits;
 it is separate from the parent PCA and neighbor-search work budgets. Cancellation,
 work exhaustion, failure to converge and objective decrease prevent publication.
-Input axes permit at most one million cells and 254 million directed CSR records;
+Input axes permit at most two million cells and 508 million directed CSR records;
 these admission limits are not million-cell qualification.
 
 `check_file_clustering.py` checks fitted/query inputs in exact/HNSW modes,

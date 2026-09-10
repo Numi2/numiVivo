@@ -106,11 +106,13 @@ class Scores final : public hnswlib::SpaceInterface<double> {
 int32_t nvivo_omics_hnsw_neighbors_stream(const char *path, const NVivoHNSWOptions *o,
     NVivoHNSWRow sink, NVivoHNSWReport *report, NVivoHNSWCancel cancel, void *context) {
     if (!path || !o || !sink || !report || o->struct_size!=sizeof(*o) || o->abi_version!=1 ||
-        o->rows<2 || o->rows>1'000'000 || o->dimensions<1 || o->dimensions>64 || o->neighbors<2 || o->neighbors>128 ||
+        o->rows<2 || o->rows>NVIVO_OMICS_PCA_MAXIMUM_ROWS || o->dimensions<1 || o->dimensions>NVIVO_OMICS_PCA_MAXIMUM_COLUMNS ||
+        o->neighbors<2 || o->neighbors>NVIVO_OMICS_HNSW_MAXIMUM_NEIGHBORS ||
         o->neighbors>o->rows || o->connections<8 || o->connections>64 || o->ef_construction<o->connections || o->ef_construction>512 ||
-        o->ef_search<o->neighbors || o->ef_search>1024 || o->maximum_distance_evaluations<1 || o->maximum_distance_evaluations>2'000'000'000 ||
-        o->score_cache_bytes<uint64_t(2)*tileRows*o->dimensions*8 || o->score_cache_bytes>67'108'864 ||
-        uint64_t(o->rows)*o->neighbors>128'000'000) return 1;
+        o->ef_search<o->neighbors || o->ef_search>1024 || o->maximum_distance_evaluations<1 ||
+        o->maximum_distance_evaluations>NVIVO_OMICS_HNSW_MAXIMUM_DISTANCE_EVALUATIONS ||
+        o->score_cache_bytes<uint64_t(2)*tileRows*o->dimensions*8 ||
+        o->score_cache_bytes>NVIVO_OMICS_HNSW_MAXIMUM_CACHE_BYTES) return 1;
     *report={};
     try {
         std::unique_ptr<Scores> scores;

@@ -85,7 +85,7 @@ parent does not make them valid. New binaries require fresh PCA inputs.
 
 The admission index remains `N * K * D * (maximumIterations + 10)` with an
 unchanged default maximum of 200 million. An explicit maximum up to 100 billion
-is now accepted. Axes are at most one million cells, 64 PCs, 100 clusters and
+is now accepted. Axes are at most two million cells, 64 PCs, 100 clusters and
 128 covariate levels. These are bounds, not million-cell qualification or a
 measured operation count. File-backed random block sweeps above the mapping
 window have not received a million-cell throughput measurement. This is CPU

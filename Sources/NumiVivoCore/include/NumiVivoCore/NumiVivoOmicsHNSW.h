@@ -5,6 +5,16 @@
 extern "C" {
 #endif
 
+/* Shared with Swift artifact admission. These are supported resource ceilings,
+ * not allocations or defaults. The plan still supplies explicit work/cache limits. */
+enum {
+    NVIVO_OMICS_PCA_MAXIMUM_ROWS = 2000000,
+    NVIVO_OMICS_PCA_MAXIMUM_COLUMNS = 64,
+    NVIVO_OMICS_HNSW_MAXIMUM_NEIGHBORS = 128
+};
+static const uint64_t NVIVO_OMICS_HNSW_MAXIMUM_DISTANCE_EVALUATIONS = 32000000000ULL;
+static const uint64_t NVIVO_OMICS_HNSW_MAXIMUM_CACHE_BYTES = 1073741824ULL;
+
 typedef struct NVivoHNSWOptions {
     uint32_t struct_size, abi_version;
     uint32_t rows, dimensions, neighbors, connections;

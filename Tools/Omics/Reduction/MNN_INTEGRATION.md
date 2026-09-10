@@ -100,7 +100,7 @@ Counts remain sparse and file-backed. MNN's latent arrays are resident; matching
 uses two k-wide heaps per cell, without an N-by-N distance matrix. This is not
 out-of-core, million-cell or Metal qualification.
 
-Admission permits 2–1,000,000 cells, 1–64 components, 2–128 levels, and 1–100
+Admission permits 2–2,000,000 cells, 1–64 components, 2–128 levels, and 1–100
 neighbors, with at least k cells per level. Those are validation bounds, not
 qualified cohort sizes. Exact matching remains quadratic in cross-level cell
 pairs. `maximumWork` counts cross-pair distance scalar terms plus each executed

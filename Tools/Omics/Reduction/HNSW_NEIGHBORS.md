@@ -57,12 +57,16 @@ made. The index is rebuilt for verification rather than serialized; reported
 mutex and container overhead.
 
 Limits are 1–64 PCs, k=2–128, connections=8–64, construction width from connections
-through 512, search width from k through 1024, and 1–2 billion metric evaluations.
-The Swift cache bound is 256 KiB–64 MiB. Resident JSON output remains capped at four million neighbor entries. Binary
+through 512, search width from k through 1024, and 1–32 billion metric evaluations.
+The Swift cache bound is 256 KiB–1 GiB. Defaults remain 500 million evaluations
+and 32 MiB; larger allocations require explicit plan values. Shared C/Swift
+constants admit up to two million rows. Streamed neighbor entries follow the
+row and k bounds; symmetric graph bytes follow `rows × 2 × (k−1) × 16`. Resident JSON output remains capped at four million neighbor entries. Binary
 output emits rows and constructs connectivity through a disk transpose and merge,
 without resident neighbor/edge arrays. The HNSW index, identities, cell-scale
 bookkeeping and part of input PCA reconstruction remain resident. Neither storage
-mode establishes million-cell qualification.
+mode alone establishes million-cell qualification. The complete HIRISA case
+below supplies separate measured evidence.
 
 `maximumDistanceEvaluations` counts all construction and query metric calls,
 including repeated pairs. It is separate from exact-mode `maximumDistancePairs`.
@@ -117,3 +121,15 @@ connectivity; it retains sampled exact neighbors and per-query recall.
 exact results, resource rejection and rehashed tampering. These checks establish
 numerical behavior and bounded recall evidence, not biological generalization,
 downstream clustering/embedding quality, Metal execution or million-cell readiness.
+
+## Complete HIRISA scale qualification
+
+The [frozen HIRISA experiment](../Benchmarks/HIRISA/GRAPH_RESULTS.md) now passes
+full native publication/reconstruction for 1,612,594 original cells, 20 PCs and
+k=15. All returned distances and 34,707,084 fuzzy edge records pass independent
+checks. The unchanged fixed 2,048-query panel has mean strict recall
+0.9997209821428572 and fifth percentile 1.0 against all cells. Total metric work
+is 6,963,750,537 evaluations; decoded score cache peaks at 258,015,040 bytes and
+whole publication RSS at 4,360,978,432 bytes. This is a bounded complete-cohort
+CPU graph qualification; index/metadata residency, downstream biological quality
+and controlled performance remain separately measured work.

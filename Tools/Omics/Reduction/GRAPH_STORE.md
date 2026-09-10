@@ -74,9 +74,9 @@ component arrays remain resident and scale with cell count. Input PCA metadata,
 fitting state and the HNSW index retain their own resident costs. The reported
 HNSW cache/index sizes do not measure total process memory.
 
-Binary mode admits up to one million cells with k=2–128, subject to existing
-source/PCA and search-work bounds. This permits up to 128 million neighbor records
-and 254 million symmetric edge records; it does not certify successful million-cell
+Binary mode admits up to two million cells with k=2–128, subject to existing
+source/PCA and search-work bounds. This permits up to 256 million neighbor records
+and 508 million symmetric edge records; it does not certify successful million-cell
 execution. Exact search remains quadratic and capped at 500 million unique pairs.
 HNSW's metric budget remains separately bounded. Disk capacity is required for
 retained input, output records and temporary directed/transpose files.
@@ -138,3 +138,13 @@ routing changes arrived upstream during validation. The merged executable was
 rebuilt and received fresh query-input and graph-store CLI checks; the full-cohort
 measurements above remain explicitly bound to the earlier benchmark binary,
 whose omics source bytes are unchanged in publication.
+
+## Complete 1,612,594-cell HIRISA graph
+
+The [complete HIRISA qualification](../Benchmarks/HIRISA/GRAPH_RESULTS.md) passes
+full native publication/reconstruction and every-record independent checks. Its
+24,188,910 neighbor records and 34,707,084 symmetric edge records occupy
+1,045,541,936 bytes across four graph files. Shared row/k-derived byte bounds
+replace the stale 4.096 GB verification ceiling. The unchanged sampled exact
+recall gates pass; graph numerical qualification does not establish downstream
+biology, full out-of-core execution or a controlled GPU/CPU speed comparison.

@@ -1,8 +1,58 @@
 import Foundation
 import Testing
+import NumiVivoCore
 @testable import NumiVivoKit
 
 @Suite struct SingleCellHNSWTests {
+    @Test func nativeMillionRowAdmissionAndLargeResourceBounds() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = root.appendingPathComponent("scores.bin")
+        // A sparse file is enough to exercise real index admission and budget
+        // rejection above both former caps, without computing a million-cell graph.
+        _ = try VivoH5ADPCA.writeMatrix([[0], [1]], columns: 1, to: source)
+        let file = try FileHandle(forWritingTo: source)
+        try file.truncate(atOffset: UInt64(1_000_001 * 16))
+        try file.seek(toOffset: 0)
+        var tile = Data()
+        for row in 0..<256 {
+            var record = (UInt64(row).littleEndian, Double(row).bitPattern.littleEndian)
+            withUnsafeBytes(of: &record) { tile.append(contentsOf: $0) }
+        }
+        try file.write(contentsOf: tile); try file.close()
+        var native = NVivoHNSWOptions()
+        native.struct_size = UInt32(MemoryLayout<NVivoHNSWOptions>.size); native.abi_version = 1
+        native.rows = 1_000_001; native.dimensions = 1; native.neighbors = 128
+        native.connections = 8; native.ef_construction = 8; native.ef_search = 128
+        native.seed = 7; native.maximum_distance_evaluations = 1; native.score_cache_bytes = 262_144
+        var report = NVivoHNSWReport()
+        func invoke(_ path: URL) -> Int32 {
+            path.path.withCString {
+                nvivo_omics_hnsw_neighbors_stream($0, &native, { _, _, _, _, _ in 1 }, &report, nil, nil)
+            }
+        }
+        #expect(invoke(source) == 2) // Reaches metric budget; no row callback publishes.
+        native.rows = UInt32(VivoPCAStorageLimits.maximumRows)
+        native.dimensions = UInt32(VivoPCAStorageLimits.maximumColumns)
+        native.maximum_distance_evaluations = NVIVO_OMICS_HNSW_MAXIMUM_DISTANCE_EVALUATIONS
+        native.score_cache_bytes = NVIVO_OMICS_HNSW_MAXIMUM_CACHE_BYTES
+        let missing = root.appendingPathComponent("missing.bin")
+        #expect(invoke(missing) == 3) // Accepted axes/resources, then missing input.
+        native.rows += 1; #expect(invoke(missing) == 1); native.rows -= 1
+        native.maximum_distance_evaluations += 1
+        #expect(invoke(missing) == 1); native.maximum_distance_evaluations -= 1
+        native.score_cache_bytes += 1; #expect(invoke(missing) == 1)
+        var options = VivoHNSWOptions()
+        #expect(options.maximumDistanceEvaluations == 500_000_000 && options.scoreCacheBytes == 33_554_432)
+        options.maximumDistanceEvaluations = VivoHNSWOptions.maximumSupportedDistanceEvaluations
+        options.scoreCacheBytes = VivoHNSWOptions.maximumSupportedCacheBytes
+        try options.validate(neighbors: 128)
+        options.maximumDistanceEvaluations += 1
+        #expect(throws: (any Error).self) { try options.validate(neighbors: 128) }
+        options.maximumDistanceEvaluations -= 1; options.scoreCacheBytes += 1
+        #expect(throws: (any Error).self) { try options.validate(neighbors: 128) }
+    }
     @Test func exhaustiveSmallSearchMatchesExactAndEvictsScoreTiles() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)

@@ -1,5 +1,6 @@
 import Foundation
 import CryptoKit
+import NumiVivoCore
 #if canImport(Darwin)
 import Darwin
 #else
@@ -74,11 +75,12 @@ final class VivoCountRecordWriter {
 
 /// Shared storage bounds for PCA artifacts and their downstream consumers.
 enum VivoPCAStorageLimits {
-    static let maximumRows = 2_000_000
+    static let maximumRows = Int(NVIVO_OMICS_PCA_MAXIMUM_ROWS)
     static let maximumQualityBytes = 536_870_912
-    static let maximumColumns = 64
+    static let maximumColumns = Int(NVIVO_OMICS_PCA_MAXIMUM_COLUMNS)
     static let maximumBytes = maximumRows * maximumColumns * 16
-    static let maximumSymmetricGraphEntries = maximumRows * 254
+    static let maximumSymmetricGraphEntries = maximumRows * 2 * (Int(NVIVO_OMICS_HNSW_MAXIMUM_NEIGHBORS) - 1)
+    static let maximumGraphBytes = maximumSymmetricGraphEntries * 16
 }
 
 /// Maps only a 16 MiB window. The caller owns an immutable private snapshot;
