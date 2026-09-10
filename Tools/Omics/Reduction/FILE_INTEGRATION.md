@@ -70,6 +70,20 @@ memberships, assignment distances and final assignment scores. Cell identities,
 covariate indices, shuffled permutations and small cluster/batch systems remain
 resident. There is no cells-by-genes dense allocation.
 
+When memberships or distances exceed one mapping window, shuffled block sweeps
+use at most 8,192 rows per gather/scatter. IO visits sorted physical rows; the
+returned rows retain the original shuffled order for every arithmetic operation.
+The solver first removes all old memberships in the whole block, computes all
+new memberships, then adds them all back. Those phases are not interleaved
+across tiles. Resident and single-window matrices retain direct row access.
+At 100 clusters the tile value payload is at most 6,553,600 bytes (6.25 MiB),
+independent of cohort size. Row/index arrays, transient probability vectors and
+mapped pages are additional memory. Reports expose the tile value payload bound;
+this is not a whole-process RSS bound. Invalid row counts, duplicate/out-of-range
+indices, wrong widths and nonfinite values are rejected before a batch writes.
+Cancellation or IO failure can interrupt private scratch; publication remains
+transactional.
+
 Each output retains the original PCA bundle under `input/`, unchanged metadata,
 corrected `scores.bin`, `memberships.bin`, `assignment-scores.bin`, the plan,
 report and receipt. Final matrices use complete row-major 16-byte records:
@@ -212,3 +226,7 @@ The [HIRISA witness-admission repair](../Benchmarks/HIRISA/INTEGRATION_ADMISSION
 passes native boundary/trajectory tests, release build and 105 ridge/MNN lifecycle
 commands. Full-cohort execution, mapping-access cost and biological preservation
 remain separate gates.
+
+The [bounded row-batch qualification](../Benchmarks/HIRISA/TILED_INTEGRATION.md)
+records exact trajectories across tile boundaries, complete Kang/Hagai numerical
+regressions, native replay and the separate full-shape storage measurements.

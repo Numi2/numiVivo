@@ -203,20 +203,22 @@ enum VivoSingleCellIntegration {
         let assignmentScores = try matrix(n, d)
         try scores.copy(from: x)
         var observed = [Double](repeating: 0,count: k*bCount), masses = [Double](repeating: 0,count: k)
-        func setProbabilities(_ i: Int,_ diversity: Bool) throws {
-            let row = try distances.row(i)
+        func probabilities(_ i: Int, _ row: [Double], _ diversity: Bool) -> [Double] {
             var logits = [Double](repeating: 0,count: k)
             for c in 0..<k {
                 let expected = max(0,masses[c])*sizes[batch[i]]/Double(n), obs = max(0,observed[c*bCount+batch[i]])
                 logits[c] = -row[c]/o.temperature + (diversity ? o.diversity*log((2*expected+1)/(obs+expected+1)) : 0)
             }
             let peak = logits.max()!, weights = logits.map { exp($0-peak) }, total = weights.reduce(0,+)
-            try r.setRow(i, weights.map { $0 / total })
+            return weights.map { $0 / total }
         }
-        func add(_ i: Int,_ sign: Double) throws {
-            let row = try r.row(i)
+        func setProbabilities(_ i: Int,_ diversity: Bool) throws {
+            try r.setRow(i, probabilities(i, distances.row(i), diversity))
+        }
+        func addRow(_ i: Int, _ row: [Double], _ sign: Double) {
             for c in 0..<k { let value = sign*row[c]; masses[c] += value; observed[c*bCount+batch[i]] += value }
         }
+        func add(_ i: Int,_ sign: Double) throws { try addRow(i, r.row(i), sign) }
         func objective() throws -> Double {
             var result = 0.0
             for i in 0..<n {
@@ -251,9 +253,31 @@ enum VivoSingleCellIntegration {
                 for block in 0..<20 {
                     let start = block*blockSize, end = block == 19 ? n : min(n,start+blockSize)
                     if start >= n { break }
-                    for t in start..<end { try add(order[t],-1) }
-                    for t in start..<end { try setProbabilities(order[t],true) }
-                    for t in start..<end { try add(order[t],1) }
+                    if r.benefitsFromBatchedAccess || distances.benefitsFromBatchedAccess {
+                        // Keep all three whole-block phases separate. Tiling the
+                        // phases together would change the diversity statistics.
+                        let tileRows = VivoIntegrationMatrix.maximumBatchRows
+                        for tileStart in stride(from: start, to: end, by: tileRows) {
+                            let indices = Array(order[tileStart..<min(end, tileStart + tileRows)])
+                            let rows = try r.gatherRows(indices)
+                            for slot in indices.indices { addRow(indices[slot], rows[slot], -1) }
+                        }
+                        for tileStart in stride(from: start, to: end, by: tileRows) {
+                            let indices = Array(order[tileStart..<min(end, tileStart + tileRows)])
+                            var rows = try distances.gatherRows(indices)
+                            for slot in indices.indices { rows[slot] = probabilities(indices[slot], rows[slot], true) }
+                            try r.scatterRows(indices, rows: rows)
+                        }
+                        for tileStart in stride(from: start, to: end, by: tileRows) {
+                            let indices = Array(order[tileStart..<min(end, tileStart + tileRows)])
+                            let rows = try r.gatherRows(indices)
+                            for slot in indices.indices { addRow(indices[slot], rows[slot], 1) }
+                        }
+                    } else {
+                        for t in start..<end { try add(order[t],-1) }
+                        for t in start..<end { try setProbabilities(order[t],true) }
+                        for t in start..<end { try add(order[t],1) }
+                    }
                 }
             }
             let value = try objective()

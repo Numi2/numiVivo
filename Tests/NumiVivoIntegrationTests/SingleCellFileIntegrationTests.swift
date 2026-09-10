@@ -79,6 +79,8 @@ import Testing
                 owned.append(matrix); return matrix
             }
             let resident = try VivoIntegrationMatrix(rows: n, columns: d), file = try make(n, d)
+            #expect(!resident.benefitsFromBatchedAccess)
+            #expect(file.benefitsFromBatchedAccess)
             for i in 0..<n {
                 let row = (0..<d).map { j in sin(Double(i * (j + 1)) / 17) + Double(i % 3) / Double(j + 1) }
                 try resident.setRow(i, row); try file.setRow(i, row)
@@ -86,9 +88,55 @@ import Testing
             let a = try VivoSingleCellIntegration.run(cells: cells, x: resident, samples: samples, options: options) { try VivoIntegrationMatrix(rows: $0, columns: $1) }
             let b = try VivoSingleCellIntegration.run(cells: cells, x: file, samples: samples, options: options, matrix: make)
             #expect(try a.materialize(cells: cells, options: options) == b.materialize(cells: cells, options: options))
+            for (left, right) in [(a.scores, b.scores), (a.memberships, b.memberships), (a.assignmentScores, b.assignmentScores)] {
+                for i in 0..<n { #expect(try left.row(i).map(\.bitPattern) == right.row(i).map(\.bitPattern)) }
+            }
+            #expect(a.objectives.map(\.bitPattern) == b.objectives.map(\.bitPattern))
+            #expect(a.relativeImprovements.map(\.bitPattern) == b.relativeImprovements.map(\.bitPattern))
             for matrix in owned { try matrix.remove() }
             #expect(try FileManager.default.contentsOfDirectory(atPath: root.path).isEmpty)
         }
+    }
+    @Test func sortedBatchesPreserveLogicalBitsAndRejectBeforeWriting() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let n = VivoIntegrationMatrix.maximumBatchRows + 9
+        for scratch: URL? in [nil, root] {
+            let matrix = try VivoIntegrationMatrix(rows: n, columns: 3, scratch: scratch, windowBytes: 16_384)
+            #expect(matrix.benefitsFromBatchedAccess == (scratch != nil))
+            func initial(_ i: Int) -> [Double] { [Double(i) / 17, i % 2 == 0 ? -0.0 : 0.0, Double.leastNonzeroMagnitude * Double(i + 1)] }
+            for i in 0..<n { try matrix.setRow(i, initial(i)) }
+            let order = Array((0..<n).reversed())
+            for start in stride(from: 0, to: n, by: VivoIntegrationMatrix.maximumBatchRows) {
+                let indices = Array(order[start..<min(n, start + VivoIntegrationMatrix.maximumBatchRows)])
+                var rows = try matrix.gatherRows(indices)
+                for slot in indices.indices {
+                    #expect(rows[slot].map(\.bitPattern) == initial(indices[slot]).map(\.bitPattern))
+                    rows[slot][0] += 1
+                }
+                try matrix.scatterRows(indices, rows: rows)
+            }
+            for i in 0..<n {
+                var expected = initial(i); expected[0] += 1
+                #expect(try matrix.row(i).map(\.bitPattern) == expected.map(\.bitPattern))
+            }
+            let before = try matrix.materialize().map { $0.map(\.bitPattern) }
+            #expect(try matrix.gatherRows([]).isEmpty)
+            try matrix.scatterRows([], rows: [])
+            for invalid in [[-1], [n], [2, 1, 2], Array(0...VivoIntegrationMatrix.maximumBatchRows)] {
+                #expect(throws: (any Error).self) { try matrix.gatherRows(invalid) }
+                #expect(throws: (any Error).self) { try matrix.scatterRows(invalid, rows: invalid.map { _ in [1, 2, 3] }) }
+            }
+            for invalid: [[Double]] in [[], [[1, 2, 3]], [[1, 2, 3], [4, 5]], [[1, 2, 3], [.nan, 5, 6]], [[1, 2, 3], [4, .infinity, 6]]] {
+                #expect(throws: (any Error).self) { try matrix.scatterRows([0, 1], rows: invalid) }
+            }
+            #expect(try matrix.materialize().map { $0.map(\.bitPattern) } == before)
+            try matrix.remove()
+            #expect(throws: (any Error).self) { try matrix.gatherRows([]) }
+            #expect(throws: (any Error).self) { try matrix.scatterRows([], rows: []) }
+        }
+        #expect(try FileManager.default.contentsOfDirectory(atPath: root.path).isEmpty)
     }
     @Test func dependencyAndAdmissionChecksRemainExplicit() throws {
         #expect(throws: (any Error).self) { try VivoPCAIntegrationPlan(inputKind: .integrated).validate() }

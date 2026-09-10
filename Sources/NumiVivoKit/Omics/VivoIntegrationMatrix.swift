@@ -9,6 +9,7 @@ import Glibc
 /// crosses a mapping boundary. Scratch is private, mutable and never a receipt.
 final class VivoIntegrationMatrix {
     static let maximumWindowBytes = 64 * 1_024 * 1_024
+    static let maximumBatchRows = 8_192
     let rows: Int
     let columns: Int
     let strideBytes: Int
@@ -21,6 +22,9 @@ final class VivoIntegrationMatrix {
     private var offset = -1
     private var length = 0
     private var removed = false
+
+    /// A single mapped window already makes shuffled access inexpensive.
+    var benefitsFromBatchedAccess: Bool { fd >= 0 && fileBytes > windowBytes }
 
     init(rows: Int, columns: Int, scratch: URL? = nil, windowBytes: Int = maximumWindowBytes) throws {
         guard (1...VivoPCAStorageLimits.maximumRows).contains(rows), (1...128).contains(columns),
@@ -98,6 +102,37 @@ final class VivoIntegrationMatrix {
             let p = try pointer(index)
             for j in 0..<columns { p.storeBytes(of: row[j].bitPattern.littleEndian, toByteOffset: j * 8, as: UInt64.self) }
         }
+    }
+    private func orderedSlots(_ indices: [Int]) throws -> [Int] {
+        guard !removed, indices.count <= Self.maximumBatchRows else {
+            throw VivoOmicsError.invalid("integration matrix batch size or closed state")
+        }
+        for index in indices { try check(index) }
+        let slots = indices.indices.sorted { indices[$0] < indices[$1] }
+        for (left, right) in zip(slots, slots.dropFirst()) where indices[left] == indices[right] {
+            throw VivoOmicsError.invalid("integration matrix duplicate batch row")
+        }
+        return slots
+    }
+    /// Read in physical order, return in caller order. The fixed row limit bounds
+    /// the value buffer independently of the cohort size or shuffled block size.
+    func gatherRows(_ indices: [Int]) throws -> [[Double]] {
+        let slots = try orderedSlots(indices)
+        try Task.checkCancellation()
+        var result = [[Double]](repeating: [], count: indices.count)
+        for slot in slots { result[slot] = try row(indices[slot]) }
+        return result
+    }
+    /// Validate the entire batch before any write. Only IO is reordered; each
+    /// result row remains paired with its original logical index.
+    func scatterRows(_ indices: [Int], rows: [[Double]]) throws {
+        let slots = try orderedSlots(indices)
+        guard rows.count == indices.count,
+              rows.allSatisfy({ $0.count == columns && $0.allSatisfy(\.isFinite) }) else {
+            throw VivoOmicsError.invalid("integration matrix batch values")
+        }
+        try Task.checkCancellation()
+        for slot in slots { try setRow(indices[slot], rows[slot]) }
     }
     func copy(from source: VivoIntegrationMatrix, normalize: Bool = false) throws {
         guard rows == source.rows, columns == source.columns else { throw VivoOmicsError.invalid("integration matrix copy axes") }

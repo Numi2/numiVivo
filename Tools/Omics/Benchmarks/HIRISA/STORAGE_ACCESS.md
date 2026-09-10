@@ -77,9 +77,10 @@ agree across the following paths.
 The fixed tile avoids growing a buffer with the full block. Removal, update and
 addition remain separate phases, each in the original logical row order. Scratch
 was removed after each probe. This is a design candidate for the next integration
-storage change; the production solver does not yet use it. Full solver/oracle
-comparison, complete HIRISA execution and biological-preservation gates remain
-required. Existing negative preservation evidence remains unchanged.
+storage change; the production solver did not yet use it at this checkpoint.
+The subsequent [production implementation and solver qualification](TILED_INTEGRATION.md)
+now retain the arithmetic across tile boundaries. Complete HIRISA execution and
+biological-preservation gates remain required. Existing negative preservation evidence remains unchanged.
 
 ## Retained archive
 
