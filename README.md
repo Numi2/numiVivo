@@ -34,7 +34,8 @@ published ingestion, DE, donor-response prediction, PCA, graph and seed-7
 integration results. A new [program-preservation check](Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md)
 finds three control-sensitive failures in native integration and each of three
 Harmony runs; 18 of 32 comparisons have insufficient controls. Full-cohort
-clustering replay and broader biological preservation remain open.
+[clustering publication, replay and independent checks](Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md)
+now pass. Broader biological preservation remains open.
 
 ## One scientific question, several scales
 

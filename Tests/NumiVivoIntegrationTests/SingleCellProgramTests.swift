@@ -65,4 +65,57 @@ import Testing
         for x in [a,b] { try x.add(row: 0,feature: 0,logValue: 4);try x.add(row: 0,feature: 1,logValue: 2) }
         #expect(try a.finish().scores==b.finish().scores)
     }
+    @Test func binaryProgramRecordsPreserveSignedZeroAndMissingRows() throws {
+        let root=FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root,withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let a=try accumulator(.init(definitions: [definition([.init(featureID: "A",weight: -1)])]))
+        try a.add(row: 0,feature: 0,logValue: 3)
+        let (scoreHash,countHash)=try VivoH5ADPrograms.writeScores(a,root: root)
+        let scores=try VivoWindowedCountRecords(root.appendingPathComponent("scores.bin"),entries: 3)
+        let counts=try VivoWindowedCountRecords(root.appendingPathComponent("detected-members.bin"),entries: 3)
+        for row in 0..<3 {
+            let score=try scores.record(row),count=try counts.record(row)
+            #expect(score.row==row && score.feature==0 && count.row==row && count.feature==0)
+            #expect(Double(bitPattern: score.bits)==(row==0 ? -3 : 0))
+            #expect(count.bits==(row==0 ? 1 : 0))
+        }
+        #expect(a.hasLibrary==[true,true,false])
+        #expect(try VivoH5ADCountStore.fingerprint(root.appendingPathComponent("scores.bin"))==scoreHash)
+        #expect(try VivoH5ADCountStore.fingerprint(root.appendingPathComponent("detected-members.bin"))==countHash)
+        #expect(try a.finish().scores==[[-3],[0],[nil]])
+    }
+    @Test func standalonePlanRetainsExplicitNormalizationAndRejectsUnknownScope() throws {
+        let data=try VivoSingleCellExamples.pairedCounts()
+        let mapping=VivoH5ADImportPlan(id: data.id,evidence: data.evidence,sourceDescription: data.sourceDescription,
+            countUnit: data.countUnit,matrixPath: "X",samples: data.samples,sampleColumn: "sample")
+        let programs=VivoSingleCellProgramOptions(definitions: [definition([.init(featureID: "A")])])
+        let plan=VivoH5ADProgramPlan(mapping: mapping,programs: programs,normalizationTarget: 1234)
+        try plan.validate()
+        #expect(try VivoCanonicalJSON.decode(VivoH5ADProgramPlan.self,from: VivoCanonicalJSON.encode(plan))==plan)
+        for target in [0.0,-1,.infinity,.nan] {
+            #expect(throws: (any Error).self) { try VivoH5ADProgramPlan(mapping: mapping,programs: programs,normalizationTarget: target).validate() }
+        }
+        var object=try JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(plan)) as! [String:Any]
+        object["cellSelection"]=[0]
+        let bytes=try JSONSerialization.data(withJSONObject: object)
+        #expect(throws: (any Error).self) { try VivoCanonicalJSON.decode(VivoH5ADProgramPlan.self,from: bytes) }
+    }
+
+    @Test func explicitNameMappingPreservesSourceIDsAndRejectsRequestedAmbiguity() throws {
+        let definition=definition([.init(featureID: "A")])
+        let cells=[VivoOmicsCell(barcode: "c",sampleID: "s")]
+        let samples=[VivoOmicsSample(id: "s",biologicalReplicateID: "d",condition: "c",batchID: "b",organism: "human")]
+        let quality=[VivoCellQuality(sampleID: "s",barcode: "c",totalCounts: 10,detectedFeatures: 1,mitochondrialCounts: 0,mitochondrialFeatureCount: 0,mitochondrialFraction: nil)]
+        let features=[VivoOmicsFeature(id: "ENSG1",name: "A"),.init(id: "ENSG2",name: "unused"),.init(id: "ENSG3",name: "unused")]
+        let options=VivoSingleCellProgramOptions(definitions: [definition])
+        #expect(throws: (any Error).self) { try VivoSingleCellProgramAccumulator(features: features,cells: cells,samples: samples,quality: quality,normalizationTarget: 10000,options: options) }
+        let a=try VivoSingleCellProgramAccumulator(features: features,cells: cells,samples: samples,quality: quality,normalizationTarget: 10000,options: options,featureMatch: .featureName)
+        try a.add(row: 0,feature: 0,logValue: 2)
+        #expect(a.programs[0].featureIndices==[0] && a.programs[0].definition==definition)
+        #expect(try a.finish().scores==[[2]])
+        let ambiguous=[VivoOmicsFeature(id: "ENSG1",name: "A"),.init(id: "ENSG2",name: "A")]
+        #expect(throws: (any Error).self) { try VivoSingleCellProgramAccumulator(features: ambiguous,cells: cells,samples: samples,quality: quality,normalizationTarget: 10000,options: options,featureMatch: .featureName) }
+    }
+
 }

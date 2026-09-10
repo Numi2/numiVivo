@@ -16,8 +16,9 @@ prediction folds, and complete PCA/graph qualification. Native seed-7 integratio
 and three Harmony references pass coarse preservation margins. The subsequent
 [program diagnostic](../Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md) fails
 three sensitive comparisons in all four candidates, with 18/32 controls
-insufficient. Broader biological preservation and full-cohort native clustering
-replay remain open.
+insufficient. Full-cohort [native clustering publication/replay and independent
+checks](../Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md) now pass;
+broader biological preservation remains open.
 
 ## Use
 
@@ -477,7 +478,10 @@ The complete development objective remains open:
    Missing rare-type strata and the insensitive original Kang erasure control
    remain explicit. Full Baron is rejected for confounding. Multiple covariates,
    prospective mapping and general multi-donor competitiveness remain open.
-6. **Annotation:** [native fixed marker/program scoring](../Tools/Omics/Programs/README.md)
+6. **Annotation:** [standalone native binary program bundles](../Tools/Omics/Programs/BUNDLES.md)
+   separate per-cell arrays from pseudobulk JSON and preserve explicit source
+   IDs, exact-name matching, missing scores and native replay. Full-HIRISA scale
+   qualification remains separate. [Native fixed marker/program scoring](../Tools/Omics/Programs/README.md)
    now shares sparse arithmetic between resident and streamed H5AD routes, with
    exact IDs, signed weights, definition fingerprints, missing-gene coverage and
    null scores for empty libraries. Full Kang and Baron comparisons pass against

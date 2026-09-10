@@ -93,6 +93,8 @@ public struct VivoSingleCellProgramResult: Codable, Sendable, Equatable {
 }
 
 /// Sparse accumulator shared by resident CSR and canonical streamed CSR/CSC.
+enum VivoProgramFeatureMatch: String, Codable, Sendable { case featureID, featureName }
+
 final class VivoSingleCellProgramAccumulator {
     let options: VivoSingleCellProgramOptions
     let programs: [VivoSingleCellResolvedProgram]
@@ -100,11 +102,11 @@ final class VivoSingleCellProgramAccumulator {
     let normalizationTarget: Double
     let hasLibrary: [Bool]
     let memberships: [[(program: Int,weight: Double)]]
-    var values: [[Double]]
-    var detected: [[Int]]
+    var values: [Double]
+    var detected: [Int]
     var updates=0
     init(features: [VivoOmicsFeature],cells: [VivoOmicsCell],samples: [VivoOmicsSample],quality: [VivoCellQuality],
-         normalizationTarget: Double,options: VivoSingleCellProgramOptions) throws {
+         normalizationTarget: Double,options: VivoSingleCellProgramOptions,featureMatch: VivoProgramFeatureMatch = .featureID) throws {
         try options.validate()
         guard normalizationTarget.isFinite,normalizationTarget>0,quality.count==cells.count,
               zip(cells,quality).allSatisfy({ $0.sampleID==$1.sampleID && $0.barcode==$1.barcode }),
@@ -112,6 +114,8 @@ final class VivoSingleCellProgramAccumulator {
         let size=cells.count.multipliedReportingOverflow(by: options.definitions.count)
         guard !size.overflow,size.partialValue<=options.maximumScoreValues else { throw VivoOmicsError.limit("program score-value budget") }
         let organisms=Set(samples.map(\.organism))
+        let keys=features.map { featureMatch == .featureID ? $0.id : $0.name }
+        let positions=Dictionary(grouping: features.indices,by: { keys[$0] })
         var programs: [VivoSingleCellResolvedProgram]=[]
         var memberships=[[(program: Int,weight: Double)]](repeating: [],count: features.count)
         for (p,definition) in options.definitions.enumerated() {
@@ -121,13 +125,16 @@ final class VivoSingleCellProgramAccumulator {
             let requested=Dictionary(uniqueKeysWithValues: definition.members.map { ($0.featureID,$0.weight/scale) })
             guard requested.values.allSatisfy({ $0 != 0 }) else { throw VivoOmicsError.invalid("program weight dynamic range underflow") }
             let total=definition.members.reduce(0.0) { $0+abs(requested[$1.featureID]!) }
-            let selected=features.indices.filter { requested[features[$0].id] != nil }
-            let matched=selected.reduce(0.0) { $0+abs(requested[features[$1].id]!) }
-            let ids=Set(features.map(\.id)),missing=definition.members.map(\.featureID).filter { !ids.contains($0) }.sorted()
+            guard requested.keys.allSatisfy({ (positions[$0]?.count ?? 0)<=1 }) else {
+                throw VivoOmicsError.invalid("ambiguous requested program feature name")
+            }
+            let selected=features.indices.filter { requested[keys[$0]] != nil }
+            let matched=selected.reduce(0.0) { $0+abs(requested[keys[$1]]!) }
+            let ids=Set(keys),missing=definition.members.map(\.featureID).filter { !ids.contains($0) }.sorted()
             let coverage=missing.isEmpty ? 1 : matched/total
             guard matched>0,coverage>=definition.minimumWeightCoverage,
                   definition.minimumWeightCoverage<1 || missing.isEmpty else { throw VivoOmicsError.invalid("program \(definition.id) missing-feature weight coverage") }
-            let weights=selected.map { requested[features[$0].id]!/matched }
+            let weights=selected.map { requested[keys[$0]]!/matched }
             guard weights.allSatisfy({ $0.isFinite && $0 != 0 }) else { throw VivoOmicsError.invalid("program effective weight underflow") }
             let encoder=JSONEncoder();encoder.outputFormatting=[.sortedKeys,.withoutEscapingSlashes]
             programs.append(.init(definition: definition,definitionFingerprint: try VivoCanonicalJSON.fingerprint(encoder.encode(definition)),
@@ -136,7 +143,7 @@ final class VivoSingleCellProgramAccumulator {
         }
         self.options=options;self.programs=programs;self.memberships=memberships;self.normalizationTarget=normalizationTarget
         self.cells=cells.map { .init(sampleID: $0.sampleID,barcode: $0.barcode) };hasLibrary=quality.map { $0.totalCounts>0 }
-        values=Array(repeating: Array(repeating: 0,count: programs.count),count: cells.count);detected=Array(repeating: Array(repeating: 0,count: programs.count),count: cells.count)
+        values=Array(repeating: 0,count: size.partialValue);detected=Array(repeating: 0,count: size.partialValue)
     }
     func add(row: Int,feature: Int,logValue: Double) throws {
         guard row>=0,row<cells.count,feature>=0,feature<memberships.count,hasLibrary[row],logValue.isFinite,logValue>0 else {
@@ -145,12 +152,16 @@ final class VivoSingleCellProgramAccumulator {
         let targets=memberships[feature]
         guard targets.count<=options.maximumUpdates-updates else { throw VivoOmicsError.limit("program sparse-update budget") }
         updates+=targets.count
-        for target in targets { values[row][target.program]+=logValue*target.weight;detected[row][target.program]+=1 }
+        for target in targets {
+            let index=row*programs.count+target.program
+            values[index]+=logValue*target.weight;detected[index]+=1
+        }
     }
     func finish() throws -> VivoSingleCellProgramResult {
-        guard values.allSatisfy({ $0.allSatisfy(\.isFinite) }) else { throw VivoOmicsError.invalid("nonfinite program score") }
+        guard values.allSatisfy(\.isFinite) else { throw VivoOmicsError.invalid("nonfinite program score") }
         return .init(method: "signed-l1-mean-log-normalized-expression-v1",normalizationTarget: normalizationTarget,programs: programs,cells: cells,
-            scores: values.enumerated().map { row,values in values.map { hasLibrary[row] ? $0 : nil } },detectedMembers: detected,updates: updates,
+            scores: cells.indices.map { row in programs.indices.map { hasLibrary[row] ? values[row*programs.count+$0] : nil } },
+            detectedMembers: cells.indices.map { row in Array(detected[(row*programs.count)..<((row+1)*programs.count)]) },updates: updates,
             qualification: "Supplied expression programs with exact-ID matching and declared provenance; descriptive scores, not fitted labels, calibrated pathway activity or biological ground truth.")
     }
 }
@@ -168,14 +179,19 @@ enum VivoSingleCellPrograms {
     }
     static func run(snapshot: URL,mapping: VivoH5ADImportPlan,metadata: VivoSingleCellCountMetadata,quality: [VivoCellQuality],
                     normalizationTarget: Double,options: VivoSingleCellProgramOptions) throws -> VivoSingleCellProgramResult {
+        return try accumulate(snapshot: snapshot,mapping: mapping,metadata: metadata,quality: quality,
+                              normalizationTarget: normalizationTarget,options: options).finish()
+    }
+    static func accumulate(snapshot: URL,mapping: VivoH5ADImportPlan,metadata: VivoSingleCellCountMetadata,quality: [VivoCellQuality],
+                           normalizationTarget: Double,options: VivoSingleCellProgramOptions,featureMatch: VivoProgramFeatureMatch = .featureID) throws -> VivoSingleCellProgramAccumulator {
         let accumulator=try VivoSingleCellProgramAccumulator(features: metadata.features,cells: metadata.cells,samples: metadata.samples,
-            quality: quality,normalizationTarget: normalizationTarget,options: options)
+            quality: quality,normalizationTarget: normalizationTarget,options: options,featureMatch: featureMatch)
         _ = try VivoSingleCellH5AD.scanSnapshot(snapshot,plan: mapping,limits: VivoH5ADPseudobulk.sourceLimits,onMetadata: {
             guard $0==metadata else { throw VivoOmicsError.invalid("program source metadata changed") }
         },onEntry: { row,feature,count in
             let value=log1p((Double(count)/Double(quality[row].totalCounts))*normalizationTarget)
             try accumulator.add(row: row,feature: feature,logValue: value)
         })
-        return try accumulator.finish()
+        return accumulator
     }
 }

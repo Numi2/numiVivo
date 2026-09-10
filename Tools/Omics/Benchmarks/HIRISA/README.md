@@ -33,7 +33,9 @@ unchanged full-HIRISA igraph partitions, now independently checked over every
 graph edge. Runtime-aware comparison and efficient remote collection pass on
 complete Baron data, including corruption and cross-cohort rejection. The
 original and optimized full native clustering runs retain separate identities;
-their terminal publication/replay remains a separate gate.
+the buffered runtime now has [complete publication, replay and independent
+checks](FULL_CLUSTERING_RESULTS.md). The original mapped-reader baseline remains
+a separate running experiment.
 
 The [protocol](PROTOCOL.md) was frozen before count inspection, fitting or
 prediction. Its SHA256 is

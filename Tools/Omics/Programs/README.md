@@ -1,5 +1,9 @@
 # Deterministic expression programs
 
+For large cohorts, use [standalone native program bundles](BUNDLES.md):
+`singlecell-h5ad-programs` publishes binary scores, detection counts and library
+totals separately from metadata, with native reconstruction verification.
+
 Add `programs` to a `singlecell-analyze` plan or to the existing
 `singlecell-h5ad-pseudobulk` plan. This uses the same analysis/publication/replay
 owners as counts and PCA. Plans without programs retain their earlier behavior.
@@ -40,7 +44,9 @@ labels or PCA.
 
 Matching is exact against feature IDs, in source feature order. Duplicate
 members, zero/nonfinite weights and mismatching sample organisms are rejected.
-There is no automatic alias, case, Ensembl-version or ortholog conversion.
+The standalone bundle additionally supports explicit exact original-name matching,
+rejecting ambiguous requested names and retaining source IDs. There is no
+automatic alias, case, Ensembl-version or ortholog conversion.
 `featureNamespace` declares the author's namespace; the current count model has
 no independent namespace field with which to verify that declaration.
 
@@ -62,7 +68,8 @@ visible alongside scores.
 ## Sparse execution and limits
 
 `VivoSingleCellProgramAccumulator` owns resolution and arithmetic for both
-resident CSR and streamed canonical CSR/CSC. H5AD scoring adds one scan after
+resident CSR and streamed canonical CSR/CSC. Its score and detection arrays are
+flat internally; existing JSON results retain their prior shape. H5AD scoring adds one scan after
 QC, with no dense cells-by-genes matrix. With PCA enabled, the combined workflow
 uses four source scans: QC, programs, HVG moments and selected-cache writing.
 The existing `reductionStorage.sourcePasses` counts the three scans used by the

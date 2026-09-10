@@ -1,5 +1,9 @@
 # Complete clustering references and runtime-aware verification
 
+The buffered native full-cohort run subsequently completed publication, replay
+and all independent checks: [complete result](FULL_CLUSTERING_RESULTS.md). The
+original reference partitions and the evidence below remain unchanged.
+
 The independent weighted Louvain references cover all **1,612,594 HIRISA cells**
 and **34,707,084 directed symmetric graph edges**. Their original igraph 1.0.0
 partitions and receipts remain unchanged. A separate NumPy calculation now
