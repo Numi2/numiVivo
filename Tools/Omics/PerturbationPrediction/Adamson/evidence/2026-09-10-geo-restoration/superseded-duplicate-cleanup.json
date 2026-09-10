@@ -1,0 +1,10 @@
+{
+  "removed": [
+    "local/annotated.h5ad",
+    "macmini/annotated.h5ad"
+  ],
+  "retained": "macmini:/Users/n/numivivo-adamson-target-kernel-20260910/pseudobulk/original.h5ad",
+  "sha256": "8ed5c635c9e5408bede2debc2104eb02ab7769ae4599eddd4296361ee4cbc13f",
+  "noOpenHandles": true,
+  "initialAttempt": "Python 3.9 lacked hashlib.file_digest; stopped before deletion, reran with Python 3.12"
+}

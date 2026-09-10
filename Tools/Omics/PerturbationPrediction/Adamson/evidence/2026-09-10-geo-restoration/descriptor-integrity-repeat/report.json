@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "case": "changed-annotation",
+      "returnCode": 1,
+      "unexpectedOutputAbsent": true
+    },
+    {
+      "case": "rehashed-annotation",
+      "returnCode": 1,
+      "unexpectedOutputAbsent": true
+    },
+    {
+      "case": "missing-capture",
+      "returnCode": 1,
+      "unexpectedOutputAbsent": true
+    },
+    {
+      "case": "unlisted-capture",
+      "returnCode": 1,
+      "unexpectedOutputAbsent": true
+    },
+    {
+      "case": "wrong-receipt",
+      "returnCode": 1,
+      "unexpectedOutputAbsent": true
+    },
+    {
+      "case": "wrong-identities",
+      "returnCode": 1,
+      "unexpectedOutputAbsent": true
+    }
+  ]
+}

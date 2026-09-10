@@ -235,7 +235,8 @@ struct VivoSingleCellCLICommands {
                 guard arguments.count == 6, arguments[2] == "--plan", arguments[4] == "--output" else {
                     throw VivoOmicsError.invalid("singlecell-h5ad-pseudobulk <source.h5ad> --plan <stream-plan.json> --output <new-bundle-directory>")
                 }
-                let plan=try load(VivoH5ADPseudobulkPlan.self,URL(fileURLWithPath: arguments[3]))
+                let bytes = try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[3]), maximumBytes: 2_097_152)
+                let plan = try VivoCanonicalJSON.decode(VivoH5ADPseudobulkPlan.self, from: bytes)
                 let receipt=try VivoH5ADPseudobulk.publish(source: URL(fileURLWithPath: arguments[1]),plan: plan,
                     implementation: VivoWorkflowCLIImplementation.fingerprint(),to: canonicalURL(URL(fileURLWithPath: arguments[5])))
                 try printJSON(receipt); return 0

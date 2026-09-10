@@ -1,9 +1,10 @@
 # Donor-held-out perturbation response baselines
 
-The independent [Adamson UPR study](Adamson/README.md) now has qualified native
-ingestion for all 65,337 cells, with exact source-guide counts and a frozen
-held-target prediction protocol. Its control identities and prediction scores
-remain unresolved. The [AlphaGenome Atlas note](ALPHAGENOME_ATLAS.md) records
+The independent [Adamson UPR study](Adamson/GEO_RESTORATION.md) now has original
+GEO identities restored for all 65,337 cells, correcting 3,634 assignments affected
+by its deposited barcode join. Corrected native counts match the independent
+reference, and fixed GO descriptors are captured. Its control identities and
+prediction scores remain unresolved. The [AlphaGenome Atlas note](ALPHAGENOME_ATLAS.md) records
 the later regulatory-variant integration opportunity and its current boundaries.
 
 This is a deterministic external benchmark for the [native prediction

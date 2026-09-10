@@ -1,0 +1,42 @@
+{
+  "annotations": 2932,
+  "candidates": 90,
+  "candidatesWithoutSharedTerms": [],
+  "controlsVerified": false,
+  "experimentalGuideAssignmentsVerified": false,
+  "files": 96,
+  "independentJaccardExact": true,
+  "minimumJaccardEigenvalue": 0.20911935440169707,
+  "predictionQualification": false,
+  "receiptSHA256": "8494e5623186b4478532112f9a0b67bd4443958a55bcb8090915f6a5f9e63f76",
+  "status": "passed-capture-reconstruction",
+  "studyCitationOverlap": [
+    {
+      "annotations": [
+        {
+          "evidence": "IMP",
+          "gocategory": "BP",
+          "id": "GO:0036500",
+          "namespace": "BP",
+          "pubmed": 27984733,
+          "qualifier": "involved_in",
+          "term": "ATF6-mediated unfolded protein response"
+        }
+      ],
+      "sourceFeatureID": "ENSG00000145050",
+      "target": "MANF"
+    }
+  ],
+  "supportedCandidates": 88,
+  "terms": 895,
+  "unsupported": [
+    {
+      "status": "no-usable-GO-annotations",
+      "target": "IER3IP1"
+    },
+    {
+      "status": "annotation-not-found",
+      "target": "TIMM23"
+    }
+  ]
+}

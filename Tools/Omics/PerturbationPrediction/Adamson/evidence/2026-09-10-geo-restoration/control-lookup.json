@@ -1,0 +1,34 @@
+{
+  "status": "no-explicit-control-mapping-in-inspected-files",
+  "curatorCommit": "b69f72a070a92bcbaf41e7f9897b11598109ab48",
+  "files": [
+    {
+      "path": "source/curator-config.yaml",
+      "sha256": "1b3d83024b9927e59542c1e443562e4062221dd0692ddc08ad4f22ccf4fba070"
+    },
+    {
+      "path": "source/curator-scperturb_dataset_info_140922.csv",
+      "sha256": "6fdc049b2a57734671f5fb73aefd6208c74bda42ab775eb01ebb248477a7249d"
+    },
+    {
+      "path": "source/curator-scperturb_dataset_info_datavzrd_annotated.csv",
+      "sha256": "3e5580661b9fdd2b429dc010c3fb80c31085787e951086d60cd88b7dd316b39f"
+    },
+    {
+      "path": "source/curator-snake_prepare_data.py",
+      "sha256": "85f35ad618014fc6bbcceb0ee62997f1924e4bd56f2f00b8590be4d20e137664"
+    },
+    {
+      "path": "source/curator-snake_compute_edistance_to_control.py",
+      "sha256": "c1671b8a935d6215b09e62e0710d46d32037f106a3ba0a97dd502d026f5d2981"
+    }
+  ],
+  "sourceControlLabels": [
+    "62(mod)_pBA581",
+    "63(mod)_pBA580",
+    "Gal4-4(mod)_pBA582"
+  ],
+  "publisherSupplementHTTPStatus": 403,
+  "primaryGuideCSVRetrieved": true,
+  "controlsVerified": false
+}

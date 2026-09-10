@@ -1,5 +1,12 @@
 # Adamson UPR: complete native ingestion, prediction qualification pending
 
+**The deposited guide assignments contain a barcode-join error.** Comparison
+against original GEO records identifies 3,634 changed cell assignments. The
+ingestion checks below prove faithful handling of the deposited file, not correct
+biological labels. Use the [GEO identity restoration](GEO_RESTORATION.md) before
+constructing a prediction benchmark. The deposited fields and historical
+receipts remain available for audit.
+
 The complete scPerturb Adamson UPR source now passes native annotation and
 streamed pseudobulk reconstruction. An independent HDF5/SciPy check verifies
 all original datasets and every aggregate/QC count. No perturbation predictor

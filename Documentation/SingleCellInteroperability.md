@@ -60,6 +60,12 @@ nonunique gene symbols; the index remains the default display name. Missing
 group annotations are preserved; missing selected design identities are rejected. Mitochondrial feature
 identities are explicit, never inferred from names.
 
+Preserve complete barcode identities when joining metadata. The
+[Adamson GEO restoration](../Tools/Omics/PerturbationPrediction/Adamson/GEO_RESTORATION.md)
+corrects 3,634 assignments caused by removing barcode suffixes before a metadata
+join. Successful H5AD parsing and count reconstruction alone cannot establish
+that deposited experimental labels are correct.
+
 ## Preservation contract
 
 - Import publishes the **unchanged original.h5ad**, a native `dataset.json`, the
@@ -212,8 +218,10 @@ DAG. It is not a substitute for general chunked transforms or sparse PCA.
 
 Explicit limits are 1 GiB source bytes, 1 million cell identities, 100,000
 features, 1 billion source sparse entries, 5 million aggregate nonzeros,
-2 MiB encoded plan and 512 MiB encoded report. The CLI's common plan reader
-has a tighter 128 KiB input limit. These are bounds, not demonstrated scale:
+2 MiB encoded plan and 512 MiB encoded report. The pseudobulk CLI now uses
+the same 2 MiB input-plan allowance; a complete Adamson mapping with 1,106
+guide/GEM sample identities exposed the former 128 KiB CLI mismatch. These
+are bounds, not demonstrated scale:
 metadata, group membership and JSON reports remain resident. Compression
 depends on the installed HDF5 filters; gzip is qualified, while LZF was rejected
 on the tested host because no native LZF filter was installed.
