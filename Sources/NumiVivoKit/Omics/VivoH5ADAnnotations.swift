@@ -93,14 +93,16 @@ extension VivoSingleCellH5AD {
     public static func annotate(_ sourceURL: URL, plan: VivoH5ADAnnotationPlan, implementation: VivoFingerprint,
                                 to destination: URL) throws -> VivoH5ADAnnotationReceipt {
         try plan.validate()
-        let source = try VivoSingleCellCampaignIO.readDocument(sourceURL, maximumBytes: 64 * 1_024 * 1_024)
-        guard try VivoCanonicalJSON.fingerprint(source) == plan.source else { throw VivoOmicsError.invalid("annotation source fingerprint mismatch") }
         let planBytes = try VivoCanonicalJSON.encode(plan), planID = try VivoCanonicalJSON.fingerprint(planBytes)
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-annotation-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         defer { try? FileManager.default.removeItem(at: directory) }
         let staging = directory.appendingPathComponent("annotated.h5ad")
-        try source.write(to: staging, options: .withoutOverwriting)
+        // Hash the exact private copy HDF5 will edit, without retaining the
+        // complete file in Data. Axis/value limits remain independently bounded.
+        guard try VivoOmicsFileSnapshot.fingerprint(sourceURL, copyTo: staging, maximumBytes: 1_024 * 1_024 * 1_024) == plan.source else {
+            throw VivoOmicsError.invalid("annotation source fingerprint mismatch")
+        }
         let version = try VivoHDF5.lock.withLock {
             let h = try VivoHDF5(), file = try h.file(staging.path, writable: true)
             defer { h.close(file, "H5Fclose") }
@@ -212,10 +214,15 @@ extension VivoSingleCellH5AD {
             return runtime
         }
         try Task.checkCancellation()
-        let output = try VivoSingleCellCampaignIO.readDocument(staging, maximumBytes: 128 * 1_024 * 1_024)
+        let outputLimit = 2 * 1_024 * 1_024 * 1_024
+        let output = try VivoOmicsFileSnapshot.fingerprint(staging, maximumBytes: outputLimit)
         let receipt = try VivoH5ADAnnotationReceipt(schemaVersion: 1, source: plan.source, plan: planID,
-            output: VivoCanonicalJSON.fingerprint(output), implementation: implementation, hdf5Version: version)
-        try publish(output, to: destination)
+            output: output, implementation: implementation, hdf5Version: version)
+        guard destination.isFileURL else { throw VivoOmicsError.invalid("local H5AD output required") }
+        let files = try VivoRootedFileStore(rootURL: destination.deletingLastPathComponent(), createIfNeeded: false)
+        guard try files.writeFile(from: staging, relative: destination.lastPathComponent, maximumBytes: outputLimit, immutable: true) else {
+            throw VivoOmicsError.invalid("H5AD output already exists")
+        }
         return receipt
     }
 }

@@ -124,6 +124,57 @@ final class VivoRootedFileStore: @unchecked Sendable {
     /// publication replaces only the directory entry, never follows its target.
     @discardableResult
     func writeFile(_ data: Data, relative: String, immutable: Bool) throws -> Bool {
+        try writeFile(relative: relative, immutable: immutable) { fd in
+            try data.withUnsafeBytes { bytes in try Self.write(bytes, to: fd) }
+        }
+    }
+
+    /// Publish a regular file with fixed-size copying and the same atomic,
+    /// descriptor-rooted destination semantics as in-memory artifacts.
+    @discardableResult
+    func writeFile(from source: URL, relative: String, maximumBytes: Int, immutable: Bool) throws -> Bool {
+        guard source.isFileURL, maximumBytes >= 0 else { throw Failure.invalidPath(source.path) }
+        let input = open(source.path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_CLOEXEC)
+        guard input >= 0 else { throw Failure.io("open copy source", errno) }
+        defer { _ = close(input) }
+        var before = stat()
+        guard fstat(input, &before) == 0 else { throw Failure.io("stat copy source", errno) }
+        guard before.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG) else { throw Failure.invalidPath(source.path) }
+        guard before.st_size >= 0, before.st_size <= maximumBytes else { throw Failure.exceededLimit(source.path) }
+        return try writeFile(relative: relative, immutable: immutable) { output in
+            var buffer = [UInt8](repeating: 0, count: 1_048_576), total = 0
+            while true {
+                try Task.checkCancellation()
+                let count = buffer.withUnsafeMutableBytes { read(input, $0.baseAddress, $0.count) }
+                if count < 0, errno == EINTR { continue }
+                guard count >= 0 else { throw Failure.io("read copy source", errno) }
+                if count == 0 { break }
+                guard count <= maximumBytes - total else { throw Failure.exceededLimit(source.path) }
+                total += count
+                try buffer.withUnsafeBytes { try Self.write(UnsafeRawBufferPointer(rebasing: $0[..<count]), to: output) }
+            }
+            var after = stat()
+            guard total == before.st_size, fstat(input, &after) == 0, after.st_size == before.st_size else {
+                throw Failure.io("copy source changed size", EIO)
+            }
+        }
+    }
+
+    private static func write(_ bytes: UnsafeRawBufferPointer, to fd: Int32) throws {
+        var position = 0
+        while position < bytes.count {
+            #if canImport(Darwin)
+            let amount = Darwin.write(fd, bytes.baseAddress!.advanced(by: position), bytes.count - position)
+            #else
+            let amount = Glibc.write(fd, bytes.baseAddress!.advanced(by: position), bytes.count - position)
+            #endif
+            if amount < 0 && errno == EINTR { continue }
+            guard amount > 0 else { throw Failure.io("write object", amount < 0 ? errno : EIO) }
+            position += amount
+        }
+    }
+
+    private func writeFile(relative: String, immutable: Bool, body: (Int32) throws -> Void) throws -> Bool {
         let parts = try components(relative)
         let parent = try directory(parts.dropLast(), create: true)
         defer { _ = close(parent) }
@@ -131,15 +182,8 @@ final class VivoRootedFileStore: @unchecked Sendable {
         let fd = openat(parent, temporary, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC, 0o600)
         guard fd >= 0 else { throw Failure.io("create temporary", errno) }
         defer { _ = close(fd); _ = unlinkat(parent, temporary, 0) }
-        try data.withUnsafeBytes { bytes in
-            var position = 0
-            while position < bytes.count {
-                let amount = write(fd, bytes.baseAddress!.advanced(by: position), bytes.count - position)
-                if amount < 0 && errno == EINTR { continue }
-                guard amount > 0 else { throw Failure.io("write object", amount < 0 ? errno : EIO) }
-                position += amount
-            }
-        }
+        try body(fd)
+        try Task.checkCancellation()
         guard fsync(fd) == 0 else { throw Failure.io("fsync object", errno) }
         if immutable {
             if linkat(parent, temporary, parent, parts.last!, 0) != 0 {

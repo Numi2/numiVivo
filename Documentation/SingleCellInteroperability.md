@@ -90,8 +90,8 @@ identities are explicit, never inferred from names.
   indices coexist with original barcode/sample columns. Use `barcodeColumn:
   "barcode"`, `sampleColumn: "sample"`, `groupColumn: "group"`, and
   `featureNameColumn: "name"` when importing native output again.
-- Publication refuses existing destinations. Resident count import and annotation
-  editing use a 64 MiB source limit; resident count processing is bounded at
+- Publication refuses existing destinations. Resident count import uses a
+  64 MiB source limit; resident count processing is bounded at
   100,000 cells/features and 5 million nonzeros by default. Streaming processing
   and axis projection have separate routes and limits. HDF5 itself may retain
   decompression and variable-string buffers beyond the Swift sparse arrays.
@@ -123,6 +123,16 @@ object references are rejected because their meaning may change during copying.
 Existing destinations and conflicting add/replace modes fail. Failures and
 cancellation before publication leave no output. Edited parent groups are copied
 before mutation so hard-linked backups retain their old values.
+
+Annotation now snapshots and hashes the source and publishes the result using
+fixed 1 MiB buffers, accepting up to 1 GiB source files and 2 GiB outputs without
+whole-file `Data` allocations. The 100,000-cell/feature annotation axes and payload
+limits still apply. Publication uses a pinned destination directory, a private
+temporary file, and atomic no-overwrite linking. HDF5 metadata/decompression
+allocations are separate from the fixed copy buffer. The complete
+[Adamson UPR ingestion check](../Tools/Omics/PerturbationPrediction/Adamson/README.md)
+preserves the original 65,337 cells and 237,812,947 sparse entries and verifies
+native aggregates against an independent SciPy reference.
 
 A complete executable authoring/verification example is provided by
 `Tools/Omics/H5AD/check_annotations.py`. Its JSON value syntax follows the typed

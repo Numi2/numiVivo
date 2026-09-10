@@ -1,5 +1,11 @@
 # Donor-held-out perturbation response baselines
 
+The independent [Adamson UPR study](Adamson/README.md) now has qualified native
+ingestion for all 65,337 cells, with exact source-guide counts and a frozen
+held-target prediction protocol. Its control identities and prediction scores
+remain unresolved. The [AlphaGenome Atlas note](ALPHAGENOME_ATLAS.md) records
+the later regulatory-variant integration opportunity and its current boundaries.
+
 This is a deterministic external benchmark for the [native prediction
 implementation](NATIVE.md). It uses full, source-verified pseudobulk counts from Kang B cells
 (2,651 cells, 15,706 genes, eight paired donors) and Hagai fibroblasts (13,863 cells,
