@@ -2,7 +2,9 @@
 
 A subsequent [exact spatial-tree trial](MNN_TREE.md) reproduced every coordinate
 and anchor on all three original cohorts but ran slower. It was not promoted;
-the exhaustive matcher and existing API below remain unchanged.
+the exhaustive matcher and existing API below remain unchanged. A subsequent
+[HNSW/local-kernel candidate](LocalMNN/README.md) improves larger-cohort timings
+but fails Kang/Ding biological preservation and remains experimental.
 
 The file-backed PCA workflow now offers an explicit mutual-nearest-neighbor
 (MNN) method. It corrects donor or batch effects in global median-PCA-norm units,

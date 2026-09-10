@@ -478,6 +478,9 @@ The complete development objective remains open:
    A [native exact-tree performance trial](../Tools/Omics/Reduction/MNN_TREE.md)
    preserves all original MNN outputs on Hagai/Kang/Ding but is slower; the
    prototype remains archived and is not a production option.
+   The subsequent [HNSW/local-kernel candidate](../Tools/Omics/Reduction/LocalMNN/README.md)
+   completes all three original cohorts but fails type/program preservation on
+   Kang and Ding despite over 99% exact-anchor recall; it is not promoted.
    The opt-in [native scale-aware MNN method](../Tools/Omics/Reduction/MNN_INTEGRATION.md)
    now passes the available preservation margins on full Kang, Hagai and Ding,
    with independent anchor, coordinate and neighbor agreement. It remains a

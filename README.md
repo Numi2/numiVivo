@@ -61,6 +61,9 @@ retains 37/146 failures: four resolve and four new failures appear. This candida
 has not been promoted into the native solver.
 A separate [exact-tree MNN trial](Tools/Omics/Reduction/MNN_TREE.md) preserved all
 outputs on three original cohorts but ran slower, so its prototype remains archived.
+A [local-kernel MNN candidate](Tools/Omics/Reduction/LocalMNN/README.md) is faster
+on the two larger cohorts but loses cell-type and program signal, so it also
+remains experimental.
 
 ## One scientific question, several scales
 
