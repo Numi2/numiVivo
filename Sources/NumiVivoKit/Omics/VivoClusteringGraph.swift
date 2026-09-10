@@ -55,7 +55,7 @@ final class VivoFileClusteringGraph: VivoClusteringGraph {
     private let allowSelf: Bool
     private let ownedDirectory: URL?
     init(root: URL, rows: Int, entries: Int, work: VivoClusteringWork, allowSelf: Bool = false, owned: Bool = false) throws {
-        guard (1...1_000_000).contains(rows), (0...254_000_000).contains(entries) else { throw VivoOmicsError.limit("clustering CSR axes") }
+        guard (1...VivoPCAStorageLimits.maximumRows).contains(rows), (0...VivoPCAStorageLimits.maximumSymmetricGraphEntries).contains(entries) else { throw VivoOmicsError.limit("clustering CSR axes") }
         count = rows; self.work = work; self.allowSelf = allowSelf; ownedDirectory = owned ? root : nil
         let source = try VivoWindowedCountRecords(root.appendingPathComponent("offsets.bin"), entries: rows+1)
         var offsets: [Int] = []; offsets.reserveCapacity(rows+1)

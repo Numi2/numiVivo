@@ -68,8 +68,8 @@ public enum VivoH5ADPCAQuery {
     static func snapshotReference(_ source: URL, to destination: URL) throws {
         try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         for (name, limit) in [("original.h5ad", VivoH5ADPseudobulk.sourceLimits.maximumInputBytes), ("plan.json", 2_097_152), ("receipt.json", 65_536),
-            ("metadata.json", 536_870_912), ("quality.json", 268_435_456), ("model.json", 67_108_864),
-            ("scores.bin", 1_024_000_000), ("loadings.bin", 10_240_000)] {
+            ("metadata.json", 536_870_912), ("quality.json", VivoPCAStorageLimits.maximumQualityBytes), ("model.json", 67_108_864),
+            ("scores.bin", VivoPCAStorageLimits.maximumBytes), ("loadings.bin", 10_240_000)] {
             _ = try VivoOmicsFileSnapshot.fingerprint(source.appendingPathComponent(name), copyTo: destination.appendingPathComponent(name), maximumBytes: limit)
         }
     }
@@ -142,7 +142,7 @@ public enum VivoH5ADPCAQuery {
             qualification: "Training-only features, centers and loadings; exact full gene universe, namespace, organism and count units required. Query cells must be disjoint by sampleID/barcode. Empty libraries retain the mathematical centered-zero score and are flagged in QC. No labels, biological generalization or million-cell qualification. Query scores use 16 MiB mapping windows; metadata/QC and reference reconstruction remain resident.")
         let receipt = try VivoH5ADPCAQueryReceipt(schemaVersion: 1, matrixFormat: VivoH5ADPCA.matrixFormat, source: sourceHash,
             plan: write(plan, root: temp, name: "plan.json", maximum: 2_097_152), reference: VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(referenceReceipt)),
-            metadata: write(metadata, root: temp, name: "metadata.json", maximum: 536_870_912), quality: write(quality, root: temp, name: "quality.json", maximum: 268_435_456),
+            metadata: write(metadata, root: temp, name: "metadata.json", maximum: 536_870_912), quality: write(quality, root: temp, name: "quality.json", maximum: VivoPCAStorageLimits.maximumQualityBytes),
             report: write(report, root: temp, name: "report.json", maximum: 1_048_576), scores: scoreHash, implementation: implementation)
         _ = try write(receipt, root: temp, name: "receipt.json", maximum: 65_536)
         try Task.checkCancellation(); try FileManager.default.moveItem(at: temp, to: destination); return receipt
@@ -157,7 +157,7 @@ public enum VivoH5ADPCAQuery {
         let rebuilt = try publish(source: root.appendingPathComponent("original.h5ad"), plan: plan, reference: root.appendingPathComponent("reference"), implementation: implementation, to: temp.appendingPathComponent("rebuilt"))
         guard rebuilt == receipt else { throw VivoOmicsError.invalid("PCA query source reconstruction differs") }
         for (name, hash, maximum) in [("plan.json", receipt.plan, 2_097_152), ("metadata.json", receipt.metadata, 536_870_912),
-            ("quality.json", receipt.quality, 268_435_456), ("report.json", receipt.report, 1_048_576), ("scores.bin", receipt.scores, 1_024_000_000)] {
+            ("quality.json", receipt.quality, VivoPCAStorageLimits.maximumQualityBytes), ("report.json", receipt.report, 1_048_576), ("scores.bin", receipt.scores, VivoPCAStorageLimits.maximumBytes)] {
             guard try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), maximumBytes: maximum) == hash else {
                 throw VivoOmicsError.invalid("PCA query artifact fingerprint differs")
             }

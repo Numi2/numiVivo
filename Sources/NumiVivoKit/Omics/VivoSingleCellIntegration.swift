@@ -126,7 +126,7 @@ enum VivoSingleCellIntegration {
     }
     static func validateAxes(rows n: Int, columns d: Int, options o: VivoSingleCellIntegrationOptions) throws {
         try o.validate()
-        guard (o.clusters...1_000_000).contains(n), (1...64).contains(d) else { throw VivoOmicsError.invalid("integration PCA axes") }
+        guard (o.clusters...VivoPCAStorageLimits.maximumRows).contains(n), (1...64).contains(d) else { throw VivoOmicsError.invalid("integration PCA axes") }
         // An explicit work index, not an instruction count. Check before allocation.
         var work = n
         for factor in [o.clusters, d, o.maximumIterations + 10] {

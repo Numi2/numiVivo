@@ -23,7 +23,7 @@ final class VivoIntegrationMatrix {
     private var removed = false
 
     init(rows: Int, columns: Int, scratch: URL? = nil, windowBytes: Int = maximumWindowBytes) throws {
-        guard (1...1_000_000).contains(rows), (1...128).contains(columns),
+        guard (1...VivoPCAStorageLimits.maximumRows).contains(rows), (1...128).contains(columns),
               windowBytes >= Int(getpagesize()), windowBytes <= Self.maximumWindowBytes,
               windowBytes.nonzeroBitCount == 1 else { throw VivoOmicsError.invalid("integration matrix axes or window") }
         var stride = 8

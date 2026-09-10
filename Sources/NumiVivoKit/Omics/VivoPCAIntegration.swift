@@ -80,9 +80,9 @@ public enum VivoPCAIntegration {
         try plan.validate()
         try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         try VivoPCANeighborBundle.snapshot(input.appendingPathComponent("input"), kind: plan.inputKind, to: output.appendingPathComponent("input"))
-        let witnesses = plan.mnn == nil ? [("assignment-scores.bin", 1_024_000_000), ("memberships.bin", 1_600_000_000)] : [("anchors.bin", 1_600_000_000)]
+        let witnesses = plan.mnn == nil ? [("assignment-scores.bin", VivoPCAStorageLimits.maximumBytes), ("memberships.bin", 1_600_000_000)] : [("anchors.bin", 1_600_000_000)]
         for (name, limit) in [("plan.json", 65_536), ("receipt.json", 65_536), ("report.json", 16_777_216), ("metadata.json", 536_870_912),
-            ("scores.bin", 1_024_000_000)] + witnesses {
+            ("scores.bin", VivoPCAStorageLimits.maximumBytes)] + witnesses {
             _ = try VivoOmicsFileSnapshot.fingerprint(input.appendingPathComponent(name), copyTo: output.appendingPathComponent(name), maximumBytes: limit)
         }
     }
@@ -152,8 +152,8 @@ public enum VivoPCAIntegration {
         let rebuilt = try publish(input: root.appendingPathComponent("input"), plan: plan, implementation: implementation, to: temp.appendingPathComponent("rebuilt"))
         guard rebuilt == receipt else { throw VivoOmicsError.invalid("integration reconstruction differs") }
         for (name, hash, limit) in [("plan.json", receipt.plan, 65_536), ("metadata.json", receipt.metadata, 536_870_912),
-            ("report.json", receipt.report, 16_777_216), ("scores.bin", receipt.scores, 1_024_000_000),
-            ("assignment-scores.bin", receipt.assignmentScores!, 1_024_000_000), ("memberships.bin", receipt.memberships!, 1_600_000_000)] {
+            ("report.json", receipt.report, 16_777_216), ("scores.bin", receipt.scores, VivoPCAStorageLimits.maximumBytes),
+            ("assignment-scores.bin", receipt.assignmentScores!, VivoPCAStorageLimits.maximumBytes), ("memberships.bin", receipt.memberships!, 1_600_000_000)] {
             guard try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), maximumBytes: limit) == hash else { throw VivoOmicsError.invalid("integration artifact fingerprint differs") }
         }
         return receipt

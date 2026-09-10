@@ -34,7 +34,7 @@ enum VivoPCAGraphStore {
                       distancePairs: Int, approximate: Bool, neighborsHash: VivoFingerprint) throws -> VivoPCAGraphStoreReport {
         try options.validate()
         let k = options.neighbors
-        guard n >= k, n <= 1_000_000, (1...64).contains(dimensions) else { throw VivoOmicsError.limit("binary graph axes") }
+        guard n >= k, n <= VivoPCAStorageLimits.maximumRows, (1...64).contains(dimensions) else { throw VivoOmicsError.limit("binary graph axes") }
         let records = try VivoWindowedCountRecords(root.appendingPathComponent("neighbors.bin"), entries: n*k)
         func row(_ i: Int) throws -> (indices: [Int], distances: [Double]) {
             var indices: [Int] = [], distances: [Double] = []

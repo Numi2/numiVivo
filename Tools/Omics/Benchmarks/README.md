@@ -20,8 +20,11 @@ independent conditional numerical checks pass for every native case. The full
 All 79 frozen held-out prediction folds now pass native replay and independent
 NumPy reconstruction. [Complete results](HIRISA/PREDICTION_RESULTS.md) retain
 both gene families and every baseline: ridge improves on the simple training
-mean in only four of sixteen contrasts. PBMC transfer and million-cell
-PCA/graph/integration remain open.
+mean in only four of sixteen contrasts. [Complete-source HIRISA PCA](HIRISA/PCA_RESULTS.md)
+now passes native publication/replay and independent comparison of all 32.25
+million scores, with aligned relative error 3.3741e-12. Peak native RSS is
+4.33/4.34 GB; metadata, QC and fitted arrays remain resident. PBMC transfer,
+million-cell graph/integration and controlled CPU/GPU performance remain open.
 
 ## Recorded scope
 

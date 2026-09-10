@@ -49,7 +49,7 @@ enum VivoHNSWNeighbors {
                        approximation: VivoHNSWOptions, sink: @escaping (Int, [Int], [Double]) throws -> Void) throws -> VivoHNSWReport {
         try options.validate(); try approximation.validate(neighbors: options.neighbors)
         let k = options.neighbors
-        guard n >= k, n <= 1_000_000, (1...64).contains(dimensions) else {
+        guard n >= k, n <= VivoPCAStorageLimits.maximumRows, (1...64).contains(dimensions) else {
             throw VivoOmicsError.limit("HNSW axes or representation")
         }
         try Task.checkCancellation()

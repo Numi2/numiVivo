@@ -73,7 +73,8 @@ public enum VivoH5ADPCA {
     /// Every coordinate, including zeros, is emitted in row-major order. The
     /// record primitive buffers 1 MiB, and never encodes the score matrix as JSON.
     static func writeMatrix(_ values: [[Double]], columns: Int, to url: URL) throws -> VivoFingerprint {
-        guard columns > 0, columns <= 64, values.count <= 1_000_000 else { throw VivoOmicsError.limit("PCA matrix dimensions") }
+        guard columns > 0, columns <= VivoPCAStorageLimits.maximumColumns,
+              values.count <= VivoPCAStorageLimits.maximumRows else { throw VivoOmicsError.limit("PCA matrix dimensions") }
         let writer = try VivoCountRecordWriter(url)
         for (row, vector) in values.enumerated() {
             guard vector.count == columns else { throw VivoOmicsError.invalid("PCA matrix row width") }
@@ -115,7 +116,7 @@ public enum VivoH5ADPCA {
             basisSize: result.basisSize, projectionCenters: centers, storage: storage,
             qualification: "Shared native QC/HVG/PCA without condition aggregates. Binary scores/loadings; metadata, quality, feature statistics and fitted arrays remain resident. No million-cell, parallel, GPU or held-out biological qualification.")
         let metadataHash = try writeJSON(metadata, name: "metadata.json", root: temp, maximum: 536_870_912)
-        let qualityHash = try writeJSON(quality, name: "quality.json", root: temp, maximum: 268_435_456)
+        let qualityHash = try writeJSON(quality, name: "quality.json", root: temp, maximum: VivoPCAStorageLimits.maximumQualityBytes)
         let modelHash = try writeJSON(model, name: "model.json", root: temp, maximum: 67_108_864)
         let scoresHash = try writeMatrix(result.scores, columns: result.options.components, to: temp.appendingPathComponent("scores.bin"))
         let loadingsHash = try writeMatrix(result.loadings, columns: result.options.components, to: temp.appendingPathComponent("loadings.bin"))
@@ -136,8 +137,8 @@ public enum VivoH5ADPCA {
         let temp = try staging(FileManager.default.temporaryDirectory); defer { try? FileManager.default.removeItem(at: temp) }
         let rebuilt = try publish(source: directory.appendingPathComponent("original.h5ad"), plan: plan, implementation: implementation, to: temp.appendingPathComponent("rebuilt"))
         guard rebuilt == receipt else { throw VivoOmicsError.invalid("PCA source reconstruction differs") }
-        for (name, hash, maximum) in [("metadata.json", receipt.metadata, 536_870_912), ("quality.json", receipt.quality, 268_435_456),
-            ("model.json", receipt.model, 67_108_864), ("scores.bin", receipt.scores, 1_024_000_000), ("loadings.bin", receipt.loadings, 10_240_000)] {
+        for (name, hash, maximum) in [("metadata.json", receipt.metadata, 536_870_912), ("quality.json", receipt.quality, VivoPCAStorageLimits.maximumQualityBytes),
+            ("model.json", receipt.model, 67_108_864), ("scores.bin", receipt.scores, VivoPCAStorageLimits.maximumBytes), ("loadings.bin", receipt.loadings, 10_240_000)] {
             guard try VivoOmicsFileSnapshot.fingerprint(directory.appendingPathComponent(name), maximumBytes: maximum) == hash else {
                 throw VivoOmicsError.invalid("PCA artifact fingerprint differs")
             }

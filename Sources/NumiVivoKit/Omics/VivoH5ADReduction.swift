@@ -7,6 +7,9 @@ import Glibc
 #endif
 
 public struct VivoH5ADReductionOptions: Codable, Sendable, Equatable {
+    // Reuse the record reader's checked Int64 file range; defaults remain small.
+    static let maximumSupportedCacheBytes = VivoH5ADCountStore.maximumEntries * 16
+    static let maximumSupportedEntryVisits = VivoH5ADCountStore.maximumEntries * (2 * 256 + 3 * 64)
     public var pca: VivoSingleCellReductionOptions = .init()
     public var normalizationTarget: Double = 10_000
     public var maximumCacheBytes: Int = 2_000_000_000
@@ -24,7 +27,8 @@ public struct VivoH5ADReductionOptions: Codable, Sendable, Equatable {
     public func validate() throws {
         try pca.validate()
         guard normalizationTarget.isFinite,normalizationTarget>0,
-              (16...2_000_000_000).contains(maximumCacheBytes), (1...20_000_000_000).contains(maximumEntryVisits) else {
+              (16...Self.maximumSupportedCacheBytes).contains(maximumCacheBytes),
+              (1...Self.maximumSupportedEntryVisits).contains(maximumEntryVisits) else {
             throw VivoOmicsError.invalid("streamed reduction options")
         }
     }
@@ -51,7 +55,7 @@ final class VivoMappedReductionEntries {
     let count: Int
     private(set) var visits = 0
     init(url: URL, expectedEntries: Int, rows: Int, columns: Int) throws {
-        guard expectedEntries > 0, expectedEntries <= 125_000_000, rows > 0, columns > 0 else {
+        guard expectedEntries > 0, expectedEntries <= VivoH5ADCountStore.maximumEntries, rows > 0, columns > 0 else {
             throw VivoOmicsError.invalid("reduction cache dimensions")
         }
         records = try VivoWindowedCountRecords(url, entries: expectedEntries)
@@ -123,10 +127,14 @@ enum VivoH5ADReduction {
             sum+(logM2[j]+logMeans[j]*logMeans[j]*Double(seen[j])*Double(n-seen[j])/Double(n))/Double(n-1)
         }
         let expectedEntries=selected.reduce(0) { $0+seen[$1] }
-        guard expectedEntries>0,expectedEntries<=options.maximumCacheBytes/16 else { throw VivoOmicsError.limit("streamed PCA cache-byte budget") }
+        guard expectedEntries>0,expectedEntries<=options.maximumCacheBytes/16 else {
+            throw VivoOmicsError.limit("streamed PCA cache-byte budget: \(expectedEntries) selected records require \(expectedEntries * 16) bytes; allowed \(options.maximumCacheBytes)")
+        }
         let traversals=2*min(options.pca.maximumBasis,width)+3*options.pca.components
         let work=expectedEntries.multipliedReportingOverflow(by: traversals)
-        guard !work.overflow,work.partialValue<=options.maximumEntryVisits else { throw VivoOmicsError.limit("streamed PCA entry-visit budget") }
+        guard !work.overflow,work.partialValue<=options.maximumEntryVisits else {
+            throw VivoOmicsError.limit("streamed PCA entry-visit budget: \(expectedEntries) records times \(traversals) traversals; allowed \(options.maximumEntryVisits)")
+        }
         let url=snapshot.deletingLastPathComponent().appendingPathComponent(".reduction-"+UUID().uuidString+".bin")
         let fd=open(url.path,O_WRONLY|O_CREAT|O_EXCL|O_NOFOLLOW,mode_t(0o600))
         guard fd>=0 else { throw VivoOmicsError.invalid("cannot create reduction cache") }

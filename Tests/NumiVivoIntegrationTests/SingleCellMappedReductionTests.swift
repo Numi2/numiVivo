@@ -62,4 +62,25 @@ import Testing
         #expect(throws: (any Error).self) { try options.validate() }
         #expect(throws: (any Error).self) { try JSONDecoder().decode(VivoH5ADReductionOptions.self,from: Data("{\"maximumCacheByte\":16}".utf8)) }
     }
+    @Test func wideFileOffsetsAndExplicitLargeBudgets() throws {
+        var options=VivoH5ADReductionOptions()
+        options.maximumCacheBytes=2_263_542_272;options.maximumEntryVisits=44_704_959_872
+        try options.validate()
+        options.maximumCacheBytes=VivoH5ADReductionOptions.maximumSupportedCacheBytes+1
+        #expect(throws: (any Error).self) { try options.validate() }
+        let url=FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: url) }
+        let count=Int(Int32.max)/16+3,tail=count-1
+        #expect(FileManager.default.createFile(atPath: url.path,contents: nil))
+        let file=try FileHandle(forWritingTo: url)
+        try file.truncate(atOffset: UInt64(count*16))
+        try file.seek(toOffset: 0)
+        try file.write(contentsOf: Self.bytes([(0,0,1)]))
+        try file.seek(toOffset: UInt64(tail*16))
+        try file.write(contentsOf: Self.bytes([(1_612_593,1_999,2.5)]));try file.close()
+        let records=try VivoWindowedCountRecords(url,entries: count)
+        let last=try records.record(tail),first=try records.record(0)
+        #expect(last.row==1_612_593 && last.feature==1_999 && last.bits==2.5.bitPattern)
+        #expect(first.row==0 && first.feature==0 && first.bits==1.0.bitPattern)
+    }
 }

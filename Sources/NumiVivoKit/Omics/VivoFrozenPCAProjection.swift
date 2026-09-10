@@ -47,7 +47,7 @@ final class VivoWindowedPCAScores {
     private var length = 0
     let byteCount: Int
     init(_ url: URL, rows: Int, initial: [Double]) throws {
-        guard (1...1_000_000).contains(rows), (1...64).contains(initial.count), initial.allSatisfy(\.isFinite) else {
+        guard (1...VivoPCAStorageLimits.maximumRows).contains(rows), (1...64).contains(initial.count), initial.allSatisfy(\.isFinite) else {
             throw VivoOmicsError.limit("windowed PCA score dimensions")
         }
         self.rows = rows; components = initial.count

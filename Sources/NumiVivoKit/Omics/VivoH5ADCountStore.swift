@@ -72,6 +72,15 @@ final class VivoCountRecordWriter {
     }
 }
 
+/// Shared storage bounds for PCA artifacts and their downstream consumers.
+enum VivoPCAStorageLimits {
+    static let maximumRows = 2_000_000
+    static let maximumQualityBytes = 536_870_912
+    static let maximumColumns = 64
+    static let maximumBytes = maximumRows * maximumColumns * 16
+    static let maximumSymmetricGraphEntries = maximumRows * 254
+}
+
 /// Maps only a 16 MiB window. The caller owns an immutable private snapshot;
 /// unmapping each previous window bounds the mapped working set even for large
 /// files. Metadata and row/feature statistics are separate resident structures.

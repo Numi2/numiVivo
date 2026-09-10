@@ -89,7 +89,7 @@ enum VivoMNNIntegration {
     /// buffers and heap/identity storage. Source metadata and JSON encoding are separate.
     static func admittedBytes(rows n: Int, dimensions d: Int, options o: VivoMNNIntegrationOptions) throws -> Int {
         try o.validate()
-        guard (2...1_000_000).contains(n), (1...64).contains(d) else { throw VivoOmicsError.invalid("MNN PCA axes") }
+        guard (2...VivoPCAStorageLimits.maximumRows).contains(n), (1...64).contains(d) else { throw VivoOmicsError.invalid("MNN PCA axes") }
         return try product([n, 3*d*8 + 2*o.neighbors*16 + 80 + o.neighbors*40], limit: o.maximumResidentBytes, reason: "MNN latent memory budget")
     }
     static func run(cells: [VivoOmicsCellIdentity], scores x: [Double], dimensions d: Int,

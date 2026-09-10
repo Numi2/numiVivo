@@ -233,6 +233,16 @@ Archive with `archive_prediction.py` and verify every member with
 and report payloads are shared through the earlier ingestion archive and external
 source identity rather than duplicated per fold.
 
+The [complete PCA qualification](PCA_RESULTS.md) retains all 1,612,594 cells and
+compares every score to a frozen file-backed sparse reference. Native publication,
+independent comparison and source reconstruction pass with unchanged numerical
+settings. The selected cache is 2,263,542,272 bytes; QC JSON is 345,933,053 bytes.
+These measurements drove shared storage-limit repairs. Metadata and fitted arrays
+remain resident, and million-cell graphs/integration are separate open gates.
+Verify the full score/metadata/QC archive with `python verify_archive.py
+evidence/2026-09-10-pca`; its chunk manifest checks complete reconstructed hashes
+as well as every stored member. Earlier failed and interrupted runs are retained.
+
 Sources: [GEO GSE306664](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE306664),
 [author resource](https://apps.allenimmunology.org/aifi/resources/ifn-response/),
 [experimental methods](https://apps.allenimmunology.org/aifi/resources/ifn-response/methods/),

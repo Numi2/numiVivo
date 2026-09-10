@@ -41,10 +41,18 @@ The report records cache SHA256, bytes, selected entry count, three source passe
 and actual PCA entry visits. Before cache writing, byte and work bounds reject
 oversized requests. Visits equal selected entries times
 `2 * min(maximumBasis, selectedFeatures) + 3 * components`. PCA rank, residual
-and orthogonality gates remain unchanged. The source scanner retains its
-1 GiB / one billion nonzero bounds; the resident count projection retains its
-five-million-entry default. Cache bytes are capped at two billion and the
-entry-visit default is two billion (configurable up to twenty billion).
+and orthogonality gates remain unchanged. The shared source scanner admits up to
+64 GiB, two million cells and four billion source entries; the resident count
+projection retains its five-million-entry default. Cache and entry-visit
+allowances each default to two billion. Explicit cache allowances can reach
+32 billion bytes (two billion 16-byte records); explicit work allowances can
+reach 1,408 billion entry visits, matching the supported basis/component bounds.
+PCA score storage and downstream row readers share a two-million-row ceiling;
+quality artifacts share a 512 MiB ceiling across publication, verification and
+snapshot readers. These are checked storage limits, not scale qualification.
+The full HIRISA execution and comparison gates are recorded in
+[the execution specification](../Benchmarks/HIRISA/PCA_EXECUTION.md) and
+[comparison specification](../Benchmarks/HIRISA/PCA_COMPARISON.md).
 
 ## Original full experimental matrix qualification
 

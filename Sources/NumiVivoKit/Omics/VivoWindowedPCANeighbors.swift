@@ -28,7 +28,7 @@ final class VivoPCAScoreReader {
     let rows: Int
     let columns: Int
     init(_ url: URL, rows: Int, columns: Int) throws {
-        guard (1...1_000_000).contains(rows), (1...64).contains(columns) else { throw VivoOmicsError.invalid("PCA score axes") }
+        guard (1...VivoPCAStorageLimits.maximumRows).contains(rows), (1...64).contains(columns) else { throw VivoOmicsError.invalid("PCA score axes") }
         self.rows = rows; self.columns = columns
         records = try VivoWindowedCountRecords(url, entries: rows * columns)
     }
@@ -94,7 +94,7 @@ enum VivoWindowedPCANeighbors {
                        execution: VivoPCANeighborExecution, sink: (Int, [Int], [Double]) throws -> Void) throws {
         try options.validate(); try execution.validate()
         let k = options.neighbors
-        guard n >= k, n <= 1_000_000, (1...64).contains(dimensions) else {
+        guard n >= k, n <= VivoPCAStorageLimits.maximumRows, (1...64).contains(dimensions) else {
             throw VivoOmicsError.limit("PCA neighbor axes, graph-entry bound or unsupported integrated representation")
         }
         let pairs = n*(n-1)/2

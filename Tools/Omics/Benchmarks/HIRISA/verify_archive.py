@@ -21,6 +21,7 @@ def main():
     root = args.archive
     manifest = json.loads((root / 'manifest.json').read_text())
     seen = set()
+    source_parts = {}
     for record in manifest['records']:
         name = record['storedPath']
         assert name not in seen
@@ -32,6 +33,20 @@ def main():
         opener = gzip.open if record['gzipEncoded'] else open
         with opener(path, 'rb') as stream:
             assert identity(stream) == (record['sourceBytes'], record['sourceSHA256'])
+        source_parts.setdefault(record['sourcePath'], []).append(record)
+    # Version 2 can split large evidence files into bounded Git-friendly chunks.
+    # Verify exact contiguous reconstruction as well as each stored/decoded part.
+    if 'fullSources' in manifest:
+        assert set(source_parts) == set(manifest['fullSources'])
+        for name, expected in manifest['fullSources'].items():
+            count = 0; sha = hashlib.sha256()
+            for part in sorted(source_parts[name], key=lambda p: p['sourceOffset']):
+                assert part['sourceOffset'] == count
+                opener = gzip.open if part['gzipEncoded'] else open
+                with opener(root / part['storedPath'], 'rb') as stream:
+                    for block in iter(lambda: stream.read(1_048_576), b''):
+                        count += len(block); sha.update(block)
+            assert (count, sha.hexdigest()) == (expected['bytes'], expected['SHA256'])
     actual = {str(p.relative_to(root)) for p in root.rglob('*') if p.is_file()}
     assert actual == seen | {'manifest.json'}
     print(json.dumps({'status': 'passed', 'members': len(seen)}))

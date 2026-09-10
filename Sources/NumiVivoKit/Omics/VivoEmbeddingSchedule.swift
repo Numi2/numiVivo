@@ -68,7 +68,7 @@ final class VivoFileEmbeddingSchedule: VivoEmbeddingSchedule {
     init(edges: URL, entries: Int, cells: Int, options: VivoSingleCellEmbeddingOptions, scratch: URL,
          windowBytes: Int = maximumWindowBytes) throws {
         try options.validate()
-        guard entries > 0, entries <= 254_000_000, (1...1_000_000).contains(cells),
+        guard entries > 0, entries <= VivoPCAStorageLimits.maximumSymmetricGraphEntries, (1...VivoPCAStorageLimits.maximumRows).contains(cells),
               windowBytes >= Int(getpagesize()), windowBytes <= Self.maximumWindowBytes,
               windowBytes % Int(getpagesize()) == 0 else { throw VivoOmicsError.invalid("embedding schedule axes or window") }
         let records = try VivoWindowedCountRecords(edges, entries: entries)

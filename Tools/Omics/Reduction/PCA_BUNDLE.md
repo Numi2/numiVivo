@@ -44,13 +44,16 @@ or projection centers does not bypass reconstruction. Publication requires a
 new destination and removes private staging on thrown failures. Private scratch
 uses the shared 16 MiB record windows; the source snapshot uses fixed-buffer I/O.
 
-The H5AD route retains its existing 1 GiB source, one-million-observation,
-100,000-feature and one-billion-source-entry admission bounds. Selected scratch
-is capped at two billion bytes; sparse entry visits default to two billion and
-can be explicitly raised to twenty billion. These bounds are not qualifications
-at all allowed sizes. Metadata, quality, feature statistics, fitted score/loading
-arrays and PCA basis remain resident. This removes unused aggregation and large
-JSON matrix encoding, not every resident structure.
+The shared H5AD scanner admits up to 64 GiB, two million observations,
+100,000 features and four billion source entries. Selected scratch and sparse
+entry visits each default to two billion; explicit allowances can reach 32
+billion bytes and 1,408 billion visits, matching the supported record count and
+basis/component limits. PCA score files admit two million rows and 64 components;
+QC files admit 512 MiB across publication, verification and downstream snapshots.
+These bounds do not qualify every allowed size. Metadata, QC, feature statistics,
+fitted score/loading arrays and PCA basis remain resident. The
+[complete HIRISA experiment](../Benchmarks/HIRISA/PCA_RESULTS.md) records actual
+million-cell numerical evidence and the remaining graph/integration limits.
 
 ## Independent checks
 
