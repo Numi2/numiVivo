@@ -6,6 +6,7 @@ Start with the [project overview](../README.md) for the scientific scope and fir
 
 | Task | Entry point |
 |---|---|
+| Determine which biological outcomes NumiVivo can predict from available inputs | [Prediction assessment, results and limits](BiologicalPrediction.md) |
 | Import/export AnnData H5AD and continue the single-cell pipeline | [Single-cell interoperability and roadmap](SingleCellInteroperability.md) |
 | Preserve separate RNA/protein/ATAC feature spaces and export MuData | [Native multi-assay counts and CITE-seq](../Tools/Omics/Multimodal/README.md) |
 | Build the Apple package and run a supplied experiment | [Get started](../README.md#get-started) |

@@ -16,7 +16,30 @@ This roadmap orders the work without replacing the intended architecture with a 
 | Demonstrated useful scale and performance | Published systems, source/binary/device identities, correctness tolerances, preparation and warmup policy, elapsed time, throughput, memory, and accepted-work accounting; compare like-for-like numerical models against named independent references where available. | No broad speedup or maximum biological scale is established. Measure complete workflows and bottlenecks before promoting an acceleration claim. |
 | A usable, maintainable research product | Documented complete examples, discoverable CLI/API operations, actionable bounded errors, readable progress and result inspection, automated native regression gates, install/release checks, and retained evidence for failures as well as successes. | Workflow activity now has a concrete ownership model. CLI examples, operation coverage, long-run inspection and release qualification must stay aligned with the actual package. |
 
-## Execution order
+## Immediate single-cell execution order
+
+The active development sequence is H5AD/AnnData → complete real-data benchmarks
+→ native negative-binomial DE → PCA/neighbors/clustering → integration with
+biological preservation → perturbation prediction. The
+[twelve-part single-cell roadmap](SingleCellInteroperability.md) retains all
+required capabilities, including annotation, multimodal assays, out-of-core
+execution, later Metal acceleration and cross-scale biology.
+
+The [prediction assessment](BiologicalPrediction.md) records the current
+scientific answer: bounded expression-response prediction is demonstrated,
+while reliable general biological-outcome prediction remains open. Complete
+HIRISA ingestion, DE, 79 donor folds, PCA/graph and seed-7 integration have
+published evidence. Finish the running full-cohort clustering checks, sensitive
+marker/program and rare-cell preservation, and independent-study prediction.
+Resolve Adamson's experimental controls before fitting its frozen transfer test;
+freeze HIRISA cross-preparation transfer before inspecting its prediction scores.
+Retain all negative results and simple baselines. Prediction uncertainty and
+measured phenotype links need their own acceptance experiments.
+
+The following molecular milestones remain part of the wider product roadmap;
+they do not replace this immediate single-cell priority.
+
+## Molecular qualification sequence
 
 The [frontier benchmark contract](Design/FRONTIER_BENCHMARKS.md) and
 [reference campaign tools](../Tools/Benchmarks/README.md) make the next broad

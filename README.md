@@ -2,13 +2,37 @@
 
 **From atoms to biological behavior. Built for Apple silicon.**
 
-NumiVivo is a research platform for molecular simulation and programmable biology. It brings molecular structures, GPU molecular dynamics, native electronic structure, reaction networks, and reproducible experiments into one Swift, C++ and Metal codebase.
+NumiVivo is a research platform for molecular simulation and programmable biology. It brings molecular structures, GPU molecular dynamics, native electronic structure, reaction networks, single-cell analysis, expression-response prediction, and reproducible experiments into one Swift, C++ and Metal codebase.
 
 The ambition is to follow a molecular change across scales: how a structure moves, where electrons interact, which reactions become possible, and how those reactions affect a cell or physiological model. Every transition should preserve the quantities, assumptions and evidence needed to understand the result.
 
 [Get started](#get-started) · [Explore the capabilities](#explore-the-capabilities) · [Examples](#choose-an-experiment) · [Documentation](Documentation/README.md) · [Implementation status](Documentation/CAPABILITIES.md) · [Completion roadmap](Documentation/COMPLETION_ROADMAP.md)
 
 > **Research software, under active development.** The capabilities below describe source implementations and their intended workflows—not a fully qualified release. Apple package integration, GPU numerical behavior and performance require qualification. The [capability map](Documentation/CAPABILITIES.md) separates implemented methods, current restrictions and planned work.
+
+## Biological prediction: current evidence
+
+NumiVivo can predict **population-average gene-expression responses in defined
+experimental settings**. In 79 HIRISA held-out donor folds, context ridge beats
+no-change in 14 of 16 contrasts, but beats the simpler training-mean response in
+only four. Two contrasts are worse than no-change under every learned baseline.
+Native combination models also predict held-out pairs of observed targets;
+an unseen-target GO prototype has only a 0.58% average improvement over the
+mean baseline on reused development data, with substantial target-level failures.
+
+The [biological prediction assessment](Documentation/BiologicalPrediction.md)
+explains the required inputs, complete positive and negative results, native
+commands and remaining validation. These are expression point estimates;
+reliable prediction of new tissues, disease outcomes, individual-cell responses
+or variant-to-phenotype effects is not established.
+
+The [single-cell program](Documentation/SingleCellInteroperability.md) now includes
+native H5AD interchange, negative-binomial DE, sparse PCA/neighbors/clustering,
+integration, marker scoring and multimodal count interchange. The complete
+[1.61-million-cell HIRISA cohort](Tools/Omics/Benchmarks/HIRISA/README.md) has
+published ingestion, DE, donor-response prediction, PCA, graph and seed-7
+integration results. Full-cohort clustering qualification and broader biological
+preservation remain open.
 
 ## One scientific question, several scales
 
@@ -40,6 +64,7 @@ This is the integration direction, not a claim that every arrow is already an au
 | **Embedding and reaction research** | QM/MM electrostatic and boundary-link machinery, C-PCM reaction-field work, correlated orbital information, orbital-subspace alignment and a bounded path-consistent QIO optimizer. These are experimental methods, not a reproduced protein-reaction result. | [Embedding source](Sources/NumiVivoKit/Embedding) · [QM environment source](Sources/NumiVivoKit/QMEnv) |
 | **Programmable reaction dynamics** | Typed molecular programs and compiled ProgramPacks; deterministic kinetics; discrete stochastic simulation; exact-SSA/tau-leap/RK2 execution across dependency-separated components; temporal rules, monitors and concentration transport within declared backend limits. | [Hybrid runtime](Examples/hybrid-reaction-runtime/README.md) · [ProgramPack backend](Documentation/Design/PROGRAM_PACK_METAL_BACKEND.md) |
 | **Target engagement and physiology** | Exposure-driven reversible binding, covalent conversion, competition and turnover; a native FP64 reference and an existing-runtime Metal path; physiological exchange and molecular–physiology coupling contracts. | [Target-engagement example](Examples/target-engagement/README.md) |
+| **Single-cell analysis and prediction** | Native H5AD/H5MU count interchange, paired negative-binomial DE, sparse reduction and integration, marker programs, donor-response and target/composition baselines. | [Single-cell workflows](Documentation/SingleCellInteroperability.md) · [Prediction evidence and limits](Documentation/BiologicalPrediction.md) |
 | **Reproducible experiments** | Content-addressed artifacts and tasks, evidence references, configuration-bound checkpoints, staged protocols, compact trajectory chunks, observation records and explicit failure results. | [Artifacts and provenance](Documentation/Design/ARTIFACTS_AND_PROVENANCE.md) · [Trajectory storage](Documentation/Design/MD_TRAJECTORY_ARCHIVE.md) |
 
 The repository also contains experimental quantum-algorithm, reaction-path, reaction-network, population, calibration and surrogate components. Their presence is not a claim of complete Qiskit, ORCA, GROMACS or physiological-modeling equivalence. See the [source-backed capability map](Documentation/CAPABILITIES.md) before choosing a backend.
@@ -147,7 +172,15 @@ NumiVivo contains coupling contracts and participant infrastructure. Fully quali
 
 ## Development direction
 
-The next milestone is **an integrated, numerically qualified research workflow**, not simply more named solvers.
+The immediate development priority is **the experimentally evaluated single-cell
+prediction workflow**: H5AD → real-data benchmarks → native negative-binomial DE
+→ PCA/neighbors/clustering → integration with biological preservation →
+perturbation prediction. Finish full-cohort qualification, independent-study
+prediction and context-transfer evidence before claiming general biological
+prediction. See the [current assessment and next gates](Documentation/BiologicalPrediction.md#next-evidence-needed).
+
+The broader molecular program remains an integrated, numerically qualified
+research workflow.
 
 The priorities are to consolidate model semantics and execution ownership; qualify the Apple MD and kinetic backends; expand electronic-structure and embedding methods against independent references; and connect reaction energetics to observations and kinetics without losing thermodynamic meaning. Membrane interfaces, general triclinic dynamics, delayed/refractory state, live fidelity migration and larger correlated calculations require additional work.
 

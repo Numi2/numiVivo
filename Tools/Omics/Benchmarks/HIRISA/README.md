@@ -189,8 +189,9 @@ default, biological calibration, million-cell full analysis or Metal speed claim
 follows from these checks.
 
 The 79-fold enriched-population experiment is complete at this stated scope.
-Cross-preparation PBMC transfer and the million-cell PCA/graph/integration
-pipeline remain separate, incomplete parts of the broader objective.
+Cross-preparation PBMC transfer remains unfrozen. Complete PCA/graph and native
+seed-7 integration results are linked below; full-cohort clustering and broader
+biological preservation remain incomplete.
 
 ## Reproduction and evidence
 
@@ -251,8 +252,8 @@ compares every score to a frozen file-backed sparse reference. Native publicatio
 independent comparison and source reconstruction pass with unchanged numerical
 settings. The selected cache is 2,263,542,272 bytes; QC JSON is 345,933,053 bytes.
 These measurements drove shared storage-limit repairs. Metadata and fitted arrays
-remain resident; complete graph results are recorded below and integration
-remains a separate open gate.
+remain resident; complete graph and integration results are recorded below.
+Their numerical gates do not establish biological preservation.
 Verify the full score/metadata/QC archive with `python verify_archive.py
 evidence/2026-09-10-pca`; its chunk manifest checks complete reconstructed hashes
 as well as every stored member. Earlier failed and interrupted runs are retained.
@@ -270,8 +271,9 @@ biological preservation and Metal performance have their own acceptance gates.
 
 The [integration witness repair](INTEGRATION_ADMISSION.md) removes the stale
 1.6 GB artifact ceiling and passes native boundary tests plus 105 lifecycle
-commands. This is prerequisite storage compatibility; complete HIRISA integration
-and biological preservation remain open.
+commands. This was prerequisite storage compatibility. The subsequent
+[complete native integration](FULL_INTEGRATION_RESULTS.md) passes publication,
+replay and numerical gates; broader biological preservation remains open.
 
 The [storage-access qualification](STORAGE_ACCESS.md) repairs measured large-graph
 reader mapping overhead while preserving every HIRISA edge record and complete
@@ -279,7 +281,8 @@ Baron/Hagai clustering outputs. The subsequent [bounded integration implementati
 preserves complete solver trajectories across tile boundaries and all six
 Kang/Hagai regressions. The [scratch lifetime repair](SCRATCH_LIFETIME.md)
 reduces peak logical extents before full-cohort publication/replay. Complete
-HIRISA integration remains open.
+HIRISA seed-7 integration is now complete at the
+[declared numerical and coarse-response scope](FULL_INTEGRATION_RESULTS.md).
 
 Sources: [GEO GSE306664](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE306664),
 [author resource](https://apps.allenimmunology.org/aifi/resources/ifn-response/),

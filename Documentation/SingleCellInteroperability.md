@@ -6,6 +6,16 @@ Install HDF5 (`brew install hdf5` on macOS), or set `NUMIVIVO_HDF5_LIBRARY` to
 its shared library. Other workflows do not require HDF5. HDF5 calls are serialized
 because installed libraries may not be thread safe.
 
+## Current outcome and scale evidence
+
+The [biological prediction assessment](BiologicalPrediction.md) states what can
+be predicted from available data, including negative results and simple baselines.
+The complete [HIRISA experiment](../Tools/Omics/Benchmarks/HIRISA/README.md) adds
+1,612,594 cells, 131 libraries, 48 native/reference DE cases, 79 frozen donor
+prediction folds, and complete PCA/graph qualification. Native seed-7 integration
+and three Harmony references pass coarse preservation margins; broader biological
+preservation and full-cohort clustering qualification remain open.
+
 ## Use
 
 ```
@@ -562,7 +572,11 @@ The complete development objective remains open:
    mutable edge schedules in a 16 MiB mapping window and reads only the requested
    PCA initialization columns into resident arrays. File-backed integration now
    keeps latent matrices in bounded mappings and is measured on full Kang/Hagai;
-   million-cell graph/integration qualification and general biological preservation remain open.
+   [Complete HIRISA graph qualification](../Tools/Omics/Benchmarks/HIRISA/GRAPH_RESULTS.md)
+   and [native seed-7 integration](../Tools/Omics/Benchmarks/HIRISA/FULL_INTEGRATION_RESULTS.md)
+   now pass operational/numerical gates on all 1,612,594 cells. Full-cohort
+   clustering, broader biological preservation and native multi-seed integration
+   remain open; this does not remove resident metadata/bookkeeping limits.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

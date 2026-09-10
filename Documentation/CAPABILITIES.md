@@ -4,6 +4,27 @@ This is a source-backed map of the implementation, not a feature certification. 
 
 The navigation and implementation references below describe the reviewed source beginning at `b77fb7885ce2c484a10f2509798cb4a05a294047`, with subsequent integration corrections. Consult the actual revision when a method changes. This map deliberately does not assign an unmeasured speedup or maximum biological scale.
 
+## Single-cell analysis and biological prediction
+
+The single-cell entries were reviewed against published evidence available at
+`aa85e1a0` on 2026-09-10. Historical receipts retain their named runtime identities.
+
+| Capability | Implemented and measured scope | Remaining boundary |
+| --- | --- | --- |
+| H5AD and multi-assay interchange | Native count import/export, explicit metadata mapping and source preservation; separate RNA/protein/ATAC spaces and H5MU routes. | Supported encodings and bounds are explicit; interchange does not validate experimental labels or joint biological inference. |
+| Count inference | Native negative-binomial fitting, dispersion/shrinkage, offsets and paired/batch designs; real-data numerical and R-reference comparisons. | Null-benchmark failures, varying support and broader FDR/interval calibration remain. Method concordance is not ground truth. |
+| Reduction and integration | Sparse HVG/PCA, neighbors, Louvain, UMAP-compatible optimization and donor correction. Full HIRISA PCA/graph and seed-7 integration have numerical/replay evidence. | Full HIRISA clustering qualification remains open. Coarse integration margins pass, but marker/program, rare-cell and native multi-seed preservation do not yet close. |
+| Known-treatment donor prediction | Native control-context ridge plus three simple baselines. All 79 HIRISA folds complete; ridge beats no-change in 14/16 contrasts and mean response in 4/16. | Requires the new donor's control profile and matching context. Two contrasts fail against no-change; no calibrated intervals or general phenotype claim. |
+| Target/composition prediction | Native composition models reproduce all 131 Norman held-out pairs; native GO kernel evaluates 105 held-target folds, with 101 supported descriptors. | GO gain over mean is only 0.58% on reused data, with 29/101 worse than no-change. Reliable independent-study, unseen-context and mechanistic prediction remain unqualified. |
+| Annotation | Sparse fixed marker/program scores and provenance-bound candidate reference labels. | Labels remain nonauthoritative; annotation calibration and novel-class rejection remain separate. |
+
+Use the [prediction assessment](BiologicalPrediction.md) for input requirements,
+positive and negative results and next evidence gates, and the
+[single-cell roadmap](SingleCellInteroperability.md) for commands and detailed
+owner-specific limits. Count/latent storage is bounded or streamed in specific
+stages; cell-scale metadata and several model arrays still reside in memory.
+No general Metal speedup for this pipeline is established.
+
 ## Molecular preparation and dynamics
 
 | Capability | Implemented source | Important boundary |

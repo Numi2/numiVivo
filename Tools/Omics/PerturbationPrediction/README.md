@@ -1,4 +1,16 @@
-# Donor-held-out perturbation response baselines
+# Perturbation prediction evidence
+
+The [platform prediction assessment](../../../Documentation/BiologicalPrediction.md)
+compares the three native prediction families by available input and demonstrated
+outcome. [HIRISA](../Benchmarks/HIRISA/PREDICTION_RESULTS.md) adds 79 complete
+donor-held-out folds: ridge beats no-change in 14/16 contrasts and mean response
+in 4/16, retaining two contrasts worse than no-change for every learned method.
+[Norman composition](Norman/NATIVE_COMPOSITION.md) covers held-out pairs of observed
+targets; the [GO target kernel](Norman/NATIVE_TARGET_KERNEL.md) has only a small,
+nonuniform unseen-target development gain. General phenotype prediction and
+independent-study transfer remain unqualified.
+
+## Donor-held-out response baselines
 
 The independent [Adamson UPR study](Adamson/GEO_RESTORATION.md) now has original
 GEO identities restored for all 65,337 cells, correcting 3,634 assignments affected
@@ -103,9 +115,11 @@ sampler is automatically a hierarchical whole-transcriptome predictor. Learned
 omics-to-mechanistic parameter mappings and physical units need separate models
 and calibration. No Bayesian or mechanistic prediction is claimed here.
 
-Bayesian/mechanistic prediction, unseen perturbation identities, unseen cell/tissue
-contexts, heterogeneous single-cell responses, uncertainty calibration and larger
-independent donor cohorts remain open.
+Bayesian/mechanistic prediction, reliable unseen-perturbation transfer, unseen
+cell/tissue contexts, heterogeneous single-cell responses, uncertainty calibration
+and larger independent donor cohorts remain open. The separate native GO
+target-kernel prototype is described above; it does not extend the donor model
+to those settings.
 
 ## Rationale and primary sources
 
