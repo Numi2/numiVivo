@@ -1,0 +1,17 @@
+{
+  "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+  "case": "kang-null-10-default",
+  "command": [
+    "ssh",
+    "macmini",
+    "/usr/bin/time",
+    "-l",
+    "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+    "/Users/n/numivivo-null-benchmark-20260910/kang/10/default/report.json.gz"
+  ],
+  "exitCode": 0,
+  "logicalSHA256": "807c9f452891449f33cf92792f0dc63657eb7b32c62682d3e8fc9262bd5dc6e4",
+  "outputSHA256": "608ccccef2868310aa58c8e18de073dd3aa9bc807d790331b530960f1eb579da",
+  "seconds": 32.16136750020087,
+  "sourceSHA256": "48df481119bbfd87aa295a994d1b0fe395d4481cd9ea86925a7867858a229a3b"
+}

@@ -1,0 +1,54 @@
+{
+  "binarySHA256": "27f8c07423cb4b925ebf1787139960a0e013b11afb23f7660ab4ae58e2ea01d4",
+  "hdf5SHA256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e",
+  "runs": [
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-likelihood-ratio-20260910/product/wald-plan.json",
+        "--output",
+        "/Users/n/numivivo-likelihood-ratio-20260910/product/wald"
+      ],
+      "exitCode": 0,
+      "method": "wald",
+      "seconds": 24.496001625,
+      "stage": "publish"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-likelihood-ratio-20260910/product/wald"
+      ],
+      "exitCode": 0,
+      "method": "wald",
+      "seconds": 24.527226167000002,
+      "stage": "replay"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-likelihood-ratio-20260910/product/likelihoodRatio-plan.json",
+        "--output",
+        "/Users/n/numivivo-likelihood-ratio-20260910/product/likelihoodRatio"
+      ],
+      "exitCode": 0,
+      "method": "likelihoodRatio",
+      "seconds": 24.910782542000007,
+      "stage": "publish"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-likelihood-ratio-20260910/product/likelihoodRatio"
+      ],
+      "exitCode": 0,
+      "method": "likelihoodRatio",
+      "seconds": 25.133615375000005,
+      "stage": "replay"
+    }
+  ]
+}

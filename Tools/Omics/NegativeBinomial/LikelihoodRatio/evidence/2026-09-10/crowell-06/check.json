@@ -1,0 +1,53 @@
+{
+  "case": "crowell-06",
+  "checkerSHA256": "4b9959d630bd1f4c78a543002eb4c1cc2ed5d6da13a48b2170050dd5dbce2c15",
+  "failures": [],
+  "gainedCallIndices": [
+    7922,
+    9072
+  ],
+  "likelihoodRatioBHCalls": 207,
+  "lostCallIndices": [
+    5040,
+    6084,
+    6205,
+    9868,
+    10841
+  ],
+  "metrics": {
+    "BH": 0.0,
+    "constraint": 0.0,
+    "pValue": 9.34328725499256e-10,
+    "relativeMean": 0.0,
+    "scaledScore": 9.998839126025223e-08,
+    "statistic": 2.3792381398379803e-09
+  },
+  "numpyLongDoubleBits": 64,
+  "oldTestedGenes": 11070,
+  "originalBHCalls": 210,
+  "outputSHA256": "2841e247770fd7e034bac769214a4a607dafe402244a5a242e4486153369c7a6",
+  "precisionRefinements": [
+    {
+      "featureIndex": 7028,
+      "initialErrors": {
+        "constraint": 0.0,
+        "pValue": 3.272641979634727e-08,
+        "relativeMean": 0.0,
+        "scaledScore": 8.933411533718408e-09,
+        "statistic": 1.5626696985016064e-12
+      },
+      "precisionDigits": 80,
+      "refinedErrors": {
+        "constraint": 0.0,
+        "pValue": 1.687538997430238e-14,
+        "relativeMean": 0.0,
+        "scaledScore": 8.933411533718408e-09,
+        "statistic": 8.092377725970454e-19
+      }
+    }
+  ],
+  "sourceSHA256": "666055bf7323b99724666bab1491f340ac770e9705c09608d32ad2a918a38c12",
+  "status": "passed",
+  "testedGenes": 11070,
+  "unavailable": []
+}

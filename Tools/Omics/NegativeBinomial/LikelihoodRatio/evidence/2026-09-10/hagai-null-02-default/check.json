@@ -1,0 +1,46 @@
+{
+  "case": "hagai-null-02-default",
+  "checkerSHA256": "4b9959d630bd1f4c78a543002eb4c1cc2ed5d6da13a48b2170050dd5dbce2c15",
+  "failures": [],
+  "gainedCallIndices": [
+    140
+  ],
+  "likelihoodRatioBHCalls": 4,
+  "lostCallIndices": [],
+  "metrics": {
+    "BH": 0.0,
+    "constraint": 0.0,
+    "pValue": 3.1536898648099054e-09,
+    "relativeMean": 0.0,
+    "scaledScore": 9.99020336853899e-08,
+    "statistic": 1.3851604308001697e-09
+  },
+  "numpyLongDoubleBits": 64,
+  "oldTestedGenes": 11920,
+  "originalBHCalls": 3,
+  "outputSHA256": "8248dfe15bf49b68ce14662ba8c6493c06e090f20f11feb9136485b628c962c3",
+  "precisionRefinements": [
+    {
+      "featureIndex": 18857,
+      "initialErrors": {
+        "constraint": 0.0,
+        "pValue": 1.216777449908335e-07,
+        "relativeMean": 0.0,
+        "scaledScore": 7.964665232845096e-08,
+        "statistic": 1.5068731418904635e-11
+      },
+      "precisionDigits": 80,
+      "refinedErrors": {
+        "constraint": 0.0,
+        "pValue": 3.3306690738754696e-16,
+        "relativeMean": 0.0,
+        "scaledScore": 7.964665232845096e-08,
+        "statistic": 4.840909098844084e-20
+      }
+    }
+  ],
+  "sourceSHA256": "6338f067f3e6553c66393a8d23e20290cecc0cd5eadf2e0c243d7909bf73f410",
+  "status": "passed",
+  "testedGenes": 11920,
+  "unavailable": []
+}

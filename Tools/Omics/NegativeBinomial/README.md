@@ -1,10 +1,22 @@
 # Native negative-binomial cohort analysis
 
+Optional [contrast likelihood-ratio inference](LikelihoodRatio/README.md) now
+refits the zero-contrast null at the unchanged full-model dispersion and uses
+its own p-values/BH family. Set `negativeBinomialOptions.testMethod` to
+`"likelihoodRatio"`; omission preserves Wald behavior and encoding. All 50
+frozen analyses, 443,705 independent gene/analysis checks and the real H5AD
+publication/replay comparison pass. Original edgeR stopping discrepancies are
+retained alongside a passing tighter-solver sensitivity. Sham calls remain
+concerning: Hagai increases from 20 to 22 under each policy and active-donor
+Kang adds one. General FDR calibration remains open.
+
 Optional [count-likelihood effect shrinkage](EffectShrinkage/README.md) now adds
 an explicit normal prior on the requested contrast, jointly refits nuisance
 coefficients and reports conditional Laplace uncertainty separately from the
-original Wald/BH inference. The caller supplies the prior SD; empirical prior
-learning and posterior coverage remain unqualified.
+original Wald/BH inference. The caller can supply the prior SD or explicitly
+select the [empirical weighted-quantile prior](EmpiricalPrior/README.md).
+Its [held-out count-risk study](HeldOutRisk/README.md) provides bounded Crowell
+prediction evidence; posterior coverage remains unqualified.
 
 The optional [active-donor profile policy](ActiveDonor/README.md) now handles
 complete zero-total donor pairs with recorded gene-specific designs, retaining
@@ -179,8 +191,9 @@ not the product CLI. No Python implementation supplies native fitting.
 
 ## Remaining work
 
-Multi-study calibration, robust reference sensitivity, gene-specific nuisance
-handling and effect shrinkage remain. [Direct Bioconductor comparisons](../Bioconductor/README.md)
+Multi-study calibration, broader robust reference sensitivity and posterior
+coverage remain. Active-donor nuisance handling and optional effect shrinkage
+have bounded evidence linked above. [Direct Bioconductor comparisons](../Bioconductor/README.md)
 now cover Kang and Hagai with fixed native and independent package normalization.
 Native support-rank coverage and calibrated significance remain open.
 Do not promote the default on effect correlation alone. The original Hagai

@@ -1,0 +1,27 @@
+{
+  "case": "kang-null-08-active",
+  "checkerSHA256": "4b9959d630bd1f4c78a543002eb4c1cc2ed5d6da13a48b2170050dd5dbce2c15",
+  "failures": [],
+  "gainedCallIndices": [
+    4007
+  ],
+  "likelihoodRatioBHCalls": 1,
+  "lostCallIndices": [],
+  "metrics": {
+    "BH": 0.0,
+    "constraint": 0.0,
+    "pValue": 2.1451307397057917e-10,
+    "relativeMean": 0.0,
+    "scaledScore": 9.955465928435472e-08,
+    "statistic": 1.3855583347321954e-11
+  },
+  "numpyLongDoubleBits": 64,
+  "oldTestedGenes": 7395,
+  "originalBHCalls": 0,
+  "outputSHA256": "3cfe0060ec05bfb6eb7f5815c0a4d2eced158ef11d760e986655c0df6bcadf30",
+  "precisionRefinements": [],
+  "sourceSHA256": "1e6507283831258817e67013e8a6181cd5156576eb046ee79268dae5ed5b14b0",
+  "status": "passed",
+  "testedGenes": 7395,
+  "unavailable": []
+}

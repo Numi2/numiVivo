@@ -3,6 +3,35 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellNBCohortTests {
+    @Test func explicitLikelihoodRatioUsesSameDispersionAndOwnBHFamily() throws {
+        let data = try Self.fixture()
+        var request = VivoOmicsExpressionContrast(id: "lrt",controlCondition: "ctrl",treatmentCondition: "stim",design: .pairedDonors)
+        request.model = .negativeBinomial; request.minimumCellsPerPseudobulk = 1
+        var options = VivoOmicsNBCohortOptions(); options.trend = .mean
+        request.negativeBinomialOptions = options
+        let wald = try VivoPseudobulkDifferentialExpression.run(data,contrast: request)
+        let encoded = try JSONEncoder().encode(options)
+        #expect(!(String(data: encoded,encoding: .utf8) ?? "").contains("testMethod"))
+        options.testMethod = .likelihoodRatio; request.negativeBinomialOptions = options
+        #expect(try JSONDecoder().decode(VivoOmicsNBCohortOptions.self,from: JSONEncoder().encode(options)) == options)
+        let lrt = try VivoPseudobulkDifferentialExpression.run(data,contrast: request)
+        #expect(lrt.method.hasSuffix("LRT-v1") && lrt.testedFeatures == wald.testedFeatures)
+        #expect(lrt.negativeBinomial?.trend == wald.negativeBinomial?.trend)
+        let diagnostics = try #require(lrt.negativeBinomial?.features), old = try #require(wald.negativeBinomial?.features)
+        for (a,b) in zip(diagnostics,old) { #expect(a.finalFit == b.finalFit) }
+        let tested = lrt.features.filter { $0.status == .tested }
+        let bh = try VivoOmicsLinearStatistics.benjaminiHochberg(tested.map { $0.pValue! })
+        for (i,f) in tested.enumerated() {
+            #expect(f.pValue == diagnostics[f.featureIndex].likelihoodRatioFit?.pValue)
+            #expect(f.adjustedPValue == bh[i])
+            #expect(f.zStatistic == wald.features[f.featureIndex].zStatistic)
+            #expect(f.intervalLower == wald.features[f.featureIndex].intervalLower)
+        }
+        options.maximumCooksDistance = 1e-15; request.negativeBinomialOptions = options
+        let excluded = try VivoPseudobulkDifferentialExpression.run(data,contrast: request)
+        #expect(excluded.testedFeatures == 0)
+        #expect(excluded.negativeBinomial!.features.allSatisfy { $0.likelihoodRatioFit == nil })
+    }
     @Test func gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() throws {
         let means=(0..<64).map { exp(Double($0)/10+1) }
         let values=means.map { 0.04+2/$0 }

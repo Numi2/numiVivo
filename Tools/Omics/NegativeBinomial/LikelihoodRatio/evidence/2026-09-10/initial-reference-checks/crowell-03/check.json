@@ -1,0 +1,36 @@
+{
+  "case": "crowell-03",
+  "checkerSHA256": "4a263e98eda97e2520397e7de945552fd463c00e37d48800e7b9f8b7b5f7d812",
+  "failures": [],
+  "gainedCallIndices": [
+    728,
+    3363,
+    3512,
+    4830,
+    7920,
+    7931,
+    7934,
+    8915,
+    9268,
+    9881,
+    9936,
+    10507
+  ],
+  "likelihoodRatioBHCalls": 109,
+  "lostCallIndices": [],
+  "metrics": {
+    "BH": 0.0,
+    "constraint": 0.0,
+    "pValue": 4.5551229455043085e-11,
+    "relativeMean": 0.0,
+    "scaledScore": 9.97811867936255e-08,
+    "statistic": 2.432898327242583e-11
+  },
+  "oldTestedGenes": 10387,
+  "originalBHCalls": 97,
+  "outputSHA256": "ad5e3fc1d206495b71ed2837f9bd8ceb6ffed1b901dd91ebe0bce56268041036",
+  "sourceSHA256": "edb62260cfc3b95cd8c3d765e03d533f77f8871bc415218a7502187f0dd74276",
+  "status": "passed",
+  "testedGenes": 10387,
+  "unavailable": []
+}

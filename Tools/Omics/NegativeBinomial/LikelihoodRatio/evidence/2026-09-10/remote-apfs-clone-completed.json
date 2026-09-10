@@ -1,0 +1,30 @@
+{
+  "beforeDF": "Filesystem   1024-blocks      Used Available Capacity iused   ifree %iused  Mounted on\n/dev/disk3s5   482797652 447804744    274124   100% 2012485 2741240   42%   /System/Volumes/Data\n",
+  "completed": [
+    {
+      "source": "/Users/n/numivivo-count-store-20260909/original.h5ad",
+      "target": "/Users/n/numivivo-count-store-20260909/store/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/n/numivivo-count-store-20260909/normalized/values.bin",
+      "target": "/Users/n/numivivo-count-store-final-20260909/normalized/values.bin",
+      "bytes": 5785321936,
+      "sha256": "66336f23b26f7c23c2bfd357c95142c948de9a4768ec48a5dd1ce90925e42821"
+    },
+    {
+      "source": "/Users/n/numivivo-count-store-20260909/original.h5ad",
+      "target": "/Users/n/numivivo-count-store-final-20260909/store/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/n/numivivo-count-store-20260909/store/counts.bin",
+      "target": "/Users/n/numivivo-count-store-final-20260909/store/counts.bin",
+      "bytes": 5785321936,
+      "sha256": "77135b8d983e6302ce13cdd1ec2503ce6d6d84be2af52e003ccea9d5270fed2e"
+    }
+  ],
+  "afterDF": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 435140680  12938188    98% 2012486 129381880    2%   /System/Volumes/Data\n"
+}

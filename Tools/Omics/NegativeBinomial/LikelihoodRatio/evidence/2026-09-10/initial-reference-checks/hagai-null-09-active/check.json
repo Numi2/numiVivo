@@ -1,0 +1,25 @@
+{
+  "case": "hagai-null-09-active",
+  "checkerSHA256": "4a263e98eda97e2520397e7de945552fd463c00e37d48800e7b9f8b7b5f7d812",
+  "failures": [],
+  "gainedCallIndices": [
+    8956
+  ],
+  "likelihoodRatioBHCalls": 3,
+  "lostCallIndices": [],
+  "metrics": {
+    "BH": 0.0,
+    "constraint": 0.0,
+    "pValue": 4.351646465394765e-08,
+    "relativeMean": 0.0,
+    "scaledScore": 9.987688656355159e-08,
+    "statistic": 1.1640395314316265e-09
+  },
+  "oldTestedGenes": 11920,
+  "originalBHCalls": 2,
+  "outputSHA256": "60d3b21b056e61336273a392ee0942c6cc9524d792b96994ddb87d3d8ec7ded3",
+  "sourceSHA256": "7ca6c8f12e789322a56930b6e9868505e82c02d08a41427929272e2b6550f2c6",
+  "status": "passed",
+  "testedGenes": 11920,
+  "unavailable": []
+}

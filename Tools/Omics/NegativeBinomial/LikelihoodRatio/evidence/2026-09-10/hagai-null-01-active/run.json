@@ -1,0 +1,17 @@
+{
+  "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+  "case": "hagai-null-01-active",
+  "command": [
+    "ssh",
+    "macmini",
+    "/usr/bin/time",
+    "-l",
+    "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+    "/Users/n/numivivo-null-benchmark-20260910/hagai/1/active/report.json.gz"
+  ],
+  "exitCode": 0,
+  "logicalSHA256": "dd8b8743501af73aa96f8d09f56f255bb92cd6a80d57c7a7db931b46bcafe639",
+  "outputSHA256": "ee0f96c05715f8a2edbf63fa136ee69fed5979bae994248dc59f89408d181ed8",
+  "seconds": 25.565718832891434,
+  "sourceSHA256": "959598597312ce205f54498bcf48c060958a44a98ef873e9eeb51aeb843067a1"
+}

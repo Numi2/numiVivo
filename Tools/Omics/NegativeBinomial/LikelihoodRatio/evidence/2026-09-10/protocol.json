@@ -1,0 +1,407 @@
+{
+  "baselineCommit": "e5c5d4ee15f51c5354ade241e491c7e621e9fabf",
+  "cases": [
+    {
+      "family": "null",
+      "id": "kang-null-01-default",
+      "logicalSHA256": "6945023c864872a8147206587417c38bd73deaf2a9f57ef688d32267c4e4454d",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/1/default/report.json.gz",
+      "sourceSHA256": "3bb92a20fec81f08614d02b98f61dc7f9e28d7c8b8637c7d6d987766956cbe84",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-01-active",
+      "logicalSHA256": "f4abe10ac7c785920dcea5f3e183dadb98595df791b3344b2ab2efb3457e4834",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/1/active/report.json.gz",
+      "sourceSHA256": "43f900412c092b6a719236d08f98afb84db987fd041cf9544a670826e86f2b81",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-02-default",
+      "logicalSHA256": "ad0bc0d6316c38a35cf56e034b5ea5741acc6f85fc6c8f334c4ca153c24e1275",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/2/default/report.json.gz",
+      "sourceSHA256": "f7c67f2f3496d7990cc1c33082a5153836fd3b9be9100307a4eec870ce35f248",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-02-active",
+      "logicalSHA256": "420d44b19d1c47e5231342a56ef460b11bb003658e0b64ef4f3b34dd61c81cb6",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/2/active/report.json.gz",
+      "sourceSHA256": "f0282c9c1eb602c522b11bba676f22f71467f9791ad88e84a4ed5fbd73bb48a8",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-03-default",
+      "logicalSHA256": "9d4042c79c7e5015b8aed96b7a68d53fe4ea11e9a8becb0c4964d81c7bdb61ce",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/3/default/report.json.gz",
+      "sourceSHA256": "ce00365fc78efd93765ae5c658f8b45afedf33c985876fc03f60c412f0d758cd",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-03-active",
+      "logicalSHA256": "12e8d0dfed3d010eaef580eb621bb128cb5b1e2dd5fe1ada3b0dba3773c98bfc",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/3/active/report.json.gz",
+      "sourceSHA256": "3c54e50f0f085bff8e620eb4bef4f92cc83d2c760ad4f392dba468eb4b993585",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-04-default",
+      "logicalSHA256": "74c52ad3a4f0740d0c86c2d11fcd9cbdcf237a7250164679b2a08d4f577a70c2",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/4/default/report.json.gz",
+      "sourceSHA256": "0f13f3e70ead99901259713a6c20b4344fd284948bb434223794c011119a9311",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-04-active",
+      "logicalSHA256": "6cdeb3bdc67d59711350408d889eb059da9e376285e250e9f6ae6b1709a00b6a",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/4/active/report.json.gz",
+      "sourceSHA256": "eb74285888ec5e82851b7f395cc40baaa4ea6a4c4cf0b2ba43f4f25d01b497a5",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-05-default",
+      "logicalSHA256": "aea37da191c867dd210153c39db93878bd7a00ddfc31796fc8414d4b62a41a59",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/5/default/report.json.gz",
+      "sourceSHA256": "7d3bf9394d77fbe58bce9e3fb030cf9ce365d27878bf7f64716b3de34bca8f4c",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-05-active",
+      "logicalSHA256": "1b98af5f4d447bb316058cc9e7a579d73e480ae0aca502f3f482f097e49bd0cc",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/5/active/report.json.gz",
+      "sourceSHA256": "9d76f8cbe61c23df53f57e6c698302ddcf648fe9934e420aa65076fc26e61a32",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-06-default",
+      "logicalSHA256": "cc70fca1c94b91643ada4333eec728f7924553f057535d4dfe453a9321362d22",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/6/default/report.json.gz",
+      "sourceSHA256": "f6ba5090144a3d82a64fc1db8229390de21f3ff3d96f58e4541d0972a1b28e85",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-06-active",
+      "logicalSHA256": "8d27f08ceea639f3a04d482a34e42cd9cbacf3c1876c890df9434152e948dd66",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/6/active/report.json.gz",
+      "sourceSHA256": "6948e8d51dbc19b0fb895acec98f2c883a4154a958a7ccd3391bdb8c29467443",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-07-default",
+      "logicalSHA256": "bc56f609b248ad81ce4e719c598028d3d55a399ac29f5ff33e3e0c9e163d7805",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/7/default/report.json.gz",
+      "sourceSHA256": "17b35530da3f7eba9281a8748ea871f5fc52b752fb0e08ca998ead11f42a75d3",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-07-active",
+      "logicalSHA256": "52a2590d48f5b2e60793bf0000ae740355f8c93ff4fb63d1b6db9b8bbd16db64",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/7/active/report.json.gz",
+      "sourceSHA256": "ba68aa51db0c3268da562a8e93ed0e0314b86944fbc4dfd5278e629ced6c1969",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-08-default",
+      "logicalSHA256": "5de93f5b694e36b5b09a2729d3c82b60ab72f1937088a193922361eea2e8b937",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/8/default/report.json.gz",
+      "sourceSHA256": "d0f1d9a8616cd5b6c26324143284177293e24e74690e963cae449190127d54df",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-08-active",
+      "logicalSHA256": "f9cafc7fba130140c52afb13e15885340c1ba8ae439333e2f0402f6fa1607cbf",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/8/active/report.json.gz",
+      "sourceSHA256": "1e6507283831258817e67013e8a6181cd5156576eb046ee79268dae5ed5b14b0",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-09-default",
+      "logicalSHA256": "adc1f1ced16249a5471350ae8c1096bf49fe38e52dd22a248075b128a16ba704",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/9/default/report.json.gz",
+      "sourceSHA256": "46a2c52247d9becfc6598bae02f3cd9c925be81baaa0899bb39a66c5c16b1dc9",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-09-active",
+      "logicalSHA256": "2f762f16593a017c1b4b22b2e0d5e562567e8c676ed4493b07d431155531b71e",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/9/active/report.json.gz",
+      "sourceSHA256": "a4a7d93310d6d595239cbe29d536eb2d4ef142c2be95a46d62a0f55dc2ef729a",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-10-default",
+      "logicalSHA256": "98da8271a896a36ff259b6fa33d9aef637ff20619c8d08620ea0debfdf06e0eb",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/10/default/report.json.gz",
+      "sourceSHA256": "48df481119bbfd87aa295a994d1b0fe395d4481cd9ea86925a7867858a229a3b",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "kang-null-10-active",
+      "logicalSHA256": "9d75f0162b05ca7eaa53cc0efa96dbd77daef55fce3036319ce9db9c5f58bb41",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/10/active/report.json.gz",
+      "sourceSHA256": "624399aa8b77f73d5f4594cf228ba586d7279aa1d43ec3da96da9c6c1b892a36",
+      "study": "kang"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-01-default",
+      "logicalSHA256": "150686d8a290b8a6577c88c30b4efd24decfe19ed73ad5678380a0be3564102d",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/1/default/report.json.gz",
+      "sourceSHA256": "c674e893c5721e45ed13ef3f34f1804a3ffee8d84a51af09640825d0d648d9a7",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-01-active",
+      "logicalSHA256": "55cd5483077904c50bdcab59256e9e834355a11efd925bf0a1344084617a2917",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/1/active/report.json.gz",
+      "sourceSHA256": "959598597312ce205f54498bcf48c060958a44a98ef873e9eeb51aeb843067a1",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-02-default",
+      "logicalSHA256": "4b8930c86914196fbb95b8bb7a1c1ecef86a1d3cdcaf965c81ef48e721370108",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/2/default/report.json.gz",
+      "sourceSHA256": "6338f067f3e6553c66393a8d23e20290cecc0cd5eadf2e0c243d7909bf73f410",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-02-active",
+      "logicalSHA256": "a844a3b0c57c6bb6bf49def8ce419bd8f18a76805ef4c72e79e1cad4592b1885",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/2/active/report.json.gz",
+      "sourceSHA256": "8aa46c60afeaaec8a2dc8aa4d6157149447be1663fa7960c8fdfd15556c7fb1a",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-03-default",
+      "logicalSHA256": "f796d32628a61b9c560102302e7a6166c94000d3083c02cba61ab75e847cb3f2",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/3/default/report.json.gz",
+      "sourceSHA256": "6b97e96ff5d56f163065ff32e0224ad28e3287bcbbc75e0ea3ba5eb7e28bbb23",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-03-active",
+      "logicalSHA256": "2cabb6eb4681c1a149958afac2c7a8f6702d516d420c4a3587844704f5b87c24",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/3/active/report.json.gz",
+      "sourceSHA256": "0988a016f45f9d5a3a6d827377b61f4e4a5cd50e0135a95d9a16b3ffff45876f",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-04-default",
+      "logicalSHA256": "7a77c07616bbbb469148780643a448d8b3b3469de3e713d8d2fc329368f67ac6",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/4/default/report.json.gz",
+      "sourceSHA256": "0add82fb0bf5066fb1a0bae552a11c09f3f894d8005f20a84cb329b90935aa84",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-04-active",
+      "logicalSHA256": "1a125cf067b36debe9644881e96cd16c778811973e27fd436ed3e63a2292e79a",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/4/active/report.json.gz",
+      "sourceSHA256": "b161bcd0961ab8239041e5283d83c9da3984aa7b3c90d083c31d9d29ca4d5828",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-05-default",
+      "logicalSHA256": "b6fdf238666298630b9acaa1ad534e51d6f27c5ac137a462f1d342d1cb74a607",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/5/default/report.json.gz",
+      "sourceSHA256": "01851ac97b07dcf9ff75de2383cf6c2e2077afb86b18f6581080de0c70f447c1",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-05-active",
+      "logicalSHA256": "9079502747e9f9c80ea68d15530644dc94e0d3472ea638a08637b5517a94d8ac",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/5/active/report.json.gz",
+      "sourceSHA256": "02c54dd940097fbe697142608d1a8b8724ce85fb5f2d585106ee6c08a61d62b2",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-06-default",
+      "logicalSHA256": "8e7d536de3afa5672debb8e6a0041be90e7486876c428b3267c40e2d0779d62d",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/6/default/report.json.gz",
+      "sourceSHA256": "64895a3ef828030138b867c58a3006f203b4d18b5ad116749df13400f8ad2cfd",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-06-active",
+      "logicalSHA256": "a4d286b60f1f6474c75c79891cab8aebbe9d4e15d618ccf69176e7edcefb3500",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/6/active/report.json.gz",
+      "sourceSHA256": "3ec3179c064e732bfecb2919006a045897fbee42add626219b2281dbc853f36b",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-07-default",
+      "logicalSHA256": "3029732987796edeef88a047e69cc309f2503a74f022124f741fd8e89187e129",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/7/default/report.json.gz",
+      "sourceSHA256": "7078b95de2b3c55b4f895ca901f7fadcbd93913e99c007685cd68dfcb2ea9c8a",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-07-active",
+      "logicalSHA256": "0f9cd8c3937e868691cb07c1938a6f97e348c6e6122bdd6e3a96be8b8a9c543c",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/7/active/report.json.gz",
+      "sourceSHA256": "b1b42f5cb56e2b84cad7f53c552e88016935259ed901ba67d60aa9ba7dfff17b",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-08-default",
+      "logicalSHA256": "b76e529bca715466c730803ef675d2e696b0daabcf5aa50c5bf6c8c04ca04031",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/8/default/report.json.gz",
+      "sourceSHA256": "e0da619e36fbfacd4666c1606786e0cad3c94d6a22b7fb1761ab6b2fc97c2383",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-08-active",
+      "logicalSHA256": "2d4a52fb4eed4a74cd284c084f5781d5469fbbd21350c5154e9e9559830e1ffc",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/8/active/report.json.gz",
+      "sourceSHA256": "fbebc5393f00a88b22eb33138419d35895a803a8355971ad50255b5c2f6b0320",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-09-default",
+      "logicalSHA256": "07bf6d3b612c2baf22b3ff59a7203f38bd42835b15bb23ca559b121a26b3a8ae",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/9/default/report.json.gz",
+      "sourceSHA256": "cab3e8ff1882c9de26f476a354313060185fa31e0d8ffbf619f25b6faf865ca1",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-09-active",
+      "logicalSHA256": "d1227f4fd455516fdb911428248014ccf76d6dd923083e8301d5d1a93fee931a",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/9/active/report.json.gz",
+      "sourceSHA256": "7ca6c8f12e789322a56930b6e9868505e82c02d08a41427929272e2b6550f2c6",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-10-default",
+      "logicalSHA256": "8d78e5bfcb9a73d3b5ed5dd0fdbf1395afd2948f071dc609b3b6fada82fa04e5",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/10/default/report.json.gz",
+      "sourceSHA256": "9cc532d5d839dd7db8fe0f2cb43e9d77a855b0a34f073d5ecf90dddc56af9f25",
+      "study": "hagai"
+    },
+    {
+      "family": "null",
+      "id": "hagai-null-10-active",
+      "logicalSHA256": "5c82e82a9da2788ec5eeb034bc132feef77bba8e372dd50ea3978ec9a8adfc45",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/10/active/report.json.gz",
+      "sourceSHA256": "a6d2b5762c51f7e2de3650d4212095652d45c3fe27f0540a68885691697ebf98",
+      "study": "hagai"
+    },
+    {
+      "family": "treatment",
+      "id": "kang-default",
+      "logicalSHA256": "01b3951c6dcfc4c5883887d14e742c0a70ac110f56fe803760a88180fede4fe1",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/kang-default/native/report.json.gz",
+      "sourceSHA256": "58a7fa53cce8691ac5ca90ba72450f8116ac80e531e5151edf72091d3c182fa3",
+      "study": "kang"
+    },
+    {
+      "family": "treatment",
+      "id": "kang-active",
+      "logicalSHA256": "a746a70904244735341cdc30bbf75dcbb99c4226213389e8fd9bc2d7848ddbb3",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/kang-active/native/report.json.gz",
+      "sourceSHA256": "14539cb252252914121d0df2b10fcc7df0f3deb72d5bffae8c20011fe5caba0e",
+      "study": "kang"
+    },
+    {
+      "family": "treatment",
+      "id": "hagai-default",
+      "logicalSHA256": "eb3fce03f76ccd0c32c4beb4dcd755f4686c68f512f73ccd8b732f7a2649f1d3",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/hagai-default/native/report.json.gz",
+      "sourceSHA256": "5518569eb91b6584b42a1846e594ea094ba4f87ea6fc766a71307a001800947c",
+      "study": "hagai"
+    },
+    {
+      "family": "treatment",
+      "id": "crowell-00",
+      "logicalSHA256": "b4e48e8c0201e16851fe215d58e55e15a9e494e2b9f0e5bd8c14810bb1f197c8",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/crowell-00/native/report.json.gz",
+      "sourceSHA256": "535012496cd7d4168f4efe16e8805523b420a46b81a5de55b15caa522914b2e1",
+      "study": "crowell"
+    },
+    {
+      "family": "treatment",
+      "id": "crowell-01",
+      "logicalSHA256": "9bda59f5bc44fd4c57ec98ed8e1821aaa3a9807e80ae8718efb35459973ed597",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/crowell-01/native/report.json.gz",
+      "sourceSHA256": "f7bc37b7a78de36da8f5d3e08f817f1d8ea6167970d2319e8877ab376fbc7f34",
+      "study": "crowell"
+    },
+    {
+      "family": "treatment",
+      "id": "crowell-02",
+      "logicalSHA256": "dcee671b1156f1ee795b947b220d9728f09c752b428fbd6ab165cb4cbf328a3e",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/crowell-02/native/report.json.gz",
+      "sourceSHA256": "219ad0ae13f3e61be049952577b0f3d195d249702cfcae353a54503f01eeff09",
+      "study": "crowell"
+    },
+    {
+      "family": "treatment",
+      "id": "crowell-03",
+      "logicalSHA256": "d09943f4ab363d124039e5af1f22fcb67cb3b58d93f26bd0e06f371518542ffb",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/crowell-03/native/report.json.gz",
+      "sourceSHA256": "edb62260cfc3b95cd8c3d765e03d533f77f8871bc415218a7502187f0dd74276",
+      "study": "crowell"
+    },
+    {
+      "family": "treatment",
+      "id": "crowell-04",
+      "logicalSHA256": "417f84ae8cbd1901b6a1813da38d31a5f04cd2751ce3366255e733dd9ba2633a",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/crowell-04/native/report.json.gz",
+      "sourceSHA256": "42f4e6ea46d1a063737e40f5160bf58eb437c558cb563067658a92fd5ff508ff",
+      "study": "crowell"
+    },
+    {
+      "family": "treatment",
+      "id": "crowell-06",
+      "logicalSHA256": "0035d0a8fceda5fe56f093eeb1e13cdfd64e48fb9c9cfc3f7bbee4202522d732",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/crowell-06/native/report.json.gz",
+      "sourceSHA256": "666055bf7323b99724666bab1491f340ac770e9705c09608d32ad2a918a38c12",
+      "study": "crowell"
+    },
+    {
+      "family": "treatment",
+      "id": "crowell-07",
+      "logicalSHA256": "234889970969a3e137eb33b1bb937572a8570933393e5118f464345a33039fac",
+      "source": "/Users/n/numivivo-empirical-prior-20260910/crowell-07/native/report.json.gz",
+      "sourceSHA256": "4fc941b2243c9eed9cdb3698ff1b040ac8723738cda6381ae5d45b9e34b2e81d",
+      "study": "crowell"
+    }
+  ],
+  "host": "macmini",
+  "protocolSHA256": "ba8955c7299f49c6877abd097573a4e4c18bedba838679fab05de9c5c2b09abd"
+}

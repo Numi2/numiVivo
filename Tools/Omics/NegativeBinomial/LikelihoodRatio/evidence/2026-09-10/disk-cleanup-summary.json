@@ -1,0 +1,11 @@
+{
+  "status": "completed-user-requested-disk-cleanup",
+  "localVerifiedClones": 113,
+  "remoteVerifiedClones": 4,
+  "localConsolidatedLogicalBytes": 24983766077,
+  "remoteConsolidatedLogicalBytes": 12968004270,
+  "localDF": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482766932 416088524  20400040    96% 3492327 204000400    2%   /System/Volumes/Data\n",
+  "remoteDF": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 435199808  12879060    98% 2012633 128790600    2%   /System/Volumes/Data\n",
+  "preservation": "Every clone verified by SHA256 before and after atomic replacement; distinct inodes and independent future writes; source projects, unique research evidence, installed runtimes and executables retained",
+  "retainedCleanupAttempt": "First remote clone adapter failed because os.listxattr is unavailable; no file was replaced in that attempt. Native xattr CLI used on retry."
+}

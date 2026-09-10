@@ -1,0 +1,74 @@
+{
+  "case": "hagai-default",
+  "errors": [
+    {
+      "failed": false,
+      "featureIndex": 3052,
+      "pValueDifference": 8.44991739590295e-06,
+      "statisticDifference": 2.0682338853703075e-09
+    },
+    {
+      "failed": false,
+      "featureIndex": 3404,
+      "pValueDifference": 5.132804524632384e-06,
+      "statisticDifference": 3.409752465516336e-07
+    },
+    {
+      "failed": false,
+      "featureIndex": 4312,
+      "pValueDifference": 5.394141399694963e-05,
+      "statisticDifference": 7.343900134109543e-08
+    },
+    {
+      "failed": false,
+      "featureIndex": 7280,
+      "pValueDifference": 4.561026681626501e-05,
+      "statisticDifference": 5.062514101396125e-09
+    },
+    {
+      "failed": false,
+      "featureIndex": 11940,
+      "pValueDifference": 4.824513654799745e-06,
+      "statisticDifference": 2.438549737658613e-08
+    },
+    {
+      "failed": false,
+      "featureIndex": 12021,
+      "pValueDifference": 3.376378372554889e-06,
+      "statisticDifference": 4.158760217309876e-07
+    },
+    {
+      "failed": false,
+      "featureIndex": 14227,
+      "pValueDifference": 3.962960683834282e-06,
+      "statisticDifference": 9.530412970956692e-08
+    },
+    {
+      "failed": false,
+      "featureIndex": 17126,
+      "pValueDifference": 1.2215013214911252e-05,
+      "statisticDifference": 2.0171737425637298e-07
+    },
+    {
+      "failed": false,
+      "featureIndex": 19949,
+      "pValueDifference": 5.369566108304191e-06,
+      "statisticDifference": 7.581104021978091e-08
+    },
+    {
+      "failed": false,
+      "featureIndex": 21062,
+      "pValueDifference": 5.863540087913677e-06,
+      "statisticDifference": 8.595054970268051e-08
+    }
+  ],
+  "exitCode": 0,
+  "genes": 12426,
+  "maximumPValueDifference": 5.394141399694963e-05,
+  "maximumStatisticDifference": 6.786860495822111e-06,
+  "messages": [],
+  "outputSHA256": "7b1e8e4771cc32f503a4a55e85d5d78bea1f353c48967ae5cd772bbc3b305237",
+  "referenceScriptSHA256": "3836f0e8f25a59547e750d46b54af69ee023376d6f4fed837e42f3cca3d9e2f9",
+  "status": "numerical-disagreements",
+  "warnings": []
+}

@@ -1,0 +1,4 @@
+{
+  "status": "failed-method-constraint",
+  "reason": "Pinned glmFit.default ignores tol/maxit in ... when prior.count=0; it hardcodes mglmLevenberg maxit=250 and omits tol. Attempt did not apply requested tighter optimization. Every output and its identical failed comparison is retained."
+}

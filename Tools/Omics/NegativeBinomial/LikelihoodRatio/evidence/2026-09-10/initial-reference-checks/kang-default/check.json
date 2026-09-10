@@ -1,0 +1,48 @@
+{
+  "case": "kang-default",
+  "checkerSHA256": "4a263e98eda97e2520397e7de945552fd463c00e37d48800e7b9f8b7b5f7d812",
+  "failures": [],
+  "gainedCallIndices": [
+    1211,
+    1220,
+    1560,
+    2243,
+    2303,
+    2990,
+    3151,
+    3585,
+    4708,
+    7401,
+    8101,
+    9179,
+    9713,
+    10159,
+    10280,
+    10624,
+    11067,
+    11331,
+    11954,
+    12753,
+    14633,
+    15484
+  ],
+  "likelihoodRatioBHCalls": 871,
+  "lostCallIndices": [
+    5558
+  ],
+  "metrics": {
+    "BH": 0.0,
+    "constraint": 0.0,
+    "pValue": 1.7373769090056612e-11,
+    "relativeMean": 0.0,
+    "scaledScore": 9.956060311689829e-08,
+    "statistic": 2.390265763096977e-11
+  },
+  "oldTestedGenes": 5400,
+  "originalBHCalls": 850,
+  "outputSHA256": "b7dfdb32547cffde8ff5e9200e6594a815f54cb68c6932fe21faba2c99a6a146",
+  "sourceSHA256": "58a7fa53cce8691ac5ca90ba72450f8116ac80e531e5151edf72091d3c182fa3",
+  "status": "passed",
+  "testedGenes": 5400,
+  "unavailable": []
+}

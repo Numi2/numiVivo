@@ -339,6 +339,14 @@ The complete development objective remains open:
    better in endothelial cells. All count isolation and conditional numerical
    checks pass. This is eight previously inspected animals, not cross-study
    effect-truth recovery or FDR/interval calibration.
+   Optional [contrast likelihood-ratio inference](../Tools/Omics/NegativeBinomial/LikelihoodRatio/README.md)
+   now passes 50 frozen native analyses and 443,705 independent gene/analysis
+   checks, plus real H5AD publication/replay with byte-exact old Wald output.
+   The null fit retains full-model dispersion and donor/support choices;
+   omitted options preserve Wald behavior. Original edgeR stopping discrepancies
+   remain recorded alongside a passing tighter-solver sensitivity. This does
+   not close calibration: Hagai has 22 sham calls versus Wald's 20 under each
+   policy, and active-donor Kang adds one across ten overlapping splits.
    Heavy-tailed priors, prior uncertainty, posterior coverage, effect-estimation
    risk and robust cross-study qualification remain.
    An explicit Gamma dispersion-trend option now passes controlled Kang/Hagai

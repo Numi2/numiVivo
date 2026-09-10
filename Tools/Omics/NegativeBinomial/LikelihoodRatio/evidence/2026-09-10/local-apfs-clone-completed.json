@@ -1,0 +1,684 @@
+{
+  "beforeDF": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482766932 434796916   1691648   100% 3492323 16916480   17%   /System/Volumes/Data\n",
+  "completed": [
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/train/projected.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-repeat-20260909/human1/native/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-repeat-20260909/human1/train/projected.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/native/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human1/train/projected.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-repeat-20260909/human1/native/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-repeat-20260909/human1/train/projected.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human1/repeat/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human1/reordered/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human1/empty/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human1/tampered-reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human1/mapped/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human1/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-scoped-20260909/human1/repeat/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-scoped-20260909/human1/reordered/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-scoped-20260909/human1/empty/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-scoped-20260909/human1/mapped/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-scoped-20260909/human1/reference/training/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human1/native/original.h5ad",
+      "target": "/Users/home/numivivo-reference-default-report-20260909/original.h5ad",
+      "bytes": 151078925,
+      "sha256": "dd02f238c321a664b634a5272ae966b96d56b20492aced4bc0d7d8e13bfce021"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/train/projected.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-repeat-20260909/human3/native/original.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-repeat-20260909/human3/train/projected.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human3/native/original.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human3/train/projected.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-repeat-20260909/human3/native/original.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-repeat-20260909/human3/train/projected.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human3/repeat/reference/training/original.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human3/mapped/reference/training/original.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human3/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human3/reference/training/original.h5ad",
+      "bytes": 119954222,
+      "sha256": "ead6e88bc549dddfb808731b8e8912391d98a053e14b93f794b4a3ac29cddd56"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/train/projected.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-repeat-20260909/human4/native/original.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-repeat-20260909/human4/train/projected.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human4/native/original.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human4/train/projected.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-repeat-20260909/human4/native/original.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-repeat-20260909/human4/train/projected.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human4/repeat/reference/training/original.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human4/mapped/reference/training/original.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human4/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human4/reference/training/original.h5ad",
+      "bytes": 161400364,
+      "sha256": "a515fdfc25cbf09acff8dbc39f0c9666d53abbbad379a5920110980280fd5147"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/train/projected.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-repeat-20260909/human2/native/original.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-repeat-20260909/human2/train/projected.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human2/native/original.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-20260909/human2/train/projected.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-repeat-20260909/human2/native/original.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-baron-reference-mapping-v2-repeat-20260909/human2/train/projected.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human2/repeat/reference/training/original.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human2/mapped/reference/training/original.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-baron-reference-mapping-20260909/human2/native/original.h5ad",
+      "target": "/Users/home/numivivo-native-reference-product-20260909/human2/reference/training/original.h5ad",
+      "bytes": 156629090,
+      "sha256": "bef289efc66d1ba2b7bd03fb52687d70f0ffe6826b261e2bd56ab45c5b4aae8a"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-20260909/repeat/original.h5",
+      "bytes": 159718112,
+      "sha256": "7c2fe101a64d9dd3608177a32ebbd768cbaecd1d8fa64d2d0aed229da578c70f"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-20260909/mudata-csr/original.h5",
+      "bytes": 159718112,
+      "sha256": "7c2fe101a64d9dd3608177a32ebbd768cbaecd1d8fa64d2d0aed229da578c70f"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-final-20260909/repeat/original.h5",
+      "bytes": 159718112,
+      "sha256": "7c2fe101a64d9dd3608177a32ebbd768cbaecd1d8fa64d2d0aed229da578c70f"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-final-20260909/mudata-csr/original.h5",
+      "bytes": 159718112,
+      "sha256": "7c2fe101a64d9dd3608177a32ebbd768cbaecd1d8fa64d2d0aed229da578c70f"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "target": "/Users/home/numivivo-h5mu-scoped-real-20260909/original.h5",
+      "bytes": 159718112,
+      "sha256": "7c2fe101a64d9dd3608177a32ebbd768cbaecd1d8fa64d2d0aed229da578c70f"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/mudata-roundtrip.h5mu",
+      "target": "/Users/home/numivivo-h5mu-tenx-regression-20260909/mudata-roundtrip.h5mu",
+      "bytes": 159718112,
+      "sha256": "7c2fe101a64d9dd3608177a32ebbd768cbaecd1d8fa64d2d0aed229da578c70f"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-citeseq-product-20260909/tampered/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-citeseq-product-20260909/bundle/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-citeseq-scoped-20260909/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-citeseq-scoped-final-20260909/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-20260909/repeat/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-20260909/mudata-csr/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-20260909/mixed-count-layers/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-20260909/native-csr/original.h5",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-20260909/native-csr/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-final-20260909/repeat/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-final-20260909/mudata-csr/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-final-20260909/mixed-count-layers/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-final-20260909/native-csr/original.h5",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-final-20260909/native-csr/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-scoped-real-20260909/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-tenx-regression-20260909/repeat/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-tenx-regression-20260909/tampered/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-citeseq-product-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-h5mu-tenx-regression-20260909/bundle/dataset.h5mu",
+      "bytes": 165609842,
+      "sha256": "e029c49b285b815741cfbd9806447c791493dbb6a32cb288f29eeda9a259c3b7"
+    },
+    {
+      "source": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-file-clustering-20260909/real/norman/pca/original.h5ad",
+      "target": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-file-clustering-20260909/real/norman/graph/input/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-file-clustering-20260909/real/norman/pca/original.h5ad",
+      "target": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-graph-store-20260909/real/norman/pca/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-file-clustering-20260909/real/norman/pca/original.h5ad",
+      "target": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-graph-store-20260909/real/norman/json/input/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-file-clustering-20260909/real/norman/pca/original.h5ad",
+      "target": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-graph-store-20260909/real/norman/binary/input/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-file-clustering-20260909/real/norman/pca/original.h5ad",
+      "target": "/Users/home/numivivo-native-composition-20260909/source/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-file-clustering-20260909/real/norman/pca/original.h5ad",
+      "target": "/Users/home/numivivo-norman-20260909/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-file-clustering-20260909/real/norman/pca/original.h5ad",
+      "target": "/Users/home/numivivo-norman-native-20260909/bundle/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/home/numivivo-file-embedding-20260909/retired-input-snapshots-complete/numivivo-file-clustering-20260909/real/norman/pca/original.h5ad",
+      "target": "/Users/home/numivivo-norman-native-v2-20260909/bundle/original.h5ad",
+      "bytes": 698680199,
+      "sha256": "efde6f5301fe256725dce1d980f37bd96a13481a9a16135515897368e631affc"
+    },
+    {
+      "source": "/Users/home/numivivo-go-transfer-20260910/repeat/predictions.npz",
+      "target": "/Users/home/numivivo-go-transfer-20260910/first/predictions.npz",
+      "bytes": 116662581,
+      "sha256": "cb7e7ec6c41f5322c1bb4cbcd91d4151e5c4d2676f7c4e71eb0d1e3fb0fb8ec9"
+    },
+    {
+      "source": "/Users/home/numivivo-graph-store-20260909/real-evidence/norman/json/graph.json",
+      "target": "/Users/home/numivivo-hnsw-20260909/real-evidence/norman/graph/graph.json",
+      "bytes": 113960372,
+      "sha256": "fb1ccb626b2019c3091e0f0930a4124e84619fa7a5cd799e13f7dd45a706a10b"
+    },
+    {
+      "source": "/Users/home/numivivo-h5mu-check-20260909/mixed-count-layers.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-20260909/mixed-count-layers/original.h5",
+      "bytes": 121798408,
+      "sha256": "064f1907f165ca4f8983cef31668c7310d2b8ebe1f39a8f37058a17991c07f2d"
+    },
+    {
+      "source": "/Users/home/numivivo-h5mu-check-20260909/mixed-count-layers.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-final-20260909/mixed-count-layers.h5mu",
+      "bytes": 121798408,
+      "sha256": "064f1907f165ca4f8983cef31668c7310d2b8ebe1f39a8f37058a17991c07f2d"
+    },
+    {
+      "source": "/Users/home/numivivo-h5mu-check-20260909/mixed-count-layers.h5mu",
+      "target": "/Users/home/numivivo-h5mu-check-final-20260909/mixed-count-layers/original.h5",
+      "bytes": 121798408,
+      "sha256": "064f1907f165ca4f8983cef31668c7310d2b8ebe1f39a8f37058a17991c07f2d"
+    },
+    {
+      "source": "/Users/home/numivivo-multiome-check-20260909/independent.h5mu",
+      "target": "/Users/home/numivivo-multiome-check-20260909/h5mu/original.h5",
+      "bytes": 221362629,
+      "sha256": "22bedebde10ad6c481c6d54f7a87b88c67c5f401753f07a5d3464658b489efbc"
+    },
+    {
+      "source": "/Users/home/numivivo-multiome-check-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-multiome-check-20260909/bundle/dataset.h5mu",
+      "bytes": 453637886,
+      "sha256": "71c351e1df893fb3996ec32b2f85d49769e4e72d1594c5039fa9c0d235792f1b"
+    },
+    {
+      "source": "/Users/home/numivivo-multiome-check-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-multiome-check-20260909/h5mu/dataset.h5mu",
+      "bytes": 453637886,
+      "sha256": "71c351e1df893fb3996ec32b2f85d49769e4e72d1594c5039fa9c0d235792f1b"
+    },
+    {
+      "source": "/Users/home/numivivo-multiome-check-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-spatial-product-20260909/nonspatial-regression.h5mu",
+      "bytes": 453637886,
+      "sha256": "71c351e1df893fb3996ec32b2f85d49769e4e72d1594c5039fa9c0d235792f1b"
+    },
+    {
+      "source": "/Users/home/numivivo-multiome-check-20260909/repeat/dataset.json",
+      "target": "/Users/home/numivivo-multiome-check-20260909/bundle/dataset.json",
+      "bytes": 206711096,
+      "sha256": "8a4bae170d6b0708a3d565a0c263f6bf3e0acd12a6b5b56da3d4a47fad5b264a"
+    },
+    {
+      "source": "/Users/home/numivivo-multiome-check-20260909/repeat/dataset.json",
+      "target": "/Users/home/numivivo-multiome-check-20260909/h5mu/dataset.json",
+      "bytes": 206711096,
+      "sha256": "8a4bae170d6b0708a3d565a0c263f6bf3e0acd12a6b5b56da3d4a47fad5b264a"
+    },
+    {
+      "source": "/Users/home/numivivo-native-composition-qualified-20260909/prediction/report.json",
+      "target": "/Users/home/numivivo-native-composition-qualified-20260909/reverse/report.json",
+      "bytes": 187134591,
+      "sha256": "a6bd982d4452f054f51d885a2afc2bbc236a5740198ec2fe68abf33f9e5d6dcb"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/repeat/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/prediction/original.h5ad",
+      "bytes": 119449784,
+      "sha256": "35c137a16a286b5c04aee05d2a0bec50308b666cec91dc7ddb72d8bf50933e32"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/repeat/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/control/projected.h5ad",
+      "bytes": 119449784,
+      "sha256": "35c137a16a286b5c04aee05d2a0bec50308b666cec91dc7ddb72d8bf50933e32"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/repeat/reference/training/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/training/projected.h5ad",
+      "bytes": 345233664,
+      "sha256": "cb241eb965914b09b3994ae8e9bc6eced0b5ed29ddf2397d9b2ad277276724ef"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/repeat/reference/training/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/prediction/reference/training/original.h5ad",
+      "bytes": 345233664,
+      "sha256": "cb241eb965914b09b3994ae8e9bc6eced0b5ed29ddf2397d9b2ad277276724ef"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/repeat/reference/training/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse3/model/training/original.h5ad",
+      "bytes": 345233664,
+      "sha256": "cb241eb965914b09b3994ae8e9bc6eced0b5ed29ddf2397d9b2ad277276724ef"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/repeat/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/prediction/original.h5ad",
+      "bytes": 132854148,
+      "sha256": "806a6eb0410a1bc0b849b7b2e55abddc8d0b1a13c9ea9c1adb6aad85a7ffbee7"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/repeat/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/control/projected.h5ad",
+      "bytes": 132854148,
+      "sha256": "806a6eb0410a1bc0b849b7b2e55abddc8d0b1a13c9ea9c1adb6aad85a7ffbee7"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/repeat/reference/training/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/training/projected.h5ad",
+      "bytes": 308039856,
+      "sha256": "ae86d14b35f5856e4c29dca631c78e150e518d9638cfaf923a9c104682e7383b"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/repeat/reference/training/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/prediction/reference/training/original.h5ad",
+      "bytes": 308039856,
+      "sha256": "ae86d14b35f5856e4c29dca631c78e150e518d9638cfaf923a9c104682e7383b"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/repeat/reference/training/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse2/model/training/original.h5ad",
+      "bytes": 308039856,
+      "sha256": "ae86d14b35f5856e4c29dca631c78e150e518d9638cfaf923a9c104682e7383b"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/repeat/reference/training/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/training/projected.h5ad",
+      "bytes": 406017472,
+      "sha256": "23c2373d1f991494a534bb5fcc472de5b4144e1c0cd61ca95ea181386287c4cf"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/repeat/reference/training/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/prediction/reference/training/original.h5ad",
+      "bytes": 406017472,
+      "sha256": "23c2373d1f991494a534bb5fcc472de5b4144e1c0cd61ca95ea181386287c4cf"
+    },
+    {
+      "source": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/repeat/reference/training/original.h5ad",
+      "target": "/Users/home/numivivo-native-perturbation-hagai-20260909/mouse1/model/training/original.h5ad",
+      "bytes": 406017472,
+      "sha256": "23c2373d1f991494a534bb5fcc472de5b4144e1c0cd61ca95ea181386287c4cf"
+    },
+    {
+      "source": "/Users/home/numivivo-spatial-check-20260909/input.h5mu",
+      "target": "/Users/home/numivivo-spatial-check-20260909/repeat/original.h5",
+      "bytes": 175916681,
+      "sha256": "62b7550bcf473d7aa0a6f48800b65822aeac8791c396507a91833b2699e0d4c4"
+    },
+    {
+      "source": "/Users/home/numivivo-spatial-check-20260909/input.h5mu",
+      "target": "/Users/home/numivivo-spatial-check-20260909/bundle/original.h5",
+      "bytes": 175916681,
+      "sha256": "62b7550bcf473d7aa0a6f48800b65822aeac8791c396507a91833b2699e0d4c4"
+    },
+    {
+      "source": "/Users/home/numivivo-spatial-check-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-spatial-check-20260909/reimport/original.h5",
+      "bytes": 353498913,
+      "sha256": "0a6be6b64c9bce570dbf5ab3c8942ca203b33bc8715eedf292b16fdede21cbe2"
+    },
+    {
+      "source": "/Users/home/numivivo-spatial-check-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-spatial-check-20260909/reimport/dataset.h5mu",
+      "bytes": 353498913,
+      "sha256": "0a6be6b64c9bce570dbf5ab3c8942ca203b33bc8715eedf292b16fdede21cbe2"
+    },
+    {
+      "source": "/Users/home/numivivo-spatial-check-20260909/repeat/dataset.h5mu",
+      "target": "/Users/home/numivivo-spatial-check-20260909/bundle/dataset.h5mu",
+      "bytes": 353498913,
+      "sha256": "0a6be6b64c9bce570dbf5ab3c8942ca203b33bc8715eedf292b16fdede21cbe2"
+    },
+    {
+      "source": "/Users/home/numivivo-spatial-check-20260909/repeat/dataset.json",
+      "target": "/Users/home/numivivo-spatial-check-20260909/reimport/dataset.json",
+      "bytes": 165520067,
+      "sha256": "faf13f9cc6bbbe0f8346fd931585bb821048c1604ad4112471768d5d1fd36103"
+    },
+    {
+      "source": "/Users/home/numivivo-spatial-check-20260909/repeat/dataset.json",
+      "target": "/Users/home/numivivo-spatial-check-20260909/bundle/dataset.json",
+      "bytes": 165520067,
+      "sha256": "faf13f9cc6bbbe0f8346fd931585bb821048c1604ad4112471768d5d1fd36103"
+    }
+  ],
+  "afterDF": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482766932 415663652  20824912    96% 3492323 208249120    2%   /System/Volumes/Data\n"
+}

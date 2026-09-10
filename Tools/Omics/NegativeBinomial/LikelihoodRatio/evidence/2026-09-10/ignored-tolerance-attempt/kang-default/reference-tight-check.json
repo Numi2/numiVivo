@@ -1,0 +1,44 @@
+{
+  "case": "kang-default",
+  "errors": [
+    {
+      "failed": false,
+      "featureIndex": 880,
+      "pValueDifference": 8.043608592411822e-06,
+      "statisticDifference": 8.683095166972174e-08
+    },
+    {
+      "failed": false,
+      "featureIndex": 1635,
+      "pValueDifference": 3.664732827535211e-06,
+      "statisticDifference": 4.385363334405076e-09
+    },
+    {
+      "failed": false,
+      "featureIndex": 7221,
+      "pValueDifference": 6.654241101466951e-06,
+      "statisticDifference": 8.284540513195729e-08
+    },
+    {
+      "failed": false,
+      "featureIndex": 11622,
+      "pValueDifference": 3.4490369128503673e-06,
+      "statisticDifference": 3.275812105352216e-06
+    },
+    {
+      "failed": false,
+      "featureIndex": 11623,
+      "pValueDifference": 3.7319212710107408e-06,
+      "statisticDifference": 3.342849222653932e-06
+    }
+  ],
+  "exitCode": 0,
+  "genes": 5400,
+  "maximumPValueDifference": 8.043608592411822e-06,
+  "maximumStatisticDifference": 3.342849222653932e-06,
+  "messages": [],
+  "outputSHA256": "d15301159632b7371acae5aca7e66e302d19b97003f90eb2d36b83b5c3f98b73",
+  "referenceScriptSHA256": "9ac9bec9685627a65f89306e6b7372546b829214e99a5a9271596b48e95ff3e1",
+  "status": "numerical-disagreements",
+  "warnings": []
+}

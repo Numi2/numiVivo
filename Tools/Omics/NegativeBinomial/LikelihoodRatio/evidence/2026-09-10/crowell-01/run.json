@@ -1,0 +1,17 @@
+{
+  "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+  "case": "crowell-01",
+  "command": [
+    "ssh",
+    "macmini",
+    "/usr/bin/time",
+    "-l",
+    "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+    "/Users/n/numivivo-empirical-prior-20260910/crowell-01/native/report.json.gz"
+  ],
+  "exitCode": 0,
+  "logicalSHA256": "912eea5bae7a3f6fc613580e8047840e970c693d490c7addd2d42fa8f77239ab",
+  "outputSHA256": "d9005dc531239742ac2c7248ef22f8f387c0745ae328cad083cde03b9f3f76a9",
+  "seconds": 18.946829959284514,
+  "sourceSHA256": "f7bc37b7a78de36da8f5d3e08f817f1d8ea6167970d2319e8877ab376fbc7f34"
+}

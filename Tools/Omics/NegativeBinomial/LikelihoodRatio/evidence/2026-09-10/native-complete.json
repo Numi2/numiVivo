@@ -1,0 +1,855 @@
+{
+  "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+  "runs": [
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-01-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/1/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "fa75d47dd09de71a2d32fbf4d695a3704099ca90a50ddf6b2e35299b701d665d",
+      "outputSHA256": "60b0fe4e2124f7be0bb014b66a554a92f86f403e63fd3a1361a09ed32c85c918",
+      "seconds": 32.02384466677904,
+      "sourceSHA256": "3bb92a20fec81f08614d02b98f61dc7f9e28d7c8b8637c7d6d987766956cbe84"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-01-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/1/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "5f6adf8da0e0de61f8d5e12c67352e23ac9df2cbc9a1ba6afe30ea6cd22240b3",
+      "outputSHA256": "04b57c6817af506349670e6c3b74187eafc6c8907f7415674df69af236847611",
+      "seconds": 60.546657875180244,
+      "sourceSHA256": "43f900412c092b6a719236d08f98afb84db987fd041cf9544a670826e86f2b81"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-02-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/2/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "ade61f981e6b2537f41c5b0182eaf58cfdab3e2b0bab38a406f8502601feafcc",
+      "outputSHA256": "28ff3cc41affe3db0f06e1e8bfccb1a79707cc0e1facebd19751a7344415e22e",
+      "seconds": 31.339531749952585,
+      "sourceSHA256": "f7c67f2f3496d7990cc1c33082a5153836fd3b9be9100307a4eec870ce35f248"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-02-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/2/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "bdeac6cb1dd0200d3c2547ed4f30b988de9799c33500a37088a5824e307716b3",
+      "outputSHA256": "0c9c7c20bd38a7fbe67b4b80089823e22359710a2c69762834908574bf0920f2",
+      "seconds": 60.61640058411285,
+      "sourceSHA256": "f0282c9c1eb602c522b11bba676f22f71467f9791ad88e84a4ed5fbd73bb48a8"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-03-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/3/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "c3ae7392105eb50bbf02c7fd83929bcd71b36e88f0ec850cfe873f226ad8053a",
+      "outputSHA256": "21a8712a9165c31af833e97cc908788c2a74aa0c63e1680ab9b68f3859998c8e",
+      "seconds": 32.88317191693932,
+      "sourceSHA256": "ce00365fc78efd93765ae5c658f8b45afedf33c985876fc03f60c412f0d758cd"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-03-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/3/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "2d6a4e9f4cf8bf812bf21d6ef0a4f2b25edd5c1e797d92d533e9c9c161642e9e",
+      "outputSHA256": "4a88fdcfb525847db76436f9e618226db3297c526481743bce8967de37512e90",
+      "seconds": 59.17412933381274,
+      "sourceSHA256": "3c54e50f0f085bff8e620eb4bef4f92cc83d2c760ad4f392dba468eb4b993585"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-04-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/4/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "b88df77f03d6ce050755d821bf53f4fb704812ab074cf02c95347bad03b5223a",
+      "outputSHA256": "6bb8f0d0c74a5e1d2ec251d90e9573ff673e7002c8764bdb8827b046304d069b",
+      "seconds": 31.91025474993512,
+      "sourceSHA256": "0f13f3e70ead99901259713a6c20b4344fd284948bb434223794c011119a9311"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-04-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/4/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "a9100931b85ff328d188fb0b3b513e95f67ba2c94fd5596057ce7a5d2543a87b",
+      "outputSHA256": "e49540fe94ddb14045e9a4d39cd5eb71d515ef000e0bbc2569f6c20de100d0f3",
+      "seconds": 59.42666995944455,
+      "sourceSHA256": "eb74285888ec5e82851b7f395cc40baaa4ea6a4c4cf0b2ba43f4f25d01b497a5"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-05-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/5/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "d91364fcccc65ce01e32b54e06d35909594f0a15272181286b78f13f16e64cb9",
+      "outputSHA256": "10902b8d6fb4d0fd755aa486d8ebbfdf4e610e9f55f9ae1dfdc55ce7e3714116",
+      "seconds": 32.3004293339327,
+      "sourceSHA256": "7d3bf9394d77fbe58bce9e3fb030cf9ce365d27878bf7f64716b3de34bca8f4c"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-05-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/5/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "16712b6c2b472fa3827e8638763e2bd0a07dee9def349e649f22b8c835040871",
+      "outputSHA256": "ad03a12fd60dbe540f3555a5363bd3e58b25365edb0177f9a3435df358053d87",
+      "seconds": 59.49246620805934,
+      "sourceSHA256": "9d76f8cbe61c23df53f57e6c698302ddcf648fe9934e420aa65076fc26e61a32"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-06-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/6/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "4657726f922d1f8b154b221f587cf33681a61c8c2d0ca633f42fdd42eda6c143",
+      "outputSHA256": "3143fa088ead9378dd4094f00f67b9e4e9a2bf73ddc6ea84d58f9375456747a2",
+      "seconds": 32.190831375308335,
+      "sourceSHA256": "f6ba5090144a3d82a64fc1db8229390de21f3ff3d96f58e4541d0972a1b28e85"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-06-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/6/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "a3f1c636c704356a3e9350ef3c48f7edc26dd8ba7bf51e00f9ccf6402b2b6c02",
+      "outputSHA256": "d841726a6e6121f78fb74df2d3f79d17009d5eccdafafa606aadd12bc5bb0283",
+      "seconds": 59.591927291825414,
+      "sourceSHA256": "6948e8d51dbc19b0fb895acec98f2c883a4154a958a7ccd3391bdb8c29467443"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-07-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/7/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "b2906bb8392b896d25a18ee393045166b3eccd994ade2d1acd4069aa4759a9f4",
+      "outputSHA256": "d87a78b1158baf1a17cb797fbf4522e9d6300119b18d4ab8176033222da69a9e",
+      "seconds": 32.74902354134247,
+      "sourceSHA256": "17b35530da3f7eba9281a8748ea871f5fc52b752fb0e08ca998ead11f42a75d3"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-07-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/7/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "817b4ecae08d9ddee6e6ede9790cf0d19c36d2a15bd0d90a2284a79d05ab89fd",
+      "outputSHA256": "99790aee3cc9bb31f63d3b5e7f1f57d0cb758d734c6818e0ee14ee4d1a329a53",
+      "seconds": 60.1216910420917,
+      "sourceSHA256": "ba68aa51db0c3268da562a8e93ed0e0314b86944fbc4dfd5278e629ced6c1969"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-08-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/8/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "a06f4fbd4d291ddcdd41cf6d6dc705d536deca8cd7dcfedf06ae8a0567b735aa",
+      "outputSHA256": "8ce87889c625675d050998700cd825d07b0ab71b37a6d38f464372fcd144bec8",
+      "seconds": 33.163016540929675,
+      "sourceSHA256": "d0f1d9a8616cd5b6c26324143284177293e24e74690e963cae449190127d54df"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-08-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/8/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "91f37e9836fd91d312a756b541464de72dacd61e1167974ad50b8b0d35b33471",
+      "outputSHA256": "3cfe0060ec05bfb6eb7f5815c0a4d2eced158ef11d760e986655c0df6bcadf30",
+      "seconds": 59.49400316691026,
+      "sourceSHA256": "1e6507283831258817e67013e8a6181cd5156576eb046ee79268dae5ed5b14b0"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-09-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/9/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "394527ceec421b1fa5d066d042858bed395077482ab69135efb86197356dca27",
+      "outputSHA256": "f91ce18c92b47ae31bb30cb5766b0c376072d3e446127891e84fb43bea565803",
+      "seconds": 32.42569133406505,
+      "sourceSHA256": "46a2c52247d9becfc6598bae02f3cd9c925be81baaa0899bb39a66c5c16b1dc9"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-09-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/9/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "4342c08cc052fdc1744d4d3f73919e843a3be3fdd44b6e6e0010345ddb791f85",
+      "outputSHA256": "176f4582840894c156545afe313279bfec8b98e13583e0f816be82eb160a57c0",
+      "seconds": 60.413747041951865,
+      "sourceSHA256": "a4a7d93310d6d595239cbe29d536eb2d4ef142c2be95a46d62a0f55dc2ef729a"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-10-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/10/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "807c9f452891449f33cf92792f0dc63657eb7b32c62682d3e8fc9262bd5dc6e4",
+      "outputSHA256": "608ccccef2868310aa58c8e18de073dd3aa9bc807d790331b530960f1eb579da",
+      "seconds": 32.16136750020087,
+      "sourceSHA256": "48df481119bbfd87aa295a994d1b0fe395d4481cd9ea86925a7867858a229a3b"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-null-10-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/10/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "ed5d2b150ee1b0a909ea8389c699dd7f177b9fff194c9264a0042f34637863f4",
+      "outputSHA256": "5355d159d8c28af2bcaeebdbbde63f6cb86bfb5552be62cb75a91a0380090ed3",
+      "seconds": 59.496417166199535,
+      "sourceSHA256": "624399aa8b77f73d5f4594cf228ba586d7279aa1d43ec3da96da9c6c1b892a36"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-01-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/1/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "880746e73f02719e87cb99156572e9b8338f9d226631352bdc00e5914a17a871",
+      "outputSHA256": "f2cd16815af76c723852ca763244a106a05a016519343fb5f0f448f01f45abed",
+      "seconds": 25.446742500178516,
+      "sourceSHA256": "c674e893c5721e45ed13ef3f34f1804a3ffee8d84a51af09640825d0d648d9a7"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-01-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/1/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "dd8b8743501af73aa96f8d09f56f255bb92cd6a80d57c7a7db931b46bcafe639",
+      "outputSHA256": "ee0f96c05715f8a2edbf63fa136ee69fed5979bae994248dc59f89408d181ed8",
+      "seconds": 25.565718832891434,
+      "sourceSHA256": "959598597312ce205f54498bcf48c060958a44a98ef873e9eeb51aeb843067a1"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-02-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/2/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "3ba3bbc5212ba60773eb1f214ef0726c365df2f61806382f01ba903a68636200",
+      "outputSHA256": "8248dfe15bf49b68ce14662ba8c6493c06e090f20f11feb9136485b628c962c3",
+      "seconds": 25.031624124851078,
+      "sourceSHA256": "6338f067f3e6553c66393a8d23e20290cecc0cd5eadf2e0c243d7909bf73f410"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-02-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/2/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "9ead7ec6fe0a15b4c412b156b67fb8d1ba85904c48a4e5bd9cfc4d0ab3116171",
+      "outputSHA256": "f876ecbbe622c677b33fdc61f761c3f6a23f77496dcb2c38d9cad56d0c212cc6",
+      "seconds": 24.87871129112318,
+      "sourceSHA256": "8aa46c60afeaaec8a2dc8aa4d6157149447be1663fa7960c8fdfd15556c7fb1a"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-03-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/3/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "a651b59dcd8ed6046a3e877c044dfa393becdfe67d8097e6f78acca54548a72b",
+      "outputSHA256": "0bd1686c1381c4f9303192c0f842c6b42d86405ab5f77fac453143d6816e630a",
+      "seconds": 24.295933624729514,
+      "sourceSHA256": "6b97e96ff5d56f163065ff32e0224ad28e3287bcbbc75e0ea3ba5eb7e28bbb23"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-03-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/3/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "362ecd5f24f496ecb7445f2fefbe0b20ecf07187a0b1b25d1688a39f2bf4d2b6",
+      "outputSHA256": "1b1df262013242ef6a7ca0d3a3391ad6e12857eb277efe6a2dd542e268e0ad79",
+      "seconds": 25.115824167151004,
+      "sourceSHA256": "0988a016f45f9d5a3a6d827377b61f4e4a5cd50e0135a95d9a16b3ffff45876f"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-04-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/4/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "0ae81ddee37abf9e28ed960783d948790ee3319fe050d44445e87eccd197aa55",
+      "outputSHA256": "55f706efdf38907daf9c0464e228018fa1eb1ad71f0fdd64b466e3d6e8c25a71",
+      "seconds": 25.23073137458414,
+      "sourceSHA256": "0add82fb0bf5066fb1a0bae552a11c09f3f894d8005f20a84cb329b90935aa84"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-04-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/4/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "3b65b411e0197a08b1e56e52a4fef60f0263df39df42d038eed02605e527a573",
+      "outputSHA256": "50114395da7e0c77cdfe6b041b1a12b3f22584b8e7b21279966ba7164650400f",
+      "seconds": 25.2847519996576,
+      "sourceSHA256": "b161bcd0961ab8239041e5283d83c9da3984aa7b3c90d083c31d9d29ca4d5828"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-05-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/5/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "f886130581b0799f21ee6ff2bc0bfb31a79cffa3298b833bc86f35380d1600e3",
+      "outputSHA256": "c2e596fedf3576b3d1b023821a500a1a9a5d539536f1e56c98ade09fd387cce9",
+      "seconds": 25.299710124731064,
+      "sourceSHA256": "01851ac97b07dcf9ff75de2383cf6c2e2077afb86b18f6581080de0c70f447c1"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-05-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/5/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "c8f255936e992d9e86c0465fbfefb565a27bc257a802a782550a30f879e3fbfa",
+      "outputSHA256": "1b76a77d4cd659432a171c88b6c8b122ef9969e819ee7da3a661038b717ace4d",
+      "seconds": 25.034114040900022,
+      "sourceSHA256": "02c54dd940097fbe697142608d1a8b8724ce85fb5f2d585106ee6c08a61d62b2"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-06-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/6/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "a937b53fa6f6d2658c2c36244505565935902153eb1d80eef470b37e3c5b66e3",
+      "outputSHA256": "0966bcf5db0493ffff72a466df62819fdc7d62a41db9ba255a5684d9d4e7f086",
+      "seconds": 26.55545699968934,
+      "sourceSHA256": "64895a3ef828030138b867c58a3006f203b4d18b5ad116749df13400f8ad2cfd"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-06-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/6/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "ae21b86562475e1462a00b5b6e9d6fc968bf53b71ce521cf4e9872d44745d3a9",
+      "outputSHA256": "577efa3dfec935028dbd078861730aecc84611ef63686844db0eda602c0e82d0",
+      "seconds": 24.069060124922544,
+      "sourceSHA256": "3ec3179c064e732bfecb2919006a045897fbee42add626219b2281dbc853f36b"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-07-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/7/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "ef16fc5e40dba74ba8080c37ebba887e1e978f19d4b2e2b95360865a0705d495",
+      "outputSHA256": "c38d8803b1f5fa4e882a6e8964c01ef491bc087668e38167101bb173b1371a17",
+      "seconds": 23.69650095887482,
+      "sourceSHA256": "7078b95de2b3c55b4f895ca901f7fadcbd93913e99c007685cd68dfcb2ea9c8a"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-07-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/7/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "699718f0639ad0a86fe5410d4f1bdff0d5cb04f3c4f207a7b68492f9a9c92bd4",
+      "outputSHA256": "495cd8b625c4ddbb49aa010d683b4755a42fce28170bc1a2a60e5e9f6dc36ded",
+      "seconds": 23.98267887486145,
+      "sourceSHA256": "b1b42f5cb56e2b84cad7f53c552e88016935259ed901ba67d60aa9ba7dfff17b"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-08-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/8/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "fb2afcfc32d5a2328ae6160f49477864afdad1a77a694942acd2c88fe33d3307",
+      "outputSHA256": "1d5c50e3f1a48b9ad44fcc78d74a9bce2c6dcfce04eb2c978afa9c6462839f53",
+      "seconds": 24.939374167006463,
+      "sourceSHA256": "e0da619e36fbfacd4666c1606786e0cad3c94d6a22b7fb1761ab6b2fc97c2383"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-08-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/8/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "f01cdfae9db214e9ad99e8a8f98c93f5542edec9ade5f83dbaab16827cd34d82",
+      "outputSHA256": "a4e051e6d8b70f57e6d21fb4981247ac2a8c1331a395b5429cf1ebbf651ac670",
+      "seconds": 25.752962625119835,
+      "sourceSHA256": "fbebc5393f00a88b22eb33138419d35895a803a8355971ad50255b5c2f6b0320"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-09-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/9/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "acd655dc98aeb6a382453809cc64ca5547b9defb17621516c6a93e4b0e558c35",
+      "outputSHA256": "ce67d7e2a42b146dccfd08efcc7a2ce86d1451157580d1767d09f74a784438c7",
+      "seconds": 25.559489708859473,
+      "sourceSHA256": "cab3e8ff1882c9de26f476a354313060185fa31e0d8ffbf619f25b6faf865ca1"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-09-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/9/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "b152d735b0e1c5c7d5ff3f78f3c95d42eec5ec5a0641f4c85c7c8f89acd1e4b5",
+      "outputSHA256": "60d3b21b056e61336273a392ee0942c6cc9524d792b96994ddb87d3d8ec7ded3",
+      "seconds": 25.17583820829168,
+      "sourceSHA256": "7ca6c8f12e789322a56930b6e9868505e82c02d08a41427929272e2b6550f2c6"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-10-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/10/default/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "62ee3224d561b6e54ab7a7c47d088bba37620997da5aa548615cabd115aff12d",
+      "outputSHA256": "eca38c7bb24baa97d0e11035b9656a02ec6385506ac2544f55e8fcfc6dde7ece",
+      "seconds": 25.045892625115812,
+      "sourceSHA256": "9cc532d5d839dd7db8fe0f2cb43e9d77a855b0a34f073d5ecf90dddc56af9f25"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-null-10-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/10/active/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "4eed70bd30928267f5cc8ceb50afcf82c8d12b243beb4e373139dbbc994432a5",
+      "outputSHA256": "f09e44a5b17da9d23c2e6f82b3a6019a7d577b7b359ea424519534f83b446312",
+      "seconds": 23.176813333295286,
+      "sourceSHA256": "a6d2b5762c51f7e2de3650d4212095652d45c3fe27f0540a68885691697ebf98"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/kang-default/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "5d2f9c66d79510a0a38d3680d2409baaaafe54bca70734900650bb451196fd30",
+      "outputSHA256": "b7dfdb32547cffde8ff5e9200e6594a815f54cb68c6932fe21faba2c99a6a146",
+      "seconds": 53.934086584020406,
+      "sourceSHA256": "58a7fa53cce8691ac5ca90ba72450f8116ac80e531e5151edf72091d3c182fa3"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "kang-active",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/kang-active/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "e7f0a5e0013e3b296bc2d1b43c26c87be8801781afad6794508a6e4edbcddcb5",
+      "outputSHA256": "198d461fd0ec86b51d829dd37f28a446b6d042663cbe06df39eee6b2167b63bc",
+      "seconds": 77.97960008308291,
+      "sourceSHA256": "14539cb252252914121d0df2b10fcc7df0f3deb72d5bffae8c20011fe5caba0e"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "hagai-default",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/hagai-default/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "000704fc73f802d90b3dc1a955e42b0b27c9b0a81ca75ecc6a6fd158a64c65d7",
+      "outputSHA256": "577cfaf1d8d21060a25487eb7d3ef1ff275570d64723ae36b23ade196bb8e980",
+      "seconds": 28.11409725015983,
+      "sourceSHA256": "5518569eb91b6584b42a1846e594ea094ba4f87ea6fc766a71307a001800947c"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "crowell-00",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-00/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "8925e9b1deb4c80eca143ad500dda823f9bd74f5bb65e26575b934a95ca310d9",
+      "outputSHA256": "8933cde778ae3b047cd0ee3ff15c1fae6f046bcedb1441c682b3cef1b17996d3",
+      "seconds": 18.82491529220715,
+      "sourceSHA256": "535012496cd7d4168f4efe16e8805523b420a46b81a5de55b15caa522914b2e1"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "crowell-01",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-01/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "912eea5bae7a3f6fc613580e8047840e970c693d490c7addd2d42fa8f77239ab",
+      "outputSHA256": "d9005dc531239742ac2c7248ef22f8f387c0745ae328cad083cde03b9f3f76a9",
+      "seconds": 18.946829959284514,
+      "sourceSHA256": "f7bc37b7a78de36da8f5d3e08f817f1d8ea6167970d2319e8877ab376fbc7f34"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "crowell-02",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-02/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "6836abd7e815abc519ecb99c01a23c4103439ec66160d5fe92329ee25c17e02d",
+      "outputSHA256": "71897353b99a174331453325e5a882764834b21cddd5d9c0288a74bf5dac0d69",
+      "seconds": 17.273151875007898,
+      "sourceSHA256": "219ad0ae13f3e61be049952577b0f3d195d249702cfcae353a54503f01eeff09"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "crowell-03",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-03/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "de313529db96a5214416a7972a3f1a6b770e592a61521c86f49907b9481fb30b",
+      "outputSHA256": "ad5e3fc1d206495b71ed2837f9bd8ceb6ffed1b901dd91ebe0bce56268041036",
+      "seconds": 18.916698792017996,
+      "sourceSHA256": "edb62260cfc3b95cd8c3d765e03d533f77f8871bc415218a7502187f0dd74276"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "crowell-04",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-04/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "ddfa249752e1232fbf178f0b613aac462d4638a0f164b021a9ae8b02de9a1bc0",
+      "outputSHA256": "b6b039b37713074171fa8f874ad9beeafb0e237c83cf64326f808bc44ac3e6db",
+      "seconds": 18.253769083879888,
+      "sourceSHA256": "42f4e6ea46d1a063737e40f5160bf58eb437c558cb563067658a92fd5ff508ff"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "crowell-06",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-06/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "d4b4fccb2815950e7ff7e69ff61aba4aa12a54a0a4c844f6007f45a998f06dfb",
+      "outputSHA256": "2841e247770fd7e034bac769214a4a607dafe402244a5a242e4486153369c7a6",
+      "seconds": 19.521019165869802,
+      "sourceSHA256": "666055bf7323b99724666bab1491f340ac770e9705c09608d32ad2a918a38c12"
+    },
+    {
+      "binarySHA256": "f0c1eb48d2aa240f5cf31a2927a54efbbdeb7fb229851ddcd8346d7055287f46",
+      "case": "crowell-07",
+      "command": [
+        "ssh",
+        "macmini",
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-likelihood-ratio-20260910/build/nb-lrt",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-07/native/report.json.gz"
+      ],
+      "exitCode": 0,
+      "logicalSHA256": "75bc2625ac1319e8f824d9646bf8d11ac6cdca438f1d83ecb2bb53f27a3d5396",
+      "outputSHA256": "c61ec4bfa0631583cdb79ab98a409e22ee5aca1d8ab54e0a35f220e7bb3c2eb3",
+      "seconds": 18.934741749893874,
+      "sourceSHA256": "4fc941b2243c9eed9cdb3698ff1b040ac8723738cda6381ae5d45b9e34b2e81d"
+    }
+  ]
+}

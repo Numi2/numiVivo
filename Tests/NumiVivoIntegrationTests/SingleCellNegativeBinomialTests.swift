@@ -3,6 +3,36 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellNegativeBinomialTests {
+    @Test func likelihoodRatioMatchesAnalyticGroupMeansAndReparameterization() throws {
+        let y: [UInt64] = [11,20,12,55,43,61]
+        let x = [[1.0,0],[1,0],[1,0],[1,1],[1,1],[1,1]], offsets = Array(repeating: 0.0,count: 6)
+        let fit = try VivoOmicsNegativeBinomial.fitContrastLikelihoodRatio(counts: y,design: x,offsets: offsets,contrast: [0,1],dispersion: 0.1)
+        let groupMeans = Array(repeating: 43.0/3,count: 3)+Array(repeating: 53.0,count: 3)
+        var expected = 0.0
+        for i in y.indices {
+            expected += 2 * (Double(y[i])*log(groupMeans[i]/(202.0/6)) - (Double(y[i])+10)*log((1+0.1*groupMeans[i])/(1+0.1*202/6)))
+        }
+        #expect(fit.error == nil && fit.degreesOfFreedom == 1)
+        #expect(abs(try #require(fit.statistic)-expected) < 1e-9)
+        #expect(fit.nullMeans.allSatisfy { abs($0-202.0/6) < 1e-6 })
+        let rebased = try VivoOmicsNegativeBinomial.fitContrastLikelihoodRatio(counts: y,design: x.map { [1-$0[1],$0[1]] },offsets: offsets.map { $0+2 },contrast: [-3,3],dispersion: 0.1)
+        #expect(abs(try #require(rebased.statistic)-expected) < 1e-9)
+        #expect(abs(rebased.nullCoefficients[0]-rebased.nullCoefficients[1]) < 1e-12)
+        #expect(abs(try #require(fit.pValue)-erfc(sqrt(expected/2))) < 1e-12)
+    }
+    @Test func likelihoodRatioPreservesNullAndSupportBoundaries() throws {
+        let x = [[1.0,0],[1,0],[1,0],[1,1],[1,1],[1,1]], offsets = Array(repeating: 0.0,count: 6)
+        let null = try VivoOmicsNegativeBinomial.fitContrastLikelihoodRatio(counts: [10,12,14,10,12,14],design: x,offsets: offsets,contrast: [0,1],dispersion: 0.2)
+        #expect(abs(try #require(null.statistic)) < 1e-10)
+        for c in [[0.0,0],[.nan,1]] {
+            #expect(throws: (any Error).self) { try VivoOmicsNegativeBinomial.fitContrastLikelihoodRatio(counts: [1,2,3,4,5,6],design: x,offsets: offsets,contrast: c,dispersion: 0.1) }
+        }
+        #expect(throws: (any Error).self) { try VivoOmicsNegativeBinomial.fitContrastLikelihoodRatio(counts: [1,2,3,0,0,0],design: x,offsets: offsets,contrast: [0,1],dispersion: 0.1) }
+        let scalar = try VivoOmicsNegativeBinomial.fitContrastLikelihoodRatio(counts: [1,1,1],design: [[1],[1],[1]],offsets: [0,0,0],contrast: [2],dispersion: 0.2)
+        #expect(scalar.nullCoefficients == [0] && scalar.nullMeans == [1,1,1])
+        let scalarStatistic = try #require(scalar.statistic)
+        #expect(scalar.nullIterations == 0 && abs(scalarStatistic) < 1e-10)
+    }
     // Independent mpmath 1.3.0, 80-digit loggamma calculation.
     @Test func logMassMatchesHighPrecisionReference() throws {
         let cases: [(UInt64,Double,Double,Double)] = [

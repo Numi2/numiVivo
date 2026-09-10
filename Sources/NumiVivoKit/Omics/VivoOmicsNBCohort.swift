@@ -3,7 +3,10 @@ import Foundation
 public enum VivoOmicsNBZeroDonorPolicy: String, Codable, Sendable { case activeDonorProfile }
 public enum VivoOmicsNBTrendMethod: String, Codable, Sendable { case parametric, mean, gammaParametric }
 public enum VivoOmicsNBEffectPriorEstimation: String, Codable, Sendable { case weightedUpperQuantile }
+public enum VivoOmicsNBTestMethod: String, Codable, Sendable { case likelihoodRatio }
 public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
+    /// nil preserves the original Wald test. LRT uses the same full-fit dispersion.
+    public var testMethod: VivoOmicsNBTestMethod?
     public var zeroTotalDonorPolicy: VivoOmicsNBZeroDonorPolicy?
     public var trend: VivoOmicsNBTrendMethod = .parametric
     public var minimumTrendGenes: Int = 20
@@ -18,11 +21,12 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     public var effectPriorEstimation: VivoOmicsNBEffectPriorEstimation?
     public init() {}
     private enum CodingKeys: String, CodingKey {
-        case zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance, effectPriorStandardDeviationLog2, effectPriorEstimation
+        case testMethod, zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance, effectPriorStandardDeviationLog2, effectPriorEstimation
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance", "effectPriorStandardDeviationLog2", "effectPriorEstimation"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["testMethod", "zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance", "effectPriorStandardDeviationLog2", "effectPriorEstimation"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
+        testMethod = try c.decodeIfPresent(VivoOmicsNBTestMethod.self,forKey: .testMethod)
         zeroTotalDonorPolicy = try c.decodeIfPresent(VivoOmicsNBZeroDonorPolicy.self,forKey: .zeroTotalDonorPolicy)
         trend = try c.decodeIfPresent(VivoOmicsNBTrendMethod.self, forKey: .trend) ?? .parametric
         minimumTrendGenes = try c.decodeIfPresent(Int.self, forKey: .minimumTrendGenes) ?? 20
@@ -71,6 +75,7 @@ public struct VivoOmicsNBFeatureDiagnostics: Codable, Sendable, Equatable {
     /// Raw natural-log MAP/Laplace diagnostics, including an unconverged attempt.
     public var effectShrinkageFit: VivoOmicsNBContrastMAPFit?
     public var effectShrinkageError: String?
+    public var likelihoodRatioFit: VivoOmicsNBLikelihoodRatioFit?
 }
 public struct VivoOmicsNBEffectShrinkageSummary: Codable, Sendable, Equatable {
     public let method: String
@@ -358,7 +363,18 @@ public enum VivoOmicsNBCohort {
                     else if let threshold = options.maximumCooksDistance, cooks.contains(where: { $0 > threshold }) { status = .influentialObservation }
                     else { status = .tested }
                     guard let effect = final.fit.effect, let error = final.fit.standardError, error > 0 else { throw VivoOmicsError.invalid("NB final fit lacks identified effect/information") }
-                    let z = effect/error, probability = erfc(abs(z)/sqrt(2))
+                    let z = effect/error
+                    var probability = erfc(abs(z)/sqrt(2))
+                    if status == .tested, options.testMethod == .likelihoodRatio {
+                        let likelihoodRatio = try VivoOmicsNegativeBinomial.contrastLikelihoodRatio(
+                            counts: rows.map { y[$0] },design: resolution?.rows ?? design.rows,
+                            offsets: rows.map { offsets[$0] },contrast: resolution?.contrast ?? design.contrast,full: final.fit)
+                        diagnostics[gene].likelihoodRatioFit = likelihoodRatio
+                        guard let value = likelihoodRatio.pValue else {
+                            throw VivoOmicsError.invalid(likelihoodRatio.error ?? "NB likelihood ratio unavailable")
+                        }
+                        probability = value
+                    }
                     result = .init(featureIndex: gene,featureID: metadata.features[gene].id,status: status,totalCounts: totals[gene],
                         expressingPseudobulks: entries[gene].count,meanNormalizedCount: means[gene],
                         log2FoldChange: effect/log(2),residualVariance: nil,posteriorVariance: nil,standardError: error/log(2),tStatistic: nil,
@@ -408,17 +424,18 @@ public enum VivoOmicsNBCohort {
                 catch { diagnostics[gene].effectShrinkageError = error.localizedDescription }
             }
         }
-        return .init(method: options.zeroTotalDonorPolicy == nil ? "donor-aware-NB2-adjusted-profile-log-prior-Wald-v1" : "donor-aware-NB2-active-donor-adjusted-profile-log-prior-Wald-v1",request: request,evidence: metadata.evidence,design: design,
+        let testName = options.testMethod == .likelihoodRatio ? "LRT" : "Wald"
+        return .init(method: "donor-aware-NB2-" + (options.zeroTotalDonorPolicy == nil ? "" : "active-donor-") + "adjusted-profile-log-prior-\(testName)-v1",request: request,evidence: metadata.evidence,design: design,
             variancePrior: nil,features: features,testedFeatures: tested.count,
-            multiplicityScope: "BH across available NB Wald tests within this contrast; no selection-adjusted or cross-contrast calibration claim",
+            multiplicityScope: "BH across available NB \(testName) tests within this contrast; no selection-adjusted or cross-contrast calibration claim",
             negativeBinomial: .init(trend: trend,features: diagnostics,
-                qualification: "Experimental NB cohort method; asymptotic Wald intervals, heuristic influence gate if requested, no count replacement; multi-study calibration remains open",
+                qualification: "Experimental NB cohort method; asymptotic Wald intervals, heuristic influence gate if requested, no count replacement; multi-study calibration remains open" + (options.testMethod == .likelihoodRatio ? "; p-values use fixed-dispersion one-constraint likelihood ratio with asymptotic chi-square(1); z and intervals remain Wald diagnostics; no dispersion-uncertainty adjustment" : ""),
                 effectShrinkage: priorSD.map { priorSD in
                     let completed = diagnostics.filter { $0.effectShrinkageFit?.converged == true }.count
                     return .init(method: "NB2-contrast-normal-prior-count-likelihood-MAP-Laplace-v1",
                         priorStandardDeviationLog2: priorSD,eligibleFeatures: tested.count,convergedFeatures: completed,
                         failedFeatures: tested.count-completed,
-                        qualification: (options.effectPriorEstimation == nil ? "Explicit fixed prior" : "Empirically estimated prior treated as fixed") + "; nuisance coefficients jointly refitted; natural-log fit diagnostics; Laplace SD conditional on fixed dispersion and prior; original Wald tests and BH family unchanged; posterior coverage and biological calibration unqualified")
+                        qualification: (options.effectPriorEstimation == nil ? "Explicit fixed prior" : "Empirically estimated prior treated as fixed") + "; nuisance coefficients jointly refitted; natural-log fit diagnostics; Laplace SD conditional on fixed dispersion and prior; original \(testName) tests and BH family unchanged; posterior coverage and biological calibration unqualified")
                 }, effectPriorEstimate: priorEstimate, effectPriorEstimationError: priorError))
     }
 }

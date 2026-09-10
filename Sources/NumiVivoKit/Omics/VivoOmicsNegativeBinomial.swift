@@ -48,7 +48,86 @@ public struct VivoOmicsNBContrastMAPFit: Codable, Sendable, Equatable {
     public let maximumScaledScore: Double
 }
 
+/// Tests c' beta = 0 with dispersion fixed. Null coefficients use the original
+/// coordinates. Failed null optimization retains diagnostics but no probability.
+public struct VivoOmicsNBLikelihoodRatioFit: Codable, Sendable, Equatable {
+    public let nullCoefficients: [Double]
+    public let nullMeans: [Double]
+    public let nullLogLikelihood: Double
+    public let nullIterations: Int
+    public let nullConverged: Bool
+    public let nullMaximumScaledScore: Double
+    public let rawStatistic: Double
+    public let statistic: Double?
+    public let pValue: Double?
+    public let error: String?
+    public let degreesOfFreedom: Int
+}
+
 public enum VivoOmicsNegativeBinomial {
+    /// Fixed-dispersion NB likelihood ratio; asymptotic chi-square with one DF.
+    /// This is not a quasi-likelihood test or dispersion-uncertainty adjustment.
+    public static func fitContrastLikelihoodRatio(counts: [UInt64], design: [[Double]], offsets: [Double],
+        contrast: [Double], dispersion: Double) throws -> VivoOmicsNBLikelihoodRatioFit {
+        let full = try fit(counts: counts,design: design,offsets: offsets,contrast: contrast,dispersion: dispersion)
+        return try contrastLikelihoodRatio(counts: counts,design: design,offsets: offsets,contrast: contrast,full: full)
+    }
+    // Internal reuse only: full must be the unpenalized fit to these exact inputs.
+    static func contrastLikelihoodRatio(counts: [UInt64], design: [[Double]], offsets: [Double],
+        contrast: [Double], full: VivoOmicsNBFit) throws -> VivoOmicsNBLikelihoodRatioFit {
+        guard full.converged, !full.positiveCountDesignRankDeficient,
+              let pivot = contrast.indices.max(by: { abs(contrast[$0]) < abs(contrast[$1]) }),
+              contrast[pivot] != 0 else {
+            throw VivoOmicsStatisticsError.invalid("NB likelihood ratio requires an identified converged full fit and nonzero contrast")
+        }
+        let free = contrast.indices.filter { $0 != pivot }
+        var beta = [Double](repeating: 0,count: contrast.count)
+        let mu: [Double], ll: Double, iterations: Int, converged: Bool, scaledScore: Double
+        if free.isEmpty {
+            guard offsets.allSatisfy({ (-700...700).contains($0) }) else {
+                throw VivoOmicsStatisticsError.invalid("NB constrained offsets overflow")
+            }
+            mu = offsets.map(exp)
+            ll = counts.indices.reduce(0) { $0 + mass(Double(counts[$1]),mu[$1],full.dispersion) }
+            iterations = 0; converged = true; scaledScore = 0
+        } else {
+            // Eliminate the largest contrast coefficient. Ratios stay <= 1;
+            // no special case assumes that treatment is a particular column.
+            let reduced = design.map { row in free.map { row[$0]-row[pivot]*(contrast[$0]/contrast[pivot]) } }
+            // The QR fit requires a nonzero vector for its information report.
+            // Select a nuisance coefficient solely for that discarded report;
+            // the null constraint is already encoded by the reduced design.
+            let nuisanceContrast = [1.0] + [Double](repeating: 0,count: free.count-1)
+            let null = try fit(counts: counts,design: reduced,offsets: offsets,
+                contrast: nuisanceContrast,dispersion: full.dispersion)
+            for (j,column) in free.enumerated() { beta[column] = null.coefficients[j] }
+            beta[pivot] = -free.reduce(0) { $0 + beta[$1]*(contrast[$1]/contrast[pivot]) }
+            mu = null.means; ll = null.logLikelihood; iterations = null.iterations
+            converged = null.converged && !null.positiveCountDesignRankDeficient
+            scaledScore = null.maximumScaledScore
+        }
+        // Cancel count-only log-Gamma terms before summing. Subtracting complete
+        // log likelihoods loses small LR differences at large counts.
+        let a = full.dispersion
+        var difference = 0.0, compensation = 0.0
+        for i in counts.indices {
+            let delta = full.means[i]-mu[i], relative = delta/mu[i]
+            let logMeanRatio = abs(relative) < 0.5 ? log1p(relative) : log(full.means[i])-log(mu[i])
+            let ratio = a*delta/(1+a*mu[i])
+            let logSizeRatio = abs(ratio) < 0.5 ? log1p(ratio) : log1p(a*full.means[i])-log1p(a*mu[i])
+            let term = Double(counts[i])*logMeanRatio-(Double(counts[i])+1/a)*logSizeRatio
+            let corrected = term-compensation, next = difference+corrected
+            compensation = (next-difference)-corrected; difference = next
+        }
+        let raw = 2*difference
+        guard raw.isFinite, ll.isFinite else { throw VivoOmicsStatisticsError.invalid("nonfinite NB likelihood ratio") }
+        let failure: String? = !converged ? "NB likelihood-ratio null fit did not converge" :
+            raw < -1e-7 ? "NB constrained likelihood exceeds the full fit beyond numerical tolerance" : nil
+        let statistic = failure == nil ? max(0,raw) : nil
+        return .init(nullCoefficients: beta,nullMeans: mu,nullLogLikelihood: ll,nullIterations: iterations,
+            nullConverged: converged,nullMaximumScaledScore: scaledScore,rawStatistic: raw,
+            statistic: statistic,pValue: statistic.map { erfc(sqrt($0/2)) },error: failure,degreesOfFreedom: 1)
+    }
     /// Stable NB log mass, including the near-Poisson small-dispersion limit.
     public static func logMass(count: UInt64, mean: Double, dispersion: Double) throws -> Double {
         guard count <= 9_007_199_254_740_992, mean.isFinite, mean > 0,

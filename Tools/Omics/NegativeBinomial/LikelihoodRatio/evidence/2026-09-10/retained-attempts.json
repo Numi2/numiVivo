@@ -1,0 +1,58 @@
+{
+  "attempts": [
+    {
+      "stage": "initial local source patch",
+      "result": "No space left on device; source unchanged"
+    },
+    {
+      "stage": "cache manifest transport",
+      "result": "SSH shell quoting failure; no cache removed; retried with literal remote path"
+    },
+    {
+      "stage": "first release tests build",
+      "result": "Foundation module cache and diagnostics output failed with No space left on device; terminal exit 1; retained focused-tests-attempt-1.log"
+    },
+    {
+      "stage": "second release tests build",
+      "result": "terminal exit 1; compiler IO failure on output stream, No space left on device; retained focused-tests-attempt-2.log"
+    },
+    {
+      "stage": "first scoped harness build",
+      "result": "terminal exit 1; no diagnostic text emitted; no binary produced; overlapped compiler storage exhaustion; retained empty harness-build-attempt-1.log"
+    },
+    {
+      "stage": "third release test attempt",
+      "result": "Production owner compiled; test macro compilation rejected throwing #require inside &&. Extracted required statistic before the assertion; retained focused-tests-attempt-3.log."
+    },
+    {
+      "stage": "fourth release test attempt",
+      "result": "21 tests ran; three issues exposed null-model helper receiving an unsupported zero reporting contrast. Null constraint is correctly encoded by reduced design; use an arbitrary nonzero nuisance reporting contrast without changing likelihood or constraints. Retained failed log and pre-repair owner source."
+    },
+    {
+      "stage": "initial independent arithmetic checks",
+      "result": "Two failed Hagai sham checks retained. 80-digit reference confirms native values; refined all 50 cases with unchanged native arithmetic and acceptance thresholds."
+    },
+    {
+      "stage": "reference checker refinement edit",
+      "result": "Temporary IndentationError caught before measurement execution; repaired indentation before final 50-case check."
+    },
+    {
+      "stage": "first full H5AD product verification",
+      "result": "Missing Homebrew HDF5 path caused publication failure, followed by wrapper hashing failure. Retained logs; validate installed HDF5 hash before successful rerun."
+    },
+    {
+      "stage": "first tighter edgeR stopping sensitivity",
+      "result": "glmFit.default ignored tol/maxit. All ten attempted outputs retained as failed method constraint; declared owner adapter applied settings to mglmLevenberg for the final sensitivity."
+    },
+    {
+      "stage": "first remote APFS clone adapter",
+      "result": "os.listxattr unavailable; failed before any replacement. Native xattr CLI adapter succeeded; byte hashes and metadata preserved."
+    }
+  ],
+  "recovery": "59 verified installed-package wheel download caches removed after matching installed METADATA, hashing and confirming no open handles; manifest retained on Mac mini; source, installed packages and unique research evidence retained",
+  "remoteCacheRecovery": {
+    "files": 43,
+    "bytes": 236143908,
+    "manifestSHA256": "cead032f7c57b07d05fe4487c0fac4ebdaffa6b150592c796eec498447159c78"
+  }
+}
