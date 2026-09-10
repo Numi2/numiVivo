@@ -100,9 +100,14 @@ arms and 483,576 gene/arm fits, including independent LOWESS on the actual nativ
 inputs, fixed-scale GLMs and recomputed score checks. It performs two updates at
 fixed initial means and one scaled-dispersion refit; abundance coordinates are
 explicit reference inputs. All 31 focused Swift tests in six suites pass.
+The subsequent [native abundance integration](Abundance/README.md) removes the
+reference-covariate dependency for an explicit native entry point. All 58 arms,
+105 controlled cases and 35 focused native tests pass, with the original count
+fits unchanged. Its diagnosed final-arm transport stall and recovery remain
+recorded.
 
 A native QL cohort method still needs robust abundance-dependent prior
-estimation for unequal residual DF, native abundance estimation, and constrained-test
+estimation for unequal residual DF and constrained-test
 integration with explicit failure behavior. The existing equal-DF, untrended,
 non-robust linear variance prior is insufficient. The conditional residual stage
 must not be exposed as if it provided those missing stages. The reference

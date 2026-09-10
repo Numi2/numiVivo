@@ -1,0 +1,36 @@
+{
+  "abundanceScoreEvaluations": 134526,
+  "binarySHA256": "05a2875637aa4626c5a5ee39a7b567aff913be4905ad399df12d1dfccbcc7a76",
+  "case": "kang-null-04-default",
+  "comparisonSHA256": "610b8a33df5f10c4a7ba5f456919253b485b46819eac3345431736905b5b2607",
+  "exitCode": 0,
+  "failedGenes": 0,
+  "genes": 3203,
+  "inputSHA256": "ec9c5b0334af6460456a32f8ef64835a426b1757be65a69d03c6f97aea944d90",
+  "logicalSHA256": "c37737b522781cf61667244b081f9e755a6423a0847032897c1d0bba94e12527",
+  "maximumAbundanceAbsoluteError": 1.1122658349904668e-11,
+  "maximumAbundanceBracketWidth": 1.8189894035458565e-12,
+  "maximumAbundanceScaledScore": 4.679532134715825e-11,
+  "maximumAbundanceScoreEvaluations": 42,
+  "maximumFinalScaledScore": 9.946171128508588e-08,
+  "maximumRefitMeanRelativeError": 1.587618925213974e-14,
+  "maximumResidualRelativeError": {
+    "degreesOfFreedom": 1.8697900749643712e-14,
+    "deviance": 4.456774878245435e-14,
+    "quasiDispersion": 2.731148640577885e-14
+  },
+  "method": "nativeTrend-adjusted",
+  "omittedIndices": [
+    [],
+    []
+  ],
+  "outputSHA256": "c0fcded598985f4058420182ad50a54f65c5b2d9199bd93ba429b989eaef1ed1",
+  "priorNativeSHA256": "9e4e23e89cc4f9e56b505faa7f42241e5268e1e585116d0e9dc4fee9d16d9eb1",
+  "priorScale": 1.0013543804006608,
+  "referenceSHA256": "276ee93a389277ad546403b99200282a61a8bb5e294caf7d21a61a9a31f83775",
+  "requestSHA256": "f4bb81621739ad1303cf075ef18a80c55358f97181b6db2ed7a67cf6f1c8bcca",
+  "scale": 1.001354380400635,
+  "scaleRelativeError": 2.572233634310133e-14,
+  "secondsIncludingTransport": 10.54140495788306,
+  "status": "passed"
+}

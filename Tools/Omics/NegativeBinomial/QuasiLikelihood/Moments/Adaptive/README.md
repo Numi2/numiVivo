@@ -78,5 +78,6 @@ The [family comparison](evidence/2026-09-10/family-comparison.json.gz) records t
 complete coverage. The direct method's original failures remain in the parent
 archive. The subsequent [native global scale/refit](../../GlobalScale/README.md)
 passes the complete 58-arm family using explicit abundance inputs. Robust
-unequal-DF moderation and cohort inference remain open, as do native abundance
-estimation and biological/FDR calibration.
+unequal-DF moderation and cohort inference remain open, as does biological/FDR
+calibration. The subsequent [native abundance integration](../../Abundance/README.md)
+also qualifies the complete 58-arm consumer without reference abundance inputs.

@@ -1,0 +1,527 @@
+[
+  {
+    "id": "equal-phi0-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi0-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi0-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi0-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi1e-08-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi1e-08-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi1e-08-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi1e-08-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi0.05-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi0.05-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi0.05-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi0.05-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi4-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi4-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi4-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi4-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi100-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi100-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi100-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "equal-phi100-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi0-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi0-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi0-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi0-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi1e-08-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi1e-08-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi1e-08-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi1e-08-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi0.05-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi0.05-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi0.05-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi0.05-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi4-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi4-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi4-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi4-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi100-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi100-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi100-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "unequal-phi100-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi0-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi0-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi0-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi1e-08-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi1e-08-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi1e-08-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi0.05-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi0.05-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi0.05-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi4-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi4-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi4-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi100-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi100-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "zero-phi100-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi0-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi0-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi0-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi0-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi1e-08-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi1e-08-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi1e-08-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi1e-08-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi0.05-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi0.05-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi0.05-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi0.05-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi4-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi4-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi4-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi4-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi100-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi100-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi100-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "singleton-phi100-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi0-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi0-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi0-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi0-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi1e-08-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi1e-08-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi1e-08-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi1e-08-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi0.05-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi0.05-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi0.05-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi0.05-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi4-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi4-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi4-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi4-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi100-prior0",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi100-prior0.5",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi100-prior2",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-phi100-prior10",
+    "expected": "finite",
+    "challenging": false
+  },
+  {
+    "id": "large-exact-poisson",
+    "expected": "finite",
+    "challenging": true
+  },
+  {
+    "id": "large-exact-nb",
+    "expected": "finite",
+    "challenging": true
+  },
+  {
+    "id": "wide-libraries",
+    "expected": "finite",
+    "challenging": true
+  },
+  {
+    "id": "small-libraries",
+    "expected": "finite",
+    "challenging": true
+  },
+  {
+    "id": "large-libraries",
+    "expected": "finite",
+    "challenging": true
+  },
+  {
+    "id": "zero-without-prior",
+    "expected": "error",
+    "challenging": false
+  },
+  {
+    "id": "inexact-count",
+    "expected": "error",
+    "challenging": false
+  },
+  {
+    "id": "offset-outside-domain",
+    "expected": "error",
+    "challenging": false
+  },
+  {
+    "id": "scaled-prior-underflow",
+    "expected": "error",
+    "challenging": false
+  },
+  {
+    "id": "work-bound",
+    "expected": "error",
+    "challenging": false
+  }
+]

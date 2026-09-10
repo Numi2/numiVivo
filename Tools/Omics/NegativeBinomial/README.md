@@ -21,8 +21,10 @@ unavailable under direct summation. The [explicit adaptive method](QuasiLikeliho
 now resolves all twenty and passes the complete 58-arm, 3,940,972-moment family.
 The [native global QL scale/refit](QuasiLikelihood/GlobalScale/README.md) now
 passes all 58 arms, 483,576 gene/arm fits and independent native-input LOWESS,
-fixed-scale fit and score checks. Abundance coordinates remain supplied inputs.
-Robust unequal-DF moderation and cohort inference remain unimplemented; these
+fixed-scale fit and score checks. The subsequent [native abundance entry point](QuasiLikelihood/Abundance/README.md)
+now derives those covariates directly and passes all 58 integrated arms,
+105 controlled cases and 35 focused Swift tests. Robust unequal-DF moderation
+and cohort inference remain unimplemented; these
 stages do not establish improved calibration.
 
 Optional [count-likelihood effect shrinkage](EffectShrinkage/README.md) now adds

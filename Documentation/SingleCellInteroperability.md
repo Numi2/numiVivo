@@ -366,8 +366,13 @@ The complete development objective remains open:
    passes all 58 arms and 483,576 gene/arm fits, independent LOWESS/fixed-scale
    GLM comparisons and direct score checks. Its 31 focused native tests pass;
    no genes are omitted from either real-data scale update. Abundance covariates
-   remain supplied reference inputs. Robust unequal-DF QL prior fitting, native
-   abundance estimation and QL cohort integration remain unimplemented.
+   remain supplied reference inputs in that stage. The subsequent
+   [native abundance integration](../Tools/Omics/NegativeBinomial/QuasiLikelihood/Abundance/README.md)
+   derives those covariates directly, passing all 58 integrated arms,
+   105 controlled cases and 35 focused native tests with original count fits
+   unchanged. The final-arm SSH output stall, partial output and successful
+   file-backed recovery remain retained. Robust unequal-DF QL prior fitting,
+   posterior moderation and QL cohort integration remain unimplemented.
    QL is not a demonstrated calibration fix:
    the native-trend adjusted reference yields 39 Hagai sham calls versus Wald's
    20 on the same default families. Active-donor QL borrowing remains separate.

@@ -1,0 +1,37 @@
+{
+  "abundanceScoreEvaluations": 461286,
+  "binarySHA256": "05a2875637aa4626c5a5ee39a7b567aff913be4905ad399df12d1dfccbcc7a76",
+  "case": "crowell-07",
+  "comparisonSHA256": "0ea21c552c811f5514bb33babdc98d8ff4282d80a2cc725162c7b971004862a4",
+  "exitCode": 0,
+  "failedGenes": 0,
+  "genes": 10983,
+  "inputSHA256": "cd09413e9e9af157b2472f19bc1e773f17d22f918f38c03fdd6cd387ef1ef2a9",
+  "logicalSHA256": "14835711dbc3608a60b35fc365eca179a3fbaba830ab76aa1a4bd5b943aacfe0",
+  "maximumAbundanceAbsoluteError": 9.78950254193478e-12,
+  "maximumAbundanceBracketWidth": 1.8189894035458565e-12,
+  "maximumAbundanceScaledScore": 1.5473878433604922e-11,
+  "maximumAbundanceScoreEvaluations": 42,
+  "maximumFinalScaledScore": 9.968294337503665e-08,
+  "maximumRefitMeanRelativeError": 0.0,
+  "maximumResidualRelativeError": {
+    "degreesOfFreedom": 0.0,
+    "deviance": 0.0,
+    "quasiDispersion": 0.0
+  },
+  "method": "nativeTrend-adjusted",
+  "omittedIndices": [
+    [],
+    []
+  ],
+  "outputSHA256": "aaaf40a430d42d770474d6cfc87d80528465f68ca45e6f7cc1dea4fd1fa7fd24",
+  "priorNativeSHA256": "305ea543d710cf57e2db66ba0b837887b9fd6ea8489b2883901af6ca62fe6e69",
+  "priorScale": 1,
+  "referenceSHA256": "7f710805cfad3476dcf3176953ebfe05a3c83d12e27b667bbb8a705f5d0e97f9",
+  "requestSHA256": "363ae669265e0d37e14f7c3d98f5c0e203b18b3fad77a34d3d3c15a800d1e2c4",
+  "scale": 1,
+  "scaleRelativeError": 0.0,
+  "secondsIncludingTransport": 11.70361450035125,
+  "status": "passed",
+  "transport": "remote-file-then-gzip-over-ipv4"
+}
