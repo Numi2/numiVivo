@@ -1,0 +1,879 @@
+{
+  "status": "complete-diagnostic-evidence",
+  "entries": [
+    {
+      "path": "complete.json.gz",
+      "bytes": 157,
+      "sha256": "b89683112f931f9f993d6d85caf68d27272c3df2c49ba027c6010f993ad1a0f7",
+      "logicalPath": "complete.json",
+      "logicalBytes": 199,
+      "logicalSHA256": "0ed818d2ae21af5dc4ea06fdc2a159ad00c87e8fb098d73dfe6d3ff74402299c"
+    },
+    {
+      "path": "declaration.json.gz",
+      "bytes": 276,
+      "sha256": "96fdd01ae437a693335c0539928b9ca0b5af1c9f69d0f3b1fd62e357ff9848c3",
+      "logicalPath": "declaration.json",
+      "logicalBytes": 392,
+      "logicalSHA256": "7d3eac252d845c56b5d717967bbb9b633dd26e5b05e8cc47a238f4e03678c107"
+    },
+    {
+      "path": "hagai/1/native-stages.json.gz",
+      "bytes": 641197,
+      "sha256": "3f25d5319b27d4b8fbebfb3b58b01daa0e6d0c840b2273959e1a7ad4d1da0590",
+      "logicalPath": "hagai/1/native-stages.json.gz",
+      "logicalBytes": 641197,
+      "logicalSHA256": "3f25d5319b27d4b8fbebfb3b58b01daa0e6d0c840b2273959e1a7ad4d1da0590"
+    },
+    {
+      "path": "hagai/1/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/1/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/1/stages.json.gz",
+      "bytes": 235,
+      "sha256": "d0d2b9481d693d2b80b6526420facfc2df577273fa998afbb556b457d0e06d02",
+      "logicalPath": "hagai/1/stages.json",
+      "logicalBytes": 322,
+      "logicalSHA256": "e5b09351e41818a39a4f28930f906b8e66e7a9dd44b1cc21def03918e6901bf3"
+    },
+    {
+      "path": "hagai/1/stages.tsv.gz",
+      "bytes": 724990,
+      "sha256": "35e96bba171ec9c789d48a8f55f262d8ade7998898ae49fe0ae0e46598a6ebc7",
+      "logicalPath": "hagai/1/stages.tsv.gz",
+      "logicalBytes": 724990,
+      "logicalSHA256": "35e96bba171ec9c789d48a8f55f262d8ade7998898ae49fe0ae0e46598a6ebc7"
+    },
+    {
+      "path": "hagai/1.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/1.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hagai/10/native-stages.json.gz",
+      "bytes": 643879,
+      "sha256": "bfc89d49f8a9cc67b262aa1e8c539620b7dcbf572d36c7e98fb36acf1c0a09b0",
+      "logicalPath": "hagai/10/native-stages.json.gz",
+      "logicalBytes": 643879,
+      "logicalSHA256": "bfc89d49f8a9cc67b262aa1e8c539620b7dcbf572d36c7e98fb36acf1c0a09b0"
+    },
+    {
+      "path": "hagai/10/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/10/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/10/stages.json.gz",
+      "bytes": 236,
+      "sha256": "a4ef2b14f6e32f0b9f3f712443f09b4b76f6033b37601e3399d28a3f7d4e0586",
+      "logicalPath": "hagai/10/stages.json",
+      "logicalBytes": 322,
+      "logicalSHA256": "e30e42fb933fec42ab6c6f4bc166e74b65352e18064c0d0f0c0f3c840f0f807d"
+    },
+    {
+      "path": "hagai/10/stages.tsv.gz",
+      "bytes": 725476,
+      "sha256": "0ca0a44476fe6b573daeb7ae0ddad4a9c7f00442997239e80a57b350104d200a",
+      "logicalPath": "hagai/10/stages.tsv.gz",
+      "logicalBytes": 725476,
+      "logicalSHA256": "0ca0a44476fe6b573daeb7ae0ddad4a9c7f00442997239e80a57b350104d200a"
+    },
+    {
+      "path": "hagai/10.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/10.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hagai/2/native-stages.json.gz",
+      "bytes": 641807,
+      "sha256": "8c73af7c612b2d7cbad0f71d1da6f65e6dd20eb7ed0eb84c4a9c34b69f5b8a63",
+      "logicalPath": "hagai/2/native-stages.json.gz",
+      "logicalBytes": 641807,
+      "logicalSHA256": "8c73af7c612b2d7cbad0f71d1da6f65e6dd20eb7ed0eb84c4a9c34b69f5b8a63"
+    },
+    {
+      "path": "hagai/2/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/2/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/2/stages.json.gz",
+      "bytes": 237,
+      "sha256": "7a25b7fa6935b37b4b385d36d62055aaa44b5c8fa9c74f74f190091a830ff746",
+      "logicalPath": "hagai/2/stages.json",
+      "logicalBytes": 322,
+      "logicalSHA256": "b1dafb0ea91175f47de92b11012cf73b8d5649c8d4c6f7a1930f3c7b39297c44"
+    },
+    {
+      "path": "hagai/2/stages.tsv.gz",
+      "bytes": 724251,
+      "sha256": "3032593cb4d581289abecf59fab59d73385f044d9ea3e210331820ed24879556",
+      "logicalPath": "hagai/2/stages.tsv.gz",
+      "logicalBytes": 724251,
+      "logicalSHA256": "3032593cb4d581289abecf59fab59d73385f044d9ea3e210331820ed24879556"
+    },
+    {
+      "path": "hagai/2.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/2.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hagai/3/native-stages.json.gz",
+      "bytes": 642095,
+      "sha256": "18d7e5085deba677411a3faabe06553f0edae643f52fa84c9a4ca3388950600c",
+      "logicalPath": "hagai/3/native-stages.json.gz",
+      "logicalBytes": 642095,
+      "logicalSHA256": "18d7e5085deba677411a3faabe06553f0edae643f52fa84c9a4ca3388950600c"
+    },
+    {
+      "path": "hagai/3/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/3/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/3/stages.json.gz",
+      "bytes": 236,
+      "sha256": "e2d4740090f6c5628c6e0cac62c8b8a1c2613538f924c853c4a2ba9ec5e5ae7a",
+      "logicalPath": "hagai/3/stages.json",
+      "logicalBytes": 322,
+      "logicalSHA256": "0119a7328986c9f9cb37825c9574ef0416afd8b70fe47eb6a5213b1bcf2de599"
+    },
+    {
+      "path": "hagai/3/stages.tsv.gz",
+      "bytes": 725414,
+      "sha256": "91797ff358ae16fb3c75f9b353856975fc709c3e394581877d08937569ccd68f",
+      "logicalPath": "hagai/3/stages.tsv.gz",
+      "logicalBytes": 725414,
+      "logicalSHA256": "91797ff358ae16fb3c75f9b353856975fc709c3e394581877d08937569ccd68f"
+    },
+    {
+      "path": "hagai/3.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/3.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hagai/4/native-stages.json.gz",
+      "bytes": 643433,
+      "sha256": "0ee576d45081a8709f791b6503e519b873843f39db6e667bcb21baa87220ee20",
+      "logicalPath": "hagai/4/native-stages.json.gz",
+      "logicalBytes": 643433,
+      "logicalSHA256": "0ee576d45081a8709f791b6503e519b873843f39db6e667bcb21baa87220ee20"
+    },
+    {
+      "path": "hagai/4/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/4/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/4/stages.json.gz",
+      "bytes": 235,
+      "sha256": "05f5e33a55e098700a7aa417f2be3eeaa6dbd1083ae33d922777886d9ac85953",
+      "logicalPath": "hagai/4/stages.json",
+      "logicalBytes": 322,
+      "logicalSHA256": "628e34490f1b7c0726a1ec3fb11832ed47c1cf31224cf88099d69d5abd2b8b6c"
+    },
+    {
+      "path": "hagai/4/stages.tsv.gz",
+      "bytes": 725850,
+      "sha256": "e678c9a993fdf82df83e08c83b5b05667940ac1a4d54a91d5fbc002d63df50ba",
+      "logicalPath": "hagai/4/stages.tsv.gz",
+      "logicalBytes": 725850,
+      "logicalSHA256": "e678c9a993fdf82df83e08c83b5b05667940ac1a4d54a91d5fbc002d63df50ba"
+    },
+    {
+      "path": "hagai/4.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/4.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hagai/5/native-stages.json.gz",
+      "bytes": 643736,
+      "sha256": "35f6d27a60ff0332cb1c164f9bbbef76a5aa0bf73d81298bd6faa6cfd1fb42b5",
+      "logicalPath": "hagai/5/native-stages.json.gz",
+      "logicalBytes": 643736,
+      "logicalSHA256": "35f6d27a60ff0332cb1c164f9bbbef76a5aa0bf73d81298bd6faa6cfd1fb42b5"
+    },
+    {
+      "path": "hagai/5/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/5/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/5/stages.json.gz",
+      "bytes": 234,
+      "sha256": "c8c77e7c07109d69358427e5d0df94cd4bd77c3c8e925631f411b4d2e735b6ae",
+      "logicalPath": "hagai/5/stages.json",
+      "logicalBytes": 321,
+      "logicalSHA256": "9a1cb831b95523b18939b825a33058c67f66e0f4eabc881051c9e7a6a7b32247"
+    },
+    {
+      "path": "hagai/5/stages.tsv.gz",
+      "bytes": 724415,
+      "sha256": "fb8962e57503c3936e7a443db09f85f918ac5b165d096972e82575a85abe64e6",
+      "logicalPath": "hagai/5/stages.tsv.gz",
+      "logicalBytes": 724415,
+      "logicalSHA256": "fb8962e57503c3936e7a443db09f85f918ac5b165d096972e82575a85abe64e6"
+    },
+    {
+      "path": "hagai/5.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/5.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hagai/6/native-stages.json.gz",
+      "bytes": 642560,
+      "sha256": "a884406e00d9d1ee22d5ba933864f479f752c03403c10e5fefa9d6bfa2c0673b",
+      "logicalPath": "hagai/6/native-stages.json.gz",
+      "logicalBytes": 642560,
+      "logicalSHA256": "a884406e00d9d1ee22d5ba933864f479f752c03403c10e5fefa9d6bfa2c0673b"
+    },
+    {
+      "path": "hagai/6/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/6/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/6/stages.json.gz",
+      "bytes": 236,
+      "sha256": "8eb67966e7ffc40a4ace6bac406c6c1ba9d56eae536a677169d4d05dfea27b47",
+      "logicalPath": "hagai/6/stages.json",
+      "logicalBytes": 322,
+      "logicalSHA256": "00e97d6ed5c9aa5f7a9a7b012a5318e615301b29ce3cd623734ff2101bdece64"
+    },
+    {
+      "path": "hagai/6/stages.tsv.gz",
+      "bytes": 725394,
+      "sha256": "226d5b7ed90377afa531f2954e65f4903f06642e3966bfbb6c1923b4a5b09230",
+      "logicalPath": "hagai/6/stages.tsv.gz",
+      "logicalBytes": 725394,
+      "logicalSHA256": "226d5b7ed90377afa531f2954e65f4903f06642e3966bfbb6c1923b4a5b09230"
+    },
+    {
+      "path": "hagai/6.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/6.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hagai/7/native-stages.json.gz",
+      "bytes": 641971,
+      "sha256": "2edbddd10fdb9c076438963bf7932526cb62927b890a799a01fdbb58414c1717",
+      "logicalPath": "hagai/7/native-stages.json.gz",
+      "logicalBytes": 641971,
+      "logicalSHA256": "2edbddd10fdb9c076438963bf7932526cb62927b890a799a01fdbb58414c1717"
+    },
+    {
+      "path": "hagai/7/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/7/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/7/stages.json.gz",
+      "bytes": 235,
+      "sha256": "fc41cb50dcb2b048e777dd439d69236e23ae21bd41f5fde50144ecff3bd9e9db",
+      "logicalPath": "hagai/7/stages.json",
+      "logicalBytes": 322,
+      "logicalSHA256": "744c391a33feca2f2e7f84184ff208f0b1b570136b4056d2a65ca2b47912865d"
+    },
+    {
+      "path": "hagai/7/stages.tsv.gz",
+      "bytes": 725519,
+      "sha256": "3188996a90712187ab1b78cae8534e4862b3f1b0bd5a3d10e5f659c26e8e2c8f",
+      "logicalPath": "hagai/7/stages.tsv.gz",
+      "logicalBytes": 725519,
+      "logicalSHA256": "3188996a90712187ab1b78cae8534e4862b3f1b0bd5a3d10e5f659c26e8e2c8f"
+    },
+    {
+      "path": "hagai/7.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/7.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hagai/8/native-stages.json.gz",
+      "bytes": 642429,
+      "sha256": "e44aa85be7d0334070daeb4379d93da193244c0bb5078fa05bb2b4c82579b8b9",
+      "logicalPath": "hagai/8/native-stages.json.gz",
+      "logicalBytes": 642429,
+      "logicalSHA256": "e44aa85be7d0334070daeb4379d93da193244c0bb5078fa05bb2b4c82579b8b9"
+    },
+    {
+      "path": "hagai/8/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/8/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/8/stages.json.gz",
+      "bytes": 236,
+      "sha256": "b4e7c8c2950c5381118ff4b9dbb68b768b4532527783d89d67d42e038f1b7218",
+      "logicalPath": "hagai/8/stages.json",
+      "logicalBytes": 322,
+      "logicalSHA256": "6ff71f4da0c4fe740991c2a554e1cacd6df4905ac13445c35272f65e16e8408a"
+    },
+    {
+      "path": "hagai/8/stages.tsv.gz",
+      "bytes": 724898,
+      "sha256": "0ab39bc3f9f7988592e0867f75aad0d7ecb4ae2f57a07e6be20067fa859ad97c",
+      "logicalPath": "hagai/8/stages.tsv.gz",
+      "logicalBytes": 724898,
+      "logicalSHA256": "0ab39bc3f9f7988592e0867f75aad0d7ecb4ae2f57a07e6be20067fa859ad97c"
+    },
+    {
+      "path": "hagai/8.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/8.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hagai/9/native-stages.json.gz",
+      "bytes": 640736,
+      "sha256": "25ea36308ab212c609545d309e22f9b0f0a9c0ebf33cea6a243b0ce944366be5",
+      "logicalPath": "hagai/9/native-stages.json.gz",
+      "logicalBytes": 640736,
+      "logicalSHA256": "25ea36308ab212c609545d309e22f9b0f0a9c0ebf33cea6a243b0ce944366be5"
+    },
+    {
+      "path": "hagai/9/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "hagai/9/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "hagai/9/stages.json.gz",
+      "bytes": 237,
+      "sha256": "6ed9d39b8e681d15c7e683743d43ece6fb3fc3085fdf2165f46066ae5a606de0",
+      "logicalPath": "hagai/9/stages.json",
+      "logicalBytes": 322,
+      "logicalSHA256": "2f581a5559594cc3f93ccc5d26cfdfc9e38821562b2422ffe53ff3b6851e8ea9"
+    },
+    {
+      "path": "hagai/9/stages.tsv.gz",
+      "bytes": 724832,
+      "sha256": "5f894481e7b9706becc7f08dc396d5dc82e0ca6f00719bd0d2765c2dae964231",
+      "logicalPath": "hagai/9/stages.tsv.gz",
+      "logicalBytes": 724832,
+      "logicalSHA256": "5f894481e7b9706becc7f08dc396d5dc82e0ca6f00719bd0d2765c2dae964231"
+    },
+    {
+      "path": "hagai/9.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "hagai/9.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/1/native-stages.json.gz",
+      "bytes": 341423,
+      "sha256": "0c88fa390693dc15cd48762ea34d7d8123b6fcbc8328a86545e021c19872d85b",
+      "logicalPath": "kang/1/native-stages.json.gz",
+      "logicalBytes": 341423,
+      "logicalSHA256": "0c88fa390693dc15cd48762ea34d7d8123b6fcbc8328a86545e021c19872d85b"
+    },
+    {
+      "path": "kang/1/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/1/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/1/stages.json.gz",
+      "bytes": 245,
+      "sha256": "442180b3ed9e0b398a259aad853dc6ba8a968cde3b047aca7ab3bdb2c74b8854",
+      "logicalPath": "kang/1/stages.json",
+      "logicalBytes": 334,
+      "logicalSHA256": "aebb20eca4af360a27a7002bf5e11ce557f4cd33b9b56e43a0c493960a49e250"
+    },
+    {
+      "path": "kang/1/stages.tsv.gz",
+      "bytes": 448995,
+      "sha256": "e415c15d8bcd0ffe4494436428b23002248efa7c58202ae3b78b3705f1ccfd03",
+      "logicalPath": "kang/1/stages.tsv.gz",
+      "logicalBytes": 448995,
+      "logicalSHA256": "e415c15d8bcd0ffe4494436428b23002248efa7c58202ae3b78b3705f1ccfd03"
+    },
+    {
+      "path": "kang/1.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/1.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/10/native-stages.json.gz",
+      "bytes": 342234,
+      "sha256": "54f6b079725caccf3c0d35061e7cc96ec3762ddfa9e99e4a28d24a34045544e7",
+      "logicalPath": "kang/10/native-stages.json.gz",
+      "logicalBytes": 342234,
+      "logicalSHA256": "54f6b079725caccf3c0d35061e7cc96ec3762ddfa9e99e4a28d24a34045544e7"
+    },
+    {
+      "path": "kang/10/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/10/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/10/stages.json.gz",
+      "bytes": 243,
+      "sha256": "f69d845665a4b92973ec7daae2a1c09e6a19aecfdd723cdd527119e822410221",
+      "logicalPath": "kang/10/stages.json",
+      "logicalBytes": 334,
+      "logicalSHA256": "b866011be1667a800ae7d7b13a2d47a42255466c3be879486167a684321f5eec"
+    },
+    {
+      "path": "kang/10/stages.tsv.gz",
+      "bytes": 449512,
+      "sha256": "9331994baa392a30801f15ab85b670e96a9ed712b28ed4b3ee01578a279e498b",
+      "logicalPath": "kang/10/stages.tsv.gz",
+      "logicalBytes": 449512,
+      "logicalSHA256": "9331994baa392a30801f15ab85b670e96a9ed712b28ed4b3ee01578a279e498b"
+    },
+    {
+      "path": "kang/10.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/10.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/2/native-stages.json.gz",
+      "bytes": 341609,
+      "sha256": "a11b08d6a83260992656ce207a7546b29ec23cd09908b2d398d905189891c2e9",
+      "logicalPath": "kang/2/native-stages.json.gz",
+      "logicalBytes": 341609,
+      "logicalSHA256": "a11b08d6a83260992656ce207a7546b29ec23cd09908b2d398d905189891c2e9"
+    },
+    {
+      "path": "kang/2/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/2/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/2/stages.json.gz",
+      "bytes": 244,
+      "sha256": "8cabc569d66b213b1df403e661e781d3236c8124f01ff0b34ba325c88d84bfce",
+      "logicalPath": "kang/2/stages.json",
+      "logicalBytes": 334,
+      "logicalSHA256": "939ddf2f3183dff2dd559c30547565785e9707e3c64f4f09d165b754e6934ce3"
+    },
+    {
+      "path": "kang/2/stages.tsv.gz",
+      "bytes": 449381,
+      "sha256": "f3a1b5762f480800deba2b5fe7233710d578b999a0ab46f2184dcfbc8ea561bd",
+      "logicalPath": "kang/2/stages.tsv.gz",
+      "logicalBytes": 449381,
+      "logicalSHA256": "f3a1b5762f480800deba2b5fe7233710d578b999a0ab46f2184dcfbc8ea561bd"
+    },
+    {
+      "path": "kang/2.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/2.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/3/native-stages.json.gz",
+      "bytes": 340634,
+      "sha256": "99110ec80c1b586135a33a8017b641916936b20e5f2cd45182d355e89448cb22",
+      "logicalPath": "kang/3/native-stages.json.gz",
+      "logicalBytes": 340634,
+      "logicalSHA256": "99110ec80c1b586135a33a8017b641916936b20e5f2cd45182d355e89448cb22"
+    },
+    {
+      "path": "kang/3/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/3/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/3/stages.json.gz",
+      "bytes": 243,
+      "sha256": "4766831ee9b1d3fc30a7dbd48a627de2173740c3bfdf7f934b9bbc8a29ce69fc",
+      "logicalPath": "kang/3/stages.json",
+      "logicalBytes": 334,
+      "logicalSHA256": "f5d31c713c598601cbfe96eb610c03ea96cc4a0b90d391dedd45eafd9e919c7b"
+    },
+    {
+      "path": "kang/3/stages.tsv.gz",
+      "bytes": 449512,
+      "sha256": "549ba69a8572f279f795297696eff8d17105a8d44db2ff2066755d7027b2cf98",
+      "logicalPath": "kang/3/stages.tsv.gz",
+      "logicalBytes": 449512,
+      "logicalSHA256": "549ba69a8572f279f795297696eff8d17105a8d44db2ff2066755d7027b2cf98"
+    },
+    {
+      "path": "kang/3.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/3.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/4/native-stages.json.gz",
+      "bytes": 341870,
+      "sha256": "4c2bcd6f4282a6cbe7204205114525a7878449c508ee55383c0ce3de59bde255",
+      "logicalPath": "kang/4/native-stages.json.gz",
+      "logicalBytes": 341870,
+      "logicalSHA256": "4c2bcd6f4282a6cbe7204205114525a7878449c508ee55383c0ce3de59bde255"
+    },
+    {
+      "path": "kang/4/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/4/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/4/stages.json.gz",
+      "bytes": 243,
+      "sha256": "c6b73794f715fa5464185b18f5fe22e366706d859a8d580edd60b54a4afd0990",
+      "logicalPath": "kang/4/stages.json",
+      "logicalBytes": 334,
+      "logicalSHA256": "5f6a454d180cf3774c3e267c97596cde4ee60cb6e2c5cd6ff31d67f3b25900aa"
+    },
+    {
+      "path": "kang/4/stages.tsv.gz",
+      "bytes": 450289,
+      "sha256": "8176e49d9bca23d09505b184256be0a28b0b2a622c6efcb7bbbab2692dcaa0a4",
+      "logicalPath": "kang/4/stages.tsv.gz",
+      "logicalBytes": 450289,
+      "logicalSHA256": "8176e49d9bca23d09505b184256be0a28b0b2a622c6efcb7bbbab2692dcaa0a4"
+    },
+    {
+      "path": "kang/4.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/4.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/5/native-stages.json.gz",
+      "bytes": 341377,
+      "sha256": "852c1519aead6f297c00d6968c14722f54fc74332e8e891a1d3cc6b520620ec2",
+      "logicalPath": "kang/5/native-stages.json.gz",
+      "logicalBytes": 341377,
+      "logicalSHA256": "852c1519aead6f297c00d6968c14722f54fc74332e8e891a1d3cc6b520620ec2"
+    },
+    {
+      "path": "kang/5/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/5/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/5/stages.json.gz",
+      "bytes": 244,
+      "sha256": "b8ce7bdd74f56288c53d9741d1be5d986374cdde827397c1b141bc2c71d9de06",
+      "logicalPath": "kang/5/stages.json",
+      "logicalBytes": 334,
+      "logicalSHA256": "bc55a287c39764a93347925374d8922de18ad17e4856f58c501352e47818b5f1"
+    },
+    {
+      "path": "kang/5/stages.tsv.gz",
+      "bytes": 449713,
+      "sha256": "156cd2bfb7be92a282b61f77d29ac70953cd00156a862d4be28df2026e2c455d",
+      "logicalPath": "kang/5/stages.tsv.gz",
+      "logicalBytes": 449713,
+      "logicalSHA256": "156cd2bfb7be92a282b61f77d29ac70953cd00156a862d4be28df2026e2c455d"
+    },
+    {
+      "path": "kang/5.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/5.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/6/native-stages.json.gz",
+      "bytes": 341623,
+      "sha256": "dbf7cf88e16330c42e662bdff9a07b168df104dab7d10764a54d149c631c0968",
+      "logicalPath": "kang/6/native-stages.json.gz",
+      "logicalBytes": 341623,
+      "logicalSHA256": "dbf7cf88e16330c42e662bdff9a07b168df104dab7d10764a54d149c631c0968"
+    },
+    {
+      "path": "kang/6/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/6/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/6/stages.json.gz",
+      "bytes": 244,
+      "sha256": "b62bb740a17d9779b55a2a2641a2a61f408368e79560a887ca9026114ea3eca6",
+      "logicalPath": "kang/6/stages.json",
+      "logicalBytes": 333,
+      "logicalSHA256": "42928cde53a8f39a32452629c9640619fd0eaff46675e432b6380fc76b70276d"
+    },
+    {
+      "path": "kang/6/stages.tsv.gz",
+      "bytes": 449732,
+      "sha256": "5d8f0f6403c5c08139632478a978c0f8e4dcc533325f165f5ac6282e732c34a1",
+      "logicalPath": "kang/6/stages.tsv.gz",
+      "logicalBytes": 449732,
+      "logicalSHA256": "5d8f0f6403c5c08139632478a978c0f8e4dcc533325f165f5ac6282e732c34a1"
+    },
+    {
+      "path": "kang/6.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/6.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/7/native-stages.json.gz",
+      "bytes": 341005,
+      "sha256": "f785a6083ff9e2f99c5071f01d1995cf3cdfce703291ccffcf6940e088778e57",
+      "logicalPath": "kang/7/native-stages.json.gz",
+      "logicalBytes": 341005,
+      "logicalSHA256": "f785a6083ff9e2f99c5071f01d1995cf3cdfce703291ccffcf6940e088778e57"
+    },
+    {
+      "path": "kang/7/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/7/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/7/stages.json.gz",
+      "bytes": 245,
+      "sha256": "818efaea446d0c4a169b1cb123d9ed0061a2320200f07c8ca059c7b79db445b6",
+      "logicalPath": "kang/7/stages.json",
+      "logicalBytes": 334,
+      "logicalSHA256": "6b8852531cd94d29450bbe99efabf9281f264cbf7db4f2977ec79ccebc3db96e"
+    },
+    {
+      "path": "kang/7/stages.tsv.gz",
+      "bytes": 449261,
+      "sha256": "f9081a6ae6e83c96d04e7c1df7a364f9fab681eff6a35d2548055ad9b8e7687b",
+      "logicalPath": "kang/7/stages.tsv.gz",
+      "logicalBytes": 449261,
+      "logicalSHA256": "f9081a6ae6e83c96d04e7c1df7a364f9fab681eff6a35d2548055ad9b8e7687b"
+    },
+    {
+      "path": "kang/7.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/7.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/8/native-stages.json.gz",
+      "bytes": 340460,
+      "sha256": "9cd8447a72b03a1d1e1f58180ffef5224876f79213613f77f6268156701befb7",
+      "logicalPath": "kang/8/native-stages.json.gz",
+      "logicalBytes": 340460,
+      "logicalSHA256": "9cd8447a72b03a1d1e1f58180ffef5224876f79213613f77f6268156701befb7"
+    },
+    {
+      "path": "kang/8/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/8/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/8/stages.json.gz",
+      "bytes": 244,
+      "sha256": "09732d3aaa3e1d69fd6857dcd911e7ad816d2b7cfd1af34391f045beb9cb6b8f",
+      "logicalPath": "kang/8/stages.json",
+      "logicalBytes": 334,
+      "logicalSHA256": "4df498657b64dba874f55d88bed8b925addfea7e7e968fd26b2c1d2c7fad5b15"
+    },
+    {
+      "path": "kang/8/stages.tsv.gz",
+      "bytes": 449662,
+      "sha256": "ef147c5679f3713d1857f0726200d214dfc620b64fd50d38b98c4214125158f6",
+      "logicalPath": "kang/8/stages.tsv.gz",
+      "logicalBytes": 449662,
+      "logicalSHA256": "ef147c5679f3713d1857f0726200d214dfc620b64fd50d38b98c4214125158f6"
+    },
+    {
+      "path": "kang/8.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/8.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "kang/9/native-stages.json.gz",
+      "bytes": 342676,
+      "sha256": "59f240798ed24e41e815c2e75af11c42993fbf92b8419287ee8934bd59f0958f",
+      "logicalPath": "kang/9/native-stages.json.gz",
+      "logicalBytes": 342676,
+      "logicalSHA256": "59f240798ed24e41e815c2e75af11c42993fbf92b8419287ee8934bd59f0958f"
+    },
+    {
+      "path": "kang/9/session-info.txt.gz",
+      "bytes": 802,
+      "sha256": "2d4438739cc6f75c9dd7938dbadf4874d3ce7752ee872694b78b3d7103b175cf",
+      "logicalPath": "kang/9/session-info.txt",
+      "logicalBytes": 1526,
+      "logicalSHA256": "18b96a8f9b7815fbb95f5e8678f1043a0ed182f9c2ea4b9576c4ba8e25db73ca"
+    },
+    {
+      "path": "kang/9/stages.json.gz",
+      "bytes": 244,
+      "sha256": "fd999c004e23e4cb78e4dc28bcc36e894eb76fd8427b3b8e9bce870edde75a81",
+      "logicalPath": "kang/9/stages.json",
+      "logicalBytes": 334,
+      "logicalSHA256": "3fb0a25804927a0204d1a26201d388bbaa1f63eed4413bd5cf1102b5a0b3c3f4"
+    },
+    {
+      "path": "kang/9/stages.tsv.gz",
+      "bytes": 449867,
+      "sha256": "b80c5b42e9f7c11e6ea2220966ebee4de4c9d860d9be6bca7d470cfad4f8a542",
+      "logicalPath": "kang/9/stages.tsv.gz",
+      "logicalBytes": 449867,
+      "logicalSHA256": "b80c5b42e9f7c11e6ea2220966ebee4de4c9d860d9be6bca7d470cfad4f8a542"
+    },
+    {
+      "path": "kang/9.log.gz",
+      "bytes": 20,
+      "sha256": "f1b651238a58fe290baec6c5e32f3bdb1943dd2bd582f02569231f7a757c7837",
+      "logicalPath": "kang/9.log",
+      "logicalBytes": 0,
+      "logicalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "null-calls.json.gz",
+      "bytes": 1797,
+      "sha256": "a8c3b6c721a6d65cf9648aa57dea7a96ce7b6289a1b12eee4d8e726afc72a247",
+      "logicalPath": "null-calls.json",
+      "logicalBytes": 10399,
+      "logicalSHA256": "64bc58930dff77153e7a5a4e8a983adce59e80e6453814f4b2fefb93f98c2741"
+    },
+    {
+      "path": "operational-attempts.json.gz",
+      "bytes": 199,
+      "sha256": "25a7566f8cb6021fdd71032a741af5c57bccd9a3ca2209b9061552006c1b54bf",
+      "logicalPath": "operational-attempts.json",
+      "logicalBytes": 236,
+      "logicalSHA256": "0ab77ba753d349e3371496f90aba2ce09bca9a3afba90940b5a5371119705533"
+    },
+    {
+      "path": "runs.json.gz",
+      "bytes": 6566,
+      "sha256": "b2128e751e76ca266575f1e0e3e15dfdeb6a15f58465f442299b35397b83e9ae",
+      "logicalPath": "runs.json",
+      "logicalBytes": 37442,
+      "logicalSHA256": "5df2432cbd74b9a1c8f4b47114149537dbdb7fdb38195c08fe609d669042fa20"
+    },
+    {
+      "path": "summary.json.gz",
+      "bytes": 3948,
+      "sha256": "388d5e52abf145e83647d8a40ac220f62e722cf07404101f0e634bc9699bf1e1",
+      "logicalPath": "summary.json",
+      "logicalBytes": 33087,
+      "logicalSHA256": "a86b7b722433dc54c37cde8b2c94a137ac232ec0d03dc65109bdb938d42ad4c7"
+    },
+    {
+      "path": "trend-declaration.json.gz",
+      "bytes": 161,
+      "sha256": "e09383956d9d4e5c6b7358b604317819a60d9744249e234e5747ae798173b34f",
+      "logicalPath": "trend-declaration.json",
+      "logicalBytes": 176,
+      "logicalSHA256": "12973c714ec428f74f4bfc2035725cbd607a56620a7f89140420dbd5d2beb9c6"
+    },
+    {
+      "path": "trend-decomposition/complete.json.gz",
+      "bytes": 74,
+      "sha256": "7761701c15f859f7798767780142d5ed2b0beb15fe8dd6d06f4c5c60ffc60536",
+      "logicalPath": "trend-decomposition/complete.json",
+      "logicalBytes": 62,
+      "logicalSHA256": "ae1e338796483b3532c340dfa7d455c6ebb2577b5790c191d5c2efe27bf6b469"
+    },
+    {
+      "path": "trend-decomposition/trends.json.gz",
+      "bytes": 3194,
+      "sha256": "4a3117082bffbc6d9f496484e70e44df7a2e0a83891eab70677f3871eed9d832",
+      "logicalPath": "trend-decomposition/trends.json",
+      "logicalBytes": 27106,
+      "logicalSHA256": "a655881d751615372fa9016efb54c335a7bfe7aa1d24bfeae7d7d5947d47827a"
+    }
+  ],
+  "sourceCommit": "6e6f8b20338600d7965ce00d0b7b2e23c7c9c5d0",
+  "qualification": "Post-score stage diagnosis; native inference unchanged; original count and model evidence remains in NullBenchmark."
+}

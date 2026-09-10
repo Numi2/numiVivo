@@ -12,6 +12,11 @@ Native Kang has zero BH<0.05 sham calls; Hagai has twenty calls across eight of
 ten splits under each native policy, covering fourteen distinct genes. Exact
 count/design/numerical checks pass, leaving observed statistical calibration
 concerns. The overlapping splits do not qualify general FDR control or power.
+The follow-up [dispersion-stage audit](DispersionAudit/README.md) reproduces all
+twenty DESeq2 references exactly and completes eighty trend decompositions.
+It rules out differing Hagai prior variance as the explanation and locates
+substantial differences in gene-wise estimates, trend reference admission and
+outlier spread. Those inference gaps remain open; no post-score filter is added.
 
 The actual `singlecell-analyze` route now supports an explicit
 `"model": "negativeBinomial"` contrast. It uses the existing sample selection,

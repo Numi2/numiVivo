@@ -298,6 +298,11 @@ The complete development objective remains open:
    under each policy; Kang has none, with default support coverage still limited.
    These overlapping resamples expose a calibration concern and do not establish
    general FDR control, independent-donor replication or alternative-model power.
+   A [stage audit](../Tools/Omics/NegativeBinomial/DispersionAudit/README.md)
+   exactly reproduces all twenty DESeq2 references and completes eighty trend
+   decompositions. Equal Hagai prior variance rules out a prior-strength
+   explanation; gene-wise estimation and outlier admission remain the next
+   concrete inference targets, without claiming the calibration issue fixed.
 3. **Negative-binomial DE:** an explicit native NB cohort model now runs through
    the count/analysis/replay/table CLI, with adjusted dispersion estimation,
    robust trend, prior shrinkage, offsets, shared paired/batch designs and
