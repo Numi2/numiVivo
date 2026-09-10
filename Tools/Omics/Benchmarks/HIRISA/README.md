@@ -264,7 +264,9 @@ The [storage-access qualification](STORAGE_ACCESS.md) repairs measured large-gra
 reader mapping overhead while preserving every HIRISA edge record and complete
 Baron/Hagai clustering outputs. The subsequent [bounded integration implementation](TILED_INTEGRATION.md)
 preserves complete solver trajectories across tile boundaries and all six
-Kang/Hagai regressions. Complete HIRISA integration remains open.
+Kang/Hagai regressions. The [scratch lifetime repair](SCRATCH_LIFETIME.md)
+reduces peak logical extents before full-cohort publication/replay. Complete
+HIRISA integration remains open.
 
 Sources: [GEO GSE306664](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE306664),
 [author resource](https://apps.allenimmunology.org/aifi/resources/ifn-response/),

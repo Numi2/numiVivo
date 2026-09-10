@@ -142,12 +142,17 @@ public enum VivoPCAIntegration {
             qualification: VivoIntegrationSolution.qualification + " Latent matrices use private row-major f64 scratch with one 64 MiB mapping per matrix. Shuffled access beyond a window gathers/scatters at most 8192 rows in physical order while retaining logical arithmetic order and all three whole-block phases. Buffered value bytes exclude array/index overhead and mapped pages; cell identities, covariate indices, permutations and cluster statistics remain resident. Count and PCA parent reconstruction is included. Final matrices use complete row-major u32-row/u32-column/f64 little-endian records. Work budget is an admission index, not an operation counter. No million-cell, Metal or biological qualification follows from file storage.", ridgePenalties: result.ridgePenalties,
             maximumBufferedValueBytes: result.memberships.benefitsFromBatchedAccess
                 ? min(n, VivoIntegrationMatrix.maximumBatchRows) * plan.integration!.clusters * 8 : 0)
+        // Solving is complete: original, normalized and distance scratch no
+        // longer participates in publication. Keep only the three output matrices.
+        let outputs = [result.scores, result.memberships, result.assignmentScores]
+        for matrix in matrices where !outputs.contains(where: { $0 === matrix }) { try matrix.remove() }
+        let scores = try result.scores.writeRecordsAndRemove(to: temp.appendingPathComponent("scores.bin"))
+        let memberships = try result.memberships.writeRecordsAndRemove(to: temp.appendingPathComponent("memberships.bin"))
+        let assignmentScores = try result.assignmentScores.writeRecordsAndRemove(to: temp.appendingPathComponent("assignment-scores.bin"))
         let receipt = try VivoPCAIntegrationReceipt(schemaVersion: 1, input: parent,
             plan: write(plan, temp, "plan.json", maximum: 65_536),
             metadata: VivoOmicsFileSnapshot.fingerprint(source.appendingPathComponent("metadata.json"), copyTo: temp.appendingPathComponent("metadata.json"), maximumBytes: 536_870_912),
-            scores: result.scores.writeRecords(to: temp.appendingPathComponent("scores.bin")),
-            memberships: result.memberships.writeRecords(to: temp.appendingPathComponent("memberships.bin")),
-            assignmentScores: result.assignmentScores.writeRecords(to: temp.appendingPathComponent("assignment-scores.bin")),
+            scores: scores, memberships: memberships, assignmentScores: assignmentScores,
             report: write(report, temp, "report.json", maximum: 16_777_216), implementation: implementation)
         for matrix in matrices { try matrix.remove() }
         _ = try write(receipt, temp, "receipt.json", maximum: 65_536)

@@ -3,6 +3,40 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellFileIntegrationTests {
+    @Test func consumedScratchPreservesOutputBitsAndFailureOwnership() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let matrix = try VivoIntegrationMatrix(rows: 513, columns: 3, scratch: root, windowBytes: 16_384)
+        defer { try? matrix.remove() }
+        for i in 0..<513 { try matrix.setRow(i, [Double(i) / 17, -0.0, Double.leastNonzeroMagnitude]) }
+        let expected = root.appendingPathComponent("expected.bin")
+        let fingerprint = try matrix.writeRecords(to: expected)
+        #expect(throws: (any Error).self) { try matrix.writeRecordsAndRemove(to: expected) }
+        #expect(try matrix.row(0).map(\.bitPattern) == [0.0, -0.0, Double.leastNonzeroMagnitude].map(\.bitPattern))
+        #expect(try FileManager.default.contentsOfDirectory(atPath: root.path).filter { $0.hasPrefix(".integration-matrix-") }.count == 1)
+        let output = root.appendingPathComponent("output.bin")
+        #expect(try matrix.writeRecordsAndRemove(to: output) == fingerprint)
+        #expect(try Data(contentsOf: output) == Data(contentsOf: expected))
+        #expect(throws: (any Error).self) { try matrix.row(0) }
+        try matrix.remove()
+        #expect(try FileManager.default.contentsOfDirectory(atPath: root.path).sorted() == ["expected.bin", "output.bin"])
+    }
+    @Test func cancelledSerializationLeavesScratchForOwnerCleanup() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let task = Task {
+            let matrix = try VivoIntegrationMatrix(rows: 1, columns: 3, scratch: root)
+            defer { try? matrix.remove() }
+            try matrix.setRow(0, [1, 2, 3])
+            withUnsafeCurrentTask { $0?.cancel() }
+            #expect(throws: CancellationError.self) { try matrix.writeRecordsAndRemove(to: root.appendingPathComponent("cancelled.bin")) }
+            #expect(try matrix.row(0) == [1, 2, 3])
+        }
+        try await task.value
+        #expect(try FileManager.default.contentsOfDirectory(atPath: root.path).allSatisfy { !$0.hasPrefix(".integration-matrix-") })
+    }
     @Test func completeCohortWitnessAdmissionUsesSupportedAxes() throws {
         var options = VivoSingleCellIntegrationOptions()
         options.clusters = VivoSingleCellIntegrationOptions.maximumClusters

@@ -92,6 +92,13 @@ levels, per-cell level indices, assignment centers, every objective/improvement,
 stopping reason, ridge residual and storage bounds. Large membership JSON is
 not emitted by this path. Scratch files are not restart checkpoints.
 
+After solving, publication releases its three solver-only scratch matrices.
+Each remaining output matrix is released after successful serialization and
+fingerprinting; owner cleanup still runs on every failure and cancellation.
+The report retains its conservative six-matrix scratch bounds. The
+[full-shape lifetime check](../Benchmarks/HIRISA/SCRATCH_LIFETIME.md) distinguishes
+logical extents, sampled allocated blocks and complete integration execution.
+
 Publication uses a private staging directory and a new destination. Verification
 reconstructs the parent and correction with the executing binary's identity and
 compares every artifact fingerprint. Rehashing modified outputs or a modified

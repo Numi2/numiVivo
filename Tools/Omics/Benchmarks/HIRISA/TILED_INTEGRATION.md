@@ -67,9 +67,8 @@ Complete HIRISA integration and biological preservation are still unqualified.
 The prior Kang NK-cell recall failure and unavailable evaluation strata remain
 unchanged. This storage repair does not improve those biological outcomes.
 
-Before full publication/replay, reduce the publisher's peak scratch lifetime:
-it currently retains all six matrices while writing three final artifacts.
-Release solver-only scratch after solving and each output matrix after successful
+The subsequent [scratch lifetime repair](SCRATCH_LIFETIME.md) releases
+solver-only scratch after solving and each output matrix after successful
 serialization, with cleanup/replay qualification. Full execution then needs fresh
 runtime-bound PCA ancestors and the original cohort, followed by independent
 numerical and biological-preservation checks. Exact MNN scaling and Metal work

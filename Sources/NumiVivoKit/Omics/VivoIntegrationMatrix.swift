@@ -155,4 +155,11 @@ final class VivoIntegrationMatrix {
         }
         return try writer.finish()
     }
+    /// Consume private scratch only after the complete output has been written
+    /// and fingerprinted. The owning publication cleans up on any failure.
+    func writeRecordsAndRemove(to url: URL) throws -> VivoFingerprint {
+        let fingerprint = try writeRecords(to: url)
+        try remove()
+        return fingerprint
+    }
 }
