@@ -1,0 +1,11 @@
+{
+  "attempts": [
+    {
+      "stage": "local git add",
+      "exitCode": 128,
+      "error": "unable to create temporary file: No space left on device",
+      "path": "Tools/Omics/NegativeBinomial/HeldOutRisk/evidence/2026-09-10/071/runs.json",
+      "recovery": "Archive verification remained successful; subsequent filesystem check reported 514 MiB available without additional deletion. Scoped staging retried."
+    }
+  ]
+}

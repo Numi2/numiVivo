@@ -332,6 +332,13 @@ The complete development objective remains open:
    [empirical weighted-quantile effect prior](../Tools/Omics/NegativeBinomial/EmpiricalPrior/README.md)
    now learns the contrast prior width from full-design available genes, records
    its contributing/excluded genes and fails independently of original inference.
+   A frozen [held-out-animal count-risk study](../Tools/Omics/NegativeBinomial/HeldOutRisk/README.md)
+   now evaluates all 112 overlapping Crowell training folds. Empirical shrinkage
+   improves the primary depth-conditional NB log score by 0.0426 nats/gene over
+   MLE, with 55/56 animal/population summaries improved; fixed shrinkage performs
+   better in endothelial cells. All count isolation and conditional numerical
+   checks pass. This is eight previously inspected animals, not cross-study
+   effect-truth recovery or FDR/interval calibration.
    Heavy-tailed priors, prior uncertainty, posterior coverage, effect-estimation
    risk and robust cross-study qualification remain.
    An explicit Gamma dispersion-trend option now passes controlled Kang/Hagai

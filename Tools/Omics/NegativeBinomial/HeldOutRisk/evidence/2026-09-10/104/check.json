@@ -1,0 +1,180 @@
+{
+  "case": "104",
+  "cellGroup": "Oligodendrocytes",
+  "checkerSHA256": "d3935a6ebe414e3b6d0904909501e74e3100e7d5650957d2b70f3fbce383b772",
+  "conditionalFits": 30642,
+  "errors": [],
+  "metrics": [
+    {
+      "featureIndex": 9403,
+      "maximum": 9.994896347273671e-08,
+      "method": "mle",
+      "metric": "scaledScore"
+    },
+    {
+      "featureIndex": 7931,
+      "maximum": 1.3322676295501878e-15,
+      "method": "mle",
+      "metric": "standardDeviation"
+    },
+    {
+      "featureIndex": 6307,
+      "maximum": 9.98219727326415e-08,
+      "method": "fixed",
+      "metric": "scaledScore"
+    },
+    {
+      "featureIndex": 5429,
+      "maximum": 2.220446049250313e-16,
+      "method": "fixed",
+      "metric": "standardDeviation"
+    },
+    {
+      "featureIndex": 8098,
+      "maximum": 9.992398730141269e-08,
+      "method": "empirical",
+      "metric": "scaledScore"
+    },
+    {
+      "featureIndex": 4026,
+      "maximum": 1.6653345369377348e-15,
+      "method": "empirical",
+      "metric": "standardDeviation"
+    },
+    {
+      "maximum": 2.042810365310288e-14,
+      "method": "mle",
+      "metric": "aggregateLogScore",
+      "sampleID": "LC022"
+    },
+    {
+      "maximum": 1.6653345369377348e-16,
+      "method": "mle",
+      "metric": "meanSquaredLog1pError",
+      "sampleID": "LC022"
+    },
+    {
+      "maximum": 1.4210854715202004e-14,
+      "method": "fixed",
+      "metric": "aggregateLogScore",
+      "sampleID": "LC022"
+    },
+    {
+      "maximum": 3.608224830031759e-16,
+      "method": "fixed",
+      "metric": "meanSquaredLog1pError",
+      "sampleID": "LC022"
+    },
+    {
+      "maximum": 1.9539925233402755e-14,
+      "method": "empirical",
+      "metric": "aggregateLogScore",
+      "sampleID": "LC022"
+    },
+    {
+      "maximum": 1.942890293094024e-16,
+      "method": "empirical",
+      "metric": "meanSquaredLog1pError",
+      "sampleID": "LC022"
+    },
+    {
+      "maximum": 7.993605777301127e-15,
+      "method": "mle",
+      "metric": "aggregateLogScore",
+      "sampleID": "LC017"
+    },
+    {
+      "maximum": 5.551115123125783e-16,
+      "method": "mle",
+      "metric": "meanSquaredLog1pError",
+      "sampleID": "LC017"
+    },
+    {
+      "maximum": 1.9095836023552692e-14,
+      "method": "fixed",
+      "metric": "aggregateLogScore",
+      "sampleID": "LC017"
+    },
+    {
+      "maximum": 1.887379141862766e-15,
+      "method": "fixed",
+      "metric": "meanSquaredLog1pError",
+      "sampleID": "LC017"
+    },
+    {
+      "maximum": 2.2648549702353193e-14,
+      "method": "empirical",
+      "metric": "aggregateLogScore",
+      "sampleID": "LC017"
+    },
+    {
+      "maximum": 4.218847493575595e-15,
+      "method": "empirical",
+      "metric": "meanSquaredLog1pError",
+      "sampleID": "LC017"
+    }
+  ],
+  "modelSHA256": "d65034c559f95e20ae112a90bc4bfb274fc2f6bf8c481a22843056387f766ce5",
+  "observations": [
+    {
+      "condition": "Vehicle",
+      "genes": 10214,
+      "meanLogScore": -3.296717962847112,
+      "meanSquaredLog1pError": 0.18602797133321688,
+      "method": "MLE",
+      "sampleID": "LC022"
+    },
+    {
+      "condition": "Vehicle",
+      "genes": 10214,
+      "meanLogScore": -3.2771346849456027,
+      "meanSquaredLog1pError": 0.17797599939091632,
+      "method": "fixed",
+      "sampleID": "LC022"
+    },
+    {
+      "condition": "Vehicle",
+      "genes": 10214,
+      "meanLogScore": -3.272801240425666,
+      "meanSquaredLog1pError": 0.17761286178871674,
+      "method": "empirical",
+      "sampleID": "LC022"
+    },
+    {
+      "condition": "LPS",
+      "genes": 10214,
+      "meanLogScore": -2.235566800426429,
+      "meanSquaredLog1pError": 0.6103953062300828,
+      "method": "MLE",
+      "sampleID": "LC017"
+    },
+    {
+      "condition": "LPS",
+      "genes": 10214,
+      "meanLogScore": -2.2220492725449366,
+      "meanSquaredLog1pError": 0.6002979205350906,
+      "method": "fixed",
+      "sampleID": "LC017"
+    },
+    {
+      "condition": "LPS",
+      "genes": 10214,
+      "meanLogScore": -2.2141046278393137,
+      "meanSquaredLog1pError": 0.5972655967419384,
+      "method": "empirical",
+      "sampleID": "LC017"
+    }
+  ],
+  "primaryAvailable": true,
+  "priorSDLog2": 0.5535012896058286,
+  "scoresSHA256": "f670d75cbfce541217328ef7521e0a73e76f12946ac5f44d2caf230f94a5a98d",
+  "sourceCountsAndIsolationVerified": true,
+  "status": "passed",
+  "testedGenes": 10214,
+  "trainingStatusCounts": {
+    "filteredLowExpression": 853,
+    "rankDeficientSupport": 9,
+    "tested": 10214
+  },
+  "unavailableMAPFeatureIndices": []
+}

@@ -1,0 +1,270 @@
+{
+  "checkerSHA256": "d3935a6ebe414e3b6d0904909501e74e3100e7d5650957d2b70f3fbce383b772",
+  "conditionalFits": 3381105,
+  "empiricalMinusFixed": 0.014461460113302666,
+  "fixedMinusMLE": 0.028142015347792114,
+  "folds": 112,
+  "groups": [
+    {
+      "availableFolds": 16,
+      "cellGroup": "Astrocytes",
+      "comparisons": {
+        "empiricalMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.05253588100249518,
+          "mean": 0.032531164947357416,
+          "minimum": 0.015993770194394408
+        },
+        "empiricalMinusfixed": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.012846646335988865,
+          "mean": 0.005778496759442364,
+          "minimum": 0.0011797731347038543
+        },
+        "fixedMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.03989622324292741,
+          "mean": 0.026752668187915052,
+          "minimum": 0.011861286329727605
+        }
+      },
+      "maximumTestedGenes": 10605,
+      "minimumTestedGenes": 10283,
+      "primaryAvailable": true,
+      "priorSDRange": [
+        0.6791139041228362,
+        0.7535406645754538
+      ]
+    },
+    {
+      "availableFolds": 16,
+      "cellGroup": "Endothelial",
+      "comparisons": {
+        "empiricalMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.09628326463637338,
+          "mean": 0.03252856662699499,
+          "minimum": 0.00793429277364499
+        },
+        "empiricalMinusfixed": {
+          "animals": 8,
+          "animalsImproved": 1,
+          "maximum": 0.0004032242791631724,
+          "mean": -0.0023766300993767198,
+          "minimum": -0.013462701505067454
+        },
+        "fixedMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.10974596614144083,
+          "mean": 0.03490519672637171,
+          "minimum": 0.008116728105994397
+        }
+      },
+      "maximumTestedGenes": 10035,
+      "minimumTestedGenes": 9061,
+      "primaryAvailable": true,
+      "priorSDRange": [
+        1.0556746202964982,
+        1.250279121214872
+      ]
+    },
+    {
+      "availableFolds": 16,
+      "cellGroup": "Excit. Neuron",
+      "comparisons": {
+        "empiricalMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 7,
+          "maximum": 0.17643413439288302,
+          "mean": 0.049401855274105344,
+          "minimum": -0.0008344967809055248
+        },
+        "empiricalMinusfixed": {
+          "animals": 8,
+          "animalsImproved": 6,
+          "maximum": 0.14274361055844853,
+          "mean": 0.03583561642182009,
+          "minimum": -0.006662838534868598
+        },
+        "fixedMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.033690523834434494,
+          "mean": 0.01356623885228525,
+          "minimum": 0.005357682153577237
+        }
+      },
+      "maximumTestedGenes": 11066,
+      "minimumTestedGenes": 11051,
+      "primaryAvailable": true,
+      "priorSDRange": [
+        0.2827901746878292,
+        0.40885086469791687
+      ]
+    },
+    {
+      "availableFolds": 16,
+      "cellGroup": "Inhib. Neuron",
+      "comparisons": {
+        "empiricalMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.10271548197449576,
+          "mean": 0.0517888049365694,
+          "minimum": 0.019540241391735602
+        },
+        "empiricalMinusfixed": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.07520764460131524,
+          "mean": 0.03492636995635995,
+          "minimum": 0.009589917653932023
+        },
+        "fixedMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.02750783737318052,
+          "mean": 0.01686243498020945,
+          "minimum": 0.00834906971630378
+        }
+      },
+      "maximumTestedGenes": 10966,
+      "minimumTestedGenes": 10852,
+      "primaryAvailable": true,
+      "priorSDRange": [
+        0.25397605849863863,
+        0.36021474207499954
+      ]
+    },
+    {
+      "availableFolds": 16,
+      "cellGroup": "Microglia",
+      "comparisons": {
+        "empiricalMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.06574392896849846,
+          "mean": 0.036211381477395305,
+          "minimum": 0.01921769061387346
+        },
+        "empiricalMinusfixed": {
+          "animals": 8,
+          "animalsImproved": 6,
+          "maximum": 0.0010355720925181444,
+          "mean": 0.0004237754546946859,
+          "minimum": -0.0002791146032619096
+        },
+        "fixedMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.06470835687598031,
+          "mean": 0.03578760602270062,
+          "minimum": 0.01928895816575449
+        }
+      },
+      "maximumTestedGenes": 9115,
+      "minimumTestedGenes": 7740,
+      "primaryAvailable": true,
+      "priorSDRange": [
+        0.8864842627241762,
+        1.0002463340131411
+      ]
+    },
+    {
+      "availableFolds": 16,
+      "cellGroup": "OPC",
+      "comparisons": {
+        "empiricalMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.09211741007228058,
+          "mean": 0.044032970783390024,
+          "minimum": 0.01394133954691057
+        },
+        "empiricalMinusfixed": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.01880805954027087,
+          "mean": 0.01046726723422281,
+          "minimum": 0.004224683093847936
+        },
+        "fixedMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.07330935053200971,
+          "mean": 0.033565703549167214,
+          "minimum": 0.009716656453062633
+        }
+      },
+      "maximumTestedGenes": 9922,
+      "minimumTestedGenes": 9190,
+      "primaryAvailable": true,
+      "priorSDRange": [
+        0.5935322055719653,
+        0.637653759203402
+      ]
+    },
+    {
+      "availableFolds": 16,
+      "cellGroup": "Oligodendrocytes",
+      "comparisons": {
+        "empiricalMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.14040424808074992,
+          "mean": 0.051729584181850974,
+          "minimum": 0.01730198562958707
+        },
+        "empiricalMinusfixed": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.05285462924777029,
+          "mean": 0.01617532506595548,
+          "minimum": 0.001441196077929252
+        },
+        "fixedMinusMLE": {
+          "animals": 8,
+          "animalsImproved": 8,
+          "maximum": 0.08754961883297963,
+          "mean": 0.03555425911589549,
+          "minimum": 0.011322311112539118
+        }
+      },
+      "maximumTestedGenes": 10284,
+      "minimumTestedGenes": 9879,
+      "primaryAvailable": true,
+      "priorSDRange": [
+        0.5524168820186844,
+        0.669821254391763
+      ]
+    }
+  ],
+  "independentAnimals": 8,
+  "maximumErrors": {
+    "aggregateLogScore": 3.5438318946034997e-13,
+    "meanSquaredLog1pError": 4.6629367034256575e-15,
+    "scaledScore": 9.999999802544965e-08,
+    "standardDeviation": 6.716849298982197e-14
+  },
+  "nativeFailures": [],
+  "numericalFailures": [],
+  "primaryAvailable": true,
+  "primaryEmpiricalMinusMLE": 0.042603475461094775,
+  "protocolSHA256": "07142ad0ead162b1bda03d78a847cca5b03a147084f430e6c15246eb4031ac87",
+  "qualification": "All 112 predeclared overlapping folds; eight independent animals; conditional on observed library depth; previously inspected source; no FDR or interval coverage claim",
+  "scope": "Plug-in NB score conditional on observed library depth; train-only filtering, normalization, dispersion and effect priors; no uncertainty integration, FDR or causal accuracy claim",
+  "secondarySquaredLog1pError": {
+    "empiricalMinusFixed": -0.001527924981974684,
+    "empiricalMinusMLE": -0.011392603375563495,
+    "empiricalWorseThanMLEAnimalPopulationSummaries": 6,
+    "fixedMinusMLE": -0.009864678393588813,
+    "qualification": "Secondary error; lower is better; overlapping observations, no independence-based uncertainty"
+  },
+  "status": "completed-held-out-count-risk-evaluation",
+  "testedGeneFoldPairs": 1127035
+}

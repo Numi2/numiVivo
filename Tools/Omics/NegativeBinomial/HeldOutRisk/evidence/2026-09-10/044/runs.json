@@ -1,0 +1,36 @@
+[
+  {
+    "case": "044",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-heldout-risk-20260910/build/nb-heldout",
+      "fit",
+      "/Users/n/numivivo-heldout-risk-20260910/metadata.json.gz",
+      "/Users/n/numivivo-heldout-risk-20260910/044/training.json.gz"
+    ],
+    "exitCode": 0,
+    "logicalSHA256": "ff9627209885db790c7813459326f7efbc45bf17ceacaf83eccff349d8cdf1fa",
+    "outputBytes": 7082021,
+    "outputSHA256": "83cbd27e343eebd023cd8580cb2d72ed26acaf19726d63c816800dc1129b4f91",
+    "seconds": 8.029154667,
+    "stage": "fit"
+  },
+  {
+    "case": "044",
+    "command": [
+      "/usr/bin/time",
+      "-l",
+      "/Users/n/numivivo-heldout-risk-20260910/build/nb-heldout",
+      "score",
+      "/Users/n/numivivo-heldout-risk-20260910/044/model.json.gz",
+      "/Users/n/numivivo-heldout-risk-20260910/044/test.json.gz"
+    ],
+    "exitCode": 0,
+    "logicalSHA256": "a08d46711eb87192c55d52a444d4e9e8b9e456c6341f73b47b7dd6cf04596246",
+    "outputBytes": 1343,
+    "outputSHA256": "13b568e917c74adaa9a7764bfa9a2329e877888b25f3011497bf8e996e8d2663",
+    "seconds": 0.11288116599999398,
+    "stage": "score"
+  }
+]

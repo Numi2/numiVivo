@@ -1,0 +1,26 @@
+{
+  "attempts": [
+    {
+      "stage": "preparation script write",
+      "result": "Two file-write attempts failed under disk pressure before any preparation execution; original sources unchanged"
+    },
+    {
+      "stage": "reference checker first attempt",
+      "result": "Stopped on serialized default NB options; explicit documented defaults added to the reference comparison",
+      "log": "check-first.log",
+      "source": "check-attempt-1.py.txt"
+    },
+    {
+      "stage": "bulk model mirror transfer",
+      "result": "rsync error: 071/.model.json.gz.hp0sdchXiL: write: No space left on device; checker stopped at missing model 071 after checking 000-070",
+      "log": "check-all.log",
+      "source": "check-attempt-2.py.txt"
+    },
+    {
+      "stage": "streamed final reference check",
+      "result": "Verified all 112 remote model output hashes and all numerical checks without local model mirrors",
+      "log": "check-streamed.log"
+    }
+  ],
+  "nativeFailures": 0
+}

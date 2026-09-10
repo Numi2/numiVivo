@@ -48,6 +48,12 @@ power and statistical calibration require separate evidence. Learning a width
 does not repair the retained Hagai null-calibration concern or the Crowell
 reference significance disagreements.
 
+The subsequent [held-out-animal count-risk study](../HeldOutRisk/README.md)
+finds a descriptive mean predictive-score improvement over MLE across the
+112 frozen Crowell folds, with weaker animal/population results retained.
+Its depth-conditional count score does not establish effect-truth recovery,
+prior uncertainty, cross-study benefit or FDR/interval calibration.
+
 ## Reproduction
 
 `prepare.py` freezes ten analyses from the existing fixed-prior Kang, Hagai and
