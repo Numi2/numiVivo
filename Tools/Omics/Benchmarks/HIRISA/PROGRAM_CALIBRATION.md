@@ -1,5 +1,11 @@
 # Program decoder calibration: post-result development
 
+The subsequent [complete annotation-retention diagnostic](ANNOTATION_RETENTION.md)
+finds 37 native failures among 146 supported, control-sensitive comparisons,
+including ten rare-label failures. All three Harmony references also fail.
+This separate endpoint preserves the program results below and leaves complete
+biological preservation unqualified.
+
 **PARTIAL: 28/32 controls are sensitive and all four integration candidates meet
 the original loss margins under a within-library fit. Four controls remain
 insufficient, so the complete preservation gate still does not pass.** This is

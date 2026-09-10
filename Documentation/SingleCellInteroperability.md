@@ -480,6 +480,12 @@ The complete development objective remains open:
    with independent anchor, coordinate and neighbor agreement. It remains a
    development result on already inspected cohorts; untouched-study validation
    and Ding's partial source-label coverage remain open.
+   The [full HIRISA annotation-retention diagnostic](../Tools/Omics/Benchmarks/HIRISA/ANNOTATION_RETENTION.md)
+   now evaluates all 1,612,594 cells with five independent per-cell SVD checks.
+   Native integration fails 37/146 supported, sensitive comparisons, including
+   10/29 rare comparisons; all three Harmony candidates also fail. Another 325
+   comparisons lack sufficient support or control sensitivity. These are
+   annotation-recoverability measurements, not authoritative cell identities.
    Missing rare-type strata and the insensitive original Kang erasure control
    remain explicit. Full Baron is rejected for confounding. Multiple covariates,
    prospective mapping and general multi-donor competitiveness remain open.

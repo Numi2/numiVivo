@@ -219,6 +219,13 @@ annotation-conditioned strata and independent-study replication remain open.
 Complete PCA/graph, native seed-7 integration and full-cohort clustering have
 published results; broader biological preservation remains unqualified.
 
+The [full annotation-retention diagnostic](ANNOTATION_RETENTION.md) additionally
+checks all 1,612,594 cells and 31 author labels through 114 donor folds. Native
+integration exceeds the declared loss margins in 37/146 supported, sensitive
+comparisons, including 10/29 rare ones; all Harmony references also fail. Every
+actual fit and confusion matrix matches independent per-cell SVD. Unsupported
+and insensitive comparisons remain reported, and labels remain nonauthoritative.
+
 ## Reproduction and evidence
 
 Use the pinned [requirements](requirements.txt). Each script uses the same root:

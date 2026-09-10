@@ -52,7 +52,11 @@ complete biological preservation. Full-cohort
 [clustering publication, replay and independent checks](Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md)
 now pass. [Native program scoring](Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
 also reproduces the complete cohort’s reference scores exactly and passes replay.
-Broader biological preservation remains open.
+The new [annotation-retention diagnostic](Tools/Omics/Benchmarks/HIRISA/ANNOTATION_RETENTION.md)
+finds native losses beyond its margins in **37/146** supported, sensitive
+comparisons, including **10/29 rare-label comparisons**. All three Harmony
+references also fail the complete gate. Broader biological preservation remains
+unqualified.
 
 ## One scientific question, several scales
 

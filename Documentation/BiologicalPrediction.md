@@ -8,8 +8,8 @@ targets, and a GO-based prototype predicts some unseen targets with a small,
 nonuniform advantage over simple baselines.
 
 This assessment reviews the expression-prediction evidence and subsequent
-full-cohort scoring, clustering, decoder calibration and complete preparation
-transfer through 2026-09-11, with the retained Adamson experimental-role audit.
+full-cohort scoring, clustering, decoder calibration, preparation transfer and
+annotation retention through 2026-09-11, with the retained Adamson experimental-role audit.
 It distinguishes measured held-out expression outcomes from numerical
 reconstruction, integration diagnostics and conditional molecular simulations.
 Each linked experiment retains its actual source, executable and platform
@@ -151,8 +151,18 @@ then increases sensitivity to 28/32 comparisons and meets the same loss margins
 in all four candidates. Direct per-cell SVD checks verify every fit. This shows
 that the earlier losses depend on the decoder objective; it is development
 evidence after known outcomes, not independent biological replication. Four
-controls remain insufficient, and complete preservation remains unqualified. Rare-cell and native multi-seed preservation
-remain open. Full-cohort [clustering publication, native replay and independent
+controls remain insufficient, and complete preservation remains unqualified.
+
+The subsequent [annotation-retention diagnostic](../Tools/Omics/Benchmarks/HIRISA/ANNOTATION_RETENTION.md)
+evaluates every original cell across 114 donor folds, 23 preparation/treatment
+strata and 31 exact author labels. Native integration exceeds recall-loss margins
+in 37/146 supported, control-sensitive label/stratum comparisons, including
+10/29 rare comparisons. Harmony seeds 7/19/41 fail 41/39/38 comparisons. All five
+representations match independent per-cell SVD fits and exact query confusion.
+Another 308 comparisons lack sufficient support and seventeen more lack control
+sensitivity. These are annotation recoverability failures under a fixed decoder;
+author predictions are not biological truth. No candidate qualifies complete
+preservation, and native multi-seed robustness remains open. Full-cohort [clustering publication, native replay and independent
 partition checks](../Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md) now
 pass for all original cells; graph communities are not validated cell types.
 
@@ -169,7 +179,9 @@ Lower donor-associated variance also does not isolate technical batch removal.
    validation without treating graph partitions as authoritative annotations.
 2. Validate the revised within-library diagnostic on independent contexts and
    measured endpoints, retaining four insufficient controls and the original
-   decoder/Kang NK-recall failures. Complete rare-cell and neighborhood checks.
+   decoder/Kang NK-recall failures. Address the measured HIRISA annotation/rare-label
+   retention failures, retain all insufficient strata, and complete neighborhood
+   and independent biological validation.
    The [compact native program artifact](../Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
    now passes full-cohort publication, replay and independent comparison.
 3. Resolve Adamson controls and its 94-versus-93 guide roster from primary records, then execute the

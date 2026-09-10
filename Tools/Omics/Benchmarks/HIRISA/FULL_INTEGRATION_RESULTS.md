@@ -1,5 +1,11 @@
 # Complete native HIRISA integration result
 
+The subsequent [complete annotation-retention diagnostic](ANNOTATION_RETENTION.md)
+finds 37 native failures among 146 supported, control-sensitive comparisons,
+including ten rare-label failures. All three Harmony references also fail.
+This separate endpoint preserves the program results below and leaves complete
+biological preservation unqualified.
+
 A subsequent [within-library decoder development experiment](PROGRAM_CALIBRATION.md)
 meets the unchanged program-loss margins with 28/32 sensitive controls, four
 insufficient. It identifies objective dependence without replacing the original
