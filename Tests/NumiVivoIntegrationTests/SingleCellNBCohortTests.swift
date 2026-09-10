@@ -3,6 +3,35 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellNBCohortTests {
+    @Test func singletonBatchDoesNotRequireUnrequestedInfluenceDiagnostics() throws {
+        let source = try Self.fixture()
+        let samples = source.samples.enumerated().map { i,s in
+            VivoOmicsSample(id: s.id,biologicalReplicateID: s.id,donorID: s.id,
+                condition: s.condition,batchID: i == 0 ? "singleton" : "shared",organism: s.organism)
+        }
+        let data = VivoSingleCellDataset(id: source.id,evidence: source.evidence,sourceDescription: source.sourceDescription,
+            countUnit: source.countUnit,samples: samples,features: source.features,cells: source.cells,matrix: source.matrix)
+        var request = VivoOmicsExpressionContrast(id: "singleton",controlCondition: "ctrl",treatmentCondition: "stim",design: .independentReplicates)
+        request.model = .negativeBinomial;request.minimumCellsPerPseudobulk = 1;request.adjustForBatch = true
+        let methods: [VivoOmicsNBTestMethod?] = [nil,.likelihoodRatio]
+        for method in methods {
+            var options = VivoOmicsNBCohortOptions();options.trend = .mean;options.testMethod = method
+            request.negativeBinomialOptions = options
+            let result = try VivoPseudobulkDifferentialExpression.run(data,contrast: request)
+            let diagnostics = try #require(result.negativeBinomial?.features)
+            let missing = result.features.filter { $0.status == .tested && diagnostics[$0.featureIndex].finalFit?.cooksDistances == nil }
+            #expect(missing.count > 50)
+            #expect(missing.allSatisfy { $0.pValue != nil && $0.adjustedPValue != nil })
+            #expect(result.design.residualDegreesOfFreedom == 9)
+            options.maximumCooksDistance = 1e9;request.negativeBinomialOptions = options
+            let requested = try VivoPseudobulkDifferentialExpression.run(data,contrast: request)
+            for f in missing {
+                #expect(requested.features[f.featureIndex].status == .numericalFailure)
+                #expect(requested.features[f.featureIndex].pValue == nil)
+                #expect(requested.negativeBinomial?.features[f.featureIndex].finalFit == diagnostics[f.featureIndex].finalFit)
+            }
+        }
+    }
     @Test func explicitLikelihoodRatioUsesSameDispersionAndOwnBHFamily() throws {
         let data = try Self.fixture()
         var request = VivoOmicsExpressionContrast(id: "lrt",controlCondition: "ctrl",treatmentCondition: "stim",design: .pairedDonors)

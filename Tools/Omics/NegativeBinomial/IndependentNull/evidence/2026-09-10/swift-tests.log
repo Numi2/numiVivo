@@ -1,0 +1,73 @@
+[0/1] Planning build
+Building for debugging...
+[0/6] Write sources
+[1/6] Write swift-version-3CD7052B146186F2.txt
+[3/7] Emitting module NumiVivoIntegrationTests
+[4/7] Compiling NumiVivoIntegrationTests SingleCellSnapshotTests.swift
+[5/7] Compiling NumiVivoIntegrationTests SingleCellQLInferenceTests.swift
+[5/7] Write Objects.LinkFileList
+warning: /Users/n/numivivo-h5ad-20260909/.build/arm64-apple-macosx/debug/ModuleCache/2QN131FK6QAIU/_SwiftConcurrencyShims-YRTOM2Y1Q1ED.pcm: No such file or directory
+note: while processing /Users/n/numivivo-h5ad-20260909/.build/arm64-apple-macosx/debug/ModuleCache/2QN131FK6QAIU/_SwiftConcurrencyShims-YRTOM2Y1Q1ED.pcm
+note: The clang module cache may have expired since this object file was built. Rebuilding the object file will rebuild the module cache.
+[6/7] Linking NumiVivoPackageTests
+Build complete! (3.63s)
+Test Suite 'Selected tests' started at 2026-09-10 12:40:18.302.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-10 12:40:18.307.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-10 12:40:18.307.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-10 12:40:18.307.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellSnapshotTests started.
+◇ Suite SingleCellPCABundleTests started.
+◇ Suite SingleCellCohortTests started.
+◇ Suite SingleCellInterchangeTests started.
+◇ Suite SingleCellMappedReductionTests started.
+◇ Suite SingleCellPCAQueryTests started.
+◇ Test snapshotCopiesExactBytesAndRejectsSmallerAdmission() started.
+◇ Test standalonePlanRequiresProjectionCenters() started.
+◇ Test densePCARecordsRetainSignedAndExtremeFiniteValues() started.
+◇ Test oversizedSparseSourceIsRejectedBeforeCopying() started.
+◇ Test incompletePairsAndConfoundedBatchAreRejected() started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test unknownScientificOptionsCannotBeIgnored() started.
+◇ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() started.
+◇ Test malformedCachesAndBudgetsAreRejected() started.
+◇ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test scoreWindowsPreserveEveryValueAcrossRewindsAndPageBoundaries() started.
+◇ Test qualitySelectionPreservesCountsAndSourceIdentity() started.
+◇ Test mappedProductsMatchExplicitMatrixAndAdjoint() started.
+◇ Test frozenProjectionUsesTrainingCentersAndAllGeneTotals() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test sharedStreamedQualityMatchesResidentQuality() started.
+◇ Test repeatedProductsCrossMappingWindows() started.
+✔ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() passed after 0.003 seconds.
+✔ Test unknownScientificOptionsCannotBeIgnored() passed after 0.003 seconds.
+✔ Test oversizedSparseSourceIsRejectedBeforeCopying() passed after 0.003 seconds.
+✔ Test mappedProductsMatchExplicitMatrixAndAdjoint() passed after 0.003 seconds.
+✔ Test frozenProjectionUsesTrainingCentersAndAllGeneTotals() passed after 0.003 seconds.
+✔ Test densePCARecordsRetainSignedAndExtremeFiniteValues() passed after 0.003 seconds.
+✔ Test standalonePlanRequiresProjectionCenters() passed after 0.003 seconds.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.003 seconds.
+✔ Test malformedCachesAndBudgetsAreRejected() passed after 0.003 seconds.
+✔ Test sharedStreamedQualityMatchesResidentQuality() passed after 0.004 seconds.
+✔ Suite SingleCellPCABundleTests passed after 0.004 seconds.
+✔ Test qualitySelectionPreservesCountsAndSourceIdentity() passed after 0.005 seconds.
+✔ Test incompletePairsAndConfoundedBatchAreRejected() passed after 0.008 seconds.
+✔ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() passed after 0.011 seconds.
+✔ Suite SingleCellCohortTests passed after 0.011 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.014 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.015 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.027 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.027 seconds.
+✔ Test snapshotCopiesExactBytesAndRejectsSmallerAdmission() passed after 0.084 seconds.
+✔ Suite SingleCellSnapshotTests passed after 0.085 seconds.
+✔ Test repeatedProductsCrossMappingWindows() passed after 0.910 seconds.
+✔ Suite SingleCellMappedReductionTests passed after 0.910 seconds.
+✔ Test scoreWindowsPreserveEveryValueAcrossRewindsAndPageBoundaries() passed after 1.227 seconds.
+✔ Suite SingleCellPCAQueryTests passed after 1.227 seconds.
+✔ Test run with 19 tests in 6 suites passed after 1.227 seconds.

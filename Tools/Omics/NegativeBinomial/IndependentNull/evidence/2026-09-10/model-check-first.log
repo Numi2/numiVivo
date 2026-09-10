@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/NegativeBinomial/IndependentNull/check_models.py", line 81, in <module>
+    check('reported-log2-effect',[features[g]['log2FoldChange'] for g in rows],effect/np.log(2),2e-12,True)
+                                  ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'log2FoldChange'

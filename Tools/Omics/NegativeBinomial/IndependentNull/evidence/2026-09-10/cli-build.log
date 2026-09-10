@@ -1,0 +1,34 @@
+[0/1] Planning build
+Building for debugging...
+[0/4] Write sources
+[2/5] Write swift-version-3CD7052B146186F2.txt
+[4/12] Compiling NumiVivoKit VivoOmicsNBQLCohort.swift
+[5/12] Compiling NumiVivoKit VivoOmicsNegativeBinomial.swift
+[6/12] Compiling NumiVivoKit VivoOmicsNBQLInference.swift
+[7/12] Compiling NumiVivoKit VivoH5ADPseudobulk.swift
+[8/12] Compiling NumiVivoKit VivoPseudobulkDifferentialExpression.swift
+[9/12] Emitting module NumiVivoKit
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Omics/VivoH5ADAnnotations.swift:219:23: warning: no calls to throwing functions occur within 'try' expression
+217 |         let outputLimit = 2 * 1_024 * 1_024 * 1_024
+218 |         let output = try VivoOmicsFileSnapshot.fingerprint(staging, maximumBytes: outputLimit)
+219 |         let receipt = try VivoH5ADAnnotationReceipt(schemaVersion: 1, source: plan.source, plan: planID,
+    |                       `- warning: no calls to throwing functions occur within 'try' expression
+220 |             output: output, implementation: implementation, hdf5Version: version)
+221 |         guard destination.isFileURL else { throw VivoOmicsError.invalid("local H5AD output required") }
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Surrogates/VivoReactiveMetalBackend.swift:54:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 52 |         coefficients = try buffer(payload.coefficientsKJPerMol.flatMap { $0 })
+ 53 |         scales = try buffer(payload.configuration.features.map { 1/($0.scaleNM*$0.scaleNM) })
+ 54 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 55 |         let library = try device.makeLibrary(source: Self.source,options: options)
+ 56 |         guard let function = library.makeFunction(name: "vivo_reactive_delta") else { throw VivoChemistryError.invalid("missing reactive Metal kernel") }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[10/12] Compiling NumiVivoKit VivoOmicsNBCohort.swift
+[11/14] Compiling NumiVivoCLI VivoSingleCellCLICommands.swift
+[12/14] Emitting module NumiVivoCLI
+[12/15] Write Objects.LinkFileList
+[13/15] Linking numivivo
+[14/15] Applying numivivo
+Build of product 'numivivo' complete! (7.67s)

@@ -1,0 +1,79 @@
+[0/1] Planning build
+Building for debugging...
+[0/6] Write sources
+[2/6] Write swift-version-3CD7052B146186F2.txt
+[4/9] Compiling NumiVivoKit VivoPCANeighborBundle.swift
+[5/9] Emitting module NumiVivoKit
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Omics/VivoH5ADAnnotations.swift:219:23: warning: no calls to throwing functions occur within 'try' expression
+217 |         let outputLimit = 2 * 1_024 * 1_024 * 1_024
+218 |         let output = try VivoOmicsFileSnapshot.fingerprint(staging, maximumBytes: outputLimit)
+219 |         let receipt = try VivoH5ADAnnotationReceipt(schemaVersion: 1, source: plan.source, plan: planID,
+    |                       `- warning: no calls to throwing functions occur within 'try' expression
+220 |             output: output, implementation: implementation, hdf5Version: version)
+221 |         guard destination.isFileURL else { throw VivoOmicsError.invalid("local H5AD output required") }
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Surrogates/VivoReactiveMetalBackend.swift:54:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 52 |         coefficients = try buffer(payload.coefficientsKJPerMol.flatMap { $0 })
+ 53 |         scales = try buffer(payload.configuration.features.map { 1/($0.scaleNM*$0.scaleNM) })
+ 54 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 55 |         let library = try device.makeLibrary(source: Self.source,options: options)
+ 56 |         guard let function = library.makeFunction(name: "vivo_reactive_delta") else { throw VivoChemistryError.invalid("missing reactive Metal kernel") }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[6/9] Compiling NumiVivoKit VivoH5ADPCAQuery.swift
+[6/10] Write Objects.LinkFileList
+[7/12] Linking numivivo
+[8/12] Applying numivivo
+[10/12] Emitting module NumiVivoIntegrationTests
+[11/12] Compiling NumiVivoIntegrationTests SingleCellSnapshotTests.swift
+[11/13] Write Objects.LinkFileList
+warning: /Users/n/numivivo-h5ad-20260909/.build/arm64-apple-macosx/debug/ModuleCache/2QN131FK6QAIU/_SwiftConcurrencyShims-YRTOM2Y1Q1ED.pcm: No such file or directory
+note: while processing /Users/n/numivivo-h5ad-20260909/.build/arm64-apple-macosx/debug/ModuleCache/2QN131FK6QAIU/_SwiftConcurrencyShims-YRTOM2Y1Q1ED.pcm
+note: The clang module cache may have expired since this object file was built. Rebuilding the object file will rebuild the module cache.
+[12/13] Linking NumiVivoPackageTests
+Build complete! (10.49s)
+Test Suite 'Selected tests' started at 2026-09-10 13:08:18.216.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-10 13:08:18.222.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-10 13:08:18.222.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-10 13:08:18.222.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.006) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellPCAQueryTests started.
+◇ Suite SingleCellGraphStoreTests started.
+◇ Suite SingleCellWindowedNeighborTests started.
+◇ Suite SingleCellPCABundleTests started.
+◇ Test scoreWindowsPreserveEveryValueAcrossRewindsAndPageBoundaries() started.
+◇ Test frozenProjectionUsesTrainingCentersAndAllGeneTotals() started.
+◇ Suite SingleCellSnapshotTests started.
+◇ Test streamingExactAndHNSWPropagateSinkFailure() started.
+◇ Test parallelTilesMatchResidentGraphIncludingDistanceTies() started.
+◇ Test binaryTransposeMatchesResidentWithTiesAndDisconnectedComponents() started.
+◇ Test scoreTilesCrossMappingBoundaryAndRewind() started.
+◇ Test oversizedSparseSourceIsRejectedBeforeCopying() started.
+◇ Test standalonePlanRequiresProjectionCenters() started.
+◇ Test sharedStreamedQualityMatchesResidentQuality() started.
+◇ Test snapshotCopiesExactBytesAndRejectsSmallerAdmission() started.
+◇ Test downstreamSnapshotsAcceptTheStreamedSourceByteBudget() started.
+◇ Test densePCARecordsRetainSignedAndExtremeFiniteValues() started.
+✔ Test frozenProjectionUsesTrainingCentersAndAllGeneTotals() passed after 0.001 seconds.
+✔ Test sharedStreamedQualityMatchesResidentQuality() passed after 0.001 seconds.
+✔ Test standalonePlanRequiresProjectionCenters() passed after 0.002 seconds.
+✔ Test oversizedSparseSourceIsRejectedBeforeCopying() passed after 0.002 seconds.
+✔ Test densePCARecordsRetainSignedAndExtremeFiniteValues() passed after 0.004 seconds.
+✔ Suite SingleCellPCABundleTests passed after 0.004 seconds.
+✔ Test binaryTransposeMatchesResidentWithTiesAndDisconnectedComponents() passed after 0.005 seconds.
+✔ Test streamingExactAndHNSWPropagateSinkFailure() passed after 0.006 seconds.
+✔ Suite SingleCellGraphStoreTests passed after 0.006 seconds.
+✔ Test snapshotCopiesExactBytesAndRejectsSmallerAdmission() passed after 0.085 seconds.
+✔ Test parallelTilesMatchResidentGraphIncludingDistanceTies() passed after 0.115 seconds.
+✔ Test scoreTilesCrossMappingBoundaryAndRewind() passed after 0.162 seconds.
+✔ Suite SingleCellWindowedNeighborTests passed after 0.162 seconds.
+✔ Test scoreWindowsPreserveEveryValueAcrossRewindsAndPageBoundaries() passed after 1.390 seconds.
+✔ Suite SingleCellPCAQueryTests passed after 1.390 seconds.
+✔ Test downstreamSnapshotsAcceptTheStreamedSourceByteBudget() passed after 1.536 seconds.
+✔ Suite SingleCellSnapshotTests passed after 1.536 seconds.
+✔ Test run with 12 tests in 5 suites passed after 1.537 seconds.

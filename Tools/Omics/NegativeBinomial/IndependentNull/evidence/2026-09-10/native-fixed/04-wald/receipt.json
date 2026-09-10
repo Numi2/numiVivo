@@ -1,0 +1,20 @@
+{
+  "binarySHA256": "d7aa8e45560d52453b33bc53d3ecbd181ed67ebeae7c3c2bf206385fc348754e",
+  "cohort": "04",
+  "command": [
+    "/usr/bin/time",
+    "-l",
+    "/Users/n/numivivo-independent-null-20260910/build-influence-fix/independent-null",
+    "/Users/n/numivivo-independent-null-20260910/source-report.json.gz",
+    "/Users/n/numivivo-independent-null-20260910/requests/04-wald.json"
+  ],
+  "error": null,
+  "method": "wald",
+  "outputSHA256": "ffb00784cda59cbc57a139bc6512a5ff2de0e0b6952e8bccbab4c9e1ee56651e",
+  "path": "04-wald.json",
+  "protocolSHA256": "4605983598e1f14987b9aa4c9d60204140d4996ec07bbe4fe5a81bb354685bd9",
+  "requestSHA256": "09a1cacaba365df4e9a10a166161ce119e63bf9f0959fde9e6a2b7fa4ccb7cd0",
+  "returnCode": 0,
+  "seconds": 29.081191301345825,
+  "sourceReportSHA256": "b6b8aade422b88bd3bf2219b938ffacae0dbc93e1027c51654ea1f3b248134ae"
+}

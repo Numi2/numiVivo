@@ -1,0 +1,295 @@
+{
+  "cases": 18,
+  "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+  "results": [
+    {
+      "checkedFits": 14698,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "01",
+      "featureStatuses": {
+        "filteredLowExpression": 16749,
+        "rankDeficientSupport": 910,
+        "tested": 14698
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "c71055a8d6cc6958f0fce83e9d7f7187b91c745ed968d56c1cf9e0e522d34cc2",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 14698
+    },
+    {
+      "checkedFits": 14698,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "01",
+      "featureStatuses": {
+        "filteredLowExpression": 16749,
+        "rankDeficientSupport": 910,
+        "tested": 14698
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "4730facef35fc37f81b5a225af5c44fd32219406121d12ee21f4605b34d05d8c",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 14698
+    },
+    {
+      "checkedFits": 15930,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "02",
+      "featureStatuses": {
+        "filteredLowExpression": 16250,
+        "rankDeficientSupport": 177,
+        "tested": 15930
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "4303371ddf8b255b5cc07226b33bc521850e6b15fc0e772391e9285aab40e5d9",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15930
+    },
+    {
+      "checkedFits": 15930,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "02",
+      "featureStatuses": {
+        "filteredLowExpression": 16250,
+        "rankDeficientSupport": 177,
+        "tested": 15930
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "4a2249115949854b2b4378e147634aabbb3bbca40ff84dffe36a7f22b29b2697",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15930
+    },
+    {
+      "checkedFits": 15177,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "03",
+      "featureStatuses": {
+        "filteredLowExpression": 16444,
+        "rankDeficientSupport": 736,
+        "tested": 15177
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "d24e51a429c19052daa94c5d094fe81fe6523ecf1758811c43ac74ea38166e5e",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15177
+    },
+    {
+      "checkedFits": 15177,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "03",
+      "featureStatuses": {
+        "filteredLowExpression": 16444,
+        "rankDeficientSupport": 736,
+        "tested": 15177
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "a100cdbf600bddf042607ff455df759e2c5ff2ef95d2678892ccd91d1e7a0bfc",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15177
+    },
+    {
+      "checkedFits": 15553,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "04",
+      "featureStatuses": {
+        "filteredLowExpression": 16057,
+        "rankDeficientSupport": 747,
+        "tested": 15553
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "ffb00784cda59cbc57a139bc6512a5ff2de0e0b6952e8bccbab4c9e1ee56651e",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15553
+    },
+    {
+      "checkedFits": 15553,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "04",
+      "featureStatuses": {
+        "filteredLowExpression": 16057,
+        "rankDeficientSupport": 747,
+        "tested": 15553
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "d764aea140d6e3274d5b5ccbcbc34230475bc1972ea8caea8a1ff6b20f375af3",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15553
+    },
+    {
+      "checkedFits": 14223,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "05",
+      "featureStatuses": {
+        "filteredLowExpression": 16067,
+        "rankDeficientSupport": 2067,
+        "tested": 14223
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "7ccf641d3f057d57c02f4975a9aeeafbddbbc61f0101c85953b66741fca09d21",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 14223
+    },
+    {
+      "checkedFits": 14223,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "05",
+      "featureStatuses": {
+        "filteredLowExpression": 16067,
+        "rankDeficientSupport": 2067,
+        "tested": 14223
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "dbcf674a7b9e5102ddb1c707b6b9ef7d95e1bb2222edf740ba1f451cc6b01904",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 14223
+    },
+    {
+      "checkedFits": 14199,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "06",
+      "featureStatuses": {
+        "filteredLowExpression": 15896,
+        "rankDeficientSupport": 2262,
+        "tested": 14199
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "35c3c63ee5ae1f71e1ce7c3d55848eaed7e5dac1eb69ee42eeeef8fac23dd7e7",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 14199
+    },
+    {
+      "checkedFits": 14199,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "06",
+      "featureStatuses": {
+        "filteredLowExpression": 15896,
+        "rankDeficientSupport": 2262,
+        "tested": 14199
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "a699e26096f4844f4c8e9891a8e9b6123fff85d453707d7be3cb2a5b940a1728",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 14199
+    },
+    {
+      "checkedFits": 15996,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "07",
+      "featureStatuses": {
+        "filteredLowExpression": 16264,
+        "rankDeficientSupport": 97,
+        "tested": 15996
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "6974297d956639d1600b037453e184cfa76e19b9f303caea6dacef9882066bf6",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15996
+    },
+    {
+      "checkedFits": 15996,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "07",
+      "featureStatuses": {
+        "filteredLowExpression": 16264,
+        "rankDeficientSupport": 97,
+        "tested": 15996
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "ee4a3a3d01b9847fed914939a384dc0d8c28491c762ed9a52d032b6036ecda81",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15996
+    },
+    {
+      "checkedFits": 13342,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "08",
+      "featureStatuses": {
+        "filteredLowExpression": 16332,
+        "rankDeficientSupport": 2683,
+        "tested": 13342
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "06197acd0c112ffd25e843c23c056aecb018f946c9844acfdd7d5c9cd49028c7",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 13342
+    },
+    {
+      "checkedFits": 13342,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "08",
+      "featureStatuses": {
+        "filteredLowExpression": 16332,
+        "rankDeficientSupport": 2683,
+        "tested": 13342
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "902ba122845f6dc996968c6aa5787acc1c8779b76f60875641afff6bdaedb97d",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 13342
+    },
+    {
+      "checkedFits": 13474,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "09",
+      "featureStatuses": {
+        "filteredLowExpression": 17003,
+        "rankDeficientSupport": 1880,
+        "tested": 13474
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "b107a66837bed40e6f39f1fcb23d7a7923f20d4e9aa0ac3d912c3505a2bde70a",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 13474
+    },
+    {
+      "checkedFits": 13474,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "09",
+      "featureStatuses": {
+        "filteredLowExpression": 17003,
+        "rankDeficientSupport": 1880,
+        "tested": 13474
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "f07b9e2cf2880254097f32874ea30ab0be09f69a453b083a67b6177bddb48d23",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 13474
+    }
+  ],
+  "status": "passed"
+}

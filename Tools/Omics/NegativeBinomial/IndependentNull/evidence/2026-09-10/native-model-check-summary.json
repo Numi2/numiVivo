@@ -1,0 +1,453 @@
+{
+  "cases": 27,
+  "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+  "results": [
+    {
+      "checkedFits": 14698,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "01",
+      "featureStatuses": {
+        "filteredLowExpression": 16749,
+        "numericalFailure": 13854,
+        "rankDeficientSupport": 910,
+        "tested": 844
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "4d2807ce0c476ef0f5f1fb9c2680dfecfb1f6892a63ae7fbeaf37cc1c296753e",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 844
+    },
+    {
+      "checkedFits": 14698,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "01",
+      "featureStatuses": {
+        "filteredLowExpression": 16749,
+        "numericalFailure": 13854,
+        "rankDeficientSupport": 910,
+        "tested": 844
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "16a1f4315196b25d7854d894fdded10b4560f814647b4adedb11828f8abfb87b",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 844
+    },
+    {
+      "checkedFits": 14698,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "01",
+      "featureStatuses": {
+        "filteredLowExpression": 16749,
+        "rankDeficientSupport": 910,
+        "tested": 14698
+      },
+      "method": "ql",
+      "methodError": null,
+      "outputSHA256": "dff9fafb4f0a6ed837bc02bfc7c350d306331ceb0b05d5bc87164c53c85b08e3",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 14698
+    },
+    {
+      "checkedFits": 15930,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "02",
+      "featureStatuses": {
+        "filteredLowExpression": 16250,
+        "rankDeficientSupport": 177,
+        "tested": 15930
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "c7e8bc0a8fd285e071d20bd88de084266a5d9a06a7fc03b281575a9e04b37c6a",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15930
+    },
+    {
+      "checkedFits": 15930,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "02",
+      "featureStatuses": {
+        "filteredLowExpression": 16250,
+        "rankDeficientSupport": 177,
+        "tested": 15930
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "756877cec1cd53f9d5a69277d52a2561f253ab901a83a77bc1fe5da4b6a7a4ff",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15930
+    },
+    {
+      "checkedFits": 15930,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "02",
+      "featureStatuses": {
+        "filteredLowExpression": 16250,
+        "rankDeficientSupport": 177,
+        "tested": 15930
+      },
+      "method": "ql",
+      "methodError": null,
+      "outputSHA256": "cb93220af2f0aaba1f11280c3b95607cb487f8e2ae90b6afd3e079618b49831e",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15930
+    },
+    {
+      "checkedFits": 15177,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "03",
+      "featureStatuses": {
+        "filteredLowExpression": 16444,
+        "numericalFailure": 11403,
+        "rankDeficientSupport": 736,
+        "tested": 3774
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "b804db628b6c05b1f748a74b80bd8c9c184bd895fc2742c1a6ecb74d71ab217f",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 3774
+    },
+    {
+      "checkedFits": 15177,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "03",
+      "featureStatuses": {
+        "filteredLowExpression": 16444,
+        "numericalFailure": 11403,
+        "rankDeficientSupport": 736,
+        "tested": 3774
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "d336bd359eda8c67264d088cb0b86e9794d065cf9d031084512a282f35071af4",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 3774
+    },
+    {
+      "checkedFits": 15177,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "03",
+      "featureStatuses": {
+        "filteredLowExpression": 16444,
+        "rankDeficientSupport": 736,
+        "tested": 15177
+      },
+      "method": "ql",
+      "methodError": null,
+      "outputSHA256": "dba093057f3701cdb3a70fdb1aaa60e5e72200a66717c56a2c86d4699d9675e7",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15177
+    },
+    {
+      "checkedFits": 15553,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "04",
+      "featureStatuses": {
+        "filteredLowExpression": 16057,
+        "numericalFailure": 11355,
+        "rankDeficientSupport": 747,
+        "tested": 4198
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "aecad1782582d25c1a5b09d83ffb7107e00fe5ce2b90819a96caf15f889005f7",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 4198
+    },
+    {
+      "checkedFits": 15553,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "04",
+      "featureStatuses": {
+        "filteredLowExpression": 16057,
+        "numericalFailure": 11355,
+        "rankDeficientSupport": 747,
+        "tested": 4198
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "dc895734d7019b99287ea4a14d399e2c6cea73ac377e1494628790c4ee78cd58",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 4198
+    },
+    {
+      "checkedFits": 15553,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "04",
+      "featureStatuses": {
+        "filteredLowExpression": 16057,
+        "rankDeficientSupport": 747,
+        "tested": 15553
+      },
+      "method": "ql",
+      "methodError": null,
+      "outputSHA256": "3dab26a83df089facb03857e62471846a5a5a91ea0a5aa73d4d9010314aadaf6",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15553
+    },
+    {
+      "checkedFits": 14223,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "05",
+      "featureStatuses": {
+        "filteredLowExpression": 16067,
+        "numericalFailure": 9889,
+        "rankDeficientSupport": 2067,
+        "tested": 4334
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "d2dd50eadacc65c163eb3feee107bb136ff1363d95132aac36b370174ac49870",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 4334
+    },
+    {
+      "checkedFits": 14223,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "05",
+      "featureStatuses": {
+        "filteredLowExpression": 16067,
+        "numericalFailure": 9889,
+        "rankDeficientSupport": 2067,
+        "tested": 4334
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "9c61c4afc76f2bb9d2c66e45c3c58f09c11cb5134583893682f2e27eed4821a4",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 4334
+    },
+    {
+      "checkedFits": 14223,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "05",
+      "featureStatuses": {
+        "filteredLowExpression": 16067,
+        "rankDeficientSupport": 2067,
+        "tested": 14223
+      },
+      "method": "ql",
+      "methodError": null,
+      "outputSHA256": "7821fd315478d67f50f8b94f4e2dc0590f56c4812e8e8ccc86a1ca206b49c7ec",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 14223
+    },
+    {
+      "checkedFits": 14199,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "06",
+      "featureStatuses": {
+        "filteredLowExpression": 15896,
+        "numericalFailure": 12989,
+        "rankDeficientSupport": 2262,
+        "tested": 1210
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "ac50c37921ead03f1c86da1f3a96960151529506ad3e03bb7c031c850442ad4c",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 1210
+    },
+    {
+      "checkedFits": 14199,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "06",
+      "featureStatuses": {
+        "filteredLowExpression": 15896,
+        "numericalFailure": 12989,
+        "rankDeficientSupport": 2262,
+        "tested": 1210
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "10a8b86c113a06977930271332755c5405694523282647d54941ef4a884f018a",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 1210
+    },
+    {
+      "checkedFits": 14199,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "06",
+      "featureStatuses": {
+        "filteredLowExpression": 15896,
+        "rankDeficientSupport": 2262,
+        "tested": 14199
+      },
+      "method": "ql",
+      "methodError": null,
+      "outputSHA256": "97e4c05602a1fa7cfd10946062a2027209febbe41348a454658a3c7eff01f6c0",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 14199
+    },
+    {
+      "checkedFits": 15996,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "07",
+      "featureStatuses": {
+        "filteredLowExpression": 16264,
+        "rankDeficientSupport": 97,
+        "tested": 15996
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "000923228491a13cd50207a2cfbfb001c284824c4735b2db3804e88b539a2ae7",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15996
+    },
+    {
+      "checkedFits": 15996,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "07",
+      "featureStatuses": {
+        "filteredLowExpression": 16264,
+        "rankDeficientSupport": 97,
+        "tested": 15996
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "7fa6ff383838c4d013685cb3ab5146b96ce35b96b1e593a16a1a9e19b111d366",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15996
+    },
+    {
+      "checkedFits": 15996,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "07",
+      "featureStatuses": {
+        "filteredLowExpression": 16264,
+        "rankDeficientSupport": 97,
+        "tested": 15996
+      },
+      "method": "ql",
+      "methodError": null,
+      "outputSHA256": "4b7ba1b91e72fabd22e8e7dbd0f61021cb761e268ccabb4248aa24d40243394f",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 15996
+    },
+    {
+      "checkedFits": 13342,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "08",
+      "featureStatuses": {
+        "filteredLowExpression": 16332,
+        "numericalFailure": 12411,
+        "rankDeficientSupport": 2683,
+        "tested": 931
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "0864d8f2bb193320577afd98154f54dae2922a833e538939cdd3b938581a611d",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 931
+    },
+    {
+      "checkedFits": 13342,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "08",
+      "featureStatuses": {
+        "filteredLowExpression": 16332,
+        "numericalFailure": 12411,
+        "rankDeficientSupport": 2683,
+        "tested": 931
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "c9c892ea7664961aab445c664d71522a705334180015d3a442ac626ca1558387",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 931
+    },
+    {
+      "checkedFits": 13342,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "08",
+      "featureStatuses": {
+        "filteredLowExpression": 16332,
+        "rankDeficientSupport": 2683,
+        "tested": 13342
+      },
+      "method": "ql",
+      "methodError": null,
+      "outputSHA256": "2435194ae43ecd4cc35bb3bd88bd4b03178ef7db5c83743994a56c3f4c3a9d65",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 13342
+    },
+    {
+      "checkedFits": 13474,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "09",
+      "featureStatuses": {
+        "filteredLowExpression": 17003,
+        "numericalFailure": 13192,
+        "rankDeficientSupport": 1880,
+        "tested": 282
+      },
+      "method": "wald",
+      "methodError": null,
+      "outputSHA256": "17be3fdde3a1eab85966d5db09aade69381886fa1b0040c0553f77c7130bc47c",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 282
+    },
+    {
+      "checkedFits": 13474,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "09",
+      "featureStatuses": {
+        "filteredLowExpression": 17003,
+        "numericalFailure": 13192,
+        "rankDeficientSupport": 1880,
+        "tested": 282
+      },
+      "method": "lrt",
+      "methodError": null,
+      "outputSHA256": "b24b4f61599d3c9223b3854e686ae4f443d694c9e1a3ec68be0605f7d1af0131",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 282
+    },
+    {
+      "checkedFits": 13474,
+      "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+      "cohort": "09",
+      "featureStatuses": {
+        "filteredLowExpression": 17003,
+        "rankDeficientSupport": 1880,
+        "tested": 13474
+      },
+      "method": "ql",
+      "methodError": null,
+      "outputSHA256": "dc951a6b6f50452b4d76fa84b5a3fd97e4e7f7f216d8593cc3349aec0ffff943",
+      "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+      "status": "passed",
+      "testedFeatures": 13474
+    }
+  ],
+  "status": "passed"
+}

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/n/numivivo-h5ad-20260909/Tools/Omics/NegativeBinomial/IndependentNull/run_native.py", line 41, in <module>
+    record=dict(**case,**identity,command=command,returnCode=completed.returncode,seconds=time.time()-start,
+TypeError: dict() got multiple values for keyword argument 'requestSHA256'

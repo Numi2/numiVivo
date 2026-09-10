@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/opt/homebrew/bin/Rscript",
+    "/Users/home/numivivo-single-cell-20260909/Tools/Omics/NegativeBinomial/IndependentNull/reference.R",
+    "/Users/home/numivivo-independent-null-20260910/reference-inputs/01",
+    "/Users/home/numivivo-independent-null-20260910/reference/01"
+  ],
+  "files": {
+    "native_size_factors-DESeq2-default-results.tsv": "3d1a578a05e9fe615cd078ee071c3e44be25a682353835ed04e3c29dbc11480e",
+    "native_size_factors-DESeq2-normalization.tsv": "392a9e4fcd8cd3c057ef60e27e7e93ca4c447fccc697bb783a41bcaa834ba2ad",
+    "native_size_factors-DESeq2.tsv": "19df876f2abd81142250b532cbccb06552df9975b32f4b6b7d5ffa5f022b3f4f",
+    "native_size_factors-edgeR-QL.tsv": "42cccf04411d315d83b9dffba7207e2fe80b5154a72d43bdb3707cb79af95d8c",
+    "native_size_factors-edgeR-normalization.tsv": "3b9efd4a4d4ecf3bfbb584835964250119e515edf1bceb1ae5c5830bf0fa45a6",
+    "native_size_factors-limma-voom.tsv": "322a96f4c206c6dac8ccc729bc8a9882a147bccb1544ef1e798aab317420799d",
+    "runs.json": "8a2ebe948f0492021cd9106fc80e6644c4f4b00315fccc62cb7d031fe48792a6",
+    "session-info.txt": "741a6bc9b5a5545b8cf3c919c4699d7edb7ce11eda2fd4b5111ef4b0d4621620",
+    "summary.json": "087ccb66ab996d62ebc08a141262cd40f7d1319841dd802c5049ddf66983d289",
+    "tested-features.tsv": "4fbfed134e097ecfa8e4786230f08a0fbab9c56e51aa1866f4c6070ccebaba00"
+  },
+  "inputSHA256": "8a95a6f714aaac68b2dc91ffac31a4cb0a8fdfcaa69ce84eeb4df5cc8756ca6a",
+  "returnCode": 0,
+  "scriptSHA256": "7cfa3dd671625a9fe344e809c5a726a10e92e446aee87fb84ab4e4ec02dee125",
+  "seconds": 7.924702882766724
+}

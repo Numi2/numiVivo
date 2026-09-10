@@ -209,6 +209,13 @@ a time. The streaming route retains metadata, per-cell QC and grouped count
 sums; it does not construct the complete resident sparse cell matrix. It copies
 and hashes the H5AD source in 1 MiB blocks before analysis.
 
+The [independent-donor null benchmark](../Tools/Omics/NegativeBinomial/IndependentNull/README.md)
+now verifies the complete 1,199,390,735-byte Human Immune Health Atlas B/Plasma
+source: all 160,632 cells, 233,853,565 raw entries and 108 donor aggregates match
+independent count/QC calculations. Its old 1 GiB rejection exposed the source
+admission mismatch; streamed PCA reference/query snapshots now share the same
+64 GiB copy ceiling. That ceiling is capacity admission, not demonstrated scale.
+
 The output is an exchange bundle containing `original.h5ad`, `plan.json`,
 `report.json` and `receipt.json`. Verification copies the source to a private
 snapshot, checks source/plan/report/executable fingerprints and reconstructs
@@ -216,7 +223,7 @@ the report. Existing destinations are refused. This route uses the common
 fingerprint types but does not yet publish its report into the artifact-store
 DAG. It is not a substitute for general chunked transforms or sparse PCA.
 
-Explicit limits are 1 GiB source bytes, 1 million cell identities, 100,000
+Explicit limits are 64 GiB source bytes, 1 million cell identities, 100,000
 features, 1 billion source sparse entries, 5 million aggregate nonzeros,
 2 MiB encoded plan and 512 MiB encoded report. The pseudobulk CLI now uses
 the same 2 MiB input-plan allowance; a complete Adamson mapping with 1,106
@@ -391,6 +398,14 @@ The complete development objective remains open:
    versus Wald's 20, and three Kang calls versus two from the original adjusted
    reference and zero from Wald. These inspected families cannot qualify future
    method selection. Active-donor QL borrowing remains separate.
+   A [fresh independent-donor experiment](../Tools/Omics/NegativeBinomial/IndependentNull/README.md)
+   adds nine disjoint twelve-donor cohorts from the full public Human Immune
+   Health Atlas B/Plasma release, with a protocol frozen before DE outcomes.
+   Original Wald/LRT/QL and pinned edgeR/limma/DESeq2 families are retained.
+   A separately declared all-cohort follow-up repairs an unrequested influence
+   diagnostic dependency in singleton batches, retaining original failures and
+   exact fit comparisons. One selected study and descriptive sham-call events
+   do not establish universal FDR, power, interval coverage or a production default.
    Heavy-tailed priors, prior uncertainty, posterior coverage, effect-estimation
    risk and robust cross-study qualification remain.
    An explicit Gamma dispersion-trend option now passes controlled Kang/Hagai

@@ -368,10 +368,16 @@ public enum VivoOmicsNBCohort {
                         offsets: rows.map { offsets[$0] },contrast: resolution?.contrast ?? design.contrast,logPriorMean: log(target),logPriorVariance: trend.priorLogVariance)
                     diagnostics[gene].finalDispersion = final.fit.dispersion
                     diagnostics[gene].finalFit = final.fit
-                    guard let cooks = final.fit.cooksDistances else { throw VivoOmicsError.invalid("NB influence unavailable on unit-leverage design") }
+                    // A singleton batch can make Cook's distance unavailable
+                    // while the requested contrast remains identified. Require
+                    // influence diagnostics only for an explicit exclusion policy.
+                    if options.maximumCooksDistance != nil, final.fit.cooksDistances == nil {
+                        throw VivoOmicsError.invalid("NB influence unavailable on unit-leverage design")
+                    }
                     let status: VivoOmicsExpressionStatus
                     if final.lowerBoundary || final.upperBoundary { status = .dispersionBoundary }
-                    else if let threshold = options.maximumCooksDistance, cooks.contains(where: { $0 > threshold }) { status = .influentialObservation }
+                    else if let threshold = options.maximumCooksDistance,
+                            final.fit.cooksDistances?.contains(where: { $0 > threshold }) == true { status = .influentialObservation }
                     else { status = .tested }
                     guard let effect = final.fit.effect, let error = final.fit.standardError, error > 0 else { throw VivoOmicsError.invalid("NB final fit lacks identified effect/information") }
                     let z = effect/error

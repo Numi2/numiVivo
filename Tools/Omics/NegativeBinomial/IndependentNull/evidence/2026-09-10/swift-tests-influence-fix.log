@@ -1,0 +1,148 @@
+[0/1] Planning build
+Building for debugging...
+[0/6] Write sources
+[2/6] Write swift-version-3CD7052B146186F2.txt
+[4/8] Emitting module NumiVivoKit
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Omics/VivoH5ADAnnotations.swift:219:23: warning: no calls to throwing functions occur within 'try' expression
+217 |         let outputLimit = 2 * 1_024 * 1_024 * 1_024
+218 |         let output = try VivoOmicsFileSnapshot.fingerprint(staging, maximumBytes: outputLimit)
+219 |         let receipt = try VivoH5ADAnnotationReceipt(schemaVersion: 1, source: plan.source, plan: planID,
+    |                       `- warning: no calls to throwing functions occur within 'try' expression
+220 |             output: output, implementation: implementation, hdf5Version: version)
+221 |         guard destination.isFileURL else { throw VivoOmicsError.invalid("local H5AD output required") }
+
+/Users/n/numivivo-h5ad-20260909/Sources/NumiVivoKit/Surrogates/VivoReactiveMetalBackend.swift:54:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 52 |         coefficients = try buffer(payload.coefficientsKJPerMol.flatMap { $0 })
+ 53 |         scales = try buffer(payload.configuration.features.map { 1/($0.scaleNM*$0.scaleNM) })
+ 54 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 55 |         let library = try device.makeLibrary(source: Self.source,options: options)
+ 56 |         guard let function = library.makeFunction(name: "vivo_reactive_delta") else { throw VivoChemistryError.invalid("missing reactive Metal kernel") }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[5/8] Compiling NumiVivoKit VivoOmicsNBCohort.swift
+[5/9] Write Objects.LinkFileList
+[6/11] Linking numivivo
+[7/11] Applying numivivo
+[9/11] Emitting module NumiVivoIntegrationTests
+[10/11] Compiling NumiVivoIntegrationTests SingleCellNBCohortTests.swift
+[11/13] Compiling NumiVivoIntegrationTests SingleCellNBSupportTests.swift
+[12/13] Compiling NumiVivoIntegrationTests SingleCellQLInferenceTests.swift
+[12/14] Write Objects.LinkFileList
+warning: /Users/n/numivivo-h5ad-20260909/.build/arm64-apple-macosx/debug/ModuleCache/2QN131FK6QAIU/_SwiftConcurrencyShims-YRTOM2Y1Q1ED.pcm: No such file or directory
+note: while processing /Users/n/numivivo-h5ad-20260909/.build/arm64-apple-macosx/debug/ModuleCache/2QN131FK6QAIU/_SwiftConcurrencyShims-YRTOM2Y1Q1ED.pcm
+note: The clang module cache may have expired since this object file was built. Rebuilding the object file will rebuild the module cache.
+[13/14] Linking NumiVivoPackageTests
+Build complete! (10.80s)
+Test Suite 'Selected tests' started at 2026-09-10 13:02:43.403.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-10 13:02:43.409.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-10 13:02:43.409.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-10 13:02:43.409.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.006) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellPCABundleTests started.
+◇ Suite SingleCellSnapshotTests started.
+◇ Suite SingleCellInterchangeTests started.
+◇ Suite SingleCellNBSupportTests started.
+◇ Suite SingleCellNegativeBinomialTests started.
+◇ Suite SingleCellMappedReductionTests started.
+◇ Test snapshotCopiesExactBytesAndRejectsSmallerAdmission() started.
+◇ Test standalonePlanRequiresProjectionCenters() started.
+◇ Suite SingleCellCohortTests started.
+◇ Test sharedStreamedQualityMatchesResidentQuality() started.
+◇ Suite SingleCellNBCohortTests started.
+◇ Test replicationSeparationAndBatchConfoundingRemainRejected() started.
+◇ Test densePCARecordsRetainSignedAndExtremeFiniteValues() started.
+◇ Suite SingleCellPCAQueryTests started.
+◇ Test oversizedSparseSourceIsRejectedBeforeCopying() started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test cohortPreservesPriorAndFullSupportFitsWhileRecordingNewDesign() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test mappedProductsMatchExplicitMatrixAndAdjoint() started.
+◇ Test repeatedProductsCrossMappingWindows() started.
+◇ Test likelihoodRatioMatchesAnalyticGroupMeansAndReparameterization() started.
+◇ Test contrastMAPSupportsFullObservationLimitWithoutAddingReplication() started.
+◇ Test baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() started.
+◇ Test interceptHasAnalyticMeanAndInformation() started.
+◇ Test unitDevianceResolvesSaturationPoissonAndExtremeMeans() started.
+◇ Test zeroOnlyCovariateSupportDoesNotProduceInference() started.
+◇ Test contrastMAPPreservesSupportAndReportsIterationExhaustion() started.
+◇ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() started.
+◇ Test likelihoodRatioPreservesNullAndSupportBoundaries() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test offsetReparameterizationPreservesFit() started.
+◇ Test contrastMAPRefitsNuisanceAndPreservesParameterization() started.
+◇ Test malformedCachesAndBudgetsAreRejected() started.
+◇ Test contrastMAPMatchesHighPrecisionScalarCountLikelihood() started.
+◇ Test profileAndExplicitPriorAreDistinct() started.
+◇ Test logMassMatchesHighPrecisionReference() started.
+◇ Test optionsCannotBeSilentlyAppliedToWrongModel() started.
+◇ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() started.
+◇ Test unknownScientificOptionsCannotBeIgnored() started.
+◇ Test explicitLikelihoodRatioUsesSameDispersionAndOwnBHFamily() started.
+◇ Test incompletePairsAndConfoundedBatchAreRejected() started.
+◇ Test parametricTrendRecoversDeclaredMeanRelationship() started.
+◇ Test qualitySelectionPreservesCountsAndSourceIdentity() started.
+◇ Test singletonBatchDoesNotRequireUnrequestedInfluenceDiagnostics() started.
+◇ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() started.
+◇ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() started.
+◇ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() started.
+◇ Test empiricalPriorUsesWeightedQuantileAndRetainsDomainBoundaries() started.
+◇ Test frozenProjectionUsesTrainingCentersAndAllGeneTotals() started.
+◇ Test scoreWindowsPreserveEveryValueAcrossRewindsAndPageBoundaries() started.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.008 seconds.
+✔ Test replicationSeparationAndBatchConfoundingRemainRejected() passed after 0.009 seconds.
+✔ Test mappedProductsMatchExplicitMatrixAndAdjoint() passed after 0.011 seconds.
+✔ Test oversizedSparseSourceIsRejectedBeforeCopying() passed after 0.013 seconds.
+✔ Test interceptHasAnalyticMeanAndInformation() passed after 0.013 seconds.
+✔ Test likelihoodRatioMatchesAnalyticGroupMeansAndReparameterization() passed after 0.023 seconds.
+✔ Test baselineDonorRemovalRebasesAndMatchesAnalyticInformationLimit() passed after 0.027 seconds.
+✔ Test unitDevianceResolvesSaturationPoissonAndExtremeMeans() passed after 0.027 seconds.
+✔ Test sharedStreamedQualityMatchesResidentQuality() passed after 0.028 seconds.
+✔ Test densePCARecordsRetainSignedAndExtremeFiniteValues() passed after 0.028 seconds.
+✔ Test standalonePlanRequiresProjectionCenters() passed after 0.028 seconds.
+✔ Test offsetReparameterizationPreservesFit() passed after 0.028 seconds.
+✔ Test contrastMAPPreservesSupportAndReportsIterationExhaustion() passed after 0.028 seconds.
+✔ Test invalidInputsAndNonconvergenceAreNotSuccessfulFits() passed after 0.028 seconds.
+✔ Test zeroOnlyCovariateSupportDoesNotProduceInference() passed after 0.028 seconds.
+✔ Test contrastMAPMatchesHighPrecisionScalarCountLikelihood() passed after 0.028 seconds.
+✔ Test logMassMatchesHighPrecisionReference() passed after 0.028 seconds.
+✔ Test likelihoodRatioPreservesNullAndSupportBoundaries() passed after 0.028 seconds.
+✔ Test contrastMAPRefitsNuisanceAndPreservesParameterization() passed after 0.028 seconds.
+✔ Test optionsCannotBeSilentlyAppliedToWrongModel() passed after 0.026 seconds.
+✔ Test malformedCachesAndBudgetsAreRejected() passed after 0.028 seconds.
+✔ Test unknownScientificOptionsCannotBeIgnored() passed after 0.026 seconds.
+✔ Test parametricTrendRecoversDeclaredMeanRelationship() passed after 0.026 seconds.
+✔ Test incompletePairsAndConfoundedBatchAreRejected() passed after 0.027 seconds.
+✔ Test qrStudentAndMultipleTestingMatchAnalyticalFixtures() passed after 0.026 seconds.
+✔ Test contrastMAPSupportsFullObservationLimitWithoutAddingReplication() passed after 0.029 seconds.
+✔ Test gammaTrendRecoversMeanAndRejectsUnidentifiedDesign() passed after 0.026 seconds.
+✔ Test pairedModeratedExpressionUsesDonorsAndRecoversDeclaredSignal() passed after 0.027 seconds.
+✔ Test qualitySelectionPreservesCountsAndSourceIdentity() passed after 0.026 seconds.
+✔ Test frozenProjectionUsesTrainingCentersAndAllGeneTotals() passed after 0.023 seconds.
+✔ Test empiricalPriorUsesWeightedQuantileAndRetainsDomainBoundaries() passed after 0.025 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.029 seconds.
+✔ Suite SingleCellPCABundleTests passed after 0.029 seconds.
+✔ Suite SingleCellCohortTests passed after 0.029 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.030 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.036 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.036 seconds.
+✔ Test profileAndExplicitPriorAreDistinct() passed after 0.039 seconds.
+✔ Suite SingleCellNegativeBinomialTests passed after 0.040 seconds.
+✔ Test snapshotCopiesExactBytesAndRejectsSmallerAdmission() passed after 0.133 seconds.
+✔ Suite SingleCellSnapshotTests passed after 0.134 seconds.
+✔ Test repeatedProductsCrossMappingWindows() passed after 1.458 seconds.
+✔ Suite SingleCellMappedReductionTests passed after 1.458 seconds.
+✔ Test scoreWindowsPreserveEveryValueAcrossRewindsAndPageBoundaries() passed after 1.954 seconds.
+✔ Suite SingleCellPCAQueryTests passed after 1.961 seconds.
+✔ Test singletonBatchDoesNotRequireUnrequestedInfluenceDiagnostics() passed after 22.030 seconds.
+✔ Test cohortPreservesPriorAndFullSupportFitsWhileRecordingNewDesign() passed after 44.077 seconds.
+✔ Suite SingleCellNBSupportTests passed after 44.078 seconds.
+✔ Test explicitLikelihoodRatioUsesSameDispersionAndOwnBHFamily() passed after 44.920 seconds.
+✔ Test cohortUsesNBAndRetainsInfluenceAndReplicationGates() passed after 70.376 seconds.
+✔ Suite SingleCellNBCohortTests passed after 70.379 seconds.
+✔ Test run with 42 tests in 9 suites passed after 70.380 seconds.

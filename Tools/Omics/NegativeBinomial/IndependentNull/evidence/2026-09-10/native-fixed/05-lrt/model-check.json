@@ -1,0 +1,138 @@
+{
+  "checkedFits": 14223,
+  "checkerSHA256": "1ffbac6b75f886d5b7abeb90ae8057fda62512f6c442d89b15ec8b83d2a416a4",
+  "checks": [
+    {
+      "error": 3.3135804429501237e-15,
+      "name": "independent-native-offsets",
+      "passed": true,
+      "tolerance": 2e-13
+    },
+    {
+      "error": 0.0,
+      "name": "feature-total-counts",
+      "passed": true,
+      "tolerance": 0
+    },
+    {
+      "error": 0.0,
+      "name": "expressing-observations",
+      "passed": true,
+      "tolerance": 0
+    },
+    {
+      "error": 5.771165628880764e-16,
+      "name": "normalized-means",
+      "passed": true,
+      "tolerance": 2e-12
+    },
+    {
+      "error": 1.078587866594148e-15,
+      "name": "linear-predictor-means",
+      "passed": true,
+      "tolerance": 2e-12
+    },
+    {
+      "error": 9.997375351813413e-08,
+      "name": "full-scaled-score",
+      "passed": true,
+      "tolerance": 1.01e-07
+    },
+    {
+      "error": 1.218657761512121e-11,
+      "name": "NB-log-likelihood",
+      "passed": true,
+      "tolerance": 2e-06
+    },
+    {
+      "error": 0.0,
+      "name": "conditional-effect",
+      "passed": true,
+      "tolerance": 2e-12
+    },
+    {
+      "error": 4.1031674639455844e-16,
+      "name": "conditional-information-SE",
+      "passed": true,
+      "tolerance": 2e-10
+    },
+    {
+      "error": 0.0,
+      "name": "reported-log2-effect",
+      "passed": true,
+      "tolerance": 2e-12
+    },
+    {
+      "error": 4.312403363252939e-16,
+      "name": "reported-log2-SE",
+      "passed": true,
+      "tolerance": 2e-10
+    },
+    {
+      "error": 5.383103102124803e-16,
+      "name": "reported-Wald-z",
+      "passed": true,
+      "tolerance": 2e-10
+    },
+    {
+      "error": 0.0,
+      "name": "null-constraint",
+      "passed": true,
+      "tolerance": 2e-12
+    },
+    {
+      "error": 1.0987084861123262e-15,
+      "name": "null-linear-predictor",
+      "passed": true,
+      "tolerance": 2e-12
+    },
+    {
+      "error": 9.995223108895593e-08,
+      "name": "null-scaled-score",
+      "passed": true,
+      "tolerance": 1.01e-07
+    },
+    {
+      "error": 1.0883950078274962e-11,
+      "name": "null-NB-log-likelihood",
+      "passed": true,
+      "tolerance": 2e-06
+    },
+    {
+      "error": 9.015887253034671e-12,
+      "name": "gamma-cancelled-LR",
+      "passed": true,
+      "tolerance": 2e-06
+    },
+    {
+      "error": 9.015887253034671e-12,
+      "name": "nonnegative-LR",
+      "passed": true,
+      "tolerance": 2e-06
+    },
+    {
+      "error": 4.413136522884997e-15,
+      "name": "chi-square-tail",
+      "passed": true,
+      "tolerance": 2e-12
+    },
+    {
+      "error": 0.0,
+      "name": "BH",
+      "passed": true,
+      "tolerance": 2e-12
+    }
+  ],
+  "cohort": "05",
+  "featureStatuses": {
+    "filteredLowExpression": 16067,
+    "rankDeficientSupport": 2067,
+    "tested": 14223
+  },
+  "method": "lrt",
+  "methodError": null,
+  "outputSHA256": "dbcf674a7b9e5102ddb1c707b6b9ef7d95e1bb2222edf740ba1f451cc6b01904",
+  "scope": "Count/design identity and conditional numerical arithmetic; QL tails use reported denominator DF. Statistical calibration is a separate descriptive null experiment.",
+  "status": "passed",
+  "testedFeatures": 14223
+}

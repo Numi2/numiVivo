@@ -1,0 +1,35 @@
+{
+  "adjustForBatch": true,
+  "cellGroup": "B cell",
+  "controlCondition": "shamA",
+  "design": "independentReplicates",
+  "id": "independent-null-08-ql",
+  "includedDonorIDs": [
+    "BR1009",
+    "BR1012",
+    "BR1059",
+    "BR2010",
+    "BR2040",
+    "BR2043",
+    "BR2044",
+    "BR2050",
+    "BR2051",
+    "UP1017",
+    "UP1018",
+    "UP1022"
+  ],
+  "minimumCellsPerPseudobulk": 10,
+  "minimumExpressingPseudobulks": 3,
+  "minimumFeatureCounts": 10,
+  "minimumReplicatesPerCondition": 3,
+  "model": "negativeBinomial",
+  "negativeBinomialOptions": {
+    "minimumPriorVariance": 0.25,
+    "minimumTrendGenes": 20,
+    "outlierStandardDeviations": 2,
+    "testMethod": "quasiLikelihoodAdjusted",
+    "trend": "gammaParametric"
+  },
+  "sizeFactors": "medianRatio",
+  "treatmentCondition": "shamB"
+}

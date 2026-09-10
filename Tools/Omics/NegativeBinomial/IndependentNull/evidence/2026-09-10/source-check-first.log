@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-single-cell-20260909/Tools/Omics/NegativeBinomial/IndependentNull/check_source.py", line 29, in <module>
+    assert bulk['featureIDs']==counts['features'].tolist()==var.index.astype(str).tolist()
+                               ~~~~~~^^^^^^^^^^^^
+  File "/Users/home/numivivo-singlecell-benchmark-py/lib/python3.12/site-packages/numpy/lib/_npyio_impl.py", line 257, in __getitem__
+    return format.read_array(
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/home/numivivo-singlecell-benchmark-py/lib/python3.12/site-packages/numpy/lib/_format_impl.py", line 833, in read_array
+    raise ValueError("Object arrays cannot be loaded when "
+ValueError: Object arrays cannot be loaded when allow_pickle=False

@@ -67,7 +67,7 @@ public enum VivoH5ADPCAQuery {
     }
     static func snapshotReference(_ source: URL, to destination: URL) throws {
         try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
-        for (name, limit) in [("original.h5ad", 1_073_741_824), ("plan.json", 2_097_152), ("receipt.json", 65_536),
+        for (name, limit) in [("original.h5ad", VivoH5ADPseudobulk.sourceLimits.maximumInputBytes), ("plan.json", 2_097_152), ("receipt.json", 65_536),
             ("metadata.json", 536_870_912), ("quality.json", 268_435_456), ("model.json", 67_108_864),
             ("scores.bin", 1_024_000_000), ("loadings.bin", 10_240_000)] {
             _ = try VivoOmicsFileSnapshot.fingerprint(source.appendingPathComponent(name), copyTo: destination.appendingPathComponent(name), maximumBytes: limit)

@@ -1,0 +1,20 @@
+{
+  "binarySHA256": "b109ee58c9ba6a798cbe540453280a3ae6160054a70a2a96fb53b604d5cdc901",
+  "commands": [
+    {
+      "stage": "publish",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/n/numivivo-h5ad-20260909/.build/debug/numivivo",
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-independent-null-20260910/source.h5ad",
+        "--plan",
+        "/Users/n/numivivo-independent-null-20260910/stream-plan.json",
+        "--output",
+        "/Users/n/numivivo-independent-null-20260910/native"
+      ],
+      "returnCode": 65
+    }
+  ]
+}

@@ -1,5 +1,13 @@
 # Native negative-binomial cohort analysis
 
+The [independent-donor null benchmark](IndependentNull/README.md) adds nine
+disjoint twelve-donor Human Immune Health Atlas cohorts, full-source streamed
+count/QC verification and pinned edgeR/limma/DESeq2 comparisons. Original
+Wald/LRT/QL outputs and a separately declared singleton-batch diagnostic repair
+are retained. Cook's distance is now required only for an explicit influence
+threshold; missing diagnostics remain unavailable. Descriptive null events do
+not promote a production default.
+
 Optional [contrast likelihood-ratio inference](LikelihoodRatio/README.md) now
 refits the zero-contrast null at the unchanged full-model dispersion and uses
 its own p-values/BH family. Set `negativeBinomialOptions.testMethod` to

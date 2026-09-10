@@ -1,0 +1,896 @@
+{
+  "contrasts": [],
+  "mapping": {
+    "countUnit": "umiCount",
+    "evidence": "measured",
+    "featureNameColumn": "gene_symbols",
+    "groupColumn": "AIFI_L1",
+    "id": "human-immune-health-atlas-independent-null",
+    "matrixPath": "raw/X",
+    "mitochondrialFeatureIDs": [
+      "ENSG00000198888",
+      "ENSG00000198763",
+      "ENSG00000198804",
+      "ENSG00000198712",
+      "ENSG00000228253",
+      "ENSG00000198899",
+      "ENSG00000198938",
+      "ENSG00000198840",
+      "ENSG00000212907",
+      "ENSG00000198886",
+      "ENSG00000198786",
+      "ENSG00000198695",
+      "ENSG00000198727"
+    ],
+    "sampleColumn": "donor_id",
+    "samples": [
+      {
+        "batchID": "B001",
+        "biologicalReplicateID": "BR1001",
+        "condition": "shamB",
+        "donorID": "BR1001",
+        "id": "BR1001",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B001",
+        "biologicalReplicateID": "BR1002",
+        "condition": "shamB",
+        "donorID": "BR1002",
+        "id": "BR1002",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B001",
+        "biologicalReplicateID": "BR1003",
+        "condition": "shamA",
+        "donorID": "BR1003",
+        "id": "BR1003",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B002",
+        "biologicalReplicateID": "BR1004",
+        "condition": "shamB",
+        "donorID": "BR1004",
+        "id": "BR1004",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B002",
+        "biologicalReplicateID": "BR1005",
+        "condition": "shamA",
+        "donorID": "BR1005",
+        "id": "BR1005",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B078",
+        "biologicalReplicateID": "BR1006",
+        "condition": "shamA",
+        "donorID": "BR1006",
+        "id": "BR1006",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B002",
+        "biologicalReplicateID": "BR1007",
+        "condition": "shamB",
+        "donorID": "BR1007",
+        "id": "BR1007",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B002",
+        "biologicalReplicateID": "BR1008",
+        "condition": "shamA",
+        "donorID": "BR1008",
+        "id": "BR1008",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B078",
+        "biologicalReplicateID": "BR1009",
+        "condition": "shamA",
+        "donorID": "BR1009",
+        "id": "BR1009",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B002",
+        "biologicalReplicateID": "BR1010",
+        "condition": "shamB",
+        "donorID": "BR1010",
+        "id": "BR1010",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B078",
+        "biologicalReplicateID": "BR1011",
+        "condition": "shamB",
+        "donorID": "BR1011",
+        "id": "BR1011",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B078",
+        "biologicalReplicateID": "BR1012",
+        "condition": "shamB",
+        "donorID": "BR1012",
+        "id": "BR1012",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B078",
+        "biologicalReplicateID": "BR1013",
+        "condition": "shamB",
+        "donorID": "BR1013",
+        "id": "BR1013",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B078",
+        "biologicalReplicateID": "BR1014",
+        "condition": "shamA",
+        "donorID": "BR1014",
+        "id": "BR1014",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B041",
+        "biologicalReplicateID": "BR1015",
+        "condition": "shamA",
+        "donorID": "BR1015",
+        "id": "BR1015",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B040",
+        "biologicalReplicateID": "BR1016",
+        "condition": "shamB",
+        "donorID": "BR1016",
+        "id": "BR1016",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B041",
+        "biologicalReplicateID": "BR1017",
+        "condition": "shamA",
+        "donorID": "BR1017",
+        "id": "BR1017",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B007",
+        "biologicalReplicateID": "BR1018",
+        "condition": "shamA",
+        "donorID": "BR1018",
+        "id": "BR1018",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B039",
+        "biologicalReplicateID": "BR1019",
+        "condition": "shamB",
+        "donorID": "BR1019",
+        "id": "BR1019",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B036",
+        "biologicalReplicateID": "BR1021",
+        "condition": "shamA",
+        "donorID": "BR1021",
+        "id": "BR1021",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B040",
+        "biologicalReplicateID": "BR1023",
+        "condition": "shamB",
+        "donorID": "BR1023",
+        "id": "BR1023",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B040",
+        "biologicalReplicateID": "BR1024",
+        "condition": "shamB",
+        "donorID": "BR1024",
+        "id": "BR1024",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B040",
+        "biologicalReplicateID": "BR1025",
+        "condition": "shamA",
+        "donorID": "BR1025",
+        "id": "BR1025",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B047",
+        "biologicalReplicateID": "BR1026",
+        "condition": "shamB",
+        "donorID": "BR1026",
+        "id": "BR1026",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B039",
+        "biologicalReplicateID": "BR1028",
+        "condition": "shamA",
+        "donorID": "BR1028",
+        "id": "BR1028",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B045",
+        "biologicalReplicateID": "BR1030",
+        "condition": "shamB",
+        "donorID": "BR1030",
+        "id": "BR1030",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B041",
+        "biologicalReplicateID": "BR1031",
+        "condition": "shamB",
+        "donorID": "BR1031",
+        "id": "BR1031",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B040",
+        "biologicalReplicateID": "BR1032",
+        "condition": "shamA",
+        "donorID": "BR1032",
+        "id": "BR1032",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B010",
+        "biologicalReplicateID": "BR1033",
+        "condition": "shamA",
+        "donorID": "BR1033",
+        "id": "BR1033",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B036",
+        "biologicalReplicateID": "BR1037",
+        "condition": "shamB",
+        "donorID": "BR1037",
+        "id": "BR1037",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B040",
+        "biologicalReplicateID": "BR1040",
+        "condition": "shamA",
+        "donorID": "BR1040",
+        "id": "BR1040",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B056",
+        "biologicalReplicateID": "BR1041",
+        "condition": "shamA",
+        "donorID": "BR1041",
+        "id": "BR1041",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B040",
+        "biologicalReplicateID": "BR1042",
+        "condition": "shamB",
+        "donorID": "BR1042",
+        "id": "BR1042",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B041",
+        "biologicalReplicateID": "BR1043",
+        "condition": "shamB",
+        "donorID": "BR1043",
+        "id": "BR1043",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B041",
+        "biologicalReplicateID": "BR1044",
+        "condition": "shamB",
+        "donorID": "BR1044",
+        "id": "BR1044",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B041",
+        "biologicalReplicateID": "BR1045",
+        "condition": "shamA",
+        "donorID": "BR1045",
+        "id": "BR1045",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B046",
+        "biologicalReplicateID": "BR1047",
+        "condition": "shamB",
+        "donorID": "BR1047",
+        "id": "BR1047",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B046",
+        "biologicalReplicateID": "BR1048",
+        "condition": "shamA",
+        "donorID": "BR1048",
+        "id": "BR1048",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B046",
+        "biologicalReplicateID": "BR1049",
+        "condition": "shamA",
+        "donorID": "BR1049",
+        "id": "BR1049",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B072",
+        "biologicalReplicateID": "BR1050",
+        "condition": "shamA",
+        "donorID": "BR1050",
+        "id": "BR1050",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B072",
+        "biologicalReplicateID": "BR1051",
+        "condition": "shamB",
+        "donorID": "BR1051",
+        "id": "BR1051",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B072",
+        "biologicalReplicateID": "BR1052",
+        "condition": "shamA",
+        "donorID": "BR1052",
+        "id": "BR1052",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B073",
+        "biologicalReplicateID": "BR1054",
+        "condition": "shamB",
+        "donorID": "BR1054",
+        "id": "BR1054",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B072",
+        "biologicalReplicateID": "BR1056",
+        "condition": "shamB",
+        "donorID": "BR1056",
+        "id": "BR1056",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B072",
+        "biologicalReplicateID": "BR1057",
+        "condition": "shamB",
+        "donorID": "BR1057",
+        "id": "BR1057",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B073",
+        "biologicalReplicateID": "BR1058",
+        "condition": "shamA",
+        "donorID": "BR1058",
+        "id": "BR1058",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B085",
+        "biologicalReplicateID": "BR1059",
+        "condition": "shamB",
+        "donorID": "BR1059",
+        "id": "BR1059",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B002",
+        "biologicalReplicateID": "BR2002",
+        "condition": "shamB",
+        "donorID": "BR2002",
+        "id": "BR2002",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B002",
+        "biologicalReplicateID": "BR2003",
+        "condition": "shamA",
+        "donorID": "BR2003",
+        "id": "BR2003",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B142",
+        "biologicalReplicateID": "BR2005",
+        "condition": "shamA",
+        "donorID": "BR2005",
+        "id": "BR2005",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B078",
+        "biologicalReplicateID": "BR2008",
+        "condition": "shamB",
+        "donorID": "BR2008",
+        "id": "BR2008",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B039",
+        "biologicalReplicateID": "BR2009",
+        "condition": "shamA",
+        "donorID": "BR2009",
+        "id": "BR2009",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B078",
+        "biologicalReplicateID": "BR2010",
+        "condition": "shamA",
+        "donorID": "BR2010",
+        "id": "BR2010",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B045",
+        "biologicalReplicateID": "BR2012",
+        "condition": "shamA",
+        "donorID": "BR2012",
+        "id": "BR2012",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B046",
+        "biologicalReplicateID": "BR2013",
+        "condition": "shamB",
+        "donorID": "BR2013",
+        "id": "BR2013",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B046",
+        "biologicalReplicateID": "BR2014",
+        "condition": "shamA",
+        "donorID": "BR2014",
+        "id": "BR2014",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B040",
+        "biologicalReplicateID": "BR2015",
+        "condition": "shamA",
+        "donorID": "BR2015",
+        "id": "BR2015",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B040",
+        "biologicalReplicateID": "BR2016",
+        "condition": "shamB",
+        "donorID": "BR2016",
+        "id": "BR2016",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B047",
+        "biologicalReplicateID": "BR2018",
+        "condition": "shamA",
+        "donorID": "BR2018",
+        "id": "BR2018",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B048",
+        "biologicalReplicateID": "BR2019",
+        "condition": "shamB",
+        "donorID": "BR2019",
+        "id": "BR2019",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B048",
+        "biologicalReplicateID": "BR2020",
+        "condition": "shamB",
+        "donorID": "BR2020",
+        "id": "BR2020",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B048",
+        "biologicalReplicateID": "BR2021",
+        "condition": "shamA",
+        "donorID": "BR2021",
+        "id": "BR2021",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B043",
+        "biologicalReplicateID": "BR2022",
+        "condition": "shamA",
+        "donorID": "BR2022",
+        "id": "BR2022",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B046",
+        "biologicalReplicateID": "BR2023",
+        "condition": "shamB",
+        "donorID": "BR2023",
+        "id": "BR2023",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B045",
+        "biologicalReplicateID": "BR2024",
+        "condition": "shamB",
+        "donorID": "BR2024",
+        "id": "BR2024",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B050",
+        "biologicalReplicateID": "BR2025",
+        "condition": "shamA",
+        "donorID": "BR2025",
+        "id": "BR2025",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B053",
+        "biologicalReplicateID": "BR2026",
+        "condition": "shamB",
+        "donorID": "BR2026",
+        "id": "BR2026",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B054",
+        "biologicalReplicateID": "BR2028",
+        "condition": "shamA",
+        "donorID": "BR2028",
+        "id": "BR2028",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B132",
+        "biologicalReplicateID": "BR2029",
+        "condition": "shamA",
+        "donorID": "BR2029",
+        "id": "BR2029",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B054",
+        "biologicalReplicateID": "BR2030",
+        "condition": "shamB",
+        "donorID": "BR2030",
+        "id": "BR2030",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B056",
+        "biologicalReplicateID": "BR2031",
+        "condition": "shamA",
+        "donorID": "BR2031",
+        "id": "BR2031",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B073",
+        "biologicalReplicateID": "BR2032",
+        "condition": "shamB",
+        "donorID": "BR2032",
+        "id": "BR2032",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B067",
+        "biologicalReplicateID": "BR2033",
+        "condition": "shamB",
+        "donorID": "BR2033",
+        "id": "BR2033",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B053",
+        "biologicalReplicateID": "BR2034",
+        "condition": "shamA",
+        "donorID": "BR2034",
+        "id": "BR2034",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B055",
+        "biologicalReplicateID": "BR2035",
+        "condition": "shamB",
+        "donorID": "BR2035",
+        "id": "BR2035",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B053",
+        "biologicalReplicateID": "BR2036",
+        "condition": "shamA",
+        "donorID": "BR2036",
+        "id": "BR2036",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B056",
+        "biologicalReplicateID": "BR2037",
+        "condition": "shamB",
+        "donorID": "BR2037",
+        "id": "BR2037",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B056",
+        "biologicalReplicateID": "BR2038",
+        "condition": "shamB",
+        "donorID": "BR2038",
+        "id": "BR2038",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B077",
+        "biologicalReplicateID": "BR2039",
+        "condition": "shamA",
+        "donorID": "BR2039",
+        "id": "BR2039",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B082",
+        "biologicalReplicateID": "BR2040",
+        "condition": "shamB",
+        "donorID": "BR2040",
+        "id": "BR2040",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B064",
+        "biologicalReplicateID": "BR2041",
+        "condition": "shamA",
+        "donorID": "BR2041",
+        "id": "BR2041",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B060",
+        "biologicalReplicateID": "BR2042",
+        "condition": "shamA",
+        "donorID": "BR2042",
+        "id": "BR2042",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B080",
+        "biologicalReplicateID": "BR2043",
+        "condition": "shamA",
+        "donorID": "BR2043",
+        "id": "BR2043",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B080",
+        "biologicalReplicateID": "BR2044",
+        "condition": "shamB",
+        "donorID": "BR2044",
+        "id": "BR2044",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B073",
+        "biologicalReplicateID": "BR2045",
+        "condition": "shamA",
+        "donorID": "BR2045",
+        "id": "BR2045",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B145",
+        "biologicalReplicateID": "BR2046",
+        "condition": "shamB",
+        "donorID": "BR2046",
+        "id": "BR2046",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B077",
+        "biologicalReplicateID": "BR2047",
+        "condition": "shamB",
+        "donorID": "BR2047",
+        "id": "BR2047",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B077",
+        "biologicalReplicateID": "BR2048",
+        "condition": "shamA",
+        "donorID": "BR2048",
+        "id": "BR2048",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B084",
+        "biologicalReplicateID": "BR2050",
+        "condition": "shamB",
+        "donorID": "BR2050",
+        "id": "BR2050",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B084",
+        "biologicalReplicateID": "BR2051",
+        "condition": "shamA",
+        "donorID": "BR2051",
+        "id": "BR2051",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B060",
+        "biologicalReplicateID": "BR2052",
+        "condition": "shamB",
+        "donorID": "BR2052",
+        "id": "BR2052",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B145",
+        "biologicalReplicateID": "BR2053",
+        "condition": "shamA",
+        "donorID": "BR2053",
+        "id": "BR2053",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B053",
+        "biologicalReplicateID": "UP1008",
+        "condition": "shamA",
+        "donorID": "UP1008",
+        "id": "UP1008",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B060",
+        "biologicalReplicateID": "UP1011",
+        "condition": "shamA",
+        "donorID": "UP1011",
+        "id": "UP1011",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B053",
+        "biologicalReplicateID": "UP1012",
+        "condition": "shamB",
+        "donorID": "UP1012",
+        "id": "UP1012",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B063",
+        "biologicalReplicateID": "UP1014",
+        "condition": "shamB",
+        "donorID": "UP1014",
+        "id": "UP1014",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B063",
+        "biologicalReplicateID": "UP1015",
+        "condition": "shamA",
+        "donorID": "UP1015",
+        "id": "UP1015",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B094",
+        "biologicalReplicateID": "UP1017",
+        "condition": "shamB",
+        "donorID": "UP1017",
+        "id": "UP1017",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B094",
+        "biologicalReplicateID": "UP1018",
+        "condition": "shamA",
+        "donorID": "UP1018",
+        "id": "UP1018",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B094",
+        "biologicalReplicateID": "UP1021",
+        "condition": "shamB",
+        "donorID": "UP1021",
+        "id": "UP1021",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B094",
+        "biologicalReplicateID": "UP1022",
+        "condition": "shamA",
+        "donorID": "UP1022",
+        "id": "UP1022",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B096",
+        "biologicalReplicateID": "UP1023",
+        "condition": "shamA",
+        "donorID": "UP1023",
+        "id": "UP1023",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B096",
+        "biologicalReplicateID": "UP1024",
+        "condition": "shamB",
+        "donorID": "UP1024",
+        "id": "UP1024",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B096",
+        "biologicalReplicateID": "UP1025",
+        "condition": "shamB",
+        "donorID": "UP1025",
+        "id": "UP1025",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B096",
+        "biologicalReplicateID": "UP1026",
+        "condition": "shamA",
+        "donorID": "UP1026",
+        "id": "UP1026",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B138",
+        "biologicalReplicateID": "UP1031",
+        "condition": "shamB",
+        "donorID": "UP1031",
+        "id": "UP1031",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B138",
+        "biologicalReplicateID": "UP1032",
+        "condition": "shamA",
+        "donorID": "UP1032",
+        "id": "UP1032",
+        "organism": "NCBITaxon:9606"
+      },
+      {
+        "batchID": "B138",
+        "biologicalReplicateID": "UP1034",
+        "condition": "shamB",
+        "donorID": "UP1034",
+        "id": "UP1034",
+        "organism": "NCBITaxon:9606"
+      }
+    ],
+    "schemaVersion": 1,
+    "sourceDescription": "Complete CELLxGENE B/Plasma release b6986a7f-981e-4e04-93ed-57f444749b8b; original UMI counts; sham conditions assigned by frozen metadata-only donor randomization; no biological intervention."
+  },
+  "schemaVersion": 1
+}

@@ -94,7 +94,11 @@ public enum VivoH5ADPseudobulk {
         // Source entry count bounds scan work, not resident matrix allocation:
         // the reader keeps at most one sparse major segment and 65,536-entry
         // input slices. The separate aggregate allowance remains unchanged.
-        limits.maximumNonzeros=1_000_000_000; limits.maximumInputBytes=1_073_741_824
+        limits.maximumNonzeros=1_000_000_000
+        // Source snapshots use fixed 1 MiB I/O, independently of the retained
+        // report/plan bounds below. Match the existing count-store file ceiling
+        // so complete atlas files also enter streamed aggregation and PCA.
+        limits.maximumInputBytes=64 * 1_024 * 1_024 * 1_024
         return limits
     }
     static let maximumAggregateNonzeros=5_000_000

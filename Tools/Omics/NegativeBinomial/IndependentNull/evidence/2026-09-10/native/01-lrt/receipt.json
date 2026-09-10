@@ -1,0 +1,20 @@
+{
+  "binarySHA256": "91de11aea277f0fa285d47d6a22453309e213662865adca06325977095c1c47c",
+  "cohort": "01",
+  "command": [
+    "/usr/bin/time",
+    "-l",
+    "/Users/n/numivivo-independent-null-20260910/build/independent-null",
+    "/Users/n/numivivo-independent-null-20260910/source-report.json.gz",
+    "/Users/n/numivivo-independent-null-20260910/requests/01-lrt.json"
+  ],
+  "error": null,
+  "method": "lrt",
+  "outputSHA256": "16a1f4315196b25d7854d894fdded10b4560f814647b4adedb11828f8abfb87b",
+  "path": "01-lrt.json",
+  "protocolSHA256": "4605983598e1f14987b9aa4c9d60204140d4996ec07bbe4fe5a81bb354685bd9",
+  "requestSHA256": "7c3a00d21381fb5f693baafabac30bde3b93c8c3685516b2c32a7dd86a25f0f4",
+  "returnCode": 0,
+  "seconds": 24.19208812713623,
+  "sourceReportSHA256": "b6b8aade422b88bd3bf2219b938ffacae0dbc93e1027c51654ea1f3b248134ae"
+}

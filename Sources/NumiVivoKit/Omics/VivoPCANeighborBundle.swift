@@ -71,7 +71,7 @@ public enum VivoPCANeighborBundle {
         if kind == .fitted { try VivoH5ADPCAQuery.snapshotReference(input, to: output); return }
         try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         try VivoH5ADPCAQuery.snapshotReference(input.appendingPathComponent("reference"), to: output.appendingPathComponent("reference"))
-        for (name, limit) in [("original.h5ad", 1_073_741_824), ("plan.json", 2_097_152), ("receipt.json", 65_536),
+        for (name, limit) in [("original.h5ad", VivoH5ADPseudobulk.sourceLimits.maximumInputBytes), ("plan.json", 2_097_152), ("receipt.json", 65_536),
             ("metadata.json", 536_870_912), ("quality.json", 268_435_456), ("report.json", 1_048_576), ("scores.bin", 1_024_000_000)] {
             _ = try VivoOmicsFileSnapshot.fingerprint(input.appendingPathComponent(name), copyTo: output.appendingPathComponent(name), maximumBytes: limit)
         }
