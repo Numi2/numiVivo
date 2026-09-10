@@ -176,9 +176,7 @@ public enum VivoOmicsNegativeBinomial {
         guard initial.converged, !initial.positiveCountDesignRankDeficient else {
             throw VivoOmicsStatisticsError.invalid("NB contrast MAP requires a converged identified unpenalized fit")
         }
-        // Spell out numeric conversion: Double.init also has a UInt64
-        // bitPattern overload, which is not a count-to-FP64 conversion.
-        let n = counts.count, p = contrast.count, y = counts.map { Double($0) }
+        let n = counts.count, p = contrast.count, y = counts.map(Double.init)
         let priorRow = contrast.map { $0 / priorStandardDeviation }
         let precision = 1 / (priorStandardDeviation * priorStandardDeviation)
         func effect(_ beta: [Double]) -> Double { zip(beta,contrast).reduce(0) { $0+$1.0*$1.1 } }

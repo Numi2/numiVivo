@@ -10,12 +10,15 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     public var outlierStandardDeviations: Double = 2
     /// nil reports influence without excluding observations or genes.
     public var maximumCooksDistance: Double?
+    /// Optional zero-centered normal prior on the requested log2 contrast.
+    /// Fixed by the caller; never learned from the test outcomes.
+    public var effectPriorStandardDeviationLog2: Double?
     public init() {}
     private enum CodingKeys: String, CodingKey {
-        case zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance
+        case zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance, effectPriorStandardDeviationLog2
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance", "effectPriorStandardDeviationLog2"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         zeroTotalDonorPolicy = try c.decodeIfPresent(VivoOmicsNBZeroDonorPolicy.self,forKey: .zeroTotalDonorPolicy)
         trend = try c.decodeIfPresent(VivoOmicsNBTrendMethod.self, forKey: .trend) ?? .parametric
@@ -23,12 +26,14 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
         minimumPriorVariance = try c.decodeIfPresent(Double.self, forKey: .minimumPriorVariance) ?? 0.25
         outlierStandardDeviations = try c.decodeIfPresent(Double.self, forKey: .outlierStandardDeviations) ?? 2
         maximumCooksDistance = try c.decodeIfPresent(Double.self, forKey: .maximumCooksDistance)
+        effectPriorStandardDeviationLog2 = try c.decodeIfPresent(Double.self, forKey: .effectPriorStandardDeviationLog2)
     }
     public func validate() throws {
         guard (20...100_000).contains(minimumTrendGenes), minimumPriorVariance.isFinite,
               (0.01...10).contains(minimumPriorVariance), outlierStandardDeviations.isFinite,
               (1...10).contains(outlierStandardDeviations),
-              maximumCooksDistance.map({ $0.isFinite && $0 > 0 }) ?? true else {
+              maximumCooksDistance.map({ $0.isFinite && $0 > 0 }) ?? true,
+              effectPriorStandardDeviationLog2.map({ $0.isFinite && (0.01...100).contains($0) }) ?? true else {
             throw VivoOmicsError.invalid("NB trend, prior or influence options")
         }
     }
@@ -58,11 +63,23 @@ public struct VivoOmicsNBFeatureDiagnostics: Codable, Sendable, Equatable {
     public var finalDispersion: Double?
     public var finalFit: VivoOmicsNBFit?
     public var error: String?
+    /// Raw natural-log MAP/Laplace diagnostics, including an unconverged attempt.
+    public var effectShrinkageFit: VivoOmicsNBContrastMAPFit?
+    public var effectShrinkageError: String?
+}
+public struct VivoOmicsNBEffectShrinkageSummary: Codable, Sendable, Equatable {
+    public let method: String
+    public let priorStandardDeviationLog2: Double
+    public let eligibleFeatures: Int
+    public let convergedFeatures: Int
+    public let failedFeatures: Int
+    public let qualification: String
 }
 public struct VivoOmicsNBCohortDiagnostics: Codable, Sendable, Equatable {
     public let trend: VivoOmicsNBTrend
     public let features: [VivoOmicsNBFeatureDiagnostics]
     public let qualification: String
+    public var effectShrinkage: VivoOmicsNBEffectShrinkageSummary? = nil
 }
 
 public enum VivoOmicsNBCohort {
@@ -292,6 +309,21 @@ public enum VivoOmicsNBCohort {
                         posteriorVariance: nil,standardError: nil,tStatistic: nil,degreesOfFreedom: nil,intervalLower: nil,intervalUpper: nil,pValue: nil,adjustedPValue: nil)
                 }
             }
+            // Keep shrinkage failures outside the Wald inference path. Only
+            // tested genes are eligible, using exactly their retained donors.
+            if result.status == .tested, let priorSD = options.effectPriorStandardDeviationLog2 {
+                do {
+                    let resolution = diagnostics[gene].supportResolution
+                    let rows = resolution?.retainedObservationIndices ?? Array(0..<n), y = response(gene)
+                    let map = try VivoOmicsNegativeBinomial.fitContrastMAP(counts: rows.map { y[$0] },
+                        design: resolution?.rows ?? design.rows, offsets: rows.map { offsets[$0] },
+                        contrast: resolution?.contrast ?? design.contrast, dispersion: diagnostics[gene].finalDispersion!,
+                        priorStandardDeviation: priorSD*log(2))
+                    diagnostics[gene].effectShrinkageFit = map
+                    if !map.converged { diagnostics[gene].effectShrinkageError = "NB contrast MAP did not converge" }
+                } catch is CancellationError { throw CancellationError() }
+                catch { diagnostics[gene].effectShrinkageError = error.localizedDescription }
+            }
             features.append(result)
         }
         let adjusted = try VivoOmicsLinearStatistics.benjaminiHochberg(probabilities)
@@ -300,6 +332,13 @@ public enum VivoOmicsNBCohort {
             variancePrior: nil,features: features,testedFeatures: tested.count,
             multiplicityScope: "BH across available NB Wald tests within this contrast; no selection-adjusted or cross-contrast calibration claim",
             negativeBinomial: .init(trend: trend,features: diagnostics,
-                qualification: "Experimental NB cohort method; asymptotic Wald intervals, heuristic influence gate if requested, no count replacement; multi-study calibration remains open"))
+                qualification: "Experimental NB cohort method; asymptotic Wald intervals, heuristic influence gate if requested, no count replacement; multi-study calibration remains open",
+                effectShrinkage: options.effectPriorStandardDeviationLog2.map { priorSD in
+                    let completed = diagnostics.filter { $0.effectShrinkageFit?.converged == true }.count
+                    return .init(method: "NB2-contrast-normal-prior-count-likelihood-MAP-Laplace-v1",
+                        priorStandardDeviationLog2: priorSD,eligibleFeatures: tested.count,convergedFeatures: completed,
+                        failedFeatures: tested.count-completed,
+                        qualification: "Explicit fixed prior; nuisance coefficients jointly refitted; natural-log fit diagnostics; Laplace SD conditional on fixed dispersion and prior; original Wald tests and BH family unchanged; posterior coverage and biological calibration unqualified")
+                }))
     }
 }

@@ -55,10 +55,19 @@ import Testing
         #expect(result.features.prefix(3).allSatisfy { ($0.log2FoldChange ?? 0) > 2 })
         #expect(result.features.allSatisfy { $0.tStatistic == nil && $0.degreesOfFreedom == nil })
         #expect(result.features.filter { $0.status == .tested }.allSatisfy { $0.zStatistic != nil && $0.pValue != nil })
+        options.effectPriorStandardDeviationLog2 = 1; contrast.negativeBinomialOptions = options
+        let shrunk = try VivoPseudobulkDifferentialExpression.run(data,contrast: contrast)
+        #expect(shrunk.features == result.features)
+        #expect(shrunk.negativeBinomial?.trend == result.negativeBinomial?.trend)
+        #expect(shrunk.negativeBinomial?.effectShrinkage?.convergedFeatures == result.testedFeatures)
+        #expect(shrunk.negativeBinomial?.effectShrinkage?.failedFeatures == 0)
+        #expect(result.negativeBinomial?.effectShrinkage == nil)
         options.maximumCooksDistance = 1e-15; contrast.negativeBinomialOptions = options
         let excluded = try VivoPseudobulkDifferentialExpression.run(data,contrast: contrast)
         #expect(excluded.testedFeatures == 0)
         #expect(excluded.features.allSatisfy { $0.pValue == nil && $0.adjustedPValue == nil })
+        #expect(excluded.negativeBinomial?.effectShrinkage?.eligibleFeatures == 0)
+        #expect(excluded.negativeBinomial!.features.allSatisfy { $0.effectShrinkageFit == nil })
         contrast.design = .independentReplicates
         #expect(throws: (any Error).self) { try VivoPseudobulkDifferentialExpression.run(data,contrast: contrast) }
     }
@@ -70,5 +79,12 @@ import Testing
         #expect(throws: (any Error).self) { try contrast.validate() }
         let bytes = Data("{\"trend\":\"mean\",\"fakeOption\":true}".utf8)
         #expect(throws: (any Error).self) { try JSONDecoder().decode(VivoOmicsNBCohortOptions.self,from: bytes) }
+        let decoded = try JSONDecoder().decode(VivoOmicsNBCohortOptions.self,from: Data("{\"effectPriorStandardDeviationLog2\":1}".utf8))
+        #expect(decoded.effectPriorStandardDeviationLog2 == 1)
+        #expect(try JSONDecoder().decode(VivoOmicsNBCohortOptions.self,from: JSONEncoder().encode(decoded)) == decoded)
+        for sd in [0.0,-1,0.001,101,.infinity,.nan] {
+            var invalid = decoded; invalid.effectPriorStandardDeviationLog2 = sd
+            #expect(throws: (any Error).self) { try invalid.validate() }
+        }
     }
 }

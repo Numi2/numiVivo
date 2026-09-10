@@ -82,5 +82,13 @@ import Testing
         #expect(old.negativeBinomial!.trend==new.negativeBinomial!.trend)
         #expect(old.negativeBinomial!.features[0]==new.negativeBinomial!.features[0])
         #expect(old.features[0].pValue==new.features[0].pValue)
+        var shrinkRequest = request; shrinkRequest.negativeBinomialOptions!.effectPriorStandardDeviationLog2 = 1
+        let shrink = try VivoPseudobulkDifferentialExpression.run(data,contrast: shrinkRequest)
+        #expect(shrink.features == new.features)
+        let s = try #require(shrink.negativeBinomial!.features[90].supportResolution)
+        let map = try #require(shrink.negativeBinomial!.features[90].effectShrinkageFit)
+        #expect(map.converged && map.means.count == s.retainedObservationIndices.count)
+        #expect(shrink.negativeBinomial!.features[91].effectShrinkageFit == nil)
+        #expect(shrink.negativeBinomial!.features[92].effectShrinkageFit == nil)
     }
 }

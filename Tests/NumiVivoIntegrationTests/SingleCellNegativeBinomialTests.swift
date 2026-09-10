@@ -66,4 +66,49 @@ import Testing
         #expect(abs(log(map.fit.dispersion/0.1)) < abs(log(mle.fit.dispersion/0.1)))
         #expect(!mle.lowerBoundary && !mle.upperBoundary)
     }
+    @Test func contrastMAPRefitsNuisanceAndPreservesParameterization() throws {
+        let y: [UInt64] = [11,20,12,55,43,61]
+        let x = [[1.0,0],[1,0],[1,0],[1,1],[1,1],[1,1]], offsets = [0.0,0.2,0.1,0.3,0.1,0.2]
+        let mle = try VivoOmicsNegativeBinomial.fit(counts: y,design: x,offsets: offsets,contrast: [0,1],dispersion: 0.1)
+        let map = try VivoOmicsNegativeBinomial.fitContrastMAP(counts: y,design: x,offsets: offsets,contrast: [0,1],dispersion: 0.1,priorStandardDeviation: 0.4)
+        let cellMeans = x.map { [1-$0[1],$0[1]] }
+        let rebased = try VivoOmicsNegativeBinomial.fitContrastMAP(counts: y,design: cellMeans,offsets: offsets.map { $0+2 },contrast: [-1,1],dispersion: 0.1,priorStandardDeviation: 0.4)
+        #expect(map.converged && rebased.converged)
+        #expect(map.effect > 0 && map.effect < mle.effect!)
+        #expect(abs(map.coefficients[0]-mle.coefficients[0]) > 0.01)
+        #expect(abs(map.effect-rebased.effect) < 1e-8)
+        #expect(abs(map.posteriorStandardDeviation-rebased.posteriorStandardDeviation) < 1e-8)
+        #expect(zip(map.means,rebased.means).allSatisfy { abs($0-$1) < 1e-6 })
+        #expect(map.objective >= mle.logLikelihood-pow(mle.effect!,2)/(2*0.4*0.4))
+        let weak = try VivoOmicsNegativeBinomial.fitContrastMAP(counts: y,design: x,offsets: offsets,contrast: [0,1],dispersion: 0.1,priorStandardDeviation: 1e6)
+        #expect(weak.converged && abs(weak.effect-mle.effect!) < 1e-7)
+    }
+    @Test func contrastMAPMatchesHighPrecisionScalarCountLikelihood() throws {
+        // mpmath 1.3.0, 70 digits: solve 6*(12-exp(b))/(1+0.2*exp(b))-b/0.4^2=0.
+        // Guards numerical UInt64 conversion as well as the posterior curvature.
+        let fit = try VivoOmicsNegativeBinomial.fitContrastMAP(counts: Array(repeating: 12,count: 6),
+            design: Array(repeating: [1.0],count: 6),offsets: Array(repeating: 0,count: 6),
+            contrast: [1],dispersion: 0.2,priorStandardDeviation: 0.4)
+        #expect(fit.converged)
+        #expect(abs(fit.effect-1.9568087071818467) < 1e-8)
+        #expect(fit.means.allSatisfy { abs($0-7.07670714626965) < 1e-7 })
+        #expect(abs(fit.posteriorStandardDeviation-0.17961700266278638) < 1e-9)
+    }
+    @Test func contrastMAPPreservesSupportAndReportsIterationExhaustion() throws {
+        let x = [[1.0,0],[1,0],[1,0],[1,1],[1,1],[1,1]], offsets = Array(repeating: 0.0,count: 6)
+        for sd in [0.0,-1,.infinity,.nan,1e-7,1e7] {
+            #expect(throws: (any Error).self) { try VivoOmicsNegativeBinomial.fitContrastMAP(counts: [1,2,3,4,5,6],design: x,offsets: offsets,contrast: [0,1],dispersion: 0.1,priorStandardDeviation: sd) }
+        }
+        for y: [UInt64] in [[0,0,0,0,0,0],[10,12,9,0,0,0]] {
+            #expect(throws: (any Error).self) { try VivoOmicsNegativeBinomial.fitContrastMAP(counts: y,design: x,offsets: offsets,contrast: [0,1],dispersion: 0.1,priorStandardDeviation: 1) }
+        }
+        let unfinished = try VivoOmicsNegativeBinomial.fitContrastMAP(counts: [1,2,1000,3,4000,5],design: x,offsets: offsets,contrast: [0,1],dispersion: 0.1,priorStandardDeviation: 0.01,maximumIterations: 1)
+        #expect(!unfinished.converged && unfinished.maximumScaledScore > 1e-7)
+    }
+    @Test func contrastMAPSupportsFullObservationLimitWithoutAddingReplication() throws {
+        let y = (0..<512).map { UInt64(5+$0%7) }, x = y.map { _ in [1.0] }
+        let fit = try VivoOmicsNegativeBinomial.fitContrastMAP(counts: y,design: x,offsets: y.map { _ in 0 },contrast: [1],dispersion: 0.2,priorStandardDeviation: 1)
+        #expect(fit.converged && fit.means.count == 512)
+        #expect(throws: (any Error).self) { try VivoOmicsNegativeBinomial.fitContrastMAP(counts: y+[5],design: x+[[1]],offsets: Array(repeating: 0,count: 513),contrast: [1],dispersion: 0.2,priorStandardDeviation: 1) }
+    }
 }

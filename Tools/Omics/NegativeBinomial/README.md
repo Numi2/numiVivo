@@ -1,5 +1,11 @@
 # Native negative-binomial cohort analysis
 
+Optional [count-likelihood effect shrinkage](EffectShrinkage/README.md) now adds
+an explicit normal prior on the requested contrast, jointly refits nuisance
+coefficients and reports conditional Laplace uncertainty separately from the
+original Wald/BH inference. The caller supplies the prior SD; empirical prior
+learning and posterior coverage remain unqualified.
+
 The optional [active-donor profile policy](ActiveDonor/README.md) now handles
 complete zero-total donor pairs with recorded gene-specific designs, retaining
 replication/rank gates and the original full-support dispersion-prior cohort.

@@ -1,0 +1,100 @@
+{
+  "checkerSHA256": "a30651dadccd4ded5714a13d87ef575d213945d62cd52a1c8adc9c38b7518e5d",
+  "failedFeatures": 0,
+  "numpy": "2.5.3",
+  "python": "3.12.14",
+  "qualification": "conditional numerical validation; no posterior coverage, power, or FDR qualification",
+  "scipy": "1.18.1",
+  "seconds": 7.464261583052576,
+  "status": "passed-conditional-numerical-checks",
+  "studies": [
+    {
+      "BH005Calls": 850,
+      "activeSupportFits": 0,
+      "baselineCountsDesignAndDiagnosticsExactlyEqual": true,
+      "baselineInferenceExactlyEqual": true,
+      "failures": [],
+      "maximumErrors": {
+        "effect": 5.5410839028269265e-08,
+        "logLikelihood": 2.942537236094722e-07,
+        "objective": 1.0561507224338129e-10,
+        "posteriorSD": 3.24021748321357e-09,
+        "relativeMean": 1.1426657732568876e-07,
+        "scaledScore": 9.988210811444921e-08
+      },
+      "mode": "default",
+      "referenceSolverFlagFalse": 0,
+      "reportSHA256": "3c5895a7924313231bff4b6a1aa5bce36cf1edb00066dffc38a32a465aeb3939",
+      "study": "kang",
+      "testedFeatures": 5400
+    },
+    {
+      "BH005Calls": 815,
+      "activeSupportFits": 3429,
+      "baselineCountsDesignAndDiagnosticsExactlyEqual": true,
+      "baselineInferenceExactlyEqual": true,
+      "failures": [],
+      "maximumErrors": {
+        "effect": 5.5410839028269265e-08,
+        "logLikelihood": 2.942537236094722e-07,
+        "objective": 1.0561507224338129e-10,
+        "posteriorSD": 3.24021748321357e-09,
+        "relativeMean": 2.394360219056359e-07,
+        "scaledScore": 9.988210811444921e-08
+      },
+      "mode": "active",
+      "referenceSolverFlagFalse": 0,
+      "reportSHA256": "06ba9e9260bda93e7b37d42cd5c9aef700766a8355e33fd96b90a9b8fc03b864",
+      "study": "kang",
+      "testedFeatures": 8829
+    },
+    {
+      "BH005Calls": 4827,
+      "activeSupportFits": 0,
+      "baselineCountsDesignAndDiagnosticsExactlyEqual": true,
+      "baselineInferenceExactlyEqual": true,
+      "failures": [],
+      "maximumErrors": {
+        "effect": 6.637761273964315e-08,
+        "logLikelihood": 7.166482198783797e-07,
+        "objective": 9.531902378512314e-09,
+        "posteriorSD": 4.3936337901229194e-09,
+        "relativeMean": 2.0439904699597595e-07,
+        "scaledScore": 9.995309568552879e-08
+      },
+      "mode": "default",
+      "referenceSolverFlagFalse": 0,
+      "reportSHA256": "451b52d485ee4be46c7f182604a8765b70eab98092904239e2a7028b49b1df8c",
+      "study": "hagai",
+      "testedFeatures": 12426
+    },
+    {
+      "BH005Calls": 4827,
+      "activeSupportFits": 0,
+      "baselineCountsDesignAndDiagnosticsExactlyEqual": true,
+      "baselineInferenceExactlyEqual": true,
+      "failures": [],
+      "maximumErrors": {
+        "effect": 6.637761273964315e-08,
+        "logLikelihood": 7.166482198783797e-07,
+        "objective": 9.531902378512314e-09,
+        "posteriorSD": 4.3936337901229194e-09,
+        "relativeMean": 2.0439904699597595e-07,
+        "scaledScore": 9.995309568552879e-08
+      },
+      "mode": "active",
+      "referenceSolverFlagFalse": 0,
+      "reportSHA256": "0a64847e8c4d8367f872942828fce9dfe9dd9a1f0776c466fc0439ad0e4168f1",
+      "study": "hagai",
+      "testedFeatures": 12426
+    }
+  ],
+  "tolerances": {
+    "effect": 2e-06,
+    "logLikelihood": 2e-05,
+    "objective": 2e-05,
+    "posteriorSD": 2e-06,
+    "relativeMean": 2e-06,
+    "scaledScore": 1e-07
+  }
+}

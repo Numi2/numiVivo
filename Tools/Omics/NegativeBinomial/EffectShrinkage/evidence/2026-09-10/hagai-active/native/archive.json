@@ -1,0 +1,27 @@
+{
+  "completeSourceRetained": true,
+  "entries": [
+    {
+      "logicalPath": "plan.json",
+      "logicalSHA256": "7362a336f559da1c29a0cb8ad1c68467df88be262d0385cb4b3f2812178dcd8d",
+      "path": "plan.json.gz",
+      "sha256": "4ea51b6ebff1e3bb83d28de1eae1e0f25c15f441a7583893ad2e2e198e1ec556"
+    },
+    {
+      "logicalPath": "report.json",
+      "logicalSHA256": "294595d73eac15c4e4624731664fea3744c656ff53a6ab24f824161ff78ee523",
+      "path": "report.json.gz",
+      "sha256": "0a64847e8c4d8367f872942828fce9dfe9dd9a1f0776c466fc0439ad0e4168f1"
+    },
+    {
+      "logicalPath": "receipt.json",
+      "logicalSHA256": "2c259b79cc3cc6e9ef31112b1a77427c5d07232afdf681f41daa53a92e1b8edc",
+      "path": "receipt.json.gz",
+      "sha256": "e8cf255a1032a2ab675f4d0d5d0a7ad7541099f9dcc8f0d0ae390543bea288bf"
+    }
+  ],
+  "restoreTool": "EffectShrinkage/restore_bundle.py --source <matching-original.h5ad>",
+  "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/original.h5ad",
+  "sourceSHA256": "2d0a69d121bcf6e9b63b82fafd06e597f6165a927b87b0cc51cb5c90c2caa5f5",
+  "status": "published-and-replay-verified-before-archival"
+}

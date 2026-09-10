@@ -18,8 +18,12 @@ public struct VivoOmicsQR: Sendable {
     private let r: [[Double]]
 
     public init(design: [[Double]], relativeRankTolerance: Double = 1e-10) throws {
+        try self.init(design: design, relativeRankTolerance: relativeRankTolerance, maximumObservations: 512)
+    }
+    /// Internal allowance for a penalty row; it is not a biological observation.
+    init(design: [[Double]], relativeRankTolerance: Double = 1e-10, maximumObservations: Int) throws {
         let n = design.count, p = design.first?.count ?? 0
-        guard n <= 512, p > 0, p <= 128, n > p,
+        guard n <= maximumObservations, p > 0, p <= 128, n > p,
               relativeRankTolerance.isFinite, relativeRankTolerance > 0,
               relativeRankTolerance < 1,
               design.allSatisfy({ $0.count == p && $0.allSatisfy(\.isFinite) }) else {

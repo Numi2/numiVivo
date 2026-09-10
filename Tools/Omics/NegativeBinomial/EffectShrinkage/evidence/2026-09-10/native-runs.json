@@ -1,0 +1,111 @@
+{
+  "binarySHA256": "2d9e524cbb1cdd552fc9f52a1c5237cc904f9faec6eb6bc30b7f49d479ee5433",
+  "hdf5SHA256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e",
+  "protocolSHA256": "2f99847620fbee9388990d5593f642b070a4f05fea7004c23b4ee32b826786cf",
+  "runs": [
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-effect-shrinkage-20260910/kang-default/plan.json",
+        "--output",
+        "/Users/n/numivivo-effect-shrinkage-20260910/kang-default/native"
+      ],
+      "exitCode": 0,
+      "mode": "default",
+      "seconds": 25.511595957999997,
+      "stage": "publish",
+      "study": "kang"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-effect-shrinkage-20260910/kang-default/native"
+      ],
+      "exitCode": 0,
+      "mode": "default",
+      "seconds": 24.156685208999995,
+      "stage": "replay",
+      "study": "kang"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-effect-shrinkage-20260910/kang-active/plan.json",
+        "--output",
+        "/Users/n/numivivo-effect-shrinkage-20260910/kang-active/native"
+      ],
+      "exitCode": 0,
+      "mode": "active",
+      "seconds": 34.550322124999994,
+      "stage": "publish",
+      "study": "kang"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-effect-shrinkage-20260910/kang-active/native"
+      ],
+      "exitCode": 0,
+      "mode": "active",
+      "seconds": 34.665958292,
+      "stage": "replay",
+      "study": "kang"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-effect-shrinkage-20260910/hagai-default/plan.json",
+        "--output",
+        "/Users/n/numivivo-effect-shrinkage-20260910/hagai-default/native"
+      ],
+      "exitCode": 0,
+      "mode": "default",
+      "seconds": 17.259280042,
+      "stage": "publish",
+      "study": "hagai"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-effect-shrinkage-20260910/hagai-default/native"
+      ],
+      "exitCode": 0,
+      "mode": "default",
+      "seconds": 17.388720667,
+      "stage": "replay",
+      "study": "hagai"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-effect-shrinkage-20260910/hagai-active/plan.json",
+        "--output",
+        "/Users/n/numivivo-effect-shrinkage-20260910/hagai-active/native"
+      ],
+      "exitCode": 0,
+      "mode": "active",
+      "seconds": 17.077869958000008,
+      "stage": "publish",
+      "study": "hagai"
+    },
+    {
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-effect-shrinkage-20260910/hagai-active/native"
+      ],
+      "exitCode": 0,
+      "mode": "active",
+      "seconds": 17.112552083999987,
+      "stage": "replay",
+      "study": "hagai"
+    }
+  ]
+}

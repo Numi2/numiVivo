@@ -1,0 +1,54 @@
+{
+  "reason": "counts.map(Double.init) resolves to UInt64 bit-pattern conversion; use explicit Double(value) numeric conversion",
+  "nativeBinarySHA256": "62c8f9bdefadc54551efcc0dd58382e3eb9d87c252b38ecade3a2d0e2d0f47f4",
+  "studies": [
+    {
+      "study": "hagai-active",
+      "summary": {
+        "convergedFeatures": 12076,
+        "eligibleFeatures": 12426,
+        "failedFeatures": 350,
+        "method": "NB2-contrast-normal-prior-count-likelihood-MAP-Laplace-v1",
+        "priorStandardDeviationLog2": 1,
+        "qualification": "Explicit fixed prior; nuisance coefficients jointly refitted; natural-log fit diagnostics; Laplace SD conditional on fixed dispersion and prior; original Wald tests and BH family unchanged; posterior coverage and biological calibration unqualified"
+      },
+      "reportSHA256": "07268c9b7ae50d837a6e05c9e33323fbb05d46dd5b6f56faf0844f60bc3d506e"
+    },
+    {
+      "study": "kang-default",
+      "summary": {
+        "convergedFeatures": 3943,
+        "eligibleFeatures": 5400,
+        "failedFeatures": 1457,
+        "method": "NB2-contrast-normal-prior-count-likelihood-MAP-Laplace-v1",
+        "priorStandardDeviationLog2": 1,
+        "qualification": "Explicit fixed prior; nuisance coefficients jointly refitted; natural-log fit diagnostics; Laplace SD conditional on fixed dispersion and prior; original Wald tests and BH family unchanged; posterior coverage and biological calibration unqualified"
+      },
+      "reportSHA256": "6c98765732d37abb1bd38bf5a5d6e122e9790eb217bbdef3a7b869d72367395c"
+    },
+    {
+      "study": "hagai-default",
+      "summary": {
+        "convergedFeatures": 12076,
+        "eligibleFeatures": 12426,
+        "failedFeatures": 350,
+        "method": "NB2-contrast-normal-prior-count-likelihood-MAP-Laplace-v1",
+        "priorStandardDeviationLog2": 1,
+        "qualification": "Explicit fixed prior; nuisance coefficients jointly refitted; natural-log fit diagnostics; Laplace SD conditional on fixed dispersion and prior; original Wald tests and BH family unchanged; posterior coverage and biological calibration unqualified"
+      },
+      "reportSHA256": "316416d6a91927be54f6605281584eadb882248d8af947f8b814095bb686d638"
+    },
+    {
+      "study": "kang-active",
+      "summary": {
+        "convergedFeatures": 7369,
+        "eligibleFeatures": 8829,
+        "failedFeatures": 1460,
+        "method": "NB2-contrast-normal-prior-count-likelihood-MAP-Laplace-v1",
+        "priorStandardDeviationLog2": 1,
+        "qualification": "Explicit fixed prior; nuisance coefficients jointly refitted; natural-log fit diagnostics; Laplace SD conditional on fixed dispersion and prior; original Wald tests and BH family unchanged; posterior coverage and biological calibration unqualified"
+      },
+      "reportSHA256": "c86d955d311da524f0710e2f415ab23dc6409575bd452e64d37a0c4e8cafe417"
+    }
+  ]
+}
