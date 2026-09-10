@@ -1,0 +1,39 @@
+{
+  "binarySHA256": "db0744334d031d76bff070d1b1e0e9bd2dedd9cf43b0c35dda58cb2a257ee72f",
+  "case": "hagai-null-01-default",
+  "failures": [],
+  "inputSHA256": "1acc2b8e1b3cd9c7d208df897227eabf35a91063dfe9a79380a86165a65a492c",
+  "logicalSHA256": "bb7cc31f35a33d3ac771984380d252eabad8ae6ad0ecd312e8dfdadc8187a629",
+  "maximumAbsoluteError": 5.665192399396946e-10,
+  "maximumEdgeRRawDevianceDifference": 1.135405360841446e-06,
+  "outputSHA256": "cd31b5f3ea2bc6db6a9426700c539f329ec43a9b5087e1da99395c07ada8d19e",
+  "precisionRefinements": [],
+  "stages": [
+    {
+      "maximumAbsoluteError": 5.665192399396946e-10,
+      "maximumEdgeRRawDevianceDifference": 1.0583198246649772e-06,
+      "method": "nativeTrend-adjusted",
+      "units": 71526
+    },
+    {
+      "maximumAbsoluteError": 5.665192399396946e-10,
+      "maximumEdgeRRawDevianceDifference": 1.0583198246649772e-06,
+      "method": "nativeTrend-legacy",
+      "units": 71526
+    },
+    {
+      "maximumAbsoluteError": 2.684297350369347e-10,
+      "maximumEdgeRRawDevianceDifference": 1.135405360841446e-06,
+      "method": "edgeRTrend-adjusted",
+      "units": 71526
+    },
+    {
+      "maximumAbsoluteError": 2.684297350369347e-10,
+      "maximumEdgeRRawDevianceDifference": 1.135405360841446e-06,
+      "method": "edgeRTrend-legacy",
+      "units": 71526
+    }
+  ],
+  "status": "passed",
+  "units": 286104
+}

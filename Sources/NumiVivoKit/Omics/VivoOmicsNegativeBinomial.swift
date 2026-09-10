@@ -65,6 +65,60 @@ public struct VivoOmicsNBLikelihoodRatioFit: Codable, Sendable, Equatable {
 }
 
 public enum VivoOmicsNegativeBinomial {
+    /// Twice the saturated-minus-model log likelihood for one exact count.
+    /// This residual diagnostic is not a QL scale estimate or hypothesis test.
+    /// Dispersion zero is the exact Poisson limit; positive NB dispersion uses
+    /// the same bounded domain as logMass. A zero mean admits only zero counts.
+    public static func unitDeviance(count: UInt64, mean: Double, dispersion: Double) throws -> Double {
+        guard count <= 9_007_199_254_740_992, mean.isFinite, mean >= 0,
+              dispersion.isFinite, dispersion == 0 || (1e-8...100).contains(dispersion),
+              mean > 0 || count == 0 else {
+            throw VivoOmicsStatisticsError.invalid("NB deviance count, mean or dispersion domain")
+        }
+        if mean == 0 { return 0 }
+        let y = Double(count), a = dispersion
+        if y == mean { return 0 }
+        let half: Double
+        if count == 0 {
+            if a == 0 { half = mean }
+            else {
+                let product = a*mean
+                half = (product.isFinite ? log1p(product) : log(a)+log(mean))/a
+            }
+        } else {
+            let delta = y-mean, relative = delta/mean
+            if abs(relative) <= 0.25 {
+                // Expand the difference of two entropy terms together. Taking
+                // that difference after evaluation loses precision at high NB
+                // means, even when each individual entropy is well resolved.
+                let logQ = a == 0 ? 0 : -log1p(1/(a*mean))
+                var power = relative*relative, sum = 0.0, compensation = 0.0
+                for k in 2...64 {
+                    let scale = a == 0 ? 1 : -expm1(Double(k-1)*logQ)
+                    let term = power*scale/Double(k*(k-1))
+                    let corrected = term-compensation, next = sum+corrected
+                    compensation = (next-sum)-corrected; sum = next
+                    power *= -relative
+                }
+                half = mean*sum
+            } else if a == 0 {
+                half = y*(log(y)-log(mean))-delta
+            } else {
+                let r = 1/a
+                let scaled = relative/(1+a*y)
+                let logCross = scaled.isFinite && scaled > -1 ? log1p(scaled) :
+                    log(y)-log(mean)+log(mean+r)-log(y+r)
+                let sizeRelative = delta/(mean+r)
+                let logSize = abs(sizeRelative) < 0.5 ? log1p(sizeRelative) : log(y+r)-log(mean+r)
+                half = y*logCross-r*logSize
+            }
+        }
+        let value = 2*half
+        guard value.isFinite, value >= 0 else {
+            throw VivoOmicsStatisticsError.invalid("NB deviance exceeds finite nonnegative arithmetic")
+        }
+        return value
+    }
     /// Fixed-dispersion NB likelihood ratio; asymptotic chi-square with one DF.
     /// This is not a quasi-likelihood test or dispersion-uncertainty adjustment.
     public static func fitContrastLikelihoodRatio(counts: [UInt64], design: [[Double]], offsets: [Double],

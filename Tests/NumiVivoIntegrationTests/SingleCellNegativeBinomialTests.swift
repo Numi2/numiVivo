@@ -3,6 +3,28 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellNegativeBinomialTests {
+    @Test func unitDevianceResolvesSaturationPoissonAndExtremeMeans() throws {
+        // Independent 100-digit saturated likelihood differences at exact
+        // binary64 inputs, including the cancellation-prone large-count case.
+        let cases: [(UInt64,Double,Double,Double)] = [
+            (0,2,0.1,3.6464311358790925069),
+            (7,3,0,3.8621700454208505919),
+            (100,100.00000001,0.1,9.0908976751672006888e-20),
+            (9_007_199_254_740_992,9_007_199_254_740_991,100,1.232595164407831127e-34),
+            (1_000_000_000,1_000_000_001,1e-8,9.0909090793388428147e-11),
+            (1,1e-200,0.1,918.93721324192312672),
+            (1,1e200,100,9.1902407036527832081)]
+        for (y,mu,a,expected) in cases {
+            let value = try VivoOmicsNegativeBinomial.unitDeviance(count: y,mean: mu,dispersion: a)
+            #expect(abs(value/expected-1) < 2e-12)
+        }
+        #expect(try VivoOmicsNegativeBinomial.unitDeviance(count: 0,mean: 0,dispersion: 0) == 0)
+        #expect(try VivoOmicsNegativeBinomial.unitDeviance(count: 3,mean: 3,dispersion: 0.2) == 0)
+        #expect(throws: (any Error).self) { try VivoOmicsNegativeBinomial.unitDeviance(count: 1,mean: 0,dispersion: 0.2) }
+        #expect(throws: (any Error).self) { try VivoOmicsNegativeBinomial.unitDeviance(count: 9_007_199_254_740_993,mean: 2,dispersion: 0.2) }
+        #expect(throws: (any Error).self) { try VivoOmicsNegativeBinomial.unitDeviance(count: 1,mean: .nan,dispersion: 0.2) }
+        #expect(throws: (any Error).self) { try VivoOmicsNegativeBinomial.unitDeviance(count: 1,mean: 2,dispersion: -1) }
+    }
     @Test func likelihoodRatioMatchesAnalyticGroupMeansAndReparameterization() throws {
         let y: [UInt64] = [11,20,12,55,43,61]
         let x = [[1.0,0],[1,0],[1,0],[1,1],[1,1],[1,1]], offsets = Array(repeating: 0.0,count: 6)

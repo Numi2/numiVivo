@@ -347,6 +347,14 @@ The complete development objective remains open:
    remain recorded alongside a passing tighter-solver sensitivity. This does
    not close calibration: Hagai has 22 sham calls versus Wald's 20 under each
    policy, and active-donor Kang adds one across ten overlapping splits.
+   The subsequent [QL stage study](../Tools/Omics/NegativeBinomial/QuasiLikelihood/README.md)
+   completes 116 reference fits across 29 full-support analyses, with exact
+   source checks and independently verified QL arithmetic. Native stable unit
+   deviance now passes 7.88 million real fitted-count checks and 702 high-precision
+   boundary cases. Native adjusted moments, robust QL prior fitting and cohort
+   integration remain unimplemented. QL is not a demonstrated calibration fix:
+   the native-trend adjusted reference yields 39 Hagai sham calls versus Wald's
+   20 on the same default families. Active-donor QL borrowing remains separate.
    Heavy-tailed priors, prior uncertainty, posterior coverage, effect-estimation
    risk and robust cross-study qualification remain.
    An explicit Gamma dispersion-trend option now passes controlled Kang/Hagai

@@ -10,6 +10,12 @@ retained alongside a passing tighter-solver sensitivity. Sham calls remain
 concerning: Hagai increases from 20 to 22 under each policy and active-donor
 Kang adds one. General FDR calibration remains open.
 
+The [QL stage study and native unit deviance](QuasiLikelihood/README.md) now
+provide the next implementation evidence: 116 pinned reference QL fits across
+29 full-support analyses, 7.88 million native residual-deviance checks and 702
+high-precision boundary cases. Native QL moderation and cohort inference remain
+unimplemented; the reference study does not establish improved calibration.
+
 Optional [count-likelihood effect shrinkage](EffectShrinkage/README.md) now adds
 an explicit normal prior on the requested contrast, jointly refits nuisance
 coefficients and reports conditional Laplace uncertainty separately from the

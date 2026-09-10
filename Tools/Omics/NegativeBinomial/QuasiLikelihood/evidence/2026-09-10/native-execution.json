@@ -1,0 +1,43 @@
+{
+  "baseCommit": "472e3b56c79a7ea7991f330fdc92de71ecffe8b6",
+  "checkout": "/Users/n/numivivo-h5ad-20260909",
+  "commands": [
+    [
+      "bash",
+      "Tools/Omics/NegativeBinomial/QuasiLikelihood/build.sh",
+      "/Users/n/numivivo-quasi-likelihood-20260910/build"
+    ],
+    [
+      "swift",
+      "test",
+      "-c",
+      "release",
+      "--jobs",
+      "2",
+      "--filter",
+      "SingleCellNegativeBinomialTests|SingleCellNBCohortTests|SingleCellNBSupportTests"
+    ]
+  ],
+  "exitCode": 0,
+  "host": "macmini",
+  "qualification": "Physical M4 Pro CPU FP64 primitive tests and real reference-fit arithmetic; native QL cohort method not yet implemented",
+  "scriptHashes": {
+    "Main.swift": "ef64d4ab40e3a08e6a34e032d2c9221157a0743578d54672624c03f1825e15f0",
+    "PROTOCOL.md": "6765e33f94c02248dd119185da5185a0c1083563399ee67d2efd4bcdbff9d756",
+    "README.md": "d6bfb95f9956b96176ae11012ca6238beb92c14cc6586fea30f72acf0cdf0a9b",
+    "archive.py": "77c6b5e70671a2e245ff607d8b244512520e8945d9f5a24c1d8c27bb789be612",
+    "build.sh": "d7c9375b10907f1083ca93a269f180dafc912134b5947755f28ae8c0b01467e3",
+    "check.py": "9ef07b88476df00f2ec78b2ee56ba4e53ed19c5db0646fcf7b3b513f2dfe2749",
+    "check_inputs.py": "33a6582e02342c7ad468b099aeb7e3a08ec19aa65a6b3230e98d813a0fc347e0",
+    "check_native.py": "280e44846e5edc60b1e0bbf88d44c5d112ac2e23c927e7a4d8d6fb4193d74c88",
+    "prepare.py": "2b59e2a6715cc3aa66039082d4f7380dc9d99c4db86f2ce5ffa8f51e780d7e65",
+    "reference.R": "a80e835cb3ead0a942371656b02006fec26d3c2da1ae70c639974a3b7e3a72b3",
+    "run.py": "f4e78bff4c3fdb5f9663055d1890bd7cf8de9c8377fce921db1feeb2cd39e423"
+  },
+  "sourceHashes": {
+    "Sources/NumiVivoKit/Omics/VivoOmicsNegativeBinomial.swift": "319fb8b89272ad118a44da7d1affc84fb6f22901a9f589e59ebd4364b67e8171",
+    "Tests/NumiVivoIntegrationTests/SingleCellNegativeBinomialTests.swift": "6c770c9d9dc66cfcb180389526126c36dc8424606554b6fe50e609c794f33c3a"
+  },
+  "suites": 3,
+  "tests": 22
+}

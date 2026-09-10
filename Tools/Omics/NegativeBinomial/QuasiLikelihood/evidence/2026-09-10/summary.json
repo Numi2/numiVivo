@@ -1,0 +1,376 @@
+{
+  "arithmeticFailures": [],
+  "cases": 29,
+  "geneAnalyses": 967152,
+  "maximumErrors": {
+    "BH": 3.552713678800501e-15,
+    "DF": 0.0,
+    "F": 0.0,
+    "pValue": 1.27675647831893e-15,
+    "posterior": 4.09791981356859e-16,
+    "unitDF": 5.970864448032132e-16,
+    "unitDeviance": 7.257705312692268e-16
+  },
+  "maximumScaledScore": 0.0005609148668321616,
+  "methodConstraintFailures": [],
+  "null": [
+    {
+      "arithmeticFailures": 0,
+      "calls": 2,
+      "method": "nativeTrend-adjusted",
+      "methodConstraintFailures": 0,
+      "splitsWithCalls": 1,
+      "study": "kang"
+    },
+    {
+      "arithmeticFailures": 0,
+      "calls": 0,
+      "method": "nativeTrend-legacy",
+      "methodConstraintFailures": 0,
+      "splitsWithCalls": 0,
+      "study": "kang"
+    },
+    {
+      "arithmeticFailures": 0,
+      "calls": 3,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraintFailures": 0,
+      "splitsWithCalls": 2,
+      "study": "kang"
+    },
+    {
+      "arithmeticFailures": 0,
+      "calls": 0,
+      "method": "edgeRTrend-legacy",
+      "methodConstraintFailures": 0,
+      "splitsWithCalls": 0,
+      "study": "kang"
+    },
+    {
+      "arithmeticFailures": 0,
+      "calls": 39,
+      "method": "nativeTrend-adjusted",
+      "methodConstraintFailures": 0,
+      "splitsWithCalls": 8,
+      "study": "hagai"
+    },
+    {
+      "arithmeticFailures": 0,
+      "calls": 38,
+      "method": "nativeTrend-legacy",
+      "methodConstraintFailures": 0,
+      "splitsWithCalls": 8,
+      "study": "hagai"
+    },
+    {
+      "arithmeticFailures": 0,
+      "calls": 79,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraintFailures": 0,
+      "splitsWithCalls": 10,
+      "study": "hagai"
+    },
+    {
+      "arithmeticFailures": 0,
+      "calls": 83,
+      "method": "edgeRTrend-legacy",
+      "methodConstraintFailures": 0,
+      "splitsWithCalls": 9,
+      "study": "hagai"
+    }
+  ],
+  "optimizerFailureFlags": 0,
+  "qualification": "Previously inspected full-support families; reference QL stage measurements, not a native QL method, FDR calibration, effect truth or power",
+  "stages": 116,
+  "status": "completed",
+  "treatment": [
+    {
+      "arithmeticStatus": "passed",
+      "calls": 906,
+      "case": "kang-default",
+      "genes": 5400,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 931,
+      "case": "kang-default",
+      "genes": 5400,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 1072,
+      "case": "kang-default",
+      "genes": 5400,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 1046,
+      "case": "kang-default",
+      "genes": 5400,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 4613,
+      "case": "hagai-default",
+      "genes": 12426,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 4562,
+      "case": "hagai-default",
+      "genes": 12426,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 4904,
+      "case": "hagai-default",
+      "genes": 12426,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 4812,
+      "case": "hagai-default",
+      "genes": 12426,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 466,
+      "case": "crowell-00",
+      "genes": 10650,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 477,
+      "case": "crowell-00",
+      "genes": 10650,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 497,
+      "case": "crowell-00",
+      "genes": 10650,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 509,
+      "case": "crowell-00",
+      "genes": 10650,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 569,
+      "case": "crowell-01",
+      "genes": 10140,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 574,
+      "case": "crowell-01",
+      "genes": 10140,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 625,
+      "case": "crowell-01",
+      "genes": 10140,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 620,
+      "case": "crowell-01",
+      "genes": 10140,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 219,
+      "case": "crowell-02",
+      "genes": 9435,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 215,
+      "case": "crowell-02",
+      "genes": 9435,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 281,
+      "case": "crowell-02",
+      "genes": 9435,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 274,
+      "case": "crowell-02",
+      "genes": 9435,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 56,
+      "case": "crowell-03",
+      "genes": 10387,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 64,
+      "case": "crowell-03",
+      "genes": 10387,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 65,
+      "case": "crowell-03",
+      "genes": 10387,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 79,
+      "case": "crowell-03",
+      "genes": 10387,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 124,
+      "case": "crowell-04",
+      "genes": 10074,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 134,
+      "case": "crowell-04",
+      "genes": 10074,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 153,
+      "case": "crowell-04",
+      "genes": 10074,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 153,
+      "case": "crowell-04",
+      "genes": 10074,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 32,
+      "case": "crowell-06",
+      "genes": 11070,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 13,
+      "case": "crowell-06",
+      "genes": 11070,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 33,
+      "case": "crowell-06",
+      "genes": 11070,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 13,
+      "case": "crowell-06",
+      "genes": 11070,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 6,
+      "case": "crowell-07",
+      "genes": 10983,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 5,
+      "case": "crowell-07",
+      "genes": 10983,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 5,
+      "case": "crowell-07",
+      "genes": 10983,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed"
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 5,
+      "case": "crowell-07",
+      "genes": 10983,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed"
+    }
+  ]
+}

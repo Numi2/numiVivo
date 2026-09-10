@@ -1,0 +1,172 @@
+{
+  "case": "hagai-null-09-default",
+  "checkerSHA256": "9ef07b88476df00f2ec78b2ee56ba4e53ed19c5db0646fcf7b3b513f2dfe2749",
+  "inputSHA256": "c4491c0a9fc59714a95ea82118f316dbd901566a23542bdf3e31178895751c6d",
+  "outputSHA256": "223a1aca1727482da1ca031a002d8c5e197c3a46f2cc0f13806d6c121376e413",
+  "stages": [
+    {
+      "arithmeticStatus": "passed",
+      "calls": 5,
+      "case": "hagai-null-09-default",
+      "failures": [],
+      "family": "null",
+      "genes": 11920,
+      "maximumErrors": {
+        "BH": 9.992007221626409e-16,
+        "DF": 0.0,
+        "F": 0.0,
+        "pValue": 6.661338147750939e-16,
+        "posterior": 2.220446049250313e-16,
+        "unitDF": 4.4408568439734885e-16,
+        "unitDeviance": 0.0
+      },
+      "maximumScaledScore": 0.00033230338158986707,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed",
+      "optimizerFailureFlags": 0,
+      "posteriorScaleQuantiles": [
+        0.4231917129403011,
+        0.44356864826945785,
+        0.4681366844903812,
+        0.5202086350083537,
+        38.78774329356633
+      ],
+      "residualDFQuantiles": [
+        1.9422659584149367,
+        1.9996700054867174,
+        1.9999886495861365,
+        2.0000183348871095,
+        5.210566437695691
+      ],
+      "stages": {
+        "error": null,
+        "messages": [],
+        "seconds": 0.19699999999999995,
+        "status": "completed",
+        "warnings": []
+      }
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 7,
+      "case": "hagai-null-09-default",
+      "failures": [],
+      "family": "null",
+      "genes": 11920,
+      "maximumErrors": {
+        "BH": 7.771561172376096e-16,
+        "DF": 0.0,
+        "F": 0.0,
+        "pValue": 4.996003610813204e-16,
+        "posterior": 0.0
+      },
+      "maximumScaledScore": 0.00033230338158986707,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed",
+      "optimizerFailureFlags": 0,
+      "posteriorScaleQuantiles": [
+        0.4244783633659287,
+        0.4474463544751092,
+        0.4665573430589681,
+        0.5123154001115447,
+        39.038256228377094
+      ],
+      "residualDFQuantiles": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "stages": {
+        "error": null,
+        "messages": [],
+        "seconds": 0.16500000000000004,
+        "status": "completed",
+        "warnings": []
+      }
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 10,
+      "case": "hagai-null-09-default",
+      "failures": [],
+      "family": "null",
+      "genes": 11920,
+      "maximumErrors": {
+        "BH": 1.5543122344752192e-15,
+        "DF": 0.0,
+        "F": 0.0,
+        "pValue": 7.216449660063518e-16,
+        "posterior": 3.6543998373453047e-16,
+        "unitDF": 4.44085676049495e-16,
+        "unitDeviance": 0.0
+      },
+      "maximumScaledScore": 1.9087700382880468e-05,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed",
+      "optimizerFailureFlags": 0,
+      "posteriorScaleQuantiles": [
+        0.5182441285531455,
+        0.9478014397573615,
+        0.97123749066537,
+        1.0209878792203735,
+        56.80453850762599
+      ],
+      "residualDFQuantiles": [
+        1.931528978454012,
+        1.9997782073711778,
+        1.9999876116781796,
+        2.000016071800622,
+        5.37251579501311
+      ],
+      "stages": {
+        "error": null,
+        "messages": [],
+        "seconds": 0.9380000000000001,
+        "status": "completed",
+        "warnings": []
+      }
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 13,
+      "case": "hagai-null-09-default",
+      "failures": [],
+      "family": "null",
+      "genes": 11920,
+      "maximumErrors": {
+        "BH": 1.5543122344752192e-15,
+        "DF": 0.0,
+        "F": 0.0,
+        "pValue": 6.106226635438361e-16,
+        "posterior": 0.0
+      },
+      "maximumScaledScore": 1.9087700382880468e-05,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed",
+      "optimizerFailureFlags": 0,
+      "posteriorScaleQuantiles": [
+        0.4761414060054525,
+        0.9532189760409157,
+        0.9699922111447628,
+        1.0104824672671084,
+        57.12047087559902
+      ],
+      "residualDFQuantiles": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "stages": {
+        "error": null,
+        "messages": [],
+        "seconds": 0.08099999999999996,
+        "status": "completed",
+        "warnings": []
+      }
+    }
+  ]
+}

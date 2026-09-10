@@ -1,0 +1,172 @@
+{
+  "case": "crowell-01",
+  "checkerSHA256": "9ef07b88476df00f2ec78b2ee56ba4e53ed19c5db0646fcf7b3b513f2dfe2749",
+  "inputSHA256": "deb8d3d1b8e7a1974704c8f5b9828207b7d7ddeb0908c4ee5c7d018ce6df80bd",
+  "outputSHA256": "e6ab67d522726ae33e48a105e00bcda315dbd07b8405b7da3e8b68782fed4c6d",
+  "stages": [
+    {
+      "arithmeticStatus": "passed",
+      "calls": 569,
+      "case": "crowell-01",
+      "failures": [],
+      "family": "treatment",
+      "genes": 10140,
+      "maximumErrors": {
+        "BH": 1.6653345369377348e-15,
+        "DF": 0.0,
+        "F": 0.0,
+        "pValue": 6.106226635438361e-16,
+        "posterior": 2.4300658262366204e-16,
+        "unitDF": 4.500199466880111e-16,
+        "unitDeviance": 5.498289187949637e-16
+      },
+      "maximumScaledScore": 4.768365718810837e-11,
+      "method": "nativeTrend-adjusted",
+      "methodConstraint": "passed",
+      "optimizerFailureFlags": 0,
+      "posteriorScaleQuantiles": [
+        0.5525016512383212,
+        0.6559176561568428,
+        0.7306816145380863,
+        0.8210051127538139,
+        13.223880862710386
+      ],
+      "residualDFQuantiles": [
+        5.910575456396837,
+        5.983034422528231,
+        6.51738439763696,
+        8.50075551678109,
+        13.872411223639633
+      ],
+      "stages": {
+        "error": null,
+        "messages": [],
+        "seconds": 0.137,
+        "status": "completed",
+        "warnings": []
+      }
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 574,
+      "case": "crowell-01",
+      "failures": [],
+      "family": "treatment",
+      "genes": 10140,
+      "maximumErrors": {
+        "BH": 1.3322676295501878e-15,
+        "DF": 0.0,
+        "F": 0.0,
+        "pValue": 8.881784197001252e-16,
+        "posterior": 3.8972903648006335e-16
+      },
+      "maximumScaledScore": 4.768365718810837e-11,
+      "method": "nativeTrend-legacy",
+      "methodConstraint": "passed",
+      "optimizerFailureFlags": 0,
+      "posteriorScaleQuantiles": [
+        0.6424460070225793,
+        0.7168407684891489,
+        0.7916298393497784,
+        0.8452514238634404,
+        14.485036469903417
+      ],
+      "residualDFQuantiles": [
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "stages": {
+        "error": null,
+        "messages": [],
+        "seconds": 0.05399999999999999,
+        "status": "completed",
+        "warnings": []
+      }
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 625,
+      "case": "crowell-01",
+      "failures": [],
+      "family": "treatment",
+      "genes": 10140,
+      "maximumErrors": {
+        "BH": 1.3322676295501878e-15,
+        "DF": 0.0,
+        "F": 0.0,
+        "pValue": 6.106226635438361e-16,
+        "posterior": 2.4474498534823604e-16,
+        "unitDF": 4.333343965836808e-16,
+        "unitDeviance": 4.335451351944928e-16
+      },
+      "maximumScaledScore": 5.2431105184993637e-11,
+      "method": "edgeRTrend-adjusted",
+      "methodConstraint": "passed",
+      "optimizerFailureFlags": 0,
+      "posteriorScaleQuantiles": [
+        0.7610610470380959,
+        0.8771378784254255,
+        0.946124624452156,
+        1.0275646434542658,
+        11.943718501096612
+      ],
+      "residualDFQuantiles": [
+        5.904751918775174,
+        5.966479160344419,
+        6.321828952925334,
+        7.968249814242311,
+        12.47121036138972
+      ],
+      "stages": {
+        "error": null,
+        "messages": [],
+        "seconds": 0.595,
+        "status": "completed",
+        "warnings": []
+      }
+    },
+    {
+      "arithmeticStatus": "passed",
+      "calls": 620,
+      "case": "crowell-01",
+      "failures": [],
+      "family": "treatment",
+      "genes": 10140,
+      "maximumErrors": {
+        "BH": 1.5543122344752192e-15,
+        "DF": 0.0,
+        "F": 0.0,
+        "pValue": 6.106226635438361e-16,
+        "posterior": 2.98998355410727e-16
+      },
+      "maximumScaledScore": 5.2431105184993637e-11,
+      "method": "edgeRTrend-legacy",
+      "methodConstraint": "passed",
+      "optimizerFailureFlags": 0,
+      "posteriorScaleQuantiles": [
+        0.8539259325594916,
+        0.9580023164319268,
+        1.054521189269626,
+        1.1311275518246517,
+        12.560749708651732
+      ],
+      "residualDFQuantiles": [
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "stages": {
+        "error": null,
+        "messages": [],
+        "seconds": 0.04200000000000004,
+        "status": "completed",
+        "warnings": []
+      }
+    }
+  ]
+}
