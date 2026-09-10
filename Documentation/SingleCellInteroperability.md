@@ -351,8 +351,15 @@ The complete development objective remains open:
    completes 116 reference fits across 29 full-support analyses, with exact
    source checks and independently verified QL arithmetic. Native stable unit
    deviance now passes 7.88 million real fitted-count checks and 702 high-precision
-   boundary cases. Native adjusted moments, robust QL prior fitting and cohort
-   integration remain unimplemented. QL is not a demonstrated calibration fix:
+   boundary cases. [Native conditional moments and adjusted residuals](../Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/README.md)
+   now pass 25 focused Swift tests and independent checks of all 3,940,848
+   available default-budget moments across 58 attempted real-data arms. Twenty
+   gene/arm fits exhaust the declared work limit; a separately declared larger
+   budget resolves nineteen, leaving one Hagai fit unavailable. The positive-mean
+   scaling-underflow defect and its verified repair are retained. Full-family
+   coverage needs an accelerated moment evaluator qualified against direct
+   summation. Global QL scale/refit, robust QL prior fitting and cohort integration
+   remain unimplemented. QL is not a demonstrated calibration fix:
    the native-trend adjusted reference yields 39 Hagai sham calls versus Wald's
    20 on the same default families. Active-donor QL borrowing remains separate.
    Heavy-tailed priors, prior uncertainty, posterior coverage, effect-estimation

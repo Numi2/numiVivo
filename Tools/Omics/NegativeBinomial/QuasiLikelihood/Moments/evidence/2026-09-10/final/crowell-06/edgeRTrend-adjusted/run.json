@@ -1,0 +1,37 @@
+{
+  "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+  "case": "crowell-06",
+  "evaluatedCounts": 189968490,
+  "failures": [
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "featureIndex": 10755
+    }
+  ],
+  "genes": 11070,
+  "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+  "logicalSHA256": "5c3aac04b1aef64c579752164b8d134c8d5241f1b1cd434d2f23c7ccc17956a7",
+  "maximumLeverageError": 6.38378239159465e-16,
+  "maximumRelativeTruncationBound": 9.999923996610808e-11,
+  "method": "edgeRTrend-adjusted",
+  "moments": 88552,
+  "outputSHA256": "79cf29a0e4410868a0e16aa92e2913412d3d79d7e35dd63d1a3c32c98610b30b",
+  "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+  "relativeDFDifferenceQuantiles": [
+    9.430568049495178e-10,
+    1.8706268937618052e-05,
+    2.9523380924732013e-05,
+    4.3544355304324816e-05,
+    6.115716541514813e-05
+  ],
+  "relativeDevianceDifferenceQuantiles": [
+    1.0638322453536826e-08,
+    0.0002703312419199652,
+    0.0008377809990316391,
+    0.0009839675707106347,
+    0.0010114575281350326
+  ],
+  "requestSHA256": "8e0bc9d0f0cc26fcf0c6df7ad2bbcf203aa77c3d1d68b79f87c434babeb5eed1",
+  "seconds": 15.865291374735534,
+  "status": "completed-with-failures"
+}

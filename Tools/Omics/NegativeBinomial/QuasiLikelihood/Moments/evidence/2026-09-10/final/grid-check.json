@@ -1,0 +1,2785 @@
+{
+  "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+  "cases": 77,
+  "inputSHA256": "e7e2a739f08f4df0a18f2d0da48aec44bdbb3fa95780886a65389b17996842bd",
+  "maximumEvaluatedCounts": 107328,
+  "maximumRelativeError": 7.965472725857126e-11,
+  "outputSHA256": "8bb59853ab424387752edaf0869dfa9fd3702264db6baf9e82f0878e036d4a0a",
+  "protocolSHA256": "74ef85bc0486354d239b4c660fee34a293f17c8ab3f9b45ece2046d96879dc52",
+  "rows": [
+    {
+      "index": 0,
+      "input": {
+        "dispersion": 0,
+        "mean": 1e-08
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.236202367904448e-08,
+          "devianceScale": 0.06069814677715298,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 3.684136150176768e-07,
+          "meanTruncationBound": 7.78320019069716e-281,
+          "omittedProbabilityBound": 3.8003907180384615e-292,
+          "variance": 1.213920472301303e-05,
+          "varianceTruncationBound": 1.5939993990884044e-269
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.2362023679044482e-08,
+        "devianceScale": 0.060698146777152996,
+        "mean": 3.6841361501767677e-07,
+        "variance": 1.2139204723013026e-05
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 129,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.1102230246251565e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 4.440892098500626e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 1,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 1e-08
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.2362023679741332e-08,
+          "devianceScale": 0.060698146795520026,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 3.684136149176768e-07,
+          "meanTruncationBound": 8.960784814207479e-289,
+          "omittedProbabilityBound": 3.800409568021176e-292,
+          "variance": 1.2139204716044757e-05,
+          "varianceTruncationBound": 2.1128160807294277e-285
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.236202367974133e-08,
+        "devianceScale": 0.060698146795520026,
+        "mean": 3.6841361491767675e-07,
+        "variance": 1.2139204716044755e-05
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 128,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 0.0,
+        "mean": 2.220446049250313e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 2,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 1e-08
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.2362093342798706e-08,
+          "devianceScale": 0.06069998292358002,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 3.68403618349483e-07,
+          "meanTruncationBound": 1.0064676244523922e-288,
+          "omittedProbabilityBound": 6.208854196088677e-292,
+          "variance": 1.2138508138076258e-05,
+          "varianceTruncationBound": 1.6315040538622624e-285
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.2362093342798712e-08,
+        "devianceScale": 0.06069998292358002,
+        "mean": 3.6840361834948303e-07,
+        "variance": 1.2138508138076261e-05
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 129,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.3306690738754696e-16,
+        "devianceScale": 0.0,
+        "mean": 1.1102230246251565e-16,
+        "variance": 3.3306690738754696e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 3,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 1e-08
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.2368790162126572e-08,
+          "devianceScale": 0.060876504795402964,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 3.6744537547457443e-07,
+          "meanTruncationBound": 4.646568024890645e-277,
+          "omittedProbabilityBound": 3.5034355073444726e-280,
+          "variance": 1.2071828916903316e-05,
+          "varianceTruncationBound": 6.16269212458731e-274
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.2368790162126572e-08,
+        "devianceScale": 0.060876504795402964,
+        "mean": 3.6744537547457443e-07,
+        "variance": 1.2071828916903315e-05
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 129,
+      "relativeErrors": {
+        "degreesOfFreedom": 0.0,
+        "devianceScale": 0.0,
+        "mean": 0.0,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 4,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 1e-08
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.2402951948983864e-08,
+          "devianceScale": 0.06177734652036608,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 3.626402429181432e-07,
+          "meanTruncationBound": 6.678201166894638e-258,
+          "omittedProbabilityBound": 5.557060049981548e-261,
+          "variance": 1.1740233705201046e-05,
+          "varianceTruncationBound": 8.0255333620756e-255
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.2402951948983864e-08,
+        "devianceScale": 0.06177734652036608,
+        "mean": 3.626402429181432e-07,
+        "variance": 1.1740233705201046e-05
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 129,
+      "relativeErrors": {
+        "degreesOfFreedom": 0.0,
+        "devianceScale": 0.0,
+        "mean": 0.0,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 5,
+      "input": {
+        "dispersion": 1,
+        "mean": 1e-08
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.24171161973625e-08,
+          "devianceScale": 0.06215103664896284,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 3.6068772792925877e-07,
+          "meanTruncationBound": 1.178923191746576e-253,
+          "omittedProbabilityBound": 9.999996800000555e-257,
+          "variance": 1.1606812931101055e-05,
+          "varianceTruncationBound": 1.3898603368183442e-250
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.24171161973625e-08,
+        "devianceScale": 0.06215103664896284,
+        "mean": 3.6068772792925877e-07,
+        "variance": 1.1606812931101055e-05
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 129,
+      "relativeErrors": {
+        "degreesOfFreedom": 0.0,
+        "devianceScale": 0.0,
+        "mean": 0.0,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 6,
+      "input": {
+        "dispersion": 4,
+        "mean": 1e-08
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.2511982979221962e-08,
+          "devianceScale": 0.06465659652398317,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 3.4817766770126164e-07,
+          "meanTruncationBound": 4.209266528344382e-236,
+          "omittedProbabilityBound": 3.86100137500703e-239,
+          "variance": 1.0770058630355267e-05,
+          "varianceTruncationBound": 4.588945453939593e-233
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.251198297922197e-08,
+        "devianceScale": 0.06465659652398317,
+        "mean": 3.481776677012617e-07,
+        "variance": 1.0770058630355267e-05
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 129,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.3306690738754696e-16,
+        "devianceScale": 0.0,
+        "mean": 1.1102230246251565e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 7,
+      "input": {
+        "dispersion": 0,
+        "mean": 0.0001
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.00025168091512429807,
+          "devianceScale": 0.1366285125878777,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.0018420819370511712,
+          "meanTruncationBound": 7.782447849515492e-157,
+          "omittedProbabilityBound": 3.800022609851239e-164,
+          "variance": 0.026964824576661738,
+          "varianceTruncationBound": 1.5938456559716614e-149
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.00025168091512429807,
+        "devianceScale": 0.13662851258787767,
+        "mean": 0.0018420819370511714,
+        "variance": 0.026964824576661748
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 131,
+      "relativeErrors": {
+        "degreesOfFreedom": 0.0,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 1.1102230246251565e-16,
+        "variance": 3.3306690738754696e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 8,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 0.0001
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.0002516809151572796,
+          "devianceScale": 0.1366285126799426,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.0018420819360513098,
+          "meanTruncationBound": 6.719946065162008e-161,
+          "omittedProbabilityBound": 3.800041457890216e-164,
+          "variance": 0.026964824543855726,
+          "varianceTruncationBound": 1.1883469205898429e-157
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.0002516809151572796,
+        "devianceScale": 0.13662851267994258,
+        "mean": 0.00184208193605131,
+        "variance": 0.026964824543855733
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 131,
+      "relativeErrors": {
+        "degreesOfFreedom": 0.0,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 1.1102230246251565e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 9,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 0.0001
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.00025168421238397554,
+          "devianceScale": 0.1366377166219661,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.0018419819842299266,
+          "meanTruncationBound": 6.4041670906235325e-161,
+          "omittedProbabilityBound": 6.20823353964844e-164,
+          "variance": 0.026961545168763548,
+          "varianceTruncationBound": 6.6062845463460055e-158
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.00025168421238397554,
+        "devianceScale": 0.13663771662196614,
+        "mean": 0.0018419819842299264,
+        "variance": 0.02696154516876354
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 131,
+      "relativeErrors": {
+        "degreesOfFreedom": 0.0,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 10,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 0.0001
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.0002520021689206999,
+          "devianceScale": 0.13752567208600516,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.0018324009263019922,
+          "meanTruncationBound": 2.580386271100261e-149,
+          "omittedProbabilityBound": 3.5020093923875018e-152,
+          "variance": 0.026648129014865733,
+          "varianceTruncationBound": 1.9013066420567702e-146
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.00025200216892069983,
+        "devianceScale": 0.1375256720860051,
+        "mean": 0.0018324009263019922,
+        "variance": 0.02664812901486574
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 131,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 4.440892098500626e-16,
+        "mean": 0.0,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 11,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 0.0001
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.0002536551067252355,
+          "devianceScale": 0.14215485264771816,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.0017843577057044427,
+          "meanTruncationBound": 3.394859244210922e-130,
+          "omittedProbabilityBound": 5.544466726825198e-133,
+          "variance": 0.02510442200839051,
+          "varianceTruncationBound": 2.0786617408350824e-127
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.00025365510672523546,
+        "devianceScale": 0.14215485264771813,
+        "mean": 0.0017843577057044425,
+        "variance": 0.02510442200839051
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 131,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 12,
+      "input": {
+        "dispersion": 1,
+        "mean": 0.0001
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.00025435596813912486,
+          "devianceScale": 0.14412438415788825,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.0017648364614032135,
+          "meanTruncationBound": 5.875887889195432e-126,
+          "omittedProbabilityBound": 9.968052740212335e-129,
+          "variance": 0.024490463174778744,
+          "varianceTruncationBound": 3.463671911880284e-123
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.0002543559681391248,
+        "devianceScale": 0.14412438415788825,
+        "mean": 0.0017648364614032133,
+        "variance": 0.02449046317477874
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 131,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 0.0,
+        "mean": 2.220446049250313e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 13,
+      "input": {
+        "dispersion": 4,
+        "mean": 0.0001
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.00025929681037497785,
+          "devianceScale": 0.1581298055560917,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.0016397718915995268,
+          "meanTruncationBound": 1.909472884368139e-108,
+          "omittedProbabilityBound": 3.813053542015917e-111,
+          "variance": 0.02073956754494165,
+          "varianceTruncationBound": 9.562122279049748e-106
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.0002592968103749779,
+        "devianceScale": 0.15812980555609174,
+        "mean": 0.0016397718915995266,
+        "variance": 0.020739567544941644
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 132,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 4.440892098500626e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 14,
+      "input": {
+        "dispersion": 0,
+        "mean": 0.01
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.032459009414548295,
+          "devianceScale": 0.3518906656511897,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.09224174603916083,
+          "meanTruncationBound": 7.708322107084836e-95,
+          "omittedProbabilityBound": 3.763752407653209e-100,
+          "variance": 0.5242636707538876,
+          "varianceTruncationBound": 1.5786985469475163e-89
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.03245900941454829,
+        "devianceScale": 0.3518906656511897,
+        "mean": 0.09224174603916081,
+        "variance": 0.5242636707538876
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 134,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 0.0,
+        "mean": 2.220446049250313e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 15,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 0.01
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.0324590094291665,
+          "devianceScale": 0.35189066618589854,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.09224174594053851,
+          "meanTruncationBound": 5.546974647631314e-97,
+          "omittedProbabilityBound": 3.7637710642319054e-100,
+          "variance": 0.5242636693967244,
+          "varianceTruncationBound": 8.17503091402912e-94
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.03245900942916649,
+        "devianceScale": 0.3518906661858984,
+        "mean": 0.09224174594053852,
+        "variance": 0.5242636693967246
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 134,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 1.1102230246251565e-16,
+        "variance": 4.440892098500626e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 16,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 0.01
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.03246047083317535,
+          "devianceScale": 0.35194412517978557,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.09223188714002085,
+          "meanTruncationBound": 4.5300821486835417e-97,
+          "omittedProbabilityBound": 6.147089189302797e-100,
+          "variance": 0.5241280109046033,
+          "varianceTruncationBound": 3.338437193385592e-94
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.03246047083317537,
+        "devianceScale": 0.3519441251797856,
+        "mean": 0.09223188714002087,
+        "variance": 0.5241280109046031
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 134,
+      "relativeErrors": {
+        "degreesOfFreedom": 4.440892098500626e-16,
+        "devianceScale": 1.1102230246251565e-16,
+        "mean": 1.1102230246251565e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 17,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 0.01
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.03260136960829581,
+          "devianceScale": 0.3571294416376922,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.09128726396455963,
+          "meanTruncationBound": 1.4877349158272588e-85,
+          "omittedProbabilityBound": 3.3637145266030364e-88,
+          "variance": 0.5112278816663374,
+          "varianceTruncationBound": 6.5801182213218604e-83
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.032601369608295815,
+        "devianceScale": 0.3571294416376923,
+        "mean": 0.09128726396455965,
+        "variance": 0.5112278816663374
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 134,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 1.1102230246251565e-16,
+        "mean": 1.1102230246251565e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 18,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 0.01
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.03333420801248848,
+          "devianceScale": 0.38508867869733815,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.08656242018137236,
+          "meanTruncationBound": 1.410325824006651e-66,
+          "omittedProbabilityBound": 4.4324567144176403e-69,
+          "variance": 0.449571358338511,
+          "varianceTruncationBound": 4.4874480396540846e-64
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.03333420801248847,
+        "devianceScale": 0.3850886786973381,
+        "mean": 0.08656242018137235,
+        "variance": 0.449571358338511
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 135,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 19,
+      "input": {
+        "dispersion": 1,
+        "mean": 0.01
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.03364516227818682,
+          "devianceScale": 0.39746934167896464,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.08464844643379303,
+          "meanTruncationBound": 2.149653212035888e-62,
+          "omittedProbabilityBound": 7.273041052711737e-65,
+          "variance": 0.4259369846047822,
+          "varianceTruncationBound": 6.353707761361348e-60
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.03364516227818682,
+        "devianceScale": 0.3974693416789647,
+        "mean": 0.08464844643379303,
+        "variance": 0.42593698460478213
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 135,
+      "relativeErrors": {
+        "degreesOfFreedom": 0.0,
+        "devianceScale": 1.1102230246251565e-16,
+        "mean": 0.0,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 20,
+      "input": {
+        "dispersion": 4,
+        "mean": 0.01
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.03581315803116055,
+          "devianceScale": 0.494046701065641,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.07248941841715136,
+          "meanTruncationBound": 2.3674817400438543e-45,
+          "omittedProbabilityBound": 1.133466388146953e-47,
+          "variance": 0.29345168487430145,
+          "varianceTruncationBound": 4.945215696547272e-43
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.03581315803116056,
+        "devianceScale": 0.49404670106564114,
+        "mean": 0.07248941841715136,
+        "variance": 0.2934516848743014
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 137,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 0.0,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 21,
+      "input": {
+        "dispersion": 0,
+        "mean": 0.1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.5224739851226983,
+          "devianceScale": 1.102038298004383,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.474097847659937,
+          "meanTruncationBound": 7.066246157209401e-64,
+          "omittedProbabilityBound": 3.44951549406947e-68,
+          "variance": 0.860401763747146,
+          "varianceTruncationBound": 1.4475211841273964e-59
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.5224739851226984,
+        "devianceScale": 1.102038298004383,
+        "mean": 0.47409784765993707,
+        "variance": 0.8604017637471459
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 137,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 0.0,
+        "mean": 1.1102230246251565e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 22,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 0.1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.5224739854237963,
+          "devianceScale": 1.1020383006610255,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.47409784679026634,
+          "meanTruncationBound": 4.5778505607231235e-65,
+          "omittedProbabilityBound": 3.4495324968357926e-68,
+          "variance": 0.8604017600947128,
+          "varianceTruncationBound": 6.0752567605454435e-62
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.5224739854237962,
+        "devianceScale": 1.1020383006610253,
+        "mean": 0.4740978467902663,
+        "variance": 0.860401760094713
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 137,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 23,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 0.1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.522504066839557,
+          "devianceScale": 1.1023038754701893,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.4740109133850973,
+          "meanTruncationBound": 3.3158612378788027e-65,
+          "omittedProbabilityBound": 5.618182945421774e-68,
+          "variance": 0.8600367356649405,
+          "varianceTruncationBound": 1.9570405438753004e-62
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.5225040668396171,
+        "devianceScale": 1.102303875470102,
+        "mean": 0.4740109133851894,
+        "variance": 0.8600367356651757
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 137,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.1513012765362873e-13,
+        "devianceScale": 7.926992395823618e-14,
+        "mean": 1.942890293094024e-13,
+        "variance": 2.7344793096517606e-13
+      },
+      "status": "passed"
+    },
+    {
+      "index": 24,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 0.1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.5252288580221263,
+          "devianceScale": 1.1277969777790309,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.46571224109543086,
+          "meanTruncationBound": 6.91917378048918e-54,
+          "omittedProbabilityBound": 2.3363666263028737e-56,
+          "variance": 0.8258795692333869,
+          "varianceTruncationBound": 2.0491757619376914e-51
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.5252288580221267,
+        "devianceScale": 1.1277969777790309,
+        "mean": 0.46571224109543125,
+        "variance": 0.8258795692333877
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 137,
+      "relativeErrors": {
+        "degreesOfFreedom": 8.881784197001252e-16,
+        "devianceScale": 0.0,
+        "mean": 8.881784197001252e-16,
+        "variance": 8.881784197001252e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 25,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 0.1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.5349848549816996,
+          "devianceScale": 1.2586640542167469,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.42504181571675603,
+          "meanTruncationBound": 1.0882432274303639e-35,
+          "omittedProbabilityBound": 6.199813092719208e-38,
+          "variance": 0.6753856428850746,
+          "varianceTruncationBound": 1.9103803553357273e-33
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.5349848549816992,
+        "devianceScale": 1.2586640542167464,
+        "mean": 0.42504181571675587,
+        "variance": 0.6753856428850746
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 141,
+      "relativeErrors": {
+        "degreesOfFreedom": 6.661338147750939e-16,
+        "devianceScale": 4.440892098500626e-16,
+        "mean": 4.440892098500626e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 26,
+      "input": {
+        "dispersion": 1,
+        "mean": 0.1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.5373082863541792,
+          "devianceScale": 1.313874891939358,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.4089493525225069,
+          "meanTruncationBound": 7.319602176801646e-32,
+          "omittedProbabilityBound": 4.736244074476701e-34,
+          "variance": 0.6225088172875778,
+          "varianceTruncationBound": 1.1313690152199535e-29
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.537308286354179,
+        "devianceScale": 1.3138748919393575,
+        "mean": 0.408949352522507,
+        "variance": 0.6225088172875782
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 142,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 4.440892098500626e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 6.661338147750939e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 27,
+      "input": {
+        "dispersion": 4,
+        "mean": 0.1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.5301592235999696,
+          "devianceScale": 1.6975474124981482,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.31230893446432556,
+          "meanTruncationBound": 8.554734880395347e-18,
+          "omittedProbabilityBound": 1.0476093942076507e-19,
+          "variance": 0.3679531212677292,
+          "varianceTruncationBound": 6.990033728654566e-16
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.5301592235999686,
+        "devianceScale": 1.6975474124981456,
+        "mean": 0.31230893446432545,
+        "variance": 0.36795312126772967
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 152,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.7763568394002505e-15,
+        "devianceScale": 1.5543122344752192e-15,
+        "mean": 4.440892098500626e-16,
+        "variance": 1.2212453270876722e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 28,
+      "input": {
+        "dispersion": 0,
+        "mean": 0.5
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.779573263995703,
+          "devianceScale": 2.7602033464766893,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.0070175690293757,
+          "meanTruncationBound": 2.2365089049935194e-42,
+          "omittedProbabilityBound": 5.452059355302083e-46,
+          "variance": 0.7296691168169194,
+          "varianceTruncationBound": 9.175060707049696e-39
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.779573263995704,
+        "devianceScale": 2.7602033464766897,
+        "mean": 1.0070175690293757,
+        "variance": 0.7296691168169194
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 141,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.3306690738754696e-16,
+        "devianceScale": 1.1102230246251565e-16,
+        "mean": 0.0,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 29,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 0.5
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.779573266618221,
+          "devianceScale": 2.760203355735903,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.007017566601412,
+          "meanTruncationBound": 6.6837051077849744e-43,
+          "omittedProbabilityBound": 5.4520855584570995e-46,
+          "variance": 0.7296691126099506,
+          "varianceTruncationBound": 8.193689537759498e-40
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.779573266618222,
+        "devianceScale": 2.7602033557359036,
+        "mean": 1.0070175666014123,
+        "variance": 0.7296691126099505
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 141,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.3306690738754696e-16,
+        "devianceScale": 1.1102230246251565e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 30,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 0.5
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.7798346703513364,
+          "devianceScale": 2.761128309621883,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.0067748972998705,
+          "meanTruncationBound": 4.286903098518514e-43,
+          "omittedProbabilityBound": 8.771245789858567e-46,
+          "variance": 0.7292489043638404,
+          "varianceTruncationBound": 2.095260631908588e-40
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.779834670351342,
+        "devianceScale": 2.761128309621896,
+        "mean": 1.0067748972998678,
+        "variance": 0.729248904363835
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 141,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.1094237467877974e-15,
+        "devianceScale": 4.6629367034256575e-15,
+        "mean": 2.6645352591003757e-15,
+        "variance": 7.327471962526033e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 31,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 0.5
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.7986038511947613,
+          "devianceScale": 2.844446076801876,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.9838836018088074,
+          "meanTruncationBound": 2.207196726448179e-32,
+          "omittedProbabilityBound": 1.1192410662514247e-34,
+          "variance": 0.691792760518791,
+          "varianceTruncationBound": 4.353278415470236e-30
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.7986038511947524,
+        "devianceScale": 2.8444460768018645,
+        "mean": 0.9838836018088082,
+        "variance": 0.6917927605187943
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 143,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.1086244689504383e-15,
+        "devianceScale": 3.9968028886505635e-15,
+        "mean": 7.771561172376096e-16,
+        "variance": 4.773959005888173e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 32,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 0.5
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.777978435342001,
+          "devianceScale": 3.1692365144207737,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.8765450046727481,
+          "meanTruncationBound": 6.874225643969268e-17,
+          "omittedProbabilityBound": 7.715924111592432e-19,
+          "variance": 0.5531584662010939,
+          "varianceTruncationBound": 6.128675592938894e-15
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.7779784353419776,
+        "devianceScale": 3.169236514420747,
+        "mean": 0.8765450046727481,
+        "variance": 0.5531584662010985
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 154,
+      "relativeErrors": {
+        "degreesOfFreedom": 8.43769498715119e-15,
+        "devianceScale": 8.43769498715119e-15,
+        "mean": 0.0,
+        "variance": 8.43769498715119e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 33,
+      "input": {
+        "dispersion": 1,
+        "mean": 0.5
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.7379150741348175,
+          "devianceScale": 3.277535955577162,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 0.8353577538869991,
+          "meanTruncationBound": 3.9425413264815546e-14,
+          "omittedProbabilityBound": 5.396595277354284e-16,
+          "variance": 0.5097474231918201,
+          "varianceTruncationBound": 2.883248698756564e-12
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.737915074123741,
+        "devianceScale": 3.277535955563771,
+        "mean": 0.8353577538870327,
+        "variance": 0.5097474231939233
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 159,
+      "relativeErrors": {
+        "degreesOfFreedom": 4.0456527017340704e-12,
+        "devianceScale": 4.085620730620576e-12,
+        "mean": 4.030109579389318e-14,
+        "variance": 4.126032848716932e-12
+      },
+      "status": "passed"
+    },
+    {
+      "index": 34,
+      "input": {
+        "dispersion": 4,
+        "mean": 0.5
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.2885535427158024,
+          "devianceScale": 3.8322705527272314,
+          "evaluatedCounts": 96,
+          "firstCount": 0,
+          "lastCount": 95,
+          "mean": 0.5971795339677037,
+          "meanTruncationBound": 2.0720844693077647e-17,
+          "omittedProbabilityBound": 2.5702616608412185e-19,
+          "variance": 0.3116583371404827,
+          "varianceTruncationBound": 1.671743302192463e-15
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.288553542715784,
+        "devianceScale": 3.8322705527272016,
+        "mean": 0.5971795339677036,
+        "variance": 0.3116583371404851
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 203,
+      "relativeErrors": {
+        "degreesOfFreedom": 7.993605777301127e-15,
+        "devianceScale": 7.771561172376096e-15,
+        "mean": 2.220446049250313e-16,
+        "variance": 7.66053886991358e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 35,
+      "input": {
+        "dispersion": 0,
+        "mean": 1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.9275411327041088,
+          "devianceScale": 1.6807914977374228,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.1468056182452404,
+          "meanTruncationBound": 2.966242711833058e-33,
+          "omittedProbabilityBound": 1.4431851634880812e-36,
+          "variance": 1.364601879280088,
+          "varianceTruncationBound": 6.097471858844247e-30
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.927541132704109,
+        "devianceScale": 1.680791497737423,
+        "mean": 1.1468056182452404,
+        "variance": 1.3646018792800878
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 145,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.1102230246251565e-16,
+        "devianceScale": 1.1102230246251565e-16,
+        "mean": 0.0,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 36,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.9275411418975705,
+          "devianceScale": 1.6807915089174303,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.1468056160868325,
+          "meanTruncationBound": 1.707669500925259e-33,
+          "omittedProbabilityBound": 1.4431918810643546e-36,
+          "variance": 1.3646018676349345,
+          "varianceTruncationBound": 2.0206859650740937e-30
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.9275411418975692,
+        "devianceScale": 1.6807915089174295,
+        "mean": 1.1468056160868323,
+        "variance": 1.364601867634935
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 145,
+      "relativeErrors": {
+        "degreesOfFreedom": 6.661338147750939e-16,
+        "devianceScale": 4.440892098500626e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 3.3306690738754696e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 37,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.928459958418017,
+          "devianceScale": 1.6819090547462892,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.146589913988494,
+          "meanTruncationBound": 1.0194319487091077e-33,
+          "omittedProbabilityBound": 2.286924671470364e-36,
+          "variance": 1.3634386600783877,
+          "varianceTruncationBound": 4.544516511641987e-31
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.9284599584181759,
+        "devianceScale": 1.6819090547465145,
+        "mean": 1.1465899139884348,
+        "variance": 1.3634386600781345
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 145,
+      "relativeErrors": {
+        "degreesOfFreedom": 8.237854842718662e-14,
+        "devianceScale": 1.340039190722564e-13,
+        "mean": 5.1736392947532295e-14,
+        "variance": 1.8562928971732617e-13
+      },
+      "status": "passed"
+    },
+    {
+      "index": 38,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.0148284057847294,
+          "devianceScale": 1.7887682080742249,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.1263775802197868,
+          "meanTruncationBound": 1.1377401597143343e-23,
+          "omittedProbabilityBound": 7.240751496992559e-26,
+          "variance": 1.2593890870102582,
+          "varianceTruncationBound": 1.788255901376359e-21
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.0148284057847317,
+        "devianceScale": 1.788768208074226,
+        "mean": 1.1263775802197873,
+        "variance": 1.259389087010258
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 148,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.1102230246251565e-15,
+        "devianceScale": 6.661338147750939e-16,
+        "mean": 4.440892098500626e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 39,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.40552888000088,
+          "devianceScale": 2.3409107154287216,
+          "evaluatedCounts": 64,
+          "firstCount": 0,
+          "lastCount": 63,
+          "mean": 1.027603856971676,
+          "meanTruncationBound": 1.3774279284169335e-22,
+          "omittedProbabilityBound": 1.1735282613876381e-24,
+          "variance": 0.8779522005677842,
+          "varianceTruncationBound": 1.6175527981922183e-20
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.405528880000882,
+        "devianceScale": 2.3409107154287225,
+        "mean": 1.0276038569716763,
+        "variance": 0.877952200567784
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 168,
+      "relativeErrors": {
+        "degreesOfFreedom": 7.771561172376096e-16,
+        "devianceScale": 3.3306690738754696e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 2.220446049250313e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 40,
+      "input": {
+        "dispersion": 1,
+        "mean": 1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.5390944379645526,
+          "devianceScale": 2.574349953339866,
+          "evaluatedCounts": 64,
+          "firstCount": 0,
+          "lastCount": 63,
+          "mean": 0.9863050805001962,
+          "meanTruncationBound": 5.013444787051536e-18,
+          "omittedProbabilityBound": 5.421010862427522e-20,
+          "variance": 0.7662556360844419,
+          "varianceTruncationBound": 4.640074347983637e-16
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.539094437964552,
+        "devianceScale": 2.5743499533398655,
+        "mean": 0.986305080500196,
+        "variance": 0.7662556360844419
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 177,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 41,
+      "input": {
+        "dispersion": 4,
+        "mean": 1
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.864216228322474,
+          "devianceScale": 3.9955162422747272,
+          "evaluatedCounts": 128,
+          "firstCount": 0,
+          "lastCount": 127,
+          "mean": 0.7168576110434777,
+          "meanTruncationBound": 5.800352127771065e-13,
+          "omittedProbabilityBound": 9.598230413523826e-15,
+          "variance": 0.3588310333762309,
+          "varianceTruncationBound": 3.510392586842748e-11
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.864216228098451,
+        "devianceScale": 3.995516241959343,
+        "mean": 0.7168576110439939,
+        "variance": 0.3588310334048135
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 265,
+      "relativeErrors": {
+        "degreesOfFreedom": 7.821432390642258e-11,
+        "devianceScale": 7.893441456019445e-11,
+        "mean": 7.20201676074339e-13,
+        "variance": 7.965472725857126e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 42,
+      "input": {
+        "dispersion": 0,
+        "mean": 3
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9960711266940077,
+          "devianceScale": 0.9099988079708013,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.0945850895290052,
+          "meanTruncationBound": 2.685950508835134e-19,
+          "omittedProbabilityBound": 3.8688058748097324e-22,
+          "variance": 2.4056846667081055,
+          "varianceTruncationBound": 1.865601908089361e-16
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9960711266940087,
+        "devianceScale": 0.9099988079708016,
+        "mean": 1.0945850895290061,
+        "variance": 2.4056846667081064
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 153,
+      "relativeErrors": {
+        "degreesOfFreedom": 9.992007221626409e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 7.771561172376096e-16,
+        "variance": 3.3306690738754696e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 43,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 3
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9960711304637353,
+          "devianceScale": 0.9099988107790367,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.0945850902937042,
+          "meanTruncationBound": 4.3303366399242174e-19,
+          "omittedProbabilityBound": 3.86882163622161e-22,
+          "variance": 2.4056846609648774,
+          "varianceTruncationBound": 4.847454782378153e-16
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9960711304637349,
+        "devianceScale": 0.9099988107790364,
+        "mean": 1.094585090293704,
+        "variance": 2.4056846609648774
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 153,
+      "relativeErrors": {
+        "degreesOfFreedom": 4.440892098500626e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 44,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 3
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9964489294451001,
+          "devianceScale": 0.9102801437612408,
+          "evaluatedCounts": 32,
+          "firstCount": 0,
+          "lastCount": 31,
+          "mean": 1.0946618316069308,
+          "meanTruncationBound": 2.2002172819340433e-19,
+          "omittedProbabilityBound": 5.785444455283065e-22,
+          "variance": 2.4051097656240907,
+          "varianceTruncationBound": 8.368675231796103e-17
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9964489294450051,
+        "devianceScale": 0.9102801437611917,
+        "mean": 1.0946618316068855,
+        "variance": 2.405109765624121
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 153,
+      "relativeErrors": {
+        "degreesOfFreedom": 9.547918011776346e-14,
+        "devianceScale": 5.395683899678261e-14,
+        "mean": 4.1300296516055823e-14,
+        "variance": 1.2545520178264269e-14
+      },
+      "status": "passed"
+    },
+    {
+      "index": 45,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 3
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.0409215354609507,
+          "devianceScale": 0.9432339210494165,
+          "evaluatedCounts": 64,
+          "firstCount": 0,
+          "lastCount": 63,
+          "mean": 1.103566689271363,
+          "meanTruncationBound": 3.265790219126764e-29,
+          "omittedProbabilityBound": 1.6739939877375774e-31,
+          "variance": 2.339963957283395,
+          "varianceTruncationBound": 6.3727186268961016e-27
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0409215354609498,
+        "devianceScale": 0.9432339210494162,
+        "mean": 1.1035666892713625,
+        "variance": 2.339963957283395
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 164,
+      "relativeErrors": {
+        "degreesOfFreedom": 8.881784197001252e-16,
+        "devianceScale": 4.440892098500626e-16,
+        "mean": 4.440892098500626e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 46,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 3
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.4204822537360815,
+          "devianceScale": 1.263777475839276,
+          "evaluatedCounts": 96,
+          "firstCount": 0,
+          "lastCount": 95,
+          "mean": 1.1239971283652905,
+          "meanTruncationBound": 2.3262770610624893e-14,
+          "omittedProbabilityBound": 2.8793261079882944e-16,
+          "variance": 1.77878962056804,
+          "varianceTruncationBound": 1.881859172660564e-12
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.4204822537351962,
+        "devianceScale": 1.263777475838468,
+        "mean": 1.1239971283653087,
+        "variance": 1.7787896205692062
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 220,
+      "relativeErrors": {
+        "degreesOfFreedom": 6.232792060245629e-13,
+        "devianceScale": 6.392664175791651e-13,
+        "mean": 1.6209256159527285e-14,
+        "variance": 6.555866960411549e-13
+      },
+      "status": "passed"
+    },
+    {
+      "index": 47,
+      "input": {
+        "dispersion": 1,
+        "mean": 3
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.6163908213885265,
+          "devianceScale": 1.4533865538010902,
+          "evaluatedCounts": 128,
+          "firstCount": 0,
+          "lastCount": 127,
+          "mean": 1.1121547926538373,
+          "meanTruncationBound": 8.070153406142972e-15,
+          "omittedProbabilityBound": 1.0182202130902542e-16,
+          "variance": 1.5304322029747446,
+          "varianceTruncationBound": 6.404319591501757e-13
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.616390821388086,
+        "devianceScale": 1.453386553800686,
+        "mean": 1.1121547926538433,
+        "variance": 1.5304322029751785
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 247,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.724487302430134e-13,
+        "devianceScale": 2.779998453661392e-13,
+        "mean": 5.440092820663267e-15,
+        "variance": 2.83550960489265e-13
+      },
+      "status": "passed"
+    },
+    {
+      "index": 48,
+      "input": {
+        "dispersion": 4,
+        "mean": 3
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.8903160648993365,
+          "devianceScale": 3.2840967470482902,
+          "evaluatedCounts": 352,
+          "firstCount": 0,
+          "lastCount": 351,
+          "mean": 0.8800946767165494,
+          "meanTruncationBound": 8.165778106872556e-13,
+          "omittedProbabilityBound": 1.3511970040648134e-14,
+          "variance": 0.5359736600376154,
+          "varianceTruncationBound": 4.943097915261363e-11
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.8903160646931867,
+        "devianceScale": 3.2840967468113798,
+        "mean": 0.8800946767172662,
+        "variance": 0.5359736600767163
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 511,
+      "relativeErrors": {
+        "degreesOfFreedom": 7.132427981559886e-11,
+        "devianceScale": 7.213873942646387e-11,
+        "mean": 8.144596108650148e-13,
+        "variance": 7.295308801502642e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 49,
+      "input": {
+        "dispersion": 0,
+        "mean": 10
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9944128096750108,
+          "devianceScale": 0.9760354867697387,
+          "evaluatedCounts": 64,
+          "firstCount": 0,
+          "lastCount": 63,
+          "mean": 1.0188285396938723,
+          "meanTruncationBound": 3.583327583634015e-27,
+          "omittedProbabilityBound": 4.240572550380479e-30,
+          "variance": 2.087687493957336,
+          "varianceTruncationBound": 3.0285931474122893e-24
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.994412809675013,
+        "devianceScale": 0.9760354867697386,
+        "mean": 1.0188285396938748,
+        "variance": 2.0876874939573415
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 172,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-15,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.4424906541753444e-15,
+        "variance": 2.55351295663786e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 50,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 10
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9944128087842448,
+          "devianceScale": 0.9760354856419772,
+          "evaluatedCounts": 64,
+          "firstCount": 0,
+          "lastCount": 63,
+          "mean": 1.0188285399584422,
+          "meanTruncationBound": 8.863368101497585e-27,
+          "omittedProbabilityBound": 4.240633437569618e-30,
+          "variance": 2.0876874969116894,
+          "varianceTruncationBound": 1.8526352637044413e-23
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9944128087842452,
+        "devianceScale": 0.9760354856419774,
+        "mean": 1.0188285399584425,
+        "variance": 2.0876874969116894
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 172,
+      "relativeErrors": {
+        "degreesOfFreedom": 4.440892098500626e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 51,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 10
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9943234548466385,
+          "devianceScale": 0.9759208029158544,
+          "evaluatedCounts": 64,
+          "firstCount": 0,
+          "lastCount": 63,
+          "mean": 1.0188567062776004,
+          "meanTruncationBound": 1.052047491523239e-26,
+          "omittedProbabilityBound": 1.714908228228805e-29,
+          "variance": 2.0879905484819306,
+          "varianceTruncationBound": 6.4544281252841805e-24
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9943234548466394,
+        "devianceScale": 0.9759208029158551,
+        "mean": 1.0188567062776004,
+        "variance": 2.0879905484819288
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 172,
+      "relativeErrors": {
+        "degreesOfFreedom": 8.881784197001252e-16,
+        "devianceScale": 7.771561172376096e-16,
+        "mean": 0.0,
+        "variance": 8.881784197001252e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 52,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 10
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9844074644731052,
+          "devianceScale": 0.9556931860238023,
+          "evaluatedCounts": 96,
+          "firstCount": 0,
+          "lastCount": 95,
+          "mean": 1.0300454987743188,
+          "meanTruncationBound": 1.223296087560542e-17,
+          "omittedProbabilityBound": 8.1743610505052e-20,
+          "variance": 2.1555987085350314,
+          "varianceTruncationBound": 1.8314351087231045e-15
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.984407464473105,
+        "devianceScale": 0.9556931860238017,
+        "mean": 1.0300454987743193,
+        "variance": 2.1555987085350337
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 208,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 6.661338147750939e-16,
+        "mean": 4.440892098500626e-16,
+        "variance": 9.992007221626409e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 53,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 10
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.0839479570750952,
+          "devianceScale": 0.964158527484915,
+          "evaluatedCounts": 256,
+          "firstCount": 0,
+          "lastCount": 255,
+          "mean": 1.1242424623911802,
+          "meanTruncationBound": 5.567132309067069e-13,
+          "omittedProbabilityBound": 7.19934185779501e-15,
+          "variance": 2.332069738207589,
+          "varianceTruncationBound": 4.311419391619972e-11
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0839479570649009,
+        "devianceScale": 0.9641585274754927,
+        "mean": 1.1242424623915936,
+        "variance": 2.332069738231237
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 398,
+      "relativeErrors": {
+        "degreesOfFreedom": 9.404699241599701e-12,
+        "devianceScale": 9.772627151960478e-12,
+        "mean": 3.6770586575585185e-13,
+        "variance": 1.0140444040018792e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 54,
+      "input": {
+        "dispersion": 1,
+        "mean": 10
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.2097338596600735,
+          "devianceScale": 1.0537444141766656,
+          "evaluatedCounts": 352,
+          "firstCount": 0,
+          "lastCount": 351,
+          "mean": 1.1480334731883621,
+          "meanTruncationBound": 2.0162164633345574e-13,
+          "omittedProbabilityBound": 2.690139641994002e-15,
+          "variance": 2.1789600167614998,
+          "varianceTruncationBound": 1.5134923856381124e-11
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.2097338596552272,
+        "devianceScale": 1.0537444141722996,
+        "mean": 1.1480334731885198,
+        "variance": 2.1789600167708274
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 489,
+      "relativeErrors": {
+        "degreesOfFreedom": 4.006128762057415e-12,
+        "devianceScale": 4.143352327901084e-12,
+        "mean": 1.3733458814613186e-13,
+        "variance": 4.2807979383496786e-12
+      },
+      "status": "passed"
+    },
+    {
+      "index": 55,
+      "input": {
+        "dispersion": 4,
+        "mean": 10
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.5411484669349518,
+          "devianceScale": 2.493437158937598,
+          "evaluatedCounts": 1120,
+          "firstCount": 0,
+          "lastCount": 1119,
+          "mean": 1.0191347545400673,
+          "meanTruncationBound": 1.355646746696529e-12,
+          "omittedProbabilityBound": 2.253297972077891e-14,
+          "variance": 0.8174537311975407,
+          "varianceTruncationBound": 8.171483380691113e-11
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.541148466746844,
+        "devianceScale": 2.4934371587501625,
+        "mean": 1.0191347545412361,
+        "variance": 0.8174537312599275
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 1371,
+      "relativeErrors": {
+        "degreesOfFreedom": 7.402478630069709e-11,
+        "devianceScale": 7.517142464052995e-11,
+        "mean": 1.1468603844377867e-12,
+        "variance": 7.63183960472702e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 56,
+      "input": {
+        "dispersion": 0,
+        "mean": 30
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9996102015783231,
+          "devianceScale": 0.9938915985140648,
+          "evaluatedCounts": 96,
+          "firstCount": 0,
+          "lastCount": 95,
+          "mean": 1.0057537492748787,
+          "meanTruncationBound": 5.949622654000178e-19,
+          "omittedProbabilityBound": 8.732983574804626e-22,
+          "variance": 2.023870109735405,
+          "varianceTruncationBound": 4.054378928184694e-16
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9996102015783224,
+        "devianceScale": 0.9938915985140631,
+        "mean": 1.0057537492748798,
+        "variance": 2.0238701097354106
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 211,
+      "relativeErrors": {
+        "degreesOfFreedom": 8.881784197001252e-16,
+        "devianceScale": 1.7763568394002505e-15,
+        "mean": 1.1102230246251565e-15,
+        "variance": 2.886579864025407e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 57,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 30
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9996102014416981,
+          "devianceScale": 0.9938915983169972,
+          "evaluatedCounts": 96,
+          "firstCount": 0,
+          "lastCount": 95,
+          "mean": 1.0057537493368336,
+          "meanTruncationBound": 2.58362226321588e-18,
+          "omittedProbabilityBound": 8.733172169493498e-22,
+          "variance": 2.0238701102613668,
+          "varianceTruncationBound": 7.643914449570262e-15
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9996102014416981,
+        "devianceScale": 0.993891598316997,
+        "mean": 1.0057537493368338,
+        "variance": 2.0238701102613676
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 211,
+      "relativeErrors": {
+        "degreesOfFreedom": 0.0,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 2.220446049250313e-16,
+        "variance": 4.440892098500626e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 58,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 30
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9995965757061288,
+          "devianceScale": 0.9938671289485762,
+          "evaluatedCounts": 96,
+          "firstCount": 0,
+          "lastCount": 95,
+          "mean": 1.005764801542047,
+          "meanTruncationBound": 5.0578781277219884e-18,
+          "omittedProbabilityBound": 6.811257879262965e-21,
+          "variance": 2.023942179486422,
+          "varianceTruncationBound": 3.7561413915699374e-15
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9995965757061208,
+        "devianceScale": 0.9938671289485715,
+        "mean": 1.0057648015420437,
+        "variance": 2.0239421794864247
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 212,
+      "relativeErrors": {
+        "degreesOfFreedom": 7.993605777301127e-15,
+        "devianceScale": 4.6629367034256575e-15,
+        "mean": 3.3306690738754696e-15,
+        "variance": 1.3322676295501878e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 59,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 30
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9988395755679348,
+          "devianceScale": 0.9805858908218295,
+          "evaluatedCounts": 192,
+          "firstCount": 0,
+          "lastCount": 191,
+          "mean": 1.0186150799404292,
+          "meanTruncationBound": 7.93107256752496e-13,
+          "omittedProbabilityBound": 5.612252065396124e-15,
+          "variance": 2.077564218442359,
+          "varianceTruncationBound": 1.1213453693038138e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9988395755591325,
+        "devianceScale": 0.9805858908128685,
+        "mean": 1.0186150799407612,
+        "variance": 2.0775642184620216
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 326,
+      "relativeErrors": {
+        "degreesOfFreedom": 8.812506280264643e-12,
+        "devianceScale": 9.138245715689663e-12,
+        "mean": 3.2585045772748344e-13,
+        "variance": 9.46420719571961e-12
+      },
+      "status": "passed"
+    },
+    {
+      "index": 60,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 30
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.0235937438882294,
+          "devianceScale": 0.9171657448189837,
+          "evaluatedCounts": 704,
+          "firstCount": 0,
+          "lastCount": 703,
+          "mean": 1.1160400938112347,
+          "meanTruncationBound": 2.3392928859894833e-12,
+          "omittedProbabilityBound": 3.021244628190687e-14,
+          "variance": 2.433671558528392,
+          "varianceTruncationBound": 1.8139989016203382e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0235937438534481,
+        "devianceScale": 0.9171657447864695,
+        "mean": 1.1160400938128765,
+        "variance": 2.4336715586182476
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 906,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.397948589167754e-11,
+        "devianceScale": 3.54507534439108e-11,
+        "mean": 1.4710455076283324e-12,
+        "variance": 3.6921909973841593e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 61,
+      "input": {
+        "dispersion": 1,
+        "mean": 30
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.0918153232820644,
+          "devianceScale": 0.9465410350146871,
+          "evaluatedCounts": 960,
+          "firstCount": 0,
+          "lastCount": 959,
+          "mean": 1.153479123348438,
+          "meanTruncationBound": 1.5565955369706701e-12,
+          "omittedProbabilityBound": 2.1339215533951134e-14,
+          "variance": 2.437251171747752,
+          "varianceTruncationBound": 1.1374047515641582e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0918153232555434,
+        "devianceScale": 0.9465410349907357,
+        "mean": 1.153479123349607,
+        "variance": 2.4372511718118943
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 1182,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.4290791600378725e-11,
+        "devianceScale": 2.5304203177256568e-11,
+        "mean": 1.0133005545753804e-12,
+        "variance": 2.6317503731831948e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 62,
+      "input": {
+        "dispersion": 4,
+        "mean": 30
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.2513861388020433,
+          "devianceScale": 2.0187370999101963,
+          "evaluatedCounts": 3297,
+          "firstCount": 0,
+          "lastCount": 3296,
+          "mean": 1.115244842382991,
+          "meanTruncationBound": 1.8247352301132337e-12,
+          "omittedProbabilityBound": 3.029754805008586e-14,
+          "variance": 1.1048935915752505,
+          "varianceTruncationBound": 1.1012864950744338e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.2513861386436256,
+        "devianceScale": 2.0187370997653713,
+        "mean": 1.1152448423845256,
+        "variance": 1.1048935916560363
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 3828,
+      "relativeErrors": {
+        "degreesOfFreedom": 7.036460303311287e-11,
+        "devianceScale": 7.174039140522837e-11,
+        "mean": 1.376010416720419e-12,
+        "variance": 7.311640182194878e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 63,
+      "input": {
+        "dispersion": 0,
+        "mean": 100
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9999682356303911,
+          "devianceScale": 0.9982874596052155,
+          "evaluatedCounts": 192,
+          "firstCount": 20,
+          "lastCount": 211,
+          "mean": 1.0016836593598404,
+          "meanTruncationBound": 1.7242914231236822e-19,
+          "omittedProbabilityBound": 1.869807565388877e-22,
+          "variance": 2.006804051722673,
+          "varianceTruncationBound": 1.840197623618325e-16
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9999682356303851,
+        "devianceScale": 0.9982874596052084,
+        "mean": 1.0016836593598415,
+        "variance": 2.00680405172269
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 317,
+      "relativeErrors": {
+        "degreesOfFreedom": 5.995204332975845e-15,
+        "devianceScale": 7.105427357601002e-15,
+        "mean": 1.1102230246251565e-15,
+        "variance": 8.43769498715119e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 64,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 100
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9999682355950923,
+          "devianceScale": 0.9982874595528449,
+          "evaluatedCounts": 192,
+          "firstCount": 19,
+          "lastCount": 210,
+          "mean": 1.0016836593770297,
+          "meanTruncationBound": 1.9194997640346323e-18,
+          "omittedProbabilityBound": 3.238917971686033e-22,
+          "variance": 2.0068040518623884,
+          "varianceTruncationBound": 1.1616540904949438e-14
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9999682355950925,
+        "devianceScale": 0.9982874595528451,
+        "mean": 1.0016836593770297,
+        "variance": 2.0068040518623884
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 317,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 2.220446049250313e-16,
+        "mean": 0.0,
+        "variance": 0.0
+      },
+      "status": "passed"
+    },
+    {
+      "index": 65,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 100
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9999647787957895,
+          "devianceScale": 0.9982672078752042,
+          "evaluatedCounts": 192,
+          "firstCount": 19,
+          "lastCount": 210,
+          "mean": 1.0017005175640283,
+          "meanTruncationBound": 8.647627352378641e-17,
+          "omittedProbabilityBound": 7.16817061428802e-20,
+          "variance": 2.006878538454913,
+          "varianceTruncationBound": 1.0450035318918971e-13
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9999647787957819,
+        "devianceScale": 0.9982672078751997,
+        "mean": 1.0017005175640252,
+        "variance": 2.0068785384549157
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 323,
+      "relativeErrors": {
+        "degreesOfFreedom": 7.549516567451064e-15,
+        "devianceScale": 4.440892098500626e-15,
+        "mean": 3.1086244689504383e-15,
+        "variance": 1.3322676295501878e-15
+      },
+      "status": "passed"
+    },
+    {
+      "index": 66,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 100
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.0001580748959165,
+          "devianceScale": 0.9835741150975423,
+          "evaluatedCounts": 608,
+          "firstCount": 0,
+          "lastCount": 607,
+          "mean": 1.0168609152516477,
+          "meanTruncationBound": 1.9086242427524026e-13,
+          "omittedProbabilityBound": 1.1419146420900907e-15,
+          "variance": 2.0676853927795857,
+          "varianceTruncationBound": 3.191231912286507e-11
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0001580748939147,
+        "devianceScale": 0.9835741150955052,
+        "mean": 1.0168609152517187,
+        "variance": 2.067685392784013
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 737,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.0015100687942322e-12,
+        "devianceScale": 2.071232074740692e-12,
+        "mean": 6.983302824892235e-14,
+        "variance": 2.1410651029896144e-12
+      },
+      "status": "passed"
+    },
+    {
+      "index": 67,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 100
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.0157972160821571,
+          "devianceScale": 0.9128159215089136,
+          "evaluatedCounts": 2304,
+          "firstCount": 0,
+          "lastCount": 2303,
+          "mean": 1.1128171542001724,
+          "meanTruncationBound": 2.625979334603381e-12,
+          "omittedProbabilityBound": 3.2553278970373307e-14,
+          "variance": 2.4382071521290962,
+          "varianceTruncationBound": 2.1212388726160715e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0157972160455406,
+        "devianceScale": 0.9128159214745603,
+        "mean": 1.112817154201939,
+        "variance": 2.4382071522247273
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 2683,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.604694320813451e-11,
+        "devianceScale": 3.7634340088743556e-11,
+        "mean": 1.5875079029115113e-12,
+        "variance": 3.922184799165507e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 68,
+      "input": {
+        "dispersion": 1,
+        "mean": 100
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.050690882323221,
+          "devianceScale": 0.91022194347143,
+          "evaluatedCounts": 3104,
+          "firstCount": 0,
+          "lastCount": 3103,
+          "mean": 1.1543238326204999,
+          "meanTruncationBound": 2.8611799609880396e-12,
+          "omittedProbabilityBound": 3.8588311767937263e-14,
+          "variance": 2.5363568542812915,
+          "varianceTruncationBound": 2.125009254849447e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0506908822812964,
+        "devianceScale": 0.9102219434334909,
+        "mean": 1.1543238326225533,
+        "variance": 2.5363568543915216
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 3603,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.99020816388429e-11,
+        "devianceScale": 4.168110301350225e-11,
+        "mean": 1.7789103523568883e-12,
+        "variance": 4.346001336585914e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 69,
+      "input": {
+        "dispersion": 4,
+        "mean": 100
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 2.0093211082150173,
+          "devianceScale": 1.6821024420175414,
+          "evaluatedCounts": 10880,
+          "firstCount": 0,
+          "lastCount": 10879,
+          "mean": 1.1945295708654964,
+          "meanTruncationBound": 2.235477384696875e-12,
+          "omittedProbabilityBound": 3.69371403781107e-14,
+          "variance": 1.420281596443981,
+          "varianceTruncationBound": 1.355992328699604e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 2.0093211080857336,
+        "devianceScale": 1.6821024419067288,
+        "mean": 1.1945295708673307,
+        "variance": 1.4202815965397266
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 12429,
+      "relativeErrors": {
+        "degreesOfFreedom": 6.434208721373125e-11,
+        "devianceScale": 6.587752565678784e-11,
+        "mean": 1.535549465359054e-12,
+        "variance": 6.741318614444936e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 70,
+      "input": {
+        "dispersion": 0,
+        "mean": 1000
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9999996932829766,
+          "devianceScale": 0.9998328875120599,
+          "evaluatedCounts": 576,
+          "firstCount": 728,
+          "lastCount": 1303,
+          "mean": 1.000166833650903,
+          "meanTruncationBound": 2.6742863017348066e-16,
+          "omittedProbabilityBound": 9.274771382681446e-20,
+          "variance": 2.0006680039094817,
+          "varianceTruncationBound": 9.786310046291675e-13
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9999996932829764,
+        "devianceScale": 0.9998328875120595,
+        "mean": 1.0001668336509035,
+        "variance": 2.000668003909483
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 1389,
+      "relativeErrors": {
+        "degreesOfFreedom": 2.220446049250313e-16,
+        "devianceScale": 4.440892098500626e-16,
+        "mean": 4.440892098500626e-16,
+        "variance": 6.661338147750939e-16
+      },
+      "status": "passed"
+    },
+    {
+      "index": 71,
+      "input": {
+        "dispersion": 1e-08,
+        "mean": 1000
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.9999996932796436,
+          "devianceScale": 0.9998328875070398,
+          "evaluatedCounts": 576,
+          "firstCount": 743,
+          "lastCount": 1318,
+          "mean": 1.0001668336525913,
+          "meanTruncationBound": 1.4784889245437156e-14,
+          "omittedProbabilityBound": 7.382806049299011e-18,
+          "variance": 2.000668003922904,
+          "varianceTruncationBound": 2.997270907991877e-11
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9999996932796246,
+        "devianceScale": 0.9998328875070204,
+        "mean": 1.0001668336525917,
+        "variance": 2.000668003922944
+      },
+      "referenceOwner": "80-digit direct probability recurrence",
+      "referenceUpperCount": 1389,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.9095836023552692e-14,
+        "devianceScale": 1.9539925233402755e-14,
+        "mean": 4.440892098500626e-16,
+        "variance": 1.9984014443252818e-14
+      },
+      "status": "passed"
+    },
+    {
+      "index": 72,
+      "input": {
+        "dispersion": 0.001,
+        "mean": 1000
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 0.999999475597046,
+          "devianceScale": 0.9997492457193977,
+          "evaluatedCounts": 768,
+          "firstCount": 647,
+          "lastCount": 1414,
+          "mean": 1.000250292639599,
+          "meanTruncationBound": 4.436050994944648e-14,
+          "omittedProbabilityBound": 1.3945285328948112e-17,
+          "variance": 2.001002345182748,
+          "varianceTruncationBound": 1.4551372997382066e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 0.9999994755968937,
+        "devianceScale": 0.9997492457192821,
+        "mean": 1.0002502926395624,
+        "variance": 2.001002345182906
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 1514,
+      "relativeErrors": {
+        "degreesOfFreedom": 1.5232259897857148e-13,
+        "devianceScale": 1.156852391659413e-13,
+        "mean": 3.6637359812630166e-14,
+        "variance": 7.904787935331115e-14
+      },
+      "status": "passed"
+    },
+    {
+      "index": 73,
+      "input": {
+        "dispersion": 0.1,
+        "mean": 1000
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.0002987270680526,
+          "devianceScale": 0.9839142228988569,
+          "evaluatedCounts": 5696,
+          "firstCount": 4,
+          "lastCount": 5699,
+          "mean": 1.0166523704890889,
+          "meanTruncationBound": 9.353297181281802e-13,
+          "omittedProbabilityBound": 4.474251776611656e-15,
+          "variance": 2.0665467513901308,
+          "varianceTruncationBound": 1.9560938327737325e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0002987270614552,
+        "devianceScale": 0.9839142228921375,
+        "mean": 1.0166523704893264,
+        "variance": 2.0665467514047267
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 6011,
+      "relativeErrors": {
+        "degreesOfFreedom": 6.595390900088205e-12,
+        "devianceScale": 6.829203869074263e-12,
+        "mean": 2.3370194668359545e-13,
+        "variance": 7.062905815757858e-12
+      },
+      "status": "passed"
+    },
+    {
+      "index": 74,
+      "input": {
+        "dispersion": 0.7,
+        "mean": 1000
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.0167680860197879,
+          "devianceScale": 0.9144199495489331,
+          "evaluatedCounts": 22912,
+          "firstCount": 0,
+          "lastCount": 22911,
+          "mean": 1.111926841186417,
+          "meanTruncationBound": 2.7747053827864027e-12,
+          "omittedProbabilityBound": 3.1792799942470265e-14,
+          "variance": 2.431982901805479,
+          "varianceTruncationBound": 2.4244793802905685e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0167680859849049,
+        "devianceScale": 0.9144199495161477,
+        "mean": 1.111926841188136,
+        "variance": 2.4319829018964345
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 25532,
+      "relativeErrors": {
+        "degreesOfFreedom": 3.430766781775674e-11,
+        "devianceScale": 3.585376440184973e-11,
+        "mean": 1.5459855617905305e-12,
+        "variance": 3.739974996364026e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 75,
+      "input": {
+        "dispersion": 1,
+        "mean": 1000
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.034950629928187,
+          "devianceScale": 0.8965036889745884,
+          "evaluatedCounts": 30848,
+          "firstCount": 0,
+          "lastCount": 30847,
+          "mean": 1.154429861980772,
+          "meanTruncationBound": 3.2003682560304454e-12,
+          "omittedProbabilityBound": 4.069845454869054e-14,
+          "variance": 2.5754045993970127,
+          "varianceTruncationBound": 2.5204060578867054e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.0349506298862654,
+        "devianceScale": 0.8965036889366197,
+        "mean": 1.1544298619829032,
+        "variance": 2.5754045995108408
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 34741,
+      "relativeErrors": {
+        "degreesOfFreedom": 4.050582091963406e-11,
+        "devianceScale": 4.2352121809585697e-11,
+        "mean": 1.8460788453467103e-12,
+        "variance": 4.4198089632629944e-11
+      },
+      "status": "passed"
+    },
+    {
+      "index": 76,
+      "input": {
+        "dispersion": 4,
+        "mean": 1000
+      },
+      "native": {
+        "value": {
+          "degreesOfFreedom": 1.7051258421280389,
+          "devianceScale": 1.318281656154721,
+          "evaluatedCounts": 107328,
+          "firstCount": 0,
+          "lastCount": 107327,
+          "mean": 1.293445777817844,
+          "meanTruncationBound": 3.18936691923968e-12,
+          "omittedProbabilityBound": 5.2201148602869134e-14,
+          "variance": 1.962320831484039,
+          "varianceTruncationBound": 1.953486930910446e-10
+        }
+      },
+      "reference": {
+        "degreesOfFreedom": 1.7051258420205564,
+        "devianceScale": 1.3182816560690176,
+        "mean": 1.2934457778204007,
+        "variance": 1.962320831615491
+      },
+      "referenceOwner": "SciPy PMF and direct saturated likelihood",
+      "referenceUpperCount": 123009,
+      "relativeErrors": {
+        "degreesOfFreedom": 6.303491062453759e-11,
+        "devianceScale": 6.501155169758022e-11,
+        "mean": 1.9766410730426287e-12,
+        "variance": 6.698797072601792e-11
+      },
+      "status": "passed"
+    }
+  ],
+  "seconds": 1.116301250178367,
+  "status": "passed"
+}

@@ -1,0 +1,50 @@
+{
+  "case": "hagai-default",
+  "checkerSHA256": "b574d9c9ad1e5c5d6b5746153d3fa79d982ab9af52f7d1e558bebd2a715022eb",
+  "failures": [
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+      "featureIndex": 2701
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+      "featureIndex": 4951
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+      "featureIndex": 5091
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+      "featureIndex": 5469
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+      "featureIndex": 13599
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+      "featureIndex": 14822
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+      "featureIndex": 15720
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (341544...1341543)",
+      "featureIndex": 19389
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+      "featureIndex": 21247
+    }
+  ],
+  "highPrecisionRefinements": [],
+  "maximumPMFMassError": 4.515309237618226e-10,
+  "maximumRelativeMomentError": 1.3538070664509405e-10,
+  "method": "edgeRTrend-adjusted",
+  "moments": 74502,
+  "outputSHA256": "56229c8545288544a0ac89296e5e8eca0ecdfc6ec8ec8247f1dc0077e976e033",
+  "status": "failed",
+  "supportTerms": 354937220
+}

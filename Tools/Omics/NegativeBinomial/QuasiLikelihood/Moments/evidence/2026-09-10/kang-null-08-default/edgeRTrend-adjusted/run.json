@@ -1,0 +1,32 @@
+{
+  "binarySHA256": "40b4cb59dee3873f45004b9a06b50e8992a635ae23d17e11289544f08440cd48",
+  "case": "kang-null-08-default",
+  "evaluatedCounts": 4507649,
+  "failures": [],
+  "genes": 3202,
+  "inputSHA256": "b86078f9d5b63c0ea18b8a94a575acb7a87790d46478d8391bf4e8daafc98902",
+  "logicalSHA256": "8d642cf1f238766b8c01827bc0fad0fcaef9a50ccce59e8fe4ab3887d1221965",
+  "maximumLeverageError": 3.164135620181696e-15,
+  "maximumRelativeTruncationBound": 9.999584193641776e-11,
+  "method": "edgeRTrend-adjusted",
+  "moments": 51232,
+  "outputSHA256": "187af9fbafa0ae56880b138bc6f66d5ecf036bec58082ffaff37440a0fd3bd05",
+  "referenceSHA256": "e6c004c5c53e2bde14e49e588a0b2eab0d7765e00ba0864e15d8e684440fe9e5",
+  "relativeDFDifferenceQuantiles": [
+    5.8180283955416945e-09,
+    4.317539275854837e-06,
+    1.2511605657530502e-05,
+    2.0826230862577577e-05,
+    3.222352860611397e-05
+  ],
+  "relativeDevianceDifferenceQuantiles": [
+    7.777368364986417e-09,
+    2.4908299764339988e-05,
+    5.8508060287819594e-05,
+    0.0002215294985621784,
+    0.0007456575429905178
+  ],
+  "requestSHA256": "af8286b2912781fcbbd66e1d4671f54ba789660d99891a305e20e6ef55055d5e",
+  "seconds": 5.92972204182297,
+  "status": "passed-conditional-stage"
+}

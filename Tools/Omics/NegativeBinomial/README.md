@@ -13,8 +13,12 @@ Kang adds one. General FDR calibration remains open.
 The [QL stage study and native unit deviance](QuasiLikelihood/README.md) now
 provide the next implementation evidence: 116 pinned reference QL fits across
 29 full-support analyses, 7.88 million native residual-deviance checks and 702
-high-precision boundary cases. Native QL moderation and cohort inference remain
-unimplemented; the reference study does not establish improved calibration.
+high-precision boundary cases. The subsequent [native conditional moments and
+adjusted residuals](QuasiLikelihood/Moments/README.md) pass 3,940,848 independent
+default-budget moment checks, with twenty explicit work-limit failures. A
+separate larger-budget check resolves nineteen of those fits; one remains
+unavailable. Global QL scale/refit, robust moderation and cohort inference remain
+unimplemented; neither stage establishes improved calibration.
 
 Optional [count-likelihood effect shrinkage](EffectShrinkage/README.md) now adds
 an explicit normal prior on the requested contrast, jointly refits nuisance

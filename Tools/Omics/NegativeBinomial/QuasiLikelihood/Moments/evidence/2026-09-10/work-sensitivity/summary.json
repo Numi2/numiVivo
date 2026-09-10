@@ -1,0 +1,2740 @@
+{
+  "binarySHA256": "d91b824de8cfa99ad3f4a30361c8b845a5eea0153e45a6d134c67db41989fc8f",
+  "checks": [
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 737440,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (64062...1064061)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316361766606,
+        "devianceScale": 0.9945159106281655,
+        "mean": 1.0055461410818567,
+        "variance": 2.022182109578768
+      },
+      "referenceMass": 0.9999999996769842,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.116107289396041e-11,
+        "devianceScale": 7.76201325436432e-12,
+        "mean": 1.339905963959609e-11,
+        "variance": 5.63704638523177e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 623968,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (64062...1064061)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316361826749,
+        "devianceScale": 0.9945159105977157,
+        "mean": 1.0055461411186917,
+        "variance": 2.022182109714759
+      },
+      "referenceMass": 0.9999999999950029,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 8.309797294714372e-12,
+        "devianceScale": 8.45534753324273e-12,
+        "mean": 1.676503380565464e-11,
+        "variance": 2.5220270316594906e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1490400,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (64062...1064061)",
+      "reference": {
+        "degreesOfFreedom": 1.000031636252049,
+        "devianceScale": 0.9945159108424759,
+        "mean": 1.0055461409409736,
+        "variance": 2.022182108859684
+      },
+      "referenceMass": 1.0000000004821603,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.868849685062514e-11,
+        "devianceScale": 1.200877175477899e-10,
+        "mean": 8.13991096748623e-11,
+        "variance": 2.014868272226522e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1225376,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (64062...1064061)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316362211794,
+        "devianceScale": 0.9945159107140956,
+        "mean": 1.0055461410397377,
+        "variance": 2.022182109319341
+      },
+      "referenceMass": 1.0000000002562586,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 9.659939514961025e-12,
+        "devianceScale": 4.131472941537595e-12,
+        "mean": 5.5282445288185045e-12,
+        "variance": 1.396660564978447e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1245312,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (64062...1064061)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316362254924,
+        "devianceScale": 0.9945159107222507,
+        "mean": 1.0055461410358293,
+        "variance": 2.0221821092948993
+      },
+      "referenceMass": 1.0000000000867169,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.3788525876634594e-11,
+        "devianceScale": 1.1051493054026196e-11,
+        "mean": 2.7370328226083984e-12,
+        "variance": 8.314460231417797e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1259744,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (64062...1064061)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316362290753,
+        "devianceScale": 0.9945159107288225,
+        "mean": 1.0055461410327873,
+        "variance": 2.022182109275419
+      },
+      "referenceMass": 1.0000000001224105,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.7249868200508445e-11,
+        "devianceScale": 1.677957772727723e-11,
+        "mean": 4.704014955336788e-13,
+        "variance": 1.630917623174355e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1059168,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (45593...1045592)",
+      "reference": {
+        "degreesOfFreedom": 1.0000317043084663,
+        "devianceScale": 0.9945101530427402,
+        "mean": 1.0055520310665838,
+        "variance": 2.0222056617321815
+      },
+      "referenceMass": 0.9999999993102637,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 5.260347712976454e-11,
+        "devianceScale": 1.085442846715523e-11,
+        "mean": 4.174904866260931e-11,
+        "variance": 3.089462019545408e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 512,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (45593...1045592)",
+      "reference": {
+        "degreesOfFreedom": 0.9999883370236048,
+        "devianceScale": 0.9942543934835334,
+        "mean": 1.0057670789062159,
+        "variance": 2.0231584300720984
+      },
+      "referenceMass": 1.0000000000000513,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.8984813721090177e-14,
+        "devianceScale": 2.2648549702353193e-14,
+        "mean": 3.774758283725532e-15,
+        "variance": 2.6423307986078726e-14
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 188992,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (45593...1045592)",
+      "reference": {
+        "degreesOfFreedom": 1.0000317040598308,
+        "devianceScale": 0.9945101513340076,
+        "mean": 1.0055520325442802,
+        "variance": 2.0222056681783718
+      },
+      "referenceMass": 1.0000000000259521,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.347766342973955e-11,
+        "devianceScale": 2.1428414598290146e-12,
+        "mean": 1.5620171822661177e-11,
+        "variance": 1.7763124304792655e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 128,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (45593...1045592)",
+      "reference": {
+        "degreesOfFreedom": 0.9989736377148077,
+        "devianceScale": 0.9894989609813573,
+        "mean": 1.0095752265611817,
+        "variance": 2.0405786491375664
+      },
+      "referenceMass": 1.000000000000021,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 4.551914400963142e-15,
+        "devianceScale": 3.3306690738754696e-15,
+        "mean": 1.1102230246251565e-15,
+        "variance": 2.220446049250313e-15
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 229152,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (45593...1045592)",
+      "reference": {
+        "degreesOfFreedom": 1.0000317041676343,
+        "devianceScale": 0.9945101519241082,
+        "mean": 1.005552032056026,
+        "variance": 2.022205665996581
+      },
+      "referenceMass": 1.000000000007564,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 5.437872374614017e-13,
+        "devianceScale": 2.5022539595909166e-11,
+        "mean": 2.556643785567303e-11,
+        "variance": 5.058886642927973e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 160,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (45593...1045592)",
+      "reference": {
+        "degreesOfFreedom": 0.9995268559449602,
+        "devianceScale": 0.9918616241132036,
+        "mean": 1.0077281262278999,
+        "variance": 2.0319933783684436
+      },
+      "referenceMass": 1.000000000000022,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.993605777301127e-15,
+        "devianceScale": 4.440892098500626e-16,
+        "mean": 7.549516567451064e-15,
+        "variance": 6.8833827526759706e-15
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1677568,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (71970...1071969)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316637527,
+        "devianceScale": 0.9945135741341306,
+        "mean": 1.0055485312237933,
+        "variance": 2.0221916671157962
+      },
+      "referenceMass": 1.0000000004321157,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.1387757403724663e-10,
+        "devianceScale": 1.3754231087403923e-10,
+        "mean": 2.514197738889834e-10,
+        "variance": 3.889621957853251e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 5568,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (71970...1071969)",
+      "reference": {
+        "degreesOfFreedom": 1.000031330331954,
+        "devianceScale": 0.9945115793137286,
+        "mean": 1.0055502129216376,
+        "variance": 2.0221991052442574
+      },
+      "referenceMass": 1.000000000000661,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.6897594434794883e-13,
+        "devianceScale": 3.4139358007223564e-13,
+        "mean": 5.102585021177219e-13,
+        "variance": 8.515410598874951e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 624000,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (71970...1071969)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316638331725,
+        "devianceScale": 0.9945135738480306,
+        "mean": 1.0055485315939843,
+        "variance": 2.0221916684420034
+      },
+      "referenceMass": 0.9999999998866242,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.863931728024909e-12,
+        "devianceScale": 9.244605081448753e-12,
+        "mean": 1.3807843757263072e-12,
+        "variance": 1.0625500479477523e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2048,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (71970...1071969)",
+      "reference": {
+        "degreesOfFreedom": 1.000029193771727,
+        "devianceScale": 0.9944988117365412,
+        "mean": 1.0055609740000884,
+        "variance": 2.022246707855248
+      },
+      "referenceMass": 0.9999999999997871,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 5.0182080713057076e-14,
+        "devianceScale": 7.593925488436071e-14,
+        "mean": 2.5646151868841116e-14,
+        "variance": 1.0147438445073931e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 591488,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (71970...1071969)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316638309952,
+        "devianceScale": 0.9945135738309998,
+        "mean": 1.0055485316090145,
+        "variance": 2.022191668506859
+      },
+      "referenceMass": 0.9999999998991485,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 6.945999331264829e-12,
+        "devianceScale": 7.769784815536696e-12,
+        "mean": 8.238965065743287e-13,
+        "variance": 8.593681322111024e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2368,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (71970...1071969)",
+      "reference": {
+        "degreesOfFreedom": 1.0000298354750246,
+        "devianceScale": 0.9945026445757719,
+        "mean": 1.0055577437922356,
+        "variance": 2.022232417936263
+      },
+      "referenceMass": 0.9999999999999277,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.19824158875781e-14,
+        "devianceScale": 6.505906924303417e-14,
+        "mean": 4.3298697960381105e-14,
+        "variance": 1.0824674490095276e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 555776,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (44855...1044854)",
+      "reference": {
+        "degreesOfFreedom": 1.000031648791746,
+        "devianceScale": 0.9945148443113322,
+        "mean": 1.0055472319110872,
+        "variance": 2.022186471449593
+      },
+      "referenceMass": 1.000000000125266,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 6.758815729313028e-12,
+        "devianceScale": 2.166955503923873e-11,
+        "mean": 1.491062828762324e-11,
+        "variance": 3.658018332686197e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 3072,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (44855...1044854)",
+      "reference": {
+        "degreesOfFreedom": 1.0000305468215436,
+        "devianceScale": 0.9945082542407078,
+        "mean": 1.005552787075711,
+        "variance": 2.0222110430716045
+      },
+      "referenceMass": 1.000000000000023,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 5.773159728050814e-15,
+        "devianceScale": 1.0880185641326534e-13,
+        "mean": 1.1435297153639112e-13,
+        "variance": 2.2315482794965646e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1040160,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (44855...1044854)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316489036523,
+        "devianceScale": 0.9945148445392117,
+        "mean": 1.0055472317932035,
+        "variance": 2.022186470749169
+      },
+      "referenceMass": 1.000000000414205,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 8.085454528128366e-11,
+        "devianceScale": 5.97768501364726e-11,
+        "mean": 2.1077917189415984e-11,
+        "variance": 3.869904396935908e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 5536,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (44855...1044854)",
+      "reference": {
+        "degreesOfFreedom": 1.0000313101224554,
+        "devianceScale": 0.9945128184715343,
+        "mean": 1.0055489396902921,
+        "variance": 2.022194025081988
+      },
+      "referenceMass": 1.0000000000020093,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.9206858326015208e-13,
+        "devianceScale": 3.098632461728812e-13,
+        "mean": 5.020428517354958e-13,
+        "variance": 8.120171202108395e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1297952,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (44855...1044854)",
+      "reference": {
+        "degreesOfFreedom": 1.000031648707287,
+        "devianceScale": 0.9945148445623602,
+        "mean": 1.0055472315723497,
+        "variance": 2.0221864702579566
+      },
+      "referenceMass": 1.0000000007112306,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.191882148532386e-10,
+        "devianceScale": 5.930678170784631e-11,
+        "mean": 1.7849499656108492e-10,
+        "variance": 2.3780177826893123e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 8480,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (44855...1044854)",
+      "reference": {
+        "degreesOfFreedom": 1.000031503992468,
+        "devianceScale": 0.994513978085053,
+        "mean": 1.0055479621493495,
+        "variance": 2.0221897013163
+      },
+      "referenceMass": 1.0000000000008042,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 4.96269692007445e-13,
+        "devianceScale": 4.9960036108132044e-14,
+        "mean": 4.460876112943879e-13,
+        "variance": 3.959055305813308e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 629504,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (48895...1048894)",
+      "reference": {
+        "degreesOfFreedom": 1.000031634361545,
+        "devianceScale": 0.9945160654518541,
+        "mean": 1.0055459827159101,
+        "variance": 2.02218147629228
+      },
+      "referenceMass": 1.000000000010812,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.089772799251932e-12,
+        "devianceScale": 1.3958834088612093e-12,
+        "mean": 6.940004126931854e-13,
+        "variance": 7.01882996168024e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1134240,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (48895...1048894)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316344012357,
+        "devianceScale": 0.9945160655394246,
+        "mean": 1.005545982667278,
+        "variance": 2.0221814760164194
+      },
+      "referenceMass": 0.9999999995855294,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.4006907572982072e-11,
+        "devianceScale": 2.1440627051561023e-11,
+        "mean": 4.544764564684556e-11,
+        "variance": 6.688827269840658e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1098048,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (48895...1048894)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316343508342,
+        "devianceScale": 0.9945160655233961,
+        "mean": 1.0055459826328048,
+        "variance": 2.0221814759796843
+      },
+      "referenceMass": 0.9999999996203206,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.5952795468242584e-11,
+        "devianceScale": 3.443800800084773e-11,
+        "mean": 8.485212532605146e-12,
+        "variance": 4.292322053345288e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1922240,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (48895...1048894)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316342933842,
+        "devianceScale": 0.9945160655450602,
+        "mean": 1.0055459825531337,
+        "variance": 2.022181475775413
+      },
+      "referenceMass": 0.9999999992713747,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 8.991629663057665e-11,
+        "devianceScale": 4.7617465526172964e-11,
+        "mean": 4.229883110440369e-11,
+        "variance": 5.3187454440717374e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1031392,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (48895...1048894)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316342720474,
+        "devianceScale": 0.9945160655026142,
+        "mean": 1.005545982574596,
+        "variance": 2.0221814759048815
+      },
+      "referenceMass": 0.9999999997570218,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.0377299020092323e-10,
+        "devianceScale": 4.854761037620392e-11,
+        "mean": 5.522537982471931e-11,
+        "variance": 6.6775474039104665e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2221504,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (48895...1048894)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316343508628,
+        "devianceScale": 0.9945160656003496,
+        "mean": 1.0055459825550266,
+        "variance": 2.022181475666798
+      },
+      "referenceMass": 0.9999999989684417,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.164823958456964e-11,
+        "devianceScale": 2.990607761432784e-12,
+        "mean": 3.4638958368304884e-11,
+        "variance": 3.7629455107435206e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 95136,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (47617...1047616)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316580779351,
+        "devianceScale": 0.9945139580372586,
+        "mean": 1.005548137355021,
+        "variance": 2.0221900944246958
+      },
+      "referenceMass": 1.0000000000012699,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 5.3370641239780525e-12,
+        "devianceScale": 1.7330581414398694e-13,
+        "mean": 5.163647287531603e-12,
+        "variance": 4.990341473387616e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 277952,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (47617...1047616)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316590776877,
+        "devianceScale": 0.9945139642007527,
+        "mean": 1.0055481321284103,
+        "variance": 2.022190071381301
+      },
+      "referenceMass": 0.9999999999784601,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.5512258972071322e-11,
+        "devianceScale": 2.051026015692514e-12,
+        "mean": 2.3461455000983733e-11,
+        "variance": 2.141042898529122e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 389312,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (47617...1047616)",
+      "reference": {
+        "degreesOfFreedom": 1.000031659194341,
+        "devianceScale": 0.9945139645988154,
+        "mean": 1.005548131843228,
+        "variance": 2.0221900699983912
+      },
+      "referenceMass": 1.0000000000268843,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.3768653711897514e-11,
+        "devianceScale": 7.300604565330104e-12,
+        "mean": 3.106925827722762e-11,
+        "variance": 3.836986284255772e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1105152,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (47617...1047616)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316592395362,
+        "devianceScale": 0.9945139650139808,
+        "mean": 1.0055481314689008,
+        "variance": 2.0221900684014322
+      },
+      "referenceMass": 0.9999999995892808,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.729594742045265e-12,
+        "devianceScale": 3.958955385741092e-11,
+        "mean": 3.186007013766812e-11,
+        "variance": 7.14497350173815e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 339072,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (47617...1047616)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316591777745,
+        "devianceScale": 0.994513964480016,
+        "mean": 1.0055481319466877,
+        "variance": 2.022190070448012
+      },
+      "referenceMass": 0.9999999998106069,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.9506841414672635e-11,
+        "devianceScale": 7.495115639244432e-12,
+        "mean": 2.2011725775428204e-11,
+        "variance": 1.451649911388131e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1184352,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (47617...1047616)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316592408136,
+        "devianceScale": 0.9945139650255614,
+        "mean": 1.005548131458476,
+        "variance": 2.0221900683569203
+      },
+      "referenceMass": 1.0000000003107195,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.685851954875034e-12,
+        "devianceScale": 4.3548054051711915e-11,
+        "mean": 3.5862424141441807e-11,
+        "variance": 7.941047819315372e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 386752,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54491...1054490)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316541084833,
+        "devianceScale": 0.9945143911230625,
+        "mean": 1.0055476954729536,
+        "variance": 2.0221883251733175
+      },
+      "referenceMass": 0.9999999998590853,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.3324452652341279e-11,
+        "devianceScale": 2.3564261653064023e-11,
+        "mean": 1.0239586956117819e-11,
+        "variance": 3.380384860918184e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 17248,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54491...1054490)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316190977416,
+        "devianceScale": 0.9945141816295586,
+        "mean": 1.0055478720867936,
+        "variance": 2.0221891063215525
+      },
+      "referenceMass": 0.9999999999949668,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 4.651834473179406e-13,
+        "devianceScale": 1.3071765891936593e-12,
+        "mean": 1.7724710588140624e-12,
+        "variance": 3.0797586703101842e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 816000,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54491...1054490)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316541738319,
+        "devianceScale": 0.994514391518603,
+        "mean": 1.005547695138734,
+        "variance": 2.022188323696922
+      },
+      "referenceMass": 1.0000000001781817,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 4.1386893911976586e-12,
+        "devianceScale": 4.269207209972592e-11,
+        "mean": 4.68309835355285e-11,
+        "variance": 8.952305563525442e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 35328,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54491...1054490)",
+      "reference": {
+        "degreesOfFreedom": 1.000031645785263,
+        "devianceScale": 0.9945143412818118,
+        "mean": 1.0055477374980233,
+        "variance": 2.022188511031406
+      },
+      "referenceMass": 0.9999999999959982,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 6.001865671123596e-13,
+        "devianceScale": 2.9201085993690867e-12,
+        "mean": 3.5202951664814464e-12,
+        "variance": 6.440403765850533e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1266112,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54491...1054490)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316542222811,
+        "devianceScale": 0.9945143915866136,
+        "mean": 1.0055476951186855,
+        "variance": 2.0221883235183147
+      },
+      "referenceMass": 1.0000000002255607,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.653255475910555e-11,
+        "devianceScale": 5.3806292754643437e-11,
+        "mean": 1.7273737995537886e-11,
+        "variance": 7.108025279478625e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 67456,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54491...1054490)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316518771797,
+        "devianceScale": 0.9945143777026741,
+        "mean": 1.0055477067986192,
+        "variance": 2.0221883752378362
+      },
+      "referenceMass": 0.9999999999914332,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.5218937221561646e-12,
+        "devianceScale": 5.559996907322784e-12,
+        "mean": 7.0818906294789485e-12,
+        "variance": 1.2641998559104195e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2752320,
+      "featureIndex": 19389,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (350037...1350036)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316233449744,
+        "devianceScale": 0.9945169976380758,
+        "mean": 1.0055450291146313,
+        "variance": 2.022177663132448
+      },
+      "referenceMass": 0.999999999302774,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.9098278514206868e-11,
+        "devianceScale": 3.1782898535226423e-10,
+        "mean": 3.3692715284416863e-10,
+        "variance": 6.547562492187353e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2516416,
+      "featureIndex": 19389,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (350037...1350036)",
+      "reference": {
+        "degreesOfFreedom": 1.00003162317314,
+        "devianceScale": 0.9945169974020018,
+        "mean": 1.0055450291805412,
+        "variance": 2.02217766374501
+      },
+      "referenceMass": 1.00000000067491,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.9111223714673997e-10,
+        "devianceScale": 8.133649309627344e-11,
+        "mean": 2.724485081984085e-10,
+        "variance": 3.5378500129468193e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 9384448,
+      "featureIndex": 19389,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (350037...1350036)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316234415654,
+        "devianceScale": 0.9945169976842844,
+        "mean": 1.0055450291650336,
+        "variance": 2.0221776631398516
+      },
+      "referenceMass": 0.9999999978717848,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.736988827389268e-11,
+        "devianceScale": 3.5079472660015654e-10,
+        "mean": 2.7342483832626385e-10,
+        "variance": 6.242195649264204e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 8337408,
+      "featureIndex": 19389,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (350037...1350036)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316232919568,
+        "devianceScale": 0.9945169974920132,
+        "mean": 1.0055450292090036,
+        "variance": 2.0221776636192264
+      },
+      "referenceMass": 1.0000000020832733,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.094835829946078e-11,
+        "devianceScale": 1.676873084832664e-10,
+        "mean": 2.3863577780502965e-10,
+        "variance": 4.063229752659936e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 6636416,
+      "featureIndex": 19389,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (350037...1350036)",
+      "reference": {
+        "degreesOfFreedom": 1.000031623150142,
+        "devianceScale": 0.9945169970773814,
+        "mean": 1.0055450294856365,
+        "variance": 2.0221776650186243
+      },
+      "referenceMass": 0.9999999984955237,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.2275536970539633e-10,
+        "devianceScale": 2.471389759506337e-10,
+        "mean": 2.4383606245237388e-11,
+        "variance": 2.7152269321817357e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 7253792,
+      "featureIndex": 19389,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (350037...1350036)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316230563484,
+        "devianceScale": 0.9945169971686523,
+        "mean": 1.0055450292990427,
+        "variance": 2.0221776644577956
+      },
+      "referenceMass": 0.9999999965448271,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.1326496952033267e-10,
+        "devianceScale": 1.5507417572280247e-10,
+        "mean": 1.5819101584213513e-10,
+        "variance": 3.1166180747277394e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 470528,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (509687...1509686)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316271263887,
+        "devianceScale": 0.9945166758178455,
+        "mean": 1.0055453583058405,
+        "variance": 2.0221789795106764
+      },
+      "referenceMass": 1.0000000001436624,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 9.745204643252237e-12,
+        "devianceScale": 2.1929680293908405e-11,
+        "mean": 1.2184475650656168e-11,
+        "variance": 3.411404492226211e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 887328,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (509687...1509686)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316271510794,
+        "devianceScale": 0.9945166760030292,
+        "mean": 1.00554535814343,
+        "variance": 2.022178978807525
+      },
+      "referenceMass": 1.0000000004865042,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.37188088351104e-14,
+        "devianceScale": 4.574118861455645e-14,
+        "mean": 2.7977620220553945e-14,
+        "variance": 1.7541523789077473e-14
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 3270753,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (509687...1509686)",
+      "reference": {
+        "degreesOfFreedom": 1.000031626816043,
+        "devianceScale": 0.994516676129787,
+        "mean": 1.0055453576783826,
+        "variance": 2.022178977614562
+      },
+      "referenceMass": 1.0000000006681924,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.5172798007465644e-10,
+        "devianceScale": 5.42761391386648e-11,
+        "mean": 4.0600411921332125e-10,
+        "variance": 4.6028025835198605e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 5992064,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (509687...1509686)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316274250758,
+        "devianceScale": 0.9945166754561398,
+        "mean": 1.0055453589718912,
+        "variance": 2.022178981585589
+      },
+      "referenceMass": 0.9999999991840416,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.6140845044153593e-10,
+        "devianceScale": 6.329627932899484e-10,
+        "mean": 8.943712437314844e-10,
+        "variance": 1.5273340370214328e-09
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2616544,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (509687...1509686)",
+      "reference": {
+        "degreesOfFreedom": 1.000031627332609,
+        "devianceScale": 0.9945166762271979,
+        "mean": 1.005545358099306,
+        "variance": 2.022178978262982
+      },
+      "referenceMass": 1.0000000007829335,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.7022139253697333e-10,
+        "devianceScale": 1.5659873398021773e-10,
+        "mean": 1.3622658556755596e-11,
+        "variance": 1.4297607542346213e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 5897600,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (509687...1509686)",
+      "reference": {
+        "degreesOfFreedom": 1.0000316273338314,
+        "devianceScale": 0.9945166753899062,
+        "mean": 1.0055453589471117,
+        "variance": 2.0221789816704314
+      },
+      "referenceMass": 0.9999999991039008,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.7027768084432182e-10,
+        "devianceScale": 6.993787771136795e-10,
+        "mean": 8.696563469356988e-10,
+        "variance": 1.5690352350716807e-09
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 830688,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+      "reference": {
+        "degreesOfFreedom": 1.0000499057684022,
+        "devianceScale": 0.9931553446107644,
+        "mean": 1.0069420772843345,
+        "variance": 2.02776349691593
+      },
+      "referenceMass": 0.9999999999023381,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 5.021283389083919e-11,
+        "devianceScale": 5.715206086165381e-11,
+        "mean": 1.07364894752493e-10,
+        "variance": 1.6451706663644927e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 702848,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+      "reference": {
+        "degreesOfFreedom": 1.0000499057502323,
+        "devianceScale": 0.9931553446164044,
+        "mean": 1.0069420772603213,
+        "variance": 2.027763496856057
+      },
+      "referenceMass": 0.9999999999920386,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 4.115585650055209e-11,
+        "devianceScale": 1.1308287639621994e-11,
+        "mean": 5.246436618477901e-11,
+        "variance": 6.377276484670347e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1678784,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+      "reference": {
+        "degreesOfFreedom": 1.0000499056527496,
+        "devianceScale": 0.9931553449120661,
+        "mean": 1.0069420768624004,
+        "variance": 2.0277634954510666
+      },
+      "referenceMass": 1.0000000001970608,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.792033684950184e-11,
+        "devianceScale": 1.6666890090277775e-10,
+        "mean": 2.445894597968845e-10,
+        "variance": 4.1125836069966226e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1380288,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+      "reference": {
+        "degreesOfFreedom": 1.0000499056264505,
+        "devianceScale": 0.9931553447748233,
+        "mean": 1.006942076975068,
+        "variance": 2.027763495958169
+      },
+      "referenceMass": 1.0000000002022542,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.0370193592734722e-10,
+        "devianceScale": 4.116595953007618e-11,
+        "mean": 1.448678954574234e-10,
+        "variance": 1.8603385498749958e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1402720,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+      "reference": {
+        "degreesOfFreedom": 1.0000499056187702,
+        "devianceScale": 0.9931553447819969,
+        "mean": 1.0069420769600617,
+        "variance": 2.0277634959133026
+      },
+      "referenceMass": 1.0000000002120986,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.115540992913111e-10,
+        "devianceScale": 4.7049031337564884e-11,
+        "mean": 1.58603130628876e-10,
+        "variance": 2.0565216196644087e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1418976,
+      "featureIndex": 2701,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+      "reference": {
+        "degreesOfFreedom": 1.0000499056150574,
+        "devianceScale": 0.9931553447882205,
+        "mean": 1.0069420769500133,
+        "variance": 2.02776349588036
+      },
+      "referenceMass": 1.0000000001004106,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.1536505084563942e-10,
+        "devianceScale": 5.2400084271653213e-11,
+        "mean": 1.6776513511729263e-10,
+        "variance": 2.2016521938894584e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1247872,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+      "reference": {
+        "degreesOfFreedom": 1.0000468604219135,
+        "devianceScale": 0.9933611374595839,
+        "mean": 1.0067304051972756,
+        "variance": 2.0269172353005116
+      },
+      "referenceMass": 1.000000000159159,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.7110536038321698e-11,
+        "devianceScale": 5.066391750574439e-12,
+        "mean": 2.2044144287747258e-11,
+        "variance": 1.697775253717282e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 544,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+      "reference": {
+        "degreesOfFreedom": 1.0000009576116655,
+        "devianceScale": 0.993131666538634,
+        "mean": 1.006916797947822,
+        "variance": 2.0277609341714644
+      },
+      "referenceMass": 1.0000000000000306,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 9.992007221626409e-15,
+        "devianceScale": 1.0769163338864018e-14,
+        "mean": 2.0650148258027912e-14,
+        "variance": 3.1530333899354446e-14
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 207008,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+      "reference": {
+        "degreesOfFreedom": 1.0000468601421604,
+        "devianceScale": 0.993361135914453,
+        "mean": 1.0067304064815792,
+        "variance": 2.026917241039069
+      },
+      "referenceMass": 0.9999999999984256,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.610489519521252e-12,
+        "devianceScale": 5.867972774353802e-12,
+        "mean": 4.257705299437475e-12,
+        "variance": 1.012578909609374e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 128,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+      "reference": {
+        "degreesOfFreedom": 0.9987248132794144,
+        "devianceScale": 0.9879479086681258,
+        "mean": 1.010908373322858,
+        "variance": 2.0464811240618666
+      },
+      "referenceMass": 1.0000000000000138,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.3322676295501878e-15,
+        "devianceScale": 2.1094237467877974e-15,
+        "mean": 3.3306690738754696e-15,
+        "variance": 5.329070518200751e-15
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 252992,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+      "reference": {
+        "degreesOfFreedom": 1.0000468602455932,
+        "devianceScale": 0.9933611364300823,
+        "mean": 1.0067304060631341,
+        "variance": 2.0269172391444625
+      },
+      "referenceMass": 1.0000000000559561,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.7437162824762709e-12,
+        "devianceScale": 1.3695267142566081e-11,
+        "mean": 1.1951439837787348e-11,
+        "variance": 2.564670698035343e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 160,
+      "featureIndex": 4951,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+      "reference": {
+        "degreesOfFreedom": 0.999430528181505,
+        "devianceScale": 0.9905821187027968,
+        "mean": 1.0089325350333354,
+        "variance": 2.0370497629304456
+      },
+      "referenceMass": 1.0000000000000138,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.552713678800501e-15,
+        "devianceScale": 8.659739592076221e-15,
+        "mean": 5.10702591327572e-15,
+        "variance": 1.3766765505351941e-14
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1880224,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+      "reference": {
+        "degreesOfFreedom": 1.0000480496444124,
+        "devianceScale": 0.9932799431924676,
+        "mean": 1.0068138962216349,
+        "variance": 2.0272510345586325
+      },
+      "referenceMass": 1.0000000004859804,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.740825261720147e-10,
+        "devianceScale": 1.6058820939690577e-11,
+        "mean": 1.9014145813400773e-10,
+        "variance": 2.0620039009600077e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 6208,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+      "reference": {
+        "degreesOfFreedom": 1.000047703474292,
+        "devianceScale": 0.9932782132372663,
+        "mean": 1.006815301238676,
+        "variance": 2.027257394395655
+      },
+      "referenceMass": 1.000000000001073,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.667554982986985e-13,
+        "devianceScale": 1.5121237595394632e-13,
+        "mean": 3.1796787425264483e-13,
+        "variance": 4.691802502065912e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 695040,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+      "reference": {
+        "degreesOfFreedom": 1.0000480497902298,
+        "devianceScale": 0.9932799430756437,
+        "mean": 1.0068138964868545,
+        "variance": 2.027251035331094
+      },
+      "referenceMass": 1.000000000218494,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.5853542357244805e-12,
+        "devianceScale": 2.0798029964907983e-11,
+        "mean": 2.4383384200632463e-11,
+        "variance": 4.5181414165540446e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2272,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+      "reference": {
+        "degreesOfFreedom": 1.000045440163626,
+        "devianceScale": 0.9932669146628075,
+        "mean": 1.0068244752752282,
+        "variance": 2.027298927231505
+      },
+      "referenceMass": 0.9999999999999315,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.0724754417879012e-13,
+        "devianceScale": 3.9745984281580604e-14,
+        "mean": 6.750155989720952e-14,
+        "variance": 2.7644553313166398e-14
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 659808,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+      "reference": {
+        "degreesOfFreedom": 1.0000480497945323,
+        "devianceScale": 0.9932799430670355,
+        "mean": 1.0068138964999116,
+        "variance": 2.027251035374954
+      },
+      "referenceMass": 1.0000000000623148,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.7629899196645056e-12,
+        "devianceScale": 2.811550992021239e-11,
+        "mean": 2.4352520000547884e-11,
+        "variance": 5.246780787615535e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2624,
+      "featureIndex": 5091,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+      "reference": {
+        "degreesOfFreedom": 1.0000461258484985,
+        "devianceScale": 0.9932703364848113,
+        "mean": 1.0068216970897035,
+        "variance": 2.0272863491581767
+      },
+      "referenceMass": 1.000000000000066,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 8.615330671091215e-14,
+        "devianceScale": 1.9761969838327786e-14,
+        "mean": 6.639133687258436e-14,
+        "variance": 4.6629367034256575e-14
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 622432,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+      "reference": {
+        "degreesOfFreedom": 1.0000488236676885,
+        "devianceScale": 0.9932276836167168,
+        "mean": 1.0068676499492375,
+        "variance": 2.027465940705262
+      },
+      "referenceMass": 0.999999999991957,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.027600723574778e-12,
+        "devianceScale": 1.2674195026818325e-11,
+        "mean": 5.646594303243546e-12,
+        "variance": 1.8320900352364333e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 3424,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+      "reference": {
+        "degreesOfFreedom": 1.0000476730801255,
+        "devianceScale": 0.9932219765318684,
+        "mean": 1.0068722770030634,
+        "variance": 2.0274869078488558
+      },
+      "referenceMass": 0.9999999999998146,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.538769112130467e-13,
+        "devianceScale": 1.226796442210798e-13,
+        "mean": 2.76667577736589e-13,
+        "variance": 3.994582442601313e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1164961,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+      "reference": {
+        "degreesOfFreedom": 1.0000488236847398,
+        "devianceScale": 0.993227683730495,
+        "mean": 1.0068676498510645,
+        "variance": 2.027465940275323
+      },
+      "referenceMass": 0.9999999997729881,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.4506174039752295e-12,
+        "devianceScale": 7.698286452750835e-13,
+        "mean": 6.80566714095221e-13,
+        "variance": 8.93729534823251e-14
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 6176,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+      "reference": {
+        "degreesOfFreedom": 1.0000484709705917,
+        "devianceScale": 0.9932259339018368,
+        "mean": 1.0068690685934396,
+        "variance": 2.027472369026867
+      },
+      "referenceMass": 0.999999999999618,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.4277468096679513e-13,
+        "devianceScale": 3.2529534621517087e-13,
+        "mean": 4.681810494844285e-13,
+        "variance": 7.935874180020619e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1453184,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+      "reference": {
+        "degreesOfFreedom": 1.0000488236908842,
+        "devianceScale": 0.993227683749562,
+        "mean": 1.0068676498379219,
+        "variance": 2.027465940209937
+      },
+      "referenceMass": 1.0000000002419005,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.0622613899613498e-12,
+        "devianceScale": 1.3344880755994382e-13,
+        "mean": 9.289236047038685e-13,
+        "variance": 7.953637748414621e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 9472,
+      "featureIndex": 5469,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+      "reference": {
+        "degreesOfFreedom": 1.0000486729097533,
+        "devianceScale": 0.9932269356944622,
+        "mean": 1.006868256357266,
+        "variance": 2.027468688519338
+      },
+      "referenceMass": 0.9999999999992433,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 4.887201754399939e-13,
+        "devianceScale": 1.3344880755994382e-13,
+        "mean": 3.552713678800501e-13,
+        "variance": 2.2182256032010628e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 709984,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+      "reference": {
+        "degreesOfFreedom": 1.000050134603113,
+        "devianceScale": 0.9931401486520208,
+        "mean": 1.0069577148406206,
+        "variance": 2.0278260147016596
+      },
+      "referenceMass": 1.0000000001109564,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 6.181721801112872e-12,
+        "devianceScale": 1.8263057732781363e-11,
+        "mean": 2.4444668511591772e-11,
+        "variance": 4.2707837266675597e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1279168,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+      "reference": {
+        "degreesOfFreedom": 1.0000501346269455,
+        "devianceScale": 0.9931401486881082,
+        "mean": 1.0069577148280282,
+        "variance": 2.0278260146026166
+      },
+      "referenceMass": 1.0000000002181642,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.8829382497642655e-12,
+        "devianceScale": 4.02409217059585e-11,
+        "mean": 3.8357983456194233e-11,
+        "variance": 7.859890516215273e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1238336,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+      "reference": {
+        "degreesOfFreedom": 1.0000501346264774,
+        "devianceScale": 0.9931401486880961,
+        "mean": 1.006957714827569,
+        "variance": 2.0278260146017164
+      },
+      "referenceMass": 1.000000000308976,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.7603696278456482e-12,
+        "devianceScale": 3.7768010940908425e-11,
+        "mean": 3.6007530290760315e-11,
+        "variance": 7.377554123166874e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2167840,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+      "reference": {
+        "degreesOfFreedom": 1.0000501345931199,
+        "devianceScale": 0.9931401487705509,
+        "mean": 1.0069577147103792,
+        "variance": 2.027826014197359
+      },
+      "referenceMass": 1.0000000008727605,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 4.209277371103326e-11,
+        "devianceScale": 1.665878546219801e-11,
+        "mean": 5.875167019553373e-11,
+        "variance": 7.541056668003421e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1163168,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+      "reference": {
+        "degreesOfFreedom": 1.0000501346336936,
+        "devianceScale": 0.9931401486946659,
+        "mean": 1.0069577148281739,
+        "variance": 2.02782601458952
+      },
+      "referenceMass": 1.0000000003806762,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 6.797340468267521e-12,
+        "devianceScale": 2.5616397891781162e-11,
+        "mean": 3.241373836004868e-11,
+        "variance": 5.803002522952738e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2505344,
+      "featureIndex": 13599,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+      "reference": {
+        "degreesOfFreedom": 1.000050134631719,
+        "devianceScale": 0.9931401488333507,
+        "mean": 1.0069577146855715,
+        "variance": 2.0278260140191744
+      },
+      "referenceMass": 1.0000000003008156,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.213873611684903e-12,
+        "devianceScale": 7.42267358688764e-11,
+        "mean": 7.744049845825884e-11,
+        "variance": 1.516673453494377e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 106176,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+      "reference": {
+        "degreesOfFreedom": 1.000048253150828,
+        "devianceScale": 0.993266081589667,
+        "mean": 1.0068281517781281,
+        "variance": 2.0273080304257562
+      },
+      "referenceMass": 1.000000000009516,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.0160761121369433e-12,
+        "devianceScale": 1.254552017826427e-13,
+        "mean": 8.905098880518381e-13,
+        "variance": 7.651657085716579e-13
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 310272,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+      "reference": {
+        "degreesOfFreedom": 1.0000482542198414,
+        "devianceScale": 0.9932660869282456,
+        "mean": 1.0068281474429175,
+        "variance": 2.027308010800235
+      },
+      "referenceMass": 0.9999999999996333,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.116529587847253e-13,
+        "devianceScale": 5.331513008854927e-12,
+        "mean": 4.6200820946751264e-12,
+        "variance": 9.951595103530053e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 434560,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+      "reference": {
+        "degreesOfFreedom": 1.0000482542727893,
+        "devianceScale": 0.9932660872403876,
+        "mean": 1.0068281471798204,
+        "variance": 2.0273080096333755
+      },
+      "referenceMass": 1.0000000001428322,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.5520695839654763e-11,
+        "devianceScale": 3.161648720606536e-11,
+        "mean": 1.6095791366410594e-11,
+        "variance": 4.771227857247595e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1233632,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+      "reference": {
+        "degreesOfFreedom": 1.00004825435657,
+        "devianceScale": 0.9932660876287647,
+        "mean": 1.0068281468704892,
+        "variance": 2.0273080082178208
+      },
+      "referenceMass": 1.0000000004051297,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 4.072298054325074e-12,
+        "devianceScale": 3.933442460635206e-11,
+        "mean": 3.526223757432945e-11,
+        "variance": 7.459655115837904e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 378528,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+      "reference": {
+        "degreesOfFreedom": 1.0000482542454492,
+        "devianceScale": 0.9932660871428871,
+        "mean": 1.0068281472511267,
+        "variance": 2.0273080099759584
+      },
+      "referenceMass": 1.0000000000159321,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.0182966409265646e-11,
+        "devianceScale": 1.3669509968394777e-11,
+        "mean": 6.513456440870868e-12,
+        "variance": 7.156053527523909e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1322048,
+      "featureIndex": 14822,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+      "reference": {
+        "degreesOfFreedom": 1.0000482544219769,
+        "devianceScale": 0.9932660876363146,
+        "mean": 1.0068281469286864,
+        "variance": 2.0273080083195945
+      },
+      "referenceMass": 1.0000000000803126,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 6.832578947069123e-11,
+        "devianceScale": 4.0208947282849294e-11,
+        "mean": 2.8116953210144402e-11,
+        "variance": 1.209188305040243e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 432352,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+      "reference": {
+        "degreesOfFreedom": 1.0000485077722376,
+        "devianceScale": 0.9932489583653568,
+        "mean": 1.0068457654544851,
+        "variance": 2.027378447215299
+      },
+      "referenceMass": 0.9999999999396268,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.3742784688020038e-11,
+        "devianceScale": 3.247857538468679e-11,
+        "mean": 4.622124905040437e-11,
+        "variance": 7.86997134127887e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 19264,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+      "reference": {
+        "degreesOfFreedom": 1.0000484713963729,
+        "devianceScale": 0.9932487772935437,
+        "mean": 1.0068459123819486,
+        "variance": 2.027379112663909
+      },
+      "referenceMass": 1.0000000000003428,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 6.561418075534675e-13,
+        "devianceScale": 1.3534728893205283e-12,
+        "mean": 2.0095036745715333e-12,
+        "variance": 3.363087586194524e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 912160,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+      "reference": {
+        "degreesOfFreedom": 1.0000485078782795,
+        "devianceScale": 0.9932489585331387,
+        "mean": 1.0068457653911689,
+        "variance": 2.0273784467453364
+      },
+      "referenceMass": 1.000000000100004,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.505895573852058e-11,
+        "devianceScale": 8.56712478736199e-11,
+        "mean": 1.2073009258983802e-10,
+        "variance": 2.06401118418853e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 39488,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+      "reference": {
+        "degreesOfFreedom": 1.0000484991312795,
+        "devianceScale": 0.9932489152629012,
+        "mean": 1.006845800447291,
+        "variance": 2.027378605655544
+      },
+      "referenceMass": 0.9999999999940978,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.4582779428451431e-12,
+        "devianceScale": 1.8005597013370789e-12,
+        "mean": 3.258615599577297e-12,
+        "variance": 5.059064278611913e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1415296,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+      "reference": {
+        "degreesOfFreedom": 1.000048507728052,
+        "devianceScale": 0.9932489587042111,
+        "mean": 1.0068457650665061,
+        "variance": 2.0273784457424116
+      },
+      "referenceMass": 0.9999999998601286,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.2521095271722515e-10,
+        "devianceScale": 3.5969227596410747e-11,
+        "mean": 1.611801803136359e-10,
+        "variance": 1.9714940791004665e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 75424,
+      "featureIndex": 15720,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+      "reference": {
+        "degreesOfFreedom": 1.0000485054550807,
+        "devianceScale": 0.9932489467315145,
+        "mean": 1.0068457749146793,
+        "variance": 2.027378490010803
+      },
+      "referenceMass": 0.9999999999958907,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 8.906209103543006e-13,
+        "devianceScale": 1.8577361871052744e-12,
+        "mean": 9.670042544485113e-13,
+        "variance": 2.8248514638562483e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 534464,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+      "reference": {
+        "degreesOfFreedom": 1.000051495594608,
+        "devianceScale": 0.9930505423963982,
+        "mean": 1.0070499465025369,
+        "variance": 2.0281947464070775
+      },
+      "referenceMass": 1.0000000002522338,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 5.120792678781072e-11,
+        "devianceScale": 2.7914559552755236e-11,
+        "mean": 7.912248634056596e-11,
+        "variance": 1.0703704589332119e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 1007872,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+      "reference": {
+        "degreesOfFreedom": 1.000051495692627,
+        "devianceScale": 0.9930505425019547,
+        "mean": 1.0070499464941973,
+        "variance": 2.0281947461746945
+      },
+      "referenceMass": 1.0000000001649316,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.205835431505875e-11,
+        "devianceScale": 4.370703798883824e-11,
+        "mean": 5.576550332619945e-11,
+        "variance": 9.947254131503769e-11
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 3715008,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+      "reference": {
+        "degreesOfFreedom": 1.000051495765602,
+        "devianceScale": 0.9930505428025114,
+        "mean": 1.0070499462628892,
+        "variance": 2.0281947450949875
+      },
+      "referenceMass": 1.000000001413082,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.140898983237776e-11,
+        "devianceScale": 1.9463342049164112e-10,
+        "mean": 1.232243196369609e-10,
+        "variance": 3.17857740128602e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 6805792,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+      "reference": {
+        "degreesOfFreedom": 1.0000514955567454,
+        "devianceScale": 0.9930505425590609,
+        "mean": 1.0070499462994535,
+        "variance": 2.0281947456658482
+      },
+      "referenceMass": 1.000000000936128,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.3140954990831233e-10,
+        "devianceScale": 6.076317227154959e-11,
+        "mean": 7.064615559215781e-11,
+        "variance": 9.882983320608218e-12
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 2971904,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+      "reference": {
+        "degreesOfFreedom": 1.00005149546958,
+        "devianceScale": 0.993050542653494,
+        "mean": 1.007049946115914,
+        "variance": 2.028194745103331
+      },
+      "referenceMass": 1.0000000002694465,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.2299118107582672e-10,
+        "devianceScale": 4.915789997284037e-11,
+        "mean": 2.721489700263646e-10,
+        "variance": 3.2130698102150745e-10
+      }
+    },
+    {
+      "case": "hagai-default",
+      "evaluatedCounts": 6698528,
+      "featureIndex": 21247,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+      "reference": {
+        "degreesOfFreedom": 1.0000514955384052,
+        "devianceScale": 0.9930505425572413,
+        "mean": 1.00704994628283,
+        "variance": 2.0281947456360845
+      },
+      "referenceMass": 0.9999999988166733,
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.5053913671181363e-10,
+        "devianceScale": 6.283218390024103e-11,
+        "mean": 8.770717485617752e-11,
+        "variance": 2.4875213000541407e-11
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1179904,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "nativeTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+      "reference": {
+        "degreesOfFreedom": 1.0000432857361272,
+        "devianceScale": 0.9936119607446016,
+        "mean": 1.0064726726786843,
+        "variance": 2.025886789696946
+      },
+      "referenceMass": 0.9999999996024113,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.097588852085664e-11,
+        "devianceScale": 2.2615909145429214e-11,
+        "mean": 8.359979375427429e-12,
+        "variance": 1.4255929770001785e-11
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 960832,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "nativeTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+      "reference": {
+        "degreesOfFreedom": 1.000043285683013,
+        "devianceScale": 0.9936119607569948,
+        "mean": 1.0064726726126751,
+        "variance": 2.02588678953881
+      },
+      "referenceMass": 1.0000000005235592,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.942024815577042e-11,
+        "devianceScale": 1.46201939443813e-11,
+        "mean": 9.404055312245418e-11,
+        "variance": 1.0866063604453302e-10
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1185408,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "nativeTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+      "reference": {
+        "degreesOfFreedom": 1.0000432857421326,
+        "devianceScale": 0.9936119607465907,
+        "mean": 1.0064726726827136,
+        "variance": 2.0258867897010004
+      },
+      "referenceMass": 1.0000000001294076,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 2.506683749459171e-11,
+        "devianceScale": 2.106625984765742e-11,
+        "mean": 4.000577646934289e-12,
+        "variance": 1.7065460156118206e-11
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1081472,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "nativeTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+      "reference": {
+        "degreesOfFreedom": 1.000043285652204,
+        "devianceScale": 0.9936119607207833,
+        "mean": 1.0064726726183482,
+        "variance": 2.025886789624061
+      },
+      "referenceMass": 1.0000000000852332,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.1314749137625313e-10,
+        "devianceScale": 3.7305492028849585e-11,
+        "mean": 7.584177730279862e-11,
+        "variance": 3.8536285273949034e-11
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1350432,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "nativeTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+      "reference": {
+        "degreesOfFreedom": 1.000043285863408,
+        "devianceScale": 0.993611960758569,
+        "mean": 1.0064726727926354,
+        "variance": 2.025886789897835
+      },
+      "referenceMass": 1.0000000004357772,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 9.410527912478983e-11,
+        "devianceScale": 2.0090151764406983e-11,
+        "mean": 1.1419531986689435e-10,
+        "variance": 1.3428547163130133e-10
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1458432,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "nativeTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+      "reference": {
+        "degreesOfFreedom": 1.0000432858450738,
+        "devianceScale": 0.9936119606960557,
+        "mean": 1.0064726728375055,
+        "variance": 2.025886790115611
+      },
+      "referenceMass": 0.9999999999497977,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 7.478007102434958e-11,
+        "devianceScale": 8.832334863484448e-11,
+        "mean": 1.6310341965919406e-10,
+        "variance": 2.51426879316341e-10
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1775584,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "nativeTrend-adjusted",
+      "observation": 6,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+      "reference": {
+        "degreesOfFreedom": 1.000043285872081,
+        "devianceScale": 0.9936119606460583,
+        "mean": 1.006472672915331,
+        "variance": 2.0258867903742033
+      },
+      "referenceMass": 0.9999999989336824,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 9.983602833329996e-11,
+        "devianceScale": 1.490256806846446e-10,
+        "mean": 2.488617090179446e-10,
+        "variance": 3.978873897025892e-10
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 2545024,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "nativeTrend-adjusted",
+      "observation": 7,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+      "reference": {
+        "degreesOfFreedom": 1.00004328557471,
+        "devianceScale": 0.9936119608184775,
+        "mean": 1.006472672441397,
+        "variance": 2.025886789068694
+      },
+      "referenceMass": 1.000000000327053,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.9957968611095112e-10,
+        "devianceScale": 1.3446244118142658e-11,
+        "mean": 2.1302604125139624e-10,
+        "variance": 2.2647239639184136e-10
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1395104,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "edgeRTrend-adjusted",
+      "observation": 0,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "reference": {
+        "degreesOfFreedom": 1.0000812854573051,
+        "devianceScale": 0.991337923621765,
+        "mean": 1.0088197592639219,
+        "variance": 2.0352691755769587
+      },
+      "referenceMass": 0.9999999995811596,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.0332845690186332e-11,
+        "devianceScale": 2.9992230921038754e-11,
+        "mean": 4.0324965588922623e-11,
+        "variance": 7.031697446535645e-11
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1136064,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "edgeRTrend-adjusted",
+      "observation": 1,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "reference": {
+        "degreesOfFreedom": 1.000081285569511,
+        "devianceScale": 0.9913379236015379,
+        "mean": 1.008819759397692,
+        "variance": 2.035269175888364
+      },
+      "referenceMass": 0.999999999702319,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.291023954408388e-10,
+        "devianceScale": 2.9892976982637265e-11,
+        "mean": 1.5899559446808098e-10,
+        "variance": 1.8888857145071825e-10
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1401600,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "edgeRTrend-adjusted",
+      "observation": 2,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "reference": {
+        "degreesOfFreedom": 1.0000812854512586,
+        "devianceScale": 0.9913379236203704,
+        "mean": 1.0088197592592418,
+        "variance": 2.03526917557038
+      },
+      "referenceMass": 0.999999999746357,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 4.178768442386627e-12,
+        "devianceScale": 3.174238649705785e-11,
+        "mean": 3.592126596174694e-11,
+        "variance": 6.766365245880479e-11
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1278752,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "edgeRTrend-adjusted",
+      "observation": 3,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "reference": {
+        "degreesOfFreedom": 1.0000812855506274,
+        "devianceScale": 0.9913379236362477,
+        "mean": 1.0088197593433215,
+        "variance": 2.0352691757074117
+      },
+      "referenceMass": 0.9999999996545674,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.0616485468517567e-10,
+        "devianceScale": 7.794653811288299e-12,
+        "mean": 1.1395961951876643e-10,
+        "variance": 1.2175427333005473e-10
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1596736,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "edgeRTrend-adjusted",
+      "observation": 4,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "reference": {
+        "degreesOfFreedom": 1.0000812853123437,
+        "devianceScale": 0.9913379235992111,
+        "mean": 1.0088197591406456,
+        "variance": 2.035269175374556
+      },
+      "referenceMass": 0.9999999998758285,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.3734346993032887e-10,
+        "devianceScale": 6.170308708419725e-11,
+        "mean": 7.564016080152669e-11,
+        "variance": 1.3936851672724515e-11
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 1724448,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "edgeRTrend-adjusted",
+      "observation": 5,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "reference": {
+        "degreesOfFreedom": 1.0000812852963405,
+        "devianceScale": 0.99133792362237,
+        "mean": 1.0088197591009351,
+        "variance": 2.0352691752468948
+      },
+      "referenceMass": 1.0000000000097482,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 1.5432988220709376e-10,
+        "devianceScale": 4.228439820508356e-11,
+        "mean": 1.1204526195740527e-10,
+        "variance": 6.976108579692664e-11
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 2099392,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "edgeRTrend-adjusted",
+      "observation": 6,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "reference": {
+        "degreesOfFreedom": 1.0000812854197145,
+        "devianceScale": 0.9913379237331934,
+        "mean": 1.0088197591126093,
+        "variance": 2.035269175042921
+      },
+      "referenceMass": 0.9999999995833443,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 3.2482683209877905e-11,
+        "devianceScale": 6.200084889940172e-11,
+        "mean": 9.448375415388455e-11,
+        "variance": 1.5648460305328626e-10
+      }
+    },
+    {
+      "case": "crowell-06",
+      "evaluatedCounts": 3009088,
+      "featureIndex": 10755,
+      "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+      "method": "edgeRTrend-adjusted",
+      "observation": 7,
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "reference": {
+        "degreesOfFreedom": 1.000081285504574,
+        "devianceScale": 0.9913379236885158,
+        "mean": 1.0088197592436758,
+        "variance": 2.03526917539907
+      },
+      "referenceMass": 1.0000000001150267,
+      "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+      "relativeErrors": {
+        "degreesOfFreedom": 5.177236417353015e-11,
+        "devianceScale": 1.180588959925899e-11,
+        "mean": 3.996658559657362e-11,
+        "variance": 2.8160695997314633e-11
+      }
+    }
+  ],
+  "evaluatedCounts": 162190498,
+  "failures": [
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 10000000 support evaluations (276889...10276888)",
+      "featureIndex": 19389,
+      "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+      "method": "edgeRTrend-adjusted",
+      "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (341544...1341543)",
+      "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340"
+    }
+  ],
+  "genes": 20,
+  "logicalSHA256": "8279561762c37d899c7f0e4a20b35a67c28108a33530ca9b35ae4f3d18724195",
+  "maximumEvaluatedCounts": 9384448,
+  "maximumPMFMassError": 3.455172925548311e-09,
+  "maximumRelativeMomentError": 1.5690352350716807e-09,
+  "moments": 118,
+  "outputSHA256": "cb5b982ab2a289468d2b8cf75d03ccbdb88f424ae4c042c2ec5f144937197aea",
+  "seconds": 7.590889290906489,
+  "status": "failed"
+}

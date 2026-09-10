@@ -1,0 +1,18 @@
+{
+  "case": "crowell-06",
+  "checkerSHA256": "b574d9c9ad1e5c5d6b5746153d3fa79d982ab9af52f7d1e558bebd2a715022eb",
+  "failures": [
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "featureIndex": 10755
+    }
+  ],
+  "highPrecisionRefinements": [],
+  "maximumPMFMassError": 1.6040879735612634e-10,
+  "maximumRelativeMomentError": 8.313738586451791e-11,
+  "method": "edgeRTrend-adjusted",
+  "moments": 88552,
+  "outputSHA256": "79cf29a0e4410868a0e16aa92e2913412d3d79d7e35dd63d1a3c32c98610b30b",
+  "status": "failed",
+  "supportTerms": 189968490
+}

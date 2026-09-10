@@ -1,0 +1,56 @@
+{
+  "baseCommit": "c9380158ae90748bba9677a8169548c64a8d4d26",
+  "nativeBinarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+  "nativeEnvironmentFile": "native-environment.txt",
+  "protocolSHA256": "74ef85bc0486354d239b4c660fee34a293f17c8ab3f9b45ece2046d96879dc52",
+  "qualification": "Conditional deviance moment/residual stage, completed with explicit resource-limit failures",
+  "referenceSource": {
+    "cacheSHA256": "083f1ec9ff3999d4df497927c63d2f83d0f8a59b28510a32cdc92aa0834950c7",
+    "status": "Inspected external reference source; source archive and extracted code excluded from Git",
+    "url": "https://bioconductor.org/packages/release/bioc/src/contrib/edgeR_4.10.5.tar.gz"
+  },
+  "requalification": {
+    "equalityReceipt": "final/requalification-equality.json",
+    "identicalRealDataArms": 58,
+    "reusedIndependentReceipts": 37
+  },
+  "retainedFailureEvidence": {
+    "defaultWorkLimitFailures": 20,
+    "higherWorkFailures": 1,
+    "initialUnderflowProbe": "underflow-probe-attempt-1.json",
+    "repairedProbe": "final/underflow-probe.json"
+  },
+  "sensitivityBinarySHA256": "d91b824de8cfa99ad3f4a30361c8b845a5eea0153e45a6d134c67db41989fc8f",
+  "testEvidence": {
+    "log": "tests-final.log",
+    "passedTests": 25,
+    "scope": "Focused NB, cohort, support and deviance moment suites; not a full package or biological qualification",
+    "suites": 4
+  },
+  "toolAndTestSHA256": {
+    "Tests/NumiVivoIntegrationTests/SingleCellNBDevianceMomentsTests.swift": "ec2cf54868610ed8973bdbfabdc2bd277cd093b2c4537e5ed7fcd6e9adbddc9c",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/archive.py": "1a4251f27e3de7f8620a6e8982ca4b3425d3cf1fcb74be86842844bb23dfcada",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/build.sh": "e2ac140f91051eb127ba13bc8e70f49640207e381e04f4cc8e72116e2a230047",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/build_sensitivity.sh": "7fd52aaee457883dc660bb4c926dce894b864762a9861eb05b0173534b2bcad1",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/check_grid.py": "cfaba4f10ac811b86f874182766910acca9e920878172c64008ffefd22e0ce26",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/check_real.py": "b574d9c9ad1e5c5d6b5746153d3fa79d982ab9af52f7d1e558bebd2a715022eb",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/check_sensitivity.py": "5467196a53048dfdb85c173f947752322aafdba8929ac8cdde10670b9724f924",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/compare_requalification.py": "a44b7cbcdcea1a5eb470860a7f79d4e9bfd95f032c6a62b0106edc373f43eac3",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/run.py": "909143797614906fccb3a2c003353f91e004dff445333aa32b9a2b36f11b6705",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/summarize.py": "814b696ba1f6655081c47d812abd47b89e180629b8dcbdcb84d19e41c419b877"
+  },
+  "verifiedCompiledSourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoOmicsLinearStatistics.swift": "b072cd8d6816541c7570187c99664d82ebbf26a127583cae8aba6eefb9d58664",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBCohort.swift": "40df22acb83708eeb515d996b3157d91808dfd68c2171fbbe2217b9f796f4e8f",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBDevianceMoments.swift": "73358c43a3666017e6138ce9b270974d49ee320859e7cb974114899e0f01767b",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBSupport.swift": "410fa18fb3979d3cd99de75ca59f9d2ccfbae30a23a35809e211f044538d48e7",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNegativeBinomial.swift": "319fb8b89272ad118a44da7d1affc84fb6f22901a9f589e59ebd4364b67e8171",
+    "Sources/NumiVivoKit/Omics/VivoOmicsSourceDecoder.swift": "9f07ae764bb71f57be6319fd43debb1594fee886dd2198a152edc499210687b3",
+    "Sources/NumiVivoKit/Omics/VivoPseudobulkDifferentialExpression.swift": "cc50a437bd4a9b43147e88fec8d502a3ace584de961411fa51edb0ca78d1ca18",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellAnalysis.swift": "23d0d228f450fc441252e200e8c905a72f360011f778b6e317c45cf3b348ecb9",
+    "Sources/NumiVivoKit/Omics/VivoSparseCounts.swift": "69ac2a3f26c36a6beb5cc2d0b4e26c8f4d129a091361314fc2ba0b1348bdbbad",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Main.swift": "afb04d7a6599296cc8a4966b57f0893c03a2302d603b17e31ac6252a8394137a",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Sensitivity.swift": "ec7dab826d30fd57d6ae39a3947dec19dd46600215bada1ef20f47cdc2e332e5"
+  },
+  "workLimitProtocolSHA256": "e5f8336a40db1822ef572e7d13db5a3fbf5ffecbb4965d85e47bd40eabd9c1fa"
+}

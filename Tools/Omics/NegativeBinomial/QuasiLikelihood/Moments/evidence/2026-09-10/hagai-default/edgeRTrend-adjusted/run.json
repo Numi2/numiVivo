@@ -1,0 +1,69 @@
+{
+  "binarySHA256": "40b4cb59dee3873f45004b9a06b50e8992a635ae23d17e11289544f08440cd48",
+  "case": "hagai-default",
+  "evaluatedCounts": 354937220,
+  "failures": [
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+      "featureIndex": 2701
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+      "featureIndex": 4951
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+      "featureIndex": 5091
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+      "featureIndex": 5469
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+      "featureIndex": 13599
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+      "featureIndex": 14822
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+      "featureIndex": 15720
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (341544...1341543)",
+      "featureIndex": 19389
+    },
+    {
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+      "featureIndex": 21247
+    }
+  ],
+  "genes": 12426,
+  "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+  "logicalSHA256": "b81b7d8a5a7755d1c76c5157e8e45d59b8bc576836f8965c84635ed8fba49ca0",
+  "maximumLeverageError": 1.4432899320127035e-15,
+  "maximumRelativeTruncationBound": 9.999980850321464e-11,
+  "method": "edgeRTrend-adjusted",
+  "moments": 74502,
+  "outputSHA256": "56229c8545288544a0ac89296e5e8eca0ecdfc6ec8ec8247f1dc0077e976e033",
+  "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+  "relativeDFDifferenceQuantiles": [
+    1.064123551485649e-09,
+    1.617686010491482e-05,
+    2.347920605711313e-05,
+    3.9170301221845636e-05,
+    9.424620444872156e-05
+  ],
+  "relativeDevianceDifferenceQuantiles": [
+    9.394928430628223e-09,
+    0.00022955424566823755,
+    0.0008291732757937429,
+    0.0009392551086896378,
+    0.0009570468913196328
+  ],
+  "requestSHA256": "236af2124d91a9f4f2131eb9190c88604c7922cb58214870c367410ddb1cb158",
+  "seconds": 17.349162000231445,
+  "status": "completed-with-failures"
+}

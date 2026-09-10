@@ -85,11 +85,18 @@ This is CPU FP64 primitive validation, with no Metal or performance claim.
 
 ## Next native ownership
 
-A native QL cohort method still needs adjusted unit-deviance moments and
-leverage-dependent residual DF, the global QL scale/refit, robust abundance-
+[Native direct moments and adjusted residuals](Moments/README.md) now implement
+conditional unit-deviance moments and leverage-dependent residual DF at supplied
+means, trend dispersion and average QL scale. All 3,940,848 available default-budget
+moments pass independent checks. Twenty gene/arm fits exhaust the default work
+limit; a separate higher-work sensitivity resolves nineteen, leaving one Hagai
+fit unavailable. An accelerated evaluator qualified against direct summation is
+needed for full-family coverage.
+
+A native QL cohort method still needs the global QL scale/refit, robust abundance-
 dependent prior estimation for unequal residual DF, and constrained-test
 integration with explicit failure behavior. The existing equal-DF, untrended,
-non-robust linear variance prior is insufficient. The raw deviance primitive
+non-robust linear variance prior is insufficient. The conditional residual stage
 must not be exposed as if it provided those missing stages. The reference
 matrices here supply stage-level comparison targets, including unit adjustments,
 prior/posterior scales and optimizer diagnostics. Scientific calibration,

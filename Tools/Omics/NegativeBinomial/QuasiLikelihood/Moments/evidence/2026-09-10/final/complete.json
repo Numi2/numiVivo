@@ -1,0 +1,1942 @@
+[
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-01-default",
+    "evaluatedCounts": 5152403,
+    "failures": [],
+    "genes": 3203,
+    "inputSHA256": "aff63590297725152bd2e561afb241c8df023e83dcd41f41c14f44ce32030794",
+    "logicalSHA256": "dcf8921892115b33dd1ee80853f4b6bcd7930c01353c75a0d34249040325c9f2",
+    "maximumLeverageError": 1.7208456881689926e-15,
+    "maximumRelativeTruncationBound": 9.998956036336705e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51248,
+    "outputSHA256": "7c5744bfedeb437d2d3f2c0dae057c2a2b7784a1ffe222084444a94467f7ef5c",
+    "referenceSHA256": "267c92258dcba98aa49369b425443844c4ceed967ad22896ada7695cf9303a2b",
+    "relativeDFDifferenceQuantiles": [
+      7.186330954222061e-09,
+      7.470464117696583e-06,
+      2.2324319173302884e-05,
+      3.959689961566583e-05,
+      0.00010281261996479673
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.5427760139880153e-08,
+      3.59713415159089e-05,
+      0.00017497596060767553,
+      0.00039204743262996974,
+      0.0006418146869849231
+    ],
+    "requestSHA256": "7a0c0bb32927ce78d4dd8b9a9f0b71735858e64d70964a85c92cad844f615197",
+    "seconds": 5.8435873333364725,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-01-default",
+    "evaluatedCounts": 4589382,
+    "failures": [],
+    "genes": 3203,
+    "inputSHA256": "aff63590297725152bd2e561afb241c8df023e83dcd41f41c14f44ce32030794",
+    "logicalSHA256": "2c139510b7fb578d3b83045c6b690869691c008902ddce6ffd2407f0e9130178",
+    "maximumLeverageError": 2.4424906541753444e-15,
+    "maximumRelativeTruncationBound": 9.999505954536681e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51248,
+    "outputSHA256": "c93656e2dfc5f393d3da196d2f7c6a2f1b93f972a44d8860f9ac836de4a688f0",
+    "referenceSHA256": "267c92258dcba98aa49369b425443844c4ceed967ad22896ada7695cf9303a2b",
+    "relativeDFDifferenceQuantiles": [
+      1.2789234152237172e-09,
+      5.242546443856635e-06,
+      1.2833121761618548e-05,
+      2.0127340557592156e-05,
+      2.796013311555137e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.0158656108628695e-08,
+      3.149052695563251e-05,
+      8.689318622277873e-05,
+      0.0001849814041368055,
+      0.000688368614769638
+    ],
+    "requestSHA256": "896041e614106862ff3a9d5cc8a332e1d806e3562e2326421fe67ad8ef851215",
+    "seconds": 5.460425124969333,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-02-default",
+    "evaluatedCounts": 5092194,
+    "failures": [],
+    "genes": 3203,
+    "inputSHA256": "ecb88dcc57370878f400042923c9d31963f15a21d27213482eb6a97045b55c67",
+    "logicalSHA256": "581b940244591349e494688984ffde338df108e2bb1b82a0224427cdc4021324",
+    "maximumLeverageError": 1.4432899320127035e-15,
+    "maximumRelativeTruncationBound": 9.996966717794318e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51248,
+    "outputSHA256": "b9926edd69a4e16bd4b7bf45d70b6399af20ee6d397dd1ee6db69beb87df5c51",
+    "referenceSHA256": "5e16040bc4292fe8a832bc2002c8d1baf401f3d692a14b2dc5913a143aa76dff",
+    "relativeDFDifferenceQuantiles": [
+      1.368880527845114e-09,
+      8.258031817747179e-06,
+      2.5185803336358613e-05,
+      5.059369361252386e-05,
+      0.00010345371975586845
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.920821577606258e-09,
+      4.027083028061164e-05,
+      0.0001799568329767769,
+      0.0004715540640218605,
+      0.0007091041482562836
+    ],
+    "requestSHA256": "570081856c58e4d991fa328ccad4a1e9057e92d0c0622aa078dc2715ae64dccb",
+    "seconds": 5.064567792229354,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-02-default",
+    "evaluatedCounts": 4008183,
+    "failures": [],
+    "genes": 3203,
+    "inputSHA256": "ecb88dcc57370878f400042923c9d31963f15a21d27213482eb6a97045b55c67",
+    "logicalSHA256": "588f9330d79b3f9138e5ed114b478194b8cbfbb5fc74e3012ac7a57be4c5797b",
+    "maximumLeverageError": 3.3306690738754696e-15,
+    "maximumRelativeTruncationBound": 9.991174418350244e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51248,
+    "outputSHA256": "06e79eec590abc77b68421d6e412551bfbe57faec7c158ab0c51d124b86b1263",
+    "referenceSHA256": "5e16040bc4292fe8a832bc2002c8d1baf401f3d692a14b2dc5913a143aa76dff",
+    "relativeDFDifferenceQuantiles": [
+      1.522447819465118e-09,
+      6.242471762588434e-06,
+      1.5426617677443594e-05,
+      2.482780362401442e-05,
+      3.3847800502209587e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.4645960563979303e-09,
+      3.9781967387892066e-05,
+      0.00010326671266256606,
+      0.0003822022875552598,
+      0.000721107255778701
+    ],
+    "requestSHA256": "b7a0a872ca942481f796c5c5dbef66f2bd85bf67808709dd35fed9dd2887a80c",
+    "seconds": 5.2182387500070035,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-03-default",
+    "evaluatedCounts": 5075000,
+    "failures": [],
+    "genes": 3202,
+    "inputSHA256": "b8df9525893620f80a4c36e869e93fb25d81c352a40680e7afe060a56dc1610f",
+    "logicalSHA256": "ca8ca292bcae2ff7934d84813ee3ea278b93310a049f1fa8394464d49f52e142",
+    "maximumLeverageError": 1.9984014443252818e-15,
+    "maximumRelativeTruncationBound": 9.99296188877156e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51232,
+    "outputSHA256": "943d8f1086f3f7e80b4b5321f54f6160df4a69a19f80eb0619cc596c294e34db",
+    "referenceSHA256": "320c3b6251b40b96a6cfd945dc4442113e40dd7a33f4a0d0bdc8579dcebfeae5",
+    "relativeDFDifferenceQuantiles": [
+      1.734068181397602e-09,
+      8.503037367450688e-06,
+      2.7594938406106683e-05,
+      5.642522225288576e-05,
+      0.00011215200205337329
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.4000521326577815e-08,
+      3.671853154142876e-05,
+      0.00018336024340129647,
+      0.0004805401005517657,
+      0.0006587728458146583
+    ],
+    "requestSHA256": "47ac67a63f5b29ff6d3d310d6020b50cd35b0bdaa57afc04d00e0e0ce00e5fa3",
+    "seconds": 5.703693625051528,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-03-default",
+    "evaluatedCounts": 4012538,
+    "failures": [],
+    "genes": 3202,
+    "inputSHA256": "b8df9525893620f80a4c36e869e93fb25d81c352a40680e7afe060a56dc1610f",
+    "logicalSHA256": "68c5b94e6c7195d003e82c46dab3385ef24886c14b3fe6c7e356124e433756d5",
+    "maximumLeverageError": 2.7755575615628914e-15,
+    "maximumRelativeTruncationBound": 9.991159177664872e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51232,
+    "outputSHA256": "2af4feda83c8fb4a650d5b29ebe75bf78ec3407b01379626705cdfb92d5393f6",
+    "referenceSHA256": "320c3b6251b40b96a6cfd945dc4442113e40dd7a33f4a0d0bdc8579dcebfeae5",
+    "relativeDFDifferenceQuantiles": [
+      1.78057845769617e-10,
+      4.7552241972463166e-06,
+      1.2876084078030674e-05,
+      1.9661227554252144e-05,
+      2.7839250793631626e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.515153347995194e-08,
+      2.6971567445645827e-05,
+      6.994871596598286e-05,
+      0.00035089653976657476,
+      0.0006486900310420955
+    ],
+    "requestSHA256": "165a3bd2910a0e989fe25d8ddcfd99c6912915114afe26b3dbe663a28443ab1c",
+    "seconds": 5.314055125229061,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-04-default",
+    "evaluatedCounts": 5350372,
+    "failures": [],
+    "genes": 3203,
+    "inputSHA256": "ec9c5b0334af6460456a32f8ef64835a426b1757be65a69d03c6f97aea944d90",
+    "logicalSHA256": "57be8ffc728cbe05a7482ec806236489e018df757315e2c79ceefbcd3bd28c5e",
+    "maximumLeverageError": 2.1094237467877974e-15,
+    "maximumRelativeTruncationBound": 9.999294965309924e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51248,
+    "outputSHA256": "eca643abf390018337a9bd7cd8356142189d27ef995d8715829ea16760787af0",
+    "referenceSHA256": "09bc6765fd8a0f859cde49c2abf8249261bccda59259a742b05e01a87084069f",
+    "relativeDFDifferenceQuantiles": [
+      1.024710854853649e-08,
+      8.082445595907169e-06,
+      2.3839258214789984e-05,
+      4.519873001967486e-05,
+      0.00010134146193798105
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.1242287616661962e-08,
+      3.533784868021379e-05,
+      0.00017384473343488207,
+      0.0004523185309319111,
+      0.000703579203066256
+    ],
+    "requestSHA256": "21af47177145c9a414e43f91418e2e62c9331a512753821c28febb448e9d669f",
+    "seconds": 4.985015542246401,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-04-default",
+    "evaluatedCounts": 4729769,
+    "failures": [],
+    "genes": 3203,
+    "inputSHA256": "ec9c5b0334af6460456a32f8ef64835a426b1757be65a69d03c6f97aea944d90",
+    "logicalSHA256": "241761be633c93898e56e4cd1f0c56a53a9c25dd60bc10ed876a20ff07e3abdc",
+    "maximumLeverageError": 2.4424906541753444e-15,
+    "maximumRelativeTruncationBound": 9.997055366169783e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51248,
+    "outputSHA256": "5a9f73212b61a7b664e1760e672521990773c73d84dda275561d9bf979892351",
+    "referenceSHA256": "09bc6765fd8a0f859cde49c2abf8249261bccda59259a742b05e01a87084069f",
+    "relativeDFDifferenceQuantiles": [
+      9.711619848121858e-10,
+      6.359763659919877e-06,
+      1.4771431024774901e-05,
+      2.3240265029160606e-05,
+      3.659989775237956e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.366121410270843e-10,
+      3.953044410257258e-05,
+      0.000114899836563859,
+      0.00021447762433735737,
+      0.0007852158379106185
+    ],
+    "requestSHA256": "61161c3702029216fa646d574fab755ca91b4528cffb56d1297de02dc4dc3773",
+    "seconds": 5.510282458737493,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-05-default",
+    "evaluatedCounts": 5440878,
+    "failures": [],
+    "genes": 3202,
+    "inputSHA256": "07658884765f923fe0ef65cee231e34a5101daf36f955db96f814279361f783b",
+    "logicalSHA256": "95307fdb4f190bbef28f755c9c387ae83638087ab0a87e68b8bf4220d84d89b8",
+    "maximumLeverageError": 2.1094237467877974e-15,
+    "maximumRelativeTruncationBound": 9.998999468798042e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51232,
+    "outputSHA256": "0bdb52e0d5dc5d120a48638d3b4eca018d4d8189803a4c9f6711abc3d5c0a249",
+    "referenceSHA256": "0ced2c0e5643830969c5dda477383a2c734e569a1003843aacb8671cd866be5a",
+    "relativeDFDifferenceQuantiles": [
+      6.781917045741599e-09,
+      8.18507674442289e-06,
+      2.492658523808094e-05,
+      5.111966830442652e-05,
+      9.453595292418322e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      5.272841551166219e-09,
+      4.0974240301172506e-05,
+      0.00017181810812084476,
+      0.00038893432473460386,
+      0.0006747276048287259
+    ],
+    "requestSHA256": "d94d4209a7a853df4a7aed9a86b0445fe489ef65d594e3b1e180092cb17679d6",
+    "seconds": 4.738065041135997,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-05-default",
+    "evaluatedCounts": 4668406,
+    "failures": [],
+    "genes": 3202,
+    "inputSHA256": "07658884765f923fe0ef65cee231e34a5101daf36f955db96f814279361f783b",
+    "logicalSHA256": "c2b79cdf7a672750b0238fa672d73d0cb96349849dcba586d1d9c0156431cae1",
+    "maximumLeverageError": 2.275957200481571e-15,
+    "maximumRelativeTruncationBound": 9.998138206243532e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51232,
+    "outputSHA256": "761119759b4199c79e0bff54396df998ed08c1d53ca76df56377b120764ee285",
+    "referenceSHA256": "0ced2c0e5643830969c5dda477383a2c734e569a1003843aacb8671cd866be5a",
+    "relativeDFDifferenceQuantiles": [
+      3.880531484096237e-09,
+      6.270049655569164e-06,
+      1.5230178409782948e-05,
+      2.401982078369812e-05,
+      3.173744159272281e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.5958399912790875e-09,
+      3.7527655185489136e-05,
+      0.00011275404302061033,
+      0.0002641800906939596,
+      0.0007293481040648395
+    ],
+    "requestSHA256": "8f1ad9cdec893255ab719bdf8947dc5afcbc54587eeeebad17e41a6fd7370f07",
+    "seconds": 4.233884207904339,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-06-default",
+    "evaluatedCounts": 5292104,
+    "failures": [],
+    "genes": 3204,
+    "inputSHA256": "db85aa5a55eda025756b33c48f20798545f8e24049b570cae09d74cf8129ef11",
+    "logicalSHA256": "6ba71ab9a3776072376e7e66dbbffe8881b575e27a6412aced5c5b40cc826d06",
+    "maximumLeverageError": 2.220446049250313e-15,
+    "maximumRelativeTruncationBound": 9.999060107446718e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51264,
+    "outputSHA256": "b63a07d6d4cc11131d4a56221b8f7ae6ad8fe4e728533de87842114ed7a53863",
+    "referenceSHA256": "4af1d33ba3bef66eaad6b7bd5232d096d0b06c4eebdd49435839537d0dfcf5f5",
+    "relativeDFDifferenceQuantiles": [
+      1.0209163942882723e-09,
+      8.238525139389059e-06,
+      2.5878286669691063e-05,
+      4.6719398696674855e-05,
+      9.449452499696259e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      4.885497620455839e-09,
+      3.7477426680167856e-05,
+      0.0001761230941043825,
+      0.0003977727073448157,
+      0.0006543391373891335
+    ],
+    "requestSHA256": "125b0926365b757a6699075c56ffdec39f0621023bf139fefda537e5be57ea60",
+    "seconds": 5.036188083235174,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-06-default",
+    "evaluatedCounts": 4092967,
+    "failures": [],
+    "genes": 3204,
+    "inputSHA256": "db85aa5a55eda025756b33c48f20798545f8e24049b570cae09d74cf8129ef11",
+    "logicalSHA256": "0bad61cf72025629c24192684e9e80a932fc074240158063e63c68046e14de0f",
+    "maximumLeverageError": 3.3306690738754696e-15,
+    "maximumRelativeTruncationBound": 9.998365366279745e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51264,
+    "outputSHA256": "693edd26eb751b68be9fa32bab28cca18c6847d0c83a4704d7e37617473464b1",
+    "referenceSHA256": "4af1d33ba3bef66eaad6b7bd5232d096d0b06c4eebdd49435839537d0dfcf5f5",
+    "relativeDFDifferenceQuantiles": [
+      9.926050221441565e-10,
+      5.604522104568349e-06,
+      1.4420360248614894e-05,
+      2.2307704003936302e-05,
+      3.4386244690040927e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      6.1327758288375244e-09,
+      3.288409568462536e-05,
+      8.356429727342184e-05,
+      0.0003160089776929396,
+      0.0006490125287335466
+    ],
+    "requestSHA256": "e9c53aebf749034c4b275de8b83a2db7f955d80230cac4137b7d52967b6af446",
+    "seconds": 5.079096499830484,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-07-default",
+    "evaluatedCounts": 5175733,
+    "failures": [],
+    "genes": 3202,
+    "inputSHA256": "d86d65838297ab0de5c23d6106f24dc4e70dc74868fb304a84797de5e273e8be",
+    "logicalSHA256": "888ee09d14875f102b525bc2da28212ffbec08eaf97e8b10f9929081eed82a29",
+    "maximumLeverageError": 1.9984014443252818e-15,
+    "maximumRelativeTruncationBound": 9.999213684329091e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51232,
+    "outputSHA256": "12d61fb388567f56ea6a99b8b1bcfa82062ce38625219cd5e98c19bf3d26a7b0",
+    "referenceSHA256": "8406439a99d2583120476c891f9b861df6135e961f3a1d609fd6682ae608a098",
+    "relativeDFDifferenceQuantiles": [
+      4.499234986208e-10,
+      8.662057973737426e-06,
+      2.6341313793073168e-05,
+      4.839355937456207e-05,
+      0.00012123501120597048
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      6.247417203420933e-09,
+      3.8433827841087025e-05,
+      0.00017807494791751113,
+      0.00045678404521672854,
+      0.0007132029259716197
+    ],
+    "requestSHA256": "333af98ec440115bdb3fdeac1c8c43f59e5ff7f26a3ee787923ef3c5e8cb6cfc",
+    "seconds": 4.173911250196397,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-07-default",
+    "evaluatedCounts": 4579337,
+    "failures": [],
+    "genes": 3202,
+    "inputSHA256": "d86d65838297ab0de5c23d6106f24dc4e70dc74868fb304a84797de5e273e8be",
+    "logicalSHA256": "993334fc02d5e38641c686d3ac33a9981a1738aada32b00c14e297b5b26f4cc9",
+    "maximumLeverageError": 2.55351295663786e-15,
+    "maximumRelativeTruncationBound": 9.997995041956332e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51232,
+    "outputSHA256": "564529b0c3f95afdca1dccae3ee474767c6b387aa03b739686fd60fe1f75f0a8",
+    "referenceSHA256": "8406439a99d2583120476c891f9b861df6135e961f3a1d609fd6682ae608a098",
+    "relativeDFDifferenceQuantiles": [
+      9.206940046205532e-10,
+      4.739211607823791e-06,
+      1.384923455434785e-05,
+      2.2577215437746447e-05,
+      3.368158138424282e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      4.760657056101117e-08,
+      2.7066089308632573e-05,
+      7.307507431189038e-05,
+      0.0002916822240566982,
+      0.0007895999074290085
+    ],
+    "requestSHA256": "d055f88c59a5b6a767c4499379718c0e01e3618137f4c5a57367f18a6281b6cc",
+    "seconds": 4.7438012501224875,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-08-default",
+    "evaluatedCounts": 5176469,
+    "failures": [],
+    "genes": 3202,
+    "inputSHA256": "b86078f9d5b63c0ea18b8a94a575acb7a87790d46478d8391bf4e8daafc98902",
+    "logicalSHA256": "aae2f504fe8f6febf30fc86de98c60a0774240d9a030bfe0acae7ecd4f706937",
+    "maximumLeverageError": 1.8318679906315083e-15,
+    "maximumRelativeTruncationBound": 9.999202385404057e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51232,
+    "outputSHA256": "ebb86e8b6a583ea2144ae3e23d8c78674c745314d81f6f56e094d070fb7f2c64",
+    "referenceSHA256": "e6c004c5c53e2bde14e49e588a0b2eab0d7765e00ba0864e15d8e684440fe9e5",
+    "relativeDFDifferenceQuantiles": [
+      7.660877551332274e-10,
+      8.63033251652389e-06,
+      2.7648848614191115e-05,
+      5.377810382286111e-05,
+      0.00012173903934404455
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.5367972256302654e-08,
+      3.914475828341199e-05,
+      0.0001776722792842291,
+      0.0004306769778822807,
+      0.0006892057561721571
+    ],
+    "requestSHA256": "140ca69c85f3232d34f59d9cff5761399334831b009edcb0fd084b22674d4638",
+    "seconds": 3.8706700410693884,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-08-default",
+    "evaluatedCounts": 4507649,
+    "failures": [],
+    "genes": 3202,
+    "inputSHA256": "b86078f9d5b63c0ea18b8a94a575acb7a87790d46478d8391bf4e8daafc98902",
+    "logicalSHA256": "8d642cf1f238766b8c01827bc0fad0fcaef9a50ccce59e8fe4ab3887d1221965",
+    "maximumLeverageError": 3.164135620181696e-15,
+    "maximumRelativeTruncationBound": 9.999584193641776e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51232,
+    "outputSHA256": "187af9fbafa0ae56880b138bc6f66d5ecf036bec58082ffaff37440a0fd3bd05",
+    "referenceSHA256": "e6c004c5c53e2bde14e49e588a0b2eab0d7765e00ba0864e15d8e684440fe9e5",
+    "relativeDFDifferenceQuantiles": [
+      5.8180283955416945e-09,
+      4.317539275854837e-06,
+      1.2511605657530502e-05,
+      2.0826230862577577e-05,
+      3.222352860611397e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      7.777368364986417e-09,
+      2.4908299764339988e-05,
+      5.8508060287819594e-05,
+      0.0002215294985621784,
+      0.0007456575429905178
+    ],
+    "requestSHA256": "af8286b2912781fcbbd66e1d4671f54ba789660d99891a305e20e6ef55055d5e",
+    "seconds": 3.4958827500231564,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-09-default",
+    "evaluatedCounts": 5213050,
+    "failures": [],
+    "genes": 3203,
+    "inputSHA256": "69f6bf618d396181fcd465aa17dd7df31973d853f42b1b1978ccd9a46316f1be",
+    "logicalSHA256": "cfcf617503f5979b1cfa79dfe7a9f1e8323b4df8f8812880d9a86a1277a4bb8d",
+    "maximumLeverageError": 2.1094237467877974e-15,
+    "maximumRelativeTruncationBound": 9.999625200484816e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51248,
+    "outputSHA256": "8d324645d9cf8fabfdffb526678dc209cf2d742a8a199159f38c253f3b13cfe4",
+    "referenceSHA256": "ee6b33ae743f54d123f709254fc523cb8a441deacdce39f28197cc70a53e9a11",
+    "relativeDFDifferenceQuantiles": [
+      1.1078186454168511e-09,
+      8.521665934717169e-06,
+      2.5399104141884744e-05,
+      4.801972909056403e-05,
+      9.752979989794615e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.0348961263035714e-08,
+      3.971053459449065e-05,
+      0.0001851182450388438,
+      0.00043204499328370065,
+      0.000706076918263657
+    ],
+    "requestSHA256": "f97cf31c5dc1080c08640a2dbd67de1d01c9a89bebf5880ad87e13248d4b2113",
+    "seconds": 4.038209333084524,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-09-default",
+    "evaluatedCounts": 4610333,
+    "failures": [],
+    "genes": 3203,
+    "inputSHA256": "69f6bf618d396181fcd465aa17dd7df31973d853f42b1b1978ccd9a46316f1be",
+    "logicalSHA256": "464ba7dbb1d698e1637f33a1167b9cafe99de863da71b012de89c703a048ede2",
+    "maximumLeverageError": 3.885780586188048e-15,
+    "maximumRelativeTruncationBound": 9.994399362301843e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51248,
+    "outputSHA256": "1d7048fdc0b3cf416e144c6eac2ec3cf2fb03b0d3e0a8988564dea2c1eb136cb",
+    "referenceSHA256": "ee6b33ae743f54d123f709254fc523cb8a441deacdce39f28197cc70a53e9a11",
+    "relativeDFDifferenceQuantiles": [
+      2.3099646290469563e-09,
+      6.856609636956041e-06,
+      1.6805071735596046e-05,
+      2.6573493893968e-05,
+      3.8217056997479467e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.1619202397565612e-08,
+      4.1533358043388134e-05,
+      0.0001277186463710825,
+      0.00024744797185128405,
+      0.000771379272781616
+    ],
+    "requestSHA256": "e5be89de8b1ddb5077b9ad1f86a8e94dc9fbef4b4fbfb7dc557ecc97439c5095",
+    "seconds": 4.983828958589584,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-10-default",
+    "evaluatedCounts": 5261356,
+    "failures": [],
+    "genes": 3204,
+    "inputSHA256": "86897ea5fdfec7bd01a0d1a7780971ff406e70223ababcc070ddf1aa095f5962",
+    "logicalSHA256": "9ac62c4ac2d08cc1c3e1f3442572860f679b80aa13bc663753eeef66fc1eb64b",
+    "maximumLeverageError": 2.4424906541753444e-15,
+    "maximumRelativeTruncationBound": 9.999635880565339e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 51264,
+    "outputSHA256": "57b98910c9c4874eb662fe64f308ef66bf488ea7f4c253724c2a87ec1427d972",
+    "referenceSHA256": "aa6257f57d3ed92da4b989597df2c1f6bb63b3fbed5ee5afd72832c876f36152",
+    "relativeDFDifferenceQuantiles": [
+      2.4815289909444004e-09,
+      8.413408601957366e-06,
+      2.6136082379918817e-05,
+      5.043283432840192e-05,
+      0.00010472758795363175
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.922378383250383e-08,
+      4.143342469206099e-05,
+      0.0001778967953618256,
+      0.0004000143821036181,
+      0.000725549957839778
+    ],
+    "requestSHA256": "d6f725e0ce88049f5cf4b0f9323f8822546af242f906baa294027e542b2fafa8",
+    "seconds": 5.256967457942665,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-null-10-default",
+    "evaluatedCounts": 4104957,
+    "failures": [],
+    "genes": 3204,
+    "inputSHA256": "86897ea5fdfec7bd01a0d1a7780971ff406e70223ababcc070ddf1aa095f5962",
+    "logicalSHA256": "32b31cda2e00560497554058bf6bba4be1e8fabb96fa9e5fd1fd9f7c7e9777a7",
+    "maximumLeverageError": 2.3314683517128287e-15,
+    "maximumRelativeTruncationBound": 9.999420530572438e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 51264,
+    "outputSHA256": "2c4b021f7e1234f193d04c0734ac8cc91daf9a72bc73913876d5ff415ddf3b31",
+    "referenceSHA256": "aa6257f57d3ed92da4b989597df2c1f6bb63b3fbed5ee5afd72832c876f36152",
+    "relativeDFDifferenceQuantiles": [
+      6.230678819427434e-10,
+      6.036252318933611e-06,
+      1.5245689666836539e-05,
+      2.3582409662490754e-05,
+      3.50163896100077e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.5952059248369484e-08,
+      3.775860887818244e-05,
+      0.0001079714700680475,
+      0.0003046437452013839,
+      0.0007400256595989517
+    ],
+    "requestSHA256": "24491006b5bccf34645fa89ba2b23090550c1e17491b6ec27ca5b52959472e2a",
+    "seconds": 4.1314527918584645,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-01-default",
+    "evaluatedCounts": 41153403,
+    "failures": [],
+    "genes": 11921,
+    "inputSHA256": "d5884d9867e3aa40cbd8ac57781f6a0ca74de75e2870818a8ee826182fea6cd8",
+    "logicalSHA256": "ebf135886180e3265e626241a70ae12b69b38ded3fc9424057f0b265f4449d88",
+    "maximumLeverageError": 1.4432899320127035e-15,
+    "maximumRelativeTruncationBound": 9.999663415688691e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71526,
+    "outputSHA256": "b736848e66f6adca2f99c40e10f7740d81dbb7f45417336547acb793ae40d3c8",
+    "referenceSHA256": "2b3fb2a13d7718d4af1e3f1b0f4cdb440087cee99db8316176ce76bee4c0edef",
+    "relativeDFDifferenceQuantiles": [
+      2.6066032861421186e-09,
+      9.39200165831107e-06,
+      2.2970176539511253e-05,
+      5.708538349272246e-05,
+      0.0006259522617833368
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.423013838332202e-09,
+      0.00027876576751724414,
+      0.0006445385737050317,
+      0.0007125714989882615,
+      0.0010423844486259447
+    ],
+    "requestSHA256": "fd1147eca2a0e54704b27e78b35e43cf683f341701e19d789e6c85129bb60b89",
+    "seconds": 12.097605666145682,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-01-default",
+    "evaluatedCounts": 31627190,
+    "failures": [],
+    "genes": 11921,
+    "inputSHA256": "d5884d9867e3aa40cbd8ac57781f6a0ca74de75e2870818a8ee826182fea6cd8",
+    "logicalSHA256": "03ac95f43a800b7452fd07cfdea5c4af1ebbb45b4b90bbe21c73a899e52b759c",
+    "maximumLeverageError": 2.1649348980190553e-15,
+    "maximumRelativeTruncationBound": 9.999184852675831e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71526,
+    "outputSHA256": "7ec1e3d39e80d96e33acd001ff12a2f65278a4301d1fd3d66a7ffb66f1052396",
+    "referenceSHA256": "2b3fb2a13d7718d4af1e3f1b0f4cdb440087cee99db8316176ce76bee4c0edef",
+    "relativeDFDifferenceQuantiles": [
+      7.196841225846809e-09,
+      9.033935586123548e-06,
+      2.0910105897755576e-05,
+      4.1577085975915716e-05,
+      8.253378479518044e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      9.830337903792275e-09,
+      0.0006706446607364313,
+      0.0007016442875410035,
+      0.0007748786950413032,
+      0.0008387687966465492
+    ],
+    "requestSHA256": "ab43aece5a33d126218f8e08d1dd6729833164487ccb0e44a4abd37306a8c7dc",
+    "seconds": 12.062545916996896,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-02-default",
+    "evaluatedCounts": 41820182,
+    "failures": [],
+    "genes": 11920,
+    "inputSHA256": "21c2a4070583967f67cfbd37df22530614f538e53b12db7380968ce176f04941",
+    "logicalSHA256": "64808f81b67a9eb92b43151c22bad67fc5f3bc2a24ef6bf753fdb1e1a230f0b9",
+    "maximumLeverageError": 1.2212453270876722e-15,
+    "maximumRelativeTruncationBound": 9.999980987886829e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71520,
+    "outputSHA256": "c2cb64eae19c826875ddc17521fbba34a44a35c957e155e98007d4ba9c3aeadb",
+    "referenceSHA256": "626821131f27a018426b68e56958c6b802e87f86821187c489bebc9355423fd9",
+    "relativeDFDifferenceQuantiles": [
+      4.736056911637436e-11,
+      9.391810500172706e-06,
+      2.2709010595295832e-05,
+      5.502040132197506e-05,
+      0.00038061336877578483
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.5797761190592796e-08,
+      0.0002774942897308929,
+      0.0006438186692410645,
+      0.0007119662048519767,
+      0.0008835826422526503
+    ],
+    "requestSHA256": "58ba529dc6cc62cf0bf5718f20c8802aa2b502c8938167f84d3705803f405c3d",
+    "seconds": 11.948208791669458,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-02-default",
+    "evaluatedCounts": 33505350,
+    "failures": [],
+    "genes": 11920,
+    "inputSHA256": "21c2a4070583967f67cfbd37df22530614f538e53b12db7380968ce176f04941",
+    "logicalSHA256": "34d74dfddf6cb3066198b008ddb36288bad6497d2f90f03a064cce639618ce80",
+    "maximumLeverageError": 3.219646771412954e-15,
+    "maximumRelativeTruncationBound": 9.99970212889245e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71520,
+    "outputSHA256": "0a9cf3663b2cef2808ad776155911185e0810bf0e785ac05418e0ace89eb87c9",
+    "referenceSHA256": "626821131f27a018426b68e56958c6b802e87f86821187c489bebc9355423fd9",
+    "relativeDFDifferenceQuantiles": [
+      9.8654109517506e-09,
+      9.085949380599833e-06,
+      2.3833513573068482e-05,
+      5.355462922451713e-05,
+      8.764013994974412e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.584678445522922e-08,
+      0.0006711266380369403,
+      0.0006997701975808726,
+      0.0007764781422406254,
+      0.0008408059588778481
+    ],
+    "requestSHA256": "bd6567ed637551610375907aeaeb47a39820eda43706ebb7a52cb621dde7902d",
+    "seconds": 12.140905709005892,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-03-default",
+    "evaluatedCounts": 44673238,
+    "failures": [],
+    "genes": 11917,
+    "inputSHA256": "9560a5e488da2f96a2977fd746453bef3e37404f0ebae7db0c4622d87a845aad",
+    "logicalSHA256": "4a6f4bd3c9519a00bb486ce628c9e5ab38ab0103c8eceba8ff5ade690bf64f93",
+    "maximumLeverageError": 1.1102230246251565e-15,
+    "maximumRelativeTruncationBound": 9.999646462164905e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71502,
+    "outputSHA256": "ec20b265e6fd37bf3be2a65529438c75a46534fa0161c0806e690d72c0684dec",
+    "referenceSHA256": "138b3fff51b0b3f256df67461ee8ed9d7f5dcbe77253188ba38b76e3ec4f01bb",
+    "relativeDFDifferenceQuantiles": [
+      6.345470170056067e-09,
+      9.415896802273329e-06,
+      2.2021713927579172e-05,
+      5.39750374437573e-05,
+      0.0005114293150714079
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.015002959437262e-08,
+      0.00028081535048937186,
+      0.000642139986718342,
+      0.0007119033668422227,
+      0.0007943098344154133
+    ],
+    "requestSHA256": "73c833ff8086ed350d4de58f9f5414e65cf94d8afaeabcad984558b75752407b",
+    "seconds": 11.85614199982956,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-03-default",
+    "evaluatedCounts": 36268410,
+    "failures": [],
+    "genes": 11917,
+    "inputSHA256": "9560a5e488da2f96a2977fd746453bef3e37404f0ebae7db0c4622d87a845aad",
+    "logicalSHA256": "70d9513437151260f3783411a269d7953c60c8ff37e2dc641f40a2c43c9b0ea9",
+    "maximumLeverageError": 2.7755575615628914e-15,
+    "maximumRelativeTruncationBound": 9.999213338454828e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71502,
+    "outputSHA256": "99a9f277aa5a68b079a8f02e8cef7d3e7355d52d4ab2f52c9e0b75f2b8ad4e85",
+    "referenceSHA256": "138b3fff51b0b3f256df67461ee8ed9d7f5dcbe77253188ba38b76e3ec4f01bb",
+    "relativeDFDifferenceQuantiles": [
+      1.635746121037054e-10,
+      9.08323880265939e-06,
+      2.1676949844714723e-05,
+      4.494832975934785e-05,
+      8.263529196066778e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.0258807236083068e-07,
+      0.0006799576236607303,
+      0.0006985674312537249,
+      0.0007662351571337584,
+      0.0008534398842470304
+    ],
+    "requestSHA256": "e3994cb39744a42988f04acfee186a4515576b25d3785f62018012dc995eca1b",
+    "seconds": 12.748617666773498,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-04-default",
+    "evaluatedCounts": 44041746,
+    "failures": [],
+    "genes": 11921,
+    "inputSHA256": "0bd6ca174ac28b51458fa5af6e6e04a87c5c81164f29ff8f34ad8bbed0448e73",
+    "logicalSHA256": "1ddad069f749e12895c07f426e75e4710a26a8b1d3000df248bca3ec36eba962",
+    "maximumLeverageError": 1.3322676295501878e-15,
+    "maximumRelativeTruncationBound": 9.999956292835397e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71526,
+    "outputSHA256": "64f6cf6b1c3ce040f47abef27aea4c9fec34951a5ad464bc3b7939b1698a332b",
+    "referenceSHA256": "c58103aa1c330afbc7e14cae3737527cabe682b489170b1bf717413c250ec72d",
+    "relativeDFDifferenceQuantiles": [
+      1.052094930497511e-09,
+      9.465583541340722e-06,
+      2.3431596627317585e-05,
+      6.264644052874643e-05,
+      0.00042566555546014406
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.1549069366763326e-08,
+      0.00027586916778920146,
+      0.0006425031449662382,
+      0.0007120810162071759,
+      0.0009914820235877636
+    ],
+    "requestSHA256": "efab48752c69b8b55de92416d2d9cd03a75a345614c8452020980d1c17496131",
+    "seconds": 12.991836207918823,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-04-default",
+    "evaluatedCounts": 39632116,
+    "failures": [],
+    "genes": 11921,
+    "inputSHA256": "0bd6ca174ac28b51458fa5af6e6e04a87c5c81164f29ff8f34ad8bbed0448e73",
+    "logicalSHA256": "3e65081de962c1b2bbeba50e67dc33629a633bbeefeaad0ae8b1953f7f08318f",
+    "maximumLeverageError": 1.5543122344752192e-15,
+    "maximumRelativeTruncationBound": 9.999894125475712e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71526,
+    "outputSHA256": "cce24c09bc97ce61d25abc8b815bb349c223ec7e57b8d3f96bb8a686854c47b8",
+    "referenceSHA256": "c58103aa1c330afbc7e14cae3737527cabe682b489170b1bf717413c250ec72d",
+    "relativeDFDifferenceQuantiles": [
+      4.791332632337157e-09,
+      9.066668922269786e-06,
+      1.846970159254507e-05,
+      3.196993964638322e-05,
+      7.480146982405948e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.1231926522042116e-08,
+      0.000641472693005162,
+      0.0006838318261505402,
+      0.0007346609037316536,
+      0.0007916213854255995
+    ],
+    "requestSHA256": "a45a8689ec17bddf426626602433a4688e9e5fb6b7590b00122d039a75558a21",
+    "seconds": 14.561350625008345,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-05-default",
+    "evaluatedCounts": 44827812,
+    "failures": [],
+    "genes": 11919,
+    "inputSHA256": "19b66d7698561f5636892cc0d8265d8c0530a2b5e7685bada73189bdc51c02c5",
+    "logicalSHA256": "88b44a9caba80e33487e86755effa7c671bf897e8e5f9fa15232a3251da20caf",
+    "maximumLeverageError": 1.2212453270876722e-15,
+    "maximumRelativeTruncationBound": 9.999223173715512e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71514,
+    "outputSHA256": "c3b3ce396deec19d69bc1ff7e0791a078839d8e10d81b5588c5307a24c7d4c9e",
+    "referenceSHA256": "333f41bcb2e5ae3f21419e700aed5ed00aac7392ba3cf8ae8ad1754ba1056417",
+    "relativeDFDifferenceQuantiles": [
+      1.0830753466197503e-09,
+      9.426909860125917e-06,
+      2.226341188985159e-05,
+      5.418216897510369e-05,
+      0.0004204674023915665
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.3039120696069247e-08,
+      0.0002784732951887814,
+      0.000642739138201505,
+      0.0007126725681849201,
+      0.0010223389058085972
+    ],
+    "requestSHA256": "3a564fa8cc078fade853313f7227962fff9b3becdc6e344ea5eb4b0f836713c9",
+    "seconds": 13.24235725030303,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-05-default",
+    "evaluatedCounts": 38196350,
+    "failures": [],
+    "genes": 11919,
+    "inputSHA256": "19b66d7698561f5636892cc0d8265d8c0530a2b5e7685bada73189bdc51c02c5",
+    "logicalSHA256": "cdb6f337b8da44c3e789ec936f15da8d1a957554ef7823ebc055ca7440a2fb54",
+    "maximumLeverageError": 2.886579864025407e-15,
+    "maximumRelativeTruncationBound": 9.998847346473342e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71514,
+    "outputSHA256": "44600fa2a862834b68c4ff03c3b4c28061cc4f1d33f5c1f286f63d53cec61473",
+    "referenceSHA256": "333f41bcb2e5ae3f21419e700aed5ed00aac7392ba3cf8ae8ad1754ba1056417",
+    "relativeDFDifferenceQuantiles": [
+      9.896899981217788e-09,
+      9.095797039769366e-06,
+      2.1923813235123692e-05,
+      4.539838077871535e-05,
+      8.577620216795432e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.4864729733172352e-08,
+      0.0006476290404366131,
+      0.0006888831193320138,
+      0.0007421291406699079,
+      0.0008162215025735136
+    ],
+    "requestSHA256": "48e0e3ce536e4bbc15a3f4bc52ecce1d859d73a5b92f6741a6f2f90b1daa4f79",
+    "seconds": 10.699181959033012,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-06-default",
+    "evaluatedCounts": 44568902,
+    "failures": [],
+    "genes": 11921,
+    "inputSHA256": "973542355d975252ee8891a2ec3f1d9cfd5f478923317f893903be593db7f148",
+    "logicalSHA256": "6d7cfac56bf3cd840bfb0a29329e179b777d494baa883ababdc85c6050d72ef6",
+    "maximumLeverageError": 1.9984014443252818e-15,
+    "maximumRelativeTruncationBound": 9.999350859611507e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71526,
+    "outputSHA256": "b56162f3489dc3047bf91ac39bcc433f1e41fea7b01184e8ae391b1f3c7f5334",
+    "referenceSHA256": "c616ac2f5d5d7a4702e525307567d12031270388508fc836c420120733b3ceb3",
+    "relativeDFDifferenceQuantiles": [
+      1.250394123085138e-09,
+      9.4430533928989e-06,
+      2.2502576969698068e-05,
+      5.654857052170802e-05,
+      0.0004440072055171982
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.3135323192644474e-08,
+      0.00027751722918085937,
+      0.0006426567950596347,
+      0.0007111860515386258,
+      0.0010115372696332435
+    ],
+    "requestSHA256": "ec809038ff93b4cb4bf8d8e409649e59f994dd0707aa60ebf03212a2bc25e35d",
+    "seconds": 12.198915250133723,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-06-default",
+    "evaluatedCounts": 36429780,
+    "failures": [],
+    "genes": 11921,
+    "inputSHA256": "973542355d975252ee8891a2ec3f1d9cfd5f478923317f893903be593db7f148",
+    "logicalSHA256": "f935a257616b26d1e7c8baf3f15bd5866de3fd5fd8bcb3c16097e53ef0476ac7",
+    "maximumLeverageError": 1.7763568394002505e-15,
+    "maximumRelativeTruncationBound": 9.999929861137751e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71526,
+    "outputSHA256": "f779810e8aaa7835f66773f85bba141ad3bddd7ca904ebb79d01da4a738f52d6",
+    "referenceSHA256": "c616ac2f5d5d7a4702e525307567d12031270388508fc836c420120733b3ceb3",
+    "relativeDFDifferenceQuantiles": [
+      2.081711941724045e-09,
+      9.126859405059541e-06,
+      1.943451388053435e-05,
+      3.5622330229277604e-05,
+      7.88150975353447e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.7451494723476186e-08,
+      0.0006749389827862888,
+      0.0006970916225036923,
+      0.000765626749081242,
+      0.000838286402551351
+    ],
+    "requestSHA256": "079cd556ae0fb17ef5f66d5c07dd4e145944f0aaeec6e780b29dd1c7040363b2",
+    "seconds": 10.793198041152209,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-07-default",
+    "evaluatedCounts": 43424061,
+    "failures": [],
+    "genes": 11919,
+    "inputSHA256": "1085a9bd7b5d2f49bab27c353f3e41b80be67bc3d2275625e6f19b7f82c992dd",
+    "logicalSHA256": "c70cb7e5f2be9a065a928f762e10bdc2c0f33d8d8ea7fadc3d7e2546618c534c",
+    "maximumLeverageError": 1.2212453270876722e-15,
+    "maximumRelativeTruncationBound": 9.999726305288201e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71514,
+    "outputSHA256": "49defcdfafebfcadb91133cc8a434f1f9892fa3b68c6855196078f00a16973f1",
+    "referenceSHA256": "8e29ce72f9f5ea6be069a8358e39fdc862733f3f0e8fd29d76c4a1fac5855bbd",
+    "relativeDFDifferenceQuantiles": [
+      2.687619377509044e-10,
+      9.405579027921912e-06,
+      2.2715017583312395e-05,
+      5.4441652713590624e-05,
+      0.0004191842432007126
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.065173335068508e-08,
+      0.00027674987507093267,
+      0.0006433710350416526,
+      0.0007119009118697916,
+      0.000991824219711519
+    ],
+    "requestSHA256": "6c7e2300768b22ff7fda782c9e541579a0a1106ab93bf2c0000487f0be5c6ae8",
+    "seconds": 13.190617834217846,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-07-default",
+    "evaluatedCounts": 35865365,
+    "failures": [],
+    "genes": 11919,
+    "inputSHA256": "1085a9bd7b5d2f49bab27c353f3e41b80be67bc3d2275625e6f19b7f82c992dd",
+    "logicalSHA256": "ceb9ebe74510a0bbbfa597491430f6c570b8fc5e08b213567509dead06ddba7e",
+    "maximumLeverageError": 1.7208456881689926e-15,
+    "maximumRelativeTruncationBound": 9.999163059410706e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71514,
+    "outputSHA256": "1dda3007e7125e7e9275b8a9f613de8beeb23a91c0c51f40f32d060084d0606c",
+    "referenceSHA256": "8e29ce72f9f5ea6be069a8358e39fdc862733f3f0e8fd29d76c4a1fac5855bbd",
+    "relativeDFDifferenceQuantiles": [
+      5.956583409289926e-10,
+      9.045927550508401e-06,
+      2.0637668548959095e-05,
+      4.1120651580671125e-05,
+      7.858577797303336e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      5.8939536525152084e-08,
+      0.0006749316606061761,
+      0.0006964445362237079,
+      0.0007591610729296641,
+      0.0008534366764901542
+    ],
+    "requestSHA256": "e535717825ade0ec95c2b9f1f3777385a57eafcaf3e0e1754725304c103b41ac",
+    "seconds": 11.894846665672958,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-08-default",
+    "evaluatedCounts": 42220009,
+    "failures": [],
+    "genes": 11917,
+    "inputSHA256": "174d0ee9696199e8e5b404a662e23a772dc230aa5798fba9535f9199c43d3472",
+    "logicalSHA256": "fb4535c79e1ac4f3df7bc2498dfa520f4b6e13b748ad96d978337c4dceac7209",
+    "maximumLeverageError": 9.992007221626409e-16,
+    "maximumRelativeTruncationBound": 9.999903287705445e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71502,
+    "outputSHA256": "99c6d868bfc3eb64ceecd786d17a575c7d0762de17c1325deee867c19d5bdeb9",
+    "referenceSHA256": "0d2b12bcd564672a8f4ace01a9a1a809e2338f9b58f17e6db1aaebc0edb05c67",
+    "relativeDFDifferenceQuantiles": [
+      1.292087315191496e-10,
+      9.409478410457685e-06,
+      2.2648127321954575e-05,
+      5.387347674247802e-05,
+      0.0004910313603410308
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.816752039956836e-08,
+      0.0002788594005984578,
+      0.0006442639443230283,
+      0.0007125588311611458,
+      0.0010407716785318264
+    ],
+    "requestSHA256": "26b71b150b333dba6c9ac6360033329494876f27ff646337c96529ef12ceee43",
+    "seconds": 12.493980832863599,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-08-default",
+    "evaluatedCounts": 32819151,
+    "failures": [],
+    "genes": 11917,
+    "inputSHA256": "174d0ee9696199e8e5b404a662e23a772dc230aa5798fba9535f9199c43d3472",
+    "logicalSHA256": "939e44a5f8f09ba5dd96d360807ea6af0c21d9fc62ea44d8740143afa813b7b8",
+    "maximumLeverageError": 2.1788126858268697e-15,
+    "maximumRelativeTruncationBound": 9.999848603587828e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71502,
+    "outputSHA256": "46b3c6b174dc4e5b6d144f1e415fe0f4ed84bb848a2a6d1e945807ab9e0fb2fe",
+    "referenceSHA256": "0d2b12bcd564672a8f4ace01a9a1a809e2338f9b58f17e6db1aaebc0edb05c67",
+    "relativeDFDifferenceQuantiles": [
+      7.027893703447327e-10,
+      9.043726352417594e-06,
+      1.9736474656687065e-05,
+      3.603503952919565e-05,
+      7.840395379411984e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.307938538825765e-08,
+      0.0006510622801057195,
+      0.0006966599912742775,
+      0.0007492203482083048,
+      0.0008233433365241891
+    ],
+    "requestSHA256": "ce092265756d71e741eecf360b9ec08346199c31d082458a66ff234f90a8a25e",
+    "seconds": 12.046849625185132,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-09-default",
+    "evaluatedCounts": 42842130,
+    "failures": [],
+    "genes": 11920,
+    "inputSHA256": "c4491c0a9fc59714a95ea82118f316dbd901566a23542bdf3e31178895751c6d",
+    "logicalSHA256": "68a11eb933a71df35494582b687d0740a5cee1ffeaa27c5bfbaf1143666a7b3f",
+    "maximumLeverageError": 1.1102230246251565e-15,
+    "maximumRelativeTruncationBound": 9.99960240933092e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71520,
+    "outputSHA256": "3a14d08758f460da28d8affe91626b18e92cfc58a5783c34f02b8be6ba7ddf65",
+    "referenceSHA256": "223a1aca1727482da1ca031a002d8c5e197c3a46f2cc0f13806d6c121376e413",
+    "relativeDFDifferenceQuantiles": [
+      1.7136174899930217e-11,
+      9.409245693168228e-06,
+      2.2979463146117484e-05,
+      5.6123554022867294e-05,
+      0.0003852100738913295
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      9.904361493863961e-09,
+      0.0002760153073962525,
+      0.0006435285578564716,
+      0.000711945340611231,
+      0.0010656993901413411
+    ],
+    "requestSHA256": "9a707665a5a72b5367ad409f9245e778d29895f876d0758f0359e78657975000",
+    "seconds": 12.176227500196546,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-09-default",
+    "evaluatedCounts": 32521234,
+    "failures": [],
+    "genes": 11920,
+    "inputSHA256": "c4491c0a9fc59714a95ea82118f316dbd901566a23542bdf3e31178895751c6d",
+    "logicalSHA256": "0d7299396b576d0cac2607c8d6d6d4512d9bcf6b2b1b6b31f6c35eddcf228c58",
+    "maximumLeverageError": 2.220446049250313e-15,
+    "maximumRelativeTruncationBound": 9.999945887068844e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71520,
+    "outputSHA256": "2e9dbad5e61ca50e7ddcd27e7bf8d2ba4dee9c8ffddddb48c72dab8c8db68b32",
+    "referenceSHA256": "223a1aca1727482da1ca031a002d8c5e197c3a46f2cc0f13806d6c121376e413",
+    "relativeDFDifferenceQuantiles": [
+      2.1551535607340435e-09,
+      9.022298739355606e-06,
+      2.064234905341488e-05,
+      3.886270107159314e-05,
+      8.381110396439264e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      7.280157850668204e-08,
+      0.0006773071784089661,
+      0.0007040874302607422,
+      0.0007807257224226079,
+      0.0008525625233116124
+    ],
+    "requestSHA256": "fdd2b47cb75a204ae8e455ea49836e0860b2cc9f2c86b544365b87aecd90c669",
+    "seconds": 11.219104875344783,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-10-default",
+    "evaluatedCounts": 42488211,
+    "failures": [],
+    "genes": 11920,
+    "inputSHA256": "1087ef6285d2990946eb9c4c2f6c3dadc9058e973789ea9a05bf0ec1add1d817",
+    "logicalSHA256": "59d0850b0717857ae9f688daa7ece34888c1d61216864560c47186fe18100588",
+    "maximumLeverageError": 1.1102230246251565e-15,
+    "maximumRelativeTruncationBound": 9.999658688199273e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 71520,
+    "outputSHA256": "69478ae2ddf5310fa206e48625d42bc96ba3f151d5ef9c0d29716b7e553a4341",
+    "referenceSHA256": "ddb5965c1addc303b2e810e8674f7ff64675f9adeae768448f68c42b808d8872",
+    "relativeDFDifferenceQuantiles": [
+      2.8541798930007196e-09,
+      9.412166184785236e-06,
+      2.291728594397035e-05,
+      5.864461179209195e-05,
+      0.00047961387557215703
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      7.757062231681002e-09,
+      0.0002766398633198458,
+      0.0006444210062298937,
+      0.0007126103483234718,
+      0.0010295399495242653
+    ],
+    "requestSHA256": "afe36592d20f97becd51c2d5db16c81f8feebd226872f9f0ca9e636590185175",
+    "seconds": 12.892855582758784,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-null-10-default",
+    "evaluatedCounts": 37937456,
+    "failures": [],
+    "genes": 11920,
+    "inputSHA256": "1087ef6285d2990946eb9c4c2f6c3dadc9058e973789ea9a05bf0ec1add1d817",
+    "logicalSHA256": "76029ef26c0e7cc6e0398bf7245aaea9217f57292f73e8e324ec0e9c44633803",
+    "maximumLeverageError": 1.8318679906315083e-15,
+    "maximumRelativeTruncationBound": 9.999994265696356e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 71520,
+    "outputSHA256": "4793a14eb193b19c834ab70cf3c4623b874e648073b0ed5c9e953001dd266286",
+    "referenceSHA256": "ddb5965c1addc303b2e810e8674f7ff64675f9adeae768448f68c42b808d8872",
+    "relativeDFDifferenceQuantiles": [
+      2.4391410573176155e-09,
+      9.060710771391797e-06,
+      1.8418704007540248e-05,
+      3.0886700691178204e-05,
+      7.620040542517998e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      8.01924678141907e-09,
+      0.0006476206865482411,
+      0.0006850212264414964,
+      0.0007305076380092095,
+      0.0008081904721622744
+    ],
+    "requestSHA256": "ca28a28edeb077abecdffaf07964a2158e5b9c018f82f39d2f6bde6b50195421",
+    "seconds": 12.31670833285898,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-default",
+    "evaluatedCounts": 10695869,
+    "failures": [],
+    "genes": 5400,
+    "inputSHA256": "c4427677679773a08b77153e79ddc5e3f493de60ee4e38c23bdaf203f939b5a5",
+    "logicalSHA256": "e70f4693581b0bc7190c7e21367c69393b214124244060c41c1d803524610b9b",
+    "maximumLeverageError": 1.887379141862766e-15,
+    "maximumRelativeTruncationBound": 9.999322345102503e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 86400,
+    "outputSHA256": "6209ce63458bb7f5d222adb2c99b009e6e27ce40806b4ba23e09d6629110f841",
+    "referenceSHA256": "2738019585c24196e4cfbbea97559c59babdd569100f0c3ecf95b9de2b63713f",
+    "relativeDFDifferenceQuantiles": [
+      9.7433249827018e-10,
+      6.611237651472232e-06,
+      2.019339978324559e-05,
+      3.740564611342732e-05,
+      0.00015026060765123842
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.1140551808319124e-08,
+      3.964319308406462e-05,
+      0.00018576489114448619,
+      0.0004500843180643597,
+      0.0007366245295798015
+    ],
+    "requestSHA256": "c7411dbe1a9fee54462a7df3a349e9d2109a2e82928fc24156882629337270c3",
+    "seconds": 8.567069625016302,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "kang-default",
+    "evaluatedCounts": 11090426,
+    "failures": [],
+    "genes": 5400,
+    "inputSHA256": "c4427677679773a08b77153e79ddc5e3f493de60ee4e38c23bdaf203f939b5a5",
+    "logicalSHA256": "c2706c8d0a24b185d0a782be2097222e1f53fb0dd2956abb9ae9f38d2f6606bf",
+    "maximumLeverageError": 2.4424906541753444e-15,
+    "maximumRelativeTruncationBound": 9.999619212650203e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 86400,
+    "outputSHA256": "26935d9311871157e8a81ef9cf093d7e1673398e741c1247cb9df32087543638",
+    "referenceSHA256": "2738019585c24196e4cfbbea97559c59babdd569100f0c3ecf95b9de2b63713f",
+    "relativeDFDifferenceQuantiles": [
+      8.638710848827474e-10,
+      3.901092848770839e-06,
+      1.1328507042980364e-05,
+      1.941219877656392e-05,
+      3.05923864938013e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      4.3345012018021935e-09,
+      2.6842441490902523e-05,
+      0.00010206361060891509,
+      0.00040621595261105387,
+      0.0008994213612557372
+    ],
+    "requestSHA256": "edc72da312bbde6e86708756efc57329da02cae9e829b82476e9692b805b5b09",
+    "seconds": 8.639740916900337,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-default",
+    "evaluatedCounts": 340716986,
+    "failures": [
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (64062...1064061)",
+        "featureIndex": 2701
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (45593...1045592)",
+        "featureIndex": 4951
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (71970...1071969)",
+        "featureIndex": 5091
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (44855...1044854)",
+        "featureIndex": 5469
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (48895...1048894)",
+        "featureIndex": 13599
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (47617...1047616)",
+        "featureIndex": 14822
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (54491...1054490)",
+        "featureIndex": 15720
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (350037...1350036)",
+        "featureIndex": 19389
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (509687...1509686)",
+        "featureIndex": 21247
+      }
+    ],
+    "genes": 12426,
+    "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+    "logicalSHA256": "d24350bc5ee7f39d8be30f5eef99846a3566c8c8e4dfa67a7a858f339b483adf",
+    "maximumLeverageError": 1.1102230246251565e-15,
+    "maximumRelativeTruncationBound": 9.999917821675105e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 74502,
+    "outputSHA256": "5f7602f26f9c976f065c1cb45965770cd675a0e645fd427b8f64704d7c415146",
+    "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+    "relativeDFDifferenceQuantiles": [
+      5.879590668486099e-10,
+      1.719580678963035e-05,
+      2.648238397747807e-05,
+      0.0001767226204794849,
+      0.0005531325221485518
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.4241638092107401e-08,
+      0.00025671683440876684,
+      0.0008243644601077527,
+      0.0009106043445041904,
+      0.0010388439897534402
+    ],
+    "requestSHA256": "f36633e24ba678bf7a626fdf24e27d43e1bba73f4469c84b0c8f29fb95c39816",
+    "seconds": 22.497190999798477,
+    "status": "completed-with-failures"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "hagai-default",
+    "evaluatedCounts": 354937220,
+    "failures": [
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+        "featureIndex": 2701
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+        "featureIndex": 4951
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+        "featureIndex": 5091
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+        "featureIndex": 5469
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+        "featureIndex": 13599
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+        "featureIndex": 14822
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+        "featureIndex": 15720
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (341544...1341543)",
+        "featureIndex": 19389
+      },
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+        "featureIndex": 21247
+      }
+    ],
+    "genes": 12426,
+    "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+    "logicalSHA256": "b81b7d8a5a7755d1c76c5157e8e45d59b8bc576836f8965c84635ed8fba49ca0",
+    "maximumLeverageError": 1.4432899320127035e-15,
+    "maximumRelativeTruncationBound": 9.999980850321464e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 74502,
+    "outputSHA256": "56229c8545288544a0ac89296e5e8eca0ecdfc6ec8ec8247f1dc0077e976e033",
+    "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340",
+    "relativeDFDifferenceQuantiles": [
+      1.064123551485649e-09,
+      1.617686010491482e-05,
+      2.347920605711313e-05,
+      3.9170301221845636e-05,
+      9.424620444872156e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      9.394928430628223e-09,
+      0.00022955424566823755,
+      0.0008291732757937429,
+      0.0009392551086896378,
+      0.0009570468913196328
+    ],
+    "requestSHA256": "236af2124d91a9f4f2131eb9190c88604c7922cb58214870c367410ddb1cb158",
+    "seconds": 22.448825415689498,
+    "status": "completed-with-failures"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-00",
+    "evaluatedCounts": 13963528,
+    "failures": [],
+    "genes": 10650,
+    "inputSHA256": "e8990706862e88e8f7062e3e6e034c8c9bdf4bd046df9621c70a6d6cf9c85ca4",
+    "logicalSHA256": "58bcf0d1e167f06baa8decf37b54c8114f7c451373943b020ab70d328ee677c8",
+    "maximumLeverageError": 1.3183898417423734e-15,
+    "maximumRelativeTruncationBound": 9.999932359037367e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 85200,
+    "outputSHA256": "6ccf92fc7bc489e6110bf5e64d30940dac478d2ebea8c66c2534ad5013630dbe",
+    "referenceSHA256": "4ff67281f44eb49548581ffb770070ae394d0238af02801c4609272a9ee9c248",
+    "relativeDFDifferenceQuantiles": [
+      1.2367547310835837e-09,
+      1.021279255078131e-05,
+      4.006439031832001e-05,
+      5.723413673739332e-05,
+      0.0005945220881190511
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      6.20782246319928e-09,
+      3.652587170212924e-05,
+      9.175902095086148e-05,
+      0.00028107689801410405,
+      0.0010185884794357285
+    ],
+    "requestSHA256": "bf05875f10dfe427219054df94229486deaec412e8626f9bd2325e7ad502a174",
+    "seconds": 8.004963209386915,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-00",
+    "evaluatedCounts": 12845032,
+    "failures": [],
+    "genes": 10650,
+    "inputSHA256": "e8990706862e88e8f7062e3e6e034c8c9bdf4bd046df9621c70a6d6cf9c85ca4",
+    "logicalSHA256": "216e62624a8a2e0d707571efc1de5116ad9dce25c4ad70021c67a900010e621e",
+    "maximumLeverageError": 1.8041124150158794e-15,
+    "maximumRelativeTruncationBound": 9.999614454639377e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 85200,
+    "outputSHA256": "50229d6a6570bfae331b249882f898e646c585a8b27e0a6e2c28b736f4ae0b2a",
+    "referenceSHA256": "4ff67281f44eb49548581ffb770070ae394d0238af02801c4609272a9ee9c248",
+    "relativeDFDifferenceQuantiles": [
+      3.3419254042591956e-09,
+      1.0899140063786204e-05,
+      4.188172514471356e-05,
+      5.5966462748387825e-05,
+      6.270012841324845e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.3686442602579024e-09,
+      8.709398381750628e-05,
+      0.00020067263574539485,
+      0.00031225480554851617,
+      0.0011370286138505056
+    ],
+    "requestSHA256": "4a004aeeb74d291eadf28ab60c69ab1467051c526f7616e5b28576e3d8ee755b",
+    "seconds": 10.427731458097696,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-01",
+    "evaluatedCounts": 10867954,
+    "failures": [],
+    "genes": 10140,
+    "inputSHA256": "deb8d3d1b8e7a1974704c8f5b9828207b7d7ddeb0908c4ee5c7d018ce6df80bd",
+    "logicalSHA256": "5d1fe59941c9f346c3ffa54533866df71f86e0b17df56c4d21d1d203232b4224",
+    "maximumLeverageError": 1.7069679003611782e-15,
+    "maximumRelativeTruncationBound": 9.99943152786477e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 81120,
+    "outputSHA256": "5f79a4daa8a43ff2492a9bffc9d472573418cfc661126484d7d3722ad41966d4",
+    "referenceSHA256": "e6ab67d522726ae33e48a105e00bcda315dbd07b8405b7da3e8b68782fed4c6d",
+    "relativeDFDifferenceQuantiles": [
+      5.000297648959148e-10,
+      8.478397554366174e-06,
+      2.4340725570301385e-05,
+      4.815902412454143e-05,
+      0.00032539384799768135
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.8787413329949747e-08,
+      3.96042384104558e-05,
+      9.474209483993797e-05,
+      0.00023360468895534313,
+      0.001149119924283618
+    ],
+    "requestSHA256": "156bb589dc79a0cd3aee4dc99832d315fd4e479d1b2ae703f6241f736e46652d",
+    "seconds": 8.878017832990736,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-01",
+    "evaluatedCounts": 9457194,
+    "failures": [],
+    "genes": 10140,
+    "inputSHA256": "deb8d3d1b8e7a1974704c8f5b9828207b7d7ddeb0908c4ee5c7d018ce6df80bd",
+    "logicalSHA256": "aa0bdbc3cb91365ecc114d90ee2d7a79232b98882d9d27e8cbb84787bee7ec2d",
+    "maximumLeverageError": 9.71445146547012e-16,
+    "maximumRelativeTruncationBound": 9.998636460732109e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 81120,
+    "outputSHA256": "b1055f1b5f3cb471f62a5e64f8f149a8dfd0f1654b97d9918992c6be40608d15",
+    "referenceSHA256": "e6ab67d522726ae33e48a105e00bcda315dbd07b8405b7da3e8b68782fed4c6d",
+    "relativeDFDifferenceQuantiles": [
+      1.6993908387228344e-10,
+      3.552241586433073e-06,
+      1.1204534663627258e-05,
+      1.9460981917382517e-05,
+      3.3322223954101504e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      7.09928115552159e-11,
+      1.2785700224149836e-05,
+      4.16336629728302e-05,
+      0.00022353472638863208,
+      0.0012119122199658742
+    ],
+    "requestSHA256": "6c0695f50b60dae6149a93542e566b85b92450e1bf4f4668787b3a2be7f4676c",
+    "seconds": 7.805661290884018,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-02",
+    "evaluatedCounts": 8046113,
+    "failures": [],
+    "genes": 9435,
+    "inputSHA256": "369866b62fca8af823339189d901c5017ad2778f73f6fe5abc55ff099650b915",
+    "logicalSHA256": "ee5cb894645d0145c862c454148432be7300cd6777eb71a2f5397c32a8e065f7",
+    "maximumLeverageError": 9.575673587391975e-16,
+    "maximumRelativeTruncationBound": 9.999812392699473e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 75480,
+    "outputSHA256": "094a1d13ad73648da00fa301737103770fd6706737fe91751dc358865f434f80",
+    "referenceSHA256": "ff58af610fcc507d26809b5cafe3dcb18cab88a643d3b27696b6cee713af7236",
+    "relativeDFDifferenceQuantiles": [
+      2.012522092073379e-09,
+      8.683409736489442e-06,
+      2.686999924374285e-05,
+      4.468247938781536e-05,
+      0.00039923038209739006
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.253832123472005e-08,
+      3.1812558257077155e-05,
+      8.92186626072593e-05,
+      0.00015817699264079999,
+      0.001164270472243599
+    ],
+    "requestSHA256": "b0d65aa7e813942023b77b82aabe990e32603339848448714b3ba0df5a23d6b3",
+    "seconds": 4.344169082585722,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-02",
+    "evaluatedCounts": 6489739,
+    "failures": [],
+    "genes": 9435,
+    "inputSHA256": "369866b62fca8af823339189d901c5017ad2778f73f6fe5abc55ff099650b915",
+    "logicalSHA256": "628bf29387a918c2ca9013e3347a953718423d816d18448fe1df0dd263d60fe7",
+    "maximumLeverageError": 8.743006318923108e-16,
+    "maximumRelativeTruncationBound": 9.999275782871745e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 75480,
+    "outputSHA256": "cab14b3191122631b4b0de27577fe278124f96f191a3779a08dc3864d29c26e2",
+    "referenceSHA256": "ff58af610fcc507d26809b5cafe3dcb18cab88a643d3b27696b6cee713af7236",
+    "relativeDFDifferenceQuantiles": [
+      5.56505101508474e-10,
+      4.303741749135376e-06,
+      1.7781920016630423e-05,
+      3.5428871576443715e-05,
+      6.606381134375575e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.2557462136215697e-09,
+      1.59172981646352e-05,
+      5.667438059591472e-05,
+      0.00011306023727167863,
+      0.0011753970263665412
+    ],
+    "requestSHA256": "a07c22047829a668f4982d86ec86d14efaa8851e840d365eaf324b2f2ef94d7e",
+    "seconds": 3.4601012910716236,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-03",
+    "evaluatedCounts": 15229161,
+    "failures": [],
+    "genes": 10387,
+    "inputSHA256": "1b3c89437388bb664719c89de6fc35ba6debafec95e0fcbc1514c05d161580d0",
+    "logicalSHA256": "d7fe502257b975b2b08cab866c3c83ce4f4ee6aabe3d6add21fdf4abcf9507e6",
+    "maximumLeverageError": 5.828670879282072e-16,
+    "maximumRelativeTruncationBound": 9.999608053477038e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 83096,
+    "outputSHA256": "88ca914a6ea1438045968205da9c0eab855e6c8ce4ff0cb8d8f89d2b022b5b70",
+    "referenceSHA256": "f182b2da93f7b8c23d62b39bd3d2ea75cecb1f259669a3946fd4b4e45bc00e8a",
+    "relativeDFDifferenceQuantiles": [
+      2.015253705687569e-09,
+      9.969379885588895e-06,
+      4.352970901947041e-05,
+      5.765837108104044e-05,
+      0.00029044070117284883
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.7546435508043935e-09,
+      4.071269638604293e-05,
+      9.295574986876325e-05,
+      0.0004061529994435289,
+      0.0011270365726509233
+    ],
+    "requestSHA256": "a64576fb2cedb7ad177fe370ea5a96b442beddae92e34bcd56641be1a9b0797d",
+    "seconds": 8.054001833777875,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-03",
+    "evaluatedCounts": 14296061,
+    "failures": [],
+    "genes": 10387,
+    "inputSHA256": "1b3c89437388bb664719c89de6fc35ba6debafec95e0fcbc1514c05d161580d0",
+    "logicalSHA256": "2acea487ff5e7bbbff262c8186927a1e8a8649550480519a16de76ed53957c79",
+    "maximumLeverageError": 1.429412144204889e-15,
+    "maximumRelativeTruncationBound": 9.999619683483502e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 83096,
+    "outputSHA256": "f7844d97cf100af796ea67f13e4798fa67c9c577936db0c8601505969bdecc8e",
+    "referenceSHA256": "f182b2da93f7b8c23d62b39bd3d2ea75cecb1f259669a3946fd4b4e45bc00e8a",
+    "relativeDFDifferenceQuantiles": [
+      2.3196426755220937e-10,
+      4.240869369784418e-06,
+      1.3286579023028568e-05,
+      1.9750339666459722e-05,
+      3.5643412720049526e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      3.6731334396927476e-09,
+      1.9202508007961916e-05,
+      5.3740675132157384e-05,
+      0.0004505341507830325,
+      0.0012073401452030084
+    ],
+    "requestSHA256": "9a3c0bd42255388ed727afe5bdffa6d5b53f30eb92688e5d62fdb36fa372df0a",
+    "seconds": 8.138932082802057,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-04",
+    "evaluatedCounts": 7898304,
+    "failures": [],
+    "genes": 10074,
+    "inputSHA256": "568312760773f04b42b6673a7f496de9e1c9b31a3eb39a807d786d360e6da59f",
+    "logicalSHA256": "f64458a4d6abdbb728e14e4b65d949806f6603ca9823cf7568c2e6a8d3853b9a",
+    "maximumLeverageError": 6.938893903907228e-16,
+    "maximumRelativeTruncationBound": 9.997892723491632e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 80592,
+    "outputSHA256": "ef6204167bd4aa5fc4f0da5e71f1f8e4288b7b7c313ae1de7e7ed97c903a793f",
+    "referenceSHA256": "fed0f90cf32c7f1112b05457d2b2cf118e9a5853afa7e9db21dda1afe55a3ca1",
+    "relativeDFDifferenceQuantiles": [
+      3.7633864873262793e-10,
+      9.24529248859557e-06,
+      2.3134819188865324e-05,
+      4.2184118129399107e-05,
+      0.0002606827021055314
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.02648249034183e-08,
+      4.155033474659451e-05,
+      0.00011603987370393137,
+      0.0002290263132677062,
+      0.0009082264043201273
+    ],
+    "requestSHA256": "0f3fdf33f60b638c67f250a3feae32338205e51740e3a343d611e904a304c93c",
+    "seconds": 8.687406999990344,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-04",
+    "evaluatedCounts": 6296501,
+    "failures": [],
+    "genes": 10074,
+    "inputSHA256": "568312760773f04b42b6673a7f496de9e1c9b31a3eb39a807d786d360e6da59f",
+    "logicalSHA256": "70d175d9997ca1fa618194d25a4bd24d14ea39e9fbad517ffc3ee7f31bfda0a5",
+    "maximumLeverageError": 7.216449660063518e-16,
+    "maximumRelativeTruncationBound": 9.999868589763493e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 80592,
+    "outputSHA256": "023ee86104620297af855e58827b78111ba165bf05daea245427d99bc4c1cfee",
+    "referenceSHA256": "fed0f90cf32c7f1112b05457d2b2cf118e9a5853afa7e9db21dda1afe55a3ca1",
+    "relativeDFDifferenceQuantiles": [
+      5.494598608225724e-10,
+      1.7278653742904455e-05,
+      4.415995497535285e-05,
+      6.148482265153231e-05,
+      7.029754933119676e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      7.587872058027122e-10,
+      8.653782286834044e-05,
+      0.00021105697436158273,
+      0.00029165359949033846,
+      0.000974062559023342
+    ],
+    "requestSHA256": "8d06b984590699f99d97e4feff81291dadeb300d2173a4495adb955e3364fc91",
+    "seconds": 6.051501709036529,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-06",
+    "evaluatedCounts": 171521186,
+    "failures": [
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+        "featureIndex": 10755
+      }
+    ],
+    "genes": 11070,
+    "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+    "logicalSHA256": "282889d3912239dfc1b34e011ace1f61d128872b701dcd6b2e925b558641987c",
+    "maximumLeverageError": 1.5265566588595902e-15,
+    "maximumRelativeTruncationBound": 9.999963546706059e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 88552,
+    "outputSHA256": "c3cc8783eb13f3eb8049409a5a2ee2017ac9c1cbaddd93e9df59f82c773455d5",
+    "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+    "relativeDFDifferenceQuantiles": [
+      2.0109462159176307e-10,
+      1.8780146363013475e-05,
+      2.767085864776128e-05,
+      4.346011396524883e-05,
+      0.00031704502751529116
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      2.1527955162991967e-08,
+      0.00027760715377897087,
+      0.0007837930403068057,
+      0.0009138720370075454,
+      0.0009446463307857786
+    ],
+    "requestSHA256": "e00d70011f6b96f3bca0236d3934697fc0b087b08898fe6a26c01febde977795",
+    "seconds": 16.54261708399281,
+    "status": "completed-with-failures"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-06",
+    "evaluatedCounts": 189968490,
+    "failures": [
+      {
+        "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+        "featureIndex": 10755
+      }
+    ],
+    "genes": 11070,
+    "inputSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+    "logicalSHA256": "5c3aac04b1aef64c579752164b8d134c8d5241f1b1cd434d2f23c7ccc17956a7",
+    "maximumLeverageError": 6.38378239159465e-16,
+    "maximumRelativeTruncationBound": 9.999923996610808e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 88552,
+    "outputSHA256": "79cf29a0e4410868a0e16aa92e2913412d3d79d7e35dd63d1a3c32c98610b30b",
+    "referenceSHA256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa",
+    "relativeDFDifferenceQuantiles": [
+      9.430568049495178e-10,
+      1.8706268937618052e-05,
+      2.9523380924732013e-05,
+      4.3544355304324816e-05,
+      6.115716541514813e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      1.0638322453536826e-08,
+      0.0002703312419199652,
+      0.0008377809990316391,
+      0.0009839675707106347,
+      0.0010114575281350326
+    ],
+    "requestSHA256": "8e0bc9d0f0cc26fcf0c6df7ad2bbcf203aa77c3d1d68b79f87c434babeb5eed1",
+    "seconds": 15.865291374735534,
+    "status": "completed-with-failures"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-07",
+    "evaluatedCounts": 33648583,
+    "failures": [],
+    "genes": 10983,
+    "inputSHA256": "cd09413e9e9af157b2472f19bc1e773f17d22f918f38c03fdd6cd387ef1ef2a9",
+    "logicalSHA256": "cfd566617329751bb8f944c30a052dc6cd72a97f2a916dc60a8c15c3df9a8c39",
+    "maximumLeverageError": 5.273559366969494e-16,
+    "maximumRelativeTruncationBound": 9.999983724282566e-11,
+    "method": "nativeTrend-adjusted",
+    "moments": 87864,
+    "outputSHA256": "c6390787fbdc5ee171f2d652b0ec8ef032108246f0f0d3f78de5d40a8f0d15a0",
+    "referenceSHA256": "ff37a46121b6fa855d37a6c860db69d116229002ffac7b7cb7edd1f53fca07a9",
+    "relativeDFDifferenceQuantiles": [
+      7.409690426428434e-10,
+      1.6887080675435675e-05,
+      3.137651070678014e-05,
+      3.882958529282456e-05,
+      0.00032445633258624504
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      9.027670920590988e-10,
+      0.00014682057320623086,
+      0.0002745790664161242,
+      0.0007177219291781189,
+      0.0008773380198316506
+    ],
+    "requestSHA256": "053d658a2b0dc88c24f3343e69e51db6ee1b640f255ca587d560fc0d266755b4",
+    "seconds": 11.580040667206049,
+    "status": "passed-conditional-stage"
+  },
+  {
+    "binarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+    "case": "crowell-07",
+    "evaluatedCounts": 34475748,
+    "failures": [],
+    "genes": 10983,
+    "inputSHA256": "cd09413e9e9af157b2472f19bc1e773f17d22f918f38c03fdd6cd387ef1ef2a9",
+    "logicalSHA256": "993a7562d943856536aad6fd9ff77b1fe4ba622ea9c24391074e2d51968b9557",
+    "maximumLeverageError": 8.049116928532385e-16,
+    "maximumRelativeTruncationBound": 9.99971844184822e-11,
+    "method": "edgeRTrend-adjusted",
+    "moments": 87864,
+    "outputSHA256": "2ddf87ee67bde9303e752ca1882eeeb6750aa452ed9a4a2a83aab8bca5343002",
+    "referenceSHA256": "ff37a46121b6fa855d37a6c860db69d116229002ffac7b7cb7edd1f53fca07a9",
+    "relativeDFDifferenceQuantiles": [
+      1.6378896745657746e-09,
+      2.1342572000406465e-05,
+      4.132611842020577e-05,
+      5.718006243765745e-05,
+      6.562746320250072e-05
+    ],
+    "relativeDevianceDifferenceQuantiles": [
+      6.396193613617719e-08,
+      0.00019959089851098597,
+      0.00031204132240631393,
+      0.0007650886571980551,
+      0.0009439902263188886
+    ],
+    "requestSHA256": "242566c25df0883fbcbe4f933e77b6857c9c2f3bdacca8ec7fd2c8d49e93717e",
+    "seconds": 8.254895749967545,
+    "status": "passed-conditional-stage"
+  }
+]

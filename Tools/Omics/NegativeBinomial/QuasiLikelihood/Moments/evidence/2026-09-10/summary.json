@@ -1,0 +1,171 @@
+{
+  "attemptedArms": 58,
+  "defaultMoments": 3940848,
+  "defaultSupportEvaluations": 2135439271,
+  "defaultUnavailable": [
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (64062...1064061)",
+      "featureIndex": 2701,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (45593...1045592)",
+      "featureIndex": 4951,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (71970...1071969)",
+      "featureIndex": 5091,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (44855...1044854)",
+      "featureIndex": 5469,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (48895...1048894)",
+      "featureIndex": 13599,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (47617...1047616)",
+      "featureIndex": 14822,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (54491...1054490)",
+      "featureIndex": 15720,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (350037...1350036)",
+      "featureIndex": 19389,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (509687...1509686)",
+      "featureIndex": 21247,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (46978...1046977)",
+      "featureIndex": 2701,
+      "method": "edgeRTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (37299...1037298)",
+      "featureIndex": 4951,
+      "method": "edgeRTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (54572...1054571)",
+      "featureIndex": 5091,
+      "method": "edgeRTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (33455...1033454)",
+      "featureIndex": 5469,
+      "method": "edgeRTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (35738...1035737)",
+      "featureIndex": 13599,
+      "method": "edgeRTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (35828...1035827)",
+      "featureIndex": 14822,
+      "method": "edgeRTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (40820...1040819)",
+      "featureIndex": 15720,
+      "method": "edgeRTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (341544...1341543)",
+      "featureIndex": 19389,
+      "method": "edgeRTrend-adjusted"
+    },
+    {
+      "case": "hagai-default",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (27495...1027494)",
+      "featureIndex": 21247,
+      "method": "edgeRTrend-adjusted"
+    },
+    {
+      "case": "crowell-06",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (38108...1038107)",
+      "featureIndex": 10755,
+      "method": "nativeTrend-adjusted"
+    },
+    {
+      "case": "crowell-06",
+      "error": "omics statistics: deviance moments exhausted 1000000 support evaluations (23089...1023088)",
+      "featureIndex": 10755,
+      "method": "edgeRTrend-adjusted"
+    }
+  ],
+  "defaultUnavailableGeneArms": 20,
+  "fullyAvailableArms": 54,
+  "gridCases": 77,
+  "gridMaximumRelativeError": 7.965472725857126e-11,
+  "higherWorkSensitivity": {
+    "binarySHA256": "d91b824de8cfa99ad3f4a30361c8b845a5eea0153e45a6d134c67db41989fc8f",
+    "evaluatedCounts": 162190498,
+    "failures": [
+      {
+        "case": "hagai-default",
+        "error": "omics statistics: deviance moments exhausted 10000000 support evaluations (276889...10276888)",
+        "featureIndex": 19389,
+        "inputSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+        "method": "edgeRTrend-adjusted",
+        "originalError": "omics statistics: deviance moments exhausted 1000000 support evaluations (341544...1341543)",
+        "referenceSHA256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340"
+      }
+    ],
+    "genes": 20,
+    "logicalSHA256": "8279561762c37d899c7f0e4a20b35a67c28108a33530ca9b35ae4f3d18724195",
+    "maximumEvaluatedCounts": 9384448,
+    "maximumPMFMassError": 3.455172925548311e-09,
+    "maximumRelativeMomentError": 1.5690352350716807e-09,
+    "moments": 118,
+    "outputSHA256": "cb5b982ab2a289468d2b8cf75d03ccbdb88f424ae4c042c2ec5f144937197aea",
+    "seconds": 7.590889290906489,
+    "status": "failed"
+  },
+  "independentNumericalFailures": [],
+  "maximumLeverageError": 3.885780586188048e-15,
+  "maximumReferencePMFMassError": 2.8446351940658587e-09,
+  "maximumRelativeMomentError": 6.078990644198257e-10,
+  "maximumRelativeReferenceDFDifference": 0.0006259522617833368,
+  "maximumRelativeReferenceDevianceDifference": 0.0012119122199658742,
+  "maximumRelativeTruncationBound": 9.999994265696356e-11,
+  "nativeBinarySHA256": "935909b17d818c1c10727c4a169e058393b3552b57f0ce9dc68a62c4df64195c",
+  "nativePeakResidentBytesRange": [
+    159399936,
+    279396352
+  ],
+  "qualification": "Native conditional moment and residual adjustment only. Twenty primary work-limit failures retained; supplemental higher-work results do not change default coverage. One higher-work fit remains unavailable. Global QL scale, robust prior and cohort test remain unimplemented; no calibration or performance superiority claim.",
+  "requalifiedByteIdenticalArms": 58,
+  "reusedExactOutputChecks": 37,
+  "status": "completed-with-resource-limit-failures"
+}

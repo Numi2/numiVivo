@@ -1,0 +1,96 @@
+{
+  "input": {
+    "residuals": [
+      {
+        "counts": [
+          0,
+          0,
+          0
+        ],
+        "means": [
+          1e-200,
+          1e-200,
+          1e-200
+        ],
+        "design": [
+          [
+            1
+          ],
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        "dispersion": 0,
+        "averageQuasiDispersion": 1e+200
+      }
+    ]
+  },
+  "exitCode": 0,
+  "output": {
+    "moments": [],
+    "residuals": [
+      {
+        "value": {
+          "degreesOfFreedom": 0,
+          "deviance": 0,
+          "leverage": [
+            0.3333333333333334,
+            0.3333333333333334,
+            0.3333333333333334
+          ],
+          "moments": [
+            {
+              "degreesOfFreedom": 0,
+              "devianceScale": 0,
+              "evaluatedCounts": 1,
+              "firstCount": 0,
+              "lastCount": 0,
+              "mean": 0,
+              "meanTruncationBound": 0,
+              "omittedProbabilityBound": 0,
+              "variance": 0,
+              "varianceTruncationBound": 0
+            },
+            {
+              "degreesOfFreedom": 0,
+              "devianceScale": 0,
+              "evaluatedCounts": 1,
+              "firstCount": 0,
+              "lastCount": 0,
+              "mean": 0,
+              "meanTruncationBound": 0,
+              "omittedProbabilityBound": 0,
+              "variance": 0,
+              "varianceTruncationBound": 0
+            },
+            {
+              "degreesOfFreedom": 0,
+              "devianceScale": 0,
+              "evaluatedCounts": 1,
+              "firstCount": 0,
+              "lastCount": 0,
+              "mean": 0,
+              "meanTruncationBound": 0,
+              "omittedProbabilityBound": 0,
+              "variance": 0,
+              "varianceTruncationBound": 0
+            }
+          ],
+          "unitDegreesOfFreedom": [
+            0,
+            0,
+            0
+          ],
+          "unitDeviance": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    ]
+  }
+}

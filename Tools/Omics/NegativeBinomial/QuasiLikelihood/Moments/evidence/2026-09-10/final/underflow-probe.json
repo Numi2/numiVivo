@@ -1,0 +1,40 @@
+{
+  "input": {
+    "residuals": [
+      {
+        "counts": [
+          0,
+          0,
+          0
+        ],
+        "means": [
+          1e-200,
+          1e-200,
+          1e-200
+        ],
+        "design": [
+          [
+            1
+          ],
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        "dispersion": 0,
+        "averageQuasiDispersion": 1e+200
+      }
+    ]
+  },
+  "exitCode": 0,
+  "output": {
+    "moments": [],
+    "residuals": [
+      {
+        "error": "omics statistics: QL scaling exceeds the representable mean or dispersion domain"
+      }
+    ]
+  }
+}
