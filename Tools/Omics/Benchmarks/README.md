@@ -5,9 +5,14 @@ donors and 14 author-assigned cell types, with native streamed QC/pseudobulk
 checks against every original source row and Scanpy. It also retains the rejected
 fractional Muraro release and the unresolved streaming-PCA/integration scope.
 
-These scripts run the actual native product commands and replay their receipts.
+Completed native comparisons run the actual product commands and replay their receipts.
 Python supplies public-data preparation and independent Scanpy/PyDESeq2
 references. It is not a dependency of native NumiVivo count execution.
+
+The [complete HIRISA source benchmark](HIRISA/README.md) adds all 131 deposited
+libraries: 1,612,594 cells and 3.846 billion count entries, with exact source and
+backed AnnData checks. Donor/batch control matching is frozen before modeling.
+Native execution, DE references and held-out prediction remain pending.
 
 ## Recorded scope
 

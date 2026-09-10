@@ -216,6 +216,12 @@ independent count/QC calculations. Its old 1 GiB rejection exposed the source
 admission mismatch; streamed PCA reference/query snapshots now share the same
 64 GiB copy ceiling. That ceiling is capacity admission, not demonstrated scale.
 
+The [complete HIRISA release](../Tools/Omics/Benchmarks/HIRISA/README.md) now
+provides a verified 1,612,594-cell, 3.846-billion-entry AnnData input and exact
+source QC/library aggregates. Those are Python/scverse interoperability checks;
+native execution is pending. This complete source exceeds the cell/entry limits
+below and does not yet qualify their removal or million-cell native analysis.
+
 The output is an exchange bundle containing `original.h5ad`, `plan.json`,
 `report.json` and `receipt.json`. Verification copies the source to a private
 snapshot, checks source/plan/report/executable fingerprints and reconstructs
