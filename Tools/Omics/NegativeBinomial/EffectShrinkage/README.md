@@ -36,10 +36,11 @@ observed negative log-posterior Hessian: a **conditional Laplace approximation**
 not a replacement Wald SE. It treats dispersion and the supplied prior as fixed.
 No calibrated posterior interval or new significance test is produced.
 
-This is a fixed, contrast-specific normal prior, not DESeq2's adaptive prior
-estimation or apeglm's heavy-tailed shrinkage. It does not resolve the retained
+This option supplies a fixed, contrast-specific normal prior. The separate
+[empirical-prior option](../EmpiricalPrior/README.md) estimates its width using
+weighted quantiles; neither uses apeglm's heavy-tailed shrinkage. They do not resolve the retained
 null-calibration findings in [NullBenchmark](../NullBenchmark/README.md) and
-[ProfileAudit](../ProfileAudit/README.md). Empirical prior estimation, posterior
+[ProfileAudit](../ProfileAudit/README.md). Prior uncertainty, posterior
 coverage, effect-estimation risk, power and general biological calibration
 remain open.
 

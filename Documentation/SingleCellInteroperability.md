@@ -328,8 +328,12 @@ The complete development objective remains open:
    [count-likelihood contrast shrinkage](../Tools/Omics/NegativeBinomial/EffectShrinkage/README.md)
    now jointly refits nuisance coefficients under an explicit fixed normal prior,
    with conditional Laplace uncertainty and separate failure diagnostics. Original
-   Wald/BH inference remains unchanged. Learned effect priors, posterior coverage,
-   fuller nuisance handling and robust cross-study qualification remain.
+   Wald/BH inference remains unchanged. An explicit
+   [empirical weighted-quantile effect prior](../Tools/Omics/NegativeBinomial/EmpiricalPrior/README.md)
+   now learns the contrast prior width from full-design available genes, records
+   its contributing/excluded genes and fails independently of original inference.
+   Heavy-tailed priors, prior uncertainty, posterior coverage, effect-estimation
+   risk and robust cross-study qualification remain.
    An explicit Gamma dispersion-trend option now passes controlled Kang/Hagai
    comparisons and independent numerical checks. The earlier robust log trend
    remains available with unchanged defaults; neither is promoted by correlation

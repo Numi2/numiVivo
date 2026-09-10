@@ -1,0 +1,99 @@
+{
+  "baselineSourceCommit": "cf2008ec240312b5baf95d75ceca73d8e5678441",
+  "method": "weightedUpperQuantile",
+  "qualification": "Numerical empirical-prior and conditional MAP checks, not prior uncertainty, posterior coverage, risk, power or FDR qualification",
+  "records": [
+    {
+      "baselineReport": "/Users/home/numivivo-effect-shrinkage-20260910/kang-default/native/report.json.gz",
+      "baselineReportSHA256": "3c5895a7924313231bff4b6a1aa5bce36cf1edb00066dffc38a32a465aeb3939",
+      "id": "kang-default",
+      "planSHA256": "05b6a7aec1c955158f2d5dac85b7bb9b2e18693655879cdda36a0ecb7313aa66",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/original.h5ad",
+      "sourceSHA256": "6e5609e5bd0635ac1bd2a8f9a2bf98ad4fa9a012e8e4e2ad926436d073d745f0",
+      "testedFeatures": 5400
+    },
+    {
+      "baselineReport": "/Users/home/numivivo-effect-shrinkage-20260910/kang-active/native/report.json.gz",
+      "baselineReportSHA256": "06ba9e9260bda93e7b37d42cd5c9aef700766a8355e33fd96b90a9b8fc03b864",
+      "id": "kang-active",
+      "planSHA256": "c34ecd4a14007e5b004955cd22f15a8d23b45649ebb0e0246381cd55c1eee247",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/kang/original.h5ad",
+      "sourceSHA256": "6e5609e5bd0635ac1bd2a8f9a2bf98ad4fa9a012e8e4e2ad926436d073d745f0",
+      "testedFeatures": 8829
+    },
+    {
+      "baselineReport": "/Users/home/numivivo-effect-shrinkage-20260910/hagai-default/native/report.json.gz",
+      "baselineReportSHA256": "451b52d485ee4be46c7f182604a8765b70eab98092904239e2a7028b49b1df8c",
+      "id": "hagai-default",
+      "planSHA256": "b73397b5fde0d1ffc864cd1088c1988d4d129d6df7955fc959bdef8601ab5e0d",
+      "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/original.h5ad",
+      "sourceSHA256": "2d0a69d121bcf6e9b63b82fafd06e597f6165a927b87b0cc51cb5c90c2caa5f5",
+      "testedFeatures": 12426
+    },
+    {
+      "baselineReport": "/Users/home/numivivo-crowell-20260910/00/native/report.json.gz",
+      "baselineReportSHA256": "9b8a9860de8fbe3fe169bc23f8090c5baed5ab6ae25eeeba7116a250afd470c8",
+      "id": "crowell-00",
+      "planSHA256": "85ae808e20a13ddf0d27ea679c0091ca9fe4dcc3e0bf7cf56b9903bd36ad2157",
+      "source": "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+      "sourceSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+      "testedFeatures": 10650
+    },
+    {
+      "baselineReport": "/Users/home/numivivo-crowell-20260910/01/native/report.json.gz",
+      "baselineReportSHA256": "d023a9ab79658103e33485c8e4bb1b4b76f40568601b16ff72e611c51d334569",
+      "id": "crowell-01",
+      "planSHA256": "c75b1bdca9e687ac4793b098447a426046648149fd9b110c74a05fdf80c2fda6",
+      "source": "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+      "sourceSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+      "testedFeatures": 10140
+    },
+    {
+      "baselineReport": "/Users/home/numivivo-crowell-20260910/02/native/report.json.gz",
+      "baselineReportSHA256": "8703a46a302ff7f7eeca27a369fb116edad4d5ddb4593753f881ae13a12d1ab0",
+      "id": "crowell-02",
+      "planSHA256": "8dd4dd4a2a805e3353bd60959f0f75d0eb9833d6692f6879e050c6023e5596a5",
+      "source": "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+      "sourceSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+      "testedFeatures": 9435
+    },
+    {
+      "baselineReport": "/Users/home/numivivo-crowell-20260910/03/native/report.json.gz",
+      "baselineReportSHA256": "b57dc5d26d4fa0109e690478ebaaa72234df356d814679fe6c596750153b8c96",
+      "id": "crowell-03",
+      "planSHA256": "864ab60f6ee4757306170fce8270920c00e0f8cefb11a722fbe270add383509e",
+      "source": "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+      "sourceSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+      "testedFeatures": 10387
+    },
+    {
+      "baselineReport": "/Users/home/numivivo-crowell-20260910/04/native/report.json.gz",
+      "baselineReportSHA256": "a215da51eb46b9c692660a4452c757a7ab47eac33fa418a23dd687e84cc3d828",
+      "id": "crowell-04",
+      "planSHA256": "5f4ffef1b4d366f490f6418a0b4fe83d81c3f4f8e8ad3767978555bfffbde937",
+      "source": "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+      "sourceSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+      "testedFeatures": 10074
+    },
+    {
+      "baselineReport": "/Users/home/numivivo-crowell-20260910/06/native/report.json.gz",
+      "baselineReportSHA256": "5591d74c029148933e538620f9acc9638296a46b0e5c86aac98d741964f449d4",
+      "id": "crowell-06",
+      "planSHA256": "6433bea32c3382955f9fd9416b01fc019e039e5d2cc7bb26819779e2873e029a",
+      "source": "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+      "sourceSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+      "testedFeatures": 11070
+    },
+    {
+      "baselineReport": "/Users/home/numivivo-crowell-20260910/07/native/report.json.gz",
+      "baselineReportSHA256": "45093c2accae7a3461f5c81bbafa763f997a932d7c394789f049aa0536824547",
+      "id": "crowell-07",
+      "planSHA256": "0966cf7a349fd1241175492224143a0729f5854488f7b6d12c2a38b64164ce55",
+      "source": "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+      "sourceSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+      "testedFeatures": 10983
+    }
+  ],
+  "referencePolicy": "All tested full-design genes; abs(log2 effect)<10; weights 1/(1/mean + trend dispersion); weighted absolute 95th percentile divided by qnorm(.975); minimum 20 genes; SD floor .01",
+  "unavailable": "Crowell CPE remains replication-ineligible; no empirical fit attempted"
+}

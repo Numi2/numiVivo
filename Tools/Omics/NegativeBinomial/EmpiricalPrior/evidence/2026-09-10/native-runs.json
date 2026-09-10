@@ -1,0 +1,262 @@
+{
+  "binarySHA256": "b0fd73896d17dbfdaadc3173799a56940fe32cd55aa6a2dba852d1b0ad8da59f",
+  "hdf5SHA256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e",
+  "runs": [
+    {
+      "case": "kang-default",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/kang-default/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/kang-default/native"
+      ],
+      "exitCode": 0,
+      "seconds": 23.846666374999998,
+      "stage": "publish"
+    },
+    {
+      "case": "kang-default",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/kang-default/native"
+      ],
+      "exitCode": 0,
+      "seconds": 23.288936791999998,
+      "stage": "replay"
+    },
+    {
+      "case": "kang-active",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-null-benchmark-20260910/kang/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/kang-active/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/kang-active/native"
+      ],
+      "exitCode": 0,
+      "seconds": 33.529092458,
+      "stage": "publish"
+    },
+    {
+      "case": "kang-active",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/kang-active/native"
+      ],
+      "exitCode": 0,
+      "seconds": 33.701446583000006,
+      "stage": "replay"
+    },
+    {
+      "case": "hagai-default",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-null-benchmark-20260910/hagai/original.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/hagai-default/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/hagai-default/native"
+      ],
+      "exitCode": 0,
+      "seconds": 16.46392591700001,
+      "stage": "publish"
+    },
+    {
+      "case": "hagai-default",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/hagai-default/native"
+      ],
+      "exitCode": 0,
+      "seconds": 16.617379999999997,
+      "stage": "replay"
+    },
+    {
+      "case": "crowell-00",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-00/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-00/native"
+      ],
+      "exitCode": 0,
+      "seconds": 13.906246374999995,
+      "stage": "publish"
+    },
+    {
+      "case": "crowell-00",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-00/native"
+      ],
+      "exitCode": 0,
+      "seconds": 14.099520916999978,
+      "stage": "replay"
+    },
+    {
+      "case": "crowell-01",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-01/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-01/native"
+      ],
+      "exitCode": 0,
+      "seconds": 13.95381658300002,
+      "stage": "publish"
+    },
+    {
+      "case": "crowell-01",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-01/native"
+      ],
+      "exitCode": 0,
+      "seconds": 13.867879125000002,
+      "stage": "replay"
+    },
+    {
+      "case": "crowell-02",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-02/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-02/native"
+      ],
+      "exitCode": 0,
+      "seconds": 13.333718290999997,
+      "stage": "publish"
+    },
+    {
+      "case": "crowell-02",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-02/native"
+      ],
+      "exitCode": 0,
+      "seconds": 13.55233741699999,
+      "stage": "replay"
+    },
+    {
+      "case": "crowell-03",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-03/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-03/native"
+      ],
+      "exitCode": 0,
+      "seconds": 13.741248624999997,
+      "stage": "publish"
+    },
+    {
+      "case": "crowell-03",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-03/native"
+      ],
+      "exitCode": 0,
+      "seconds": 14.03669770800002,
+      "stage": "replay"
+    },
+    {
+      "case": "crowell-04",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-04/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-04/native"
+      ],
+      "exitCode": 0,
+      "seconds": 13.833290083000009,
+      "stage": "publish"
+    },
+    {
+      "case": "crowell-04",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-04/native"
+      ],
+      "exitCode": 0,
+      "seconds": 13.78035941600001,
+      "stage": "replay"
+    },
+    {
+      "case": "crowell-06",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-06/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-06/native"
+      ],
+      "exitCode": 0,
+      "seconds": 14.042431040999986,
+      "stage": "publish"
+    },
+    {
+      "case": "crowell-06",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-06/native"
+      ],
+      "exitCode": 65,
+      "seconds": 0.5062105000000088,
+      "stage": "replay"
+    },
+    {
+      "attempt": 2,
+      "case": "crowell-06",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-06/native"
+      ],
+      "exitCode": 0,
+      "logPath": "/Users/n/numivivo-empirical-prior-20260910/crowell-06/replay-attempt-2.log",
+      "seconds": 13.183836875,
+      "stage": "replay"
+    },
+    {
+      "attempt": 1,
+      "case": "crowell-07",
+      "command": [
+        "singlecell-h5ad-pseudobulk",
+        "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+        "--plan",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-07/plan.json",
+        "--output",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-07/native"
+      ],
+      "exitCode": 0,
+      "logPath": "/Users/n/numivivo-empirical-prior-20260910/crowell-07/publish.log",
+      "seconds": 13.355354875,
+      "stage": "publish"
+    },
+    {
+      "attempt": 1,
+      "case": "crowell-07",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-07/native"
+      ],
+      "exitCode": 0,
+      "logPath": "/Users/n/numivivo-empirical-prior-20260910/crowell-07/replay.log",
+      "seconds": 13.356934125000002,
+      "stage": "replay"
+    }
+  ]
+}

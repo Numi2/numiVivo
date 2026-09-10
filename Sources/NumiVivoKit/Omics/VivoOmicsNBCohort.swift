@@ -2,6 +2,7 @@ import Foundation
 
 public enum VivoOmicsNBZeroDonorPolicy: String, Codable, Sendable { case activeDonorProfile }
 public enum VivoOmicsNBTrendMethod: String, Codable, Sendable { case parametric, mean, gammaParametric }
+public enum VivoOmicsNBEffectPriorEstimation: String, Codable, Sendable { case weightedUpperQuantile }
 public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     public var zeroTotalDonorPolicy: VivoOmicsNBZeroDonorPolicy?
     public var trend: VivoOmicsNBTrendMethod = .parametric
@@ -13,12 +14,14 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     /// Optional zero-centered normal prior on the requested log2 contrast.
     /// Fixed by the caller; never learned from the test outcomes.
     public var effectPriorStandardDeviationLog2: Double?
+    /// Explicit empirical prior; mutually exclusive with a caller-supplied SD.
+    public var effectPriorEstimation: VivoOmicsNBEffectPriorEstimation?
     public init() {}
     private enum CodingKeys: String, CodingKey {
-        case zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance, effectPriorStandardDeviationLog2
+        case zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance, effectPriorStandardDeviationLog2, effectPriorEstimation
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance", "effectPriorStandardDeviationLog2"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance", "effectPriorStandardDeviationLog2", "effectPriorEstimation"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         zeroTotalDonorPolicy = try c.decodeIfPresent(VivoOmicsNBZeroDonorPolicy.self,forKey: .zeroTotalDonorPolicy)
         trend = try c.decodeIfPresent(VivoOmicsNBTrendMethod.self, forKey: .trend) ?? .parametric
@@ -27,13 +30,15 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
         outlierStandardDeviations = try c.decodeIfPresent(Double.self, forKey: .outlierStandardDeviations) ?? 2
         maximumCooksDistance = try c.decodeIfPresent(Double.self, forKey: .maximumCooksDistance)
         effectPriorStandardDeviationLog2 = try c.decodeIfPresent(Double.self, forKey: .effectPriorStandardDeviationLog2)
+        effectPriorEstimation = try c.decodeIfPresent(VivoOmicsNBEffectPriorEstimation.self, forKey: .effectPriorEstimation)
     }
     public func validate() throws {
         guard (20...100_000).contains(minimumTrendGenes), minimumPriorVariance.isFinite,
               (0.01...10).contains(minimumPriorVariance), outlierStandardDeviations.isFinite,
               (1...10).contains(outlierStandardDeviations),
               maximumCooksDistance.map({ $0.isFinite && $0 > 0 }) ?? true,
-              effectPriorStandardDeviationLog2.map({ $0.isFinite && (0.01...100).contains($0) }) ?? true else {
+              effectPriorStandardDeviationLog2.map({ $0.isFinite && (0.01...100).contains($0) }) ?? true,
+              effectPriorEstimation == nil || effectPriorStandardDeviationLog2 == nil else {
             throw VivoOmicsError.invalid("NB trend, prior or influence options")
         }
     }
@@ -75,14 +80,74 @@ public struct VivoOmicsNBEffectShrinkageSummary: Codable, Sendable, Equatable {
     public let failedFeatures: Int
     public let qualification: String
 }
+public struct VivoOmicsNBEffectPriorEstimate: Codable, Sendable, Equatable {
+    public let method: VivoOmicsNBEffectPriorEstimation
+    public let eligibleFeatureIndices: [Int]
+    public let referenceFeatureIndices: [Int]
+    public let excludedHighEffectFeatureIndices: [Int]
+    public let weightSum: Double
+    public let effectiveReferenceFeatures: Double
+    public let absoluteEffectQuantileLog2: Double
+    public let unboundedStandardDeviationLog2: Double
+    public let priorStandardDeviationLog2: Double
+    public let standardDeviationFloorReached: Bool
+    public let qualification: String
+}
 public struct VivoOmicsNBCohortDiagnostics: Codable, Sendable, Equatable {
     public let trend: VivoOmicsNBTrend
     public let features: [VivoOmicsNBFeatureDiagnostics]
     public let qualification: String
     public var effectShrinkage: VivoOmicsNBEffectShrinkageSummary? = nil
+    public var effectPriorEstimate: VivoOmicsNBEffectPriorEstimate? = nil
+    public var effectPriorEstimationError: String? = nil
 }
 
 public enum VivoOmicsNBCohort {
+    /// Weighted absolute 95th percentile, matched to a zero-centered normal.
+    /// Weights approximate inverse variance of log counts, not contrast precision.
+    /// The caller supplies only full-design, available, unshrunk NB effects.
+    public static func estimateEffectPrior(effectsLog2: [Double], means: [Double],
+        trendDispersions: [Double], featureIndices: [Int]) throws -> VivoOmicsNBEffectPriorEstimate {
+        let n = effectsLog2.count
+        guard n == means.count, n == trendDispersions.count, n == featureIndices.count,
+              Set(featureIndices).count == n, featureIndices.allSatisfy({ $0 >= 0 }),
+              effectsLog2.allSatisfy(\.isFinite), means.allSatisfy({ $0.isFinite && $0 > 0 }),
+              trendDispersions.allSatisfy({ $0.isFinite && $0 > 0 }) else {
+            throw VivoOmicsError.invalid("NB empirical effect-prior input domain")
+        }
+        let references = effectsLog2.indices.filter { abs(effectsLog2[$0]) < 10 }
+        guard references.count >= 20 else {
+            throw VivoOmicsError.invalid("NB empirical effect prior requires 20 finite full-design effects with abs(log2 effect) < 10")
+        }
+        let weights = references.map { 1 / (1 / means[$0] + trendDispersions[$0]) }
+        let weightSum = weights.reduce(0,+), squaredSum = weights.reduce(0) { $0 + $1*$1 }
+        guard weights.allSatisfy({ $0.isFinite && $0 > 0 }), weightSum.isFinite,
+              squaredSum.isFinite, squaredSum > 0 else {
+            throw VivoOmicsError.invalid("NB empirical effect-prior weights overflow")
+        }
+        let sorted = references.indices.sorted {
+            let lhs = abs(effectsLog2[references[$0]]), rhs = abs(effectsLog2[references[$1]])
+            return lhs == rhs ? featureIndices[references[$0]] < featureIndices[references[$1]] : lhs < rhs
+        }
+        // Frequency-quantile interpolation after weights sum to the reference
+        // count. Equal values naturally have the same inverse-CDF value.
+        var cumulative = 0.0, cumulativeWeights: [Double] = []
+        for i in sorted { cumulative += weights[i]*Double(references.count)/weightSum; cumulativeWeights.append(cumulative) }
+        let rank = 1 + (cumulative-1)*0.95, low = max(1,floor(rank)), high = min(low+1,cumulative)
+        func atRank(_ value: Double) -> Double {
+            let i = cumulativeWeights.firstIndex(where: { $0 >= value }) ?? (sorted.count-1)
+            return abs(effectsLog2[references[sorted[i]]])
+        }
+        let fraction = rank-floor(rank), quantile = (1-fraction)*atRank(low)+fraction*atRank(high)
+        let rawSD = quantile/1.959963984540054, sd = max(0.01,rawSD)
+        return .init(method: .weightedUpperQuantile,eligibleFeatureIndices: featureIndices,
+            referenceFeatureIndices: references.map { featureIndices[$0] },
+            excludedHighEffectFeatureIndices: effectsLog2.indices.filter { abs(effectsLog2[$0]) >= 10 }.map { featureIndices[$0] },
+            weightSum: weightSum,effectiveReferenceFeatures: weightSum/(squaredSum/weightSum),
+            absoluteEffectQuantileLog2: quantile,unboundedStandardDeviationLog2: rawSD,
+            priorStandardDeviationLog2: sd,standardDeviationFloorReached: rawSD <= 0.01,
+            qualification: "Empirical weighted absolute 95th percentile / Normal 97.5th percentile; weights 1/(1/mean + trend dispersion); abs(log2 effect) < 10; 20 reference genes minimum; SD floor 0.01; full-design tested genes only; no p-value selection; prior uncertainty and posterior coverage unqualified")
+    }
     /// Robust log-residual fit of alpha = a0 + a1 / mean. A named mean-only
     /// alternative is explicit; failed parametric fits do not switch methods.
     public static func fitTrend(means: [Double], dispersions: [Double], featureIndices: [Int],
@@ -309,9 +374,27 @@ public enum VivoOmicsNBCohort {
                         posteriorVariance: nil,standardError: nil,tStatistic: nil,degreesOfFreedom: nil,intervalLower: nil,intervalUpper: nil,pValue: nil,adjustedPValue: nil)
                 }
             }
+            features.append(result)
+        }
+        let adjusted = try VivoOmicsLinearStatistics.benjaminiHochberg(probabilities)
+        for (i,gene) in tested.enumerated() { features[gene].adjustedPValue = adjusted[i] }
+        var priorSD = options.effectPriorStandardDeviationLog2
+        var priorEstimate: VivoOmicsNBEffectPriorEstimate?
+        var priorError: String?
+        if options.effectPriorEstimation != nil {
+            do {
+                let reference = tested.filter { diagnostics[$0].supportResolution == nil }
+                priorEstimate = try estimateEffectPrior(effectsLog2: reference.map { features[$0].log2FoldChange! },
+                    means: reference.map { means[$0] },trendDispersions: reference.map { diagnostics[$0].trendDispersion! },
+                    featureIndices: reference)
+                priorSD = priorEstimate?.priorStandardDeviationLog2
+            } catch { priorError = error.localizedDescription }
+        }
+        for gene in tested {
+            try Task.checkCancellation()
             // Keep shrinkage failures outside the Wald inference path. Only
             // tested genes are eligible, using exactly their retained donors.
-            if result.status == .tested, let priorSD = options.effectPriorStandardDeviationLog2 {
+            if let priorSD {
                 do {
                     let resolution = diagnostics[gene].supportResolution
                     let rows = resolution?.retainedObservationIndices ?? Array(0..<n), y = response(gene)
@@ -324,21 +407,18 @@ public enum VivoOmicsNBCohort {
                 } catch is CancellationError { throw CancellationError() }
                 catch { diagnostics[gene].effectShrinkageError = error.localizedDescription }
             }
-            features.append(result)
         }
-        let adjusted = try VivoOmicsLinearStatistics.benjaminiHochberg(probabilities)
-        for (i,gene) in tested.enumerated() { features[gene].adjustedPValue = adjusted[i] }
         return .init(method: options.zeroTotalDonorPolicy == nil ? "donor-aware-NB2-adjusted-profile-log-prior-Wald-v1" : "donor-aware-NB2-active-donor-adjusted-profile-log-prior-Wald-v1",request: request,evidence: metadata.evidence,design: design,
             variancePrior: nil,features: features,testedFeatures: tested.count,
             multiplicityScope: "BH across available NB Wald tests within this contrast; no selection-adjusted or cross-contrast calibration claim",
             negativeBinomial: .init(trend: trend,features: diagnostics,
                 qualification: "Experimental NB cohort method; asymptotic Wald intervals, heuristic influence gate if requested, no count replacement; multi-study calibration remains open",
-                effectShrinkage: options.effectPriorStandardDeviationLog2.map { priorSD in
+                effectShrinkage: priorSD.map { priorSD in
                     let completed = diagnostics.filter { $0.effectShrinkageFit?.converged == true }.count
                     return .init(method: "NB2-contrast-normal-prior-count-likelihood-MAP-Laplace-v1",
                         priorStandardDeviationLog2: priorSD,eligibleFeatures: tested.count,convergedFeatures: completed,
                         failedFeatures: tested.count-completed,
-                        qualification: "Explicit fixed prior; nuisance coefficients jointly refitted; natural-log fit diagnostics; Laplace SD conditional on fixed dispersion and prior; original Wald tests and BH family unchanged; posterior coverage and biological calibration unqualified")
-                }))
+                        qualification: (options.effectPriorEstimation == nil ? "Explicit fixed prior" : "Empirically estimated prior treated as fixed") + "; nuisance coefficients jointly refitted; natural-log fit diagnostics; Laplace SD conditional on fixed dispersion and prior; original Wald tests and BH family unchanged; posterior coverage and biological calibration unqualified")
+                }, effectPriorEstimate: priorEstimate, effectPriorEstimationError: priorError))
     }
 }

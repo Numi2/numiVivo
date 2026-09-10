@@ -1,0 +1,27 @@
+{
+  "completeSourceRetained": true,
+  "entries": [
+    {
+      "logicalPath": "plan.json",
+      "logicalSHA256": "aa9b4f77ad32199c32dde5504d68eb9604d819be68b12628bf7bc0af76e0f055",
+      "path": "plan.json.gz",
+      "sha256": "10a0b76e829da03635201c90a43ae74954c6d9445225991d705f15ee10ba0a26"
+    },
+    {
+      "logicalPath": "report.json",
+      "logicalSHA256": "417f84ae8cbd1901b6a1813da38d31a5f04cd2751ce3366255e733dd9ba2633a",
+      "path": "report.json.gz",
+      "sha256": "42f4e6ea46d1a063737e40f5160bf58eb437c558cb563067658a92fd5ff508ff"
+    },
+    {
+      "logicalPath": "receipt.json",
+      "logicalSHA256": "75cea7058e79e5fe60a1753ffea0151eeef194940be8d0f401bacf3ded58cc2d",
+      "path": "receipt.json.gz",
+      "sha256": "b255ecb42483af844ea574dc0539c65ae3c7a83f3bfab57f3f5ceadd8ab503e2"
+    }
+  ],
+  "restoreTool": "Tools/Omics/NegativeBinomial/EffectShrinkage/restore_bundle.py",
+  "source": "/Users/n/numivivo-crowell-20260910/counts.h5ad",
+  "sourceSHA256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66",
+  "status": "published-and-replay-verified-before-archival"
+}

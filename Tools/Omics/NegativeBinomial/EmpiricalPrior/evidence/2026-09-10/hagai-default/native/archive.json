@@ -1,0 +1,27 @@
+{
+  "completeSourceRetained": true,
+  "entries": [
+    {
+      "logicalPath": "plan.json",
+      "logicalSHA256": "8340a6c59e9553eaf69660c32888d17eda103cb0838616723a2a97cf14a72aae",
+      "path": "plan.json.gz",
+      "sha256": "7b1d2b1971a262eaee858016d12218742f0445a1af054480f1cfbc26b64aecd9"
+    },
+    {
+      "logicalPath": "report.json",
+      "logicalSHA256": "eb3fce03f76ccd0c32c4beb4dcd755f4686c68f512f73ccd8b732f7a2649f1d3",
+      "path": "report.json.gz",
+      "sha256": "5518569eb91b6584b42a1846e594ea094ba4f87ea6fc766a71307a001800947c"
+    },
+    {
+      "logicalPath": "receipt.json",
+      "logicalSHA256": "fd5a9d9bb9a077a39cdbe9c7dc1c3f0971bfff4a9632c9c8ccd0016b7e4bf3c9",
+      "path": "receipt.json.gz",
+      "sha256": "1becc6288f69be908fa931be0287d355dc27d76b5fe21cc6ac5b06ae66d91c7a"
+    }
+  ],
+  "restoreTool": "Tools/Omics/NegativeBinomial/EffectShrinkage/restore_bundle.py",
+  "source": "/Users/n/numivivo-null-benchmark-20260910/hagai/original.h5ad",
+  "sourceSHA256": "2d0a69d121bcf6e9b63b82fafd06e597f6165a927b87b0cc51cb5c90c2caa5f5",
+  "status": "published-and-replay-verified-before-archival"
+}

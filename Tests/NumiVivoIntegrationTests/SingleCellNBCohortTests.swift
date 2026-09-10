@@ -62,6 +62,22 @@ import Testing
         #expect(shrunk.negativeBinomial?.effectShrinkage?.convergedFeatures == result.testedFeatures)
         #expect(shrunk.negativeBinomial?.effectShrinkage?.failedFeatures == 0)
         #expect(result.negativeBinomial?.effectShrinkage == nil)
+        var empirical = options; empirical.effectPriorStandardDeviationLog2 = nil
+        empirical.effectPriorEstimation = .weightedUpperQuantile; contrast.negativeBinomialOptions = empirical
+        let learned = try VivoPseudobulkDifferentialExpression.run(data,contrast: contrast)
+        #expect(learned.features == result.features)
+        #expect(learned.negativeBinomial?.trend == result.negativeBinomial?.trend)
+        #expect(learned.negativeBinomial?.effectPriorEstimationError == nil)
+        let estimate = try #require(learned.negativeBinomial?.effectPriorEstimate)
+        #expect(estimate.referenceFeatureIndices.count >= 20)
+        #expect(learned.negativeBinomial?.effectShrinkage?.priorStandardDeviationLog2 == estimate.priorStandardDeviationLog2)
+        #expect(learned.negativeBinomial?.effectShrinkage?.failedFeatures == 0)
+        empirical.maximumCooksDistance = 1e-15; contrast.negativeBinomialOptions = empirical
+        let unavailable = try VivoPseudobulkDifferentialExpression.run(data,contrast: contrast)
+        #expect(unavailable.testedFeatures == 0)
+        #expect(unavailable.negativeBinomial?.effectPriorEstimate == nil)
+        #expect(unavailable.negativeBinomial?.effectPriorEstimationError != nil)
+        #expect(unavailable.negativeBinomial?.effectShrinkage == nil)
         options.maximumCooksDistance = 1e-15; contrast.negativeBinomialOptions = options
         let excluded = try VivoPseudobulkDifferentialExpression.run(data,contrast: contrast)
         #expect(excluded.testedFeatures == 0)
@@ -86,5 +102,30 @@ import Testing
             var invalid = decoded; invalid.effectPriorStandardDeviationLog2 = sd
             #expect(throws: (any Error).self) { try invalid.validate() }
         }
+        var both = decoded; both.effectPriorEstimation = .weightedUpperQuantile
+        #expect(throws: (any Error).self) { try both.validate() }
+        let learned = try JSONDecoder().decode(VivoOmicsNBCohortOptions.self,from: Data("{\"effectPriorEstimation\":\"weightedUpperQuantile\"}".utf8))
+        #expect(try JSONDecoder().decode(VivoOmicsNBCohortOptions.self,from: JSONEncoder().encode(learned)) == learned)
+    }
+    @Test func empiricalPriorUsesWeightedQuantileAndRetainsDomainBoundaries() throws {
+        let x = (0..<20).map { Double($0)/10 }
+        func estimate(_ x: [Double], _ means: [Double]) throws -> VivoOmicsNBEffectPriorEstimate {
+            try VivoOmicsNBCohort.estimateEffectPrior(effectsLog2: x,means: means,
+                trendDispersions: Array(repeating: 0.1,count: x.count),featureIndices: Array(x.indices))
+        }
+        let equal = try estimate(x,Array(repeating: 100,count: 20))
+        #expect(abs(equal.absoluteEffectQuantileLog2-1.805) < 1e-12)
+        #expect(abs(equal.effectiveReferenceFeatures-20) < 1e-12)
+        let reversed = try estimate(x.reversed().map { -$0 },Array(repeating: 100,count: 20))
+        #expect(abs(equal.priorStandardDeviationLog2-reversed.priorStandardDeviationLog2) < 1e-12)
+        let lowCountOutlier = try estimate(x+[9],Array(repeating: 100,count: 20)+[1e-5])
+        #expect(lowCountOutlier.absoluteEffectQuantileLog2 < 2)
+        let excluded = try estimate(x+[10],Array(repeating: 100,count: 21))
+        #expect(excluded.excludedHighEffectFeatureIndices == [20])
+        #expect(excluded.priorStandardDeviationLog2 == equal.priorStandardDeviationLog2)
+        let zero = try estimate(Array(repeating: 0,count: 20),Array(repeating: 100,count: 20))
+        #expect(zero.standardDeviationFloorReached && zero.priorStandardDeviationLog2 == 0.01)
+        #expect(throws: (any Error).self) { try estimate(Array(x.prefix(19)),Array(repeating: 100,count: 19)) }
+        #expect(throws: (any Error).self) { try estimate(x,Array(repeating: .nan,count: 20)) }
     }
 }

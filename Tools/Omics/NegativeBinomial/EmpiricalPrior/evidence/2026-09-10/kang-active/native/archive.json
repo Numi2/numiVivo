@@ -1,0 +1,27 @@
+{
+  "completeSourceRetained": true,
+  "entries": [
+    {
+      "logicalPath": "plan.json",
+      "logicalSHA256": "19085ad989c4668347fe403cbbce846b2fad4fab9698214e9f6ab3c9ccb19853",
+      "path": "plan.json.gz",
+      "sha256": "d1200722fc00406a32d64096f15dd3b9fbe49878559625a871e82581ee953a7c"
+    },
+    {
+      "logicalPath": "report.json",
+      "logicalSHA256": "a746a70904244735341cdc30bbf75dcbb99c4226213389e8fd9bc2d7848ddbb3",
+      "path": "report.json.gz",
+      "sha256": "14539cb252252914121d0df2b10fcc7df0f3deb72d5bffae8c20011fe5caba0e"
+    },
+    {
+      "logicalPath": "receipt.json",
+      "logicalSHA256": "a77d91af53cbf3c9943f8937614e43fa63b7e023353e505d2589e9a4fedb2c1b",
+      "path": "receipt.json.gz",
+      "sha256": "1c2622a2a2c0f62bc59a5fd0818a8c6044ef5ce3c03ff8a6a2280eec32c0331e"
+    }
+  ],
+  "restoreTool": "Tools/Omics/NegativeBinomial/EffectShrinkage/restore_bundle.py",
+  "source": "/Users/n/numivivo-null-benchmark-20260910/kang/original.h5ad",
+  "sourceSHA256": "6e5609e5bd0635ac1bd2a8f9a2bf98ad4fa9a012e8e4e2ad926436d073d745f0",
+  "status": "published-and-replay-verified-before-archival"
+}

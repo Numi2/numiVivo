@@ -1,0 +1,18 @@
+{
+  "binarySHA256": "b0fd73896d17dbfdaadc3173799a56940fe32cd55aa6a2dba852d1b0ad8da59f",
+  "cases": 10,
+  "commands": 21,
+  "retainedFailedCommands": [
+    {
+      "case": "crowell-06",
+      "command": [
+        "singlecell-h5ad-pseudobulk-verify",
+        "/Users/n/numivivo-empirical-prior-20260910/crowell-06/native"
+      ],
+      "exitCode": 65,
+      "seconds": 0.5062105000000088,
+      "stage": "replay"
+    }
+  ],
+  "status": "all-frozen-contrasts-published-and-replayed"
+}
