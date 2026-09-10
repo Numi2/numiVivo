@@ -1,5 +1,10 @@
 # Restore original cell identities before evaluating Adamson predictions
 
+Follow-up: the [original-author assignment cohort](COHORT.md) now resolves the
+quality rule and verifies native aggregation of its 50,440 selected cells.
+Experimental control identities remain unresolved. The complete-source results
+below remain the historical, unfiltered restoration audit.
+
 The deposited scPerturb file has **3,634 incorrect or missing guide assignments**
 relative to the original GEO cell records. Its preprocessing removes barcode
 suffixes before joining metadata, then drops duplicated metadata indexes.

@@ -1,23 +1,51 @@
 import Foundation
 import CryptoKit
 
+/// Observation indices address exactly the source bytes named by `source`.
+/// Selection changes aggregation only; the complete source remains in the bundle.
+public struct VivoH5ADCellSelection: Codable, Sendable, Equatable {
+    public let source: VivoFingerprint
+    public let observationIndices: [Int]
+    public let provenance: String
+    public init(source: VivoFingerprint, observationIndices: [Int], provenance: String) {
+        self.source=source; self.observationIndices=observationIndices; self.provenance=provenance
+    }
+    private enum CodingKeys: String, CodingKey { case source,observationIndices,provenance }
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["source","observationIndices","provenance"])
+        let c=try decoder.container(keyedBy: CodingKeys.self)
+        source=try c.decode(VivoFingerprint.self,forKey: .source)
+        observationIndices=try c.decode([Int].self,forKey: .observationIndices)
+        provenance=try c.decode(String.self,forKey: .provenance)
+    }
+    func validate() throws {
+        guard !observationIndices.isEmpty, observationIndices.count<=1_000_000,
+              observationIndices.allSatisfy({ (0..<1_000_000).contains($0) }),
+              Set(observationIndices).count==observationIndices.count,
+              !provenance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              provenance.utf8.count<=16_384 else { throw VivoOmicsError.invalid("streamed cell selection indices or provenance") }
+    }
+}
+
 public struct VivoH5ADPseudobulkPlan: Codable, Sendable, Equatable {
     public let schemaVersion: Int
     public let mapping: VivoH5ADImportPlan
     public let contrasts: [VivoOmicsExpressionContrast]
     public var programs: VivoSingleCellProgramOptions? = nil
     public var reduction: VivoH5ADReductionOptions? = nil
+    public var cellSelection: VivoH5ADCellSelection? = nil
     public init(mapping: VivoH5ADImportPlan,contrasts: [VivoOmicsExpressionContrast] = [],reduction: VivoH5ADReductionOptions? = nil,programs: VivoSingleCellProgramOptions? = nil) {
         schemaVersion=1; self.mapping=mapping; self.contrasts=contrasts;self.reduction=reduction;self.programs=programs
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,contrasts,reduction,programs }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,contrasts,reduction,programs,cellSelection }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","contrasts","reduction","programs"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","contrasts","reduction","programs","cellSelection"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion)
         mapping=try c.decode(VivoH5ADImportPlan.self,forKey: .mapping)
         programs=try c.decodeIfPresent(VivoSingleCellProgramOptions.self,forKey: .programs)
         reduction=try c.decodeIfPresent(VivoH5ADReductionOptions.self,forKey: .reduction)
+        cellSelection=try c.decodeIfPresent(VivoH5ADCellSelection.self,forKey: .cellSelection)
         contrasts=try c.decodeIfPresent([VivoOmicsExpressionContrast].self,forKey: .contrasts) ?? []
     }
     public func validate() throws {
@@ -26,6 +54,10 @@ public struct VivoH5ADPseudobulkPlan: Codable, Sendable, Equatable {
         }
         try programs?.validate()
         try reduction?.validate()
+        try cellSelection?.validate()
+        guard cellSelection == nil || (programs == nil && reduction == nil) else {
+            throw VivoOmicsError.invalid("streamed cell selection currently supports aggregation and contrasts only")
+        }
         for contrast in contrasts { try contrast.validate() }
     }
 }
@@ -41,6 +73,9 @@ public struct VivoH5ADPseudobulkReport: Codable, Sendable, Equatable {
     public var programs: VivoSingleCellProgramResult? = nil
     public var reduction: VivoSingleCellReductionResult? = nil
     public var reductionStorage: VivoH5ADReductionStorage? = nil
+    /// Maps report-local rows (including group member indices) to original rows.
+    public var sourceObservationIndices: [Int]? = nil
+    public var sourceCellCount: Int? = nil
 }
 public struct VivoH5ADPseudobulkReceipt: Codable, Sendable, Equatable {
     public let schemaVersion: Int
@@ -50,8 +85,8 @@ public struct VivoH5ADPseudobulkReceipt: Codable, Sendable, Equatable {
     public let implementation: VivoFingerprint
 }
 
-/// All source cells are retained. This is an exact raw aggregation route;
-/// cell filtering and normalized per-cell matrix output are separate operations.
+/// The complete source file is retained. Optional source-bound cell selection
+/// restricts raw aggregation without writing another cell-by-feature matrix.
 public enum VivoH5ADPseudobulk {
     static var sourceLimits: VivoOmicsLimits {
         var limits=VivoOmicsLimits()
@@ -126,15 +161,38 @@ public enum VivoH5ADPseudobulk {
     }
     static func evaluateSnapshot(_ url: URL,plan: VivoH5ADPseudobulkPlan) throws -> VivoH5ADPseudobulkReport {
         try plan.validate()
+        if let selection=plan.cellSelection {
+            guard try fingerprint(url)==selection.source else { throw VivoOmicsError.invalid("streamed cell selection source changed") }
+        }
         var accumulator: Accumulator?
-        let version=try VivoSingleCellH5AD.scanSnapshot(url,plan: plan.mapping,limits: sourceLimits,onMetadata: {
-            accumulator=try Accumulator($0)
+        var rowMap: [Int]?, sourceCellCount: Int?
+        let version=try VivoSingleCellH5AD.scanSnapshot(url,plan: plan.mapping,limits: sourceLimits,onMetadata: { metadata in
+            if let selection=plan.cellSelection {
+                let indices=selection.observationIndices
+                guard indices.allSatisfy({ $0<metadata.cells.count }) else {
+                    throw VivoOmicsError.invalid("streamed cell selection index outside source axis")
+                }
+                sourceCellCount=metadata.cells.count
+                var map=[Int](repeating: -1,count: metadata.cells.count)
+                for (local,original) in indices.enumerated() { map[original]=local }
+                rowMap=map
+                let selected=VivoSingleCellCountMetadata(id: metadata.id,evidence: metadata.evidence,
+                    sourceDescription: metadata.sourceDescription,countUnit: metadata.countUnit,
+                    samples: metadata.samples,features: metadata.features,cells: indices.map { metadata.cells[$0] })
+                try selected.validate(limits: sourceLimits)
+                accumulator=try Accumulator(selected)
+            } else {
+                accumulator=try Accumulator(metadata)
+            }
         },onEntry: { row,feature,count in
             guard let accumulator else { throw VivoOmicsError.invalid("stream has no metadata") }
-            try accumulator.add(row: row,feature: feature,count: count)
+            let local=rowMap?[row] ?? row
+            if local>=0 { try accumulator.add(row: local,feature: feature,count: count) }
         })
         guard let accumulator else { throw VivoOmicsError.invalid("stream has no metadata") }
         var report=try accumulator.finish(version: version,contrasts: plan.contrasts)
+        report.sourceObservationIndices=plan.cellSelection?.observationIndices
+        report.sourceCellCount=sourceCellCount
         if let options=plan.programs {
             report.programs=try VivoSingleCellPrograms.run(snapshot: url,mapping: plan.mapping,metadata: report.metadata,quality: report.quality,normalizationTarget: plan.reduction?.normalizationTarget ?? 10_000,options: options)
         }

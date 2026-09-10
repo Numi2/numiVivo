@@ -120,3 +120,9 @@ reconstruction inputs recorded; they are not embedded in Git. The source-guide
 count reference and native report are retained. Next: verify primary guide and
 control identities, group all guides for each target together, capture fixed GO
 descriptors, then run and score the predeclared held-target protocol.
+## Verified assignment cohort
+
+The [original-author cohort](COHORT.md) now selects 50,440 cells using original
+GEO assignment quality. Native source-bound streaming aggregates match the
+independent sparse reference exactly; 82 candidate gene prefixes remain (80
+with frozen GO support). Control construct definitions still precede fitting.

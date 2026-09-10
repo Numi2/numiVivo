@@ -228,7 +228,9 @@ struct VivoSingleCellCLICommands {
             if command == "singlecell-h5ad-pseudobulk-verify" {
                 guard arguments.count == 2 else { throw VivoOmicsError.invalid("singlecell-h5ad-pseudobulk-verify <bundle-directory>") }
                 let report=try VivoH5ADPseudobulk.verify(URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint())
-                try printJSON(["status":"verified-streamed-pseudobulk","sourceCells":String(report.metadata.cells.count),"nonzeros":String(report.canonicalNonzeros)])
+                var summary=["status":"verified-streamed-pseudobulk","sourceCells":String(report.sourceCellCount ?? report.metadata.cells.count),"nonzeros":String(report.canonicalNonzeros)]
+                if report.sourceObservationIndices != nil { summary["selectedCells"]=String(report.metadata.cells.count) }
+                try printJSON(summary)
                 return 0
             }
             if command == "singlecell-h5ad-pseudobulk" {

@@ -449,3 +449,11 @@ The complete development objective remains open:
     [native genomic evidence layer and retrieval adapter](Design/ALPHAGENOME_ATLAS.md)
     already exists for bounded public-reference research. RNA/ATAC integration,
     live service qualification and downstream biological coupling remain open.
+## Source-bound aggregation cohorts
+
+[Cell selection](../Tools/Omics/H5AD/CELL_SELECTION.md) now applies explicit,
+source-fingerprinted observation indices during native streamed pseudobulk
+aggregation. It retains the full input and maps every selected report row back
+to the original axis. The [Adamson author cohort](../Tools/Omics/PerturbationPrediction/Adamson/COHORT.md)
+verifies 50,440 cells and 781,977,660 UMIs against independent sparse aggregation;
+control definitions and predictive scoring remain pending.
