@@ -351,6 +351,12 @@ The complete development objective remains open:
    A [GO-informed target-kernel experiment](../Tools/Omics/PerturbationPrediction/Norman/GO_TRANSFER.md)
    covers 101 targets: fixed regularization modestly improves matched mean and
    shuffled baselines, while nested selection fails the primary all-gene comparison.
+   The [native target-kernel owner](../Tools/Omics/PerturbationPrediction/Norman/NATIVE_TARGET_KERNEL.md)
+   now fits reusable annotation models, rejects seen target IDs and known aliases,
+   retains unsupported descriptors and reproduces the fixed GO result across all
+   105 held-target folds. Its 517 available prediction vectors agree with frozen
+   references within 2.45e-15; the 0.58% mean-RMSE gain remains a development result
+   with substantial per-target failures.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)

@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["singlecell-pca-integrate", "singlecell-pca-integrate-verify", "singlecell-graph-embed", "singlecell-graph-embed-verify", "singlecell-graph-cluster", "singlecell-graph-cluster-verify", "singlecell-pca-neighbors", "singlecell-pca-neighbors-verify", "singlecell-h5ad-pca-query", "singlecell-h5ad-pca-query-verify", "singlecell-h5ad-pca", "singlecell-h5ad-pca-verify", "singlecell-h5ad-store", "singlecell-count-store-verify", "singlecell-count-store-normalize", "singlecell-count-store-normalize-verify", "multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
+        ["singlecell-target-kernel-fit", "singlecell-target-kernel-predict", "singlecell-target-kernel-verify", "singlecell-target-kernel-prediction-verify", "singlecell-pca-integrate", "singlecell-pca-integrate-verify", "singlecell-graph-embed", "singlecell-graph-embed-verify", "singlecell-graph-cluster", "singlecell-graph-cluster-verify", "singlecell-pca-neighbors", "singlecell-pca-neighbors-verify", "singlecell-h5ad-pca-query", "singlecell-h5ad-pca-query-verify", "singlecell-h5ad-pca", "singlecell-h5ad-pca-verify", "singlecell-h5ad-store", "singlecell-count-store-verify", "singlecell-count-store-normalize", "singlecell-count-store-normalize-verify", "multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
     private func canonicalURL(_ url: URL) throws -> URL {
@@ -81,6 +81,25 @@ struct VivoSingleCellCLICommands {
             if command == "multiassay-verify" {
                 guard arguments.count == 2 else { throw VivoOmicsError.invalid("multiassay-verify <bundle>") }
                 try printJSON(VivoMultiAssayIO.verify(URL(fileURLWithPath: arguments[1]), implementation: VivoWorkflowCLIImplementation.fingerprint())); return 0
+            }
+            if command == "singlecell-target-kernel-fit" || command == "singlecell-target-kernel-predict" {
+                guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("target-kernel fit/predict <input> --plan <plan.json> --output <new-bundle>") }
+                let bytes=try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[3]),maximumBytes: 2_097_152)
+                let input=URL(fileURLWithPath: arguments[1]),output=try canonicalURL(URL(fileURLWithPath: arguments[5]))
+                let implementation=try VivoWorkflowCLIImplementation.fingerprint()
+                if command == "singlecell-target-kernel-fit" {
+                    try printJSON(VivoTargetKernel.fit(source: input,plan: VivoCanonicalJSON.decode(VivoTargetKernelPlan.self,from: bytes),implementation: implementation,to: output))
+                } else {
+                    try printJSON(VivoTargetKernel.predict(reference: input,plan: VivoCanonicalJSON.decode(VivoTargetKernelQueryPlan.self,from: bytes),implementation: implementation,to: output))
+                }
+                return 0
+            }
+            if command == "singlecell-target-kernel-verify" || command == "singlecell-target-kernel-prediction-verify" {
+                guard arguments.count==2 else { throw VivoOmicsError.invalid("target-kernel verifier requires one bundle") }
+                let root=URL(fileURLWithPath: arguments[1]),implementation=try VivoWorkflowCLIImplementation.fingerprint()
+                if command == "singlecell-target-kernel-verify" { _=try VivoTargetKernel.verifyModel(root,implementation: implementation) }
+                else { _=try VivoTargetKernel.verifyPrediction(root,implementation: implementation) }
+                try printJSON(["status":"verified-target-kernel-bundle"]);return 0
             }
             if command == "singlecell-composition-prepare" {
                 guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("singlecell-composition-prepare <pseudobulk-bundle> --plan <selection.json> --output <training.json>") }
@@ -375,6 +394,10 @@ struct VivoSingleCellCLICommands {
       multiassay-h5mu-write <dataset.json> --output <new.h5mu>
       multiassay-10x-import <matrix.h5> --plan <plan.json> --output <new-bundle>
       multiassay-verify <bundle>
+      singlecell-target-kernel-fit <training.json> --plan <descriptors.json> --output <model>
+      singlecell-target-kernel-verify <model>
+      singlecell-target-kernel-predict <model> --plan <queries.json> --output <prediction>
+      singlecell-target-kernel-prediction-verify <prediction>
       singlecell-composition-prepare <pseudobulk-bundle> --plan <selection.json> --output <training.json>
       singlecell-composition-fit <training.json> --output <model-bundle>
       singlecell-composition-predict <model-bundle> --plan <queries.json> --output <prediction-bundle>

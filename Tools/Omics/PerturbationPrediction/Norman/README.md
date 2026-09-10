@@ -11,6 +11,11 @@ The [unseen-target co-response experiment](UNSEEN_TARGETS.md) now evaluates all
 A [second experiment using only untreated-cell correlations](CONTROL_DESCRIPTORS.md)
 also underperforms the mean baseline and loses descriptor coverage on five weakly
 expressed targets.
+The [GO transfer experiment](GO_TRANSFER.md) adds independently sourced annotation
+terms and finds a modest fixed-kernel improvement, while its nested variant fails
+the primary comparison. The [native target-kernel owner](NATIVE_TARGET_KERNEL.md)
+now reproduces the fixed model across all 105 held-target folds, retaining all
+four annotation gaps and the generic/shuffled baselines.
 
 The source is [scPerturb RNA release 1.4, Zenodo 13350497](https://zenodo.org/records/13350497),
 file `NormanWeissman2019_filtered.h5ad`, from
