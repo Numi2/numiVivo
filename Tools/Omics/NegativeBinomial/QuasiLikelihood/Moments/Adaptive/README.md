@@ -76,5 +76,7 @@ compiler warnings, a failed expression-format repair and the test-fixture
 indentation failure are retained; they precede the final successful checks.
 The [family comparison](evidence/2026-09-10/family-comparison.json.gz) records the
 complete coverage. The direct method's original failures remain in the parent
-archive. Global QL scale/refit, robust unequal-DF moderation and cohort inference
-remain open, as do biological and FDR calibration.
+archive. The subsequent [native global scale/refit](../../GlobalScale/README.md)
+passes the complete 58-arm family using explicit abundance inputs. Robust
+unequal-DF moderation and cohort inference remain open, as do native abundance
+estimation and biological/FDR calibration.

@@ -19,8 +19,11 @@ default-budget moment checks, with twenty explicit work-limit failures. A
 separate larger-budget check resolves nineteen of those fits; one remains
 unavailable under direct summation. The [explicit adaptive method](QuasiLikelihood/Moments/Adaptive/README.md)
 now resolves all twenty and passes the complete 58-arm, 3,940,972-moment family.
-Global QL scale/refit, robust moderation and cohort inference remain
-unimplemented; neither stage establishes improved calibration.
+The [native global QL scale/refit](QuasiLikelihood/GlobalScale/README.md) now
+passes all 58 arms, 483,576 gene/arm fits and independent native-input LOWESS,
+fixed-scale fit and score checks. Abundance coordinates remain supplied inputs.
+Robust unequal-DF moderation and cohort inference remain unimplemented; these
+stages do not establish improved calibration.
 
 Optional [count-likelihood effect shrinkage](EffectShrinkage/README.md) now adds
 an explicit normal prior on the requested contrast, jointly refits nuisance

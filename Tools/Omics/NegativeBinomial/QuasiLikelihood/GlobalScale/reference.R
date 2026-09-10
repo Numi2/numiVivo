@@ -1,0 +1,29 @@
+args<-commandArgs(trailingOnly=TRUE);stopifnot(length(args)==3)
+suppressPackageStartupMessages({library(edgeR);library(jsonlite)})
+stopifnot(packageVersion('edgeR')=='4.10.5',packageVersion('limma')=='3.68.5',packageVersion('jsonlite')=='2.0.0')
+i<-fromJSON(gzfile(args[1]));prior<-fromJSON(gzfile(args[2]));y<-as.matrix(i$counts);x<-as.matrix(i$design)
+offset<-matrix(i$offsets,nrow=nrow(y),ncol=ncol(y),byrow=TRUE)
+ns<-asNamespace('edgeR');adjust<-get('.cxx_compute_adj_vec',ns);weights<-get('.compressWeights',ns)(y,NULL)
+results<-list()
+for(method in c('nativeTrend-adjusted','edgeRTrend-adjusted')) {
+ previous<-prior$results[[method]];phi<-previous$table$actualDispersion
+ abundance<-aveLogCPM(y,offset=offset,dispersion=phi)
+ initial<-glmFit(y,design=x,offset=offset,dispersion=phi,prior.count=0)
+ dmat<-get('.compressDispersions',ns)(y,phi);scale<-1;updates<-list()
+ for(step in 1:2) {
+  adjusted<-.Call(adjust,y,initial$fitted.values,x,dmat,scale,weights)
+  eligible<-which(adjusted$df>1e-8)
+  smooth<-lowess(abundance[eligible],adjusted$s2[eligible]^0.25,f=.5,iter=3,delta=.01*diff(range(abundance[eligible])))
+  quantile90<-unname(quantile(smooth$y,.9,type=7));nextScale<-max(1,quantile90)^4
+  fitted<-numeric(length(eligible));fitted[order(abundance[eligible])]<-smooth$y
+  updates[[step]]<-list(inputScale=scale,outputScale=nextScale,quasiDispersions=adjusted$s2,residualDegreesOfFreedom=adjusted$df,residualDeviances=adjusted$deviance,eligibleIndices=eligible-1L,smoother=fitted,quarterRootQuantile90=quantile90)
+  scale<-nextScale
+ }
+ final<-glmFit(y,design=x,offset=offset,dispersion=phi/scale,prior.count=0)
+ scaleDifference<-max(abs(scale/previous$table$averageQLScale-1))
+ meansDifference<-max(abs(final$fitted.values-previous$means)/pmax(1,abs(previous$means)))
+ stopifnot(scaleDifference<=1e-10,meansDifference<=1e-8)
+ results[[method]]<-list(trendDispersions=phi,abundanceCovariates=abundance,initialMeans=initial$fitted.values,initialCoefficients=initial$coefficients,updates=updates,averageQuasiDispersion=scale,finalMeans=final$fitted.values,finalCoefficients=final$coefficients,priorScaleDifference=scaleDifference,priorMeansDifference=meansDifference)
+ cat(method,'reconstructed',scale,'\n')
+}
+write_json(list(results=results,session=capture.output(sessionInfo())),args[3],auto_unbox=TRUE,digits=17,na='string',null='null')

@@ -1,0 +1,376 @@
+{
+  "baseRevision": "1de403d566e631dab61ed0152da2afc9acf41538",
+  "externalExecutables": [
+    {
+      "host": "macmini",
+      "path": "/Users/n/numivivo-ql-global-20260910/build/nb-ql-global",
+      "role": "Native CPU FP64 executable",
+      "sha256": "d9d5a8b989cb9968792caf1185ae9911634f8e4872865af815495282b93b3fd6"
+    },
+    {
+      "host": "macmini",
+      "path": "/Users/n/numivivo-ql-global-20260910/lowess",
+      "role": "Native CPU FP64 executable",
+      "sha256": "21c03246798284b4fb1b3739d39598e2524835d1252fd9f9d94941e8e7fee3c1"
+    },
+    {
+      "host": "macmini",
+      "path": "/Users/n/numivivo-h5ad-20260909/.build/arm64-apple-macosx/release/NumiVivoPackageTests.xctest/Contents/MacOS/NumiVivoPackageTests",
+      "role": "Release Swift test executable; selected 31 tests in six suites",
+      "sha256": "864bac3f316ada4e9852112bb60d2f9fb01ebeae04ff2ca87cc82970b7025946"
+    }
+  ],
+  "focusedSwiftTests": {
+    "configuration": "release",
+    "status": "passed",
+    "suiteNames": [
+      "SingleCellNegativeBinomialTests",
+      "SingleCellNBDevianceMomentsTests",
+      "SingleCellNBQLGlobalScaleTests",
+      "SingleCellNBCohortTests",
+      "SingleCellNBSupportTests",
+      "SingleCellNBAdaptiveMomentsTests"
+    ],
+    "suites": 6,
+    "tests": 31
+  },
+  "host": "macmini",
+  "limitations": [
+    "Supplied abundance coordinates are reference inputs, not a native abundance estimator",
+    "No unequal-DF robust prior, posterior moderation, cohort QL test or calibration claim",
+    "Timing includes serialization, transport and shared-host effects"
+  ],
+  "priorInputs": [
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-02-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "ecb88dcc57370878f400042923c9d31963f15a21d27213482eb6a97045b55c67"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-02-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "5e16040bc4292fe8a832bc2002c8d1baf401f3d692a14b2dc5913a143aa76dff"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "c4427677679773a08b77153e79ddc5e3f493de60ee4e38c23bdaf203f939b5a5"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "2738019585c24196e4cfbbea97559c59babdd569100f0c3ecf95b9de2b63713f"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-02-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "21c2a4070583967f67cfbd37df22530614f538e53b12db7380968ce176f04941"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-02-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "626821131f27a018426b68e56958c6b802e87f86821187c489bebc9355423fd9"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-03-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "9560a5e488da2f96a2977fd746453bef3e37404f0ebae7db0c4622d87a845aad"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-03-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "138b3fff51b0b3f256df67461ee8ed9d7f5dcbe77253188ba38b76e3ec4f01bb"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-03/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "1b3c89437388bb664719c89de6fc35ba6debafec95e0fcbc1514c05d161580d0"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-03/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "f182b2da93f7b8c23d62b39bd3d2ea75cecb1f259669a3946fd4b4e45bc00e8a"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-04/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "568312760773f04b42b6673a7f496de9e1c9b31a3eb39a807d786d360e6da59f"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-04/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "fed0f90cf32c7f1112b05457d2b2cf118e9a5853afa7e9db21dda1afe55a3ca1"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-03-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "b8df9525893620f80a4c36e869e93fb25d81c352a40680e7afe060a56dc1610f"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-03-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "320c3b6251b40b96a6cfd945dc4442113e40dd7a33f4a0d0bdc8579dcebfeae5"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-02/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "369866b62fca8af823339189d901c5017ad2778f73f6fe5abc55ff099650b915"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-02/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "ff58af610fcc507d26809b5cafe3dcb18cab88a643d3b27696b6cee713af7236"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-01-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "d5884d9867e3aa40cbd8ac57781f6a0ca74de75e2870818a8ee826182fea6cd8"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-01-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "2b3fb2a13d7718d4af1e3f1b0f4cdb440087cee99db8316176ce76bee4c0edef"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-08-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "b86078f9d5b63c0ea18b8a94a575acb7a87790d46478d8391bf4e8daafc98902"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-08-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "e6c004c5c53e2bde14e49e588a0b2eab0d7765e00ba0864e15d8e684440fe9e5"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "5f85f5affd67d6b681b413dcae205ce68d18f290d12b1e1ea32668a8afe20340"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-08-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "174d0ee9696199e8e5b404a662e23a772dc230aa5798fba9535f9199c43d3472"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-08-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "0d2b12bcd564672a8f4ace01a9a1a809e2338f9b58f17e6db1aaebc0edb05c67"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-01-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "aff63590297725152bd2e561afb241c8df023e83dcd41f41c14f44ce32030794"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-01-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "267c92258dcba98aa49369b425443844c4ceed967ad22896ada7695cf9303a2b"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-09-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "c4491c0a9fc59714a95ea82118f316dbd901566a23542bdf3e31178895751c6d"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-09-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "223a1aca1727482da1ca031a002d8c5e197c3a46f2cc0f13806d6c121376e413"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-10-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "86897ea5fdfec7bd01a0d1a7780971ff406e70223ababcc070ddf1aa095f5962"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-10-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "aa6257f57d3ed92da4b989597df2c1f6bb63b3fbed5ee5afd72832c876f36152"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-10-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "1087ef6285d2990946eb9c4c2f6c3dadc9058e973789ea9a05bf0ec1add1d817"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-10-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "ddb5965c1addc303b2e810e8674f7ff64675f9adeae768448f68c42b808d8872"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-09-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "69f6bf618d396181fcd465aa17dd7df31973d853f42b1b1978ccd9a46316f1be"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-09-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "ee6b33ae743f54d123f709254fc523cb8a441deacdce39f28197cc70a53e9a11"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-05-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "19b66d7698561f5636892cc0d8265d8c0530a2b5e7685bada73189bdc51c02c5"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-05-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "333f41bcb2e5ae3f21419e700aed5ed00aac7392ba3cf8ae8ad1754ba1056417"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-05-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "07658884765f923fe0ef65cee231e34a5101daf36f955db96f814279361f783b"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-05-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "0ced2c0e5643830969c5dda477383a2c734e569a1003843aacb8671cd866be5a"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-07/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "cd09413e9e9af157b2472f19bc1e773f17d22f918f38c03fdd6cd387ef1ef2a9"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-07/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "ff37a46121b6fa855d37a6c860db69d116229002ffac7b7cb7edd1f53fca07a9"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-00/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "e8990706862e88e8f7062e3e6e034c8c9bdf4bd046df9621c70a6d6cf9c85ca4"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-00/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "4ff67281f44eb49548581ffb770070ae394d0238af02801c4609272a9ee9c248"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-04-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "ec9c5b0334af6460456a32f8ef64835a426b1757be65a69d03c6f97aea944d90"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-04-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "09bc6765fd8a0f859cde49c2abf8249261bccda59259a742b05e01a87084069f"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-01/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "deb8d3d1b8e7a1974704c8f5b9828207b7d7ddeb0908c4ee5c7d018ce6df80bd"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-01/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "e6ab67d522726ae33e48a105e00bcda315dbd07b8405b7da3e8b68782fed4c6d"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-06/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/crowell-06/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "f7eb59d5b7aa137c3d1afc59f92e068615717a2791a1c1f1e9252a033a0dcffa"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-04-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "0bd6ca174ac28b51458fa5af6e6e04a87c5c81164f29ff8f34ad8bbed0448e73"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-04-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "c58103aa1c330afbc7e14cae3737527cabe682b489170b1bf717413c250ec72d"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-06-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "db85aa5a55eda025756b33c48f20798545f8e24049b570cae09d74cf8129ef11"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-06-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "4af1d33ba3bef66eaad6b7bd5232d096d0b06c4eebdd49435839537d0dfcf5f5"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-06-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "973542355d975252ee8891a2ec3f1d9cfd5f478923317f893903be593db7f148"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-06-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "c616ac2f5d5d7a4702e525307567d12031270388508fc836c420120733b3ceb3"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-07-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "1085a9bd7b5d2f49bab27c353f3e41b80be67bc3d2275625e6f19b7f82c992dd"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/hagai-null-07-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "8e29ce72f9f5ea6be069a8358e39fdc862733f3f0e8fd29d76c4a1fac5855bbd"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-07-default/input.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "d86d65838297ab0de5c23d6106f24dc4e70dc74868fb304a84797de5e273e8be"
+    },
+    {
+      "path": "/Users/home/numivivo-quasi-likelihood-20260910/kang-null-07-default/reference.json.gz",
+      "role": "Unchanged original QL study counts/design or reference results",
+      "sha256": "8406439a99d2583120476c891f9b861df6135e961f3a1d609fd6682ae608a098"
+    }
+  ],
+  "protocolSHA256": "9b07ed61d169f253be35a13dbf13eceb0035accbd2756f55c6b2742e9f79e63f",
+  "retainedFailures": [
+    {
+      "cause": "Compiler could not type-check mixed UInt64/integer literal expression in reasonable time",
+      "resolution": "Explicit UInt64 map and local typed value; production source/binary unchanged; final 31 tests pass",
+      "stage": "Swift test compile attempt 1"
+    },
+    {
+      "cause": "JSON updates simplified into a dataframe",
+      "resolution": "simplifyDataFrame=FALSE",
+      "stage": "Independent R checker attempt 1"
+    },
+    {
+      "cause": "glmFit wrapper ignores supplied tol/maxit arguments; reference means remained at default stopping tolerance",
+      "resolution": "Call edgeR::mglmLevenberg directly at tol=1e-12 and maxit=10000; retain failed comparisons",
+      "stage": "Independent R checker attempt 2"
+    }
+  ],
+  "runtime": "CPU FP64 on physical Apple M4 Pro; no Metal acceleration in this stage",
+  "sourceHashes": {
+    "Sources/NumiVivoKit/Omics/VivoOmicsLinearStatistics.swift": "b072cd8d6816541c7570187c99664d82ebbf26a127583cae8aba6eefb9d58664",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBAdaptiveMoments.swift": "a571308fbcdef31d32e19684e6540f37ad397ed132a37f7a0d0f9c44e88a99e5",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBCohort.swift": "40df22acb83708eeb515d996b3157d91808dfd68c2171fbbe2217b9f796f4e8f",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBDevianceMoments.swift": "5fa8b8705c7b8eaaca53fc512cbf88ac4644236ba949301d3794fe5c44711084",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBQLGlobalScale.swift": "56db18c46f9badbab51d006b9f4ed4d206e2986e50abfcb347f989d030e5db95",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNBSupport.swift": "410fa18fb3979d3cd99de75ca59f9d2ccfbae30a23a35809e211f044538d48e7",
+    "Sources/NumiVivoKit/Omics/VivoOmicsNegativeBinomial.swift": "319fb8b89272ad118a44da7d1affc84fb6f22901a9f589e59ebd4364b67e8171",
+    "Sources/NumiVivoKit/Omics/VivoOmicsRobustLowess.swift": "8ad43b20a96b9196a97d986164f7bba38866f4bce0d751b067bb395849df0a63",
+    "Sources/NumiVivoKit/Omics/VivoOmicsSourceDecoder.swift": "9f07ae764bb71f57be6319fd43debb1594fee886dd2198a152edc499210687b3",
+    "Sources/NumiVivoKit/Omics/VivoPseudobulkDifferentialExpression.swift": "cc50a437bd4a9b43147e88fec8d502a3ace584de961411fa51edb0ca78d1ca18",
+    "Sources/NumiVivoKit/Omics/VivoSingleCellAnalysis.swift": "23d0d228f450fc441252e200e8c905a72f360011f778b6e317c45cf3b348ecb9",
+    "Sources/NumiVivoKit/Omics/VivoSparseCounts.swift": "69ac2a3f26c36a6beb5cc2d0b4e26c8f4d129a091361314fc2ba0b1348bdbbad",
+    "Tests/NumiVivoIntegrationTests/SingleCellNBAdaptiveMomentsTests.swift": "2c78e190b8184049096e09124c8c0095e1cfdbcb7b899b0c92d681a9e8a353a8",
+    "Tests/NumiVivoIntegrationTests/SingleCellNBCohortTests.swift": "71020bfca51d54b8a7baaa0398f7d5ae87d1fa20eb3ecf7b936a61bb5e71de9e",
+    "Tests/NumiVivoIntegrationTests/SingleCellNBDevianceMomentsTests.swift": "ec2cf54868610ed8973bdbfabdc2bd277cd093b2c4537e5ed7fcd6e9adbddc9c",
+    "Tests/NumiVivoIntegrationTests/SingleCellNBQLGlobalScaleTests.swift": "2b9a0b9b0196bccc9ff90a3072a25d524cd3394aafbab9367d0b58d684e9b9ae",
+    "Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift": "25de95cb337d8f76f7d148d9ad7f08e0e7ca99414fc0c306786de43270410deb",
+    "Tests/NumiVivoIntegrationTests/SingleCellNegativeBinomialTests.swift": "6c770c9d9dc66cfcb180389526126c36dc8424606554b6fe50e609c794f33c3a",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/GlobalScale/Lowess.swift": "f43dbed326f2808003be69a497796de0e6fd566d3d6166d2594ffd4a9a1b6b31",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/GlobalScale/Main.swift": "ba3b5342c1ab3df577c7cd3a6504017388c5d78b7bb2fd0306ee239641ff2109"
+  }
+}

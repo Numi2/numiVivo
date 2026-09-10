@@ -95,8 +95,14 @@ closes all twenty measured work-limit failures: all 58 arms and 3,940,972 moment
 pass, including independent checks of the 124 recovered moments. Direct remains
 the default, and the original failures remain retained.
 
-A native QL cohort method still needs the global QL scale/refit, robust abundance-
-dependent prior estimation for unequal residual DF, and constrained-test
+The [native global scale/refit](GlobalScale/README.md) now passes all 58 original
+arms and 483,576 gene/arm fits, including independent LOWESS on the actual native
+inputs, fixed-scale GLMs and recomputed score checks. It performs two updates at
+fixed initial means and one scaled-dispersion refit; abundance coordinates are
+explicit reference inputs. All 31 focused Swift tests in six suites pass.
+
+A native QL cohort method still needs robust abundance-dependent prior
+estimation for unequal residual DF, native abundance estimation, and constrained-test
 integration with explicit failure behavior. The existing equal-DF, untrended,
 non-robust linear variance prior is insufficient. The conditional residual stage
 must not be exposed as if it provided those missing stages. The reference

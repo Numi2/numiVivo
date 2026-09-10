@@ -361,8 +361,14 @@ The complete development objective remains open:
    resolves all twenty original work-limit failures and passes all 58 arms and
    3,940,972 moments, including independent checks of the 124 recovered moments.
    Its 28 focused native tests pass; direct summation remains the default and
-   the earlier failures remain recorded. Global QL scale/refit, robust QL prior fitting and cohort integration
-   remain unimplemented. QL is not a demonstrated calibration fix:
+   the earlier failures remain recorded. The subsequent
+   [native global QL scale/refit](../Tools/Omics/NegativeBinomial/QuasiLikelihood/GlobalScale/README.md)
+   passes all 58 arms and 483,576 gene/arm fits, independent LOWESS/fixed-scale
+   GLM comparisons and direct score checks. Its 31 focused native tests pass;
+   no genes are omitted from either real-data scale update. Abundance covariates
+   remain supplied reference inputs. Robust unequal-DF QL prior fitting, native
+   abundance estimation and QL cohort integration remain unimplemented.
+   QL is not a demonstrated calibration fix:
    the native-trend adjusted reference yields 39 Hagai sham calls versus Wald's
    20 on the same default families. Active-donor QL borrowing remains separate.
    Heavy-tailed priors, prior uncertainty, posterior coverage, effect-estimation
