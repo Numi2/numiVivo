@@ -1,5 +1,10 @@
 # Complete HIRISA independent integration reference
 
+A subsequent [within-library decoder development experiment](PROGRAM_CALIBRATION.md)
+meets the unchanged program-loss margins with 28/32 sensitive controls, four
+insufficient. It identifies objective dependence without replacing the original
+failures or establishing independent biological preservation.
+
 The subsequent [full-cohort program diagnostic](INTEGRATION_PROGRAMS.md) fails
 three control-sensitive comparisons for native integration and all three Harmony
 seeds, with 18/32 comparisons insufficiently sensitive. Earlier coarse results

@@ -1,5 +1,10 @@
 # HIRISA complete-source experimental benchmark
 
+A subsequent [within-library decoder development experiment](PROGRAM_CALIBRATION.md)
+meets the unchanged program-loss margins with 28/32 sensitive controls, four
+insufficient. It identifies objective dependence without replacing the original
+failures or establishing independent biological preservation.
+
 [Native program scoring](NATIVE_PROGRAM_RESULTS.md) now passes full-cohort
 publication, replay and every-cell comparison to the frozen RNA reference,
 with exact scores, detections, totals and original metadata.

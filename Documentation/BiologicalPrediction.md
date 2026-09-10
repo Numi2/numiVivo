@@ -117,8 +117,12 @@ finds three control-sensitive preservation failures in native integration and
 each of three Harmony runs. Eighteen of 32 comparisons lack sufficient erasure
 control sensitivity; some baseline decoders have negative within-library skill.
 Every fold was independently checked with per-cell weighted SVD regressions.
-These results prevent complete program-preservation qualification while leaving
-the earlier coarse results intact. Rare-cell and native multi-seed preservation
+A separately declared [within-library fitting follow-up](../Tools/Omics/Benchmarks/HIRISA/PROGRAM_CALIBRATION.md)
+then increases sensitivity to 28/32 comparisons and meets the same loss margins
+in all four candidates. Direct per-cell SVD checks verify every fit. This shows
+that the earlier losses depend on the decoder objective; it is development
+evidence after known outcomes, not independent biological replication. Four
+controls remain insufficient, and complete preservation remains unqualified. Rare-cell and native multi-seed preservation
 remain open. Full-cohort [clustering publication, native replay and independent
 partition checks](../Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md) now
 pass for all original cells; graph communities are not validated cell types.
@@ -134,9 +138,9 @@ Lower donor-associated variance also does not isolate technical batch removal.
 1. Retain the completed full-cohort clustering evidence and the separate original
    mapped-reader baseline under their actual identities. Extend biological
    validation without treating graph partitions as authoritative annotations.
-2. Diagnose the frozen program-preservation failures and weak baseline decoder
-   sensitivity in a separately declared development experiment. Preserve these
-   failures and the known Kang NK-recall failures; complete rare-cell checks.
+2. Validate the revised within-library diagnostic on independent contexts and
+   measured endpoints, retaining four insufficient controls and the original
+   decoder/Kang NK-recall failures. Complete rare-cell and neighborhood checks.
    The [compact native program artifact](../Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
    now passes full-cohort publication, replay and independent comparison.
 3. Resolve Adamson controls from primary experimental records, then execute the

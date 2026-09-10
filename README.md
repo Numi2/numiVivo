@@ -31,9 +31,11 @@ native H5AD interchange, negative-binomial DE, sparse PCA/neighbors/clustering,
 integration, marker scoring and multimodal count interchange. The complete
 [1.61-million-cell HIRISA cohort](Tools/Omics/Benchmarks/HIRISA/README.md) has
 published ingestion, DE, donor-response prediction, PCA, graph and seed-7
-integration results. A new [program-preservation check](Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md)
-finds three control-sensitive failures in native integration and each of three
-Harmony runs; 18 of 32 comparisons have insufficient controls. Full-cohort
+integration results. The original [program-preservation check](Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md)
+found decoder-dependent failures. A separately declared [within-library fit](Tools/Omics/Benchmarks/HIRISA/PROGRAM_CALIBRATION.md)
+meets the same loss margins with 28/32 sensitive controls; four remain insufficient.
+This development result preserves the original failures and does not establish
+complete biological preservation. Full-cohort
 [clustering publication, replay and independent checks](Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md)
 now pass. [Native program scoring](Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
 also reproduces the complete cohort’s reference scores exactly and passes replay.

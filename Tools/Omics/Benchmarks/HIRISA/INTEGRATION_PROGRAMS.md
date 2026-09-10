@@ -1,5 +1,10 @@
 # Complete HIRISA program-preservation diagnostic
 
+A subsequent [within-library decoder development experiment](PROGRAM_CALIBRATION.md)
+meets the unchanged program-loss margins with 28/32 sensitive controls, four
+insufficient. It identifies objective dependence without replacing the original
+failures or establishing independent biological preservation.
+
 Subsequently, [native standalone program scoring](NATIVE_PROGRAM_RESULTS.md)
 reproduced every original-cell reference score exactly and passed native replay.
 This closes the native artifact scale gap without changing the failures below.

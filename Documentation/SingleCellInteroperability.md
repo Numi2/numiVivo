@@ -16,7 +16,9 @@ prediction folds, and complete PCA/graph qualification. Native seed-7 integratio
 and three Harmony references pass coarse preservation margins. The subsequent
 [program diagnostic](../Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md) fails
 three sensitive comparisons in all four candidates, with 18/32 controls
-insufficient. Full-cohort [native clustering publication/replay and independent
+insufficient. A separately declared [within-library fitting follow-up](../Tools/Omics/Benchmarks/HIRISA/PROGRAM_CALIBRATION.md)
+meets the same margins with 28/32 sensitive controls, retaining four insufficient
+controls and the original failures as development evidence. Full-cohort [native clustering publication/replay and independent
 checks](../Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md) now pass;
 broader biological preservation remains open.
 
