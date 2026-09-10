@@ -7,6 +7,12 @@ biological labels. Use the [GEO identity restoration](GEO_RESTORATION.md) before
 constructing a prediction benchmark. The deposited fields and historical
 receipts remain available for audit.
 
+The current [experimental-role audit](EXPERIMENTAL_ROLES.md) reconstructs all
+50,440 selected cells from original records. Controls and target assignments
+remain unverified; 94 selected guide groups also need reconciliation with the
+paper's 93-guide experiment summary. This prerequisite remains open before any
+independent prediction score is reported.
+
 The complete scPerturb Adamson UPR source now passes native annotation and
 streamed pseudobulk reconstruction. An independent HDF5/SciPy check verifies
 all original datasets and every aggregate/QC count. No perturbation predictor

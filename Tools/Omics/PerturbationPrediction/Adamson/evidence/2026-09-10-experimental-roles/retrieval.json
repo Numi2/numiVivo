@@ -1,0 +1,26 @@
+[
+  {
+    "path": "publisher-table-s1.xlsx",
+    "url": "https://ars.els-cdn.com/content/image/1-s2.0-S0092867416316609-mmc10.xlsx",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "path": "publisher-supplement.pdf",
+    "url": "https://ars.els-cdn.com/content/image/1-s2.0-S0092867416316609-mmc1.pdf",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "path": "author-repositories.json",
+    "url": "https://api.github.com/users/thomasmaxwellnorman/repos?per_page=100",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "bytes": 17591,
+    "sha256": "dc6961a8c98503fe99172097bf0e6b21d1e681b8ac68ecacb942ff507ddb07cc",
+    "prefix": "b'[{\"id\":201129970,\"node_id\":\"MD'"
+  },
+  {
+    "path": "princeton-record.html",
+    "url": "https://oar.princeton.edu/handle/88435/pr16t0gw6t",
+    "error": "HTTP Error 401: Unauthorized"
+  }
+]

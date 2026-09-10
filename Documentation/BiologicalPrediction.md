@@ -7,8 +7,9 @@ control profile. Native models also predict combinations of previously observed
 targets, and a GO-based prototype predicts some unseen targets with a small,
 nonuniform advantage over simple baselines.
 
-This assessment reviews the expression-prediction evidence available at `aa85e1a0`
-and the subsequent full-cohort program-preservation experiment on 2026-09-10.
+This assessment reviews the expression-prediction evidence and subsequent
+full-cohort scoring, clustering and decoder-calibration results through
+`8f4a6f9d`, with an experimental-role audit on 2026-09-10.
 It distinguishes measured held-out expression outcomes from numerical
 reconstruction, integration diagnostics and conditional molecular simulations.
 Each linked experiment retains its actual source, executable and platform
@@ -101,10 +102,13 @@ baseline. Numerical agreement on 517 native prediction vectors verifies the
 implementation, not generalization to a new experiment.
 
 The independent [Adamson preparation](../Tools/Omics/PerturbationPrediction/Adamson/COHORT.md)
-has restored experimental identities and verified its original-author assignment
-cohort. Authoritative control identities remain unresolved, so no independent
-prediction scores are claimed. Resolving that experimental definition is the
-next concrete requirement for this transfer test.
+has restored deposited cell-to-guide identities and verified its original-author
+assignment cohort. The [experimental-role audit](../Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md)
+reconstructs all 50,440 selected cells from original GEO records, but controls and
+guide-to-target roles remain unverified. Its 94 selected guide groups also need
+reconciliation with the paper's stated 93-guide experiment. No independent
+prediction scores are claimed. Primary experimental roles and the complete
+roster must be resolved before this fixed algorithm is fitted in Adamson.
 
 ## What the million-cell work establishes
 
@@ -143,7 +147,7 @@ Lower donor-associated variance also does not isolate technical batch removal.
    decoder/Kang NK-recall failures. Complete rare-cell and neighborhood checks.
    The [compact native program artifact](../Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
    now passes full-cohort publication, replay and independent comparison.
-3. Resolve Adamson controls from primary experimental records, then execute the
+3. Resolve Adamson controls and its 94-versus-93 guide roster from primary records, then execute the
    frozen independent-study target-prediction protocol with coverage, all
    failures and matched simple/shuffled baselines. Do not tune it on test scores.
 4. Freeze a cross-preparation/context split before fitting. HIRISA PBMC transfer

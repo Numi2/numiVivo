@@ -26,6 +26,12 @@ commands and remaining validation. These are expression point estimates;
 reliable prediction of new tissues, disease outcomes, individual-cell responses
 or variant-to-phenotype effects is not established.
 
+The independent [Adamson validation](Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md)
+has verified 50,440 selected cells, but still needs primary control assignments
+and reconciliation of its guide roster before fitting. [AlphaGenome Atlas](Documentation/AlphaGenomeAtlas.md)
+can supply variant-level molecular hypotheses; its predictions do not establish
+NumiVivo's downstream cellular or tissue outcomes.
+
 The [single-cell program](Documentation/SingleCellInteroperability.md) now includes
 native H5AD interchange, negative-binomial DE, sparse PCA/neighbors/clustering,
 integration, marker scoring and multimodal count interchange. The complete

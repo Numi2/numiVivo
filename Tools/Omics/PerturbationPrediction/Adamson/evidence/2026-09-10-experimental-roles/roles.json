@@ -1,0 +1,1256 @@
+{
+  "controlsVerified": false,
+  "excludedCells": 14897,
+  "experimentalTargetsVerified": false,
+  "expressionOutcomesRead": false,
+  "fittingPerformed": false,
+  "guides": [
+    {
+      "candidateGOStatus": null,
+      "candidateTarget": null,
+      "excludedCells": 112,
+      "experimentalRole": "unverified",
+      "guide": "*",
+      "selectedCells": 0,
+      "sourceCells": 112
+    },
+    {
+      "candidateGOStatus": null,
+      "candidateTarget": null,
+      "excludedCells": 2,
+      "experimentalRole": "unverified",
+      "guide": "62(mod)_pBA581",
+      "selectedCells": 0,
+      "sourceCells": 2
+    },
+    {
+      "candidateGOStatus": null,
+      "candidateTarget": null,
+      "excludedCells": 1689,
+      "experimentalRole": "unverified",
+      "guide": "63(mod)_pBA580",
+      "selectedCells": 4595,
+      "sourceCells": 6284
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "AARS",
+      "excludedCells": 106,
+      "experimentalRole": "unverified",
+      "guide": "AARS_pDS381",
+      "selectedCells": 360,
+      "sourceCells": 466
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "AMIGO3",
+      "excludedCells": 134,
+      "experimentalRole": "unverified",
+      "guide": "AMIGO3_pDS434",
+      "selectedCells": 616,
+      "sourceCells": 750
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ARHGAP22",
+      "excludedCells": 107,
+      "experimentalRole": "unverified",
+      "guide": "ARHGAP22_pDS458",
+      "selectedCells": 406,
+      "sourceCells": 513
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ASCC3",
+      "excludedCells": 115,
+      "experimentalRole": "unverified",
+      "guide": "ASCC3_pDS051",
+      "selectedCells": 524,
+      "sourceCells": 639
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ASCC3",
+      "excludedCells": 229,
+      "experimentalRole": "unverified",
+      "guide": "ASCC3_pDS052",
+      "selectedCells": 956,
+      "sourceCells": 1185
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ATF4",
+      "excludedCells": 6,
+      "experimentalRole": "unverified",
+      "guide": "ATF4_pBA576",
+      "selectedCells": 0,
+      "sourceCells": 6
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ATF4",
+      "excludedCells": 23,
+      "experimentalRole": "unverified",
+      "guide": "ATF4_pBA577",
+      "selectedCells": 0,
+      "sourceCells": 23
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ATF4",
+      "excludedCells": 353,
+      "experimentalRole": "unverified",
+      "guide": "ATF4_pBA608",
+      "selectedCells": 0,
+      "sourceCells": 353
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ATF6",
+      "excludedCells": 11,
+      "experimentalRole": "unverified",
+      "guide": "ATF6_pBA586",
+      "selectedCells": 0,
+      "sourceCells": 11
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ATP5B",
+      "excludedCells": 123,
+      "experimentalRole": "unverified",
+      "guide": "ATP5B_pDS055",
+      "selectedCells": 547,
+      "sourceCells": 670
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "C7orf26",
+      "excludedCells": 14,
+      "experimentalRole": "unverified",
+      "guide": "C7orf26_pDS004",
+      "selectedCells": 0,
+      "sourceCells": 14
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "CAD",
+      "excludedCells": 53,
+      "experimentalRole": "unverified",
+      "guide": "CAD_pDS468",
+      "selectedCells": 242,
+      "sourceCells": 295
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "CARS",
+      "excludedCells": 93,
+      "experimentalRole": "unverified",
+      "guide": "CARS_pDS460",
+      "selectedCells": 429,
+      "sourceCells": 522
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "CCND3",
+      "excludedCells": 19,
+      "experimentalRole": "unverified",
+      "guide": "CCND3_pDS005",
+      "selectedCells": 0,
+      "sourceCells": 19
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "CCND3",
+      "excludedCells": 83,
+      "experimentalRole": "unverified",
+      "guide": "CCND3_pDS006",
+      "selectedCells": 310,
+      "sourceCells": 393
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "CHERP",
+      "excludedCells": 93,
+      "experimentalRole": "unverified",
+      "guide": "CHERP_pDS024",
+      "selectedCells": 404,
+      "sourceCells": 497
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "COPB1",
+      "excludedCells": 50,
+      "experimentalRole": "unverified",
+      "guide": "COPB1_pDS065",
+      "selectedCells": 185,
+      "sourceCells": 235
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "COPZ1",
+      "excludedCells": 71,
+      "experimentalRole": "unverified",
+      "guide": "COPZ1_pDS462",
+      "selectedCells": 220,
+      "sourceCells": 291
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "DAD1",
+      "excludedCells": 156,
+      "experimentalRole": "unverified",
+      "guide": "DAD1_pDS499",
+      "selectedCells": 618,
+      "sourceCells": 774
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "DARS",
+      "excludedCells": 139,
+      "experimentalRole": "unverified",
+      "guide": "DARS_pDS495",
+      "selectedCells": 550,
+      "sourceCells": 689
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "DDOST",
+      "excludedCells": 80,
+      "experimentalRole": "unverified",
+      "guide": "DDOST_pDS382",
+      "selectedCells": 318,
+      "sourceCells": 398
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "DDRGK1",
+      "excludedCells": 120,
+      "experimentalRole": "unverified",
+      "guide": "DDRGK1_pDS041",
+      "selectedCells": 513,
+      "sourceCells": 633
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "DERL2",
+      "excludedCells": 134,
+      "experimentalRole": "unverified",
+      "guide": "DERL2_pDS042",
+      "selectedCells": 542,
+      "sourceCells": 676
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "DHDDS",
+      "excludedCells": 127,
+      "experimentalRole": "unverified",
+      "guide": "DHDDS_pDS383",
+      "selectedCells": 399,
+      "sourceCells": 526
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "DNAJC19",
+      "excludedCells": 213,
+      "experimentalRole": "unverified",
+      "guide": "DNAJC19_pDS026",
+      "selectedCells": 829,
+      "sourceCells": 1042
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "DNAJC19",
+      "excludedCells": 100,
+      "experimentalRole": "unverified",
+      "guide": "DNAJC19_pDS074",
+      "selectedCells": 446,
+      "sourceCells": 546
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "EIF2AK3",
+      "excludedCells": 152,
+      "experimentalRole": "unverified",
+      "guide": "EIF2AK3_pBA572",
+      "selectedCells": 0,
+      "sourceCells": 152
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "EIF2AK3",
+      "excludedCells": 21,
+      "experimentalRole": "unverified",
+      "guide": "EIF2AK3_pBA573",
+      "selectedCells": 0,
+      "sourceCells": 21
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "EIF2B2",
+      "excludedCells": 130,
+      "experimentalRole": "unverified",
+      "guide": "EIF2B2_pDS463",
+      "selectedCells": 508,
+      "sourceCells": 638
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "EIF2B3",
+      "excludedCells": 81,
+      "experimentalRole": "unverified",
+      "guide": "EIF2B3_pDS508",
+      "selectedCells": 346,
+      "sourceCells": 427
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "EIF2B4",
+      "excludedCells": 109,
+      "experimentalRole": "unverified",
+      "guide": "EIF2B4_pDS491",
+      "selectedCells": 545,
+      "sourceCells": 654
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "EIF2S1",
+      "excludedCells": 119,
+      "experimentalRole": "unverified",
+      "guide": "EIF2S1_pDS386",
+      "selectedCells": 415,
+      "sourceCells": 534
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ERN1",
+      "excludedCells": 42,
+      "experimentalRole": "unverified",
+      "guide": "ERN1_pBA574",
+      "selectedCells": 0,
+      "sourceCells": 42
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "ERN1",
+      "excludedCells": 46,
+      "experimentalRole": "unverified",
+      "guide": "ERN1_pBA575",
+      "selectedCells": 0,
+      "sourceCells": 46
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "FARSB",
+      "excludedCells": 138,
+      "experimentalRole": "unverified",
+      "guide": "FARSB_pDS390",
+      "selectedCells": 517,
+      "sourceCells": 655
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "FECH",
+      "excludedCells": 132,
+      "experimentalRole": "unverified",
+      "guide": "FECH_pDS494",
+      "selectedCells": 570,
+      "sourceCells": 702
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "GBF1",
+      "excludedCells": 158,
+      "experimentalRole": "unverified",
+      "guide": "GBF1_pDS043",
+      "selectedCells": 639,
+      "sourceCells": 797
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "GBF1",
+      "excludedCells": 68,
+      "experimentalRole": "unverified",
+      "guide": "GBF1_pDS044",
+      "selectedCells": 147,
+      "sourceCells": 215
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "GMPPB",
+      "excludedCells": 128,
+      "experimentalRole": "unverified",
+      "guide": "GMPPB_pDS391",
+      "selectedCells": 506,
+      "sourceCells": 634
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "GNPNAT1",
+      "excludedCells": 86,
+      "experimentalRole": "unverified",
+      "guide": "GNPNAT1_pDS506",
+      "selectedCells": 428,
+      "sourceCells": 514
+    },
+    {
+      "candidateGOStatus": null,
+      "candidateTarget": null,
+      "excludedCells": 697,
+      "experimentalRole": "unverified",
+      "guide": "Gal4-4(mod)_pBA582",
+      "selectedCells": 646,
+      "sourceCells": 1343
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "HARS",
+      "excludedCells": 68,
+      "experimentalRole": "unverified",
+      "guide": "HARS_pDS466",
+      "selectedCells": 272,
+      "sourceCells": 340
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "HSD17B12",
+      "excludedCells": 98,
+      "experimentalRole": "unverified",
+      "guide": "HSD17B12_pDS087",
+      "selectedCells": 323,
+      "sourceCells": 421
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "HSPA5",
+      "excludedCells": 189,
+      "experimentalRole": "unverified",
+      "guide": "HSPA5_pDS017",
+      "selectedCells": 740,
+      "sourceCells": 929
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "HSPA5",
+      "excludedCells": 51,
+      "experimentalRole": "unverified",
+      "guide": "HSPA5_pDS371",
+      "selectedCells": 262,
+      "sourceCells": 313
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "HSPA9",
+      "excludedCells": 208,
+      "experimentalRole": "unverified",
+      "guide": "HSPA9_pDS088",
+      "selectedCells": 718,
+      "sourceCells": 926
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "HYOU1",
+      "excludedCells": 82,
+      "experimentalRole": "unverified",
+      "guide": "HYOU1_pDS089",
+      "selectedCells": 432,
+      "sourceCells": 514
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "IARS2",
+      "excludedCells": 99,
+      "experimentalRole": "unverified",
+      "guide": "IARS2_pDS090",
+      "selectedCells": 351,
+      "sourceCells": 450
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "IARS2",
+      "excludedCells": 120,
+      "experimentalRole": "unverified",
+      "guide": "IARS2_pDS091",
+      "selectedCells": 572,
+      "sourceCells": 692
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "IDH3A",
+      "excludedCells": 150,
+      "experimentalRole": "unverified",
+      "guide": "IDH3A_pDS393",
+      "selectedCells": 540,
+      "sourceCells": 690
+    },
+    {
+      "candidateGOStatus": "no-usable-GO-annotations",
+      "candidateTarget": "IER3IP1",
+      "excludedCells": 513,
+      "experimentalRole": "unverified",
+      "guide": "IER3IP1_pDS002",
+      "selectedCells": 763,
+      "sourceCells": 1276
+    },
+    {
+      "candidateGOStatus": "no-usable-GO-annotations",
+      "candidateTarget": "IER3IP1",
+      "excludedCells": 32,
+      "experimentalRole": "unverified",
+      "guide": "IER3IP1_pDS003",
+      "selectedCells": 0,
+      "sourceCells": 32
+    },
+    {
+      "candidateGOStatus": "no-usable-GO-annotations",
+      "candidateTarget": "IER3IP1",
+      "excludedCells": 100,
+      "experimentalRole": "unverified",
+      "guide": "IER3IP1_pDS110",
+      "selectedCells": 504,
+      "sourceCells": 604
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "KCTD16",
+      "excludedCells": 75,
+      "experimentalRole": "unverified",
+      "guide": "KCTD16_pDS096",
+      "selectedCells": 405,
+      "sourceCells": 480
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "MANF",
+      "excludedCells": 116,
+      "experimentalRole": "unverified",
+      "guide": "MANF_pDS027",
+      "selectedCells": 462,
+      "sourceCells": 578
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "MARS",
+      "excludedCells": 109,
+      "experimentalRole": "unverified",
+      "guide": "MARS_pDS394",
+      "selectedCells": 434,
+      "sourceCells": 543
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "MRGBP",
+      "excludedCells": 99,
+      "experimentalRole": "unverified",
+      "guide": "MRGBP_pDS124",
+      "selectedCells": 487,
+      "sourceCells": 586
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "MRPL39",
+      "excludedCells": 130,
+      "experimentalRole": "unverified",
+      "guide": "MRPL39_pDS498",
+      "selectedCells": 582,
+      "sourceCells": 712
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "MTHFD1",
+      "excludedCells": 119,
+      "experimentalRole": "unverified",
+      "guide": "MTHFD1_pDS395",
+      "selectedCells": 421,
+      "sourceCells": 540
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "NEDD8",
+      "excludedCells": 129,
+      "experimentalRole": "unverified",
+      "guide": "NEDD8_pDS396",
+      "selectedCells": 389,
+      "sourceCells": 518
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "OST4",
+      "excludedCells": 145,
+      "experimentalRole": "unverified",
+      "guide": "OST4_pDS353",
+      "selectedCells": 524,
+      "sourceCells": 669
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "P4HB",
+      "excludedCells": 107,
+      "experimentalRole": "unverified",
+      "guide": "P4HB_pDS397",
+      "selectedCells": 471,
+      "sourceCells": 578
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "PDIA6",
+      "excludedCells": 113,
+      "experimentalRole": "unverified",
+      "guide": "PDIA6_pDS029",
+      "selectedCells": 505,
+      "sourceCells": 618
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "PPWD1",
+      "excludedCells": 51,
+      "experimentalRole": "unverified",
+      "guide": "PPWD1_pDS398",
+      "selectedCells": 190,
+      "sourceCells": 241
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "PSMA1",
+      "excludedCells": 30,
+      "experimentalRole": "unverified",
+      "guide": "PSMA1_pDS007",
+      "selectedCells": 0,
+      "sourceCells": 30
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "PSMD12",
+      "excludedCells": 52,
+      "experimentalRole": "unverified",
+      "guide": "PSMD12_pDS008",
+      "selectedCells": 0,
+      "sourceCells": 52
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "PSMD12",
+      "excludedCells": 11,
+      "experimentalRole": "unverified",
+      "guide": "PSMD12_pDS009",
+      "selectedCells": 0,
+      "sourceCells": 11
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "PSMD4",
+      "excludedCells": 151,
+      "experimentalRole": "unverified",
+      "guide": "PSMD4_pDS488",
+      "selectedCells": 488,
+      "sourceCells": 639
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "PTDSS1",
+      "excludedCells": 108,
+      "experimentalRole": "unverified",
+      "guide": "PTDSS1_pDS478",
+      "selectedCells": 449,
+      "sourceCells": 557
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "QARS",
+      "excludedCells": 85,
+      "experimentalRole": "unverified",
+      "guide": "QARS_pDS510",
+      "selectedCells": 305,
+      "sourceCells": 390
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SAMM50",
+      "excludedCells": 166,
+      "experimentalRole": "unverified",
+      "guide": "SAMM50_pDS156",
+      "selectedCells": 672,
+      "sourceCells": 838
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SARS",
+      "excludedCells": 92,
+      "experimentalRole": "unverified",
+      "guide": "SARS_pDS467",
+      "selectedCells": 392,
+      "sourceCells": 484
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SCYL1",
+      "excludedCells": 115,
+      "experimentalRole": "unverified",
+      "guide": "SCYL1_pDS159",
+      "selectedCells": 465,
+      "sourceCells": 580
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SCYL1",
+      "excludedCells": 129,
+      "experimentalRole": "unverified",
+      "guide": "SCYL1_pDS160",
+      "selectedCells": 559,
+      "sourceCells": 688
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SEC61A1",
+      "excludedCells": 97,
+      "experimentalRole": "unverified",
+      "guide": "SEC61A1_pDS031",
+      "selectedCells": 373,
+      "sourceCells": 470
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SEC61A1",
+      "excludedCells": 169,
+      "experimentalRole": "unverified",
+      "guide": "SEC61A1_pDS032",
+      "selectedCells": 589,
+      "sourceCells": 758
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SEC61B",
+      "excludedCells": 245,
+      "experimentalRole": "unverified",
+      "guide": "SEC61B_pDS033",
+      "selectedCells": 1002,
+      "sourceCells": 1247
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SEC61B",
+      "excludedCells": 87,
+      "experimentalRole": "unverified",
+      "guide": "SEC61B_pDS162",
+      "selectedCells": 426,
+      "sourceCells": 513
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SEC61G",
+      "excludedCells": 144,
+      "experimentalRole": "unverified",
+      "guide": "SEC61G_pDS440",
+      "selectedCells": 530,
+      "sourceCells": 674
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SEC63",
+      "excludedCells": 127,
+      "experimentalRole": "unverified",
+      "guide": "SEC63_pDS218",
+      "selectedCells": 557,
+      "sourceCells": 684
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SEL1L",
+      "excludedCells": 88,
+      "experimentalRole": "unverified",
+      "guide": "SEL1L_pDS373",
+      "selectedCells": 376,
+      "sourceCells": 464
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SLC35B1",
+      "excludedCells": 121,
+      "experimentalRole": "unverified",
+      "guide": "SLC35B1_pDS046",
+      "selectedCells": 523,
+      "sourceCells": 644
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SLC39A7",
+      "excludedCells": 108,
+      "experimentalRole": "unverified",
+      "guide": "SLC39A7_pDS219",
+      "selectedCells": 518,
+      "sourceCells": 626
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SLMO2",
+      "excludedCells": 107,
+      "experimentalRole": "unverified",
+      "guide": "SLMO2_pDS433",
+      "selectedCells": 552,
+      "sourceCells": 659
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SOCS1",
+      "excludedCells": 79,
+      "experimentalRole": "unverified",
+      "guide": "SOCS1_pDS479",
+      "selectedCells": 383,
+      "sourceCells": 462
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SPCS2",
+      "excludedCells": 115,
+      "experimentalRole": "unverified",
+      "guide": "SPCS2_pDS401",
+      "selectedCells": 497,
+      "sourceCells": 612
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SPCS3",
+      "excludedCells": 136,
+      "experimentalRole": "unverified",
+      "guide": "SPCS3_pDS402",
+      "selectedCells": 536,
+      "sourceCells": 672
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SRP68",
+      "excludedCells": 146,
+      "experimentalRole": "unverified",
+      "guide": "SRP68_pDS403",
+      "selectedCells": 583,
+      "sourceCells": 729
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SRP72",
+      "excludedCells": 100,
+      "experimentalRole": "unverified",
+      "guide": "SRP72_pDS505",
+      "selectedCells": 441,
+      "sourceCells": 541
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SRPRB",
+      "excludedCells": 136,
+      "experimentalRole": "unverified",
+      "guide": "SRPRB_pDS404",
+      "selectedCells": 596,
+      "sourceCells": 732
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SRPR",
+      "excludedCells": 111,
+      "experimentalRole": "unverified",
+      "guide": "SRPR_pDS482",
+      "selectedCells": 506,
+      "sourceCells": 617
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "STT3A",
+      "excludedCells": 1,
+      "experimentalRole": "unverified",
+      "guide": "STT3A_pDS010",
+      "selectedCells": 0,
+      "sourceCells": 1
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "STT3A",
+      "excludedCells": 131,
+      "experimentalRole": "unverified",
+      "guide": "STT3A_pDS011",
+      "selectedCells": 391,
+      "sourceCells": 522
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "SYVN1",
+      "excludedCells": 123,
+      "experimentalRole": "unverified",
+      "guide": "SYVN1_pDS442",
+      "selectedCells": 553,
+      "sourceCells": 676
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "TARS",
+      "excludedCells": 159,
+      "experimentalRole": "unverified",
+      "guide": "TARS_pDS405",
+      "selectedCells": 671,
+      "sourceCells": 830
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "TELO2",
+      "excludedCells": 149,
+      "experimentalRole": "unverified",
+      "guide": "TELO2_pDS496",
+      "selectedCells": 562,
+      "sourceCells": 711
+    },
+    {
+      "candidateGOStatus": "annotation-not-found",
+      "candidateTarget": "TIMM23",
+      "excludedCells": 164,
+      "experimentalRole": "unverified",
+      "guide": "TIMM23_pDS284",
+      "selectedCells": 625,
+      "sourceCells": 789
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "TIMM44",
+      "excludedCells": 118,
+      "experimentalRole": "unverified",
+      "guide": "TIMM44_pDS430",
+      "selectedCells": 487,
+      "sourceCells": 605
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "TMED10",
+      "excludedCells": 115,
+      "experimentalRole": "unverified",
+      "guide": "TMED10_pDS036",
+      "selectedCells": 534,
+      "sourceCells": 649
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "TMED2",
+      "excludedCells": 84,
+      "experimentalRole": "unverified",
+      "guide": "TMED2_pDS175",
+      "selectedCells": 450,
+      "sourceCells": 534
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "TMEM167A",
+      "excludedCells": 103,
+      "experimentalRole": "unverified",
+      "guide": "TMEM167A_pDS038",
+      "selectedCells": 385,
+      "sourceCells": 488
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "TTI1",
+      "excludedCells": 107,
+      "experimentalRole": "unverified",
+      "guide": "TTI1_pDS407",
+      "selectedCells": 435,
+      "sourceCells": 542
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "TTI2",
+      "excludedCells": 152,
+      "experimentalRole": "unverified",
+      "guide": "TTI2_pDS408",
+      "selectedCells": 530,
+      "sourceCells": 682
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "UFL1",
+      "excludedCells": 129,
+      "experimentalRole": "unverified",
+      "guide": "UFL1_pDS410",
+      "selectedCells": 482,
+      "sourceCells": 611
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "UFM1",
+      "excludedCells": 132,
+      "experimentalRole": "unverified",
+      "guide": "UFM1_pDS040",
+      "selectedCells": 591,
+      "sourceCells": 723
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "XBP1",
+      "excludedCells": 28,
+      "experimentalRole": "unverified",
+      "guide": "XBP1_pBA578",
+      "selectedCells": 0,
+      "sourceCells": 28
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "XBP1",
+      "excludedCells": 38,
+      "experimentalRole": "unverified",
+      "guide": "XBP1_pBA579",
+      "selectedCells": 0,
+      "sourceCells": 38
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "XRN1",
+      "excludedCells": 189,
+      "experimentalRole": "unverified",
+      "guide": "XRN1_pDS411",
+      "selectedCells": 621,
+      "sourceCells": 810
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "YIPF5",
+      "excludedCells": 10,
+      "experimentalRole": "unverified",
+      "guide": "YIPF5_pDS001",
+      "selectedCells": 0,
+      "sourceCells": 10
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "YIPF5",
+      "excludedCells": 160,
+      "experimentalRole": "unverified",
+      "guide": "YIPF5_pDS186",
+      "selectedCells": 700,
+      "sourceCells": 860
+    },
+    {
+      "candidateGOStatus": "supported",
+      "candidateTarget": "YIPF5",
+      "excludedCells": 105,
+      "experimentalRole": "unverified",
+      "guide": "YIPF5_pDS226",
+      "selectedCells": 482,
+      "sourceCells": 587
+    }
+  ],
+  "inputs": [
+    {
+      "archive": "2026-09-10-geo-restoration",
+      "manifestSHA256": "2e551bbdcd01289b5e480f48aa3046920ed39fd5e2f37845b534be0ffd1d6f7c",
+      "path": "source/GSM2406681_10X010_barcodes.tsv.gz",
+      "sha256": "1e0d820343d0c6e17bdab4fef96f4446e223b94861942ccf3d7225818e009836"
+    },
+    {
+      "archive": "2026-09-10-geo-restoration",
+      "manifestSHA256": "2e551bbdcd01289b5e480f48aa3046920ed39fd5e2f37845b534be0ffd1d6f7c",
+      "path": "source/GSM2406681_10X010_cell_identities.csv.gz",
+      "sha256": "8b40be7a2280c1713bf5a1eb828aad46e70ad3a7000b5f5a1322e51e06c4cf7f"
+    },
+    {
+      "archive": "2026-09-10-author-cohort",
+      "manifestSHA256": "d2d8df13672573e404fb4a2bcb3059d54492b0bcaac297424f9a921359e747c4",
+      "path": "cohort.json",
+      "sha256": "17ca8746fbe3096cc2d69ee06ca7313f5af302a0ab56b9e7a065222f3c4b3077"
+    },
+    {
+      "archive": "2026-09-10-author-cohort",
+      "manifestSHA256": "d2d8df13672573e404fb4a2bcb3059d54492b0bcaac297424f9a921359e747c4",
+      "path": "audit.json",
+      "sha256": "1c42357091c29ad27ddaf616756bb3e13bddff2f3e61f6f3e68f6cecc9aae90a"
+    },
+    {
+      "archive": "2026-09-10-geo-restoration",
+      "manifestSHA256": "2e551bbdcd01289b5e480f48aa3046920ed39fd5e2f37845b534be0ffd1d6f7c",
+      "path": "descriptors/candidates.json",
+      "sha256": "f970a41ab352edbaf0361c046d75070a3772aa9d876e70ac0a90510a4d97da5f"
+    },
+    {
+      "archive": "2026-09-10-geo-restoration",
+      "manifestSHA256": "2e551bbdcd01289b5e480f48aa3046920ed39fd5e2f37845b534be0ffd1d6f7c",
+      "path": "descriptors/coverage.json",
+      "sha256": "1dc7b844c101509be36905fd8aeae4478fae401482ef92eea6a529efea51e13e"
+    }
+  ],
+  "metadataReconstruction": "passed",
+  "missingGuideRecords": 80,
+  "pending": [
+    "Primary experimental control-to-guide mapping",
+    "Primary guide-to-target roster and reconciliation with the paper",
+    "Freeze verified roles and folds before fitting; freeze predictions before scoring"
+  ],
+  "readyForFrozenPrediction": false,
+  "schemaVersion": 1,
+  "selectedCandidateTargets": [
+    "AARS",
+    "AMIGO3",
+    "ARHGAP22",
+    "ASCC3",
+    "ATP5B",
+    "CAD",
+    "CARS",
+    "CCND3",
+    "CHERP",
+    "COPB1",
+    "COPZ1",
+    "DAD1",
+    "DARS",
+    "DDOST",
+    "DDRGK1",
+    "DERL2",
+    "DHDDS",
+    "DNAJC19",
+    "EIF2B2",
+    "EIF2B3",
+    "EIF2B4",
+    "EIF2S1",
+    "FARSB",
+    "FECH",
+    "GBF1",
+    "GMPPB",
+    "GNPNAT1",
+    "HARS",
+    "HSD17B12",
+    "HSPA5",
+    "HSPA9",
+    "HYOU1",
+    "IARS2",
+    "IDH3A",
+    "IER3IP1",
+    "KCTD16",
+    "MANF",
+    "MARS",
+    "MRGBP",
+    "MRPL39",
+    "MTHFD1",
+    "NEDD8",
+    "OST4",
+    "P4HB",
+    "PDIA6",
+    "PPWD1",
+    "PSMD4",
+    "PTDSS1",
+    "QARS",
+    "SAMM50",
+    "SARS",
+    "SCYL1",
+    "SEC61A1",
+    "SEC61B",
+    "SEC61G",
+    "SEC63",
+    "SEL1L",
+    "SLC35B1",
+    "SLC39A7",
+    "SLMO2",
+    "SOCS1",
+    "SPCS2",
+    "SPCS3",
+    "SRP68",
+    "SRP72",
+    "SRPR",
+    "SRPRB",
+    "STT3A",
+    "SYVN1",
+    "TARS",
+    "TELO2",
+    "TIMM23",
+    "TIMM44",
+    "TMED10",
+    "TMED2",
+    "TMEM167A",
+    "TTI1",
+    "TTI2",
+    "UFL1",
+    "UFM1",
+    "XRN1",
+    "YIPF5"
+  ],
+  "selectedCells": 50440,
+  "selectedGeneLikeGuideGroups": 92,
+  "selectedGuideGroups": 94,
+  "selectedNonGeneLabels": [
+    "63(mod)_pBA580",
+    "Gal4-4(mod)_pBA582"
+  ],
+  "sourceCells": 65337,
+  "supportedCandidateTargets": [
+    "AARS",
+    "AMIGO3",
+    "ARHGAP22",
+    "ASCC3",
+    "ATP5B",
+    "CAD",
+    "CARS",
+    "CCND3",
+    "CHERP",
+    "COPB1",
+    "COPZ1",
+    "DAD1",
+    "DARS",
+    "DDOST",
+    "DDRGK1",
+    "DERL2",
+    "DHDDS",
+    "DNAJC19",
+    "EIF2B2",
+    "EIF2B3",
+    "EIF2B4",
+    "EIF2S1",
+    "FARSB",
+    "FECH",
+    "GBF1",
+    "GMPPB",
+    "GNPNAT1",
+    "HARS",
+    "HSD17B12",
+    "HSPA5",
+    "HSPA9",
+    "HYOU1",
+    "IARS2",
+    "IDH3A",
+    "KCTD16",
+    "MANF",
+    "MARS",
+    "MRGBP",
+    "MRPL39",
+    "MTHFD1",
+    "NEDD8",
+    "OST4",
+    "P4HB",
+    "PDIA6",
+    "PPWD1",
+    "PSMD4",
+    "PTDSS1",
+    "QARS",
+    "SAMM50",
+    "SARS",
+    "SCYL1",
+    "SEC61A1",
+    "SEC61B",
+    "SEC61G",
+    "SEC63",
+    "SEL1L",
+    "SLC35B1",
+    "SLC39A7",
+    "SLMO2",
+    "SOCS1",
+    "SPCS2",
+    "SPCS3",
+    "SRP68",
+    "SRP72",
+    "SRPR",
+    "SRPRB",
+    "STT3A",
+    "SYVN1",
+    "TARS",
+    "TELO2",
+    "TIMM44",
+    "TMED10",
+    "TMED2",
+    "TMEM167A",
+    "TTI1",
+    "TTI2",
+    "UFL1",
+    "UFM1",
+    "XRN1",
+    "YIPF5"
+  ]
+}

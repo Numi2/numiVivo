@@ -40,7 +40,10 @@ The labels `63(mod)_pBA580` (4,595 selected cells) and `Gal4-4(mod)_pBA582`
 (646) remain unresolved experimental control candidates. `62(mod)_pBA581` has
 zero selected cells. Their names and these counts are not sufficient primary
 experimental definitions, so no label is yet assigned the authoritative control
-role. The next prediction step still requires that definition. The
+role. The [experimental-role audit](EXPERIMENTAL_ROLES.md) independently reproduces
+this inventory and identifies 94 selected guide groups versus 93 guides in the
+paper's experiment summary. Primary controls and the complete guide roster must
+be reconciled before fitting. The
 [frozen prediction protocol](PROTOCOL.md) is unchanged.
 
 ## Native execution and independent verification
