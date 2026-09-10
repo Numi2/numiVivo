@@ -2,7 +2,9 @@
 
 The original **1,612,594 cells in 131 libraries** have a measured unintegrated
 baseline, an exact identity control, and a library-mean-erasure control. The
-integrated response result is pending the already-running native publication.
+complete native seed-7 publication now passes all frozen mean-response and
+classification preservation margins; native replay and method comparison have
+separate status records.
 This evaluator adds a bounded experimental-response diagnostic; it does not
 complete biological preservation or replace the previous Kang NK-cell failures.
 
@@ -69,14 +71,26 @@ no arithmetic, margins or design choices changed.
 | Tcell | IFNg | 0.6272 | yes |
 | Tcell | IFN-L1 | 0.5342 | insufficient |
 
+The complete native result has maximum contrast-mean balanced-accuracy loss
+0.002546 and maximum individual-fold loss 0.019370. Mean paired response drift
+ranges from 0.004105 to 0.138859 across the sixteen contrasts, within the frozen
+0.25 margin. Conditional donor-associated variance fractions decrease in all
+23 measured enrichment/treatment strata (unweighted mean 0.079429 to 0.020288).
+This descriptive reduction includes confounded donor/batch variation. These
+coarse diagnostics do not qualify marker programs or rare-cell identity. The
+initial remote evaluation failed before metrics because the frozen design file
+was absent; copying that exact file and verifying its hash resolved the failure
+without changing the evaluator, protocol, margins, baseline or native outputs.
+Both attempts are preserved in the full-result report archive.
+
 The identity control reproduces all fold results exactly, with zero response
 drift. Subtracting each original library mean erases every paired mean response
 (relative drift one in all sixteen contrasts) and returns balanced accuracy
 0.5 in every fold. The control analytically sets centered library means to zero
 and adjusts second moments; it is a deliberate adversarial control, not an
 integration method. Four baseline contrasts are too close to chance for the
-frozen classification loss test. Passing a future preservation margin there
-will not establish classification sensitivity. The mean-response control is
+frozen classification loss test. Passing a preservation margin there
+does not establish classification sensitivity. The mean-response control is
 sensitive in all sixteen contrasts, but only tests this coarse response moment.
 
 The final baseline and both controls each scan the complete cohort in roughly
@@ -100,7 +114,7 @@ both evaluator versions, original and final baselines, all 79 fold coefficients
 and counts, moments for every library, all controls, tests, versions and the
 frozen native evaluation coordinator. Its manifest SHA256 is
 `aee509905f480ed90745e7ab917a134713a75d37421bdab5de5732b68f3e33c2`.
-The coordinator waits for the existing full native publication, validates its
+The archived coordinator waits for the full native publication, validates its
 receipt/score/metadata and original input-PC identities, then evaluates that
 output with the same frozen baseline and protocol. It does not launch a second
 integration run. Native replay and the streamed independent numerical checker

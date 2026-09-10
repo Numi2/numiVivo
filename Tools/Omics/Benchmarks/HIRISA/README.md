@@ -13,8 +13,15 @@ This is not a completed biological or full million-cell analysis benchmark.
 The [streamed integration-response diagnostic](INTEGRATION_RESPONSE.md) now has
 a complete original-cohort baseline and identity/mean-erasure controls across
 the same 79 matched donor-held-out folds. Four treatment contrasts have
-insufficient classification-control sensitivity. Evaluation of the running full
-native integration output and broader biological preservation remain pending.
+insufficient classification-control sensitivity. The complete native seed-7
+output passes the frozen coarse response margins and independent numerical
+reconstruction, and [complete native replay passes](FULL_INTEGRATION_RESULTS.md).
+The [three-seed full-cohort Harmony comparison](HARMONY_REFERENCE.md) is complete
+for these coarse metrics. Broader biological preservation remains open.
+
+[Sequential ridge passes](RIDGE_STREAMING.md) remove repeated per-cluster file
+scans with exact full-cohort trajectory regression checks and a separate
+full-HIRISA-shape storage-phase measurement.
 
 The [protocol](PROTOCOL.md) was frozen before count inspection, fitting or
 prediction. Its SHA256 is

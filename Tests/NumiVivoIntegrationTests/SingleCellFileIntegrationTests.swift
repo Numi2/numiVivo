@@ -3,6 +3,83 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellFileIntegrationTests {
+    @Test func streamedRidgePassesPreserveScalarOrderAndInactiveLevels() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let n = 1_031, d = 5, k = 7, levels = 3
+        let batch = (0..<n).map { ($0 * 7 + $0 / 11) % levels }
+        let x = try VivoIntegrationMatrix(rows: n, columns: d, scratch: root, windowBytes: 16_384)
+        let r = try VivoIntegrationMatrix(rows: n, columns: k, scratch: root, windowBytes: 16_384)
+        let scores = try VivoIntegrationMatrix(rows: n, columns: d, scratch: root, windowBytes: 16_384)
+        for i in 0..<n {
+            try x.setRow(i, (0..<d).map { $0 == 0 ? -0.0 : sin(Double(i * ($0 + 1)) / 17) })
+            try r.setRow(i, (0..<k).map { Double((i * 3 + $0) % 19) / 19 })
+        }
+        try scores.copy(from: x)
+        let active = [0, 2, 5, 6]
+        var expected = [Double](repeating: 0, count: k * levels * d)
+        for c in active { for i in 0..<n {
+            let weight = try r.value(i, c), row = try x.row(i)
+            for j in 0..<d { expected[(c * levels + batch[i]) * d + j] += weight * row[j] }
+        } }
+        let actual = try VivoSingleCellIntegration.streamedRidgeSums(x: x, memberships: r,
+            batch: batch, levels: levels, activeClusters: active)
+        #expect(actual.map(\.bitPattern) == expected.map(\.bitPattern))
+        var effects = [[Double]?](repeating: nil, count: k * levels)
+        for c in active { for b in 0..<levels where (c + b) % 2 == 0 {
+            effects[c * levels + b] = (0..<d).map { $0 == 0 ? -0.0 : Double(c + b + $0) / 13 }
+        } }
+        let old = try VivoIntegrationMatrix(rows: n, columns: d)
+        try old.copy(from: x)
+        for c in 0..<k { for b in 0..<levels {
+            guard let effect = effects[c * levels + b] else { continue }
+            for i in 0..<n where batch[i] == b {
+                let weight = try r.value(i, c); var row = try old.row(i)
+                for j in 0..<d { row[j] -= weight * effect[j] }
+                try old.setRow(i, row)
+            }
+        } }
+        try VivoSingleCellIntegration.applyStreamedRidgeEffects(scores: scores, memberships: r,
+            batch: batch, levels: levels, effects: effects)
+        for i in 0..<n { #expect(try scores.row(i).map(\.bitPattern) == old.row(i).map(\.bitPattern)) }
+    }
+
+    @Test func streamedRidgeRejectsInvalidTablesBeforeWrites() throws {
+        let x = try VivoIntegrationMatrix(rows: 3, columns: 2)
+        let r = try VivoIntegrationMatrix(rows: 3, columns: 2)
+        for i in 0..<3 { try x.setRow(i, [Double(i), -0.0]); try r.setRow(i, [0.5, 0.5]) }
+        #expect(throws: (any Error).self) {
+            try VivoSingleCellIntegration.streamedRidgeSums(x: x, memberships: r, batch: [0, 1, 0], levels: 2, activeClusters: [0, 0])
+        }
+        #expect(throws: (any Error).self) {
+            try VivoSingleCellIntegration.streamedRidgeSums(x: x, memberships: r, batch: [0, 2, 0], levels: 2, activeClusters: [0])
+        }
+        #expect(throws: (any Error).self) {
+            try VivoSingleCellIntegration.applyStreamedRidgeEffects(scores: x, memberships: r,
+                batch: [0, 1, 0], levels: 2, effects: [[1, 1], nil, nil, [.nan, 1]])
+        }
+        for i in 0..<3 { #expect(try x.row(i).map(\.bitPattern) == [Double(i), -0.0].map(\.bitPattern)) }
+    }
+
+    @Test func cancelledStreamedRidgePassDoesNotMutateScores() async throws {
+        let task = Task {
+            let scores = try VivoIntegrationMatrix(rows: 3, columns: 2)
+            let memberships = try VivoIntegrationMatrix(rows: 3, columns: 2)
+            withUnsafeCurrentTask { $0?.cancel() }
+            #expect(throws: CancellationError.self) {
+                try VivoSingleCellIntegration.streamedRidgeSums(x: scores, memberships: memberships,
+                    batch: [0, 1, 0], levels: 2, activeClusters: [0, 1])
+            }
+            #expect(throws: CancellationError.self) {
+                try VivoSingleCellIntegration.applyStreamedRidgeEffects(scores: scores, memberships: memberships,
+                    batch: [0, 1, 0], levels: 2, effects: [[1, 1], nil, nil, nil])
+            }
+            for i in 0..<3 { #expect(try scores.row(i) == [0, 0]) }
+        }
+        try await task.value
+    }
+
     @Test func consumedScratchPreservesOutputBitsAndFailureOwnership() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)

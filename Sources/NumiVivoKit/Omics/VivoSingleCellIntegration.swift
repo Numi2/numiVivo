@@ -61,6 +61,52 @@ public struct VivoSingleCellIntegrationResult: Codable, Sendable, Equatable {
 }
 
 enum VivoSingleCellIntegration {
+    /// One sequential read of the latent and membership matrices. Each scalar
+    /// accumulator still sees cells in exactly the original ascending order.
+    /// The table is bounded by clusters * levels * components, never cell count.
+    static func streamedRidgeSums(x: VivoIntegrationMatrix, memberships: VivoIntegrationMatrix,
+                                 batch: [Int], levels: Int, activeClusters: [Int]) throws -> [Double] {
+        let n = x.rows, d = x.columns, k = memberships.columns
+        guard memberships.rows == n, batch.count == n, (1...64).contains(d),
+              (2...100).contains(k), (2...128).contains(levels),
+              batch.allSatisfy({ (0..<levels).contains($0) }),
+              activeClusters.allSatisfy({ (0..<k).contains($0) }),
+              Set(activeClusters).count == activeClusters.count else { throw VivoOmicsError.invalid("streamed ridge axes") }
+        var sums = [Double](repeating: 0, count: k * levels * d)
+        for i in 0..<n {
+            if i % 2_048 == 0 { try Task.checkCancellation() }
+            let row = try x.row(i), weights = try memberships.row(i)
+            for c in activeClusters {
+                let weight = weights[c], offset = (c * levels + batch[i]) * d
+                for j in 0..<d { sums[offset + j] += weight * row[j] }
+            }
+        }
+        return sums
+    }
+
+    /// Each cell receives effects in ascending cluster order, exactly as in the
+    /// cluster-major implementation. Nil entries skip inactive levels entirely.
+    static func applyStreamedRidgeEffects(scores: VivoIntegrationMatrix, memberships: VivoIntegrationMatrix,
+                                         batch: [Int], levels: Int, effects: [[Double]?]) throws {
+        let n = scores.rows, d = scores.columns, k = memberships.columns
+        guard memberships.rows == n, batch.count == n, (1...64).contains(d),
+              (2...100).contains(k), (2...128).contains(levels), effects.count == k * levels,
+              batch.allSatisfy({ (0..<levels).contains($0) }),
+              effects.allSatisfy({ $0 == nil || ($0!.count == d && $0!.allSatisfy(\.isFinite)) }) else {
+            throw VivoOmicsError.invalid("streamed ridge effect axes or values")
+        }
+        for i in 0..<n {
+            if i % 2_048 == 0 { try Task.checkCancellation() }
+            let weights = try memberships.row(i)
+            var row = try scores.row(i)
+            for c in 0..<k {
+                guard let effect = effects[c * levels + batch[i]] else { continue }
+                for j in 0..<d { row[j] -= weights[c] * effect[j] }
+            }
+            try scores.setRow(i, row)
+        }
+    }
+
     /// Solve an intercept plus categorical ridge model through its Schur complement.
     /// The stable complement is sum(mass * lambda / (mass + lambda)); no subtraction
     /// of nearly equal total masses. Intercept is unpenalized and never removed.
@@ -286,6 +332,11 @@ enum VivoSingleCellIntegration {
             objectives.append(value); improvements.append(improvement)
             // Every correction is fitted to and subtracted from original PCA.
             try scores.copy(from: x)
+            let streamRidge = x.benefitsFromBatchedAccess || r.benefitsFromBatchedAccess || scores.benefitsFromBatchedAccess
+            let activeLevels = (0..<k).map { c in (0..<bCount).filter { observed[c*bCount+$0]/sizes[$0] > 1e-5 } }
+            let streamedSums = try streamRidge ? streamedRidgeSums(x: x, memberships: r, batch: batch,
+                levels: bCount, activeClusters: (0..<k).filter { activeLevels[$0].count >= 2 }) : nil
+            var streamedEffects = streamRidge ? [[Double]?](repeating: nil, count: k * bCount) : []
             for c in 0..<k {
                 if o.ridgeScaling == .expectedClusterBatchMass {
                     ridgePenalties![c] = sizes.map { size in
@@ -293,12 +344,19 @@ enum VivoSingleCellIntegration {
                         return o.ridge * expected
                     }
                 }
-                let active = (0..<bCount).filter { observed[c*bCount+$0]/sizes[$0] > 1e-5 }
+                let active = activeLevels[c]
                 if active.count < 2 { continue }
                 var sums = [[Double]](repeating: [Double](repeating: 0,count: d),count: bCount)
-                for i in 0..<n {
-                    let weight = try r.value(i, c), row = try x.row(i)
-                    for j in 0..<d { sums[batch[i]][j] += weight*row[j] }
+                if let streamedSums {
+                    for b in 0..<bCount {
+                        let offset = (c * bCount + b) * d
+                        sums[b] = Array(streamedSums[offset..<(offset + d)])
+                    }
+                } else {
+                    for i in 0..<n {
+                        let weight = try r.value(i, c), row = try x.row(i)
+                        for j in 0..<d { sums[batch[i]][j] += weight*row[j] }
+                    }
                 }
                 let fit: (intercept: [Double], effects: [[Double]], residual: Double)
                 if let ridgePenalties {
@@ -307,12 +365,18 @@ enum VivoSingleCellIntegration {
                     fit = try ridgeFit(masses: active.map { max(0,observed[c*bCount+$0]) },sums: active.map { sums[$0] },ridge: o.ridge)
                 }
                 maxResidual = max(maxResidual,fit.residual); centers[c] = fit.intercept
-                for (slot,b) in active.enumerated() { for i in 0..<n where batch[i] == b {
-                    let weight = try r.value(i, c); var row = try scores.row(i)
-                    for j in 0..<d { row[j] -= weight*fit.effects[slot][j] }
-                    try scores.setRow(i, row)
-                } }
+                if streamRidge {
+                    for (slot, b) in active.enumerated() { streamedEffects[c * bCount + b] = fit.effects[slot] }
+                } else {
+                    for (slot,b) in active.enumerated() { for i in 0..<n where batch[i] == b {
+                        let weight = try r.value(i, c); var row = try scores.row(i)
+                        for j in 0..<d { row[j] -= weight*fit.effects[slot][j] }
+                        try scores.setRow(i, row)
+                    } }
+                }
             }
+            if streamRidge { try applyStreamedRidgeEffects(scores: scores, memberships: r,
+                batch: batch, levels: bCount, effects: streamedEffects) }
             centers = normalized(centers)
             // Each matrix row write rejects nonfinite corrected values.
             if improvement < 0 { stopping = "objective-increase"; break }
