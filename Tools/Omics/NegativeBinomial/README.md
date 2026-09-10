@@ -17,6 +17,13 @@ twenty DESeq2 references exactly and completes eighty trend decompositions.
 It rules out differing Hagai prior variance as the explanation and locates
 substantial differences in gene-wise estimates, trend reference admission and
 outlier spread. Those inference gaps remain open; no post-score filter is added.
+The subsequent [profile audit](ProfileAudit/README.md) passes 2,305 valid native
+point checks and finds better in-bounds objectives than thousands of default
+DESeq2 gene-wise estimates per split. The objective-checked Hagai reference
+sensitivity changes one sham call to 25; nine Kang candidates fail the requested
+parametric trend constraint through automatic local fallback. These retained
+results preclude using default reference agreement alone to justify a native
+repair or a calibration claim.
 
 The actual `singlecell-analyze` route now supports an explicit
 `"model": "negativeBinomial"` contrast. It uses the existing sample selection,

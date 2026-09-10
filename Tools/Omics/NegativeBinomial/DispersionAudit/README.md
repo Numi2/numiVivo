@@ -1,5 +1,10 @@
 # Dispersion-stage diagnosis of the measured null result
 
+Follow-up: the [profile audit](../ProfileAudit/README.md) finds missed better
+objectives in the default reference and passes the selected native numerical
+checks. The differences below should not be read as proof of a native numerical
+defect. Reference optimization sensitivity and calibration remain distinct.
+
 This post-score audit follows the [frozen untreated-cell benchmark](../NullBenchmark/README.md).
 It narrows the next inference work to gene-wise dispersion estimation, its
 reference-gene admission and outlier handling. It does not change or qualify

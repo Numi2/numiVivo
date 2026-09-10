@@ -4,6 +4,13 @@ This benchmark runs native NumiVivo NB results against R edgeR QL, limma-voom
 and DESeq2 on two existing experimental contrasts. It uses all source cells and
 genes before the predeclared count filter. Only donor-level pseudobulk is dense.
 
+The subsequent [untreated-split profile audit](../NegativeBinomial/ProfileAudit/README.md)
+finds better in-bounds gene-wise objectives than the pinned default DESeq2
+optimizer in all twenty sham splits. Its objective-checked Hagai sensitivity
+changes one sham call to 25; nine Kang candidates automatically change trend
+method and fail the declared parametric comparison. Package completion and
+agreement alone therefore do not certify optimization adequacy or calibration.
+
 - Kang: all 2,651 B cells, 15,706 source genes, eight paired human donors,
   IFNB stimulation versus control; 8,894 eligible genes.
 - Hagai: all 13,863 deposited mouse cells, 22,048 source genes, three paired

@@ -303,6 +303,13 @@ The complete development objective remains open:
    decompositions. Equal Hagai prior variance rules out a prior-strength
    explanation; gene-wise estimation and outlier admission remain the next
    concrete inference targets, without claiming the calibration issue fixed.
+   The subsequent [profile audit](../Tools/Omics/NegativeBinomial/ProfileAudit/README.md)
+   passes 2,305 valid native point checks and exposes missed better in-bounds
+   objectives in the default DESeq2 references. Objective-checked Hagai reference
+   sensitivity yields 25 sham calls instead of one; nine Kang parametric
+   sensitivities fall back to local trends and remain failed method constraints.
+   Matching the original reference does not justify a native numerical repair;
+   statistical calibration and independent power evidence remain open.
 3. **Negative-binomial DE:** an explicit native NB cohort model now runs through
    the count/analysis/replay/table CLI, with adjusted dispersion estimation,
    robust trend, prior shrinkage, offsets, shared paired/batch designs and
