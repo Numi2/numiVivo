@@ -207,16 +207,17 @@ improves on the simpler mean response in only four. Monocyte IFN-L1 and NK IFNg
 remain worse than no-change for every learned baseline. See the full tables
 and [prediction archive](evidence/2026-09-10-prediction), including the interrupted
 provenance-correction attempt. No model settings were tuned from these outcomes.
-The separate [PBMC preparation-transfer mapping](CONTEXT_TRANSFER.md) is now
-frozen, with sixty cross-preparation folds, sixty matched references and verified
-sparse counts. Native aggregation is underway; response fitting remains pending. No production
-default, biological calibration, million-cell full analysis or Metal speed claim
-follows from these checks.
+The separate [PBMC preparation-transfer experiment](CONTEXT_TRANSFER.md) now
+completes sixty cross-preparation folds and sixty matched within-preparation
+references on 705,365 selected cells. Every native count, fit and replay passes
+independent checks. Ridge beats both no-change and cross mean in 3/12 primary
+contrasts; the complete report retains all negative results and fold metrics.
 
-The 79-fold enriched-population experiment is complete at this stated scope.
-Cross-preparation PBMC prediction remains unqualified pending execution of the
-frozen split. Complete PCA/graph, native seed-7 integration and full-cohort
-clustering have published results; broader biological preservation remains open.
+Both the 79-fold enriched-population experiment and the 120-fold transfer
+experiment are complete at their stated scopes. Preparation/batch confounding,
+annotation-conditioned strata and independent-study replication remain open.
+Complete PCA/graph, native seed-7 integration and full-cohort clustering have
+published results; broader biological preservation remains unqualified.
 
 ## Reproduction and evidence
 

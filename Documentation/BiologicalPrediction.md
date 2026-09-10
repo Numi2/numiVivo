@@ -8,8 +8,8 @@ targets, and a GO-based prototype predicts some unseen targets with a small,
 nonuniform advantage over simple baselines.
 
 This assessment reviews the expression-prediction evidence and subsequent
-full-cohort scoring, clustering and decoder-calibration results through
-`8f4a6f9d`, with an experimental-role audit on 2026-09-10.
+full-cohort scoring, clustering, decoder calibration and complete preparation
+transfer through 2026-09-11, with the retained Adamson experimental-role audit.
 It distinguishes measured held-out expression outcomes from numerical
 reconstruction, integration diagnostics and conditional molecular simulations.
 Each linked experiment retains its actual source, executable and platform
@@ -22,6 +22,7 @@ identities; this review does not requalify historical receipts under a new build
 | How will a new donor respond to a known treatment? | Paired control/treated count profiles from training donors; the new donor's control counts; matching treatment, organism, population and feature identities. | Native no-change, mean, median and context-ridge estimates of population-average treated log1p(CPM). Complete Kang, Hagai and HIRISA held-out donor experiments show conditional predictive signal, with failures retained. |
 | What happens when two observed targets are perturbed together? | Control and single-target counts for both constituents in the same experimental context; the pair's target identities. | Six native composition baselines evaluated on all 131 held-out Norman pairs. This tests expression composition; it does not identify genetic interactions. |
 | What happens when an unobserved target is perturbed? | Control and other single-target counts in the same context; independently supplied target identities and GO terms for training and query targets. | Native target-kernel prototype, evaluated on 105 Norman folds with 101 supported descriptors. Its small average gain does not establish reliable unseen-target transfer. |
+| Can a known response transfer between enriched preparations and PBMCs? | Other-donor paired counts from the training preparation; query-preparation control counts; exact author lineage annotations, donor and feature identities. | All 120 HIRISA folds completed. Cross ridge beats both no-change and cross mean in 3/12 contrasts; this is an inspected-study, annotation-conditioned endpoint with preparation/batch confounding. |
 | What will happen in a new tissue, species, disease state or patient? | Would require a validated transfer model and measured outcomes in that destination context. | No qualifying result in this evidence set. Existing point estimates cannot be promoted to those outcomes. |
 | Can a DNA variant predict a cellular or tissue phenotype? | Would require assembly/allele-resolved regulatory evidence and validated connections through RNA, proteins, mechanisms and phenotype. | [AlphaGenome integration work](AlphaGenomeAtlas.md) provides a direction and separate evidence interface; a validated end-to-end phenotype predictor is not established. |
 
@@ -68,6 +69,30 @@ B cells and 0.572022 / 0.247536 / 0.239330 for Hagai fibroblasts. These are sepa
 within-study experiments, not training across species. Weak individual folds
 and marker-panel regressions remain reported. Millions of measured cells do
 not turn a handful of donors into millions of independent biological replicates.
+
+### Known treatment across preparations
+
+The [complete HIRISA transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
+withholds each query donor from both preparations and retains six separate author
+lineages. All **120 frozen folds completed**: sixty cross-preparation predictions and
+sixty matched within-preparation references, spanning 705,365 selected cells and
+all 18,082 source genes. All six native count bundles and prediction batches
+pass independent numerical checks and native replay. Every output was frozen
+before scoring, and two scoring executions produced identical result bytes.
+
+All three learned methods beat no-change in **all twelve cross-preparation
+contrast means**. Ridge meets the fixed
+primary gate—lower all-gene RMSE than both no-change and cross-preparation mean—in
+**3/12 contrasts**. Cross-preparation ridge is worse than matched within-preparation
+ridge in all twelve contrasts, showing a consistent transfer penalty. No model
+was selected or tuned from these results.
+
+The protocol preceded these fits and PBMC scores, but followed other inspected
+HIRISA results. Treated-cell annotations define outcome strata, and preparation,
+batch and culture composition vary together. This supports measured conditional
+average RNA prediction across these combined contexts; it does not establish
+independent-study replication, prospective cell identity or a causal preparation
+effect. All twelve direction/lineage outcomes and every fold remain reported.
 
 ### Held-out combinations of observed targets
 
@@ -150,10 +175,10 @@ Lower donor-associated variance also does not isolate technical batch removal.
 3. Resolve Adamson controls and its 94-versus-93 guide roster from primary records, then execute the
    frozen independent-study target-prediction protocol with coverage, all
    failures and matched simple/shuffled baselines. Do not tune it on test scores.
-4. Execute the [frozen HIRISA preparation-transfer split](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md):
-   sixty cross-preparation folds and sixty matched within-preparation references.
-   Membership and independent sparse counts pass; native aggregation and
-   predictions remain pending. All source cells and excluded strata are retained.
+4. Extend the [completed HIRISA preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
+   to an independent study with prospective strata and measured outcomes. Its
+   sixty cross-preparation folds and sixty matched references now pass replay
+   and numerical checks; limited donor replication and context confounding remain.
 5. Establish predictive interval coverage and useful improvements over simple
    baselines on independent biological replicates before promoting a predictor.
    Connecting expression to a measured phenotype requires its own model,

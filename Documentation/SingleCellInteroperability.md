@@ -246,7 +246,10 @@ warnings. All 79 frozen held-out prediction folds through the new aggregate
 batch API pass native replay and independent NumPy reconstruction. Complete
 results retain both gene families and weaker cases; ridge improves contrast
 RMSE over the training-mean baseline in only four of sixteen contrasts. The
-separate PBMC transfer and million-cell PCA/graph/integration remain incomplete.
+[subsequent preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
+now completes all 120 folds with native replay and independent reconstruction.
+Full-cohort PCA, graph, clustering and seed-7 integration also have published
+results; these numerical gates do not establish general biological prediction.
 
 The output is an exchange bundle containing `original.h5ad`, `plan.json`,
 `report.json` and `receipt.json`. Verification copies the source to a private
