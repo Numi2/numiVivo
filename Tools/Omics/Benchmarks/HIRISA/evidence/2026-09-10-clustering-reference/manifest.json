@@ -1,0 +1,838 @@
+{
+  "externalOriginalBaronBundleFiles": {
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/execution.json": "0863bb668f5fa2065aab9253ee9704beda3a977a1e15a92f4ef52f93364742b3",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/bandwidths.bin": "d28d5467ff7d38656b2a97902925777559e76086105cbd64a96af1bc0ff0b0f5",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/edges.bin": "0fdb6b6b07ac05d313dd858788a404b45a5cedc0829b3e3b3498dc7a9673c1df",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/execution.json": "724a5f7be0940c5692b17cc66c76ffa98d6d398ee9ed078613bb01683beb578e",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/graph.json": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/loadings.bin": "b63ae9515f29b600b6cf762d8b9ea82d14de703be1c387e6e3bbeb3352a35bff",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/metadata.json": "53ff29ff72b68ac107ef3867311007f6b9f3a2bcf0f3b80e52507660a4769c50",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/model.json": "ccbdce5b0966d0fbf1c8f5605347390af376d1161587b0650865b6d617d0db74",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/plan.json": "1c76a82b06b706a7488e739d4131154839cc6ffbff195236b400624924b8b43f",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/quality.json": "2a7b2905e23b851c8970c8f0e75648627bff19788e605d1690adee22e121e684",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/receipt.json": "45f6524f0142fd8e598c4f92a34daffbf2ac99fcb57dfd1962ea7c0692c1cc2a",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/scores.bin": "6ea92b3e2bac881e3787cd96992424614a853b6add82174d482a64e665f55eb5",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/neighbors.bin": "42f33acc200d80464bffdeb385e4d81b5ac8dfff98ebd02d8fc3315f90915869",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/offsets.bin": "ad55aebb1407d40722e371496e4d3e154d00ac8fefa0fea4402a4392d1dfd1d4",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/plan.json": "d53d7ef8d7884c432167968a1ae9c08adc90203169ed5462dbf7f57afc417dfc",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/receipt.json": "7a61796194afe38a572dd7b8aa47bbdae6884fe93767ca02a3b0f856d4a2ae92",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/plan.json": "86e741a46df012add0d56e4eaf41c49cd2ab49b3260bfe8e2c8ab5c817d159d6",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/receipt.json": "9496e11aa22b71122a3cbf0ff10cb3c4c33dbe2ac457da57f8a1312fd0329d1b",
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/result.json": "5f2f55adf8fa01dea6e9024862be72af5b012944ab4b9937e7e4f59082e7e282",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/bandwidths.bin": "d28d5467ff7d38656b2a97902925777559e76086105cbd64a96af1bc0ff0b0f5",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/edges.bin": "0fdb6b6b07ac05d313dd858788a404b45a5cedc0829b3e3b3498dc7a9673c1df",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/execution.json": "724a5f7be0940c5692b17cc66c76ffa98d6d398ee9ed078613bb01683beb578e",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/graph.json": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/loadings.bin": "b63ae9515f29b600b6cf762d8b9ea82d14de703be1c387e6e3bbeb3352a35bff",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/metadata.json": "53ff29ff72b68ac107ef3867311007f6b9f3a2bcf0f3b80e52507660a4769c50",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/model.json": "ccbdce5b0966d0fbf1c8f5605347390af376d1161587b0650865b6d617d0db74",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/plan.json": "1c76a82b06b706a7488e739d4131154839cc6ffbff195236b400624924b8b43f",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/quality.json": "2a7b2905e23b851c8970c8f0e75648627bff19788e605d1690adee22e121e684",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/receipt.json": "57a7c0496276eb60c11fb49114a23f8d198c6b027ed67cef612126a3af3c9540",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/scores.bin": "6ea92b3e2bac881e3787cd96992424614a853b6add82174d482a64e665f55eb5",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/neighbors.bin": "42f33acc200d80464bffdeb385e4d81b5ac8dfff98ebd02d8fc3315f90915869",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/offsets.bin": "ad55aebb1407d40722e371496e4d3e154d00ac8fefa0fea4402a4392d1dfd1d4",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/plan.json": "d53d7ef8d7884c432167968a1ae9c08adc90203169ed5462dbf7f57afc417dfc",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/receipt.json": "ebf1317fc40c31e7e123f9a3cfff2b2f231de39efffc7ebb12eca608dad103ea",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/plan.json": "86e741a46df012add0d56e4eaf41c49cd2ab49b3260bfe8e2c8ab5c817d159d6",
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/result.json": "5f2f55adf8fa01dea6e9024862be72af5b012944ab4b9937e7e4f59082e7e282"
+  },
+  "records": [
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 552,
+      "sourcePath": "study/clustering/baron-protocol.json",
+      "sourceSHA256": "60cc8d35184230f19307eb2e38b997aeac767d9b2f496b5641d6d6d6cb96961b",
+      "storedBytes": 365,
+      "storedPath": "study/clustering/baron-protocol.json.gz",
+      "storedSHA256": "b3479c598c3ca95b9e6ca56253f3cceea25c2ac747d8e8667acbb4ce5eca8a29"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 17430,
+      "sourcePath": "study/clustering/baron-reference/partitions.npz",
+      "sourceSHA256": "c6acea6db5d1140b6322d8ae2c60da22cf51c5a0c74738c39783e942b400cb91",
+      "storedBytes": 16924,
+      "storedPath": "study/clustering/baron-reference/partitions.npz.gz",
+      "storedSHA256": "a6360967c90407b7af5b7f047a384ba1248751e64b25c0de81a13b9ac07a42f2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1271,
+      "sourcePath": "study/clustering/baron-reference/reference.json",
+      "sourceSHA256": "31826af166c9e9072f3091d961fbade701a708dcbd1848cf45968094384f9d0b",
+      "storedBytes": 682,
+      "storedPath": "study/clustering/baron-reference/reference.json.gz",
+      "storedSHA256": "91a3040e73813d26b11311e5cdf777426300f503066ee28a87da295a201c2ef6"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 622,
+      "sourcePath": "study/clustering/baron/execution.json",
+      "sourceSHA256": "4459f42e5963fddbfd3cdbdc900c040efd31f236dea7d46a871165dc662917d0",
+      "storedBytes": 413,
+      "storedPath": "study/clustering/baron/execution.json.gz",
+      "storedSHA256": "d670552e956d10fdd03db21a0423ff85c51ab3e19fd29016951be43c0870e65d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 708,
+      "sourcePath": "study/clustering/baron/receipt.json",
+      "sourceSHA256": "d2c8ae141c02897c91b043c6b1c42725721325bc5f567e26e87c78c3b98cb18d",
+      "storedBytes": 389,
+      "storedPath": "study/clustering/baron/receipt.json.gz",
+      "storedSHA256": "7b675d1b75bccdec89819c2239bceddf1da1b08dac5069a2b86d0daf46a99f9c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2161902,
+      "sourcePath": "study/clustering/independent-reference/partitions.npz",
+      "sourceSHA256": "d7065a9ea4505806676ff485397ecc38c7dbd7f66825bcd857cbed37507330ea",
+      "storedBytes": 2130268,
+      "storedPath": "study/clustering/independent-reference/partitions.npz.gz",
+      "storedSHA256": "e9cc36a77fc5c615e876f3235e3c23963cb2c0141b71a939288f96e24101bb94"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1272,
+      "sourcePath": "study/clustering/independent-reference/reference.json",
+      "sourceSHA256": "a88cad925aef6ff5d32e5df5b7580585ef297cf731fe335ba29302b4aff74e31",
+      "storedBytes": 682,
+      "storedPath": "study/clustering/independent-reference/reference.json.gz",
+      "storedSHA256": "8d2d97d0326c6221ab5d761f32850fbdd93c62f24d34677125d2487332c2ca10"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 104,
+      "sourcePath": "study/clustering/independent-reference/seed-19.json",
+      "sourceSHA256": "b5e8a8883db00dc4cb1cf81f34e545a88392604e6b4d3651c290b2e63eb76697",
+      "storedBytes": 106,
+      "storedPath": "study/clustering/independent-reference/seed-19.json.gz",
+      "storedSHA256": "a2035239221de524b983e969b84c7ab853bf0f3b598d9fcbafc21d77b1f904f0"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 103,
+      "sourcePath": "study/clustering/independent-reference/seed-41.json",
+      "sourceSHA256": "1b820c694c44b6f6c693597a8ed24ed02a55f6449930df03e4b7564ec97c5157",
+      "storedBytes": 105,
+      "storedPath": "study/clustering/independent-reference/seed-41.json.gz",
+      "storedSHA256": "d219832b2a9722789a7349f0e2e4cd321bcb87e15f2ef926ac516033ee7ad50c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 103,
+      "sourcePath": "study/clustering/independent-reference/seed-7.json",
+      "sourceSHA256": "d63b22fe5f3a00bfeb410347547cc9080f80708c991b690412d9bfb1c797bf05",
+      "storedBytes": 107,
+      "storedPath": "study/clustering/independent-reference/seed-7.json.gz",
+      "storedSHA256": "2a6ba5cf37bd9f445a4a9961e4df96ccb9cd892394713a55595612983e02f2af"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 555,
+      "sourcePath": "study/clustering/protocol.json",
+      "sourceSHA256": "959c681eb770a3c29f8670dfbf9338168b53e9a6a400036c590c2fb42e0c6471",
+      "storedBytes": 368,
+      "storedPath": "study/clustering/protocol.json.gz",
+      "storedSHA256": "cf63b3c289d1b114814affb32e4faecb85a850854a09e69bd9c5f17c16faba52"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 605,
+      "sourcePath": "study/clustering/reference-prepare-status.json",
+      "sourceSHA256": "11f76dded7a267e422d4779315604ec14a4c9e89612638808eab5c1a6a3b340b",
+      "storedBytes": 263,
+      "storedPath": "study/clustering/reference-prepare-status.json.gz",
+      "storedSHA256": "177156098a9ec08e6eb76a4dd9e91bfb39d2ef50fd6d63b7cb7aafd5cec319cf"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1110,
+      "sourcePath": "study/clustering/reference-prepare.log",
+      "sourceSHA256": "807d164c5c7384408e55cb59379831cc05a9358664fe92fb687fe7ec86e3818f",
+      "storedBytes": 447,
+      "storedPath": "study/clustering/reference-prepare.log.gz",
+      "storedSHA256": "e33676a5df5f1b93cfce463b378a16273ca35a65109871a508b8b3970f8edbd7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 8871,
+      "sourcePath": "study/clustering/reference_clustering.py",
+      "sourceSHA256": "3fb3778386cbb39b7d20c533245fb42d87de0f27d9050fc7d6a108d65992dec6",
+      "storedBytes": 3274,
+      "storedPath": "study/clustering/reference_clustering.py.gz",
+      "storedSHA256": "db9f55468b5e80ae054cf2400e34c8b72b446a8b2f862cd28623eaf4d72beadb"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1100,
+      "sourcePath": "study/graph/baron-independent-check-final/checks.json",
+      "sourceSHA256": "e573184e61697ae671771851096431c7da4dfeb36f272f27c26a1a3291f389b1",
+      "storedBytes": 628,
+      "storedPath": "study/graph/baron-independent-check-final/checks.json.gz",
+      "storedSHA256": "e5873c5e3e217857ba298cff55e2da3a96915d34bef753df35338dc2ee424827"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 711,
+      "sourcePath": "study/graph/full/receipt.json",
+      "sourceSHA256": "6db0d3deb8ae66bc20108edb57676b8f24a0bddae8e938214d189d9b483e4073",
+      "storedBytes": 388,
+      "storedPath": "study/graph/full/receipt.json.gz",
+      "storedSHA256": "6e42bfb807d7e40bb2d7d9177d9a57ec2aeee7af429606827bddd3d327c97396"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1149,
+      "sourcePath": "study/graph/independent-check/checks.json",
+      "sourceSHA256": "5d3128d501dfa6d4c3af91662aa8a948fdff376cdd955677dc590a8847fa33f7",
+      "storedBytes": 664,
+      "storedPath": "study/graph/independent-check/checks.json.gz",
+      "storedSHA256": "ef3a028bc7b970eb122d2e289998687b738d114902e4d0c68416dfcdf83f275b"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4071,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/current-explicit-reuse.log",
+      "sourceSHA256": "392e8b3beb295420b01d9b4f7801c41d353e46a48be4dbad8a2a80f504144aa5",
+      "storedBytes": 1931,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/current-explicit-reuse.log.gz",
+      "storedSHA256": "c7bab022e324c30c1d107b5454759adc0e993cc3b88b24ac1bd1d3ec3a238917"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4763,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/current-explicit-reuse/checks.json",
+      "sourceSHA256": "0151c62430e6bbe6fb1e2488e68f972bf57f8b3d395b61a3220c1c7cdc09c339",
+      "storedBytes": 1993,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/current-explicit-reuse/checks.json.gz",
+      "storedSHA256": "9734fef271cce29a6b887f780101a1d3e159d79f7c54faf313159c915abbb85b"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 952,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/current-without-equivalence-rejected.log",
+      "sourceSHA256": "a008f500629ce14e41cd634af86981e224328151d54e90c103de9244f6f386b0",
+      "storedBytes": 354,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/current-without-equivalence-rejected.log.gz",
+      "storedSHA256": "b4b3349ab84d757f2d1286bbbd77b823b3d75c705b215931928c7f0ab56717de"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 969,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/graph-payload-rejected.log",
+      "sourceSHA256": "157410737bc86fcedc66f0aea3c8c58a04e46ae7f2a27bff93c9ec841140ac22",
+      "storedBytes": 364,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/graph-payload-rejected.log.gz",
+      "storedSHA256": "54da145e4948bc4dbe87fed56c45e16fb4427f47872875b2d100d31fd626bb8e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1594,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/original-direct.log",
+      "sourceSHA256": "119789bd7dea3f3b93fc7eac93c053d8d8e57cab53059e4a0bab1ace21859124",
+      "storedBytes": 808,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/original-direct.log.gz",
+      "storedSHA256": "091664784d81b11368e3d7e6fd2e5baf9cd7dddbf6e2156a01cea0968f9091be"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1850,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/original-direct/checks.json",
+      "sourceSHA256": "60384ca73ad79f6d9a14209ccc2f420330324dd954106565b8ddce13b947ce7c",
+      "storedBytes": 827,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/original-direct/checks.json.gz",
+      "storedSHA256": "e0f5a8929b95279e29f1d7ba378afc42b4f0448445924aea11983d68e43625c7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1040,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/pca-implementation-rejected.log",
+      "sourceSHA256": "dd115bf5401709ec8fa4de5638f0e1b7435d4fd42a4e29d365db0e4259808e6d",
+      "storedBytes": 376,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/pca-implementation-rejected.log.gz",
+      "storedSHA256": "94243c2a70baaf42e050f921b8c43a242beec0837974847933f4a6ee97a6dd05"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 975,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/pca-payload-rejected.log",
+      "sourceSHA256": "168c008bec10a37d6c752b404704e60ccdd798415788119c03bd429f07ec42e2",
+      "storedBytes": 368,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/pca-payload-rejected.log.gz",
+      "storedSHA256": "7a7c25c7b0dcd6ffa1df7d7e556102e7e158bb469da57cf81a82080f160f8195"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 17388,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/qualification.json",
+      "sourceSHA256": "a4438094d9e4b1812d8352bd634646d948dd3a8777d265ff43903b5bcfb62606",
+      "storedBytes": 2984,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/qualification.json.gz",
+      "storedSHA256": "a27631678c78d3db789abcbae0c5bec06c729312d847baf8acf691cd03ab8720"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 607,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/reference-partitions-rejected.log",
+      "sourceSHA256": "ac60d38d52ee169c20d3a97fbea815779f36a6c4c82d8fbb7c8a7028626b4f51",
+      "storedBytes": 280,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/reference-partitions-rejected.log.gz",
+      "storedSHA256": "718c8b5880c8f833da395252c2a039f95612a3fe956847c893149cb31913cf08"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 962,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/source-identity-rejected.log",
+      "sourceSHA256": "eae63c11a86cbc5061fed1563c6af3206b9506f10069840f24dc0dccb71cb5e4",
+      "storedBytes": 353,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/source-identity-rejected.log.gz",
+      "storedSHA256": "ab45df1d0f96941a76759ca342fdbf97da4beb907b1d4717bb8d4444373cc34b"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 989,
+      "sourcePath": "study/optimized-clustering/checker-qualification-v2/unfitted-graph-rejected.log",
+      "sourceSHA256": "71fc271ab79fb9d8fb29cf25fada0db8b3d4fce094e64e7aa7dc3ec60b48c7c0",
+      "storedBytes": 353,
+      "storedPath": "study/optimized-clustering/checker-qualification-v2/unfitted-graph-rejected.log.gz",
+      "storedSHA256": "e6fe0ed405b41d6801f0780eb3f4a78ed4385352c8c7a061371b43c02f13d8c9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6996,
+      "sourcePath": "study/optimized-clustering/checker-qualification/attempt-check_reference_reuse.py",
+      "sourceSHA256": "b39e0b627fe412ddda5614b43d82de12be57ea1d3c351e03d866813eae24ac7f",
+      "storedBytes": 2454,
+      "storedPath": "study/optimized-clustering/checker-qualification/attempt-check_reference_reuse.py.gz",
+      "storedSHA256": "1b504530fbb77df223adbec814845533ee015d0b2d645cd98813e96d552f22c8"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 264,
+      "sourcePath": "study/optimized-clustering/checker-qualification/attempt-status.json",
+      "sourceSHA256": "98991ee20e18344122ee8dd682659359a2fafaf4e73873a9284d43f6edb4ce0d",
+      "storedBytes": 202,
+      "storedPath": "study/optimized-clustering/checker-qualification/attempt-status.json.gz",
+      "storedSHA256": "6d3fdd21be2970c4902e2885d172444a2925af1d71f214ac9697cfd5edaece8a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4071,
+      "sourcePath": "study/optimized-clustering/checker-qualification/current-explicit-reuse.log",
+      "sourceSHA256": "075a452e07096342d1980cb118e57760eec1dc57d488bb45571531bcb3bd2475",
+      "storedBytes": 1931,
+      "storedPath": "study/optimized-clustering/checker-qualification/current-explicit-reuse.log.gz",
+      "storedSHA256": "19065c8da8b340660a05a4f02b55f7a04e51ba1210a0379c6dd82dd4958d7a79"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4763,
+      "sourcePath": "study/optimized-clustering/checker-qualification/current-explicit-reuse/checks.json",
+      "sourceSHA256": "439fa38f254bf5ac9c6ee0d01722611a11acf3567744d52f7f1daec625f4589e",
+      "storedBytes": 1993,
+      "storedPath": "study/optimized-clustering/checker-qualification/current-explicit-reuse/checks.json.gz",
+      "storedSHA256": "e68617237a91056c63c37fb3db09e8e29d65a4d1bbbfc4c98509f79660884343"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 952,
+      "sourcePath": "study/optimized-clustering/checker-qualification/current-without-equivalence-rejected.log",
+      "sourceSHA256": "a008f500629ce14e41cd634af86981e224328151d54e90c103de9244f6f386b0",
+      "storedBytes": 354,
+      "storedPath": "study/optimized-clustering/checker-qualification/current-without-equivalence-rejected.log.gz",
+      "storedSHA256": "b4b3349ab84d757f2d1286bbbd77b823b3d75c705b215931928c7f0ab56717de"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 969,
+      "sourcePath": "study/optimized-clustering/checker-qualification/graph-payload-rejected.log",
+      "sourceSHA256": "157410737bc86fcedc66f0aea3c8c58a04e46ae7f2a27bff93c9ec841140ac22",
+      "storedBytes": 364,
+      "storedPath": "study/optimized-clustering/checker-qualification/graph-payload-rejected.log.gz",
+      "storedSHA256": "54da145e4948bc4dbe87fed56c45e16fb4427f47872875b2d100d31fd626bb8e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1595,
+      "sourcePath": "study/optimized-clustering/checker-qualification/original-direct.log",
+      "sourceSHA256": "4438938b69c8d1bad2a4dafce4a439d9bd25002e09f57d2ac84969880d05407c",
+      "storedBytes": 809,
+      "storedPath": "study/optimized-clustering/checker-qualification/original-direct.log.gz",
+      "storedSHA256": "45f85a79df7ca20af2240de3c241d314f8ec881c6b1eb0d832f344e9e2f0d627"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1851,
+      "sourcePath": "study/optimized-clustering/checker-qualification/original-direct/checks.json",
+      "sourceSHA256": "75273c453ebbd8a11ff2d90ec56323a91a4cec4e8ae3f20d0c22515fd733e276",
+      "storedBytes": 828,
+      "storedPath": "study/optimized-clustering/checker-qualification/original-direct/checks.json.gz",
+      "storedSHA256": "496ca4c28419416fb2e001f303f14c4b58a977b92b900051cf03412322273e14"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1072,
+      "sourcePath": "study/optimized-clustering/collector-baron/bundle/execution.json",
+      "sourceSHA256": "0863bb668f5fa2065aab9253ee9704beda3a977a1e15a92f4ef52f93364742b3",
+      "storedBytes": 593,
+      "storedPath": "study/optimized-clustering/collector-baron/bundle/execution.json.gz",
+      "storedSHA256": "ecdfe12a833a73c043686ae6f6e01ecef5309e56fc5f5f26a3bf369895e11972"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1174,
+      "sourcePath": "study/optimized-clustering/collector-baron/bundle/input/input/receipt.json",
+      "sourceSHA256": "45f6524f0142fd8e598c4f92a34daffbf2ac99fcb57dfd1962ea7c0692c1cc2a",
+      "storedBytes": 613,
+      "storedPath": "study/optimized-clustering/collector-baron/bundle/input/input/receipt.json.gz",
+      "storedSHA256": "7476099748845f2a8f8b9f171aa5254b088b7edb46c57407504a6518c4540e10"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 716,
+      "sourcePath": "study/optimized-clustering/collector-baron/bundle/input/receipt.json",
+      "sourceSHA256": "7a61796194afe38a572dd7b8aa47bbdae6884fe93767ca02a3b0f856d4a2ae92",
+      "storedBytes": 388,
+      "storedPath": "study/optimized-clustering/collector-baron/bundle/input/receipt.json.gz",
+      "storedSHA256": "ee3942a4ed499f7303ed7dde38a8b7c2e952e6a2d9dc9375485a450215f47619"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 152,
+      "sourcePath": "study/optimized-clustering/collector-baron/bundle/plan.json",
+      "sourceSHA256": "86e741a46df012add0d56e4eaf41c49cd2ab49b3260bfe8e2c8ab5c817d159d6",
+      "storedBytes": 132,
+      "storedPath": "study/optimized-clustering/collector-baron/bundle/plan.json.gz",
+      "storedSHA256": "b2d06c069ab798c4c15ac858f644736882da488b7d1cff52a06fb4d40f05d796"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 711,
+      "sourcePath": "study/optimized-clustering/collector-baron/bundle/receipt.json",
+      "sourceSHA256": "9496e11aa22b71122a3cbf0ff10cb3c4c33dbe2ac457da57f8a1312fd0329d1b",
+      "storedBytes": 394,
+      "storedPath": "study/optimized-clustering/collector-baron/bundle/receipt.json.gz",
+      "storedSHA256": "4302933953fa502a787908d4c37b189c603b0c8d33d80c58f2f6ebd2ea16037d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 552226,
+      "sourcePath": "study/optimized-clustering/collector-baron/bundle/result.json",
+      "sourceSHA256": "5f2f55adf8fa01dea6e9024862be72af5b012944ab4b9937e7e4f59082e7e282",
+      "storedBytes": 28408,
+      "storedPath": "study/optimized-clustering/collector-baron/bundle/result.json.gz",
+      "storedSHA256": "7fb50f9661389abf42b7ccd23d6bb0fc7a42d2154b4b9a256fbe952e4150b0d9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 3656,
+      "sourcePath": "study/optimized-clustering/collector-baron/collection.json",
+      "sourceSHA256": "2c721c6c90e80ab73cdbb814e871882000e2148968367a738ba666bb3e74aebb",
+      "storedBytes": 1436,
+      "storedPath": "study/optimized-clustering/collector-baron/collection.json.gz",
+      "storedSHA256": "de3618ae7d1921387031a645ba32dedb03977af7c81ffb5d24f0de82bad970b6"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 363,
+      "sourcePath": "study/optimized-clustering/collector-baron/complete.json",
+      "sourceSHA256": "194eb856afcbc0e87d35b799cfc394ddf78e075b6612701296d3dea09ea0c0d0",
+      "storedBytes": 263,
+      "storedPath": "study/optimized-clustering/collector-baron/complete.json.gz",
+      "storedSHA256": "3bce7f7ec21c4ca3c97711fe9b39286fc0695c0a47dccd2f0ad19de50363fb14"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 905,
+      "sourcePath": "study/optimized-clustering/collector-baron/independent-check-status.json",
+      "sourceSHA256": "b7b3121e691e4d0bc8f1a37040a3d167ae3742f8c37d0ffaec1d0873c021898a",
+      "storedBytes": 365,
+      "storedPath": "study/optimized-clustering/collector-baron/independent-check-status.json.gz",
+      "storedSHA256": "57fe86f2b4a389defef6ccd82d83beb5465630184683ba6b5a5e2036c08bc617"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4070,
+      "sourcePath": "study/optimized-clustering/collector-baron/independent-check.log",
+      "sourceSHA256": "dd072717a99bec5931f592f0384f1042abd9b803c5509f2255054bc80ba90021",
+      "storedBytes": 1933,
+      "storedPath": "study/optimized-clustering/collector-baron/independent-check.log.gz",
+      "storedSHA256": "2ee5703ec5a629598ab19e78452ae87d43830ad15bfa900f139f0ea51869bc6a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4762,
+      "sourcePath": "study/optimized-clustering/collector-baron/independent-check/checks.json",
+      "sourceSHA256": "79434509823cb72fed6b864c69c3f0b5c1b4bec87b2e0da5f2801d860c66bcb2",
+      "storedBytes": 1995,
+      "storedPath": "study/optimized-clustering/collector-baron/independent-check/checks.json.gz",
+      "storedSHA256": "e43fffffbf22ced5d71959db4024b20e70528c682a7092f6c7a46b636b55f57d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2520,
+      "sourcePath": "study/optimized-clustering/collector-baron/remote-after.json",
+      "sourceSHA256": "f89252b78a1dfdf4ee1be9f2c30f778d4fba87917dca8fc4d38d2b1445f0c6a8",
+      "storedBytes": 1055,
+      "storedPath": "study/optimized-clustering/collector-baron/remote-after.json.gz",
+      "storedSHA256": "614f18d06b8870f611b62a75a3bad892cf28ac107c271b5501c8433881004621"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2520,
+      "sourcePath": "study/optimized-clustering/collector-baron/remote-before.json",
+      "sourceSHA256": "f89252b78a1dfdf4ee1be9f2c30f778d4fba87917dca8fc4d38d2b1445f0c6a8",
+      "storedBytes": 1055,
+      "storedPath": "study/optimized-clustering/collector-baron/remote-before.json.gz",
+      "storedSHA256": "614f18d06b8870f611b62a75a3bad892cf28ac107c271b5501c8433881004621"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 94,
+      "sourcePath": "study/optimized-clustering/collector-baron/transfer-files.txt",
+      "sourceSHA256": "18084d463e15dfe09acbecaee8de0d487d2408bb0e112e9ad8b35b331fb0a77d",
+      "storedBytes": 65,
+      "storedPath": "study/optimized-clustering/collector-baron/transfer-files.txt.gz",
+      "storedSHA256": "143ceb4c1db4ba2093eafaae2c9a894e06277831240512f2c7e6c1f1bb951b8c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 494,
+      "sourcePath": "study/optimized-clustering/collector-cross-cohort-rejected.log",
+      "sourceSHA256": "55584805de7b6cb6f27650accda5c7ca4767dcfad52b4962542a745631ca3b77",
+      "storedBytes": 271,
+      "storedPath": "study/optimized-clustering/collector-cross-cohort-rejected.log.gz",
+      "storedSHA256": "e01fad7c1f8e66e99e62bda1d5e22fd69bf156c15b77da4759d209ece0251c4a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2520,
+      "sourcePath": "study/optimized-clustering/collector-cross-cohort-rejected/remote-before.json",
+      "sourceSHA256": "12dc6cc847aef2b4de0a77a7209e8428de094a3b0da96b895ea02ecd80ef0a5e",
+      "storedBytes": 1047,
+      "storedPath": "study/optimized-clustering/collector-cross-cohort-rejected/remote-before.json.gz",
+      "storedSHA256": "20be02aa6b0da97943ab100b8a52a330b2f9a6105c968b2f51e83eccfa7bdc1d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 517,
+      "sourcePath": "study/optimized-clustering/collector-qualification.json",
+      "sourceSHA256": "35af763abf8dc2c378d73990e648924ed924edd0c76f6b55148d4f00e076d63d",
+      "storedBytes": 335,
+      "storedPath": "study/optimized-clustering/collector-qualification.json.gz",
+      "storedSHA256": "806dbd89fb31c8b36364f7796522a40086a7097f5850edd1d94e46ee3f7c8511"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6036,
+      "sourcePath": "study/optimized-clustering/continue_independent.py",
+      "sourceSHA256": "4678412ecf63016f56194a1051d5ea04cee56e6d7684ee0c5e08954f7b04686b",
+      "storedBytes": 2190,
+      "storedPath": "study/optimized-clustering/continue_independent.py.gz",
+      "storedSHA256": "23f009ae3bd7a08777ca09c09949e8e4e15bff8f09ac360977742351232f2178"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1589,
+      "sourcePath": "study/optimized-clustering/full-reference-check/checks.json",
+      "sourceSHA256": "07d40cc0968106eef253281ef7bc6356d467005a158cb1f2ee505dc7ace907e8",
+      "storedBytes": 785,
+      "storedPath": "study/optimized-clustering/full-reference-check/checks.json.gz",
+      "storedSHA256": "bdeb4dccd1062ec011d2c2dd444da7b6b72f7c5668775e3972e3a2df2905a87d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 7101,
+      "sourcePath": "tools/archive_clustering_reference.py",
+      "sourceSHA256": "7bf479f0ca119561dc539de4565fb3fb6f36bd862281126bfa1a8001a2a14787",
+      "storedBytes": 2323,
+      "storedPath": "tools/archive_clustering_reference.py.gz",
+      "storedSHA256": "707cb106cf6de772baa5eed47ee9f1a592b8c953932775dc15a21d492808fff9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6980,
+      "sourcePath": "tools/check_reference_reuse.py",
+      "sourceSHA256": "4b891185be5d38ce68999ba01ef5a84c35f149802c7e2c6c88ceae64fe6cc6f7",
+      "storedBytes": 2449,
+      "storedPath": "tools/check_reference_reuse.py.gz",
+      "storedSHA256": "88aa7ebbb0f6c0e51c5ea8f0a3f63738244778a03b04a14a6237f95bf57a04a2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6136,
+      "sourcePath": "tools/collect_clustering.py",
+      "sourceSHA256": "bb4881b57f6b9bca18b9ee79a40c92dba2ad0d77ada8386c6d68e3f7551295cf",
+      "storedBytes": 2291,
+      "storedPath": "tools/collect_clustering.py.gz",
+      "storedSHA256": "f59975ff5b904af46f32c7d1cddc945afbabf7bf276eed8dc9dbc03844695dbb"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 12898,
+      "sourcePath": "tools/reference_clustering.py",
+      "sourceSHA256": "217edf6e361b708d617daf8ebc8a2da92f53de2726904737e4fc126eddd7f3d7",
+      "storedBytes": 4445,
+      "storedPath": "tools/reference_clustering.py.gz",
+      "storedSHA256": "eef81086dfcd785fd4e30e463a91cfad4230dd5d1bbf67786897f4f4770a9b1f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 54,
+      "sourcePath": "tools/requirements-clustering.txt",
+      "sourceSHA256": "4afe2977f9ba47e0cc2d0ac07bd8e4241632ce5bc51564cdbbd4e8963e015abf",
+      "storedBytes": 70,
+      "storedPath": "tools/requirements-clustering.txt.gz",
+      "storedSHA256": "94d5a7d5439457edfc47980c0568a2cc94329c7a7b375b04765b6de24c746ab5"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4045,
+      "sourcePath": "tools/verify_clustering_reference.py",
+      "sourceSHA256": "dc804af001bedd8e479e4133efb7822ece5a8be8f21fa3f9e0e6a5fb9ad719a4",
+      "storedBytes": 1585,
+      "storedPath": "tools/verify_clustering_reference.py.gz",
+      "storedSHA256": "32f545fcfd23d4c71c1f37dbc0eb7a547b031c9e8a3fd759b79b9c7dddeb84d1"
+    }
+  ],
+  "reusedCollectorPayloads": {
+    "input/bandwidths.bin": {
+      "SHA256": "d28d5467ff7d38656b2a97902925777559e76086105cbd64a96af1bc0ff0b0f5",
+      "bytes": 411312
+    },
+    "input/edges.bin": {
+      "SHA256": "0fdb6b6b07ac05d313dd858788a404b45a5cedc0829b3e3b3498dc7a9673c1df",
+      "bytes": 2829696
+    },
+    "input/execution.json": {
+      "SHA256": "724a5f7be0940c5692b17cc66c76ffa98d6d398ee9ed078613bb01683beb578e",
+      "bytes": 1564
+    },
+    "input/graph.json": {
+      "SHA256": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+      "bytes": 1365
+    },
+    "input/input/loadings.bin": {
+      "SHA256": "b63ae9515f29b600b6cf762d8b9ea82d14de703be1c387e6e3bbeb3352a35bff",
+      "bytes": 640000
+    },
+    "input/input/metadata.json": {
+      "SHA256": "53ff29ff72b68ac107ef3867311007f6b9f3a2bcf0f3b80e52507660a4769c50",
+      "bytes": 1746155
+    },
+    "input/input/model.json": {
+      "SHA256": "ccbdce5b0966d0fbf1c8f5605347390af376d1161587b0650865b6d617d0db74",
+      "bytes": 5139135
+    },
+    "input/input/plan.json": {
+      "SHA256": "1c76a82b06b706a7488e739d4131154839cc6ffbff195236b400624924b8b43f",
+      "bytes": 1354
+    },
+    "input/input/quality.json": {
+      "SHA256": "2a7b2905e23b851c8970c8f0e75648627bff19788e605d1690adee22e121e684",
+      "bytes": 1362678
+    },
+    "input/input/scores.bin": {
+      "SHA256": "6ea92b3e2bac881e3787cd96992424614a853b6add82174d482a64e665f55eb5",
+      "bytes": 2742080
+    },
+    "input/neighbors.bin": {
+      "SHA256": "42f33acc200d80464bffdeb385e4d81b5ac8dfff98ebd02d8fc3315f90915869",
+      "bytes": 2056560
+    },
+    "input/offsets.bin": {
+      "SHA256": "ad55aebb1407d40722e371496e4d3e154d00ac8fefa0fea4402a4392d1dfd1d4",
+      "bytes": 137120
+    },
+    "input/plan.json": {
+      "SHA256": "d53d7ef8d7884c432167968a1ae9c08adc90203169ed5462dbf7f57afc417dfc",
+      "bytes": 367
+    }
+  },
+  "schemaVersion": 1,
+  "scope": "Complete Baron direct and equivalence checks, seven expected rejections, remote collection and cross-cohort rejection. Original graph/PCA bundles remain in the earlier graph/storage archives and study paths, with exact external identities here. All three original full-HIRISA igraph partitions and their independent every-edge objective check are retained. Native HIRISA clustering/replay and biological qualification are not asserted. The initial overly specific test diagnostic failure is retained.",
+  "upstreamRestorationMap": {
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/execution.json": {
+      "SHA256": "0863bb668f5fa2065aab9253ee9704beda3a977a1e15a92f4ef52f93364742b3",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "clustering/baron/execution.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/bandwidths.bin": {
+      "SHA256": "d28d5467ff7d38656b2a97902925777559e76086105cbd64a96af1bc0ff0b0f5",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/bandwidths.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/edges.bin": {
+      "SHA256": "0fdb6b6b07ac05d313dd858788a404b45a5cedc0829b3e3b3498dc7a9673c1df",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/edges.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/execution.json": {
+      "SHA256": "724a5f7be0940c5692b17cc66c76ffa98d6d398ee9ed078613bb01683beb578e",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/execution.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/graph.json": {
+      "SHA256": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/graph.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/loadings.bin": {
+      "SHA256": "b63ae9515f29b600b6cf762d8b9ea82d14de703be1c387e6e3bbeb3352a35bff",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/loadings.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/metadata.json": {
+      "SHA256": "53ff29ff72b68ac107ef3867311007f6b9f3a2bcf0f3b80e52507660a4769c50",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/metadata.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/model.json": {
+      "SHA256": "ccbdce5b0966d0fbf1c8f5605347390af376d1161587b0650865b6d617d0db74",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/model.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/plan.json": {
+      "SHA256": "1c76a82b06b706a7488e739d4131154839cc6ffbff195236b400624924b8b43f",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/plan.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/quality.json": {
+      "SHA256": "2a7b2905e23b851c8970c8f0e75648627bff19788e605d1690adee22e121e684",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/quality.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/receipt.json": {
+      "SHA256": "45f6524f0142fd8e598c4f92a34daffbf2ac99fcb57dfd1962ea7c0692c1cc2a",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "clustering/baron/input/input/receipt.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/input/scores.bin": {
+      "SHA256": "6ea92b3e2bac881e3787cd96992424614a853b6add82174d482a64e665f55eb5",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/scores.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/neighbors.bin": {
+      "SHA256": "42f33acc200d80464bffdeb385e4d81b5ac8dfff98ebd02d8fc3315f90915869",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/neighbors.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/offsets.bin": {
+      "SHA256": "ad55aebb1407d40722e371496e4d3e154d00ac8fefa0fea4402a4392d1dfd1d4",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/offsets.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/plan.json": {
+      "SHA256": "d53d7ef8d7884c432167968a1ae9c08adc90203169ed5462dbf7f57afc417dfc",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/hagai/input/plan.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/input/receipt.json": {
+      "SHA256": "7a61796194afe38a572dd7b8aa47bbdae6884fe93767ca02a3b0f856d4a2ae92",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "clustering/baron/input/receipt.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/plan.json": {
+      "SHA256": "86e741a46df012add0d56e4eaf41c49cd2ab49b3260bfe8e2c8ab5c817d159d6",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/hagai/plan.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/receipt.json": {
+      "SHA256": "9496e11aa22b71122a3cbf0ff10cb3c4c33dbe2ac457da57f8a1312fd0329d1b",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "clustering/baron/receipt.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering-storage-adaptive/baron/result.json": {
+      "SHA256": "5f2f55adf8fa01dea6e9024862be72af5b012944ab4b9937e7e4f59082e7e282",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/result.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/bandwidths.bin": {
+      "SHA256": "d28d5467ff7d38656b2a97902925777559e76086105cbd64a96af1bc0ff0b0f5",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/bandwidths.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/edges.bin": {
+      "SHA256": "0fdb6b6b07ac05d313dd858788a404b45a5cedc0829b3e3b3498dc7a9673c1df",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/edges.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/execution.json": {
+      "SHA256": "724a5f7be0940c5692b17cc66c76ffa98d6d398ee9ed078613bb01683beb578e",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/execution.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/graph.json": {
+      "SHA256": "e941a5eab625a4c12986689ce2d73be8cb06d5fc61d59af1149506e9fd0d8309",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/graph.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/loadings.bin": {
+      "SHA256": "b63ae9515f29b600b6cf762d8b9ea82d14de703be1c387e6e3bbeb3352a35bff",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/loadings.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/metadata.json": {
+      "SHA256": "53ff29ff72b68ac107ef3867311007f6b9f3a2bcf0f3b80e52507660a4769c50",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/metadata.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/model.json": {
+      "SHA256": "ccbdce5b0966d0fbf1c8f5605347390af376d1161587b0650865b6d617d0db74",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/model.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/plan.json": {
+      "SHA256": "1c76a82b06b706a7488e739d4131154839cc6ffbff195236b400624924b8b43f",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/plan.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/quality.json": {
+      "SHA256": "2a7b2905e23b851c8970c8f0e75648627bff19788e605d1690adee22e121e684",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/quality.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/receipt.json": {
+      "SHA256": "57a7c0496276eb60c11fb49114a23f8d198c6b027ed67cef612126a3af3c9540",
+      "archive": "2026-09-10-graph",
+      "sourcePath": "baron-pca/receipt.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/input/scores.bin": {
+      "SHA256": "6ea92b3e2bac881e3787cd96992424614a853b6add82174d482a64e665f55eb5",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/input/scores.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/neighbors.bin": {
+      "SHA256": "42f33acc200d80464bffdeb385e4d81b5ac8dfff98ebd02d8fc3315f90915869",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/neighbors.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/offsets.bin": {
+      "SHA256": "ad55aebb1407d40722e371496e4d3e154d00ac8fefa0fea4402a4392d1dfd1d4",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/input/offsets.bin"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/plan.json": {
+      "SHA256": "d53d7ef8d7884c432167968a1ae9c08adc90203169ed5462dbf7f57afc417dfc",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/hagai/input/plan.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/input/receipt.json": {
+      "SHA256": "ebf1317fc40c31e7e123f9a3cfff2b2f231de39efffc7ebb12eca608dad103ea",
+      "archive": "2026-09-10-graph",
+      "sourcePath": "baron-graph/receipt.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/plan.json": {
+      "SHA256": "86e741a46df012add0d56e4eaf41c49cd2ab49b3260bfe8e2c8ab5c817d159d6",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/hagai/plan.json"
+    },
+    "/Users/home/numivivo-hiris-20260910/clustering/baron/result.json": {
+      "SHA256": "5f2f55adf8fa01dea6e9024862be72af5b012944ab4b9937e7e4f59082e7e282",
+      "archive": "2026-09-10-storage-access",
+      "sourcePath": "first-candidate/baron/result.json"
+    }
+  }
+}

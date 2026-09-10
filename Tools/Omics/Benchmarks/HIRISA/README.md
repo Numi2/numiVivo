@@ -23,6 +23,13 @@ for these coarse metrics. Broader biological preservation remains open.
 scans with exact full-cohort trajectory regression checks and a separate
 full-HIRISA-shape storage-phase measurement.
 
+The [complete clustering references](CLUSTERING_REFERENCE.md) retain three
+unchanged full-HIRISA igraph partitions, now independently checked over every
+graph edge. Runtime-aware comparison and efficient remote collection pass on
+complete Baron data, including corruption and cross-cohort rejection. The
+original and optimized full native clustering runs retain separate identities;
+their terminal publication/replay remains a separate gate.
+
 The [protocol](PROTOCOL.md) was frozen before count inspection, fitting or
 prediction. Its SHA256 is
 `24680681c348a92f75308225d6c162f20c7e9be8191c19a1339ab54c499ee10d`.
