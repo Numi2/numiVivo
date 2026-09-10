@@ -2,7 +2,9 @@
 
 The binary PCA graph store now feeds the same deterministic Louvain solver as
 the resident count-analysis route. Original edges and every aggregated level
-use CSR files with 16 MiB reader windows. Cell identities, offsets, labels,
+use CSR files. Edge files up to 16 MiB stay in one mapping; larger files use a
+4 KiB positional-read buffer for shuffled row access. Offset and scatter-bucket
+scans retain 16 MiB windows. Cell identities, offsets, labels,
 degrees, community totals, permutations, traversal queues and output JSON remain
 resident. A single aggregate row's edge map also remains resident; a high-degree
 row can therefore still use memory proportional to the number of communities.
@@ -112,3 +114,10 @@ commands, three frozen-oracle executions and 66 CLI
 fixture commands (including 25 expected rejections). The archive retains the
 initial test compilation failure and the successful correction. Numerical
 qualification remains scoped to the recorded binary and production-source hashes.
+
+The [HIRISA storage-access qualification](../Benchmarks/HIRISA/STORAGE_ACCESS.md)
+checks every original graph edge bit through both readers, preserves complete
+Baron/Hagai clustering result bytes and records native lifecycle controls.
+Buffered load/byte counters cover large CSR reads; they do not count physical
+disk traffic or parent reconstruction. Full optimized million-cell clustering
+and integration remain separate qualifications.

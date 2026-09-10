@@ -260,6 +260,11 @@ The [integration witness repair](INTEGRATION_ADMISSION.md) removes the stale
 commands. This is prerequisite storage compatibility; complete HIRISA integration
 and biological preservation remain open.
 
+The [storage-access qualification](STORAGE_ACCESS.md) repairs measured large-graph
+reader mapping overhead while preserving every HIRISA edge record and complete
+Baron/Hagai clustering outputs. A separate bounded integration tile prototype
+retains arithmetic bits; it is not yet integrated into the production solver.
+
 Sources: [GEO GSE306664](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE306664),
 [author resource](https://apps.allenimmunology.org/aifi/resources/ifn-response/),
 [experimental methods](https://apps.allenimmunology.org/aifi/resources/ifn-response/methods/),

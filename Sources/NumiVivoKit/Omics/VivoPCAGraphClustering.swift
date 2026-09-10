@@ -28,6 +28,9 @@ public struct VivoPCAGraphClusteringExecution: Codable, Sendable, Equatable {
     public let maximumEdgeMapEntries: Int
     public let maximumMappedBytesPerReader: Int
     public let qualification: String
+    public var edgeBufferLoads: Int? = nil
+    public var edgeBytesRead: Int? = nil
+    public var maximumEdgeBufferBytes: Int? = nil
 }
 public struct VivoPCAGraphClusteringReceipt: Codable, Sendable, Equatable {
     public let schemaVersion: Int
@@ -65,10 +68,12 @@ public enum VivoPCAGraphClustering {
         let work = VivoClusteringWork(maximumEdgeVisits: plan.maximumEdgeVisits)
         let reader = try VivoFileClusteringGraph(root: source, rows: graph.cells, entries: graph.connectivityEntries, work: work)
         let result = try VivoSingleCellClustering.run(original: reader, cells: cells, options: plan.clustering, scratch: temp)
-        let execution = VivoPCAGraphClusteringExecution(method: "file-backed-shared-Louvain-stable-scatter-v1", edgeVisits: work.edgeVisits,
+        let execution = VivoPCAGraphClusteringExecution(method: "file-backed-shared-Louvain-buffered-edges-stable-scatter-v2", edgeVisits: work.edgeVisits,
             rowReads: work.rowReads, aggregatedLevels: work.aggregatedLevels, maximumEdgeMapEntries: work.maximumEdgeMapEntries,
             maximumMappedBytesPerReader: VivoWindowedCountRecords.windowBytes,
-            qualification: "Original and aggregated CSR edges use 16 MiB file windows. Stable disk scatter preserves resident source-row/column summation order; each aggregate row uses one edge map. edgeVisits includes repeated graph reads and temporary aggregation records. Cell identities, offsets, labels, degrees, totals, permutation, traversal queues and output JSON remain resident. No million-cell, Leiden, biological or Metal qualification.")
+            qualification: "CSR edge files no larger than 16 MiB retain one file mapping; larger original or aggregated edge files use 4 KiB positional-read buffers. Sequential offset and aggregation-bucket readers retain 16 MiB file windows. edgeBufferLoads and edgeBytesRead count deterministic complete buffer fills for large CSR edge files, including rereads; they exclude mapped small edge files, offsets, scatter buckets and parent reconstruction. Stable disk scatter preserves resident source-row/column summation order; each aggregate row uses one edge map. edgeVisits includes repeated graph reads and temporary aggregation records. Cell identities, offsets, labels, degrees, totals, permutation, traversal queues and output JSON remain resident. No million-cell, Leiden, biological or Metal qualification.",
+            edgeBufferLoads: work.edgeBufferLoads, edgeBytesRead: work.edgeBytesRead,
+            maximumEdgeBufferBytes: VivoBufferedCountRecords.bufferBytes)
         let receipt = try VivoPCAGraphClusteringReceipt(schemaVersion: 1, input: VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(parent)),
             plan: write(plan, temp, "plan.json", maximum: 65_536), result: write(result, temp, "result.json", maximum: 268_435_456),
             executionReport: write(execution, temp, "execution.json", maximum: 65_536), implementation: implementation)

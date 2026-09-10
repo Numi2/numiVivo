@@ -3,6 +3,33 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellFileClusteringTests {
+    @Test func bufferedRecordsPreserveBitsAcrossPagesAndRejectChangedFiles() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let path = root.appendingPathComponent("records.bin")
+        let writer = try VivoCountRecordWriter(path)
+        for i in 0..<600 { try writer.append(row: i, feature: 599 - i, bits: UInt64.max - UInt64(i)) }
+        _ = try writer.finish()
+        let reader = try VivoBufferedCountRecords(path, entries: 600)
+        for i in [0, 255, 256, 599, 512, 0] {
+            let record = try reader.record(i)
+            #expect(record.row == i && record.feature == 599 - i && record.bits == UInt64.max - UInt64(i))
+        }
+        #expect(reader.bufferLoads == 4)
+        #expect(reader.loadedBytes == 3 * 4_096 + 88 * 16)
+        #expect(throws: (any Error).self) { try reader.record(-1) }
+        #expect(throws: (any Error).self) { try reader.record(600) }
+        #expect(throws: (any Error).self) { try VivoBufferedCountRecords(path, entries: 599) }
+        #expect(throws: (any Error).self) { try VivoBufferedCountRecords(root, entries: 0) }
+        let link = root.appendingPathComponent("linked.bin")
+        try FileManager.default.createSymbolicLink(at: link, withDestinationURL: path)
+        #expect(throws: (any Error).self) { try VivoBufferedCountRecords(link, entries: 600) }
+        let changed = try FileHandle(forWritingTo: path)
+        try changed.truncate(atOffset: 16); try changed.close()
+        #expect(throws: (any Error).self) { try reader.record(599) }
+    }
+
     private func write(_ rows: [[VivoSingleCellClustering.Edge]], root: URL) throws {
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         let edges = try VivoCountRecordWriter(root.appendingPathComponent("edges.bin")), offsets = try VivoCountRecordWriter(root.appendingPathComponent("offsets.bin"))
@@ -31,7 +58,36 @@ import Testing
         let result = try VivoSingleCellClustering.run(original: input, cells: cells, options: .init(), scratch: root)
         #expect(result == (try VivoSingleCellClustering.run(graph, options: .init())))
         #expect(work.aggregatedLevels > 0 && work.edgeVisits > graph.weights.count && work.maximumEdgeMapEntries > 0)
+        #expect(work.edgeBufferLoads == 0 && work.edgeBytesRead == 0)
         #expect(try !FileManager.default.contentsOfDirectory(atPath: root.path).contains { $0.hasPrefix(".clustering-level-") })
+    }
+    @Test func graphAboveOneWindowUsesBoundedBufferedReads() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let entries = VivoWindowedCountRecords.windowBytes / 16 + 1
+        let offsets = try VivoCountRecordWriter(root.appendingPathComponent("offsets.bin"))
+        for (row, value) in [0, 1, entries].enumerated() {
+            try offsets.append(row: row, feature: 0, bits: UInt64(value))
+        }
+        _ = try offsets.finish()
+        let path = root.appendingPathComponent("edges.bin")
+        #expect(FileManager.default.createFile(atPath: path.path, contents: nil))
+        let file = try FileHandle(forWritingTo: path)
+        try file.truncate(atOffset: UInt64(entries * 16))
+        try file.seek(toOffset: 0)
+        try file.write(contentsOf: Data([0,0,0,0,1,0,0,0,0,0,0,0,0,0,240,63]))
+        try file.close()
+        let work = VivoClusteringWork()
+        let graph = try VivoFileClusteringGraph(root: root, rows: 2, entries: entries, work: work)
+        var edges = 0
+        try graph.forEachEdge(in: 0) { edge in
+            #expect(edge.column == 1 && edge.weight == 1); edges += 1
+        }
+        #expect(edges == 1 && work.edgeBufferLoads == 1 && work.edgeBytesRead == 4_096)
+        // The sparse tail deliberately has invalid coordinates; it must not be
+        // accepted merely because the byte count and backend admission succeed.
+        #expect(throws: (any Error).self) { try graph.forEachEdge(in: 1) { _ in } }
     }
     @Test func diskAggregationPreservesSummationOrderAndDiagonalMass() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

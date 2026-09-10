@@ -11,6 +11,8 @@ final class VivoClusteringWork {
     private(set) var rowReads = 0
     private(set) var aggregatedLevels = 0
     private(set) var maximumEdgeMapEntries = 0
+    private(set) var edgeBufferLoads = 0
+    private(set) var edgeBytesRead = 0
     init(maximumEdgeVisits: Int = Int.max) { self.maximumEdgeVisits = maximumEdgeVisits }
     func row() throws { try Task.checkCancellation(); rowReads += 1 }
     func edge() throws {
@@ -19,6 +21,7 @@ final class VivoClusteringWork {
     }
     func map(_ count: Int) { maximumEdgeMapEntries = max(maximumEdgeMapEntries, count) }
     func aggregate() { aggregatedLevels += 1 }
+    func read(loads: Int, bytes: Int) { edgeBufferLoads += loads; edgeBytesRead += bytes }
 }
 
 protocol VivoClusteringGraph: AnyObject {
@@ -46,12 +49,14 @@ final class VivoResidentClusteringGraph: VivoClusteringGraph {
 }
 
 /// Private immutable CSR snapshots. Offsets are cell-scale; edge records use the
-/// shared 16 MiB reader. Aggregation preserves source-row/column summation order.
+/// one 16 MiB map when the complete edge file fits, otherwise a 4 KiB positional
+/// buffer. Aggregation preserves source-row/column summation order.
 final class VivoFileClusteringGraph: VivoClusteringGraph {
     let count: Int
     let work: VivoClusteringWork
     private let offsets: [Int]
-    private let records: VivoWindowedCountRecords
+    private let records: VivoBufferedCountRecords?
+    private let mappedRecords: VivoWindowedCountRecords?
     private let allowSelf: Bool
     private let ownedDirectory: URL?
     init(root: URL, rows: Int, entries: Int, work: VivoClusteringWork, allowSelf: Bool = false, owned: Bool = false) throws {
@@ -67,15 +72,22 @@ final class VivoFileClusteringGraph: VivoClusteringGraph {
         }
         guard offsets[rows] == entries else { throw VivoOmicsError.invalid("clustering CSR terminal offset") }
         self.offsets = offsets
-        records = try VivoWindowedCountRecords(root.appendingPathComponent("edges.bin"), entries: entries)
+        let edges = root.appendingPathComponent("edges.bin")
+        if entries * 16 <= VivoWindowedCountRecords.windowBytes {
+            mappedRecords = try VivoWindowedCountRecords(edges, entries: entries); records = nil
+        } else {
+            records = try VivoBufferedCountRecords(edges, entries: entries); mappedRecords = nil
+        }
     }
     deinit { if let ownedDirectory { try? FileManager.default.removeItem(at: ownedDirectory) } }
     func forEachEdge(in row: Int, _ body: (VivoSingleCellClustering.Edge) throws -> Void) throws {
         guard row >= 0, row < count else { throw VivoOmicsError.invalid("clustering CSR row") }
         try work.row(); var previous = -1
+        let loads = records?.bufferLoads ?? 0, bytes = records?.loadedBytes ?? 0
+        defer { work.read(loads: (records?.bufferLoads ?? 0) - loads, bytes: (records?.loadedBytes ?? 0) - bytes) }
         for i in offsets[row]..<offsets[row+1] {
             try work.edge()
-            let record = try records.record(i), weight = Double(bitPattern: record.bits)
+            let record = try records?.record(i) ?? mappedRecords!.record(i), weight = Double(bitPattern: record.bits)
             guard record.row == row, record.feature < count, record.feature > previous,
                   allowSelf || record.feature != row, weight.isFinite, weight > 0 else { throw VivoOmicsError.invalid("clustering CSR edge") }
             previous = record.feature; try body(.init(column: record.feature, weight: weight))
