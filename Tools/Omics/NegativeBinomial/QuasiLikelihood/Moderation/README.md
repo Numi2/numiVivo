@@ -4,9 +4,10 @@
 scaled-F prior and posterior quasi-dispersions. Its `fit(from:)` entry point
 consumes a complete [native abundance/global-scale fit](../Abundance/README.md),
 with no supplied reference abundance or prior parameters. This completes the
-native prior/posterior stage; the constrained cohort QL hypothesis test, Poisson
-bound, varying-support borrowing and calibration remain open. Cohort defaults
-are unchanged.
+native prior/posterior stage. The subsequent [native inference stage](../Inference/README.md)
+now supplies the constrained adjusted QL cohort test. Varying-support borrowing,
+effect intervals and calibration remain open. The Poisson bound belongs only to
+legacy QL; the modern method disables it. Cohort defaults are unchanged.
 
 For residual quasi-dispersion `v`, residual shape `a = residualDF/2` and prior
 shape `d`, the prior uses corrected log variance `log(v) + log(a) - digamma(a)`
@@ -148,6 +149,7 @@ Use new directories for failed-attempt recovery, retaining earlier artifacts.
 Completed receipts are reused only with exact input, binary, protocol, checker
 and output hashes. Collect native source/build/test logs and `execution.json`
 before summary/archive generation. The frozen [protocol](PROTOCOL.md) fixes all
-arms and limits. Remaining work includes constrained QL cohort hypotheses,
-Poisson bounds and fresh sham/held-out calibration. The parent study's 39 Hagai
+arms and limits. The [subsequent inference stage](../Inference/README.md) now
+provides constrained adjusted QL hypotheses. Legacy-only Poisson bounds and
+fresh sham/held-out calibration remain separate. The parent study's 39 Hagai
 sham calls versus Wald's 20 remain unresolved evidence.

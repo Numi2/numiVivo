@@ -3,7 +3,7 @@ import Foundation
 public enum VivoOmicsNBZeroDonorPolicy: String, Codable, Sendable { case activeDonorProfile }
 public enum VivoOmicsNBTrendMethod: String, Codable, Sendable { case parametric, mean, gammaParametric }
 public enum VivoOmicsNBEffectPriorEstimation: String, Codable, Sendable { case weightedUpperQuantile }
-public enum VivoOmicsNBTestMethod: String, Codable, Sendable { case likelihoodRatio }
+public enum VivoOmicsNBTestMethod: String, Codable, Sendable { case likelihoodRatio, quasiLikelihoodAdjusted }
 public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     /// nil preserves the original Wald test. LRT uses the same full-fit dispersion.
     public var testMethod: VivoOmicsNBTestMethod?
@@ -37,6 +37,11 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
         effectPriorEstimation = try c.decodeIfPresent(VivoOmicsNBEffectPriorEstimation.self, forKey: .effectPriorEstimation)
     }
     public func validate() throws {
+        if testMethod == .quasiLikelihoodAdjusted {
+            guard zeroTotalDonorPolicy == nil, effectPriorStandardDeviationLog2 == nil, effectPriorEstimation == nil else {
+                throw VivoOmicsError.invalid("Adjusted QL does not yet support active-donor borrowing or effect-prior options")
+            }
+        }
         guard (20...100_000).contains(minimumTrendGenes), minimumPriorVariance.isFinite,
               (0.01...10).contains(minimumPriorVariance), outlierStandardDeviations.isFinite,
               (1...10).contains(outlierStandardDeviations),
@@ -105,6 +110,7 @@ public struct VivoOmicsNBCohortDiagnostics: Codable, Sendable, Equatable {
     public var effectShrinkage: VivoOmicsNBEffectShrinkageSummary? = nil
     public var effectPriorEstimate: VivoOmicsNBEffectPriorEstimate? = nil
     public var effectPriorEstimationError: String? = nil
+    public var quasiLikelihood: VivoOmicsNBQLCohortDiagnostics? = nil
 }
 
 public enum VivoOmicsNBCohort {
@@ -275,6 +281,7 @@ public enum VivoOmicsNBCohort {
     static func evaluate(metadata: VivoSingleCellCountMetadata, entries: [[(row: Int,count: UInt64)]],
                          design: VivoOmicsDesignMatrix, request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
         let options = request.negativeBinomialOptions ?? .init()
+        try options.validate()
         guard options.zeroTotalDonorPolicy == nil || request.design == .pairedDonors else {
             throw VivoOmicsError.invalid("NB zero-total donor policy requires paired donors")
         }
@@ -330,6 +337,10 @@ public enum VivoOmicsNBCohort {
         let reference = entries.indices.filter { diagnostics[$0].supportResolution == nil && (profiles[$0].map { !$0.lowerBoundary && !$0.upperBoundary } ?? false) }
         let trend = try fitTrend(means: reference.map { means[$0] },dispersions: reference.map { profiles[$0]!.fit.dispersion },
                                  featureIndices: reference,residualDF: design.residualDegreesOfFreedom,options: options)
+        if options.testMethod == .quasiLikelihoodAdjusted {
+            return try evaluateAdjustedQL(metadata: metadata,entries: entries,design: design,request: request,
+                totals: totals,means: means,profiles: profiles,diagnostics: diagnostics,statuses: statuses,trend: trend)
+        }
         var low = 0.0, high = 10.0
         for _ in 0..<80 {
             let mid = (low+high)/2

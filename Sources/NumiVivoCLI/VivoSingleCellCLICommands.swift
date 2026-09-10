@@ -447,7 +447,8 @@ struct VivoSingleCellCLICommands {
     Input is integer/general MEX Gene Expression data, plain or gzip with bounded native decoding.
     Counts stay UInt64; QC records every cell decision and keeps feature identities.
     Expression uses explicit biological replicates/paired donors, not cells as independent samples.
-    The moderated log-expression model is untrended: no voom weights, mixed model, or NB fit is claimed.
+    Log-linear expression remains an untrended baseline. Set model=negativeBinomial for count-based inference.
+    NB testMethod options are likelihoodRatio or quasiLikelihoodAdjusted; omission preserves Wald. Adjusted QL is experimental and has no calibrated effect intervals.
     Replay requires the recorded executable/OS. Regenerate count receipts after rebuilding the executable.
     H5AD uses native HDF5 (install hdf5 or set NUMIVIVO_HDF5_LIBRARY), with explicit X/raw/X/layer and design mapping; CSR/CSC and row-wise dense reads.
     Import retains original.h5ad unchanged alongside the count projection and MEX manifest; no ancillary AnnData fields are discarded.

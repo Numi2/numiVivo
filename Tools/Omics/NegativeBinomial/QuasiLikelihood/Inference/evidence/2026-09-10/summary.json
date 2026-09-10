@@ -1,0 +1,64 @@
+{
+  "arms": 58,
+  "baseCommit": "9da4ee0d50aea97d6b8312c3acdd4796225c124a",
+  "features": 483576,
+  "maximumErrors": {
+    "BH": 6.71018796083445e-13,
+    "F-arithmetic": 1.12101683252137e-15,
+    "LR-native-means": 5.02499504229093e-08,
+    "LR-tight-null": 5.02499475363294e-08,
+    "constrained-means": 3.61239993984437e-07,
+    "contrast-zero": 0,
+    "denominator-DF": 0,
+    "log-F-tail": 1.22435395155662e-12,
+    "null-score": 9.99968405468382e-08,
+    "ordinary-DF-cap": 0,
+    "probability-arithmetic": 9.66587920814277e-14
+  },
+  "maximumResidentBytes": 140050432,
+  "product": {
+    "calls": 906,
+    "countsExactlyEqual": true,
+    "designExactlyEqual": true,
+    "featureIndicesExactlyEqual": true,
+    "features": 15706,
+    "frozenInputSHA256": "0d752ba54e9b5baa406670c01f30c847daba2547bf51c09fb69c8ddd27a45b45",
+    "outputSHA256": "2d05f054b16437fed2a12c1ad8b5fbb89782fde5e45370fdbf546dfa5c34a10f",
+    "referenceReturnCode": 0,
+    "referenceStatus": "passed",
+    "seconds": 14.557554960250854,
+    "sourceSHA256": "58a7fa53cce8691ac5ca90ba72450f8116ac80e531e5151edf72091d3c182fa3",
+    "status": "passed",
+    "testedFeatures": 5400
+  },
+  "scope": "Complete native adjusted QL chain and one-constraint tests on 58 frozen full-support families, plus Kang through the existing internal pseudobulk expression owner and controlled public dataset-route tests. No legacy Poisson-bound, varying-support, effect-interval, FDR calibration, biological truth, GPU or million-cell claim.",
+  "shamCallInventory": {
+    "hagai/edgeRTrend-adjusted": {
+      "cases": 10,
+      "nativeCalls": 79,
+      "originalDefaultReferenceCalls": 79,
+      "originalWaldCalls": 20
+    },
+    "hagai/nativeTrend-adjusted": {
+      "cases": 10,
+      "nativeCalls": 39,
+      "originalDefaultReferenceCalls": 39,
+      "originalWaldCalls": 20
+    },
+    "kang/edgeRTrend-adjusted": {
+      "cases": 10,
+      "nativeCalls": 3,
+      "originalDefaultReferenceCalls": 3,
+      "originalWaldCalls": 0
+    },
+    "kang/nativeTrend-adjusted": {
+      "cases": 10,
+      "nativeCalls": 3,
+      "originalDefaultReferenceCalls": 2,
+      "originalWaldCalls": 0
+    }
+  },
+  "status": "passed",
+  "swiftSuites": 9,
+  "swiftTests": 50
+}

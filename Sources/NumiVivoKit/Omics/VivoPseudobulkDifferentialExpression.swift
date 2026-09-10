@@ -117,6 +117,7 @@ public struct VivoOmicsExpressionFeature: Codable, Sendable, Equatable {
     public let pValue: Double?
     public var adjustedPValue: Double?
     public var zStatistic: Double? = nil
+    public var fStatistic: Double? = nil
 }
 public struct VivoOmicsExpressionResult: Codable, Sendable, Equatable {
     public let method: String
@@ -295,4 +296,3 @@ public enum VivoPseudobulkDifferentialExpression {
             multiplicityScope: "Benjamini-Hochberg across tested features in this contrast only; no across-contrast or selective-inference guarantee")
     }
 }
-

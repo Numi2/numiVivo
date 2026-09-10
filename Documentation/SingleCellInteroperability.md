@@ -377,11 +377,20 @@ The complete development objective remains open:
    43 focused native tests. All 111 prior profiles pass independent objective
    and trend checks; posterior error against a tightly optimized reference is
    at most 1.32e-6. Ordinary-default reference discrepancies remain recorded,
-   including coarse optimization near the upper prior-DF boundary. Constrained
-   QL cohort testing, Poisson bounds and varying-support borrowing remain open.
-   QL is not a demonstrated calibration fix:
-   the native-trend adjusted reference yields 39 Hagai sham calls versus Wald's
-   20 on the same default families. Active-donor QL borrowing remains separate.
+   including coarse optimization near the upper prior-DF boundary. The subsequent
+   [native adjusted QL cohort test](../Tools/Omics/NegativeBinomial/QuasiLikelihood/Inference/README.md)
+   completes the native chain on all 58 arms and 483,576 tests with exact upstream
+   fits, residual DF, abundance and moderation. Independent constrained-fit,
+   F-tail and BH checks pass, as do 50 native tests in nine suites. The existing
+   pseudobulk expression owner also passes a real Kang check with 5,400 tests
+   and all 15,706 original feature identities retained. The opt-in method leaves
+   defaults unchanged and does not supply QL effect intervals. Modern adjusted
+   QL explicitly disables the legacy-only Poisson bound. Legacy inference,
+   varying-support borrowing and fresh calibration remain open. QL is not a
+   demonstrated calibration fix: native-trend QL yields 39 Hagai sham calls
+   versus Wald's 20, and three Kang calls versus two from the original adjusted
+   reference and zero from Wald. These inspected families cannot qualify future
+   method selection. Active-donor QL borrowing remains separate.
    Heavy-tailed priors, prior uncertainty, posterior coverage, effect-estimation
    risk and robust cross-study qualification remain.
    An explicit Gamma dispersion-trend option now passes controlled Kang/Hagai

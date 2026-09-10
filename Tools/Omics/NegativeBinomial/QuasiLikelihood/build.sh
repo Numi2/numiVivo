@@ -4,7 +4,7 @@ ROOT="$(cd "$(dirname "$0")/../../../.." && pwd)"
 OUT="${1:?output directory}"
 mkdir -p "$OUT"
 FILES=()
-for name in VivoSparseCounts VivoSingleCellAnalysis VivoOmicsSourceDecoder VivoOmicsLinearStatistics VivoOmicsNegativeBinomial VivoOmicsNBSupport VivoOmicsNBCohort VivoPseudobulkDifferentialExpression; do
+for name in VivoSparseCounts VivoSingleCellAnalysis VivoOmicsSourceDecoder VivoOmicsLinearStatistics VivoOmicsNegativeBinomial VivoOmicsNBSupport VivoOmicsNBCohort VivoPseudobulkDifferentialExpression VivoOmicsNBDevianceMoments VivoOmicsNBAdaptiveMoments VivoOmicsRobustLowess VivoOmicsNBQLGlobalScale VivoOmicsNBAbundance VivoOmicsQLSpecialFunctions VivoOmicsPrecisionLowess VivoOmicsQLModeration VivoOmicsNBQLInference VivoOmicsNBQLCohort; do
   FILES+=("$ROOT/Sources/NumiVivoKit/Omics/$name.swift")
 done
 shasum -a 256 "${FILES[@]}" "$ROOT/Tools/Omics/NegativeBinomial/QuasiLikelihood/Main.swift" > "$OUT/sources.sha256"

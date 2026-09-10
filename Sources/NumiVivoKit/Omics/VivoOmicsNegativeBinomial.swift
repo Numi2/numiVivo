@@ -128,7 +128,7 @@ public enum VivoOmicsNegativeBinomial {
     }
     // Internal reuse only: full must be the unpenalized fit to these exact inputs.
     static func contrastLikelihoodRatio(counts: [UInt64], design: [[Double]], offsets: [Double],
-        contrast: [Double], full: VivoOmicsNBFit) throws -> VivoOmicsNBLikelihoodRatioFit {
+        contrast: [Double], full: VivoOmicsNBFit, maximumNullIterations: Int = 100) throws -> VivoOmicsNBLikelihoodRatioFit {
         guard full.converged, !full.positiveCountDesignRankDeficient,
               let pivot = contrast.indices.max(by: { abs(contrast[$0]) < abs(contrast[$1]) }),
               contrast[pivot] != 0 else {
@@ -153,7 +153,7 @@ public enum VivoOmicsNegativeBinomial {
             // the null constraint is already encoded by the reduced design.
             let nuisanceContrast = [1.0] + [Double](repeating: 0,count: free.count-1)
             let null = try fit(counts: counts,design: reduced,offsets: offsets,
-                contrast: nuisanceContrast,dispersion: full.dispersion)
+                contrast: nuisanceContrast,dispersion: full.dispersion,maximumIterations: maximumNullIterations)
             for (j,column) in free.enumerated() { beta[column] = null.coefficients[j] }
             beta[pivot] = -free.reduce(0) { $0 + beta[$1]*(contrast[$1]/contrast[pivot]) }
             mu = null.means; ll = null.logLikelihood; iterations = null.iterations

@@ -1,7 +1,8 @@
 # Quasi-likelihood stages and native deviance
 
 This study resolves the inputs and arithmetic needed for native QL development.
-It does not introduce a native QL cohort test. Current Wald and LRT reports and
+The original study does not introduce a native QL cohort test; the subsequent
+[native inference stage](Inference/README.md) now does. Current Wald and LRT reports and
 options remain unchanged. The new production primitive is
 `VivoOmicsNegativeBinomial.unitDeviance(count:mean:dispersion:)`, the residual
 likelihood calculation needed before QL scale estimation and moderation.
@@ -109,9 +110,11 @@ implements abundance-dependent unequal-DF prior estimation and posterior
 variance. All 58 arms, 265 numerical checks and 43 focused native tests pass;
 ordinary-default and tightly optimized reference comparisons remain distinct.
 
-A native QL cohort method still needs constrained-test integration and a
-Poisson bound with explicit failure behavior. The conditional residual stage
-alone does not provide a cohort hypothesis test. The reference
+The subsequent [native adjusted QL inference](Inference/README.md) connects
+these stages to constrained hypotheses and the existing pseudobulk owner.
+All 58 full-support arms and 483,576 tests pass independent numerical checks;
+50 native tests pass. Modern adjusted QL disables the legacy-only Poisson bound.
+The conditional residual stage alone does not provide a cohort hypothesis test. The reference
 matrices here supply stage-level comparison targets, including unit adjustments,
 prior/posterior scales and optimizer diagnostics. Scientific calibration,
 independent power, uncertain-dispersion coverage and varying-support designs

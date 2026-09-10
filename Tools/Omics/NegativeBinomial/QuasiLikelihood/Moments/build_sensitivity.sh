@@ -4,7 +4,7 @@ ROOT="$(cd "$(dirname "$0")/../../../../.." && pwd)"
 OUT="${1:?output directory}"
 mkdir -p "$OUT"
 FILES=()
-for name in VivoSparseCounts VivoSingleCellAnalysis VivoOmicsSourceDecoder VivoOmicsLinearStatistics VivoOmicsNegativeBinomial VivoOmicsNBDevianceMoments VivoOmicsNBAdaptiveMoments VivoOmicsNBSupport VivoOmicsNBCohort VivoPseudobulkDifferentialExpression; do
+for name in VivoSparseCounts VivoSingleCellAnalysis VivoOmicsSourceDecoder VivoOmicsLinearStatistics VivoOmicsNegativeBinomial VivoOmicsNBDevianceMoments VivoOmicsNBAdaptiveMoments VivoOmicsNBSupport VivoOmicsNBCohort VivoPseudobulkDifferentialExpression VivoOmicsRobustLowess VivoOmicsNBQLGlobalScale VivoOmicsNBAbundance VivoOmicsQLSpecialFunctions VivoOmicsPrecisionLowess VivoOmicsQLModeration VivoOmicsNBQLInference VivoOmicsNBQLCohort; do
  FILES+=("$ROOT/Sources/NumiVivoKit/Omics/$name.swift")
 done
 MAIN="$ROOT/Tools/Omics/NegativeBinomial/QuasiLikelihood/Moments/Sensitivity.swift"

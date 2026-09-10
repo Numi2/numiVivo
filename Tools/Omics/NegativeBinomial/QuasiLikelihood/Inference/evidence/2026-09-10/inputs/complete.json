@@ -1,0 +1,524 @@
+[
+  {
+    "case": "kang-null-01-default",
+    "genes": 3203,
+    "inputSHA256": "6fe2f1427b7a9a46eaed25e0a053efd60563654573d39e47811ea3952ed987fe",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "f1e94ce03206ed77a25ea0e61abb7b35e5e9bb89b3ac6136ab815fca5b4cdd21",
+    "upstreamCountSHA256": "aff63590297725152bd2e561afb241c8df023e83dcd41f41c14f44ce32030794",
+    "upstreamModerationSHA256": "a79a3901517bff1f6337c2e3470d7696f32d84c3757a55e706662d96d041e195"
+  },
+  {
+    "case": "kang-null-01-default",
+    "genes": 3203,
+    "inputSHA256": "8e128e7ad411a60520461e5f5265991490ebcd5e91e384b206782a3fde4145a2",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "9f3b37f8e9ab469407256b32adc1b91c56217bb7f8f1c8b1c6004b167d842965",
+    "upstreamCountSHA256": "aff63590297725152bd2e561afb241c8df023e83dcd41f41c14f44ce32030794",
+    "upstreamModerationSHA256": "1b89733ec4cf816ba5277d6395cf6a25d7054be8b7c4c4d1df917247d3208b96"
+  },
+  {
+    "case": "kang-null-02-default",
+    "genes": 3203,
+    "inputSHA256": "74f65490783cf2b7a726ac86f63f71e9171a483f96fe6fd111711d0a4b9162f5",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "b4d5001f7157be5c2487262202e7b0169e0c1a173bdcd0cb3be27e4001af3f59",
+    "upstreamCountSHA256": "ecb88dcc57370878f400042923c9d31963f15a21d27213482eb6a97045b55c67",
+    "upstreamModerationSHA256": "2cba32f1120ff164fe3145ef1b26140aa00dce8bef39159d4feb0d1c1f41735a"
+  },
+  {
+    "case": "kang-null-02-default",
+    "genes": 3203,
+    "inputSHA256": "ed9fa21f94a55699cecaead75dfe6f4a4feb041c076bb6711a3a34e46b2d1345",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "d989369b73f4f2755c2dd4c43dfeb69a62d97d349962c63d373ae14ba7fa76a8",
+    "upstreamCountSHA256": "ecb88dcc57370878f400042923c9d31963f15a21d27213482eb6a97045b55c67",
+    "upstreamModerationSHA256": "49faaf25a28c710a1076989880854656d835abe86d7dc20da43fc375d451fa79"
+  },
+  {
+    "case": "kang-null-03-default",
+    "genes": 3202,
+    "inputSHA256": "1d56730d139df333de2594ed6fddb23cedae5b4f77b6a8c5f77323f2f74bc798",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "b5c72da91a7979f8f1d0de8db2ce322134bd805a747ecaa0fa7b34427af51ea6",
+    "upstreamCountSHA256": "b8df9525893620f80a4c36e869e93fb25d81c352a40680e7afe060a56dc1610f",
+    "upstreamModerationSHA256": "1eb2b0febdbdc9abb122b275274b0f6bff3c9645970491f5b613facfb6baab29"
+  },
+  {
+    "case": "kang-null-03-default",
+    "genes": 3202,
+    "inputSHA256": "bce682138c6b648eda9d66febef1a7296033339bdfa4e8ebc8e3d8f075f23b94",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "80be8fdead6ad815324ac59e14b0b167e283df4f39c91413ef3a9b29ba08bc2c",
+    "upstreamCountSHA256": "b8df9525893620f80a4c36e869e93fb25d81c352a40680e7afe060a56dc1610f",
+    "upstreamModerationSHA256": "8e2479fa8ea43889b16ba3d912d15eefeb854a4c07f3f38683672f636dbfbf37"
+  },
+  {
+    "case": "kang-null-04-default",
+    "genes": 3203,
+    "inputSHA256": "b3638bb95d2c62565374e50ba438eb68dff71d462b547851241c788876f3a3b6",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "c0fcded598985f4058420182ad50a54f65c5b2d9199bd93ba429b989eaef1ed1",
+    "upstreamCountSHA256": "ec9c5b0334af6460456a32f8ef64835a426b1757be65a69d03c6f97aea944d90",
+    "upstreamModerationSHA256": "c7e0170a701b20d52f7bd8e40a2a723544e951e86823ba0b93740eea08206a95"
+  },
+  {
+    "case": "kang-null-04-default",
+    "genes": 3203,
+    "inputSHA256": "2bbd9aa9e85de1cc7154e217b9f5e73bb4decc7cf797c91134ab19a371c6c4da",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "01d15107dd5a15e33dfaa1c50efc01057accd29455b0cb3dd2c29d01153fd39b",
+    "upstreamCountSHA256": "ec9c5b0334af6460456a32f8ef64835a426b1757be65a69d03c6f97aea944d90",
+    "upstreamModerationSHA256": "57b422bbe7749d6125c97548d8fac0ee3529943b3686ce408ecec930f8f53c51"
+  },
+  {
+    "case": "kang-null-05-default",
+    "genes": 3202,
+    "inputSHA256": "f4c8f7dfb37ce13fb2ebd2d0320edfd213adeee7dbde78809f7e02bc7c11f759",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "554a8996b6a5845cd3e4b5b2dc7ae14cfe487997726b6e9603560fdfcc6d85f2",
+    "upstreamCountSHA256": "07658884765f923fe0ef65cee231e34a5101daf36f955db96f814279361f783b",
+    "upstreamModerationSHA256": "2d7a89f2b0aa16c293fa14e5aea4e27805243408ed36623be19492cb7e1a3d31"
+  },
+  {
+    "case": "kang-null-05-default",
+    "genes": 3202,
+    "inputSHA256": "4e6e767a345ce9afe371c7a0bd3383ae15b94fb066c5b300e28a9ad78ac2db85",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "93e9657adbdc4eb86e2202d0312030d1cd1185a4a6526147952a74495163f6ff",
+    "upstreamCountSHA256": "07658884765f923fe0ef65cee231e34a5101daf36f955db96f814279361f783b",
+    "upstreamModerationSHA256": "e6d17f46348298087296480d6f41152b2765b0ec01413f0ae1ac65d4932b34b3"
+  },
+  {
+    "case": "kang-null-06-default",
+    "genes": 3204,
+    "inputSHA256": "bf39765cc4b5b6a10002421ee929b57a36d94f0ad717a9ae0b18ea86fc0adb7e",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "c749b77db6a98ba70d929b81e84fd9eb6ef43648c053b8720be4582e54423fff",
+    "upstreamCountSHA256": "db85aa5a55eda025756b33c48f20798545f8e24049b570cae09d74cf8129ef11",
+    "upstreamModerationSHA256": "a00e4ea193b716be7a5d86a33e451177f4e313edbfcbfb991f6bee9291c65546"
+  },
+  {
+    "case": "kang-null-06-default",
+    "genes": 3204,
+    "inputSHA256": "7330fd459a9983a7bd1b090b6090d4736a2da44700a40d117e4eef94ec0e729b",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "0fb5f1c798b4a320e4b1082f4fe7b8ff7683499b401d75c9daac15a677001523",
+    "upstreamCountSHA256": "db85aa5a55eda025756b33c48f20798545f8e24049b570cae09d74cf8129ef11",
+    "upstreamModerationSHA256": "945a1da20022ba0d12480bccb34229b49f1abe6850895395b010642548f08288"
+  },
+  {
+    "case": "kang-null-07-default",
+    "genes": 3202,
+    "inputSHA256": "b542537d623620062a0138306bd7fc0bb4a5f9ecbddaf9201fd6347fb69f14f4",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "f3b7e553aece844ec2e9e76a9f54157773711bedf9395beebac70a1efc579022",
+    "upstreamCountSHA256": "d86d65838297ab0de5c23d6106f24dc4e70dc74868fb304a84797de5e273e8be",
+    "upstreamModerationSHA256": "7e6fdb14f1442c1d29df8368802e541b37c7dce3bb8124082d564d0c07e54222"
+  },
+  {
+    "case": "kang-null-07-default",
+    "genes": 3202,
+    "inputSHA256": "a39a2c3b8039c63a68af8c7505ca7c39f72ca51e0051d96da27c3895a5a78980",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "6e9ff866d0a64ab6eb423d17c899c9d2c018bee4168d437c33d62a4c58388812",
+    "upstreamCountSHA256": "d86d65838297ab0de5c23d6106f24dc4e70dc74868fb304a84797de5e273e8be",
+    "upstreamModerationSHA256": "fc5bbc7f1e2a39913285dc38fd196da541a921ad317b8a01a811ac08b72f8494"
+  },
+  {
+    "case": "kang-null-08-default",
+    "genes": 3202,
+    "inputSHA256": "fdde05be588db928869eb4a70975552530f6d196d84c9f76ff6c3070f2e05a73",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "f02a54b2244596b1f0ea4d0f9c2889dbdc677f63cea32208ffccc94767c0f389",
+    "upstreamCountSHA256": "b86078f9d5b63c0ea18b8a94a575acb7a87790d46478d8391bf4e8daafc98902",
+    "upstreamModerationSHA256": "da0cc2cea409cc9b785089131ca902a13673234c410be48cc7fa5f52b8aa5326"
+  },
+  {
+    "case": "kang-null-08-default",
+    "genes": 3202,
+    "inputSHA256": "61b919827b5b177e526944be2a04d5df70b66dd7c657439cfcd05d17a436edcd",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "1b971c5a015b9093d5650845618ff36904c2e983b3a68619815cd7574876fb33",
+    "upstreamCountSHA256": "b86078f9d5b63c0ea18b8a94a575acb7a87790d46478d8391bf4e8daafc98902",
+    "upstreamModerationSHA256": "3f52b002d54b5422fdc09538c5fac1a36797d708fde71725ab22740ab894e9a1"
+  },
+  {
+    "case": "kang-null-09-default",
+    "genes": 3203,
+    "inputSHA256": "0d6481025d441900f0c23100a4f39a5f9751e611d6e56f58bd0ca291442eca60",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "8836c13e5779c48abf6bb83a6fac90ceefd0e7207ddc6210b97007a4cdd75608",
+    "upstreamCountSHA256": "69f6bf618d396181fcd465aa17dd7df31973d853f42b1b1978ccd9a46316f1be",
+    "upstreamModerationSHA256": "f71ac98a2f2e4211493b8225418734fca2cb6146d8d4eb8e7fca99e50ecca7cb"
+  },
+  {
+    "case": "kang-null-09-default",
+    "genes": 3203,
+    "inputSHA256": "dee2c6897b8596afb2870abbf3a876b8f96cdedd3a201fb9cba6f08013c33714",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "bbbf7273978d99eb07affbc639fff93fc7e329853606b8d01d0897ae78fb57db",
+    "upstreamCountSHA256": "69f6bf618d396181fcd465aa17dd7df31973d853f42b1b1978ccd9a46316f1be",
+    "upstreamModerationSHA256": "546bcb3a9cbed1c6ee3e029951cf9792a22a192a48067cac5026d63503665e83"
+  },
+  {
+    "case": "kang-null-10-default",
+    "genes": 3204,
+    "inputSHA256": "3e3e32255d78d694b61b32eb0fb2718344dd72a7bad75c2fdccbd52597142623",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "47f37cc3380737f611a0e2a5759c6e8731150ddeecdbe97aba696b1f1c247f22",
+    "upstreamCountSHA256": "86897ea5fdfec7bd01a0d1a7780971ff406e70223ababcc070ddf1aa095f5962",
+    "upstreamModerationSHA256": "74c78812b4fd012f3cc41d92c807a6482e0ce2ce0232571a833bd1afeb8983ea"
+  },
+  {
+    "case": "kang-null-10-default",
+    "genes": 3204,
+    "inputSHA256": "0b8a5ba3536daa33b69c2d9befa81acbfc71f9816ee991aaf7685f3b1977e95e",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "2674897615c23d05cec4e213b5fad70d8f6139b02bce72e499f7746bfa6c1f22",
+    "upstreamCountSHA256": "86897ea5fdfec7bd01a0d1a7780971ff406e70223ababcc070ddf1aa095f5962",
+    "upstreamModerationSHA256": "2e1e14e9eba99af07b2f89e7dd12df727d0ed67d9f6ce894bb8866b62df038e2"
+  },
+  {
+    "case": "hagai-null-01-default",
+    "genes": 11921,
+    "inputSHA256": "ba9ea705e3d9bdbb73a4eda3f6a007f638036cdd7b63438fe665f2cd7c5db3dd",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "fae1d64fe67531148d7bc65bf3a3cd4aaffde0398a4552be915b5506911eab7e",
+    "upstreamCountSHA256": "d5884d9867e3aa40cbd8ac57781f6a0ca74de75e2870818a8ee826182fea6cd8",
+    "upstreamModerationSHA256": "0808d7cc062fe3fad90ddadafbedc53fae8e2c9100a193b9d0e90a1f01eb9715"
+  },
+  {
+    "case": "hagai-null-01-default",
+    "genes": 11921,
+    "inputSHA256": "0495f28b17cb4b1515377bb6f0eb3791c6520ef5fb457647ca707f471a027aa0",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "60e7b50027bd4508433f69b6cc6c913aa268c70305377e503e1d6f2eabf56e45",
+    "upstreamCountSHA256": "d5884d9867e3aa40cbd8ac57781f6a0ca74de75e2870818a8ee826182fea6cd8",
+    "upstreamModerationSHA256": "b40e98fa1ed5d8fed2e9bcb0fed1cac42660cbe184095e0e53a6c08105e6a535"
+  },
+  {
+    "case": "hagai-null-02-default",
+    "genes": 11920,
+    "inputSHA256": "522ab92243d50e97d311b7fd2fabaf823aef9f4c7f8b3907859a52bde46b70cb",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "9a0e2acc77471aa2e34891b06fe7a7d51c3d0cb5ccc9a0def2029b2ac717d334",
+    "upstreamCountSHA256": "21c2a4070583967f67cfbd37df22530614f538e53b12db7380968ce176f04941",
+    "upstreamModerationSHA256": "6062a540b4e731f8b96977020c367f9408ab602755b9308a3800ddb16627d8e2"
+  },
+  {
+    "case": "hagai-null-02-default",
+    "genes": 11920,
+    "inputSHA256": "18b388b29084716d325005dd7b80783257124d83e77c4e682792ec4984814dbc",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "1b68c7216afe4a5ead472fcf09f67053bb83959599eacfb8c09dccfe9791157b",
+    "upstreamCountSHA256": "21c2a4070583967f67cfbd37df22530614f538e53b12db7380968ce176f04941",
+    "upstreamModerationSHA256": "db54fb9ce744d785fe753e1e73b31b58e2f3171a30d0e8ef0022b4c714414e08"
+  },
+  {
+    "case": "hagai-null-03-default",
+    "genes": 11917,
+    "inputSHA256": "019b20c006355f58dc0f2b88c61db0a4ad934083c299e7233cc1a7981ef2ef0e",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "0351cffc8721ce278b57abf4a58887bb50baa04cb5c4e2da5c925e6d933476c3",
+    "upstreamCountSHA256": "9560a5e488da2f96a2977fd746453bef3e37404f0ebae7db0c4622d87a845aad",
+    "upstreamModerationSHA256": "86dfe40fce9b15fba319e03131bccceb39cbf0f970f745bcd841d537a577a9ae"
+  },
+  {
+    "case": "hagai-null-03-default",
+    "genes": 11917,
+    "inputSHA256": "0dffb84e5c5e5fb8835bcc6187f487671568131a043b7e6720cdd55b77433185",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "e763fc1e230cbce14c705e3a36d1e8a7ecdb52ff6b8e608b29513f47ea786988",
+    "upstreamCountSHA256": "9560a5e488da2f96a2977fd746453bef3e37404f0ebae7db0c4622d87a845aad",
+    "upstreamModerationSHA256": "bf64fe88e7de13c970a6e5b2e0ee5ad0355419460917af508dadbab3fd644f2f"
+  },
+  {
+    "case": "hagai-null-04-default",
+    "genes": 11921,
+    "inputSHA256": "ee103d30fea52dca5aca4a5e4ae756c4afd39476fb441690c1c2d3033c6c6cdb",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "e4b74c14b26f354e624509d52df3ce76ab9d35c45a2925313616b0632045ce89",
+    "upstreamCountSHA256": "0bd6ca174ac28b51458fa5af6e6e04a87c5c81164f29ff8f34ad8bbed0448e73",
+    "upstreamModerationSHA256": "fe7568ee28f56f4b2e61b8e597d67b74107079be10b36ee94f2bb74f3f0029cf"
+  },
+  {
+    "case": "hagai-null-04-default",
+    "genes": 11921,
+    "inputSHA256": "14b42c3ac92338c242b5d36070f619f4d25ace8bd535016528aa8b62e37adaa7",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "dd38e277cf529a5353d27b483e7249567aaeba683bda89e254c2729316230e55",
+    "upstreamCountSHA256": "0bd6ca174ac28b51458fa5af6e6e04a87c5c81164f29ff8f34ad8bbed0448e73",
+    "upstreamModerationSHA256": "3a514f5d99ea4e225bb069357c7b1ae67c9b4c969f82bab234b3d59865845368"
+  },
+  {
+    "case": "hagai-null-05-default",
+    "genes": 11919,
+    "inputSHA256": "9a1cba7f47c3ee06a58c1e57c9aa2b577f2ec00683d8624c20763908ae88be41",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "9e1fdfb90bbccce0d7df79b1eb26686024c8484b21e041c2edf1373347dbebac",
+    "upstreamCountSHA256": "19b66d7698561f5636892cc0d8265d8c0530a2b5e7685bada73189bdc51c02c5",
+    "upstreamModerationSHA256": "667397765afd0a198aa194fe2642fef0232e13558e3991b1f345c578cc48f16f"
+  },
+  {
+    "case": "hagai-null-05-default",
+    "genes": 11919,
+    "inputSHA256": "52cedc537f7aab2b8d8ce49bbf3b7f4cdedf7de8de1f18343ad8c7deabb43e0e",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "6845b1288e2c2f88d607e65439df84eb008ae023928b391c40c5cc2f0825e5ca",
+    "upstreamCountSHA256": "19b66d7698561f5636892cc0d8265d8c0530a2b5e7685bada73189bdc51c02c5",
+    "upstreamModerationSHA256": "e00eba657c40cd282b36e5a98f793749748c7fd1fdf4cc7d122c1f9736ebf00b"
+  },
+  {
+    "case": "hagai-null-06-default",
+    "genes": 11921,
+    "inputSHA256": "a98b669fbbb3a867bccea1337e18c1af5081946e56ef88d4b6b1f52c77cbba63",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "928b54a948ceba178035742c69a86a1ddf958cd2778fa78615421ab765d42650",
+    "upstreamCountSHA256": "973542355d975252ee8891a2ec3f1d9cfd5f478923317f893903be593db7f148",
+    "upstreamModerationSHA256": "514d7380460558df5e78261fdc50abeee0d59c1114b689501c48cd4f5f5a9731"
+  },
+  {
+    "case": "hagai-null-06-default",
+    "genes": 11921,
+    "inputSHA256": "4ee733f22fb722635b4032571d96621035563de8796a75815b3f337ffab3a1e3",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "b7c40b63c644325adb3fd5d81495f46a7a0c1a59daa94561416e02aec7439f4a",
+    "upstreamCountSHA256": "973542355d975252ee8891a2ec3f1d9cfd5f478923317f893903be593db7f148",
+    "upstreamModerationSHA256": "45f44cd2e784d3b606b8f30d300377cfc4d09253cf405a8d57ee5fd042a7772b"
+  },
+  {
+    "case": "hagai-null-07-default",
+    "genes": 11919,
+    "inputSHA256": "075b998e5146616f7bd555b4ffea1cca117c84b7bb8bb77248aacc73ca648afa",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "8869973587519619988f77d2319c473118344096b77139648464be8c7fb2fee1",
+    "upstreamCountSHA256": "1085a9bd7b5d2f49bab27c353f3e41b80be67bc3d2275625e6f19b7f82c992dd",
+    "upstreamModerationSHA256": "4148ebc289976898ef62f3c20d7b0aa4068d7f11f7a9551a80edc236720762b1"
+  },
+  {
+    "case": "hagai-null-07-default",
+    "genes": 11919,
+    "inputSHA256": "91026abd8d337391fc5089000113c0289e668cb37640dc2a589261c176e11b68",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "063229f373e3b10085e958694b996835d09b30d1d08a010187439c4f6f02e93d",
+    "upstreamCountSHA256": "1085a9bd7b5d2f49bab27c353f3e41b80be67bc3d2275625e6f19b7f82c992dd",
+    "upstreamModerationSHA256": "6ec560df0c76c9b832a2c9e4566b857b20c8b1bb965ce1d15e0ccb1c96f32c27"
+  },
+  {
+    "case": "hagai-null-08-default",
+    "genes": 11917,
+    "inputSHA256": "5aa65130e1f5e950dc7566920f06e18809ee1db62fbbc0c7e7a531cd1302b1e4",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "200e8e427721866ee0af5b658723516a405f4aab43bb78e0bcfe5005a3355314",
+    "upstreamCountSHA256": "174d0ee9696199e8e5b404a662e23a772dc230aa5798fba9535f9199c43d3472",
+    "upstreamModerationSHA256": "65207217f195901170623b9579eb7f7b13e6b8f4415318d579579c6812604beb"
+  },
+  {
+    "case": "hagai-null-08-default",
+    "genes": 11917,
+    "inputSHA256": "1780aa23cde3a53412c59e3741cc874c557ee73e80a9ff986fb11883e633d5b4",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "6cd3fa9d4df668f774b34d4a8de503d35139a5410fde73bbf70dcd102ac1798f",
+    "upstreamCountSHA256": "174d0ee9696199e8e5b404a662e23a772dc230aa5798fba9535f9199c43d3472",
+    "upstreamModerationSHA256": "dc8d4763aba803d9ed126f836dc1180802e9941137e4e06e913bbfa3b56ac85a"
+  },
+  {
+    "case": "hagai-null-09-default",
+    "genes": 11920,
+    "inputSHA256": "db2f7ee38dcc941eccf1ce539b3d50a5e7d9c6d5a43789ead60c2e5816566b18",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "7a47c302d2570751b312de9f055d3a42b8d8d651495bc208500237e65b2dd80d",
+    "upstreamCountSHA256": "c4491c0a9fc59714a95ea82118f316dbd901566a23542bdf3e31178895751c6d",
+    "upstreamModerationSHA256": "a4b4cf6b50b317f50959ad3f85a01275f87dce2b231ddf972cde8f1c78de7c39"
+  },
+  {
+    "case": "hagai-null-09-default",
+    "genes": 11920,
+    "inputSHA256": "1956f8b98eadc91cdd61a37488e27337ccf040f6064adfa9f3545e4d7d7dbb8f",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "06d84bf4690c95b361e753576c6e54fe80e0e6aff6f19da5c66f9157297ca922",
+    "upstreamCountSHA256": "c4491c0a9fc59714a95ea82118f316dbd901566a23542bdf3e31178895751c6d",
+    "upstreamModerationSHA256": "9ce4ca17b1b0678c8bd8ec810a41a0c60ca16c39d22f73162bb77c9d483f22af"
+  },
+  {
+    "case": "hagai-null-10-default",
+    "genes": 11920,
+    "inputSHA256": "800cd70acfbf864e50ce58c6f1917127d6c20e5ebed90d4f6a0a6fb408fb9676",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "e36ed0072eff8ff9788da6368019b266d711c20a362ef800e9e480bb9dda4981",
+    "upstreamCountSHA256": "1087ef6285d2990946eb9c4c2f6c3dadc9058e973789ea9a05bf0ec1add1d817",
+    "upstreamModerationSHA256": "d3cd8085d0a0461276a2bc1ef36429c2dcf06cefbc6e772f78a2df947c3e180c"
+  },
+  {
+    "case": "hagai-null-10-default",
+    "genes": 11920,
+    "inputSHA256": "d38156b993b96c624aafb2916dba287d4f9fe8285435f89da9b99a7a759300e0",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "3af45eee214b2bca48f22486d0f80c888f74777086d263fad7393bf7dabe67cc",
+    "upstreamCountSHA256": "1087ef6285d2990946eb9c4c2f6c3dadc9058e973789ea9a05bf0ec1add1d817",
+    "upstreamModerationSHA256": "d9dfc166f23a7333ece2f7945a42556d2e54a299884f58a035ef1a2b089d1f83"
+  },
+  {
+    "case": "kang-default",
+    "genes": 5400,
+    "inputSHA256": "0d752ba54e9b5baa406670c01f30c847daba2547bf51c09fb69c8ddd27a45b45",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "2789358b853be46beeef749d44adae55ce13e064ad09c03ea39650e95a4d0c66",
+    "upstreamCountSHA256": "c4427677679773a08b77153e79ddc5e3f493de60ee4e38c23bdaf203f939b5a5",
+    "upstreamModerationSHA256": "1766fef2f423b3dbb209ba68bc3681729fa3dcabdd23d2e7e578824af3f85411"
+  },
+  {
+    "case": "kang-default",
+    "genes": 5400,
+    "inputSHA256": "f0054c2c9506f74d0e295b41aac46e005083f82804d90d5e74c90af5b34e966f",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "fa711cd40c744b95aef709d016ce707ab4030a7f361cb351ad13ef96cab3c5cb",
+    "upstreamCountSHA256": "c4427677679773a08b77153e79ddc5e3f493de60ee4e38c23bdaf203f939b5a5",
+    "upstreamModerationSHA256": "a8fb756b55e63117aa33ac0dea2bb2dc366b526bac58d210f4cb279fb8c8a6aa"
+  },
+  {
+    "case": "hagai-default",
+    "genes": 12426,
+    "inputSHA256": "6149052d4e225e78d98f8363a1e32d5a0889911771a1144c31cbe211df01e92d",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "6de0335574ce0da83e0c817dfd9c908504a06938383e31576b4a21630e5b86f0",
+    "upstreamCountSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+    "upstreamModerationSHA256": "7d4dcf8c385e7e2ee550f71f8bfe0799797d3c8356d152aa10be7d1a8fd6737a"
+  },
+  {
+    "case": "hagai-default",
+    "genes": 12426,
+    "inputSHA256": "e84260edacfa0029aaf8bd2c40bc8b1b27b0951b8826f0e523059b211003a04c",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "8a724454bcdd8bc5e35744b6655893020d031925c1b50a7843f039d3d7e9526a",
+    "upstreamCountSHA256": "0ac7b0ae965ada07c62e8eddce5dd8b3366457d850ed06a3bf1c589de22fe780",
+    "upstreamModerationSHA256": "73ed009a1a4bf2b98508c539b224ebade00329b82ea01aff98f7f9775c800a65"
+  },
+  {
+    "case": "crowell-00",
+    "genes": 10650,
+    "inputSHA256": "dbafa380d62b2e66baf3326f61d1d6e2da94c658f239b4f2d3ea64428b77a09f",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "f90ffd7b841251681f5e26383f6e70980489c9521867c87fdf3f225a04b598e4",
+    "upstreamCountSHA256": "e8990706862e88e8f7062e3e6e034c8c9bdf4bd046df9621c70a6d6cf9c85ca4",
+    "upstreamModerationSHA256": "f0e4921a1d5fcb4587318ab078213db56cb64e1ca6f50f35055cec5cbfd0a5a8"
+  },
+  {
+    "case": "crowell-00",
+    "genes": 10650,
+    "inputSHA256": "0a251c0d1bfd9de4b30a1b407ca449e43b405a0afcf5410741051d5e638d98d5",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "42c65153761546a2475696be70c9598c9b976740ea6f4264d2a8d34aa4572baa",
+    "upstreamCountSHA256": "e8990706862e88e8f7062e3e6e034c8c9bdf4bd046df9621c70a6d6cf9c85ca4",
+    "upstreamModerationSHA256": "f89f0a1a75c30637eeeb5989c634193e27a20baa51a59b8f13216c16f34d6266"
+  },
+  {
+    "case": "crowell-01",
+    "genes": 10140,
+    "inputSHA256": "b3bafd20a4c2bddbe0a195a632cf70a54411154cd016bcdd0249fae404740923",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "9848dac9030c851e5e00ed344838985bda0cd83280a13c38bf526879524cfdf0",
+    "upstreamCountSHA256": "deb8d3d1b8e7a1974704c8f5b9828207b7d7ddeb0908c4ee5c7d018ce6df80bd",
+    "upstreamModerationSHA256": "800ca411a4dab9c665dc935674b29f9ad1aec0b03e224041452c628625b4a492"
+  },
+  {
+    "case": "crowell-01",
+    "genes": 10140,
+    "inputSHA256": "054f3d2a2123de922e2e251080af3f59efac6914e9c07a9b9e6ee2c06c8f1468",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "57005a8194f72319104b3fa2d92d9e267770fd27dcaa40f1d320956de30a97a6",
+    "upstreamCountSHA256": "deb8d3d1b8e7a1974704c8f5b9828207b7d7ddeb0908c4ee5c7d018ce6df80bd",
+    "upstreamModerationSHA256": "fc0c9bea352398aa18e95a9eea1f31b2dc1609cdad5761a37832fd60913e21ac"
+  },
+  {
+    "case": "crowell-02",
+    "genes": 9435,
+    "inputSHA256": "3d851e9776a1caa819729f1e921c2caa996baec6d4c1d91573cb8b05a58b28e2",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "19b5f05e5080a1a3db8a5028d21ffab6be50f47cbe8d84968ac71577564e478c",
+    "upstreamCountSHA256": "369866b62fca8af823339189d901c5017ad2778f73f6fe5abc55ff099650b915",
+    "upstreamModerationSHA256": "b0bd19a80104c7a72b8d3c105f4f25b8cc1e49b18d823a92c8958aaebca82251"
+  },
+  {
+    "case": "crowell-02",
+    "genes": 9435,
+    "inputSHA256": "ba82a8caf8e4f3d8d63bceccee3b9c80019eeef975d0c171d3f9003ab658ee2c",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "98bf1009b9af76ba1e95a7cfcb699179d72b519079588f227075d547bba027b8",
+    "upstreamCountSHA256": "369866b62fca8af823339189d901c5017ad2778f73f6fe5abc55ff099650b915",
+    "upstreamModerationSHA256": "c21756206a7f08b86e5c10e9c0f4c3c4f2b7dd676c7e1d340d7af733614f9faa"
+  },
+  {
+    "case": "crowell-03",
+    "genes": 10387,
+    "inputSHA256": "b35c0e53b23d3a4e447a5deb4d0b542e44cbc8ac30a3742ab9cb948434c36e32",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "f243088f8de3242e8d75541f44f31d1418d4240052a0c9fa67591cb21537771f",
+    "upstreamCountSHA256": "1b3c89437388bb664719c89de6fc35ba6debafec95e0fcbc1514c05d161580d0",
+    "upstreamModerationSHA256": "302a6f6f9419acb5aab2a065df9742c03abeaa0eb5718faa3dd45063316a6290"
+  },
+  {
+    "case": "crowell-03",
+    "genes": 10387,
+    "inputSHA256": "ed4127956bdd32f9376bd8dea8fd489101c1c672c233a0257085c6c421dee165",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "01b8669d14feb8e7b72ea9c0241f31503b6bf14bbafc30f45d46e6982dc786f6",
+    "upstreamCountSHA256": "1b3c89437388bb664719c89de6fc35ba6debafec95e0fcbc1514c05d161580d0",
+    "upstreamModerationSHA256": "5ba024911c4ee1f967399031592a4e5727e71fd82420d317bbda9c46324fadea"
+  },
+  {
+    "case": "crowell-04",
+    "genes": 10074,
+    "inputSHA256": "13e1d727518fba45d71946e8932b6e7fa48071c782f4a8c8c94db2c36cea2e4b",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "8b04afab94c4dfec801936f3777a972f6c7984c77c7da330f73d80f16049da2f",
+    "upstreamCountSHA256": "568312760773f04b42b6673a7f496de9e1c9b31a3eb39a807d786d360e6da59f",
+    "upstreamModerationSHA256": "8510079a5acdf8aee9d2f5bc778b5b1910b8c0f70bbf58cbadc8a9a62286ac90"
+  },
+  {
+    "case": "crowell-04",
+    "genes": 10074,
+    "inputSHA256": "f1897c506470791de0997d20702e1c8905aef4ef29afde622209401a4dfc882d",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "c129cb473d7bae5bad11ae24f30962782347d03f55721bf99121c77eac1482c9",
+    "upstreamCountSHA256": "568312760773f04b42b6673a7f496de9e1c9b31a3eb39a807d786d360e6da59f",
+    "upstreamModerationSHA256": "f58c950289fc1d83fdf94933d6e5d8e703d79c8d6dbc1f0c01c7e3585879e84f"
+  },
+  {
+    "case": "crowell-06",
+    "genes": 11070,
+    "inputSHA256": "8722eb128a7bea36c3e58980ac570c6b6e4daf62822498bd983c0c3918c88e74",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "b5c6dfb90fa9914a06a5d2ea6fce54c898a0ef7e0bacbbd2ddbe531cbf5e56f8",
+    "upstreamCountSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+    "upstreamModerationSHA256": "b4adc130848e9ccfbc5fe5139439ad00fa3e46ddfaa2dec470a1d1c29a0c54c9"
+  },
+  {
+    "case": "crowell-06",
+    "genes": 11070,
+    "inputSHA256": "e9021b5ecbbba2f57022dbc3e18e794daacd2e2586e1e8ae3d2ccc1933850541",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "eee9dcad7e85a4b199e4597874fe05a6505ca378e893ca651cf2b5478bc5a552",
+    "upstreamCountSHA256": "7393524702322586824030737807f196e438ce4f4d36cef67742c92d0be37166",
+    "upstreamModerationSHA256": "04b40bdc6f85c2e2595c75e923b8d0a2c1536b561a7487904590a266c317197d"
+  },
+  {
+    "case": "crowell-07",
+    "genes": 10983,
+    "inputSHA256": "885e8b70d219630ac3258c7e4e24db1ef467cf0e92270d4420fc9cf631d185a8",
+    "method": "nativeTrend-adjusted",
+    "upstreamAbundanceSHA256": "aaaf40a430d42d770474d6cfc87d80528465f68ca45e6f7cc1dea4fd1fa7fd24",
+    "upstreamCountSHA256": "cd09413e9e9af157b2472f19bc1e773f17d22f918f38c03fdd6cd387ef1ef2a9",
+    "upstreamModerationSHA256": "8ad8f114191527064d210a5e5212361928c35a073313d0105e23cef96469125b"
+  },
+  {
+    "case": "crowell-07",
+    "genes": 10983,
+    "inputSHA256": "0e4352e79c6d20041f251e2d50e05c503e24e59cb03c50b5229546791ea821c0",
+    "method": "edgeRTrend-adjusted",
+    "upstreamAbundanceSHA256": "3ae56f4af975f96a345735f5a6faafc3e124e2f0a64c0494ff4cf26df7ece6a0",
+    "upstreamCountSHA256": "cd09413e9e9af157b2472f19bc1e773f17d22f918f38c03fdd6cd387ef1ef2a9",
+    "upstreamModerationSHA256": "c7d99781222053bb7312dad78cf48dfe48baacbf22eb5b3b2701b0e3aea65002"
+  }
+]
