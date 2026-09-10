@@ -1,0 +1,7 @@
+args<-commandArgs(trailingOnly=TRUE);stopifnot(length(args)==2)
+suppressPackageStartupMessages({library(limma);library(jsonlite)})
+stopifnot(packageVersion('limma')=='3.68.5',packageVersion('jsonlite')=='2.0.0')
+i<-fromJSON(args[1],simplifyDataFrame=FALSE)
+smooth<-lapply(i$smoothers,function(r) loessFit(r$y,r$x,weights=r$weights,span=r$span,iterations=1,min.weight=1e-8,max.weight=100)$fitted)
+tails<-lapply(i$tails,function(r) list(lower=pf(exp(r$logStatistic),r$numeratorDF,r$denominatorDF,log.p=TRUE),upper=pf(exp(r$logStatistic),r$numeratorDF,r$denominatorDF,lower.tail=FALSE,log.p=TRUE)))
+write_json(list(smoothers=smooth,tails=tails,session=capture.output(sessionInfo())),args[2],auto_unbox=TRUE,digits=17,na='string',null='null')

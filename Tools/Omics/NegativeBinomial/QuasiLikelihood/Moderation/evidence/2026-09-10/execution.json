@@ -1,0 +1,73 @@
+{
+  "baseCommit": "6cb43383fce3de26b9a48361370c3cfea29c73bf",
+  "external": [
+    {
+      "path": "macmini:/Users/n/numivivo-ql-moderation-20260910/build-attempt-1/nb-ql-moderation",
+      "role": "Retained previous candidate: qualified native moderation executable",
+      "sha256": "767ca456d26b35ebca587a18c94c9ff6853ad42d740fd1ec81dad41605f61b85"
+    },
+    {
+      "path": "macmini:/Users/n/numivivo-ql-moderation-20260910/numerics",
+      "role": "Retained previous candidate: qualified native numerical probe",
+      "sha256": "f5c4d7852772435e4a777a5defce157c986d507cf69d776d390767eaf6fa50ea"
+    },
+    {
+      "path": "macmini:/Users/n/numivivo-ql-moderation-20260910/numerics-build-script/numerics",
+      "role": "Retained previous candidate: numerical probe rebuilt with reproduction script",
+      "sha256": "626ff23fd60d509e08d17c42d2e90f1ef9515b15dc9257efcd05de0392c846ae"
+    },
+    {
+      "path": "macmini:/Users/n/numivivo-ql-moderation-20260910/build-final/nb-ql-moderation",
+      "role": "Qualified final moderation executable",
+      "sha256": "48f4f13238ea8b2f350ccec383903ef827c8b3db7479cc00b9e82ea2f32946bf"
+    },
+    {
+      "path": "macmini:/Users/n/numivivo-ql-moderation-20260910/numerics-final/numerics",
+      "role": "Qualified final numerical probe",
+      "sha256": "adc52965449fe777e4032e9899d60ec0a9837bcec86a72cd2637aa0d666f56f3"
+    },
+    {
+      "path": "macmini:/Users/n/numivivo-ql-moderation-20260910/overflow-before",
+      "role": "Reproduced nonfinite output before guard",
+      "sha256": "1fa17f5648512712883b93530df5c5e66f03c2b5311aa207eb58aac984b9ca8f"
+    },
+    {
+      "path": "macmini:/Users/n/numivivo-ql-moderation-20260910/overflow-after",
+      "role": "Verified explicit overflow error after guard",
+      "sha256": "20ae469fd612650c33adfbd96dbb4911b235dc0aebb1bb0be87cd03b0aae6073"
+    }
+  ],
+  "finalFamily": "family-final",
+  "finalNumerics": "numerics-final-check",
+  "host": "Mac.domain_not_set.invalid\nProductName:\t\tmacOS\nProductVersion:\t\t26.6\nBuildVersion:\t\t25G72\nMac16,11\nApple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: arm64-apple-macosx26.0\n",
+  "protocolSHA256": "4c7e69cfdc67b8a98fc750e1affdb55c1276eedd3a1ad3a53b445b6eb6eb908e",
+  "retainedFailures": [
+    "Special-function compilation attempt 1 produced no executable; explicit types and return-expression repair preceded all numerical results.",
+    "Reference attempt 1 closed an already-closed connection before comparisons. Corrected reader reused the same native pilot bytes.",
+    "Small-family precision weighted-line arithmetic could return nonfinite values. Native before/after probe verifies explicit error after repair. Full final numerical, real-family and count-model qualification rerun; every real fit exactly unchanged."
+  ],
+  "runtime": "Physical Mac mini, native CPU FP64, swiftc -O -swift-version 6",
+  "sourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoOmicsPrecisionLowess.swift": "9ddd1acc8a704bd8d32333a96a24e63eb5bcec7dd7103ea69a4a582dcc347d9c",
+    "Sources/NumiVivoKit/Omics/VivoOmicsQLModeration.swift": "360d3297347e3b1c5a0cb7f12c7849206cf9da19395b38c5ddcb7ac0b67919ad",
+    "Sources/NumiVivoKit/Omics/VivoOmicsQLSpecialFunctions.swift": "ca84c6ed3e73dba25ec2f4bd26feaee62acb1ebc4b5ea21eeb6bf067920fbf2e",
+    "Tests/NumiVivoIntegrationTests/SingleCellQLModerationTests.swift": "5ba2a9ae3062a0b4bbac5743af010db3ae360ec7fcb086745f9c8b8310fc4e28",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/Main.swift": "21c594f96574e56d402b63384837440c9825001ecc29e6ec7a1cca6ba54903bc",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/Numerics.swift": "d5797c307382763b41582db68118d3edf8717b0252a9be8d00bab0c7c005ee20",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/PROTOCOL.md": "4c7e69cfdc67b8a98fc750e1affdb55c1276eedd3a1ad3a53b445b6eb6eb908e",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/README.md": "bc4f08437b67ecbd7b1f0dd8f24da5ad15ff1cc2097c7a660160e3656c35896e",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/archive.py": "2d99e26ef7187b7f9639aaa07fd9322d5541a394b449c5804d8401ea06fc791d",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/build.sh": "83a3a3625dfa619b596db545f876f173ee7e2c6067803b04be2a366053a6f627",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/build_numerics.sh": "1214dfaff107531c4da01f08391708b068fcacddb9fd5cb038e551e87cd820a2",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/check_numerics.py": "9e3ba062913274bc911a9cff906b22cdc94de5fa8da9282ba973311dfb88e6f7",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/numerics_reference.R": "c3de2c0db98ed10d96cf053583d7afaaef4b4e375efdfa1278cca2da76ac0fd2",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/prepare.py": "19060a6a90525b2cdaf9666ba3e530c281bf36478e6644d7ae71d11ab92ee3f4",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/reference.R": "ab6a05d3c85f0d7d05b35d7f629da80124abc982eef6bdd2d5e8ae81621c8ced",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/run.py": "d50a0de0b132adedf5013d86573e4b2e4397ebb6d69d549cd1242b49f975fb01",
+    "Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/summarize.py": "3c0c404003796580a3972346aa855dcc333e15111e18b02c0d3ae067e5febfc2"
+  },
+  "tests": [
+    "43 tests in 8 suites passed on final source, including overflow and both profile endpoints; swift-tests-final.log."
+  ],
+  "upstream": "All 58 exact published abundance outputs and count inputs are hash-bound in inputs/*/*/input-receipt.json. Full upstream matrices remain external."
+}

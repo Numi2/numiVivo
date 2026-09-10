@@ -139,8 +139,9 @@ A failed download can then retry the transfer without rerunning computation.
 Keep that remote directory and execution receipt until the output is verified.
 
 The [protocol](PROTOCOL.md) fixes all 58 original full-support arms and their
-acceptance limits. Robust unequal-DF QL prior fitting, posterior moderation and
-cohort QL hypothesis testing remain open. This stage does not establish FDR,
+acceptance limits. The subsequent [native robust moderation](../Moderation/README.md)
+implements unequal-DF prior fitting and posterior variance, with all 58 arms
+qualified. Cohort QL hypothesis testing remains open. This stage does not establish FDR,
 coverage, power, biological truth, varying-support borrowing, general speed
 superiority, GPU acceleration or million-cell execution. The parent study's
 39 Hagai sham calls with adjusted native-trend reference QL versus 20 with Wald

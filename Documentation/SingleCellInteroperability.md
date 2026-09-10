@@ -371,8 +371,14 @@ The complete development objective remains open:
    derives those covariates directly, passing all 58 integrated arms,
    105 controlled cases and 35 focused native tests with original count fits
    unchanged. The final-arm SSH output stall, partial output and successful
-   file-backed recovery remain retained. Robust unequal-DF QL prior fitting,
-   posterior moderation and QL cohort integration remain unimplemented.
+   file-backed recovery remain retained. The subsequent
+   [native robust QL moderation](../Tools/Omics/NegativeBinomial/QuasiLikelihood/Moderation/README.md)
+   passes all 58 arms and 483,576 posterior rows, 265 numerical checks and
+   43 focused native tests. All 111 prior profiles pass independent objective
+   and trend checks; posterior error against a tightly optimized reference is
+   at most 1.32e-6. Ordinary-default reference discrepancies remain recorded,
+   including coarse optimization near the upper prior-DF boundary. Constrained
+   QL cohort testing, Poisson bounds and varying-support borrowing remain open.
    QL is not a demonstrated calibration fix:
    the native-trend adjusted reference yields 39 Hagai sham calls versus Wald's
    20 on the same default families. Active-donor QL borrowing remains separate.

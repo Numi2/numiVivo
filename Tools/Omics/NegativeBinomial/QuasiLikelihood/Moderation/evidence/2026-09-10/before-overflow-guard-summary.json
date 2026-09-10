@@ -1,0 +1,570 @@
+{
+  "arms": 58,
+  "armsDiagnostics": [
+    {
+      "case": "kang-null-01-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0946719666623874,
+      "features": 3203,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.043039917945861816
+    },
+    {
+      "case": "kang-null-01-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.078997751420016,
+      "features": 3203,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.026885032653808594
+    },
+    {
+      "case": "kang-null-02-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0881398433429655,
+      "features": 3203,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.027824997901916504
+    },
+    {
+      "case": "kang-null-02-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0898394435221596,
+      "features": 3203,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.027474045753479004
+    },
+    {
+      "case": "kang-null-03-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0759769965016902,
+      "features": 3202,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.026736021041870117
+    },
+    {
+      "case": "kang-null-03-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0487036052113224,
+      "features": 3202,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.02684497833251953
+    },
+    {
+      "case": "kang-null-04-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0447525572153239,
+      "features": 3203,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.026113033294677734
+    },
+    {
+      "case": "kang-null-04-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0827776034328302,
+      "features": 3203,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.02701103687286377
+    },
+    {
+      "case": "kang-null-05-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0961628575962627,
+      "features": 3202,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.026260972023010254
+    },
+    {
+      "case": "kang-null-05-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0912515228103442,
+      "features": 3202,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.029726028442382812
+    },
+    {
+      "case": "kang-null-06-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0566505190208475,
+      "features": 3204,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.0277940034866333
+    },
+    {
+      "case": "kang-null-06-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.055082158675294,
+      "features": 3204,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.027585983276367188
+    },
+    {
+      "case": "kang-null-07-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0935800640657376,
+      "features": 3202,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.02582693099975586
+    },
+    {
+      "case": "kang-null-07-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0930294238476863,
+      "features": 3202,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.02588796615600586
+    },
+    {
+      "case": "kang-null-08-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0149278825088647,
+      "features": 3202,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.026540040969848633
+    },
+    {
+      "case": "kang-null-08-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0258790102732995,
+      "features": 3202,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.027361035346984863
+    },
+    {
+      "case": "kang-null-09-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0355412859530291,
+      "features": 3203,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.027519941329956055
+    },
+    {
+      "case": "kang-null-09-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.075173592979586,
+      "features": 3203,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.026974916458129883
+    },
+    {
+      "case": "kang-null-10-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0720544535596861,
+      "features": 3204,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.025792956352233887
+    },
+    {
+      "case": "kang-null-10-default",
+      "defaultCommonPriorDF": 8134.84478038266,
+      "defaultPosteriorRelativeError": 0.0845765883547704,
+      "features": 3204,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9998.0000000011,
+      "seconds": 0.027058959007263184
+    },
+    {
+      "case": "hagai-null-01-default",
+      "defaultCommonPriorDF": 24.1374913943271,
+      "defaultPosteriorRelativeError": 0.00017731799428485,
+      "features": 11921,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 24.133978624222106,
+      "seconds": 0.08367693424224854
+    },
+    {
+      "case": "hagai-null-01-default",
+      "defaultCommonPriorDF": 51.0934332509751,
+      "defaultPosteriorRelativeError": 0.000287954914229336,
+      "features": 11921,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 51.107852411586876,
+      "seconds": 0.08015191555023193
+    },
+    {
+      "case": "hagai-null-02-default",
+      "defaultCommonPriorDF": 23.6895668791856,
+      "defaultPosteriorRelativeError": 0.000181537351114408,
+      "features": 11920,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 23.687295775022115,
+      "seconds": 0.08489394187927246
+    },
+    {
+      "case": "hagai-null-02-default",
+      "defaultCommonPriorDF": 57.097031859522,
+      "defaultPosteriorRelativeError": 7.39641340025244e-05,
+      "features": 11920,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 57.113493596042794,
+      "seconds": 0.07689797878265381
+    },
+    {
+      "case": "hagai-null-03-default",
+      "defaultCommonPriorDF": 27.3122970002882,
+      "defaultPosteriorRelativeError": 0.000312056592078544,
+      "features": 11917,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 27.309132825178136,
+      "seconds": 0.08317101001739502
+    },
+    {
+      "case": "hagai-null-03-default",
+      "defaultCommonPriorDF": 46.8586384772916,
+      "defaultPosteriorRelativeError": 0.00019666982245396,
+      "features": 11917,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 46.873756937348105,
+      "seconds": 0.07806801795959473
+    },
+    {
+      "case": "hagai-null-04-default",
+      "defaultCommonPriorDF": 21.4051115589357,
+      "defaultPosteriorRelativeError": 2.16448275206504e-05,
+      "features": 11921,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 21.403647665485064,
+      "seconds": 0.08716702461242676
+    },
+    {
+      "case": "hagai-null-04-default",
+      "defaultCommonPriorDF": 37.835251083597,
+      "defaultPosteriorRelativeError": 0.00010192935214134,
+      "features": 11921,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 37.84866254429265,
+      "seconds": 0.08273100852966309
+    },
+    {
+      "case": "hagai-null-05-default",
+      "defaultCommonPriorDF": 27.1678317971296,
+      "defaultPosteriorRelativeError": 0.000265716926138848,
+      "features": 11919,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 27.16004735010905,
+      "seconds": 0.08011698722839355
+    },
+    {
+      "case": "hagai-null-05-default",
+      "defaultCommonPriorDF": 61.9987252591329,
+      "defaultPosteriorRelativeError": 0.00014865976414063,
+      "features": 11919,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 61.96590953108392,
+      "seconds": 0.08434200286865234
+    },
+    {
+      "case": "hagai-null-06-default",
+      "defaultCommonPriorDF": 23.8202657940592,
+      "defaultPosteriorRelativeError": 0.000123222356000347,
+      "features": 11921,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 23.817510891769214,
+      "seconds": 0.09141898155212402
+    },
+    {
+      "case": "hagai-null-06-default",
+      "defaultCommonPriorDF": 46.6081536312813,
+      "defaultPosteriorRelativeError": 0.00033252553600216,
+      "features": 11921,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 46.62216154404325,
+      "seconds": 0.08610796928405762
+    },
+    {
+      "case": "hagai-null-07-default",
+      "defaultCommonPriorDF": 20.1802425714636,
+      "defaultPosteriorRelativeError": 1.59846955664944e-05,
+      "features": 11919,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 20.179410812381214,
+      "seconds": 0.09231305122375488
+    },
+    {
+      "case": "hagai-null-07-default",
+      "defaultCommonPriorDF": 33.2733064846764,
+      "defaultPosteriorRelativeError": 0.000291841148439195,
+      "features": 11919,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 33.26300804739801,
+      "seconds": 0.08773696422576904
+    },
+    {
+      "case": "hagai-null-08-default",
+      "defaultCommonPriorDF": 20.4593925683499,
+      "defaultPosteriorRelativeError": 2.13040907583448e-05,
+      "features": 11917,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 20.45814994902975,
+      "seconds": 0.0920339822769165
+    },
+    {
+      "case": "hagai-null-08-default",
+      "defaultCommonPriorDF": 38.0394684408283,
+      "defaultPosteriorRelativeError": 6.60475456693659e-05,
+      "features": 11917,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 38.05043444277599,
+      "seconds": 0.0863269567489624
+    },
+    {
+      "case": "hagai-null-09-default",
+      "defaultCommonPriorDF": 22.3130977108573,
+      "defaultPosteriorRelativeError": 0.000233440422537048,
+      "features": 11920,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 22.311236544060804,
+      "seconds": 0.0903099775314331
+    },
+    {
+      "case": "hagai-null-09-default",
+      "defaultCommonPriorDF": 52.806222892917,
+      "defaultPosteriorRelativeError": 0.000363415220255183,
+      "features": 11920,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 52.81087419331427,
+      "seconds": 0.08454501628875732
+    },
+    {
+      "case": "hagai-null-10-default",
+      "defaultCommonPriorDF": 26.8968659963196,
+      "defaultPosteriorRelativeError": 0.000237958904595761,
+      "features": 11920,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 26.89234840892544,
+      "seconds": 0.08935201168060303
+    },
+    {
+      "case": "hagai-null-10-default",
+      "defaultCommonPriorDF": 56.01472859739,
+      "defaultPosteriorRelativeError": 0.000326443627931992,
+      "features": 11920,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 56.034671241351816,
+      "seconds": 0.08617293834686279
+    },
+    {
+      "case": "kang-default",
+      "defaultCommonPriorDF": 84.2762224242879,
+      "defaultPosteriorRelativeError": 6.34462198393543e-05,
+      "features": 5400,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 84.2846272199289,
+      "seconds": 0.03951096534729004
+    },
+    {
+      "case": "kang-default",
+      "defaultCommonPriorDF": 93.0579417145352,
+      "defaultPosteriorRelativeError": 9.60775689406337e-05,
+      "features": 5400,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 93.07622384425221,
+      "seconds": 0.03965795040130615
+    },
+    {
+      "case": "hagai-default",
+      "defaultCommonPriorDF": 3.51201251129281,
+      "defaultPosteriorRelativeError": 1.49137294650069e-05,
+      "features": 12426,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 3.511919051481232,
+      "seconds": 0.12875592708587646
+    },
+    {
+      "case": "hagai-default",
+      "defaultCommonPriorDF": 3.78289216335814,
+      "defaultPosteriorRelativeError": 3.55360428379088e-05,
+      "features": 12426,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 3.7826805139687973,
+      "seconds": 0.06614494323730469
+    },
+    {
+      "case": "crowell-00",
+      "defaultCommonPriorDF": 16.2002678739557,
+      "defaultPosteriorRelativeError": 5.05240169656751e-05,
+      "features": 10650,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 16.197475614004798,
+      "seconds": 0.09070098400115967
+    },
+    {
+      "case": "crowell-00",
+      "defaultCommonPriorDF": 17.4664787318262,
+      "defaultPosteriorRelativeError": 0.000211106691279165,
+      "features": 10650,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 17.466162065513924,
+      "seconds": 0.0890200138092041
+    },
+    {
+      "case": "crowell-01",
+      "defaultCommonPriorDF": 29.3608490447116,
+      "defaultPosteriorRelativeError": 8.14485603792825e-05,
+      "features": 10140,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 29.371210900681387,
+      "seconds": 0.07335197925567627
+    },
+    {
+      "case": "crowell-01",
+      "defaultCommonPriorDF": 33.8793566907372,
+      "defaultPosteriorRelativeError": 0.00020709881054395,
+      "features": 10140,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 33.877759195184304,
+      "seconds": 0.07069802284240723
+    },
+    {
+      "case": "crowell-02",
+      "defaultCommonPriorDF": 45.1471999877217,
+      "defaultPosteriorRelativeError": 6.04491588601018e-05,
+      "features": 9435,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 45.14481414113719,
+      "seconds": 0.06481695175170898
+    },
+    {
+      "case": "crowell-02",
+      "defaultCommonPriorDF": 69.0865416768299,
+      "defaultPosteriorRelativeError": 0.000149444306660709,
+      "features": 9435,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 69.09522856803298,
+      "seconds": 0.06491196155548096
+    },
+    {
+      "case": "crowell-03",
+      "defaultCommonPriorDF": 10.2816187026934,
+      "defaultPosteriorRelativeError": 2.42223433830428e-05,
+      "features": 10387,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 10.281160757244896,
+      "seconds": 0.05190396308898926
+    },
+    {
+      "case": "crowell-03",
+      "defaultCommonPriorDF": 10.9903247628144,
+      "defaultPosteriorRelativeError": 1.34521523909412e-05,
+      "features": 10387,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 10.990057526568535,
+      "seconds": 0.051029086112976074
+    },
+    {
+      "case": "crowell-04",
+      "defaultCommonPriorDF": 35.2370453925736,
+      "defaultPosteriorRelativeError": 0.000192292642764824,
+      "features": 10074,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 35.235443539373534,
+      "seconds": 0.06674599647521973
+    },
+    {
+      "case": "crowell-04",
+      "defaultCommonPriorDF": 50.8223442995133,
+      "defaultPosteriorRelativeError": 3.37902380753857e-05,
+      "features": 10074,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 50.81624655906564,
+      "seconds": 0.06450498104095459
+    },
+    {
+      "case": "crowell-06",
+      "defaultCommonPriorDF": 4.30183655203282,
+      "defaultPosteriorRelativeError": 1.54696742476378e-05,
+      "features": 11070,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 4.302000021049419,
+      "seconds": 0.05437493324279785
+    },
+    {
+      "case": "crowell-06",
+      "defaultCommonPriorDF": 4.31981772553354,
+      "defaultPosteriorRelativeError": 1.42395600333623e-05,
+      "features": 11070,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 4.31996844437057,
+      "seconds": 0.05419909954071045
+    },
+    {
+      "case": "crowell-07",
+      "defaultCommonPriorDF": 9.32285683503704,
+      "defaultPosteriorRelativeError": 2.84009170261443e-05,
+      "features": 10983,
+      "method": "nativeTrend-adjusted",
+      "nativeCommonPriorDF": 9.322409303803544,
+      "seconds": 0.09926509857177734
+    },
+    {
+      "case": "crowell-07",
+      "defaultCommonPriorDF": 9.34535156657634,
+      "defaultPosteriorRelativeError": 3.03490166566683e-05,
+      "features": 10983,
+      "method": "edgeRTrend-adjusted",
+      "nativeCommonPriorDF": 9.344895987788432,
+      "seconds": 0.09887397289276123
+    }
+  ],
+  "baseCommit": "6cb43383fce3de26b9a48361370c3cfea29c73bf",
+  "boundaries": {
+    "interior": 91,
+    "lower": 0,
+    "upper": 20
+  },
+  "featureEvaluations": 47414224,
+  "features": 483576,
+  "maximumDefaultCommonDFRelativeError": 0.2290338992222047,
+  "maximumDefaultPosteriorRelativeError": 0.0961628575962627,
+  "maximumErrors": {
+    "objective-minimum": 8.77670220142441e-14,
+    "objective-value": 7.49191477736892e-12,
+    "outlier-probability": 4.96713781217295e-13,
+    "posterior-arithmetic": 4.42571651007355e-16,
+    "refit-weights": 1.15130127653629e-13,
+    "right-log-tail": 1.69997349530604e-12,
+    "right-underflow": 0,
+    "screening-weights": 1.15130127653629e-13,
+    "tight-reference-posterior": 1.31379165881949e-06,
+    "trend": 1.58567603492088e-13
+  },
+  "maximumResidentBytes": 29425664,
+  "numericalChecks": {
+    "shape": {
+      "cases": 15,
+      "maximumError": 4.440892098500626e-16
+    },
+    "smoother": {
+      "cases": 25,
+      "maximumError": 2.658022236906573e-12
+    },
+    "tail": {
+      "cases": 225,
+      "maximumError": 4.656612873077393e-10
+    }
+  },
+  "profiles": 111,
+  "robustRefits": 53,
+  "scope": "Native unequal-DF robust QL prior and posterior variance, with native abundance integration. No cohort QL hypothesis, Poisson bound, varying-support borrowing, FDR calibration, biological truth, GPU or million-cell claim.",
+  "status": "passed",
+  "swiftSuites": 8,
+  "swiftTests": 43
+}

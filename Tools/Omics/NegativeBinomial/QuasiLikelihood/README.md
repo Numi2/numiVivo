@@ -104,13 +104,14 @@ The subsequent [native abundance integration](Abundance/README.md) removes the
 reference-covariate dependency for an explicit native entry point. All 58 arms,
 105 controlled cases and 35 focused native tests pass, with the original count
 fits unchanged. Its diagnosed final-arm transport stall and recovery remain
-recorded.
+recorded. The subsequent [native robust moderation](Moderation/README.md)
+implements abundance-dependent unequal-DF prior estimation and posterior
+variance. All 58 arms, 265 numerical checks and 43 focused native tests pass;
+ordinary-default and tightly optimized reference comparisons remain distinct.
 
-A native QL cohort method still needs robust abundance-dependent prior
-estimation for unequal residual DF and constrained-test
-integration with explicit failure behavior. The existing equal-DF, untrended,
-non-robust linear variance prior is insufficient. The conditional residual stage
-must not be exposed as if it provided those missing stages. The reference
+A native QL cohort method still needs constrained-test integration and a
+Poisson bound with explicit failure behavior. The conditional residual stage
+alone does not provide a cohort hypothesis test. The reference
 matrices here supply stage-level comparison targets, including unit adjustments,
 prior/posterior scales and optimizer diagnostics. Scientific calibration,
 independent power, uncertain-dispersion coverage and varying-support designs

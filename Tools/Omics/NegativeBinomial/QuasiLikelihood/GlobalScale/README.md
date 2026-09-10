@@ -94,9 +94,10 @@ Calling `mglmLevenberg` directly applies the intended limits and all final
 comparisons pass. Both failed checker attempts, their outputs/logs and the
 initial test compilation remain archived.
 
-Robust abundance-dependent prior estimation with unequal residual DF,
-posterior moderation, constrained QL hypothesis testing and cohort integration
-remain open. This stage does not supply those methods or establish FDR,
+The subsequent [native robust moderation](../Moderation/README.md) supplies
+abundance-dependent unequal-DF prior estimation and posterior variance, qualified
+on all 58 arms. Constrained QL hypothesis testing and cohort integration remain
+open. This global-scale stage does not establish FDR,
 coverage, power, biological truth, varying-support borrowing, million-cell
 execution or GPU acceleration. In particular, the
 parent study's 39 Hagai sham calls with adjusted native-trend reference QL
