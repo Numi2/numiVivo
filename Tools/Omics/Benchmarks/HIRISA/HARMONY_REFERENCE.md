@@ -1,5 +1,10 @@
 # Complete HIRISA independent integration reference
 
+The subsequent [full-cohort program diagnostic](INTEGRATION_PROGRAMS.md) fails
+three control-sensitive comparisons for native integration and all three Harmony
+seeds, with 18/32 comparisons insufficiently sensitive. Earlier coarse results
+remain valid at their stated scope; complete biological preservation is unqualified.
+
 All three Harmony 2.0.0 reference fits and response evaluations are complete for
 **1,612,594 cells** using
 the same original 20-PC matrix and donor metadata as native integration. No

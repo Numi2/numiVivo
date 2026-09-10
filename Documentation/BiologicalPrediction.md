@@ -7,8 +7,9 @@ control profile. Native models also predict combinations of previously observed
 targets, and a GO-based prototype predicts some unseen targets with a small,
 nonuniform advantage over simple baselines.
 
-This assessment reviews the published evidence available at `aa85e1a0` on
-2026-09-10. It distinguishes measured held-out expression outcomes from numerical
+This assessment reviews the expression-prediction evidence available at `aa85e1a0`
+and the subsequent full-cohort program-preservation experiment on 2026-09-10.
+It distinguishes measured held-out expression outcomes from numerical
 reconstruction, integration diagnostics and conditional molecular simulations.
 Each linked experiment retains its actual source, executable and platform
 identities; this review does not requalify historical receipts under a new build.
@@ -111,9 +112,15 @@ Complete HIRISA ingestion, count-based DE, PCA, neighbor graph and native seed-7
 integration have published operational and numerical evidence. The
 [integration result](../Tools/Omics/Benchmarks/HIRISA/FULL_INTEGRATION_RESULTS.md)
 and three full Harmony references pass the frozen coarse response-preservation
-margins. Four classification controls remain insufficient; marker/program,
-rare-cell and native multi-seed preservation are still open. Full-cohort
-clustering qualification was still running at this review.
+margins. The subsequent [measured-program diagnostic](../Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md)
+finds three control-sensitive preservation failures in native integration and
+each of three Harmony runs. Eighteen of 32 comparisons lack sufficient erasure
+control sensitivity; some baseline decoders have negative within-library skill.
+Every fold was independently checked with per-cell weighted SVD regressions.
+These results prevent complete program-preservation qualification while leaving
+the earlier coarse results intact. Rare-cell and native multi-seed preservation
+remain open. Full-cohort clustering publication and independent partition checks
+have completed; native replay is still running at this review.
 
 Integration classifiers use full-cohort preprocessing and assess retained
 information. They are not prospective prediction of an unseen donor's treated
@@ -123,11 +130,13 @@ Lower donor-associated variance also does not isolate technical batch removal.
 
 ## Next evidence needed
 
-1. Finish the running full-cohort clustering publication, replay and independent
-   partition/objective checks. Retain baseline and optimized-runtime results
+1. Finish the running full-cohort native clustering replay and publish its
+   completed independent partition/objective checks. Retain baseline and optimized-runtime results
    under their actual identities.
-2. Complete marker/program and rare-cell integration checks with sensitive
-   controls; retain the known Kang NK-recall failures and unavailable strata.
+2. Diagnose the frozen program-preservation failures and weak baseline decoder
+   sensitivity in a separately declared development experiment. Preserve these
+   failures and the known Kang NK-recall failures; complete rare-cell checks and
+   a compact native program artifact for the full cohort.
 3. Resolve Adamson controls from primary experimental records, then execute the
    frozen independent-study target-prediction protocol with coverage, all
    failures and matched simple/shuffled baselines. Do not tune it on test scores.

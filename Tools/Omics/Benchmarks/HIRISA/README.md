@@ -1,5 +1,10 @@
 # HIRISA complete-source experimental benchmark
 
+The subsequent [full-cohort program diagnostic](INTEGRATION_PROGRAMS.md) fails
+three control-sensitive comparisons for native integration and all three Harmony
+seeds, with 18/32 comparisons insufficiently sensitive. Earlier coarse results
+remain valid at their stated scope; complete biological preservation is unqualified.
+
 The complete deposited GSE306664 release is acquired, audited and available as
 one verified AnnData source: **1,612,594 unique cells, 18,082 genes,
 3,845,991,249 nonzero count entries and 7,700,096,227 UMIs**. All 131 original H5

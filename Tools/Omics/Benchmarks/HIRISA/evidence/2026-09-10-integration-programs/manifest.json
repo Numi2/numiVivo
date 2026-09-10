@@ -1,0 +1,762 @@
+{
+  "externalBindings": {
+    "baseline": {
+      "metadata": {
+        "SHA256": "f81771d3a3f2db3fc23a4ec21b6d52f160ed2b56f843e567dfdf443e8cfc2b7f",
+        "bytes": 149506727
+      },
+      "scores": {
+        "SHA256": "62e6b0644e2c954749b77946ba748e184c33580614f5756b1bc1b0980df86296",
+        "bytes": 516030080
+      },
+      "source": {
+        "SHA256": "0873e698ebf8770a54e6dba09724ffbeda5e1a67dbf24d4e223552d4aca7969c",
+        "bytes": 6117413997
+      }
+    },
+    "harmony-19": {
+      "metadata": {
+        "SHA256": "f81771d3a3f2db3fc23a4ec21b6d52f160ed2b56f843e567dfdf443e8cfc2b7f",
+        "bytes": 149506727
+      },
+      "scores": {
+        "SHA256": "508892427388f9ea3b997548f88269095cb1591a12a77bc40613a78fe7d3c34c",
+        "bytes": 516030080
+      },
+      "source": {
+        "SHA256": "0873e698ebf8770a54e6dba09724ffbeda5e1a67dbf24d4e223552d4aca7969c",
+        "bytes": 6117413997
+      }
+    },
+    "harmony-41": {
+      "metadata": {
+        "SHA256": "f81771d3a3f2db3fc23a4ec21b6d52f160ed2b56f843e567dfdf443e8cfc2b7f",
+        "bytes": 149506727
+      },
+      "scores": {
+        "SHA256": "c816d5ced397248b6edffb5229a401d0f4186779422dc12d9cd85e377b148371",
+        "bytes": 516030080
+      },
+      "source": {
+        "SHA256": "0873e698ebf8770a54e6dba09724ffbeda5e1a67dbf24d4e223552d4aca7969c",
+        "bytes": 6117413997
+      }
+    },
+    "harmony-7": {
+      "metadata": {
+        "SHA256": "f81771d3a3f2db3fc23a4ec21b6d52f160ed2b56f843e567dfdf443e8cfc2b7f",
+        "bytes": 149506727
+      },
+      "scores": {
+        "SHA256": "4e14bf44ff76b58fe566958bf582559d5f0321eb0fb0fda61722f680ebb8c4fa",
+        "bytes": 516030080
+      },
+      "source": {
+        "SHA256": "0873e698ebf8770a54e6dba09724ffbeda5e1a67dbf24d4e223552d4aca7969c",
+        "bytes": 6117413997
+      }
+    },
+    "native": {
+      "metadata": {
+        "SHA256": "f81771d3a3f2db3fc23a4ec21b6d52f160ed2b56f843e567dfdf443e8cfc2b7f",
+        "bytes": 149506727
+      },
+      "scores": {
+        "SHA256": "51a37c9f2184ebf706348cacf4142d8cf005ca69e4fd5bdb4fd81c1e9601c756",
+        "bytes": 516030080
+      },
+      "source": {
+        "SHA256": "0873e698ebf8770a54e6dba09724ffbeda5e1a67dbf24d4e223552d4aca7969c",
+        "bytes": 6117413997
+      }
+    }
+  },
+  "records": [
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 189,
+      "sourcePath": "programs/archive-initial-attempt.json",
+      "sourceSHA256": "da1ec90b55a8e514bb0297753e4f108279d02823b7429e9b15508c1340c836ea",
+      "storedBytes": 157,
+      "storedPath": "programs/archive-initial-attempt.json.gz",
+      "storedSHA256": "3308e7fbbf3f0093d38d51a8b958b1889f8d53d6e032285946fd83383a7a9f9c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 998,
+      "sourcePath": "programs/baseline-dense-oracle-status.json",
+      "sourceSHA256": "085080a041383690ee782ae19375c148c4a82e67a69a3c20d6c29bc7ca11f62c",
+      "storedBytes": 319,
+      "storedPath": "programs/baseline-dense-oracle-status.json.gz",
+      "storedSHA256": "efaed216c01484c7bc6a291c360a005bc43d4b0cb835809457888766c9f76604"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 743,
+      "sourcePath": "programs/baseline-dense-oracle.json",
+      "sourceSHA256": "f28083e18b27aef438a0831412a6cb3ce10ea878bae8ad1ac5f6029588a69845",
+      "storedBytes": 490,
+      "storedPath": "programs/baseline-dense-oracle.json.gz",
+      "storedSHA256": "970e4d26c80ac199b745a10c67a7ad66cb9a024419903afe6e81927946fe6aae"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 701,
+      "sourcePath": "programs/baseline-dense-oracle.log",
+      "sourceSHA256": "f2cdd7971d63b900eb51b75a3fab4ddaa8edaa338bf45252b793c46808641e5f",
+      "storedBytes": 478,
+      "storedPath": "programs/baseline-dense-oracle.log.gz",
+      "storedSHA256": "009a5f3192326c49816b0753614a829dbf80cdd6f3351ec2c0cd7553566e406a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 892,
+      "sourcePath": "programs/baseline-status.json",
+      "sourceSHA256": "e3fd08ade4e6ae930e6986965e3abd2be0c5ef12514dc20f8d8ac0aca5327d47",
+      "storedBytes": 300,
+      "storedPath": "programs/baseline-status.json.gz",
+      "storedSHA256": "d010a40dd10e788fbe35777e7607a904c62abfb3ed1cb858c62207b9c1b5f3a2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2340649,
+      "sourcePath": "programs/baseline.json",
+      "sourceSHA256": "54719d75e92bc489120c2701b5a33a0a87d3097c9934450553218b7a7846edb6",
+      "storedBytes": 518359,
+      "storedPath": "programs/baseline.json.gz",
+      "storedSHA256": "ea670d5b75ed4bfb74cd04f136ee68ab6d18683eeb7d2b87985986c6a2cd69c2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 140,
+      "sourcePath": "programs/baseline.log",
+      "sourceSHA256": "f89aca704fd7b977132b5f2832d72d8d61548c275ac4c57d94bb47b7825ed75e",
+      "storedBytes": 142,
+      "storedPath": "programs/baseline.log.gz",
+      "storedSHA256": "91431f998450586ef4ead0fb91a1f2a3d749c28518973f8b1c8880d60a2d4795"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 12737,
+      "sourcePath": "programs/check_integration_programs.py",
+      "sourceSHA256": "185efec462fafa15b3645304db63a02432eaa417d8d9800d4108f606b319f211",
+      "storedBytes": 3824,
+      "storedPath": "programs/check_integration_programs.py.gz",
+      "storedSHA256": "9bdd62d0ba3aa9f12e8a89d16978527c4a1d8fec4518c94db5688ecf27d878f9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 16062,
+      "sourcePath": "programs/check_integration_response.py",
+      "sourceSHA256": "5f081709d5f8ccdc2c55b0788a75a94c48f93e9a89398ef14593d7ec68287db1",
+      "storedBytes": 5066,
+      "storedPath": "programs/check_integration_response.py.gz",
+      "storedSHA256": "8c0a9b5cc541955d62204369e10c88d8560306b0f4d642608472aeaa4fa1a2f4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 5779,
+      "sourcePath": "programs/check_program_dense_oracle.py",
+      "sourceSHA256": "6551e8707146ee9855943695c8e5b6ca7fabcf86363b30b78e749b020909fd56",
+      "storedBytes": 2281,
+      "storedPath": "programs/check_program_dense_oracle.py.gz",
+      "storedSHA256": "02df8f24b6d4739c22bb0810c54a2c276d76c621880d8ccbe3f3130aea00507e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 8988,
+      "sourcePath": "programs/complete.json",
+      "sourceSHA256": "52064a1fdd2dcdb7ec963779c567d6c2036f3eb33725ca02edfcc0c059c886f3",
+      "storedBytes": 1201,
+      "storedPath": "programs/complete.json.gz",
+      "storedSHA256": "fa11760ce4456f108a7f4412ddea2bfbf79bf52bcd8ef73358e526a7e83169b9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 8721,
+      "sourcePath": "programs/definitions.json",
+      "sourceSHA256": "c416240f83b504651adca8233fc4b554004842ec15146aa3ce78aac5b2b4a7ed",
+      "storedBytes": 1104,
+      "storedPath": "programs/definitions.json.gz",
+      "storedSHA256": "6cc55c9f7d204c1882c0eeb70ee4b89c1c4e2b2709e75a23524c906a23935685"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 5708,
+      "sourcePath": "programs/dense-oracles-complete.json",
+      "sourceSHA256": "b2a5abb01d52e591384b1b956313c9052afe1a2800997935856c4e2862534e41",
+      "storedBytes": 596,
+      "storedPath": "programs/dense-oracles-complete.json.gz",
+      "storedSHA256": "de8f448491c6955216f8a56facba0b9791daaccfbb2b77792f76feae88c5f0d5"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 58,
+      "sourcePath": "programs/dense-oracles-coordinator.log",
+      "sourceSHA256": "5393ba6c3ad673aa11b0e3af2995443e8610987be8667660d9e4a9243d5c4db0",
+      "storedBytes": 56,
+      "storedPath": "programs/dense-oracles-coordinator.log.gz",
+      "storedSHA256": "b8b5c4a8174e0496843b2c8e0154b9b9b116b221b5db4cf790a67dc08b0898a1"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 866852,
+      "sourcePath": "programs/design.json",
+      "sourceSHA256": "ace6e6eb5dad1ff8fcc43d748753b05a9e6d9a7d989a14efc6fe54cb066885e8",
+      "storedBytes": 15869,
+      "storedPath": "programs/design.json.gz",
+      "storedSHA256": "e3d6ad72c038dd263df7d5df406299c09f2b4b3f55a8bf31f0b9d58f50e1ca96"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 184,
+      "sourcePath": "programs/evaluation-coordinator.log",
+      "sourceSHA256": "1c41296166c75049257d513aa5cc8fcbaeab55b6072d136d85eca30a20d0a4e9",
+      "storedBytes": 118,
+      "storedPath": "programs/evaluation-coordinator.log.gz",
+      "storedSHA256": "9d0b35ce3f78594358dc863235e4f7a8fa73eaca1ffca8c3b4fdabe1b0aa3cff"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1371,
+      "sourcePath": "programs/evaluation-execution-freeze.json",
+      "sourceSHA256": "26fb439382d1066b0d6889685dec01833baa155168fc542c57ed790303ddccb6",
+      "storedBytes": 796,
+      "storedPath": "programs/evaluation-execution-freeze.json.gz",
+      "storedSHA256": "198eb6a8d54fadd54e7b0bba9cd6f633949101e49333f3e071fccb8c0a1f5717"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 732,
+      "sourcePath": "programs/evaluator-tests-final.log",
+      "sourceSHA256": "c4989d368d11587fc9f834bedc03613a2831dec58d627bf0de03ce9c3b218563",
+      "storedBytes": 249,
+      "storedPath": "programs/evaluator-tests-final.log.gz",
+      "storedSHA256": "b254fd23823c7f9d6aef5d983c7bad83d163efcf8947ccf0a070c285e5d9b0dc"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 732,
+      "sourcePath": "programs/evaluator-tests.log",
+      "sourceSHA256": "e5bbbfc5e60ed4a976d681b05e332a2eca992d63639f6d33640de01998be06b4",
+      "storedBytes": 249,
+      "storedPath": "programs/evaluator-tests.log.gz",
+      "storedSHA256": "0f662ba1686e1b5d7df15921d3f1de7ccad7c7e9f5495358a93afecd2935254b"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1010,
+      "sourcePath": "programs/harmony-19-dense-oracle-status.json",
+      "sourceSHA256": "3878be6c9840103fcccc9f70e513e9175def745f5aa01a5d72b7438cd79f3d16",
+      "storedBytes": 325,
+      "storedPath": "programs/harmony-19-dense-oracle-status.json.gz",
+      "storedSHA256": "9fd0c8037955021566fceb15a00c9b2e5a8730f78e1b81618cb1695c5ca4d422"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 745,
+      "sourcePath": "programs/harmony-19-dense-oracle.json",
+      "sourceSHA256": "446538c066b4a45e7dc4ce464092c7073d3735bfc070b5a149e462ad57a48e83",
+      "storedBytes": 490,
+      "storedPath": "programs/harmony-19-dense-oracle.json.gz",
+      "storedSHA256": "72e51d9aa08125b6ee6c246c67b628dcf04d70565f32a93e2bc634e64674e678"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 703,
+      "sourcePath": "programs/harmony-19-dense-oracle.log",
+      "sourceSHA256": "cae1867dda5ee90fc1c708310d2e534556bc7a495c6a14fa521f1cf004c48492",
+      "storedBytes": 480,
+      "storedPath": "programs/harmony-19-dense-oracle.log.gz",
+      "storedSHA256": "11679e4a10af4a230f234b45d2ccecd6d678c575e2130d38cf4dc216d6d792b9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 997,
+      "sourcePath": "programs/harmony-19-status.json",
+      "sourceSHA256": "2f48b25ccd6e633e04463d97c5163f818096ec410881816c666bbadd5da826e3",
+      "storedBytes": 316,
+      "storedPath": "programs/harmony-19-status.json.gz",
+      "storedSHA256": "fecc453688ea33b6f89d1ae8df23bc22d7af4dc7c018ba6f34adf3e1724e1dda"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2382548,
+      "sourcePath": "programs/harmony-19.json",
+      "sourceSHA256": "f9779aa4dd83065cd28685b4a814666221be0c986761acfb3441b77f1d4b720b",
+      "storedBytes": 523596,
+      "storedPath": "programs/harmony-19.json.gz",
+      "storedSHA256": "0527cbab4bcc74d28cb3d35df6b4acdcf98863b654c4029e9dbacc1937447f91"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 140,
+      "sourcePath": "programs/harmony-19.log",
+      "sourceSHA256": "d5c57c4e67d85e1c1f929340a7a8eea7b258ea71964db3dc925cc20b54a2ce5d",
+      "storedBytes": 141,
+      "storedPath": "programs/harmony-19.log.gz",
+      "storedSHA256": "76a6bc21b809c31f1ea6ad522ac545975412486d7c21fbe58c0d4fa100b1c981"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1011,
+      "sourcePath": "programs/harmony-41-dense-oracle-status.json",
+      "sourceSHA256": "d63667ae4b1c9063c669e177c03f998107b2fe3ff44f1bb71bb1810bad5a9c77",
+      "storedBytes": 325,
+      "storedPath": "programs/harmony-41-dense-oracle-status.json.gz",
+      "storedSHA256": "eb3587ba1cb69afe3e0aad1308d6ffdda487293187e49eb23e93fdc4087ff091"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 746,
+      "sourcePath": "programs/harmony-41-dense-oracle.json",
+      "sourceSHA256": "daec5e365e0875f597ed61533b0b87cc9f04e7d733afbae71bc4b72137c9c2fb",
+      "storedBytes": 492,
+      "storedPath": "programs/harmony-41-dense-oracle.json.gz",
+      "storedSHA256": "e42cdbb9d0aa75ee1198dc58e63d24d2d63eab0565343346008190942643aaed"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 704,
+      "sourcePath": "programs/harmony-41-dense-oracle.log",
+      "sourceSHA256": "b61f3ff89b3ffefa7929155c7ef20f673e92f8e5c00a71e8f94aeae5bc4926e7",
+      "storedBytes": 477,
+      "storedPath": "programs/harmony-41-dense-oracle.log.gz",
+      "storedSHA256": "11970dbb570e87f3f8829f304603e1d5cc75f941076d446ed7718ba1f6a2aa7b"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 997,
+      "sourcePath": "programs/harmony-41-status.json",
+      "sourceSHA256": "490c1f49ee12034d5576854d31016d9e49c5d20b2a1eb2611f1a730ae4932377",
+      "storedBytes": 315,
+      "storedPath": "programs/harmony-41-status.json.gz",
+      "storedSHA256": "d0951ca54415e8598adc1000d9565a564f75b0a4c868f809104cebeea66e9890"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2383059,
+      "sourcePath": "programs/harmony-41.json",
+      "sourceSHA256": "2f8e9a9cfd8ae8eb085610d1ba6e96fd0a4ced15442cada9dc05fc85d594abc4",
+      "storedBytes": 523613,
+      "storedPath": "programs/harmony-41.json.gz",
+      "storedSHA256": "8990d24545478aa86b1e1b0c8e510189315fb0e48d0e8cdd29bb4b11e98d7923"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 140,
+      "sourcePath": "programs/harmony-41.log",
+      "sourceSHA256": "1017f5220d64a00284545b20aec90506c741676eab7ba64058d5ede0e5bad5a7",
+      "storedBytes": 141,
+      "storedPath": "programs/harmony-41.log.gz",
+      "storedSHA256": "c41580eaffe4af128ea996b3a8ea5a771a6a57ff7e6b36cabe164364f3628a3f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1007,
+      "sourcePath": "programs/harmony-7-dense-oracle-status.json",
+      "sourceSHA256": "d5a75766f159f62de592d4b49941f3751129b9f52abbf945ec2552a96370b70e",
+      "storedBytes": 325,
+      "storedPath": "programs/harmony-7-dense-oracle-status.json.gz",
+      "storedSHA256": "27eadd896395c6c76ad1c04579e0873bc7c12416f38b68dee4154351ec92d12a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 741,
+      "sourcePath": "programs/harmony-7-dense-oracle.json",
+      "sourceSHA256": "c99bb564b99b5413dc294bf38ce92673289813610d77aaad38583f6fb7870dc5",
+      "storedBytes": 489,
+      "storedPath": "programs/harmony-7-dense-oracle.json.gz",
+      "storedSHA256": "1c7847edc4d4a45c66adbc2ad06bcc5ed190494fa69a7c84f9b41fee2cd6d226"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 699,
+      "sourcePath": "programs/harmony-7-dense-oracle.log",
+      "sourceSHA256": "30cd37ef2dc41e7f8b6b817f1d349197efbb7c29f0895f0a407ea801b4e8153e",
+      "storedBytes": 477,
+      "storedPath": "programs/harmony-7-dense-oracle.log.gz",
+      "storedSHA256": "733cfca7fb3d1c87c823bbdb792f699bf7eecc029adf93b90c166beb4b033fb1"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 993,
+      "sourcePath": "programs/harmony-7-status.json",
+      "sourceSHA256": "1ca61dd29357de809d4aed8635b7afc5d8522487aa6cdcd2bef9cd88647d4884",
+      "storedBytes": 313,
+      "storedPath": "programs/harmony-7-status.json.gz",
+      "storedSHA256": "922db77a20da2614c502f9e28c2b9a22d28c63b2b76cbec48ac6def6adfa1e99"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2383003,
+      "sourcePath": "programs/harmony-7.json",
+      "sourceSHA256": "14541213fa2aea8b58f9ceb6ff5408f45d7b0a036d1b04227962a09e0a035502",
+      "storedBytes": 523705,
+      "storedPath": "programs/harmony-7.json.gz",
+      "storedSHA256": "722680ab2b08f1060cc972e1f82a54bee96de875802632f4d707b6f6f696debd"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 140,
+      "sourcePath": "programs/harmony-7.log",
+      "sourceSHA256": "8a3aa1f29c6d824f6ce07b1eb9b2c0828ea46acad39b63a001c361bc2282825a",
+      "storedBytes": 142,
+      "storedPath": "programs/harmony-7.log.gz",
+      "storedSHA256": "48f3867011f77024dd3c0537456f8d4aa4fdc773ecdaaa111a23ae10dbd44f9a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 985,
+      "sourcePath": "programs/identity-status.json",
+      "sourceSHA256": "c3c007b518e58bea456ff7ab01ede3d59a91261d4386b88fb8ab49a4e052c740",
+      "storedBytes": 308,
+      "storedPath": "programs/identity-status.json.gz",
+      "storedSHA256": "9400a0dfd1917acf018b30273145ebc7838676a36ab8363593913d048d860392"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2378616,
+      "sourcePath": "programs/identity.json",
+      "sourceSHA256": "38ced7a16015a906b283f40da079dca2489f8bddb4425b6e0f050eea70cd3902",
+      "storedBytes": 522115,
+      "storedPath": "programs/identity.json.gz",
+      "storedSHA256": "e31f1fe604bf9cd9050514d489b6f4ab1eb11fd405e013dfbcb2a18f521b1cb8"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 140,
+      "sourcePath": "programs/identity.log",
+      "sourceSHA256": "432af8acb5d8666d326884edc20b095e48a8ebd0553b26a43bbf5cd85f3a5d0a",
+      "storedBytes": 141,
+      "storedPath": "programs/identity.log.gz",
+      "storedSHA256": "17e5b16c574967dd1210e18709ac5a35985b7fdf90edc64a9550256e6c3fe346"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1031,
+      "sourcePath": "programs/library-mean-only-status.json",
+      "sourceSHA256": "0c7789ae2b488789a932747912f5ae3ab49cd4f2fc5ee18d28ddaa5efdf4faf3",
+      "storedBytes": 318,
+      "storedPath": "programs/library-mean-only-status.json.gz",
+      "storedSHA256": "275867d3161f60f7d977d242691501eb97c438dc1f3fd7dee07958b85391f913"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2383640,
+      "sourcePath": "programs/library-mean-only.json",
+      "sourceSHA256": "e2cadc55969d5d6135968aff8d848b6b8d0c2fd9b339b6eefe5a141e53bfe524",
+      "storedBytes": 512098,
+      "storedPath": "programs/library-mean-only.json.gz",
+      "storedSHA256": "fb1c9535b87f5e5c908e1776be471366a16fedf83b9aede5db4338b0bc4d0746"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 140,
+      "sourcePath": "programs/library-mean-only.log",
+      "sourceSHA256": "7e305a3d896cd043aa8fc230a6dc6e001d21af1611aa63e9d9ad65efbec99d1f",
+      "storedBytes": 142,
+      "storedPath": "programs/library-mean-only.log.gz",
+      "storedSHA256": "d617e2b2225937789fcba01bd4d08a091e2bcb2e861bde39947344c4357dbec6"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 995,
+      "sourcePath": "programs/native-dense-oracle-status.json",
+      "sourceSHA256": "266a01a74b0b7ddc47fdf7735abbf5435635c39d419d9cba7f05d9ee3a9fe981",
+      "storedBytes": 313,
+      "storedPath": "programs/native-dense-oracle-status.json.gz",
+      "storedSHA256": "3f7b5ec389b4858e6974f4724c43f0600f85b52e617d967627368aeb117894b7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 746,
+      "sourcePath": "programs/native-dense-oracle.json",
+      "sourceSHA256": "3d016e4c180f53b5172407966fd730c29556c6b76d20214515692d6a05455a34",
+      "storedBytes": 492,
+      "storedPath": "programs/native-dense-oracle.json.gz",
+      "storedSHA256": "1c44b259d1273e7ea2fba2aa4f06bec0161226558bd3653faba23ddaa1aba48c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 704,
+      "sourcePath": "programs/native-dense-oracle.log",
+      "sourceSHA256": "84961377403a6f5566e0e5ef57a38c050a11b72d7f51f9f694a38eed68876d10",
+      "storedBytes": 482,
+      "storedPath": "programs/native-dense-oracle.log.gz",
+      "storedSHA256": "158c1aedfbbd478c4e6d9c71a0039ada7acf7a8aa5e8cf66c88788f0ba119bbb"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 985,
+      "sourcePath": "programs/native-status.json",
+      "sourceSHA256": "a4fdd4c894079ecb4ebdb61506087bf20f7508de1a2fafdf8a130b7583e6b4a4",
+      "storedBytes": 304,
+      "storedPath": "programs/native-status.json.gz",
+      "storedSHA256": "0d688d0cca4fe641609243ed92079d7f8025ddab35ed29ef6e92b9832f222fef"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2382549,
+      "sourcePath": "programs/native.json",
+      "sourceSHA256": "d9a460b457bbf3d2482237167c652adc73b051d90780c6ea2eed168098b305b5",
+      "storedBytes": 523597,
+      "storedPath": "programs/native.json.gz",
+      "storedSHA256": "bdbf9962d92e63152cd4a9dc3d53434196f6b3aad63192425df120662e04b3eb"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 140,
+      "sourcePath": "programs/native.log",
+      "sourceSHA256": "45f61d2d87fee7793f661b6148e29a7f3fc2d00c352dc128d1d5df2f0e462d97",
+      "storedBytes": 141,
+      "storedPath": "programs/native.log.gz",
+      "storedSHA256": "d9e0a770b316cbe3d7121596f080cdacecd0a31954c804599b380cd468abb085"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 230,
+      "sourcePath": "programs/prepare-reference.log",
+      "sourceSHA256": "d15b1eef2c4514f188786faf9d5297dbd6640cf382e9a048026ffbf814ce004e",
+      "storedBytes": 195,
+      "storedPath": "programs/prepare-reference.log.gz",
+      "storedSHA256": "0b4cd1de21afd4087d83ee69e54692b4b8b27fd694cf454e14508628fdbb131e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 9349,
+      "sourcePath": "programs/prepare_program_reference.py",
+      "sourceSHA256": "fd40d8673d999ee9b808d6840af1357a9ce6a62e433f9fb54fd61d7e2e07c3f1",
+      "storedBytes": 3360,
+      "storedPath": "programs/prepare_program_reference.py.gz",
+      "storedSHA256": "912968a8ea5e571fc3abd8d48b8dcfd061d70983a6f0c32fc4d61ca697956830"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 297,
+      "sourcePath": "programs/preparer-tests.json",
+      "sourceSHA256": "446ba5f4b1ad3c034ef945c20d3e135aa52d27ab3c218511c3d6623d2fedcc89",
+      "storedBytes": 214,
+      "storedPath": "programs/preparer-tests.json.gz",
+      "storedSHA256": "4a8ce77a5f2cea3c7591bc62f4fe1d8ca9e939aeb0754a282a96f1373a572481"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 3057,
+      "sourcePath": "programs/protocol.json",
+      "sourceSHA256": "90e55cab09b15de892208a21b43ca6cb8ddfd6811c5c5fac723645b4e518c1d9",
+      "storedBytes": 1668,
+      "storedPath": "programs/protocol.json.gz",
+      "storedSHA256": "2fe8453e5488c66453446db4aed8047a4c6271948b36a594f9cbad9021eb48d4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 543,
+      "sourcePath": "programs/reference-execution-freeze.json",
+      "sourceSHA256": "c69f8f7d29211c09cc4f70c3726cf725efdf63068fdb0bf4bd7d0d655d00db33",
+      "storedBytes": 376,
+      "storedPath": "programs/reference-execution-freeze.json.gz",
+      "storedSHA256": "f5c3feed218e9c2bb3d2617a9c3ea85c5ead4227bba83afd6268d768f6d493cd"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6450504,
+      "sourcePath": "programs/reference/detected.npy",
+      "sourceSHA256": "831400eda4dca5a98fef9b0d5bfcb8ffbdc34c44e8daee847c8c01160d23537a",
+      "storedBytes": 1983524,
+      "storedPath": "programs/reference/detected.npy.gz",
+      "storedSHA256": "581bd132b0ebc221f5c8ed3e98d6fe75cfc76cdba432f2fd2506acbec4cde0bf"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 20241,
+      "sourcePath": "programs/reference/reference.json",
+      "sourceSHA256": "8ddeb852880f478a059dfd5c01c7d977df6e7848699aa7d1d6d4621182dd0372",
+      "storedBytes": 3273,
+      "storedPath": "programs/reference/reference.json.gz",
+      "storedSHA256": "4d1f8163708a8a4a1527e9c4f20d5fb86e58334b900d2b935e7577951817407e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 25801632,
+      "sourcePath": "programs/reference/scores.npy",
+      "sourceSHA256": "0ac4edd03e13e831a83a4680ca200340a898f4fc95be05bd42faa488d0772968",
+      "storedBytes": 23330454,
+      "storedPath": "programs/reference/scores.npy.gz",
+      "storedSHA256": "4ec4842543a157ceec924b9f516cd61ab0489cf953dd9ae6ce65c731782cb117"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 12900880,
+      "sourcePath": "programs/reference/total-counts.npy",
+      "sourceSHA256": "8cdaa2ddd732f02109dc94ad407f6f31449a44288d1e39046534baff6511cfce",
+      "storedBytes": 3875402,
+      "storedPath": "programs/reference/total-counts.npy.gz",
+      "storedSHA256": "5e7fff842ab31c9899330eda0dd2ea80fe9b57bcc8e970bda1b3e81b557d84fe"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1716,
+      "sourcePath": "programs/run_dense_oracles.py",
+      "sourceSHA256": "151f340674788dd74b0439c2b75c7aeda0565469683076ef60be45ea6f55e614",
+      "storedBytes": 815,
+      "storedPath": "programs/run_dense_oracles.py.gz",
+      "storedSHA256": "866c1338dabf148ba8b4cf61ccd789c7e3bf6d41ac6f425732cfd9e5fc9afd2c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4090,
+      "sourcePath": "programs/run_evaluations.py",
+      "sourceSHA256": "aa6754d99f7cdde7d8da778374b49cd2db49d0677f618d6b809d8f0601c14561",
+      "storedBytes": 1651,
+      "storedPath": "programs/run_evaluations.py.gz",
+      "storedSHA256": "6c0735cf535c1afcdfcf8931070884524fadd7333f1e7cacf7ba2508661556a5"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 150,
+      "sourcePath": "programs/start.json",
+      "sourceSHA256": "96dea2dba47516ee19d96e25d5ef6ee469de5cfe46e68320224c6c22493cfa31",
+      "storedBytes": 147,
+      "storedPath": "programs/start.json.gz",
+      "storedSHA256": "d0199c41f86a7f52c0b12acbdff74c3d26fbfe53313ee843ab43d69507d53e6f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 20144,
+      "sourcePath": "programs/summary.json",
+      "sourceSHA256": "805b17eb53d9cae8918fa167ecb2e34835d01bc6c49e602f6e9a452036783eed",
+      "storedBytes": 1938,
+      "storedPath": "programs/summary.json.gz",
+      "storedSHA256": "8275e298fce6350a0d72bf5337cca77d6592e13a69c6627786402b3bbe2e6793"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 7552,
+      "sourcePath": "programs/test_integration_programs.py",
+      "sourceSHA256": "3a0bbac8ede064318699e0de2ee68f749efeeaf91976f98ee62606b792be70d9",
+      "storedBytes": 2515,
+      "storedPath": "programs/test_integration_programs.py.gz",
+      "storedSHA256": "e46dedeb4a139f15830c606f0ec1ce3b5c9e5cc3becb572c8e8f2eed71c5a7ec"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 8963,
+      "sourcePath": "programs/write_report.py",
+      "sourceSHA256": "04f71cc0a9702348545ea928da37bd8aad054c6362b41ce1edb54c2c186a44e4",
+      "storedBytes": 4266,
+      "storedPath": "programs/write_report.py.gz",
+      "storedSHA256": "63bd72fabff9b93de94c57dc0a65779cb428e3fc4306ecbfbf40849bd1dfe55e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1228,
+      "sourcePath": "study/integration-full/full-output-freeze.json",
+      "sourceSHA256": "a935045b381e988296b25ae2f00b0a2fce5c802d6aa8cb85f5c7f550e8a58d48",
+      "storedBytes": 621,
+      "storedPath": "study/integration-full/full-output-freeze.json.gz",
+      "storedSHA256": "59648ac118ffa4e74ad792f7fd7efad182bfb03cd0e77ce2f42ad31ccf00a953"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1114,
+      "sourcePath": "study/integration-full/native/receipt.json",
+      "sourceSHA256": "4d62b363489a2453b581aaba12e116a3e8ebb576bc56031a16e5f2f6ae3ceca9",
+      "storedBytes": 559,
+      "storedPath": "study/integration-full/native/receipt.json.gz",
+      "storedSHA256": "4da9386e82ea50cdf15bb9856a11aa7886a837503b721e7bc2114f3123e365f7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2399,
+      "sourcePath": "study/integration-harmony/seed-19/report.json",
+      "sourceSHA256": "14f91d935756afd3f2aae77e588ac59cddb2073bdd632ba3ec38cb6012d55567",
+      "storedBytes": 1340,
+      "storedPath": "study/integration-harmony/seed-19/report.json.gz",
+      "storedSHA256": "d9aaa61a8fa76d47bbf9a9848040e4b67709483f9695b77c5f0382d5d39abf4f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2492,
+      "sourcePath": "study/integration-harmony/seed-41/report.json",
+      "sourceSHA256": "305a7315c959bbd1c9a9dc49820c4d553c67b743118122a15d682ab1a2618be8",
+      "storedBytes": 1376,
+      "storedPath": "study/integration-harmony/seed-41/report.json.gz",
+      "storedSHA256": "db0a8b7b38ee9b59de96cd7a145718687c15808bd7a0afcbb3de015326e9e0d2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2463,
+      "sourcePath": "study/integration-harmony/seed-7/report.json",
+      "sourceSHA256": "cb5588ee9d743084bd6ef5d8b32763c7ca338fbdde315f03aa5a5432f226dd5a",
+      "storedBytes": 1362,
+      "storedPath": "study/integration-harmony/seed-7/report.json.gz",
+      "storedSHA256": "149e921fa690b2c208a85c0f5fef51a08fae2c55a18bfe456fb2b4e87ce98a99"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 41427,
+      "sourcePath": "study/native-qc-reference/receipt.json",
+      "sourceSHA256": "5add042bd159eed5796420a751079019b6e66ddea946d9b8937c29c4bc805208",
+      "storedBytes": 12811,
+      "storedPath": "study/native-qc-reference/receipt.json.gz",
+      "storedSHA256": "0164a91198d2425f0f614506f31e2ee187f5489c3d2524b30807754caf55edef"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4603,
+      "sourcePath": "tools/archive_integration_programs.py",
+      "sourceSHA256": "cf8ba328a679aec501e9112efd40cc73417fc828b0df96d337ced00119fb4df1",
+      "storedBytes": 1823,
+      "storedPath": "tools/archive_integration_programs.py.gz",
+      "storedSHA256": "ed44bc540b926e2cffe456991084f370c95f17f0c9da9880119e1e5c148387a8"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 12737,
+      "sourcePath": "tools/check_integration_programs.py",
+      "sourceSHA256": "185efec462fafa15b3645304db63a02432eaa417d8d9800d4108f606b319f211",
+      "storedBytes": 3824,
+      "storedPath": "tools/check_integration_programs.py.gz",
+      "storedSHA256": "9bdd62d0ba3aa9f12e8a89d16978527c4a1d8fec4518c94db5688ecf27d878f9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 16062,
+      "sourcePath": "tools/check_integration_response.py",
+      "sourceSHA256": "5f081709d5f8ccdc2c55b0788a75a94c48f93e9a89398ef14593d7ec68287db1",
+      "storedBytes": 5066,
+      "storedPath": "tools/check_integration_response.py.gz",
+      "storedSHA256": "8c0a9b5cc541955d62204369e10c88d8560306b0f4d642608472aeaa4fa1a2f4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 5779,
+      "sourcePath": "tools/check_program_dense_oracle.py",
+      "sourceSHA256": "6551e8707146ee9855943695c8e5b6ca7fabcf86363b30b78e749b020909fd56",
+      "storedBytes": 2281,
+      "storedPath": "tools/check_program_dense_oracle.py.gz",
+      "storedSHA256": "02df8f24b6d4739c22bb0810c54a2c276d76c621880d8ccbe3f3130aea00507e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 9349,
+      "sourcePath": "tools/prepare_program_reference.py",
+      "sourceSHA256": "fd40d8673d999ee9b808d6840af1357a9ce6a62e433f9fb54fd61d7e2e07c3f1",
+      "storedBytes": 3360,
+      "storedPath": "tools/prepare_program_reference.py.gz",
+      "storedSHA256": "912968a8ea5e571fc3abd8d48b8dcfd061d70983a6f0c32fc4d61ca697956830"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 7552,
+      "sourcePath": "tools/test_integration_programs.py",
+      "sourceSHA256": "3a0bbac8ede064318699e0de2ee68f749efeeaf91976f98ee62606b792be70d9",
+      "storedBytes": 2515,
+      "storedPath": "tools/test_integration_programs.py.gz",
+      "storedSHA256": "e46dedeb4a139f15830c606f0ec1ce3b5c9e5cc3becb572c8e8f2eed71c5a7ec"
+    }
+  ],
+  "schemaVersion": 1,
+  "scope": "All original cells and program arrays; seven full diagnostics and five independent weighted-SVD checks. Failed and insensitive gates retained. External original H5AD, metadata and latent matrices remain in study storage with exact identities. This is an independent RNA reference and integration diagnostic, not newly executed native million-cell program scoring or prospective phenotype prediction."
+}

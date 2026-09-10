@@ -1,5 +1,10 @@
 # Complete native HIRISA integration result
 
+The subsequent [full-cohort program diagnostic](INTEGRATION_PROGRAMS.md) fails
+three control-sensitive comparisons for native integration and all three Harmony
+seeds, with 18/32 comparisons insufficiently sensitive. Earlier coarse results
+remain valid at their stated scope; complete biological preservation is unqualified.
+
 The original **1,612,594 cells, 18,082 genes and 131 libraries** now have a
 complete native donor-integration publication, exact native replay, independent
 numerical reconstruction and frozen coarse response-preservation measurements.

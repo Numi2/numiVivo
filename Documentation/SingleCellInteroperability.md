@@ -13,8 +13,11 @@ be predicted from available data, including negative results and simple baseline
 The complete [HIRISA experiment](../Tools/Omics/Benchmarks/HIRISA/README.md) adds
 1,612,594 cells, 131 libraries, 48 native/reference DE cases, 79 frozen donor
 prediction folds, and complete PCA/graph qualification. Native seed-7 integration
-and three Harmony references pass coarse preservation margins; broader biological
-preservation and full-cohort clustering qualification remain open.
+and three Harmony references pass coarse preservation margins. The subsequent
+[program diagnostic](../Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md) fails
+three sensitive comparisons in all four candidates, with 18/32 controls
+insufficient. Broader biological preservation and full-cohort native clustering
+replay remain open.
 
 ## Use
 
