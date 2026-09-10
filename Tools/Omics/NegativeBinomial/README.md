@@ -6,6 +6,13 @@ replication/rank gates and the original full-support dispersion-prior cohort.
 Full Kang/Hagai checks add 3,429 Kang tests while preserving default outputs.
 Selection-adjusted FDR and broader scientific calibration remain unqualified.
 
+A predeclared [measured untreated-cell null benchmark](NullBenchmark/README.md)
+now completes twenty splits, forty native fits/replays and 120 direct R fits.
+Native Kang has zero BH<0.05 sham calls; Hagai has twenty calls across eight of
+ten splits under each native policy, covering fourteen distinct genes. Exact
+count/design/numerical checks pass, leaving observed statistical calibration
+concerns. The overlapping splits do not qualify general FDR control or power.
+
 The actual `singlecell-analyze` route now supports an explicit
 `"model": "negativeBinomial"` contrast. It uses the existing sample selection,
 paired-donor/independent-replicate checks, batch design, sparse pseudobulk and

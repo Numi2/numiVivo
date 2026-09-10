@@ -291,6 +291,13 @@ The complete development objective remains open:
    comparison now pass through the streaming route. Its three donor pairs are
    inferred explicitly from deposited sample prefixes, supported by the primary
    individual table. Cross-study FDR calibration remains open.
+   A frozen [untreated-cell null benchmark](../Tools/Omics/NegativeBinomial/NullBenchmark/README.md)
+   now completes ten splits each of Kang and Hagai, forty native fits/replays and
+   120 direct R fits. Exact counts/designs and numerical checks pass. Native
+   Hagai nevertheless reports twenty BH<0.05 sham calls across eight splits
+   under each policy; Kang has none, with default support coverage still limited.
+   These overlapping resamples expose a calibration concern and do not establish
+   general FDR control, independent-donor replication or alternative-model power.
 3. **Negative-binomial DE:** an explicit native NB cohort model now runs through
    the count/analysis/replay/table CLI, with adjusted dispersion estimation,
    robust trend, prior shrinkage, offsets, shared paired/batch designs and
