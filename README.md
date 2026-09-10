@@ -35,7 +35,9 @@ integration results. A new [program-preservation check](Tools/Omics/Benchmarks/H
 finds three control-sensitive failures in native integration and each of three
 Harmony runs; 18 of 32 comparisons have insufficient controls. Full-cohort
 [clustering publication, replay and independent checks](Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md)
-now pass. Broader biological preservation remains open.
+now pass. [Native program scoring](Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
+also reproduces the complete cohort’s reference scores exactly and passes replay.
+Broader biological preservation remains open.
 
 ## One scientific question, several scales
 

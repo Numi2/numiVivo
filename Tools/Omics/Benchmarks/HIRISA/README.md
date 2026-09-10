@@ -1,5 +1,9 @@
 # HIRISA complete-source experimental benchmark
 
+[Native program scoring](NATIVE_PROGRAM_RESULTS.md) now passes full-cohort
+publication, replay and every-cell comparison to the frozen RNA reference,
+with exact scores, detections, totals and original metadata.
+
 The subsequent [full-cohort program diagnostic](INTEGRATION_PROGRAMS.md) fails
 three control-sensitive comparisons for native integration and all three Harmony
 seeds, with 18/32 comparisons insufficiently sensitive. Earlier coarse results

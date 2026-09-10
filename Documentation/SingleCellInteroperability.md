@@ -480,8 +480,9 @@ The complete development objective remains open:
    prospective mapping and general multi-donor competitiveness remain open.
 6. **Annotation:** [standalone native binary program bundles](../Tools/Omics/Programs/BUNDLES.md)
    separate per-cell arrays from pseudobulk JSON and preserve explicit source
-   IDs, exact-name matching, missing scores and native replay. Full-HIRISA scale
-   qualification remains separate. [Native fixed marker/program scoring](../Tools/Omics/Programs/README.md)
+   IDs, exact-name matching, missing scores and native replay. [Full HIRISA
+   publication, replay and independent score checks](../Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
+   now pass. [Native fixed marker/program scoring](../Tools/Omics/Programs/README.md)
    now shares sparse arithmetic between resident and streamed H5AD routes, with
    exact IDs, signed weights, definition fingerprints, missing-gene coverage and
    null scores for empty libraries. Full Kang and Baron comparisons pass against
@@ -581,9 +582,12 @@ The complete development objective remains open:
    keeps latent matrices in bounded mappings and is measured on full Kang/Hagai;
    [Complete HIRISA graph qualification](../Tools/Omics/Benchmarks/HIRISA/GRAPH_RESULTS.md)
    and [native seed-7 integration](../Tools/Omics/Benchmarks/HIRISA/FULL_INTEGRATION_RESULTS.md)
-   now pass operational/numerical gates on all 1,612,594 cells. Full-cohort
-   clustering, broader biological preservation and native multi-seed integration
-   remain open; this does not remove resident metadata/bookkeeping limits.
+   now pass operational/numerical gates on all 1,612,594 cells. [Full-cohort
+   clustering](../Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md) and
+   [native program scoring](../Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
+   also pass publication, replay and independent checks. Broader biological
+   preservation and native multi-seed integration remain open; resident
+   metadata/bookkeeping limits remain explicit.
 10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
     memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial

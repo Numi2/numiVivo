@@ -1,0 +1,264 @@
+{
+  "externalOriginalH5AD": {
+    "SHA256": "0873e698ebf8770a54e6dba09724ffbeda5e1a67dbf24d4e223552d4aca7969c",
+    "bytes": 6117413997
+  },
+  "externalRuntimeSHA256": "70a5bdcb258f35f947811bb7b5f2ddc777dfef19ce26880a74de818c8586ac95",
+  "independentReferenceArchive": "2026-09-10-integration-programs",
+  "records": [
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 51603008,
+      "sourcePath": "bundle/detected-members.bin",
+      "sourceSHA256": "f10d7b6fc9526cd4c15842c1c65f56658b1585708fdf8bcef653dfa37e50f176",
+      "storedBytes": 9043954,
+      "storedPath": "bundle/detected-members.bin.gz",
+      "storedSHA256": "ec57e9aa310087f43cedabfd291f68ccaeac8e1006995359a896a4de71ef53ca"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 149506727,
+      "sourcePath": "bundle/metadata.json",
+      "sourceSHA256": "f81771d3a3f2db3fc23a4ec21b6d52f160ed2b56f843e567dfdf443e8cfc2b7f",
+      "storedBytes": 6260182,
+      "storedPath": "bundle/metadata.json.gz",
+      "storedSHA256": "6cb7bee64be0d3aa12954a744112ee6c9ba97eef5f9f9414b9132ac063c894f7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 8028,
+      "sourcePath": "bundle/model.json",
+      "sourceSHA256": "498e5b66776362409eb354aedf7865aab3ed13ffd19a7ad45c466103aa3afc2f",
+      "storedBytes": 2067,
+      "storedPath": "bundle/model.json.gz",
+      "storedSHA256": "452c9245fec22e916671c4cf4939e240b77bd80e80d2249123a71844ec7a4921"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 24166,
+      "sourcePath": "bundle/plan.json",
+      "sourceSHA256": "887ef4b9c12f997fe5a15a2907a09bb604e8306eccdb64bd540ba7fcbb3825d7",
+      "storedBytes": 2526,
+      "storedPath": "bundle/plan.json.gz",
+      "storedSHA256": "617b9dd1f69431816f2eeabcff0c7f395311e9fad40700b538d0a5789d40f49b"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1264,
+      "sourcePath": "bundle/receipt.json",
+      "sourceSHA256": "79e70d45f94c9f4189e0e9d69ceec7ad8ba13df4badfbb7b8c1eba3469de04cd",
+      "storedBytes": 647,
+      "storedPath": "bundle/receipt.json.gz",
+      "storedSHA256": "09e4436ee9263bc01b0b29059abf7a32293ec04c7254d4346de86d9a0e2c05da"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 51603008,
+      "sourcePath": "bundle/scores.bin",
+      "sourceSHA256": "b19af1fb8bffef4c7011ca04a8687b92dc72df1f482683adf107ebfcea25c7e8",
+      "storedBytes": 30723399,
+      "storedPath": "bundle/scores.bin.gz",
+      "storedSHA256": "a1c54e691ad816041425fedc3bc6261df48aba7895dcdfc6690a1a94344e6faf"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 25801504,
+      "sourcePath": "bundle/total-counts.bin",
+      "sourceSHA256": "6720f52b0f29d4404d34f80350257fccb1cc7739f5b7b99b9124f61f394cc4f1",
+      "storedBytes": 7221638,
+      "storedPath": "bundle/total-counts.bin.gz",
+      "storedSHA256": "aba80a66a1c938d2413a7a518d6312fe272a46e69154898d8d638de67698ba3c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 20241,
+      "sourcePath": "reference/reference.json",
+      "sourceSHA256": "8ddeb852880f478a059dfd5c01c7d977df6e7848699aa7d1d6d4621182dd0372",
+      "storedBytes": 3273,
+      "storedPath": "reference/reference.json.gz",
+      "storedSHA256": "4d1f8163708a8a4a1527e9c4f20d5fb86e58334b900d2b935e7577951817407e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 16062,
+      "sourcePath": "run/check_integration_response.py",
+      "sourceSHA256": "5f081709d5f8ccdc2c55b0788a75a94c48f93e9a89398ef14593d7ec68287db1",
+      "storedBytes": 5066,
+      "storedPath": "run/check_integration_response.py.gz",
+      "storedSHA256": "8c0a9b5cc541955d62204369e10c88d8560306b0f4d642608472aeaa4fa1a2f4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4864,
+      "sourcePath": "run/check_native_programs.py",
+      "sourceSHA256": "73793eb90ebd45ab13deeb88dba62f1c1ac198a8e5b765bec8753285cab3fd19",
+      "storedBytes": 1899,
+      "storedPath": "run/check_native_programs.py.gz",
+      "storedSHA256": "47d18c086c1e10a6ec813fafaedbc9a251042a822ea3021c1d981bd21287c759"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2124,
+      "sourcePath": "run/full-complete.json",
+      "sourceSHA256": "cfe2b81e6db13b6b49727e18bb2cce22accf41ff639b3ea39f16ec9442e6b305",
+      "storedBytes": 704,
+      "storedPath": "run/full-complete.json.gz",
+      "storedSHA256": "7eaf79ba0b2e26b4d0eedcd1b2dc5512bda15d89827096aabe372036f499cc5f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 20653,
+      "sourcePath": "run/full-execution-freeze.json",
+      "sourceSHA256": "5cbb2b04e610dd6c1a34af9f341f860e1c0b4344d12b2063470662551b331c7f",
+      "storedBytes": 5338,
+      "storedPath": "run/full-execution-freeze.json.gz",
+      "storedSHA256": "e355009a2d753bfee141c54f5dc0a67e09b20a264a25526356f1c19e0589255b"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 588,
+      "sourcePath": "run/full-independent-start.json",
+      "sourceSHA256": "1713fac529bb8b868ab94be29d606da62223d6796a94b3973c22a3edde97b1b2",
+      "storedBytes": 257,
+      "storedPath": "run/full-independent-start.json.gz",
+      "storedSHA256": "5c7e8987d2d34fe303489eb208c95210cf2cece4ac9eeb92f933f4e53efc398d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 606,
+      "sourcePath": "run/full-independent-status.json",
+      "sourceSHA256": "75baf359a3ede25b8151d33242cce124ee86e62da93bbec724ce79c97a7c9d4c",
+      "storedBytes": 265,
+      "storedPath": "run/full-independent-status.json.gz",
+      "storedSHA256": "178fb0d6e4f20c225405bb6cb3d440f6c527a82b277091353713841258b11ab2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 803,
+      "sourcePath": "run/full-independent.json",
+      "sourceSHA256": "5cad9479a1b6de46105458a4413ea95031f0fd814472061d8778e3b5c356c890",
+      "storedBytes": 500,
+      "storedPath": "run/full-independent.json.gz",
+      "storedSHA256": "dfa3d64f41728417f0fad589fc58a1e5b5b473d799f3f5460530ca4e5181714a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 773,
+      "sourcePath": "run/full-independent.log",
+      "sourceSHA256": "0150c9400c26a6cce8092c5779fdd4d015ab48d5eea0def9bc719230ae54d335",
+      "storedBytes": 495,
+      "storedPath": "run/full-independent.log.gz",
+      "storedSHA256": "ae0de76e57e00c7d992e841a989956ea13b81e45a4ae41cf0c3939e07aef5f94"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 902,
+      "sourcePath": "run/full-output-freeze.json",
+      "sourceSHA256": "6557924b5dc84f6af8dd257e787864106437794ad59b0955c3c450ae38e2d954",
+      "storedBytes": 451,
+      "storedPath": "run/full-output-freeze.json.gz",
+      "storedSHA256": "ea40a2e114f4dfe771032d9ccb7e7aac683dbe9ea2e74671074d82cbcd23f380"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 39302,
+      "sourcePath": "run/full-plan.json",
+      "sourceSHA256": "fe0a02d16aeb902d0e541471c375cc4997fb3a80ae1cd7f2ed21c861b24c47de",
+      "storedBytes": 2674,
+      "storedPath": "run/full-plan.json.gz",
+      "storedSHA256": "89ca96d9450e641ea1333c5bc89200f3a847deb52cfac56541cede1e46cd924d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1049,
+      "sourcePath": "run/full-protocol.json",
+      "sourceSHA256": "b6f4ecd1eb9cd6efe49fc76b1855b207d14f0b387ee6b216d3c7111106812d53",
+      "storedBytes": 654,
+      "storedPath": "run/full-protocol.json.gz",
+      "storedSHA256": "06325fb3198a2ffd5113ab521f0dac2307dd24958cd4009510357abcc8067889"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 479,
+      "sourcePath": "run/full-publish-start.json",
+      "sourceSHA256": "1023216b737a10a55c183ed7351aeb0e6e03a019f77b3e5c30e10fb96eebcda7",
+      "storedBytes": 240,
+      "storedPath": "run/full-publish-start.json.gz",
+      "storedSHA256": "8c7180e6dc0383f64ef0d116884e1a2f958faf85c85170d21d65d178d36fc060"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 498,
+      "sourcePath": "run/full-publish-status.json",
+      "sourceSHA256": "95097dfd48240d1ce7deb1ac5a7bfa1d856e05a9a8875913844ec3caf8becd44",
+      "storedBytes": 250,
+      "storedPath": "run/full-publish-status.json.gz",
+      "storedSHA256": "5045c51fffbecd55f2338046c6ebd06b42b4d1075ea4a53dba62bede4a4486a2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2042,
+      "sourcePath": "run/full-publish.log",
+      "sourceSHA256": "7bcd3d8ec3f4e8a51ecee9b322b1772c0e51950d00eac6bd84e2635f789e737d",
+      "storedBytes": 927,
+      "storedPath": "run/full-publish.log.gz",
+      "storedSHA256": "150fefe3ebe31c05a302256e318df0470a06caf84587cebbfd6fa00510172e77"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 314,
+      "sourcePath": "run/full-verify-start.json",
+      "sourceSHA256": "4823d3230a8eea431fe08807158f14a6d70158fd57eed85855f39e1642f098f7",
+      "storedBytes": 210,
+      "storedPath": "run/full-verify-start.json.gz",
+      "storedSHA256": "7779121952a319c95f022b3a51ba0f776aed5707e98ad847960b6dac04595944"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 333,
+      "sourcePath": "run/full-verify-status.json",
+      "sourceSHA256": "321e90127e34d2b09e33348415ec10e19720b9878d33da38b2753c21dead6e17",
+      "storedBytes": 221,
+      "storedPath": "run/full-verify-status.json.gz",
+      "storedSHA256": "a62f19be3aa5f1242e256c566766380b73fb34084688a725b38b1e33ba31c29e"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2042,
+      "sourcePath": "run/full-verify.log",
+      "sourceSHA256": "0625efb109725227ea3a28c12b2cdd4625cebf4c029e6e746898055d17911dde",
+      "storedBytes": 928,
+      "storedPath": "run/full-verify.log.gz",
+      "storedSHA256": "9d7746ccd67ff967c05bdc20a90727c782502181dcf218f5e775c3846ca38074"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 3555,
+      "sourcePath": "run/run_full.py",
+      "sourceSHA256": "f5af8aadf58346ae9eabab3b398286157e21a1c2f38d48b3cc512f2328f904a1",
+      "storedBytes": 1527,
+      "storedPath": "run/run_full.py.gz",
+      "storedSHA256": "aab5b01d2752a53359d6796c5c0cad9abd0fe7b34b6aaf7daa699c163bc3f280"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 72304,
+      "sourcePath": "runtime/environment.json",
+      "sourceSHA256": "0f197981d7484cc4d80c240a3296320c0ee56a6637c33a9494c1152c957fb5ad",
+      "storedBytes": 28601,
+      "storedPath": "runtime/environment.json.gz",
+      "storedSHA256": "80f4179753873f9ea65b11e539ee575f7a72cf91c3f2bcc130ec5b9af4cef99d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4076,
+      "sourcePath": "tools/archive_native_programs.py",
+      "sourceSHA256": "b0631c74751bb5a787a3cc560007fd5f3b1cd23b0d6f7f7d609cb8a98f137d9e",
+      "storedBytes": 1644,
+      "storedPath": "tools/archive_native_programs.py.gz",
+      "storedSHA256": "bf8b70f8829ac608eeb858d9520d191fa3cc94b6a9de6d83515772c9a6c2804e"
+    }
+  ],
+  "schemaVersion": 1,
+  "scope": "Full native original-cohort program publication, exact replay, every-cell score/detection/total comparison and original metadata identity. All native derived arrays included. Original H5AD and frozen executable remain external with exact identities; independent source/RNA arrays restore from previous integration-programs archive. No biological prediction or preservation gate is promoted by numerical agreement."
+}

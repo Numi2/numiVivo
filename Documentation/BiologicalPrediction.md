@@ -136,8 +136,9 @@ Lower donor-associated variance also does not isolate technical batch removal.
    validation without treating graph partitions as authoritative annotations.
 2. Diagnose the frozen program-preservation failures and weak baseline decoder
    sensitivity in a separately declared development experiment. Preserve these
-   failures and the known Kang NK-recall failures; complete rare-cell checks and
-   a compact native program artifact for the full cohort.
+   failures and the known Kang NK-recall failures; complete rare-cell checks.
+   The [compact native program artifact](../Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
+   now passes full-cohort publication, replay and independent comparison.
 3. Resolve Adamson controls from primary experimental records, then execute the
    frozen independent-study target-prediction protocol with coverage, all
    failures and matched simple/shuffled baselines. Do not tune it on test scores.

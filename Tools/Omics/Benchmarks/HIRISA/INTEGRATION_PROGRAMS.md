@@ -1,5 +1,9 @@
 # Complete HIRISA program-preservation diagnostic
 
+Subsequently, [native standalone program scoring](NATIVE_PROGRAM_RESULTS.md)
+reproduced every original-cell reference score exactly and passed native replay.
+This closes the native artifact scale gap without changing the failures below.
+
 **FAIL on the frozen complete preservation gate for native seed 7 and all three
 Harmony references.** All four candidates lose more than the declared margins
 in the same three control-sensitive comparisons. Eighteen of 32 comparisons
@@ -135,12 +139,11 @@ executable SHA256
 It predates sequential-ridge optimization. All three [Harmony matrices](HARMONY_REFERENCE.md)
 are the original complete seeds 7/19/41. No integration refit is claimed here.
 
-This is an independent measured-program reference, not a newly executed native
-million-cell program publication. The existing native pseudobulk JSON report
+This diagnostic used an independent measured-program reference. At that time,
+the native pseudobulk JSON report
 is 526,518,683 bytes against its 536,870,912-byte limit, leaving insufficient
-space for the added per-cell program arrays. Native full-scale scoring needs a
-compact separate program artifact; increasing the global report limit does not
-resolve that ownership/storage gap. Existing smaller native program evidence
+space for the added per-cell program arrays. The subsequent standalone bundle closes this
+storage gap while preserving the global report limit. Existing smaller native program evidence
 remains separate. Rare-cell, neighborhood, annotation and unseen-context gates
 also remain open.
 

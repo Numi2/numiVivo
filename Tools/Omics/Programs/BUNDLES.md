@@ -79,8 +79,8 @@ python Tools/Omics/Benchmarks/HIRISA/verify_archive.py \
 
 The complete HIRISA protocol uses all 1,612,594 cells and both unchanged supplied
 IFN definitions, with original Ensembl IDs and explicit exact-name matching.
-Its native publication, replay and comparison against the [previously frozen
-independent RNA reference](../Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md) are
-separate scale gates. Do not infer completion from the existence of this command
-or the smaller fixtures. The known integration-preservation failures remain
+Its [complete native publication, replay and comparison](../Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
+against the previously frozen independent RNA reference now pass with exact
+scores, detections, totals and metadata. This scale evidence is separate from
+the smaller fixtures. The known integration-preservation failures remain
 unchanged: these new bundles score original measured RNA, not corrected PCs.
