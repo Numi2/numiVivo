@@ -1,5 +1,9 @@
 # Native scale-aware mutual-neighbor integration
 
+A subsequent [exact spatial-tree trial](MNN_TREE.md) reproduced every coordinate
+and anchor on all three original cohorts but ran slower. It was not promoted;
+the exhaustive matcher and existing API below remain unchanged.
+
 The file-backed PCA workflow now offers an explicit mutual-nearest-neighbor
 (MNN) method. It corrects donor or batch effects in global median-PCA-norm units,
 retains original counts and PCA, and publishes the actual anchor pairs used to

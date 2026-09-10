@@ -475,6 +475,9 @@ The complete development objective remains open:
    matches the previous numerical solver exactly across three seeds on Kang and
    independent Hagai. Hagai passes its response-preservation margins; full Kang
    fails NK-cell recall preservation in both native and reference Harmony runs.
+   A [native exact-tree performance trial](../Tools/Omics/Reduction/MNN_TREE.md)
+   preserves all original MNN outputs on Hagai/Kang/Ding but is slower; the
+   prototype remains archived and is not a production option.
    The opt-in [native scale-aware MNN method](../Tools/Omics/Reduction/MNN_INTEGRATION.md)
    now passes the available preservation margins on full Kang, Hagai and Ding,
    with independent anchor, coordinate and neighbor agreement. It remains a

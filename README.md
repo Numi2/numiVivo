@@ -59,6 +59,8 @@ references also fail the complete gate. Broader biological preservation remains
 unqualified. A single [protected-stratum regression experiment](Tools/Omics/Benchmarks/HIRISA/PROTECTED_REGRESSION.md)
 retains 37/146 failures: four resolve and four new failures appear. This candidate
 has not been promoted into the native solver.
+A separate [exact-tree MNN trial](Tools/Omics/Reduction/MNN_TREE.md) preserved all
+outputs on three original cohorts but ran slower, so its prototype remains archived.
 
 ## One scientific question, several scales
 

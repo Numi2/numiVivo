@@ -1,0 +1,782 @@
+{
+  "baseCommit": "435531e369f72f343663bfeeb442f2f71340ceb7",
+  "externalExecutables": {
+    "mnn-tests": "042fe4be04b0d2cbb2686c8e50299286534265ffb6cd90682deceffdada02806",
+    "mnn-tree-check": "e96d590308192551ca2de03d5e7fd047ffd464f95a15a6940896c9ab92a56619",
+    "runtime/h5ad-check": "f65f2f8c9800f1d4da16bf58b2a92cb9905bb8e3daf8682fd9c96fca6f21c3f8"
+  },
+  "externalUnchangedOutputRestoration": {
+    "cohorts-v2/ding-scan/anchors.bin": {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "sourceCohortRelativePath": "ding/mnn/anchors.bin"
+    },
+    "cohorts-v2/ding-scan/scores.bin": {
+      "SHA256": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+      "bytes": 14089920,
+      "sourceCohortRelativePath": "ding/mnn/scores.bin"
+    },
+    "cohorts-v2/ding-tree-replay/anchors.bin": {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "sourceCohortRelativePath": "ding/mnn/anchors.bin"
+    },
+    "cohorts-v2/ding-tree-replay/scores.bin": {
+      "SHA256": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+      "bytes": 14089920,
+      "sourceCohortRelativePath": "ding/mnn/scores.bin"
+    },
+    "cohorts-v2/ding-tree/anchors.bin": {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "sourceCohortRelativePath": "ding/mnn/anchors.bin"
+    },
+    "cohorts-v2/ding-tree/scores.bin": {
+      "SHA256": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+      "bytes": 14089920,
+      "sourceCohortRelativePath": "ding/mnn/scores.bin"
+    },
+    "cohorts-v2/hagai-scan/anchors.bin": {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "sourceCohortRelativePath": "hagai/mnn/anchors.bin"
+    },
+    "cohorts-v2/hagai-scan/scores.bin": {
+      "SHA256": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+      "bytes": 4436160,
+      "sourceCohortRelativePath": "hagai/mnn/scores.bin"
+    },
+    "cohorts-v2/hagai-tree-replay/anchors.bin": {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "sourceCohortRelativePath": "hagai/mnn/anchors.bin"
+    },
+    "cohorts-v2/hagai-tree-replay/scores.bin": {
+      "SHA256": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+      "bytes": 4436160,
+      "sourceCohortRelativePath": "hagai/mnn/scores.bin"
+    },
+    "cohorts-v2/hagai-tree/anchors.bin": {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "sourceCohortRelativePath": "hagai/mnn/anchors.bin"
+    },
+    "cohorts-v2/hagai-tree/scores.bin": {
+      "SHA256": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+      "bytes": 4436160,
+      "sourceCohortRelativePath": "hagai/mnn/scores.bin"
+    },
+    "cohorts-v2/kang-scan/anchors.bin": {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "sourceCohortRelativePath": "kang/mnn/anchors.bin"
+    },
+    "cohorts-v2/kang-scan/scores.bin": {
+      "SHA256": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+      "bytes": 7895360,
+      "sourceCohortRelativePath": "kang/mnn/scores.bin"
+    },
+    "cohorts-v2/kang-tree-replay/anchors.bin": {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "sourceCohortRelativePath": "kang/mnn/anchors.bin"
+    },
+    "cohorts-v2/kang-tree-replay/scores.bin": {
+      "SHA256": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+      "bytes": 7895360,
+      "sourceCohortRelativePath": "kang/mnn/scores.bin"
+    },
+    "cohorts-v2/kang-tree/anchors.bin": {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "sourceCohortRelativePath": "kang/mnn/anchors.bin"
+    },
+    "cohorts-v2/kang-tree/scores.bin": {
+      "SHA256": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+      "bytes": 7895360,
+      "sourceCohortRelativePath": "kang/mnn/scores.bin"
+    }
+  },
+  "priorCohortManifestSHA256": "78cbbd300d1e26983692e88e102b1079e1d3ab40bceebee076e10df6b632f03b",
+  "records": [
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 943,
+      "sourcePath": "SanitizeMain.cpp",
+      "sourceSHA256": "b401654cdbd3cda221fe552c897173a1236b55e61f6c4de685a8e0b0ada33990",
+      "storedBytes": 520,
+      "storedPath": "SanitizeMain.cpp.gz",
+      "storedSHA256": "875aad0aebc44c62c9b25e815f9ae902cfc5e0edfb8d83d6020129ada2b8ba8a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 172,
+      "sourcePath": "TestMain.swift",
+      "sourceSHA256": "34d8d4a8ad4782970cbae58fd2f649fefe450d1d54b6118d27b7f925e910a741",
+      "storedBytes": 145,
+      "storedPath": "TestMain.swift.gz",
+      "storedSHA256": "e17932ff1e0c6cecba2be6b7b3c6570405ce6c7caab0b1af62918eb3d66936a2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4844,
+      "sourcePath": "archive_mnn_tree.py",
+      "sourceSHA256": "61757366159f4bf455c78252c0ba7d8b5bb0a8a207f4814090480cd7130486d2",
+      "storedBytes": 2229,
+      "storedPath": "archive_mnn_tree.py.gz",
+      "storedSHA256": "23b43e8f2f33528b45934e96106c66c1c4dbc0707b7454c964b7f776ea3f1037"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1337,
+      "sourcePath": "attempts.json",
+      "sourceSHA256": "c34f34e246d885e7738814d60554b32e52143ddb2a9eb54ceba08bd7b07e2850",
+      "storedBytes": 633,
+      "storedPath": "attempts.json.gz",
+      "storedSHA256": "823a80e78211ac7304087f39dfe5faa620d939f62cb0c1fccbee234992717a99"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1309,
+      "sourcePath": "build-attempt-1.log",
+      "sourceSHA256": "8b08f098231123e543b78a4b06890a28c6f51349144c130ec22cda87d18079c8",
+      "storedBytes": 601,
+      "storedPath": "build-attempt-1.log.gz",
+      "storedSHA256": "916a5ea5cb8519af43db92aa58eabb65eeb2d9c0d0a2b537b3c763acc36a1e0c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1462,
+      "sourcePath": "build.log",
+      "sourceSHA256": "9c0c1d46463441f356fe3721ae2d4076a2633878ea4bb8159f1c93f18e8cdb0a",
+      "storedBytes": 405,
+      "storedPath": "build.log.gz",
+      "storedSHA256": "6d9e56015f7314df143907660a6960495cd98cf68c90eaf9b50ceccbdfc74851"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 830,
+      "sourcePath": "cohorts-v2/commands.json",
+      "sourceSHA256": "10500529e267d28ef9bf416e31e4711b8e676a9d655bba110e5ac3de0c10be24",
+      "storedBytes": 244,
+      "storedPath": "cohorts-v2/commands.json.gz",
+      "storedSHA256": "4e84b7347b483f156b310c02c711de9038f5d56c6a1c0da36df2d88f3e389449"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6928,
+      "sourcePath": "cohorts-v2/complete.json",
+      "sourceSHA256": "a1fae941a7ba36d86336563265269c6bc7601e78030d4e67786124f29855f2f6",
+      "storedBytes": 2476,
+      "storedPath": "cohorts-v2/complete.json.gz",
+      "storedSHA256": "3ba0207718f1160122e8cfd175911d883431b5d702f23deccd0411537f7753bd"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 311,
+      "sourcePath": "cohorts-v2/ding-scan-process.json",
+      "sourceSHA256": "e276a08449850614e7f91f2fc49137e8d5022121ba84d6e089f91e4f370468b2",
+      "storedBytes": 194,
+      "storedPath": "cohorts-v2/ding-scan-process.json.gz",
+      "storedSHA256": "deafe4ca713ffda483f3ea89d6389a11ae6e2a32251c3ac86c4806a4f87a381a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 870,
+      "sourcePath": "cohorts-v2/ding-scan.log",
+      "sourceSHA256": "82e1aa0be5f97bb6b188d2b0c6e2a1babc7cb9cb52eb8a5f3af79f556ac63ad7",
+      "storedBytes": 356,
+      "storedPath": "cohorts-v2/ding-scan.log.gz",
+      "storedSHA256": "8b0fd793dac9cb8a0ea64a325bc2cccd05ba18b2623ce56790c3db37bfffd0d9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 392,
+      "sourcePath": "cohorts-v2/ding-scan/checks.json",
+      "sourceSHA256": "814205eb995a513f97a10287456c420db77e9bbb6365ac9aad02cf0307daa1d5",
+      "storedBytes": 266,
+      "storedPath": "cohorts-v2/ding-scan/checks.json.gz",
+      "storedSHA256": "7032a59368d38792b868382290ab89635c03f14aa9df2a9a119fbb685b477cef"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 97564,
+      "sourcePath": "cohorts-v2/ding-scan/report.json",
+      "sourceSHA256": "1c0dab32b1509eeaa2c93a6b9f33c0de9a4aef5a62228da0f3f14e1f846cc09c",
+      "storedBytes": 2875,
+      "storedPath": "cohorts-v2/ding-scan/report.json.gz",
+      "storedSHA256": "de167f623ed1e5574d316eaaf7c089ef5d0664d58112c2a9f2648ea31708deda"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 312,
+      "sourcePath": "cohorts-v2/ding-tree-process.json",
+      "sourceSHA256": "3c986fe3efb3dac549c872a481ed4f43436519a1e2db657b02afa3a067d23e30",
+      "storedBytes": 194,
+      "storedPath": "cohorts-v2/ding-tree-process.json.gz",
+      "storedSHA256": "56ef0414f8ab791a7b24d33c7074340684fb77e7c116db68d2d04523720f126c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 319,
+      "sourcePath": "cohorts-v2/ding-tree-replay-process.json",
+      "sourceSHA256": "ade455434ce3ff80928387b79643255a7f8a0d22b279973309c9fd58561c0b1b",
+      "storedBytes": 201,
+      "storedPath": "cohorts-v2/ding-tree-replay-process.json.gz",
+      "storedSHA256": "dd490fcf5686214fa0b385ced9df5dd36014a7850754ed8bb45b25a115318966"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 869,
+      "sourcePath": "cohorts-v2/ding-tree-replay.log",
+      "sourceSHA256": "6993a8cd6c11c7ce9c8a2ddc050a8eea5fcf4051265d7bf4af7bfb37fa25e657",
+      "storedBytes": 356,
+      "storedPath": "cohorts-v2/ding-tree-replay.log.gz",
+      "storedSHA256": "fced22f758c5ca8f1165dfa3bfcf057619950a2cc8f24901b84fc51b0930e253"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 392,
+      "sourcePath": "cohorts-v2/ding-tree-replay/checks.json",
+      "sourceSHA256": "b45013688d6016a2b257a2e08e3214efa1de6a1a2924ab859bedfdace4e3c95d",
+      "storedBytes": 265,
+      "storedPath": "cohorts-v2/ding-tree-replay/checks.json.gz",
+      "storedSHA256": "e165f869a1917e92f7d177f717c9c191f4b334fd205df236c2c4e987b25ab2d0"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 97770,
+      "sourcePath": "cohorts-v2/ding-tree-replay/report.json",
+      "sourceSHA256": "f5edf5d95eae1a57cd0a5d51939003cf19bedbbca82051c1e484505099d0ad3d",
+      "storedBytes": 2977,
+      "storedPath": "cohorts-v2/ding-tree-replay/report.json.gz",
+      "storedSHA256": "a37e466daaa09efb2efd481c825f038ac26b1d2fe9cbfafdae9a53643d9334e9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 869,
+      "sourcePath": "cohorts-v2/ding-tree.log",
+      "sourceSHA256": "96109c309f131b111051031312373042f5b78668f089f4783012a28ac45d6e63",
+      "storedBytes": 353,
+      "storedPath": "cohorts-v2/ding-tree.log.gz",
+      "storedSHA256": "d9a3129851d05497c73c01e83d1d490feb9acee649839de0820eb573a6ab21b5"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 392,
+      "sourcePath": "cohorts-v2/ding-tree/checks.json",
+      "sourceSHA256": "83100ce250c4bd755dc05f501cd94a70ca3e4acf4dee6f6e842739bc230d200a",
+      "storedBytes": 265,
+      "storedPath": "cohorts-v2/ding-tree/checks.json.gz",
+      "storedSHA256": "46cd7b7aa64176b6ebb26f64db78e3d59113894799b40d334bced9be8aa4ea61"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 97770,
+      "sourcePath": "cohorts-v2/ding-tree/report.json",
+      "sourceSHA256": "f5edf5d95eae1a57cd0a5d51939003cf19bedbbca82051c1e484505099d0ad3d",
+      "storedBytes": 2977,
+      "storedPath": "cohorts-v2/ding-tree/report.json.gz",
+      "storedSHA256": "a37e466daaa09efb2efd481c825f038ac26b1d2fe9cbfafdae9a53643d9334e9"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2247,
+      "sourcePath": "cohorts-v2/execution-freeze.json",
+      "sourceSHA256": "7a6e6769325a64a38c4125473a3f24c99cdf2ffabbc9356d8953b3a9d4c0c5f7",
+      "storedBytes": 1150,
+      "storedPath": "cohorts-v2/execution-freeze.json.gz",
+      "storedSHA256": "9e7061758c0eea49619c4af62ab932d4a6e46d8a97f4968833efab571323444f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 312,
+      "sourcePath": "cohorts-v2/hagai-scan-process.json",
+      "sourceSHA256": "57d714be30cc0a0425623f714286fb46645183bffa85a82a97f50b5cf27ba246",
+      "storedBytes": 195,
+      "storedPath": "cohorts-v2/hagai-scan-process.json.gz",
+      "storedSHA256": "0bf21d0e428ce6a14ef08b9f7a39913228a8ee399c1959629b8f573d5d165852"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 871,
+      "sourcePath": "cohorts-v2/hagai-scan.log",
+      "sourceSHA256": "1fde881c449c9e5acea87626a31a45a50dcc4c6548195ca35fc62ca6413bde67",
+      "storedBytes": 353,
+      "storedPath": "cohorts-v2/hagai-scan.log.gz",
+      "storedSHA256": "279a1d368bb67a7063c2ebd110ea4f4a6401b890150764f11645c7c14e40f8ec"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 391,
+      "sourcePath": "cohorts-v2/hagai-scan/checks.json",
+      "sourceSHA256": "054cb260583404c4c9b60097084519c80f553de91c6f429dd5c9d4d302399c65",
+      "storedBytes": 263,
+      "storedPath": "cohorts-v2/hagai-scan/checks.json.gz",
+      "storedSHA256": "7ece5b12309b4f3828f1950cfb9fd412d86ee94d95f3735637cd25691eb23a15"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 29907,
+      "sourcePath": "cohorts-v2/hagai-scan/report.json",
+      "sourceSHA256": "fe28fb8ad37e8ab7ea073636b5a22f8f3df858d2d67105c570ccc26c9098392a",
+      "storedBytes": 1171,
+      "storedPath": "cohorts-v2/hagai-scan/report.json.gz",
+      "storedSHA256": "a494767665c6bd19a8a4336fb1bae985cd3fd9cbaf3e5bc75ccd57e89d9fd6b7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 313,
+      "sourcePath": "cohorts-v2/hagai-tree-process.json",
+      "sourceSHA256": "9351e396e8b35c6828a76dee500c6c08dd2f12aa456ff0577d08cbd0776ade7b",
+      "storedBytes": 194,
+      "storedPath": "cohorts-v2/hagai-tree-process.json.gz",
+      "storedSHA256": "41e45f74caef5178bfcea6054f90a13a9193c991ac7f3d38a8678390bd053d84"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 320,
+      "sourcePath": "cohorts-v2/hagai-tree-replay-process.json",
+      "sourceSHA256": "af6bb446438e62c9d2c674c8014021fc409507092c5bb1bb1b78f6e9ba042b52",
+      "storedBytes": 200,
+      "storedPath": "cohorts-v2/hagai-tree-replay-process.json.gz",
+      "storedSHA256": "c7fe55b1d4fe6a17b4ce9e7eda43fd93f90f05a7377a15cafbe235c5e2f04c33"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 871,
+      "sourcePath": "cohorts-v2/hagai-tree-replay.log",
+      "sourceSHA256": "c60de8c5d1cde1c75971005e41cdb7793a707365e9c028286bc7e0caabf1b537",
+      "storedBytes": 352,
+      "storedPath": "cohorts-v2/hagai-tree-replay.log.gz",
+      "storedSHA256": "9284410303091ab0d41d6587f2f03e75e2ada059c3162147f533d3d6322c819a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 391,
+      "sourcePath": "cohorts-v2/hagai-tree-replay/checks.json",
+      "sourceSHA256": "e0d6807f3a12a4afadeaa2f3c1f6ab25173edcc7053a28cce4cc196ca8368d00",
+      "storedBytes": 264,
+      "storedPath": "cohorts-v2/hagai-tree-replay/checks.json.gz",
+      "storedSHA256": "17e9b0145ca1cfab264b6d6882faec1be2218a2b7c818c79a928bb166bf517da"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 30109,
+      "sourcePath": "cohorts-v2/hagai-tree-replay/report.json",
+      "sourceSHA256": "7cbeb569afd76a6a6e63ad6866a54a906c4d201979ed080850fe2740a8d33358",
+      "storedBytes": 1269,
+      "storedPath": "cohorts-v2/hagai-tree-replay/report.json.gz",
+      "storedSHA256": "fb299771ab4c47d1aedf4d46eebe8da74c94f8552bf1feae8d071fa0cb4c5150"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 871,
+      "sourcePath": "cohorts-v2/hagai-tree.log",
+      "sourceSHA256": "531a02d734c4df32934717cb70a8157b07fae774cf7daa1f4357d107bf044e32",
+      "storedBytes": 351,
+      "storedPath": "cohorts-v2/hagai-tree.log.gz",
+      "storedSHA256": "4056a12d7693d54b4ce538d50b6fac92f39f8c2f6e4c607b9b69a1e38d52e888"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 391,
+      "sourcePath": "cohorts-v2/hagai-tree/checks.json",
+      "sourceSHA256": "1ee7508689809cd5eb757521bbccc0b38305b5623c063ca315a895e03be979a6",
+      "storedBytes": 263,
+      "storedPath": "cohorts-v2/hagai-tree/checks.json.gz",
+      "storedSHA256": "739f9d9e89f16b51b2c69c2ce5e7cb9c083fd831077d30537a75dc77e0734939"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 30109,
+      "sourcePath": "cohorts-v2/hagai-tree/report.json",
+      "sourceSHA256": "7cbeb569afd76a6a6e63ad6866a54a906c4d201979ed080850fe2740a8d33358",
+      "storedBytes": 1269,
+      "storedPath": "cohorts-v2/hagai-tree/report.json.gz",
+      "storedSHA256": "fb299771ab4c47d1aedf4d46eebe8da74c94f8552bf1feae8d071fa0cb4c5150"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 312,
+      "sourcePath": "cohorts-v2/kang-scan-process.json",
+      "sourceSHA256": "7ac81e1ddfbad38115c45772ade615b56b088c85597d9785cbe70bad4a5dc29b",
+      "storedBytes": 195,
+      "storedPath": "cohorts-v2/kang-scan-process.json.gz",
+      "storedSHA256": "992edb731a7ffece7d1b8259232a986d830df5ca0152444586acca0613602223"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 870,
+      "sourcePath": "cohorts-v2/kang-scan.log",
+      "sourceSHA256": "6ff02d9fb4861f247bc9a35bc813ef1cb19004d9ffa75090d4cc4498b0d74e3e",
+      "storedBytes": 354,
+      "storedPath": "cohorts-v2/kang-scan.log.gz",
+      "storedSHA256": "b9f94ca3a9142c24b82f56fc18dcaa1c1494f47ee0a87fa2ca94382f3270b4e2"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 392,
+      "sourcePath": "cohorts-v2/kang-scan/checks.json",
+      "sourceSHA256": "fe65085ab487697fdb875ad5dc5c6c02ff4a489ee5da3839df8fbde5b74be236",
+      "storedBytes": 264,
+      "storedPath": "cohorts-v2/kang-scan/checks.json.gz",
+      "storedSHA256": "65b2cd88497d4e2b3af37d176d0ca2f18eb90456c0947da84352ab142ce8c094"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 61296,
+      "sourcePath": "cohorts-v2/kang-scan/report.json",
+      "sourceSHA256": "1ff5bce2148f67bbe00b0311f627d33cce4b408d4b2a7b5484d3a48197571ef1",
+      "storedBytes": 15413,
+      "storedPath": "cohorts-v2/kang-scan/report.json.gz",
+      "storedSHA256": "49a2e977a2cb6b80019921fe04ffe1d31107e45628a0505ac0d3fae308f18702"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 312,
+      "sourcePath": "cohorts-v2/kang-tree-process.json",
+      "sourceSHA256": "8a828de5740a52b1383d1a59b8412c33fd3a2f4b64c24b9cb48035138ffc4be3",
+      "storedBytes": 194,
+      "storedPath": "cohorts-v2/kang-tree-process.json.gz",
+      "storedSHA256": "b164f74078230ed5ee0651f90896c867f0bf251510fc6f5799e995c505c61235"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 318,
+      "sourcePath": "cohorts-v2/kang-tree-replay-process.json",
+      "sourceSHA256": "7b8e9188aae81fbb7492d937fc9e095923edc069e8a6a1e6429d68566cdb78df",
+      "storedBytes": 201,
+      "storedPath": "cohorts-v2/kang-tree-replay-process.json.gz",
+      "storedSHA256": "905053b8f77ac4443712d190ca2e86d36466cc4aacb1831ca8bb9b3d376e9bb1"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 870,
+      "sourcePath": "cohorts-v2/kang-tree-replay.log",
+      "sourceSHA256": "68eeed40d0e305fd438184afa71f0dbc72d565e53776527df6b9fa02acd70d8f",
+      "storedBytes": 354,
+      "storedPath": "cohorts-v2/kang-tree-replay.log.gz",
+      "storedSHA256": "96a3b6bbc84bc2a5aa4fd235364a7770a2c531b331022c29f5b521d9c542e3dc"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 392,
+      "sourcePath": "cohorts-v2/kang-tree-replay/checks.json",
+      "sourceSHA256": "b0f6172da4ee8913d8c665c67e6215303f1b3bacc1ab4ebf182d33690eaacc0f",
+      "storedBytes": 264,
+      "storedPath": "cohorts-v2/kang-tree-replay/checks.json.gz",
+      "storedSHA256": "3996c12caa21e321915797e83bb6723df60dbdf47cd6b276a2628c84c2f2dd5c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 61499,
+      "sourcePath": "cohorts-v2/kang-tree-replay/report.json",
+      "sourceSHA256": "b9147b8a1fe35ce341058e993943541f72e90c76b2c0776e2cf2e4a0683a95db",
+      "storedBytes": 15526,
+      "storedPath": "cohorts-v2/kang-tree-replay/report.json.gz",
+      "storedSHA256": "a22b675356c7a5eb9c4bf639d6a6e3675dbe0a5c96f5e1be49a86efcd359b8f7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 871,
+      "sourcePath": "cohorts-v2/kang-tree.log",
+      "sourceSHA256": "f3a3f9e7cbcf45850b0ca300cae0a4547ab490379e6350ebf023bd3d8a19b398",
+      "storedBytes": 354,
+      "storedPath": "cohorts-v2/kang-tree.log.gz",
+      "storedSHA256": "c73a797afadf634a90359f7f62737c0693ea05944811f5f8b7ed5efea1c5a3ba"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 392,
+      "sourcePath": "cohorts-v2/kang-tree/checks.json",
+      "sourceSHA256": "4f990c4672d557850fb9b2673460a787a1c6b171988deb5774a1c6f855ac3adf",
+      "storedBytes": 265,
+      "storedPath": "cohorts-v2/kang-tree/checks.json.gz",
+      "storedSHA256": "b52b6d03bdc7a0b11177842965bf2ed019e2b6fd5340ad74d61c3fe822f3ba7f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 61499,
+      "sourcePath": "cohorts-v2/kang-tree/report.json",
+      "sourceSHA256": "b9147b8a1fe35ce341058e993943541f72e90c76b2c0776e2cf2e4a0683a95db",
+      "storedBytes": 15526,
+      "storedPath": "cohorts-v2/kang-tree/report.json.gz",
+      "storedSHA256": "a22b675356c7a5eb9c4bf639d6a6e3675dbe0a5c96f5e1be49a86efcd359b8f7"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 95,
+      "sourcePath": "cohorts/commands.json",
+      "sourceSHA256": "cdcf358e64af9e765493d9df44717e4d4db55fa773f088f520c92bd85a226f04",
+      "storedBytes": 101,
+      "storedPath": "cohorts/commands.json.gz",
+      "storedSHA256": "4869481fca7b68ba0145ab7a48bc0715d7e19f04bfeba8fd182f68f3a0d6d7e6"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2247,
+      "sourcePath": "cohorts/execution-freeze.json",
+      "sourceSHA256": "94bdeff5af6e8e1366d30bf5a19f10d86a3c077496401468d5d9d293781d4fb3",
+      "storedBytes": 1148,
+      "storedPath": "cohorts/execution-freeze.json.gz",
+      "storedSHA256": "10ab1f0f56eed9f142e038de7ea626276e864c08d654d8580478b9caa15d631a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 310,
+      "sourcePath": "cohorts/hagai-scan-process.json",
+      "sourceSHA256": "42462760617ab019acaa12d01f23ac7729137f36dfad0f8bd20baafc18c5c7ea",
+      "storedBytes": 192,
+      "storedPath": "cohorts/hagai-scan-process.json.gz",
+      "storedSHA256": "caf3dfa4289354aed4263e56586a2cc532aecf0240648d79057a247d46535ab5"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 936,
+      "sourcePath": "cohorts/hagai-scan.log",
+      "sourceSHA256": "20407ed976cea0ae1e4ef1b2dab2ef5b143e85c7f5f54fad387fdf43c1334796",
+      "storedBytes": 400,
+      "storedPath": "cohorts/hagai-scan.log.gz",
+      "storedSHA256": "d20faba55e7bd53cb8b872744eb56ae4e63255ac4ea98986ffed78b0b8adabb6"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 12746,
+      "sourcePath": "environment.json",
+      "sourceSHA256": "3b13a8b0f78c384a31be8b6fcc4463a34af9f92f7290af5f91b8641a1631421f",
+      "storedBytes": 5397,
+      "storedPath": "environment.json.gz",
+      "storedSHA256": "c20aca303b4460300bdd60790c4f94fa8681399f4e0edfce9ae713114d83ec71"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 13737,
+      "sourcePath": "prior-artifacts.json",
+      "sourceSHA256": "78cbbd300d1e26983692e88e102b1079e1d3ab40bceebee076e10df6b632f03b",
+      "storedBytes": 2849,
+      "storedPath": "prior-artifacts.json.gz",
+      "storedSHA256": "6246793cbb0df7a93a6f7968df21b8cfed4dd3a678e52e4c0f6b437a8652e444"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1462,
+      "sourcePath": "production-restored-build.log",
+      "sourceSHA256": "9c0c1d46463441f356fe3721ae2d4076a2633878ea4bb8159f1c93f18e8cdb0a",
+      "storedBytes": 405,
+      "storedPath": "production-restored-build.log.gz",
+      "storedSHA256": "6d9e56015f7314df143907660a6960495cd98cf68c90eaf9b50ceccbdfc74851"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 13006,
+      "sourcePath": "production-restored/sources.sha256",
+      "sourceSHA256": "9c1f608697b9c72026e62562cd8dd56d90c7093f0d29a3b2bb5cf6a4e9532ad9",
+      "storedBytes": 4437,
+      "storedPath": "production-restored/sources.sha256.gz",
+      "storedSHA256": "909f243d0f017daf62eeb0090b5e7d96e673329ee54c7c6a84515a01cebdc682"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6927,
+      "sourcePath": "prototype/Sources/NumiVivoCore/OmicsMNNTree.cpp",
+      "sourceSHA256": "b36e164b554ef9b171f747886b51f7a6dfed0b87c02ff5bdac8c2abc153e02ed",
+      "storedBytes": 2311,
+      "storedPath": "prototype/Sources/NumiVivoCore/OmicsMNNTree.cpp.gz",
+      "storedSHA256": "031e1450bf8bf36285887a4a8c829bc266b6b79b80de6f88494864c68f59f96a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1379,
+      "sourcePath": "prototype/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsMNNTree.h",
+      "sourceSHA256": "59fc34a7b9dd9f05c98b51e1ab66f329ebcb3cf088aad2df7f919d98a23f53a4",
+      "storedBytes": 733,
+      "storedPath": "prototype/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsMNNTree.h.gz",
+      "storedSHA256": "e2628f1ffc8d4e5833cb0040a2533a62406116046bcdf353daa96c3e211ee543"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 481,
+      "sourcePath": "prototype/Sources/NumiVivoCore/include/module.modulemap",
+      "sourceSHA256": "8097603cf0bd7fddcea539398a7d47e7f22fdcd18d7b2ca5fd9458d599e9248f",
+      "storedBytes": 234,
+      "storedPath": "prototype/Sources/NumiVivoCore/include/module.modulemap.gz",
+      "storedSHA256": "09af9b91967d91f922415007fe24fe7be97c77b72bcdbb8cb779df9d3ffb2346"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 22155,
+      "sourcePath": "prototype/Sources/NumiVivoKit/Omics/VivoMNNIntegration.swift",
+      "sourceSHA256": "4a7e818fe69362a007a7f998a6587a326eb8483d1f9b2c43d068a83ec9e9d1b6",
+      "storedBytes": 6234,
+      "storedPath": "prototype/Sources/NumiVivoKit/Omics/VivoMNNIntegration.swift.gz",
+      "storedSHA256": "14ea3bc1c234201cd9a38d15826694c408a9b33d98227ec4a7dd41482b6d0dff"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 6759,
+      "sourcePath": "prototype/Tests/NumiVivoIntegrationTests/MNNIntegrationTests.swift",
+      "sourceSHA256": "51fc10b5e34710bb4b3a18c382a8f4616bd28e17c81ae1a6e58d47666272b68d",
+      "storedBytes": 1708,
+      "storedPath": "prototype/Tests/NumiVivoIntegrationTests/MNNIntegrationTests.swift.gz",
+      "storedSHA256": "046de40cf72f5b3ac8eacd90a6b44002e9e5b01316750294b4285affeb56dc2f"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 3213,
+      "sourcePath": "prototype/Tools/Omics/H5AD/build.sh",
+      "sourceSHA256": "a009a02b7b97a2e66f3f24f037708ed8b82401bda67ef97ef23cac4c7f119eeb",
+      "storedBytes": 1129,
+      "storedPath": "prototype/Tools/Omics/H5AD/build.sh.gz",
+      "storedSHA256": "0c4a05759cf056b195322b46323511cc3195efd39781833f14b9b64d660d4329"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 700,
+      "sourcePath": "prototype/Tools/Omics/NegativeBinomial/QuasiLikelihood/Inference/build_product.sh",
+      "sourceSHA256": "cdad3bff8e7e97006a0c472ca9125b31034aa8e66044af4ecdedfd28573d511c",
+      "storedBytes": 377,
+      "storedPath": "prototype/Tools/Omics/NegativeBinomial/QuasiLikelihood/Inference/build_product.sh.gz",
+      "storedSHA256": "bfb8058a1ff0538c09aa8181aa95767ee94cf8ae9fc8da6fb68263528aebc0df"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4614,
+      "sourcePath": "prototype/Tools/Omics/Reduction/MNNTreeMain.swift",
+      "sourceSHA256": "c9ec430019ed5d9f6659b383bab2c3c68678b4d05ae5c2508b4ce3c339f3cfe1",
+      "storedBytes": 1771,
+      "storedPath": "prototype/Tools/Omics/Reduction/MNNTreeMain.swift.gz",
+      "storedSHA256": "8c0d801659cced41b04d9fb0c0dd8544494ef33a7391e6b2a1ef82819d7a5a68"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 485,
+      "sourcePath": "prototype/Tools/Omics/Reduction/build_legacy_clustering.sh",
+      "sourceSHA256": "b42b1df16eaa54dd9453b1b6675620f97b44d5fa2ad0c5d4448eea0b354ca79c",
+      "storedBytes": 319,
+      "storedPath": "prototype/Tools/Omics/Reduction/build_legacy_clustering.sh.gz",
+      "storedSHA256": "923fc06446434b67773a3fe5da7e24628bf2cf94d547975e9f4f0d0d0bf2b811"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 483,
+      "sourcePath": "prototype/Tools/Omics/Reduction/build_legacy_embedding.sh",
+      "sourceSHA256": "5f548569b36a75b60b11391fd89d81c3837fd98983d2b385747db1f1b2acec48",
+      "storedBytes": 319,
+      "storedPath": "prototype/Tools/Omics/Reduction/build_legacy_embedding.sh.gz",
+      "storedSHA256": "8fc85d50bc4ac2e3cce3ceb60de75e3ba486785f2f41c199e0206418163b22b0"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 487,
+      "sourcePath": "prototype/Tools/Omics/Reduction/build_legacy_integration.sh",
+      "sourceSHA256": "67e0b8bc475f67ba4b8d81517c1b5192b960392a5746a8bc366c1b6434fb3b0c",
+      "storedBytes": 318,
+      "storedPath": "prototype/Tools/Omics/Reduction/build_legacy_integration.sh.gz",
+      "storedSHA256": "95f8145a2a9be2d1e6de86384b1fa3a6d469683d626b7203986a8ebda118b622"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 3712,
+      "sourcePath": "prototype/Tools/Omics/Reduction/check_mnn_tree.py",
+      "sourceSHA256": "f95df9d642547372f4fb0e343d4e6351523de196b558558928426b8f130ff67f",
+      "storedBytes": 1643,
+      "storedPath": "prototype/Tools/Omics/Reduction/check_mnn_tree.py.gz",
+      "storedSHA256": "5b5536350929821b0618eea72451116d9f22d036c157a3fa8e0c79fd903b6258"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2774,
+      "sourcePath": "prototype/Tools/Omics/Reduction/run_mnn_tree.py",
+      "sourceSHA256": "09c072020fd57fdb10c0f5a51d72248cede5ab15203fbe0bce19c279c0fafe72",
+      "storedBytes": 1408,
+      "storedPath": "prototype/Tools/Omics/Reduction/run_mnn_tree.py.gz",
+      "storedSHA256": "84e87fc8615b70ba63206809643cb85dad7e25f9303e4e9599cfa0442e3cdfd1"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 1675,
+      "sourcePath": "prototype/source-manifest.json",
+      "sourceSHA256": "36b5c75c4d2876ef4d520a6927e784fdfd09a20b170eb0e9f33b9336f8856d26",
+      "storedBytes": 867,
+      "storedPath": "prototype/source-manifest.json.gz",
+      "storedSHA256": "8f306f8e9c5b8574c1b9eceee69c7e80e931855fe5313d83647e4e1d97690ea0"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 13305,
+      "sourcePath": "runtime/sources.sha256",
+      "sourceSHA256": "a775f16d1f27eb7fe2f4e3dfed8af3f35e4b260203afe9f18811f30c6b6cb6e6",
+      "storedBytes": 4540,
+      "storedPath": "runtime/sources.sha256.gz",
+      "storedSHA256": "9e3dfdd1a9229f48ff9dfaac9a48714adee28821279f3455bd359f608b8fa4de"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 97,
+      "sourcePath": "sanitizers.log",
+      "sourceSHA256": "ea365b55d92fd01f8b89aa834aea5cc870fcaa8fef56e2117bd47f10c52845a9",
+      "storedBytes": 98,
+      "storedPath": "sanitizers.log.gz",
+      "storedSHA256": "1bb1b7fb504cce3794be11fb378724b56629a5a33043db923022d9b44e5a95ed"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4538,
+      "sourcePath": "summary.json",
+      "sourceSHA256": "aaeceac2e86cad93ed69deda8039e5fdb5ad4c091b8827bdd531c97b4b62add2",
+      "storedBytes": 987,
+      "storedPath": "summary.json.gz",
+      "storedSHA256": "ac9bb12bce4925c9726cad0c50d4c469937d986a235056b64d8b6f0d02715966"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 0,
+      "sourcePath": "test-build.log",
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedPath": "test-build.log.gz",
+      "storedSHA256": "ac73670af3abed54ac6fb4695131f4099be9fbe39d6076c5d0264a6bbdae9d83"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2946,
+      "sourcePath": "tests-v2.log",
+      "sourceSHA256": "2adb486e114c393d2886e12f6b670749bc495ce1297068eb22af5de7e93620f3",
+      "storedBytes": 641,
+      "storedPath": "tests-v2.log.gz",
+      "storedSHA256": "25fd018b2955297a4ce46d5ff3c4b82c3a259305ed791959f92ed822b34dcfb8"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 914,
+      "sourcePath": "tests-v3.log",
+      "sourceSHA256": "5f3469a78746fa382f6828631e3342c043a478935a9a0cf3b34fa20a901b1e16",
+      "storedBytes": 348,
+      "storedPath": "tests-v3.log.gz",
+      "storedSHA256": "c75ccbe3954268cb2f1faef8984cf40781b247351919069f9f70b42fc0db399c"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 80,
+      "sourcePath": "tests.log",
+      "sourceSHA256": "e3ce1e4cbd7e5b7044234ff229f965de0d8e53e3f4234fb08ba4b6bfc181061b",
+      "storedBytes": 95,
+      "storedPath": "tests.log.gz",
+      "storedSHA256": "98745a23d0d44959e218e8b35fcce61d49f43d4df9736b40afa372252a8379c4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 5748,
+      "sourcePath": "tree-checks.json",
+      "sourceSHA256": "bdec6b6916a7c6021d8a39876edc4182ce745f0436a8a3b5d465c7668403d9c5",
+      "storedBytes": 1106,
+      "storedPath": "tree-checks.json.gz",
+      "storedSHA256": "577ff78b9516ecae5d7e60fe7668467a09f49290c10ab3c3bf4af7f4577e632a"
+    }
+  ],
+  "schemaVersion": 1,
+  "scope": "Rejected development prototype preserved with full modified source overlay. Restore original base commit in an isolated checkout, then overlay prototype files before building. Production API is unchanged. Every omitted score/anchor payload exactly matches its recorded original MNN cohort source; all small results, attempts and checks are retained.",
+  "sourceBindingsSHA256": "3b13a8b0f78c384a31be8b6fcc4463a34af9f92f7290af5f91b8641a1631421f",
+  "summarySHA256": "aaeceac2e86cad93ed69deda8039e5fdb5ad4c091b8827bdd531c97b4b62add2"
+}
