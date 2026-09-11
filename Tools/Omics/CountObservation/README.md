@@ -142,10 +142,17 @@ moment correction; the final method compares the actual posterior mean.
 The rebuilt implementation passes all checks. No full package test, GPU
 acceleration, learned-prior assessment or biological coverage claim is implied.
 
+The [training calibration](Calibration/README.md) now fits cell dispersion and
+new-donor Gamma rate priors from all 122,164 original Kang/HIRISA training cells.
+It checks the complete native path through available query-control posteriors,
+retains unsupported parameters and reproduces the full training reports with
+bounded read-buffer lifetimes. Its biological calibration and donor-response
+coupling remain open.
+
 ## Next integration work
 
-Fit or specify source-bound cell dispersion and rate priors using admitted
-training/control data, preserving uncertainty in those estimates. Then connect
+Use the source-bound calibration while assessing its unsupported states and
+uncertainty in estimated parameters. Then connect
 observation likelihoods to a latent donor response model, separating training
 measurement noise from donor variation rather than adding it twice. Query
 prediction must require the intended latent or future sampled endpoint and,

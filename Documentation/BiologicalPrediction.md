@@ -125,6 +125,15 @@ and an unqualified prior, and does not yet combine observation uncertainty with
 latent donor response. Its numerical checks on original control counts do not
 establish improved treated-outcome coverage or change the original failure.
 
+The [training calibration](../Tools/Omics/CountObservation/Calibration/README.md)
+now estimates gene-specific cell dispersion and source-bound new-donor rate priors
+from all 122,164 original Kang/HIRISA cells. All source counts and 67,576
+gene/condition parameter records are checked. The fitted control models produce
+1,178 independently verified query posteriors while retaining 806 unavailable
+cases. This completes a numerical observation-model path, with a full replay
+reducing HIRISA native peak RSS from 4.70 GB to 284 MB; treatment-response coupling,
+parameter uncertainty and new biological validation remain unresolved.
+
 The [complete GSE226572 external experiment](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
 now evaluates native whole-population predictions across all three new donors
 and all 18 released IFN-beta donor/time profiles. Every one of the 24 source

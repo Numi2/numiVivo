@@ -1,0 +1,189 @@
+{
+  "HIRISANativeMaximumRSSBytes": 4701716480,
+  "HIRISASeconds": 686.0432188510895,
+  "KangNativeMaximumRSSBytes": 266665984,
+  "KangSeconds": 15.272908926010132,
+  "applicationNativeMaximumRSSBytes": 95567872,
+  "completeStreamReplay": {
+    "HIRISA": {
+      "RSSReductionPercent": 93.9662682510367,
+      "completeNativeReportBytesIdentical": true,
+      "compressedNativeReportBytesIdentical": true,
+      "independentReferenceMomentsIdentical": true,
+      "initialNativeMaximumRSSBytes": 4701716480,
+      "initialSeconds": 686.0432188510895,
+      "nativeReportUncompressedBytes": 35200275,
+      "replayNativeMaximumRSSBytes": 283688960,
+      "replaySeconds": 218.96709394454956,
+      "sourceBinding": "a71ec30f260ed8c3e731f09151120fc02419f27baccbe777b36478b0c5b6c476"
+    },
+    "Kang": {
+      "RSSReductionPercent": 19.73457852052102,
+      "completeNativeReportBytesIdentical": true,
+      "compressedNativeReportBytesIdentical": true,
+      "independentReferenceMomentsIdentical": true,
+      "initialNativeMaximumRSSBytes": 266665984,
+      "initialSeconds": 15.272908926010132,
+      "nativeReportUncompressedBytes": 26589323,
+      "replayNativeMaximumRSSBytes": 214040576,
+      "replaySeconds": 6.292443037033081,
+      "sourceBinding": "881ef67088a422dc9fad331422ff9847678714be8c2158f6d34cd0b72f1905ce"
+    }
+  },
+  "finishedUnix": 1789150592.048933,
+  "geneConditionCalibrationRecords": 67576,
+  "groups": 26,
+  "independentBiologicalCalibration": false,
+  "maximumRelativePosteriorReferenceError": 2.5470969613996993e-12,
+  "maximumRelativePredictiveMomentReferenceError": 5.205617353669933e-14,
+  "maximumScaledCalibrationError": 2.6332830325995403e-09,
+  "maximumScaledMomentError": 8.643296263843578e-14,
+  "momentValuesCompared": 1728464,
+  "perturbationResponseIntegrated": false,
+  "qualifiedQueryBinarySHA256": "cd3295bbff6c9f2aa2e7ae25ff93dc00c633fdaf8211ed55c8337973c443234a",
+  "qualifiedTrainingBinarySHA256": "7395734b037a11ea4cc767caabe0e2837ebeabf6b7050e81159ed2cb94fbf57d",
+  "queryApplication": {
+    "origins": [
+      {
+        "allAvailableZeroCountVariancesPositive": true,
+        "availableZeroCountQueries": 145,
+        "origin": "Kang",
+        "queries": 992,
+        "states": {
+          "availableConditionalPosterior": 496,
+          "unavailableCalibration": 496
+        },
+        "unavailableReasons": {
+          "insufficientWithinDonorCountPairs": 496
+        }
+      },
+      {
+        "allAvailableZeroCountVariancesPositive": true,
+        "availableZeroCountQueries": 226,
+        "origin": "HIRISA",
+        "queries": 992,
+        "states": {
+          "availableConditionalPosterior": 682,
+          "unavailableCalibration": 310
+        },
+        "unavailableReasons": {
+          "cellDispersionOutsideObservationKernelDomain": 310
+        }
+      }
+    ],
+    "perturbationResponseApplied": false,
+    "queryTreatedCountsUsed": false,
+    "supportedQueries": 1178,
+    "totalQueries": 1984
+  },
+  "queryNumericalReferenceSeconds": 14.577919960021973,
+  "queryTreatedCountsUsed": false,
+  "regressionSuites": 4,
+  "regressionTests": 29,
+  "sourceCells": 122164,
+  "sourceNonzeros": 292576665,
+  "sourceRNACounts": 553598348,
+  "status": "passed-full-calibration-query-verification-and-bounded-memory-replay",
+  "training": [
+    {
+      "comparisonScale": "abs(native-reference)/max(1,abs(reference))",
+      "errors": [],
+      "fullRNAFeatures": 15706,
+      "groups": 16,
+      "maximumScaledCalibrationError": 1.1468728189356625e-09,
+      "maximumScaledMomentError": 4.6058848729148616e-14,
+      "models": [
+        {
+          "condition": "IFNB",
+          "depthRateAssociation": {
+            "absolutePearsonAbovePoint2": 822,
+            "interpretation": "Descriptive RNA-depth association; mathematical coupling and biological mixtures are not separated. No association-based feature exclusion.",
+            "medianAbsolutePearson": 0.05170294079387534,
+            "supportedDonorGenes": 16841
+          },
+          "features": 15706,
+          "latentVarianceBoundary": 4551,
+          "poissonBoundary": 3950,
+          "states": {
+            "availableConditionalMomentCalibration": 9262,
+            "cellDispersionOutsideObservationKernelDomain": 214,
+            "insufficientWithinDonorCountPairs": 6230
+          }
+        },
+        {
+          "condition": "control",
+          "depthRateAssociation": {
+            "absolutePearsonAbovePoint2": 918,
+            "interpretation": "Descriptive RNA-depth association; mathematical coupling and biological mixtures are not separated. No association-based feature exclusion.",
+            "medianAbsolutePearson": 0.049040550211043595,
+            "supportedDonorGenes": 16017
+          },
+          "features": 15706,
+          "latentVarianceBoundary": 4578,
+          "poissonBoundary": 4132,
+          "states": {
+            "availableConditionalMomentCalibration": 9487,
+            "cellDispersionOutsideObservationKernelDomain": 234,
+            "insufficientWithinDonorCountPairs": 5985
+          }
+        }
+      ],
+      "momentValuesCompared": 1005184,
+      "origin": "Kang",
+      "sourceBinding": "881ef67088a422dc9fad331422ff9847678714be8c2158f6d34cd0b72f1905ce",
+      "sourceCells": 2651,
+      "sourceNonzeros": 1479543,
+      "status": "passed"
+    },
+    {
+      "comparisonScale": "abs(native-reference)/max(1,abs(reference))",
+      "errors": [],
+      "fullRNAFeatures": 18082,
+      "groups": 10,
+      "maximumScaledCalibrationError": 2.6332830325995403e-09,
+      "maximumScaledMomentError": 8.643296263843578e-14,
+      "models": [
+        {
+          "condition": "IFNB",
+          "depthRateAssociation": {
+            "absolutePearsonAbovePoint2": 281,
+            "interpretation": "Descriptive RNA-depth association; mathematical coupling and biological mixtures are not separated. No association-based feature exclusion.",
+            "medianAbsolutePearson": 0.017972983139612816,
+            "supportedDonorGenes": 64859
+          },
+          "features": 18082,
+          "latentVarianceBoundary": 1290,
+          "poissonBoundary": 2391,
+          "states": {
+            "availableConditionalMomentCalibration": 14478,
+            "cellDispersionOutsideObservationKernelDomain": 2477,
+            "insufficientWithinDonorCountPairs": 1127
+          }
+        },
+        {
+          "condition": "control",
+          "depthRateAssociation": {
+            "absolutePearsonAbovePoint2": 267,
+            "interpretation": "Descriptive RNA-depth association; mathematical coupling and biological mixtures are not separated. No association-based feature exclusion.",
+            "medianAbsolutePearson": 0.018297905920640962,
+            "supportedDonorGenes": 64342
+          },
+          "features": 18082,
+          "latentVarianceBoundary": 1434,
+          "poissonBoundary": 2519,
+          "states": {
+            "availableConditionalMomentCalibration": 14709,
+            "cellDispersionOutsideObservationKernelDomain": 2379,
+            "insufficientWithinDonorCountPairs": 994
+          }
+        }
+      ],
+      "momentValuesCompared": 723280,
+      "origin": "HIRISA",
+      "sourceBinding": "a71ec30f260ed8c3e731f09151120fc02419f27baccbe777b36478b0c5b6c476",
+      "sourceCells": 119513,
+      "sourceNonzeros": 291097122,
+      "status": "passed"
+    }
+  ]
+}
