@@ -90,6 +90,18 @@ development on inspected data, not independent validation or general calibration
 It identifies useful timing information within this study while preserving the
 original external fixed-response failure and the missing phenotype boundary.
 
+The next [Parse IFN-beta source admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
+selects all 725,031 released IFN-beta/PBS cells across 12 source donor IDs
+and retains every source RNA feature. Complete native count execution and replay
+are in progress; no predictor has been fitted or scored. The source historical
+`gene_count` differs from retained X cardinality for 30,634 cells. Exact symbol
+correspondence also leaves 409 of the duration model's response features absent,
+and its dose/reagent identity is unresolved. Neither QC agreement nor model
+compatibility is forced by excluding cells, filling absent genes with zero or
+silently changing the panel. The count-stream owner checks arithmetic and
+reconstruction; the Python/HDF5 adapter owns remote extraction and source ranges.
+Its receipts do not claim a hash or count validation of the entire 227 GB file.
+
 The [native Visium import](../Tools/Omics/Multimodal/Visium/README.md) now makes
 original spatial RNA counts and pixel positions available without an H5MU
 preparation step. Every count and coordinate in the complete 4,039-spot source

@@ -103,7 +103,7 @@ public enum VivoH5ADPseudobulk {
     }
     static let maximumAggregateNonzeros=5_000_000
     private struct Key: Hashable { let replicate: String; let condition: String; let group: String? }
-    private final class Accumulator {
+    final class Accumulator {
         let metadata: VivoSingleCellCountMetadata
         let groups: [VivoPseudobulkGroup]
         let groupForRow: [Int]

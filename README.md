@@ -74,6 +74,13 @@ All native reconstructions and independent checks pass. This supports conditiona
 RNA prediction when exposure time and matched training observations are available;
 new independent validation is still required, and the earlier external failure stands.
 
+The next [independent Parse IFN-beta cohort](Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
+contains all 725,031 released IFN-beta/PBS cells from 12 donors. Native count
+admission and full replay are in progress through a bounded stream, avoiding a
+227 GB local source copy. Historical QC differs from retained matrix counts;
+409 duration-panel symbols are absent by exact name, and the source dose remains
+unresolved. These input checks do not add a prediction success or failure.
+
 The [native interval assessment](Tools/Omics/PerturbationPrediction/Intervals/README.md)
 now tests optional nominal 95% mean-response intervals on those same 26 folds.
 Average treated-expression coverage is 92.94% / 94.70% within Kang / HIRISA,

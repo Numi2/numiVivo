@@ -1,7 +1,9 @@
 # AnnData interoperability and the single-cell development sequence
 
-NumiVivo now reads H5AD through the native HDF5 library. Python is only used by
-an independent interoperability test, not by import, export, or analysis.
+NumiVivo reads local H5AD through the native HDF5 library; those import/export
+and analysis commands do not require Python. The optional remote-source adapter
+described below uses Python/HDF5 to produce records for a separate native stream
+reader, and independent interoperability tests also use Python.
 Install HDF5 (`brew install hdf5` on macOS), or set `NUMIVIVO_HDF5_LIBRARY` to
 its shared library. Other workflows do not require HDF5. HDF5 calls are serialized
 because installed libraries may not be thread safe.
@@ -21,6 +23,22 @@ meets the same margins with 28/32 sensitive controls, retaining four insufficien
 controls and the original failures as development evidence. Full-cohort [native clustering publication/replay and independent
 checks](../Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md) now pass;
 broader biological preservation remains open.
+
+## Remote count records
+
+The [native count-stream reader](../Tools/Omics/CountStore/Stream/README.md) accepts
+canonical little-endian row/feature/count records over standard input. It validates
+strict ordering, positive counts, row cardinalities, optional exact row totals,
+truncation and overflow. It computes cell QC and donor/condition/group aggregates,
+binds every input byte by SHA-256, and requires stream replay to verify its bundle.
+A source adapter must separately establish HDF5 decoding and source provenance.
+
+The complete [Parse IFN-beta admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
+is being qualified on 725,031 cells and 1.37 billion records using version-pinned
+HTTP ranges. This avoids a 227 GB local source snapshot. The matrix buffer is
+bounded; metadata and QC are resident, and unread source bytes are not assigned
+a fabricated whole-file fingerprint. No acceleration or biological-prediction
+claim follows from count-stream validation.
 
 ## Use
 
