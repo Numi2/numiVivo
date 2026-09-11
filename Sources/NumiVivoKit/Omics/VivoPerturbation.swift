@@ -11,20 +11,24 @@ public struct VivoPerturbationPlan: Codable, Sendable, Equatable {
     /// Explicit output/context panel; normalization still uses every input feature.
     /// Nil retains the strict, identical full-feature-universe contract.
     public let responseFeatureIDs: [String]?
-    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,perturbationID: String,controlCondition: String,treatmentCondition: String,provenance: String,responseFeatureIDs: [String]? = nil) {
+    /// Optional nominal coverage for a normal-model future-donor interval about the mean response.
+    public let donorResponseIntervalCoverage: Double?
+    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,perturbationID: String,controlCondition: String,treatmentCondition: String,provenance: String,responseFeatureIDs: [String]? = nil,donorResponseIntervalCoverage: Double? = nil) {
         schemaVersion=1;self.mapping=mapping;self.featureNamespace=featureNamespace;self.perturbationID=perturbationID
         self.controlCondition=controlCondition;self.treatmentCondition=treatmentCondition;self.provenance=provenance
         self.responseFeatureIDs=responseFeatureIDs
+        self.donorResponseIntervalCoverage=donorResponseIntervalCoverage
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,perturbationID,controlCondition,treatmentCondition,provenance,responseFeatureIDs }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,perturbationID,controlCondition,treatmentCondition,provenance,responseFeatureIDs,donorResponseIntervalCoverage }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","perturbationID","controlCondition","treatmentCondition","provenance","responseFeatureIDs"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","perturbationID","controlCondition","treatmentCondition","provenance","responseFeatureIDs","donorResponseIntervalCoverage"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);mapping=try c.decode(VivoH5ADImportPlan.self,forKey: .mapping)
         featureNamespace=try c.decode(String.self,forKey: .featureNamespace);perturbationID=try c.decode(String.self,forKey: .perturbationID)
         controlCondition=try c.decode(String.self,forKey: .controlCondition);treatmentCondition=try c.decode(String.self,forKey: .treatmentCondition)
         provenance=try c.decode(String.self,forKey: .provenance)
         responseFeatureIDs=try c.decodeIfPresent([String].self,forKey: .responseFeatureIDs)
+        donorResponseIntervalCoverage=try c.decodeIfPresent(Double.self,forKey: .donorResponseIntervalCoverage)
     }
     func validate() throws {
         guard schemaVersion==1,[featureNamespace,perturbationID,controlCondition,treatmentCondition].allSatisfy(vivoOmicsID),
@@ -35,6 +39,11 @@ public struct VivoPerturbationPlan: Codable, Sendable, Equatable {
         if let ids=responseFeatureIDs {
             guard !ids.isEmpty,ids.count<=100_000,Set(ids).count==ids.count,ids.allSatisfy(vivoOmicsID) else {
                 throw VivoOmicsError.invalid("perturbation response feature panel")
+            }
+        }
+        if let coverage=donorResponseIntervalCoverage {
+            guard coverage.isFinite,(0.5...0.99).contains(coverage) else {
+                throw VivoOmicsError.invalid("perturbation donor-response interval coverage")
             }
         }
     }
@@ -76,6 +85,8 @@ public struct VivoPerturbationModel: Codable, Sendable, Equatable {
     public let dualCoefficients: [[Double]]
     public let maximumSolveResidual: Double
     public let qualification: String
+    /// Unavailable for exactly constant/zero-variance responses; absent when intervals were not requested.
+    public let donorResponseVariances: [Double?]?
 }
 public struct VivoPerturbationEstimate: Codable, Sendable, Equatable {
     public let baseline: String
@@ -89,6 +100,19 @@ public struct VivoPerturbationPrediction: Codable, Sendable, Equatable {
     public let libraryCounts: UInt64
     public let control: [Double]
     public let estimates: [VivoPerturbationEstimate]
+    public let meanResponsePredictiveInterval: VivoDonorResponsePredictiveInterval?
+}
+public struct VivoDonorResponsePredictiveInterval: Codable, Sendable, Equatable {
+    public let method: String
+    public let nominalCoverage: Double
+    public let trainingDonors: Int
+    public let degreesOfFreedom: Int
+    public let studentCriticalValue: Double
+    public let unclippedResponseLower: [Double?]
+    public let unclippedResponseUpper: [Double?]
+    public let predictedTreatedLower: [Double?]
+    public let predictedTreatedUpper: [Double?]
+    public let unavailableFeatureIndices: [Int]
 }
 public struct VivoPerturbationReport: Codable, Sendable, Equatable {
     public let method: String
@@ -149,6 +173,7 @@ public enum VivoPerturbation {
         let logs=plan.responseFeatureIDs == nil ? fullLogs : fullLogs.map { row in order.map { row[$0] } }
         var selected: [Int]=[],mean=[Double](repeating: 0,count: m),median=mean
         var response=Array(repeating: mean,count: n)
+        var responseVariances: [Double?]?=plan.donorResponseIntervalCoverage == nil ? nil : Array(repeating: nil,count: m)
         for j in 0..<m {
             if j%256==0 { try Task.checkCancellation() }
             var sum: UInt64=0,expressing=0
@@ -161,6 +186,13 @@ public enum VivoPerturbation {
             if sum>=10,expressing>=2 { selected.append(j) }
             let ordered=response.map { $0[j] }.sorted()
             median[j]=n%2==0 ? (ordered[n/2-1]+ordered[n/2])/2 : ordered[n/2]
+            if responseVariances != nil,!ordered.allSatisfy({ $0==ordered[0] }) {
+                var squared=0.0
+                for i in 0..<n { let delta=response[i][j]-mean[j];squared+=delta*delta }
+                let variance=squared/Double(n-1)
+                guard variance.isFinite,variance>=0 else { throw VivoOmicsError.invalid("nonfinite donor-response variance") }
+                if variance>0 { responseVariances![j]=variance }
+            }
         }
         guard !selected.isEmpty else { throw VivoOmicsError.invalid("perturbation context has no training-expressed features") }
         let width=selected.count,divisor=sqrt(Double(width))
@@ -196,7 +228,7 @@ public enum VivoPerturbation {
         return .init(method: plan.responseFeatureIDs == nil ? "paired-donor-log1p-CPM-response-baselines-alpha1-v1" : "paired-donor-log1p-CPM-explicit-panel-response-baselines-alpha1-v1",plan: plan,source: source,featureIDs: featureIDs,
             organism: organisms.first!,cellGroup: groups.first!.cellGroup,trainingDonors: donors,selectedFeatureIndices: selected,
             contextCenters: centers,contextScales: scales,contexts: contexts,meanResponse: mean,medianResponse: median,dualCoefficients: dual,
-            maximumSolveResidual: maximumResidual,qualification: "Known perturbation donor-response baselines, equal donor weighting; no Bayesian uncertainty, unseen-perturbation or mechanistic qualification.")
+            maximumSolveResidual: maximumResidual,qualification: "Known perturbation donor-response baselines, equal donor weighting; no Bayesian uncertainty, unseen-perturbation or mechanistic qualification.",donorResponseVariances: responseVariances)
     }
     static func evaluate(snapshot: URL,plan: VivoPerturbationQueryPlan,model: VivoPerturbationModel) throws -> VivoPerturbationReport {
         try validateQuery(plan,model: model)
@@ -227,6 +259,14 @@ public enum VivoPerturbation {
         guard bulk.groups.count<=20_000_000/m else { throw VivoOmicsError.limit("perturbation prediction output budget") }
         let lookup=Dictionary(uniqueKeysWithValues: bulk.featureIDs.enumerated().map { ($0.element,$0.offset) })
         let order=model.featureIDs.map { lookup[$0]! },selected=model.selectedFeatureIndices
+        var critical: Double?
+        if let coverage=model.plan.donorResponseIntervalCoverage {
+            guard let variances=model.donorResponseVariances,variances.count==m,
+                  variances.allSatisfy({ $0.map { $0.isFinite && $0>0 } ?? true }) else {
+                throw VivoOmicsError.invalid("donor-response interval variance state")
+            }
+            critical=try VivoOmicsLinearStatistics.studentCriticalValue(degreesOfFreedom: Double(n-1),coverage: coverage)
+        }
         var predictions: [VivoPerturbationPrediction]=[]
         for row in bulk.groups.indices {
             try Task.checkCancellation()
@@ -242,9 +282,23 @@ public enum VivoPerturbation {
                 guard response.allSatisfy(\.isFinite),predicted.allSatisfy(\.isFinite),implied.isFinite else { throw VivoOmicsError.invalid("perturbation prediction is nonfinite") }
                 estimates.append(.init(baseline: name,unclippedResponse: response,predictedTreated: predicted,predictedResponse: applied,impliedCPMSum: implied))
             }
-            predictions.append(.init(group: bulk.groups[row],libraryCounts: totals[row],control: control,estimates: estimates))
+            var interval: VivoDonorResponsePredictiveInterval?
+            if let critical,let coverage=model.plan.donorResponseIntervalCoverage,let variances=model.donorResponseVariances {
+                var lower=[Double?](repeating: nil,count: m),upper=lower,treatedLower=lower,treatedUpper=lower,unavailable: [Int]=[]
+                for j in 0..<m {
+                    guard let variance=variances[j] else { unavailable.append(j);continue }
+                    let half=critical*sqrt(variance*(1+1/Double(n)))
+                    let lo=model.meanResponse[j]-half,hi=model.meanResponse[j]+half
+                    guard lo.isFinite,hi.isFinite else { throw VivoOmicsError.invalid("nonfinite donor-response interval") }
+                    lower[j]=lo;upper[j]=hi;treatedLower[j]=max(0,control[j]+lo);treatedUpper[j]=max(0,control[j]+hi)
+                }
+                interval = .init(method: "normal-independent-donor-response-predictive-t-v1",nominalCoverage: coverage,
+                    trainingDonors: n,degreesOfFreedom: n-1,studentCriticalValue: critical,unclippedResponseLower: lower,
+                    unclippedResponseUpper: upper,predictedTreatedLower: treatedLower,predictedTreatedUpper: treatedUpper,unavailableFeatureIndices: unavailable)
+            }
+            predictions.append(.init(group: bulk.groups[row],libraryCounts: totals[row],control: control,estimates: estimates,meanResponsePredictiveInterval: interval))
         }
         return .init(method: model.method,referenceSource: model.source,featureIDs: model.featureIDs,predictions: predictions,
-            qualification: "Frozen known-perturbation response estimates for supplied held-out control donors. Log1p-CPM point estimates are not reclosed compositions or raw count libraries; implied CPM sums are reported. No treated query outcomes used. No calibrated intervals, single-cell distributions, unseen perturbation identity or causal/mechanistic claims." + (model.plan.responseFeatureIDs == nil ? "" : " Explicit panel: each source library is normalized over all its own measured features before projection; implied CPM is a panel subtotal. Feature identities and differing assay/context comparability require external evidence."))
+            qualification: "Frozen known-perturbation response estimates for supplied held-out control donors. Log1p-CPM point estimates are not reclosed compositions or raw count libraries; implied CPM sums are reported. No treated query outcomes used. No calibrated intervals, single-cell distributions, unseen perturbation identity or causal/mechanistic claims." + (model.plan.responseFeatureIDs == nil ? "" : " Explicit panel: each source library is normalized over all its own measured features before projection; implied CPM is a panel subtotal. Feature identities and differing assay/context comparability require external evidence.") + (critical == nil ? "" : " Nominal pointwise intervals apply only to the mean-response baseline under independent identically distributed normal donor responses; the query control is treated as fixed. Constant-response variance is unavailable. These are future-donor intervals, not confidence intervals for the mean, simultaneous gene coverage or calibrated context-ridge uncertainty."))
     }
 }

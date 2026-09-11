@@ -92,5 +92,59 @@ import Testing
         // An omitted panel must retain the historical serialized plan shape.
         let object=try JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(original)) as! [String: Any]
         #expect(object["responseFeatureIDs"]==nil)
+        #expect(object["donorResponseIntervalCoverage"]==nil)
+    }
+    @Test func futureDonorIntervalsIncludeIndividualVariationAndClipQuery() throws {
+        let (report,original)=try Self.fixture()
+        let plan=VivoPerturbationPlan(mapping: original.mapping,featureNamespace: original.featureNamespace,
+            perturbationID: original.perturbationID,controlCondition: original.controlCondition,
+            treatmentCondition: original.treatmentCondition,provenance: original.provenance,donorResponseIntervalCoverage: 0.95)
+        let source=try VivoFingerprint(bytes: Array(repeating: 0,count: 32))
+        let model=try VivoPerturbation.model(report,plan: plan,source: source)
+        let defaultModel=try VivoPerturbation.model(report,plan: original,source: source)
+        #expect(model.meanResponse==defaultModel.meanResponse && model.dualCoefficients==defaultModel.dualCoefficients)
+        #expect(defaultModel.donorResponseVariances==nil)
+        let first=report.pseudobulk.groups[0],m=model.featureIDs.count
+        let group=VivoPseudobulkGroup(biologicalReplicateID: "query",donorID: "query",condition: original.controlCondition,
+            organism: first.organism,cellGroup: first.cellGroup,sampleIDs: ["query"],batchIDs: [],sourceCellIndices: [0])
+        let query=VivoPseudobulkCounts(method: "synthetic-query",countUnit: .umiCount,groups: [group],featureIDs: model.featureIDs,
+            matrix: .init(cellCount: 1,featureCount: m,rowOffsets: [0,1],featureIndices: [m-1],counts: [100]))
+        let queryPlan=VivoPerturbationQueryPlan(mapping: .init(id: "query",evidence: .synthetic,sourceDescription: "query control",
+            countUnit: .umiCount,matrixPath: "X",samples: [],sampleColumn: "sample"),featureNamespace: plan.featureNamespace,perturbationID: plan.perturbationID)
+        let prediction=try VivoPerturbation.evaluate(query,plan: queryPlan,model: model).predictions[0]
+        let interval=try #require(prediction.meanResponsePredictiveInterval),variances=try #require(model.donorResponseVariances)
+        #expect(interval.degreesOfFreedom==5 && abs(interval.studentCriticalValue-2.570581835636314)<1e-11)
+        var checked=0,clipped=0
+        for j in 0..<m {
+            guard let variance=variances[j] else { continue }
+            let half=(try #require(interval.unclippedResponseUpper[j])-model.meanResponse[j])
+            let meanOnly=interval.studentCriticalValue*sqrt(variance/6)
+            #expect(abs(half/meanOnly-sqrt(7))<1e-10)
+            #expect(interval.predictedTreatedLower[j]==max(0,prediction.control[j]+interval.unclippedResponseLower[j]!))
+            #expect(interval.predictedTreatedUpper[j]==max(0,prediction.control[j]+interval.unclippedResponseUpper[j]!))
+            if prediction.control[j]+interval.unclippedResponseLower[j]!<0 { clipped+=1 }
+            checked+=1
+        }
+        #expect(checked>0 && clipped>0)
+        let legacy=try VivoPerturbation.evaluate(query,plan: queryPlan,model: defaultModel).predictions[0]
+        #expect(prediction.estimates==legacy.estimates && legacy.meanResponsePredictiveInterval==nil)
+        let object=try JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(legacy)) as! [String: Any]
+        #expect(object["meanResponsePredictiveInterval"]==nil)
+    }
+    @Test func constantResponseHasUnavailableUncertaintyAndInvalidCoverageRejects() throws {
+        let (report,original)=try Self.fixture(),m=report.pseudobulk.featureIDs.count,n=report.pseudobulk.groups.count
+        let same=VivoPseudobulkCounts(method: "constant-control",countUnit: .umiCount,groups: report.pseudobulk.groups,
+            featureIDs: report.pseudobulk.featureIDs,matrix: .init(cellCount: n,featureCount: m,
+                rowOffsets: (0...n).map { $0*m },featureIndices: (0..<n).flatMap { _ in Array(0..<m) },counts: Array(repeating: 100,count: n*m)))
+        func plan(_ coverage: Double) -> VivoPerturbationPlan {
+            .init(mapping: original.mapping,featureNamespace: original.featureNamespace,perturbationID: original.perturbationID,
+                controlCondition: original.controlCondition,treatmentCondition: original.treatmentCondition,
+                provenance: original.provenance,donorResponseIntervalCoverage: coverage)
+        }
+        let model=try VivoPerturbation.model(same,plan: plan(0.95),source: VivoFingerprint(bytes: Array(repeating: 0,count: 32)))
+        #expect(model.donorResponseVariances?.count==m && model.donorResponseVariances!.allSatisfy { $0==nil })
+        for coverage in [0,0.49,1,Double.infinity,Double.nan] {
+            #expect(throws: (any Error).self) { try plan(coverage).validate() }
+        }
     }
 }

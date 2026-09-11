@@ -56,6 +56,12 @@ cross-study training mean for all thirteen donors. The studies differ in health
 status, stimulation time, preparation and assay; their gene alignment does not
 establish reliable biological-context transfer.
 
+The [native interval assessment](Tools/Omics/PerturbationPrediction/Intervals/README.md)
+now tests optional nominal 95% mean-response intervals on those same 26 folds.
+Average treated-expression coverage is 92.94% / 94.70% within Kang / HIRISA,
+versus 42.39% / 99.21% across studies. Width, missing intervals and donor-level
+variation prevent interpreting these averages as general predictive calibration.
+
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five
 technical gemgroups. All 150 native fits and predictions pass replay; all 750

@@ -64,6 +64,19 @@ observed weaker folds and composition deviations remain visible. There is no
 Bayesian interval, heterogeneous single-cell response distribution, causal
 identification, unseen-perturbation prediction or mechanistic interpretation.
 
+Optional `donorResponseIntervalCoverage` (finite, 0.5–0.99) adds a pointwise
+normal-model prediction interval for one future donor around **mean response**.
+It uses training sample variance, n−1 Student-t degrees of freedom and the
+future-observation factor `sqrt(1+1/n)`. Constant/zero-variance responses remain
+unavailable. Model `donorResponseVariances` and query
+`meanResponsePredictiveInterval` retain the variance state, nominal coverage,
+donor count, unavailable indices and both unclipped-response and clipped-treated
+bounds. Omitted settings preserve historical serialization and point predictions.
+This supplies neither context-ridge uncertainty nor simultaneous gene coverage.
+The [complete empirical assessment](Intervals/README.md) verifies all 26 native
+folds but finds substantial cross-study undercoverage and overly broad reverse
+transfer intervals. Nominal coverage is not a calibrated probability claim.
+
 A model bundle archives the complete native streamed training bundle, the fit
 plan, fitted model and hash receipt. A prediction bundle archives that reference,
 the complete query H5AD, plan, predictions and receipt. Verification reconstructs

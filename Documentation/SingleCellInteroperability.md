@@ -570,6 +570,12 @@ The complete development objective remains open:
    checks pass for all 104 vectors, but ridge fails both directional primary
    comparisons and is worse than cross mean for all thirteen donors. These reused
    studies expose a combined context-transfer failure, not prospective validation.
+   Optional [normal-model donor-response intervals](../Tools/Omics/PerturbationPrediction/Intervals/README.md)
+   now pass all 26 native folds and 104 independent bound-array checks, retaining
+   every prior point vector. Nominal 95% treated-expression coverage ranges from
+   42.39% to 99.21% between the two transfer directions, with different widths and
+   unavailable genes. This is implemented uncertainty output, not general
+   calibration or Bayesian/mechanistic coupling.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)

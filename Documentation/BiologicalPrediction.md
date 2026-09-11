@@ -68,8 +68,9 @@ validation. Technical gemgroups are not biological replicates.
 The expression outputs are compositional pseudobulk point estimates, not absolute
 molecule counts or individual-cell response distributions. Negative predicted
 log-expression is clipped to zero; implied CPM totals are retained rather than
-silently renormalized. These models supply neither calibrated predictive intervals
-nor an experimentally validated RNA-to-phenotype mapping.
+silently renormalized. Optional normal-model mean-response intervals are now
+implemented and assessed below; they are not generally calibrated. These models
+still supply no experimentally validated RNA-to-phenotype mapping.
 
 ## Decision before using a prediction
 
@@ -91,8 +92,12 @@ outcome model or validation.
 ### Uncertainty has a separate owner and evidence requirement
 
 The native [single-cell response model](../Sources/NumiVivoKit/Omics/VivoPerturbation.swift)
-stores mean/median responses and ridge coefficients; its estimates contain no
-predictive interval. The existing
+stores mean/median responses and ridge coefficients. Its optional
+`donorResponseIntervalCoverage` now adds a separate normal-model future-donor
+interval around the mean response; it does not supply context-ridge uncertainty.
+The [empirical assessment](../Tools/Omics/PerturbationPrediction/Intervals/README.md)
+retains coverage, width, unavailable genes and the failed context-transfer
+assumption rather than promoting nominal coverage. The existing
 [Bayesian target-engagement predictor](../Sources/NumiVivoKit/Calibration/VivoTargetPosteriorPrediction.swift)
 instead propagates kinetic posterior particles into occupancy observables at
 specified times, with a declared assay model. Its pointwise intervals, noise
@@ -126,9 +131,9 @@ replicates. Before inspecting outcome scores:
    result even when it fails. Development after test inspection requires a new
    validation cohort before making a stronger generalization claim.
 
-This is an acceptance specification, not a registered or completed new experiment.
-No new cohort, interval method or predictor is qualified by this documentation
-update. Existing completed benchmarks remain under their original protocols.
+These are acceptance requirements for stronger generalization claims. Completed
+experiments below retain their original protocols and limits. The new nominal
+interval implementation does not close the independent-calibration requirement.
 
 ## What the measured outcomes show
 
@@ -237,6 +242,32 @@ a new cross-study test on reused observations, not untouched external validation
 Matching gene symbols also does not prove a common reference annotation release
 or assay equivalence. The negative result strengthens the present limit on
 generalizing the donor-context predictor.
+
+### Mean-response intervals: measured coverage is context dependent
+
+The [native interval experiment](../Tools/Omics/PerturbationPrediction/Intervals/README.md)
+adds nominal 95% future-donor intervals to the same 26 frozen Kang–HIRISA folds.
+Training sample variances and Student-t quantiles determine bounds around the
+mean response. Every fit/prediction passes replay; independent NumPy/SciPy checks
+verify all 104 bound arrays, and the 104 existing point vectors remain exact.
+Constant-response genes retain unavailable intervals rather than zero-width
+certainty. Clipped and unclipped coverage are reported separately.
+
+| Query study / mode | Mean treated coverage | Mean treated width | Gene availability |
+| --- | ---: | ---: | ---: |
+| Kang / within | 92.94% | 4.230723 | 87.65% |
+| Kang / cross from HIRISA | 42.39% | 0.279829 | 99.98% |
+| HIRISA / within | 94.70% | 0.467843 | 99.97% |
+| HIRISA / cross from Kang | 99.21% | 5.152851 | 88.57% |
+
+Values are equal-donor averages among available genes; widths use log1p(CPM).
+Within-Kang donor coverage ranges from 81.45% to 98.92%, so the mean conceals
+substantial variation. Cross-to-Kang raw-response coverage is only 33.08%; clipping
+raises it to 42.39% through the zero boundary. Reverse transfer covers broadly
+with wide intervals. Neither high aggregate coverage nor nominal 95% establishes
+useful calibration. Normal exchangeable responses, a fixed query control and
+pointwise coverage remain assumptions; these reused small-donor cohorts do not
+qualify simultaneous gene coverage or general uncertainty.
 
 ### Held-out combinations of observed targets
 
@@ -367,6 +398,9 @@ Lower donor-associated variance also does not isolate technical batch removal.
    and numerical checks; limited donor replication and context confounding remain.
 5. Establish predictive interval coverage and useful improvements over simple
    baselines on independent biological replicates before promoting a predictor.
+   The new normal-model mean-response interval is implemented, but its
+   [reused-cohort assessment](../Tools/Omics/PerturbationPrediction/Intervals/README.md)
+   exposes undercoverage, broad intervals and missingness; this gate remains open.
    Connecting expression to a measured phenotype requires its own model,
    quantitative units and held-out outcome experiment.
 
