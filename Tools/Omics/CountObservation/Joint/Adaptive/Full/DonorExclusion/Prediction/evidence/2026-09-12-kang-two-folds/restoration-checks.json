@@ -1,0 +1,38 @@
+{
+  "allArchiveObjectsReadbackVerified": true,
+  "restoredFoldChecks": {
+    "Kang-00": {
+      "prediction": {
+        "status": "passed-control-only-predictions",
+        "genes": 15706,
+        "numericalValuesCompared": 5138249,
+        "maximumScaledError": 6.110667527536862e-13,
+        "errors": []
+      },
+      "scoring": {
+        "status": "passed-independent-sparse-scoring",
+        "tag": "Kang-00",
+        "compared": 55480,
+        "maximumScaledError": 4.440892098500626e-16,
+        "scoreReportSHA256": "fe672b8167b6a21ebafdbd706b861bec8ce3d77ecc27dddd7d8722baaa4c4f2e"
+      }
+    },
+    "Kang-01": {
+      "prediction": {
+        "status": "passed-control-only-predictions",
+        "genes": 15706,
+        "numericalValuesCompared": 4749262,
+        "maximumScaledError": 1.2754842360304427e-12,
+        "errors": []
+      },
+      "scoring": {
+        "status": "passed-independent-sparse-scoring",
+        "tag": "Kang-01",
+        "compared": 54917,
+        "maximumScaledError": 4.440892098500626e-16,
+        "scoreReportSHA256": "abad329b4b53d666a8612e463b29726c0192cc1f653bd35502bb230c9fbd668c"
+      }
+    }
+  },
+  "note": "Independent calculations rerun after restoration. Generated verification reports change timing fields; original reports remain in the archive. Current verifier uses atomic replacement and current restore copies generated reports to preserve immutable object hard links."
+}

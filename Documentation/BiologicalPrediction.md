@@ -41,7 +41,7 @@ success nor a failure.
 | Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. It loses to the mean in 37/150 target/group folds. | Independent biological contexts, target selection and replication; technical groups do not supply these. |
 | Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
 | Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
-| Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene fitting completes: nine eligible Kang limits and 185 HIRISA leaf limits remain. Training-only dispersions and manifests are verified for all 13 donor omissions; two 64-gene joint-fit pilots pass. Complete joint held-out fits, parameter uncertainty and new biological calibration remain open. |
+| Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene fitting completes: nine eligible Kang limits and 185 HIRISA leaf limits remain. Training-only dispersions and manifests are verified for all 13 donor omissions; two 64-gene joint-fit pilots pass. Two complete Kang omissions have numerically verified, control-only predictions and improved development RMSE; remaining folds, parameter uncertainty and new biological calibration remain open. |
 | Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
 
 The GSE181897 input contract is now resolved and its frozen comparison is complete.
@@ -204,8 +204,13 @@ Those changes are retained in all 13 prepared joint-fit manifests: 131,887 of
 Kang and HIRISA shards pass 102,608 independent numerical comparisons; the full
 fold runs started on September 12, 2026 and are not yet qualified. Each fold
 selects only its training donors from the verified sparse cache and starts a
-fresh model, with no full-cohort fitted weights. Joint donor-held-out
-predictions, parameter uncertainty and the 35.54% historical treated-coverage
+fresh model, with no full-cohort fitted weights. [The first two complete Kang
+omissions](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/README.md)
+now score 8,353 and 7,790 eligible genes: RMSE falls 30.83% and 20.74% versus
+no change, and 25.60% and 21.18% versus the training-mean response baseline.
+All 9,887,511 prediction-value comparisons pass. There are 2,333 latent point-mass
+predictions, which do not establish zero biological uncertainty. Complete
+13-fold qualification, parameter uncertainty and the 35.54% historical treated-coverage
 failure remain unresolved. The revised search
 resolves 27 original limits but introduces one finite-support budget limit for
 PANK2; this case is retained instead of claiming universal improvement.

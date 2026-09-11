@@ -173,8 +173,12 @@ convergence failure. HIRISA now processes all 18,082 genes: 13,082 converge,
 independent comparisons pass. Training-only dispersions are also verified for
 all 13 donor omissions. Separate joint fits are now running; the first 64-gene
 Kang and HIRISA pilot shards pass independent checks. These pilots do not
-qualify the complete folds. Parameter uncertainty,
-donor-held-out prediction and independent biological validation remain open.
+qualify the complete folds. The first two complete Kang donor omissions now
+produce [control-only joint predictions](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/README.md):
+RMSE improves 20.7–30.8% versus no change and 21.2–25.6% versus training-mean
+response on their eligible genes. These are reused development donors; the
+remaining folds, parameter uncertainty and independent biological validation
+remain open.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five

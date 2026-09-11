@@ -99,8 +99,8 @@ results. Sparse caches remain in the published full-cohort archives.
 checkers, freezes controller/reference scripts, and resumes verified shard
 receipts. It checks storage before each new fold and shard. Failures preserve
 partial output and identify any surviving children; inspect those processes
-before restarting. The complete run started September 12, 2026. No held-out
-joint prediction or scoring is reported from this run yet.
+before restarting. The complete run started September 12, 2026. The first two complete Kang omissions now have [control-only predictions and
+verified development scores](Prediction/README.md). Remaining folds are in progress.
 
 Prepare with `prepare_joint.py NEW_STUDY CALIBRATION_STUDY FULL_COHORT_STUDY`.
 The new study must use the pinned runtime and original verified sparse caches.
