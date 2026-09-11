@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "native-metadata.json",
+      "sourceBytes": 3898507,
+      "sourceSHA256": "63b852fb7a2701a3f1c0c2768120de6e854095a3d79ccac9dbaf23caa3e366e6",
+      "storedPath": "native-metadata.json.gz",
+      "storedBytes": 327095,
+      "storedSHA256": "57a627844f6888f923829aef623f0a0cbd115b8bcb23411ad747b06da19f510b",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "identity-captures.json",
+      "sourceBytes": 2616538,
+      "sourceSHA256": "2c5e4059cbef649101eade97bcc2b30fb170681fd1ecc3ec748c681e81c611e5",
+      "storedPath": "identity-captures.json.gz",
+      "storedBytes": 530143,
+      "storedSHA256": "6846b895445881814c1cd8914881a85d0098c3b152a7527e512e269da55ab305",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "executed-and-verification-sources.json",
+      "sourceBytes": 75478,
+      "sourceSHA256": "a89d0e5d9e91a44d5412b76ad3193c0ff62cfe4a385e1c2350896bef0ebda0c3",
+      "storedPath": "executed-and-verification-sources.json.gz",
+      "storedBytes": 19682,
+      "storedSHA256": "1e83f2b5fb31546406fd850f8f4e748f2ef75f33613d1e0194104d5c9f9c0f9d",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "scoring.json",
+      "sourceBytes": 3096000,
+      "sourceSHA256": "30604c75615da922d5642ae07d3413655117b115b4e8c8fde570425a78557854",
+      "storedPath": "scoring.json.gz",
+      "storedBytes": 537636,
+      "storedSHA256": "1ab2c6a47e429b84ebc8e9fe5885e60ef8b7ec79a533bf81d8e2b8056003b3aa",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "external-artifacts.json",
+      "sourceBytes": 51587,
+      "sourceSHA256": "65fd6ad70993b610ddd05841c06f1355d4a407ab23a16926d8196aa189ade6bd",
+      "storedPath": "external-artifacts.json.gz",
+      "storedBytes": 15381,
+      "storedSHA256": "d44d9b8113f851f1f702c53a84c0eed38f8bbcb2f4bf6a939e15845ad5908c4b",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    }
+  ]
+}

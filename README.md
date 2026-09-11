@@ -25,8 +25,11 @@ finds that 13 of those 14 no-change wins, and three of the four mean-baseline
 wins, survive every single-donor score omission. This does not establish
 predictive uncertainty or independent-study validation.
 Native combination models also predict held-out pairs of observed targets;
-an unseen-target GO prototype has only a 0.58% average improvement over the
-mean baseline on reused development data, with substantial target-level failures.
+the unseen-target GO prototype improves the mean baseline by 0.58% on reused
+Norman development data. A separately collected [Replogle UPR validation](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
+now meets the fixed primary criterion in all five technical gemgroups, with
+1.41–2.12% lower all-gene RMSE than the training mean. It remains worse than
+no-change in 34/150 folds; this does not establish general target or tissue transfer.
 
 The [biological prediction assessment](Documentation/BiologicalPrediction.md)
 explains the required inputs, complete positive and negative results, native
@@ -40,15 +43,14 @@ and reconciliation of its guide roster before fitting. [AlphaGenome Atlas](Docum
 can supply variant-level molecular hypotheses; its predictions do not establish
 NumiVivo's downstream cellular or tissue outcomes.
 
-A [separate Replogle UPR cohort](Tools/Omics/PerturbationPrediction/Replogle2020/README.md)
-now has verified complete inputs: 40,997 cells, 33,694 RNA features and 64 guide
-features kept separate. Native and AnnData/SciPy checks also agree on all 32,829
-confident cells across five technical gemgroups. Projection now admits this
-129.84-million-entry source under explicit work/storage bounds. Prediction
-fitting and scoring remain pending. The [next native preparation](Tools/Omics/PerturbationPrediction/Replogle2020/TRAINING_PREPARATION.md)
-also verifies control pooling within each gemgroup, five complete training inputs
-and all 150 guide-level count exclusions. Gene descriptors and prediction
-payloads still need freezing; these checks add no predictive claim.
+The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
+retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five
+technical gemgroups. All 150 native fits and predictions pass replay; all 750
+output vectors agree with independent calculations. Inputs and predictions were
+frozen before scoring, and repeated scoring is identical. [Gene identity evidence](Tools/Omics/PerturbationPrediction/Replogle2020/IDENTITIES.md)
+uses a reproduced guide/gene table and reference sequence checks; full guide
+sequences and genome-wide specificity remain unverified. The five groups share
+K562/UPR biology and are not five independent biological replications.
 
 The [HIRISA preparation-transfer test](Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
 now completes all 120 donor-excluded folds across 705,365 cells. Cross-preparation

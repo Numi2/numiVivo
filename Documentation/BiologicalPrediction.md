@@ -11,7 +11,8 @@ The practical decision depends on the requested outcome and what was observed
 before it. For a known treatment, paired training-donor RNA measurements and
 the query donor's untreated RNA can support a conditional expression estimate.
 For an unseen target, gene identity and annotations are additional inputs;
-their availability has not yet established reliable generalization. DNA or RNA
+the fixed GO model now has a modest separately collected UPR validation result,
+but reliable generalization across targets and biological contexts remains unproven. DNA or RNA
 information alone does not supply a validated mapping to survival, tissue
 function, disease progression or treatment benefit. Those outcomes require
 their own measured endpoints and held-out validation.
@@ -41,22 +42,16 @@ input-processing boundary. They add no held-out biological observations: the
 remaining decision is whether frozen predictors outperform simple baselines in
 an independently identified experiment, with uncertainty and failures reported.
 
-The [Replogle 2020 UPR input qualification](../Tools/Omics/PerturbationPrediction/Replogle2020/README.md)
-adds a separately collected source with explicit paper-defined controls. All
-40,997 cells and both RNA/guide feature spaces are retained, and native and
-AnnData/SciPy checks agree on the full source and all 32,829 confidently assigned
-cells. No predictor has been fitted or scored. Five technical gemgroups are not
-five independent biological donors, and target-descriptor identity requirements
-remain part of the frozen validation protocol.
-
-The subsequent [native training preparation](../Tools/Omics/PerturbationPrediction/Replogle2020/TRAINING_PREPARATION.md)
-pools the two author-defined controls within each original gemgroup, preserves
-all 30 non-control guides in each, and checks all 155 aggregate rows against the
-independent count reference. Five native training inputs and 150 guide-level
-count-exclusion plans are qualified. This freezes count selection only:
-descriptor identities and prediction payloads are not yet frozen, and no fit or
-score is reported. A native negative check rejects a training selection that
-mixes gemgroups.
+The [complete Replogle 2020 UPR prediction experiment](../Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
+now meets the fixed primary comparison in all five original technical gemgroups.
+All 150 held-target predictions and native replays completed. Equal-target
+all-gene RMSE is 1.41–2.12% below the training mean, but 34/150 folds remain worse
+than no change and 37/150 worse than the mean. The [identity audit](../Tools/Omics/PerturbationPrediction/Replogle2020/IDENTITIES.md)
+resolved nominal gene descriptors using a reproduced guide table and reference
+sequence evidence; it does not prove full guide identity or off-target specificity.
+This is separate data collection in the same broad K562/UPR setting, with shared
+investigators and earlier target selection, not independent laboratory or tissue
+validation. Technical gemgroups are not biological replicates.
 
 ## What information is sufficient for the implemented predictors?
 
@@ -64,7 +59,7 @@ mixes gemgroups.
 | --- | --- | --- |
 | How will a new donor respond to a known treatment? | Paired control/treated count profiles from training donors; the new donor's control counts; matching treatment, organism, population and feature identities. | Native no-change, mean, median and context-ridge estimates of population-average treated log1p(CPM). Complete Kang, Hagai and HIRISA held-out donor experiments show conditional predictive signal, with failures retained. |
 | What happens when two observed targets are perturbed together? | Control and single-target counts for both constituents in the same experimental context; the pair's target identities. | Six native composition baselines evaluated on all 131 held-out Norman pairs. This tests expression composition; it does not identify genetic interactions. |
-| What happens when an unobserved target is perturbed? | Control and other single-target counts in the same context; independently supplied target identities and GO terms for training and query targets. | Native target-kernel prototype, evaluated on 105 Norman folds with 101 supported descriptors. Its small average gain does not establish reliable unseen-target transfer. |
+| What happens when an unobserved target is perturbed? | Control and other single-target counts in the same context; independently supplied target identities and GO terms for training and query targets. | Native target-kernel prototype: 105 Norman development folds (101 supported), followed by 150 Replogle folds (30 targets × 5 technical groups). Replogle meets the fixed primary criterion in all five groups with modest gains and target-level failures; broad unseen-target transfer remains unqualified. |
 | Can a known response transfer between enriched preparations and PBMCs? | Other-donor paired counts from the training preparation; query-preparation control counts; exact author lineage annotations, donor and feature identities. | All 120 HIRISA folds completed. Cross ridge beats both no-change and cross mean in 3/12 contrasts; this is an inspected-study, annotation-conditioned endpoint with preparation/batch confounding. |
 | What will happen in a new tissue, species, disease state or patient? | Would require a validated transfer model and measured outcomes in that destination context. | No qualifying result in this evidence set. Existing point estimates cannot be promoted to those outcomes. |
 | Can a DNA variant predict a cellular or tissue phenotype? | Would require assembly/allele-resolved regulatory evidence and validated connections through RNA, proteins, mechanisms and phenotype. | [AlphaGenome integration work](AlphaGenomeAtlas.md) provides a direction and separate evidence interface; a validated end-to-end phenotype predictor is not established. |
@@ -169,7 +164,7 @@ reproduces all 786 pair/method vectors. This same-cell-line pooled experiment
 does not provide independent biological-replicate uncertainty or qualify
 unseen constituent targets, donor transfer or causal interaction effects.
 
-### Unseen targets: implemented, with weak development evidence
+### Unseen targets: development and separately collected validation
 
 The [native GO target kernel](../Tools/Omics/PerturbationPrediction/Norman/NATIVE_TARGET_KERNEL.md)
 withholds each of 105 targets, using control and the other singles. Four targets
@@ -185,6 +180,22 @@ regularization experiment fails the primary all-gene comparison; earlier
 co-response and control-descriptor models also fail to beat their simple
 baseline. Numerical agreement on 517 native prediction vectors verifies the
 implementation, not generalization to a new experiment.
+
+The subsequent [Replogle validation](../Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
+uses the unchanged lambda-one native model and all source RNA genes. All five
+gemgroups meet the predeclared all-gene criterion against the all-training mean,
+supported-training mean and one-position shuffled response. Both means coincide
+because all 30 targets have usable direct GO descriptors. Gains over the mean
+range from 1.41% to 2.12%; no-change regressions affect 34/150 folds and mean
+regressions affect 37/150. All 750 vectors pass independent checks, and repeated
+scoring is identical. No model or favorable group was selected after scores.
+
+This strengthens the evidence beyond Norman's reused development data. It tests
+an independently collected experiment with shared investigators, K562 systems
+and prior UPR target selection. It does not transfer Norman-trained coefficients,
+provide temporal independence of current GO knowledge, or establish prospective
+biological contexts. Nominal target identity relies partly on FBA's reproduced
+sequence table; the original full guide supplement was not retrieved.
 
 The independent [Adamson preparation](../Tools/Omics/PerturbationPrediction/Adamson/COHORT.md)
 has restored deposited cell-to-guide identities and verified its original-author
@@ -254,11 +265,11 @@ Lower donor-associated variance also does not isolate technical batch removal.
 3. Resolve Adamson controls and its 94-versus-93 guide roster from primary records, then execute the
    frozen independent-study target-prediction protocol with coverage, all
    failures and matched simple/shuffled baselines. Do not tune it on test scores.
-   The separately prepared Replogle UPR cohort now supplies another complete,
-   verified input route and five native training contexts. Its 150 guide-level
-   count exclusions are frozen; resolve descriptor identities and freeze the
-   descriptor/fitter/query inputs before fitting, then freeze predictions before
-   scoring. Adamson's gate remains unchanged.
+   The complete Replogle fixed-model experiment now passes its declared primary
+   comparison in all five technical groups. Preserve all 150 folds and failures,
+   and extend validation to an independently selected target panel and laboratory
+   or biological context rather than retuning on these results. Adamson's gate
+   remains unchanged.
 4. Extend the [completed HIRISA preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
    to an independent study with prospective strata and measured outcomes. Its
    sixty cross-preparation folds and sixty matched references now pass replay

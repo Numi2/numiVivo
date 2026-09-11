@@ -556,6 +556,14 @@ The complete development objective remains open:
    105 held-target folds. Its 517 available prediction vectors agree with frozen
    references within 2.45e-15; the 0.58% mean-RMSE gain remains a development result
    with substantial per-target failures.
+   The subsequent [complete Replogle validation](../Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
+   retains 30 targets across five technical gemgroups and completes all 150
+   native folds. It meets the fixed all-gene criterion in all five groups with
+   1.41–2.12% lower mean RMSE than the training mean, while 34/150 folds remain
+   worse than no change. All 750 vectors pass independent checks and repeated
+   scoring is identical. This separately collected K562/UPR experiment shares
+   investigators and earlier target selection; it does not supply independent
+   laboratory, temporal-knowledge or new-tissue validation.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)

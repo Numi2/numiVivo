@@ -1,11 +1,13 @@
 # Replogle UPR: native context preparation and count-fold freeze
 
 **All five native training inputs and 150 guide-level count exclusions pass.
-No model has been fitted, no predictions frozen, and no outcomes scored.**
+At this preparation stage, no model was fitted and no outcomes were scored.**
+The subsequent [complete prediction experiment](RESULTS.md) is reported separately.
 This completes control pooling and context isolation for the
 [previously qualified complete cohort](README.md), under the unchanged
 [prediction protocol](PROTOCOL.md). Experimental guide-to-gene descriptor
-identities remain unresolved. Count preparation cannot establish prediction
+identities were unresolved at this stage and are now addressed by the separate
+[identity audit](IDENTITIES.md). Count preparation cannot establish prediction
 accuracy or substitute for that identity requirement.
 
 ## Complete cohort and controls

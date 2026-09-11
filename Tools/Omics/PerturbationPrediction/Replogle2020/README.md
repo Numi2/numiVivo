@@ -1,6 +1,13 @@
-# Replogle 2020 UPR: complete inputs and confident cohort qualified
+# Replogle 2020 UPR: complete inputs and fixed prediction validation
 
-The complete deposited five-gemgroup experiment now passes native assay partition, RNA aggregation, reconstruction and independent AnnData/SciPy checks. The subsequent [native training preparation](TRAINING_PREPARATION.md) also verifies pooled controls, all five training contexts and 150 guide-level count exclusions. **No predictor has been fitted or scored on this study.** The [frozen protocol](PROTOCOL.md) retains the existing fixed target-kernel method and all five technical conditions. This adds a separately collected experiment to the validation route while Adamson's unresolved identities remain open.
+The complete deposited five-gemgroup experiment passes native assay partition,
+RNA aggregation, reconstruction and independent AnnData/SciPy checks. The
+[subsequent fixed prediction experiment](RESULTS.md) now completes all 150
+held-target folds and meets the primary baseline comparison in all five groups.
+Gains over the training mean are 1.41–2.12%, with 34/150 folds worse than no
+change. The [frozen protocol](PROTOCOL.md) is unchanged; [nominal gene identities](IDENTITIES.md)
+are supported by the reproduced guide table and reference checks. This is a
+separately collected K562/UPR study, not new-tissue or clinical qualification.
 
 ## Original information and assay separation
 
@@ -21,7 +28,7 @@ The original feature indices are unsorted within cells. Conversion preserves the
 
 The source assignment CSV has 34,406 rows; three barcodes are absent from the filtered matrix and are retained in an explicit outside-matrix record. Full barcode suffixes are used. Among source cells, 6,594 have no assignment, 702 fail guide coverage and 872 have multiple guide calls. The 32,829 included cells meet exactly `good_coverage=True` and integer-valued `number_of_cells=1`; both `1` and `1.0` CSV forms are validated without changing their meaning. These are guide-quality rules, not expression-based filters.
 
-All five gemgroups and all 32 guide labels remain separate. They do not represent independent biological donors. Technical platform names, gene-level descriptor identities and missing/ambiguous mappings still require their declared authority before those labels enter prediction results. No guide is discarded to improve a score.
+All five gemgroups and all 32 guide labels remain separate. They do not represent independent biological donors. Predictions retain original gemgroup IDs without assigning unverified platform names. Nominal gene-level descriptor identities are now supported by the separate identity audit; full guide sequences and off-target specificity remain unverified. No guide is discarded to improve a score.
 
 ## Native change and validation
 
@@ -53,4 +60,9 @@ The [evidence archive](evidence/2026-09-11/manifest.json) retains source metadat
 
 Interactive GEO access and the PMC supplement download exposed challenges; neither was bypassed. Official public bulk GEO metadata/count downloads succeeded. The apparent spreadsheet response is retained as HTML, not accepted as a table. The original prediction-protocol hash preceded matrix acquisition; its source-declared RNA/guide distinction is recorded as an explicit pre-fit clarification.
 
-Next: resolve exact descriptor identities and any required technical-platform naming, complete the descriptor/fitter/query freeze for all 150 count exclusions, freeze every prediction, then run the separate scorer against all simple/shuffled baselines. Current GO knowledge may incorporate this and Adamson's studies. Success on an ingestion or replay check adds no biological prediction result, prospective target-selection evidence, new tissue context, calibrated uncertainty or clinical qualification.
+The [complete prediction results](RESULTS.md) retain every fold, all matched
+baselines, independent checks and limitations. Next, extend validation to an
+independently selected target panel and biological context, establish uncertainty
+coverage, and test measured downstream phenotypes. Current GO knowledge and
+shared investigators/UPR target selection remain limitations. Ingestion and replay
+passes alone do not establish those biological outcomes.
