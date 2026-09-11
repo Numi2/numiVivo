@@ -1,0 +1,97 @@
+{
+  "allZeroCasesPositiveCredibleUpperBound": true,
+  "allZeroCasesPositivePosteriorVariance": true,
+  "biologicalCoverageValidated": false,
+  "boundariesMaximumRSSBytes": 7176192,
+  "boundaryCases": 75,
+  "controlCases": 2976,
+  "controlDonors": 62,
+  "controlRepeatByteIdentical": true,
+  "controls-repeatMaximumRSSBytes": 31113216,
+  "controlsMaximumRSSBytes": 31113216,
+  "features": 16,
+  "maximumNativePanels": 64,
+  "maximumNativeTailBound": 5.0193164607976515e-16,
+  "maximumRelativePosteriorError": 7.093313949666096e-08,
+  "maximumRelativePredictiveMomentError": 7.093313945883933e-08,
+  "native": {
+    "binarySHA256": "0d0b5cc438727637211c727e0d9a1d35331de7b79b1fc4a2a147d0119c7e45be",
+    "commands": [
+      {
+        "arguments": [
+          "bash",
+          "Tools/Omics/CountObservation/test.sh",
+          "/Users/home/numivivo-count-observation-20260911/build"
+        ],
+        "exit": 0,
+        "name": "tests-final",
+        "pid": 19381,
+        "seconds": 2.3544299602508545,
+        "startedUnix": 1789148184.903029
+      },
+      {
+        "arguments": [
+          "/Users/home/numivivo-count-observation-20260911/build/count-observation-check",
+          "/Users/home/numivivo-count-observation-20260911/inputs/boundary-cases.json",
+          "/Users/home/numivivo-count-observation-20260911/boundaries.jsonl"
+        ],
+        "exit": 0,
+        "name": "boundaries",
+        "pid": 20065,
+        "seconds": 0.34908223152160645,
+        "startedUnix": 1789148187.257917
+      },
+      {
+        "arguments": [
+          "/Users/home/numivivo-count-observation-20260911/build/count-observation-check",
+          "/Users/home/numivivo-count-observation-20260911/inputs/cases.json",
+          "/Users/home/numivivo-count-observation-20260911/controls.jsonl"
+        ],
+        "exit": 0,
+        "name": "controls",
+        "pid": 20074,
+        "seconds": 4.3663060665130615,
+        "startedUnix": 1789148187.607234
+      },
+      {
+        "arguments": [
+          "/Users/home/numivivo-count-observation-20260911/build/count-observation-check",
+          "/Users/home/numivivo-count-observation-20260911/inputs/cases.json",
+          "/Users/home/numivivo-count-observation-20260911/controls-repeat.jsonl"
+        ],
+        "exit": 0,
+        "name": "controls-repeat",
+        "pid": 20079,
+        "seconds": 4.346988201141357,
+        "startedUnix": 1789148191.973742
+      }
+    ],
+    "completeControlRepeatByteIdentical": true,
+    "finishedUnix": 1789148196.321573,
+    "pid": 19346,
+    "referenceChecks": {
+      "boundaries": {
+        "cases": 75,
+        "receiptSHA256": "4ff54b166033716e895018050b6dc1060f204bb193bdcc42967175ff73c5662e",
+        "status": "passed"
+      },
+      "controls": {
+        "cases": 2976,
+        "receiptSHA256": "03f59a1fb11d852a6ab7d930fcc5e92725e4ba0edac641e2995390faca945cc5",
+        "status": "passed"
+      }
+    },
+    "sourceHEAD": "02053522a7d088135901c75d8dec40d0446c6e1b",
+    "startedUnix": 1789148184.89841,
+    "status": "passed-native-and-independent-reference"
+  },
+  "perturbationIntervalsChanged": false,
+  "priorAndDispersionLearned": false,
+  "referenceBoundarySeconds": 12.381018877029419,
+  "referenceControlSeconds": 48.44478702545166,
+  "regressionTests": 25,
+  "sourceControlCells": 2309,
+  "status": "passed-native-count-observation-numerical-qualification",
+  "testSuites": 3,
+  "zeroCountCases": 1503
+}

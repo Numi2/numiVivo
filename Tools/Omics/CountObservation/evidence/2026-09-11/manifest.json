@@ -1,0 +1,174 @@
+{
+  "archive": {
+    "SHA256": "1c4670468150acaf9a6aedac9a3d94a7732d03dedce6af69a0324188a0ac5fbc",
+    "bytes": 746589
+  },
+  "files": {
+    "recipes/Check.swift": {
+      "SHA256": "278ea72bf5fe35abcdc478c2d7153dca38f85e6a78a280addb133d66bc6d4489",
+      "bytes": 1908
+    },
+    "recipes/prepare.py": {
+      "SHA256": "5c467995ee3d28f35964e10606b58bbd3c208c3f2ba450c2b9c636fea16941ca",
+      "bytes": 3998
+    },
+    "recipes/retain.py": {
+      "SHA256": "ead0e26a30141f252f5154da5f5081c9d38be551cd77fc9ecf10196429d84e42",
+      "bytes": 2226
+    },
+    "recipes/test.sh": {
+      "SHA256": "c493e27ef3418d99b95e504f4d116ae0cd2dceb089eaa636c72bfa08ce728407",
+      "bytes": 1344
+    },
+    "recipes/verify.py": {
+      "SHA256": "1db5674afa92a3dcf02914863dd440ed5401bcfe9149131afed2aa945ac74327",
+      "bytes": 5509
+    },
+    "source/SingleCellCountObservationTests.swift": {
+      "SHA256": "ae7b6deee1b341d2af14a7c18501983846598e22ed90a11e9034b72fff155829",
+      "bytes": 3137
+    },
+    "source/VivoCountObservation.swift": {
+      "SHA256": "1c9da739bc3ef8dedd93447496c7051c163898712b89c9f48494977cc9c13036",
+      "bytes": 13573
+    },
+    "study/boundaries.jsonl": {
+      "SHA256": "fea6e91dc905810ca15405dcb78f715029606adc5c782a262b84120906f848f4",
+      "bytes": 65309
+    },
+    "study/boundaries.stderr": {
+      "SHA256": "4b577675061ac0e4af6dbbdcb3f0f5b6cd28c241c0b50c15535c945b18f42d55",
+      "bytes": 777
+    },
+    "study/boundaries.stdout": {
+      "SHA256": "c34a67fefe6a8a4c0e6bce8817dfc4e65bf8755de3fe82b3799613d7f0b81dcf",
+      "bytes": 18
+    },
+    "study/build-initial.log": {
+      "SHA256": "37318da3e8be3385cab649f4cdc0892d36927fa106b1d8cfe4b22b5c7dbd49c0",
+      "bytes": 2234
+    },
+    "study/build-refinement.log": {
+      "SHA256": "37318da3e8be3385cab649f4cdc0892d36927fa106b1d8cfe4b22b5c7dbd49c0",
+      "bytes": 2234
+    },
+    "study/build/sources.sha256": {
+      "SHA256": "3956d9f4a8bdc59bd48eb64acc02f2408a2f1e16cf1a9e2efbcb50c8f4c162dc",
+      "bytes": 18234
+    },
+    "study/controls-repeat.jsonl": {
+      "SHA256": "56e1e427802d7631e9223f84e148027a249b8e9d8bdc7c32acd352982bba04bc",
+      "bytes": 2620414
+    },
+    "study/controls-repeat.stderr": {
+      "SHA256": "e652d2ecf9ec42a9684b6a9d1439facfa704ff45f3f771d274d815e28cfea4fa",
+      "bytes": 777
+    },
+    "study/controls-repeat.stdout": {
+      "SHA256": "488448ea46951f8247d5c9ea9835861371e47f451ee74adb7d579445e48ab5d5",
+      "bytes": 20
+    },
+    "study/controls.jsonl": {
+      "SHA256": "56e1e427802d7631e9223f84e148027a249b8e9d8bdc7c32acd352982bba04bc",
+      "bytes": 2620414
+    },
+    "study/controls.stderr": {
+      "SHA256": "d253bc2b61c3b8e014e98738e48a1fddb3d8b68c2ff62fa082dd002a75ac3cb9",
+      "bytes": 777
+    },
+    "study/controls.stdout": {
+      "SHA256": "488448ea46951f8247d5c9ea9835861371e47f451ee74adb7d579445e48ab5d5",
+      "bytes": 20
+    },
+    "study/environment-native.json": {
+      "SHA256": "c625e7ceba1d4a56b908d136cac26ac27d111e582e89b4608107312c84546edf",
+      "bytes": 208
+    },
+    "study/environment-python.json": {
+      "SHA256": "2470995b1dc70438a3e7ad55a191094e60a7fbef52de96465d0543463a69b244",
+      "bytes": 137
+    },
+    "study/execute.py": {
+      "SHA256": "d4b495eaf4561c928216dc2b3c3513f222d930a210ac26c228f56486394b13cb",
+      "bytes": 1633
+    },
+    "study/execution.log": {
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "study/inputs/boundary-cases.json": {
+      "SHA256": "adc38107949228b105e7483ea181f7c286d77e668e70b70f5678e72d8d8bafb3",
+      "bytes": 20473
+    },
+    "study/inputs/cases.json": {
+      "SHA256": "91e1477662b96025fdce1bb5721ed783f60ed6a50b9912e4746ed2c4dadc0fe3",
+      "bytes": 3702511
+    },
+    "study/inputs/freeze.json": {
+      "SHA256": "886f853d00d0bb6dc5ec4b91b5de36f9e713107f1f8207e7755d3430f9175f1b",
+      "bytes": 467
+    },
+    "study/inputs/protocol.json": {
+      "SHA256": "72b9afc32ac0c72bfc663bef76437e81dc3cc805e5f8a189adb69f2193dfec59",
+      "bytes": 1436
+    },
+    "study/inputs/selection.json": {
+      "SHA256": "a33f6b412f2fe2c5337ebdc535b3c6c211b1d51425d2cd4c96c1a69c3d680e92",
+      "bytes": 40627
+    },
+    "study/pipeline.json": {
+      "SHA256": "a02dd497672b837329275142fee50572a8dcc77d18e60bfadeb9648189a05c86",
+      "bytes": 2312
+    },
+    "study/prepare.log": {
+      "SHA256": "a6ea731a23e1dad2af73151666e5fb6034dc33424365480a70f3e4ee8c07b02c",
+      "bytes": 407
+    },
+    "study/reference-boundaries.json": {
+      "SHA256": "4ff54b166033716e895018050b6dc1060f204bb193bdcc42967175ff73c5662e",
+      "bytes": 39472
+    },
+    "study/reference-boundaries.log": {
+      "SHA256": "dc7bc157c8d136c9379a616ace0da96779c3be1c1fe0fa732f28b872e50d1fbd",
+      "bytes": 340
+    },
+    "study/reference-controls.json": {
+      "SHA256": "03f59a1fb11d852a6ab7d930fcc5e92725e4ba0edac641e2995390faca945cc5",
+      "bytes": 1592358
+    },
+    "study/reference-controls.log": {
+      "SHA256": "f57b983731a09c34e251bb7ae08bdc03ad6c62cb310026085b4464992081cf61",
+      "bytes": 1233
+    },
+    "study/results.json": {
+      "SHA256": "6bdd0b27d2581462f29ee17d547b5439fdf4d70502762e5a6bbd2fc8eee7fb55",
+      "bytes": 3410
+    },
+    "study/source-freeze-final.json": {
+      "SHA256": "51391512e87da4b84e9ace2eb090bd819e62ff7ec6dbabff57a40ed0cc468dbd",
+      "bytes": 850
+    },
+    "study/source-freeze-initial.json": {
+      "SHA256": "a312f9a9b5865c0b9175b6d8e9ae3539dc4ef1583d2a596746ba4d8bcead7d85",
+      "bytes": 711
+    },
+    "study/tests-final.stderr": {
+      "SHA256": "e7940b75b1f4d331160dcb0f0699eb3c94e9beb849310c2eb9699ef9c8870e81",
+      "bytes": 5154
+    },
+    "study/tests-final.stdout": {
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "study/tests-initial.log": {
+      "SHA256": "efe86336739385e5cbcc28ab02679b532b2b19af5daf7f7a984a0f0e38973f7b",
+      "bytes": 1059
+    },
+    "study/tests-retry.log": {
+      "SHA256": "688a196663687862e8d0f44b1e5efe5ee9c93adce278c93332d2842510dcd286",
+      "bytes": 4811
+    }
+  },
+  "purpose": "Complete conditional count posterior numerical qualification; no biological calibration claim",
+  "schemaVersion": 1
+}

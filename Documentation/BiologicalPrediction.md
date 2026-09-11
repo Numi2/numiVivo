@@ -117,6 +117,14 @@ and is not a new predictor. The next uncertainty extension needs an explicit
 count-based observation model, source sampling information and zero-count
 support, followed by new validation. The original external interval failure stands.
 
+A native [NB2 count observation posterior](../Tools/Omics/CountObservation/README.md)
+now provides this likelihood component: original per-cell counts and RNA depths,
+an explicit proper Gamma prior, latent CPM/log1p-CPM uncertainty, and variance
+components for a planned new sample. It conditions on supplied cell dispersion
+and an unqualified prior, and does not yet combine observation uncertainty with
+latent donor response. Its numerical checks on original control counts do not
+establish improved treated-outcome coverage or change the original failure.
+
 The [complete GSE226572 external experiment](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
 now evaluates native whole-population predictions across all three new donors
 and all 18 released IFN-beta donor/time profiles. Every one of the 24 source

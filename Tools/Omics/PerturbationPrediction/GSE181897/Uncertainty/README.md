@@ -106,6 +106,12 @@ intervals until these known scores approach 95%. A usable extension needs:
    observations, with all unsupported contexts and earlier failures retained.
    GSE181897 is now development data for any such extension.
 
+The [native count observation component](../../../CountObservation/README.md)
+now implements the conditional NB2 likelihood and proper-prior posterior. It
+preserves per-cell depths and distinguishes latent-rate uncertainty from future
+sampling variance. Learned prior/dispersion, coupling to donor response and
+independent calibration remain required before the original intervals are repaired.
+
 ## Evidence and reproduction
 
 The [manifest](evidence/2026-09-11/manifest.json) binds all diagnostic arrays,

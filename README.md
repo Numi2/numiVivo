@@ -142,6 +142,11 @@ with failed uncertainty and model-dependent transfer retained explicitly.
 The [cell-sampling diagnosis](Tools/Omics/PerturbationPrediction/GSE181897/Uncertainty/README.md)
 points to sampling and zero-count uncertainty; its outcome-informed widening is
 a retrospective diagnostic, not a new prediction model.
+The native [count observation posterior](Tools/Omics/CountObservation/README.md)
+now models original cell counts and RNA depths, with nonzero uncertainty after
+zero observations and separate variance for planned cell sampling. It is
+conditional on a supplied prior and dispersion; integration with donor-response
+prediction and independent calibration remain open.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five
