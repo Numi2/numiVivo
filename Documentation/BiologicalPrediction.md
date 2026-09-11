@@ -1,7 +1,8 @@
 # Can NumiVivo predict biological outcomes?
 
-**Yes, within specific gene-expression experiments. Reliable prediction of
-general biological outcomes is not established.** The strongest evidence is
+**Available information supports conditional RNA-response estimates with limited,
+context-dependent predictive value. Reliable prediction of general biological
+outcomes is not established.** The strongest evidence is
 prediction of a known perturbation in an unseen donor from that donor's observed
 control profile. Native models also predict combinations of previously observed
 targets, and a GO-based prototype predicts some unseen targets with a small,
@@ -24,6 +25,37 @@ It distinguishes measured held-out expression outcomes from numerical
 reconstruction, integration diagnostics and conditional molecular simulations.
 Each linked experiment retains its actual source, executable and platform
 identities; this review does not requalify historical receipts under a new build.
+
+## Current completion and admission gates
+
+This is the decision as of the published `71ce4fff` implementation and its
+retained experiments. A completed execution check and a passed biological
+comparison answer different questions. An unscored cohort is neither a prediction
+success nor a failure.
+
+| Requirement | Current evidence | What remains before a stronger claim |
+| --- | --- | --- |
+| Preserve and analyze real counts | Full Parse ingestion and source replay pass; paired native DE and all six edgeR/limma/DESeq2 comparisons complete. Analysis peaks at 202.3 MiB with unchanged report bytes. | Other pipeline stages retain separate memory bounds; numerical agreement does not establish biological accuracy or false-discovery calibration. |
+| Preserve biology through integration | Complete HIRISA execution and coarse response checks pass. Native annotation retention fails 37/146 supported, sensitive comparisons, including 10/29 rare comparisons. | Resolve preservation losses and validate independently; do not promote the protected-stratum candidate, which still fails 37/146. |
+| Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. It loses to the mean in 37/150 target/group folds. | Independent biological contexts, target selection and replication; technical groups do not supply these. |
+| Transfer RNA response across studies | GSE226572 mean gains 2.00% against a declared 5% target; ridge fails. Kang–HIRISA ridge fails both directions. | A useful improvement under a frozen independent protocol; retain the external failures after subsequent model development. |
+| Quantify predictive uncertainty | Mean-response intervals are implemented and assessed, with context-dependent undercoverage and width. | Independent biological-replicate calibration and useful width; nominal coverage alone is insufficient. |
+| Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
+
+The next prediction work should clear one prepared cohort's input contract and
+execute its frozen comparison. The immediate choices and their exact missing
+inputs are:
+
+| Prepared cohort | Ready | Required before fitting or scoring |
+| --- | --- | --- |
+| [Adamson](../Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md) | 50,440 selected cells and a fixed unseen-target protocol | Primary control/construct assignments and reconciliation of 94 observed guide groups versus the paper's 93-guide roster. |
+| [Parse IFN-beta](../Tools/Omics/PerturbationPrediction/ParseIFNB/FEATURE_IDENTITY.md) | Complete counts, donor aggregates and DE | Intervention dose/reagent identity and an explicit feature contract: 409 duration-panel symbols are absent by exact name; naming candidates are not verified replacements. |
+| [GSE181897](../Tools/Omics/PerturbationPrediction/GSE181897/README.md) | Original counts and native B-lineage aggregates across 64 donor IDs | Primary condition-code mapping; an external curator's B/C interpretation does not establish the original intervention. |
+
+None has been fitted or scored for its proposed prediction test. Resolve roles
+from experimental records, not RNA patterns. Freeze any justified protocol
+revision before prediction and disclose earlier outcome inspection, including
+Parse DE. Further storage improvements do not clear these admission gates.
 
 The latest [native legacy H5AD check](../Tools/Omics/H5AD/Projection/README.md#original-legacy-kang-2026-09-11)
 preserves every original Kang cell, gene, annotation and embedding, including
@@ -205,9 +237,11 @@ The [file-backed cell-axis and count consumer](../Tools/Omics/CountStore/CellAxi
 now address resident cell identities, QC and membership arrays for count aggregation.
 Fourteen native tests pass, and all 725,031 original Parse cell identities and
 declared matrix totals pass import and reopen at 62.6 MiB native peak RSS.
-The full paired count ingestion/replay and memory comparison remain pending;
-this metadata result does not establish that graphs or prediction models execute
-out of core, nor does it add a biological prediction result. Atlas supplies a separate
+The [complete paired count ingestion, source replay and memory comparison](../Tools/Omics/CountStore/CellAxis/COUNT_RESULTS.md)
+now pass: file-backed ingestion/replay peak at 165.6/181.8 MiB versus
+1,005.0/1,024.7 MiB for the resident owner. These completed count-path results do
+not establish that graphs or prediction models execute out of core, nor do they
+add a biological prediction result. Atlas supplies a separate
 variant-to-molecular hypothesis route; it supplies neither missing Parse treatment
 metadata nor experimental RNA-to-phenotype outcomes.
 

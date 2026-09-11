@@ -12,14 +12,17 @@ The ambition is to follow a molecular change across scales: how a structure move
 
 ## Biological prediction: current evidence
 
-NumiVivo can predict **population-average gene-expression responses in defined
-experimental settings** when the required training measurements, control profile
-and biological identities are available. Reliable prediction of general
-biological outcomes from DNA or RNA alone is not established.
+**Available data supports conditional estimates of average RNA responses;
+reliable prediction of general biological outcomes is not established.**
+NumiVivo can generate these estimates when the required training measurements,
+control profile and biological identities are available. Held-out experiments
+show useful results in some settings and failures in others; having compatible
+inputs does not establish accuracy for a new query.
 
 | Requested outcome | Decision from the available evidence |
 | --- | --- |
 | Average RNA response with matched training and untreated query measurements | **Supported as a conditional research estimate.** Performance depends on the treatment and population; retain no-change and training-mean baselines. |
+| RNA response to an unseen gene target with training perturbations, controls and gene annotations | **Limited validation.** Fixed GO prediction improves mean RMSE by 1.41–2.12% across five Replogle technical groups, but loses to the mean in 37/150 target/group folds; these are not independent biological replications. |
 | Exposure-dependent RNA response | **Development result.** Duration mean improves RMSE by 24.83% over the matched time-invariant mean in three donor holdouts; independent validation remains open. |
 | Reliable transfer to another study or biological context | **Not established.** Kang–HIRISA ridge fails both transfer directions; fixed-response GSE226572 transfer misses its declared improvement target. |
 | Molecular effects of a DNA substitution | **External hypothesis source.** AlphaGenome Atlas can contribute variant evidence; its results do not qualify a NumiVivo phenotype prediction. |
@@ -30,6 +33,12 @@ that information can be processed correctly. They do not establish that an
 unmeasured biological outcome can be predicted accurately. The
 [input-to-outcome decision](Documentation/BiologicalPrediction.md#available-information-does-not-imply-a-validated-outcome)
 separates these requirements and identifies the next work.
+
+For a concrete prediction, specify the measured endpoint and units, population,
+intervention and exposure time, then identify which training and control
+measurements would be available before the outcome. The
+[current completion and admission gates](Documentation/BiologicalPrediction.md#current-completion-and-admission-gates)
+separate finished execution work from the missing biological evidence.
 
 In 79 HIRISA held-out donor folds, context ridge beats
 no-change in 14 of 16 contrasts, but beats the simpler training-mean response in
