@@ -99,7 +99,10 @@ retries and saved donor receipts protect the replacement run. No predictor has
 been fitted or scored. The source historical
 `gene_count` differs from retained X cardinality for 30,634 cells. Exact symbol
 correspondence also leaves 409 of the duration model's response features absent,
-and its dose/reagent identity is unresolved. Neither QC agreement nor model
+and its dose/reagent identity is unresolved. A subsequent [HGNC nomenclature
+audit](../Tools/Omics/PerturbationPrediction/ParseIFNB/FEATURE_IDENTITY.md) identifies
+271 unique candidates but leaves 138 unresolved/ambiguous; it changes neither
+the panel nor the prediction gate. Neither QC agreement nor model
 compatibility is forced by excluding cells, filling absent genes with zero or
 silently changing the panel. The count-stream owner checks arithmetic and
 reconstruction; the Python/HDF5 adapter owns remote extraction and source ranges.

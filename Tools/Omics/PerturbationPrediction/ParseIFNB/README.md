@@ -26,6 +26,12 @@ missing features filled with zero, or panel silently changed. A future transfer
 protocol must resolve correspondence or declare its supported panel before fit
 and scoring; the current frozen model cannot simply be passed these axes.
 
+The subsequent [HGNC identity audit](FEATURE_IDENTITY.md) finds 271 unique
+approved/previous-symbol correspondence candidates among those 409 absences.
+The other 138 remain unresolved or ambiguous, and the source lacks stable gene
+IDs. These are nomenclature candidates, not a changed model panel or proof of
+sequence-equivalent measurements; the exact-name compatibility gate remains open.
+
 The source methods identify 24-hour stimulation. The exact IFN-beta dose and
 reagent remain unresolved in accessible primary evidence. No model has been
 fitted or scored on this cohort. Count agreement would not repair the previous
