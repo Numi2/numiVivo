@@ -81,4 +81,38 @@ import Testing
             #expect(p.moments.treatedMeanCPM==3000)
         }
     }
+    @Test func concaveCoordinateTangentsBoundCountLikelihood() throws {
+        for phi in [0.0,0.2,100.0] { for y: UInt64 in [0,7] {
+            let l=try VivoCountRateLikelihood(.init(libraryCounts: [100,2000],cellsPerLibrary: [2,3],geneCountsPerLibrary: [y,y*2]),cellDispersion: phi)
+            let scale=l.concaveCoordinateScaleCPM
+            for x in [0.1,1.0,5.0,10.0] {
+                let r=scale*expm1(x),ell=try l.logRelativeLikelihood(rateCPM: r),slope=try l.coordinateSlope(rateCPM: r,scaleCPM: scale)
+                for xx in [0.0,0.05,0.2,2.0,7.0,11.0] {
+                    #expect(try l.logRelativeLikelihood(rateCPM: scale*expm1(xx))<=ell+slope*(xx-x)+1e-8)
+                }
+                let h=1e-5,d=(try l.logRelativeLikelihood(rateCPM: scale*expm1(x+h))-l.logRelativeLikelihood(rateCPM: scale*expm1(x-h)))/(2*h)
+                #expect(abs(d-slope)<1e-6*max(1,abs(slope)))
+            }
+        } }
+    }
+    @Test func adaptiveIdenticalDonorsHaveAnExplicitContinuousBound() throws {
+        let pairs=(0..<3).map { VivoJointCountPair(donorID: "d\($0)",control: stratum(0),treated: stratum(3)) }
+        let m=try VivoAdaptiveJointCountResponse.fit(pairs: pairs,featureID: "g",controlConditionID: "C",treatedConditionID: "T",controlCellDispersion: 0.2,treatedCellDispersion: 0.2,trainingSource: source)
+        #expect(m.status=="boundedContinuousLikelihood")
+        #expect(m.certificate!.boxes.count==1)
+        #expect(m.certificate!.maximumMeanDirectionalUpperBound<=1+1e-6)
+        let p=try VivoAdaptiveJointCountResponse.predict(control: stratum(0),featureID: "g",queryDonorID: "new",controlConditionID: "C",querySource: source,model: m,plannedTreatedLibraryCounts: [1000])
+        #expect(p.degenerateTreatedRateDistribution)
+        #expect(abs(p.moments.treatedMeanCPM-3000)<1e-8)
+    }
+    @Test func adaptiveBudgetExhaustionDoesNotAdmitPrediction() throws {
+        let pairs=zip([UInt64(0),1,2,4,9],[UInt64(6),3,1,2,0]).enumerated().map {
+            VivoJointCountPair(donorID: "d\($0.offset)",control: stratum($0.element.0),treated: stratum($0.element.1))
+        }
+        let m=try VivoAdaptiveJointCountResponse.fit(pairs: pairs,featureID: "g",controlConditionID: "C",treatedConditionID: "T",controlCellDispersion: 0.2,treatedCellDispersion: 0.2,trainingSource: source,plan: .init(initialGridPointsPerAxis: 3,maximumSupportAdditions: 0,maximumOracleLeaves: 1))
+        #expect(m.status != "boundedContinuousLikelihood")
+        #expect(m.certificate != nil)
+        #expect(throws: (any Error).self) { try VivoAdaptiveJointCountResponse.predict(control: stratum(1),featureID: "g",queryDonorID: "new",controlConditionID: "C",querySource: source,model: m,plannedTreatedLibraryCounts: [1000]) }
+    }
+
 }

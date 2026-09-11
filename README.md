@@ -160,6 +160,12 @@ and 4,712 conditional predictions pass independent numerical checks. However,
 **17/19 available gene models fail grid refinement**; 13/32 origin/gene cases
 remain unavailable. This implementation does not yet establish stable predictions
 or repair the failed biological uncertainty coverage.
+The subsequent [adaptive support fitter](Tools/Omics/CountObservation/Joint/Adaptive/README.md)
+now bounds the continuous likelihood gap for **all 19 available models** from
+two initial grids. All 19 also pass the 1% query-moment sensitivity criterion;
+1.82 million independent numerical comparisons pass. This resolves the tested
+support-convergence problem. Parameter uncertainty, full-transcriptome execution
+and independent biological validation remain open.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five

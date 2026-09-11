@@ -41,7 +41,7 @@ success nor a failure.
 | Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. It loses to the mean in 37/150 target/group folds. | Independent biological contexts, target selection and replication; technical groups do not supply these. |
 | Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
 | Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
-| Couple control counts to treated RNA uncertainty | The joint finite-support model passes numerical verification on the fixed 16-gene panel, but 17/19 available models fail grid refinement. | Continuous-support convergence, parameter uncertainty, full-transcriptome execution and new biological calibration. |
+| Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Parameter uncertainty, full-transcriptome execution and new biological calibration. |
 | Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
 
 The GSE181897 input contract is now resolved and its frozen comparison is complete.
@@ -164,10 +164,23 @@ The predeclared grid refinement gate **fails for 17/19 available models**; only
 HIRISA MZB1 and PPP1R18 pass. A finite-grid optimum therefore does not establish
 convergence of the continuous mixing distribution or stable query uncertainty.
 Forty regression tests pass, including two repaired numerical defects retained
-with their original failures and outputs. The next numerical work is support
-refinement with an explicit convergence certificate, followed by parameter
-uncertainty and full-transcriptome qualification. Independent biological outcome
+with their original failures and outputs. The subsequent adaptive work below resolves the tested support-convergence
+gate; parameter uncertainty and full-transcriptome qualification remain open. Independent biological outcome
 validation remains necessary; the prior 35.54% treated-coverage failure stands.
+
+The [adaptive joint support fitter](../Tools/Omics/CountObservation/Joint/Adaptive/README.md)
+now reaches a continuous mean log-likelihood-gap bound of `1e-6` for all 19
+available models, from both nine- and seventeen-point initial grids. An
+independent individual-cell reference checks all 15,472 final partition leaves
+and 1,820,028 numerical values. All 19 models pass the frozen 1% query-moment
+initialization-sensitivity criterion; the largest scaled change is `1.65e-6`.
+The analytic bound is evaluated in FP64 with a documented numerical allowance,
+not formal interval arithmetic. Both exhausted PNPLA4 optimizer attempts remain
+retained alongside the repaired native exchange rule. All 43 regression tests
+pass, and the previous fixed-grid outputs remain byte-identical. This advances
+numerical fitting and conditional prediction on the unchanged 16-gene panel;
+it does not establish statistical parameter uncertainty, full-transcriptome
+qualification or improved biological outcome coverage.
 
 The [complete GSE226572 external experiment](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
 now evaluates native whole-population predictions across all three new donors

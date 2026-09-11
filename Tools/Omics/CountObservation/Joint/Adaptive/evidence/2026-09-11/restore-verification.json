@@ -1,0 +1,34 @@
+{
+  "restoredLogicalFiles": 292,
+  "verifiedUniqueObjects": 268,
+  "archiveSHA256": "4cdfc4636ac41271e0c898e7bd6b96fe27699a944e6f48664d3ebcc88fb5d449",
+  "independentChecks": [
+    {
+      "path": "study/Kang-verification.json",
+      "valuesCompared": 272129,
+      "maximumScaledError": 7.815970093361102e-14
+    },
+    {
+      "path": "study/HIRISA-verification.json",
+      "valuesCompared": 414158,
+      "maximumScaledError": 5.187961171770894e-12
+    },
+    {
+      "path": "study/initialization17/Kang-verification.json",
+      "valuesCompared": 451981,
+      "maximumScaledError": 7.815970093361102e-14
+    },
+    {
+      "path": "study/initialization17/HIRISA-verification.json",
+      "valuesCompared": 681760,
+      "maximumScaledError": 5.187961171770894e-12
+    }
+  ],
+  "changedOnlyElapsedTime": [
+    "study/HIRISA-verification.json",
+    "study/Kang-verification.json",
+    "study/initialization17/HIRISA-verification.json",
+    "study/initialization17/Kang-verification.json"
+  ],
+  "initializationComparisonExactlyReproduced": true
+}

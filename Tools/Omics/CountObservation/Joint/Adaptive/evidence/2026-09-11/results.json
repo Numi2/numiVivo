@@ -1,0 +1,1445 @@
+{
+  "fixedGridReplay": {
+    "HIRISA": {
+      "SHA256": "f011989a0e59d98ad58b7444dc19d8e2a1e390cdf973b65f99c94c9d95a217d3",
+      "byteIdenticalToPublishedParent": true,
+      "expandedBytes": 14283964
+    },
+    "Kang": {
+      "SHA256": "cfff5b5298606a48eb2d4b6c0da1f1a40d44bee006583ea41fba62c7c9b2a245",
+      "byteIdenticalToPublishedParent": true,
+      "expandedBytes": 10701780
+    },
+    "binarySHA256": "a11b8eacea2464d424425239c45d298fc9e43575981f9b7d9a3bd0d3ae35b5e0"
+  },
+  "independentBiologicalValidation": false,
+  "initializationSensitivity": {
+    "HIRISA": {
+      "records": [
+        {
+          "feature": "HIRISA:symbol|ACAD10",
+          "maximumScaledQueryMomentChange": 8.881784197001252e-16,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "log1pResponseMean",
+            "initialGrid17": -0.185412593658409,
+            "initialGrid9": -0.1854125936584099,
+            "queryID": "3:symbol|ACAD10"
+          }
+        },
+        {
+          "feature": "HIRISA:symbol|AHCYL2",
+          "maximumScaledQueryMomentChange": 2.6582002274908214e-09,
+          "meanLogLikelihoodChange": 1.7763568394002506e-16,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedVarianceCPM2",
+            "initialGrid17": 10.81452663435513,
+            "initialGrid9": 10.814526605607952,
+            "queryID": "17:symbol|AHCYL2"
+          }
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "HIRISA:symbol|CCDC170",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "HIRISA:symbol|CCL1",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "feature": "HIRISA:symbol|CRYGS",
+          "maximumScaledQueryMomentChange": 1.2836620655320985e-11,
+          "meanLogLikelihoodChange": 1.7763568394002506e-16,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedVarianceCPM2",
+            "initialGrid17": 0.9950297917096427,
+            "initialGrid9": 0.9950297917224793,
+            "queryID": "32:symbol|CRYGS"
+          }
+        },
+        {
+          "feature": "HIRISA:symbol|EFHC2",
+          "maximumScaledQueryMomentChange": 2.4468105233374384e-10,
+          "meanLogLikelihoodChange": -1.7763568394002506e-16,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedMeanCPM",
+            "initialGrid17": 2.170601003269054,
+            "initialGrid9": 2.170601003800159,
+            "queryID": "49:symbol|EFHC2"
+          }
+        },
+        {
+          "feature": "HIRISA:symbol|GLCCI1",
+          "maximumScaledQueryMomentChange": 1.5520900184224348e-12,
+          "meanLogLikelihoodChange": -1.7763568394002506e-16,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedVarianceCPM2",
+            "initialGrid17": 3.145926334396455,
+            "initialGrid9": 3.1459263343915724,
+            "queryID": "12:symbol|GLCCI1"
+          }
+        },
+        {
+          "feature": "HIRISA:symbol|INTS2",
+          "maximumScaledQueryMomentChange": 5.977894819970395e-09,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedVarianceCPM2",
+            "initialGrid17": 5.967972928272494,
+            "initialGrid9": 5.967972963948409,
+            "queryID": "22:symbol|INTS2"
+          }
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "HIRISA:symbol|KCNE3",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "feature": "HIRISA:symbol|MXRA7",
+          "maximumScaledQueryMomentChange": 1.5205045428480865e-09,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedVarianceCPM2",
+            "initialGrid17": 4.059495403188867,
+            "initialGrid9": 4.059495397016386,
+            "queryID": "12:symbol|MXRA7"
+          }
+        },
+        {
+          "feature": "HIRISA:symbol|MZB1",
+          "maximumScaledQueryMomentChange": 0,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": null
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "HIRISA:symbol|PACSIN1",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "feature": "HIRISA:symbol|PNPLA4",
+          "maximumScaledQueryMomentChange": 6.703901536327172e-09,
+          "meanLogLikelihoodChange": -1.7763568394002506e-16,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedVarianceCPM2",
+            "initialGrid17": 1.7486756235704544,
+            "initialGrid9": 1.7486756352934036,
+            "queryID": "1:symbol|PNPLA4"
+          }
+        },
+        {
+          "feature": "HIRISA:symbol|PPP1R18",
+          "maximumScaledQueryMomentChange": 0,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": null
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "HIRISA:symbol|SH2D1B",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "feature": "HIRISA:symbol|TRIP4",
+          "maximumScaledQueryMomentChange": 0,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": null
+        }
+      ],
+      "states": {
+        "passed": 11,
+        "unavailableOrUnconverged": 5
+      }
+    },
+    "Kang": {
+      "records": [
+        {
+          "feature": "Kang:symbol|ACAD10",
+          "maximumScaledQueryMomentChange": 0,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": null
+        },
+        {
+          "feature": "Kang:symbol|AHCYL2",
+          "maximumScaledQueryMomentChange": 2.0722600604779795e-08,
+          "meanLogLikelihoodChange": -2.220446049250313e-16,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedVarianceCPM2",
+            "initialGrid17": 1.461050327090668,
+            "initialGrid9": 1.4610502968139063,
+            "queryID": "1:symbol|AHCYL2"
+          }
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "Kang:symbol|CCDC170",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "Kang:symbol|CCL1",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "Kang:symbol|CRYGS",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "Kang:symbol|EFHC2",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "feature": "Kang:symbol|GLCCI1",
+          "maximumScaledQueryMomentChange": 0,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": null
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "Kang:symbol|INTS2",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "Kang:symbol|KCNE3",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "Kang:symbol|MXRA7",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "feature": "Kang:symbol|MZB1",
+          "maximumScaledQueryMomentChange": 2.6271695929835914e-10,
+          "meanLogLikelihoodChange": -2.220446049250313e-16,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "log1pResponseMean",
+            "initialGrid17": -0.5366581640299635,
+            "initialGrid9": -0.5366581637672465,
+            "queryID": "56:symbol|MZB1"
+          }
+        },
+        {
+          "alternateStatus": "unavailableCellDispersion",
+          "feature": "Kang:symbol|PACSIN1",
+          "primaryStatus": "unavailableCellDispersion",
+          "status": "unavailableOrUnconverged"
+        },
+        {
+          "feature": "Kang:symbol|PNPLA4",
+          "maximumScaledQueryMomentChange": 4.281533057220093e-08,
+          "meanLogLikelihoodChange": 1.1657341758564144e-14,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedVarianceCPM2",
+            "initialGrid17": 47.43534054035887,
+            "initialGrid9": 47.43533850939917,
+            "queryID": "0:symbol|PNPLA4"
+          }
+        },
+        {
+          "feature": "Kang:symbol|PPP1R18",
+          "maximumScaledQueryMomentChange": 0,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": null
+        },
+        {
+          "feature": "Kang:symbol|SH2D1B",
+          "maximumScaledQueryMomentChange": 0,
+          "meanLogLikelihoodChange": 0.0,
+          "queries": 62,
+          "status": "passed",
+          "worst": null
+        },
+        {
+          "feature": "Kang:symbol|TRIP4",
+          "maximumScaledQueryMomentChange": 1.6415862515457987e-06,
+          "meanLogLikelihoodChange": -9.836575998178887e-14,
+          "queries": 62,
+          "status": "passed",
+          "worst": {
+            "field": "treatedVarianceCPM2",
+            "initialGrid17": 45.009934922350254,
+            "initialGrid9": 45.009861034781196,
+            "queryID": "57:symbol|TRIP4"
+          }
+        }
+      ],
+      "states": {
+        "passed": 8,
+        "unavailableOrUnconverged": 8
+      }
+    },
+    "qualification": "Numerical sensitivity at fixed fitted cell dispersions and on the same known development data; this is not statistical parameter uncertainty or biological validation."
+  },
+  "numericalValuesCompared": 1820028,
+  "origins": {
+    "HIRISA": {
+      "initialGrid17": {
+        "pipeline": {
+          "binarySHA256": "86ef1a3e20e52877383c1ff8a35ab0206d5c41d5ee636827a5a57d3263d16ce1",
+          "command": [
+            "ssh",
+            "-4",
+            "-C",
+            "-o",
+            "ConnectTimeout=10",
+            "-o",
+            "ServerAliveInterval=10",
+            "-o",
+            "ServerAliveCountMax=1",
+            "macmini",
+            "python3 -c 'import hashlib,pathlib,sys; p=pathlib.Path('\"'\"'/Users/n/numivivo-adaptive-counts-20260911/build/adaptive17-counts'\"'\"'); assert hashlib.sha256(p.read_bytes()).hexdigest()=='\"'\"'86ef1a3e20e52877383c1ff8a35ab0206d5c41d5ee636827a5a57d3263d16ce1'\"'\"'' && /usr/bin/time -l /Users/n/numivivo-adaptive-counts-20260911/build/adaptive17-counts"
+          ],
+          "controllerPID": 38181,
+          "errors": [],
+          "exitCode": 0,
+          "finishedUnix": 1789158977.8558059,
+          "origin": "HIRISA",
+          "outputBytes": 3349734,
+          "outputSHA256": "bd6e87153185304c074ae3ae2dfa9f02434e05514288990e6d7ed96405c083de",
+          "seconds": 13.114654064178467,
+          "sshPID": 38215,
+          "startedUnix": 1789158964.74114,
+          "status": "passed"
+        },
+        "verification": {
+          "certificates": [
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000008767605528,
+              "independentWitness": 1.0000001194598072,
+              "leaves": 241,
+              "maximumLeafCenterScore": 1.0000001194598072,
+              "modelID": "HIRISA:symbol|ACAD10:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009910075924,
+              "independentWitness": 1.000000510287746,
+              "leaves": 417,
+              "maximumLeafCenterScore": 1.000000510287746,
+              "modelID": "HIRISA:symbol|AHCYL2:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009386863267,
+              "independentWitness": 1.0000003786793723,
+              "leaves": 437,
+              "maximumLeafCenterScore": 1.0000003786793723,
+              "modelID": "HIRISA:symbol|CRYGS:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009999993975,
+              "independentWitness": 1.0000009390771234,
+              "leaves": 312,
+              "maximumLeafCenterScore": 1.0000009334773008,
+              "modelID": "HIRISA:symbol|EFHC2:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009658807112,
+              "independentWitness": 1.0000001779970935,
+              "leaves": 305,
+              "maximumLeafCenterScore": 1.0000001779970935,
+              "modelID": "HIRISA:symbol|GLCCI1:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009687818316,
+              "independentWitness": 1.0000000071109083,
+              "leaves": 241,
+              "maximumLeafCenterScore": 0.9999998885853383,
+              "modelID": "HIRISA:symbol|INTS2:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009765938604,
+              "independentWitness": 1.0000007956231693,
+              "leaves": 198,
+              "maximumLeafCenterScore": 1.0000007956231693,
+              "modelID": "HIRISA:symbol|MXRA7:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.000000897790581,
+              "independentWitness": 1.0000000916784901,
+              "leaves": 113,
+              "maximumLeafCenterScore": 1.0000000916784901,
+              "modelID": "HIRISA:symbol|MZB1:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.000000999492279,
+              "independentWitness": 1.0000007325590017,
+              "leaves": 499,
+              "maximumLeafCenterScore": 1.0000006862746966,
+              "modelID": "HIRISA:symbol|PNPLA4:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000006707256381,
+              "independentWitness": 1.0000000000006346,
+              "leaves": 43,
+              "maximumLeafCenterScore": 0.9999977958670674,
+              "modelID": "HIRISA:symbol|PPP1R18:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009324723214,
+              "independentWitness": 1.0000003870095933,
+              "leaves": 285,
+              "maximumLeafCenterScore": 1.0000003870095933,
+              "modelID": "HIRISA:symbol|TRIP4:grid=17"
+            }
+          ],
+          "errors": [],
+          "fitStates": {
+            "boundedContinuousLikelihood": 11,
+            "unavailableCellDispersion": 5
+          },
+          "fits": [
+            {
+              "finiteGridGap": 3.863576125695545e-12,
+              "independentUpper": 1.0000008767605528,
+              "leaves": 241,
+              "meanLogLikelihoodGainOverGrid65": 0.0016924647604174225,
+              "modelID": "HIRISA:symbol|ACAD10:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 17,
+              "supportShape": [
+                31,
+                32
+              ]
+            },
+            {
+              "finiteGridGap": 5.550533366260879e-09,
+              "independentUpper": 1.0000009910075924,
+              "leaves": 417,
+              "meanLogLikelihoodGainOverGrid65": 0.0007882497884361683,
+              "modelID": "HIRISA:symbol|AHCYL2:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 19,
+              "supportShape": [
+                33,
+                32
+              ]
+            },
+            {
+              "modelID": "HIRISA:symbol|CCDC170:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "HIRISA:symbol|CCL1:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 1.7067480762023024e-10,
+              "independentUpper": 1.0000009386863267,
+              "leaves": 437,
+              "meanLogLikelihoodGainOverGrid65": 0.0005151871211570124,
+              "modelID": "HIRISA:symbol|CRYGS:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 22,
+              "supportShape": [
+                37,
+                37
+              ]
+            },
+            {
+              "finiteGridGap": 3.558749961385388e-09,
+              "independentUpper": 1.0000009999993975,
+              "leaves": 312,
+              "meanLogLikelihoodGainOverGrid65": 0.0011314996271963196,
+              "modelID": "HIRISA:symbol|EFHC2:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 16,
+              "supportShape": [
+                32,
+                30
+              ]
+            },
+            {
+              "finiteGridGap": 1.1299288171784383e-09,
+              "independentUpper": 1.0000009658807112,
+              "leaves": 305,
+              "meanLogLikelihoodGainOverGrid65": 0.0035450754904891467,
+              "modelID": "HIRISA:symbol|GLCCI1:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 19,
+              "supportShape": [
+                33,
+                34
+              ]
+            },
+            {
+              "finiteGridGap": 7.110960265066524e-09,
+              "independentUpper": 1.0000009687818316,
+              "leaves": 241,
+              "meanLogLikelihoodGainOverGrid65": 0.0005086396703529062,
+              "modelID": "HIRISA:symbol|INTS2:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 9,
+              "supportShape": [
+                28,
+                27
+              ]
+            },
+            {
+              "modelID": "HIRISA:symbol|KCNE3:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 1.8239334487191172e-09,
+              "independentUpper": 1.0000009765938604,
+              "leaves": 198,
+              "meanLogLikelihoodGainOverGrid65": 0.0008833694980504347,
+              "modelID": "HIRISA:symbol|MXRA7:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 12,
+              "supportShape": [
+                30,
+                27
+              ]
+            },
+            {
+              "finiteGridGap": 0,
+              "independentUpper": 1.000000897790581,
+              "leaves": 113,
+              "meanLogLikelihoodGainOverGrid65": 0.0005707816771478135,
+              "modelID": "HIRISA:symbol|MZB1:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 4,
+              "supportShape": [
+                23,
+                24
+              ]
+            },
+            {
+              "modelID": "HIRISA:symbol|PACSIN1:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 7.566790971580417e-09,
+              "independentUpper": 1.000000999492279,
+              "leaves": 499,
+              "meanLogLikelihoodGainOverGrid65": 0.0009249275552313918,
+              "modelID": "HIRISA:symbol|PNPLA4:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 27,
+              "supportShape": [
+                44,
+                39
+              ]
+            },
+            {
+              "finiteGridGap": 2.220446049250313e-16,
+              "independentUpper": 1.0000006707256381,
+              "leaves": 43,
+              "meanLogLikelihoodGainOverGrid65": 9.809042467168184e-13,
+              "modelID": "HIRISA:symbol|PPP1R18:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 0,
+              "supportShape": [
+                20,
+                20
+              ]
+            },
+            {
+              "modelID": "HIRISA:symbol|SH2D1B:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 3.3490508144495834e-09,
+              "independentUpper": 1.0000009324723214,
+              "leaves": 285,
+              "meanLogLikelihoodGainOverGrid65": 5.5243000023352806e-05,
+              "modelID": "HIRISA:symbol|TRIP4:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 11,
+              "supportShape": [
+                27,
+                30
+              ]
+            }
+          ],
+          "histogramsChecked": 1152,
+          "maximumScaledError": 5.187961171770894e-12,
+          "numericalValuesCompared": 681760,
+          "origin": "HIRISA",
+          "qualification": "Analytic support bounds reconstructed in FP64 from individual cells, not directed-rounding interval certification or biological validation.",
+          "queryStates": {
+            "conditionalPrediction": 682,
+            "unavailableCellDispersion": 310
+          },
+          "seconds": 1.955003261566162,
+          "status": "passed-independent-numerics"
+        }
+      },
+      "primary": {
+        "pipeline": {
+          "binarySHA256": "3674fbac0f21df28fd1e9175c45a94f1cda0c2ce7c7e0f68527b38bfca58455a",
+          "command": [
+            "ssh",
+            "-4",
+            "-C",
+            "-o",
+            "ConnectTimeout=10",
+            "-o",
+            "ServerAliveInterval=10",
+            "-o",
+            "ServerAliveCountMax=1",
+            "macmini",
+            "python3 -c 'import hashlib,pathlib,sys; p=pathlib.Path('\"'\"'/Users/n/numivivo-adaptive-counts-20260911/build/adaptive-counts'\"'\"'); assert hashlib.sha256(p.read_bytes()).hexdigest()=='\"'\"'3674fbac0f21df28fd1e9175c45a94f1cda0c2ce7c7e0f68527b38bfca58455a'\"'\"'' && /usr/bin/time -l /Users/n/numivivo-adaptive-counts-20260911/build/adaptive-counts"
+          ],
+          "controllerPID": 34394,
+          "errors": [],
+          "exitCode": 0,
+          "finishedUnix": 1789158829.1570659,
+          "origin": "HIRISA",
+          "outputBytes": 2803594,
+          "outputSHA256": "c46b33aea72e30370a7960c26c67d8e36ee80941ca0350776c0c12eb0263b28f",
+          "seconds": 11.799517154693604,
+          "sshPID": 35059,
+          "startedUnix": 1789158817.357533,
+          "status": "passed"
+        },
+        "verification": {
+          "certificates": [
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000008767605526,
+              "independentWitness": 1.000000119459807,
+              "leaves": 241,
+              "maximumLeafCenterScore": 1.000000119459807,
+              "modelID": "HIRISA:symbol|ACAD10:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009890423174,
+              "independentWitness": 1.000000508322186,
+              "leaves": 417,
+              "maximumLeafCenterScore": 1.000000508322186,
+              "modelID": "HIRISA:symbol|AHCYL2:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.000000938698301,
+              "independentWitness": 1.0000003786912937,
+              "leaves": 437,
+              "maximumLeafCenterScore": 1.0000003786912937,
+              "modelID": "HIRISA:symbol|CRYGS:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009996311499,
+              "independentWitness": 1.0000009381353712,
+              "leaves": 310,
+              "maximumLeafCenterScore": 1.0000009325355506,
+              "modelID": "HIRISA:symbol|EFHC2:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009658856477,
+              "independentWitness": 1.0000001779956238,
+              "leaves": 305,
+              "maximumLeafCenterScore": 1.0000001779956238,
+              "modelID": "HIRISA:symbol|GLCCI1:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.000000972039289,
+              "independentWitness": 1.000000002017146,
+              "leaves": 241,
+              "maximumLeafCenterScore": 0.9999998918427936,
+              "modelID": "HIRISA:symbol|INTS2:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009747700132,
+              "independentWitness": 1.0000007937993223,
+              "leaves": 198,
+              "maximumLeafCenterScore": 1.0000007937993223,
+              "modelID": "HIRISA:symbol|MXRA7:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.000000897790581,
+              "independentWitness": 1.0000000916784901,
+              "leaves": 113,
+              "maximumLeafCenterScore": 1.0000000916784901,
+              "modelID": "HIRISA:symbol|MZB1:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.00000099128372,
+              "independentWitness": 1.0000007277119118,
+              "leaves": 499,
+              "maximumLeafCenterScore": 1.00000068142868,
+              "modelID": "HIRISA:symbol|PNPLA4:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000006707256381,
+              "independentWitness": 1.0000000000006346,
+              "leaves": 43,
+              "maximumLeafCenterScore": 0.9999977958670674,
+              "modelID": "HIRISA:symbol|PPP1R18:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009324723214,
+              "independentWitness": 1.0000003870095933,
+              "leaves": 285,
+              "maximumLeafCenterScore": 1.0000003870095933,
+              "modelID": "HIRISA:symbol|TRIP4:grid=9"
+            }
+          ],
+          "errors": [],
+          "fitStates": {
+            "boundedContinuousLikelihood": 11,
+            "unavailableCellDispersion": 5
+          },
+          "fits": [
+            {
+              "finiteGridGap": 3.86335408109062e-12,
+              "independentUpper": 1.0000008767605526,
+              "leaves": 241,
+              "meanLogLikelihoodGainOverGrid65": 0.0016924647604174225,
+              "modelID": "HIRISA:symbol|ACAD10:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 17,
+              "supportShape": [
+                23,
+                24
+              ]
+            },
+            {
+              "finiteGridGap": 4.954169519066909e-09,
+              "independentUpper": 1.0000009890423174,
+              "leaves": 417,
+              "meanLogLikelihoodGainOverGrid65": 0.0007882497884359907,
+              "modelID": "HIRISA:symbol|AHCYL2:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 21,
+              "supportShape": [
+                27,
+                26
+              ]
+            },
+            {
+              "modelID": "HIRISA:symbol|CCDC170:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "HIRISA:symbol|CCL1:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 1.8259682654786502e-10,
+              "independentUpper": 1.000000938698301,
+              "leaves": 437,
+              "meanLogLikelihoodGainOverGrid65": 0.0005151871211570124,
+              "modelID": "HIRISA:symbol|CRYGS:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 23,
+              "supportShape": [
+                30,
+                30
+              ]
+            },
+            {
+              "finiteGridGap": 3.1905371677964922e-09,
+              "independentUpper": 1.0000009996311499,
+              "leaves": 310,
+              "meanLogLikelihoodGainOverGrid65": 0.001131499627196142,
+              "modelID": "HIRISA:symbol|EFHC2:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 17,
+              "supportShape": [
+                25,
+                22
+              ]
+            },
+            {
+              "finiteGridGap": 1.1284588818938346e-09,
+              "independentUpper": 1.0000009658856477,
+              "leaves": 305,
+              "meanLogLikelihoodGainOverGrid65": 0.0035450754904889693,
+              "modelID": "HIRISA:symbol|GLCCI1:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 20,
+              "supportShape": [
+                26,
+                27
+              ]
+            },
+            {
+              "finiteGridGap": 2.017145783739238e-09,
+              "independentUpper": 1.000000972039289,
+              "leaves": 241,
+              "meanLogLikelihoodGainOverGrid65": 0.0005086396703530838,
+              "modelID": "HIRISA:symbol|INTS2:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 9,
+              "supportShape": [
+                20,
+                19
+              ]
+            },
+            {
+              "modelID": "HIRISA:symbol|KCNE3:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 8.815170815523743e-14,
+              "independentUpper": 1.0000009747700132,
+              "leaves": 198,
+              "meanLogLikelihoodGainOverGrid65": 0.0008833694980506124,
+              "modelID": "HIRISA:symbol|MXRA7:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 13,
+              "supportShape": [
+                23,
+                20
+              ]
+            },
+            {
+              "finiteGridGap": 0,
+              "independentUpper": 1.000000897790581,
+              "leaves": 113,
+              "meanLogLikelihoodGainOverGrid65": 0.0005707816771478135,
+              "modelID": "HIRISA:symbol|MZB1:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 5,
+              "supportShape": [
+                17,
+                16
+              ]
+            },
+            {
+              "modelID": "HIRISA:symbol|PACSIN1:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 4.707855216778967e-09,
+              "independentUpper": 1.00000099128372,
+              "leaves": 499,
+              "meanLogLikelihoodGainOverGrid65": 0.0009249275552317471,
+              "modelID": "HIRISA:symbol|PNPLA4:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 28,
+              "supportShape": [
+                37,
+                31
+              ]
+            },
+            {
+              "finiteGridGap": 2.220446049250313e-16,
+              "independentUpper": 1.0000006707256381,
+              "leaves": 43,
+              "meanLogLikelihoodGainOverGrid65": 9.809042467168184e-13,
+              "modelID": "HIRISA:symbol|PPP1R18:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 0,
+              "supportShape": [
+                12,
+                12
+              ]
+            },
+            {
+              "modelID": "HIRISA:symbol|SH2D1B:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 3.3490508144495834e-09,
+              "independentUpper": 1.0000009324723214,
+              "leaves": 285,
+              "meanLogLikelihoodGainOverGrid65": 5.5243000023352806e-05,
+              "modelID": "HIRISA:symbol|TRIP4:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 11,
+              "supportShape": [
+                19,
+                22
+              ]
+            }
+          ],
+          "histogramsChecked": 1152,
+          "maximumScaledError": 5.187961171770894e-12,
+          "numericalValuesCompared": 414158,
+          "origin": "HIRISA",
+          "qualification": "Analytic support bounds reconstructed in FP64 from individual cells, not directed-rounding interval certification or biological validation.",
+          "queryStates": {
+            "conditionalPrediction": 682,
+            "unavailableCellDispersion": 310
+          },
+          "seconds": 1.887315034866333,
+          "status": "passed-independent-numerics"
+        }
+      }
+    },
+    "Kang": {
+      "initialGrid17": {
+        "pipeline": {
+          "binarySHA256": "86ef1a3e20e52877383c1ff8a35ab0206d5c41d5ee636827a5a57d3263d16ce1",
+          "command": [
+            "ssh",
+            "-4",
+            "-C",
+            "-o",
+            "ConnectTimeout=10",
+            "-o",
+            "ServerAliveInterval=10",
+            "-o",
+            "ServerAliveCountMax=1",
+            "macmini",
+            "python3 -c 'import hashlib,pathlib,sys; p=pathlib.Path('\"'\"'/Users/n/numivivo-adaptive-counts-20260911/build/adaptive17-counts'\"'\"'); assert hashlib.sha256(p.read_bytes()).hexdigest()=='\"'\"'86ef1a3e20e52877383c1ff8a35ab0206d5c41d5ee636827a5a57d3263d16ce1'\"'\"'' && /usr/bin/time -l /Users/n/numivivo-adaptive-counts-20260911/build/adaptive17-counts"
+          ],
+          "controllerPID": 37372,
+          "errors": [],
+          "exitCode": 0,
+          "finishedUnix": 1789158925.5947142,
+          "origin": "Kang",
+          "outputBytes": 2846910,
+          "outputSHA256": "4d6a09cc67c62cfca63e6a3119897c6146ce69322150614386fe125e538b8374",
+          "seconds": 1.2226719856262207,
+          "sshPID": 37406,
+          "startedUnix": 1789158924.372036,
+          "status": "passed"
+        },
+        "verification": {
+          "certificates": [
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009989589234,
+              "independentWitness": 1.0000005500452798,
+              "leaves": 789,
+              "maximumLeafCenterScore": 0.9999999708039238,
+              "modelID": "Kang:symbol|ACAD10:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009972448993,
+              "independentWitness": 1.0000009604390545,
+              "leaves": 204,
+              "maximumLeafCenterScore": 1.0000009604390545,
+              "modelID": "Kang:symbol|AHCYL2:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009991367136,
+              "independentWitness": 1.0000003672009408,
+              "leaves": 1237,
+              "maximumLeafCenterScore": 0.9999999769291952,
+              "modelID": "Kang:symbol|GLCCI1:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009557196132,
+              "independentWitness": 1.0000003373746482,
+              "leaves": 386,
+              "maximumLeafCenterScore": 1.0000003373746482,
+              "modelID": "Kang:symbol|MZB1:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009969763375,
+              "independentWitness": 1.0000009637100093,
+              "leaves": 381,
+              "maximumLeafCenterScore": 1.0000009637100096,
+              "modelID": "Kang:symbol|PNPLA4:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009940926282,
+              "independentWitness": 1.0000002380918633,
+              "leaves": 775,
+              "maximumLeafCenterScore": 1.0000002380918633,
+              "modelID": "Kang:symbol|PPP1R18:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009830392607,
+              "independentWitness": 1.0000005208086835,
+              "leaves": 340,
+              "maximumLeafCenterScore": 1.0000005208086835,
+              "modelID": "Kang:symbol|SH2D1B:grid=17"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009706484054,
+              "independentWitness": 1.000000725885842,
+              "leaves": 533,
+              "maximumLeafCenterScore": 1.000000725885842,
+              "modelID": "Kang:symbol|TRIP4:grid=17"
+            }
+          ],
+          "errors": [],
+          "fitStates": {
+            "boundedContinuousLikelihood": 8,
+            "unavailableCellDispersion": 8
+          },
+          "fits": [
+            {
+              "finiteGridGap": 9.14665432283357e-09,
+              "independentUpper": 1.0000009989589234,
+              "leaves": 789,
+              "meanLogLikelihoodGainOverGrid65": 3.7069432114456013e-05,
+              "modelID": "Kang:symbol|ACAD10:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 12,
+              "supportShape": [
+                28,
+                26
+              ]
+            },
+            {
+              "finiteGridGap": 7.64704632949531e-09,
+              "independentUpper": 1.0000009972448993,
+              "leaves": 204,
+              "meanLogLikelihoodGainOverGrid65": 2.8747110987881186e-05,
+              "modelID": "Kang:symbol|AHCYL2:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 7,
+              "supportShape": [
+                24,
+                21
+              ]
+            },
+            {
+              "modelID": "Kang:symbol|CCDC170:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|CCL1:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|CRYGS:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|EFHC2:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 3.9729810552557865e-09,
+              "independentUpper": 1.0000009991367136,
+              "leaves": 1237,
+              "meanLogLikelihoodGainOverGrid65": 4.5692794222729205e-05,
+              "modelID": "Kang:symbol|GLCCI1:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 9,
+              "supportShape": [
+                22,
+                28
+              ]
+            },
+            {
+              "modelID": "Kang:symbol|INTS2:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|KCNE3:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|MXRA7:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 3.956283300965424e-09,
+              "independentUpper": 1.0000009557196132,
+              "leaves": 386,
+              "meanLogLikelihoodGainOverGrid65": 0.0007770832546514228,
+              "modelID": "Kang:symbol|MZB1:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 16,
+              "supportShape": [
+                36,
+                31
+              ]
+            },
+            {
+              "modelID": "Kang:symbol|PACSIN1:grid=17",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 1.878034394664496e-09,
+              "independentUpper": 1.0000009969763375,
+              "leaves": 381,
+              "meanLogLikelihoodGainOverGrid65": 0.00020550984571610087,
+              "modelID": "Kang:symbol|PNPLA4:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 11,
+              "supportShape": [
+                33,
+                30
+              ]
+            },
+            {
+              "finiteGridGap": 0,
+              "independentUpper": 1.0000009940926282,
+              "leaves": 775,
+              "meanLogLikelihoodGainOverGrid65": 0.0005511089104210942,
+              "modelID": "Kang:symbol|PPP1R18:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 16,
+              "supportShape": [
+                35,
+                33
+              ]
+            },
+            {
+              "finiteGridGap": 0,
+              "independentUpper": 1.0000009830392607,
+              "leaves": 340,
+              "meanLogLikelihoodGainOverGrid65": 7.866884452523148e-05,
+              "modelID": "Kang:symbol|SH2D1B:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 8,
+              "supportShape": [
+                22,
+                26
+              ]
+            },
+            {
+              "finiteGridGap": 8.676360740977884e-09,
+              "independentUpper": 1.0000009706484054,
+              "leaves": 533,
+              "meanLogLikelihoodGainOverGrid65": 0.00012452378120486607,
+              "modelID": "Kang:symbol|TRIP4:grid=17",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 12,
+              "supportShape": [
+                31,
+                35
+              ]
+            }
+          ],
+          "histogramsChecked": 1248,
+          "maximumScaledError": 7.815970093361102e-14,
+          "numericalValuesCompared": 451981,
+          "origin": "Kang",
+          "qualification": "Analytic support bounds reconstructed in FP64 from individual cells, not directed-rounding interval certification or biological validation.",
+          "queryStates": {
+            "conditionalPrediction": 496,
+            "unavailableCellDispersion": 496
+          },
+          "seconds": 0.4944031238555908,
+          "status": "passed-independent-numerics"
+        }
+      },
+      "primary": {
+        "pipeline": {
+          "binarySHA256": "3674fbac0f21df28fd1e9175c45a94f1cda0c2ce7c7e0f68527b38bfca58455a",
+          "command": [
+            "ssh",
+            "-4",
+            "-C",
+            "-o",
+            "ConnectTimeout=10",
+            "-o",
+            "ServerAliveInterval=10",
+            "-o",
+            "ServerAliveCountMax=1",
+            "macmini",
+            "python3 -c 'import hashlib,pathlib,sys; p=pathlib.Path('\"'\"'/Users/n/numivivo-adaptive-counts-20260911/build/adaptive-counts'\"'\"'); assert hashlib.sha256(p.read_bytes()).hexdigest()=='\"'\"'3674fbac0f21df28fd1e9175c45a94f1cda0c2ce7c7e0f68527b38bfca58455a'\"'\"'' && /usr/bin/time -l /Users/n/numivivo-adaptive-counts-20260911/build/adaptive-counts"
+          ],
+          "controllerPID": 33693,
+          "errors": [],
+          "exitCode": 0,
+          "finishedUnix": 1789158803.479574,
+          "origin": "Kang",
+          "outputBytes": 2480248,
+          "outputSHA256": "257165fa687f792e50d04563bb8f255263a4e41b529ac992149b83417c7d0714",
+          "seconds": 0.9514920711517334,
+          "sshPID": 34364,
+          "startedUnix": 1789158802.528071,
+          "status": "passed"
+        },
+        "verification": {
+          "certificates": [
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009989589231,
+              "independentWitness": 1.0000005500452795,
+              "leaves": 789,
+              "maximumLeafCenterScore": 0.9999999708039236,
+              "modelID": "Kang:symbol|ACAD10:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009991660452,
+              "independentWitness": 1.000000970181397,
+              "leaves": 206,
+              "maximumLeafCenterScore": 1.000000970181397,
+              "modelID": "Kang:symbol|AHCYL2:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009991367136,
+              "independentWitness": 1.0000003672009408,
+              "leaves": 1237,
+              "maximumLeafCenterScore": 0.9999999769291952,
+              "modelID": "Kang:symbol|GLCCI1:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009558935692,
+              "independentWitness": 1.0000003373439506,
+              "leaves": 386,
+              "maximumLeafCenterScore": 1.0000003373439506,
+              "modelID": "Kang:symbol|MZB1:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.000000996972821,
+              "independentWitness": 1.0000009637081742,
+              "leaves": 381,
+              "maximumLeafCenterScore": 1.0000009637081742,
+              "modelID": "Kang:symbol|PNPLA4:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009940926282,
+              "independentWitness": 1.0000002380918633,
+              "leaves": 775,
+              "maximumLeafCenterScore": 1.0000002380918633,
+              "modelID": "Kang:symbol|PPP1R18:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009830392607,
+              "independentWitness": 1.0000005208086835,
+              "leaves": 340,
+              "maximumLeafCenterScore": 1.0000005208086835,
+              "modelID": "Kang:symbol|SH2D1B:grid=9"
+            },
+            {
+              "completePrefixFreePartition": true,
+              "independentUpper": 1.0000009675792711,
+              "independentWitness": 1.0000007234112243,
+              "leaves": 533,
+              "maximumLeafCenterScore": 1.0000007234112243,
+              "modelID": "Kang:symbol|TRIP4:grid=9"
+            }
+          ],
+          "errors": [],
+          "fitStates": {
+            "boundedContinuousLikelihood": 8,
+            "unavailableCellDispersion": 8
+          },
+          "fits": [
+            {
+              "finiteGridGap": 9.14665432283357e-09,
+              "independentUpper": 1.0000009989589231,
+              "leaves": 789,
+              "meanLogLikelihoodGainOverGrid65": 3.7069432114456013e-05,
+              "modelID": "Kang:symbol|ACAD10:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 13,
+              "supportShape": [
+                21,
+                18
+              ]
+            },
+            {
+              "finiteGridGap": 4.603150749460383e-09,
+              "independentUpper": 1.0000009991660452,
+              "leaves": 206,
+              "meanLogLikelihoodGainOverGrid65": 2.8747110987992208e-05,
+              "modelID": "Kang:symbol|AHCYL2:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 7,
+              "supportShape": [
+                16,
+                13
+              ]
+            },
+            {
+              "modelID": "Kang:symbol|CCDC170:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|CCL1:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|CRYGS:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|EFHC2:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 3.9729810552557865e-09,
+              "independentUpper": 1.0000009991367136,
+              "leaves": 1237,
+              "meanLogLikelihoodGainOverGrid65": 4.5692794222729205e-05,
+              "modelID": "Kang:symbol|GLCCI1:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 11,
+              "supportShape": [
+                15,
+                22
+              ]
+            },
+            {
+              "modelID": "Kang:symbol|INTS2:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|KCNE3:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "modelID": "Kang:symbol|MXRA7:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 3.925587188646773e-09,
+              "independentUpper": 1.0000009558935692,
+              "leaves": 386,
+              "meanLogLikelihoodGainOverGrid65": 0.0007770832546516449,
+              "modelID": "Kang:symbol|MZB1:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 18,
+              "supportShape": [
+                28,
+                25
+              ]
+            },
+            {
+              "modelID": "Kang:symbol|PACSIN1:grid=9",
+              "status": "unavailableCellDispersion"
+            },
+            {
+              "finiteGridGap": 1.910932523330189e-09,
+              "independentUpper": 1.000000996972821,
+              "leaves": 381,
+              "meanLogLikelihoodGainOverGrid65": 0.00020550984570444353,
+              "modelID": "Kang:symbol|PNPLA4:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 12,
+              "supportShape": [
+                25,
+                22
+              ]
+            },
+            {
+              "finiteGridGap": 0,
+              "independentUpper": 1.0000009940926282,
+              "leaves": 775,
+              "meanLogLikelihoodGainOverGrid65": 0.0005511089104210942,
+              "modelID": "Kang:symbol|PPP1R18:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 19,
+              "supportShape": [
+                29,
+                28
+              ]
+            },
+            {
+              "finiteGridGap": 0,
+              "independentUpper": 1.0000009830392607,
+              "leaves": 340,
+              "meanLogLikelihoodGainOverGrid65": 7.866884452523148e-05,
+              "modelID": "Kang:symbol|SH2D1B:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 9,
+              "supportShape": [
+                14,
+                19
+              ]
+            },
+            {
+              "finiteGridGap": 6.335795443845882e-09,
+              "independentUpper": 1.0000009675792711,
+              "leaves": 533,
+              "meanLogLikelihoodGainOverGrid65": 0.00012452378130334285,
+              "modelID": "Kang:symbol|TRIP4:grid=9",
+              "status": "boundedContinuousLikelihood",
+              "supportAdditions": 12,
+              "supportShape": [
+                23,
+                27
+              ]
+            }
+          ],
+          "histogramsChecked": 1248,
+          "maximumScaledError": 7.815970093361102e-14,
+          "numericalValuesCompared": 272129,
+          "origin": "Kang",
+          "qualification": "Analytic support bounds reconstructed in FP64 from individual cells, not directed-rounding interval certification or biological validation.",
+          "queryStates": {
+            "conditionalPrediction": 496,
+            "unavailableCellDispersion": 496
+          },
+          "seconds": 0.46614503860473633,
+          "status": "passed-independent-numerics"
+        }
+      }
+    }
+  },
+  "parentCommit": "5cc9bde1d3c330657030426c85750720eeac2743",
+  "partitionLeavesChecked": 15472,
+  "regressionSuites": 6,
+  "regressionTests": 43,
+  "status": "PASS-numerical-development-panel",
+  "trainingCells": 122164,
+  "unchangedPanelGenes": 16
+}

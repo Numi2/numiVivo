@@ -93,7 +93,19 @@ public enum VivoJointCountResponse {
             for i in 1..<plan.gridPointsPerAxis-1 { result.insert(expm1(a+span*Double(i)/Double(plan.gridPointsPerAxis-1))) }
             return result.sorted()
         }
-        let cr=grid(cm),tr=grid(tm),k=cr.count*tr.count,n=ordered.count
+        return try fitRateGrid(pairs: ordered,featureID: featureID,controlConditionID: controlConditionID,
+            treatedConditionID: treatedConditionID,controlCellDispersion: controlCellDispersion,
+            treatedCellDispersion: treatedCellDispersion,trainingSource: trainingSource,plan: plan,
+            control: control,treated: treated,controlRates: grid(cm),treatedRates: grid(tm),initial: nil)
+    }
+
+    static func fitRateGrid(pairs ordered: [VivoJointCountPair],featureID: String,controlConditionID: String,
+        treatedConditionID: String,controlCellDispersion: Double,treatedCellDispersion: Double,
+        trainingSource: VivoFingerprint,plan: VivoJointCountPlan,control: [VivoCountRateLikelihood],
+        treated: [VivoCountRateLikelihood],controlRates cr: [Double],treatedRates tr: [Double],
+        initial: VivoJointCountModel?,preferLargestExchangeGain: Bool=false) throws -> VivoJointCountModel {
+        let cm=control.map(\.maximumLikelihoodRateCPM),tm=treated.map(\.maximumLikelihoodRateCPM)
+        let k=cr.count*tr.count,n=ordered.count
         let cl=try control.map { l in try cr.map { try l.logRelativeLikelihood(rateCPM: $0) } }
         let tl=try treated.map { l in try tr.map { try l.logRelativeLikelihood(rateCPM: $0) } }
         var a=Array(repeating: Array(repeating: 0.0,count: k),count: n),w=Array(repeating: 0.0,count: k)
@@ -105,6 +117,15 @@ public enum VivoJointCountResponse {
             } }
             guard a[d][best]>0 else { throw VivoOmicsError.invalid("joint count support misses donor likelihood") }
             w[best]+=1/Double(n)
+        }
+        if let initial {
+            w=Array(repeating: 0,count: k)
+            for i in initial.controlRatesCPM.indices { for j in initial.treatedRatesCPM.indices {
+                guard let x=cr.firstIndex(of: initial.controlRatesCPM[i]),let y=tr.firstIndex(of: initial.treatedRatesCPM[j]) else {
+                    throw VivoOmicsError.invalid("adaptive count support lost prior coordinates")
+                }
+                w[x*tr.count+y]=initial.probabilities[i*initial.treatedRatesCPM.count+j]
+            } }
         }
         var s=Array(repeating: 0.0,count: n),gradient=Array(repeating: 0.0,count: k),iteration=0,gap=Double.infinity,status="iterationLimit"
         while true {
@@ -120,23 +141,36 @@ public enum VivoJointCountResponse {
             gap=max(0,gradient[best]/Double(n)-1)
             if gap<=plan.meanLogLikelihoodGapTolerance { status="convergedFiniteGridLikelihood";break }
             if iteration>=plan.maximumIterations { break }
-            let worst=w.indices.filter { w[$0]>0 }.min { gradient[$0]<gradient[$1] }!
-            let delta=(0..<n).map { a[$0][best]-a[$0][worst] },maximum=w[worst]
-            func derivative(_ step: Double) -> Double {
-                var value=0.0
-                for d in 0..<n {
-                    let den=s[d]+step*delta[d]
-                    if den<=0 { return -.infinity }
-                    value+=delta[d]/den
+            func exchange(_ worst: Int) -> (step: Double,gain: Double) {
+                let delta=(0..<n).map { a[$0][best]-a[$0][worst] },maximum=w[worst]
+                func derivative(_ step: Double) -> Double {
+                    var value=0.0
+                    for d in 0..<n {
+                        let den=s[d]+step*delta[d]
+                        if den<=0 { return -.infinity }
+                        value+=delta[d]/den
+                    }
+                    return value
                 }
-                return value
+                var step=maximum
+                if derivative(maximum)<0 {
+                    var lo=0.0,hi=maximum
+                    for _ in 0..<70 { let mid=(lo+hi)/2;if derivative(mid)>0 { lo=mid } else { hi=mid } }
+                    step=(lo+hi)/2
+                }
+                var gain=0.0
+                for d in 0..<n { gain+=log1p(step*delta[d]/s[d]) }
+                return (step,gain)
             }
-            var step=maximum
-            if derivative(maximum)<0 {
-                var lo=0.0,hi=maximum
-                for _ in 0..<70 { let mid=(lo+hi)/2;if derivative(mid)>0 { lo=mid } else { hi=mid } }
-                step=(lo+hi)/2
+            var worst=w.indices.filter { w[$0]>0 }.min { gradient[$0]<gradient[$1] }!
+            var move=exchange(worst)
+            if preferLargestExchangeGain {
+                for candidate in w.indices where w[candidate]>0 && candidate != best {
+                    let option=exchange(candidate)
+                    if option.gain>move.gain { worst=candidate;move=option }
+                }
             }
+            let step=move.step
             guard best != worst,step>0,w[best]+step>w[best] else { status="stalledBeforeCertificate";break }
             w[worst]-=step;w[best]+=step;iteration+=1
         }

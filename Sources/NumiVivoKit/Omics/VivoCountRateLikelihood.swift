@@ -89,4 +89,24 @@ public struct VivoCountRateLikelihood: Sendable {
         guard value.isFinite else { throw VivoOmicsError.invalid("count rate likelihood arithmetic") }
         return value
     }
+    /// With r = S * expm1(x), this scale makes each NB2 log likelihood
+    /// concave in x >= 0: phi * exposure * S < 1 for every depth bin.
+    var concaveCoordinateScaleCPM: Double { 1/(1+cellDispersion*(exposures.max() ?? 0)) }
+
+    func coordinateSlope(rateCPM r: Double,scaleCPM scale: Double) throws -> Double {
+        guard r.isFinite,r>=0,scale.isFinite,scale>0,scale<=concaveCoordinateScaleCPM else {
+            throw VivoOmicsError.invalid("count likelihood concave coordinate")
+        }
+        if r==0 { return geneCounts==0 ? -scale*Double(libraryCounts)/1e6 : .infinity }
+        var score=0.0
+        if cellDispersion==0 { score=Double(geneCounts)-Double(libraryCounts)/1e6*r }
+        else {
+            for i in counts.indices {
+                let q=VivoCountObservation.sigmoid(logOffsets[i]+log(r))
+                score+=counts[i]*(1-q)-ns[i]*q/cellDispersion
+            }
+        }
+        return score*(1+scale/r)
+    }
+
 }

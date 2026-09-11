@@ -173,3 +173,8 @@ independent verification needs only the restored files, not the full H5ADs or
 parent study directory. Retention includes individual-cell panel counts and full
 depths, original-query cells, source hashes, all fits/queries, independent duals,
 protocols, source snapshots, exact final/initial binaries and all failure logs.
+
+The subsequent [adaptive support qualification](Adaptive/README.md) resolves the
+tested support-convergence problem for all 19 available models from two initial
+grids. Original grid-refinement failures above remain retained; parameter
+uncertainty and biological validation are still separate open gates.
