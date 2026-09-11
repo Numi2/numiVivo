@@ -164,8 +164,13 @@ The subsequent [adaptive support fitter](Tools/Omics/CountObservation/Joint/Adap
 now bounds the continuous likelihood gap for **all 19 available models** from
 two initial grids. All 19 also pass the 1% query-moment sensitivity criterion;
 1.82 million independent numerical comparisons pass. This resolves the tested
-support-convergence problem. Parameter uncertainty, full-transcriptome execution
-and independent biological validation remain open.
+support-convergence problem on the tested panel. The [full-gene extension](Tools/Omics/CountObservation/Joint/Adaptive/Full/README.md)
+now processes all 15,706 Kang genes: 8,405 converge, nine eligible genes retain
+solver limits, and 7,292 remain unavailable. Over 20.27 million independent
+numerical comparisons pass; 44 Swift tests include a repaired real-count
+convergence failure. HIRISA full-gene fitting is still running. Parameter
+uncertainty, donor-held-out qualification and independent biological validation
+remain open.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five

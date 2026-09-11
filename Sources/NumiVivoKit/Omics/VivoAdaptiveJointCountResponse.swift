@@ -160,7 +160,10 @@ public enum VivoAdaptiveJointCountResponse {
             let j=leaves.indices.max { leaves[$0].meanDirectionalUpperBound<leaves[$1].meanDirectionalUpperBound }!
             let upper=leaves[j].meanDirectionalUpperBound
             if upper<=1+plan.meanLogLikelihoodGapTolerance { status="boundedContinuousLikelihood";break }
-            if lower>1+plan.meanLogLikelihoodGapTolerance { status="improvingSupportPoint";break }
+            // Reserve headroom for the recorded floating-point upper-bound
+            // allowance. Waiting until the witness itself exceeds the final
+            // target can subdivide forever when lower < target < lower+allowance.
+            if lower>1+0.9*plan.meanLogLikelihoodGapTolerance { status="improvingSupportPoint";break }
             if leaves.count>=plan.maximumOracleLeaves { break }
             let b=leaves.remove(at: j)
             let splitC=(ch>cl) && ((th==tl) || (b.controlHigh-b.controlLow)/(ch-cl)>=(b.treatedHigh-b.treatedLow)/(th-tl))

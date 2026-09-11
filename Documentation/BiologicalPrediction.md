@@ -41,7 +41,7 @@ success nor a failure.
 | Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. It loses to the mean in 37/150 target/group folds. | Independent biological contexts, target selection and replication; technical groups do not supply these. |
 | Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
 | Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
-| Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Parameter uncertainty, full-transcriptome execution and new biological calibration. |
+| Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene Kang fitting now completes with nine eligible solver-limit cases; HIRISA is running. Parameter uncertainty, donor-held-out fitting and new biological calibration remain open. |
 | Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
 
 The GSE181897 input contract is now resolved and its frozen comparison is complete.
@@ -181,6 +181,22 @@ pass, and the previous fixed-grid outputs remain byte-identical. This advances
 numerical fitting and conditional prediction on the unchanged 16-gene panel;
 it does not establish statistical parameter uncertainty, full-transcriptome
 qualification or improved biological outcome coverage.
+
+The [full-gene extension](../Tools/Omics/CountObservation/Joint/Adaptive/Full/README.md)
+now completes all 15,706 Kang genes from 2,651 original admitted cells. Of 8,414
+paired-dispersion-eligible genes, 8,405 meet the continuous likelihood bound; eight
+hit the leaf budget and one the finite-support iteration limit. The remaining
+7,292 genes are unavailable. All 20,279,579 independent numerical comparisons
+and 3,986,925 leaf checks pass, with maximum scaled discrepancy `3.67e-12`.
+The full gene set exposed a support-search decision problem at the numerical
+allowance boundary; a real DNAJC8 regression now covers the repair. All 44 Swift
+tests pass, and original baseline failures remain retained. HIRISA fitting across
+18,082 genes and 119,513 admitted training cells is still running. This is training
+likelihood qualification, not a new outcome test. Donor-exclusion must re-estimate
+cell dispersions using only its training donors; parameter uncertainty and the
+35.54% historical treated-coverage failure remain unresolved. The revised search
+resolves 27 original limits but introduces one finite-support budget limit for
+PANK2; this case is retained instead of claiming universal improvement.
 
 The [complete GSE226572 external experiment](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
 now evaluates native whole-population predictions across all three new donors

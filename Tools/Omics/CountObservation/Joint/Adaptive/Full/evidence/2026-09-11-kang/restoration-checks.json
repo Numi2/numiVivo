@@ -1,0 +1,50 @@
+{
+  "status": "all-archive-files-restored-and-checks-passed",
+  "archiveSHA256": "ff423ee2dc846ff0a416cb17a5ea099940b8e777e0ae31c552fc4d876b586f93",
+  "logicalFiles": 2513,
+  "objects": 2266,
+  "verificationMode": "Restored original numerical receipts are reused only after exact native input/output hash checks. The full archive was independently read and every object SHA256 verified during restoration.",
+  "runs": {
+    "Kang": {
+      "status": "verified-completed-shards",
+      "origin": "Kang",
+      "pid": 83391,
+      "startedUnix": 1789162262.431474,
+      "genesVerified": 15706,
+      "numericalValuesCompared": 21119534,
+      "maximumScaledError": 3.6637359812630166e-12,
+      "leafBoundsChecked": 4154912,
+      "errors": [],
+      "fitStates": {
+        "unavailableCellDispersion": 7292,
+        "boundedContinuousLikelihood": 8379,
+        "oracleResolutionLimit": 8,
+        "oracleLeafLimit": 27
+      },
+      "lastShard": "15680-15706",
+      "finishedUnix": 1789162262.73891,
+      "seconds": 0.3074369430541992
+    },
+    "Kang-gap-repaired": {
+      "status": "verified-completed-shards",
+      "origin": "Kang",
+      "pid": 83390,
+      "startedUnix": 1789162262.431474,
+      "genesVerified": 15706,
+      "numericalValuesCompared": 20279579,
+      "maximumScaledError": 3.6637359812630166e-12,
+      "leafBoundsChecked": 3986925,
+      "errors": [],
+      "fitStates": {
+        "unavailableCellDispersion": 7292,
+        "boundedContinuousLikelihood": 8405,
+        "oracleLeafLimit": 8,
+        "finiteSupportFitNotConverged": 1
+      },
+      "lastShard": "15680-15706",
+      "finishedUnix": 1789162262.722767,
+      "seconds": 0.2912931442260742
+    }
+  },
+  "unix": 1789162297.821141
+}

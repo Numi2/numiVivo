@@ -45,7 +45,8 @@ exponentials of those affine tangents is convex, so its maximum on a rectangle
 occurs at a corner. Each box uses the smaller of this bound and the sum of
 individual donor maxima obtained by clamping each donor's MLE to that box.
 The native search splits the box with the largest upper bound. An evaluated
-score above the target supplies a new support point; otherwise subdivision
+score above `1 + 0.9 * tolerance` supplies a new support point, reserving
+headroom for the floating-point allowance; otherwise subdivision
 continues until the global bound passes or a budget is exhausted.
 
 Every retained leaf includes its binary subdivision path, coordinate bounds
@@ -118,9 +119,10 @@ remain historical evidence; the adaptive method supplies a separate numerical
 resolution of that support problem.
 
 This remains a 16-gene development-panel experiment using all admitted training
-cells. Full-transcriptome fitting, donor-exclusion sensitivity, mixing-distribution
-and dispersion estimation uncertainty, and independent treated-outcome validation
-remain open. The historical nominal 95% treated coverage of **35.54%** is unchanged;
+cells. The [full-gene extension](Full/README.md) now completes Kang fitting and
+independent numerical checks, with nine eligible solver-limit cases; HIRISA is
+still running. Donor-exclusion sensitivity, mixing-distribution and dispersion
+estimation uncertainty, and independent treated-outcome validation remain open. The historical nominal 95% treated coverage of **35.54%** is unchanged;
 no treated outcomes were scored or used to recalibrate intervals here.
 
 ## Reproduction

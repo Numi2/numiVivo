@@ -115,4 +115,29 @@ import Testing
         #expect(throws: (any Error).self) { try VivoAdaptiveJointCountResponse.predict(control: stratum(1),featureID: "g",queryDonorID: "new",controlConditionID: "C",querySource: source,model: m,plannedTreatedLibraryCounts: [1000]) }
     }
 
+    @Test func numericalAllowanceDoesNotTrapTheRealDNAJC8SupportSearch() throws {
+        struct Group: Decodable { let donorID: String;let conditionID: String;let libraryCounts: [UInt64];let cellsPerLibrary: [Int] }
+        struct Header: Decodable { let groups: [Group] }
+        struct Counts: Decodable { let bins: [Int];let counts: [UInt64] }
+        struct Gene: Decodable { let featureID: String;let controlCellDispersion: Double;let treatedCellDispersion: Double;let groups: [Counts] }
+        struct Fixture: Decodable { let header: Header;let gene: Gene }
+        let root=URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        let file=root.appendingPathComponent("Tools/Omics/CountObservation/Joint/Adaptive/Full/DNAJC8-regression.json")
+        let fixture=try JSONDecoder().decode(Fixture.self,from: Data(contentsOf: file))
+        let groups=fixture.header.groups,gene=fixture.gene
+        let strata=groups.indices.map { i -> VivoCountDepthStratum in
+            var y=Array(repeating: UInt64(0),count: groups[i].libraryCounts.count)
+            for j in gene.groups[i].bins.indices { y[gene.groups[i].bins[j]]=gene.groups[i].counts[j] }
+            return .init(libraryCounts: groups[i].libraryCounts,cellsPerLibrary: groups[i].cellsPerLibrary,geneCountsPerLibrary: y)
+        }
+        let pairs=Set(groups.map(\.donorID)).sorted().map { donor in
+            let c=groups.firstIndex { $0.donorID==donor && $0.conditionID=="control" }!
+            let t=groups.firstIndex { $0.donorID==donor && $0.conditionID=="IFNB" }!
+            return VivoJointCountPair(donorID: donor,control: strata[c],treated: strata[t])
+        }
+        let model=try VivoAdaptiveJointCountResponse.fit(pairs: pairs,featureID: gene.featureID,controlConditionID: "control",treatedConditionID: "IFNB",controlCellDispersion: gene.controlCellDispersion,treatedCellDispersion: gene.treatedCellDispersion,trainingSource: source)
+        #expect(model.status=="boundedContinuousLikelihood")
+        #expect(model.certificate!.maximumMeanDirectionalUpperBound<=1+model.plan.meanLogLikelihoodGapTolerance)
+    }
+
 }
