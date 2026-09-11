@@ -94,7 +94,7 @@ The next [Parse IFN-beta source admission](../Tools/Omics/PerturbationPrediction
 selects all 725,031 released IFN-beta/PBS cells across 12 source donor IDs
 and retains every source RNA feature. All twelve native donor ingestions and
 independent cell/aggregate checks now pass, covering 1,373,870,697 records and
-3,070,817,047 retained counts. Full native source replay is still running. The first monolithic
+3,070,817,047 retained counts. [All twelve native source replays and complete offline artifact restoration now pass](../Tools/Omics/PerturbationPrediction/ParseIFNB/COUNT_RESULTS.md). The first monolithic
 attempt stopped on upstream HTTP 500 and published no complete result; bounded
 retries and saved donor receipts protect the replacement run. No predictor has
 been fitted or scored. The source historical
@@ -178,8 +178,8 @@ for the other two. For example, the complete Parse IFN-beta ingestion supplies
 admitting that cohort to the unchanged duration-model protocol. No Parse outcome
 has been fitted or scored.
 
-The immediate sequence is to finish the existing full donor replay and preserve
-its complete receipts, then resolve the intervention and feature contract before
+The complete donor replay and artifact restoration have now passed. The next
+prediction step is to resolve the intervention and feature contract before
 freezing an independent prediction comparison. Any explicitly revised panel or
 model requires a new protocol and an account of which outcomes were already
 inspected; the 271 HGNC naming candidates do not silently repair the original

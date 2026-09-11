@@ -1,0 +1,121 @@
+{
+  "allCellAndAggregateCountsMatch": true,
+  "allDonorNativeVerificationsPassed": true,
+  "allRangeHashesAndDonorStreamHashesMatch": true,
+  "allSourceRowsCoveredExactlyOnce": true,
+  "cells": 725031,
+  "donors": 12,
+  "features": 40352,
+  "groups": 24,
+  "predictionFitOrScoring": false,
+  "preparationBinding": {
+    "allDonorPlansExactParentProjections": true,
+    "allOriginalPreparationInputsExact": true,
+    "allSourceRowsCoveredExactlyOnce": true,
+    "cells": 725031,
+    "donorFiles": 37,
+    "donors": 12,
+    "preparationArchiveSHA256": "f08c78ca7a74ab01eab6c3f7748615f45e217cbf95446ba35ef830eaf9c75d02",
+    "preparationInputs": 7437,
+    "records": 1373870697,
+    "scope": "Source identities, metadata, cardinalities and range maps only. Does not claim count ingestion, native replay or prediction completion.",
+    "status": "passed-input-bindings"
+  },
+  "records": 1373870697,
+  "sourceFingerprintScope": "Pinned ETag and exact fetched ranges; twelve donor stream SHA256 values, not a whole-source-file or monolithic-stream SHA256",
+  "sourceQCDiscrepancies": {
+    "sortedRows": 0,
+    "sourceGeneCountMismatch": 30634,
+    "sourceMinusMatrixGeneCount": 31902,
+    "sourceMinusMatrixTotal": 32500,
+    "sourceTscpCountMismatch": 30634
+  },
+  "status": "passed",
+  "streams": [
+    {
+      "donor": "Donor1",
+      "ingestPeakRSS": null,
+      "streamBytes": 3857872592,
+      "streamSHA256": "8c0c9497f774199bcca2957346f85b3b50f904661bc62bbd13da44a9cf1d2f12",
+      "verifyPeakRSS": 170131456
+    },
+    {
+      "donor": "Donor2",
+      "ingestPeakRSS": 167608320,
+      "streamBytes": 2284768528,
+      "streamSHA256": "826713933d57738f1f2e935c22def4d43319a3a6348d637fb60a0c8746aceda0",
+      "verifyPeakRSS": 136970240
+    },
+    {
+      "donor": "Donor3",
+      "ingestPeakRSS": 125190144,
+      "streamBytes": 1631567712,
+      "streamSHA256": "68ba1187561889245c74c122bd70691c9d2b8a395e7ae354152c1d9c952c751e",
+      "verifyPeakRSS": 98189312
+    },
+    {
+      "donor": "Donor4",
+      "ingestPeakRSS": 121978880,
+      "streamBytes": 1707695424,
+      "streamSHA256": "5a45eb87f2ad44556da207c6e77231d633a6c941b80ed687c1e0c27ca2777e48",
+      "verifyPeakRSS": 91553792
+    },
+    {
+      "donor": "Donor5",
+      "ingestPeakRSS": 141213696,
+      "streamBytes": 1749643488,
+      "streamSHA256": "fe0cf14eeb3f597d40233d571cd1dc5d173e6348322befcbce533ad9d2e69b8c",
+      "verifyPeakRSS": 117817344
+    },
+    {
+      "donor": "Donor6",
+      "ingestPeakRSS": 148209664,
+      "streamBytes": 2092650448,
+      "streamSHA256": "de04b114088b417bbde02496afb45d94ccecbc53eded448610e8635e85dbb861",
+      "verifyPeakRSS": 122585088
+    },
+    {
+      "donor": "Donor7",
+      "ingestPeakRSS": 116097024,
+      "streamBytes": 1256804416,
+      "streamSHA256": "7d0437b21f66a81999aa7ebaf2aeacfec85bfa166fd78f47a81463fdd6905311",
+      "verifyPeakRSS": 89178112
+    },
+    {
+      "donor": "Donor8",
+      "ingestPeakRSS": 123535360,
+      "streamBytes": 1560892496,
+      "streamSHA256": "d7c0329a647f8ecb23ab0c336dc3f6270d315c811814d3fc54df7b1126a38c24",
+      "verifyPeakRSS": 95830016
+    },
+    {
+      "donor": "Donor9",
+      "ingestPeakRSS": 107282432,
+      "streamBytes": 989764656,
+      "streamSHA256": "3842bc58df97121fcfcfbe8aded30e4a99a14c46ed541f4ad0369669caa49ccf",
+      "verifyPeakRSS": 88473600
+    },
+    {
+      "donor": "Donor10",
+      "ingestPeakRSS": 115376128,
+      "streamBytes": 1452561984,
+      "streamSHA256": "e823e8ae7244c956fad802c01d4cde5c0df34206183fb46cb86cc61bb93f35f3",
+      "verifyPeakRSS": 88997888
+    },
+    {
+      "donor": "Donor11",
+      "ingestPeakRSS": 125534208,
+      "streamBytes": 1415044880,
+      "streamSHA256": "d4fbc627e65f53f56e34bdf9f03851905030a87c467f50a552771589ed8aa893",
+      "verifyPeakRSS": 97517568
+    },
+    {
+      "donor": "Donor12",
+      "ingestPeakRSS": 169754624,
+      "streamBytes": 1982664528,
+      "streamSHA256": "3f3ff746dc7d3d7f56695687c00789d0717cf74b32e5fd421e55ab87820e81ec",
+      "verifyPeakRSS": 136871936
+    }
+  ],
+  "totalRetainedCounts": 3070817047
+}

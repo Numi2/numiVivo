@@ -91,7 +91,7 @@ new independent validation is still required, and the earlier external failure s
 The next [independent Parse IFN-beta cohort](Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
 contains all 725,031 released IFN-beta/PBS cells from 12 donors. Native count
 admission now passes all 1,373,870,697 selected records through resumable donor
-streams; full native replay is running. This avoids a 227 GB local source copy. An initial upstream HTTP 500 failure and a
+streams; [all twelve native source replays and offline artifact restoration now pass](Tools/Omics/PerturbationPrediction/ParseIFNB/COUNT_RESULTS.md). This avoids a 227 GB local source copy. An initial upstream HTTP 500 failure and a
 subsequently repaired temporary-memory defect are retained explicitly. Historical QC differs from retained matrix counts;
 409 duration-panel symbols are absent by exact name, and the source dose remains
 unresolved. These input checks do not add a prediction success or failure.

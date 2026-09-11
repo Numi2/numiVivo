@@ -10,8 +10,9 @@ or removed because of annotation/QC disagreement.
 now pass.** The retained matrix contains 3,070,817,047 counts, 32,500 fewer than
 the historical source `tscp_count` sum. Historical detected-feature totals exceed
 the retained matrix by 31,902; each historical QC field disagrees for 30,634 cells.
-All 3,456 source runs are accounted for. Full native source replay is running,
-so complete count/replay qualification and final payload retention remain pending.
+All 3,456 source runs are accounted for. [All twelve native source replays, final
+payload retention and offline restoration now pass](COUNT_RESULTS.md). The full
+result preserves every discrepancy and the earlier failed attempt.
 
 The [protocol](PROTOCOL.md) fixes the source version, selection, checks and
 scientific boundaries. The original H5AD is 227,497,986,816 bytes; an in-memory
@@ -88,9 +89,9 @@ The [preparation archive](evidence/2026-09-11-preparation/manifest.json) preserv
 all selected axes, the complete HDF5-enumerated chunk maps, requested metadata
 range identities, exact native executable, four passing native regression tests,
 and failed/abandoned preparation attempts. All 103 scoped build inputs were
-hashed and checked. The archive is **preparation evidence**: the full count scan,
-independent aggregate comparison and native replay are still running/pending.
-No complete count-validation result is claimed at this stage.
+hashed and checked. This archive remains **preparation evidence**. The later [complete count result](COUNT_RESULTS.md)
+separately retains the full count scan, independent comparison and native replay;
+those results do not retroactively change the preparation archive.
 
 Verify or restore the archive with the existing exact-content archive reader:
 
@@ -146,7 +147,7 @@ python "$R/check_donors.py"
 The first command creates a new immutable partition plan. Either execution
 command can resume already completed donors. Native artifacts retain the exact
 binary identity; changing the binary requires a separate qualification. The
-full-cohort replacement ingestion has passed; native replay remains in progress.
+full-cohort replacement ingestion and all twelve native replays have passed.
 Neither is a predictive success or a completed biological validation.
 
 The first donor completed native ingestion for 110,923 cells. The independent
@@ -154,7 +155,8 @@ checker initially decompressed an NPZ array once per cell; caching its arrays
 fixed that validation bottleneck. Its saved native bundle and every independent
 cell/aggregate count were checked without re-downloading. This recovery retains
 the interrupted producer attempt and marks its unavailable peak RSS, exit status
-and producer digest explicitly; full native source replay is still required.
+and producer digest explicitly. Its separate full native source replay has now
+passed, while the original missing process measurements remain unavailable.
 
 ## Retain the completed donor result
 
@@ -178,8 +180,9 @@ retainer requires the exact qualified executable already in its dependency
 archive; a different build requires its own executable/source evidence and
 separate qualification. Failed
 source attempts and the first-donor checker recovery remain in the result.
-The incomplete current cohort has been checked to reject before creating any
-archive directory; successful full-result packing remains pending.
+The earlier incomplete cohort was checked to reject before creating any archive
+directory. Full-result packing, archive verification and separate offline
+restoration now pass; see [results and restoration commands](COUNT_RESULTS.md).
 
 ### Immutable preparation binding
 

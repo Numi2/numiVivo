@@ -46,7 +46,7 @@ def main():
  write(temporary/'dependencies.json',dict(schemaVersion=1,required=dependencies,restore='Restore the preparation archive into a fresh study directory, then this archive into a separate directory and merge nonconflicting paths. The corrected executable is runtime/corrected/numivivo-omics in the memory-control dependency and must be placed at build-pooled/numivivo-omics; retain its exact hash. Read source-freeze for the executed recipe.'))
  checked['preparationBinding']={k:v for k,v in bindings.items() if k!='inputSHA256'}
  write(temporary/'summary.json',checked)
- sources=[Path(__file__).parent/'check_preparation_mutations.py',Path(__file__).parent/'verify_donor_preparation.py',Path(__file__),Path(__file__).parent/'retain.py',repo/'Tools/Omics/PerturbationPrediction/Duration/archive.py',repo/'Tools/Omics/PerturbationPrediction/Duration/common.py']
+ sources=[Path(__file__).parent/'restore_donors.py',Path(__file__).parent/'check_preparation_mutations.py',Path(__file__).parent/'verify_donor_preparation.py',Path(__file__),Path(__file__).parent/'retain.py',repo/'Tools/Omics/PerturbationPrediction/Duration/archive.py',repo/'Tools/Omics/PerturbationPrediction/Duration/common.py']
  recipe_data=dict(schemaVersion=1,sourceFiles=[dict(path=str(f.relative_to(repo)),bytes=f.stat().st_size,SHA256=sha(f),rawUTF8=f.read_text()) for f in sources]);(temporary/'recipe.json.gz').write_bytes(gzip.compress((json.dumps(recipe_data,sort_keys=True,separators=(',',':'))+'\n').encode(),mtime=0))
  records=[]
  for f in sorted(temporary.iterdir()):

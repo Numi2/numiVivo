@@ -1,0 +1,18 @@
+{
+  "required": [
+    {
+      "archive": "preparation.tar.gz",
+      "archiveSHA256": "f08c78ca7a74ab01eab6c3f7748615f45e217cbf95446ba35ef830eaf9c75d02",
+      "manifestSHA256": "3f31fe667e8769e21aa7030584016d6c8ce6228ef623bbef52fbdbed96db6e6f",
+      "path": "Tools/Omics/PerturbationPrediction/ParseIFNB/evidence/2026-09-11-preparation"
+    },
+    {
+      "archive": "results.tar.gz",
+      "archiveSHA256": "fa98901c2f0ce867620f7cd37494f74fca4c238dd32159c4a7751e55cbe5abe4",
+      "manifestSHA256": "afbf7d96aafdc3f72aab3a4f29c2616fd9dc4370e873a91ed84016aa484aee20",
+      "path": "Tools/Omics/CountStore/Stream/Memory/evidence/2026-09-11"
+    }
+  ],
+  "restore": "Restore the preparation archive into a fresh study directory, then this archive into a separate directory and merge nonconflicting paths. The corrected executable is runtime/corrected/numivivo-omics in the memory-control dependency and must be placed at build-pooled/numivivo-omics; retain its exact hash. Read source-freeze for the executed recipe.",
+  "schemaVersion": 1
+}
