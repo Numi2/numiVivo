@@ -589,9 +589,14 @@ The complete development objective remains open:
    cut-site units and exact agreement across native 10x and independent MuData
    imports. The [complete Visium spatial interchange benchmark](../Tools/Omics/Multimodal/SPATIAL.md)
    now checks all 4,039 spots, counts and pixel coordinates through native H5MU
-   reimport, including standard spatial-array export. Biological ATAC/spatial
-   analysis, native Visium-directory ingestion, continuous measurements and joint
-   multimodal analysis remain open.
+   reimport, including standard spatial-array export. The [native Visium directory
+   importer](../Tools/Omics/Multimodal/Visium/README.md) now reads original filtered
+   RNA HDF5 and explicitly selected legacy/header position CSVs. Both formats
+   preserve every count and coordinate in the full release and reproduce the
+   earlier qualified dataset/H5MU bytes. Native replay, 13 Swift tests and 16
+   lifecycle/regression commands pass. This is a bounded resident RNA/spot path;
+   HD Parquet, Matrix Market directories and biological ATAC/spatial analysis,
+   continuous measurements and joint multimodal analysis remain open.
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
    selected-entry PCA now pass full Baron and Hagai comparisons against Scanpy;
    see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).

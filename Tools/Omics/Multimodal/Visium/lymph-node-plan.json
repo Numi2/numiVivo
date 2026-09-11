@@ -1,0 +1,37 @@
+{
+  "counts": {
+    "assays": [
+      {
+        "countUnit": "umiCount",
+        "featureNamespace": "Ensembl:GRCh38-SpaceRanger-1.0-source-release",
+        "featureType": "Gene Expression",
+        "genomeAssembly": "GRCh38",
+        "id": "rna",
+        "kind": "rna"
+      }
+    ],
+    "evidence": "measured",
+    "id": "visium-human-lymph-node-1.0",
+    "sample": {
+      "batchID": "one-section",
+      "biologicalReplicateID": "donor1",
+      "condition": "source-unspecified",
+      "donorID": "donor1",
+      "id": "lymph-node",
+      "organism": "NCBITaxon:9606"
+    },
+    "schemaVersion": 1,
+    "sourceDescription": "10x Genomics Human Lymph Node, Visium, Space Ranger 1.0.0, full filtered release; CC BY 4.0; one section, no independent replication"
+  },
+  "frame": {
+    "axes": [
+      "x",
+      "y"
+    ],
+    "id": "full-resolution-image",
+    "sourceDescription": "Space Ranger 1.0 full-resolution image pixels: x=pxl_col_in_fullres, y=pxl_row_in_fullres; no physical-scale conversion",
+    "unit": "pixel"
+  },
+  "positionsFormat": "legacyHeaderlessCSV",
+  "schemaVersion": 1
+}

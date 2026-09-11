@@ -63,6 +63,13 @@ primary single-letter condition-to-intervention mapping is not established;
 external curator labels are not promoted to experimental ground truth. This
 adds a verified candidate input, not a new predictive success or failure.
 
+The [native Visium import](../Tools/Omics/Multimodal/Visium/README.md) now makes
+original spatial RNA counts and pixel positions available without an H5MU
+preparation step. Every count and coordinate in the complete 4,039-spot source
+matches independent readers and the earlier qualified interchange product.
+These measured spatial inputs do not themselves supply a validated spatial
+response model, deconvolution, tissue function or variant-to-phenotype endpoint.
+
 ## What information is sufficient for the implemented predictors?
 
 | Question | Information available before prediction | Output and present evidence |

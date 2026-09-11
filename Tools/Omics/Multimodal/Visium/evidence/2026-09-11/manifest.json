@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "execution.json",
+      "sourceBytes": 597598,
+      "sourceSHA256": "e22961b0be2a790766a7c4f9708787aabc75878c797e383ac5ad8d70293a8df7",
+      "storedPath": "execution.json.gz",
+      "storedBytes": 156083,
+      "storedSHA256": "fc6f7548668d4c3ed43f82399f8d501767db074d7e1dc92da859ffba6072a84f",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "native-source.json",
+      "sourceBytes": 87099,
+      "sourceSHA256": "cb7ec3b854a1087549b39468200a6d8a51ec4c12e3fb6271feaaca0524c44e7e",
+      "storedPath": "native-source.json.gz",
+      "storedBytes": 15839,
+      "storedSHA256": "1d24a526d638c4c083a41e9c45e17ba54ebabfde8a3f8ff88bbf6d8ca15fb108",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "recipe.json",
+      "sourceBytes": 29940,
+      "sourceSHA256": "45993d1e910d94ee10d11308aa8240ef7b3a79b035e4799e99180bd049b72b9e",
+      "storedPath": "recipe.json.gz",
+      "storedBytes": 10359,
+      "storedSHA256": "e88ca11c0f374d1721798d6fa7e71813dbf3e284e2b8884c3548ef412339b376",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "regression-counts.h5",
+      "sourceBytes": 7688,
+      "sourceSHA256": "9ba09b3038939869abf17dd4c9c69642d2ce1815c6e6fefb67a4bd3142f52bf6",
+      "storedPath": "regression-counts.h5.gz",
+      "storedBytes": 570,
+      "storedSHA256": "134c2c67a70d840b1c90898259bcac6e26793a14921a8f6511bf25c4610158d7",
+      "gzipEncoded": true
+    }
+  ]
+}

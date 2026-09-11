@@ -190,3 +190,12 @@ cross-space duplicate-variable-name warnings remain in the logs.
 
 The [complete paired RNA/ATAC benchmark](MULTIOME.md) documents the separate
 Cell Ranger ARC cut-site unit and the full-source qualification protocol.
+
+## Native Visium directory input
+
+The [Visium importer](Visium/README.md) now accepts original filtered RNA HDF5
+and explicit legacy/header Space Ranger position CSVs. It preserves full-resolution
+pixel positions by barcode and binds both original files in its native receipt.
+The full 4,039-spot source passes exact counts/coordinates and reconstruction,
+without the earlier external H5MU preparation. This is resident interchange;
+HD formats, image processing and spatial biological prediction remain open.

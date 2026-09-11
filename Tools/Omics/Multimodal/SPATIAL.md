@@ -44,8 +44,10 @@ python check_spatial.py --binary /absolute/path/numivivo --source original.h5 --
 | Spatial archive | 8,733,712 | `064f7e62e43a705730c30911911940dbbe583ebc6b743dd2dc52eba5037a2ef5` |
 
 Reference preparation constructs MuData from the original count matrix and
-barcode-joined positions. This Python preparation is explicit; NumiVivo does not
-yet natively ingest a Visium directory. The native path imports H5MU, preserves
+barcode-joined positions. This earlier Python preparation is explicit. A subsequent
+[native Visium directory importer](Visium/README.md) now reads the original
+filtered RNA HDF5 and selected position CSV directly; this section retains the
+original H5MU-based experiment. The native path imports H5MU, preserves
 spots/counts/coordinates, exports standard arrays and verifies source reconstruction.
 The exact original count and spatial files are retained in the evidence archive.
 
@@ -88,5 +90,6 @@ build must generate its own receipt.
 
 The pinned Scanpy version warns that `read_visium` is deprecated; this reference
 check still passed. Duplicate gene display-name and MuData creator warnings are
-retained. Stable feature IDs were not renamed. Native Visium-directory ingestion,
-multiple-frame import in one plan and spatial analytical methods remain open.
+retained. Stable feature IDs were not renamed. The subsequent [native directory qualification](Visium/README.md) covers
+filtered RNA HDF5 plus legacy/header CSV. Multiple-frame import in one plan,
+Visium HD formats and spatial analytical methods remain open.

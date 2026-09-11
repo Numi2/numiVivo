@@ -84,6 +84,11 @@ cross-preparation mean in only **3/12**. All native replays and independent
 numerical checks pass; this tests conditional RNA response between enriched
 preparations and PBMCs in one study.
 
+[Native Visium directory import](Tools/Omics/Multimodal/Visium/README.md) now
+preserves the complete 4,039-spot lymph-node release directly from its original
+counts and position table. All counts, identities and coordinates match Scanpy;
+this closes a spatial input path without establishing tissue prediction.
+
 The [single-cell program](Documentation/SingleCellInteroperability.md) now includes
 native H5AD interchange, negative-binomial DE, sparse PCA/neighbors/clustering,
 integration, marker scoring and multimodal count interchange. The complete
