@@ -1,0 +1,39 @@
+{"donorsCompleted": 8, "groupsChecked": 16}
+{"donorsCompleted": 16, "groupsChecked": 32}
+{"donorsCompleted": 24, "groupsChecked": 48}
+{"donorsCompleted": 32, "groupsChecked": 64}
+{"donorsCompleted": 40, "groupsChecked": 80}
+{"donorsCompleted": 48, "groupsChecked": 96}
+{"donorsCompleted": 56, "groupsChecked": 112}
+[
+  {
+    "origin": "Kang",
+    "rawResponseMSE": 1.4815575375638639,
+    "squaredDonorAverageResidual": 0.23627701303689438,
+    "betweenDonorResidualVariance": 1.2452805245269694,
+    "donorAverageResidualShare": 0.15947879650047642,
+    "meanObservedCellVariance": 0.7662945173188083,
+    "observedCellVarianceMagnitudeRelativeToMSE": 0.5172222461092075,
+    "originalRawCoverage": 0.9238588586742722,
+    "observedCellWideningRawCoverage": 0.9809113149095202,
+    "observedCellWideningTreatedCoverage": 0.9809143882769473,
+    "widenedRawMeanWidth": 6.966405582631318,
+    "largestBootstrapHalfCoverageDifference": 0.002477134146341431,
+    "cellCountVsRawRMSESpearman": -0.9508730476613343
+  },
+  {
+    "origin": "HIRISA",
+    "rawResponseMSE": 1.3072643622945956,
+    "squaredDonorAverageResidual": 0.06198383776762644,
+    "betweenDonorResidualVariance": 1.2452805245269694,
+    "donorAverageResidualShare": 0.047414921996977236,
+    "meanObservedCellVariance": 0.7662945173188083,
+    "observedCellVarianceMagnitudeRelativeToMSE": 0.5861817543727408,
+    "originalRawCoverage": 0.3101164942901121,
+    "observedCellWideningRawCoverage": 0.8972151822598416,
+    "observedCellWideningTreatedCoverage": 0.9424500162670976,
+    "widenedRawMeanWidth": 3.9428093257007855,
+    "largestBootstrapHalfCoverageDifference": 0.009322823968132998,
+    "cellCountVsRawRMSESpearman": -0.9448518342339159
+  }
+]

@@ -1,0 +1,2234 @@
+[
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9869474085365854,
+      0.9858041158536586
+    ],
+    "controlCells": 23,
+    "donor": "0",
+    "meanObservedCellVariance": 0.8206627932791125,
+    "observedCellWideningRawCoverage": 0.9863757621951219,
+    "observedCellWideningRawMeanWidth": 7.0756779845733275,
+    "observedCellWideningTreatedCoverage": 0.9863757621951219,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9259717987804879,
+    "originalTreatedCoverage": 0.9259717987804879,
+    "rawResponseRMSE": 1.2025740486176733,
+    "treatedCells": 20
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9891387195121951,
+      0.989233993902439
+    ],
+    "controlCells": 84,
+    "donor": "1",
+    "meanObservedCellVariance": 0.43041781937144596,
+    "observedCellWideningRawCoverage": 0.989233993902439,
+    "observedCellWideningRawMeanWidth": 6.440182336171691,
+    "observedCellWideningTreatedCoverage": 0.989233993902439,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9574123475609756,
+    "originalTreatedCoverage": 0.9574123475609756,
+    "rawResponseRMSE": 0.9360879026306056,
+    "treatedCells": 34
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9838033536585366,
+      0.983326981707317
+    ],
+    "controlCells": 16,
+    "donor": "2",
+    "meanObservedCellVariance": 0.7028911304565812,
+    "observedCellWideningRawCoverage": 0.9837080792682927,
+    "observedCellWideningRawMeanWidth": 6.885160725486971,
+    "observedCellWideningTreatedCoverage": 0.9837080792682927,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9256859756097561,
+    "originalTreatedCoverage": 0.9256859756097561,
+    "rawResponseRMSE": 1.1410880014070737,
+    "treatedCells": 51
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9388338414634146,
+      0.9398818597560976
+    ],
+    "controlCells": 9,
+    "donor": "3",
+    "meanObservedCellVariance": 1.0651603531577098,
+    "observedCellWideningRawCoverage": 0.9393102134146342,
+    "observedCellWideningRawMeanWidth": 7.460295782916598,
+    "observedCellWideningTreatedCoverage": 0.9393102134146342,
+    "origin": "Kang",
+    "originalRawCoverage": 0.87109375,
+    "originalTreatedCoverage": 0.87109375,
+    "rawResponseRMSE": 1.5865019869762857,
+    "treatedCells": 52
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9918064024390244,
+      0.9926638719512195
+    ],
+    "controlCells": 96,
+    "donor": "4",
+    "meanObservedCellVariance": 0.36689705840452863,
+    "observedCellWideningRawCoverage": 0.9922827743902439,
+    "observedCellWideningRawMeanWidth": 6.327003474421877,
+    "observedCellWideningTreatedCoverage": 0.9922827743902439,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9650342987804879,
+    "originalTreatedCoverage": 0.9650342987804879,
+    "rawResponseRMSE": 0.8517301698778258,
+    "treatedCells": 57
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9074885670731707,
+      0.9054878048780488
+    ],
+    "controlCells": 4,
+    "donor": "6",
+    "meanObservedCellVariance": 1.3346761172403823,
+    "observedCellWideningRawCoverage": 0.9075838414634146,
+    "observedCellWideningRawMeanWidth": 7.844013655996345,
+    "observedCellWideningTreatedCoverage": 0.9075838414634146,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8053544207317073,
+    "originalTreatedCoverage": 0.8053544207317073,
+    "rawResponseRMSE": 1.9316944028079677,
+    "treatedCells": 27
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9947599085365854,
+      0.9944740853658537
+    ],
+    "controlCells": 58,
+    "donor": "7",
+    "meanObservedCellVariance": 0.39648890868602965,
+    "observedCellWideningRawCoverage": 0.9946646341463414,
+    "observedCellWideningRawMeanWidth": 6.378745493431108,
+    "observedCellWideningTreatedCoverage": 0.9946646341463414,
+    "origin": "Kang",
+    "originalRawCoverage": 0.967797256097561,
+    "originalTreatedCoverage": 0.967797256097561,
+    "rawResponseRMSE": 0.8558040707014545,
+    "treatedCells": 59
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9891387195121951,
+      0.9889481707317073
+    ],
+    "controlCells": 31,
+    "donor": "8",
+    "meanObservedCellVariance": 0.6085512227659537,
+    "observedCellWideningRawCoverage": 0.9890434451219512,
+    "observedCellWideningRawMeanWidth": 6.736828861008111,
+    "observedCellWideningTreatedCoverage": 0.9890434451219512,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9480754573170732,
+    "originalTreatedCoverage": 0.9480754573170732,
+    "rawResponseRMSE": 1.0431351339748987,
+    "treatedCells": 46
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9896150914634146,
+      0.9890434451219512
+    ],
+    "controlCells": 44,
+    "donor": "9",
+    "meanObservedCellVariance": 0.6228388293034668,
+    "observedCellWideningRawCoverage": 0.989233993902439,
+    "observedCellWideningRawMeanWidth": 6.762775866913463,
+    "observedCellWideningTreatedCoverage": 0.989233993902439,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9457888719512195,
+    "originalTreatedCoverage": 0.9457888719512195,
+    "rawResponseRMSE": 1.0249943096537828,
+    "treatedCells": 45
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9894245426829268,
+      0.9895198170731707
+    ],
+    "controlCells": 69,
+    "donor": "10",
+    "meanObservedCellVariance": 0.4291204327694273,
+    "observedCellWideningRawCoverage": 0.9895198170731707,
+    "observedCellWideningRawMeanWidth": 6.436542961118626,
+    "observedCellWideningTreatedCoverage": 0.9895198170731707,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9567454268292683,
+    "originalTreatedCoverage": 0.9567454268292683,
+    "rawResponseRMSE": 0.9321761496430078,
+    "treatedCells": 45
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9870426829268293,
+      0.987233231707317
+    ],
+    "controlCells": 98,
+    "donor": "11",
+    "meanObservedCellVariance": 0.49532973884814063,
+    "observedCellWideningRawCoverage": 0.987328506097561,
+    "observedCellWideningRawMeanWidth": 6.546088698956027,
+    "observedCellWideningTreatedCoverage": 0.987328506097561,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9493140243902439,
+    "originalTreatedCoverage": 0.9493140243902439,
+    "rawResponseRMSE": 0.9747067591035058,
+    "treatedCells": 31
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9945693597560976,
+      0.9944740853658537
+    ],
+    "controlCells": 72,
+    "donor": "12",
+    "meanObservedCellVariance": 0.2795944017871837,
+    "observedCellWideningRawCoverage": 0.9948551829268293,
+    "observedCellWideningRawMeanWidth": 6.172220000096845,
+    "observedCellWideningTreatedCoverage": 0.9948551829268293,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9744664634146342,
+    "originalTreatedCoverage": 0.9744664634146342,
+    "rawResponseRMSE": 0.7628216023618007,
+    "treatedCells": 106
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9942835365853658,
+      0.9945693597560976
+    ],
+    "controlCells": 56,
+    "donor": "13",
+    "meanObservedCellVariance": 0.38152794069403234,
+    "observedCellWideningRawCoverage": 0.9942835365853658,
+    "observedCellWideningRawMeanWidth": 6.352343751653354,
+    "observedCellWideningTreatedCoverage": 0.9942835365853658,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9690358231707317,
+    "originalTreatedCoverage": 0.9690358231707317,
+    "rawResponseRMSE": 0.843852997461379,
+    "treatedCells": 86
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9878048780487805,
+      0.9881859756097561
+    ],
+    "controlCells": 58,
+    "donor": "14",
+    "meanObservedCellVariance": 0.5411138593485865,
+    "observedCellWideningRawCoverage": 0.9879954268292683,
+    "observedCellWideningRawMeanWidth": 6.632515015277349,
+    "observedCellWideningTreatedCoverage": 0.9879954268292683,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9425495426829268,
+    "originalTreatedCoverage": 0.9425495426829268,
+    "rawResponseRMSE": 1.0078757128167262,
+    "treatedCells": 58
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.985327743902439,
+      0.9847560975609756
+    ],
+    "controlCells": 39,
+    "donor": "15",
+    "meanObservedCellVariance": 0.6851787011904411,
+    "observedCellWideningRawCoverage": 0.9849466463414634,
+    "observedCellWideningRawMeanWidth": 6.861329819508683,
+    "observedCellWideningTreatedCoverage": 0.9849466463414634,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9366425304878049,
+    "originalTreatedCoverage": 0.9366425304878049,
+    "rawResponseRMSE": 1.1089748189532986,
+    "treatedCells": 47
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9844702743902439,
+      0.9845655487804879
+    ],
+    "controlCells": 17,
+    "donor": "16",
+    "meanObservedCellVariance": 0.8113698776997554,
+    "observedCellWideningRawCoverage": 0.9844702743902439,
+    "observedCellWideningRawMeanWidth": 7.059663169223005,
+    "observedCellWideningTreatedCoverage": 0.9844702743902439,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9210175304878049,
+    "originalTreatedCoverage": 0.9210175304878049,
+    "rawResponseRMSE": 1.2027101841563206,
+    "treatedCells": 40
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9762766768292683,
+      0.9763719512195121
+    ],
+    "controlCells": 20,
+    "donor": "17",
+    "meanObservedCellVariance": 0.7341066419967535,
+    "observedCellWideningRawCoverage": 0.9761814024390244,
+    "observedCellWideningRawMeanWidth": 6.948212736476273,
+    "observedCellWideningTreatedCoverage": 0.9761814024390244,
+    "origin": "Kang",
+    "originalRawCoverage": 0.926733993902439,
+    "originalTreatedCoverage": 0.926733993902439,
+    "rawResponseRMSE": 1.1847279296684643,
+    "treatedCells": 80
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9723704268292683,
+      0.9712271341463414
+    ],
+    "controlCells": 12,
+    "donor": "18",
+    "meanObservedCellVariance": 1.2855364436639123,
+    "observedCellWideningRawCoverage": 0.9718940548780488,
+    "observedCellWideningRawMeanWidth": 7.753188160986289,
+    "observedCellWideningTreatedCoverage": 0.9718940548780488,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8736661585365854,
+    "originalTreatedCoverage": 0.8736661585365854,
+    "rawResponseRMSE": 1.566639318094943,
+    "treatedCells": 10
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9577934451219512,
+      0.9572217987804879
+    ],
+    "controlCells": 11,
+    "donor": "19",
+    "meanObservedCellVariance": 1.0368375099271858,
+    "observedCellWideningRawCoverage": 0.9573170731707317,
+    "observedCellWideningRawMeanWidth": 7.407159043913136,
+    "observedCellWideningTreatedCoverage": 0.9573170731707317,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8899580792682927,
+    "originalTreatedCoverage": 0.8899580792682927,
+    "rawResponseRMSE": 1.4790697619139297,
+    "treatedCells": 45
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9831364329268293,
+      0.9827553353658537
+    ],
+    "controlCells": 19,
+    "donor": "20",
+    "meanObservedCellVariance": 1.0242964154528296,
+    "observedCellWideningRawCoverage": 0.9832317073170732,
+    "observedCellWideningRawMeanWidth": 7.371084571305335,
+    "observedCellWideningTreatedCoverage": 0.9832317073170732,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9103467987804879,
+    "originalTreatedCoverage": 0.9103467987804879,
+    "rawResponseRMSE": 1.3192404284569075,
+    "treatedCells": 18
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9821836890243902,
+      0.9816120426829268
+    ],
+    "controlCells": 21,
+    "donor": "21",
+    "meanObservedCellVariance": 0.7548482569567435,
+    "observedCellWideningRawCoverage": 0.9821836890243902,
+    "observedCellWideningRawMeanWidth": 6.974084333389612,
+    "observedCellWideningTreatedCoverage": 0.9821836890243902,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9274009146341463,
+    "originalTreatedCoverage": 0.9274009146341463,
+    "rawResponseRMSE": 1.157939428860204,
+    "treatedCells": 30
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9934260670731707,
+      0.9937118902439024
+    ],
+    "controlCells": 38,
+    "donor": "22",
+    "meanObservedCellVariance": 0.4438412175079067,
+    "observedCellWideningRawCoverage": 0.9936166158536586,
+    "observedCellWideningRawMeanWidth": 6.458779271107133,
+    "observedCellWideningTreatedCoverage": 0.9936166158536586,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9576028963414634,
+    "originalTreatedCoverage": 0.9576028963414634,
+    "rawResponseRMSE": 0.9023081147390737,
+    "treatedCells": 60
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.989233993902439,
+      0.9888528963414634
+    ],
+    "controlCells": 37,
+    "donor": "24",
+    "meanObservedCellVariance": 0.7497966812593241,
+    "observedCellWideningRawCoverage": 0.9890434451219512,
+    "observedCellWideningRawMeanWidth": 6.950051306431184,
+    "observedCellWideningTreatedCoverage": 0.9890434451219512,
+    "origin": "Kang",
+    "originalRawCoverage": 0.938548018292683,
+    "originalTreatedCoverage": 0.938548018292683,
+    "rawResponseRMSE": 1.1094863416696186,
+    "treatedCells": 30
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9802782012195121,
+      0.9798018292682927
+    ],
+    "controlCells": 26,
+    "donor": "25",
+    "meanObservedCellVariance": 0.9844992772024526,
+    "observedCellWideningRawCoverage": 0.9803734756097561,
+    "observedCellWideningRawMeanWidth": 7.316442371980135,
+    "observedCellWideningTreatedCoverage": 0.9803734756097561,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9037728658536586,
+    "originalTreatedCoverage": 0.9037728658536586,
+    "rawResponseRMSE": 1.3283056228042311,
+    "treatedCells": 17
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9861852134146342,
+      0.9861852134146342
+    ],
+    "controlCells": 35,
+    "donor": "26",
+    "meanObservedCellVariance": 0.5436861797890866,
+    "observedCellWideningRawCoverage": 0.9863757621951219,
+    "observedCellWideningRawMeanWidth": 6.6252483459067815,
+    "observedCellWideningTreatedCoverage": 0.9863757621951219,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9465510670731707,
+    "originalTreatedCoverage": 0.9465510670731707,
+    "rawResponseRMSE": 1.0400821199473649,
+    "treatedCells": 53
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9920922256097561,
+      0.991139481707317
+    ],
+    "controlCells": 51,
+    "donor": "27",
+    "meanObservedCellVariance": 0.5478666485508416,
+    "observedCellWideningRawCoverage": 0.9915205792682927,
+    "observedCellWideningRawMeanWidth": 6.640516218543911,
+    "observedCellWideningTreatedCoverage": 0.9915205792682927,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9510289634146342,
+    "originalTreatedCoverage": 0.9510289634146342,
+    "rawResponseRMSE": 0.9682141825288106,
+    "treatedCells": 61
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9891387195121951,
+      0.989233993902439
+    ],
+    "controlCells": 33,
+    "donor": "28",
+    "meanObservedCellVariance": 0.5634661663035356,
+    "observedCellWideningRawCoverage": 0.989329268292683,
+    "observedCellWideningRawMeanWidth": 6.663291440010326,
+    "observedCellWideningTreatedCoverage": 0.989329268292683,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9497903963414634,
+    "originalTreatedCoverage": 0.9497903963414634,
+    "rawResponseRMSE": 1.0168538328840824,
+    "treatedCells": 69
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9919016768292683,
+      0.9920922256097561
+    ],
+    "controlCells": 39,
+    "donor": "29",
+    "meanObservedCellVariance": 0.5393424489851955,
+    "observedCellWideningRawCoverage": 0.9920922256097561,
+    "observedCellWideningRawMeanWidth": 6.625152699872739,
+    "observedCellWideningTreatedCoverage": 0.9920922256097561,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9511242378048781,
+    "originalTreatedCoverage": 0.9511242378048781,
+    "rawResponseRMSE": 0.9755408648254215,
+    "treatedCells": 57
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9866615853658537,
+      0.9867568597560976
+    ],
+    "controlCells": 55,
+    "donor": "30",
+    "meanObservedCellVariance": 0.5617701329123508,
+    "observedCellWideningRawCoverage": 0.9868521341463414,
+    "observedCellWideningRawMeanWidth": 6.660085146612455,
+    "observedCellWideningTreatedCoverage": 0.9868521341463414,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9454077743902439,
+    "originalTreatedCoverage": 0.9454077743902439,
+    "rawResponseRMSE": 1.033626044335601,
+    "treatedCells": 34
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9957126524390244,
+      0.9953315548780488
+    ],
+    "controlCells": 59,
+    "donor": "31",
+    "meanObservedCellVariance": 0.3533006500855353,
+    "observedCellWideningRawCoverage": 0.9956173780487805,
+    "observedCellWideningRawMeanWidth": 6.30327567254134,
+    "observedCellWideningTreatedCoverage": 0.9956173780487805,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9705602134146342,
+    "originalTreatedCoverage": 0.9705602134146342,
+    "rawResponseRMSE": 0.8285595300964669,
+    "treatedCells": 87
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9582698170731707,
+      0.9573170731707317
+    ],
+    "controlCells": 24,
+    "donor": "32",
+    "meanObservedCellVariance": 1.3800133383125124,
+    "observedCellWideningRawCoverage": 0.9576028963414634,
+    "observedCellWideningRawMeanWidth": 7.909888574137465,
+    "observedCellWideningTreatedCoverage": 0.9576028963414634,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8461318597560976,
+    "originalTreatedCoverage": 0.8461318597560976,
+    "rawResponseRMSE": 1.684020481562475,
+    "treatedCells": 9
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.98046875,
+      0.9797065548780488
+    ],
+    "controlCells": 13,
+    "donor": "33",
+    "meanObservedCellVariance": 0.8029395915143771,
+    "observedCellWideningRawCoverage": 0.9801829268292683,
+    "observedCellWideningRawMeanWidth": 7.04014759643671,
+    "observedCellWideningTreatedCoverage": 0.9801829268292683,
+    "origin": "Kang",
+    "originalRawCoverage": 0.922827743902439,
+    "originalTreatedCoverage": 0.922827743902439,
+    "rawResponseRMSE": 1.2355623156320779,
+    "treatedCells": 40
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9939024390243902,
+      0.9940929878048781
+    ],
+    "controlCells": 69,
+    "donor": "34",
+    "meanObservedCellVariance": 0.40085008028171615,
+    "observedCellWideningRawCoverage": 0.9938071646341463,
+    "observedCellWideningRawMeanWidth": 6.391545316928056,
+    "observedCellWideningTreatedCoverage": 0.9938071646341463,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9672256097560976,
+    "originalTreatedCoverage": 0.9672256097560976,
+    "rawResponseRMSE": 0.8634006674512266,
+    "treatedCells": 77
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9865663109756098,
+      0.9867568597560976
+    ],
+    "controlCells": 56,
+    "donor": "35",
+    "meanObservedCellVariance": 0.5418351263262061,
+    "observedCellWideningRawCoverage": 0.9866615853658537,
+    "observedCellWideningRawMeanWidth": 6.6270151593209805,
+    "observedCellWideningTreatedCoverage": 0.9866615853658537,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9466463414634146,
+    "originalTreatedCoverage": 0.9466463414634146,
+    "rawResponseRMSE": 1.0126260641991907,
+    "treatedCells": 27
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9878048780487805,
+      0.9880907012195121
+    ],
+    "controlCells": 27,
+    "donor": "36",
+    "meanObservedCellVariance": 0.6522663874929702,
+    "observedCellWideningRawCoverage": 0.9876143292682927,
+    "observedCellWideningRawMeanWidth": 6.819035540402741,
+    "observedCellWideningTreatedCoverage": 0.9876143292682927,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9455030487804879,
+    "originalTreatedCoverage": 0.9455030487804879,
+    "rawResponseRMSE": 1.049873839143907,
+    "treatedCells": 55
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9928544207317073,
+      0.9925685975609756
+    ],
+    "controlCells": 68,
+    "donor": "37",
+    "meanObservedCellVariance": 0.4777117218580602,
+    "observedCellWideningRawCoverage": 0.9928544207317073,
+    "observedCellWideningRawMeanWidth": 6.516291814794334,
+    "observedCellWideningTreatedCoverage": 0.9928544207317073,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9632240853658537,
+    "originalTreatedCoverage": 0.9632240853658537,
+    "rawResponseRMSE": 0.9245462477720898,
+    "treatedCells": 68
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.953125,
+      0.9508384146341463
+    ],
+    "controlCells": 12,
+    "donor": "38",
+    "meanObservedCellVariance": 1.5786500599309847,
+    "observedCellWideningRawCoverage": 0.9516958841463414,
+    "observedCellWideningRawMeanWidth": 8.141747496465527,
+    "observedCellWideningTreatedCoverage": 0.9517911585365854,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8176448170731707,
+    "originalTreatedCoverage": 0.8177400914634146,
+    "rawResponseRMSE": 1.8618999339737552,
+    "treatedCells": 6
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9898056402439024,
+      0.9898056402439024
+    ],
+    "controlCells": 72,
+    "donor": "39",
+    "meanObservedCellVariance": 0.5744924344964067,
+    "observedCellWideningRawCoverage": 0.9899009146341463,
+    "observedCellWideningRawMeanWidth": 6.685534093058256,
+    "observedCellWideningTreatedCoverage": 0.9899009146341463,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9534108231707317,
+    "originalTreatedCoverage": 0.9534108231707317,
+    "rawResponseRMSE": 1.009713903447575,
+    "treatedCells": 35
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9849466463414634,
+      0.9849466463414634
+    ],
+    "controlCells": 32,
+    "donor": "40",
+    "meanObservedCellVariance": 0.8228367175540479,
+    "observedCellWideningRawCoverage": 0.9849466463414634,
+    "observedCellWideningRawMeanWidth": 7.07567531622744,
+    "observedCellWideningTreatedCoverage": 0.9849466463414634,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9276867378048781,
+    "originalTreatedCoverage": 0.9276867378048781,
+    "rawResponseRMSE": 1.18493300443177,
+    "treatedCells": 18
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9865663109756098,
+      0.9861852134146342
+    ],
+    "controlCells": 29,
+    "donor": "41",
+    "meanObservedCellVariance": 0.7737887754288693,
+    "observedCellWideningRawCoverage": 0.9861852134146342,
+    "observedCellWideningRawMeanWidth": 6.998475951911446,
+    "observedCellWideningTreatedCoverage": 0.9861852134146342,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9288300304878049,
+    "originalTreatedCoverage": 0.9288300304878049,
+    "rawResponseRMSE": 1.1607876864692785,
+    "treatedCells": 33
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9587461890243902,
+      0.9586509146341463
+    ],
+    "controlCells": 11,
+    "donor": "42",
+    "meanObservedCellVariance": 1.4693196505493078,
+    "observedCellWideningRawCoverage": 0.9583650914634146,
+    "observedCellWideningRawMeanWidth": 8.026973814387894,
+    "observedCellWideningTreatedCoverage": 0.9583650914634146,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8241234756097561,
+    "originalTreatedCoverage": 0.8241234756097561,
+    "rawResponseRMSE": 1.778074617437194,
+    "treatedCells": 7
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.987233231707317,
+      0.9866615853658537
+    ],
+    "controlCells": 29,
+    "donor": "43",
+    "meanObservedCellVariance": 0.7116827404331139,
+    "observedCellWideningRawCoverage": 0.987233231707317,
+    "observedCellWideningRawMeanWidth": 6.899996431021741,
+    "observedCellWideningTreatedCoverage": 0.987233231707317,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9323551829268293,
+    "originalTreatedCoverage": 0.9323551829268293,
+    "rawResponseRMSE": 1.1219196237072169,
+    "treatedCells": 43
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9871379573170732,
+      0.9871379573170732
+    ],
+    "controlCells": 39,
+    "donor": "44",
+    "meanObservedCellVariance": 0.7232319474585748,
+    "observedCellWideningRawCoverage": 0.9870426829268293,
+    "observedCellWideningRawMeanWidth": 6.912045405861674,
+    "observedCellWideningTreatedCoverage": 0.9870426829268293,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9382621951219512,
+    "originalTreatedCoverage": 0.9382621951219512,
+    "rawResponseRMSE": 1.133760934804222,
+    "treatedCells": 34
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9913300304878049,
+      0.9913300304878049
+    ],
+    "controlCells": 44,
+    "donor": "45",
+    "meanObservedCellVariance": 0.516657747611796,
+    "observedCellWideningRawCoverage": 0.9918064024390244,
+    "observedCellWideningRawMeanWidth": 6.582531456907542,
+    "observedCellWideningTreatedCoverage": 0.9918064024390244,
+    "origin": "Kang",
+    "originalRawCoverage": 0.954173018292683,
+    "originalTreatedCoverage": 0.954173018292683,
+    "rawResponseRMSE": 0.9555824668346123,
+    "treatedCells": 64
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9578887195121951,
+      0.9574123475609756
+    ],
+    "controlCells": 10,
+    "donor": "46",
+    "meanObservedCellVariance": 1.2803333687104723,
+    "observedCellWideningRawCoverage": 0.9576981707317073,
+    "observedCellWideningRawMeanWidth": 7.765112512624383,
+    "observedCellWideningTreatedCoverage": 0.9576981707317073,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8594702743902439,
+    "originalTreatedCoverage": 0.8594702743902439,
+    "rawResponseRMSE": 1.6158128673329362,
+    "treatedCells": 21
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9898056402439024,
+      0.989233993902439
+    ],
+    "controlCells": 41,
+    "donor": "47",
+    "meanObservedCellVariance": 0.6078082372114642,
+    "observedCellWideningRawCoverage": 0.9894245426829268,
+    "observedCellWideningRawMeanWidth": 6.728731504814191,
+    "observedCellWideningTreatedCoverage": 0.9894245426829268,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9487423780487805,
+    "originalTreatedCoverage": 0.9487423780487805,
+    "rawResponseRMSE": 1.0370010191192531,
+    "treatedCells": 30
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9858041158536586,
+      0.9856135670731707
+    ],
+    "controlCells": 23,
+    "donor": "48",
+    "meanObservedCellVariance": 0.736109085222233,
+    "observedCellWideningRawCoverage": 0.9859946646341463,
+    "observedCellWideningRawMeanWidth": 6.939726924534051,
+    "observedCellWideningTreatedCoverage": 0.9859946646341463,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9378810975609756,
+    "originalTreatedCoverage": 0.9378810975609756,
+    "rawResponseRMSE": 1.1162317581350674,
+    "treatedCells": 58
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9949504573170732,
+      0.9949504573170732
+    ],
+    "controlCells": 122,
+    "donor": "49",
+    "meanObservedCellVariance": 0.26396392659612994,
+    "observedCellWideningRawCoverage": 0.995045731707317,
+    "observedCellWideningRawMeanWidth": 6.14755679090416,
+    "observedCellWideningTreatedCoverage": 0.995045731707317,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9746570121951219,
+    "originalTreatedCoverage": 0.9746570121951219,
+    "rawResponseRMSE": 0.7468241453035595,
+    "treatedCells": 112
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9623666158536586,
+      0.9600800304878049
+    ],
+    "controlCells": 7,
+    "donor": "50",
+    "meanObservedCellVariance": 1.4763445350694422,
+    "observedCellWideningRawCoverage": 0.9616044207317073,
+    "observedCellWideningRawMeanWidth": 8.008576518846878,
+    "observedCellWideningTreatedCoverage": 0.9616044207317073,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8382240853658537,
+    "originalTreatedCoverage": 0.8382240853658537,
+    "rawResponseRMSE": 1.7448685619528903,
+    "treatedCells": 14
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9496951219512195,
+      0.9489329268292683
+    ],
+    "controlCells": 6,
+    "donor": "51",
+    "meanObservedCellVariance": 1.4219655491195902,
+    "observedCellWideningRawCoverage": 0.9496951219512195,
+    "observedCellWideningRawMeanWidth": 7.944522128158685,
+    "observedCellWideningTreatedCoverage": 0.9496951219512195,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8322217987804879,
+    "originalTreatedCoverage": 0.8322217987804879,
+    "rawResponseRMSE": 1.7755680535586396,
+    "treatedCells": 15
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9347370426829268,
+      0.9322599085365854
+    ],
+    "controlCells": 4,
+    "donor": "52",
+    "meanObservedCellVariance": 1.7091959965884123,
+    "observedCellWideningRawCoverage": 0.9334984756097561,
+    "observedCellWideningRawMeanWidth": 8.318386125247285,
+    "observedCellWideningTreatedCoverage": 0.9334984756097561,
+    "origin": "Kang",
+    "originalRawCoverage": 0.7914443597560976,
+    "originalTreatedCoverage": 0.7914443597560976,
+    "rawResponseRMSE": 2.01948490861069,
+    "treatedCells": 13
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9871379573170732,
+      0.987233231707317
+    ],
+    "controlCells": 47,
+    "donor": "53",
+    "meanObservedCellVariance": 0.6704295388681317,
+    "observedCellWideningRawCoverage": 0.9875190548780488,
+    "observedCellWideningRawMeanWidth": 6.8413757440610885,
+    "observedCellWideningTreatedCoverage": 0.9875190548780488,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9441692073170732,
+    "originalTreatedCoverage": 0.9441692073170732,
+    "rawResponseRMSE": 1.0817097474846449,
+    "treatedCells": 20
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9885670731707317,
+      0.9890434451219512
+    ],
+    "controlCells": 29,
+    "donor": "54",
+    "meanObservedCellVariance": 0.6353303459674897,
+    "observedCellWideningRawCoverage": 0.9886623475609756,
+    "observedCellWideningRawMeanWidth": 6.771899871493395,
+    "observedCellWideningTreatedCoverage": 0.9886623475609756,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9455030487804879,
+    "originalTreatedCoverage": 0.9455030487804879,
+    "rawResponseRMSE": 1.0484073602821566,
+    "treatedCells": 38
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.98828125,
+      0.98828125
+    ],
+    "controlCells": 20,
+    "donor": "55",
+    "meanObservedCellVariance": 0.7535122859433881,
+    "observedCellWideningRawCoverage": 0.9883765243902439,
+    "observedCellWideningRawMeanWidth": 6.968916369871631,
+    "observedCellWideningTreatedCoverage": 0.9883765243902439,
+    "origin": "Kang",
+    "originalRawCoverage": 0.936451981707317,
+    "originalTreatedCoverage": 0.936451981707317,
+    "rawResponseRMSE": 1.12037171919401,
+    "treatedCells": 32
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9770388719512195,
+      0.9780868902439024
+    ],
+    "controlCells": 15,
+    "donor": "56",
+    "meanObservedCellVariance": 1.032999492707968,
+    "observedCellWideningRawCoverage": 0.9778010670731707,
+    "observedCellWideningRawMeanWidth": 7.39929977383178,
+    "observedCellWideningTreatedCoverage": 0.9778010670731707,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9009146341463414,
+    "originalTreatedCoverage": 0.9009146341463414,
+    "rawResponseRMSE": 1.375824800717366,
+    "treatedCells": 21
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9894245426829268,
+      0.989233993902439
+    ],
+    "controlCells": 41,
+    "donor": "57",
+    "meanObservedCellVariance": 0.6308671931648658,
+    "observedCellWideningRawCoverage": 0.9891387195121951,
+    "observedCellWideningRawMeanWidth": 6.781815330490949,
+    "observedCellWideningTreatedCoverage": 0.9891387195121951,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9433117378048781,
+    "originalTreatedCoverage": 0.9433117378048781,
+    "rawResponseRMSE": 1.043857155352071,
+    "treatedCells": 46
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9923780487804879,
+      0.9919016768292683
+    ],
+    "controlCells": 62,
+    "donor": "58",
+    "meanObservedCellVariance": 0.41005429151477335,
+    "observedCellWideningRawCoverage": 0.9921875,
+    "observedCellWideningRawMeanWidth": 6.40138000013556,
+    "observedCellWideningTreatedCoverage": 0.9921875,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9639862804878049,
+    "originalTreatedCoverage": 0.9639862804878049,
+    "rawResponseRMSE": 0.8722497490311593,
+    "treatedCells": 47
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9866615853658537,
+      0.9860899390243902
+    ],
+    "controlCells": 24,
+    "donor": "59",
+    "meanObservedCellVariance": 0.6929114590026674,
+    "observedCellWideningRawCoverage": 0.9861852134146342,
+    "observedCellWideningRawMeanWidth": 6.869079907964489,
+    "observedCellWideningTreatedCoverage": 0.9861852134146342,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9370236280487805,
+    "originalTreatedCoverage": 0.9370236280487805,
+    "rawResponseRMSE": 1.0974028676635512,
+    "treatedCells": 52
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.995045731707317,
+      0.9939977134146342
+    ],
+    "controlCells": 52,
+    "donor": "60",
+    "meanObservedCellVariance": 0.38135040351416244,
+    "observedCellWideningRawCoverage": 0.9947599085365854,
+    "observedCellWideningRawMeanWidth": 6.35545535919598,
+    "observedCellWideningTreatedCoverage": 0.9947599085365854,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9663681402439024,
+    "originalTreatedCoverage": 0.9663681402439024,
+    "rawResponseRMSE": 0.8354250403951823,
+    "treatedCells": 69
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9836128048780488,
+      0.9846608231707317
+    ],
+    "controlCells": 16,
+    "donor": "61",
+    "meanObservedCellVariance": 0.9604648094932449,
+    "observedCellWideningRawCoverage": 0.9844702743902439,
+    "observedCellWideningRawMeanWidth": 7.288359595088453,
+    "observedCellWideningTreatedCoverage": 0.9844702743902439,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9148246951219512,
+    "originalTreatedCoverage": 0.9148246951219512,
+    "rawResponseRMSE": 1.258119583437356,
+    "treatedCells": 26
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.9625571646341463,
+      0.961985518292683
+    ],
+    "controlCells": 10,
+    "donor": "62",
+    "meanObservedCellVariance": 1.5988667091799804,
+    "observedCellWideningRawCoverage": 0.9625571646341463,
+    "observedCellWideningRawMeanWidth": 8.172439729371026,
+    "observedCellWideningTreatedCoverage": 0.9626524390243902,
+    "origin": "Kang",
+    "originalRawCoverage": 0.8344131097560976,
+    "originalTreatedCoverage": 0.8345083841463414,
+    "rawResponseRMSE": 1.7778285558478841,
+    "treatedCells": 7
+  },
+  {
+    "availableFeatures": 10496,
+    "bootstrapHalvesRawCoverage": [
+      0.985423018292683,
+      0.9851371951219512
+    ],
+    "controlCells": 25,
+    "donor": "63",
+    "meanObservedCellVariance": 0.7264626710463168,
+    "observedCellWideningRawCoverage": 0.9855182926829268,
+    "observedCellWideningRawMeanWidth": 6.919649052815936,
+    "observedCellWideningTreatedCoverage": 0.9855182926829268,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9371189024390244,
+    "originalTreatedCoverage": 0.9371189024390244,
+    "rawResponseRMSE": 1.1224006706060732,
+    "treatedCells": 37
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8983812187473514,
+      0.8947368421052632
+    ],
+    "controlCells": 23,
+    "donor": "0",
+    "meanObservedCellVariance": 0.8206627932791125,
+    "observedCellWideningRawCoverage": 0.8962623951182304,
+    "observedCellWideningRawMeanWidth": 4.217111543640677,
+    "observedCellWideningTreatedCoverage": 0.948809221120434,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.29527926095431817,
+    "originalTreatedCoverage": 0.34782608695652173,
+    "rawResponseRMSE": 1.106830359684802,
+    "treatedCells": 20
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9346554792779049,
+      0.9352487498940588
+    ],
+    "controlCells": 84,
+    "donor": "1",
+    "meanObservedCellVariance": 0.43041781937144596,
+    "observedCellWideningRawCoverage": 0.9345707263327401,
+    "observedCellWideningRawMeanWidth": 3.1524028348010975,
+    "observedCellWideningTreatedCoverage": 0.9584710568692262,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3072294262225612,
+    "originalTreatedCoverage": 0.3311297567590474,
+    "rawResponseRMSE": 0.7956264636572112,
+    "treatedCells": 34
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8942283244342741,
+      0.8935503008729553
+    ],
+    "controlCells": 16,
+    "donor": "2",
+    "meanObservedCellVariance": 0.7028911304565812,
+    "observedCellWideningRawCoverage": 0.8941435714891093,
+    "observedCellWideningRawMeanWidth": 3.9201566448792664,
+    "observedCellWideningTreatedCoverage": 0.937282820578015,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.27959996609882193,
+    "originalTreatedCoverage": 0.32273921518772775,
+    "rawResponseRMSE": 1.0796050513237063,
+    "treatedCells": 51
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.7788795660649207,
+      0.7863378252394271
+    ],
+    "controlCells": 9,
+    "donor": "3",
+    "meanObservedCellVariance": 1.0651603531577098,
+    "observedCellWideningRawCoverage": 0.7848122722264599,
+    "observedCellWideningRawMeanWidth": 4.663822773245318,
+    "observedCellWideningTreatedCoverage": 0.829985591999322,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.2643444359691499,
+    "originalTreatedCoverage": 0.309517755742012,
+    "rawResponseRMSE": 1.5543831201099627,
+    "treatedCells": 52
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9472836681074668,
+      0.9486397152301043
+    ],
+    "controlCells": 96,
+    "donor": "4",
+    "meanObservedCellVariance": 0.36689705840452863,
+    "observedCellWideningRawCoverage": 0.9478769387236207,
+    "observedCellWideningRawMeanWidth": 2.920375555107636,
+    "observedCellWideningTreatedCoverage": 0.9701669633019747,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.32672260361047545,
+    "originalTreatedCoverage": 0.34901262818882955,
+    "rawResponseRMSE": 0.7276036823581563,
+    "treatedCells": 57
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.7287058225273328,
+      0.7226883634206289
+    ],
+    "controlCells": 4,
+    "donor": "6",
+    "meanObservedCellVariance": 1.3346761172403823,
+    "observedCellWideningRawCoverage": 0.7265869988982118,
+    "observedCellWideningRawMeanWidth": 5.028661419746255,
+    "observedCellWideningTreatedCoverage": 0.7966776845495381,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.26781930672090853,
+    "originalTreatedCoverage": 0.33790999237223496,
+    "rawResponseRMSE": 1.9104967639058767,
+    "treatedCells": 27
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.950419527078566,
+      0.949826256462412
+    ],
+    "controlCells": 58,
+    "donor": "7",
+    "meanObservedCellVariance": 0.39648890868602965,
+    "observedCellWideningRawCoverage": 0.9505890329688956,
+    "observedCellWideningRawMeanWidth": 3.0223132112040125,
+    "observedCellWideningTreatedCoverage": 0.9746588693957114,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.33604542757860834,
+    "originalTreatedCoverage": 0.3601152640054242,
+    "rawResponseRMSE": 0.7336942612610575,
+    "treatedCells": 59
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9168573607932876,
+      0.9164335960674633
+    ],
+    "controlCells": 31,
+    "donor": "8",
+    "meanObservedCellVariance": 0.6085512227659537,
+    "observedCellWideningRawCoverage": 0.9175353843546064,
+    "observedCellWideningRawMeanWidth": 3.6774285088005554,
+    "observedCellWideningTreatedCoverage": 0.9549961861174676,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3090939910161878,
+    "originalTreatedCoverage": 0.34655479277904905,
+    "rawResponseRMSE": 0.96571731642114,
+    "treatedCells": 46
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9281295025002119,
+      0.9288075260615306
+    ],
+    "controlCells": 44,
+    "donor": "9",
+    "meanObservedCellVariance": 0.6228388293034668,
+    "observedCellWideningRawCoverage": 0.9288922790066955,
+    "observedCellWideningRawMeanWidth": 3.7145132927943245,
+    "observedCellWideningTreatedCoverage": 0.9627087041274685,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3152809560132215,
+    "originalTreatedCoverage": 0.3490973811339944,
+    "rawResponseRMSE": 0.9398827624407927,
+    "treatedCells": 45
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9350792440037291,
+      0.9373675735231799
+    ],
+    "controlCells": 69,
+    "donor": "10",
+    "meanObservedCellVariance": 0.4291204327694273,
+    "observedCellWideningRawCoverage": 0.9369438087973557,
+    "observedCellWideningRawMeanWidth": 3.148344533840763,
+    "observedCellWideningTreatedCoverage": 0.9611831511145013,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3062123908805831,
+    "originalTreatedCoverage": 0.33045173319772864,
+    "rawResponseRMSE": 0.8014917283927262,
+    "treatedCells": 45
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9283837613357064,
+      0.9294007966776846
+    ],
+    "controlCells": 98,
+    "donor": "11",
+    "meanObservedCellVariance": 0.49532973884814063,
+    "observedCellWideningRawCoverage": 0.9290617848970252,
+    "observedCellWideningRawMeanWidth": 3.359884737749647,
+    "observedCellWideningTreatedCoverage": 0.9546571743368082,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3074836850580558,
+    "originalTreatedCoverage": 0.3330790744978388,
+    "rawResponseRMSE": 0.8466561385676881,
+    "treatedCells": 31
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9610136452241715,
+      0.9597423510466989
+    ],
+    "controlCells": 72,
+    "donor": "12",
+    "meanObservedCellVariance": 0.2795944017871837,
+    "observedCellWideningRawCoverage": 0.960759386388677,
+    "observedCellWideningRawMeanWidth": 2.578301874459906,
+    "observedCellWideningTreatedCoverage": 0.9777947283668107,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.35545385202135776,
+    "originalTreatedCoverage": 0.3724891939994915,
+    "rawResponseRMSE": 0.6117848879072042,
+    "treatedCells": 106
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.942198491397576,
+      0.9439783032460378
+    ],
+    "controlCells": 56,
+    "donor": "13",
+    "meanObservedCellVariance": 0.38152794069403234,
+    "observedCellWideningRawCoverage": 0.9438087973557081,
+    "observedCellWideningRawMeanWidth": 2.946211660517623,
+    "observedCellWideningTreatedCoverage": 0.9702517162471396,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.34324942791762014,
+    "originalTreatedCoverage": 0.3696923468090516,
+    "rawResponseRMSE": 0.741690352500497,
+    "treatedCells": 86
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9285532672260361,
+      0.9260106788710908
+    ],
+    "controlCells": 58,
+    "donor": "14",
+    "meanObservedCellVariance": 0.5411138593485865,
+    "observedCellWideningRawCoverage": 0.9286380201712009,
+    "observedCellWideningRawMeanWidth": 3.478853012623289,
+    "observedCellWideningTreatedCoverage": 0.9617764217306551,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.31409441478091366,
+    "originalTreatedCoverage": 0.34723281634036784,
+    "rawResponseRMSE": 0.895200697632966,
+    "treatedCells": 58
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9156708195609797,
+      0.9140605136028477
+    ],
+    "controlCells": 39,
+    "donor": "15",
+    "meanObservedCellVariance": 0.6851787011904411,
+    "observedCellWideningRawCoverage": 0.9155860666158149,
+    "observedCellWideningRawMeanWidth": 3.8561031191025013,
+    "observedCellWideningTreatedCoverage": 0.9555047037884566,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.31841681498432073,
+    "originalTreatedCoverage": 0.35833545215696244,
+    "rawResponseRMSE": 1.006765225697285,
+    "treatedCells": 47
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9016018306636155,
+      0.9014323247732858
+    ],
+    "controlCells": 17,
+    "donor": "16",
+    "meanObservedCellVariance": 0.8113698776997554,
+    "observedCellWideningRawCoverage": 0.9028731248410883,
+    "observedCellWideningRawMeanWidth": 4.198418993630508,
+    "observedCellWideningTreatedCoverage": 0.9457581150944996,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3004491906093737,
+    "originalTreatedCoverage": 0.343334180862785,
+    "rawResponseRMSE": 1.122354696998469,
+    "treatedCells": 40
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8780405119077888,
+      0.879566064920756
+    ],
+    "controlCells": 20,
+    "donor": "17",
+    "meanObservedCellVariance": 0.7341066419967535,
+    "observedCellWideningRawCoverage": 0.8800745825917451,
+    "observedCellWideningRawMeanWidth": 4.0215502956189555,
+    "observedCellWideningTreatedCoverage": 0.9143995253835071,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.2914653784219002,
+    "originalTreatedCoverage": 0.3257903212136622,
+    "rawResponseRMSE": 1.1195672701477846,
+    "treatedCells": 80
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8558352402745996,
+      0.8529536401389949
+    ],
+    "controlCells": 12,
+    "donor": "18",
+    "meanObservedCellVariance": 1.2855364436639123,
+    "observedCellWideningRawCoverage": 0.8548182049326214,
+    "observedCellWideningRawMeanWidth": 5.082793568141042,
+    "observedCellWideningTreatedCoverage": 0.9289770319518603,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.29587253157047205,
+    "originalTreatedCoverage": 0.370031358589711,
+    "rawResponseRMSE": 1.5130614634097734,
+    "treatedCells": 10
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8177811678955844,
+      0.8189677091278922
+    ],
+    "controlCells": 11,
+    "donor": "19",
+    "meanObservedCellVariance": 1.0368375099271858,
+    "observedCellWideningRawCoverage": 0.8187134502923976,
+    "observedCellWideningRawMeanWidth": 4.607908620853923,
+    "observedCellWideningTreatedCoverage": 0.8761759471141622,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.28324434274091026,
+    "originalTreatedCoverage": 0.3407068395626748,
+    "rawResponseRMSE": 1.460705841705769,
+    "treatedCells": 45
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8860072887532842,
+      0.8854987710822951
+    ],
+    "controlCells": 19,
+    "donor": "20",
+    "meanObservedCellVariance": 1.0242964154528296,
+    "observedCellWideningRawCoverage": 0.8874480888210865,
+    "observedCellWideningRawMeanWidth": 4.621293422349038,
+    "observedCellWideningTreatedCoverage": 0.9519450800915332,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.30409356725146197,
+    "originalTreatedCoverage": 0.36859055852190864,
+    "rawResponseRMSE": 1.2447353508218262,
+    "treatedCells": 18
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9004152894313078,
+      0.8971946775150437
+    ],
+    "controlCells": 21,
+    "donor": "21",
+    "meanObservedCellVariance": 0.7548482569567435,
+    "observedCellWideningRawCoverage": 0.8992287481989999,
+    "observedCellWideningRawMeanWidth": 4.0739789097434045,
+    "observedCellWideningTreatedCoverage": 0.9394016442071362,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.2929909314348674,
+    "originalTreatedCoverage": 0.33316382744300366,
+    "rawResponseRMSE": 1.1088443152025793,
+    "treatedCells": 30
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9409271972201034,
+      0.9414357148910925
+    ],
+    "controlCells": 38,
+    "donor": "22",
+    "meanObservedCellVariance": 0.4438412175079067,
+    "observedCellWideningRawCoverage": 0.9421137384524112,
+    "observedCellWideningRawMeanWidth": 3.1781479412059617,
+    "observedCellWideningTreatedCoverage": 0.9696584456309857,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3330790744978388,
+    "originalTreatedCoverage": 0.36062378167641324,
+    "rawResponseRMSE": 0.7924648826049197,
+    "treatedCells": 60
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9195694550385626,
+      0.9174506314094415
+    ],
+    "controlCells": 37,
+    "donor": "24",
+    "meanObservedCellVariance": 0.7497966812593241,
+    "observedCellWideningRawCoverage": 0.9198237138740571,
+    "observedCellWideningRawMeanWidth": 4.028141812308721,
+    "observedCellWideningTreatedCoverage": 0.9631324688532926,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.31409441478091366,
+    "originalTreatedCoverage": 0.3574031697601492,
+    "rawResponseRMSE": 1.023828503946738,
+    "treatedCells": 30
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8874480888210865,
+      0.886600559369438
+    ],
+    "controlCells": 26,
+    "donor": "25",
+    "meanObservedCellVariance": 0.9844992772024526,
+    "observedCellWideningRawCoverage": 0.8878718535469108,
+    "observedCellWideningRawMeanWidth": 4.528388264917078,
+    "observedCellWideningTreatedCoverage": 0.9462666327654886,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.30358504958047294,
+    "originalTreatedCoverage": 0.3619798287990508,
+    "rawResponseRMSE": 1.2388066039186663,
+    "treatedCells": 17
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9172811255191118,
+      0.9178743961352657
+    ],
+    "controlCells": 35,
+    "donor": "26",
+    "meanObservedCellVariance": 0.5436861797890866,
+    "observedCellWideningRawCoverage": 0.91829816086109,
+    "observedCellWideningRawMeanWidth": 3.5078896018144787,
+    "observedCellWideningTreatedCoverage": 0.9503347741334012,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.299177896431901,
+    "originalTreatedCoverage": 0.33121450970421223,
+    "rawResponseRMSE": 0.9496528819178544,
+    "treatedCells": 53
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9353335028392237,
+      0.933468938045597
+    ],
+    "controlCells": 51,
+    "donor": "27",
+    "meanObservedCellVariance": 0.5478666485508416,
+    "observedCellWideningRawCoverage": 0.9349944910585642,
+    "observedCellWideningRawMeanWidth": 3.5128489419609172,
+    "observedCellWideningTreatedCoverage": 0.9653360454275786,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3168065090261887,
+    "originalTreatedCoverage": 0.347148063395203,
+    "rawResponseRMSE": 0.8765845749607732,
+    "treatedCells": 61
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9153318077803204,
+      0.9153318077803204
+    ],
+    "controlCells": 33,
+    "donor": "28",
+    "meanObservedCellVariance": 0.5634661663035356,
+    "observedCellWideningRawCoverage": 0.9167726078481228,
+    "observedCellWideningRawMeanWidth": 3.5518307621752685,
+    "observedCellWideningTreatedCoverage": 0.9499110094075769,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3085007204000339,
+    "originalTreatedCoverage": 0.3416391219594881,
+    "rawResponseRMSE": 0.9432093042978722,
+    "treatedCells": 69
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9310111026358165,
+      0.9327061615391135
+    ],
+    "controlCells": 39,
+    "donor": "29",
+    "meanObservedCellVariance": 0.5393424489851955,
+    "observedCellWideningRawCoverage": 0.9322823968132893,
+    "observedCellWideningRawMeanWidth": 3.48281505475361,
+    "observedCellWideningTreatedCoverage": 0.9642342571404356,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3119755911517925,
+    "originalTreatedCoverage": 0.3439274514789389,
+    "rawResponseRMSE": 0.8717499186967351,
+    "treatedCells": 57
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9228748198999915,
+      0.9220272904483431
+    ],
+    "controlCells": 55,
+    "donor": "30",
+    "meanObservedCellVariance": 0.5617701329123508,
+    "observedCellWideningRawCoverage": 0.9228748198999915,
+    "observedCellWideningRawMeanWidth": 3.5697940822145697,
+    "observedCellWideningTreatedCoverage": 0.9516060683108738,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3008729553351979,
+    "originalTreatedCoverage": 0.3296042037460802,
+    "rawResponseRMSE": 0.921755327519255,
+    "treatedCells": 34
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.958555809814391,
+      0.9573692685820833
+    ],
+    "controlCells": 59,
+    "donor": "31",
+    "meanObservedCellVariance": 0.3533006500855353,
+    "observedCellWideningRawCoverage": 0.9577082803627426,
+    "observedCellWideningRawMeanWidth": 2.8663714105557863,
+    "observedCellWideningTreatedCoverage": 0.9773709636409865,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.34901262818882955,
+    "originalTreatedCoverage": 0.3686753114670735,
+    "rawResponseRMSE": 0.6853493710684603,
+    "treatedCells": 87
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8405797101449275,
+      0.8382913806254767
+    ],
+    "controlCells": 24,
+    "donor": "32",
+    "meanObservedCellVariance": 1.3800133383125124,
+    "observedCellWideningRawCoverage": 0.8407492160352572,
+    "observedCellWideningRawMeanWidth": 5.254590425422892,
+    "observedCellWideningTreatedCoverage": 0.9136367488770235,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.2982456140350877,
+    "originalTreatedCoverage": 0.37113314687685395,
+    "rawResponseRMSE": 1.6178042019802383,
+    "treatedCells": 9
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8793118060852615,
+      0.8787185354691075
+    ],
+    "controlCells": 13,
+    "donor": "33",
+    "meanObservedCellVariance": 0.8029395915143771,
+    "observedCellWideningRawCoverage": 0.8793965590304264,
+    "observedCellWideningRawMeanWidth": 4.145268564946812,
+    "observedCellWideningTreatedCoverage": 0.9288075260615306,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.291550131367065,
+    "originalTreatedCoverage": 0.34096109839816935,
+    "rawResponseRMSE": 1.1807249908298403,
+    "treatedCells": 40
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9417747266717519,
+      0.9405034324942791
+    ],
+    "controlCells": 69,
+    "donor": "34",
+    "meanObservedCellVariance": 0.40085008028171615,
+    "observedCellWideningRawCoverage": 0.9415204678362573,
+    "observedCellWideningRawMeanWidth": 3.0335798851781086,
+    "observedCellWideningTreatedCoverage": 0.9678786337825239,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.33519789812695994,
+    "originalTreatedCoverage": 0.36155606407322655,
+    "rawResponseRMSE": 0.7544187244519731,
+    "treatedCells": 77
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9266039494872447,
+      0.9271124671582337
+    ],
+    "controlCells": 56,
+    "donor": "35",
+    "meanObservedCellVariance": 0.5418351263262061,
+    "observedCellWideningRawCoverage": 0.9273667259937283,
+    "observedCellWideningRawMeanWidth": 3.5112863209647096,
+    "observedCellWideningTreatedCoverage": 0.9550809390626325,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.29934740232223067,
+    "originalTreatedCoverage": 0.3270616153911348,
+    "rawResponseRMSE": 0.8910240718941257,
+    "treatedCells": 27
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9158403254513094,
+      0.9153318077803204
+    ],
+    "controlCells": 27,
+    "donor": "36",
+    "meanObservedCellVariance": 0.6522663874929702,
+    "observedCellWideningRawCoverage": 0.916603101957793,
+    "observedCellWideningRawMeanWidth": 3.7999520840773147,
+    "observedCellWideningTreatedCoverage": 0.9510127976947199,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3138401559454191,
+    "originalTreatedCoverage": 0.34824985168234596,
+    "rawResponseRMSE": 0.9632329093512358,
+    "treatedCells": 55
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9369438087973557,
+      0.937876091194169
+    ],
+    "controlCells": 68,
+    "donor": "37",
+    "meanObservedCellVariance": 0.4777117218580602,
+    "observedCellWideningRawCoverage": 0.9376218323586745,
+    "observedCellWideningRawMeanWidth": 3.2787357439749174,
+    "observedCellWideningTreatedCoverage": 0.9673701161115349,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3228239681328926,
+    "originalTreatedCoverage": 0.35257225188575303,
+    "rawResponseRMSE": 0.8216298850400692,
+    "treatedCells": 68
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8073565556403085,
+      0.7993050258496482
+    ],
+    "controlCells": 12,
+    "donor": "38",
+    "meanObservedCellVariance": 1.5786500599309847,
+    "observedCellWideningRawCoverage": 0.8030341554369015,
+    "observedCellWideningRawMeanWidth": 5.379486342102268,
+    "observedCellWideningTreatedCoverage": 0.9042291719637258,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3199423679972879,
+    "originalTreatedCoverage": 0.4211373845241122,
+    "rawResponseRMSE": 1.8009940659251018,
+    "treatedCells": 6
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9228748198999915,
+      0.9223663022290025
+    ],
+    "controlCells": 72,
+    "donor": "39",
+    "meanObservedCellVariance": 0.5744924344964067,
+    "observedCellWideningRawCoverage": 0.9228748198999915,
+    "observedCellWideningRawMeanWidth": 3.5777655775593593,
+    "observedCellWideningTreatedCoverage": 0.9558437155691161,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.30739893211289093,
+    "originalTreatedCoverage": 0.3403678277820154,
+    "rawResponseRMSE": 0.9109943876853566,
+    "treatedCells": 35
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8984659716925163,
+      0.899737265869989
+    ],
+    "controlCells": 32,
+    "donor": "40",
+    "meanObservedCellVariance": 0.8228367175540479,
+    "observedCellWideningRawCoverage": 0.8996525129248242,
+    "observedCellWideningRawMeanWidth": 4.211552881398654,
+    "observedCellWideningTreatedCoverage": 0.9484702093397746,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.30434782608695654,
+    "originalTreatedCoverage": 0.3531655225019069,
+    "rawResponseRMSE": 1.104411476059115,
+    "treatedCells": 18
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9092295957284515,
+      0.9083820662768031
+    ],
+    "controlCells": 29,
+    "donor": "41",
+    "meanObservedCellVariance": 0.7737887754288693,
+    "observedCellWideningRawCoverage": 0.9104161369607594,
+    "observedCellWideningRawMeanWidth": 4.0896768996368005,
+    "observedCellWideningTreatedCoverage": 0.9555047037884566,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3153657089583863,
+    "originalTreatedCoverage": 0.3604542757860836,
+    "rawResponseRMSE": 1.0800925457216621,
+    "treatedCells": 33
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8180354267310789,
+      0.816340367827782
+    ],
+    "controlCells": 11,
+    "donor": "42",
+    "meanObservedCellVariance": 1.4693196505493078,
+    "observedCellWideningRawCoverage": 0.8154928383761336,
+    "observedCellWideningRawMeanWidth": 5.325670264512628,
+    "observedCellWideningTreatedCoverage": 0.9045681837443851,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.29833036698025256,
+    "originalTreatedCoverage": 0.3874057123485041,
+    "rawResponseRMSE": 1.721389991249891,
+    "treatedCells": 7
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9091448427832867,
+      0.9087210780574625
+    ],
+    "controlCells": 29,
+    "donor": "43",
+    "meanObservedCellVariance": 0.7116827404331139,
+    "observedCellWideningRawCoverage": 0.910670395796254,
+    "observedCellWideningRawMeanWidth": 3.929650884366251,
+    "observedCellWideningTreatedCoverage": 0.954233409610984,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.30714467327739636,
+    "originalTreatedCoverage": 0.35070768709212646,
+    "rawResponseRMSE": 1.0376946152055075,
+    "treatedCells": 43
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9103313840155945,
+      0.9109246546317484
+    ],
+    "controlCells": 39,
+    "donor": "44",
+    "meanObservedCellVariance": 0.7232319474585748,
+    "observedCellWideningRawCoverage": 0.9104161369607594,
+    "observedCellWideningRawMeanWidth": 3.9637091356584206,
+    "observedCellWideningTreatedCoverage": 0.9527078565980168,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.30985676752267144,
+    "originalTreatedCoverage": 0.3521484871599288,
+    "rawResponseRMSE": 1.0560287767012142,
+    "treatedCells": 34
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9392321383168065,
+      0.9386388677006526
+    ],
+    "controlCells": 44,
+    "donor": "45",
+    "meanObservedCellVariance": 0.516657747611796,
+    "observedCellWideningRawCoverage": 0.9394863971523011,
+    "observedCellWideningRawMeanWidth": 3.394287885180665,
+    "observedCellWideningTreatedCoverage": 0.9695736926858208,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3300279684719044,
+    "originalTreatedCoverage": 0.3601152640054242,
+    "rawResponseRMSE": 0.8461115966440065,
+    "treatedCells": 64
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8222730739893211,
+      0.8203237562505297
+    ],
+    "controlCells": 10,
+    "donor": "46",
+    "meanObservedCellVariance": 1.2803333687104723,
+    "observedCellWideningRawCoverage": 0.8202390033053648,
+    "observedCellWideningRawMeanWidth": 5.085545503802469,
+    "observedCellWideningTreatedCoverage": 0.8952453597762522,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.2786676837020086,
+    "originalTreatedCoverage": 0.353674040172896,
+    "rawResponseRMSE": 1.5745669475177686,
+    "treatedCells": 21
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9221120433935079,
+      0.9223663022290025
+    ],
+    "controlCells": 41,
+    "donor": "47",
+    "meanObservedCellVariance": 0.6078082372114642,
+    "observedCellWideningRawCoverage": 0.9231290787354861,
+    "observedCellWideningRawMeanWidth": 3.6531592084374713,
+    "observedCellWideningTreatedCoverage": 0.9603356216628528,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3137554030002543,
+    "originalTreatedCoverage": 0.350961945927621,
+    "rawResponseRMSE": 0.9332703202547087,
+    "treatedCells": 30
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8958386303924062,
+      0.8972794304602085
+    ],
+    "controlCells": 23,
+    "donor": "48",
+    "meanObservedCellVariance": 0.736109085222233,
+    "observedCellWideningRawCoverage": 0.8974489363505381,
+    "observedCellWideningRawMeanWidth": 4.0039835362216225,
+    "observedCellWideningTreatedCoverage": 0.9403339266039494,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3096872616323417,
+    "originalTreatedCoverage": 0.35257225188575303,
+    "rawResponseRMSE": 1.0486843629255318,
+    "treatedCells": 58
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9592338333757098,
+      0.9594033392660395
+    ],
+    "controlCells": 122,
+    "donor": "49",
+    "meanObservedCellVariance": 0.26396392659612994,
+    "observedCellWideningRawCoverage": 0.9595728451563692,
+    "observedCellWideningRawMeanWidth": 2.5161882302838747,
+    "observedCellWideningTreatedCoverage": 0.9752521400118654,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3586744639376218,
+    "originalTreatedCoverage": 0.37435375879311805,
+    "rawResponseRMSE": 0.6041827050150671,
+    "treatedCells": 112
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8102381557759132,
+      0.806000508517671
+    ],
+    "controlCells": 7,
+    "donor": "50",
+    "meanObservedCellVariance": 1.4763445350694422,
+    "observedCellWideningRawCoverage": 0.8047292143401983,
+    "observedCellWideningRawMeanWidth": 5.272867739220826,
+    "observedCellWideningTreatedCoverage": 0.9052462073057038,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.30112721417069244,
+    "originalTreatedCoverage": 0.401644207136198,
+    "rawResponseRMSE": 1.7122205057672288,
+    "treatedCells": 14
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.7968471904398677,
+      0.7943046020849225
+    ],
+    "controlCells": 6,
+    "donor": "51",
+    "meanObservedCellVariance": 1.4219655491195902,
+    "observedCellWideningRawCoverage": 0.7935418255784389,
+    "observedCellWideningRawMeanWidth": 5.181697342108488,
+    "observedCellWideningTreatedCoverage": 0.8867700652597678,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3008729553351979,
+    "originalTreatedCoverage": 0.39410119501652685,
+    "rawResponseRMSE": 1.748812184082653,
+    "treatedCells": 15
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.7655733536740402,
+      0.7562505297059072
+    ],
+    "controlCells": 4,
+    "donor": "52",
+    "meanObservedCellVariance": 1.7091959965884123,
+    "observedCellWideningRawCoverage": 0.7571828121027205,
+    "observedCellWideningRawMeanWidth": 5.508802323416568,
+    "observedCellWideningTreatedCoverage": 0.8691414526654802,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3097720145775066,
+    "originalTreatedCoverage": 0.42173065514026614,
+    "rawResponseRMSE": 1.993453755426655,
+    "treatedCells": 13
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9157555725061446,
+      0.9156708195609797
+    ],
+    "controlCells": 47,
+    "donor": "53",
+    "meanObservedCellVariance": 0.6704295388681317,
+    "observedCellWideningRawCoverage": 0.9156708195609797,
+    "observedCellWideningRawMeanWidth": 3.8694314846036284,
+    "observedCellWideningTreatedCoverage": 0.9509280447495551,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.30002542588354947,
+    "originalTreatedCoverage": 0.33528265107212474,
+    "rawResponseRMSE": 0.9717540560909348,
+    "treatedCells": 20
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9196542079837274,
+      0.9195694550385626
+    ],
+    "controlCells": 29,
+    "donor": "54",
+    "meanObservedCellVariance": 0.6353303459674897,
+    "observedCellWideningRawCoverage": 0.9206712433257056,
+    "observedCellWideningRawMeanWidth": 3.7507876798957978,
+    "observedCellWideningTreatedCoverage": 0.9590643274853801,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.31341639121959486,
+    "originalTreatedCoverage": 0.35180947537926943,
+    "rawResponseRMSE": 0.9632780026491056,
+    "treatedCells": 38
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9093991016187812,
+      0.9107551487414187
+    ],
+    "controlCells": 20,
+    "donor": "55",
+    "meanObservedCellVariance": 0.7535122859433881,
+    "observedCellWideningRawCoverage": 0.9110094075769133,
+    "observedCellWideningRawMeanWidth": 4.041358404486871,
+    "observedCellWideningTreatedCoverage": 0.9570302568014238,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3127383676582761,
+    "originalTreatedCoverage": 0.35875921688278667,
+    "rawResponseRMSE": 1.0397854231455925,
+    "treatedCells": 32
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8627849817781168,
+      0.864310534791084
+    ],
+    "controlCells": 15,
+    "donor": "56",
+    "meanObservedCellVariance": 1.032999492707968,
+    "observedCellWideningRawCoverage": 0.8632934994491058,
+    "observedCellWideningRawMeanWidth": 4.6434604968324455,
+    "observedCellWideningTreatedCoverage": 0.9287227731163658,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.29163488431222984,
+    "originalTreatedCoverage": 0.35706415797948976,
+    "rawResponseRMSE": 1.3116207105507005,
+    "treatedCells": 21
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9199932197643869,
+      0.9190609373675735
+    ],
+    "controlCells": 41,
+    "donor": "57",
+    "meanObservedCellVariance": 0.6308671931648658,
+    "observedCellWideningRawCoverage": 0.9195694550385626,
+    "observedCellWideningRawMeanWidth": 3.714151173247962,
+    "observedCellWideningTreatedCoverage": 0.9575387744724129,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.32121366217476055,
+    "originalTreatedCoverage": 0.3591829816086109,
+    "rawResponseRMSE": 0.9671950975150121,
+    "treatedCells": 46
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9451648444783456,
+      0.9430460208492245
+    ],
+    "controlCells": 62,
+    "donor": "58",
+    "meanObservedCellVariance": 0.41005429151477335,
+    "observedCellWideningRawCoverage": 0.9442325620815323,
+    "observedCellWideningRawMeanWidth": 3.0679349926628094,
+    "observedCellWideningTreatedCoverage": 0.9693194338503263,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3355369099076193,
+    "originalTreatedCoverage": 0.36062378167641324,
+    "rawResponseRMSE": 0.7568417860161132,
+    "treatedCells": 47
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9109246546317484,
+      0.910670395796254
+    ],
+    "controlCells": 24,
+    "donor": "59",
+    "meanObservedCellVariance": 0.6929114590026674,
+    "observedCellWideningRawCoverage": 0.9117721840833969,
+    "observedCellWideningRawMeanWidth": 3.9032254611821147,
+    "observedCellWideningTreatedCoverage": 0.9496567505720824,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.300279684719044,
+    "originalTreatedCoverage": 0.33816425120772947,
+    "rawResponseRMSE": 1.0251147151157973,
+    "treatedCells": 52
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9494872446817527,
+      0.9484702093397746
+    ],
+    "controlCells": 52,
+    "donor": "60",
+    "meanObservedCellVariance": 0.38135040351416244,
+    "observedCellWideningRawCoverage": 0.9492329858462581,
+    "observedCellWideningRawMeanWidth": 2.969768580009359,
+    "observedCellWideningTreatedCoverage": 0.9743198576150521,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3358759216882787,
+    "originalTreatedCoverage": 0.3609627934570726,
+    "rawResponseRMSE": 0.7226039948582502,
+    "treatedCells": 69
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.889905924230867,
+      0.8943978303246037
+    ],
+    "controlCells": 16,
+    "donor": "61",
+    "meanObservedCellVariance": 0.9604648094932449,
+    "observedCellWideningRawCoverage": 0.8927027714213069,
+    "observedCellWideningRawMeanWidth": 4.500526825150271,
+    "observedCellWideningTreatedCoverage": 0.9475379269429612,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.30663615560640733,
+    "originalTreatedCoverage": 0.3614713111280617,
+    "rawResponseRMSE": 1.1986469075842396,
+    "treatedCells": 26
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.8093906263242647,
+      0.8069327909144843
+    ],
+    "controlCells": 10,
+    "donor": "62",
+    "meanObservedCellVariance": 1.5988667091799804,
+    "observedCellWideningRawCoverage": 0.808204085091957,
+    "observedCellWideningRawMeanWidth": 5.39919592178908,
+    "observedCellWideningTreatedCoverage": 0.9166878549029579,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.3199423679972879,
+    "originalTreatedCoverage": 0.42842613780828886,
+    "rawResponseRMSE": 1.738145614054001,
+    "treatedCells": 7
+  },
+  {
+    "availableFeatures": 11799,
+    "bootstrapHalvesRawCoverage": [
+      0.9072802779896602,
+      0.9063479955928468
+    ],
+    "controlCells": 25,
+    "donor": "63",
+    "meanObservedCellVariance": 0.7264626710463168,
+    "observedCellWideningRawCoverage": 0.907873548605814,
+    "observedCellWideningRawMeanWidth": 3.9602239903611274,
+    "observedCellWideningTreatedCoverage": 0.950419527078566,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.31239935587761675,
+    "originalTreatedCoverage": 0.3549453343503687,
+    "rawResponseRMSE": 1.0550800804912228,
+    "treatedCells": 37
+  }
+]

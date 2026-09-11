@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "declaredUnix": 1789146173.0212638,
+  "status": "retrospective-diagnostic-predeclared",
+  "knownResults": [
+    "Complete GSE181897 primary point and interval scores from commit 2a294637; no new independent validation claimed."
+  ],
+  "purpose": "Quantify observed cell-sampling variability and systematic donor-average residuals before choosing a model change.",
+  "cohort": "All 62 admitted donor pairs; all 11800 frozen genes; all 4938 admitted original cells. No donor, cell or gene exclusions.",
+  "bootstrap": {
+    "method": "Within each original donor and condition, multinomial resampling of whole cells with replacement at the same observed cell count. Recompute each RNA library over all20303 sourceRNAfeatures before projecting to panel.",
+    "replicates": 256,
+    "seed": 20260911,
+    "rng": "NumPy default_rng, independent SeedSequence([seed, int(donor), codeIndex]) per donor-condition; codeIndex0=control,1=treated",
+    "MonteCarloSensitivity": "Compute variance and diagnostic coverage independently using each half of the 256 replicates. Do not select a favorable half or seed."
+  },
+  "analyses": [
+    "Exact equal-donor raw-response MSE decomposition into squared donor-average residual and between-donor residual variation. These are descriptive components, not causal attribution.",
+    "Coverage and error partition by original control/treated zero/nonzero status; retain all four strata.",
+    "Observed-cell bootstrap variance for control and treated log1pCPM and their sum.",
+    "Diagnostic-only widening: preserve the original mean, availability mask and Student-t critical value; combine original future-donor variance with estimated control plus treated cell-sampling variance. No nominal calibration claim: this uses held-treated measurements, ignores cross-study exchangeability and cannot estimate genes/states never observed.",
+    "Report all donors and both training origins; no new primary acceptance threshold."
+  ],
+  "limitations": [
+    "The bootstrap treats sampled cells as exchangeable within donor/condition; technical pools and cell-state composition can violate this.",
+    "Observed-cell resampling misses unsampled states and undetected transcripts. Failure of widened intervals cannot rule out sampling noise.",
+    "Bootstrap replicates, genes and cells are not new biological donors.",
+    "No native predictor, fit, clipping rule, feature panel, uncertainty model or original result is changed."
+  ],
+  "sourceSHA256": {
+    "prediction-inputs/input-freeze.json": "155c36ba426319f74e12119c10278f84549f764bca42b37730300ec7decd33a5",
+    "prediction-execution/prediction-freeze.json": "12ae52036d2618eaeb9ae9181e6fa11741035cc30c64abad1249fb9f2833a8bd",
+    "handoff/input-freeze.json": "39cd37a564ff690e4a4ed53a7fe088e25e8c491d055e8d337d8ff93f6756685b",
+    "prediction-scores-complete/summary.json": "2a363310fcab57357dc4c3973edc0dccf9eccaf11f9f508a6b6e2cff3e5eb6f2"
+  }
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "availablePairs": 97114,
+    "donorFeaturePairs": 165035,
+    "meanObservedCellVariance": 0.0,
+    "observedCellWideningRawCoverage": 0.9993203863500628,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9993203863500628,
+    "rawResponseMSE": 0.1214665022970383,
+    "stratum": "bothZero"
+  },
+  {
+    "availablePairs": 63320,
+    "donorFeaturePairs": 68446,
+    "meanObservedCellVariance": 0.9893620233168067,
+    "observedCellWideningRawCoverage": 0.88575489576753,
+    "origin": "Kang",
+    "originalRawCoverage": 0.6817751105495894,
+    "rawResponseMSE": 6.403911015873376,
+    "stratum": "controlZeroOnly"
+  },
+  {
+    "availablePairs": 49781,
+    "donorFeaturePairs": 54956,
+    "meanObservedCellVariance": 1.1968824401214804,
+    "observedCellWideningRawCoverage": 0.9175990839878668,
+    "origin": "Kang",
+    "originalRawCoverage": 0.6736706775677467,
+    "rawResponseMSE": 6.1199239654103845,
+    "stratum": "treatedZeroOnly"
+  },
+  {
+    "availablePairs": 440537,
+    "donorFeaturePairs": 443163,
+    "meanObservedCellVariance": 0.9638154007513756,
+    "observedCellWideningRawCoverage": 0.997684643968611,
+    "origin": "Kang",
+    "originalRawCoverage": 0.9702908041776287,
+    "rawResponseMSE": 0.6526100677167741,
+    "stratum": "bothNonzero"
+  },
+  {
+    "availablePairs": 164977,
+    "donorFeaturePairs": 165035,
+    "meanObservedCellVariance": 0.0,
+    "observedCellWideningRawCoverage": 0.7769931566218321,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.7769931566218321,
+    "rawResponseMSE": 0.07765970723176414,
+    "stratum": "bothZero"
+  },
+  {
+    "availablePairs": 68443,
+    "donorFeaturePairs": 68446,
+    "meanObservedCellVariance": 0.9893620233168067,
+    "observedCellWideningRawCoverage": 0.6466841020995573,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.008722586677965606,
+    "rawResponseMSE": 6.719103745536105,
+    "stratum": "controlZeroOnly"
+  },
+  {
+    "availablePairs": 54955,
+    "donorFeaturePairs": 54956,
+    "meanObservedCellVariance": 1.1968824401214804,
+    "observedCellWideningRawCoverage": 0.7843326357929215,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.0031662269129287598,
+    "rawResponseMSE": 5.575776699055895,
+    "stratum": "treatedZeroOnly"
+  },
+  {
+    "availablePairs": 443163,
+    "donorFeaturePairs": 443163,
+    "meanObservedCellVariance": 0.9638154007513756,
+    "observedCellWideningRawCoverage": 0.9946611066357074,
+    "origin": "HIRISA",
+    "originalRawCoverage": 0.22092322689394195,
+    "rawResponseMSE": 0.3999879918482637,
+    "stratum": "bothNonzero"
+  }
+]

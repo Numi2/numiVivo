@@ -139,6 +139,9 @@ predictions reconstruct; 496 estimate vectors match independent calculations.
 HIRISA-trained nominal 95% treated-expression intervals cover only **35.54%** of
 available features on average. This supports a bounded RNA point-prediction result,
 with failed uncertainty and model-dependent transfer retained explicitly.
+The [cell-sampling diagnosis](Tools/Omics/PerturbationPrediction/GSE181897/Uncertainty/README.md)
+points to sampling and zero-count uncertainty; its outcome-informed widening is
+a retrospective diagnostic, not a new prediction model.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five

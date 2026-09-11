@@ -47,6 +47,13 @@ Kang intervals are much wider and some donors under-cover. HIRISA's narrow
 intervals fail badly in this external context despite its useful point estimates.
 Neither nominal 95% nor aggregate improvement supplies calibrated uncertainty.
 
+A subsequent [complete cell-sampling diagnosis](Uncertainty/README.md) finds
+substantial observed sampling variability and poor zero-count coverage. Adding
+variance estimated from observed control **and treated** cells raises HIRISA
+treated coverage to 94.25%, but this is an outcome-informed diagnostic, not a
+predictor or independent validation. It leaves the results above unchanged and
+identifies the need for a count-based observation model.
+
 ## Primary treatment identity
 
 The first audit found incomplete current author code and an external curator's

@@ -108,6 +108,15 @@ under-cover. This adds an external RNA point-prediction success for one frozen
 training origin, not calibrated uncertainty, universal transfer, verified
 participant independence or a measured phenotype model.
 
+The [retrospective cell-sampling diagnosis](../Tools/Omics/PerturbationPrediction/GSE181897/Uncertainty/README.md)
+then resamples all 4,938 admitted original cells within the 124 donor/condition
+strata. Observed sampling variability is substantial, while zero-count genes
+remain poorly covered. Outcome-informed widening using both control and treated
+cells raises HIRISA treated coverage to 94.25%; it is not available at query time
+and is not a new predictor. The next uncertainty extension needs an explicit
+count-based observation model, source sampling information and zero-count
+support, followed by new validation. The original external interval failure stands.
+
 The [complete GSE226572 external experiment](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
 now evaluates native whole-population predictions across all three new donors
 and all 18 released IFN-beta donor/time profiles. Every one of the 24 source

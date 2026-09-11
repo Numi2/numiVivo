@@ -1,0 +1,44 @@
+{
+  "status": "passed-complete-deterministic-repetition",
+  "records": [
+    {
+      "path": "moments.npz",
+      "bytes": 28612621,
+      "SHA256": "cae18ca4c211ddbbe09e923bc1c7853ee5976b8101f1814eb837f9affc4a350e",
+      "repeatByteIdentical": true
+    },
+    {
+      "path": "summary.json",
+      "bytes": 1403,
+      "SHA256": "c57523ba324e5ab13376aa0c5354282a59726c8bf13c5cd5411be85bc0e31e9a",
+      "repeatByteIdentical": true
+    },
+    {
+      "path": "donors.json",
+      "bytes": 74045,
+      "SHA256": "86425856108974d72bd02dd403aa98b2ab3f6df9199d0ec436871ef9d579d38d",
+      "repeatByteIdentical": true
+    },
+    {
+      "path": "source-strata.json",
+      "bytes": 22812,
+      "SHA256": "8a3f3fdef57ef6a1d84c07f7d709b8fe01648dd5f46c3f52fdce08d1743cd61d",
+      "repeatByteIdentical": true
+    },
+    {
+      "path": "zero-strata.json",
+      "bytes": 2567,
+      "SHA256": "95661d360fe49438cc87a3efed13d09cbef0907bff145b0e78809cd83415c7ce",
+      "repeatByteIdentical": true
+    }
+  ],
+  "firstSeconds": 6.671285152435303,
+  "repeatSeconds": 6.721152067184448,
+  "cells": 4938,
+  "donors": 62,
+  "geneFeatures": 11800,
+  "conditions": 124,
+  "bootstrapReplicatesPerCondition": 256,
+  "independentCountChecksPerRun": 248,
+  "noIndependentBiologicalValidationClaim": true
+}

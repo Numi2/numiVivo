@@ -1,0 +1,71 @@
+{
+  "files": {
+    "diagnose.py": {
+      "SHA256": "0f823d15f6b3e8bc887b380aecf6d0118697249d9678b6351dc5c81d5ca94296",
+      "bytes": 10376
+    },
+    "environment.json": {
+      "SHA256": "b0fbcfd924be7a292084d085ba666118a7a005ee1ad1bb0225000e3b936b4549",
+      "bytes": 401
+    },
+    "model-moments.json.gz": {
+      "SHA256": "1182bac2543ac8053aeefa149f87cf5cd5db60a5f3318a0f76ce74fe9d9e1a00",
+      "bytes": 468135
+    },
+    "protocol.json": {
+      "SHA256": "e6e805294582114d41c2ac60ea9d62a33f904c805fa35b294bfbb69f25e8c5cb",
+      "bytes": 2956
+    },
+    "repeat-check.json": {
+      "SHA256": "1088011dc99cde1c5856682e088c2f133bf67319334bc950b493165416c1026a",
+      "bytes": 1287
+    },
+    "repeat-pipeline.json": {
+      "SHA256": "b3702af42ebdd145a6e6d2381b98ba12a5058bf5ef386c2635f5bc1e929015c8",
+      "bytes": 701
+    },
+    "repeat.log": {
+      "SHA256": "e41e3e481567399c914721819dfd96a7523a06468f5cd2dfe8e3d07152b24929",
+      "bytes": 1718
+    },
+    "results/donors.json": {
+      "SHA256": "86425856108974d72bd02dd403aa98b2ab3f6df9199d0ec436871ef9d579d38d",
+      "bytes": 74045
+    },
+    "results/manifest.json": {
+      "SHA256": "d354ee1cef652025751bcd2bdc5f9afcbc359d0bf5a13ef8087bfd7506bb66c6",
+      "bytes": 832
+    },
+    "results/moments.npz": {
+      "SHA256": "cae18ca4c211ddbbe09e923bc1c7853ee5976b8101f1814eb837f9affc4a350e",
+      "bytes": 28612621
+    },
+    "results/pipeline.json": {
+      "SHA256": "e70ec74c7dc056e6f869249429ea974f1eb676bfb44013e91639514523a84187",
+      "bytes": 702
+    },
+    "results/source-strata.json": {
+      "SHA256": "8a3f3fdef57ef6a1d84c07f7d709b8fe01648dd5f46c3f52fdce08d1743cd61d",
+      "bytes": 22812
+    },
+    "results/summary.json": {
+      "SHA256": "c57523ba324e5ab13376aa0c5354282a59726c8bf13c5cd5411be85bc0e31e9a",
+      "bytes": 1403
+    },
+    "results/zero-strata.json": {
+      "SHA256": "95661d360fe49438cc87a3efed13d09cbef0907bff145b0e78809cd83415c7ce",
+      "bytes": 2567
+    },
+    "run.log": {
+      "SHA256": "e41e3e481567399c914721819dfd96a7523a06468f5cd2dfe8e3d07152b24929",
+      "bytes": 1718
+    }
+  },
+  "parentPredictionCommit": "2a294637b986f7be52a08ec4a1d19efe27538715",
+  "parentPredictionFreezeSHA256": "12ae52036d2618eaeb9ae9181e6fa11741035cc30c64abad1249fb9f2833a8bd",
+  "parentStudy": "/Users/home/numivivo-gse181897-20260911",
+  "predictionModelChanged": false,
+  "retrospective": true,
+  "schemaVersion": 1,
+  "scope": "Full diagnostic arrays and model moments are included. Rerunning cell bootstrap requires the original qualified parent source H5AD and count/role artifacts; no new independent prediction or uncertainty calibration is claimed."
+}

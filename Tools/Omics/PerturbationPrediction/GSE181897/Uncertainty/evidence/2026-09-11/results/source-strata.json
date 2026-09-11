@@ -1,0 +1,994 @@
+[
+  {
+    "cells": 23,
+    "condition": "control",
+    "donor": "0",
+    "libraryCounts": 191870,
+    "meanBootstrapVariance": 0.3767826842176286,
+    "observedZeroFeatures": 3466
+  },
+  {
+    "cells": 20,
+    "condition": "treated",
+    "donor": "0",
+    "libraryCounts": 139824,
+    "meanBootstrapVariance": 0.4438801090614837,
+    "observedZeroFeatures": 4338
+  },
+  {
+    "cells": 84,
+    "condition": "control",
+    "donor": "1",
+    "libraryCounts": 443075,
+    "meanBootstrapVariance": 0.16547715264424512,
+    "observedZeroFeatures": 2400
+  },
+  {
+    "cells": 34,
+    "condition": "treated",
+    "donor": "1",
+    "libraryCounts": 277371,
+    "meanBootstrapVariance": 0.26494066672720085,
+    "observedZeroFeatures": 3088
+  },
+  {
+    "cells": 16,
+    "condition": "control",
+    "donor": "2",
+    "libraryCounts": 155336,
+    "meanBootstrapVariance": 0.43710252046910203,
+    "observedZeroFeatures": 3853
+  },
+  {
+    "cells": 51,
+    "condition": "treated",
+    "donor": "2",
+    "libraryCounts": 253176,
+    "meanBootstrapVariance": 0.2657886099874792,
+    "observedZeroFeatures": 3200
+  },
+  {
+    "cells": 9,
+    "condition": "control",
+    "donor": "3",
+    "libraryCounts": 49303,
+    "meanBootstrapVariance": 0.826935736554417,
+    "observedZeroFeatures": 5943
+  },
+  {
+    "cells": 52,
+    "condition": "treated",
+    "donor": "3",
+    "libraryCounts": 295156,
+    "meanBootstrapVariance": 0.23822461660329286,
+    "observedZeroFeatures": 2937
+  },
+  {
+    "cells": 96,
+    "condition": "control",
+    "donor": "4",
+    "libraryCounts": 439146,
+    "meanBootstrapVariance": 0.1616662891183005,
+    "observedZeroFeatures": 2440
+  },
+  {
+    "cells": 57,
+    "condition": "treated",
+    "donor": "4",
+    "libraryCounts": 369921,
+    "meanBootstrapVariance": 0.2052307692862281,
+    "observedZeroFeatures": 2697
+  },
+  {
+    "cells": 4,
+    "condition": "control",
+    "donor": "6",
+    "libraryCounts": 27261,
+    "meanBootstrapVariance": 0.9437019135195269,
+    "observedZeroFeatures": 7414
+  },
+  {
+    "cells": 27,
+    "condition": "treated",
+    "donor": "6",
+    "libraryCounts": 171859,
+    "meanBootstrapVariance": 0.3909742037208553,
+    "observedZeroFeatures": 3653
+  },
+  {
+    "cells": 58,
+    "condition": "control",
+    "donor": "7",
+    "libraryCounts": 378650,
+    "meanBootstrapVariance": 0.19035579011878248,
+    "observedZeroFeatures": 2621
+  },
+  {
+    "cells": 59,
+    "condition": "treated",
+    "donor": "7",
+    "libraryCounts": 362323,
+    "meanBootstrapVariance": 0.20613311856724706,
+    "observedZeroFeatures": 2705
+  },
+  {
+    "cells": 31,
+    "condition": "control",
+    "donor": "8",
+    "libraryCounts": 193417,
+    "meanBootstrapVariance": 0.3556230864656759,
+    "observedZeroFeatures": 3509
+  },
+  {
+    "cells": 46,
+    "condition": "treated",
+    "donor": "8",
+    "libraryCounts": 277505,
+    "meanBootstrapVariance": 0.2529281363002779,
+    "observedZeroFeatures": 3130
+  },
+  {
+    "cells": 44,
+    "condition": "control",
+    "donor": "9",
+    "libraryCounts": 218426,
+    "meanBootstrapVariance": 0.3185266510665639,
+    "observedZeroFeatures": 3117
+  },
+  {
+    "cells": 45,
+    "condition": "treated",
+    "donor": "9",
+    "libraryCounts": 215104,
+    "meanBootstrapVariance": 0.3043121782369028,
+    "observedZeroFeatures": 3346
+  },
+  {
+    "cells": 69,
+    "condition": "control",
+    "donor": "10",
+    "libraryCounts": 352256,
+    "meanBootstrapVariance": 0.19979188545930462,
+    "observedZeroFeatures": 2521
+  },
+  {
+    "cells": 45,
+    "condition": "treated",
+    "donor": "10",
+    "libraryCounts": 331884,
+    "meanBootstrapVariance": 0.22932854731012273,
+    "observedZeroFeatures": 2960
+  },
+  {
+    "cells": 98,
+    "condition": "control",
+    "donor": "11",
+    "libraryCounts": 422157,
+    "meanBootstrapVariance": 0.1666453961909361,
+    "observedZeroFeatures": 2434
+  },
+  {
+    "cells": 31,
+    "condition": "treated",
+    "donor": "11",
+    "libraryCounts": 223961,
+    "meanBootstrapVariance": 0.3286843426572045,
+    "observedZeroFeatures": 3233
+  },
+  {
+    "cells": 72,
+    "condition": "control",
+    "donor": "12",
+    "libraryCounts": 431031,
+    "meanBootstrapVariance": 0.171775525472213,
+    "observedZeroFeatures": 2329
+  },
+  {
+    "cells": 106,
+    "condition": "treated",
+    "donor": "12",
+    "libraryCounts": 704316,
+    "meanBootstrapVariance": 0.10781887631497068,
+    "observedZeroFeatures": 2124
+  },
+  {
+    "cells": 56,
+    "condition": "control",
+    "donor": "13",
+    "libraryCounts": 327599,
+    "meanBootstrapVariance": 0.20787324625216694,
+    "observedZeroFeatures": 2791
+  },
+  {
+    "cells": 86,
+    "condition": "treated",
+    "donor": "13",
+    "libraryCounts": 413997,
+    "meanBootstrapVariance": 0.17365469444186543,
+    "observedZeroFeatures": 2607
+  },
+  {
+    "cells": 58,
+    "condition": "control",
+    "donor": "14",
+    "libraryCounts": 215116,
+    "meanBootstrapVariance": 0.3025300400998654,
+    "observedZeroFeatures": 3141
+  },
+  {
+    "cells": 58,
+    "condition": "treated",
+    "donor": "14",
+    "libraryCounts": 292548,
+    "meanBootstrapVariance": 0.23858381924872107,
+    "observedZeroFeatures": 2987
+  },
+  {
+    "cells": 39,
+    "condition": "control",
+    "donor": "15",
+    "libraryCounts": 169262,
+    "meanBootstrapVariance": 0.3777041719786404,
+    "observedZeroFeatures": 3507
+  },
+  {
+    "cells": 47,
+    "condition": "treated",
+    "donor": "15",
+    "libraryCounts": 204914,
+    "meanBootstrapVariance": 0.30747452921180074,
+    "observedZeroFeatures": 3359
+  },
+  {
+    "cells": 17,
+    "condition": "control",
+    "donor": "16",
+    "libraryCounts": 129545,
+    "meanBootstrapVariance": 0.4966368496498198,
+    "observedZeroFeatures": 4050
+  },
+  {
+    "cells": 40,
+    "condition": "treated",
+    "donor": "16",
+    "libraryCounts": 222345,
+    "meanBootstrapVariance": 0.3147330280499356,
+    "observedZeroFeatures": 3392
+  },
+  {
+    "cells": 20,
+    "condition": "control",
+    "donor": "17",
+    "libraryCounts": 110960,
+    "meanBootstrapVariance": 0.5370040868196554,
+    "observedZeroFeatures": 4286
+  },
+  {
+    "cells": 80,
+    "condition": "treated",
+    "donor": "17",
+    "libraryCounts": 369013,
+    "meanBootstrapVariance": 0.19710255517709815,
+    "observedZeroFeatures": 2653
+  },
+  {
+    "cells": 12,
+    "condition": "control",
+    "donor": "18",
+    "libraryCounts": 85907,
+    "meanBootstrapVariance": 0.6374984848633163,
+    "observedZeroFeatures": 4587
+  },
+  {
+    "cells": 10,
+    "condition": "treated",
+    "donor": "18",
+    "libraryCounts": 74412,
+    "meanBootstrapVariance": 0.6480379588005959,
+    "observedZeroFeatures": 5259
+  },
+  {
+    "cells": 11,
+    "condition": "control",
+    "donor": "19",
+    "libraryCounts": 60352,
+    "meanBootstrapVariance": 0.7420457781035453,
+    "observedZeroFeatures": 5613
+  },
+  {
+    "cells": 45,
+    "condition": "treated",
+    "donor": "19",
+    "libraryCounts": 220593,
+    "meanBootstrapVariance": 0.2947917318236404,
+    "observedZeroFeatures": 3316
+  },
+  {
+    "cells": 19,
+    "condition": "control",
+    "donor": "20",
+    "libraryCounts": 122255,
+    "meanBootstrapVariance": 0.5069049439776436,
+    "observedZeroFeatures": 4203
+  },
+  {
+    "cells": 18,
+    "condition": "treated",
+    "donor": "20",
+    "libraryCounts": 116888,
+    "meanBootstrapVariance": 0.5173914714751859,
+    "observedZeroFeatures": 4436
+  },
+  {
+    "cells": 21,
+    "condition": "control",
+    "donor": "21",
+    "libraryCounts": 145981,
+    "meanBootstrapVariance": 0.45142830505970966,
+    "observedZeroFeatures": 3993
+  },
+  {
+    "cells": 30,
+    "condition": "treated",
+    "donor": "21",
+    "libraryCounts": 222400,
+    "meanBootstrapVariance": 0.303419951897034,
+    "observedZeroFeatures": 3074
+  },
+  {
+    "cells": 38,
+    "condition": "control",
+    "donor": "22",
+    "libraryCounts": 271917,
+    "meanBootstrapVariance": 0.2623466061639185,
+    "observedZeroFeatures": 2930
+  },
+  {
+    "cells": 60,
+    "condition": "treated",
+    "donor": "22",
+    "libraryCounts": 394273,
+    "meanBootstrapVariance": 0.18149461134398812,
+    "observedZeroFeatures": 2712
+  },
+  {
+    "cells": 37,
+    "condition": "control",
+    "donor": "24",
+    "libraryCounts": 175237,
+    "meanBootstrapVariance": 0.3762257256355491,
+    "observedZeroFeatures": 3378
+  },
+  {
+    "cells": 30,
+    "condition": "treated",
+    "donor": "24",
+    "libraryCounts": 170277,
+    "meanBootstrapVariance": 0.3735709556237749,
+    "observedZeroFeatures": 3727
+  },
+  {
+    "cells": 26,
+    "condition": "control",
+    "donor": "25",
+    "libraryCounts": 120557,
+    "meanBootstrapVariance": 0.48714146951987913,
+    "observedZeroFeatures": 4006
+  },
+  {
+    "cells": 17,
+    "condition": "treated",
+    "donor": "25",
+    "libraryCounts": 110946,
+    "meanBootstrapVariance": 0.49735780768257337,
+    "observedZeroFeatures": 4304
+  },
+  {
+    "cells": 35,
+    "condition": "control",
+    "donor": "26",
+    "libraryCounts": 232278,
+    "meanBootstrapVariance": 0.3199415971879264,
+    "observedZeroFeatures": 3347
+  },
+  {
+    "cells": 53,
+    "condition": "treated",
+    "donor": "26",
+    "libraryCounts": 303441,
+    "meanBootstrapVariance": 0.22374458260116026,
+    "observedZeroFeatures": 2811
+  },
+  {
+    "cells": 51,
+    "condition": "control",
+    "donor": "27",
+    "libraryCounts": 218144,
+    "meanBootstrapVariance": 0.31545829926483976,
+    "observedZeroFeatures": 3152
+  },
+  {
+    "cells": 61,
+    "condition": "treated",
+    "donor": "27",
+    "libraryCounts": 308294,
+    "meanBootstrapVariance": 0.23240834928600188,
+    "observedZeroFeatures": 2744
+  },
+  {
+    "cells": 33,
+    "condition": "control",
+    "donor": "28",
+    "libraryCounts": 187606,
+    "meanBootstrapVariance": 0.355850636048586,
+    "observedZeroFeatures": 3592
+  },
+  {
+    "cells": 69,
+    "condition": "treated",
+    "donor": "28",
+    "libraryCounts": 346146,
+    "meanBootstrapVariance": 0.20761553025494958,
+    "observedZeroFeatures": 2741
+  },
+  {
+    "cells": 39,
+    "condition": "control",
+    "donor": "29",
+    "libraryCounts": 236174,
+    "meanBootstrapVariance": 0.2926009017084035,
+    "observedZeroFeatures": 3044
+  },
+  {
+    "cells": 57,
+    "condition": "treated",
+    "donor": "29",
+    "libraryCounts": 299211,
+    "meanBootstrapVariance": 0.2467415472767919,
+    "observedZeroFeatures": 3011
+  },
+  {
+    "cells": 55,
+    "condition": "control",
+    "donor": "30",
+    "libraryCounts": 309829,
+    "meanBootstrapVariance": 0.23495686861145892,
+    "observedZeroFeatures": 2624
+  },
+  {
+    "cells": 34,
+    "condition": "treated",
+    "donor": "30",
+    "libraryCounts": 218415,
+    "meanBootstrapVariance": 0.32681326430089186,
+    "observedZeroFeatures": 3517
+  },
+  {
+    "cells": 59,
+    "condition": "control",
+    "donor": "31",
+    "libraryCounts": 387184,
+    "meanBootstrapVariance": 0.20172888858044194,
+    "observedZeroFeatures": 2384
+  },
+  {
+    "cells": 87,
+    "condition": "treated",
+    "donor": "31",
+    "libraryCounts": 492399,
+    "meanBootstrapVariance": 0.15157176150509347,
+    "observedZeroFeatures": 2380
+  },
+  {
+    "cells": 24,
+    "condition": "control",
+    "donor": "32",
+    "libraryCounts": 94358,
+    "meanBootstrapVariance": 0.587117749081535,
+    "observedZeroFeatures": 4451
+  },
+  {
+    "cells": 9,
+    "condition": "treated",
+    "donor": "32",
+    "libraryCounts": 55178,
+    "meanBootstrapVariance": 0.7928955892309775,
+    "observedZeroFeatures": 5941
+  },
+  {
+    "cells": 13,
+    "condition": "control",
+    "donor": "33",
+    "libraryCounts": 109142,
+    "meanBootstrapVariance": 0.541783562747666,
+    "observedZeroFeatures": 4354
+  },
+  {
+    "cells": 40,
+    "condition": "treated",
+    "donor": "33",
+    "libraryCounts": 255017,
+    "meanBootstrapVariance": 0.2611560287667111,
+    "observedZeroFeatures": 3356
+  },
+  {
+    "cells": 69,
+    "condition": "control",
+    "donor": "34",
+    "libraryCounts": 355548,
+    "meanBootstrapVariance": 0.20014218195731331,
+    "observedZeroFeatures": 2597
+  },
+  {
+    "cells": 77,
+    "condition": "treated",
+    "donor": "34",
+    "libraryCounts": 356676,
+    "meanBootstrapVariance": 0.20070789832440283,
+    "observedZeroFeatures": 2754
+  },
+  {
+    "cells": 56,
+    "condition": "control",
+    "donor": "35",
+    "libraryCounts": 330124,
+    "meanBootstrapVariance": 0.2184458821598906,
+    "observedZeroFeatures": 2610
+  },
+  {
+    "cells": 27,
+    "condition": "treated",
+    "donor": "35",
+    "libraryCounts": 226861,
+    "meanBootstrapVariance": 0.32338924416631554,
+    "observedZeroFeatures": 3345
+  },
+  {
+    "cells": 27,
+    "condition": "control",
+    "donor": "36",
+    "libraryCounts": 150214,
+    "meanBootstrapVariance": 0.43268438447275803,
+    "observedZeroFeatures": 3568
+  },
+  {
+    "cells": 55,
+    "condition": "treated",
+    "donor": "36",
+    "libraryCounts": 322445,
+    "meanBootstrapVariance": 0.2195820030202121,
+    "observedZeroFeatures": 2879
+  },
+  {
+    "cells": 68,
+    "condition": "control",
+    "donor": "37",
+    "libraryCounts": 284945,
+    "meanBootstrapVariance": 0.23891892141229534,
+    "observedZeroFeatures": 2891
+  },
+  {
+    "cells": 68,
+    "condition": "treated",
+    "donor": "37",
+    "libraryCounts": 290181,
+    "meanBootstrapVariance": 0.2387928004457649,
+    "observedZeroFeatures": 3040
+  },
+  {
+    "cells": 12,
+    "condition": "control",
+    "donor": "38",
+    "libraryCounts": 62932,
+    "meanBootstrapVariance": 0.7249967254404559,
+    "observedZeroFeatures": 5177
+  },
+  {
+    "cells": 6,
+    "condition": "treated",
+    "donor": "38",
+    "libraryCounts": 36113,
+    "meanBootstrapVariance": 0.8536533344905286,
+    "observedZeroFeatures": 6812
+  },
+  {
+    "cells": 72,
+    "condition": "control",
+    "donor": "39",
+    "libraryCounts": 313804,
+    "meanBootstrapVariance": 0.2242480344914851,
+    "observedZeroFeatures": 2811
+  },
+  {
+    "cells": 35,
+    "condition": "treated",
+    "donor": "39",
+    "libraryCounts": 185838,
+    "meanBootstrapVariance": 0.3502444000049217,
+    "observedZeroFeatures": 3610
+  },
+  {
+    "cells": 32,
+    "condition": "control",
+    "donor": "40",
+    "libraryCounts": 203060,
+    "meanBootstrapVariance": 0.3463887080146014,
+    "observedZeroFeatures": 3446
+  },
+  {
+    "cells": 18,
+    "condition": "treated",
+    "donor": "40",
+    "libraryCounts": 131599,
+    "meanBootstrapVariance": 0.4764480095394464,
+    "observedZeroFeatures": 4236
+  },
+  {
+    "cells": 29,
+    "condition": "control",
+    "donor": "41",
+    "libraryCounts": 158142,
+    "meanBootstrapVariance": 0.4072698203558601,
+    "observedZeroFeatures": 3720
+  },
+  {
+    "cells": 33,
+    "condition": "treated",
+    "donor": "41",
+    "libraryCounts": 177229,
+    "meanBootstrapVariance": 0.3665189550730092,
+    "observedZeroFeatures": 3642
+  },
+  {
+    "cells": 11,
+    "condition": "control",
+    "donor": "42",
+    "libraryCounts": 63584,
+    "meanBootstrapVariance": 0.7373221680057708,
+    "observedZeroFeatures": 5227
+  },
+  {
+    "cells": 7,
+    "condition": "treated",
+    "donor": "42",
+    "libraryCounts": 57043,
+    "meanBootstrapVariance": 0.7319974825435369,
+    "observedZeroFeatures": 5883
+  },
+  {
+    "cells": 29,
+    "condition": "control",
+    "donor": "43",
+    "libraryCounts": 145777,
+    "meanBootstrapVariance": 0.41858589702874044,
+    "observedZeroFeatures": 3858
+  },
+  {
+    "cells": 43,
+    "condition": "treated",
+    "donor": "43",
+    "libraryCounts": 236327,
+    "meanBootstrapVariance": 0.2930968434043734,
+    "observedZeroFeatures": 3215
+  },
+  {
+    "cells": 39,
+    "condition": "control",
+    "donor": "44",
+    "libraryCounts": 175447,
+    "meanBootstrapVariance": 0.35316054046025397,
+    "observedZeroFeatures": 3521
+  },
+  {
+    "cells": 34,
+    "condition": "treated",
+    "donor": "44",
+    "libraryCounts": 184569,
+    "meanBootstrapVariance": 0.37007140699832075,
+    "observedZeroFeatures": 3688
+  },
+  {
+    "cells": 44,
+    "condition": "control",
+    "donor": "45",
+    "libraryCounts": 235733,
+    "meanBootstrapVariance": 0.28426665472494167,
+    "observedZeroFeatures": 2971
+  },
+  {
+    "cells": 64,
+    "condition": "treated",
+    "donor": "45",
+    "libraryCounts": 304008,
+    "meanBootstrapVariance": 0.23239109288685425,
+    "observedZeroFeatures": 2945
+  },
+  {
+    "cells": 10,
+    "condition": "control",
+    "donor": "46",
+    "libraryCounts": 51487,
+    "meanBootstrapVariance": 0.8017844429532492,
+    "observedZeroFeatures": 5894
+  },
+  {
+    "cells": 21,
+    "condition": "treated",
+    "donor": "46",
+    "libraryCounts": 142407,
+    "meanBootstrapVariance": 0.47854892575722324,
+    "observedZeroFeatures": 3977
+  },
+  {
+    "cells": 41,
+    "condition": "control",
+    "donor": "47",
+    "libraryCounts": 247262,
+    "meanBootstrapVariance": 0.27076684736199436,
+    "observedZeroFeatures": 3021
+  },
+  {
+    "cells": 30,
+    "condition": "treated",
+    "donor": "47",
+    "libraryCounts": 196192,
+    "meanBootstrapVariance": 0.33704138984946985,
+    "observedZeroFeatures": 3488
+  },
+  {
+    "cells": 23,
+    "condition": "control",
+    "donor": "48",
+    "libraryCounts": 126180,
+    "meanBootstrapVariance": 0.4984784453186629,
+    "observedZeroFeatures": 4083
+  },
+  {
+    "cells": 58,
+    "condition": "treated",
+    "donor": "48",
+    "libraryCounts": 301991,
+    "meanBootstrapVariance": 0.23763063990357017,
+    "observedZeroFeatures": 3058
+  },
+  {
+    "cells": 122,
+    "condition": "control",
+    "donor": "49",
+    "libraryCounts": 504344,
+    "meanBootstrapVariance": 0.1454353414099347,
+    "observedZeroFeatures": 2265
+  },
+  {
+    "cells": 112,
+    "condition": "treated",
+    "donor": "49",
+    "libraryCounts": 633618,
+    "meanBootstrapVariance": 0.11852858518619522,
+    "observedZeroFeatures": 2192
+  },
+  {
+    "cells": 7,
+    "condition": "control",
+    "donor": "50",
+    "libraryCounts": 42648,
+    "meanBootstrapVariance": 0.8537964813439193,
+    "observedZeroFeatures": 6117
+  },
+  {
+    "cells": 14,
+    "condition": "treated",
+    "donor": "50",
+    "libraryCounts": 75669,
+    "meanBootstrapVariance": 0.622548053725523,
+    "observedZeroFeatures": 5132
+  },
+  {
+    "cells": 6,
+    "condition": "control",
+    "donor": "51",
+    "libraryCounts": 43290,
+    "meanBootstrapVariance": 0.8299614578750351,
+    "observedZeroFeatures": 6441
+  },
+  {
+    "cells": 15,
+    "condition": "treated",
+    "donor": "51",
+    "libraryCounts": 85956,
+    "meanBootstrapVariance": 0.5920040912445551,
+    "observedZeroFeatures": 4740
+  },
+  {
+    "cells": 4,
+    "condition": "control",
+    "donor": "52",
+    "libraryCounts": 23745,
+    "meanBootstrapVariance": 0.9938340690123211,
+    "observedZeroFeatures": 7565
+  },
+  {
+    "cells": 13,
+    "condition": "treated",
+    "donor": "52",
+    "libraryCounts": 71348,
+    "meanBootstrapVariance": 0.7153619275760912,
+    "observedZeroFeatures": 5231
+  },
+  {
+    "cells": 47,
+    "condition": "control",
+    "donor": "53",
+    "libraryCounts": 322591,
+    "meanBootstrapVariance": 0.23558749932677764,
+    "observedZeroFeatures": 2772
+  },
+  {
+    "cells": 20,
+    "condition": "treated",
+    "donor": "53",
+    "libraryCounts": 152305,
+    "meanBootstrapVariance": 0.43484203954135425,
+    "observedZeroFeatures": 3850
+  },
+  {
+    "cells": 29,
+    "condition": "control",
+    "donor": "54",
+    "libraryCounts": 200795,
+    "meanBootstrapVariance": 0.3392325930386978,
+    "observedZeroFeatures": 3399
+  },
+  {
+    "cells": 38,
+    "condition": "treated",
+    "donor": "54",
+    "libraryCounts": 243719,
+    "meanBootstrapVariance": 0.296097752928792,
+    "observedZeroFeatures": 3230
+  },
+  {
+    "cells": 20,
+    "condition": "control",
+    "donor": "55",
+    "libraryCounts": 176458,
+    "meanBootstrapVariance": 0.3799513412663472,
+    "observedZeroFeatures": 3554
+  },
+  {
+    "cells": 32,
+    "condition": "treated",
+    "donor": "55",
+    "libraryCounts": 173652,
+    "meanBootstrapVariance": 0.3735609446770411,
+    "observedZeroFeatures": 3609
+  },
+  {
+    "cells": 15,
+    "condition": "control",
+    "donor": "56",
+    "libraryCounts": 85343,
+    "meanBootstrapVariance": 0.6247232215538974,
+    "observedZeroFeatures": 4859
+  },
+  {
+    "cells": 21,
+    "condition": "treated",
+    "donor": "56",
+    "libraryCounts": 175378,
+    "meanBootstrapVariance": 0.4082762711540705,
+    "observedZeroFeatures": 4026
+  },
+  {
+    "cells": 41,
+    "condition": "control",
+    "donor": "57",
+    "libraryCounts": 206070,
+    "meanBootstrapVariance": 0.3074825073642898,
+    "observedZeroFeatures": 3346
+  },
+  {
+    "cells": 46,
+    "condition": "treated",
+    "donor": "57",
+    "libraryCounts": 199867,
+    "meanBootstrapVariance": 0.323384685800576,
+    "observedZeroFeatures": 3415
+  },
+  {
+    "cells": 62,
+    "condition": "control",
+    "donor": "58",
+    "libraryCounts": 383275,
+    "meanBootstrapVariance": 0.19068517600415524,
+    "observedZeroFeatures": 2571
+  },
+  {
+    "cells": 47,
+    "condition": "treated",
+    "donor": "58",
+    "libraryCounts": 329957,
+    "meanBootstrapVariance": 0.21936911551061813,
+    "observedZeroFeatures": 2884
+  },
+  {
+    "cells": 24,
+    "condition": "control",
+    "donor": "59",
+    "libraryCounts": 150372,
+    "meanBootstrapVariance": 0.4282712931586995,
+    "observedZeroFeatures": 3731
+  },
+  {
+    "cells": 52,
+    "condition": "treated",
+    "donor": "59",
+    "libraryCounts": 252518,
+    "meanBootstrapVariance": 0.264640165843968,
+    "observedZeroFeatures": 3066
+  },
+  {
+    "cells": 52,
+    "condition": "control",
+    "donor": "60",
+    "libraryCounts": 358780,
+    "meanBootstrapVariance": 0.20584851665527984,
+    "observedZeroFeatures": 2638
+  },
+  {
+    "cells": 69,
+    "condition": "treated",
+    "donor": "60",
+    "libraryCounts": 417344,
+    "meanBootstrapVariance": 0.17550188685888263,
+    "observedZeroFeatures": 2584
+  },
+  {
+    "cells": 16,
+    "condition": "control",
+    "donor": "61",
+    "libraryCounts": 113653,
+    "meanBootstrapVariance": 0.5460369432261101,
+    "observedZeroFeatures": 4120
+  },
+  {
+    "cells": 26,
+    "condition": "treated",
+    "donor": "61",
+    "libraryCounts": 145620,
+    "meanBootstrapVariance": 0.414427866267135,
+    "observedZeroFeatures": 3879
+  },
+  {
+    "cells": 10,
+    "condition": "control",
+    "donor": "62",
+    "libraryCounts": 61524,
+    "meanBootstrapVariance": 0.7472357676765341,
+    "observedZeroFeatures": 5457
+  },
+  {
+    "cells": 7,
+    "condition": "treated",
+    "donor": "62",
+    "libraryCounts": 37583,
+    "meanBootstrapVariance": 0.8516309415034466,
+    "observedZeroFeatures": 6528
+  },
+  {
+    "cells": 25,
+    "condition": "control",
+    "donor": "63",
+    "libraryCounts": 149835,
+    "meanBootstrapVariance": 0.41850126730284193,
+    "observedZeroFeatures": 3771
+  },
+  {
+    "cells": 37,
+    "condition": "treated",
+    "donor": "63",
+    "libraryCounts": 207451,
+    "meanBootstrapVariance": 0.30796140374347486,
+    "observedZeroFeatures": 3315
+  }
+]
