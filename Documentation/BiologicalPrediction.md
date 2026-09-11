@@ -53,7 +53,7 @@ This is separate data collection in the same broad K562/UPR setting, with shared
 investigators and earlier target selection, not independent laboratory or tissue
 validation. Technical gemgroups are not biological replicates.
 
-The next [GSE181897 external cohort](../Tools/Omics/PerturbationPrediction/GSE181897/README.md)
+The separate [GSE181897 external B-cell cohort](../Tools/Omics/PerturbationPrediction/GSE181897/README.md)
 has passed complete source-count validation and native B-lineage aggregation:
 136,142 source cells, 64 donor IDs, and all 34,287,682 selected RNA records are
 checked. The source labels all features as gene expression, but its genome
@@ -62,6 +62,20 @@ totals exactly. Prediction fitting and scoring remain unstarted because the
 primary single-letter condition-to-intervention mapping is not established;
 external curator labels are not promoted to experimental ground truth. This
 adds a verified candidate input, not a new predictive success or failure.
+
+The [complete GSE226572 external experiment](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
+now evaluates native whole-population predictions across all three new donors
+and all 18 released IFN-beta donor/time profiles. Every one of the 24 source
+libraries was checked; frozen initial QC admits 126,633 cells. Training uses all
+24,673 admitted Kang cells, with no query-response fitting. Mean response reduces
+equal-donor, equal-within-donor-time RMSE by 2.00%, below the predeclared 5% target,
+and is worse than no change in 8/18 cases. Ridge also fails; nominal 95% interval
+coverage ranges from 85.37% to 95.45%. All native estimates, bounds and repeated
+scores pass numerical checks. This separately collected, whole-population RNA
+test is distinct from the B-cell endpoint and does not reproduce the author's
+later curated cell selection. The unchanged six-hour response has no duration
+covariate; differing time, health, culture, dose, assay, QC and composition limit
+interpretation. Any repair using these now-scored outcomes needs new validation.
 
 The [native Visium import](../Tools/Omics/Multimodal/Visium/README.md) now makes
 original spatial RNA counts and pixel positions available without an H5MU
@@ -437,7 +451,11 @@ Lower donor-associated variance also does not isolate technical batch removal.
    or biological context rather than retuning on these results. Adamson's gate
    remains unchanged.
 4. Establish transfer with prospective strata and measured outcomes in an
-   independent study. The new [Kang–HIRISA comparison](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
+   independent study. The [complete GSE226572 test](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
+   now adds a separately collected experiment with all donor/time outcomes;
+   it fails its 5% mean-improvement and ridge targets. Develop an explicit
+   duration/context model with donor-held-out evaluation and new independent
+   validation, preserving this fixed-model failure. The new [Kang–HIRISA comparison](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
    fails both directional primary gates on reused studies; it does not close this
    requirement. The [completed HIRISA preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)'s
    sixty cross-preparation folds and sixty matched references now pass replay

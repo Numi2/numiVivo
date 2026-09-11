@@ -37,9 +37,9 @@ commands and remaining validation. These are expression point estimates;
 reliable prediction of new tissues, disease outcomes, individual-cell responses
 or variant-to-phenotype effects is not established.
 
-The next prediction milestone is an independent biological-context experiment
-with the endpoint, donor split, simple baselines and uncertainty assessment fixed
-before scoring. [Acceptance requirements](Documentation/BiologicalPrediction.md#decision-before-using-a-prediction)
+The next prediction milestone is useful, reliable improvement in independent
+biological contexts, with endpoints, donor splits, simple baselines and uncertainty
+assessment fixed before scoring. [Acceptance requirements](Documentation/BiologicalPrediction.md#decision-before-using-a-prediction)
 explain what would justify extending the present claims. Existing Bayesian
 kinetic-model intervals do not provide uncertainty for the single-cell predictors.
 
@@ -56,13 +56,22 @@ cross-study training mean for all thirteen donors. The studies differ in health
 status, stimulation time, preparation and assay; their gene alignment does not
 establish reliable biological-context transfer.
 
+The [complete external PBMC duration-transfer experiment](Tools/Omics/PerturbationPrediction/GSE226572/README.md)
+now checks all 24 GSE226572 libraries and 126,633 cells admitted by frozen initial
+QC. Native predictions cover all three query donors and 18 released treatment-time
+profiles. Mean response improves average RMSE by **2.00%**, missing the declared
+5% target, and is worse than no change in 8/18 cases; ridge also fails. Nominal
+95% interval coverage spans 85.37–95.45%. Numerical checks and repeated scoring
+pass. A fixed six-hour response does not provide a validated temporal or general
+biological-outcome model.
+
 The [native interval assessment](Tools/Omics/PerturbationPrediction/Intervals/README.md)
 now tests optional nominal 95% mean-response intervals on those same 26 folds.
 Average treated-expression coverage is 92.94% / 94.70% within Kang / HIRISA,
 versus 42.39% / 99.21% across studies. Width, missing intervals and donor-level
 variation prevent interpreting these averages as general predictive calibration.
 
-The next [external prediction cohort](Tools/Omics/PerturbationPrediction/GSE181897/README.md)
+The separate [external B-cell prediction cohort](Tools/Omics/PerturbationPrediction/GSE181897/README.md)
 now has verified original counts and native B-lineage aggregation across all
 64 donor IDs. The IFN-beta test remains unscored pending primary treatment-code
 identity; this input qualification does not strengthen the biological prediction

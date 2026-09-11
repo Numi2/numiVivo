@@ -592,6 +592,14 @@ The complete development objective remains open:
    42.39% to 99.21% between the two transfer directions, with different widths and
    unavailable genes. This is implemented uncertainty output, not general
    calibration or Bayesian/mechanistic coupling.
+   The [complete external GSE226572 duration-transfer test](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
+   checks all 510.7 million raw stored values and 126,633 cells admitted by frozen
+   initial QC. Native aggregation, fitting, all three donor predictions and
+   independent checks pass. Across all 18 released treatment-time profiles,
+   mean response improves RMSE by 2.00%, below its 5% target, with 8/18 cases worse
+   than no change; ridge also fails. Nominal 95% coverage spans 85.37–95.45%.
+   All five repeated scoring outputs are byte-exact. This whole-population,
+   fixed-duration transfer is distinct from B-cell and learned temporal prediction.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)

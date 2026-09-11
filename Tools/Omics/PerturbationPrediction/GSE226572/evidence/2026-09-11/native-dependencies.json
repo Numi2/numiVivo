@@ -1,0 +1,221 @@
+{
+  "archive": {
+    "SHA256": "8cc3117ac59b61569c2cae56a0a75545661e7aa297a0a3fc2a33619896a37935",
+    "bytes": 14845285,
+    "decodedBytes": 98745243,
+    "members": {
+      "native-aggregation/aggregation-freeze.json": {
+        "SHA256": "09224d333a1eda105dec13fba55a759c85fe0f221a4bad8eaf2cd6e0c06977bc",
+        "bytes": 1361
+      },
+      "native-aggregation/execution.json": {
+        "SHA256": "7d13b43462afe12ac67b9ba2a91885a72ac7a0cac84ddcbf8dee8c1d18be66ce",
+        "bytes": 2162
+      },
+      "native-aggregation/kang-aggregate.log": {
+        "SHA256": "5fd598b57fc5be9f231d78c268b9159b8ced04bf5dfbee4f5aee0695616c2978",
+        "bytes": 1337
+      },
+      "native-aggregation/kang-verify.log": {
+        "SHA256": "ce7e2388e3c80b264639b2bf972b7001b57807bbb7676095114d801a0be4909a",
+        "bytes": 863
+      },
+      "native-aggregation/kang/plan.json": {
+        "SHA256": "0205ba5f0dd4398c5cd1df39d471eb63ab85f7de437b4cd6e20a43923aac31b2",
+        "bytes": 3002
+      },
+      "native-aggregation/kang/receipt.json": {
+        "SHA256": "8a27c8850ef36ae65974916dbf270415fca2755f9c94f8f9c85e9030cb5b8f57",
+        "bytes": 559
+      },
+      "native-aggregation/kang/report.json": {
+        "SHA256": "c8640533c5b65899bff1d133c33aaa9b66cff1fcdf14fc872fb5108692a15e90",
+        "bytes": 8717480
+      },
+      "native-aggregation/query-aggregate.log": {
+        "SHA256": "a541cf1fd94d0f8231bf3e5202b7495bba3cb071031125a02fdcb6719832401c",
+        "bytes": 1340
+      },
+      "native-aggregation/query-verify.log": {
+        "SHA256": "b1aae61f3f2ebda7a79c0fc3647adcf4f9d44f2b99b02d2d9cf88d5e9cae015a",
+        "bytes": 865
+      },
+      "native-aggregation/query/plan.json": {
+        "SHA256": "f2815111409b0f75a258507f21689af45c16d74e168c9ec1c3bf9bac819653ba",
+        "bytes": 4382
+      },
+      "native-aggregation/query/receipt.json": {
+        "SHA256": "f6d0057911e4170584cb6a111a0272ce1ac29f1d840126ebaef971a1f8fae131",
+        "bytes": 562
+      },
+      "native-aggregation/query/report.json": {
+        "SHA256": "4744622fd4a68a7afce89bf83e1921d68e506b25d27f0be1c42e8f989fa0dbce",
+        "bytes": 40284736
+      },
+      "native-prediction/execution.json": {
+        "SHA256": "e97d51bc11537877a4205b3fb023f3028ed7df4ef3e0d0da5ba2cb9fe9da2787",
+        "bytes": 2649
+      },
+      "native-prediction/fit.log": {
+        "SHA256": "8ed8a7c34ac77f46e9118a91d94940908bade39405220498657eb80702ff0d70",
+        "bytes": 1332
+      },
+      "native-prediction/model/model.json": {
+        "SHA256": "c26cbc05832b564844b794f65b79eec3563eb06463b8456e6b1807247603c8d5",
+        "bytes": 5816188
+      },
+      "native-prediction/model/plan.json": {
+        "SHA256": "ad753da5f816f298de63ecd51db7c168637743f91052e3ce6c3a7d6ae7282d5f",
+        "bytes": 204962
+      },
+      "native-prediction/model/receipt.json": {
+        "SHA256": "956b85ee2ca207175c2faf5849d3e4bce516298b78074900e005c1c803a7f854",
+        "bytes": 554
+      },
+      "native-prediction/model/training/plan.json": {
+        "SHA256": "8d5d07ff46e95d9db2d443280ab770c7a6ef03771e4131c63d686c586a53b805",
+        "bytes": 3219
+      },
+      "native-prediction/model/training/receipt.json": {
+        "SHA256": "ab008027ee2cf25e5cc13df4153c3679041394376557d94faa19ad42533ed3ff",
+        "bytes": 548
+      },
+      "native-prediction/model/training/report.json": {
+        "SHA256": "22726b4f9645251e5154f8a9b820710251c69d1b2d9fe54f122b78d037bbe0ad",
+        "bytes": 2988671
+      },
+      "native-prediction/predict.log": {
+        "SHA256": "d8bd0aa5434252f38502a7a00b29f70ae5afe5687e10d41f68757e5ef3cce776",
+        "bytes": 1470
+      },
+      "native-prediction/prediction-freeze.json": {
+        "SHA256": "44ca1ca3b25b9c8576d80b9c6cd86650b3fd449261e8a8d78f720e9efd5c730a",
+        "bytes": 3721
+      },
+      "native-prediction/prediction/plan.json": {
+        "SHA256": "99e9bc4f6225ef2313c9e1ba78c40e9b7fa4edc185ceef11289020403bb48323",
+        "bytes": 1143
+      },
+      "native-prediction/prediction/receipt.json": {
+        "SHA256": "e04e1e0eb58effc09e0419ddc0e3ac4a8316cbdf521720144db77b389981bd79",
+        "bytes": 692
+      },
+      "native-prediction/prediction/reference/model.json": {
+        "SHA256": "c26cbc05832b564844b794f65b79eec3563eb06463b8456e6b1807247603c8d5",
+        "bytes": 5816188
+      },
+      "native-prediction/prediction/reference/plan.json": {
+        "SHA256": "ad753da5f816f298de63ecd51db7c168637743f91052e3ce6c3a7d6ae7282d5f",
+        "bytes": 204962
+      },
+      "native-prediction/prediction/reference/receipt.json": {
+        "SHA256": "956b85ee2ca207175c2faf5849d3e4bce516298b78074900e005c1c803a7f854",
+        "bytes": 554
+      },
+      "native-prediction/prediction/reference/training/plan.json": {
+        "SHA256": "8d5d07ff46e95d9db2d443280ab770c7a6ef03771e4131c63d686c586a53b805",
+        "bytes": 3219
+      },
+      "native-prediction/prediction/reference/training/receipt.json": {
+        "SHA256": "ab008027ee2cf25e5cc13df4153c3679041394376557d94faa19ad42533ed3ff",
+        "bytes": 548
+      },
+      "native-prediction/prediction/reference/training/report.json": {
+        "SHA256": "22726b4f9645251e5154f8a9b820710251c69d1b2d9fe54f122b78d037bbe0ad",
+        "bytes": 2988671
+      },
+      "native-prediction/prediction/report.json": {
+        "SHA256": "8d9d58adacb52c01729bb1176268dac56d696ed580dcf331033e8ec85e5a575b",
+        "bytes": 11334112
+      },
+      "native-prediction/repeat.log": {
+        "SHA256": "86fbac7a4a2d871aac7983ca2225a2fef81e886c5a5db4b3bd1c9dced4462191",
+        "bytes": 1470
+      },
+      "native-prediction/repeat/plan.json": {
+        "SHA256": "99e9bc4f6225ef2313c9e1ba78c40e9b7fa4edc185ceef11289020403bb48323",
+        "bytes": 1143
+      },
+      "native-prediction/repeat/receipt.json": {
+        "SHA256": "e04e1e0eb58effc09e0419ddc0e3ac4a8316cbdf521720144db77b389981bd79",
+        "bytes": 692
+      },
+      "native-prediction/repeat/reference/model.json": {
+        "SHA256": "c26cbc05832b564844b794f65b79eec3563eb06463b8456e6b1807247603c8d5",
+        "bytes": 5816188
+      },
+      "native-prediction/repeat/reference/plan.json": {
+        "SHA256": "ad753da5f816f298de63ecd51db7c168637743f91052e3ce6c3a7d6ae7282d5f",
+        "bytes": 204962
+      },
+      "native-prediction/repeat/reference/receipt.json": {
+        "SHA256": "956b85ee2ca207175c2faf5849d3e4bce516298b78074900e005c1c803a7f854",
+        "bytes": 554
+      },
+      "native-prediction/repeat/reference/training/plan.json": {
+        "SHA256": "8d5d07ff46e95d9db2d443280ab770c7a6ef03771e4131c63d686c586a53b805",
+        "bytes": 3219
+      },
+      "native-prediction/repeat/reference/training/receipt.json": {
+        "SHA256": "ab008027ee2cf25e5cc13df4153c3679041394376557d94faa19ad42533ed3ff",
+        "bytes": 548
+      },
+      "native-prediction/repeat/reference/training/report.json": {
+        "SHA256": "22726b4f9645251e5154f8a9b820710251c69d1b2d9fe54f122b78d037bbe0ad",
+        "bytes": 2988671
+      },
+      "native-prediction/repeat/report.json": {
+        "SHA256": "8d9d58adacb52c01729bb1176268dac56d696ed580dcf331033e8ec85e5a575b",
+        "bytes": 11334112
+      },
+      "native-prediction/verify-model.log": {
+        "SHA256": "3abd07817c4f987be4f1c667bcd6d2ea539370ea66aeb6949574cd973652d792",
+        "bytes": 816
+      },
+      "native-prediction/verify-prediction.log": {
+        "SHA256": "bdd7b4ec05490ef6f8b617db0f772a0b0a08c636218f3a6d6ecc3d08523257d4",
+        "bytes": 816
+      }
+    },
+    "objects": 28,
+    "uniqueBytes": 69381012
+  },
+  "externalH5AD": {
+    "native-aggregation/kang/original.h5ad": {
+      "SHA256": "04bf88915675476febfa46e03c438e6306fdb77a9d7e76efc933045c4c7169e8",
+      "bytes": 35844290,
+      "studyPath": "prepared/kang-full.h5ad"
+    },
+    "native-aggregation/query/original.h5ad": {
+      "SHA256": "3f004ec9d6e88303a6b9dfa6c79b982666294ee2fce044863fcb1a3783be445a",
+      "bytes": 680745521,
+      "studyPath": "prepared/query-full-QC.h5ad"
+    },
+    "native-prediction/model/training/original.h5ad": {
+      "SHA256": "054bbc30fe0bdca604819bad9250321dca3637dca3fcaf9435e6093054c778ba",
+      "bytes": 1222680,
+      "studyPath": "prediction-inputs/training.h5ad"
+    },
+    "native-prediction/prediction/original.h5ad": {
+      "SHA256": "02575148b20c206b509c85da28fe78b5786ca5dcad2be0e9cf050597572756d3",
+      "bytes": 1780333,
+      "studyPath": "prediction-inputs/query.h5ad"
+    },
+    "native-prediction/prediction/reference/training/original.h5ad": {
+      "SHA256": "054bbc30fe0bdca604819bad9250321dca3637dca3fcaf9435e6093054c778ba",
+      "bytes": 1222680,
+      "studyPath": "prediction-inputs/training.h5ad"
+    },
+    "native-prediction/repeat/original.h5ad": {
+      "SHA256": "02575148b20c206b509c85da28fe78b5786ca5dcad2be0e9cf050597572756d3",
+      "bytes": 1780333,
+      "studyPath": "prediction-inputs/query.h5ad"
+    },
+    "native-prediction/repeat/reference/training/original.h5ad": {
+      "SHA256": "054bbc30fe0bdca604819bad9250321dca3637dca3fcaf9435e6093054c778ba",
+      "bytes": 1222680,
+      "studyPath": "prediction-inputs/training.h5ad"
+    }
+  },
+  "scope": "All new native non-H5AD bytes stored once by content; every source H5AD retained separately and hash-bound."
+}
