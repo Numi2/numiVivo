@@ -55,8 +55,13 @@ struct VivoSingleCellCLICommands {
                 try printJSON(VivoH5ADCountStore.verify(URL(fileURLWithPath: arguments[1]), implementation: VivoWorkflowCLIImplementation.fingerprint())); return 0
             }
             if command == "singlecell-count-store-normalize" {
-                guard arguments.count == 6, arguments[2] == "--target", arguments[4] == "--output", let target = Double(arguments[3]) else { throw VivoOmicsError.invalid("singlecell-count-store-normalize <store> --target <positive-total> --output <new-directory>") }
-                try printJSON(VivoH5ADCountStore.normalize(URL(fileURLWithPath: arguments[1]), target: target, implementation: VivoWorkflowCLIImplementation.fingerprint(), to: canonicalURL(URL(fileURLWithPath: arguments[5])))); return 0
+                guard [6, 8].contains(arguments.count), arguments[2] == "--target", arguments[4] == "--output", let target = Double(arguments[3]) else { throw VivoOmicsError.invalid("singlecell-count-store-normalize <store> --target <positive-total> --output <new-directory> [--backend cpu-fp64|metal-fp32]") }
+                var backend: VivoCountStoreNormalizationBackend = .cpuFP64
+                if arguments.count == 8 {
+                    guard arguments[6] == "--backend", let selected = VivoCountStoreNormalizationBackend(rawValue: arguments[7]) else { throw VivoOmicsError.invalid("count normalization backend") }
+                    backend = selected
+                }
+                try printJSON(VivoH5ADCountStore.normalize(URL(fileURLWithPath: arguments[1]), target: target, backend: backend, implementation: VivoWorkflowCLIImplementation.fingerprint(), to: canonicalURL(URL(fileURLWithPath: arguments[5])))); return 0
             }
             if command == "singlecell-count-store-normalize-verify" {
                 guard arguments.count == 4, arguments[2] == "--store" else { throw VivoOmicsError.invalid("singlecell-count-store-normalize-verify <normalized> --store <raw-store>") }
@@ -416,7 +421,7 @@ struct VivoSingleCellCLICommands {
     NumiVivo native single-cell workflows
       singlecell-h5ad-store <source.h5ad> --plan <mapping.json> --output <new-store>
     singlecell-count-store-verify <store>
-    singlecell-count-store-normalize <store> --target <positive-total> --output <new-directory>
+    singlecell-count-store-normalize <store> --target <positive-total> --output <new-directory> [--backend cpu-fp64|metal-fp32]
     singlecell-count-store-normalize-verify <normalized> --store <raw-store>
     multiassay-h5mu-import <source.h5mu> --plan <mapping.json> --output <new-bundle>
       multiassay-h5mu-write <dataset.json> --output <new.h5mu>

@@ -36,6 +36,22 @@ public struct VivoCountStoreNormalizationReceipt: Codable, Sendable, Equatable {
     public let metadata: VivoFingerprint
     public let values: VivoFingerprint
     public let implementation: VivoFingerprint
+    /// Absent for the historical scalar FP64 path, preserving old receipt bytes.
+    public var execution: VivoCountStoreNormalizationExecution? = nil
+}
+
+public enum VivoCountStoreNormalizationBackend: String, Codable, Sendable {
+    case cpuFP64 = "cpu-fp64"
+    case metalFP32 = "metal-fp32"
+}
+
+public struct VivoCountStoreNormalizationExecution: Codable, Sendable, Equatable {
+    public let backend: VivoCountStoreNormalizationBackend
+    public let numericalProfile: String
+    public let deviceName: String
+    public let registryID: UInt64
+    public let kernel: VivoFingerprint
+    public let batchEntries: Int
 }
 
 /// At most 1 MiB of record payload is buffered, independently of entry count.
@@ -195,24 +211,34 @@ public enum VivoH5ADCountStore {
     public static func verify(_ directory: URL, implementation: VivoFingerprint) throws -> VivoH5ADCountStoreReceipt {
         try verified(directory, implementation: implementation) { _, receipt, _, _ in receipt }
     }
-    public static func normalize(_ directory: URL, target: Double, implementation: VivoFingerprint, to destination: URL) throws -> VivoCountStoreNormalizationReceipt {
+    public static func normalize(_ directory: URL, target: Double,
+        backend: VivoCountStoreNormalizationBackend = .cpuFP64,
+        implementation: VivoFingerprint, to destination: URL) throws -> VivoCountStoreNormalizationReceipt {
         guard target.isFinite, target > 0, target <= 1_000_000_000 else { throw VivoOmicsError.invalid("count store normalization target") }
+        guard backend != .metalFP32 || target >= 1 else { throw VivoOmicsError.invalid("Metal normalization target must be in 1...1e9") }
         try requireNew(destination)
         return try verified(directory, implementation: implementation) { snapshot, receipt, metadata, quality in
             let temp = try staging(destination.deletingLastPathComponent()); defer { try? FileManager.default.removeItem(at: temp) }
             let records = try VivoWindowedCountRecords(snapshot.appendingPathComponent("counts.bin"), entries: receipt.entries)
             let writer = try VivoCountRecordWriter(temp.appendingPathComponent("values.bin"))
-            for i in 0..<records.count {
+            let execution: VivoCountStoreNormalizationExecution?
+            if backend == .metalFP32 {
+                execution = try VivoMetalCountNormalization.run(records: records, quality: quality, target: target, writer: writer)
+            } else {
+              execution = nil
+              for i in 0..<records.count {
                 let record = try records.record(i)
                 guard record.row < quality.rowTotals.count, record.feature < quality.featureTotals.count, record.bits > 0,
                       quality.rowTotals[record.row] > 0 else { throw VivoOmicsError.invalid("invalid mapped count coordinate") }
                 let value = log1p(Double(record.bits) * (target / Double(quality.rowTotals[record.row])))
                 guard value.isFinite, value > 0 else { throw VivoOmicsError.invalid("nonfinite normalized count") }
                 try writer.append(row: record.row, feature: record.feature, bits: value.bitPattern)
+              }
             }
-            let result = try VivoCountStoreNormalizationReceipt(schemaVersion: 1, format: "source-major-coo-u32-u32-f64-log1p-le/v1",
+            var result = try VivoCountStoreNormalizationReceipt(schemaVersion: 1, format: "source-major-coo-u32-u32-f64-log1p-le/v1",
                 target: target, entries: records.count, input: VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(receipt)),
                 metadata: receipt.metadata, values: writer.finish(), implementation: implementation)
+            result.execution = execution
             try metadata.write(to: temp.appendingPathComponent("metadata.json"), options: .withoutOverwriting)
             try VivoCanonicalJSON.encode(receipt).write(to: temp.appendingPathComponent("input-receipt.json"), options: .withoutOverwriting)
             try VivoCanonicalJSON.encode(result).write(to: temp.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
@@ -222,9 +248,12 @@ public enum VivoH5ADCountStore {
     public static func verifyNormalization(_ normalized: URL, store: URL, implementation: VivoFingerprint) throws -> VivoCountStoreNormalizationReceipt {
         let bytes = try read(normalized, "receipt.json", maximum: 65_536)
         let receipt = try VivoCanonicalJSON.decode(VivoCountStoreNormalizationReceipt.self, from: bytes)
-        guard receipt.schemaVersion == 1, receipt.implementation == implementation, try VivoCanonicalJSON.encode(receipt) == bytes else { throw VivoOmicsError.invalid("normalized count receipt") }
+        guard receipt.schemaVersion == 1, receipt.format == "source-major-coo-u32-u32-f64-log1p-le/v1",
+              receipt.execution == nil || receipt.execution?.backend == .metalFP32,
+              receipt.implementation == implementation, try VivoCanonicalJSON.encode(receipt) == bytes else { throw VivoOmicsError.invalid("normalized count receipt") }
         let temp = try staging(FileManager.default.temporaryDirectory); defer { try? FileManager.default.removeItem(at: temp) }
-        let rebuilt = try normalize(store, target: receipt.target, implementation: implementation, to: temp.appendingPathComponent("rebuilt"))
+        let rebuilt = try normalize(store, target: receipt.target, backend: receipt.execution?.backend ?? .cpuFP64,
+            implementation: implementation, to: temp.appendingPathComponent("rebuilt"))
         guard rebuilt == receipt, try fingerprint(normalized.appendingPathComponent("values.bin")) == receipt.values,
               try VivoCanonicalJSON.fingerprint(read(normalized, "metadata.json", maximum: 536_870_912)) == receipt.metadata,
               try VivoCanonicalJSON.fingerprint(read(normalized, "input-receipt.json", maximum: 65_536)) == receipt.input else { throw VivoOmicsError.invalid("normalized count reconstruction differs") }

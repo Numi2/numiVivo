@@ -20,6 +20,16 @@ import NumiVivoKit
         if args.count == 3,args[1] == "verify-count-store" {
             _=try VivoH5ADCountStore.verify(URL(fileURLWithPath: args[2]),implementation: implementation);print("verified");return
         }
+        if args.count == 6, args[1] == "normalize-count-store", let target = Double(args[3]),
+           let backend = VivoCountStoreNormalizationBackend(rawValue: args[4]) {
+            let receipt = try VivoH5ADCountStore.normalize(URL(fileURLWithPath: args[2]), target: target, backend: backend,
+                implementation: implementation, to: URL(fileURLWithPath: args[5]))
+            FileHandle.standardOutput.write(try VivoCanonicalJSON.encode(receipt)); return
+        }
+        if args.count == 4, args[1] == "verify-normalized-count-store" {
+            _ = try VivoH5ADCountStore.verifyNormalization(URL(fileURLWithPath: args[2]), store: URL(fileURLWithPath: args[3]), implementation: implementation)
+            print("verified"); return
+        }
         if args.count == 5, args[1] == "multiassay-h5mu-import" {
             let plan = try JSONDecoder().decode(VivoH5MUMultiAssayPlan.self, from: Data(contentsOf: URL(fileURLWithPath: args[3])))
             _ = try VivoMultiAssayIO.importH5MU(source: URL(fileURLWithPath: args[2]), plan: plan, implementation: implementation, to: URL(fileURLWithPath: args[4])); print("imported"); return

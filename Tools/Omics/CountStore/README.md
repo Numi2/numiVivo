@@ -110,3 +110,20 @@ absolute error `8.881784197001252e-16` (fixed absolute/relative tolerance `1e-12
 [The final receipt](evidence/2026-09-09/final/checks.json) includes both complete
 payload digests and the reference environment. Lossless gzip transport reduced
 SSH transfer volume; every decompressed record was checked and hashed.
+
+## Explicit Metal normalization and retained historical payloads
+
+The [Metal qualification](Metal/README.md) adds an explicit `metal-fp32` backend,
+with exact coordinates, a declared FP32 numerical profile and device-bound
+reconstruction. The complete original Kang cohort passes independent checks
+and native replay. Its three-run end-to-end median does not beat CPU; the
+historical FP64 default and complete CPU output bytes remain unchanged.
+
+Both historical Norman `normalized/values.bin` payloads (initial and final runs)
+were identical. They now share one verified local gzip backup, with every decoded
+byte checked against both receipts before deleting the redundant remote files.
+Their original receipts, metadata, logs and memory-failure evidence remain.
+The [restoration manifest](Metal/evidence/2026-09-11/manifest.json) records exact
+paths and compressed/decoded hashes. Restore the values file from that backup
+before replaying either historical normalized bundle. Later benchmark duplicate
+payloads have separate retained-copy mappings in the same archive.

@@ -24,6 +24,13 @@ pseudobulk groups agree with the original Kang information. RNA assay totals
 match every cell, and donor/treatment identities remain explicit. This verifies
 input preservation and arithmetic, without adding a new prediction claim.
 
+The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
+now covers every one of the original Kang dataset's 14,184,532 records on physical
+M4/M4 Pro GPUs. The explicit FP32 option passes its declared numerical tolerance
+and native replay; the FP64 CPU default remains byte-exact. End-to-end medians
+are 1.043 s CPU and 1.050 s Metal, so this experiment establishes **no speedup**.
+The real single-cell CLI is verified; downstream biological claims are unchanged.
+
 ## Biological prediction: current evidence
 
 NumiVivo can predict **population-average gene-expression responses in defined

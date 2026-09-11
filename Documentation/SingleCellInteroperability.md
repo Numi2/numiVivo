@@ -624,8 +624,15 @@ The complete development objective remains open:
    also pass publication, replay and independent checks. Broader biological
    preservation and native multi-seed integration remain open; resident
    metadata/bookkeeping limits remain explicit.
-10. **Metal:** only after stable algorithms; end-to-end CPU/scverse speed and
-    memory comparisons remain for sparse transforms, PCA/kNN and model fitting.
+10. **Metal:** the first explicit [sparse count-normalization backend](../Tools/Omics/CountStore/Metal/README.md)
+    now passes all 14,184,532 original Kang records, every native replay and the
+    actual product single-cell CLI. FP32 output has maximum absolute error
+    1.24e-6 against FP64 Scanpy; raw counts/identities and default CPU bundles
+    remain exact. M4 Pro end-to-end medians are 1.043 s CPU and 1.050 s Metal,
+    establishing no speedup. CPU remains default. This is a bounded GPU
+    arithmetic result, not million-cell GPU or biological qualification.
+    PCA/kNN/model-fitting acceleration and matched end-to-end scverse speed and
+    memory comparisons remain open.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial
     imaging, metabolic modeling and regulatory prediction on shared provenance
     remain outside this initial interoperability block.
