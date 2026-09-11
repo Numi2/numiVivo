@@ -5,7 +5,7 @@ public struct VivoH5ADProjectionPlan: Codable, Sendable, Equatable {
     public let source: VivoFingerprint
     public let provenance: String
     /// nil keeps the complete axis; [] selects an empty axis. Indices address
-    /// the fingerprinted source order and must be unique (no duplicated axes).
+    /// the fingerprinted source order. Repeated indices repeat aligned values.
     public let observationIndices: [Int]?
     public let featureIndices: [Int]?
     public let maximumElementVisits: Int
@@ -27,8 +27,8 @@ public struct VivoH5ADProjectionPlan: Codable, Sendable, Equatable {
         guard schemaVersion==1,!provenance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,provenance.utf8.count<=16_384,
               (1...2_000_000_000).contains(maximumElementVisits) else { throw VivoOmicsError.invalid("projection schema, provenance or work allowance") }
         for indices in [observationIndices,featureIndices].compactMap({ $0 }) {
-            guard indices.count<=2_000_000,indices.allSatisfy({ (0..<2_000_000).contains($0) }),Set(indices).count==indices.count else {
-                throw VivoOmicsError.invalid("projection indices must be unique, nonnegative and bounded")
+            guard indices.count<=2_000_000,indices.allSatisfy({ (0..<2_000_000).contains($0) }) else {
+                throw VivoOmicsError.invalid("projection indices must be nonnegative and bounded")
             }
         }
     }
@@ -162,8 +162,17 @@ private final class VivoH5ADProjector {
         let rows=try indices(selections.first ?? nil,length: shape[0]),cols=try indices(selections.count>1 ? selections[1] : nil,length: shape[1])
         let csr=kind=="csr_matrix",major=csr ? rows : cols,minor=csr ? cols : rows
         let majorLength=csr ? shape[0] : shape[1],minorLength=csr ? shape[1] : shape[0]
-        var majorMap=[Int](repeating: -1,count: majorLength),minorMap=[Int](repeating: -1,count: minorLength)
-        for (i,k) in major.enumerated() { majorMap[k]=i };for (i,k) in minor.enumerated() { minorMap[k]=i }
+        var selectedMajor=[Bool](repeating: false,count: majorLength)
+        for k in major { selectedMajor[k]=true }
+        // Each source minor index owns an ordered chain of output positions.
+        // This preserves sparse entry order while expanding repeated selections,
+        // without a dense matrix or one heap allocation per source index.
+        var minorHead=[Int](repeating: -1,count: minorLength)
+        var minorNext=[Int](repeating: -1,count: minor.count)
+        var minorMultiplicity=[Int](repeating: 0,count: minorLength)
+        for i in minor.indices.reversed() {
+            let k=minor[i];minorNext[i]=minorHead[k];minorHead[k]=i;minorMultiplicity[k]+=1
+        }
         let data=try h.dataset(source,"data");defer { h.close(data,"H5Dclose") }
         let ii=try h.dataset(source,"indices");defer { h.close(ii,"H5Dclose") }
         let pp=try h.dataset(source,"indptr");defer { h.close(pp,"H5Dclose") }
@@ -172,7 +181,7 @@ private final class VivoH5ADProjector {
         let ptr=try h.integers(pp,maximum: 2_000_001),nnz=Int(ds[0])
         guard ptr.first==0,ptr.last==ds[0],zip(ptr,ptr.dropFirst()).allSatisfy({ $0<=$1 }) else { throw VivoOmicsError.invalid("sparse offset domain") }
         try consume(nnz)
-        var counts=[Int](repeating: 0,count: major.count),sourceMajor=0
+        var counts=[Int](repeating: 0,count: majorLength),sourceMajor=0
         for start in stride(from: 0,to: nnz,by: 65_536) {
             try Task.checkCancellation()
             let values=try h.integers(ii,maximum: 65_536,range: start..<min(start+65_536,nnz))
@@ -180,14 +189,19 @@ private final class VivoH5ADProjector {
                 guard index<UInt64(minorLength) else { throw VivoOmicsError.invalid("sparse index outside axis") }
                 while sourceMajor<majorLength && UInt64(start+j)>=ptr[sourceMajor+1] { sourceMajor+=1 }
                 guard sourceMajor<majorLength else { throw VivoOmicsError.invalid("sparse offset coverage") }
-                if majorMap[sourceMajor]>=0,minorMap[Int(index)]>=0 { counts[majorMap[sourceMajor]]+=1 }
+                if selectedMajor[sourceMajor] { counts[sourceMajor]+=minorMultiplicity[Int(index)] }
             }
         }
-        var outputPtr: [Int64]=[0]
-        for count in counts { outputPtr.append(outputPtr.last!+Int64(count)) }
-        let total=Int(outputPtr.last!)
         let scanned=major.reduce(0) { $0+Int(ptr[$1+1]-ptr[$1]) }
-        try consume(scanned+total)
+        try consume(scanned)
+        var outputPtr: [Int64]=[0],total=0
+        for row in major {
+            // Bound expansion before summing or allocating. Both selected axes
+            // can repeat, so an unchecked output-size product can overflow Int.
+            guard counts[row]<=remaining-total else { throw VivoOmicsError.limit("H5AD projection element visits") }
+            total+=counts[row];outputPtr.append(Int64(total))
+        }
+        try consume(total)
         let group=try h.projectionGroup(destination,name);defer { h.close(group,"H5Gclose") }
         try h.projectionAttributes(source,group,excluding: ["shape"])
         try h.writeIntegers(group,"shape",[UInt64(rows.count),UInt64(cols.count)],attribute: true)
@@ -204,10 +218,23 @@ private final class VivoH5ADProjector {
                 try Task.checkCancellation()
                 let values=try h.integers(ii,maximum: 65_536,range: start..<min(start+65_536,Int(ptr[row+1])))
                 var positions: [UInt64]=[],mapped: [Int64]=[]
-                for (j,index) in values.enumerated() where minorMap[Int(index)]>=0 { positions.append(UInt64(start+j));mapped.append(Int64(minorMap[Int(index)])) }
-                try h.projectionTransfer(data,od,type: type,coordinates: positions,count: positions.count,outputStart: [UInt64(cursor)],outputCount: [UInt64(positions.count)],
-                    reserveVariableBytes: { try self.reserveStorage($0,output: od) })
-                try h.projectionIntegers(oi,values: mapped,offset: cursor);cursor+=mapped.count
+                func flush() throws {
+                    guard !positions.isEmpty else { return }
+                    try Task.checkCancellation()
+                    try h.projectionTransfer(data,od,type: type,coordinates: positions,count: positions.count,outputStart: [UInt64(cursor)],outputCount: [UInt64(positions.count)],
+                        reserveVariableBytes: { try self.reserveStorage($0,output: od) })
+                    try h.projectionIntegers(oi,values: mapped,offset: cursor);cursor+=mapped.count
+                    positions.removeAll(keepingCapacity: true);mapped.removeAll(keepingCapacity: true)
+                }
+                for (j,index) in values.enumerated() {
+                    var position=minorHead[Int(index)]
+                    while position>=0 {
+                        positions.append(UInt64(start+j));mapped.append(Int64(position))
+                        if positions.count==65_536 { try flush() }
+                        position=minorNext[position]
+                    }
+                }
+                try flush()
             }
         }
         guard cursor==total else { throw VivoOmicsError.invalid("projection sparse pass disagreement") }
@@ -286,8 +313,9 @@ public enum VivoH5ADProjection {
                 try engine.mapping(raw,rg,"varm",selections: [nil],expected: [rawP],path: "raw/varm")
             }
             if children.contains("uns") { try h.projectionCopy(input,"uns",out,"uns") }
-            return try .init(method: "native-H5AD-axis-projection-v1",sourceShape: [n,p],outputShape: [oi.count,vi.count],elementVisits: plan.maximumElementVisits-engine.remaining,
-                fields: engine.fields,hdf5Version: h.version(),qualification: "Unique cell/feature selection and reordering; raw retains its feature axis. Stored values/datatypes and categories retained; sparse structural indices become int64. Unstructured data copied without inferred axis semantics. No biological validation claim.")
+            let repeated=Set(oi).count != oi.count || Set(vi).count != vi.count
+            return try .init(method: repeated ? "native-H5AD-repeated-axis-projection-v1" : "native-H5AD-axis-projection-v1",sourceShape: [n,p],outputShape: [oi.count,vi.count],elementVisits: plan.maximumElementVisits-engine.remaining,
+                fields: engine.fields,hdf5Version: h.version(),qualification: (repeated ? "Repeated cell/feature selection and reordering;" : "Unique cell/feature selection and reordering;")+" raw retains its feature axis. Stored values/datatypes and categories retained; sparse structural indices become int64. Unstructured data copied without inferred axis semantics. No biological validation claim.")
         }
     }
     public static func publish(source: URL,plan: VivoH5ADProjectionPlan,implementation: VivoFingerprint,to destination: URL) throws -> VivoH5ADProjectionReceipt {

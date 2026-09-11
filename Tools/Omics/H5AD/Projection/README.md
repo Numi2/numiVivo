@@ -1,7 +1,7 @@
 # Native AnnData axis projection
 
 `singlecell-h5ad-project` creates a new, source-bound H5AD bundle after selecting
-or reordering unique cell and feature indices. It transforms every supported
+or reordering cell and feature indices, including repeated selections. It transforms every supported
 aligned slot, preserving stored values and datatypes instead of reconstructing
 only an expression matrix. The original file remains in the bundle.
 
@@ -27,8 +27,9 @@ with open("projection.json", "w") as out:
 ```
 
 Indices refer to the original zero-based axis order. Omitted/null indices keep
-that complete axis; an empty array creates an empty axis. Duplicate indices and
-out-of-range indices are rejected. Source identity is checked against the copied
+that complete axis; an empty array creates an empty axis. Repeated indices repeat
+the corresponding aligned values in the requested order. Negative and out-of-range
+indices are rejected. Source identity is checked against the copied
 snapshot before projection. Python above only prepares JSON; execution and replay
 use Swift and native HDF5 without Python/scverse.
 
@@ -65,16 +66,19 @@ Numeric data never pass through Double. This preserves integer values above
 2^53, endian-specific floats, NaN/Inf payloads, boolean enums, and complex numeric
 arrays where encoded as ordinary arrays. Sparse values retain their dtype,
 explicit zeros, duplicate entries and source order within each selected major
-axis. Sparse structural indices/offsets are written as int64 to represent remapped
+axis. When a minor index is selected repeatedly, each stored source entry expands
+to its requested destination positions in ascending output order. Duplicate
+source entries remain distinct; repeated major axes repeat their whole stored
+sequence. Sparse structural indices/offsets are written as int64 to represent remapped
 positions without narrowing. Compression, chunk layout and hard-link alias
 identity are not promised; values behind aliases remain correct in their
 respective aligned or unstructured contexts.
 
 Unknown aligned encodings, unknown root fields, external/soft links, external or
 virtual dataset storage, object references, null dataspaces requiring projection,
-first-axis/matrix shape mismatches, and duplicate selection indices fail explicitly. General legacy
-unversioned formats, ragged/Awkward arrays, structured record encodings and
-axis duplication remain outside this operation. No unsupported slot is silently
+first-axis/matrix shape mismatches fail explicitly. General legacy unversioned
+formats, ragged/Awkward arrays and structured record encodings remain outside
+this operation. No unsupported slot is silently
 removed to produce a successful result.
 
 ## Storage and replay
@@ -97,7 +101,10 @@ this allowance. Empty arrays consume zero element visits.
 Transfers gather at most 65,536 values at once with bounded numeric and variable
 buffers. Dense source arrays are read in blocks, and sparse inputs remain sparse;
 there is no dense cells × genes intermediate. Axis maps, sparse offsets and
-per-axis counts remain resident. These bounds and tests do not establish
+per-axis counts remain resident. Repeated sparse expansion is counted against
+the shared work allowance before output allocation, with checked accumulation
+when both axes repeat. Expanded transfers still hold at most 65,536 values.
+These bounds and tests do not establish
 million-cell scalability or a throughput advantage over scverse.
 
 ## Independent verification
@@ -130,7 +137,7 @@ Storage fixtures cover CSR, CSC, dense big-endian arrays, nullable columns,
 unused/ordered categories, raw with a different feature axis, tensor embeddings,
 dataframe embeddings, pairwise matrices, complex values, large unsigned integers,
 nonfinite floats, sparse duplicates, hard-link aliases in `uns`, identity and
-empty selections. Rejections cover wrong source hashes, duplicate/out-of-range
+empty selections. Rejections cover wrong source hashes, negative/out-of-range
 indices, work limits, unsupported encodings, misaligned arrays, output allocation
 limits, no-overwrite and tampered output.
 
@@ -157,3 +164,66 @@ before replay. The two real source snapshots are included so replay does not
 require recreating their exact HDF5 encoding from a public dataset download.
 These files retain their source-study metadata; the test does not assign new
 cell labels or establish scientific validity of the selected cohorts.
+
+
+## Repeated-index qualification, 2026-09-11
+
+Repeated observation/feature indices now work across all supported aligned slots,
+including CSR/CSC, dense arrays, nullable/categorical columns, tensor/dataframe
+embeddings, pairwise matrices and raw's independent feature axis. Names and
+annotations repeat exactly; the projection does not invent new biological cells,
+rename identifiers or treat repeated rows as independent experimental replicates.
+The analytical count model still requires unique cell identities. A matched
+single-cell control imports, while its repeated-cell counterpart is rejected.
+
+The current native owner passes **19 positive and 11 rejection cases**, including
+three transfer-boundary cases with more than 65,536 repeated positions and a
+sparse expansion beyond the work budget. All stored datatypes, sparse entries,
+AnnData slots and replay outputs agree with the independent reference. Seven
+repeated-axis bundles also produce identical bytes on the physical Mac mini.
+All ten previously qualified unique-selection bundles reproduce exact original
+source, output, plan and report bytes, including both earlier real-data cases.
+
+The new real cases retain every original cell and feature, reverse their order,
+and append three repeated positions on each axis:
+
+| Source | Complete source shape | Repeated output shape |
+| --- | --- | --- |
+| Prepared full Kang | 24,673 × 15,706 | 24,676 × 15,709 |
+| Full Baron | 8,569 × 20,125 | 8,572 × 20,128 |
+
+The prepared Kang snapshot is the earlier count/identity-verified conversion with
+its declared selected metadata. This result preserves every slot of that prepared
+file; it does not qualify the legacy downloaded compound-dataframe encoding or
+restore annotations omitted by the earlier preparation. The first new test
+attempt encountered that unsupported legacy source before real projection; its
+completed fixture evidence and failure remain retained. A separate native call
+also rejects the legacy source without publishing partial output.
+
+The ordinary unique real projections also reimport into the count model with
+exact counts/axes and retained H5AD bytes: 2,494,517 Kang and 2,660,360 Baron
+nonzeros. The complete repeated Kang file exceeds the resident count importer's
+file bound; file projection's larger allowance does not remove that separate
+limit. A small repeated-identity control exercises the identity rejection
+independently. The initial checker expected the word `unique`, while the native
+owner reported its existing `cell identity, sample reference or group` diagnostic;
+the matched control and explicit diagnostic checks now pass.
+
+The Omics/artifact scoped build passed with all 88 compiled source hashes checked.
+The actual tested binary SHA-256 is
+`cf5e264d0c4e31cf9f6446cd9b391212265fd785a6d10b2e4c3364f292a84be3`.
+Its transfer signature and both-host binary identity were verified. Receipt
+implementation tags from the scoped driver are retained separately from that
+binary identity. The full unrelated release product was not rebuilt in this turn;
+these are native public-API interoperability results, not new biological,
+throughput or million-cell qualification.
+
+
+The [repeated-axis evidence archive](evidence/2026-09-11-repeated) contains 465
+members and 2,387,932 stored bytes; manifest SHA-256
+`864130f2d3d60bf2ae9d3c81576194e296e07996794ba993aa62dbe9272d14e4`.
+Format fixtures and their complete native bundles, every real plan/report/receipt,
+source snapshots and all check logs are stored. Twenty-nine large real H5AD/count
+payloads remain externally retained with exact paths and hashes; no full-real
+matrix was sampled for comparison. Restore the manifest's external files when
+replaying the complete archived study on another host.

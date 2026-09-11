@@ -315,8 +315,10 @@ The complete development objective remains open:
    [axis projection](../Tools/Omics/H5AD/Projection/README.md) now filters/reorders
    unique cell/feature indices across supported aligned AnnData slots, retains
    raw's independent feature axis, and binds source/output/replay provenance.
-   General legacy encodings, ragged/structured aligned formats, duplicated axes
-   and files beyond the explicit storage/work bounds remain. Full PBMC3K count/QC
+   Repeated-axis checks now cover complete prepared Kang and Baron, all aligned
+   slots and raw, with exact prior unique-selection bytes. General legacy
+   encodings, ragged/structured aligned formats and files beyond explicit
+   storage/work bounds remain. Full PBMC3K count/QC
    and annotation preservation now pass; this single library is not a donor-DE benchmark.
 2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber

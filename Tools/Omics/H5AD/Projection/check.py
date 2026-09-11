@@ -31,7 +31,7 @@ def invoke(source,plan,dest,label,verify=False,reject=False,existing=False):
  start=time.monotonic()
  with (a.out/(label+'.log')).open('w') as log:
   r=subprocess.run([str(a.binary.resolve())]+args,stdout=log,stderr=subprocess.STDOUT,
-   env={**os.environ,'NUMIVIVO_HDF5_LIBRARY':'/opt/homebrew/opt/hdf5/lib/libhdf5.dylib'})
+   env={**os.environ,'NUMIVIVO_HDF5_LIBRARY':os.environ.get('NUMIVIVO_HDF5_LIBRARY','/opt/homebrew/opt/hdf5/lib/libhdf5.dylib')})
  if reject:
   assert r.returncode!=0 and (verify or existing or not dest.exists()),(label,r.returncode)
  else: assert r.returncode==0,(label,r.returncode,(a.out/(label+'.log')).read_text()[-3000:])
@@ -92,11 +92,13 @@ def compare(source,projected,rows,cols):
     if kind in ['csr_matrix','csc_matrix'] and not name.startswith('uns/'):
      r,c=axes(name);dims=old.attrs['shape'];r=np.arange(dims[0]) if r is None else np.asarray(r,dtype=int);c=np.arange(dims[1]) if c is None else np.asarray(c,dtype=int)
      major,minor=(r,c) if kind=='csr_matrix' else (c,r);minor_length=dims[1] if kind=='csr_matrix' else dims[0]
-     lookup=np.full(minor_length,-1,dtype='int64');lookup[minor]=np.arange(len(minor))
+     multiplicity=np.bincount(minor,minlength=minor_length);offsets=np.r_[0,np.cumsum(multiplicity)];destinations=np.argsort(minor,kind='stable')
      ptr=old['indptr'][:];expected_ptr=[0];expected_indices=[];expected_data=[]
      for row in major:
-      start,end=int(ptr[row]),int(ptr[row+1]);index=old['indices'][start:end];values=old['data'][start:end];mapped=lookup[index];keep=mapped>=0
-      expected_indices.append(mapped[keep]);expected_data.append(values[keep]);expected_ptr.append(expected_ptr[-1]+int(keep.sum()))
+      start,end=int(ptr[row]),int(ptr[row+1]);index=old['indices'][start:end];values=old['data'][start:end];copies=multiplicity[index]
+      source_positions=np.repeat(np.arange(len(index)),copies);rank=np.arange(len(source_positions))-np.repeat(np.cumsum(copies)-copies,copies)
+      mapped=destinations[offsets[index[source_positions]]+rank]
+      expected_indices.append(mapped);expected_data.append(values[source_positions]);expected_ptr.append(expected_ptr[-1]+len(mapped))
      ii=np.concatenate(expected_indices) if expected_indices else np.array([],dtype='int64')
      vv=np.concatenate(expected_data) if expected_data else np.array([],dtype=old['data'].dtype)
      np.testing.assert_array_equal(expected_ptr,obj['indptr'][:]);np.testing.assert_array_equal(ii,obj['indices'][:]);equal(vv,obj['data'][:])
@@ -156,6 +158,7 @@ def fixture(path,kind):
 for kind in ['csr','csc','dense']:
  source=fixture(a.out/(kind+'-source.h5ad'),kind)
  case(kind+'-reorder',source,[5,1,6,0],[8,2,0,6], 'format-regression')
+ case(kind+'-repeat',source,[5,1,5,6,1,0],[8,2,8,0,2,6], 'repeated-axis-format')
 case('empty-cells',source,[],[3,1],'format-regression')
 case('empty-features',source,[4,0],[],'format-regression')
 case('identity',source,None,None,'format-regression')
@@ -167,6 +170,15 @@ source=fixture(a.out/'duplicates-source.h5ad','csr')
 with h5py.File(source,'r+') as f:
  indices=f['X/indices'];values=indices[:];values[:3]=[2,1,2];indices[:]=values
 case('sparse-duplicates',source,[0,5,1],[2,8,1,0],'format-regression')
+case('sparse-duplicates-repeat',source,[0,5,0,1],[2,8,2,1,0,2],'repeated-axis-format')
+# A single sparse source entry expands beyond the 65,536-value transfer bound.
+for kind in ('csr','csc','dense'):
+ values=np.array([[11,0,7],[0,4,0]],dtype='uint64')
+ values[0,0]=2**53+3
+ matrix=sparse.csr_matrix(values) if kind=='csr' else sparse.csc_matrix(values) if kind=='csc' else values
+ large=a.out/(kind+'-repeat-buffer-source.h5ad');ad.AnnData(matrix).write_h5ad(large)
+ rr,cc=([1,0,1],[1]*65537+[2,0,1]) if kind!='csc' else ([1]*65537+[0,1,0],[1,0,1])
+ case(kind+'-repeat-buffer',large,rr,cc,'repeated-axis-transfer-boundary')
 for i,source in enumerate(a.real):
  with h5py.File(source) as f:
   def length(frame):
@@ -194,11 +206,20 @@ for i,source in enumerate(a.real):
   assert digest(imported/'original.h5ad')==digest(projected)
   summary['cases'][-1]['nativeCountReimport']=dict(exactCounts=True,exactAxes=True,exactOriginalH5AD=True,nonzeros=native.nnz,command=args)
   save()
+# Retain every original real cell/feature, reorder and repeat declared positions.
+for i,source in enumerate(a.real):
+ original=ad.read_h5ad(source);n,m=original.shape
+ rr=list(range(n-1,-1,-1))+[0,n//2,n-1];cc=list(range(m-1,-1,-1))+[0,m//2,m-1]
+ case('real-repeat-'+str(i),source,rr,cc,'complete-source-repeated-axis-interoperability')
+ del original
 # Rejection must never publish a partial destination.
 base=plan_for(source,[0],[0])
-for name,edit in [('duplicate',{'observationIndices':[0,0]}),('out-of-bounds',{'featureIndices':[1999999]}),('work-limit',{'maximumElementVisits':1}),('wrong-source',{'source':{'bytes':[0]*32}})]:
+for name,edit in [('negative-index',{'observationIndices':[-1,0]}),('out-of-bounds',{'featureIndices':[1999999]}),('work-limit',{'maximumElementVisits':1}),('wrong-source',{'source':{'bytes':[0]*32}})]:
  plan={**base,**edit};path=a.out/(name+'-plan.json');path.write_text(json.dumps(plan)+'\n')
  summary['negativeCases'].append(dict(name=name,**invoke(source,path,a.out/name,name,reject=True)));save()
+expanded=a.out/'expanded-source.h5ad';ad.AnnData(sparse.csr_matrix([[1]],dtype='uint64')).write_h5ad(expanded)
+expanded_plan=a.out/'expanded-plan.json';expanded_plan.write_text(json.dumps(plan_for(expanded,[0]*70000,[0]*70000))+'\n')
+summary['negativeCases'].append(dict(name='repeated-sparse-work-limit',**invoke(expanded,expanded_plan,a.out/'expanded-output','expanded-work',reject=True)))
 # Unknown aligned encoding cannot be silently retained with the original axis.
 bad=a.out/'unknown-encoding.h5ad';shutil.copy2(a.out/'csr-source.h5ad',bad)
 with h5py.File(bad,'r+') as f:f['obsm/pca'].attrs['encoding-type']='unknown'
