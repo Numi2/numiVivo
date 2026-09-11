@@ -184,3 +184,8 @@ The earlier GSE181897 point-prediction results and failed treatment interval
 coverage remain unchanged. Known training/development data and a valid numerical
 implementation do not replace new independent biological validation. The wider
 twelve-part development goal remains active.
+
+The subsequent [joint count-response model](../Joint/README.md) now fits paired
+nonnegative rate distributions on the unchanged 16-gene development panel.
+Finite-grid numerical checks pass, but 17/19 available models fail grid
+refinement; this does not repair or supersede the full-gene diagnosis above.

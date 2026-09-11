@@ -148,12 +148,18 @@ zero observations and separate variance for planned cell sampling. It is
 conditional on its prior and dispersion. [Training calibration](Tools/Omics/CountObservation/Calibration/README.md)
 now fits these from all 122,164 original Kang/HIRISA training cells and verifies
 the path to available query-control posteriors. Unsupported genes remain explicit;
-donor-response integration and independent biological calibration remain open.
+the joint response model and independent biological calibration have separate gates.
 The [paired-donor diagnosis](Tools/Omics/CountObservation/Paired/README.md) now
 checks every training gene and every donor omission. Separate noise corrections
 produce invalid joint covariance for 7,489 Kang and 6,373 HIRISA genes; per-cell
-and pseudobulk endpoint differences also matter. A coherent joint response model
-is still required.
+and pseudobulk endpoint differences also matter. The new
+[joint count-response model](Tools/Omics/CountObservation/Joint/README.md) fits
+nonnegative paired rate distributions from all 122,164 training cells for the
+previously selected 16-gene development panel. All 76 available finite-grid fits
+and 4,712 conditional predictions pass independent numerical checks. However,
+**17/19 available gene models fail grid refinement**; 13/32 origin/gene cases
+remain unavailable. This implementation does not yet establish stable predictions
+or repair the failed biological uncertainty coverage.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five

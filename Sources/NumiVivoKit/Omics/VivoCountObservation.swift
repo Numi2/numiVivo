@@ -211,27 +211,42 @@ public enum VivoCountObservation {
               posterior.cellDispersion.isFinite,posterior.cellDispersion==0 || (1e-8...100).contains(posterior.cellDispersion) else {
             throw VivoOmicsError.invalid("count predictive moments or planned per-cell libraries")
         }
+        return try predictiveMoments(meanCPM: posterior.meanCPM,varianceCPM: posterior.varianceCPM,
+            cellDispersion: posterior.cellDispersion,plannedLibraryCounts: plannedLibraryCounts)
+    }
+
+    /// Sampling moments from a nonnegative latent rate distribution, including
+    /// explicit fitted point masses. Zero variance does not establish absence
+    /// of parameter uncertainty or biological variability.
+    public static func predictiveMoments(meanCPM: Double,varianceCPM: Double,cellDispersion: Double,
+        plannedLibraryCounts: [UInt64]) throws -> VivoCountObservationPredictiveMoments {
+        guard meanCPM.isFinite,meanCPM>=0,varianceCPM.isFinite,varianceCPM>=0,(meanCPM>0 || varianceCPM==0),
+              cellDispersion.isFinite,cellDispersion==0 || (1e-8...100).contains(cellDispersion),
+              !plannedLibraryCounts.isEmpty,plannedLibraryCounts.count<=1_000_000,
+              plannedLibraryCounts.allSatisfy({ $0>0 && $0<=1_000_000_000 }) else {
+            throw VivoOmicsError.invalid("nonnegative latent count moments or planned libraries")
+        }
         var total: UInt64=0,squared=0.0
         for library in plannedLibraryCounts { total=try vivoOmicsSum(total,library);let e=Double(library)/1e6;squared += e*e }
         guard total<=1_000_000_000_000 else { throw VivoOmicsError.limit("planned count observation total library budget") }
-        let e=Double(total)/1e6,mean=e*posterior.meanCPM
-        let over=posterior.cellDispersion*squared*(posterior.varianceCPM+posterior.meanCPM*posterior.meanCPM)
-        let latent=e*e*posterior.varianceCPM,totalVariance=mean+over+latent
+        let e=Double(total)/1e6,mean=e*meanCPM
+        let over=cellDispersion*squared*(varianceCPM+meanCPM*meanCPM)
+        let latent=e*e*varianceCPM,totalVariance=mean+over+latent
         guard totalVariance.isFinite else { throw VivoOmicsError.invalid("count predictive variance overflow") }
         return .init(plannedCells: plannedLibraryCounts.count,plannedLibraryCounts: total,meanGeneCounts: mean,
             conditionalPoissonVariance: mean,conditionalCellOverdispersionVariance: over,
             latentRateVariance: latent,totalGeneCountVariance: totalVariance)
     }
-    private static func sigmoid(_ x: Double) -> Double { x>=0 ? 1/(1+exp(-x)) : exp(x)/(1+exp(x)) }
-    private static func softplus(_ x: Double) -> Double { max(0,x)+log1p(exp(-abs(x))) }
-    private static func softplusDifference(_ x: Double,_ d: Double) -> Double {
+    static func sigmoid(_ x: Double) -> Double { x>=0 ? 1/(1+exp(-x)) : exp(x)/(1+exp(x)) }
+    static func softplus(_ x: Double) -> Double { max(0,x)+log1p(exp(-abs(x))) }
+    static func softplusDifference(_ x: Double,_ d: Double) -> Double {
         abs(d)<0.5 ? log1p(sigmoid(x)*expm1(d)) : softplus(x+d)-softplus(x)
     }
-    private static func expm1Remainder(_ d: Double) -> Double {
+    static func expm1Remainder(_ d: Double) -> Double {
         if abs(d)>=0.01 { return expm1(d)-d }
         return d*d*(0.5+d*(1/6.0+d*(1/24.0+d*(1/120.0+d*(1/720.0+d/5040)))))
     }
-    private static func softplusRemainder(_ x: Double,_ q: Double,_ d: Double) -> Double {
+    static func softplusRemainder(_ x: Double,_ q: Double,_ d: Double) -> Double {
         if abs(d)>=0.001 { return softplusDifference(x,d)-q*d }
         let q2=q*q,q3=q2*q,q4=q3*q
         return q*(1-q)*d*d*(0.5+d*((1-2*q)/6+d*((1-6*q+6*q2)/24+d*((1-14*q+36*q2-24*q3)/120+d*(1-30*q+150*q2-240*q3+120*q4)/720))))

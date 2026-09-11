@@ -1,0 +1,415 @@
+{
+  "baseCommit": "721a003402fa8a2e9dc781c8c73688d20e823fd9",
+  "biologicalQualification": "Not assessed: no query treated outcomes used or scored; historical failed coverage remains unchanged.",
+  "nativeRegressionTests": {
+    "passed": 40,
+    "suites": 6
+  },
+  "nextGate": "Continuous-support convergence, fitted-parameter uncertainty, full-transcriptome qualification and new biological validation.",
+  "numericalValuesCompared": 7809460,
+  "origins": {
+    "HIRISA": {
+      "depthBins": 50251,
+      "maximumUnderflowedComponentsPerQuery": 0,
+      "native": {
+        "binarySHA256": "f6be23cb5dd144878507149f49de87fdd59a035338eae9acd4d5ee02287a9c95",
+        "command": [
+          "ssh",
+          "-4",
+          "-C",
+          "-o",
+          "ConnectTimeout=10",
+          "-o",
+          "ServerAliveInterval=10",
+          "-o",
+          "ServerAliveCountMax=1",
+          "macmini",
+          "python3 -c 'import hashlib,pathlib,sys; p=pathlib.Path('\"'\"'/Users/n/numivivo-joint-counts-20260911/build/joint-counts'\"'\"'); assert hashlib.sha256(p.read_bytes()).hexdigest()=='\"'\"'f6be23cb5dd144878507149f49de87fdd59a035338eae9acd4d5ee02287a9c95'\"'\"'' && /usr/bin/time -l /Users/n/numivivo-joint-counts-20260911/build/joint-counts"
+        ],
+        "controllerPID": 94000,
+        "errors": [],
+        "exitCode": 0,
+        "finishedUnix": 1789157052.646801,
+        "origin": "HIRISA",
+        "outputBytes": 14283964,
+        "outputSHA256": "f011989a0e59d98ad58b7444dc19d8e2a1e390cdf973b65f99c94c9d95a217d3",
+        "seconds": 3.3035850524902344,
+        "sshPID": 94677,
+        "startedUnix": 1789157049.343203,
+        "status": "passed"
+      },
+      "numericallyDegenerateQueries": 0,
+      "queriesWithUnderflowedComponents": 0,
+      "refinementStates": {
+        "failedGridRefinement": 9,
+        "passed": 2,
+        "unavailableCellDispersion": 5
+      },
+      "sourceCells": 119513,
+      "verification": {
+        "degeneratePredictions": 0,
+        "errors": [],
+        "fitStates": {
+          "convergedFiniteGridLikelihood": 44,
+          "unavailableCellDispersion": 20
+        },
+        "histogramsChecked": 1152,
+        "maximumScaledError": 6.7809646786543e-13,
+        "numericalValuesCompared": 4461776,
+        "origin": "HIRISA",
+        "qualification": "Finite-support conditional likelihood and arithmetic only; parameter uncertainty, continuous mixing law, full transcriptome scaling and biological prediction calibration remain open.",
+        "queryStates": {
+          "conditionalPrediction": 2728,
+          "unavailableCellDispersion": 1240
+        },
+        "refinement": [
+          {
+            "featureID": "symbol|ACAD10",
+            "maximumScaledQueryMomentChange": 0.0069497027189621245,
+            "meanDonorLogLikelihoodChange": 0.007371656778963853,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 1.3074436290059952,
+              "field": "treatedVarianceCPM2",
+              "fine": 1.3165935628696384,
+              "queryID": "49:symbol|ACAD10"
+            }
+          },
+          {
+            "featureID": "symbol|AHCYL2",
+            "maximumScaledQueryMomentChange": 0.0017389280274687148,
+            "meanDonorLogLikelihoodChange": 8.122462443456157e-05,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 15.293582734654436,
+              "field": "treatedVarianceCPM2",
+              "fine": 15.267034460534681,
+              "queryID": "49:symbol|AHCYL2"
+            }
+          },
+          {
+            "featureID": "symbol|CCDC170",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|CCL1",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|CRYGS",
+            "maximumScaledQueryMomentChange": 0.006689529052076204,
+            "meanDonorLogLikelihoodChange": 0.0012844525467592405,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 0.9966325942012105,
+              "field": "treatedVarianceCPM2",
+              "fine": 0.9899430651491343,
+              "queryID": "32:symbol|CRYGS"
+            }
+          },
+          {
+            "featureID": "symbol|EFHC2",
+            "maximumScaledQueryMomentChange": 0.010678570995317882,
+            "meanDonorLogLikelihoodChange": 0.002263247078290398,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 0.6196426026627687,
+              "field": "treatedVarianceCPM2",
+              "fine": 0.6089640316674508,
+              "queryID": "31:symbol|EFHC2"
+            }
+          },
+          {
+            "featureID": "symbol|GLCCI1",
+            "maximumScaledQueryMomentChange": 0.0399976307198436,
+            "meanDonorLogLikelihoodChange": 0.002875235742680715,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 2.861530635093028,
+              "field": "treatedVarianceCPM2",
+              "fine": 2.9807537217212334,
+              "queryID": "49:symbol|GLCCI1"
+            }
+          },
+          {
+            "featureID": "symbol|INTS2",
+            "maximumScaledQueryMomentChange": 0.007766282403087043,
+            "meanDonorLogLikelihoodChange": 0.0040988584190996494,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 1.5713319035764695,
+              "field": "treatedVarianceCPM2",
+              "fine": 1.5836308278074567,
+              "queryID": "49:symbol|INTS2"
+            }
+          },
+          {
+            "featureID": "symbol|KCNE3",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|MXRA7",
+            "maximumScaledQueryMomentChange": 0.005024767760821664,
+            "meanDonorLogLikelihoodChange": 0.028036974187518028,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 2.010335730630134,
+              "field": "treatedVarianceCPM2",
+              "fine": 2.0002847642343466,
+              "queryID": "49:symbol|MXRA7"
+            }
+          },
+          {
+            "featureID": "symbol|MZB1",
+            "maximumScaledQueryMomentChange": 1.7763568394002505e-15,
+            "meanDonorLogLikelihoodChange": 0.0,
+            "status": "passed",
+            "worst": {
+              "coarse": 0.16625316051682226,
+              "field": "log1pResponseMean",
+              "fine": 0.1662531605168205,
+              "queryID": "26:symbol|MZB1"
+            }
+          },
+          {
+            "featureID": "symbol|PACSIN1",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|PNPLA4",
+            "maximumScaledQueryMomentChange": 0.0318427205162043,
+            "meanDonorLogLikelihoodChange": 0.001954173137664661,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 1.0805349375969813,
+              "field": "treatedVarianceCPM2",
+              "fine": 1.0471895727058262,
+              "queryID": "4:symbol|PNPLA4"
+            }
+          },
+          {
+            "featureID": "symbol|PPP1R18",
+            "maximumScaledQueryMomentChange": 8.881784197001252e-16,
+            "meanDonorLogLikelihoodChange": 0.0,
+            "status": "passed",
+            "worst": {
+              "coarse": -0.03888894137137999,
+              "field": "log1pResponseMean",
+              "fine": -0.038888941371379104,
+              "queryID": "3:symbol|PPP1R18"
+            }
+          },
+          {
+            "featureID": "symbol|SH2D1B",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|TRIP4",
+            "maximumScaledQueryMomentChange": 0.009125277706290822,
+            "meanDonorLogLikelihoodChange": 0.0011012896255111926,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 4.4032873039444915,
+              "field": "treatedVarianceCPM2",
+              "fine": 4.36346943359998,
+              "queryID": "49:symbol|TRIP4"
+            }
+          }
+        ],
+        "seconds": 2.0683488845825195,
+        "status": "passed-independent-numerics"
+      }
+    },
+    "Kang": {
+      "depthBins": 2375,
+      "maximumUnderflowedComponentsPerQuery": 0,
+      "native": {
+        "binarySHA256": "f6be23cb5dd144878507149f49de87fdd59a035338eae9acd4d5ee02287a9c95",
+        "command": [
+          "ssh",
+          "-4",
+          "-C",
+          "-o",
+          "ConnectTimeout=10",
+          "-o",
+          "ServerAliveInterval=10",
+          "-o",
+          "ServerAliveCountMax=1",
+          "macmini",
+          "python3 -c 'import hashlib,pathlib,sys; p=pathlib.Path('\"'\"'/Users/n/numivivo-joint-counts-20260911/build/joint-counts'\"'\"'); assert hashlib.sha256(p.read_bytes()).hexdigest()=='\"'\"'f6be23cb5dd144878507149f49de87fdd59a035338eae9acd4d5ee02287a9c95'\"'\"'' && /usr/bin/time -l /Users/n/numivivo-joint-counts-20260911/build/joint-counts"
+        ],
+        "controllerPID": 92374,
+        "errors": [],
+        "exitCode": 0,
+        "finishedUnix": 1789157038.104094,
+        "origin": "Kang",
+        "outputBytes": 10701780,
+        "outputSHA256": "cfff5b5298606a48eb2d4b6c0da1f1a40d44bee006583ea41fba62c7c9b2a245",
+        "seconds": 2.069423198699951,
+        "sshPID": 93189,
+        "startedUnix": 1789157036.0346618,
+        "status": "passed"
+      },
+      "numericallyDegenerateQueries": 0,
+      "queriesWithUnderflowedComponents": 0,
+      "refinementStates": {
+        "failedGridRefinement": 8,
+        "unavailableCellDispersion": 8
+      },
+      "sourceCells": 2651,
+      "verification": {
+        "degeneratePredictions": 220,
+        "errors": [],
+        "fitStates": {
+          "convergedFiniteGridLikelihood": 32,
+          "unavailableCellDispersion": 32
+        },
+        "histogramsChecked": 1248,
+        "maximumScaledError": 1.3262537976865694e-13,
+        "numericalValuesCompared": 3347684,
+        "origin": "Kang",
+        "qualification": "Finite-support conditional likelihood and arithmetic only; parameter uncertainty, continuous mixing law, full transcriptome scaling and biological prediction calibration remain open.",
+        "queryStates": {
+          "conditionalPrediction": 1984,
+          "unavailableCellDispersion": 1984
+        },
+        "refinement": [
+          {
+            "featureID": "symbol|ACAD10",
+            "maximumScaledQueryMomentChange": 0.43277496678531463,
+            "meanDonorLogLikelihoodChange": 0.000489598968826721,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 3.162431226506765,
+              "field": "treatedVarianceCPM2",
+              "fine": 2.2072072026790375,
+              "queryID": "49:symbol|ACAD10"
+            }
+          },
+          {
+            "featureID": "symbol|AHCYL2",
+            "maximumScaledQueryMomentChange": 0.07724094375417354,
+            "meanDonorLogLikelihoodChange": 5.554568822829786e-05,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 2.819801211222953,
+              "field": "treatedVarianceCPM2",
+              "fine": 3.0558369404631964,
+              "queryID": "17:symbol|AHCYL2"
+            }
+          },
+          {
+            "featureID": "symbol|CCDC170",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|CCL1",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|CRYGS",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|EFHC2",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|GLCCI1",
+            "maximumScaledQueryMomentChange": 0.005760728109040936,
+            "meanDonorLogLikelihoodChange": 3.674164281064485e-05,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 0.9333007406205351,
+              "field": "treatedVarianceCPM2",
+              "fine": 0.9390614687295761,
+              "queryID": "52:symbol|GLCCI1"
+            }
+          },
+          {
+            "featureID": "symbol|INTS2",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|KCNE3",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|MXRA7",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|MZB1",
+            "maximumScaledQueryMomentChange": 0.06354650832122877,
+            "meanDonorLogLikelihoodChange": 0.0015931753166602558,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": -0.4161352207075697,
+              "field": "log1pResponseMean",
+              "fine": -0.47968172902879846,
+              "queryID": "4:symbol|MZB1"
+            }
+          },
+          {
+            "featureID": "symbol|PACSIN1",
+            "status": "unavailableCellDispersion"
+          },
+          {
+            "featureID": "symbol|PNPLA4",
+            "maximumScaledQueryMomentChange": 0.1427107667051929,
+            "meanDonorLogLikelihoodChange": 0.0002132673500695459,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 0.7643409268750472,
+              "field": "treatedVarianceCPM2",
+              "fine": 0.9070516935802401,
+              "queryID": "1:symbol|PNPLA4"
+            }
+          },
+          {
+            "featureID": "symbol|PPP1R18",
+            "maximumScaledQueryMomentChange": 0.11045220473192931,
+            "meanDonorLogLikelihoodChange": 0.00034955517135104586,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 51.58402817567248,
+              "field": "treatedVarianceCPM2",
+              "fine": 46.45317282081962,
+              "queryID": "41:symbol|PPP1R18"
+            }
+          },
+          {
+            "featureID": "symbol|SH2D1B",
+            "maximumScaledQueryMomentChange": 0.08499658144053227,
+            "meanDonorLogLikelihoodChange": 0.0001943155916672712,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 3.138383212905368,
+              "field": "treatedVarianceCPM2",
+              "fine": 2.8925282038571845,
+              "queryID": "52:symbol|SH2D1B"
+            }
+          },
+          {
+            "featureID": "symbol|TRIP4",
+            "maximumScaledQueryMomentChange": 0.07732682129618088,
+            "meanDonorLogLikelihoodChange": 0.0005217065041678293,
+            "status": "failedGridRefinement",
+            "worst": {
+              "coarse": 65.38113522980606,
+              "field": "treatedVarianceCPM2",
+              "fine": 60.68830176449431,
+              "queryID": "12:symbol|TRIP4"
+            }
+          }
+        ],
+        "seconds": 1.1705069541931152,
+        "status": "passed-independent-numerics"
+      }
+    }
+  },
+  "panelGenes": 16,
+  "schemaVersion": 1,
+  "status": "PARTIAL",
+  "trainingCells": 122164
+}

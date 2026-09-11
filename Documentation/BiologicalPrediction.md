@@ -41,6 +41,7 @@ success nor a failure.
 | Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. It loses to the mean in 37/150 target/group folds. | Independent biological contexts, target selection and replication; technical groups do not supply these. |
 | Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
 | Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
+| Couple control counts to treated RNA uncertainty | The joint finite-support model passes numerical verification on the fixed 16-gene panel, but 17/19 available models fail grid refinement. | Continuous-support convergence, parameter uncertainty, full-transcriptome execution and new biological calibration. |
 | Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
 
 The GSE181897 input contract is now resolved and its frozen comparison is complete.
@@ -131,8 +132,9 @@ from all 122,164 original Kang/HIRISA cells. All source counts and 67,576
 gene/condition parameter records are checked. The fitted control models produce
 1,178 independently verified query posteriors while retaining 806 unavailable
 cases. This completes a numerical observation-model path, with a full replay
-reducing HIRISA native peak RSS from 4.70 GB to 284 MB; treatment-response coupling,
-parameter uncertainty and new biological validation remain unresolved.
+reducing HIRISA native peak RSS from 4.70 GB to 284 MB. Joint treatment-response
+coupling now has the separate development result below; parameter uncertainty
+and new biological validation remain unresolved.
 
 The [complete paired-donor analysis](../Tools/Omics/CountObservation/Paired/README.md)
 shows why the marginals cannot be connected by simple variance subtraction.
@@ -144,6 +146,28 @@ All 249,846 feature records across full fits and every donor omission match
 independent calculations. This identifies an integration failure and endpoint
 choice; it does not fit a joint model, repair treated intervals or add biological
 validation.
+
+The native [joint count-response likelihood](../Tools/Omics/CountObservation/Joint/README.md)
+now fits a nonnegative joint distribution of latent control and treated RNA rates,
+conditional on the previously estimated cell dispersions. It uses all 122,164
+training cells, retaining full RNA denominators, for the unchanged 16-gene
+identifier-selected development panel. Equal-depth grouping preserves the exact
+fixed-dispersion rate likelihood. A new donor's control counts update the joint
+model without reading that donor's treated outcome.
+
+All 76 available fits across four grids satisfy the finite-grid likelihood
+criterion; 4,712 available conditional predictions and 7,809,460 numerical values
+pass independent per-cell and convex-dual checks. At the finest grid, 1,178
+predictions are available and 806 remain unavailable. These are repeated
+origin/gene calculations for 62 donors, not independent biological replications.
+The predeclared grid refinement gate **fails for 17/19 available models**; only
+HIRISA MZB1 and PPP1R18 pass. A finite-grid optimum therefore does not establish
+convergence of the continuous mixing distribution or stable query uncertainty.
+Forty regression tests pass, including two repaired numerical defects retained
+with their original failures and outputs. The next numerical work is support
+refinement with an explicit convergence certificate, followed by parameter
+uncertainty and full-transcriptome qualification. Independent biological outcome
+validation remains necessary; the prior 35.54% treated-coverage failure stands.
 
 The [complete GSE226572 external experiment](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
 now evaluates native whole-population predictions across all three new donors

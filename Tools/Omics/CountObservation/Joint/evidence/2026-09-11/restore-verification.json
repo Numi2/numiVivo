@@ -1,0 +1,37 @@
+{
+  "archiveSHA256": "11268bf5ce1e7b1e571d8cddbe62e7df9a4df85566d3b83e4b78eb5c1c800129",
+  "restoredLogicalFiles": 227,
+  "verifiedUniqueObjects": 218,
+  "independentVerification": {
+    "Kang": {
+      "status": "passed-independent-numerics",
+      "numericalValuesCompared": 3347684,
+      "maximumScaledError": 1.3262537976865694e-13,
+      "fitStates": {
+        "convergedFiniteGridLikelihood": 32,
+        "unavailableCellDispersion": 32
+      },
+      "queryStates": {
+        "conditionalPrediction": 1984,
+        "unavailableCellDispersion": 1984
+      }
+    },
+    "HIRISA": {
+      "status": "passed-independent-numerics",
+      "numericalValuesCompared": 4461776,
+      "maximumScaledError": 6.7809646786543e-13,
+      "fitStates": {
+        "convergedFiniteGridLikelihood": 44,
+        "unavailableCellDispersion": 20
+      },
+      "queryStates": {
+        "conditionalPrediction": 2728,
+        "unavailableCellDispersion": 1240
+      }
+    }
+  },
+  "rerunFilesDifferentOnlyInElapsedTime": [
+    "study/HIRISA-verification.json",
+    "study/Kang-verification.json"
+  ]
+}
