@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "checks/ding-all-cell-programs.npz",
+      "sourceBytes": 453434,
+      "sourceSHA256": "32c14d9f8cabf812de7b58b91904513b80bba91cb5e29419be96d07050446cbd",
+      "storedPath": "checks--ding-all-cell-programs.npz.gz",
+      "storedBytes": 422791,
+      "storedSHA256": "0cba60d58b24a76e5fa804302d6a409424aab3cb6ea65b423308f885275f9f1f",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "checks/ding-to-kang-gene-margin.npz",
+      "sourceBytes": 363689,
+      "sourceSHA256": "f1b93d0dde3ff8c3355c41f60c9c5d71f85cf179d18c3972c230b56524628e22",
+      "storedPath": "checks--ding-to-kang-gene-margin.npz.gz",
+      "storedBytes": 356508,
+      "storedSHA256": "8fc0775253f6f7b7da83068a8967748679a2657af8124f0d2f80971b7dc47530",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "checks/kang-all-cell-programs.npz",
+      "sourceBytes": 261499,
+      "sourceSHA256": "ec8fb2aaed65f002981b7df1cbe713c16310dcc530cb263e550438f923013a2c",
+      "storedPath": "checks--kang-all-cell-programs.npz.gz",
+      "storedBytes": 251677,
+      "storedSHA256": "c8c02dffb172abb0ec16e7a213a32b19d9f5756d26382c03f6b3ea48a331171c",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "checks/kang-to-ding-gene-margin.npz",
+      "sourceBytes": 664467,
+      "sourceSHA256": "cf94a37920031be6e644c4364b984748ede4da02ff7431123e1bbfe36e2746d0",
+      "storedPath": "checks--kang-to-ding-gene-margin.npz.gz",
+      "storedBytes": 649956,
+      "storedSHA256": "07494770648387ae6103516a22c95532671790d708fa1a5399845998ff852cd9",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "programs/ding/detected-members.bin",
+      "sourceBytes": 1408992,
+      "sourceSHA256": "cc1002fbc55c055b7082ea31184c81e83a3ed85d059228d7a240d8e124350243",
+      "storedPath": "programs--ding--detected-members.bin.gz",
+      "storedBytes": 172350,
+      "storedSHA256": "f62eb728b65c67c8d910526d72a1760108a4fb2ff71a75aaef4c4de91101f0b6",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "programs/ding/scores.bin",
+      "sourceBytes": 1408992,
+      "sourceSHA256": "5b54b6dcc0adce5be5e3e94a1559d7232c3f0e5f171a61a7721124c77b4a5611",
+      "storedPath": "programs--ding--scores.bin.gz",
+      "storedBytes": 196194,
+      "storedSHA256": "9dfd2ac871e46278fa8d0aa83c160da796a11b7d59a18f05f0018ff8a05a42c0",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "programs/ding/total-counts.bin",
+      "sourceBytes": 704496,
+      "sourceSHA256": "b3ecbaf60e6ee0d917257e1e35d6cbbe40bd4cd4539e9c052f9cf123fc29a948",
+      "storedPath": "programs--ding--total-counts.bin.gz",
+      "storedBytes": 196329,
+      "storedSHA256": "7de9224761cd0ccab34406f6c944690a1430bcad515aa8d35580da4bd737b6d4",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "programs/kang/detected-members.bin",
+      "sourceBytes": 789536,
+      "sourceSHA256": "29337b4ab97dd49d385a8c3ac8b8e0af1cfc7972b9f697e446f8a0740bceb5ab",
+      "storedPath": "programs--kang--detected-members.bin.gz",
+      "storedBytes": 100316,
+      "storedSHA256": "e800ffdcea77b924c13c9fb158c5d124b9522e365efb95ead95126c0c5237534",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "programs/kang/scores.bin",
+      "sourceBytes": 789536,
+      "sourceSHA256": "4dc5a0fd264a6e56d9c560f52662d1f9317d3412f012c59be9bb27a9fbec4ffa",
+      "storedPath": "programs--kang--scores.bin.gz",
+      "storedBytes": 134040,
+      "storedSHA256": "aa397edbb986566ef5206fd508e8d3f383900de05c3104201f077dd32cca46ea",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "programs/kang/total-counts.bin",
+      "sourceBytes": 394768,
+      "sourceSHA256": "80377f8ebe35b6c137122b9b1458b72466ba2f127b45f5b85e740158ebaee305",
+      "storedPath": "programs--kang--total-counts.bin.gz",
+      "storedBytes": 108861,
+      "storedSHA256": "37dab147715b90a2120b862a9a3096f1f0f7a5e8a7f53b4edcf384ccd1d35024",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "execution.json",
+      "sourceBytes": 9568793,
+      "sourceSHA256": "04acdf701e2219ce573a6ca8107c7328bba4579cd671fc2b1323e57f30556c3c",
+      "storedPath": "execution.json.gz",
+      "storedBytes": 860886,
+      "storedSHA256": "ea918be0018e8bd0b7612ec8d9f6bfa8d0d2604f01209315afb2605de9213d67",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "recipe.json",
+      "sourceBytes": 30235,
+      "sourceSHA256": "a88232c53eec9553f477f052e78ee53ce6c6077c2286928c37435a85ecd46142",
+      "storedPath": "recipe.json.gz",
+      "storedBytes": 11160,
+      "storedSHA256": "4e5bc89d0d9964d1ebf7a3b63a08dfff16fb2dbed01c66543438b74d1598d00b",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "retention.json",
+      "sourceBytes": 14099,
+      "sourceSHA256": "a691f4b0b349da43b6680da4e738711c64f5ee7759ff5df6ecd923bbc2fb36d6",
+      "storedPath": "retention.json.gz",
+      "storedBytes": 4513,
+      "storedSHA256": "237b090e069f8c3e8568a0217c64cc2ec484032a36f2da189b045e2244e0e445",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    }
+  ],
+  "externalNativeSources": [
+    {
+      "path": "programs/ding/original.h5ad",
+      "priorInputName": "ding-query.h5ad",
+      "bytes": 101571035,
+      "SHA256": "6cf9112ee8cf32c5e488d63a51a82f237f4cc0e6ddf4be0315c5ebc874f1c79d"
+    },
+    {
+      "path": "programs/kang/original.h5ad",
+      "priorInputName": "kang.h5ad",
+      "bytes": 35838074,
+      "SHA256": "1d48c1ff10bcfad7c1bc75863ce702a491c6c71b08e921a5e9754a986a9d19f3"
+    }
+  ],
+  "sourcePolicy": "Exact complete prior H5AD inputs required for native replay; no source counts discarded."
+}

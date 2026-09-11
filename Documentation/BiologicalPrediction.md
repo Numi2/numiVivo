@@ -87,6 +87,18 @@ Ding labels cover only 66.80% of its query cells; original fine taxonomies diffe
 This is evidence against generalizing the earlier within-study annotation success,
 not evidence of reliable biological identity or outcome prediction across studies.
 
+The [source-label and frozen-model diagnosis](../Tools/Omics/ReferenceMapping/CrossStudy/Diagnosis/README.md)
+checks all 24,673 original Kang labels and all 68,704 query cells. The preparation
+preserved the original labels exactly. Kang's literal rare class has strong
+HBB/HBA1/HBA2 expression and little PF4/PPBP/ITGA2B/GP9/TUBB1 expression; Ding's
+same-named class shows the opposite pattern. All diagnostic genes were retained
+and both classifiers recognize their own training class almost perfectly. Exact
+gene-space reconstruction traces the failed margins without refitting. These
+post-result observations raise a source-label-validity concern; they do not
+establish replacement identities, revised success or a complete causal account.
+Both original failures remain, and cross-study label equivalence needs independent
+support before a new annotation-transfer qualification.
+
 ## What information is sufficient for the implemented predictors?
 
 | Question | Information available before prediction | Output and present evidence |

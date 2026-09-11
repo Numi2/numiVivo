@@ -537,6 +537,11 @@ The complete development objective remains open:
    coarse-family targets fail (macro-F1 0.613/0.666); megakaryocyte recall is zero
    in both directions. Ding's partial label coverage and differing fine-label
    taxonomies remain explicit. The original default bytes remain exact.
+   The [complete post-result diagnosis](../Tools/Omics/ReferenceMapping/CrossStudy/Diagnosis/README.md)
+   verifies original Kang category labels and all query-cell transcript scores,
+   then reconstructs both frozen gene-space classifiers. Same-named rare classes
+   have sharply different measured RNA profiles, limiting source-label equivalence.
+   Both transfer failures remain; no cells were relabelled or excluded.
    Calibrated annotation, novel-class rejection and independent multi-study
    biological qualification remain; labels are not authoritative.
 7. **Perturbation prediction:** [real donor-held-out response baselines](../Tools/Omics/PerturbationPrediction/README.md)

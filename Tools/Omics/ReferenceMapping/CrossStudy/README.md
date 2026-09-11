@@ -137,6 +137,13 @@ training representation and label definitions require separate investigation.
 Calibration, reliable rare-class mapping, prospective study validation and
 biological identity evidence remain open.
 
+The subsequent [post-result diagnosis](Diagnosis/README.md) confirms exact original
+Kang label preservation and a sharp measured RNA discrepancy between the literal
+rare classes. Both frozen classifiers reconstruct exactly in gene space; neither
+was refitted. This identifies a source-label concern and its algebraic contribution
+to the failed margins, without establishing replacement identities or changing
+either original failure.
+
 ## Reproduce and retain
 
 `prepare.py` accepts the existing complete source-linked Kang and Ding prepared

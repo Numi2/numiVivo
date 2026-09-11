@@ -100,6 +100,10 @@ now maps all 68,704 query cells through an explicit 14,976-gene panel while
 preserving complete RNA-library denominators. Independent numerical checks pass,
 but both coarse-family transfer targets fail (macro-F1 0.613/0.666), with zero
 megakaryocyte recall in both directions. Cross-study annotation remains unqualified.
+The [post-result source-label diagnosis](Tools/Omics/ReferenceMapping/CrossStudy/Diagnosis/README.md)
+now verifies every original Kang label and all 68,704 cells' diagnostic scores.
+The studies' same-named rare classes have sharply different RNA profiles; their
+biological equivalence remains unqualified. Both original transfer failures stand.
 
 The [single-cell program](Documentation/SingleCellInteroperability.md) now includes
 native H5AD interchange, negative-binomial DE, sparse PCA/neighbors/clustering,
