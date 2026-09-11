@@ -70,6 +70,65 @@ log-expression is clipped to zero; implied CPM totals are retained rather than
 silently renormalized. These models supply neither calibrated predictive intervals
 nor an experimentally validated RNA-to-phenotype mapping.
 
+## Decision before using a prediction
+
+The available evidence supports a **conditional research estimate of average RNA
+response** when the experiment matches an implemented predictor's input contract.
+It does not establish that any particular new query will beat a simple baseline.
+The aggregate Replogle improvement cannot identify the failing targets in advance;
+the HIRISA ridge results likewise do not justify replacing the mean response
+across all populations and treatments.
+
+For a proposed use, first specify the observable, units, intervention, population,
+and time of measurement. Supply the control and training observations required by
+the input table. Keep no-change and training-mean estimates alongside the proposed
+model, its provenance and unsupported inputs. If the requested endpoint is tissue
+function, survival or treatment benefit, the current RNA output leaves that
+endpoint unanswered. Additional input annotations alone do not close the missing
+outcome model or validation.
+
+### Uncertainty has a separate owner and evidence requirement
+
+The native [single-cell response model](../Sources/NumiVivoKit/Omics/VivoPerturbation.swift)
+stores mean/median responses and ridge coefficients; its estimates contain no
+predictive interval. The existing
+[Bayesian target-engagement predictor](../Sources/NumiVivoKit/Calibration/VivoTargetPosteriorPrediction.swift)
+instead propagates kinetic posterior particles into occupancy observables at
+specified times, with a declared assay model. Its pointwise intervals, noise
+assumptions and failure handling belong to that model. They cannot be attached
+to gene-expression estimates without an explicit statistical model connecting
+those quantities and separate empirical validation.
+
+### Next prediction experiment
+
+The next milestone is an independent biological-context test of a frozen
+expression predictor, with uncertainty evaluated on held-out biological
+replicates. Before inspecting outcome scores:
+
+1. Admit a cohort using primary intervention, control, donor, context and feature
+   identities. Define which observations may be available at query time; do not
+   require treated-query annotations that a prospective user would lack.
+2. Freeze training, any calibration data, and final test donors without donor
+   overlap. Record prior inspection and study/model-development overlap. Keep
+   technical groups nested under their biological replicate rather than counting
+   cells, genes or overlapping folds as independent donors.
+3. Fix the endpoint, full-feature denominator, model, simple baselines, primary
+   comparison and minimum useful improvement. Preserve unsupported cases and
+   failures. Report per-donor and per-context results as well as the aggregate.
+4. If adding intervals, declare their statistical assumptions, nominal coverage,
+   whether coverage is per gene or simultaneous, and how calibration uses only
+   non-test donors. Assess held-out coverage together with interval width and
+   missingness; a nominal probability or a wide interval alone does not establish
+   useful uncertainty. Report insufficient replication explicitly.
+5. Freeze native predictions before scoring, retain source/executable identities,
+   verify numerical reconstruction independently, then report the biological
+   result even when it fails. Development after test inspection requires a new
+   validation cohort before making a stronger generalization claim.
+
+This is an acceptance specification, not a registered or completed new experiment.
+No new cohort, interval method or predictor is qualified by this documentation
+update. Existing completed benchmarks remain under their original protocols.
+
 ## What the measured outcomes show
 
 ### Known treatment, held-out donor

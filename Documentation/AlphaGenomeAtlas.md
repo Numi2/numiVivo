@@ -23,10 +23,13 @@ reaction rate or tissue outcome. Downstream mechanistic links need separate
 models and evidence. These predictions do not validate native differential
 expression, donor integration, or held-out perturbation prediction.
 
-For the current Replogle experiment, Atlas does not resolve the missing
-experimental guide-to-gene identity. CRISPR interference and a single-base DNA
-substitution are different interventions; treating an Atlas variant score as a
-measured guide response would not validate the frozen target predictor. The
+The completed [Replogle experiment](../Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
+uses nominal guide-to-gene identities resolved by its separate
+[identity audit](../Tools/Omics/PerturbationPrediction/Replogle2020/IDENTITIES.md),
+without Atlas input. Full guide sequences and genome-wide specificity remain
+unverified. CRISPR interference and a single-base DNA substitution are different
+interventions; treating an Atlas variant score as a measured guide response
+would not validate the frozen target predictor. The
 useful next Atlas experiment is a separate, explicitly identified variant panel
 with measured regulatory outcomes. This is an integration proposal, not an
 additional NumiVivo prediction result.

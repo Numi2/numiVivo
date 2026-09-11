@@ -37,6 +37,12 @@ commands and remaining validation. These are expression point estimates;
 reliable prediction of new tissues, disease outcomes, individual-cell responses
 or variant-to-phenotype effects is not established.
 
+The next prediction milestone is an independent biological-context experiment
+with the endpoint, donor split, simple baselines and uncertainty assessment fixed
+before scoring. [Acceptance requirements](Documentation/BiologicalPrediction.md#decision-before-using-a-prediction)
+explain what would justify extending the present claims. Existing Bayesian
+kinetic-model intervals do not provide uncertainty for the single-cell predictors.
+
 The independent [Adamson validation](Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md)
 has verified 50,440 selected cells, but still needs primary control assignments
 and reconciliation of its guide roster before fitting. [AlphaGenome Atlas](Documentation/AlphaGenomeAtlas.md)

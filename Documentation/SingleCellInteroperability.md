@@ -636,7 +636,11 @@ The complete development objective remains open:
    also passes on 129,839,577 mixed-source entries, with RNA and guide counts
    separated. Projection uses charged work and an explicit output-byte allowance
    while retaining bounded transfers. Full and confident-cohort native RNA sums,
-   QC and membership match independent AnnData/SciPy; prediction remains pending.
+   QC and membership match independent AnnData/SciPy. The subsequent
+   [fixed target-prediction experiment](../Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
+   completes all 150 folds and meets the primary comparison in all five technical
+   groups, with modest gains and target-level failures. This adds expression
+   evidence; it does not qualify full H5MU processing or new biological contexts.
 10. **Metal:** the first explicit [sparse count-normalization backend](../Tools/Omics/CountStore/Metal/README.md)
     now passes all 14,184,532 original Kang records, every native replay and the
     actual product single-cell CLI. FP32 output has maximum absolute error
