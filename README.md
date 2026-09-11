@@ -65,6 +65,15 @@ profiles. Mean response improves average RMSE by **2.00%**, missing the declared
 pass. A fixed six-hour response does not provide a validated temporal or general
 biological-outcome model.
 
+The subsequent [native duration-model development test](Tools/Omics/PerturbationPrediction/Duration/README.md)
+uses all three donor holdouts and all 18 outcomes in that already inspected study.
+Duration mean reduces RMSE by **55.71% versus no change** and **24.83% versus a
+matched time-invariant mean**, passing the declared development gate. It loses to
+the matched mean in 2/18 cases; context ridge fails to improve on duration mean.
+All native reconstructions and independent checks pass. This supports conditional
+RNA prediction when exposure time and matched training observations are available;
+new independent validation is still required, and the earlier external failure stands.
+
 The [native interval assessment](Tools/Omics/PerturbationPrediction/Intervals/README.md)
 now tests optional nominal 95% mean-response intervals on those same 26 folds.
 Average treated-expression coverage is 92.94% / 94.70% within Kang / HIRISA,

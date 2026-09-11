@@ -10,19 +10,19 @@ public struct VivoPerturbationReceipt: Codable, Sendable, Equatable {
 }
 
 extension VivoPerturbation {
-    private static func read(_ directory: URL,_ name: String,maximum: Int = 67_108_864) throws -> Data {
+    static func read(_ directory: URL,_ name: String,maximum: Int = 67_108_864) throws -> Data {
         try VivoSingleCellCampaignIO.readDocument(directory.appendingPathComponent(name),maximumBytes: maximum)
     }
-    private static func write<T: Encodable>(_ value: T,_ directory: URL,_ name: String,maximum: Int = 67_108_864) throws -> Data {
+    static func write<T: Encodable>(_ value: T,_ directory: URL,_ name: String,maximum: Int = 67_108_864) throws -> Data {
         let bytes=try VivoCanonicalJSON.encode(value)
         guard bytes.count<=maximum else { throw VivoOmicsError.limit("reference document size: "+name) }
         try bytes.write(to: directory.appendingPathComponent(name),options: .withoutOverwriting);return bytes
     }
-    private static func staging(_ parent: URL) throws -> URL {
+    static func staging(_ parent: URL) throws -> URL {
         let url=parent.appendingPathComponent(".numivivo-perturbation-"+UUID().uuidString)
         try FileManager.default.createDirectory(at: url,withIntermediateDirectories: false,attributes: [.posixPermissions: 0o700]);return url
     }
-    private static func copyReference(_ source: URL,to destination: URL) throws {
+    static func copyReference(_ source: URL,to destination: URL) throws {
         try FileManager.default.createDirectory(at: destination,withIntermediateDirectories: false,attributes: [.posixPermissions: 0o700])
         try FileManager.default.createDirectory(at: destination.appendingPathComponent("training"),withIntermediateDirectories: false,attributes: [.posixPermissions: 0o700])
         for (name,limit) in [("plan.json",2_097_152),("model.json",67_108_864),("receipt.json",65_536),

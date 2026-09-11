@@ -77,6 +77,19 @@ later curated cell selection. The unchanged six-hour response has no duration
 covariate; differing time, health, culture, dose, assay, QC and composition limit
 interpretation. Any repair using these now-scored outcomes needs new validation.
 
+The subsequent [native exposure-duration model](../Tools/Omics/PerturbationPrediction/Duration/README.md)
+now completes all three donor-held-out folds and all 18 outcomes in GSE226572.
+Averaging training-donor curves interpolated in log1p(hours) reduces RMSE by
+**55.71% versus no change** and **24.83% versus a matched time-invariant mean**,
+passing its predeclared development gate. Duration mean beats no change in all
+18 cases but loses to the matched mean twice; context ridge fails its secondary
+gate. All native reconstructions, independent point/bound checks and repeated
+scores pass. Nominal 95% treated-expression coverage is 93.59–96.17%, with broad
+intervals from only two training donors per fold. This is retrospective model
+development on inspected data, not independent validation or general calibration.
+It identifies useful timing information within this study while preserving the
+original external fixed-response failure and the missing phenotype boundary.
+
 The [native Visium import](../Tools/Omics/Multimodal/Visium/README.md) now makes
 original spatial RNA counts and pixel positions available without an H5MU
 preparation step. Every count and coordinate in the complete 4,039-spot source
@@ -118,6 +131,7 @@ support before a new annotation-transfer qualification.
 | Question | Information available before prediction | Output and present evidence |
 | --- | --- | --- |
 | How will a new donor respond to a known treatment? | Paired control/treated count profiles from training donors; the new donor's control counts; matching treatment, organism, population and feature identities. | Native no-change, mean, median and context-ridge estimates of population-average treated log1p(CPM). Complete Kang, Hagai and HIRISA held-out donor experiments show conditional predictive signal, with failures retained. |
+| How does a known treatment's RNA response depend on exposure duration? | Matched training-donor control and at least two timed treatment profiles, explicit exposure hours and matching intervention/population identities, plus the held-out donor's control RNA. | Native donor-curve interpolation within the observed time range. Complete three-donor GSE226572 development achieves 24.83% lower RMSE than matched time-invariant mean; independent temporal transfer and extrapolation remain unqualified. |
 | What happens when two observed targets are perturbed together? | Control and single-target counts for both constituents in the same experimental context; the pair's target identities. | Six native composition baselines evaluated on all 131 held-out Norman pairs. This tests expression composition; it does not identify genetic interactions. |
 | What happens when an unobserved target is perturbed? | Control and other single-target counts in the same context; independently supplied target identities and GO terms for training and query targets. | Native target-kernel prototype: 105 Norman development folds (101 supported), followed by 150 Replogle folds (30 targets × 5 technical groups). Replogle meets the fixed primary criterion in all five groups with modest gains and target-level failures; broad unseen-target transfer remains unqualified. |
 | Can a known response transfer between enriched preparations and PBMCs? | Other-donor paired counts from the training preparation; query-preparation control counts; exact author lineage annotations, donor and feature identities. | All 120 HIRISA folds completed. Cross ridge beats both no-change and cross mean in 3/12 contrasts; this is an inspected-study, annotation-conditioned endpoint with preparation/batch confounding. |
@@ -453,9 +467,12 @@ Lower donor-associated variance also does not isolate technical batch removal.
 4. Establish transfer with prospective strata and measured outcomes in an
    independent study. The [complete GSE226572 test](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
    now adds a separately collected experiment with all donor/time outcomes;
-   it fails its 5% mean-improvement and ridge targets. Develop an explicit
-   duration/context model with donor-held-out evaluation and new independent
-   validation, preserving this fixed-model failure. The new [Kang–HIRISA comparison](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
+   it fails its 5% mean-improvement and ridge targets. The subsequent
+   [native duration model](../Tools/Omics/PerturbationPrediction/Duration/README.md)
+   passes the complete donor-held-out development gate, while its context ridge
+   does not improve on duration mean. Freeze this model for a new independent
+   temporal experiment with matching dose, timing and population metadata; preserve
+   the fixed-model failure and report every held-out outcome. The new [Kang–HIRISA comparison](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
    fails both directional primary gates on reused studies; it does not close this
    requirement. The [completed HIRISA preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)'s
    sixty cross-preparation folds and sixty matched references now pass replay

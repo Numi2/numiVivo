@@ -600,6 +600,16 @@ The complete development objective remains open:
    than no change; ridge also fails. Nominal 95% coverage spans 85.37–95.45%.
    All five repeated scoring outputs are byte-exact. This whole-population,
    fixed-duration transfer is distinct from B-cell and learned temporal prediction.
+   The subsequent [native duration owner](../Tools/Omics/PerturbationPrediction/Duration/README.md)
+   adds `singlecell-duration-fit`, `singlecell-duration-predict` and reconstructing
+   model/prediction verifiers. It uses explicit exposure hours, within-donor
+   log-time interpolation, control-only query donors and full RNA denominators;
+   extrapolation and identity mismatches are rejected. All three GSE226572 donor
+   holdouts and 18 outcomes pass native/independent checks. Duration mean improves
+   RMSE by 55.71% against no change and 24.83% against matched time-invariant mean;
+   context ridge fails its secondary gate. This is development on inspected data,
+   with only two training donors per fold, broad nominal intervals and two losses
+   to the matched mean. Independent temporal/context validation remains open.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)

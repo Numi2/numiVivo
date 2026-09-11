@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        if ["singlecell-perturbation-batch","singlecell-perturbation-batch-verify"].contains(name ?? "") { return true }
+        if ["singlecell-duration-fit", "singlecell-duration-predict", "singlecell-duration-verify", "singlecell-duration-prediction-verify", "singlecell-perturbation-batch","singlecell-perturbation-batch-verify"].contains(name ?? "") { return true }
         return ["singlecell-h5ad-programs", "singlecell-h5ad-programs-verify", "singlecell-target-kernel-fit", "singlecell-target-kernel-predict", "singlecell-target-kernel-verify", "singlecell-target-kernel-prediction-verify", "singlecell-pca-integrate", "singlecell-pca-integrate-verify", "singlecell-graph-embed", "singlecell-graph-embed-verify", "singlecell-graph-cluster", "singlecell-graph-cluster-verify", "singlecell-pca-neighbors", "singlecell-pca-neighbors-verify", "singlecell-h5ad-pca-query", "singlecell-h5ad-pca-query-verify", "singlecell-h5ad-pca", "singlecell-h5ad-pca-verify", "singlecell-h5ad-store", "singlecell-count-store-verify", "singlecell-count-store-normalize", "singlecell-count-store-normalize-verify", "multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-visium-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
@@ -148,6 +148,24 @@ struct VivoSingleCellCLICommands {
                 let result=try VivoPerturbationAggregateBatch.verify(URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint())
                 try printJSON(["status":"verified-aggregate-prediction-batch","folds":String(result.folds.count),
                                "failedFolds":String(result.folds.filter { $0.status=="failed" }.count)]);return 0
+            }
+            if command == "singlecell-duration-fit" {
+                guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("singlecell-duration-fit <training.h5ad> --plan <fit.json> --output <new-bundle>") }
+                // Explicit response panels share the owner's existing 2 MiB plan bound.
+                let bytes=try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[3]),maximumBytes: 2_097_152)
+                let plan=try VivoCanonicalJSON.decode(VivoDurationPlan.self,from: bytes)
+                try printJSON(VivoDurationPerturbation.fit(source: URL(fileURLWithPath: arguments[1]),plan: plan,implementation: VivoWorkflowCLIImplementation.fingerprint(),to: canonicalURL(URL(fileURLWithPath: arguments[5]))));return 0
+            }
+            if command == "singlecell-duration-predict" {
+                guard arguments.count==8,arguments[2]=="--plan",arguments[4]=="--reference",arguments[6]=="--output" else { throw VivoOmicsError.invalid("singlecell-duration-predict <query.h5ad> --plan <query.json> --reference <reference-bundle> --output <new-bundle>") }
+                let plan=try load(VivoDurationQueryPlan.self,URL(fileURLWithPath: arguments[3]))
+                try printJSON(VivoDurationPerturbation.map(source: URL(fileURLWithPath: arguments[1]),plan: plan,reference: URL(fileURLWithPath: arguments[5]),implementation: VivoWorkflowCLIImplementation.fingerprint(),to: canonicalURL(URL(fileURLWithPath: arguments[7]))));return 0
+            }
+            if command == "singlecell-duration-verify" || command == "singlecell-duration-prediction-verify" {
+                guard arguments.count==2 else { throw VivoOmicsError.invalid("reference verifier requires one bundle directory") }
+                if command == "singlecell-duration-verify" { _=try VivoDurationPerturbation.verifyModel(URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint()) }
+                else { _=try VivoDurationPerturbation.verifyPrediction(URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint()) }
+                try printJSON(["status":"verified-reference-bundle"]);return 0
             }
             if command == "singlecell-perturbation-fit" {
                 guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("singlecell-perturbation-fit <training.h5ad> --plan <fit.json> --output <new-bundle>") }
@@ -446,6 +464,10 @@ struct VivoSingleCellCLICommands {
       singlecell-composition-predict <model-bundle> --plan <queries.json> --output <prediction-bundle>
       singlecell-composition-verify <model-bundle>
       singlecell-composition-prediction-verify <prediction-bundle>
+      singlecell-duration-fit <training.h5ad> --plan <exposures.json> --output <new-model>
+      singlecell-duration-predict <control.h5ad> --plan <hours.json> --reference <model> --output <new-bundle>
+      singlecell-duration-verify <model>
+      singlecell-duration-prediction-verify <prediction-bundle>
       singlecell-perturbation-fit <training.h5ad> --plan <fit.json> --output <new-model>
       singlecell-perturbation-batch <pseudobulk-bundle> --plan <batch.json> --output <new-bundle>
       singlecell-perturbation-batch-verify <batch-bundle>
