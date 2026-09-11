@@ -142,3 +142,22 @@ fixed that validation bottleneck. Its saved native bundle and every independent
 cell/aggregate count were checked without re-downloading. This recovery retains
 the interrupted producer attempt and marks its unavailable peak RSS, exit status
 and producer digest explicitly; full native source replay is still required.
+
+## Retain the completed donor result
+
+After both phases and the complete-cohort check pass, retain the result with:
+
+```sh
+python "$R/retain_donors.py" --study "$NUMIVIVO_PARSE_STUDY" \
+  --out "$R/evidence/2026-09-11-counts"
+```
+
+The retainer first requires all twelve ingestion and replay receipts, validates
+the executed recipe and binary identity, and reruns the independent full-cohort
+checker. It writes a content-addressed archive, verifies every object and source
+file again, and only then publishes the result directory. The exact existing
+preparation and memory-control archives are required dependencies, preserving
+axes, chunk maps and qualified executables without duplicating them. Failed
+source attempts and the first-donor checker recovery remain in the result.
+The incomplete current cohort has been checked to reject before creating any
+archive directory; successful full-result packing remains pending.
