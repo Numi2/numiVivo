@@ -25,6 +25,13 @@ also verifies every native count record and donor/condition/cell-type aggregate,
 with source RNA totals matching all cells. That closes the input-to-aggregation
 handoff; the predictive conclusions and remaining requirements below still apply.
 
+The [profile-guided count-writer qualification](../Tools/Omics/CountStore/Metal/Profile/README.md)
+checks the same complete source information under a revised storage implementation.
+Exact count/normalization bytes and bounded memory-safety checks protect that
+input-processing boundary. They add no held-out biological observations: the
+remaining decision is whether frozen predictors outperform simple baselines in
+an independently identified experiment, with uncertainty and failures reported.
+
 ## What information is sufficient for the implemented predictors?
 
 | Question | Information available before prediction | Output and present evidence |

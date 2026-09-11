@@ -51,6 +51,10 @@ Three-run medians are **1.043 s CPU** and **1.050 s Metal** (Metal/CPU elapsed r
 
 The independent Scanpy transform took 1.126 s after 0.089 s of H5AD loading on another host. It omits the native publication/reconstruction boundary and is therefore a descriptive reference timing, not a matched speed ratio.
 
+## Subsequent shared-writer qualification
+
+The [profile-guided follow-up](Profile/README.md) replaces per-record Array operations with a fixed buffer while preserving every complete output byte. Final CPU/Metal medians are 0.918/0.912 s; CPU's slower first call leaves its three-run mean slightly worse. The change benefits repeated calls without establishing a general CPU speedup or meaningful GPU advantage. Bounded release/ASAN, independent byte checks and the actual CLI pass. The earlier timings above retain their original owner identity.
+
 ## Evidence and restoration
 
 [The frozen protocol](PROTOCOL.md) and [archive manifest](evidence/2026-09-11/manifest.json) retain source/binary identities, every run, independent checks and failure coverage. `run_complete.py`, `check_complete.py`, `check_rejections.py` and the two Swift drivers reproduce the checks using the retained source paths and owners.

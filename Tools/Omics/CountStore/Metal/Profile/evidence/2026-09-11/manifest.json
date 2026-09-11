@@ -1,0 +1,933 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/bind.py",
+      "sourceBytes": 1394,
+      "sourceSHA256": "d3d9aff5c1b516a8563c0ae1023ca6e5bde38b40e7b91fdc49044124c3937413",
+      "storedPath": "content/d3d9aff5c1b516a8563c0ae1023ca6e5bde38b40e7b91fdc49044124c3937413.gz",
+      "storedBytes": 675,
+      "storedSHA256": "2fd6f00ec912c1ab98c8b4bbc9480ee6c425703d730f64f126cb74125e162615",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/build-asan.log",
+      "sourceBytes": 2186,
+      "sourceSHA256": "87507f4086721b1e6d2fb3b95bfcd40591a1285c57272879dadd53c7c37defbf",
+      "storedPath": "content/87507f4086721b1e6d2fb3b95bfcd40591a1285c57272879dadd53c7c37defbf.gz",
+      "storedBytes": 664,
+      "storedSHA256": "69474f695d7cf9f3f9b274908a1ea1aa7a78d2dbe0e7b005908b2caab778df25",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/build_asan.sh",
+      "sourceBytes": 4465,
+      "sourceSHA256": "70661e96e40fe3e87a4e3c6da7a56c0ddf20d1fa84b1e8e0841a23f7e8971a46",
+      "storedPath": "content/70661e96e40fe3e87a4e3c6da7a56c0ddf20d1fa84b1e8e0841a23f7e8971a46.gz",
+      "storedBytes": 1456,
+      "storedSHA256": "cb1acedbd56d222fe93f392f9de61d024abb897ce9dc84c9f4d3aea3cf943c7c",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/checks.json",
+      "sourceBytes": 575,
+      "sourceSHA256": "9ea95f9de6cc6c800e90f7cc57b67dae002ec3eadd04cf15add8f9ce0f9a5858",
+      "storedPath": "content/9ea95f9de6cc6c800e90f7cc57b67dae002ec3eadd04cf15add8f9ce0f9a5858.gz",
+      "storedBytes": 324,
+      "storedSHA256": "29ef4f30cd3f452cb7ed8c921453232cc5f53a023b63b462d5ab5180e95e140f",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cleanup.json",
+      "sourceBytes": 4960,
+      "sourceSHA256": "c66afd1a7920a220b01b24a6dc958d66c9abe889958634c145f25dc092a54a53",
+      "storedPath": "content/c66afd1a7920a220b01b24a6dc958d66c9abe889958634c145f25dc092a54a53.gz",
+      "storedBytes": 426,
+      "storedSHA256": "8f657b9b87c5913f309062b0845ce27b442a0305e012b66db907e93a83695397",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cleanup_cli.py",
+      "sourceBytes": 1399,
+      "sourceSHA256": "4bf3b061f3eb5b8419190310785407d6e343ad2f742bf1a83c32dfb1404f8b25",
+      "storedPath": "content/4bf3b061f3eb5b8419190310785407d6e343ad2f742bf1a83c32dfb1404f8b25.gz",
+      "storedBytes": 768,
+      "storedSHA256": "7e7ec63a071a3fd064cd9e149b01ba68a84cefda74c47d04e92c8ff0f2aa26a1",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cleanup_profile.py",
+      "sourceBytes": 1195,
+      "sourceSHA256": "d0638fe0bf1bca449d6535ab35daba3d3036ab7a1fe7c3001b82ed040835169e",
+      "storedPath": "content/d0638fe0bf1bca449d6535ab35daba3d3036ab7a1fe7c3001b82ed040835169e.gz",
+      "storedBytes": 672,
+      "storedSHA256": "6fdb527c2087c8a8f86c1c73bc019e5121470fe42abdfbfa318df1952131a6de",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-check.log",
+      "sourceBytes": 121,
+      "sourceSHA256": "3b81ec7fbd85d59938d8b347865cda8549c90c6731abfc65ed72c2feb0affff3",
+      "storedPath": "content/3b81ec7fbd85d59938d8b347865cda8549c90c6731abfc65ed72c2feb0affff3.gz",
+      "storedBytes": 127,
+      "storedSHA256": "abf1ee9c0acc4ad3ec2a2a18413c73019a75906b7784efdb5aa03e89c8f0f7b0",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-checks.json",
+      "sourceBytes": 4923,
+      "sourceSHA256": "9b1844bbc5ef442196c786f2fed95910cc4b3ac88205cb6ed344916b92be4184",
+      "storedPath": "content/9b1844bbc5ef442196c786f2fed95910cc4b3ac88205cb6ed344916b92be4184.gz",
+      "storedBytes": 716,
+      "storedSHA256": "3a7f5dac4ded6b84f579c2f34b27fdc608ce0b5f74b1050153840b3d1d1e8f1f",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-cleanup.json",
+      "sourceBytes": 1676,
+      "sourceSHA256": "b2a8f2bd45678c3d019e7949aa1db5c163c6e922d38534d76986e85f3f55e98f",
+      "storedPath": "content/b2a8f2bd45678c3d019e7949aa1db5c163c6e922d38534d76986e85f3f55e98f.gz",
+      "storedBytes": 513,
+      "storedSHA256": "0ab4735f67992f464e270a284a79ad550e38821a90279633003a8e2856a66a35",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-cpu/input-receipt.json",
+      "sourceBytes": 898,
+      "sourceSHA256": "4c7b6e81d12544d8e7f43d551bc0a4773f65dce5e035c3d0a5f80528dffd5eee",
+      "storedPath": "content/4c7b6e81d12544d8e7f43d551bc0a4773f65dce5e035c3d0a5f80528dffd5eee.gz",
+      "storedBytes": 485,
+      "storedSHA256": "0c8305c8f9b48bd855a7d20e9c74b9b0b27d0c0c753a0781dbf8245197c2a7fd",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-cpu/metadata.json",
+      "sourceBytes": 2972473,
+      "sourceSHA256": "7c963578630cf4210d1311bc3934a31d1e8de5961cbd6da059d21882ff9f9121",
+      "storedPath": "content/7c963578630cf4210d1311bc3934a31d1e8de5961cbd6da059d21882ff9f9121.gz",
+      "storedBytes": 279039,
+      "storedSHA256": "0573e237b7c8a24db1f3997b6fd7f446b6871f189a11f8832ea670743350b9b8",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-cpu/receipt.json",
+      "sourceBytes": 656,
+      "sourceSHA256": "730d68e04ddfec40228f2a630a67f28a31948658748d80c09478a316b4a1f71e",
+      "storedPath": "content/730d68e04ddfec40228f2a630a67f28a31948658748d80c09478a316b4a1f71e.gz",
+      "storedBytes": 392,
+      "storedSHA256": "189e2b0c6b9f986a36280cd9fd6fae7eb128dd8ea1bd4ca4749a9e0020a730e4",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-cpu-explicit-verify.log",
+      "sourceBytes": 0,
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "content/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-cpu-explicit-verify.stdout",
+      "sourceBytes": 657,
+      "sourceSHA256": "d7d819ca726514572d5fd74aa312e5a36716fd88e8b0babf526f34115ea1f8ae",
+      "storedPath": "content/d7d819ca726514572d5fd74aa312e5a36716fd88e8b0babf526f34115ea1f8ae.gz",
+      "storedBytes": 395,
+      "storedSHA256": "5a1b6777aa1dd1ea98836a696764ed5d7319c7c5dafedfd0f06c51cfe3521c67",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-help.stdout",
+      "sourceBytes": 5486,
+      "sourceSHA256": "940a81dbec6e7aae3dede8d4e419df9fd737cd69fcb9f06c69251bd8abc21bc8",
+      "storedPath": "content/940a81dbec6e7aae3dede8d4e419df9fd737cd69fcb9f06c69251bd8abc21bc8.gz",
+      "storedBytes": 1506,
+      "storedSHA256": "e4cd2f58da01f36c6fe508f36445cc8caa1b24014ec820728bb37eee9fa1aebc",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-metal/receipt.json",
+      "sourceBytes": 977,
+      "sourceSHA256": "a7b6f3195102b61d8a0fb0b545733296306ea4bbe5c0285e1166f84249ceb34e",
+      "storedPath": "content/a7b6f3195102b61d8a0fb0b545733296306ea4bbe5c0285e1166f84249ceb34e.gz",
+      "storedBytes": 586,
+      "storedSHA256": "6ca1e122fc025709cf22a208254c43d1c174f65dc974b9ea81993002f9af80f3",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-metal-verify.stdout",
+      "sourceBytes": 978,
+      "sourceSHA256": "f9d7fb4f1c36d1a26b6b4a244825a0de578120cbe680d23a6ae8240b27fee06b",
+      "storedPath": "content/f9d7fb4f1c36d1a26b6b4a244825a0de578120cbe680d23a6ae8240b27fee06b.gz",
+      "storedBytes": 588,
+      "storedSHA256": "4673cd973700a5daa65a2371151b4c5b1f0eefc7d84078f8081d0e435f325752",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-missing.log",
+      "sourceBytes": 156,
+      "sourceSHA256": "a61fcd7456e3de4502adad036bcb6b3f8dbf1e417ce7d97f186a29992dd11b20",
+      "storedPath": "content/a61fcd7456e3de4502adad036bcb6b3f8dbf1e417ce7d97f186a29992dd11b20.gz",
+      "storedBytes": 144,
+      "storedSHA256": "f97af7d7e0d3edbed08d6b5db97d55a692a646e129387c2a6d65ddcc891878e3",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-old-implementation.log",
+      "sourceBytes": 52,
+      "sourceSHA256": "9067f67a80a7885900fd6a0e147b64085a091d0ab64e11c656ddd679b36f8563",
+      "storedPath": "content/9067f67a80a7885900fd6a0e147b64085a091d0ab64e11c656ddd679b36f8563.gz",
+      "storedBytes": 71,
+      "storedSHA256": "a4c544c3b5e25783f55993f58edcbb17c9c1b8283ff80cc521604ab7f3a3dfd9",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-overwrite.log",
+      "sourceBytes": 79,
+      "sourceSHA256": "ba0795949bc8c6c8029d950d27a17edb147168eac16da7515db1b6c6851d9c15",
+      "storedPath": "content/ba0795949bc8c6c8029d950d27a17edb147168eac16da7515db1b6c6851d9c15.gz",
+      "storedBytes": 87,
+      "storedSHA256": "8dc75224d844e31a31831e396fd610f90029d2ea7102202015bbb6b447c1487a",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-store/plan.json",
+      "sourceBytes": 2984,
+      "sourceSHA256": "060af7c08ae9e057e04893adaf64d1bc430d65d50f69f5624eec47c6820b8cac",
+      "storedPath": "content/060af7c08ae9e057e04893adaf64d1bc430d65d50f69f5624eec47c6820b8cac.gz",
+      "storedBytes": 544,
+      "storedSHA256": "dd8ad2c4633b3b8b92932d2ccc9a1b306108bdaf29da79b90d973a44e664b835",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-store/quality.json",
+      "sourceBytes": 331459,
+      "sourceSHA256": "360d3c6885c0635936a99ff5137fea1f47d747d2b31e36b7096bc97356208ad5",
+      "storedPath": "content/360d3c6885c0635936a99ff5137fea1f47d747d2b31e36b7096bc97356208ad5.gz",
+      "storedBytes": 137787,
+      "storedSHA256": "4e6a09deb277555bae14b83186209c00bcef10acbd0cf9ec6e9444608d9e08a5",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-store.stdout",
+      "sourceBytes": 899,
+      "sourceSHA256": "50b8e6d79c1dbf6b00cb5abde1e9c06556a0ca3f2cbe3e16c6b2c4f4b96a930f",
+      "storedPath": "content/50b8e6d79c1dbf6b00cb5abde1e9c06556a0ca3f2cbe3e16c6b2c4f4b96a930f.gz",
+      "storedBytes": 488,
+      "storedSHA256": "6e251f21f3cd922b13ac9ab1fdc075273ca9c4e05bb8eea0d46437562dd4ea5d",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cli-unknown.log",
+      "sourceBytes": 60,
+      "sourceSHA256": "dd67e9e560097fa3b69e0ff9cb8a32a7b445398c657a5fc0bec26c2334fd4b3e",
+      "storedPath": "content/dd67e9e560097fa3b69e0ff9cb8a32a7b445398c657a5fc0bec26c2334fd4b3e.gz",
+      "storedBytes": 78,
+      "storedSHA256": "3eee4219e14a77c1f05f078ce64521a14a74e987a37ee68a2e925032150e8ba3",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-0-new-cpu/input-receipt.json",
+      "sourceBytes": 849,
+      "sourceSHA256": "280050b5ea67ea6d0912ff052bff708e55b5aa81d6c9c4b541dc6165c5314891",
+      "storedPath": "content/280050b5ea67ea6d0912ff052bff708e55b5aa81d6c9c4b541dc6165c5314891.gz",
+      "storedBytes": 444,
+      "storedSHA256": "2d581eea72cf38ac8dfcd60f85c2a423a7cbf4aa51c0b76a400d5aa0efa1e03c",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-0-new-cpu/receipt.json",
+      "sourceBytes": 604,
+      "sourceSHA256": "33dc28aed4d43111b03f9c203f6683b625f9153f2791388090eed7da8de84dc2",
+      "storedPath": "content/33dc28aed4d43111b03f9c203f6683b625f9153f2791388090eed7da8de84dc2.gz",
+      "storedBytes": 341,
+      "storedSHA256": "2d9e3dd65b80f059d66cca723b1c82e5b5a6a8a84f0d092e9970717828e1716a",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-0-new-cpu-verify.stdout",
+      "sourceBytes": 9,
+      "sourceSHA256": "672eb8316fec83f94119a4193f9fc552513d56a147502f8be4830e017d817831",
+      "storedPath": "content/672eb8316fec83f94119a4193f9fc552513d56a147502f8be4830e017d817831.gz",
+      "storedBytes": 29,
+      "storedSHA256": "86935901b3cdd27e087b161bfb29369afd73e72203b6d3a36348a27fb7207767",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-0-new-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "247d03fa6fe9fb0b1f77018bdecf3baf19ca0b608bd1055db3c00a1cee85f6f5",
+      "storedPath": "content/247d03fa6fe9fb0b1f77018bdecf3baf19ca0b608bd1055db3c00a1cee85f6f5.gz",
+      "storedBytes": 289,
+      "storedSHA256": "59ec08af5d5bf2cfad716f6dcddb9cc7faf477e1ca074637ae5b7c7f1b6b7647",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-0-new-metal/receipt.json",
+      "sourceBytes": 925,
+      "sourceSHA256": "d1159b1dde64e0fa8e318aa8687cf80910bbc72fa6979a214e5aa976e59eb4a2",
+      "storedPath": "content/d1159b1dde64e0fa8e318aa8687cf80910bbc72fa6979a214e5aa976e59eb4a2.gz",
+      "storedBytes": 534,
+      "storedSHA256": "e84da517ecc8ce78e9432cee9e9584a2487f08845cd876fb489d180198979cde",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-0-new-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "620ebcfcdcd39b1c482940fd861b8a1c0169bb750e3c8fdb4c8c45152117d403",
+      "storedPath": "content/620ebcfcdcd39b1c482940fd861b8a1c0169bb750e3c8fdb4c8c45152117d403.gz",
+      "storedBytes": 290,
+      "storedSHA256": "43070d79364536119d0ddfa8ccdbb0f7dc1fc4217fdcd1f42acd6629a757255b",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-0-old-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "3642bee08d836663f388dfde43318bccf9f86b866bbda0adcbc7a134847c169d",
+      "storedPath": "content/3642bee08d836663f388dfde43318bccf9f86b866bbda0adcbc7a134847c169d.gz",
+      "storedBytes": 291,
+      "storedSHA256": "6e761b30f36e34bffe548cc0c8c8fc2d61ad636d96b35801f49d3a9f25ff5ee2",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-0-old-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "50a5214b80bbe7f8cbf90c144cd82435d35e5de6b9c39eb149db8fd0880c4cb3",
+      "storedPath": "content/50a5214b80bbe7f8cbf90c144cd82435d35e5de6b9c39eb149db8fd0880c4cb3.gz",
+      "storedBytes": 288,
+      "storedSHA256": "0ada3be44c33831bda133d0e1438959fc546dec83f6aa882f40c2118b82b23ca",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-1-new-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "ff394ad828fecac833e4de61ce47a13784b9659e2ad2dc445e2bdcc6c824dbed",
+      "storedPath": "content/ff394ad828fecac833e4de61ce47a13784b9659e2ad2dc445e2bdcc6c824dbed.gz",
+      "storedBytes": 287,
+      "storedSHA256": "a152218ceeef70749c5b00a3f0317edcf3fe0f1778db73d351de19b21a628aa0",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-1-new-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "24c20e7025bb88c684c9ffc99a27398887927294ad035ee491d16d4e2da211d8",
+      "storedPath": "content/24c20e7025bb88c684c9ffc99a27398887927294ad035ee491d16d4e2da211d8.gz",
+      "storedBytes": 288,
+      "storedSHA256": "bad883793f19e5ea341231b984bc2ebdf8cc905e7d722042ed6eca3ef950aaaf",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-1-old-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "b80ec0568c2e19963706483bd091680837e14c0debf32e8e7ca57ad8776c7d64",
+      "storedPath": "content/b80ec0568c2e19963706483bd091680837e14c0debf32e8e7ca57ad8776c7d64.gz",
+      "storedBytes": 289,
+      "storedSHA256": "fc195c47c3e099be38e47f475378940821abf218c851742e27b1ba6024b2234d",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-1-old-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "e398fd284003647aa8aabfacc0c100bb6eba71aa29f2630849f6518b0033ea97",
+      "storedPath": "content/e398fd284003647aa8aabfacc0c100bb6eba71aa29f2630849f6518b0033ea97.gz",
+      "storedBytes": 290,
+      "storedSHA256": "1a3bc36693827c1cbbddacd63e59d579e493649cf62d9e1e70bddf04f46f4fc7",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-2-new-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "2cfa8036b40600b56afe1d68c48ab2eed0af60a715cd0271de87402ac525b0d0",
+      "storedPath": "content/2cfa8036b40600b56afe1d68c48ab2eed0af60a715cd0271de87402ac525b0d0.gz",
+      "storedBytes": 288,
+      "storedSHA256": "a557ef334f0cd2fe202e2a86afdfda4fb5bf1bff563770909037019d28767cc5",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-2-new-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "cc4f1ec939bb14b4fc2a690d5019e27c66a52e2b33df76bff72976bf3ab58741",
+      "storedPath": "content/cc4f1ec939bb14b4fc2a690d5019e27c66a52e2b33df76bff72976bf3ab58741.gz",
+      "storedBytes": 289,
+      "storedSHA256": "0bdb53f20f0c1d19796ff831b95c0d348dcb7785d0f29898e55408ab0035c182",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-2-old-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "19ee6c57834504e4d094793fbd50e0da26a1ef595cd3dc5a5d4ec144adfc3c05",
+      "storedPath": "content/19ee6c57834504e4d094793fbd50e0da26a1ef595cd3dc5a5d4ec144adfc3c05.gz",
+      "storedBytes": 288,
+      "storedSHA256": "f21e21f93d573f01d0c07d68c1a7cf78facbfa69e79761421b5acfdc9e0dfb35",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare-2-old-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "b24f3f3952426c82e8b84a849cf81a98e000e8833702724c0c3136dc6caa38fe",
+      "storedPath": "content/b24f3f3952426c82e8b84a849cf81a98e000e8833702724c0c3136dc6caa38fe.gz",
+      "storedBytes": 291,
+      "storedSHA256": "ae261413e6116186e322c3882d4c6aca7e58ca92d2559e906bf196d2cbde44a1",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/compare.log",
+      "sourceBytes": 66,
+      "sourceSHA256": "aa9ae7908c3244c888b9de7bbf040d395642512153ff90b78f84b5a78957a435",
+      "storedPath": "content/aa9ae7908c3244c888b9de7bbf040d395642512153ff90b78f84b5a78957a435.gz",
+      "storedBytes": 82,
+      "storedSHA256": "ee4b8c22c824ce8ebb916d63f424afc4a2428fb16b93a596b31d889aaddea87e",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/comparison-freeze.json",
+      "sourceBytes": 268,
+      "sourceSHA256": "58ffcf91e611c61194cdf1a8c1d4985e8b1f35dab83bb9104881f90fa20a2cd0",
+      "storedPath": "content/58ffcf91e611c61194cdf1a8c1d4985e8b1f35dab83bb9104881f90fa20a2cd0.gz",
+      "storedBytes": 207,
+      "storedSHA256": "40e5b83c2d8e12356c029b909e92e8a78ea06d20f4309b4d36ba75109c12d039",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/comparison-progress.json",
+      "sourceBytes": 6902,
+      "sourceSHA256": "20030e7570c3e11a6a7368dc400caa34353a22f7e021fe040a243df0c5815a07",
+      "storedPath": "content/20030e7570c3e11a6a7368dc400caa34353a22f7e021fe040a243df0c5815a07.gz",
+      "storedBytes": 767,
+      "storedSHA256": "3cca705f7fab8dfc1e299ce667729584356888bc2d2d536a4ff98b62eefc51bd",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/comparison.json",
+      "sourceBytes": 11855,
+      "sourceSHA256": "14aa86e024b50e28afa986d41854f0e4cd3c413e37bcbf424610aa933906aec1",
+      "storedPath": "content/14aa86e024b50e28afa986d41854f0e4cd3c413e37bcbf424610aa933906aec1.gz",
+      "storedBytes": 1183,
+      "storedSHA256": "2a5119b00ea81d1a4e2f7aebc5b41196b55813e71cedb7c802d1c5c7167d0973",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cpu/checks.json",
+      "sourceBytes": 4841,
+      "sourceSHA256": "8fd3ed252af792819986d88b825ec196d9fabc12ba38d2708097a67d84d5b7da",
+      "storedPath": "content/8fd3ed252af792819986d88b825ec196d9fabc12ba38d2708097a67d84d5b7da.gz",
+      "storedBytes": 385,
+      "storedSHA256": "c570038de1be46f8de5a4f02b8edd07019d62c67d974af509d75f23bf6264cc7",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cpu-process.json",
+      "sourceBytes": 69,
+      "sourceSHA256": "fb1df53629173ddb680f98cdb0f924fc6ba0d6860c55c77c0f6a346a8a19e756",
+      "storedPath": "content/fb1df53629173ddb680f98cdb0f924fc6ba0d6860c55c77c0f6a346a8a19e756.gz",
+      "storedBytes": 84,
+      "storedSHA256": "32573e24b6ca961a0ca14a0440c51be7823af1610b3ab8557ab6f432a9b765b2",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cpu-sample.log",
+      "sourceBytes": 326,
+      "sourceSHA256": "f6b84f01f378a5ebd827a5fa1f89ad21d2cb04285d04f9c55d68398356be84c3",
+      "storedPath": "content/f6b84f01f378a5ebd827a5fa1f89ad21d2cb04285d04f9c55d68398356be84c3.gz",
+      "storedBytes": 230,
+      "storedSHA256": "cbc01ad1dd98a07d2e8cb5adc5c13147743f6a0bdaf6c3f1428bad7253dc9c38",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cpu-sample.txt",
+      "sourceBytes": 354491,
+      "sourceSHA256": "9a47400f18c704b0d8c639933d3502e6e830bc4b31d11384ff9807ca8c7f832a",
+      "storedPath": "content/9a47400f18c704b0d8c639933d3502e6e830bc4b31d11384ff9807ca8c7f832a.gz",
+      "storedBytes": 37465,
+      "storedSHA256": "1f04c4a66d8976743bedfdee9f83ede227a2bfb50fe7b0a1d63dce662bff4a85",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cpu-status.json",
+      "sourceBytes": 114,
+      "sourceSHA256": "9a56ee4d707cb24244e26595858a8cd7a86436c06eb1ad493ae7121d1bda44ea",
+      "storedPath": "content/9a56ee4d707cb24244e26595858a8cd7a86436c06eb1ad493ae7121d1bda44ea.gz",
+      "storedBytes": 104,
+      "storedSHA256": "efd1c74515b4a22c87cf42fb9ec54fb961f08d9cfcf3efaca5cfee8937d1f89b",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/cpu.stdout",
+      "sourceBytes": 41,
+      "sourceSHA256": "10f1d111db1d728a2bdd411b09479bab59de6c8836a0214ccd01660afdeb2ae7",
+      "storedPath": "content/10f1d111db1d728a2bdd411b09479bab59de6c8836a0214ccd01660afdeb2ae7.gz",
+      "storedBytes": 61,
+      "storedSHA256": "f3efcd5bb606db94caf4ebc733271a22a8af8b3976ba65a54ab460d18127f898",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/cli-check.log",
+      "sourceBytes": 121,
+      "sourceSHA256": "29b0db605884a763779c64f9e1f6e5fd74e97f40b4c3ad6ffb2db46872c35073",
+      "storedPath": "content/29b0db605884a763779c64f9e1f6e5fd74e97f40b4c3ad6ffb2db46872c35073.gz",
+      "storedBytes": 127,
+      "storedSHA256": "b4741f8f0e0d4e0a6e407b86ee67a546b6c91d873ecde2c35327b6b44761d5a8",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/cli-checks.json",
+      "sourceBytes": 5055,
+      "sourceSHA256": "103d72b27f7944abdc0d65e9d6d649bb986200e7932f464b1329694d35f97fa2",
+      "storedPath": "content/103d72b27f7944abdc0d65e9d6d649bb986200e7932f464b1329694d35f97fa2.gz",
+      "storedBytes": 730,
+      "storedSHA256": "a6332682dedc52eaa4f7332b92330cbee29bd3c532bcfb51ffb40fd5a6c9f219",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/cli-cleanup.json",
+      "sourceBytes": 1706,
+      "sourceSHA256": "1c3b6775ec98cd83d5df7ac0d7b6dec8ef3e925ce00356f667d700cedb65749a",
+      "storedPath": "content/1c3b6775ec98cd83d5df7ac0d7b6dec8ef3e925ce00356f667d700cedb65749a.gz",
+      "storedBytes": 519,
+      "storedSHA256": "f1621b495e6106b4f3a91438ad26eacf24e98cd99f950e3f7705d128e0f515ce",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/cli-cpu/input-receipt.json",
+      "sourceBytes": 901,
+      "sourceSHA256": "72c8c60ddacc1ba4e78cb5102f944b2180f565cdcd3615edc610908c849b6530",
+      "storedPath": "content/72c8c60ddacc1ba4e78cb5102f944b2180f565cdcd3615edc610908c849b6530.gz",
+      "storedBytes": 490,
+      "storedSHA256": "b4f4e240d39b628f0d05bbe470a4a6d231dcc2e9f597f5bffae188b96476d6c5",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/cli-cpu/receipt.json",
+      "sourceBytes": 661,
+      "sourceSHA256": "20c2df55f30ee5caea2fef47e8df2c5b6b0c0887ab66f2ad2c27492b4744eeaf",
+      "storedPath": "content/20c2df55f30ee5caea2fef47e8df2c5b6b0c0887ab66f2ad2c27492b4744eeaf.gz",
+      "storedBytes": 391,
+      "storedSHA256": "2670f0f7824039d30bdb888ffa1dac81dd35dcd59ce3a0f5b45c1f37e3f0678f",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/cli-cpu-explicit-verify.stdout",
+      "sourceBytes": 662,
+      "sourceSHA256": "1819f9a91352972e632eac2df770d0bad97140588039288a8fb3af7d55f396e2",
+      "storedPath": "content/1819f9a91352972e632eac2df770d0bad97140588039288a8fb3af7d55f396e2.gz",
+      "storedBytes": 393,
+      "storedSHA256": "d3918ee7f566bc38c46f149dbe254ce816fa2f7497934f62babae14974c6d9c9",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/cli-metal/receipt.json",
+      "sourceBytes": 982,
+      "sourceSHA256": "55bf91391c079325b1e37e7f842a8948e027021e64b67193e46d573f3833398a",
+      "storedPath": "content/55bf91391c079325b1e37e7f842a8948e027021e64b67193e46d573f3833398a.gz",
+      "storedBytes": 590,
+      "storedSHA256": "eb1b910beb6e1ce17628cf627f6f30498c027d8d45e9ab73973a7e771f1b7934",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/cli-metal-verify.stdout",
+      "sourceBytes": 983,
+      "sourceSHA256": "06ca56c29d3c50dedd1dc09e3adabdfb92edf58eef4536180cb12b6bca720930",
+      "storedPath": "content/06ca56c29d3c50dedd1dc09e3adabdfb92edf58eef4536180cb12b6bca720930.gz",
+      "storedBytes": 591,
+      "storedSHA256": "1358ae974d09941187ad877d6823a00719491e8fccfa11a315c5d5327279d44f",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/cli-store.stdout",
+      "sourceBytes": 902,
+      "sourceSHA256": "7d49fec99a1b63a1443b4242131b215eee29e0e84cdc742bf2d49ab71f696862",
+      "storedPath": "content/7d49fec99a1b63a1443b4242131b215eee29e0e84cdc742bf2d49ab71f696862.gz",
+      "storedBytes": 492,
+      "storedSHA256": "772510b1f7542d6137a65929de2333e511ea94f8e75eece2894490665d26de1e",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-0-new-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "e820247f4914af08e8ff216b4356d52b357bdec8ebf7f9e1ec98011a188188eb",
+      "storedPath": "content/e820247f4914af08e8ff216b4356d52b357bdec8ebf7f9e1ec98011a188188eb.gz",
+      "storedBytes": 290,
+      "storedSHA256": "f17de637d19c4083f03394dcc59ce5f2b28cd650d9247f96753de30a9705c506",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-0-new-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "d574e0856aeb7b31f1ea1514335b3fa8eb7dbe8792adc6393283acd0ff1264dc",
+      "storedPath": "content/d574e0856aeb7b31f1ea1514335b3fa8eb7dbe8792adc6393283acd0ff1264dc.gz",
+      "storedBytes": 290,
+      "storedSHA256": "8d2e005d869b561fab3526249e861e123eab0c1ff88df717b4d7f242ea5ddb79",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-0-old-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "90322970bb2909b2619904e08b23f1a9bad2ea36236c35d24abb3be86e9c7bea",
+      "storedPath": "content/90322970bb2909b2619904e08b23f1a9bad2ea36236c35d24abb3be86e9c7bea.gz",
+      "storedBytes": 290,
+      "storedSHA256": "b8b7e3c999584ed2378cdd1c26a5f507a80273721cf89fbba9dfeddd4dca186e",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-0-old-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "e03ac4b545d2417698be28fe7c112aeae69fec6798d518b513ff3633917a9cb1",
+      "storedPath": "content/e03ac4b545d2417698be28fe7c112aeae69fec6798d518b513ff3633917a9cb1.gz",
+      "storedBytes": 288,
+      "storedSHA256": "d551baed70c498f131099c6f085b493ba3e0ef1658b421c1831593335af60e42",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-1-new-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "9b46f7553d78e675eac159b5ea190171932d3562013e34479585c5732a4be9b8",
+      "storedPath": "content/9b46f7553d78e675eac159b5ea190171932d3562013e34479585c5732a4be9b8.gz",
+      "storedBytes": 289,
+      "storedSHA256": "8fed2d00d9a476ed0f72ab4a0441800e80975d929930a884bf4437a3720c98aa",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-1-new-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "b66589ad18c3ffb5b265cb37174ce927af400c3f43de631486db5e6217a1c941",
+      "storedPath": "content/b66589ad18c3ffb5b265cb37174ce927af400c3f43de631486db5e6217a1c941.gz",
+      "storedBytes": 289,
+      "storedSHA256": "9300ddb8d7c8b6dbcb0c3bb9143a423508deebcdde6f0a86e49b14aa41a81638",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-1-old-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "0fe9e95d7bf5a780f6bbc92a30542f195041d326190506adc41c3b1711979819",
+      "storedPath": "content/0fe9e95d7bf5a780f6bbc92a30542f195041d326190506adc41c3b1711979819.gz",
+      "storedBytes": 289,
+      "storedSHA256": "0548b7e6bc0ac9df81a63b87ae67ede5ae06e57e24633b4cb652f94aea14ed20",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-1-old-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "9bc5fe4ace3350f2765b5b7cdbdc03e023ce2212413c74e23e408aaecc6464c4",
+      "storedPath": "content/9bc5fe4ace3350f2765b5b7cdbdc03e023ce2212413c74e23e408aaecc6464c4.gz",
+      "storedBytes": 291,
+      "storedSHA256": "87ba1ed7bb504d045052f58bbfbefd88a4b195bebc35921b3f9bf27829fc6b64",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-2-new-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "cd4309240529971c656712f0b5ed35386e3a99b43190a22400bb93cac9785baf",
+      "storedPath": "content/cd4309240529971c656712f0b5ed35386e3a99b43190a22400bb93cac9785baf.gz",
+      "storedBytes": 287,
+      "storedSHA256": "3717ccc0ed6f4a17934c5ac64d05b7bba857b413be300c82fbc07da75bdd47dc",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-2-new-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "c83d01e347c45462c63d5f1033a66bea2b3bb3f1296e1125f5f1ea1d193b38b8",
+      "storedPath": "content/c83d01e347c45462c63d5f1033a66bea2b3bb3f1296e1125f5f1ea1d193b38b8.gz",
+      "storedBytes": 290,
+      "storedSHA256": "b873ff06dbeb7967748d8b40824835ef564d664eafd72ea0426c904a2930b091",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-2-old-cpu.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "63b7bba85a2bafbb3e26a28518ec4f02c71469deedd865e3364711178b2d8040",
+      "storedPath": "content/63b7bba85a2bafbb3e26a28518ec4f02c71469deedd865e3364711178b2d8040.gz",
+      "storedBytes": 288,
+      "storedSHA256": "a7416b90eed25964b017e9af4267b8100862a7328bd57d71b139972d6351fefa",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/compare-2-old-metal.log",
+      "sourceBytes": 777,
+      "sourceSHA256": "b21ed8d15242ad98ed919a12508550d06aa7181aa9f008570d59bc1b1e79019e",
+      "storedPath": "content/b21ed8d15242ad98ed919a12508550d06aa7181aa9f008570d59bc1b1e79019e.gz",
+      "storedBytes": 288,
+      "storedSHA256": "243c9a0d39c04fac294fbf09199645eda7fe8e978aa9d07e654c130a694027ed",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/comparison-freeze.json",
+      "sourceBytes": 266,
+      "sourceSHA256": "1d49a7e9a0e75f7eb80eec49146566c4985cdc545ea864f867da8d5c4d759921",
+      "storedPath": "content/1d49a7e9a0e75f7eb80eec49146566c4985cdc545ea864f867da8d5c4d759921.gz",
+      "storedBytes": 207,
+      "storedSHA256": "ab90d8f1fcee6c72e33002bfb639d9956d78ed5a7a17b280377cf43ba6824f87",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/comparison-progress.json",
+      "sourceBytes": 6900,
+      "sourceSHA256": "5cf357d0e5d4fec60973591a5b633ec3b2e1dccacc8242e14e764efbe56b2141",
+      "storedPath": "content/5cf357d0e5d4fec60973591a5b633ec3b2e1dccacc8242e14e764efbe56b2141.gz",
+      "storedBytes": 767,
+      "storedSHA256": "1e1bcac92848e9148b87444fa61f364d2805ac271994c69d438706853cd9c0fe",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/comparison.json",
+      "sourceBytes": 11923,
+      "sourceSHA256": "62b6db7d4e61600fdff41d37e00be4da38e0a87f7619fe9088b81939520ad7d8",
+      "storedPath": "content/62b6db7d4e61600fdff41d37e00be4da38e0a87f7619fe9088b81939520ad7d8.gz",
+      "storedBytes": 1186,
+      "storedSHA256": "6c4e594087c0cfe3f7ca24717ab1590dd05aec561bbd4440c47d88c84494e3fa",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/runtime/NumiVivoKit.abi.json",
+      "sourceBytes": 149,
+      "sourceSHA256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+      "storedPath": "content/4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728.gz",
+      "storedBytes": 122,
+      "storedSHA256": "6d3c274caff55ea6097490c5b3bbf5d70f5372dc5c8b178492452a291f76f431",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/runtime/sources.sha256",
+      "sourceBytes": 14810,
+      "sourceSHA256": "6a98a3b3e7944e33b2da627e37d58c492641a889fdf060b2fcd3ed5ba3199378",
+      "storedPath": "content/6a98a3b3e7944e33b2da627e37d58c492641a889fdf060b2fcd3ed5ba3199378.gz",
+      "storedBytes": 5030,
+      "storedSHA256": "475b791cf54f737386b8d98335b9715eae5ec1c90ba13c9f17dea1d39ee4ebd1",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/runtime-asan/sources.sha256",
+      "sourceBytes": 13612,
+      "sourceSHA256": "04439ac19eb1c6c31c8272c83a04a52fb65de1dbfcb1a3e4366b29bcb31e8198",
+      "storedPath": "content/04439ac19eb1c6c31c8272c83a04a52fb65de1dbfcb1a3e4366b29bcb31e8198.gz",
+      "storedBytes": 4589,
+      "storedSHA256": "a918508155c944af4c4d8a5b18023ea795185a08ab595f1d2597617d54b6f4cc",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/writer-check-asan.log",
+      "sourceBytes": 723,
+      "sourceSHA256": "1bfdc26cebee25b2761ef2e9d9bc42fc8813d2cddf780f21da907a1430f768ce",
+      "storedPath": "content/1bfdc26cebee25b2761ef2e9d9bc42fc8813d2cddf780f21da907a1430f768ce.gz",
+      "storedBytes": 176,
+      "storedSHA256": "4f180e3ff850612a72a5a7403e3ef74865c350482b3bd2a98e900a26c4c39b5e",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/writer-checks/1.bin",
+      "sourceBytes": 16,
+      "sourceSHA256": "e97af7f8fe87318f3a0f7ed727c0307638cc2a01f4cf9a276f9586fc687c509e",
+      "storedPath": "content/e97af7f8fe87318f3a0f7ed727c0307638cc2a01f4cf9a276f9586fc687c509e.gz",
+      "storedBytes": 26,
+      "storedSHA256": "11bbadaf20a036370d55bcf0ab265a9687350dfce278883238ded7d939618548",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/writer-checks/131075.bin",
+      "sourceBytes": 2097200,
+      "sourceSHA256": "83289aadebfc95e10bb89d0083aba0ab0abdf354f8f77a7bcee48cd7386a206e",
+      "storedPath": "content/83289aadebfc95e10bb89d0083aba0ab0abdf354f8f77a7bcee48cd7386a206e.gz",
+      "storedBytes": 706253,
+      "storedSHA256": "ecc3de6af21733e6adfa8607d626e8bb315f11b66bd202d61f7b14d50e398985",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/writer-checks/65535.bin",
+      "sourceBytes": 1048560,
+      "sourceSHA256": "80702d0189701c1ad3dd5b7ccb5693a9c34007155b1ee5fa35a6dba33e52316d",
+      "storedPath": "content/80702d0189701c1ad3dd5b7ccb5693a9c34007155b1ee5fa35a6dba33e52316d.gz",
+      "storedBytes": 355968,
+      "storedSHA256": "c77ffdd73c0d3fa1428f20986f0920ce0f6adbdd5ac35fb28d80505b970b99e7",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/writer-checks/65536.bin",
+      "sourceBytes": 1048576,
+      "sourceSHA256": "a75b788355cd9698aa12b12bb0008884d73253364580a5d7b7aae5c4ed8d1962",
+      "storedPath": "content/a75b788355cd9698aa12b12bb0008884d73253364580a5d7b7aae5c4ed8d1962.gz",
+      "storedBytes": 355974,
+      "storedSHA256": "de0e7b8d022137e3e224b9f2296d66a1cb5686182da7a06300d7ff2baa050a6d",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/writer-checks/65537.bin",
+      "sourceBytes": 1048592,
+      "sourceSHA256": "0bcbaec471faf8c7dc1ef30d9363b753361f8524f009d9ac61d39ccefd4dcae2",
+      "storedPath": "content/0bcbaec471faf8c7dc1ef30d9363b753361f8524f009d9ac61d39ccefd4dcae2.gz",
+      "storedBytes": 355986,
+      "storedSHA256": "4e8961f631bbcd975eec68aaa0aa0f4233d08d39908a8cab207767890d0ebb28",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/writer-checks/checks.json",
+      "sourceBytes": 722,
+      "sourceSHA256": "9d9565a89f0250fae9166596fc6f5ce539a0a23800bd51a1dc39d9e96b8f1918",
+      "storedPath": "content/9d9565a89f0250fae9166596fc6f5ce539a0a23800bd51a1dc39d9e96b8f1918.gz",
+      "storedBytes": 175,
+      "storedSHA256": "72d66eb14406a6be05d036ebadc99aaa62dfa9f7099a80649999ba84e78126e0",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/writer-independent.json",
+      "sourceBytes": 987,
+      "sourceSHA256": "6fda2a5920d9c880899394ab8bd313c678b44d1bd2991f9a3996d75e60e23741",
+      "storedPath": "content/6fda2a5920d9c880899394ab8bd313c678b44d1bd2991f9a3996d75e60e23741.gz",
+      "storedBytes": 466,
+      "storedSHA256": "d08651b80fc01e15224dd481ec59e2b06eca115e94bd6e5a7a3e1cbd67e38cc2",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/final/writer-independent.log",
+      "sourceBytes": 803,
+      "sourceSHA256": "376ccf26408419b4c975dd6a2d166b244eaaa7d44c50129926ca6115ffaaad1a",
+      "storedPath": "content/376ccf26408419b4c975dd6a2d166b244eaaa7d44c50129926ca6115ffaaad1a.gz",
+      "storedBytes": 446,
+      "storedSHA256": "0db1a4a1f840b311c65c16b2635b8d1522d31f38cf166a2e455a58f80d626a23",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/identities.json",
+      "sourceBytes": 8860,
+      "sourceSHA256": "06536fe5c77c2481c7258634e4ee0639caa8b03db2c7256fdafce638da506774",
+      "storedPath": "content/06536fe5c77c2481c7258634e4ee0639caa8b03db2c7256fdafce638da506774.gz",
+      "storedBytes": 2815,
+      "storedSHA256": "ad772a7661efc6c5775e455bff85d05b4737eef883e98d1a828662c041bca797",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/initial-writer.swift",
+      "sourceBytes": 18383,
+      "sourceSHA256": "270ecddd7eb6d869d6389ba6ceacef807b2c374fe6982596da707a2e1ada4df5",
+      "storedPath": "content/270ecddd7eb6d869d6389ba6ceacef807b2c374fe6982596da707a2e1ada4df5.gz",
+      "storedBytes": 4766,
+      "storedSHA256": "f6c89826a6c394fad0e3b4cf76319f20090a333a6d7da1176f70c78bc3d0e8f4",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/metal/checks.json",
+      "sourceBytes": 7409,
+      "sourceSHA256": "544c0f28f4891cb7c1fe49a5aa0e0e7481bfe482413bb2b96e3fb0ab0184e552",
+      "storedPath": "content/544c0f28f4891cb7c1fe49a5aa0e0e7481bfe482413bb2b96e3fb0ab0184e552.gz",
+      "storedBytes": 599,
+      "storedSHA256": "48b927eecf4bde89bd8214194e869c0e82aed6d9fc83c851983a57d4705db9e1",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/metal-process.json",
+      "sourceBytes": 71,
+      "sourceSHA256": "18b33fc158d5bdc91ee970fa5414d1829fd35444ca6e7e9e6b5d8cb854d4c362",
+      "storedPath": "content/18b33fc158d5bdc91ee970fa5414d1829fd35444ca6e7e9e6b5d8cb854d4c362.gz",
+      "storedBytes": 85,
+      "storedSHA256": "2a56d7d017d0e9fb29ac99194bc36b9ec3dfea5f5dde6ce1e653bff1d8d3f2a8",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/metal-sample.log",
+      "sourceBytes": 241,
+      "sourceSHA256": "1a378a8f68b9d706d2c41c533b33cb21fae3106e22bf7c359711a127f73b797b",
+      "storedPath": "content/1a378a8f68b9d706d2c41c533b33cb21fae3106e22bf7c359711a127f73b797b.gz",
+      "storedBytes": 181,
+      "storedSHA256": "14355ea0c0b078c2222ab22b2b16ac4fef64c95dd013dff265f38965db45258c",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/metal-sample.txt",
+      "sourceBytes": 493107,
+      "sourceSHA256": "4a11ff02b5984c51fbaf63e34f9e1f9837c8b9510539881804f376290ebdfe3c",
+      "storedPath": "content/4a11ff02b5984c51fbaf63e34f9e1f9837c8b9510539881804f376290ebdfe3c.gz",
+      "storedBytes": 65018,
+      "storedSHA256": "7a75373b65143b1993ffeb54d4963df5b7f7cfbe04bb24fcda3ed03be8ad90e2",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/metal-status.json",
+      "sourceBytes": 116,
+      "sourceSHA256": "465cdf6f302069102629e722ce9f737ca28317d1cd1a8641db7ae4b9152dfae8",
+      "storedPath": "content/465cdf6f302069102629e722ce9f737ca28317d1cd1a8641db7ae4b9152dfae8.gz",
+      "storedBytes": 106,
+      "storedSHA256": "524f55613194cf591670cdf9a5edb8f200491a3910b0a503111b9138b28b9402",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/profile-summary.json",
+      "sourceBytes": 1323,
+      "sourceSHA256": "bf55ba7e9ed7d97ff65b392bd2ae5163f15a968320ae7fbfc91266e6dacd4c24",
+      "storedPath": "content/bf55ba7e9ed7d97ff65b392bd2ae5163f15a968320ae7fbfc91266e6dacd4c24.gz",
+      "storedBytes": 530,
+      "storedSHA256": "8cb27da86f7d64c312349e47ea8f24c245403d1d36c41f46f7a726553ccc5b7f",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/run.log",
+      "sourceBytes": 43,
+      "sourceSHA256": "1e2f31173b324f523269a8c5b852821ac168020e122992e0c220e8e772201d33",
+      "storedPath": "content/1e2f31173b324f523269a8c5b852821ac168020e122992e0c220e8e772201d33.gz",
+      "storedBytes": 63,
+      "storedSHA256": "e3bf759de9a05df6c4e22b81884d20bdbcc23de80cce6375f4e9a66b24037fc7",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/run_writer.sh",
+      "sourceBytes": 905,
+      "sourceSHA256": "710e2d88f8cd8a2523690c200b269548eb075aeb84f934ee1844865e38dae609",
+      "storedPath": "content/710e2d88f8cd8a2523690c200b269548eb075aeb84f934ee1844865e38dae609.gz",
+      "storedBytes": 464,
+      "storedSHA256": "4ad41f6a68b7e8775bd35dc2ca163cae216f218e65177c8e094ef93bab4e2923",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/runtime/sources.sha256",
+      "sourceBytes": 14810,
+      "sourceSHA256": "fff2882d160c1b9ec3d4da27df8258c2f97b56391b5c8581c422a1ed2eb872b6",
+      "storedPath": "content/fff2882d160c1b9ec3d4da27df8258c2f97b56391b5c8581c422a1ed2eb872b6.gz",
+      "storedBytes": 5033,
+      "storedSHA256": "d6d25e72c86446bdc3c6ddea2cc2c651875fc510fa4a50e62430b2a9cd3ef864",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/runtime-asan/sources.sha256",
+      "sourceBytes": 13612,
+      "sourceSHA256": "ce9dc6ba021630a51e58119ddeb21fa0b54d983941289b534ba93d0aead1f8ad",
+      "storedPath": "content/ce9dc6ba021630a51e58119ddeb21fa0b54d983941289b534ba93d0aead1f8ad.gz",
+      "storedBytes": 4589,
+      "storedSHA256": "5ebb7e8f76047a2c6b3294546a8806ffa03db80299ab453a877e990691157ed2",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/summary.json",
+      "sourceBytes": 3954,
+      "sourceSHA256": "e4de232b2418112b56f41c00c23075b991c2a64ec296200cec4ec5fb76634b06",
+      "storedPath": "content/e4de232b2418112b56f41c00c23075b991c2a64ec296200cec4ec5fb76634b06.gz",
+      "storedBytes": 982,
+      "storedSHA256": "99675c8b65563fa1df112f51420a0220aa3f674443fd349113ec00182e42304d",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/writer-check-asan.log",
+      "sourceBytes": 685,
+      "sourceSHA256": "8ff9d6540d26065609c3112c767baeab497a5b9c13b6d31c2dffc039e6835de5",
+      "storedPath": "content/8ff9d6540d26065609c3112c767baeab497a5b9c13b6d31c2dffc039e6835de5.gz",
+      "storedBytes": 151,
+      "storedSHA256": "b8bbb609d5c1a8430d5f34154e692ce3993e939c8d0e2188226d7e932a56c919",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/writer-checks/checks.json",
+      "sourceBytes": 684,
+      "sourceSHA256": "9b5130fb20da676ad191c559683f266ecfd8710a9a009a682c6073af1542c6d0",
+      "storedPath": "content/9b5130fb20da676ad191c559683f266ecfd8710a9a009a682c6073af1542c6d0.gz",
+      "storedBytes": 150,
+      "storedSHA256": "bd9b47749094d45d676c93f2f9f53488a18e864b5d53a3268156917144b9beab",
+      "gzipEncoded": true
+    },
+    {
+      "sourcePath": "/Users/home/numivivo-normalization-profile-20260911/source-map.json",
+      "sourceBytes": 86539,
+      "sourceSHA256": "9af8a49554cf306096ec90956d094612fe49c4a37d6b2f507cd863e31949ce25",
+      "storedPath": "source-map.json",
+      "storedBytes": 86539,
+      "storedSHA256": "9af8a49554cf306096ec90956d094612fe49c4a37d6b2f507cd863e31949ce25",
+      "gzipEncoded": false
+    }
+  ],
+  "sourceFiles": 350
+}

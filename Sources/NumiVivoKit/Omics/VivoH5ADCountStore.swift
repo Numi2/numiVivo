@@ -57,7 +57,9 @@ public struct VivoCountStoreNormalizationExecution: Codable, Sendable, Equatable
 /// At most 1 MiB of record payload is buffered, independently of entry count.
 final class VivoCountRecordWriter {
     private let output: FileHandle?
-    private var buffer: [UInt64] = []
+    private static let capacityWords = 131_072
+    private let buffer: UnsafeMutablePointer<UInt64>
+    private var bufferedWords = 0
     private var hasher = SHA256()
     private(set) var entries = 0
     init(_ url: URL?) throws {
@@ -66,22 +68,37 @@ final class VivoCountRecordWriter {
             guard fd >= 0 else { throw VivoOmicsError.invalid("cannot create count record file") }
             output = FileHandle(fileDescriptor: fd, closeOnDealloc: true)
         } else { output = nil }
-        buffer.reserveCapacity(131_072)
+        // Allocate only after successful file admission. The writer owns this
+        // fixed buffer; no per-record Array growth or copy-on-write is needed.
+        buffer = .allocate(capacity: Self.capacityWords)
+        buffer.initialize(repeating: 0, count: Self.capacityWords)
+    }
+    deinit {
+        buffer.deinitialize(count: Self.capacityWords)
+        buffer.deallocate()
     }
     func append(row: Int, feature: Int, bits: UInt64) throws {
         guard row >= 0, row <= Int(UInt32.max), feature >= 0, feature <= Int(UInt32.max),
+              bufferedWords <= Self.capacityWords - 2,
               entries < VivoH5ADCountStore.maximumEntries else { throw VivoOmicsError.limit("count record coordinates or entries") }
-        buffer.append((UInt64(row) | (UInt64(feature) << 32)).littleEndian)
-        buffer.append(bits.littleEndian); entries += 1
-        if buffer.count == 131_072 { try flush() }
+        let position = bufferedWords
+        buffer[position] = (UInt64(row) | (UInt64(feature) << 32)).littleEndian
+        buffer[position + 1] = bits.littleEndian
+        bufferedWords = position + 2; entries += 1
+        if bufferedWords == Self.capacityWords { try flush() }
     }
     private func flush() throws {
-        guard !buffer.isEmpty else { return }
+        guard bufferedWords > 0 else { return }
         try Task.checkCancellation()
-        try buffer.withUnsafeBytes {
-            let data = Data($0); hasher.update(data: data); try output?.write(contentsOf: data)
+        let bytes = UnsafeRawBufferPointer(start: buffer, count: bufferedWords * 8)
+        hasher.update(bufferPointer: bytes)
+        if let output {
+            // FileHandle writes synchronously. This borrowed view is destroyed
+            // before any subsequent append can reuse the storage.
+            let data = Data(bytesNoCopy: UnsafeMutableRawPointer(buffer), count: bytes.count, deallocator: .none)
+            try output.write(contentsOf: data)
         }
-        buffer.removeAll(keepingCapacity: true)
+        bufferedWords = 0
     }
     func finish() throws -> VivoFingerprint {
         try flush(); try output?.synchronize(); try output?.close()

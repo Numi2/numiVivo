@@ -29,7 +29,11 @@ now covers every one of the original Kang dataset's 14,184,532 records on physic
 M4/M4 Pro GPUs. The explicit FP32 option passes its declared numerical tolerance
 and native replay; the FP64 CPU default remains byte-exact. End-to-end medians
 are 1.043 s CPU and 1.050 s Metal, so this experiment establishes **no speedup**.
-The real single-cell CLI is verified; downstream biological claims are unchanged.
+A subsequent [shared-writer qualification](Tools/Omics/CountStore/Metal/Profile/README.md)
+preserves every output byte and lowers final medians to 0.918 s CPU / 0.912 s
+Metal. The first CPU call is slower and its three-run mean is slightly worse;
+these are bounded measurements, not a general speedup claim. The real single-cell
+CLI and bounded memory-safety checks pass; downstream biological claims are unchanged.
 
 ## Biological prediction: current evidence
 

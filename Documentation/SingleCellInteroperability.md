@@ -631,6 +631,11 @@ The complete development objective remains open:
     remain exact. M4 Pro end-to-end medians are 1.043 s CPU and 1.050 s Metal,
     establishing no speedup. CPU remains default. This is a bounded GPU
     arithmetic result, not million-cell GPU or biological qualification.
+    The [profile-guided shared writer](../Tools/Omics/CountStore/Metal/Profile/README.md)
+    preserves every bundle byte, with final medians 0.918 s CPU / 0.912 s Metal.
+    CPU's slower first call leaves its three-run mean slightly worse; this does
+    not establish general acceleration or a GPU advantage. Final release/ASAN
+    record checks and thirteen actual CLI checks pass.
     PCA/kNN/model-fitting acceleration and matched end-to-end scverse speed and
     memory comparisons remain open.
 11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial
