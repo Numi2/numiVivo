@@ -20,7 +20,16 @@ import Testing
         .init(sourceReceipt: try VivoOmicsFileSnapshot.fingerprint(directory.appendingPathComponent("receipt.json"), maximumBytes: 65_536),
               sourceImplementation: sourceImplementation, contrast: contrast)
     }
+    func checkStreamedBytes(_ report: VivoOmicsExpressionResult) throws {
+        let expected = try VivoCanonicalJSON.encode(report)
+        var streamed = Data()
+        let digest = try VivoExpressionReportJSON.fingerprint(report, maximumBytes: expected.count) { streamed.append($0) }
+        #expect(streamed == expected)
+        #expect(digest == (try VivoCanonicalJSON.fingerprint(expected)))
+        #expect(try VivoExpressionReportJSON.fingerprint(report, maximumBytes: expected.count) == digest)
+    }
     func checkAllStatistics(_ actual: VivoOmicsExpressionResult, _ expected: VivoOmicsExpressionResult) throws {
+        try checkStreamedBytes(actual); try checkStreamedBytes(expected)
         var a = try #require(JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(actual)) as? [String: Any])
         let b = try #require(JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(expected)) as? [String: Any])
         var design = try #require(a["design"] as? [String: Any])
@@ -127,4 +136,46 @@ import Testing
             }
         }
     }
+    @Test func streamedReportsPreserveOptionalPriorsAndFailedQLDiagnostics() throws {
+        let data = try SingleCellNBCohortTests.fixture()
+        var contrast = VivoOmicsExpressionContrast(id: "paired", controlCondition: "ctrl", treatmentCondition: "stim", design: .pairedDonors)
+        contrast.model = .negativeBinomial; contrast.minimumCellsPerPseudobulk = 1
+        for mode in 0..<3 {
+            var options = VivoOmicsNBCohortOptions(); options.trend = .mean
+            if mode == 0 { options.effectPriorStandardDeviationLog2 = 1 }
+            if mode == 1 { options.effectPriorEstimation = .weightedUpperQuantile }
+            if mode == 2 { options.testMethod = .quasiLikelihoodAdjusted }
+            contrast.negativeBinomialOptions = options
+            var result = try VivoPseudobulkDifferentialExpression.run(data, contrast: contrast)
+            try checkStreamedBytes(result)
+            if mode == 2 {
+                var nb = try #require(result.negativeBinomial)
+                let ql = try #require(nb.quasiLikelihood)
+                let failure = VivoOmicsNBQLFailure(featureIndex: nil, stage: "é/β", message: "quoted \"failure\"\n")
+                nb.effectPriorEstimationError = "retained diagnostic"
+                nb.quasiLikelihood = .init(featureIndices: ql.featureIndices, averageQLDispersion: ql.averageQLDispersion,
+                    abundanceFits: ql.abundanceFits, moderation: ql.moderation, inference: ql.inference, failures: [failure],
+                    failedUpstreamFit: .init(completed: false, abundanceFits: [nil], globalFit: .init(completed: false,
+                        averageQuasiDispersion: 0.5, initialFits: [nil], updates: [], refittedFits: [nil], adjustedResiduals: [nil], failures: [failure]), failures: [failure]))
+                result.negativeBinomial = nb
+                try checkStreamedBytes(result)
+            }
+        }
+    }
+    @Test func streamedReportRejectsOverflowSinkFailureAndCancellation() async throws {
+        let result = try VivoPseudobulkDifferentialExpression.run(VivoSingleCellExamples.pairedCounts(), contrast: VivoSingleCellExamples.pairedPlan().contrasts[0])
+        let expected = try VivoCanonicalJSON.encode(result)
+        #expect(throws: (any Error).self) { try VivoExpressionReportJSON.fingerprint(result, maximumBytes: expected.count - 1) }
+        enum SinkFailure: Error { case stopped }
+        #expect(throws: SinkFailure.self) {
+            try VivoExpressionReportJSON.fingerprint(result, maximumBytes: expected.count) { _ in throw SinkFailure.stopped }
+        }
+        let cancelled = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            return try VivoExpressionReportJSON.fingerprint(result, maximumBytes: expected.count)
+        }
+        do { _ = try await cancelled.value; Issue.record("Cancelled encoder succeeded") }
+        catch is CancellationError { }
+    }
+
 }

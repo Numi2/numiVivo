@@ -1,0 +1,42 @@
+{
+  "status": "passed-complete-native-reconstruction-and-comparison",
+  "pid": 30373,
+  "startedUnix": 1789141860.8851562,
+  "predictionFitOrScoring": false,
+  "protocolSHA256": "9952f020ebbae82201014eddf075fa74df691564f1750960faa64ad105f7ec0a",
+  "publish": {
+    "command": [
+      "/Users/home/numivivo-expression-memory-study-20260911/build/numivivo-omics",
+      "singlecell-file-expression",
+      "/Users/home/numivivo-cell-axis-study-20260911/native-file",
+      "--plan",
+      "/Users/home/numivivo-expression-memory-study-20260911/plan.json",
+      "--output",
+      "/Users/home/numivivo-expression-memory-study-20260911/native-file"
+    ],
+    "pid": 31042,
+    "nativeExit": 0,
+    "maximumNativeRSS": 212090880,
+    "seconds": 365.526268791873
+  },
+  "comparison": {
+    "allOriginalNativeReportBytesComparedDirectly": true,
+    "reportBytes": 108052499,
+    "reportSHA256": "4919f0c96dbe114707dd58b5939d708b6a3e9e7a712cb91380edd2424d92ed11",
+    "baselineArchiveSHA256": "7120f9cae419308e31c24c789a981f4c73b82b5733802d0cabf7bb4e8d8dd76e"
+  },
+  "verify": {
+    "command": [
+      "/Users/home/numivivo-expression-memory-study-20260911/build/numivivo-omics",
+      "singlecell-file-expression-verify",
+      "/Users/home/numivivo-expression-memory-study-20260911/native-file"
+    ],
+    "pid": 35330,
+    "nativeExit": 0,
+    "maximumNativeRSS": 211959808,
+    "seconds": 365.44093254208565
+  },
+  "memoryGatePassed": true,
+  "elapsedGatePassed": true,
+  "finishedUnix": 1789142592.257937
+}

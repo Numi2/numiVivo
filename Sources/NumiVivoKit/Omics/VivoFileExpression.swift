@@ -71,16 +71,24 @@ public enum VivoFileExpression {
         guard !FileManager.default.fileExists(atPath: destination.path) else { throw VivoOmicsError.invalid("file expression output exists") }
         let source = try VivoFileCountSnapshot.open(directory, implementation: plan.sourceImplementation)
         let result = try evaluate(source, plan: plan)
-        let raw = try VivoCanonicalJSON.encode(result), planBytes = try VivoCanonicalJSON.encode(plan)
-        guard raw.count <= maximumReportBytes, planBytes.count <= 131_072 else { throw VivoOmicsError.limit("file expression document size") }
+        let planBytes = try VivoCanonicalJSON.encode(plan)
+        guard planBytes.count <= 131_072 else { throw VivoOmicsError.limit("file expression document size") }
         let staging = destination.deletingLastPathComponent().appendingPathComponent(".numivivo-file-expression-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         defer { try? FileManager.default.removeItem(at: staging) }
         try source.copy(to: staging.appendingPathComponent("source"))
-        try raw.write(to: staging.appendingPathComponent("report.json"), options: .withoutOverwriting)
+        let reportURL = staging.appendingPathComponent("report.json")
+        // The private staging directory is owned exclusively by this publication.
+        guard FileManager.default.createFile(atPath: reportURL.path, contents: nil, attributes: [.posixPermissions: 0o600]) else {
+            throw VivoOmicsError.invalid("cannot create expression report")
+        }
+        let reportFile = try FileHandle(forWritingTo: reportURL)
+        defer { try? reportFile.close() }
+        let reportHash = try VivoExpressionReportJSON.fingerprint(result, maximumBytes: maximumReportBytes) { try reportFile.write(contentsOf: $0) }
+        try reportFile.synchronize(); try reportFile.close()
         try planBytes.write(to: staging.appendingPathComponent("plan.json"), options: .withoutOverwriting)
         let receipt = try VivoFileExpressionReceipt(schemaVersion: 1, method: "file-membership-pseudobulk-expression-v1", sourceReceipt: plan.sourceReceipt,
-            sourceImplementation: plan.sourceImplementation, plan: VivoCanonicalJSON.fingerprint(planBytes), report: VivoCanonicalJSON.fingerprint(raw), implementation: implementation)
+            sourceImplementation: plan.sourceImplementation, plan: VivoCanonicalJSON.fingerprint(planBytes), report: reportHash, implementation: implementation)
         try VivoCanonicalJSON.encode(receipt).write(to: staging.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
         try Task.checkCancellation(); try FileManager.default.moveItem(at: staging, to: destination); return receipt
     }
@@ -100,7 +108,7 @@ public enum VivoFileExpression {
         let plan = try VivoCanonicalJSON.decode(VivoFileExpressionPlan.self, from: Data(contentsOf: snapshot.appendingPathComponent("plan.json")))
         guard plan.sourceReceipt == receipt.sourceReceipt, plan.sourceImplementation == receipt.sourceImplementation else { throw VivoOmicsError.invalid("file expression source binding") }
         let result = try run(source: directory.appendingPathComponent("source"), plan: plan)
-        guard try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(result)) == receipt.report else { throw VivoOmicsError.invalid("file expression does not reconstruct") }
+        guard try VivoExpressionReportJSON.fingerprint(result, maximumBytes: maximumReportBytes) == receipt.report else { throw VivoOmicsError.invalid("file expression does not reconstruct") }
         return result
     }
 }

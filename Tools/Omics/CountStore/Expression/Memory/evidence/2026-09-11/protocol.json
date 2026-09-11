@@ -1,0 +1,19 @@
+{
+  "status": "frozen-before-new-product-execution",
+  "baselineCommit": "1ebe9e97dbd26825d3bda6878eca281d11a50dd2",
+  "baselineArchivePath": "Tools/Omics/CountStore/Expression/evidence/2026-09-11/results.tar.gz",
+  "baselineArchiveSHA256": "7120f9cae419308e31c24c789a981f4c73b82b5733802d0cabf7bb4e8d8dd76e",
+  "sourceBundle": "/Users/home/numivivo-cell-axis-study-20260911/native-file",
+  "expectedReportBytes": 108052499,
+  "expectedReportSHA256": "4919f0c96dbe114707dd58b5939d708b6a3e9e7a712cb91380edd2424d92ed11",
+  "cells": 725031,
+  "features": 40352,
+  "donors": 12,
+  "observations": 24,
+  "baselinePublishRSS": 1017544704,
+  "baselinePublishSeconds": 376.17462437506765,
+  "maximumPublishRSS": 508772352,
+  "maximumPublishSeconds": 451.40954925008117,
+  "policy": "All original native report bytes exact, including every feature/diagnostic and membership. Native product publish peak RSS at most half of the prior same-cohort qualification; elapsed time at most 1.2 times the previous run. Baseline is retained prior product execution on this host, not a simultaneous timing control. New profile isolates old fitting/encoding stages. No new statistical parameters, prediction fit/scoring, subsampling or R rerun.",
+  "predictionFitOrScoring": false
+}

@@ -110,7 +110,9 @@ now completes the full Parse cohort and exactly matches the existing native
 statistical results. All six edgeR/limma/DESeq2 comparisons complete; shared-offset
 effect correlations are 0.994, 0.860 and 0.990 respectively. Of 40,352 features,
 33,899 are tested, 5,946 lack estimable support and 507 fail the count filter.
-Peak analysis memory remains about 1 GiB. These are observed RNA differences,
+The [incremental report writer](Tools/Omics/CountStore/Expression/Memory/README.md)
+reduces full-cohort analysis peak RSS from 970.4 to **202.3 MiB**, preserving
+every report byte. These are observed RNA differences,
 not a new held-out prediction or validation of tissue/clinical outcomes.
 
 The [native interval assessment](Tools/Omics/PerturbationPrediction/Intervals/README.md)

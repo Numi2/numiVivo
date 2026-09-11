@@ -9,7 +9,7 @@ All original identity bytes, cell QC values, group memberships and aggregate coo
 | ingest | 165.6 | 1005.0 | 2910.1 | 2912.5 |
 | verify | 181.8 | 1024.7 | 2834.1 | 2835.3 |
 
-These are per-native-child process measurements. Elapsed time includes waiting for the bounded remote source stream and does not measure isolated compute throughput. Peak memory is lower for this complete count path; it does not establish bounded memory for every downstream algorithm or every admitted maximum. The [subsequent full statistical analysis](../Expression/README.md) still peaks near 1 GiB.
+These are per-native-child process measurements. Elapsed time includes waiting for the bounded remote source stream and does not measure isolated compute throughput. Peak memory is lower for this complete count path; it does not establish bounded memory for every downstream algorithm or every admitted maximum. The [initial full statistical analysis](../Expression/README.md) peaked near 1 GiB; its [incremental report writer](../Expression/Memory/README.md) now reduces the same complete run to 202.3 MiB. The statistical model still retains per-feature state.
 
 The count executable is SHA-256 `cae3f6e173b4a9c52f6f606743d99bfe532cad76b69f3cccd83dacb8eee18f9a`, built from 105 frozen inputs at source commit `05c01ba1a8f4fc4efcefa5df7684a51a9f7f7444`. Its 14 cell-axis/count tests pass. The prior executable is `20b13e585e1526dba7be566484373a3e4775efebd66f22b3b20dff31c1ee3516`. These count results remain tied to those binaries; the later expression executable is a separate qualification.
 

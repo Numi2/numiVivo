@@ -60,9 +60,10 @@ The [file-backed expression owner](../Tools/Omics/CountStore/Expression/README.m
 now consumes these aggregates using explicit source-receipt membership references.
 On all 725,031 Parse cells, both native fits and reconstruction pass and all six
 edgeR/limma/DESeq2 comparisons complete. The statistical result matches the prior
-native owner exactly apart from membership representation. Full analysis still
-peaks near 1 GiB; this does not qualify whole-pipeline out-of-core execution or
-add an unseen biological prediction.
+native owner exactly apart from membership representation. The [incremental report writer](../Tools/Omics/CountStore/Expression/Memory/README.md)
+now reduces full-cohort native analysis peak RSS from 970.4 to 202.3 MiB with
+all report bytes unchanged. Per-feature model state remains resident; this does
+not qualify every pipeline stage or add an unseen biological prediction.
 The import measurement excludes the source adapter and is not a whole-pipeline
 memory or Metal performance result. Existing H5AD/PCA/graph/model bounds remain.
 

@@ -1,0 +1,901 @@
+{
+  "status": "verified-self-archive",
+  "archiveSHA256": "ea7eeac4f67d4949c14f294eb87314b77529cd149514d4b5afb978c1ef1f1ffe",
+  "archiveBytes": 3598609,
+  "members": {
+    "Profile.swift": {
+      "SHA256": "2ce8bd4ed651ea5e2b13f0212a052c917ce7bb1978aa18f95256d8c31d235f75",
+      "bytes": 1021,
+      "mode": 420,
+      "archive": "self"
+    },
+    "build.log": {
+      "SHA256": "37318da3e8be3385cab649f4cdc0892d36927fa106b1d8cfe4b22b5c7dbd49c0",
+      "bytes": 2234,
+      "mode": 420,
+      "archive": "self"
+    },
+    "build/numivivo-omics": {
+      "SHA256": "5f036fdb4b4b13855d910afec37116de9eab028ed19ddb5e1bf765418349b03f",
+      "bytes": 7765840,
+      "mode": 493,
+      "archive": "self"
+    },
+    "build/sources.sha256": {
+      "SHA256": "0b94cf56ae01f28fb99d1d05d580133db32a75f1da2591dba344170067b2f5d1",
+      "bytes": 18067,
+      "mode": 420,
+      "archive": "self"
+    },
+    "implementation/Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift": {
+      "SHA256": "e3167b6bb70f87ad570b00236b91bcef5e32471ae77eeabe69ab18d3539e36ac",
+      "bytes": 56127,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCLI/VivoWorkflowCLIImplementation.swift": {
+      "SHA256": "1c9e95717a0b4a27eaaf77f3425e5ac7ca8933c21b06367b7fdecf136d2e45df",
+      "bytes": 1910,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/OmicsGaussian.cpp": {
+      "SHA256": "e709cd0150f81bcb75029b72b4eca49f6cce6b46b1bd4bf1e2b47fb6c66fa078",
+      "bytes": 8981,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/OmicsHNSW.cpp": {
+      "SHA256": "b1d3e032f6b6bce453b7b3390c5eaacf0b062fd69c2838d75cbc6a8a57eb2347",
+      "bytes": 8712,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/ThirdParty/hnswlib/bruteforce.h": {
+      "SHA256": "da1f179e99d8e5a4c39b5db0c681bccf3c63e797aaa4982620519f8e001cb2c6",
+      "bytes": 5913,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/ThirdParty/hnswlib/hnswalg.h": {
+      "SHA256": "0fb2c1b1d3aae1ea959b536f96844f3f3ae6a2f32ce063f2c31f93d84a7e5c32",
+      "bytes": 56889,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/ThirdParty/hnswlib/hnswlib.h": {
+      "SHA256": "54403db81f55fd28246114c5c9f683e663a2a55ad64903b56578c73e6db5ad2c",
+      "bytes": 6124,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/ThirdParty/hnswlib/space_ip.h": {
+      "SHA256": "6a89b5275527fe3592a9b02ea4fc50293fdc68cbd9f7c1ec13683581e1ebbaf7",
+      "bytes": 11379,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/ThirdParty/hnswlib/space_l2.h": {
+      "SHA256": "c599d024657896412250b4fde1a95e39f8bc55cccd263f36c8948fa35779edf1",
+      "bytes": 8561,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/ThirdParty/hnswlib/stop_condition.h": {
+      "SHA256": "930da73eead77dff0c8c9f3281c5d12250051c90ef98fcfbab8f5f307bdae8d9",
+      "bytes": 8874,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/ThirdParty/hnswlib/visited_list_pool.h": {
+      "SHA256": "8e5bab8d12b5ef26e3b603b656b8a1acba6738498d1d98f44c9fdb1cb0e25110",
+      "bytes": 1790,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsGaussian.h": {
+      "SHA256": "c8759a395fbba4dbfabe5fe08aa77fd44a638aaa12f9c5b2656afa8e772f28af",
+      "bytes": 3239,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsHNSW.h": {
+      "SHA256": "67204cc0b4e8de778c0f83b61470aa6caaf5c01075de1bab79fae5c9dee56584",
+      "bytes": 2409,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Artifacts/CanonicalArtifact.swift": {
+      "SHA256": "170dc29162eb791e2689d7a4e80fedd1f2b19f0dd3104c4dc03296b616e2f0d6",
+      "bytes": 7436,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Artifacts/VivoArtifactPrimitives.swift": {
+      "SHA256": "6205cf663b7732cbfc53d76aad7b2a3f55f511cf1350a0f94e52cb5ee0676477",
+      "bytes": 2525,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Artifacts/VivoArtifactStore.swift": {
+      "SHA256": "897890b26c54c7e742bcd5b661570b078a560846a27b6c0a513c79a6086617d1",
+      "bytes": 17103,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Artifacts/VivoRootedFileStore.swift": {
+      "SHA256": "d7d9fe05c505e3fa4d16116f5170a9c97b962abf26d7229e16598cdbbec41f1d",
+      "bytes": 11886,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Kinetics/VivoCovalentKinetics.swift": {
+      "SHA256": "1016993225e91eb3b6fe94835361f02d755398b3c82ba7a05aa6112f2a3597ea",
+      "bytes": 14766,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Kinetics/VivoKineticsDocumentIO.swift": {
+      "SHA256": "1a516fa0cf16d71eb0b27234e403baf1cd0928c262252ce8ae336c474596db12",
+      "bytes": 3287,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoBufferedCountRecords.swift": {
+      "SHA256": "9b2ec5537659a3ff825f75710dc666c3c8745298797fb303c409906fe6f973ed",
+      "bytes": 2877,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoClusteringGraph.swift": {
+      "SHA256": "27e363b2cce6fa31f3a16caa6d22be7fb9d3cd2c14663a11e82fc0f9bb231827",
+      "bytes": 9126,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoComposition.swift": {
+      "SHA256": "a437f64b7fa405eee32efb35e9d0ede2240eb901ae2af7be6909bbb6c81589e1",
+      "bytes": 16677,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoCompositionIO.swift": {
+      "SHA256": "d7eec66a6960a51b80764ae1b55ad9caa2bc4399335c0eb245f0a803343a3368",
+      "bytes": 9067,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoCountStreamPseudobulk.swift": {
+      "SHA256": "e6f41221694e1294055850b990b73205d8dd357c7b39c6e45711f229c80becdb",
+      "bytes": 10842,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoDurationPerturbation.swift": {
+      "SHA256": "02b950e21c3d267edbd0b1beccc00647d38ff212ccddf289ffc9dd45a3816a2f",
+      "bytes": 19192,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoDurationPerturbationIO.swift": {
+      "SHA256": "6941e67030592450658809af3598811e5631f36007b270784dc28d7072bef46c",
+      "bytes": 8025,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoEmbeddingSchedule.swift": {
+      "SHA256": "f038331f774cc4f30232a9ee33317c36fb073547f462196f1600c9d139fca2a0",
+      "bytes": 8952,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoExpressionReportJSON.swift": {
+      "SHA256": "ea8afc35da0b84a817de5f1813301a5b93d57825c01ab3f58f7fc65a458f5e6a",
+      "bytes": 7475,
+      "mode": 420,
+      "archive": "self"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoFileCellAxis.swift": {
+      "SHA256": "b0b9fa4e0731f8960ef54aa1cd4bf661d86c38e0447b2c8c80c47128d7e76364",
+      "bytes": 20808,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoFileCountStream.swift": {
+      "SHA256": "71b63185360b77ab3fb1b1e7885fc8be4c9c01f8fb74deb3b1347d3a1fdbb59b",
+      "bytes": 19181,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoFileExpression.swift": {
+      "SHA256": "315474a5f2a55c04e90117a83da589c5ec4eb7ed59022d9bccb45f8e5d3f62f2",
+      "bytes": 8641,
+      "mode": 420,
+      "archive": "self"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoFrozenPCAProjection.swift": {
+      "SHA256": "acbd16e664d4fb62658309089948166da28f065d46f33cac4dba96283df851aa",
+      "bytes": 4992,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADAnnotations.swift": {
+      "SHA256": "b296da1b988794c53212dcbc78c0c99f24fae6f9873cfb5d8d64da9d57687f93",
+      "bytes": 19596,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADCountAccess.swift": {
+      "SHA256": "dc7c0f59423ff6d233b9355534162a3cb47c44550dca388315b656c63fb56386",
+      "bytes": 9589,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADCountStore.swift": {
+      "SHA256": "7210450a92d1c5585229ff53a5816ff8402b342f556efdaac59ed4a4f4291169",
+      "bytes": 18438,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADElements.swift": {
+      "SHA256": "a0739d9a991abe9b6a29b3d63fb7dff849e32b639c077609c33331ce6952dbed",
+      "bytes": 11508,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADLegacyIO.swift": {
+      "SHA256": "d3f6bb112bcb59e9e5190cd1ff96e58423a2aab16a1bd3362237918698e5f458",
+      "bytes": 11340,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADPCA.swift": {
+      "SHA256": "146b513956d6c10f3dc9cc4edeb897a90c20cbd7d254c1a284232988b2f5e211",
+      "bytes": 10761,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADPCAQuery.swift": {
+      "SHA256": "987614e0142f9df830d839f2138f45c5ea6b8f9e06859d1535cddc432cb2f9c7",
+      "bytes": 13141,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADPrograms.swift": {
+      "SHA256": "d11d941f257dbc6ad095f452140ab5bc05b7ac9529df6afc73d1a4a7b758acd6",
+      "bytes": 10296,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADProjection.swift": {
+      "SHA256": "6ee9539614c80a3c66803abebc67cc8d6367dd5e2ba48d35684044cf4111cb4f",
+      "bytes": 42908,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADProjectionIO.swift": {
+      "SHA256": "e5708dba5af083b0d8c6861de84936b5074c65063ef17c62078ffbcd71e1a4a1",
+      "bytes": 10237,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADPseudobulk.swift": {
+      "SHA256": "cf41c50d3887017aeb65debdc92c455b3be35e0e69636339482b7c9420299920",
+      "bytes": 16893,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoH5ADReduction.swift": {
+      "SHA256": "68d8b69b592cba2745f43acad12387969d1ae6ee5e8dd11f92717cd85924607b",
+      "bytes": 10868,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoHDF5.swift": {
+      "SHA256": "bd91b453ad949e954d69a5fce1ad359ce39891d286facac8a18218821a7732c4",
+      "bytes": 20146,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoHNSWNeighbors.swift": {
+      "SHA256": "1b43a9ec58ff22d34b39058398e81e4a9658dacf0607c534d700dc603ac057b7",
+      "bytes": 7786,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoIntegrationMatrix.swift": {
+      "SHA256": "5ab6374b43b36c137ec4b926be2fc454751df7f89029e42c51735a9b6fa0d421",
+      "bytes": 8079,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoMNNIntegration.swift": {
+      "SHA256": "a9c08231b56e8771461430e72d883fc4bfb65607324388eab0ff10dbefd673eb",
+      "bytes": 22657,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoMatrixMarketCounts.swift": {
+      "SHA256": "f7a241fe94dc561c0ee18044a0d51d2e3af062dc8f9551928e4ef04eed95bbb6",
+      "bytes": 8786,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoMetalCountNormalization.swift": {
+      "SHA256": "216c41a9a8a997df8b51759762e98bd29fcb56bd3dd8b51622662bfe0918755e",
+      "bytes": 5948,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoMultiAssay.swift": {
+      "SHA256": "327a9114d5173e80e306f1d3da79ce1851dd352bb2227ebf3d59849a335f001e",
+      "bytes": 16370,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoMultiAssayH5MU.swift": {
+      "SHA256": "6551e96cf24665ee1fc1624683ce773639e1a1f103bcab25778bb9728fd27c57",
+      "bytes": 11590,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoMultiAssayH5MUImport.swift": {
+      "SHA256": "f42561c60599b8a4644b8d54b00f2909be1f3ac9ae70fc635cf7761dd6aa378e",
+      "bytes": 22092,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoMultiAssayIO.swift": {
+      "SHA256": "f2b30e65ebcbf421850b145c4a8a98bbb0be2cf37ec48b82c06f3be8c7f06d77",
+      "bytes": 8575,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoMultiAssayTenX.swift": {
+      "SHA256": "5a62554ec5e1b3326f3ea42b815a90755d645642671b765835c0ed68716de819",
+      "bytes": 8216,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoMultiAssayVisium.swift": {
+      "SHA256": "06037e05879ca0db9cca33de80a589b9b625a684c511220b7fdba4cdb838c0d3",
+      "bytes": 6448,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsDesignObservation.swift": {
+      "SHA256": "de69a33223f60d635b0476abdbe0620c0aa0f49cbde0978aa96cc1fca1143e64",
+      "bytes": 6173,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsFileSnapshot.swift": {
+      "SHA256": "036e260ab026ce3b7fcb2f25cb7652c2e6fc880d5c38868559806dd849f6c16f",
+      "bytes": 4709,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsLinearStatistics.swift": {
+      "SHA256": "b072cd8d6816541c7570187c99664d82ebbf26a127583cae8aba6eefb9d58664",
+      "bytes": 11862,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsNBAbundance.swift": {
+      "SHA256": "6a0b6c0fcefb919a7bbe6c699d18bb5a7f8ce7e22bfa9f604e5a4792099c1043",
+      "bytes": 8302,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsNBAdaptiveMoments.swift": {
+      "SHA256": "a571308fbcdef31d32e19684e6540f37ad397ed132a37f7a0d0f9c44e88a99e5",
+      "bytes": 10612,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsNBCohort.swift": {
+      "SHA256": "8c592da0424ce3bdac5b372e50efd86638b683f8348be1972eee49c3a123f7a4",
+      "bytes": 31649,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsNBDevianceMoments.swift": {
+      "SHA256": "5fa8b8705c7b8eaaca53fc512cbf88ac4644236ba949301d3794fe5c44711084",
+      "bytes": 10930,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsNBQLCohort.swift": {
+      "SHA256": "f907fb31bb6389ffc32d97a6af3d4c2f8d5e14355001532a53eb06b7a7e5ef0d",
+      "bytes": 6062,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsNBQLGlobalScale.swift": {
+      "SHA256": "56db18c46f9badbab51d006b9f4ed4d206e2986e50abfcb347f989d030e5db95",
+      "bytes": 8311,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsNBQLInference.swift": {
+      "SHA256": "377b307293aa986afd5b62df9ca878ebca17964a50db2b75cd94e037b9c084be",
+      "bytes": 9210,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsNBSupport.swift": {
+      "SHA256": "410fa18fb3979d3cd99de75ca59f9d2ccfbae30a23a35809e211f044538d48e7",
+      "bytes": 3828,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsNegativeBinomial.swift": {
+      "SHA256": "acfa04028900c8823e952f0903b7d789015ba750b321eedfaa0b923b89e151b3",
+      "bytes": 25438,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsPrecisionLowess.swift": {
+      "SHA256": "9ddd1acc8a704bd8d32333a96a24e63eb5bcec7dd7103ea69a4a582dcc347d9c",
+      "bytes": 7159,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsQLModeration.swift": {
+      "SHA256": "360d3297347e3b1c5a0cb7f12c7849206cf9da19395b38c5ddcb7ac0b67919ad",
+      "bytes": 13896,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsQLSpecialFunctions.swift": {
+      "SHA256": "ca84c6ed3e73dba25ec2f4bd26feaee62acb1ebc4b5ea21eeb6bf067920fbf2e",
+      "bytes": 5318,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsRobustLowess.swift": {
+      "SHA256": "8ad43b20a96b9196a97d986164f7bba38866f4bce0d751b067bb395849df0a63",
+      "bytes": 6035,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoOmicsSourceDecoder.swift": {
+      "SHA256": "9f07ae764bb71f57be6319fd43debb1594fee886dd2198a152edc499210687b3",
+      "bytes": 3511,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPCAGraphClustering.swift": {
+      "SHA256": "0532192488cdbd87558736235fe260ed17af2519cbbf073e5d44bdf14f9831fc",
+      "bytes": 7877,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPCAGraphEmbedding.swift": {
+      "SHA256": "193da0960ef6001312af98e4f7eb46f807d50e0351841c553c18e71f96459168",
+      "bytes": 7478,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPCAGraphStore.swift": {
+      "SHA256": "21bd45fc9adc84ce524fd3e11721e65418b500d44361dfc938ec3525a4299b62",
+      "bytes": 9887,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPCAIntegration.swift": {
+      "SHA256": "000468de80eeb4af620961f617b051abe8773fee29f8f1c611e8ce3efb8b7c92",
+      "bytes": 13983,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPCAMNNIntegration.swift": {
+      "SHA256": "2fea05092b58e86c54f24cbb72695becf0af38eb4bece5c75dd50ce6a616c9c2",
+      "bytes": 5556,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPCANeighborBundle.swift": {
+      "SHA256": "800bc24fddc4ebe61c5193df5528bd7ec5fea6b15224c6e81e73a1139ba8218a",
+      "bytes": 15228,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPerturbation.swift": {
+      "SHA256": "ca1ad1451ce424c7255d000d10155ec636ca4682ac4b3f33ed75b4842c8a86c1",
+      "bytes": 22327,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPerturbationAggregateBatch.swift": {
+      "SHA256": "54db39b8055729d015ac4f2d74af4b237371c5f3ce0bb4e63c90016bf44d0636",
+      "bytes": 18842,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPerturbationIO.swift": {
+      "SHA256": "cde316e2d90ec5488e2bc37ba7e28a5dbbd2a75e2dfa824b5e40ee706a5d8605",
+      "bytes": 9094,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoPseudobulkDifferentialExpression.swift": {
+      "SHA256": "865736507ae33701c71b8945046b93d0147c20e23b0421f91aa2ed977b243701",
+      "bytes": 23556,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoReferenceLogistic.swift": {
+      "SHA256": "7a55cff7dfba6df2d58a1f70c7a0b06d3603d48b91c588c5dbed29884b06b9bc",
+      "bytes": 11021,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellAnalysis.swift": {
+      "SHA256": "23d0d228f450fc441252e200e8c905a72f360011f778b6e317c45cf3b348ecb9",
+      "bytes": 10766,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellArtifacts.swift": {
+      "SHA256": "8db67054b017fee22b879ffaed4a81a946a731a49a3e7bd2379bd3c20d97c5c1",
+      "bytes": 3839,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellCampaign.swift": {
+      "SHA256": "b81c4a658bc8e290d9a3af940ed18f81de5a07f447568eeae8aa14b95ade8871",
+      "bytes": 9552,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellCampaignIO.swift": {
+      "SHA256": "09c849255df47db212a4e2a810f26378c39b36d713cff3120e55cc1c0502cd40",
+      "bytes": 1621,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellClustering.swift": {
+      "SHA256": "05c092d8df8fa7989a9d2bb83a34219fb4bf2f140b43a79e22068ef52f5e7c01",
+      "bytes": 9386,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellCohortAnalysis.swift": {
+      "SHA256": "1c31572c44058040158fa8c24be26364fcaa5b42763543ced2309f8af4a66fc4",
+      "bytes": 11609,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellEmbedding.swift": {
+      "SHA256": "21b789d3a5fb228080958d6992c32eeb5aeefc2aadd2f0cbad5b3b40b53a49a3",
+      "bytes": 9088,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellExamples.swift": {
+      "SHA256": "f8c1d12bccc7f0c5f99ddd736ddcb61cd0a7ffaf4ac1fc8f7d6bb94ef9773e36",
+      "bytes": 2364,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellExchange.swift": {
+      "SHA256": "d44e0cf1df03966550067965e148d2d12d9506c717fb86c8ef0d7a9bbdf06108",
+      "bytes": 11634,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellH5AD.swift": {
+      "SHA256": "09c0abf87bbd6da7025092adc504761687bb697685715e682e5bf8fd934df755",
+      "bytes": 17983,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellIntegration.swift": {
+      "SHA256": "f58a2f685181dcf2d48c0b212c709e7fc2af9339f4918edb5952e7771bdf2394",
+      "bytes": 26940,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellNeighbors.swift": {
+      "SHA256": "25408e20ca8b03a20341ae430ff612acefda74956772056d73824bb21b1df209",
+      "bytes": 10673,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellProcessing.swift": {
+      "SHA256": "ef05d2958d81cca0416301d11931451e616f334a50c2347632a67ddc7c912a50",
+      "bytes": 10269,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellPrograms.swift": {
+      "SHA256": "b1631b90eb7968951fda4a0b2cc75e8f2113135b79e3b454cabe7b514a90b7d5",
+      "bytes": 13789,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellReduction.swift": {
+      "SHA256": "bc660afa332d3b40e99bfa67aeef1d3710080802c4fcef0a9899fcb24d0c52c3",
+      "bytes": 17234,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellReference.swift": {
+      "SHA256": "0243a9c07b158fcf3825993ab1eebcb660e8fc8eea3cfbab81c21108c71eeafe",
+      "bytes": 15772,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSingleCellReferenceIO.swift": {
+      "SHA256": "f27f9ae7e0e0f37c015e82a484718c1aa33bba4bdb99bb2f156794c995f8c97b",
+      "bytes": 9205,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoSparseCounts.swift": {
+      "SHA256": "69ac2a3f26c36a6beb5cc2d0b4e26c8f4d129a091361314fc2ba0b1348bdbbad",
+      "bytes": 12687,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoTargetKernel.swift": {
+      "SHA256": "adaf182904fe1cab88f197bb448e7861f02d16ac8fb2b2ca8680165d874fdaed",
+      "bytes": 19794,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoTargetKernelIO.swift": {
+      "SHA256": "74777062239ca93cebcf36415eec7904527be9a65ca0ef0eb3a219432a4a044a",
+      "bytes": 7684,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/Omics/VivoWindowedPCANeighbors.swift": {
+      "SHA256": "aca1eee2455aa98637b5facba964a20ce6024e3ab9971313f609365e44e9802e",
+      "bytes": 8118,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Sources/NumiVivoKit/QM/VivoElectronicTypes.swift": {
+      "SHA256": "21008e708e1705dc389bed8f7c7ab0ec9905721693f1cee35a9761b0c8d1de3d",
+      "bytes": 8167,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Tests/NumiVivoIntegrationTests/SingleCellFileExpressionTests.swift": {
+      "SHA256": "ef1bf1a13f71698ac1955c83324b489baacf6cb9afc804a0c03a41b30714e6d2",
+      "bytes": 13934,
+      "mode": 420,
+      "archive": "self"
+    },
+    "implementation/Tools/Omics/CountStore/Expression/Memory/run_parse.py": {
+      "SHA256": "2c4cfbcc958051c75d45155dfb0b813c68650f451dc58047c68eb25213581fd2",
+      "bytes": 3857,
+      "mode": 420,
+      "archive": "self"
+    },
+    "implementation/Tools/Omics/H5AD/CLIMain.swift": {
+      "SHA256": "5d2b211daadee2106449a9aff10bd63f9ee8371aef0720ae76cb53f00e80b130",
+      "bytes": 354,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Tools/Omics/H5AD/Main.swift": {
+      "SHA256": "c706480188d8b95a4160c0443eeac9619b4096eaa970d8e987afb5dd3edc8688",
+      "bytes": 10715,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "implementation/Tools/Omics/H5AD/build.sh": {
+      "SHA256": "bc8396733e03b4308ab54717a6d335104426065b6f40566e150f59546d814e77",
+      "bytes": 4648,
+      "mode": 420,
+      "archive": "self"
+    },
+    "native-file/plan.json": {
+      "SHA256": "04c8f73d213101cfbb5c4882ea18b4141b460898f913a033068a83f30351ded8",
+      "bytes": 880,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "native-file/receipt.json": {
+      "SHA256": "474f9a1a78f47e9d822e2cbb17a7bc19aaea2c443b563ce2a7c89cab9badbe25",
+      "bytes": 766,
+      "mode": 420,
+      "archive": "self"
+    },
+    "native-file/report.json": {
+      "SHA256": "4919f0c96dbe114707dd58b5939d708b6a3e9e7a712cb91380edd2424d92ed11",
+      "bytes": 108052499,
+      "mode": 384,
+      "archive": "baseline"
+    },
+    "native-file/source/axis/header.json": {
+      "SHA256": "d700c8ad8c8ca5bd19848d843ea3a3168da72a37db737a96ebf477bbbb562859",
+      "bytes": 2429070,
+      "mode": 384,
+      "archive": "baseline"
+    },
+    "native-file/source/axis/receipt.json": {
+      "SHA256": "586c5ef8876c326c9e64a37bda6b9d0bb83f931660313bc61f6fcc3a4307367e",
+      "bytes": 869,
+      "mode": 384,
+      "archive": "baseline"
+    },
+    "native-file/source/axis/rows.bin": {
+      "SHA256": "5912a554b82059dd8539cc26a425303db6fbad460897eac2ea881b886cddb62f",
+      "bytes": 29001240,
+      "mode": 384,
+      "archive": "baseline"
+    },
+    "native-file/source/axis/strings.bin": {
+      "SHA256": "3a09fadfc556af235a0493c46ce2ceef6cca085e3960ca1576770fadc9ce8f6d",
+      "bytes": 18953862,
+      "mode": 384,
+      "archive": "baseline"
+    },
+    "native-file/source/quality.bin": {
+      "SHA256": "c6fa00506f037d705129a490f0475b67bb51fab92f24e8fd6787e91b950acd34",
+      "bytes": 17400744,
+      "mode": 384,
+      "archive": "baseline"
+    },
+    "native-file/source/receipt.json": {
+      "SHA256": "83da4f57bd88b55d1857ff78bfac93570970aa140fa6af476717f0fc04063cc1",
+      "bytes": 850,
+      "mode": 384,
+      "archive": "baseline"
+    },
+    "native-file/source/report.json": {
+      "SHA256": "f46b9d4e1a3900772936b1e7fc3de87d50f7353dfc18b12416d4d4e5a421622d",
+      "bytes": 8218375,
+      "mode": 384,
+      "archive": "baseline"
+    },
+    "pipeline.json": {
+      "SHA256": "beb65ab0f031dd478352f834c6ffc84199b675633e1c29cfc34501144ac09576",
+      "bytes": 1506,
+      "mode": 420,
+      "archive": "self"
+    },
+    "pipeline.log": {
+      "SHA256": "6603f0bbc08cde5255e457ae71b8baf98b31e3294f17ec0f9a1bb3eec6632bd3",
+      "bytes": 1342,
+      "mode": 420,
+      "archive": "self"
+    },
+    "plan.json": {
+      "SHA256": "bea799f6c38804ab6a6d26787eb33a4293bb1449c9ae350b2730fc23fdbb3cf9",
+      "bytes": 1510,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "prior-archive-dehydration.json": {
+      "SHA256": "fe67934b7865a3f1939c68d8debd7411d625463cc4a1b0634d0d05bda1659d4b",
+      "bytes": 682,
+      "mode": 420,
+      "archive": "self"
+    },
+    "profile": {
+      "SHA256": "f9e970173c2b035490993df6482df5ba409fc805680f59531243baef9608f238",
+      "bytes": 4130712,
+      "mode": 493,
+      "archive": "self"
+    },
+    "profile-provenance.json": {
+      "SHA256": "0dde345ff1cc79eb1dfa2ebe89ed382d86c304102aaef2d718e114bf2f152a24",
+      "bytes": 1463,
+      "mode": 420,
+      "archive": "self"
+    },
+    "profile.log": {
+      "SHA256": "4d419e0914a75a145aed1fc1a568285f20019e8fa9ba3aced0a43a6b68d8e5c3",
+      "bytes": 317,
+      "mode": 420,
+      "archive": "self"
+    },
+    "profile.stderr": {
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "protocol.json": {
+      "SHA256": "9952f020ebbae82201014eddf075fa74df691564f1750960faa64ad105f7ec0a",
+      "bytes": 1260,
+      "mode": 420,
+      "archive": "self"
+    },
+    "publish.json": {
+      "SHA256": "3c00c5fb9e088d698166e360648cdde5ef824dc668c2fb314321549700b6bb55",
+      "bytes": 476,
+      "mode": 420,
+      "archive": "self"
+    },
+    "publish.stderr": {
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "publish.stdout": {
+      "SHA256": "9f313a53a9f85dc010117913ef6a750cbc9ab50a30bcd5c83f603bc5c98969d6",
+      "bytes": 767,
+      "mode": 420,
+      "archive": "self"
+    },
+    "results.json": {
+      "SHA256": "fed92b9e8279f8d767a536b522d55928ff978440718c3e75043eafec4d8dc8ea",
+      "bytes": 1144,
+      "mode": 420,
+      "archive": "self"
+    },
+    "retention-preflight.json": {
+      "SHA256": "87cff878b031ab22372878999643aed4631afeb7cbf30bfb8c4a3d7fcf7e0ccf",
+      "bytes": 174,
+      "mode": 420,
+      "archive": "self"
+    },
+    "retention-preflight.log": {
+      "SHA256": "6b4cfd8b79e23c15b112bd068e3ab35b4c6e6dfbe29754449b8861c274e94e6e",
+      "bytes": 724,
+      "mode": 420,
+      "archive": "self"
+    },
+    "retention-recipe/Profile.swift": {
+      "SHA256": "2ce8bd4ed651ea5e2b13f0212a052c917ce7bb1978aa18f95256d8c31d235f75",
+      "bytes": 1021,
+      "mode": 420,
+      "archive": "self"
+    },
+    "retention-recipe/retain.py": {
+      "SHA256": "b60d2560809e346357048c0e5d14fad82f3accdd17d3ab063f85093072d55ad8",
+      "bytes": 7875,
+      "mode": 420,
+      "archive": "self"
+    },
+    "retention-recipe/run_parse.py": {
+      "SHA256": "2c4cfbcc958051c75d45155dfb0b813c68650f451dc58047c68eb25213581fd2",
+      "bytes": 3857,
+      "mode": 420,
+      "archive": "self"
+    },
+    "source-freeze.json": {
+      "SHA256": "209fa12a8add423b935ced90a43d1cd83db14cf8b7717e5b0f8cef303706905e",
+      "bytes": 20927,
+      "mode": 420,
+      "archive": "self"
+    },
+    "tests.log": {
+      "SHA256": "b4679a731cc4afdab5d882cc04e0509003e5913f162edb7ca167290034c9cc1e",
+      "bytes": 7851,
+      "mode": 420,
+      "archive": "self"
+    },
+    "verify.json": {
+      "SHA256": "ead5703f1923b26650b443b240157d55bff9a1cbf0031080c1c637fbb84f484d",
+      "bytes": 319,
+      "mode": 420,
+      "archive": "self"
+    },
+    "verify.stderr": {
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420,
+      "archive": "baseline"
+    },
+    "verify.stdout": {
+      "SHA256": "0356af30f9cfac68f709c2c907d75973f9218ada43526a7bb0ce9a5bad3078ae",
+      "bytes": 144,
+      "mode": 420,
+      "archive": "baseline"
+    }
+  },
+  "requiredBaseline": {
+    "commit": "1ebe9e97dbd26825d3bda6878eca281d11a50dd2",
+    "path": "Tools/Omics/CountStore/Expression/evidence/2026-09-11/results.tar.gz",
+    "SHA256": "7120f9cae419308e31c24c789a981f4c73b82b5733802d0cabf7bb4e8d8dd76e"
+  },
+  "scope": "All native output bytes, new executable/source, phase profile, tests, whole-cohort metrics and exact-byte comparison. Identical objects are retained in the exact earlier archive; no duplicate report or count-source payload. Both archives are needed to restore. Parse derivatives CC BY-NC 4.0."
+}

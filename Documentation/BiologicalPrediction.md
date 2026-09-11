@@ -117,8 +117,10 @@ membership encoding; all six edgeR, limma-voom and DESeq2 comparisons complete.
 There are 33,899 tested features, 5,946 rank-deficient-support exclusions and 507
 low-count exclusions. Effect concordance with external methods is a useful
 statistical check, but does not establish false-discovery calibration, a causal
-cell-intrinsic effect or an unseen-outcome prediction. Full statistical reporting
-still peaks near 1 GiB. No Parse duration predictor has been fitted or scored;
+cell-intrinsic effect or an unseen-outcome prediction. The [incremental report writer](../Tools/Omics/CountStore/Expression/Memory/README.md)
+now lowers the same complete analysis from 970.4 to 202.3 MiB native peak RSS
+while preserving every report byte. Per-feature model state remains resident;
+this storage change adds no biological outcome evidence. No Parse duration predictor has been fitted or scored;
 the panel/dose gates above and the prior transfer failures remain in force.
 
 The [native Visium import](../Tools/Omics/Multimodal/Visium/README.md) now makes
