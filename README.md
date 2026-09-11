@@ -17,6 +17,20 @@ experimental settings** when the required training measurements, control profile
 and biological identities are available. Reliable prediction of general
 biological outcomes from DNA or RNA alone is not established.
 
+| Requested outcome | Decision from the available evidence |
+| --- | --- |
+| Average RNA response with matched training and untreated query measurements | **Supported as a conditional research estimate.** Performance depends on the treatment and population; retain no-change and training-mean baselines. |
+| Exposure-dependent RNA response | **Development result.** Duration mean improves RMSE by 24.83% over the matched time-invariant mean in three donor holdouts; independent validation remains open. |
+| Reliable transfer to another study or biological context | **Not established.** Kang–HIRISA ridge fails both transfer directions; fixed-response GSE226572 transfer misses its declared improvement target. |
+| Molecular effects of a DNA substitution | **External hypothesis source.** AlphaGenome Atlas can contribute variant evidence; its results do not qualify a NumiVivo phenotype prediction. |
+| Individual-cell behavior, tissue function, disease progression or treatment benefit | **Not established.** These endpoints need their own outcome models and experimental validation. |
+
+Successful count ingestion, numerical replay and large-cohort processing establish
+that information can be processed correctly. They do not establish that an
+unmeasured biological outcome can be predicted accurately. The
+[input-to-outcome decision](Documentation/BiologicalPrediction.md#available-information-does-not-imply-a-validated-outcome)
+separates these requirements and identifies the next work.
+
 In 79 HIRISA held-out donor folds, context ridge beats
 no-change in 14 of 16 contrasts, but beats the simpler training-mean response in
 only four. Two contrasts are worse than no-change under every learned baseline.

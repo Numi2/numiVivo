@@ -167,6 +167,36 @@ still supply no experimentally validated RNA-to-phenotype mapping.
 
 ## Decision before using a prediction
 
+### Available information does not imply a validated outcome
+
+There are three distinct questions: whether the original observations and their
+identities are available, whether an implemented model accepts those inputs for
+the requested endpoint, and whether its predictions have passed an appropriate
+held-out comparison. A positive answer to the first question cannot substitute
+for the other two. For example, the complete Parse IFN-beta ingestion supplies
+725,031 cells, but unresolved intervention and feature identities still prevent
+admitting that cohort to the unchanged duration-model protocol. No Parse outcome
+has been fitted or scored.
+
+The immediate sequence is to finish the existing full donor replay and preserve
+its complete receipts, then resolve the intervention and feature contract before
+freezing an independent prediction comparison. Any explicitly revised panel or
+model requires a new protocol and an account of which outcomes were already
+inspected; the 271 HGNC naming candidates do not silently repair the original
+409 absent symbols. Report every donor against no-change and the matched mean,
+alongside uncertainty coverage, interval width and failures. A failed comparison
+remains a result rather than a reason to change the acceptance threshold.
+
+Storage work can progress while those experimental inputs are unresolved:
+file-backed cell identities and QC address the remaining resident metadata
+requirement. That implementation and its full-cohort validation are still open.
+The current donor-partitioned count stream does not establish that all metadata,
+graphs or prediction models execute out of core. Atlas supplies a separate
+variant-to-molecular hypothesis route; it supplies neither missing Parse treatment
+metadata nor experimental RNA-to-phenotype outcomes.
+
+### Applying the present evidence
+
 The available evidence supports a **conditional research estimate of average RNA
 response** when the experiment matches an implemented predictor's input contract.
 It does not establish that any particular new query will beat a simple baseline.

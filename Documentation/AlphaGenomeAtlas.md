@@ -16,6 +16,13 @@ The API exposes Atlas alongside model predictions for expression, splicing,
 chromatin features and contact maps. This is directly relevant to the planned
 variant → regulation → RNA/cell-state connection and future RNA/ATAC comparisons.
 
+For the current [biological prediction decision](BiologicalPrediction.md#available-information-does-not-imply-a-validated-outcome),
+Atlas adds predicted molecular effects for identified DNA variants. It does not
+supply missing cytokine dose/reagent metadata, establish equivalence between
+ambiguous RNA feature names, or provide measured cellular and tissue outcomes.
+The Parse IFN-beta admission and independent RNA-response validation therefore
+retain their existing input and outcome requirements.
+
 The proposed role is a versioned external prediction source. AVI can prioritize
 variants; modality-specific effects can form testable hypotheses. An AVI score
 must not be interpreted as an expression fold change, protein concentration,
