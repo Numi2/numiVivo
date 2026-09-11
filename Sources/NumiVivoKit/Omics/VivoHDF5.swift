@@ -9,6 +9,8 @@ import Glibc
 /// or mandatory HDF5 dependency is added to the molecular/iOS runtime.
 /// All calls are serialized because a system HDF5 build may not be thread safe.
 final class VivoHDF5 {
+    /// Per-instance projection budget; each projection opens its own locked handle.
+    var projectionMaximumOutputBytes = 1_073_741_824
     static let lock = NSLock()
     let library: UnsafeMutableRawPointer
     typealias ID = Int64

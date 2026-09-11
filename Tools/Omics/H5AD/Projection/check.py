@@ -214,7 +214,7 @@ for i,source in enumerate(a.real):
  del original
 # Rejection must never publish a partial destination.
 base=plan_for(source,[0],[0])
-for name,edit in [('negative-index',{'observationIndices':[-1,0]}),('out-of-bounds',{'featureIndices':[1999999]}),('work-limit',{'maximumElementVisits':1}),('wrong-source',{'source':{'bytes':[0]*32}})]:
+for name,edit in [('negative-index',{'observationIndices':[-1,0]}),('out-of-bounds',{'featureIndices':[1999999]}),('work-limit',{'maximumElementVisits':1}),('zero-storage',{'maximumOutputBytes':0}),('negative-storage',{'maximumOutputBytes':-1}),('excess-storage',{'maximumOutputBytes':8589934593}),('tiny-storage',{'maximumOutputBytes':1}),('wrong-source',{'source':{'bytes':[0]*32}})]:
  plan={**base,**edit};path=a.out/(name+'-plan.json');path.write_text(json.dumps(plan)+'\n')
  summary['negativeCases'].append(dict(name=name,**invoke(source,path,a.out/name,name,reject=True)));save()
 expanded=a.out/'expanded-source.h5ad';ad.AnnData(sparse.csr_matrix([[1]],dtype='uint64')).write_h5ad(expanded)
@@ -246,6 +246,15 @@ with h5py.File(oversized,'r+') as f:
  d.attrs['encoding-type']='array';d.attrs['encoding-version']='0.2.0'
 oversized_plan=a.out/'oversized-plan.json';oversized_plan.write_text(json.dumps(plan_for(oversized,None,None))+'\n')
 summary['negativeCases'].append(dict(name='output-allocation-limit',**invoke(oversized,oversized_plan,a.out/'oversized-output','oversized',reject=True)))
+# Explicit byte allowance changes admission/receipt, not projection values.
+explicit_source=a.out/'csr-source.h5ad';explicit_plan=json.loads((a.out/'csr-reorder-plan.json').read_text());explicit_plan['maximumOutputBytes']=4*1024*1024
+explicit_path=a.out/'explicit-storage-plan.json';explicit_path.write_text(json.dumps(explicit_plan)+'\n');explicit_out=a.out/'explicit-storage'
+record=invoke(explicit_source,explicit_path,explicit_out,'explicit-storage')
+assert digest(explicit_out/'projected.h5ad')==digest(a.out/'csr-reorder/projected.h5ad')
+assert json.loads((explicit_out/'plan.json').read_text())['maximumOutputBytes']==4*1024*1024
+assert 'maximumOutputBytes' not in json.loads((a.out/'csr-reorder/plan.json').read_text())
+record['verify']=invoke(explicit_source,explicit_path,explicit_out,'explicit-storage-verify',verify=True)
+summary['cases'].append(dict(name='explicit-storage',defaultOutputBytesExact=True,**record));save()
 # Explicit no-overwrite checks the existing valid output remains unchanged.
 existing=a.out/'csr-reorder';before=digest(existing/'projected.h5ad')
 summary['negativeCases'].append(dict(name='no-overwrite',**invoke(a.out/'csr-source.h5ad',a.out/'csr-reorder-plan.json',existing,'no-overwrite',reject=True,existing=True)))

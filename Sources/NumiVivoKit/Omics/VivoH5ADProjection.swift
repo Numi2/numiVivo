@@ -9,23 +9,30 @@ public struct VivoH5ADProjectionPlan: Codable, Sendable, Equatable {
     public let observationIndices: [Int]?
     public let featureIndices: [Int]?
     public let maximumElementVisits: Int
-    public init(source: VivoFingerprint,provenance: String,observationIndices: [Int]? = nil,featureIndices: [Int]? = nil,maximumElementVisits: Int = 500_000_000) {
+    /// nil preserves the historical 1 GiB output limit and encoded plan.
+    public let maximumOutputBytes: Int?
+    public init(source: VivoFingerprint,provenance: String,observationIndices: [Int]? = nil,featureIndices: [Int]? = nil,maximumElementVisits: Int = 500_000_000, maximumOutputBytes: Int? = nil) {
+        self.maximumOutputBytes=maximumOutputBytes
         schemaVersion=1;self.source=source;self.provenance=provenance;self.observationIndices=observationIndices
         self.featureIndices=featureIndices;self.maximumElementVisits=maximumElementVisits
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,source,provenance,observationIndices,featureIndices,maximumElementVisits }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,source,provenance,observationIndices,featureIndices,maximumElementVisits,maximumOutputBytes }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","source","provenance","observationIndices","featureIndices","maximumElementVisits"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","source","provenance","observationIndices","featureIndices","maximumElementVisits","maximumOutputBytes"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);source=try c.decode(VivoFingerprint.self,forKey: .source)
         provenance=try c.decode(String.self,forKey: .provenance)
         observationIndices=try c.decodeIfPresent([Int].self,forKey: .observationIndices)
         featureIndices=try c.decodeIfPresent([Int].self,forKey: .featureIndices)
+        maximumOutputBytes=try c.decodeIfPresent(Int.self,forKey: .maximumOutputBytes)
         maximumElementVisits=try c.decodeIfPresent(Int.self,forKey: .maximumElementVisits) ?? 500_000_000
     }
     func validate() throws {
         guard schemaVersion==1,!provenance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,provenance.utf8.count<=16_384,
               (1...2_000_000_000).contains(maximumElementVisits) else { throw VivoOmicsError.invalid("projection schema, provenance or work allowance") }
+        if let maximumOutputBytes {
+            guard (1...8_589_934_592).contains(maximumOutputBytes) else { throw VivoOmicsError.invalid("projection output byte allowance") }
+        }
         for indices in [observationIndices,featureIndices].compactMap({ $0 }) {
             guard indices.count<=2_000_000,indices.allSatisfy({ (0..<2_000_000).contains($0) }) else {
                 throw VivoOmicsError.invalid("projection indices must be nonnegative and bounded")
@@ -63,15 +70,15 @@ private final class VivoH5ADProjector {
     let root: Int64
     var movedLegacyCategories=Set<String>()
     var remaining: Int
-    var remainingStorage=1_073_741_824
+    var remainingStorage: Int
     var fields: [VivoH5ADProjectedField]=[]
-    init(_ h: VivoHDF5,limit: Int,root: Int64,legacy: Bool) { self.h=h;remaining=limit;self.root=root;self.legacy=legacy }
+    init(_ h: VivoHDF5,limit: Int,root: Int64,legacy: Bool) { self.h=h;remaining=limit;remainingStorage=h.projectionMaximumOutputBytes;self.root=root;self.legacy=legacy }
     func consume(_ count: Int) throws {
         try Task.checkCancellation()
         guard count>=0,count<=remaining else { throw VivoOmicsError.limit("H5AD projection element visits") };remaining-=count
     }
     func reserveStorage(_ bytes: Int,output: Int64) throws {
-        guard bytes>=0,bytes<=remainingStorage else { throw VivoOmicsError.limit("projection output allocation exceeds 1 GiB") }
+        guard bytes>=0,bytes<=remainingStorage else { throw VivoOmicsError.limit("projection output allocation exceeds byte allowance") }
         try h.projectionStorageLimit(output,reserving: bytes);remainingStorage-=bytes
     }
     func typeWidth(_ type: Int64) throws -> Int {
@@ -195,7 +202,9 @@ private final class VivoH5ADProjector {
         let ii=try h.dataset(source,"indices");defer { h.close(ii,"H5Dclose") }
         let pp=try h.dataset(source,"indptr");defer { h.close(pp,"H5Dclose") }
         let ds=try h.shape(data,attribute: false),is_=try h.shape(ii,attribute: false)
-        guard ds.count==1,ds==is_,ds[0]<=100_000_000,try h.shape(pp,attribute: false)==[UInt64(majorLength+1)] else { throw VivoOmicsError.invalid("sparse component dimensions") }
+        guard ds.count==1,ds==is_,try h.shape(pp,attribute: false)==[UInt64(majorLength+1)] else { throw VivoOmicsError.invalid("sparse component dimensions") }
+        // Entry count bounds scan work, not resident payload. Check before Int conversion.
+        guard ds[0]<=UInt64(remaining) else { throw VivoOmicsError.limit("H5AD projection element visits") }
         let ptr=try h.integers(pp,maximum: 2_000_001),nnz=Int(ds[0])
         guard ptr.first==0,ptr.last==ds[0],zip(ptr,ptr.dropFirst()).allSatisfy({ $0<=$1 }) else { throw VivoOmicsError.invalid("sparse offset domain") }
         try consume(nnz)
@@ -306,6 +315,7 @@ public enum VivoH5ADProjection {
         try plan.validate()
         return try VivoHDF5.lock.withLock {
             let h=try VivoHDF5(),input=try h.file(source.path);defer { h.close(input,"H5Fclose") }
+            h.projectionMaximumOutputBytes=plan.maximumOutputBytes ?? 1_073_741_824
             let legacy=try !h.legacyHasAttribute(input,"encoding-type") && !h.legacyHasAttribute(input,"encoding-version")
             let engine=VivoH5ADProjector(h,limit: plan.maximumElementVisits,root: input,legacy: legacy)
             try engine.encoding(input,"anndata","0.1.0");try h.validateAnnotationStorage(input)

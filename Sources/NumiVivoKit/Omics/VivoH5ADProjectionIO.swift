@@ -18,7 +18,7 @@ extension VivoHDF5 {
         let file=try id(get(object),"projection storage file");defer { close(file,"H5Fclose") }
         let size: @convention(c) (ID,UnsafeMutablePointer<UInt64>) -> Int32 = try symbol("H5Fget_filesize")
         var current: UInt64=0;try check(size(file,&current),"projection storage size")
-        guard bytes>=0,current<=1_073_741_824,UInt64(bytes)<=1_073_741_824-current else { throw VivoOmicsError.limit("projected H5AD exceeds 1 GiB") }
+        guard bytes>=0,current<=UInt64(projectionMaximumOutputBytes),UInt64(bytes)<=UInt64(projectionMaximumOutputBytes)-current else { throw VivoOmicsError.limit("projected H5AD exceeds output byte allowance") }
     }
     func projectionNames(_ object: ID, attributes: Bool = false) throws -> [String] {
         let state=VivoH5ADNames()

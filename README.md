@@ -61,6 +61,13 @@ and reconciliation of its guide roster before fitting. [AlphaGenome Atlas](Docum
 can supply variant-level molecular hypotheses; its predictions do not establish
 NumiVivo's downstream cellular or tissue outcomes.
 
+A [separate Replogle UPR cohort](Tools/Omics/PerturbationPrediction/Replogle2020/README.md)
+now has verified complete inputs: 40,997 cells, 33,694 RNA features and 64 guide
+features kept separate. Native and AnnData/SciPy checks also agree on all 32,829
+confident cells across five technical gemgroups. Projection now admits this
+129.84-million-entry source under explicit work/storage bounds. Prediction
+fitting and scoring remain pending; these input checks add no predictive claim.
+
 The [HIRISA preparation-transfer test](Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
 now completes all 120 donor-excluded folds across 705,365 cells. Cross-preparation
 ridge beats no-change in all twelve contrast means, but beats the simpler

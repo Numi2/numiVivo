@@ -624,6 +624,11 @@ The complete development objective remains open:
    also pass publication, replay and independent checks. Broader biological
    preservation and native multi-seed integration remain open; resident
    metadata/bookkeeping limits remain explicit.
+   The [complete Replogle UPR partition](../Tools/Omics/PerturbationPrediction/Replogle2020/README.md)
+   also passes on 129,839,577 mixed-source entries, with RNA and guide counts
+   separated. Projection uses charged work and an explicit output-byte allowance
+   while retaining bounded transfers. Full and confident-cohort native RNA sums,
+   QC and membership match independent AnnData/SciPy; prediction remains pending.
 10. **Metal:** the first explicit [sparse count-normalization backend](../Tools/Omics/CountStore/Metal/README.md)
     now passes all 14,184,532 original Kang records, every native replay and the
     actual product single-cell CLI. FP32 output has maximum absolute error

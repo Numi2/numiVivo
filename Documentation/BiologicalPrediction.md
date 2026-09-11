@@ -32,6 +32,14 @@ input-processing boundary. They add no held-out biological observations: the
 remaining decision is whether frozen predictors outperform simple baselines in
 an independently identified experiment, with uncertainty and failures reported.
 
+The [Replogle 2020 UPR input qualification](../Tools/Omics/PerturbationPrediction/Replogle2020/README.md)
+adds a separately collected source with explicit paper-defined controls. All
+40,997 cells and both RNA/guide feature spaces are retained, and native and
+AnnData/SciPy checks agree on the full source and all 32,829 confidently assigned
+cells. No predictor has been fitted or scored. Five technical gemgroups are not
+five independent biological donors, and target-descriptor identity requirements
+remain part of the frozen validation protocol.
+
 ## What information is sufficient for the implemented predictors?
 
 | Question | Information available before prediction | Output and present evidence |
@@ -228,6 +236,9 @@ Lower donor-associated variance also does not isolate technical batch removal.
 3. Resolve Adamson controls and its 94-versus-93 guide roster from primary records, then execute the
    frozen independent-study target-prediction protocol with coverage, all
    failures and matched simple/shuffled baselines. Do not tune it on test scores.
+   The separately prepared Replogle UPR cohort now supplies another complete,
+   verified input route; resolve descriptor identities and freeze all folds
+   before fitting and scoring it. Adamson's gate remains unchanged.
 4. Extend the [completed HIRISA preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
    to an independent study with prospective strata and measured outcomes. Its
    sixty cross-preparation folds and sixty matched references now pass replay

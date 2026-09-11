@@ -90,13 +90,26 @@ projection and checks both the report and exact H5AD output bytes. New HDF5 obje
 have timestamp tracking disabled so replay does not depend on the wall clock.
 Failures remove the staging directory; existing destinations are not overwritten.
 
-Source and output files are bounded to 1 GiB. Dataset allocations are checked
-before creation, variable storage is reserved during block transfers, and file
-size is checked during writes/copies. Axes are bounded to two million entries;
-each sparse input has at most 100 million stored entries. The default work limit
-is 500 million element visits, configurable up to two billion via
-`maximumElementVisits`. Dense output visits and sparse index/data passes share
-this allowance. Empty arrays consume zero element visits.
+Source snapshots use the existing streamed owner's 64 GiB input bound. This
+experiment does not qualify a 64 GiB source. Output defaults to 1 GiB; an explicit
+`maximumOutputBytes` plan field permits a positive allowance up to 8 GiB.
+Omitting that field preserves historical plan bytes and the default bound.
+Dataset allocations are checked before creation, variable storage is reserved
+during block transfers, and actual file size is checked during writes/copies.
+The allowance belongs to each projection's HDF5 handle, not global mutable state.
+Axes remain bounded to two million entries. Sparse input size is admitted against
+the remaining work allowance before integer conversion and scanning, replacing
+the former fixed 100-million-entry cap. The default work limit is 500 million
+element visits, configurable up to two billion via `maximumElementVisits`.
+Dense output visits and sparse index/data passes share this allowance. Empty
+arrays consume zero element visits.
+
+The [complete Replogle UPR assay partition](../../PerturbationPrediction/Replogle2020/README.md)
+qualifies this extension on 129,839,577 original entries. The RNA output explicitly
+requests 2 GiB; the guide output uses the unchanged default. Both reconstruct
+exactly, while the full RNA request with default storage or insufficient work
+rejects without publication. This is input/assay qualification, not a prediction
+result.
 
 Transfers gather at most 65,536 values at once with bounded numeric and variable
 buffers. Dense source arrays are read in blocks, and sparse inputs remain sparse;
