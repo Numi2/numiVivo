@@ -24,6 +24,12 @@ python check_replay.py /new/run /new/repeat --out replay.json
 The plan must use the original Baron `X`, `native_sample`, `donor`, `cell_type`
 and observation-index barcode axes. Use the preserved `source-plan.json` for the full donor mapping. Source IDs and metadata must not be silently remapped.
 
+The subsequent [native balanced-logistic path](Logistic/README.md) now reproduces
+all 8,569 external candidate labels with independent probability/objective checks.
+Macro-F1 improves over native kNN in all four donors, while overall accuracy
+falls in two and the original acinar/Schwann failures remain. The original
+external benchmark below remains its comparison, not an independent validation.
+
 ## First real-data results
 
 | Held-out donor | kNN accuracy | kNN macro F1 | Balanced logistic accuracy | Balanced logistic macro F1 |

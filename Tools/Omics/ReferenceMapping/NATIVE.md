@@ -4,8 +4,9 @@
 archives the exact source, mapping, label provenance, feature namespace, complete
 gene universe, normalization target, selected features, training means, loadings,
 scores and labels. `singlecell-reference-map` projects an independently supplied
-query and applies exact uniform kNN voting using the existing bounded neighbor
-heap. No dense cells-by-genes or query-by-reference distance matrix is built.
+query and by default applies exact uniform kNN voting using the existing
+bounded neighbor heap. An optional [native balanced logistic classifier](Logistic/README.md)
+uses the same frozen projection and independently fitted training-only scale. No dense cells-by-genes or query-by-reference distance matrix is built.
 
 ```sh
 numivivo singlecell-reference-fit training.h5ad --plan fit.json --output reference
@@ -47,7 +48,7 @@ donors are reported explicitly; absence of overlap alone does not prove an
 independent biological evaluation.
 
 Neighbor ordering is squared Euclidean distance followed by reference row index.
-Class order is sorted source labels; tied votes select the first class. Each
+Class order is sorted source labels; tied votes select the first class. Each default kNN
 mapped row retains scores, reference neighbor indices/distances, integer class
 votes and a `candidateLabel`. Dividing votes by k yields uncalibrated proportions.
 This does not provide unknown-class rejection, calibrated uncertainty or
@@ -76,8 +77,10 @@ native centers, frozen query scores, neighbor indices/distances, votes and label
 with the independent Python reference. It also exercises source reconstruction,
 exact replay, label-free queries with reversed feature order, empty libraries,
 contract mismatch/overlap/budget/overwrite rejection, and altered model rejection.
-The external balanced-logistic baseline remains external; native multinomial
-training and broader biological validation are still open.
+The subsequent [native balanced-logistic qualification](Logistic/README.md)
+implements multinomial training and evaluates every original donor fold. Its
+probabilities remain uncalibrated; independent-study validation and unknown-class
+rejection remain open.
 
 ## Product qualification, 2026-09-09
 

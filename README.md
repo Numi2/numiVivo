@@ -89,6 +89,12 @@ preserves the complete 4,039-spot lymph-node release directly from its original
 counts and position table. All counts, identities and coordinates match Scanpy;
 this closes a spatial input path without establishing tissue prediction.
 
+[Native balanced reference mapping](Tools/Omics/ReferenceMapping/Logistic/README.md)
+now reproduces the external classifier's labels for all 8,569 Baron query cells.
+Macro-F1 improves over kNN in all four donors, while overall accuracy falls in
+two and rare-class misses remain. These are candidate source labels with
+uncalibrated probabilities; broader biological prediction claims remain unchanged.
+
 The [single-cell program](Documentation/SingleCellInteroperability.md) now includes
 native H5AD interchange, negative-binomial DE, sparse PCA/neighbors/clustering,
 integration, marker scoring and multimodal count interchange. The complete

@@ -526,6 +526,11 @@ The complete development objective remains open:
    response observations. [Native frozen reference mapping](../Tools/Omics/ReferenceMapping/NATIVE.md)
    now fits training-only PCA and returns provenance-bound candidate kNN labels;
    all four Baron held-out donor folds match independent reference arithmetic.
+   Optional [native balanced multinomial logistic mapping](../Tools/Omics/ReferenceMapping/Logistic/README.md)
+   now fits training-only scale and class weights. All 8,569 candidate labels
+   match the external classifier, and independent probability/objective checks
+   pass. Macro-F1 improves over kNN in all four donors, while accuracy falls in
+   two and acinar/Schwann failures persist. The default kNN bytes remain exact.
    Calibrated annotation, novel-class rejection and independent multi-study
    biological qualification remain; labels are not authoritative.
 7. **Perturbation prediction:** [real donor-held-out response baselines](../Tools/Omics/PerturbationPrediction/README.md)

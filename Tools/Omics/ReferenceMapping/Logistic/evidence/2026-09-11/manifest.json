@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "execution.json",
+      "sourceBytes": 711197,
+      "sourceSHA256": "efa1faf6ba1f51759d07c7b35a678f250732717e5d98a2172a97902f0ae2b3a4",
+      "storedPath": "execution.json.gz",
+      "storedBytes": 129391,
+      "storedSHA256": "c84cab7d9ce463e4f700974d148da6554d76b951136679dde4f2099bc3825c3b",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "native-source.json",
+      "sourceBytes": 47316,
+      "sourceSHA256": "7ddfc986bb86bdca6d81794da0451bea24706d1888470572ef172e5bf719e680",
+      "storedPath": "native-source.json.gz",
+      "storedBytes": 11066,
+      "storedSHA256": "4e46de96f5ffe77058bd572d1989242a14d976a4647fef125ed9ab01207c4ed1",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "recipe.json",
+      "sourceBytes": 43667,
+      "sourceSHA256": "8d3b9235d4673d8c21b8560bc3df1c17fe505e717da860a20bbdcb3743ed3a01",
+      "storedPath": "recipe.json.gz",
+      "storedBytes": 14557,
+      "storedSHA256": "4b6a00fc8f214b0c8da08dda781aac506736514891e58fd1f7b9a96ac3ce4c5a",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "human1-predictions.npz",
+      "sourceBytes": 428774,
+      "sourceSHA256": "964ed8df54e940dd3f63320507f785d7292d7f23fbbeecfebd8ccbe25d6c5b6f",
+      "storedPath": "human1-predictions.npz.gz",
+      "storedBytes": 424262,
+      "storedSHA256": "54e6921bb0b66c81c15df657912772ab09f03f8c07eb446c4534ab99066d1843",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "human2-predictions.npz",
+      "sourceBytes": 382573,
+      "sourceSHA256": "7d502282b61e8b8d4ff938fc9551d6af176afb5794805b76bb1cbe621c51be89",
+      "storedPath": "human2-predictions.npz.gz",
+      "storedBytes": 378618,
+      "storedSHA256": "99f059a729b6ad06b363f715c35da27ef030381500c2e84bd78315258d7932fa",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "human3-predictions.npz",
+      "sourceBytes": 795099,
+      "sourceSHA256": "ac7dc622a0f2a9b07d06e299672e02b1d8e9397f1d10394973350c6d3fc80d18",
+      "storedPath": "human3-predictions.npz.gz",
+      "storedBytes": 786455,
+      "storedSHA256": "57f3d987905bfd72bf5682b9bc116ab36237aab7b1ca90cd484e21c41e7e1fde",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "human4-predictions.npz",
+      "sourceBytes": 289138,
+      "sourceSHA256": "1194e0d04c527cffa33c7401d87da1636da873cf56b930326ce4a356aee60628",
+      "storedPath": "human4-predictions.npz.gz",
+      "storedBytes": 286218,
+      "storedSHA256": "8fdea7c2d8bec0ffee52f3c25153e1c5ee6770c6b41f8e152fdacc5929c412d5",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    }
+  ]
+}

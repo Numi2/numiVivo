@@ -7,20 +7,23 @@ public struct VivoSingleCellReferencePlan: Codable, Sendable, Equatable {
     public let featureNamespace: String
     public let labelProvenance: String
     public let neighbors: Int
-    public init(mapping: VivoH5ADImportPlan,reduction: VivoH5ADReductionOptions = .init(),featureNamespace: String,labelProvenance: String,neighbors: Int = 15) {
-        schemaVersion=1;self.mapping=mapping;self.reduction=reduction;self.featureNamespace=featureNamespace;self.labelProvenance=labelProvenance;self.neighbors=neighbors
+    public var logistic: VivoReferenceLogisticOptions? = nil
+    public init(mapping: VivoH5ADImportPlan,reduction: VivoH5ADReductionOptions = .init(),featureNamespace: String,labelProvenance: String,neighbors: Int = 15, logistic: VivoReferenceLogisticOptions? = nil) {
+        schemaVersion=1;self.mapping=mapping;self.reduction=reduction;self.featureNamespace=featureNamespace;self.labelProvenance=labelProvenance;self.neighbors=neighbors;self.logistic=logistic
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,reduction,featureNamespace,labelProvenance,neighbors }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,reduction,featureNamespace,labelProvenance,neighbors,logistic }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","reduction","featureNamespace","labelProvenance","neighbors"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","reduction","featureNamespace","labelProvenance","neighbors","logistic"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);mapping=try c.decode(VivoH5ADImportPlan.self,forKey: .mapping)
         reduction=try c.decodeIfPresent(VivoH5ADReductionOptions.self,forKey: .reduction) ?? .init()
         featureNamespace=try c.decode(String.self,forKey: .featureNamespace);labelProvenance=try c.decode(String.self,forKey: .labelProvenance)
         neighbors=try c.decodeIfPresent(Int.self,forKey: .neighbors) ?? 15
+        logistic=try c.decodeIfPresent(VivoReferenceLogisticOptions.self,forKey: .logistic)
     }
     func validate() throws {
         try reduction.validate()
+        try logistic?.validate()
         guard schemaVersion==1,mapping.groupColumn != nil,vivoOmicsID(featureNamespace),
               !labelProvenance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,labelProvenance.utf8.count<=16_384,
               (1...128).contains(neighbors) else { throw VivoOmicsError.invalid("reference schema, label source, namespace or neighbors") }
@@ -36,22 +39,25 @@ public struct VivoSingleCellReferenceQueryPlan: Codable, Sendable, Equatable {
     public let featureNamespace: String
     public let maximumDistanceOperations: Int
     public let maximumProjectionUpdates: Int
-    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,maximumDistanceOperations: Int = 2_000_000_000,maximumProjectionUpdates: Int = 2_000_000_000) {
+    public var maximumClassifierOperations: Int? = nil
+    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,maximumDistanceOperations: Int = 2_000_000_000,maximumProjectionUpdates: Int = 2_000_000_000, maximumClassifierOperations: Int? = nil) {
         schemaVersion=1;self.mapping=mapping;self.featureNamespace=featureNamespace
-        self.maximumDistanceOperations=maximumDistanceOperations;self.maximumProjectionUpdates=maximumProjectionUpdates
+        self.maximumDistanceOperations=maximumDistanceOperations;self.maximumProjectionUpdates=maximumProjectionUpdates;self.maximumClassifierOperations=maximumClassifierOperations
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,maximumDistanceOperations,maximumProjectionUpdates }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,maximumDistanceOperations,maximumProjectionUpdates,maximumClassifierOperations }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","maximumDistanceOperations","maximumProjectionUpdates"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","maximumDistanceOperations","maximumProjectionUpdates","maximumClassifierOperations"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);mapping=try c.decode(VivoH5ADImportPlan.self,forKey: .mapping)
         featureNamespace=try c.decode(String.self,forKey: .featureNamespace)
         maximumDistanceOperations=try c.decodeIfPresent(Int.self,forKey: .maximumDistanceOperations) ?? 2_000_000_000
         maximumProjectionUpdates=try c.decodeIfPresent(Int.self,forKey: .maximumProjectionUpdates) ?? 2_000_000_000
+        maximumClassifierOperations=try c.decodeIfPresent(Int.self,forKey: .maximumClassifierOperations)
     }
     func validate() throws {
         guard schemaVersion==1,mapping.groupColumn==nil,vivoOmicsID(featureNamespace),
-              (1...20_000_000_000).contains(maximumDistanceOperations),(1...20_000_000_000).contains(maximumProjectionUpdates) else {
+              (1...20_000_000_000).contains(maximumDistanceOperations),(1...20_000_000_000).contains(maximumProjectionUpdates),
+              maximumClassifierOperations.map({ (1...20_000_000_000).contains($0) }) ?? true else {
             throw VivoOmicsError.invalid("query schema, namespace or work budget; query label mapping is prohibited")
         }
     }
@@ -66,6 +72,7 @@ public struct VivoSingleCellReferenceModel: Codable, Sendable, Equatable {
     public let referenceLabels: [String]
     public let classes: [String]
     public let qualification: String
+    public var logistic: VivoReferenceLogisticModel? = nil
 }
 public struct VivoSingleCellReferencePrediction: Codable, Sendable, Equatable {
     public let cell: VivoOmicsCellIdentity
@@ -75,6 +82,7 @@ public struct VivoSingleCellReferencePrediction: Codable, Sendable, Equatable {
     public let squaredDistances: [Double]
     public let votes: [Int]
     public let candidateLabel: String?
+    public var classProbabilities: [Double]? = nil
 }
 public struct VivoSingleCellReferenceReport: Codable, Sendable, Equatable {
     public let method: String
@@ -86,6 +94,7 @@ public struct VivoSingleCellReferenceReport: Codable, Sendable, Equatable {
     public let projectionUpdates: Int
     public let hdf5Version: String
     public let qualification: String
+    public var classifierOperations: Int? = nil
 }
 
 public enum VivoSingleCellReference {
@@ -94,15 +103,17 @@ public enum VivoSingleCellReference {
         let labels=report.metadata.cells.compactMap(\.group),organisms=Set(report.metadata.samples.map(\.organism))
         guard let reduction=report.reduction,let centers=reduction.projectionCenters,
               labels.count==report.metadata.cells.count,labels.allSatisfy(vivoOmicsID),
-              labels.count>=plan.neighbors,labels.count<=100_000,Set(labels).count<=256,
+              (plan.logistic != nil || labels.count>=plan.neighbors),labels.count<=100_000,Set(labels).count<=256,
               organisms.count==1,centers.count==reduction.selectedFeatureIndices.count,
               report.quality.allSatisfy({ $0.totalCounts>0 }) else {
             throw VivoOmicsError.invalid("reference requires complete labels, one organism, positive libraries and retained centers")
         }
-        return .init(method: "frozen-sparse-log-PCA-uniform-reference-kNN-v1",plan: plan,source: source,
+        let classes=Set(labels).sorted(), classIndex=Dictionary(uniqueKeysWithValues: Set(labels).sorted().enumerated().map { ($0.element,$0.offset) })
+        let logistic = try plan.logistic.map { try VivoReferenceLogistic.fit(scores: reduction.scores, labels: labels.map { classIndex[$0]! }, classes: classes.count, options: $0) }
+        return .init(method: logistic == nil ? "frozen-sparse-log-PCA-uniform-reference-kNN-v1" : "frozen-sparse-log-PCA-balanced-logistic-v1",plan: plan,source: source,
             featureIDs: report.metadata.features.map(\.id),organism: organisms.first!,reduction: reduction,
-            referenceLabels: labels,classes: Set(labels).sorted(),
-            qualification: "Training-derived reference voting; candidate labels only. Uncalibrated votes, no novelty detection, no cross-study or rare-class qualification.")
+            referenceLabels: labels,classes: classes,
+            qualification: logistic == nil ? "Training-derived reference voting; candidate labels only. Uncalibrated votes, no novelty detection, no cross-study or rare-class qualification." : "Training-only standardized class-balanced multinomial logistic model. Candidate labels and uncalibrated probabilities; no novelty detection or biological identity guarantee.", logistic: logistic)
     }
     static func nearest(_ score: [Double],reference: [[Double]],neighbors: Int) throws -> [VivoSingleCellNeighbors.Neighbor] {
         var heap: [VivoSingleCellNeighbors.Neighbor]=[]
@@ -122,7 +133,7 @@ public enum VivoSingleCellReference {
         }
         let reduction=model.reduction,d=reduction.options.components,centers=reduction.projectionCenters!
         var metadata: VivoSingleCellCountMetadata?,totals: [UInt64]=[],local: [Int]=[]
-        var operations=0
+        var operations=0, classifierOperations=0
         let version=try VivoSingleCellH5AD.scanSnapshot(snapshot,plan: plan.mapping,limits: VivoH5ADPseudobulk.sourceLimits,onMetadata: { value in
             guard Set(value.samples.map(\.organism))==[model.organism],value.features.count==model.featureIDs.count,
                   Set(value.features.map(\.id))==Set(model.featureIDs) else { throw VivoOmicsError.invalid("query must match the complete reference gene universe and organism") }
@@ -131,9 +142,14 @@ public enum VivoSingleCellReference {
                 throw VivoOmicsError.invalid("query overlaps reference cell identities")
             }
             let n=value.cells.count
-            guard n<=5_000_000/max(d,max(model.classes.count,model.plan.neighbors)),
-                  n<=plan.maximumDistanceOperations/d/reduction.cells.count else { throw VivoOmicsError.limit("reference query score/output or distance-operation budget") }
-            operations=n*d*reduction.cells.count
+            guard n<=5_000_000/max(d,max(model.classes.count,model.plan.neighbors)) else { throw VivoOmicsError.limit("reference query score/output budget") }
+            if model.logistic == nil {
+                guard n<=plan.maximumDistanceOperations/d/reduction.cells.count else { throw VivoOmicsError.limit("reference query distance-operation budget") }
+                operations=n*d*reduction.cells.count
+            } else {
+                guard n<=(plan.maximumClassifierOperations ?? 2_000_000_000)/(d+1)/model.classes.count else { throw VivoOmicsError.limit("reference query classifier-operation budget") }
+                classifierOperations=n*(d+1)*model.classes.count
+            }
             let selectedIDs=Dictionary(uniqueKeysWithValues: reduction.selectedFeatureIndices.enumerated().map { (model.featureIDs[$0.element],$0.offset) })
             local=value.features.map { selectedIDs[$0.id] ?? -1 }
             metadata=value;totals=Array(repeating: 0,count: n)
@@ -156,10 +172,16 @@ public enum VivoSingleCellReference {
             try Task.checkCancellation()
             let cell=metadata.cells[row],identity=VivoOmicsCellIdentity(sampleID: cell.sampleID,barcode: cell.barcode)
             if totals[row]==0 {
-                operations-=d*reduction.cells.count
+                if model.logistic == nil { operations-=d*reduction.cells.count }
+                else { classifierOperations-=(d+1)*model.classes.count }
                 predictions.append(.init(cell: identity,totalCounts: 0,scores: nil,neighborIndices: [],squaredDistances: [],votes: [],candidateLabel: nil));continue
             }
             guard scores[row].allSatisfy(\.isFinite) else { throw VivoOmicsError.invalid("query scores nonfinite") }
+            if let logistic=model.logistic {
+                let probabilities=try VivoReferenceLogistic.probabilities(scores[row],model: logistic)
+                let winner=probabilities.firstIndex(of: probabilities.max()!)!
+                predictions.append(.init(cell: identity,totalCounts: totals[row],scores: scores[row],neighborIndices: [],squaredDistances: [],votes: [],candidateLabel: model.classes[winner],classProbabilities: probabilities));continue
+            }
             let neighbors=try nearest(scores[row],reference: reduction.scores,neighbors: model.plan.neighbors)
             var votes=[Int](repeating: 0,count: model.classes.count)
             for neighbor in neighbors { votes[labelIndex[model.referenceLabels[neighbor.index]]!]+=1 }
@@ -170,6 +192,6 @@ public enum VivoSingleCellReference {
         let donors=Set(model.plan.mapping.samples.compactMap(\.donorID)).intersection(metadata.samples.compactMap(\.donorID)).sorted()
         return .init(method: model.method,referenceSource: model.source,classes: model.classes,cells: predictions,overlappingDonorIDs: donors,
             distanceOperations: operations,projectionUpdates: updates,hdf5Version: version,
-            qualification: "Frozen training-only projection and uniform kNN votes; labels are candidates and votes are uncalibrated. Empty libraries remain unmapped. No novel-class rejection or biological identity guarantee. No query labels read or query fitting performed.")
+            qualification: model.logistic == nil ? "Frozen training-only projection and uniform kNN votes; labels are candidates and votes are uncalibrated. Empty libraries remain unmapped. No novel-class rejection or biological identity guarantee. No query labels read or query fitting performed." : "Frozen training-only projection, standardization and class-balanced logistic classifier. Probabilities are uncalibrated and labels are candidates. Empty libraries remain unmapped; no novel-class rejection, query fitting or query labels.",classifierOperations: model.logistic == nil ? nil : classifierOperations)
     }
 }

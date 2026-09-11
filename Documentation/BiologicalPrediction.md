@@ -70,6 +70,14 @@ matches independent readers and the earlier qualified interchange product.
 These measured spatial inputs do not themselves supply a validated spatial
 response model, deconvolution, tissue function or variant-to-phenotype endpoint.
 
+The [native balanced reference classifier](../Tools/Omics/ReferenceMapping/Logistic/README.md)
+now predicts candidate source labels for all 8,569 Baron query cells, reproducing
+the previous external classifier. Macro-F1 improves over kNN in every donor,
+with lower overall accuracy in two and retained rare-class misses. This advances
+the annotation step; calibrated confidence, authoritative biological identities
+and independent context transfer remain unqualified. It adds no perturbation
+response, tissue-function or clinical outcome evidence.
+
 ## What information is sufficient for the implemented predictors?
 
 | Question | Information available before prediction | Output and present evidence |
