@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "ingestion-complete-summary.json",
+      "sourceBytes": 6460,
+      "sourceSHA256": "c1b66b6e13844838b799bbf7852dba9f610f2070545c245f17e6afd4907cc08d",
+      "storedPath": "ingestion-complete-summary.json.gz",
+      "storedBytes": 2481,
+      "storedSHA256": "0147e631414326395586cf0456e16ce03423db4235b96016f9069089db101c08",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "ingestion-phase-complete.json",
+      "sourceBytes": 18229,
+      "sourceSHA256": "e19bb25942132f93b5818a638c5962b1b24938d08d07b296e4de63a67fd8ec3a",
+      "storedPath": "ingestion-phase-complete.json.gz",
+      "storedBytes": 3753,
+      "storedSHA256": "bff489ba4445ba67855216f63755e98bafb8e0a80ae656b297d1e32ceac10db5",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "preparation-binding-mutations.json",
+      "sourceBytes": 595,
+      "sourceSHA256": "c0e09e84932f0d39bdfb381c8265c1291851c982122ac79949858b412a83e345",
+      "storedPath": "preparation-binding-mutations.json.gz",
+      "storedBytes": 345,
+      "storedSHA256": "3b18eccbce8f1f471c05ae9ca2f5509fb77020448cfee91bce522f657275f4ed",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "preparation-bindings-attempt1.json",
+      "sourceBytes": 440,
+      "sourceSHA256": "bfa46e3c77315517a32a1ee8568192aa09a9b9eb74f23b36e3ea063ced54586a",
+      "storedPath": "preparation-bindings-attempt1.json.gz",
+      "storedBytes": 298,
+      "storedSHA256": "9e5e8a9b206bf3a644fa718a8f40051bac4838c967f83ca4c86b4ca61ff39757",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "preparation-bindings-first.json",
+      "sourceBytes": 711155,
+      "sourceSHA256": "1210024878edcd36960e6cfc76b9d21d8458efdb29f2d18cd7955cd57a7f34c2",
+      "storedPath": "preparation-bindings-first.json.gz",
+      "storedBytes": 316011,
+      "storedSHA256": "e3d1b217fc7a2f530f81e8224c658c79efd6f239791b6465904396cb5081b80b",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "preparation-bindings-repeat.json",
+      "sourceBytes": 711155,
+      "sourceSHA256": "1210024878edcd36960e6cfc76b9d21d8458efdb29f2d18cd7955cd57a7f34c2",
+      "storedPath": "preparation-bindings-repeat.json.gz",
+      "storedBytes": 316011,
+      "storedSHA256": "e3d1b217fc7a2f530f81e8224c658c79efd6f239791b6465904396cb5081b80b",
+      "gzipEncoded": true,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "recipe.json",
+      "sourceBytes": 161251,
+      "sourceSHA256": "f8a92fffd2c02e53f8fe18f9a02058114090de44dc68d0b204a1f26a60d96d07",
+      "storedPath": "recipe.json.gz",
+      "storedBytes": 53495,
+      "storedSHA256": "6c6a0b83760908d118d32194792058e23eb24c601f3b3ac58b8cbc28c02c08cc",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    }
+  ]
+}

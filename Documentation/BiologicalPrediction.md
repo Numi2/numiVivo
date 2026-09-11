@@ -92,8 +92,9 @@ original external fixed-response failure and the missing phenotype boundary.
 
 The next [Parse IFN-beta source admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
 selects all 725,031 released IFN-beta/PBS cells across 12 source donor IDs
-and retains every source RNA feature. Complete native count execution and replay
-are in progress through disjoint complete donor partitions. The first monolithic
+and retains every source RNA feature. All twelve native donor ingestions and
+independent cell/aggregate checks now pass, covering 1,373,870,697 records and
+3,070,817,047 retained counts. Full native source replay is still running. The first monolithic
 attempt stopped on upstream HTTP 500 and published no complete result; bounded
 retries and saved donor receipts protect the replacement run. No predictor has
 been fitted or scored. The source historical

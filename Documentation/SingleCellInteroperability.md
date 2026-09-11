@@ -44,7 +44,9 @@ A [temporary-memory correction](../Tools/Omics/CountStore/Stream/Memory/README.m
 keeps the native allocator control near 105 MB across 160 MB and 1.6 GB streams;
 the original implementation grew to 1.71 GB. Exact counts/reports and four native
 tests pass. These synthetic controls qualify the buffer-lifetime repair; the
-complete Parse requalification is still pending.
+complete Parse ingestion now passes all twelve donors, while full native replay
+is still pending. The [preparation binding](../Tools/Omics/PerturbationPrediction/ParseIFNB/README.md#immutable-preparation-binding)
+also checks every donor projection against the immutable original source axes.
 
 ## Use
 

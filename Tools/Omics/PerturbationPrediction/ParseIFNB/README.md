@@ -6,6 +6,13 @@ cohort contains **725,031 cells, 12 donors, 24 donor/condition groups, 40,352 RN
 features and 1,373,870,697 stored count records**. No selected cell is downsampled
 or removed because of annotation/QC disagreement.
 
+**All twelve native donor ingestions and independent cell/aggregate count checks
+now pass.** The retained matrix contains 3,070,817,047 counts, 32,500 fewer than
+the historical source `tscp_count` sum. Historical detected-feature totals exceed
+the retained matrix by 31,902; each historical QC field disagrees for 30,634 cells.
+All 3,456 source runs are accounted for. Full native source replay is running,
+so complete count/replay qualification and final payload retention remain pending.
+
 The [protocol](PROTOCOL.md) fixes the source version, selection, checks and
 scientific boundaries. The original H5AD is 227,497,986,816 bytes; an in-memory
 metadata cache and bounded HTTP count ranges avoid retaining that full file.
@@ -138,9 +145,9 @@ python "$R/check_donors.py"
 
 The first command creates a new immutable partition plan. Either execution
 command can resume already completed donors. Native artifacts retain the exact
-binary identity; changing the binary requires a separate qualification. This
-full-cohort replacement and replay are in progress/pending, not a predictive
-success or a completed biological validation.
+binary identity; changing the binary requires a separate qualification. The
+full-cohort replacement ingestion has passed; native replay remains in progress.
+Neither is a predictive success or a completed biological validation.
 
 The first donor completed native ingestion for 110,923 cells. The independent
 checker initially decompressed an NPZ array once per cell; caching its arrays
@@ -151,19 +158,56 @@ and producer digest explicitly; full native source replay is still required.
 
 ## Retain the completed donor result
 
-After both phases and the complete-cohort check pass, retain the result with:
+For this preserved qualification study and its frozen `donor-recipe-v2`, after
+both phases and the complete-cohort check pass, retain the result with:
 
 ```sh
 python "$R/retain_donors.py" --study "$NUMIVIVO_PARSE_STUDY" \
   --out "$R/evidence/2026-09-11-counts"
 ```
 
-The retainer first requires all twelve ingestion and replay receipts, validates
-the executed recipe and binary identity, and reruns the independent full-cohort
+The retainer first requires all twelve ingestion and replay receipts. It checks
+every retained preparation input against the immutable archive, reconstructs all
+twelve donor plans from the original source axes and source ranges, validates the
+executed recipe and binary identity, and reruns the independent full-cohort
 checker. It writes a content-addressed archive, verifies every object and source
 file again, and only then publishes the result directory. The exact existing
 preparation and memory-control archives are required dependencies, preserving
-axes, chunk maps and qualified executables without duplicating them. Failed
+axes, chunk maps and qualified executables without duplicating them. The dated
+retainer requires the exact qualified executable already in its dependency
+archive; a different build requires its own executable/source evidence and
+separate qualification. Failed
 source attempts and the first-donor checker recovery remain in the result.
 The incomplete current cohort has been checked to reject before creating any
 archive directory; successful full-result packing remains pending.
+
+### Immutable preparation binding
+
+The [binding evidence](evidence/2026-09-11-preparation-binding/manifest.json)
+checks all 7,437 retained preparation inputs and 37 donor-plan files, including
+all 3,456 cell-axis files and 3,456 count-range maps. Every donor plan must equal
+the declared projection of the original parent metadata, with exactly the
+original samples, features, cells, row cardinalities and source declaration.
+Every source run and global-to-local row map is reconstructed independently
+from the immutable parent; all 725,031 selected rows are covered exactly once.
+Rehashing a substituted donor plan cannot make it an original source projection.
+
+The complete check passes and repeats exactly. Seven substitutions against the
+real Donor9 partition are rejected: barcode, condition, source declaration,
+per-cell cardinalities, source-entry range, a rehashed row-map permutation and
+total record count. Active inputs and the running binary were never altered.
+The initial checker incorrectly counted historical range-receipt files as
+canonical axes/maps; that failed check is retained. The corrected check requires
+the exact canonical path sets and still hashes the historical receipts.
+
+This qualifies input provenance, not count/replay or prediction completion.
+The retainer rechecks all bound inputs after packing and publishes only if they
+are still unchanged. To run the binding check independently:
+
+```sh
+python "$R/verify_donor_preparation.py" --study "$NUMIVIVO_PARSE_STUDY" \
+  --preparation "$R/evidence/2026-09-11-preparation/preparation.tar.gz" \
+  --out /path/to/new-preparation-bindings.json
+python "$R/check_preparation_mutations.py" --study "$NUMIVIVO_PARSE_STUDY" \
+  --out /path/to/new-mutation-check.json
+```
