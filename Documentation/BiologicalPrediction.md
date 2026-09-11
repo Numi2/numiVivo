@@ -15,6 +15,12 @@ reconstruction, integration diagnostics and conditional molecular simulations.
 Each linked experiment retains its actual source, executable and platform
 identities; this review does not requalify historical receipts under a new build.
 
+The latest [native legacy H5AD check](../Tools/Omics/H5AD/Projection/README.md#original-legacy-kang-2026-09-11)
+preserves every original Kang cell, gene, annotation and embedding, including
+its category definitions. This makes the original information available without
+the earlier selected-metadata conversion. It is an interoperability result;
+no new prediction fit, held-out outcome or biological generalization is claimed.
+
 ## What information is sufficient for the implemented predictors?
 
 | Question | Information available before prediction | Output and present evidence |

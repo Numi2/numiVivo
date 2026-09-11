@@ -10,11 +10,13 @@ The ambition is to follow a molecular change across scales: how a structure move
 
 > **Research software, under active development.** The capabilities below describe source implementations and their intended workflows—not a fully qualified release. Apple package integration, GPU numerical behavior and performance require qualification. The [capability map](Documentation/CAPABILITIES.md) separates implemented methods, current restrictions and planned work.
 
-Native [H5AD axis projection](Tools/Omics/H5AD/Projection/README.md) now supports
-repeated cell and feature selections across aligned AnnData slots. Complete
-prepared Kang and Baron interoperability checks pass, while previous unique
-projections remain byte-identical. Legacy encoding and analytical identity
-restrictions remain explicit.
+Native [H5AD axis projection](Tools/Omics/H5AD/Projection/README.md) now reads the
+original legacy Kang file directly: all 24,673 cells × 15,706 genes, annotations,
+category definitions and PCA/UMAP values agree with AnnData. Full and repeated
+selections reconstruct exactly; earlier unique and repeated projections remain
+byte-identical. This closes a specific input-preservation gap without changing
+the biological prediction evidence below. Other legacy formats and analytical
+identity restrictions remain explicit.
 
 ## Biological prediction: current evidence
 

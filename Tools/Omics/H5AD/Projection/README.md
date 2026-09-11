@@ -46,7 +46,7 @@ use Swift and native HDF5 without Python/scverse.
 | `varp` arrays/sparse arrays | None | First two axes |
 | `raw/X` | Rows | Retains the independent raw feature axis |
 | `raw/var`, `raw/varm` | None | Retained in full |
-| `uns` | Copied without inferred alignment | Copied without inferred alignment |
+| `uns` | Copied without inferred alignment; eligible legacy categories move into obs/var | Same |
 
 These rules follow the [AnnData storage specification](https://anndata.readthedocs.io/en/stable/fileformat-prose.html)
 and [raw slicing semantics](https://anndata.readthedocs.io/en/stable/generated/anndata.AnnData.raw.html).
@@ -76,10 +76,10 @@ respective aligned or unstructured contexts.
 
 Unknown aligned encodings, unknown root fields, external/soft links, external or
 virtual dataset storage, object references, null dataspaces requiring projection,
-first-axis/matrix shape mismatches fail explicitly. General legacy unversioned
-formats, ragged/Awkward arrays and structured record encodings remain outside
-this operation. No unsupported slot is silently
-removed to produce a successful result.
+first-axis/matrix shape mismatches fail explicitly. The legacy route below
+supports specified compound dataframe and embedding representations. Other
+legacy formats, ragged/Awkward arrays and arbitrary nested record encodings
+remain outside this operation. No unsupported slot is silently removed.
 
 ## Storage and replay
 
@@ -227,3 +227,76 @@ source snapshots and all check logs are stored. Twenty-nine large real H5AD/coun
 payloads remain externally retained with exact paths and hashes; no full-real
 matrix was sampled for comparison. Restore the manifest's external files when
 replaying the complete archived study on another host.
+
+## Original legacy Kang, 2026-09-11
+
+The native projection owner now admits an unversioned AnnData root, legacy
+`h5sparse_format`/`h5sparse_shape` CSR/CSC matrices, compound obs/var datasets,
+fixed-array compound obsm/varm fields, and dotted `raw.X`/`raw.var`/`raw.varm`.
+It produces versioned aligned slots while retaining the original source file.
+The first compound dataframe field becomes its index, and all remaining fields
+retain their order. Scalar integer, floating, enum and string fields preserve
+their stored representations. String columns use nullable string encoding with
+an all-false mask so empty projections retain pandas string semantics.
+
+Legacy string category definitions in `uns/*_categories` follow the installed
+AnnData reader's migration rules for obs/var. Every original code is checked
+before selection; a code at or above the category count leaves the numeric
+column and definition in place. Valid codes retain missing `-1`, unused labels
+and label order, with `ordered=false`. Successfully migrated definitions leave
+`uns`; unrelated unstructured data remains copied. Raw feature annotations do
+not inherit obs/var category migration. Contradictory metadata and invalid codes
+fail. Numeric category labels, nonstring indices, scalar embedding members and
+arbitrary nested/ragged records remain unsupported rather than inferred.
+
+`check_legacy.py` compared the complete **original** Kang file, SHA256
+`e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830`,
+with AnnData 0.13.3.post0. Both the complete **24,673 × 15,706** output and
+reversed full axes plus two repeats (**24,675 × 15,708**) pass. Every AnnData
+slot, all 17 compound fields, category semantics, numeric bytes and exact sparse
+stored-entry sequences agree. Both outputs reconstruct exactly. The original
+matrix has **14,184,532 stored entries**; no cells or genes were removed to make
+this qualification succeed. This supersedes the earlier prepared-file evidence
+only for the specific legacy input-preservation gap, not its historical analyses.
+
+The native legacy suite passes **12 positive cases and nine controlled
+rejections**, covering CSR/CSC/dense, full/repeated/empty axes, fixed-array
+tensors, dotted raw, shared obs/var categories, scalar string categories and
+unsupported/oversized inputs. All **15 current modern-format cases and 11
+rejections** pass. Replaying **10 historical unique** and **19 prior repeated-suite**
+bundles preserves the original source, plan, output and report bytes exactly.
+
+All twelve legacy cases were also published and reconstructed on the physical
+Mac mini, matching the laptop's four payload hashes exactly, including both
+complete Kang projections. After that check, 29 newly created remote H5AD
+duplicates were removed only after every retained laptop copy and open-handle
+check passed. This removed 476,446,015 payload bytes and measured 399,851,520
+bytes of additional APFS availability; logs and restoration mappings remain.
+
+A size query in HDF5 2.2.0 crashed on scalar variable strings during development.
+The scalar path now uses a custom allocation bound of 16,385 bytes, allowing at
+most 16,384 UTF-8 bytes plus the terminator, without that query. Its positive and
+oversized-input rejection cases pass. The crash trace, first compile errors,
+pandas big-endian slicing limitation, empty-string inference mismatch and
+corrected checks remain in the evidence rather than being counted as passes.
+
+Reproduce using the scoped native owner:
+
+```sh
+NUMIVIVO_HDF5_LIBRARY=/path/to/libhdf5.dylib python check_legacy.py \
+  --binary /path/to/h5ad-check --out /new/legacy-checks \
+  --kang /path/to/original-kang.h5ad
+```
+
+The tested binary SHA256 is
+`2ad4a4872e7da646ebcdbcbca746dfc7273b7b64bf87c29a7aace1dceaab6fef`,
+built on the physical M4 Pro Mac mini from 89 hash-verified owner files. This
+scoped harness keeps its zero implementation tag in receipts; the executable
+and actual compiled sources are bound separately. No full product rebuild or
+new biological prediction result is claimed for this change.
+
+[evidence/2026-09-11-legacy](evidence/2026-09-11-legacy) retains source, reference
+reader, checks, failures, format artifacts and every real plan/report/receipt.
+Large real H5AD files remain externally retained with restoration paths and
+SHA256 bindings in the manifest. AnnData is used only by the independent checker;
+native projection and reconstruction require no Python/scverse runtime.

@@ -316,9 +316,13 @@ The complete development objective remains open:
    unique cell/feature indices across supported aligned AnnData slots, retains
    raw's independent feature axis, and binds source/output/replay provenance.
    Repeated-axis checks now cover complete prepared Kang and Baron, all aligned
-   slots and raw, with exact prior unique-selection bytes. General legacy
-   encodings, ragged/structured aligned formats and files beyond explicit
-   storage/work bounds remain. Full PBMC3K count/QC
+   slots and raw, with exact prior unique-selection bytes. Native legacy
+   projection now preserves the complete original Kang file, including compound
+   obs/var, structured PCA/UMAP and categories previously held in uns. Both full
+   and repeated selections agree with AnnData and reconstruct exactly. Numeric
+   legacy category labels, nonstring legacy indices, scalar/ragged embedding
+   fields and arbitrary nested records remain unsupported; storage/work bounds
+   still apply. Full PBMC3K count/QC
    and annotation preservation now pass; this single library is not a donor-DE benchmark.
 2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
