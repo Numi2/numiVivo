@@ -322,7 +322,11 @@ The complete development objective remains open:
    and repeated selections agree with AnnData and reconstruct exactly. Numeric
    legacy category labels, nonstring legacy indices, scalar/ragged embedding
    fields and arbitrary nested records remain unsupported; storage/work bounds
-   still apply. Full PBMC3K count/QC
+   still apply. The [complete original Kang analytical route](../Tools/Omics/H5AD/Projection/LEGACY_COUNT_ROUTE.md)
+   now passes native annotation, streaming count import and pseudobulk:
+   14,184,532 exact count records and 124 exact donor/condition/cell-type groups.
+   A missing legacy uns dictionary tag was repaired as projection v2; the earlier
+   failed annotation remains retained. Full PBMC3K count/QC
    and annotation preservation now pass; this single library is not a donor-DE benchmark.
 2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber

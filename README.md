@@ -18,6 +18,12 @@ byte-identical. This closes a specific input-preservation gap without changing
 the biological prediction evidence below. Other legacy formats and analytical
 identity restrictions remain explicit.
 
+The [complete original-data analytical route](Tools/Omics/H5AD/Projection/LEGACY_COUNT_ROUTE.md)
+also passes: native annotation, all 14,184,532 count records and all 124
+pseudobulk groups agree with the original Kang information. RNA assay totals
+match every cell, and donor/treatment identities remain explicit. This verifies
+input preservation and arithmetic, without adding a new prediction claim.
+
 ## Biological prediction: current evidence
 
 NumiVivo can predict **population-average gene-expression responses in defined

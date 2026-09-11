@@ -20,6 +20,10 @@ preserves every original Kang cell, gene, annotation and embedding, including
 its category definitions. This makes the original information available without
 the earlier selected-metadata conversion. It is an interoperability result;
 no new prediction fit, held-out outcome or biological generalization is claimed.
+The subsequent [complete analytical route](../Tools/Omics/H5AD/Projection/LEGACY_COUNT_ROUTE.md)
+also verifies every native count record and donor/condition/cell-type aggregate,
+with source RNA totals matching all cells. That closes the input-to-aggregation
+handoff; the predictive conclusions and remaining requirements below still apply.
 
 ## What information is sufficient for the implemented predictors?
 

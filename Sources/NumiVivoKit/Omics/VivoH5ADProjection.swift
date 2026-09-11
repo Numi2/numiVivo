@@ -346,12 +346,18 @@ public enum VivoH5ADProjection {
             if children.contains("uns") {
                 try h.projectionCopy(input,"uns",out,"uns")
                 let uns=try h.object(out,"uns");defer { h.close(uns,"H5Oclose") }
+                // AnnData accepts legacy dicts through its fallback reader;
+                // downstream native annotation requires a versioned parent.
+                // Preserve every child and add only the missing dict tag.
+                if legacy,try h.legacyObjectKind(uns)==2,try !h.legacyHasAttribute(uns,"encoding-type"),try !h.legacyHasAttribute(uns,"encoding-version") {
+                    try h.encoding(uns,"dict","0.1.0")
+                }
                 let remove: @convention(c) (Int64,UnsafePointer<CChar>,Int64) -> Int32 = try h.symbol("H5Ldelete")
                 for name in engine.movedLegacyCategories.sorted() { try h.check(remove(uns,name,0),"relocate legacy categories") }
             }
             let repeated=Set(oi).count != oi.count || Set(vi).count != vi.count
-            return try .init(method: legacy ? "native-H5AD-legacy-axis-projection-v1" : repeated ? "native-H5AD-repeated-axis-projection-v1" : "native-H5AD-axis-projection-v1",sourceShape: [n,p],outputShape: [oi.count,vi.count],elementVisits: plan.maximumElementVisits-engine.remaining,
-                fields: engine.fields,hdf5Version: h.version(),qualification: (legacy ? "Legacy compound annotations and embeddings split without numeric conversion; category definitions relocated from uns; original source retained. Cell/feature selection and reordering;" : repeated ? "Repeated cell/feature selection and reordering;" : "Unique cell/feature selection and reordering;")+" raw retains its feature axis. Stored values/datatypes and categories retained; sparse structural indices become int64. Unstructured data copied without inferred axis semantics. No biological validation claim.")
+            return try .init(method: legacy ? "native-H5AD-legacy-axis-projection-v2" : repeated ? "native-H5AD-repeated-axis-projection-v1" : "native-H5AD-axis-projection-v1",sourceShape: [n,p],outputShape: [oi.count,vi.count],elementVisits: plan.maximumElementVisits-engine.remaining,
+                fields: engine.fields,hdf5Version: h.version(),qualification: (legacy ? "Legacy compound annotations and embeddings split without numeric conversion; category definitions relocated from uns and legacy uns mapping versioned; original source retained. Cell/feature selection and reordering;" : repeated ? "Repeated cell/feature selection and reordering;" : "Unique cell/feature selection and reordering;")+" raw retains its feature axis. Stored values/datatypes and categories retained; sparse structural indices become int64. Unstructured data copied without inferred axis semantics. No biological validation claim.")
         }
     }
     public static func publish(source: URL,plan: VivoH5ADProjectionPlan,implementation: VivoFingerprint,to destination: URL) throws -> VivoH5ADProjectionReceipt {

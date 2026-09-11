@@ -300,3 +300,14 @@ reader, checks, failures, format artifacts and every real plan/report/receipt.
 Large real H5AD files remain externally retained with restoration paths and
 SHA256 bindings in the manifest. AnnData is used only by the independent checker;
 native projection and reconstruction require no Python/scverse runtime.
+
+## Native analytical handoff, 2026-09-11
+
+The [complete original Kang analytical route](LEGACY_COUNT_ROUTE.md) now passes
+projection → source-bound annotation → streaming count store → pseudobulk.
+Legacy projection v2 adds a missing dictionary tag to legacy `uns`, preserving
+its children so native annotation can use it. The v1 artifact snapshots above
+remain valid historical AnnData-preservation evidence; their native annotation
+handoff failure is separately retained. Modern projections keep their exact
+historical bytes. The linked report gives every count, group, memory measurement,
+source identity and remaining biological limit.
