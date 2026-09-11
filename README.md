@@ -69,6 +69,9 @@ runs about **2.4× faster** than the preserved production scalar owner on all
 three cohorts, with identical measured biological metrics and neighbor/prediction
 arrays. The scalar default is also faster and retains exact original outputs.
 These are native-owner timings; independent-validation limits remain.
+A fixed [approximate-matching/full-Gaussian follow-up](Tools/Omics/Reduction/FullGaussianMNN/README.md)
+restores the measured Ding gates but still fails Kang megakaryocyte recall.
+The approximate matcher remains experimental; production retains exact matching.
 
 ## One scientific question, several scales
 

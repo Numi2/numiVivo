@@ -485,6 +485,11 @@ The complete development objective remains open:
    preserves all anchors and original measured biological metrics on all three
    cohorts while accelerating correction. Its scalar underflow fallback is
    explicitly budgeted; scalar defaults and full-cohort limits remain intact.
+   A [fixed matching-only intervention](../Tools/Omics/Reduction/FullGaussianMNN/README.md)
+   reuses the earlier HNSW anchors with full Gaussian smoothing. Hagai and Ding
+   pass the applicable measured gates, but Kang megakaryocyte recall loses 0.062218
+   against the fixed 0.05 allowance. Four unavailable Kang classifier strata and
+   partial Ding labels remain. Approximate matching is not promoted.
    The opt-in [native scale-aware MNN method](../Tools/Omics/Reduction/MNN_INTEGRATION.md)
    now passes the available preservation margins on full Kang, Hagai and Ding,
    with independent anchor, coordinate and neighbor agreement. It remains a

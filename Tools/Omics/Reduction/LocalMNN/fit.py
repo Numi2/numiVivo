@@ -33,7 +33,7 @@ def matrix(path,n,d):
  assert np.array_equal(r['row'],np.broadcast_to(np.arange(n)[:,None],(n,d))) and np.array_equal(r['column'],np.broadcast_to(np.arange(d),(n,d)))
  x=r['value'].copy();assert np.isfinite(x).all();return x
 
-def fit(lib,x,batch,out,expected=None):
+def fit(lib,x,batch,out,expected=None,*,kernel=None):
  n,d=x.shape;B=int(batch.max())+1;k=20;start=time.perf_counter();witness_seconds=0.;hashes={};native=[]
  def emit(name,**arrays):
   nonlocal witness_seconds
@@ -66,12 +66,16 @@ def fit(lib,x,batch,out,expected=None):
   return pairs.get((b,a),np.empty((0,2),dtype=np.int64))[:,::-1]
  def apply(target,reference,match,alignment):
   selected=np.concatenate([rows[b] for b in target]);source=corrected[match[:,0]].copy();bias=corrected[match[:,1]]-source;query=corrected[selected].copy();count=min(64,len(match));assert count>0
-  chosen,ds,r=neighbors(lib,source,query,count);native.append(dict(stage='kernel-'+str(len(steps)),**r))
-  delta=np.empty_like(query);totals=np.empty(len(query))
-  for first in range(0,len(query),512):
-   end=min(len(query),first+512);ix=chosen[first:end];w=np.exp(-7.5*ds[first:end]);total=w.sum(axis=1);totals[first:end]=total
-   dy=np.einsum('ij,ijd->id',w,bias[ix],optimize=False);delta[first:end]=np.divide(dy,total[:,None],out=np.zeros_like(dy),where=total[:,None]>0)
-  assert np.isfinite(delta).all();emit('step-'+str(len(steps)),selected=selected,anchors=match,source=source,bias=bias,queries=query,indices=chosen,distances=ds,delta=delta,totalWeights=totals)
+  if kernel is None:
+   chosen,ds,r=neighbors(lib,source,query,count);native.append(dict(stage='kernel-'+str(len(steps)),**r))
+   delta=np.empty_like(query);totals=np.empty(len(query))
+   for first in range(0,len(query),512):
+    end=min(len(query),first+512);ix=chosen[first:end];w=np.exp(-7.5*ds[first:end]);total=w.sum(axis=1);totals[first:end]=total
+    dy=np.einsum('ij,ijd->id',w,bias[ix],optimize=False);delta[first:end]=np.divide(dy,total[:,None],out=np.zeros_like(dy),where=total[:,None]>0)
+   assert np.isfinite(delta).all();extra=dict(indices=chosen,distances=ds)
+  else:
+   delta,totals,r=kernel(source,bias,query);native.append(dict(stage='kernel-'+str(len(steps)),**r));extra={}
+  assert np.isfinite(delta).all();emit('step-'+str(len(steps)),selected=selected,anchors=match,source=source,bias=bias,queries=query,delta=delta,totalWeights=totals,**extra)
   corrected[selected]+=delta
   return dict(alignment=alignment,target=target,reference=reference,anchors=len(match),correctedCells=len(selected),zeroWeightCells=int(np.sum(totals==0)),minimumWeight=float(totals.min()),maximumWeight=float(totals.max()),correctionRMS=float(np.sqrt(np.sum(delta*delta)/len(selected))*scale),status='corrected')
  for alignment in order:

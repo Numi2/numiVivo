@@ -8,7 +8,9 @@ but fails Kang/Ding biological preservation and remains experimental. The
 [tiled all-anchor Gaussian option](GaussianKernel/README.md) now accelerates the
 original full kernel while preserving all measured original biological metrics;
 add `"kernel": "tiledGaussian"` to `mnn` to select it. Omission retains the scalar
-default and historical encoding.
+default and historical encoding. A [fixed HNSW/full-Gaussian follow-up](FullGaussianMNN/README.md)
+passes the measured Hagai/Ding gates but fails Kang megakaryocyte recall. It
+is research evidence only; the production matcher remains exhaustive.
 
 The file-backed PCA workflow now offers an explicit mutual-nearest-neighbor
 (MNN) method. It corrects donor or batch effects in global median-PCA-norm units,
