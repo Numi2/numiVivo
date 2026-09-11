@@ -100,8 +100,18 @@ The new [native file-backed cell axis and count consumer](Tools/Omics/CountStore
 remove resident cell identities, QC and membership arrays from the count path.
 All 14 native tests pass, and importing and reopening the complete 725,031-cell
 axis preserves every identity byte and declared matrix total at **62.6 MiB native
-peak RSS**. The paired full-count ingestion/replay and same-cohort memory comparison
-remain pending separate evidence; this does not change the biological verdict.
+peak RSS**. [Complete paired ingestion and original-source replay now pass](Tools/Omics/CountStore/CellAxis/COUNT_RESULTS.md)
+for all 1.37 billion records. File-backed ingestion/replay peak at **165.6/181.8 MiB**,
+versus **1,005.0/1,024.7 MiB** for the resident owner on the same source.
+This count-path memory improvement does not change the biological verdict.
+
+The [file-backed count-to-DE analysis](Tools/Omics/CountStore/Expression/README.md)
+now completes the full Parse cohort and exactly matches the existing native
+statistical results. All six edgeR/limma/DESeq2 comparisons complete; shared-offset
+effect correlations are 0.994, 0.860 and 0.990 respectively. Of 40,352 features,
+33,899 are tested, 5,946 lack estimable support and 507 fail the count filter.
+Peak analysis memory remains about 1 GiB. These are observed RNA differences,
+not a new held-out prediction or validation of tissue/clinical outcomes.
 
 The [native interval assessment](Tools/Omics/PerturbationPrediction/Intervals/README.md)
 now tests optional nominal 95% mean-response intervals on those same 26 folds.

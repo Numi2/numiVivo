@@ -1,0 +1,151 @@
+{
+  "status": "completed-six-full-parse-reference-comparisons",
+  "cells": 725031,
+  "features": 40352,
+  "donors": 12,
+  "observations": 24,
+  "commonCountFilterEligibleFeatures": 39845,
+  "nativeStatuses": {
+    "tested": 33899,
+    "rankDeficientSupport": 5946,
+    "filteredLowExpression": 507
+  },
+  "comparisons": {
+    "native_size_factors-edgeR-QL": {
+      "referenceEligibleFeatures": 39845,
+      "finiteEffectPairs": 33899,
+      "effectRMSE": 0.0765464350460155,
+      "effectMedianAbsoluteDifference": 0.004616528364371791,
+      "effectMaximumAbsoluteDifference": 2.912231345232195,
+      "effectSpearman": 0.9941010930610411,
+      "effectSignConcordance": 0.9859287884598366,
+      "finitePValuePairs": 33899,
+      "pValueSpearman": 0.9870190945187959,
+      "nativeBH005": 15167,
+      "referenceBH005": 14045,
+      "sharedBH005": 13658,
+      "BH005Jaccard": 0.8781020959238781
+    },
+    "native_size_factors-limma-voom": {
+      "referenceEligibleFeatures": 39845,
+      "finiteEffectPairs": 33899,
+      "effectRMSE": 0.3593911902006411,
+      "effectMedianAbsoluteDifference": 0.030395058656540352,
+      "effectMaximumAbsoluteDifference": 3.5991321091731576,
+      "effectSpearman": 0.8595234034098842,
+      "effectSignConcordance": 0.9029764889819759,
+      "finitePValuePairs": 33899,
+      "pValueSpearman": 0.8840229048812217,
+      "nativeBH005": 15167,
+      "referenceBH005": 21048,
+      "sharedBH005": 13936,
+      "BH005Jaccard": 0.625521791821895
+    },
+    "native_size_factors-DESeq2": {
+      "referenceEligibleFeatures": 39845,
+      "finiteEffectPairs": 33899,
+      "effectRMSE": 0.1349867348301796,
+      "effectMedianAbsoluteDifference": 0.002199583969556884,
+      "effectMaximumAbsoluteDifference": 2.4828647187362574,
+      "effectSpearman": 0.9897225823835407,
+      "effectSignConcordance": 0.9876102539897932,
+      "finitePValuePairs": 33899,
+      "pValueSpearman": 0.9953128828020584,
+      "nativeBH005": 15167,
+      "referenceBH005": 14241,
+      "sharedBH005": 14065,
+      "BH005Jaccard": 0.9167046861761063
+    },
+    "package_normalization-edgeR-QL": {
+      "referenceEligibleFeatures": 39845,
+      "finiteEffectPairs": 33899,
+      "effectRMSE": 0.10172661492890221,
+      "effectMedianAbsoluteDifference": 0.07694053690522906,
+      "effectMaximumAbsoluteDifference": 2.8428372762879883,
+      "effectSpearman": 0.993925155953903,
+      "effectSignConcordance": 0.9202336352104782,
+      "finitePValuePairs": 33899,
+      "pValueSpearman": 0.8809092244561761,
+      "nativeBH005": 15167,
+      "referenceBH005": 14698,
+      "sharedBH005": 12917,
+      "BH005Jaccard": 0.7621548265282039
+    },
+    "package_normalization-limma-voom": {
+      "referenceEligibleFeatures": 39845,
+      "finiteEffectPairs": 33899,
+      "effectRMSE": 0.3368775506309226,
+      "effectMedianAbsoluteDifference": 0.0760857178667075,
+      "effectMaximumAbsoluteDifference": 3.5219241082506074,
+      "effectSpearman": 0.859669811014537,
+      "effectSignConcordance": 0.8763975338505561,
+      "finitePValuePairs": 33899,
+      "pValueSpearman": 0.8189864749796046,
+      "nativeBH005": 15167,
+      "referenceBH005": 20917,
+      "sharedBH005": 13176,
+      "BH005Jaccard": 0.5751702462022001
+    },
+    "package_normalization-DESeq2": {
+      "referenceEligibleFeatures": 39845,
+      "finiteEffectPairs": 33899,
+      "effectRMSE": 0.13495430433569236,
+      "effectMedianAbsoluteDifference": 0.0022103500726796677,
+      "effectMaximumAbsoluteDifference": 2.483082638738557,
+      "effectSpearman": 0.9897343502548201,
+      "effectSignConcordance": 0.9876102539897932,
+      "finitePValuePairs": 33899,
+      "pValueSpearman": 0.9953139221954499,
+      "nativeBH005": 15167,
+      "referenceBH005": 14235,
+      "sharedBH005": 14061,
+      "BH005Jaccard": 0.916563457401734
+    }
+  },
+  "runs": {
+    "native_size_factors-edgeR-QL": {
+      "status": "completed",
+      "seconds": 17.966,
+      "warnings": [],
+      "messages": [],
+      "error": null
+    },
+    "native_size_factors-limma-voom": {
+      "status": "completed",
+      "seconds": 1.375,
+      "warnings": [],
+      "messages": [],
+      "error": null
+    },
+    "native_size_factors-DESeq2": {
+      "status": "completed",
+      "seconds": 17.010999999999996,
+      "warnings": [],
+      "messages": [],
+      "error": null
+    },
+    "package_normalization-edgeR-QL": {
+      "status": "completed",
+      "seconds": 17.031,
+      "warnings": [],
+      "messages": [],
+      "error": null
+    },
+    "package_normalization-limma-voom": {
+      "status": "completed",
+      "seconds": 1.1929999999999978,
+      "warnings": [],
+      "messages": [],
+      "error": null
+    },
+    "package_normalization-DESeq2": {
+      "status": "completed",
+      "seconds": 16.592000000000006,
+      "warnings": [],
+      "messages": [],
+      "error": null
+    }
+  },
+  "policy": "All original aggregate observations and features; common declared low-count filter. Shared native offsets and package-specific normalization are separate. Unlike Wald, QL F and moderated-t tests are not required to give identical p-values. Concordance is descriptive, not FDR calibration or prediction validation.",
+  "predictionFitOrScoring": false
+}

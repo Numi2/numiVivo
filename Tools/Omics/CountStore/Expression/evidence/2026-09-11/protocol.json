@@ -1,0 +1,44 @@
+{
+  "status": "frozen-before-expression-fitting",
+  "createdUnix": 1789138232.5219462,
+  "countStudy": "/Users/home/numivivo-cell-axis-study-20260911",
+  "sourceCountIngestionSHA256": "fd4836be315ba3b9d986d4a59b04376d1da6eeb67c750799d95a131f17ac4915",
+  "sourceReceiptSHA256": {
+    "file": "83da4f57bd88b55d1857ff78bfac93570970aa140fa6af476717f0fc04063cc1",
+    "resident": "c0c4c3be0208f8fb1e799561eea43079e982c8f7ec07447253a45bad12a84bdd"
+  },
+  "cells": 725031,
+  "features": 40352,
+  "donors": 12,
+  "observations": 24,
+  "request": {
+    "id": "parse-ifnb-paired-aggregate-interface-v1",
+    "model": "negativeBinomial",
+    "negativeBinomialOptions": {
+      "trend": "parametric",
+      "minimumTrendGenes": 20,
+      "minimumPriorVariance": 0.25,
+      "outlierStandardDeviations": 2
+    },
+    "controlCondition": "PBS",
+    "treatmentCondition": "IFN-beta",
+    "design": "pairedDonors",
+    "sizeFactors": "medianRatio",
+    "variance": "empiricalBayes",
+    "adjustForBatch": true,
+    "minimumCellsPerPseudobulk": 10,
+    "minimumReplicatesPerCondition": 3,
+    "minimumFeatureCounts": 10,
+    "minimumExpressingPseudobulks": 3,
+    "minimumReferenceFeatures": 10,
+    "priorCount": 0.5,
+    "intervalCoverage": 0.95
+  },
+  "acceptance": {
+    "nativeComparison": "Every non-membership result and design value serialized byte-exact versus the previous native owner; every observation identity, cell count and explicit source membership reference exact. Native reconstruction must pass.",
+    "references": "Run edgeR QL, limma-voom and DESeq2 on the same complete aggregate count/filter/design, with shared declared offsets and package normalization reported separately. Differences and failures retained; no requirement that unlike tests have identical p-values.",
+    "memory": "Record per-native-process peak RSS; implementation runner differs from product routing, so no end-to-end speedup claim."
+  },
+  "interpretation": "Observed pooled PBMC donor-level RNA contrast, including possible cell-composition effects; not a cell-intrinsic, duration, dose-response or clinical model. All source features retained with explicit low-count filtering. Source dose/reagent and missing duration-panel symbols remain unresolved.",
+  "predictionFitOrScoring": false
+}

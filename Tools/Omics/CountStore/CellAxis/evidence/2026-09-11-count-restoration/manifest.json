@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "offline-check.json",
+      "sourceBytes": 4245,
+      "sourceSHA256": "f3990521ed00c971477f572d177cf5d9ce60313f0f6dff5650a51b74f67b0817",
+      "storedPath": "offline-check.json",
+      "storedBytes": 4245,
+      "storedSHA256": "f3990521ed00c971477f572d177cf5d9ce60313f0f6dff5650a51b74f67b0817",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "offline-check.log",
+      "sourceBytes": 3427,
+      "sourceSHA256": "0e649c8ef4ee7ee560d2c992f820e3b6a0c20b5d1765694781b2be16a422312d",
+      "storedPath": "offline-check.log",
+      "storedBytes": 3427,
+      "storedSHA256": "0e649c8ef4ee7ee560d2c992f820e3b6a0c20b5d1765694781b2be16a422312d",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "recipe.json",
+      "sourceBytes": 33032,
+      "sourceSHA256": "c75ed6cfba4b003fb1135705c232bed3d02f22d2417f7bd7ed1dd2d81dc7715f",
+      "storedPath": "recipe.json.gz",
+      "storedBytes": 9704,
+      "storedSHA256": "783d8a3ee4401c400cf980a197ea3b96f169e8e2935822175d8163d4429384b7",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "restoration.json",
+      "sourceBytes": 827,
+      "sourceSHA256": "37819ba5da554e5a9273eb3cb3f1833bfc099d2eb0c4316e312625696180701f",
+      "storedPath": "restoration.json",
+      "storedBytes": 827,
+      "storedSHA256": "37819ba5da554e5a9273eb3cb3f1833bfc099d2eb0c4316e312625696180701f",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "restoration.log",
+      "sourceBytes": 881,
+      "sourceSHA256": "b564493d94ff73b3dd54b70b1106298dd12bd5e59451df98a2513b624e8cd3ae",
+      "storedPath": "restoration.log",
+      "storedBytes": 881,
+      "storedSHA256": "b564493d94ff73b3dd54b70b1106298dd12bd5e59451df98a2513b624e8cd3ae",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "retention.log",
+      "sourceBytes": 317,
+      "sourceSHA256": "350e1290f75f971fa258e88755b23e9bbb40e5caebcfd8aeb1da2f86725442ca",
+      "storedPath": "retention.log",
+      "storedBytes": 317,
+      "storedSHA256": "350e1290f75f971fa258e88755b23e9bbb40e5caebcfd8aeb1da2f86725442ca",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    }
+  ]
+}

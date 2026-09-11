@@ -16,7 +16,7 @@ and [`VivoFileCountStream.swift`](../../../../Sources/NumiVivoKit/Omics/VivoFile
 | Native axis reopen | PASS | Byte-identical receipt after full structural validation |
 | Native import peak RSS | 65,617,920 bytes (62.6 MiB) | Native child process; excludes Python adapter and OS file cache |
 | Import elapsed time | 13.01 seconds | Includes input streaming waits; not isolated kernel throughput |
-| Full paired count ingestion and source replay | Pending separate evidence | Same 1,373,870,697 records sent to file-backed and resident consumers |
+| Full paired count ingestion and source replay | PASS: both complete phases | Same 1,373,870,697 records; exact QC, membership and aggregate agreement; [full results](COUNT_RESULTS.md) |
 | Biological prediction | Not fitted or scored | Storage qualification does not establish an outcome prediction |
 
 The [retained cell-axis evidence](evidence/2026-09-11-axis/summary.json) includes
@@ -121,3 +121,9 @@ See [dependencies.json](evidence/2026-09-11-axis/dependencies.json) for the exac
 source archives needed to repeat independent source checks. Restoring bytes is
 not another native execution or network replay. Parse data and derivatives are
 subject to **CC BY-NC 4.0**.
+
+## Complete count and analysis handoffs
+
+[Both full same-cohort count phases now pass](COUNT_RESULTS.md): 1.37 billion records, exact cell/QC/membership/aggregate agreement, and native peak RSS of 165.6 MiB for ingestion and 181.8 MiB for source replay. Count execution, offline archive checks and restored-artifact checks are separate evidence stages.
+
+The [file-backed expression owner](../Expression/README.md) now consumes these aggregates through explicit receipt-bound membership references and reproduces the prior native statistics on the complete cohort. All six external statistical comparisons complete. This closes the interface without fabricated cell lists; the full analysis report still peaks near 1 GiB and no Parse prediction is fitted or scored.

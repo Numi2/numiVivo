@@ -53,7 +53,16 @@ now implements disk-resident cell identities, QC and group membership with bound
 resident dictionaries and aggregate counts. Fourteen native tests pass. Complete
 Parse cell-axis import and reopen preserve all 725,031 original identities, row
 cardinalities and retained-matrix totals, with native peak RSS of 65,617,920 bytes
-(62.6 MiB). Its full paired count ingestion/replay remains a separate pending gate.
+(62.6 MiB). [Complete paired count ingestion and source replay now pass](../Tools/Omics/CountStore/CellAxis/COUNT_RESULTS.md)
+for every selected record. File-backed peak RSS is 165.6/181.8 MiB during
+ingestion/replay, versus 1,005.0/1,024.7 MiB for the resident owner.
+The [file-backed expression owner](../Tools/Omics/CountStore/Expression/README.md)
+now consumes these aggregates using explicit source-receipt membership references.
+On all 725,031 Parse cells, both native fits and reconstruction pass and all six
+edgeR/limma/DESeq2 comparisons complete. The statistical result matches the prior
+native owner exactly apart from membership representation. Full analysis still
+peaks near 1 GiB; this does not qualify whole-pipeline out-of-core execution or
+add an unseen biological prediction.
 The import measurement excludes the source adapter and is not a whole-pipeline
 memory or Metal performance result. Existing H5AD/PCA/graph/model bounds remain.
 

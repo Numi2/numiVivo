@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "required": [
+    {
+      "role": "axis-and-native-executable",
+      "path": "Tools/Omics/CountStore/CellAxis/evidence/2026-09-11-axis",
+      "archive": "results.tar.gz",
+      "archiveSHA256": "37ea8f865d6b3fea1c8785abcc61e419f0f2443983c07aa5895f8b58bb26643e"
+    },
+    {
+      "role": "original-preparation",
+      "path": "Tools/Omics/PerturbationPrediction/ParseIFNB/evidence/2026-09-11-preparation",
+      "archive": "preparation.tar.gz",
+      "archiveSHA256": "f08c78ca7a74ab01eab6c3f7748615f45e217cbf95446ba35ef830eaf9c75d02"
+    },
+    {
+      "role": "original-complete-counts",
+      "path": "Tools/Omics/PerturbationPrediction/ParseIFNB/evidence/2026-09-11-counts",
+      "archive": "results.tar.gz",
+      "archiveSHA256": "ae94b3d586d2212fc09b1d451f893e7b3badc05ad57eb04550bece351af12b97"
+    }
+  ],
+  "restore": "restore_counts.py combines this result with the exact axis/executable dependency in a fresh directory, then runs the frozen offline checker against a source-study bound to the original preparation and count archives. Source-study may be restored with ParseIFNB/restore_donors.py. Original-count dependencies transitively retain the previous native executable and source adapter. Restoration does not repeat native count execution or network replay."
+}

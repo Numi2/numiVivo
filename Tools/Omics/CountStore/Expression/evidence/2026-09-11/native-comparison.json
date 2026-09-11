@@ -1,0 +1,57 @@
+{
+  "status": "passed-full-parse-native-aggregate-handoff",
+  "cells": 725031,
+  "features": 40352,
+  "observations": 24,
+  "allNonDesignJSONValuesByteExact": true,
+  "allNonMembershipDesignJSONValuesByteExact": true,
+  "allOriginalObservationIdentitiesAndCellCountsExact": true,
+  "allFileMembershipReferencesBoundToInputReceipt": true,
+  "nativeReconstructionPassed": true,
+  "testedFeatures": 33899,
+  "native": {
+    "file": {
+      "status": "passed",
+      "command": [
+        "/Users/home/numivivo-aggregate-axis-study-20260911/build/numivivo-omics",
+        "singlecell-file-expression",
+        "/Users/home/numivivo-cell-axis-study-20260911/native-file",
+        "--plan",
+        "/Users/home/numivivo-aggregate-axis-study-20260911/file-plan.json",
+        "--output",
+        "/Users/home/numivivo-aggregate-axis-study-20260911/native-file"
+      ],
+      "startedUnix": 1789138261.917712,
+      "platform": "macOS-26.6-arm64-arm-64bit",
+      "pid": 95405,
+      "nativeExit": 0,
+      "maximumNativeRSS": 1017544704,
+      "seconds": 376.17462437506765,
+      "finishedUnix": 1789138638.0963662
+    },
+    "resident": {
+      "status": "passed",
+      "command": [
+        "/Users/home/numivivo-aggregate-axis-study-20260911/native-reference",
+        "/Users/home/numivivo-cell-axis-study-20260911/native-resident",
+        "/Users/home/numivivo-aggregate-axis-study-20260911/contrast.json",
+        "-"
+      ],
+      "startedUnix": 1789138261.9177768,
+      "platform": "macOS-26.6-arm64-arm-64bit",
+      "pid": 95404,
+      "uncompressedReportSHA256": "83be008ef62c9b878f14afb3f52cfdc540011e8a9de1130a90f5bfd50a8b0883",
+      "uncompressedReportBytes": 113012281,
+      "nativeExit": 0,
+      "maximumNativeRSS": 1032257536,
+      "seconds": 373.27751787472516,
+      "finishedUnix": 1789138635.1992939
+    }
+  },
+  "sourceReceiptSHA256": {
+    "file": "83da4f57bd88b55d1857ff78bfac93570970aa140fa6af476717f0fc04063cc1",
+    "resident": "c0c4c3be0208f8fb1e799561eea43079e982c8f7ec07447253a45bad12a84bdd"
+  },
+  "memoryScope": "Each native process including input loading, inference and output writing; baseline stdout is compressed by a separate Python adapter. Prior native core runner versus new product command, not an end-to-end product speed comparison.",
+  "predictionFitOrScoring": false
+}

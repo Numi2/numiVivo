@@ -109,6 +109,18 @@ silently changing the panel. The count-stream owner checks arithmetic and
 reconstruction; the Python/HDF5 adapter owns remote extraction and source ranges.
 Its receipts do not claim a hash or count validation of the entire 227 GB file.
 
+The [complete Parse file-backed differential-expression qualification](../Tools/Omics/CountStore/Expression/README.md)
+now connects the count bundle to the existing paired negative-binomial model.
+All 725,031 cells and 24 donor/condition aggregates are included. The new owner
+exactly reproduces the prior native statistical report apart from explicit
+membership encoding; all six edgeR, limma-voom and DESeq2 comparisons complete.
+There are 33,899 tested features, 5,946 rank-deficient-support exclusions and 507
+low-count exclusions. Effect concordance with external methods is a useful
+statistical check, but does not establish false-discovery calibration, a causal
+cell-intrinsic effect or an unseen-outcome prediction. Full statistical reporting
+still peaks near 1 GiB. No Parse duration predictor has been fitted or scored;
+the panel/dose gates above and the prior transfer failures remain in force.
+
 The [native Visium import](../Tools/Omics/Multimodal/Visium/README.md) now makes
 original spatial RNA counts and pixel positions available without an H5MU
 preparation step. Every count and coordinate in the complete 4,039-spot source

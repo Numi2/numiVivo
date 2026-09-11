@@ -202,6 +202,20 @@ public final class VivoFileCountSnapshot {
         mitochondrialFeatures = axis.header.metadata.features.filter(\.mitochondrial).count
     }
     deinit { try? FileManager.default.removeItem(at: root) }
+    func receiptFingerprint() throws -> VivoFingerprint {
+        try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent("receipt.json"), maximumBytes: 65_536)
+    }
+    /// Copy the owned snapshots, never reopen mutable source paths during analysis publication.
+    func copy(to destination: URL) throws {
+        guard !FileManager.default.fileExists(atPath: destination.path) else { throw VivoOmicsError.invalid("file count copy destination exists") }
+        try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
+        var accepted = false
+        defer { if !accepted { try? FileManager.default.removeItem(at: destination) } }
+        for (name, limit) in [("receipt.json", 65_536), ("report.json", VivoFileCountStream.maximumReportBytes), ("quality.bin", axis.header.cellCount * 24)] {
+            _ = try VivoOmicsFileSnapshot.fingerprint(root.appendingPathComponent(name), copyTo: destination.appendingPathComponent(name), maximumBytes: limit)
+        }
+        try axis.copy(to: destination.appendingPathComponent("axis")); accepted = true
+    }
     public func quality(_ row: Int) throws -> (quality: VivoCellQuality, group: Int) {
         let cell = try axis.row(row), bytes = try qualityFile.read(row * 24, 24)
         let total = bytes.vivoLE(UInt64.self, at: 0), mito = bytes.vivoLE(UInt64.self, at: 8)

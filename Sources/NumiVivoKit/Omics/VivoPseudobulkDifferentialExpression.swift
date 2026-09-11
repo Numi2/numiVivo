@@ -89,7 +89,7 @@ public struct VivoOmicsDesignMatrix: Codable, Sendable, Equatable {
     public let rows: [[Double]]
     public let contrast: [Double]
     public let sourcePseudobulkIndices: [Int]
-    public let observations: [VivoPseudobulkGroup]
+    public let observations: [VivoOmicsDesignObservation]
     public let excludedSmallPseudobulkIndices: [Int]
     public let controlReplicates: Int
     public let treatmentReplicates: Int
@@ -97,6 +97,22 @@ public struct VivoOmicsDesignMatrix: Codable, Sendable, Equatable {
     public let sizeFactorValues: [Double]
     public let libraryCounts: [UInt64]
     public let referenceFeatureIndices: [Int]
+    init(columnNames: [String], rows: [[Double]], contrast: [Double], sourcePseudobulkIndices: [Int],
+         observations: [VivoOmicsDesignObservation], excludedSmallPseudobulkIndices: [Int], controlReplicates: Int,
+         treatmentReplicates: Int, residualDegreesOfFreedom: Int, sizeFactorValues: [Double], libraryCounts: [UInt64], referenceFeatureIndices: [Int]) {
+        self.columnNames = columnNames; self.rows = rows; self.contrast = contrast; self.sourcePseudobulkIndices = sourcePseudobulkIndices
+        self.observations = observations; self.excludedSmallPseudobulkIndices = excludedSmallPseudobulkIndices
+        self.controlReplicates = controlReplicates; self.treatmentReplicates = treatmentReplicates; self.residualDegreesOfFreedom = residualDegreesOfFreedom
+        self.sizeFactorValues = sizeFactorValues; self.libraryCounts = libraryCounts; self.referenceFeatureIndices = referenceFeatureIndices
+    }
+    init(columnNames: [String], rows: [[Double]], contrast: [Double], sourcePseudobulkIndices: [Int],
+         observations: [VivoPseudobulkGroup], excludedSmallPseudobulkIndices: [Int], controlReplicates: Int,
+         treatmentReplicates: Int, residualDegreesOfFreedom: Int, sizeFactorValues: [Double], libraryCounts: [UInt64], referenceFeatureIndices: [Int]) {
+        self.init(columnNames: columnNames, rows: rows, contrast: contrast, sourcePseudobulkIndices: sourcePseudobulkIndices,
+                  observations: observations.map(VivoOmicsDesignObservation.init), excludedSmallPseudobulkIndices: excludedSmallPseudobulkIndices,
+                  controlReplicates: controlReplicates, treatmentReplicates: treatmentReplicates, residualDegreesOfFreedom: residualDegreesOfFreedom,
+                  sizeFactorValues: sizeFactorValues, libraryCounts: libraryCounts, referenceFeatureIndices: referenceFeatureIndices)
+    }
 }
 public enum VivoOmicsExpressionStatus: String, Codable, Sendable { case tested, filteredLowExpression, zeroResidualVariance, rankDeficientSupport, insufficientActiveDonors, numericalFailure, dispersionBoundary, influentialObservation }
 public struct VivoOmicsExpressionFeature: Codable, Sendable, Equatable {
@@ -134,6 +150,10 @@ public struct VivoOmicsExpressionResult: Codable, Sendable, Equatable {
 public enum VivoPseudobulkDifferentialExpression {
     /// One owner for the full and gene-specific paired/batch design conventions.
     static func makeDesign(observations: [VivoPseudobulkGroup],request: VivoOmicsExpressionContrast) throws
+        -> (columnNames: [String],rows: [[Double]],contrast: [Double],qr: VivoOmicsQR) {
+        try makeDesign(observations: observations.map(VivoOmicsDesignObservation.init), request: request)
+    }
+    static func makeDesign(observations: [VivoOmicsDesignObservation],request: VivoOmicsExpressionContrast) throws
         -> (columnNames: [String],rows: [[Double]],contrast: [Double],qr: VivoOmicsQR) {
         let n=observations.count
         var names = ["intercept", "treatment-minus-control"]
@@ -183,19 +203,24 @@ public enum VivoPseudobulkDifferentialExpression {
     }
     static func evaluate(metadata: VivoSingleCellCountMetadata,bulk: VivoPseudobulkCounts,
                          contrast request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
+        try evaluate(metadata: metadata, observations: bulk.groups.map(VivoOmicsDesignObservation.init), counts: bulk.matrix, contrast: request)
+    }
+    static func evaluate(metadata: VivoSingleCellCountMetadata, observations groups: [VivoOmicsDesignObservation], counts: VivoSparseCounts,
+                         contrast request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
         try request.validate()
+        for group in groups { try group.validate() }
         let donorSubset = request.includedDonorIDs.map { Set($0) }
-        let knownDonors = Set(bulk.groups.compactMap(\.donorID))
+        let knownDonors = Set(groups.compactMap(\.donorID))
         guard donorSubset.map({ $0.isSubset(of: knownDonors) }) ?? true else { throw VivoOmicsError.invalid("unknown selected donor") }
         var indices: [Int] = [], excluded: [Int] = []
-        for (i, group) in bulk.groups.enumerated() where group.cellGroup == request.cellGroup &&
+        for (i, group) in groups.enumerated() where group.cellGroup == request.cellGroup &&
             [request.controlCondition, request.treatmentCondition].contains(group.condition) {
             if let donors = donorSubset, !(group.donorID.map(donors.contains) ?? false) { continue }
-            if group.sourceCellIndices.count < request.minimumCellsPerPseudobulk { excluded.append(i) }
+            if group.sourceCellCount < request.minimumCellsPerPseudobulk { excluded.append(i) }
             else { indices.append(i) }
         }
         guard indices.count <= 512 else { throw VivoOmicsError.limit("at most 512 pseudobulk observations per contrast") }
-        let observations = indices.map { bulk.groups[$0] }, n = observations.count
+        let observations = indices.map { groups[$0] }, n = observations.count
         guard Set(observations.map(\.organism)).count == 1 else { throw VivoOmicsError.invalid("contrast must contain exactly one organism") }
         let controlCount = observations.filter { $0.condition == request.controlCondition }.count, treatmentCount = n - controlCount
         guard controlCount >= request.minimumReplicatesPerCondition, treatmentCount >= request.minimumReplicatesPerCondition,
@@ -208,11 +233,11 @@ public enum VivoPseudobulkDifferentialExpression {
         var entries = [[(row: Int, count: UInt64)]](repeating: [], count: metadata.features.count)
         var libraries = [UInt64](repeating: 0, count: n)
         for (row, sourceRow) in indices.enumerated() {
-            for k in bulk.matrix.rowOffsets[sourceRow]..<bulk.matrix.rowOffsets[sourceRow + 1] {
-                let count = bulk.matrix.counts[k]
+            for k in counts.rowOffsets[sourceRow]..<counts.rowOffsets[sourceRow + 1] {
+                let count = counts.counts[k]
                 guard count <= 9_007_199_254_740_992 else { throw VivoOmicsError.invalid("inference rejects counts outside exact FP64 integer range; raw import/export remains UInt64") }
                 libraries[row] = try vivoOmicsSum(libraries[row], count)
-                entries[bulk.matrix.featureIndices[k]].append((row, count))
+                entries[counts.featureIndices[k]].append((row, count))
             }
             guard libraries[row] > 0, libraries[row] <= 9_007_199_254_740_992 else {
                 throw VivoOmicsError.invalid("zero or unsupported-size pseudobulk library")
