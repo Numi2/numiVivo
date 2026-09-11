@@ -120,8 +120,10 @@ resolution of that support problem.
 
 This remains a 16-gene development-panel experiment using all admitted training
 cells. The [full-gene extension](Full/README.md) now completes Kang fitting and
-independent numerical checks, with nine eligible solver-limit cases; HIRISA is
-still running. Donor-exclusion sensitivity, mixing-distribution and dispersion
+independent numerical checks, with nine eligible solver-limit cases. HIRISA also
+completes, with 13,082 converged models, 185 leaf-budget limits and 4,815 unavailable
+genes. Training-only dispersions are verified for every donor omission; separate
+joint fits remain open. Donor-exclusion sensitivity, mixing-distribution and dispersion
 estimation uncertainty, and independent treated-outcome validation remain open. The historical nominal 95% treated coverage of **35.54%** is unchanged;
 no treated outcomes were scored or used to recalibrate intervals here.
 

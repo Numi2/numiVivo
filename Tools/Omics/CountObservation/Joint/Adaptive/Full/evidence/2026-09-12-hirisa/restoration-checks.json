@@ -1,0 +1,42 @@
+{
+  "status": "full-archive-restored-and-independent-checks-passed",
+  "archiveSHA256": "e4f47d1264b7ea6fd74f9008498d0185523d96f5791c7c80c26542b19aedf14e",
+  "archiveBytes": 1038073400,
+  "logicalFiles": 1554,
+  "objects": 1551,
+  "jointVerification": {
+    "status": "verified-completed-shards",
+    "origin": "HIRISA",
+    "pid": 18796,
+    "startedUnix": 1789164970.694526,
+    "genesVerified": 18082,
+    "numericalValuesCompared": 24992089,
+    "maximumScaledError": 2.2511148500825584e-10,
+    "leafBoundsChecked": 4913509,
+    "errors": [],
+    "fitStates": {
+      "unavailableCellDispersion": 4815,
+      "boundedContinuousLikelihood": 13082,
+      "oracleLeafLimit": 185
+    },
+    "lastShard": "18048-18082",
+    "finishedUnix": 1789164971.417274,
+    "seconds": 0.7227480411529541
+  },
+  "calibrationVerification": {
+    "status": "passed-all-training-only-calibrations",
+    "geneConditionRecords": 432116,
+    "numericalValuesCompared": 3803077,
+    "maximumScaledError": 2.8614380961523867e-13,
+    "seconds": 8.508510828018188,
+    "jointLikelihoodFits": 0,
+    "biologicalOutcomeTests": 0,
+    "scope": "Training-only plug-in calibration inputs for donor-excluded joint fitting, not completed donor-held-out prediction or parameter uncertainty."
+  },
+  "verificationMode": "Every restored archive object was byte-verified. Joint numerical receipts are reused only after input/output hashes match. All training-only calibration calculations were recomputed independently after restoration.",
+  "updatedRestoredFiles": {
+    "study/HIRISA-gap-repaired/verification-state.json": "ffb772c963ac101d480c6ae8233f25fe8402b3f2db2bf8b020148e840f0f92f4",
+    "donor-exclusion/study/verification.json": "b9cdd49707ae83ed2002a87a35350138bb53fd750b01d97e20ef92d1dfbc0e6b"
+  },
+  "unix": 1789165063.6607401
+}

@@ -49,17 +49,25 @@ the bound but now exhausts the inner finite-support iteration budget. The repair
 resolves 27 former limits and introduces this one new limit; it does not assert
 universal optimizer convergence.
 
-## HIRISA scope and remaining work
+## Completed HIRISA execution and remaining work
 
 Preparation also retained all **18,082 HIRISA source genes**, **119,513 previously
 admitted training cells**, and **291,097,122 nonzero counts** across five paired
 donors. The source H5AD has 1,612,594 cells; the count model uses the previously
-admitted cohort, not every source cell. Its full-gene native fitting and independent
-verification are **still running** in four disjoint shard streams. No completed
-HIRISA full-gene result is claimed in this release.
+admitted cohort, not every source cell. All **18,082 genes** now have completed native records and independent checks.
+Of 13,267 dispersion-eligible genes, **13,082** meet the continuous likelihood
+bound and **185** retain the oracle leaf-budget limit. The remaining **4,815**
+genes are unavailable. All **24,992,089 numerical comparisons** and **4,913,509
+partition-leaf checks** pass; maximum scaled discrepancy is `2.26e-10`. The
+four disjoint workers are finished. The [HIRISA evidence](evidence/2026-09-12-hirisa/manifest.json)
+retains every result and failure; the original baseline pilot covers only its
+first 64 genes. These are training fits, with no new query outcome scored.
 
-Training-only donor-exclusion needs cell dispersions re-estimated without the
-excluded donor. Full-cohort dispersions cannot qualify a donor-held-out fit.
+[Training-only calibration](DonorExclusion/README.md) now exposes independently
+verified dispersions for all 13 donor omissions and every source gene. It uses
+only the remaining donors and preserves changes in eligibility. The corresponding
+donor-excluded joint fits and predictions have not yet run. Full-cohort dispersions
+cannot qualify a donor-held-out fit.
 Mixing-distribution and dispersion estimation uncertainty, query-moment stability
 beyond the original panel, and new independent treated outcomes remain open.
 Historical HIRISA nominal 95% treated coverage remains **35.54%**. These training
@@ -77,7 +85,10 @@ bytes**: this is a group-bounded transpose, not constant-memory ingestion.
 record supplies only one gene's sparse counts. The native harness releases gene
 intermediates after each result. Kang peaks at **19,906,560 bytes native RSS**
 across its shards; this excludes Python preparation, reference verification and
-the source cache. Per-shard receipts pin source/cache/manifest and
+the source cache. HIRISA peaks at **39,583,744 bytes native RSS**
+and completes its four-worker native run in **51.21 minutes**.
+These values exclude preparation and independent verification and do not measure
+a GPU speedup. Per-shard receipts pin source/cache/manifest and
 executable hashes. Every gene index is preserved, and interrupted partial files
 require inspection before recovery. The immutable execution plan fixes shard size,
 worker count and binary; worker locks prevent duplicate ownership.

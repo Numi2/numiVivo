@@ -103,6 +103,18 @@ def pack(study,repo,out,origins):
    add('study/'+p.name,p)
  for p in sorted((study/'gap-repair').iterdir()):
   if p.is_file():add('study/gap-repair/'+p.name,p)
+ calibration=os.environ.get('NUMIVIVO_DONOR_EXCLUSION_STUDY')
+ if calibration:
+  cal=Path(calibration);state=json.loads((cal/'state.json').read_text());checked=json.loads((cal/'verification.json').read_text())
+  assert state['status']=='completed-all-training-only-folds' and checked['status']=='passed-all-training-only-calibrations'
+  for p in sorted(cal.rglob('*')):
+   if p.is_file() and '__pycache__' not in p.parts and 'publication' not in p.relative_to(cal).parts:
+    assert '.partial' not in p.name;add('donor-exclusion/study/'+str(p.relative_to(cal)),p)
+  for p in sorted((repo/'Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion').iterdir()):
+   if p.is_file():add('donor-exclusion/recipes/'+p.name,p)
+  for origin in ['Kang','HIRISA']:
+   add('study/'+origin+'-manifest.json.gz',study/(origin+'-manifest.json.gz'))
+  add('source/VivoCountObservationCalibration.swift',repo/'Sources/NumiVivoKit/Omics/VivoCountObservationCalibration.swift')
  for p in sorted((repo/'Tools/Omics/CountObservation/Joint/Adaptive/Full').iterdir()):
   if p.is_file():add('recipes/'+p.name,p)
  for name in ['VivoCountObservation.swift','VivoCountRateLikelihood.swift','VivoJointCountResponse.swift','VivoAdaptiveJointCountResponse.swift']:
@@ -115,6 +127,10 @@ def pack(study,repo,out,origins):
    with p.open('rb') as f:tar.addfile(info,f)
    assert sha(p)==h
  archive=writer.finish();m={'schemaVersion':1,'format':'sha256-objects-with-logical-file-aliases','origins':origins,'files':files,'objects':{h:{'bytes':p.stat().st_size} for h,p in objects.items()},'archive':archive,'scope':'Completed origin full-gene original-cell cache, baseline and repaired native fits including failures, independent checks, frozen executable and source, protocols and recipes. Training fitting only; no new outcome validation.'}
+ if 'HIRISA' in origins:
+  prior=repo/'Tools/Omics/CountObservation/Joint/Adaptive/Full/evidence/2026-09-11-kang/manifest.json'
+  prior_manifest=json.loads(prior.read_text())
+  m['relatedPublishedEvidence']={'Kang':{'commit':'217614c515e0666cf795ffb9d94b31a49789129e','path':str(prior.relative_to(repo).parent),'archiveSHA256':prior_manifest['archive']['SHA256'],'note':'Kang complete raw fits remain in this separate archive; both full-cohort result summaries may be reported together.'}}
  (out/'manifest.json').write_text(json.dumps(m,indent=2,sort_keys=True)+'\n');(out/'results.json').write_bytes((study/'results.json').read_bytes());print(json.dumps({'files':len(files),'objects':len(objects),'archiveBytes':archive['bytes'],'archiveSHA256':archive['SHA256']}))
 
 if __name__=='__main__':

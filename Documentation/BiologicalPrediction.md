@@ -41,7 +41,7 @@ success nor a failure.
 | Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. It loses to the mean in 37/150 target/group folds. | Independent biological contexts, target selection and replication; technical groups do not supply these. |
 | Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
 | Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
-| Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene Kang fitting now completes with nine eligible solver-limit cases; HIRISA is running. Parameter uncertainty, donor-held-out fitting and new biological calibration remain open. |
+| Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene fitting completes: nine eligible Kang limits and 185 HIRISA leaf limits remain. Training-only dispersions are verified for all donor omissions; joint held-out fits, parameter uncertainty and new biological calibration remain open. |
 | Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
 
 The GSE181897 input contract is now resolved and its frozen comparison is complete.
@@ -190,11 +190,18 @@ hit the leaf budget and one the finite-support iteration limit. The remaining
 and 3,986,925 leaf checks pass, with maximum scaled discrepancy `3.67e-12`.
 The full gene set exposed a support-search decision problem at the numerical
 allowance boundary; a real DNAJC8 regression now covers the repair. All 44 Swift
-tests pass, and original baseline failures remain retained. HIRISA fitting across
-18,082 genes and 119,513 admitted training cells is still running. This is training
-likelihood qualification, not a new outcome test. Donor-exclusion must re-estimate
-cell dispersions using only its training donors; parameter uncertainty and the
-35.54% historical treated-coverage failure remain unresolved. The revised search
+tests pass, and original baseline failures remain retained. HIRISA now completes
+all 18,082 genes and 119,513 admitted training cells: 13,082 models attain the
+continuous bound, 185 retain the leaf limit, and 4,815 are unavailable. All
+24,992,089 independent values and 4,913,509 partition leaves pass, with maximum
+scaled discrepancy `2.26e-10`. This is training likelihood qualification, not
+a new outcome test. [Training-only calibration](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/README.md)
+also completes all 13 donor omissions: 432,116 gene/condition records and
+3,803,077 independent comparisons pass. Omitting one donor makes 10–670 previously
+eligible Kang genes and 109–532 HIRISA genes unavailable, depending on the fold.
+Those changes must be retained in subsequent joint fits. Joint donor-held-out
+predictions, parameter uncertainty and the 35.54% historical treated-coverage
+failure remain unresolved. The revised search
 resolves 27 original limits but introduces one finite-support budget limit for
 PANK2; this case is retained instead of claiming universal improvement.
 

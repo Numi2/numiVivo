@@ -168,9 +168,11 @@ support-convergence problem on the tested panel. The [full-gene extension](Tools
 now processes all 15,706 Kang genes: 8,405 converge, nine eligible genes retain
 solver limits, and 7,292 remain unavailable. Over 20.27 million independent
 numerical comparisons pass; 44 Swift tests include a repaired real-count
-convergence failure. HIRISA full-gene fitting is still running. Parameter
-uncertainty, donor-held-out qualification and independent biological validation
-remain open.
+convergence failure. HIRISA now processes all 18,082 genes: 13,082 converge,
+185 retain the leaf-budget limit, and 4,815 are unavailable; 24.99 million
+independent comparisons pass. Training-only dispersions are also verified for
+all 13 donor omissions, ready for separate joint fits. Parameter uncertainty,
+donor-held-out prediction and independent biological validation remain open.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five
