@@ -34,7 +34,7 @@ binds every input byte by SHA-256, and requires stream replay to verify its bund
 A source adapter must separately establish HDF5 decoding and source provenance.
 
 The complete [Parse IFN-beta admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
-is being qualified on 725,031 cells and 1.37 billion records using version-pinned
+passes on 725,031 cells and 1.37 billion records using version-pinned
 HTTP ranges. This avoids a 227 GB local source snapshot. The matrix buffer is
 bounded; metadata and QC are resident, and unread source bytes are not assigned
 a fabricated whole-file fingerprint. No acceleration or biological-prediction
@@ -47,6 +47,15 @@ tests pass. These synthetic controls qualify the buffer-lifetime repair; the
 complete Parse ingestion and all twelve native source replays now pass;
 [offline artifact restoration](../Tools/Omics/PerturbationPrediction/ParseIFNB/COUNT_RESULTS.md) also passes. The [preparation binding](../Tools/Omics/PerturbationPrediction/ParseIFNB/README.md#immutable-preparation-binding)
 also checks every donor projection against the immutable original source axes.
+
+The [file-backed cell-axis/count path](../Tools/Omics/CountStore/CellAxis/README.md)
+now implements disk-resident cell identities, QC and group membership with bounded
+resident dictionaries and aggregate counts. Fourteen native tests pass. Complete
+Parse cell-axis import and reopen preserve all 725,031 original identities, row
+cardinalities and retained-matrix totals, with native peak RSS of 65,617,920 bytes
+(62.6 MiB). Its full paired count ingestion/replay remains a separate pending gate.
+The import measurement excludes the source adapter and is not a whole-pipeline
+memory or Metal performance result. Existing H5AD/PCA/graph/model bounds remain.
 
 ## Use
 

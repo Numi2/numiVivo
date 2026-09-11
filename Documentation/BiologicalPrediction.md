@@ -187,11 +187,13 @@ inspected; the 271 HGNC naming candidates do not silently repair the original
 alongside uncertainty coverage, interval width and failures. A failed comparison
 remains a result rather than a reason to change the acceptance threshold.
 
-Storage work can progress while those experimental inputs are unresolved:
-file-backed cell identities and QC address the remaining resident metadata
-requirement. That implementation and its full-cohort validation are still open.
-The current donor-partitioned count stream does not establish that all metadata,
-graphs or prediction models execute out of core. Atlas supplies a separate
+The [file-backed cell-axis and count consumer](../Tools/Omics/CountStore/CellAxis/README.md)
+now address resident cell identities, QC and membership arrays for count aggregation.
+Fourteen native tests pass, and all 725,031 original Parse cell identities and
+declared matrix totals pass import and reopen at 62.6 MiB native peak RSS.
+The full paired count ingestion/replay and memory comparison remain pending;
+this metadata result does not establish that graphs or prediction models execute
+out of core, nor does it add a biological prediction result. Atlas supplies a separate
 variant-to-molecular hypothesis route; it supplies neither missing Parse treatment
 metadata nor experimental RNA-to-phenotype outcomes.
 

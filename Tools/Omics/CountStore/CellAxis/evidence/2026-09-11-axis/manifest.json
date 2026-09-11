@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "contents.json",
+      "sourceBytes": 4055,
+      "sourceSHA256": "f6fe02b675b3c7088d78752fe788bb7fc486eb1f34a2fd49d478f484ad4d8b11",
+      "storedPath": "contents.json",
+      "storedBytes": 4055,
+      "storedSHA256": "f6fe02b675b3c7088d78752fe788bb7fc486eb1f34a2fd49d478f484ad4d8b11",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "dependencies.json",
+      "sourceBytes": 848,
+      "sourceSHA256": "71ca593db91661b1a6fc1d04588d17a945d9350d8b46b44a96307ca4d58841a8",
+      "storedPath": "dependencies.json",
+      "storedBytes": 848,
+      "storedSHA256": "71ca593db91661b1a6fc1d04588d17a945d9350d8b46b44a96307ca4d58841a8",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "recipe.json",
+      "sourceBytes": 1366106,
+      "sourceSHA256": "57c1e86f1abd11a2a1f6141b54e4c88a9f14c572173636245b96ef15c7c9596e",
+      "storedPath": "recipe.json.gz",
+      "storedBytes": 282501,
+      "storedSHA256": "e74bc6126765e719aa4b708fab3de4afebfba144a377c0d45aaddfe880f22b5a",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "results.tar.gz",
+      "sourceBytes": 11620687,
+      "sourceSHA256": "37ea8f865d6b3fea1c8785abcc61e419f0f2443983c07aa5895f8b58bb26643e",
+      "storedPath": "results.tar.gz",
+      "storedBytes": 11620687,
+      "storedSHA256": "37ea8f865d6b3fea1c8785abcc61e419f0f2443983c07aa5895f8b58bb26643e",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "summary.json",
+      "sourceBytes": 1815,
+      "sourceSHA256": "87534aae93fe34f54ef64dc5b3e5f03ff36c8dd56556c2ec729e1b538038adef",
+      "storedPath": "summary.json",
+      "storedBytes": 1815,
+      "storedSHA256": "87534aae93fe34f54ef64dc5b3e5f03ff36c8dd56556c2ec729e1b538038adef",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    }
+  ]
+}

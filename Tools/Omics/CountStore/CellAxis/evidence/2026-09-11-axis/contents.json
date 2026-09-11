@@ -1,0 +1,123 @@
+{
+  "status": "verified",
+  "members": {
+    "axis-execution.json": {
+      "SHA256": "b8dbb15146eba7b077c21de72d8edb124e5c4410ff46212ed4c604669f09100d",
+      "bytes": 1531,
+      "mode": 420
+    },
+    "axis-independent-check.json": {
+      "SHA256": "2118532ec309564ab93bbd740acc77055f15f4d5e4ce339e38053052416e213d",
+      "bytes": 262,
+      "mode": 420
+    },
+    "axis-recipe/parse_support.py": {
+      "SHA256": "a398aadb657dc2509f5037cc39941c3c5c1b2c3ae6ae2eb57a1442411f173827",
+      "bytes": 6400,
+      "mode": 420
+    },
+    "axis-recipe/prepare_parse.py": {
+      "SHA256": "323297233f38e9d9d0b2e7b26efaa5335ba1b2c2db9a22047b6ef4c754e7fea1",
+      "bytes": 3440,
+      "mode": 420
+    },
+    "axis-verify.stderr": {
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "axis-verify.stdout": {
+      "SHA256": "cd982a83c91408875e47c7432c5b386c8d4a3e207db19ae5a2f90b478c16edb5",
+      "bytes": 870,
+      "mode": 420
+    },
+    "axis.stderr": {
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "mode": 420
+    },
+    "axis.stdout": {
+      "SHA256": "cd982a83c91408875e47c7432c5b386c8d4a3e207db19ae5a2f90b478c16edb5",
+      "bytes": 870,
+      "mode": 420
+    },
+    "axis/header.json": {
+      "SHA256": "d700c8ad8c8ca5bd19848d843ea3a3168da72a37db737a96ebf477bbbb562859",
+      "bytes": 2429070,
+      "mode": 420
+    },
+    "axis/receipt.json": {
+      "SHA256": "586c5ef8876c326c9e64a37bda6b9d0bb83f931660313bc61f6fcc3a4307367e",
+      "bytes": 869,
+      "mode": 420
+    },
+    "axis/rows.bin": {
+      "SHA256": "5912a554b82059dd8539cc26a425303db6fbad460897eac2ea881b886cddb62f",
+      "bytes": 29001240,
+      "mode": 384
+    },
+    "axis/strings.bin": {
+      "SHA256": "3a09fadfc556af235a0493c46ce2ceef6cca085e3960ca1576770fadc9ce8f6d",
+      "bytes": 18953862,
+      "mode": 384
+    },
+    "build-unicode-final.log": {
+      "SHA256": "3b60fb8f1c9e658d6e272aca2b9e9961932f4c356047682f8f191aa6b4568df6",
+      "bytes": 2210,
+      "mode": 420
+    },
+    "build/numivivo-omics": {
+      "SHA256": "cae3f6e173b4a9c52f6f606743d99bfe532cad76b69f3cccd83dacb8eee18f9a",
+      "bytes": 7579776,
+      "mode": 493
+    },
+    "build/sources.sha256": {
+      "SHA256": "95be1a1935061ef61dfeb960c4c9ddd89633b06f193c4efae4b6460d70988875",
+      "bytes": 16718,
+      "mode": 420
+    },
+    "count-recipe/compare_parse_counts.py": {
+      "SHA256": "1dc5a1e209154dedbae6d6bd9a250ebeebdb810f3d355d33d670849afc0c295f",
+      "bytes": 3885,
+      "mode": 420
+    },
+    "count-recipe/parse_support.py": {
+      "SHA256": "eaea9c9f2926bec8274d4abd48a620b5451f772835b36a1b49fa321460344204",
+      "bytes": 6916,
+      "mode": 420
+    },
+    "count-recipe/run_parse_counts.py": {
+      "SHA256": "759e53a6658413a73a36320cecb79af657f8c4520defb6795a84fc6c1ca75676",
+      "bytes": 7626,
+      "mode": 420
+    },
+    "count-recipe/source-freeze.json": {
+      "SHA256": "db8fb5d67a8c0f83870c3c70161a6b4b36ed321af61c4d790d769594019af581",
+      "bytes": 19853,
+      "mode": 420
+    },
+    "header.json": {
+      "SHA256": "94d03712ba6486ca46e516e64406e05a83793103ef42a8395ac4fc3811c2fea8",
+      "bytes": 4206419,
+      "mode": 420
+    },
+    "prepare-parse.log": {
+      "SHA256": "e70ecde41583267e3318ab9ba56fe41c5be5dd9bb4583e6641eca67efc26f6ec",
+      "bytes": 1411,
+      "mode": 420
+    },
+    "source-bindings.json": {
+      "SHA256": "aa425b6cfb10d3030f65a65a8057bd030ab47ef3ae31e315ca9b7be04957ef6e",
+      "bytes": 405,
+      "mode": 420
+    },
+    "tests-unicode-final.log": {
+      "SHA256": "0300a01c5b136e4b06a6150ec70245efcf757c59755f0b6d829d8a7f6b951007",
+      "bytes": 2743,
+      "mode": 420
+    }
+  },
+  "archiveSHA256": "37ea8f865d6b3fea1c8785abcc61e419f0f2443983c07aa5895f8b58bb26643e",
+  "logicalBytes": 62246376,
+  "scope": "Complete cell-axis import and native reopen only. Frozen full-count recipe retained, but no running count output is included. Parse data and derivatives: CC BY-NC 4.0."
+}

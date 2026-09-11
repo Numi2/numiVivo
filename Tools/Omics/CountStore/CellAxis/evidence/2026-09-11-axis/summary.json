@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "cellAxis": {
+    "status": "passed-complete-cell-axis",
+    "command": [
+      "/Users/home/numivivo-cell-axis-study-20260911/build/numivivo-omics",
+      "singlecell-cell-axis-import",
+      "--header",
+      "/Users/home/numivivo-cell-axis-study-20260911/header.json",
+      "--output",
+      "/Users/home/numivivo-cell-axis-study-20260911/axis"
+    ],
+    "binarySHA256": "cae3f6e173b4a9c52f6f606743d99bfe532cad76b69f3cccd83dacb8eee18f9a",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "startedUnix": 1789134245.890799,
+    "sourceBindings": {
+      "preparationArchiveSHA256": "f08c78ca7a74ab01eab6c3f7748615f45e217cbf95446ba35ef830eaf9c75d02",
+      "countArchiveSHA256": "ae94b3d586d2212fc09b1d451f893e7b3badc05ad57eb04550bece351af12b97",
+      "planSHA256": "8958f33a675211c355c119a68503cf7cff07575e4dcbff0cd2bd0d2124c36362",
+      "verifiedSourceFiles": 6916,
+      "independentTotalsSHA256": "256eefdcf1349a66491fb851e6b8b91d85ef72a1d8e4276229df64f1fcb3da8d"
+    },
+    "predictionFitOrScoring": false,
+    "cells": 725031,
+    "inputJSONLSHA256": "ecb17aad7ec358ecbb71140b57fedd38da278ccc8a59bc3c61bded5be028b17d",
+    "nativeExit": 0,
+    "maximumNativeRSS": 65617920,
+    "seconds": 13.013564916793257,
+    "independentCheck": {
+      "status": "passed",
+      "cells": 725031,
+      "allOriginalIdentityBytesAndRowsExact": true,
+      "allDeclaredMatrixTotalsAndCardinalitiesExact": true,
+      "rowBytes": 40,
+      "axisRowsBytes": 29001240,
+      "axisStringsBytes": 18953862,
+      "predictionFitOrScoring": false
+    },
+    "nativeReopenVerified": true,
+    "finishedUnix": 1789134266.631277
+  },
+  "unitTests": 14,
+  "unitSuites": 2,
+  "nativeBuildInputCount": 105,
+  "fullPairedCountQualification": "pending-separate-evidence",
+  "predictionFitOrScoring": false
+}

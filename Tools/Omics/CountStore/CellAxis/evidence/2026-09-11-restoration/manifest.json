@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "extraction.log",
+      "sourceBytes": 38,
+      "sourceSHA256": "dbde7c6c432ffa33aa91644dabd2c459675f81390ca1f8a9cab2c7bbdc2c81d8",
+      "storedPath": "extraction.log",
+      "storedBytes": 38,
+      "storedSHA256": "dbde7c6c432ffa33aa91644dabd2c459675f81390ca1f8a9cab2c7bbdc2c81d8",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "native-reopen.stderr",
+      "sourceBytes": 0,
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "native-reopen.stderr",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "native-reopen.stdout",
+      "sourceBytes": 870,
+      "sourceSHA256": "cd982a83c91408875e47c7432c5b386c8d4a3e207db19ae5a2f90b478c16edb5",
+      "storedPath": "native-reopen.stdout",
+      "storedBytes": 870,
+      "storedSHA256": "cd982a83c91408875e47c7432c5b386c8d4a3e207db19ae5a2f90b478c16edb5",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    },
+    {
+      "sourcePath": "recipe.json",
+      "sourceBytes": 10663,
+      "sourceSHA256": "5f4f959146f88e87b18533f26e1d97bfd7265877f0fb381082da87bb3948b0d8",
+      "storedPath": "recipe.json.gz",
+      "storedBytes": 3972,
+      "storedSHA256": "fc5a01ac8c7ea96fcd2adfa0fa79d753545ef22f51782c449be6841d38f831b4",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "summary.json",
+      "sourceBytes": 406,
+      "sourceSHA256": "ab2cbd6b1dc895231bce9c72a5255ab57ca3ec9a03b6b733c76c44ce8243a2cc",
+      "storedPath": "summary.json",
+      "storedBytes": 406,
+      "storedSHA256": "ab2cbd6b1dc895231bce9c72a5255ab57ca3ec9a03b6b733c76c44ce8243a2cc",
+      "gzipEncoded": false,
+      "bundledSourceFiles": false
+    }
+  ]
+}

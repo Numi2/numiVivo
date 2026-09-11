@@ -96,6 +96,13 @@ subsequently repaired temporary-memory defect are retained explicitly. Historica
 409 duration-panel symbols are absent by exact name, and the source dose remains
 unresolved. These input checks do not add a prediction success or failure.
 
+The new [native file-backed cell axis and count consumer](Tools/Omics/CountStore/CellAxis/README.md)
+remove resident cell identities, QC and membership arrays from the count path.
+All 14 native tests pass, and importing and reopening the complete 725,031-cell
+axis preserves every identity byte and declared matrix total at **62.6 MiB native
+peak RSS**. The paired full-count ingestion/replay and same-cohort memory comparison
+remain pending separate evidence; this does not change the biological verdict.
+
 The [native interval assessment](Tools/Omics/PerturbationPrediction/Intervals/README.md)
 now tests optional nominal 95% mean-response intervals on those same 26 folds.
 Average treated-expression coverage is 92.94% / 94.70% within Kang / HIRISA,

@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        if ["singlecell-count-stream-pseudobulk", "singlecell-count-stream-verify", "singlecell-duration-fit", "singlecell-duration-predict", "singlecell-duration-verify", "singlecell-duration-prediction-verify", "singlecell-perturbation-batch","singlecell-perturbation-batch-verify"].contains(name ?? "") { return true }
+        if ["singlecell-cell-axis-import", "singlecell-cell-axis-verify", "singlecell-file-count-stream", "singlecell-file-count-stream-verify", "singlecell-count-stream-pseudobulk", "singlecell-count-stream-verify", "singlecell-duration-fit", "singlecell-duration-predict", "singlecell-duration-verify", "singlecell-duration-prediction-verify", "singlecell-perturbation-batch","singlecell-perturbation-batch-verify"].contains(name ?? "") { return true }
         return ["singlecell-h5ad-programs", "singlecell-h5ad-programs-verify", "singlecell-target-kernel-fit", "singlecell-target-kernel-predict", "singlecell-target-kernel-verify", "singlecell-target-kernel-prediction-verify", "singlecell-pca-integrate", "singlecell-pca-integrate-verify", "singlecell-graph-embed", "singlecell-graph-embed-verify", "singlecell-graph-cluster", "singlecell-graph-cluster-verify", "singlecell-pca-neighbors", "singlecell-pca-neighbors-verify", "singlecell-h5ad-pca-query", "singlecell-h5ad-pca-query-verify", "singlecell-h5ad-pca", "singlecell-h5ad-pca-verify", "singlecell-h5ad-store", "singlecell-count-store-verify", "singlecell-count-store-normalize", "singlecell-count-store-normalize-verify", "multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-visium-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
@@ -282,6 +282,24 @@ struct VivoSingleCellCLICommands {
                 guard arguments.count==2 else { throw VivoOmicsError.invalid("singlecell-h5ad-programs-verify <bundle>") }
                 try printJSON(VivoH5ADPrograms.verify(URL(fileURLWithPath: arguments[1]),implementation: VivoWorkflowCLIImplementation.fingerprint()));return 0
             }
+            if command == "singlecell-cell-axis-import" {
+                guard arguments.count == 5, arguments[1] == "--header", arguments[3] == "--output" else { throw VivoOmicsError.invalid("singlecell-cell-axis-import --header <header.json> --output <new-axis> < cells.jsonl") }
+                let bytes = try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[2]), maximumBytes: VivoFileCellAxis.maximumHeaderBytes)
+                let header = try VivoCanonicalJSON.decode(VivoCellAxisHeader.self, from: bytes)
+                try printJSON(VivoFileCellAxis.publish(header: header, input: .standardInput, implementation: VivoWorkflowCLIImplementation.fingerprint(), to: canonicalURL(URL(fileURLWithPath: arguments[4])))); return 0
+            }
+            if command == "singlecell-cell-axis-verify" {
+                guard arguments.count == 2 else { throw VivoOmicsError.invalid("singlecell-cell-axis-verify <axis>") }
+                try printJSON(VivoFileCellAxis.open(URL(fileURLWithPath: arguments[1]), implementation: VivoWorkflowCLIImplementation.fingerprint()).receipt); return 0
+            }
+            if command == "singlecell-file-count-stream" {
+                guard arguments.count == 5, arguments[1] == "--axis", arguments[3] == "--output" else { throw VivoOmicsError.invalid("singlecell-file-count-stream --axis <axis> --output <new-bundle> < records.bin") }
+                try printJSON(VivoFileCountStream.publish(axis: URL(fileURLWithPath: arguments[2]), input: .standardInput, implementation: VivoWorkflowCLIImplementation.fingerprint(), to: canonicalURL(URL(fileURLWithPath: arguments[4])))); return 0
+            }
+            if command == "singlecell-file-count-stream-verify" {
+                guard arguments.count == 2 else { throw VivoOmicsError.invalid("singlecell-file-count-stream-verify <bundle> < records.bin") }
+                try printJSON(VivoFileCountStream.verify(URL(fileURLWithPath: arguments[1]), input: .standardInput, implementation: VivoWorkflowCLIImplementation.fingerprint())); return 0
+            }
             if command == "singlecell-count-stream-pseudobulk" {
                 guard arguments.count == 5, arguments[1] == "--plan", arguments[3] == "--output" else {
                     throw VivoOmicsError.invalid("singlecell-count-stream-pseudobulk --plan <axes.json> --output <new-bundle> < records.bin")
@@ -506,6 +524,10 @@ struct VivoSingleCellCLICommands {
       singlecell-h5ad-pca-verify <bundle>
       singlecell-h5ad-programs <source.h5ad> --plan <program-plan.json> --output <new-bundle>
       singlecell-h5ad-programs-verify <bundle>
+      singlecell-cell-axis-import --header <header.json> --output <new-axis> < cells.jsonl
+      singlecell-cell-axis-verify <axis>
+      singlecell-file-count-stream --axis <axis> --output <new-bundle> < records.bin
+      singlecell-file-count-stream-verify <bundle> < records.bin
       singlecell-count-stream-pseudobulk --plan <axes.json> --output <new-bundle> < records.bin
       singlecell-count-stream-verify <bundle> < records.bin
       singlecell-h5ad-pseudobulk <source.h5ad> --plan <stream-plan.json> --output <new-bundle-directory>
