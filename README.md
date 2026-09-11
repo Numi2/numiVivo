@@ -171,7 +171,9 @@ numerical comparisons pass; 44 Swift tests include a repaired real-count
 convergence failure. HIRISA now processes all 18,082 genes: 13,082 converge,
 185 retain the leaf-budget limit, and 4,815 are unavailable; 24.99 million
 independent comparisons pass. Training-only dispersions are also verified for
-all 13 donor omissions, ready for separate joint fits. Parameter uncertainty,
+all 13 donor omissions. Separate joint fits are now running; the first 64-gene
+Kang and HIRISA pilot shards pass independent checks. These pilots do not
+qualify the complete folds. Parameter uncertainty,
 donor-held-out prediction and independent biological validation remain open.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)

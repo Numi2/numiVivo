@@ -39,8 +39,6 @@ with h5py.File(cache,'r') as h:
     receipt=read(receipt_path);assert receipt['status']=='completed' and receipt['binarySHA256']==binary and receipt['manifestSHA256']==prepared['manifestSHA256'];assert sha(input_path)==receipt['compressedInputSHA256'] and sha(output_path)==receipt['compressedOutputSHA256']
    else:
     if limit is not None and started>=limit:state['status']='bounded-shard-run-completed';break
-    disk=os.statvfs(out)
-    if disk.f_bavail*disk.f_frsize<512*1024*1024:raise OSError('insufficient free storage before starting a new gene shard')
     started+=1;state['activeShard']=tag;save()
     header={'origin':origin,'firstFeatureIndex':first,'featureIDs':[g['featureID'] for g in manifest['genes'][first:last]],'groups':groups,'cacheSHA256':manifest['cacheSHA256'],'manifestSHA256':prepared['manifestSHA256']}
     if not input_path.exists():

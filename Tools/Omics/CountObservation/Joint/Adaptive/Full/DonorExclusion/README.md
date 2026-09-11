@@ -72,3 +72,38 @@ The next stage must fit a separate joint model from each fold's training donors
 and these fold-specific dispersions, then produce control-only predictions before
 scoring omitted outcomes. Existing Kang/HIRISA observations are development data;
 this does not replace a frozen test in an independent biological context.
+
+## Separate joint fitting: September 12, 2026
+
+All 13 joint-fit manifests are prepared, covering 216,058 origin/gene folds,
+including 131,887 with both cell dispersions available. `prepare_joint.py`
+replaces each gene's dispersions with its native train-only calibration and
+retains original sparse-cache group indices after removing the omitted donor.
+The controller and independent reference both select these explicit indices and
+check donor/condition identities. Cache files are read-only hard links: no count
+bytes are copied and no shared cache may be mutated. `trainingCalibrationSHA256`
+binds the actual fold parameters; the inherited `sourceCalibrationSHA256` and
+`source` fields retain full-cohort upstream provenance, not fitted fold inputs.
+
+The first 64 genes of Kang-00 have 33 bounded fits and 31 unavailable cases;
+HIRISA-00 has 51 bounded fits and 13 unavailable cases. Their 60,939 and 41,669
+independent comparisons pass, with maximum scaled discrepancies `2.03e-13` and
+`2.27e-11`. A full-cohort Kang first-shard replay preserves exact native input
+and output bytes. Excluded-donor presence, duplicate cache indices and incorrect
+cache identity are each rejected before native input is created.
+[Retained pilot evidence](evidence/2026-09-12-joint-pilots/retention.json) binds
+these checks and all prepared manifests; it does not contain completed full-fold
+results. Sparse caches remain in the published full-cohort archives.
+
+`run_folds.py STUDY REPOSITORY` starts at most four native fits with independent
+checkers, freezes controller/reference scripts, and resumes verified shard
+receipts. It checks storage before each new fold and shard. Failures preserve
+partial output and identify any surviving children; inspect those processes
+before restarting. The complete run started September 12, 2026. No held-out
+joint prediction or scoring is reported from this run yet.
+
+Prepare with `prepare_joint.py NEW_STUDY CALIBRATION_STUDY FULL_COHORT_STUDY`.
+The new study must use the pinned runtime and original verified sparse caches.
+After complete fitting, control-only predictions must be frozen before reading
+omitted treated outcomes. Kang/HIRISA remain development studies; this stage
+cannot resolve independent biological calibration by itself.

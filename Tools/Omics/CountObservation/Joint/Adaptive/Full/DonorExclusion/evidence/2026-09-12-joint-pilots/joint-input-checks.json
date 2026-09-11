@@ -1,0 +1,53 @@
+{
+  "fullCohortReplay": "first64 Kang native input and output byte-identical",
+  "excluded-donor-present": {
+    "returncode": 1,
+    "rejectedBeforeNativeInput": true
+  },
+  "duplicate-cache-index": {
+    "returncode": 1,
+    "rejectedBeforeNativeInput": true
+  },
+  "wrong-cache-identity": {
+    "returncode": 1,
+    "rejectedBeforeNativeInput": true
+  },
+  "pilots": {
+    "Kang-00": {
+      "status": "verified-completed-shards",
+      "origin": "Kang",
+      "pid": 33529,
+      "startedUnix": 1789165939.1062,
+      "genesVerified": 64,
+      "numericalValuesCompared": 60939,
+      "maximumScaledError": 2.0272672429655358e-13,
+      "leafBoundsChecked": 11937,
+      "errors": [],
+      "fitStates": {
+        "unavailableCellDispersion": 31,
+        "boundedContinuousLikelihood": 33
+      },
+      "lastShard": "00000-00064",
+      "finishedUnix": 1789165939.9153159,
+      "seconds": 0.8091170787811279
+    },
+    "HIRISA-00": {
+      "status": "verified-completed-shards",
+      "origin": "HIRISA",
+      "pid": 33528,
+      "startedUnix": 1789165939.228374,
+      "genesVerified": 64,
+      "numericalValuesCompared": 41669,
+      "maximumScaledError": 2.2678969764908274e-11,
+      "leafBoundsChecked": 8038,
+      "errors": [],
+      "fitStates": {
+        "unavailableCellDispersion": 13,
+        "boundedContinuousLikelihood": 51
+      },
+      "lastShard": "00000-00064",
+      "finishedUnix": 1789165942.3779898,
+      "seconds": 3.14961576461792
+    }
+  }
+}

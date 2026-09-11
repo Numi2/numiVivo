@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-expression-memory-20260911/Tools/Omics/CountObservation/Joint/Adaptive/Full/run.py", line 18, in <module>
+    indices=[g['index'] for g in manifest['groups']];assert len(set(indices))==len(indices) and all(isinstance(i,int) and i>=0 for i in indices)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

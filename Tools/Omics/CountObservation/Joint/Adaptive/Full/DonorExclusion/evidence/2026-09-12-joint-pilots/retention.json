@@ -1,0 +1,303 @@
+{
+  "scope": "13 prepared manifests and two completed first-64-gene pilots; not completed full folds or outcome predictions",
+  "sourceStudy": "/Users/home/numivivo-joint-fold-fits-20260912",
+  "files": {
+    "protocol.json": {
+      "bytes": 13463,
+      "sha256": "9e51d8bd028c83c25e709e5ef04234f22198e982f2accde96aec90306722212d"
+    },
+    "joint-input-checks.json": {
+      "bytes": 1478,
+      "sha256": "909db32b0f521b27512b66b40ff9fa520b5508beb4539ee9a67d5bbcac10bfc7"
+    },
+    "joint-runtime-recipes.json": {
+      "bytes": 255,
+      "sha256": "1128bd4bc66e359f6b211a43b8d31403807b048c2d0c52f1d2ddace0e4d2fdd5"
+    },
+    "pilot-run.py": {
+      "bytes": 8161,
+      "sha256": "efe688b90ef37579d81c6b6b8d71dab4c3c4f4452e457492e91f7f0612096a59"
+    },
+    "Kang-00/Kang-manifest.json.gz": {
+      "bytes": 351427,
+      "sha256": "bc674b73e5e1b4f472852418dfda7065da84a77c7263747f1b770e4bdfe244d8"
+    },
+    "Kang-00/Kang-prepare-state.json": {
+      "bytes": 369,
+      "sha256": "d4cbb78f3fcb80047f00bf99e2cb28872e2faea59b7b936a3ad08e0f1a347556"
+    },
+    "Kang-00/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "Kang-01/Kang-manifest.json.gz": {
+      "bytes": 338874,
+      "sha256": "716343f6d4dce3ba738b4a90254ebd0aa96b94982cb283d3b9635502c7a43fcb"
+    },
+    "Kang-01/Kang-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "6fda635ad6b7919f9a2940081dddffb524f1e4efaa5191011be0569e02868e2f"
+    },
+    "Kang-01/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "Kang-02/Kang-manifest.json.gz": {
+      "bytes": 352245,
+      "sha256": "957d33f3ed241cbe2b95a659b13e4fed62058cf09150644fa783d7519ea94ce1"
+    },
+    "Kang-02/Kang-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "744438bbfb8796cfe9054d7bd50acf02e8014412933ae958107fbe4f4f544655"
+    },
+    "Kang-02/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "Kang-03/Kang-manifest.json.gz": {
+      "bytes": 354589,
+      "sha256": "f1c01aa98f21c57510a5bdf60db94f5fe9357052a2fafe6c2cfab210347b4120"
+    },
+    "Kang-03/Kang-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "624daa94518774b79ab762ab7187d6020a4b20a97088d5844f54e062b7e65d90"
+    },
+    "Kang-03/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "Kang-04/Kang-manifest.json.gz": {
+      "bytes": 354411,
+      "sha256": "83b621cf0034436aaa8e0e6c19c7bb7c4240e9775ca2a39d03bbb4e8893b6ea6"
+    },
+    "Kang-04/Kang-prepare-state.json": {
+      "bytes": 369,
+      "sha256": "568eaad1944f06edec7d4f157a4bd611798ef3bd118b5b0bfe109cf96c467d4d"
+    },
+    "Kang-04/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "Kang-05/Kang-manifest.json.gz": {
+      "bytes": 351319,
+      "sha256": "b1ee846d0df3d7a12e5d046156b9910fa151b5fede5cc2f95b98469af895b3d2"
+    },
+    "Kang-05/Kang-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "89c8bd2692a738674b1d47c781516c0e65f52d9d4bc940f81229f6684f4a79b0"
+    },
+    "Kang-05/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "Kang-06/Kang-manifest.json.gz": {
+      "bytes": 346875,
+      "sha256": "ca28fe1bcbe49bf840da719f51a81899090158e5bffa0c8120b199a6a3bef842"
+    },
+    "Kang-06/Kang-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "32a11b90c04e3caf264f5889b19037dc042c0c7263f9856eb898ed91437c65b6"
+    },
+    "Kang-06/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "Kang-07/Kang-manifest.json.gz": {
+      "bytes": 344621,
+      "sha256": "f1a47c8a0af3c1d4b95c45798118f553599012534b5ddd10a0b2db261a81b92e"
+    },
+    "Kang-07/Kang-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "87c79da4ff9b850bc9eae016b0c65182b8e9e548687d5b821a14865988c62c3f"
+    },
+    "Kang-07/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "HIRISA-00/HIRISA-manifest.json.gz": {
+      "bytes": 785935,
+      "sha256": "37b923d5a82d703a26b8179afaed5a1d91167d5530faff28310d2c6283b58853"
+    },
+    "HIRISA-00/HIRISA-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "46ca06a1d1385b985873bc574ed01508a5f6764c3ba0279701b7a349eb717ec2"
+    },
+    "HIRISA-00/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "HIRISA-01/HIRISA-manifest.json.gz": {
+      "bytes": 784784,
+      "sha256": "522fefd8513b7ee5adc77eb88861c0ab2947112d556808afa3caedf84255c414"
+    },
+    "HIRISA-01/HIRISA-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "b5270d8914654aed79ccb2616bec58ca1c22758bf0be5ad3ee10834d9de91e22"
+    },
+    "HIRISA-01/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "HIRISA-02/HIRISA-manifest.json.gz": {
+      "bytes": 784454,
+      "sha256": "2b6b7fcb1d49b2cfa157f0f2229fe95d6ee0cab2b51829c61215b4bcfb2552a7"
+    },
+    "HIRISA-02/HIRISA-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "2207328e4f0bacd5e409c0f0cc912c69f3fbc0163e8f3b801c5efa2da7be60d1"
+    },
+    "HIRISA-02/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "HIRISA-03/HIRISA-manifest.json.gz": {
+      "bytes": 783929,
+      "sha256": "60595e19070abccb0010cf9e660e524e8a4db19b25d462705bf8690d9be10c3c"
+    },
+    "HIRISA-03/HIRISA-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "7f75e7a874aae98cb9bd3d9395758d05db0021f94089a820eafe26b70187cd40"
+    },
+    "HIRISA-03/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "HIRISA-04/HIRISA-manifest.json.gz": {
+      "bytes": 784691,
+      "sha256": "154964d15a2418e91affbbf321700c0e5be672e9463684c9e260f9f5d9119e7f"
+    },
+    "HIRISA-04/HIRISA-prepare-state.json": {
+      "bytes": 370,
+      "sha256": "6ef3106a1fdde0728f623d9f1916e2e74fedc840adfa84a9685cdb67a3364e6b"
+    },
+    "HIRISA-04/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "Kang-00/Kang/00000-00064-stderr.log": {
+      "bytes": 777,
+      "sha256": "9bce5d7bdc9c1d632b92182a6cf95b7803680ba755c8091e3a430ee413149c58"
+    },
+    "Kang-00/Kang/00000-00064-verification.json.gz": {
+      "bytes": 2888,
+      "sha256": "97ad61bd59abe6fab4b69ffe557d2e71aefdc919e57309442585dde6c237f338"
+    },
+    "Kang-00/Kang/00000-00064-output.jsonl.gz": {
+      "bytes": 423165,
+      "sha256": "f28eca7146ec512a8ac7869b766a814e5b3bee87ecb52dd76c2b1a99aa6dcc06"
+    },
+    "Kang-00/Kang/00000-00064-receipt.json": {
+      "bytes": 787,
+      "sha256": "73d30626063c96947e2aca6e5f033e393be0765e1e076e9e80205e9d7ab6d273"
+    },
+    "Kang-00/Kang/00000-00064-input.jsonl.gz": {
+      "bytes": 15877,
+      "sha256": "bd668f38e185427f6fb1f5881460da7ab0fa1279366d36664feb0b869512fb81"
+    },
+    "HIRISA-00/HIRISA/00000-00064-stderr.log": {
+      "bytes": 777,
+      "sha256": "569454b623714cb47efefc0e148c36270e554e5eb2815c7ccd8b2050542266fe"
+    },
+    "HIRISA-00/HIRISA/00000-00064-verification.json.gz": {
+      "bytes": 3705,
+      "sha256": "7aa54b4714041313faac97aa6dd11eee5b96f25307e53c06c5595abc0ee86478"
+    },
+    "HIRISA-00/HIRISA/00000-00064-output.jsonl.gz": {
+      "bytes": 331367,
+      "sha256": "60e2df8586592334f52dbc0db32951a60b0864142e2e8da453fc933511044928"
+    },
+    "HIRISA-00/HIRISA/00000-00064-receipt.json": {
+      "bytes": 787,
+      "sha256": "6a86b3d827529540f3e82d88402a2e835f24e26cfc981c33ae80d963309020b5"
+    },
+    "HIRISA-00/HIRISA/00000-00064-input.jsonl.gz": {
+      "bytes": 1496989,
+      "sha256": "7873c904f063b217060efee183aa666a90d93bd90ac4e6c50be33d8de977c8d0"
+    },
+    "runtime-recipes/Full/run.py": {
+      "bytes": 8311,
+      "sha256": "d10eab57ce611e082b78774e0d5b0d7a86586f3e3804b4de93866dab81cd88db"
+    },
+    "runtime-recipes/Full/watch_verify.py": {
+      "bytes": 2590,
+      "sha256": "12da149ef72011af2a84e9ad93af4fca73351807fd569e4db7b223c42d85635b"
+    },
+    "runtime-recipes/Full/verify.py": {
+      "bytes": 13087,
+      "sha256": "ca92413115f4c43c1cf39025a1e4f9378a34dc7b5e3afc8d8dc315da121039d3"
+    },
+    "rejected-inputs/wrong-cache-identity/stderr.log": {
+      "bytes": 471,
+      "sha256": "6413441f8961749a6cb5b23870162472159d446b6ce65c18aafd9f42314f0619"
+    },
+    "rejected-inputs/wrong-cache-identity/Kang-manifest.json.gz": {
+      "bytes": 351427,
+      "sha256": "8f57d9e0131050f7aa0e4e8cb2be9c4f2eb36d9b2e75a3e320e793dc6a330bef"
+    },
+    "rejected-inputs/wrong-cache-identity/Kang-prepare-state.json": {
+      "bytes": 348,
+      "sha256": "bb3bfd26e6ccd1e88e80b831a3135121800af77860d71170430aa3bf9dae309d"
+    },
+    "rejected-inputs/wrong-cache-identity/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "rejected-inputs/duplicate-cache-index/stderr.log": {
+      "bytes": 475,
+      "sha256": "aca8aa54e040ffe4caeb4bdfdd0c55b30ebfca081d72dbc861c4d495333c4fd4"
+    },
+    "rejected-inputs/duplicate-cache-index/Kang-manifest.json.gz": {
+      "bytes": 351425,
+      "sha256": "a4f36f6a633f2570ca896271e906bdb2e5c39692456d0734d00c46a6767c5e89"
+    },
+    "rejected-inputs/duplicate-cache-index/Kang-prepare-state.json": {
+      "bytes": 348,
+      "sha256": "da50f8499b92379a92b5b9aa02dd78a47239930cf6b61e90d8ed58adb1619f8f"
+    },
+    "rejected-inputs/duplicate-cache-index/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "rejected-inputs/excluded-donor-present/stderr.log": {
+      "bytes": 423,
+      "sha256": "7e9f193bc8f78e65d666a0010fb0fe2af25e3ccb4c3cec8251acf1a2dadd76c5"
+    },
+    "rejected-inputs/excluded-donor-present/Kang-manifest.json.gz": {
+      "bytes": 351428,
+      "sha256": "030b43653e74e7e2622c489510b895e8f81ca86bcf67aac48baf58feb3a62eec"
+    },
+    "rejected-inputs/excluded-donor-present/Kang-prepare-state.json": {
+      "bytes": 348,
+      "sha256": "ad8631f860595f84209fbaa75df21d85a8a9239a6a18f884900c8b3cf8b50e47"
+    },
+    "rejected-inputs/excluded-donor-present/runtime-freeze.json": {
+      "bytes": 289,
+      "sha256": "dc7091b7919522ecb32dd2fd3c358fc40ad87efacf1fe0eb249eef87c2c9a2ff"
+    },
+    "rejected-inputs/excluded-donor-present/Kang/controller.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rejected-inputs/duplicate-cache-index/Kang/controller.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rejected-inputs/wrong-cache-identity/Kang/state.json": {
+      "bytes": 424,
+      "sha256": "5ea2cc8e9fc2c4126210d1f2d62cffe9de92052e766e1679ce6ce82e6a9c4f62"
+    },
+    "rejected-inputs/wrong-cache-identity/Kang/execution-plan.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rejected-inputs/wrong-cache-identity/Kang/controller.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rejected-inputs/wrong-cache-identity/Kang/execution-plan.json": {
+      "bytes": 218,
+      "sha256": "ce0fd5d41e8f5fa3cb4e883c8c1fd1097a14b495decea4343e09ff9f3febb956"
+    }
+  },
+  "sparseCaches": "Reuse exact cache hashes from the published full Kang and HIRISA archives; intentionally not duplicated here."
+}

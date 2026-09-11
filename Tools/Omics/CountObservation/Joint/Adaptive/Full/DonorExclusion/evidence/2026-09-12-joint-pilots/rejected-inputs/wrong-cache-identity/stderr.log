@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-expression-memory-20260911/Tools/Omics/CountObservation/Joint/Adaptive/Full/run.py", line 32, in <module>
+    group=h[str(manifest['groups'][gi]['index'])];assert group.attrs['donorID']==g['donorID'] and group.attrs['conditionID']==g['conditionID']
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/home/numivivo-expression-memory-20260911/Tools/Omics/CountObservation/Joint/Adaptive/Full/run.py", line 19, in <module>
+    if 'excludedDonorID' in manifest:assert all(g['donorID']!=manifest['excludedDonorID'] for g in manifest['groups'])
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
