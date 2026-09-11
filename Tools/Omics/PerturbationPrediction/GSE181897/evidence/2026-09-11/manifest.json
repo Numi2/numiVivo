@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "admission-and-checks.json",
+      "sourceBytes": 108648,
+      "sourceSHA256": "af0af486982dc6f052af327ac28cd6124591342f2272a58b6c4fd4b8e7b0a373",
+      "storedPath": "admission-and-checks.json.gz",
+      "storedBytes": 14502,
+      "storedSHA256": "c66a8301c09a4562d06ea65e508e1b747995a9f57d6f73136e5b4ea6bd219cd7",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "executed-scripts.json",
+      "sourceBytes": 30531,
+      "sourceSHA256": "d359930da01d3296a7be7d848ba92427c3682a492d3fc96ce7059da477f35e30",
+      "storedPath": "executed-scripts.json.gz",
+      "storedBytes": 7948,
+      "storedSHA256": "16adf522d33fe1f9b8de61f35fac935ba9c06d1710a137aa521bdcc6716cf8b1",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "frozen-handoff.json",
+      "sourceBytes": 637763,
+      "sourceSHA256": "1ded5570ebc15120fdc9c8164ec66b8e942eeed8cd76fa15324d8724bc90c92e",
+      "storedPath": "frozen-handoff.json.gz",
+      "storedBytes": 89683,
+      "storedSHA256": "811524010eb4f54ea95a32457bc407f8929403fbf42e62a3bebce663f3c2df75",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "native-execution.json",
+      "sourceBytes": 162967,
+      "sourceSHA256": "eaa15f6fc1344d3cb361ac954c5097790f56bc9e8a3e54f686225b3767017815",
+      "storedPath": "native-execution.json.gz",
+      "storedBytes": 10538,
+      "storedSHA256": "098332bbb176c8a30c43c3d1222737a15ef925062baaa9b2482d1e51d1013555",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "published-recipe.json",
+      "sourceBytes": 38936,
+      "sourceSHA256": "ad348f380c6205409bd8f68fbe50c51fe7f2ef73e08f4ae552317b8ece497171",
+      "storedPath": "published-recipe.json.gz",
+      "storedBytes": 14056,
+      "storedSHA256": "d0c98b6a1415b6a630bdc2e1f665ab605ccbfea29d229aba70a2d87dc94f6c77",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    }
+  ]
+}

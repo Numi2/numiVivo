@@ -53,6 +53,16 @@ This is separate data collection in the same broad K562/UPR setting, with shared
 investigators and earlier target selection, not independent laboratory or tissue
 validation. Technical gemgroups are not biological replicates.
 
+The next [GSE181897 external cohort](../Tools/Omics/PerturbationPrediction/GSE181897/README.md)
+has passed complete source-count validation and native B-lineage aggregation:
+136,142 source cells, 64 donor IDs, and all 34,287,682 selected RNA records are
+checked. The source labels all features as gene expression, but its genome
+field separates RNA from antibody counts and reproduces both author modality
+totals exactly. Prediction fitting and scoring remain unstarted because the
+primary single-letter condition-to-intervention mapping is not established;
+external curator labels are not promoted to experimental ground truth. This
+adds a verified candidate input, not a new predictive success or failure.
+
 ## What information is sufficient for the implemented predictors?
 
 | Question | Information available before prediction | Output and present evidence |

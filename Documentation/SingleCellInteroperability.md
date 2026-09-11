@@ -686,3 +686,19 @@ aggregation. It retains the full input and maps every selected report row back
 to the original axis. The [Adamson author cohort](../Tools/Omics/PerturbationPrediction/Adamson/COHORT.md)
 verifies 50,440 cells and 781,977,660 UMIs against independent sparse aggregation;
 control definitions and predictive scoring remain pending.
+
+### GSE181897 candidate cohort count handoff (2026-09-11)
+
+The [complete source audit and native handoff](../Tools/Omics/PerturbationPrediction/GSE181897/README.md)
+validates 292,741,570 original RNA/antibody records and matches each modality's
+library total for all 136,142 cells. External indexed-gzip extraction preserves
+all 15,272 author B-lineage cells across 64 donors and all original condition
+codes, retaining 20,303 RNA features. Native streamed aggregation processes
+34,287,682 selected records and agrees exactly on all 3,818,645 nonzero values
+in 379 observed groups. Reconstruction and repeated report bytes agree.
+
+This is source preparation plus a native RNA count handoff; it does not qualify
+native direct gzip-H5AD import, full AnnData slot preservation, multimodal outcome
+prediction or independent IFN-beta transfer. Treatment-code admission is still
+incomplete, so the frozen external prediction protocol has not been fitted or
+scored. All incomplete donor pairs and absent panel genes remain reported.

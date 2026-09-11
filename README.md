@@ -62,6 +62,12 @@ Average treated-expression coverage is 92.94% / 94.70% within Kang / HIRISA,
 versus 42.39% / 99.21% across studies. Width, missing intervals and donor-level
 variation prevent interpreting these averages as general predictive calibration.
 
+The next [external prediction cohort](Tools/Omics/PerturbationPrediction/GSE181897/README.md)
+now has verified original counts and native B-lineage aggregation across all
+64 donor IDs. The IFN-beta test remains unscored pending primary treatment-code
+identity; this input qualification does not strengthen the biological prediction
+claim.
+
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five
 technical gemgroups. All 150 native fits and predictions pass replay; all 750
