@@ -8,24 +8,34 @@ public struct VivoPerturbationPlan: Codable, Sendable, Equatable {
     public let controlCondition: String
     public let treatmentCondition: String
     public let provenance: String
-    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,perturbationID: String,controlCondition: String,treatmentCondition: String,provenance: String) {
+    /// Explicit output/context panel; normalization still uses every input feature.
+    /// Nil retains the strict, identical full-feature-universe contract.
+    public let responseFeatureIDs: [String]?
+    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,perturbationID: String,controlCondition: String,treatmentCondition: String,provenance: String,responseFeatureIDs: [String]? = nil) {
         schemaVersion=1;self.mapping=mapping;self.featureNamespace=featureNamespace;self.perturbationID=perturbationID
         self.controlCondition=controlCondition;self.treatmentCondition=treatmentCondition;self.provenance=provenance
+        self.responseFeatureIDs=responseFeatureIDs
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,perturbationID,controlCondition,treatmentCondition,provenance }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,perturbationID,controlCondition,treatmentCondition,provenance,responseFeatureIDs }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","perturbationID","controlCondition","treatmentCondition","provenance"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","perturbationID","controlCondition","treatmentCondition","provenance","responseFeatureIDs"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);mapping=try c.decode(VivoH5ADImportPlan.self,forKey: .mapping)
         featureNamespace=try c.decode(String.self,forKey: .featureNamespace);perturbationID=try c.decode(String.self,forKey: .perturbationID)
         controlCondition=try c.decode(String.self,forKey: .controlCondition);treatmentCondition=try c.decode(String.self,forKey: .treatmentCondition)
         provenance=try c.decode(String.self,forKey: .provenance)
+        responseFeatureIDs=try c.decodeIfPresent([String].self,forKey: .responseFeatureIDs)
     }
     func validate() throws {
         guard schemaVersion==1,[featureNamespace,perturbationID,controlCondition,treatmentCondition].allSatisfy(vivoOmicsID),
               controlCondition != treatmentCondition,!provenance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,provenance.utf8.count<=16_384,
               mapping.samples.allSatisfy({ $0.condition==controlCondition || $0.condition==treatmentCondition }) else {
             throw VivoOmicsError.invalid("perturbation plan schema, identity, provenance or conditions")
+        }
+        if let ids=responseFeatureIDs {
+            guard !ids.isEmpty,ids.count<=100_000,Set(ids).count==ids.count,ids.allSatisfy(vivoOmicsID) else {
+                throw VivoOmicsError.invalid("perturbation response feature panel")
+            }
         }
     }
     var trainingPlan: VivoH5ADPseudobulkPlan { .init(mapping: mapping) }
@@ -110,7 +120,11 @@ public enum VivoPerturbation {
     /// The caller validates and isolates aggregate membership before fitting.
     static func model(_ bulk: VivoPseudobulkCounts,plan: VivoPerturbationPlan,source: VivoFingerprint) throws -> VivoPerturbationModel {
         try plan.validate()
-        let m=bulk.featureIDs.count,groups=bulk.groups
+        let featureIDs=plan.responseFeatureIDs ?? bulk.featureIDs
+        guard Set(featureIDs).isSubset(of: Set(bulk.featureIDs)) else {
+            throw VivoOmicsError.invalid("perturbation response panel contains unmeasured training features")
+        }
+        let m=featureIDs.count,groups=bulk.groups
         let organisms=Set(groups.map(\.organism)),cellGroups=Set(groups.map(\.cellGroup))
         guard organisms.count==1,cellGroups.count==1,groups.allSatisfy({ $0.donorID != nil }),
               groups.allSatisfy({ $0.condition==plan.controlCondition || $0.condition==plan.treatmentCondition }) else {
@@ -127,7 +141,12 @@ public enum VivoPerturbation {
             }
             controls.append(c[0]);treated.append(t[0])
         }
-        let (counts,logs,_)=try dense(bulk)
+        // Normalize before projection: nonpanel genes remain in each denominator.
+        let (fullCounts,fullLogs,_)=try dense(bulk)
+        let lookup=Dictionary(uniqueKeysWithValues: bulk.featureIDs.enumerated().map { ($0.element,$0.offset) })
+        let order=featureIDs.map { lookup[$0]! }
+        let counts=plan.responseFeatureIDs == nil ? fullCounts : fullCounts.map { row in order.map { row[$0] } }
+        let logs=plan.responseFeatureIDs == nil ? fullLogs : fullLogs.map { row in order.map { row[$0] } }
         var selected: [Int]=[],mean=[Double](repeating: 0,count: m),median=mean
         var response=Array(repeating: mean,count: n)
         for j in 0..<m {
@@ -174,7 +193,7 @@ public enum VivoPerturbation {
             }
         }
         guard maximumResidual.isFinite,maximumResidual<=1e-9 else { throw VivoOmicsError.invalid("perturbation ridge solve residual") }
-        return .init(method: "paired-donor-log1p-CPM-response-baselines-alpha1-v1",plan: plan,source: source,featureIDs: bulk.featureIDs,
+        return .init(method: plan.responseFeatureIDs == nil ? "paired-donor-log1p-CPM-response-baselines-alpha1-v1" : "paired-donor-log1p-CPM-explicit-panel-response-baselines-alpha1-v1",plan: plan,source: source,featureIDs: featureIDs,
             organism: organisms.first!,cellGroup: groups.first!.cellGroup,trainingDonors: donors,selectedFeatureIndices: selected,
             contextCenters: centers,contextScales: scales,contexts: contexts,meanResponse: mean,medianResponse: median,dualCoefficients: dual,
             maximumSolveResidual: maximumResidual,qualification: "Known perturbation donor-response baselines, equal donor weighting; no Bayesian uncertainty, unseen-perturbation or mechanistic qualification.")
@@ -194,7 +213,11 @@ public enum VivoPerturbation {
     }
     static func evaluate(_ bulk: VivoPseudobulkCounts,plan: VivoPerturbationQueryPlan,model: VivoPerturbationModel) throws -> VivoPerturbationReport {
         try validateQuery(plan,model: model)
-        guard Set(bulk.featureIDs)==Set(model.featureIDs),bulk.featureIDs.count==model.featureIDs.count,
+        let queryFeatures=Set(bulk.featureIDs),modelFeatures=Set(model.featureIDs)
+        let matchingFeatures=model.plan.responseFeatureIDs == nil
+            ? queryFeatures==modelFeatures && bulk.featureIDs.count==model.featureIDs.count
+            : modelFeatures.isSubset(of: queryFeatures) && queryFeatures.count==bulk.featureIDs.count
+        guard matchingFeatures,
               bulk.groups.allSatisfy({ $0.organism==model.organism && $0.cellGroup==model.cellGroup && $0.donorID != nil && $0.condition==model.plan.controlCondition }),
               Set(bulk.groups.compactMap(\.donorID)).count==bulk.groups.count else {
             throw VivoOmicsError.invalid("perturbation query feature universe, organism, cell group or donor multiplicity mismatch")
@@ -222,6 +245,6 @@ public enum VivoPerturbation {
             predictions.append(.init(group: bulk.groups[row],libraryCounts: totals[row],control: control,estimates: estimates))
         }
         return .init(method: model.method,referenceSource: model.source,featureIDs: model.featureIDs,predictions: predictions,
-            qualification: "Frozen known-perturbation response estimates for supplied held-out control donors. Log1p-CPM point estimates are not reclosed compositions or raw count libraries; implied CPM sums are reported. No treated query outcomes used. No calibrated intervals, single-cell distributions, unseen perturbation identity or causal/mechanistic claims.")
+            qualification: "Frozen known-perturbation response estimates for supplied held-out control donors. Log1p-CPM point estimates are not reclosed compositions or raw count libraries; implied CPM sums are reported. No treated query outcomes used. No calibrated intervals, single-cell distributions, unseen perturbation identity or causal/mechanistic claims." + (model.plan.responseFeatureIDs == nil ? "" : " Explicit panel: each source library is normalized over all its own measured features before projection; implied CPM is a panel subtotal. Feature identities and differing assay/context comparability require external evidence."))
     }
 }

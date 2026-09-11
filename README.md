@@ -49,6 +49,13 @@ and reconciliation of its guide roster before fitting. [AlphaGenome Atlas](Docum
 can supply variant-level molecular hypotheses; its predictions do not establish
 NumiVivo's downstream cellular or tissue outcomes.
 
+A [Kang–HIRISA cross-study test](Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
+now completes all 26 cross/within folds over 11,884 shared genes. Context ridge
+fails the primary comparison in both transfer directions and is worse than the
+cross-study training mean for all thirteen donors. The studies differ in health
+status, stimulation time, preparation and assay; their gene alignment does not
+establish reliable biological-context transfer.
+
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five
 technical gemgroups. All 150 native fits and predictions pass replay; all 750

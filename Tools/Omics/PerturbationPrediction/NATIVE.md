@@ -25,10 +25,26 @@ implicit selection of cells or arbitrary collapse of distinct cell groups.
 A query plan contains schemaVersion=1, its own complete `mapping`, the same
 `featureNamespace` and `perturbationID`. All declared samples must be controls.
 Each query donor has one aggregated control profile and must be absent from
-training. Organism, count unit, cell group and the complete feature-ID universe
-must match; source gene order may differ. Empty libraries are rejected. No
+training. Organism, count unit and cell group must match. By default the complete
+feature-ID universe must also match; source gene order may differ. Empty libraries are rejected. No
 missing-gene imputation, automatic alias mapping or treated-outcome access is
 performed. Condition identity remains explicit caller-supplied assay metadata.
+
+An optional ordered `responseFeatureIDs` array in the fit plan declares a shared
+output/context panel (1–100,000 unique measured IDs). Training and query libraries
+are normalized over all their own measured features before selecting this panel.
+Every panel gene must be present; extra query features remain in its denominator.
+No missing genes are filled in. The method identifier explicitly records panel
+mode, and `impliedCPMSum` becomes a panel subtotal. Fit plans are bounded at 2 MiB
+in both the CLI and bundle owner. Omitting the field preserves historical plan
+encoding and the strict full-universe behavior.
+
+This supports explicit, auditable feature correspondence across assays; it does
+not infer biological equivalence from matching IDs. The
+[Kang–HIRISA transfer experiment](CrossStudyIFNB/README.md) verifies this route on
+all 26 folds and preserves exact historical default numerical output. It fails
+the ridge biological comparison in both directions, despite passing numerical
+checks. Gene alignment alone does not qualify context transfer.
 
 The versioned baseline method fixes normalization at natural-log(1+CPM), context
 selection at >=10 total training counts and expression in >=2 training donor

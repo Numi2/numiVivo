@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourcePath": "checks-and-scores.json",
+      "sourceBytes": 292059,
+      "sourceSHA256": "128e44c7565cef9a657515a06e97e17c5f7b6b94a0240c384d23390004a26ae2",
+      "storedPath": "checks-and-scores.json.gz",
+      "storedBytes": 29066,
+      "storedSHA256": "14425e401824e5ff36abc40a73ecdc605c769957e3512e4f9def56ca1b558264",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "executed-code.json",
+      "sourceBytes": 122160,
+      "sourceSHA256": "467f5148a0649be0a3c90876333b12d2cb2f7350aae93924bf4ac9309014902b",
+      "storedPath": "executed-code.json.gz",
+      "storedBytes": 28554,
+      "storedSHA256": "2723fc01259596208ee43c0b5ebb60ca59d28284457efb842dfc678437c22668",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "execution-and-sources.json",
+      "sourceBytes": 261946,
+      "sourceSHA256": "75083a850c6de48b05cc96686a40508b7ccd4dbadb399a5cb8b1022e8b492021",
+      "storedPath": "execution-and-sources.json.gz",
+      "storedBytes": 36490,
+      "storedSHA256": "374217478bdd6c8386217290852450d63da95c4990aa541a8dede0067a7697ec",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "input-metadata.json",
+      "sourceBytes": 17994030,
+      "sourceSHA256": "ec0ee5eb55d23464a3b86654e671012fde9afe0c0d079f69f0c1f38db82b0ad9",
+      "storedPath": "input-metadata.json.gz",
+      "storedBytes": 1790511,
+      "storedSHA256": "78abaeb2808e8b5fce0e55277afe853d023b8c1e564322e7606718ec2a754cd4",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    },
+    {
+      "sourcePath": "native-metadata.json",
+      "sourceBytes": 11579950,
+      "sourceSHA256": "bf82469c840520038c8849f80610e639f47aae28369c1551b5a74c9c4f257bad",
+      "storedPath": "native-metadata.json.gz",
+      "storedBytes": 1863684,
+      "storedSHA256": "f5bed325668efb3adb4a4389bb9bb74d43cb78e54aa0132b30949fd2ffe9e5dc",
+      "gzipEncoded": true,
+      "bundledSourceFiles": true
+    }
+  ]
+}

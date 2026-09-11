@@ -61,6 +61,7 @@ validation. Technical gemgroups are not biological replicates.
 | What happens when two observed targets are perturbed together? | Control and single-target counts for both constituents in the same experimental context; the pair's target identities. | Six native composition baselines evaluated on all 131 held-out Norman pairs. This tests expression composition; it does not identify genetic interactions. |
 | What happens when an unobserved target is perturbed? | Control and other single-target counts in the same context; independently supplied target identities and GO terms for training and query targets. | Native target-kernel prototype: 105 Norman development folds (101 supported), followed by 150 Replogle folds (30 targets × 5 technical groups). Replogle meets the fixed primary criterion in all five groups with modest gains and target-level failures; broad unseen-target transfer remains unqualified. |
 | Can a known response transfer between enriched preparations and PBMCs? | Other-donor paired counts from the training preparation; query-preparation control counts; exact author lineage annotations, donor and feature identities. | All 120 HIRISA folds completed. Cross ridge beats both no-change and cross mean in 3/12 contrasts; this is an inspected-study, annotation-conditioned endpoint with preparation/batch confounding. |
+| Can the IFN-beta response transfer between Kang and HIRISA? | Paired counts from the other study, query-donor control counts and an explicit shared-gene mapping, preserving each library's full measured-feature denominator. | All 26 cross/within folds completed over 11,884 matched genes. Cross ridge fails both directional primary comparisons and is worse than cross mean for all 13 donors. This is a combined health, duration, preparation and assay shift on reused studies. |
 | What will happen in a new tissue, species, disease state or patient? | Would require a validated transfer model and measured outcomes in that destination context. | No qualifying result in this evidence set. Existing point estimates cannot be promoted to those outcomes. |
 | Can a DNA variant predict a cellular or tissue phenotype? | Would require assembly/allele-resolved regulatory evidence and validated connections through RNA, proteins, mechanisms and phenotype. | [AlphaGenome integration work](AlphaGenomeAtlas.md) provides a direction and separate evidence interface; a validated end-to-end phenotype predictor is not established. |
 
@@ -208,6 +209,35 @@ average RNA prediction across these combined contexts; it does not establish
 independent-study replication, prospective cell identity or a causal preparation
 effect. All twelve direction/lineage outcomes and every fold remain reported.
 
+### Known treatment across studies: failed transfer comparison
+
+The [Kang–HIRISA experiment](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
+uses all eight Kang and five HIRISA B-cell donor pairs, with 11,884 exact, unique
+source-symbol matches. Each library retains all its own measured genes in the
+normalization denominator. Native fits/replays and independent reconstruction
+pass for all 26 cross/within folds and all 104 prediction vectors; repeated
+scoring is identical. Source-qualified pseudobulk transport is explicitly
+distinguished from re-running raw single-cell ingestion.
+
+| Training → query | No change | Cross mean | Cross ridge | Within ridge |
+| --- | ---: | ---: | ---: | ---: |
+| HIRISA → Kang | 1.220670 | 1.135572 | 1.178674 | 1.132625 |
+| Kang → HIRISA | 0.341591 | 0.521068 | 0.596829 | 0.107549 |
+
+These are equal-donor mean response RMSEs over the complete shared panel. Ridge
+must beat both no-change and cross mean to pass the fixed primary comparison:
+**neither direction passes**. Cross ridge is worse than cross mean for every
+donor, and worse than no-change for all five HIRISA query donors. HIRISA's simple
+mean response has some transfer signal toward Kang, but no predictor is promoted.
+
+The query cohorts differ in disease status, stimulation duration, preparation,
+cell annotation and measurement chemistry. These results do not isolate the
+cause of the transfer failure. Both studies were previously inspected; this is
+a new cross-study test on reused observations, not untouched external validation.
+Matching gene symbols also does not prove a common reference annotation release
+or assay equivalence. The negative result strengthens the present limit on
+generalizing the donor-context predictor.
+
 ### Held-out combinations of observed targets
 
 The [Norman composition experiment](../Tools/Omics/PerturbationPrediction/Norman/COMBINATIONS.md)
@@ -329,8 +359,10 @@ Lower donor-associated variance also does not isolate technical batch removal.
    and extend validation to an independently selected target panel and laboratory
    or biological context rather than retuning on these results. Adamson's gate
    remains unchanged.
-4. Extend the [completed HIRISA preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
-   to an independent study with prospective strata and measured outcomes. Its
+4. Establish transfer with prospective strata and measured outcomes in an
+   independent study. The new [Kang–HIRISA comparison](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
+   fails both directional primary gates on reused studies; it does not close this
+   requirement. The [completed HIRISA preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)'s
    sixty cross-preparation folds and sixty matched references now pass replay
    and numerical checks; limited donor replication and context confounding remain.
 5. Establish predictive interval coverage and useful improvements over simple

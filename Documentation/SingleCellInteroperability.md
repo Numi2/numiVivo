@@ -564,6 +564,12 @@ The complete development objective remains open:
    scoring is identical. This separately collected K562/UPR experiment shares
    investigators and earlier target selection; it does not supply independent
    laboratory, temporal-knowledge or new-tissue validation.
+   The [Kang–HIRISA cross-study comparison](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
+   now completes 26 cross/within donor folds over 11,884 exact shared symbols.
+   An explicit native panel preserves full source-library denominators. Numerical
+   checks pass for all 104 vectors, but ridge fails both directional primary
+   comparisons and is worse than cross mean for all thirteen donors. These reused
+   studies expose a combined context-transfer failure, not prospective validation.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)

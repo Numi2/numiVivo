@@ -145,7 +145,9 @@ struct VivoSingleCellCLICommands {
             }
             if command == "singlecell-perturbation-fit" {
                 guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("singlecell-perturbation-fit <training.h5ad> --plan <fit.json> --output <new-bundle>") }
-                let plan=try load(VivoPerturbationPlan.self,URL(fileURLWithPath: arguments[3]))
+                // Explicit response panels share the owner's existing 2 MiB plan bound.
+                let bytes=try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[3]),maximumBytes: 2_097_152)
+                let plan=try VivoCanonicalJSON.decode(VivoPerturbationPlan.self,from: bytes)
                 try printJSON(VivoPerturbation.fit(source: URL(fileURLWithPath: arguments[1]),plan: plan,implementation: VivoWorkflowCLIImplementation.fingerprint(),to: canonicalURL(URL(fileURLWithPath: arguments[5]))));return 0
             }
             if command == "singlecell-perturbation-predict" {
