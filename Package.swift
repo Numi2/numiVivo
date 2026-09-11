@@ -11,7 +11,8 @@ let package = Package(
     targets: [
         .systemLibrary(name: "CNumiVivoZlib", path: "Sources/CNumiVivoZlib"),
         .target(name: "NumiVivoCore", path: "Sources/NumiVivoCore", publicHeadersPath: "include",
-                cxxSettings: [.headerSearchPath("include"), .define("NVIVO_BUILDING_CORE")]),
+                cxxSettings: [.headerSearchPath("include"), .define("NVIVO_BUILDING_CORE")],
+                linkerSettings: [.linkedFramework("Accelerate")]),
         .target(name: "NumiVivoShaders", path: "Sources/NumiVivoShaders", resources: [
             .copy("Resources/NumiVivoProgramPackRuntime.metal"),
             .copy("Resources/NumiVivoTargetLikelihood.metal"),

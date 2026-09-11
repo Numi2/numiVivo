@@ -481,6 +481,10 @@ The complete development objective remains open:
    The subsequent [HNSW/local-kernel candidate](../Tools/Omics/Reduction/LocalMNN/README.md)
    completes all three original cohorts but fails type/program preservation on
    Kang and Ding despite over 99% exact-anchor recall; it is not promoted.
+   The [tiled full-Gaussian option](../Tools/Omics/Reduction/GaussianKernel/README.md)
+   preserves all anchors and original measured biological metrics on all three
+   cohorts while accelerating correction. Its scalar underflow fallback is
+   explicitly budgeted; scalar defaults and full-cohort limits remain intact.
    The opt-in [native scale-aware MNN method](../Tools/Omics/Reduction/MNN_INTEGRATION.md)
    now passes the available preservation margins on full Kang, Hagai and Ding,
    with independent anchor, coordinate and neighbor agreement. It remains a

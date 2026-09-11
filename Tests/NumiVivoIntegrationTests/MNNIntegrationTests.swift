@@ -61,4 +61,41 @@ import Testing
         #expect(result.report.steps.isEmpty && result.report.panoramas.count == 3)
         for (a,b) in zip(result.scores,f.scores.flatMap({ $0 })) { #expect(abs(a-b)<1e-12) }
     }
+    @Test func tiledAllAnchorKernelPreservesReferenceAndLegacyEncoding() throws {
+        let f = try Self.fixture(), (cells,samples,base) = Self.inputs(f), x = f.scores.flatMap { $0 }
+        let scalar = try VivoMNNIntegration.run(cells: cells, scores: x, dimensions: f.components, samples: samples, options: base)
+        var o = base; o.kernel = .tiledGaussian
+        let data = try VivoCanonicalJSON.encode(o)
+        #expect(try JSONDecoder().decode(VivoMNNIntegrationOptions.self, from: data) == o)
+        #expect(!String(decoding: try VivoCanonicalJSON.encode(base),as: UTF8.self).contains("kernel"))
+        #expect(throws: (any Error).self) { try JSONDecoder().decode(VivoMNNIntegrationOptions.self,from: Data("{\"kernel\":\"local\"}".utf8)) }
+        let tiled = try VivoMNNIntegration.run(cells: cells,scores: x,dimensions: f.components,samples: samples,options: o)
+        let replay = try VivoMNNIntegration.run(cells: cells,scores: x,dimensions: f.components,samples: samples,options: o)
+        #expect(tiled.report == replay.report)
+        #expect(tiled.scores.map(\.bitPattern) == replay.scores.map(\.bitPattern))
+        #expect(tiled.report.alignments == scalar.report.alignments)
+        #expect(tiled.report.assemblyOrder == scalar.report.assemblyOrder)
+        #expect(tiled.report.panoramas == scalar.report.panoramas)
+        for (a,b) in zip(tiled.scores,scalar.scores) { #expect(abs(a-b)<1e-10) }
+        let scaled = try VivoMNNIntegration.run(cells: cells,scores: x.map{$0*17},dimensions: f.components,samples: samples,options: o)
+        for (a,b) in zip(scaled.scores,tiled.scores) { #expect(abs(a/17-b)<1e-10) }
+        o.maximumResidentBytes = scalar.report.estimatedMaximumLatentResidentBytes
+        #expect(throws: (any Error).self) { try VivoMNNIntegration.run(cells: cells,scores: x,dimensions: f.components,samples: samples,options: o) }
+    }
+
+    @Test func tiledUnderflowFallbackPreservesRowsAndChargesExtraWork() throws {
+        let samples = (0..<2).map { VivoOmicsSample(id:"s\($0)",biologicalReplicateID:"d\($0)",donorID:"d\($0)",condition:"shared",batchID:"unreported",organism:"numerical-fixture") }
+        let cells = (0..<4).map { VivoOmicsCellIdentity(sampleID:"s\($0/2)",barcode:"c\($0)") }
+        let x = [1.0,0,2,0,1.1,0,1e9,0]
+        var o = VivoMNNIntegrationOptions(); o.neighbors = 1; o.sigma = 1000
+        let scalar = try VivoMNNIntegration.run(cells:cells,scores:x,dimensions:2,samples:samples,options:o)
+        o.kernel = .tiledGaussian
+        let tiled = try VivoMNNIntegration.run(cells:cells,scores:x,dimensions:2,samples:samples,options:o)
+        #expect(tiled.report.steps[0].zeroWeightCells == 1)
+        #expect(tiled.report.kernelScalarTerms == scalar.report.kernelScalarTerms+2)
+        for (a,b) in zip(tiled.scores,scalar.scores) { #expect(a == b) }
+        o.maximumWork = scalar.report.distanceScalarTerms+scalar.report.kernelScalarTerms
+        #expect(throws:(any Error).self) { try VivoMNNIntegration.run(cells:cells,scores:x,dimensions:2,samples:samples,options:o) }
+    }
+
 }

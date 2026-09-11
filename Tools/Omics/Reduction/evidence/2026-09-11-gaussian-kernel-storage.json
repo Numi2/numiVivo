@@ -1,0 +1,557 @@
+{
+  "allOriginalAndSelectedPayloadHashesUnchanged": true,
+  "allRemovedPathsAbsent": true,
+  "archiveManifestSHA256": "05a8bc5ad2b89390fff62401e769cf5fa322f87502ab21dccdff61501cc7f315",
+  "createdUnix": 1789087900.6193001,
+  "files": [
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "cohorts/ding-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+      "bytes": 14089920,
+      "path": "cohorts/ding-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "cohorts/ding-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "cohorts/ding-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "cohorts/ding-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "cohorts/ding-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "cohorts/hagai-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+      "bytes": 4436160,
+      "path": "cohorts/hagai-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "cohorts/hagai-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "cohorts/hagai-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "cohorts/hagai-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "cohorts/hagai-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "cohorts/kang-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+      "bytes": 7895360,
+      "path": "cohorts/kang-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "cohorts/kang-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "cohorts/kang-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "cohorts/kang-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "cohorts/kang-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "repaired/cohorts/ding-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+      "bytes": 14089920,
+      "path": "repaired/cohorts/ding-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "repaired/cohorts/ding-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "repaired/cohorts/ding-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "repaired/cohorts/ding-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "repaired/cohorts/ding-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "repaired/cohorts/hagai-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+      "bytes": 4436160,
+      "path": "repaired/cohorts/hagai-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "repaired/cohorts/hagai-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "repaired/cohorts/hagai-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "repaired/cohorts/hagai-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "repaired/cohorts/hagai-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "repaired/cohorts/kang-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+      "bytes": 7895360,
+      "path": "repaired/cohorts/kang-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "repaired/cohorts/kang-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "repaired/cohorts/kang-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "repaired/cohorts/kang-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "repaired/cohorts/kang-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "final/cohorts/ding-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+      "bytes": 14089920,
+      "path": "final/cohorts/ding-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "final/cohorts/ding-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "final/cohorts/ding-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "final/cohorts/ding-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "final/cohorts/ding-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "final/cohorts/hagai-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+      "bytes": 4436160,
+      "path": "final/cohorts/hagai-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "final/cohorts/hagai-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "final/cohorts/hagai-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "final/cohorts/hagai-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "final/cohorts/hagai-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "final/cohorts/kang-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+      "bytes": 7895360,
+      "path": "final/cohorts/kang-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "final/cohorts/kang-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "final/cohorts/kang-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "final/cohorts/kang-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "final/cohorts/kang-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "qualified/cohorts/ding-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+      "bytes": 14089920,
+      "path": "qualified/cohorts/ding-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "qualified/cohorts/ding-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "qualified/cohorts/ding-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "qualified/cohorts/ding-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "qualified/cohorts/ding-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "qualified/cohorts/hagai-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+      "bytes": 4436160,
+      "path": "qualified/cohorts/hagai-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "qualified/cohorts/hagai-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "qualified/cohorts/hagai-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "qualified/cohorts/hagai-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "qualified/cohorts/hagai-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "qualified/cohorts/kang-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+      "bytes": 7895360,
+      "path": "qualified/cohorts/kang-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "qualified/cohorts/kang-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "qualified/cohorts/kang-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "qualified/cohorts/kang-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "qualified/cohorts/kang-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "release/cohorts/ding-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+      "bytes": 14089920,
+      "path": "release/cohorts/ding-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "release/cohorts/ding-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "release/cohorts/ding-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "bytes": 2100512,
+      "path": "release/cohorts/ding-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/ding/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf5bc7d1bb589d1b7558480a9475ba60988340ba6d39a6107cad061de42358d3",
+      "bytes": 14089920,
+      "path": "release/cohorts/ding-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/ding-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "release/cohorts/hagai-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+      "bytes": 4436160,
+      "path": "release/cohorts/hagai-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "release/cohorts/hagai-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "release/cohorts/hagai-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "bytes": 798288,
+      "path": "release/cohorts/hagai-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/hagai/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "35f71deccf6829724019b412e5bac7b5f6a6e2199b2ed04b22978c1107b0d5ac",
+      "bytes": 4436160,
+      "path": "release/cohorts/hagai-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/hagai-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "release/cohorts/kang-scan/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+      "bytes": 7895360,
+      "path": "release/cohorts/kang-scan/scores.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "release/cohorts/kang-tiled/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "release/cohorts/kang-tiled/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    },
+    {
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "bytes": 2552208,
+      "path": "release/cohorts/kang-tiled-replay/anchors.bin",
+      "retainedPath": "/Users/n/numivivo-native-mnn-20260910/kang/mnn/anchors.bin"
+    },
+    {
+      "SHA256": "5a363e171db57ddf8a961abe89b8468a2702f161fb8b2722ea790f8398d6a372",
+      "bytes": 7895360,
+      "path": "release/cohorts/kang-tiled-replay/scores.bin",
+      "retainedPath": "/Users/n/numivivo-gaussian-kernel-20260911/native-phase/cohorts/kang-tiled/scores.bin"
+    }
+  ],
+  "filesRemoved": 90,
+  "freeBytesAfter": 2075648000,
+  "freeBytesBefore": 1597280256,
+  "logicalBytes": 478086720,
+  "noOpenHandles": true,
+  "observedFreeIncreaseBytes": 478367744,
+  "root": "/Users/n/numivivo-gaussian-kernel-20260911",
+  "scope": "All research values preserved in unchanged original cohorts and selected native-phase outputs; tiled coordinates also stored in the verified archive. Runtime binaries, source, original count/PCA data and active baseline untouched.",
+  "status": "verified-duplicate-payloads-consolidated"
+}

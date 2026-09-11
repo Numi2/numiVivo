@@ -1,9 +1,13 @@
 import Foundation
+import NumiVivoCore
 
 /// Scale-aware latent integration. Algorithmic assembly follows Scanorama 1.7.4;
 /// see Documentation/ThirdParty/Scanorama-LICENSE.txt. Native matching has explicit
-/// grouped-source-index ties, and native reductions use deterministic scalar sums.
+/// grouped-source-index ties; legacy scalar and opt-in tiled reductions are explicit.
 public struct VivoMNNIntegrationOptions: Codable, Sendable, Equatable {
+    public enum Kernel: String, Codable, Sendable { case tiledGaussian }
+    /// Nil retains the historical scalar reduction and canonical plan encoding.
+    public var kernel: Kernel? = nil
     static let maximumNeighbors = 100
     public var covariate: VivoSingleCellIntegrationOptions.Covariate = .donor
     public var neighbors: Int = 20
@@ -12,10 +16,11 @@ public struct VivoMNNIntegrationOptions: Codable, Sendable, Equatable {
     public var maximumWork: Int = 100_000_000_000
     public var maximumResidentBytes: Int = 536_870_912
     public init() {}
-    private enum CodingKeys: String, CodingKey { case covariate, neighbors, sigma, minimumAlignment, maximumWork, maximumResidentBytes }
+    private enum CodingKeys: String, CodingKey { case covariate, neighbors, sigma, minimumAlignment, maximumWork, maximumResidentBytes, kernel }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["covariate","neighbors","sigma","minimumAlignment","maximumWork","maximumResidentBytes"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["covariate","neighbors","sigma","minimumAlignment","maximumWork","maximumResidentBytes","kernel"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
+        kernel = try c.decodeIfPresent(Kernel.self, forKey: .kernel)
         covariate = try c.decodeIfPresent(VivoSingleCellIntegrationOptions.Covariate.self, forKey: .covariate) ?? .donor
         neighbors = try c.decodeIfPresent(Int.self, forKey: .neighbors) ?? 20
         sigma = try c.decodeIfPresent(Double.self, forKey: .sigma) ?? 15
@@ -92,6 +97,26 @@ enum VivoMNNIntegration {
         try o.validate()
         guard (2...VivoPCAStorageLimits.maximumRows).contains(n), (1...64).contains(d) else { throw VivoOmicsError.invalid("MNN PCA axes") }
         return try product([n, 3*d*8 + 2*o.neighbors*16 + 80 + o.neighbors*40], limit: o.maximumResidentBytes, reason: "MNN latent memory budget")
+    }
+    // Keep pointer/callback bridging outside the scalar solver's optimization unit.
+    @inline(never) private static func tiledBias(source: [Double], bias: [Double], queries: [Double],
+        rows: Int, dimensions d: Int, sigma: Double, maximumWork: Int,
+        deltas: inout [Double], totals: inout [Double], workspace: inout [Double]) throws -> Int {
+        var evaluatedTerms: UInt64 = 0
+        let status = source.withUnsafeBufferPointer { src in bias.withUnsafeBufferPointer { b in
+            queries.withUnsafeBufferPointer { q in deltas.withUnsafeMutableBufferPointer { delta in
+                totals.withUnsafeMutableBufferPointer { total in workspace.withUnsafeMutableBufferPointer { work in
+                    nvivo_omics_gaussian_bias(src.baseAddress,b.baseAddress,UInt32(source.count/d),
+                        q.baseAddress,UInt32(rows),UInt32(d),sigma,UInt64(src.count),UInt64(q.count),UInt64(maximumWork),
+                        delta.baseAddress,UInt64(delta.count),total.baseAddress,UInt64(total.count),
+                        work.baseAddress,UInt64(work.count),&evaluatedTerms,{ _ in Task.isCancelled ? 1 : 0 },nil)
+                } }
+            } }
+        } }
+        if status == 5 { throw CancellationError() }
+        if status == 2 { throw VivoOmicsError.limit("MNN scalar underflow fallback work budget") }
+        guard status == 0 else { throw VivoOmicsError.invalid("MNN tiled Gaussian status: \(status)") }
+        return Int(evaluatedTerms)
     }
     static func run(cells: [VivoOmicsCellIdentity], scores x: [Double], dimensions d: Int,
                     samples: [VivoOmicsSample], options o: VivoMNNIntegrationOptions) throws -> VivoMNNIntegrationSolution {
@@ -222,8 +247,9 @@ enum VivoMNNIntegration {
             guard cost <= o.maximumWork-distanceTerms-kernelTerms else { throw VivoOmicsError.limit("MNN total work budget") }
             kernelTerms += cost
             let bufferBytes = try product([matched.count,d,16], limit: o.maximumResidentBytes, reason: "MNN anchor memory budget")
-            guard bufferBytes <= o.maximumResidentBytes-admitted else { throw VivoOmicsError.limit("MNN assembly memory budget") }
-            maximumLatentBytes = max(maximumLatentBytes,admitted+bufferBytes)
+            let tileBytes = o.kernel == nil ? 0 : (256*(d+32) + 2*32*d + 32)*8
+            guard tileBytes <= o.maximumResidentBytes-admitted, bufferBytes <= o.maximumResidentBytes-admitted-tileBytes else { throw VivoOmicsError.limit("MNN assembly memory budget") }
+            maximumLatentBytes = max(maximumLatentBytes,admitted+bufferBytes+tileBytes)
             // Duplicate anchor records are retained (including panorama merge pairs).
             // Snapshot both coordinates and differences before mutating any query row.
             var source = [Double](repeating: 0, count: matched.count*d), bias = source
@@ -232,22 +258,43 @@ enum VivoMNNIntegration {
                 bias[a*d+j] = corrected[p.second*d+j]-corrected[p.first*d+j]
             } }
             var zero = 0, minWeight = Double.infinity, maxWeight = 0.0, sumSquared = 0.0
-            for i in selected {
-                try Task.checkCancellation()
-                var delta = [Double](repeating: 0, count: d), total = 0.0
-                for a in matched.indices {
-                    var squared = 0.0
-                    for j in 0..<d { let difference = corrected[i*d+j]-source[a*d+j]; squared += difference*difference }
-                    let weight = exp(-0.5*o.sigma*squared); total += weight
-                    for j in 0..<d { delta[j] += weight*bias[a*d+j] }
+            if o.kernel == .tiledGaussian {
+                var queries = [Double](repeating: 0, count: 32*d)
+                var deltas = queries, totals = [Double](repeating: 0, count: 32)
+                var workspace = [Double](repeating: 0, count: 256*(d+32))
+                for start in stride(from: 0, to: selected.count, by: 32) {
+                    try Task.checkCancellation()
+                    let count = min(32,selected.count-start)
+                    for q in 0..<count { for j in 0..<d { queries[q*d+j] = corrected[selected[start+q]*d+j] } }
+                    let baseTerms = count*matched.count*d
+                    let allowedTerms = baseTerms + o.maximumWork-distanceTerms-kernelTerms
+                    let evaluatedTerms = try tiledBias(source: source,bias: bias,queries: queries,
+                        rows: count,dimensions: d,sigma: o.sigma,maximumWork: allowedTerms,
+                        deltas: &deltas,totals: &totals,workspace: &workspace)
+                    kernelTerms += evaluatedTerms-baseTerms
+                    for q in 0..<count {
+                        let total = totals[q], i = selected[start+q]
+                        minWeight = min(minWeight,total); maxWeight = max(maxWeight,total)
+                        if total == 0 { zero += 1 }
+                        for j in 0..<d {
+                            let value = deltas[q*d+j]
+                            corrected[i*d+j] += value; sumSquared += value*value
+                        }
+                    }
                 }
-                guard total.isFinite, delta.allSatisfy(\.isFinite) else { throw VivoOmicsError.invalid("MNN kernel nonfinite") }
-                minWeight = min(minWeight,total); maxWeight = max(maxWeight,total)
-                if total == 0 { zero += 1 } // Same explicit underflow behavior as pinned reference.
-                for j in 0..<d {
-                    let value = total > 0 ? delta[j]/total : 0
-                    corrected[i*d+j] += value; sumSquared += value*value
-                }
+            } else {
+                var scalar = NVivoGaussianScalarReport()
+                let status = source.withUnsafeBufferPointer { src in bias.withUnsafeBufferPointer { b in
+                    selected.withUnsafeBufferPointer { indices in corrected.withUnsafeMutableBufferPointer { values in
+                        nvivo_omics_gaussian_scalar_apply(src.baseAddress,b.baseAddress,UInt32(matched.count),UInt32(d),
+                            o.sigma,UInt64(src.count),values.baseAddress,UInt32(n),UInt64(values.count),indices.baseAddress,
+                            UInt32(indices.count),UInt64(cost),&scalar,{ _ in Task.isCancelled ? 1 : 0 },nil)
+                    } }
+                } }
+                if status == 5 { throw CancellationError() }
+                guard status == 0 else { throw VivoOmicsError.invalid("MNN scalar phase status: \(status)") }
+                zero = Int(scalar.zero_weight_rows); minWeight = scalar.minimum_weight
+                maxWeight = scalar.maximum_weight; sumSquared = scalar.sum_squared
             }
             return .init(alignment: alignment, targetLevels: targetLevels, referenceLevels: referenceLevels,
                 anchors: matched.count, correctedCells: selected.count, zeroWeightCells: zero, minimumWeight: minWeight,
@@ -282,11 +329,11 @@ enum VivoMNNIntegration {
         for b in 0..<bCount where !panoramas.contains(where: { $0.contains(b) }) { panoramas.append([b]) }
         for i in corrected.indices { corrected[i] *= scale }
         guard corrected.allSatisfy(\.isFinite) else { throw VivoOmicsError.invalid("MNN corrected PCA nonfinite") }
-        let report = VivoMNNIntegrationReport(method: "mutual-nearest-neighbor-panorama-median-norm-Double-v1", cells: n, components: d,
+        let report = VivoMNNIntegrationReport(method: o.kernel == nil ? "mutual-nearest-neighbor-panorama-median-norm-Double-v1" : "mutual-nearest-neighbor-panorama-median-norm-tiled-Gaussian-Double-v1", cells: n, components: d,
             levels: levels, cellLevels: batch, medianRowNorm: scale, zeroDirectionCells: norms.filter { $0 == 0 }.count,
             alignments: alignments, assemblyOrder: order, steps: steps, panoramas: panoramas,
             distanceScalarTerms: distanceTerms, kernelScalarTerms: kernelTerms, estimatedMaximumLatentResidentBytes: maximumLatentBytes,
-            qualification: "Native exact Manhattan mutual neighbors on row-normalized PCA; Gaussian panorama correction in global median-row-norm units; explicit grouped-source-index ties. Original counts/PCA retained. Labels and conditions do not enter correction; condition is an eligibility check only. Latent arrays are resident and budgeted, not a million-cell/out-of-core or Metal qualification. Source metadata and artifact encoding memory are outside the latent estimate. Zero kernel weights preserve the affected row and remain reported. Replay/numerical agreement is separate from biological or prospective validation.")
+            qualification: (o.kernel == nil ? "" : "All-anchor 32-query/256-anchor direct-distance tiles with Accelerate vector exp and BLAS FP64 reduction, with budgeted scalar fallback below 1e-280 total weight; framework internal workspace is outside the latent estimate. ")+"Native exact Manhattan mutual neighbors on row-normalized PCA; Gaussian panorama correction in global median-row-norm units; explicit grouped-source-index ties. Original counts/PCA retained. Labels and conditions do not enter correction; condition is an eligibility check only. Latent arrays are resident and budgeted, not a million-cell/out-of-core or Metal qualification. Source metadata and artifact encoding memory are outside the latent estimate. Zero kernel weights preserve the affected row and remain reported. Replay/numerical agreement is separate from biological or prospective validation.")
         return .init(scores: corrected, anchors: anchors, anchorDistances: anchorDistances, report: report)
     }
 }

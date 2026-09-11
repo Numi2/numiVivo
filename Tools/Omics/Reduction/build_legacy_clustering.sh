@@ -4,4 +4,4 @@ ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
 LIB="${1:?scoped H5AD build directory}"
 OUT="${2:?output executable}"
 xcrun swiftc -swift-version 6 -O -parse-as-library -I "$LIB" -I "$ROOT/Sources/CNumiVivoZlib" -I "$ROOT/Sources/NumiVivoCore/include" -L "$LIB" -lNumiVivoKit \
-  "$ROOT/Tools/Omics/Reduction/LegacyClusteringReference.swift" "$ROOT/Tools/Omics/Reduction/LegacyClusteringMain.swift" "$LIB/OmicsHNSW.o" -lc++ -o "$OUT"
+  "$ROOT/Tools/Omics/Reduction/LegacyClusteringReference.swift" "$ROOT/Tools/Omics/Reduction/LegacyClusteringMain.swift" "$LIB/OmicsHNSW.o" "$LIB/OmicsGaussian.o" -framework Accelerate -lc++ -o "$OUT"

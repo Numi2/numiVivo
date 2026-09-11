@@ -12,9 +12,10 @@ for name in VivoArtifactPrimitives CanonicalArtifact VivoArtifactStore VivoRoote
   FILES+=("$ROOT/Sources/NumiVivoKit/Artifacts/$name.swift")
 done
 xcrun clang++ -std=c++23 -O3 -I "$ROOT/Sources/NumiVivoCore/include" -c "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" -o "$OUT/OmicsHNSW.o"
-shasum -a 256 "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsHNSW.h" "$ROOT/Sources/NumiVivoCore/ThirdParty/hnswlib/"*.h "${FILES[@]}" "$ROOT/Tools/Omics/H5AD/Main.swift" > "$OUT/sources.sha256"
+xcrun clang++ -std=c++23 -O3 -I "$ROOT/Sources/NumiVivoCore/include" -c "$ROOT/Sources/NumiVivoCore/OmicsGaussian.cpp" -o "$OUT/OmicsGaussian.o"
+shasum -a 256 "$ROOT/Sources/NumiVivoCore/OmicsGaussian.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsGaussian.h" "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsHNSW.h" "$ROOT/Sources/NumiVivoCore/ThirdParty/hnswlib/"*.h "${FILES[@]}" "$ROOT/Tools/Omics/H5AD/Main.swift" > "$OUT/sources.sha256"
 swiftc -swift-version 6 -O -parse-as-library -enable-testing -module-name NumiVivoKit \
   -I "$ROOT/Sources/CNumiVivoZlib" -I "$ROOT/Sources/NumiVivoCore/include" -emit-module -emit-library -static "${FILES[@]}" \
   -emit-module-path "$OUT/NumiVivoKit.swiftmodule" -o "$OUT/libNumiVivoKit.a"
 swiftc -swift-version 6 -O -parse-as-library -I "$OUT" -I "$ROOT/Sources/CNumiVivoZlib" -I "$ROOT/Sources/NumiVivoCore/include" -L "$OUT" -lNumiVivoKit \
-  "$ROOT/Tools/Omics/H5AD/Main.swift" "$OUT/OmicsHNSW.o" -lc++ -o "$OUT/h5ad-check"
+  "$ROOT/Tools/Omics/H5AD/Main.swift" "$OUT/OmicsHNSW.o" "$OUT/OmicsGaussian.o" -framework Accelerate -lc++ -o "$OUT/h5ad-check"

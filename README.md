@@ -64,6 +64,11 @@ outputs on three original cohorts but ran slower, so its prototype remains archi
 A [local-kernel MNN candidate](Tools/Omics/Reduction/LocalMNN/README.md) is faster
 on the two larger cohorts but loses cell-type and program signal, so it also
 remains experimental.
+The [tiled all-anchor Gaussian option](Tools/Omics/Reduction/GaussianKernel/README.md)
+runs about **2.4× faster** than the preserved production scalar owner on all
+three cohorts, with identical measured biological metrics and neighbor/prediction
+arrays. The scalar default is also faster and retains exact original outputs.
+These are native-owner timings; independent-validation limits remain.
 
 ## One scientific question, several scales
 
