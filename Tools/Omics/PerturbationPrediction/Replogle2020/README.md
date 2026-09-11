@@ -1,6 +1,6 @@
 # Replogle 2020 UPR: complete inputs and confident cohort qualified
 
-The complete deposited five-gemgroup experiment now passes native assay partition, RNA aggregation, reconstruction and independent AnnData/SciPy checks. **No predictor has been fitted or scored on this study.** The [frozen protocol](PROTOCOL.md) retains the existing fixed target-kernel method and all five technical conditions. This adds a separately collected experiment to the validation route while Adamson's unresolved identities remain open.
+The complete deposited five-gemgroup experiment now passes native assay partition, RNA aggregation, reconstruction and independent AnnData/SciPy checks. The subsequent [native training preparation](TRAINING_PREPARATION.md) also verifies pooled controls, all five training contexts and 150 guide-level count exclusions. **No predictor has been fitted or scored on this study.** The [frozen protocol](PROTOCOL.md) retains the existing fixed target-kernel method and all five technical conditions. This adds a separately collected experiment to the validation route while Adamson's unresolved identities remain open.
 
 ## Original information and assay separation
 
@@ -53,4 +53,4 @@ The [evidence archive](evidence/2026-09-11/manifest.json) retains source metadat
 
 Interactive GEO access and the PMC supplement download exposed challenges; neither was bypassed. Official public bulk GEO metadata/count downloads succeeded. The apparent spreadsheet response is retained as HTML, not accepted as a table. The original prediction-protocol hash preceded matrix acquisition; its source-declared RNA/guide distinction is recorded as an explicit pre-fit clarification.
 
-Next: resolve exact descriptor identities and any required technical-platform naming, freeze every target fold and prediction, then run the separate scorer against all simple/shuffled baselines. Current GO knowledge may incorporate this and Adamson's studies. Success on an ingestion or replay check adds no biological prediction result, prospective target-selection evidence, new tissue context, calibrated uncertainty or clinical qualification.
+Next: resolve exact descriptor identities and any required technical-platform naming, complete the descriptor/fitter/query freeze for all 150 count exclusions, freeze every prediction, then run the separate scorer against all simple/shuffled baselines. Current GO knowledge may incorporate this and Adamson's studies. Success on an ingestion or replay check adds no biological prediction result, prospective target-selection evidence, new tissue context, calibrated uncertainty or clinical qualification.

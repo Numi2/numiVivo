@@ -1,6 +1,6 @@
 # AlphaGenome Atlas integration assessment
 
-Assessed 2026-09-09 from the [DeepMind announcement, 2026-09-08](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
+Assessed 2026-09-09 and sources rechecked 2026-09-11: the [DeepMind announcement, 2026-09-08](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
 and the [official API repository](https://github.com/google-deepmind/alphagenome).
 The single-cell integration below remains proposed. The repository now also has
 a [native Atlas evidence layer and external retrieval adapter](Design/ALPHAGENOME_ATLAS.md)
@@ -22,6 +22,14 @@ must not be interpreted as an expression fold change, protein concentration,
 reaction rate or tissue outcome. Downstream mechanistic links need separate
 models and evidence. These predictions do not validate native differential
 expression, donor integration, or held-out perturbation prediction.
+
+For the current Replogle experiment, Atlas does not resolve the missing
+experimental guide-to-gene identity. CRISPR interference and a single-base DNA
+substitution are different interventions; treating an Atlas variant score as a
+measured guide response would not validate the frozen target predictor. The
+useful next Atlas experiment is a separate, explicitly identified variant panel
+with measured regulatory outcomes. This is an integration proposal, not an
+additional NumiVivo prediction result.
 
 ## Small first integration
 

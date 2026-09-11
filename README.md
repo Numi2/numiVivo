@@ -10,35 +10,14 @@ The ambition is to follow a molecular change across scales: how a structure move
 
 > **Research software, under active development.** The capabilities below describe source implementations and their intended workflows—not a fully qualified release. Apple package integration, GPU numerical behavior and performance require qualification. The [capability map](Documentation/CAPABILITIES.md) separates implemented methods, current restrictions and planned work.
 
-Native [H5AD axis projection](Tools/Omics/H5AD/Projection/README.md) now reads the
-original legacy Kang file directly: all 24,673 cells × 15,706 genes, annotations,
-category definitions and PCA/UMAP values agree with AnnData. Full and repeated
-selections reconstruct exactly; earlier unique and repeated projections remain
-byte-identical. This closes a specific input-preservation gap without changing
-the biological prediction evidence below. Other legacy formats and analytical
-identity restrictions remain explicit.
-
-The [complete original-data analytical route](Tools/Omics/H5AD/Projection/LEGACY_COUNT_ROUTE.md)
-also passes: native annotation, all 14,184,532 count records and all 124
-pseudobulk groups agree with the original Kang information. RNA assay totals
-match every cell, and donor/treatment identities remain explicit. This verifies
-input preservation and arithmetic, without adding a new prediction claim.
-
-The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
-now covers every one of the original Kang dataset's 14,184,532 records on physical
-M4/M4 Pro GPUs. The explicit FP32 option passes its declared numerical tolerance
-and native replay; the FP64 CPU default remains byte-exact. End-to-end medians
-are 1.043 s CPU and 1.050 s Metal, so this experiment establishes **no speedup**.
-A subsequent [shared-writer qualification](Tools/Omics/CountStore/Metal/Profile/README.md)
-preserves every output byte and lowers final medians to 0.918 s CPU / 0.912 s
-Metal. The first CPU call is slower and its three-run mean is slightly worse;
-these are bounded measurements, not a general speedup claim. The real single-cell
-CLI and bounded memory-safety checks pass; downstream biological claims are unchanged.
-
 ## Biological prediction: current evidence
 
 NumiVivo can predict **population-average gene-expression responses in defined
-experimental settings**. In 79 HIRISA held-out donor folds, context ridge beats
+experimental settings** when the required training measurements, control profile
+and biological identities are available. Reliable prediction of general
+biological outcomes from DNA or RNA alone is not established.
+
+In 79 HIRISA held-out donor folds, context ridge beats
 no-change in 14 of 16 contrasts, but beats the simpler training-mean response in
 only four. Two contrasts are worse than no-change under every learned baseline.
 A [retrospective donor-score check](Tools/Omics/Benchmarks/HIRISA/DONOR_SCORE_SENSITIVITY.md)
@@ -66,7 +45,10 @@ now has verified complete inputs: 40,997 cells, 33,694 RNA features and 64 guide
 features kept separate. Native and AnnData/SciPy checks also agree on all 32,829
 confident cells across five technical gemgroups. Projection now admits this
 129.84-million-entry source under explicit work/storage bounds. Prediction
-fitting and scoring remain pending; these input checks add no predictive claim.
+fitting and scoring remain pending. The [next native preparation](Tools/Omics/PerturbationPrediction/Replogle2020/TRAINING_PREPARATION.md)
+also verifies control pooling within each gemgroup, five complete training inputs
+and all 150 guide-level count exclusions. Gene descriptors and prediction
+payloads still need freezing; these checks add no predictive claim.
 
 The [HIRISA preparation-transfer test](Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
 now completes all 120 donor-excluded folds across 705,365 cells. Cross-preparation
@@ -110,6 +92,33 @@ These are native-owner timings; independent-validation limits remain.
 A fixed [approximate-matching/full-Gaussian follow-up](Tools/Omics/Reduction/FullGaussianMNN/README.md)
 restores the measured Ding gates but still fails Kang megakaryocyte recall.
 The approximate matcher remains experimental; production retains exact matching.
+
+## Input preservation and execution evidence
+
+Native [H5AD axis projection](Tools/Omics/H5AD/Projection/README.md) now reads the
+original legacy Kang file directly: all 24,673 cells × 15,706 genes, annotations,
+category definitions and PCA/UMAP values agree with AnnData. Full and repeated
+selections reconstruct exactly; earlier unique and repeated projections remain
+byte-identical. This closes a specific input-preservation gap without changing
+the biological prediction evidence above. Other legacy formats and analytical
+identity restrictions remain explicit.
+
+The [complete original-data analytical route](Tools/Omics/H5AD/Projection/LEGACY_COUNT_ROUTE.md)
+also passes: native annotation, all 14,184,532 count records and all 124
+pseudobulk groups agree with the original Kang information. RNA assay totals
+match every cell, and donor/treatment identities remain explicit. This verifies
+input preservation and arithmetic, without adding a new prediction claim.
+
+The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
+now covers every one of the original Kang dataset's 14,184,532 records on physical
+M4/M4 Pro GPUs. The explicit FP32 option passes its declared numerical tolerance
+and native replay; the FP64 CPU default remains byte-exact. End-to-end medians
+are 1.043 s CPU and 1.050 s Metal, so this experiment establishes **no speedup**.
+A subsequent [shared-writer qualification](Tools/Omics/CountStore/Metal/Profile/README.md)
+preserves every output byte and lowers final medians to 0.918 s CPU / 0.912 s
+Metal. The first CPU call is slower and its three-run mean is slightly worse;
+these are bounded measurements, not a general speedup claim. The real single-cell
+CLI and bounded memory-safety checks pass; downstream biological claims are unchanged.
 
 ## One scientific question, several scales
 

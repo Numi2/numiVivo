@@ -7,6 +7,15 @@ control profile. Native models also predict combinations of previously observed
 targets, and a GO-based prototype predicts some unseen targets with a small,
 nonuniform advantage over simple baselines.
 
+The practical decision depends on the requested outcome and what was observed
+before it. For a known treatment, paired training-donor RNA measurements and
+the query donor's untreated RNA can support a conditional expression estimate.
+For an unseen target, gene identity and annotations are additional inputs;
+their availability has not yet established reliable generalization. DNA or RNA
+information alone does not supply a validated mapping to survival, tissue
+function, disease progression or treatment benefit. Those outcomes require
+their own measured endpoints and held-out validation.
+
 This assessment reviews the expression-prediction evidence and subsequent
 full-cohort scoring, clustering, decoder calibration, preparation transfer and
 annotation retention through 2026-09-11, with the retained Adamson experimental-role audit.
@@ -39,6 +48,15 @@ AnnData/SciPy checks agree on the full source and all 32,829 confidently assigne
 cells. No predictor has been fitted or scored. Five technical gemgroups are not
 five independent biological donors, and target-descriptor identity requirements
 remain part of the frozen validation protocol.
+
+The subsequent [native training preparation](../Tools/Omics/PerturbationPrediction/Replogle2020/TRAINING_PREPARATION.md)
+pools the two author-defined controls within each original gemgroup, preserves
+all 30 non-control guides in each, and checks all 155 aggregate rows against the
+independent count reference. Five native training inputs and 150 guide-level
+count-exclusion plans are qualified. This freezes count selection only:
+descriptor identities and prediction payloads are not yet frozen, and no fit or
+score is reported. A native negative check rejects a training selection that
+mixes gemgroups.
 
 ## What information is sufficient for the implemented predictors?
 
@@ -237,8 +255,10 @@ Lower donor-associated variance also does not isolate technical batch removal.
    frozen independent-study target-prediction protocol with coverage, all
    failures and matched simple/shuffled baselines. Do not tune it on test scores.
    The separately prepared Replogle UPR cohort now supplies another complete,
-   verified input route; resolve descriptor identities and freeze all folds
-   before fitting and scoring it. Adamson's gate remains unchanged.
+   verified input route and five native training contexts. Its 150 guide-level
+   count exclusions are frozen; resolve descriptor identities and freeze the
+   descriptor/fitter/query inputs before fitting, then freeze predictions before
+   scoring. Adamson's gate remains unchanged.
 4. Extend the [completed HIRISA preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
    to an independent study with prospective strata and measured outcomes. Its
    sixty cross-preparation folds and sixty matched references now pass replay
