@@ -30,6 +30,10 @@ NumiVivo can predict **population-average gene-expression responses in defined
 experimental settings**. In 79 HIRISA held-out donor folds, context ridge beats
 no-change in 14 of 16 contrasts, but beats the simpler training-mean response in
 only four. Two contrasts are worse than no-change under every learned baseline.
+A [retrospective donor-score check](Tools/Omics/Benchmarks/HIRISA/DONOR_SCORE_SENSITIVITY.md)
+finds that 13 of those 14 no-change wins, and three of the four mean-baseline
+wins, survive every single-donor score omission. This does not establish
+predictive uncertainty or independent-study validation.
 Native combination models also predict held-out pairs of observed targets;
 an unseen-target GO prototype has only a 0.58% average improvement over the
 mean baseline on reused development data, with substantial target-level failures.

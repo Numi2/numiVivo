@@ -61,6 +61,15 @@ learned baseline. Thus, much of the measured predictability comes from a shared
 treatment response; the evidence does not justify presenting donor-context ridge
 as consistently superior or selecting a production winner after seeing results.
 
+The [retrospective donor-score sensitivity check](../Tools/Omics/Benchmarks/HIRISA/DONOR_SCORE_SENSITIVITY.md)
+reconstructs all published scores and omits each scoring donor in turn, without
+refitting. Thirteen of the fourteen ridge wins over no-change survive every
+omission. NK IFN-L1 changes sign; the already negative Monocyte IFN-L1 comparison
+is also sensitive. Only three of four ridge wins over the training mean survive
+every omission: Monocyte IFNa, IFNb and IFNg. NK IFNa is sensitive. These are
+aggregation diagnostics on reused evidence, not confidence intervals or new
+independent prediction experiments.
+
 Examples below are equally weighted held-out donor means, in natural-log(1+CPM)
 units; lower response RMSE is better. The linked report retains all sixteen
 contrasts and both feature families, including weak and negative results.
@@ -96,6 +105,14 @@ primary gate—lower all-gene RMSE than both no-change and cross-preparation mea
 **3/12 contrasts**. Cross-preparation ridge is worse than matched within-preparation
 ridge in all twelve contrasts, showing a consistent transfer penalty. No model
 was selected or tuned from these results.
+
+The same donor-score audit retains all 120 cross/within folds. All twelve
+cross-ridge improvements over no-change and all twelve cross-versus-within ridge
+penalties survive every single-donor score omission. Nevertheless, cross ridge
+is worse than no-change in four individual donor folds and beats cross mean in
+only 21/60 individual folds. All three contrast-mean wins over cross mean survive
+omission. Shared training donors and reused contexts prevent treating these
+folds as independent biological experiments.
 
 The protocol preceded these fits and PBMC scores, but followed other inspected
 HIRISA results. Treated-cell annotations define outcome strata, and preparation,

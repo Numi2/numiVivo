@@ -67,6 +67,17 @@ already inspected demo and the later Norman study, without supplying the needed
 UPR mapping. The [retrieval record and complete guide inventory](evidence/2026-09-10-experimental-roles/manifest.json)
 preserve these results so subsequent work can seek missing evidence directly.
 
+A bounded follow-up on 2026-09-11 inspected the original
+[UPR guide-barcode sample GSM2406691](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2406691).
+It links raw guide-barcode reads in SRA, lists no supplementary or processed
+data, and refers guide calling to the paper. It does not supply the missing
+construct-to-control mapping. The [author-deposited Addgene article inventory](https://www.addgene.org/browse/article/23036/)
+lists backbones and a barcode library without the required experiment-specific
+roster. Neither source clears the role gate. No challenged route was retried,
+no raw sequencing download was started, and no expression-derived control
+assignment was substituted. Continue unblocked prediction work while seeking an
+authoritative roster; repeating these inventory lookups is not a new validation.
+
 After verification, freeze the exact roles and all target folds, then execute
 the existing native target kernel with lambda 1 and its unchanged baselines.
 Freeze predictions before reading held-out outcomes. This will test the fixed

@@ -1,0 +1,88 @@
+{
+  "archiveScriptSHA256": "59b34dfb1f5a34a5ee602c45b94916f836d6da77f6974e67580a874be825bb37",
+  "comparisons": 368,
+  "limitations": [
+    "No confidence or predictive intervals",
+    "No independent-study validation",
+    "No donor deletion from fitted models",
+    "Shared training donors and contexts",
+    "Primary metric is all-source-gene response RMSE"
+  ],
+  "physicalMacmini": {
+    "diagnosticBytesExact": true,
+    "independentCheckBytesExact": true,
+    "nativeModelRebuilt": false,
+    "renderedReportBytesExact": true
+  },
+  "records": [
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 10012,
+      "sourcePath": "DONOR_SCORE_SENSITIVITY.md",
+      "sourceSHA256": "f14e8c73bfcf16687a72b35c0149ab2e4896cd7bf1b91dbb1930608a5c6c5ae1",
+      "storedBytes": 3294,
+      "storedPath": "DONOR_SCORE_SENSITIVITY.md.gz",
+      "storedSHA256": "f621cc82996becf3017193e0a2470a3e02e7c9b03d6a5dcf321c98888b33f31a"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 2294,
+      "sourcePath": "archive.py",
+      "sourceSHA256": "59b34dfb1f5a34a5ee602c45b94916f836d6da77f6974e67580a874be825bb37",
+      "storedBytes": 1034,
+      "storedPath": "archive.py.gz",
+      "storedSHA256": "15ef476e87650f4451ce75c9dea42bf6422774c54fbb8ca2dd74320e90eba5fb"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 4974,
+      "sourcePath": "check_prediction_sensitivity.py",
+      "sourceSHA256": "f2dc40225a0eb4431642760382bd6564eb1705969a81924a84b8c5b6929aef83",
+      "storedBytes": 1854,
+      "storedPath": "check_prediction_sensitivity.py.gz",
+      "storedSHA256": "d52a627fcaa2b4a561432317e413a25e29521a3deccf78bb613b76e7b4be982d"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 325,
+      "sourcePath": "independent-check.json",
+      "sourceSHA256": "d1979a88ad5c4299013bd40c4370bb58d8336dee1e4f2cff23ce95fc3f3d5d8e",
+      "storedBytes": 247,
+      "storedPath": "independent-check.json.gz",
+      "storedSHA256": "da66386f00dbc97125739ba176a160a4f05c3c19af2f21c9d06f00eb1130b2f4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 15722,
+      "sourcePath": "prediction_sensitivity.py",
+      "sourceSHA256": "8fb471b32b5ebe784ade9b798c0aefffe7e0e2a3e7576f78b457db8d74f738c3",
+      "storedBytes": 5317,
+      "storedPath": "prediction_sensitivity.py.gz",
+      "storedSHA256": "1b5d0d37f6ea06e099f28aeb45ba3db914fa2e56388f3eaf291883f4ce22f0f8"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 325,
+      "sourcePath": "remote/independent-check.json",
+      "sourceSHA256": "d1979a88ad5c4299013bd40c4370bb58d8336dee1e4f2cff23ce95fc3f3d5d8e",
+      "storedBytes": 247,
+      "storedPath": "remote/independent-check.json.gz",
+      "storedSHA256": "da66386f00dbc97125739ba176a160a4f05c3c19af2f21c9d06f00eb1130b2f4"
+    },
+    {
+      "gzipEncoded": true,
+      "sourceBytes": 342655,
+      "sourcePath": "sensitivity.json",
+      "sourceSHA256": "220c27edf7b5504dfd6597c979dbd534d0c8f49648c6f621356653f2db38f6c7",
+      "storedBytes": 50591,
+      "storedPath": "sensitivity.json.gz",
+      "storedSHA256": "9bb821b8945ddec3a1088504bb383d67c44d3b24e275f94e72c3656e6236edba"
+    }
+  ],
+  "schemaVersion": 1,
+  "scope": "Retrospective sensitivity of 199 completed HIRISA donor prediction scores; no fitting or new prediction",
+  "sourceBase": "28a5862a140e31bc402d7f3bbef5a92fb43119d3",
+  "sourceFolds": 199,
+  "sourceScores": 1592,
+  "status": "passed"
+}
