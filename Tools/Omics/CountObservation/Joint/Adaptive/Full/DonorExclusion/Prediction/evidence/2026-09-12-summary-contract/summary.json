@@ -1,0 +1,135 @@
+{
+  "status": "partial-completed-folds",
+  "recordedUnix": 1789167938.328146,
+  "scoringPlanSHA256": "3b9f44fa0ed0d4678d7a5372bb5f7d2fdd30c103c51fa1bd71ebef873f993507",
+  "pendingFolds": [
+    "Kang-03",
+    "Kang-04",
+    "Kang-05",
+    "Kang-06",
+    "Kang-07",
+    "HIRISA-00",
+    "HIRISA-01",
+    "HIRISA-02",
+    "HIRISA-03",
+    "HIRISA-04"
+  ],
+  "all": {
+    "declaredFolds": 13,
+    "scoredFolds": 3,
+    "allDeclaredFoldsScored": false,
+    "declaredSourceGeneFolds": 216058,
+    "completedSourceGeneFolds": 47118,
+    "scoredGeneFolds": 24490,
+    "excludedStates": {
+      "unavailableCellDispersion": 22620,
+      "oracleLeafLimit": 8
+    },
+    "metrics": {
+      "joint": {
+        "genes": 24490,
+        "sumSquaredError": 18583.09145586864,
+        "RMSE": 0.8710931318871322,
+        "MAE": 0.5886606751875176
+      },
+      "noChange": {
+        "genes": 24490,
+        "sumSquaredError": 34073.11649429208,
+        "RMSE": 1.1795369130676592,
+        "MAE": 0.7939113028279962
+      },
+      "trainingMeanResponse": {
+        "genes": 24490,
+        "sumSquaredError": 30920.7138009681,
+        "RMSE": 1.1236482065110196,
+        "MAE": 0.7868550570660083
+      }
+    },
+    "relativeRMSEGain": {
+      "noChange": 0.26149565796830165,
+      "trainingMeanResponse": 0.22476347415538778
+    },
+    "worseDonors": {
+      "noChange": [],
+      "trainingMeanResponse": []
+    },
+    "pointMassPredictions": 3452,
+    "frozenFivePercentDevelopmentCriterionPassed": null
+  },
+  "byOrigin": {
+    "HIRISA": {
+      "declaredFolds": 5,
+      "scoredFolds": 0,
+      "allDeclaredFoldsScored": false,
+      "declaredSourceGeneFolds": 90410,
+      "completedSourceGeneFolds": 0,
+      "scoredGeneFolds": 0,
+      "excludedStates": {},
+      "metrics": {},
+      "relativeRMSEGain": {},
+      "worseDonors": {},
+      "pointMassPredictions": 0,
+      "frozenFivePercentDevelopmentCriterionPassed": null
+    },
+    "Kang": {
+      "declaredFolds": 8,
+      "scoredFolds": 3,
+      "allDeclaredFoldsScored": false,
+      "declaredSourceGeneFolds": 125648,
+      "completedSourceGeneFolds": 47118,
+      "scoredGeneFolds": 24490,
+      "excludedStates": {
+        "unavailableCellDispersion": 22620,
+        "oracleLeafLimit": 8
+      },
+      "metrics": {
+        "joint": {
+          "genes": 24490,
+          "sumSquaredError": 18583.09145586864,
+          "RMSE": 0.8710931318871322,
+          "MAE": 0.5886606751875176
+        },
+        "noChange": {
+          "genes": 24490,
+          "sumSquaredError": 34073.11649429208,
+          "RMSE": 1.1795369130676592,
+          "MAE": 0.7939113028279962
+        },
+        "trainingMeanResponse": {
+          "genes": 24490,
+          "sumSquaredError": 30920.7138009681,
+          "RMSE": 1.1236482065110196,
+          "MAE": 0.7868550570660083
+        }
+      },
+      "relativeRMSEGain": {
+        "noChange": 0.26149565796830165,
+        "trainingMeanResponse": 0.22476347415538778
+      },
+      "worseDonors": {
+        "noChange": [],
+        "trainingMeanResponse": []
+      },
+      "pointMassPredictions": 3452,
+      "frozenFivePercentDevelopmentCriterionPassed": null
+    }
+  },
+  "bindings": {
+    "Kang-00": {
+      "scoreReportSHA256": "fe672b8167b6a21ebafdbd706b861bec8ce3d77ecc27dddd7d8722baaa4c4f2e",
+      "scoringVerificationSHA256": "ada6696bc42495995fdcd5aba7059aecdc70429d927fcb154869c9d3c32a40c9",
+      "predictionVerificationSHA256": "f6b74d9e74024b055f1c9855940f9e5351e4e59f9dd74bae56900b4bbcd4f54e"
+    },
+    "Kang-01": {
+      "scoreReportSHA256": "abad329b4b53d666a8612e463b29726c0192cc1f653bd35502bb230c9fbd668c",
+      "scoringVerificationSHA256": "03652ad7d47772a94c56ddc63ea8f962d28f406f893c742785b9c8d7772ac85e",
+      "predictionVerificationSHA256": "c3cf40738588e688f191f50d80611e0af4ab9adee6e3e6c4ea0ae118ffb15dc4"
+    },
+    "Kang-02": {
+      "scoreReportSHA256": "61476d92dc171931cf1ddd4b2f823cb2ca6c415342a43052bcae13f75a0bb34e",
+      "scoringVerificationSHA256": "80f1693dafed75079b6bc33ea4dcfd66c890db3901489ab47476f5dd2891c5f0",
+      "predictionVerificationSHA256": "aaf621db4cf1c1459f0eb95c97c8ed1b826fd334931743e4dbfbe6a7bc0b81ba"
+    }
+  },
+  "qualification": "Pooled matched-gene development RMSE; incomplete groups have no pass/fail result. Missing and excluded predictions remain explicit. Does not establish calibrated uncertainty, independent biological validation, or general phenotype prediction."
+}

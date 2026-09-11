@@ -72,3 +72,19 @@ Then run the restored `recipes/verify.py` and `recipes/verify_scores.py` using
 `NEW_DIRECTORY/fits`, `NEW_DIRECTORY/prediction` and each retained fold tag.
 Restoration validates every object and logical file. The cache links and restored
 files are shared hard links and must be treated as read-only.
+
+## Complete-run summary
+
+`summarize.py FIT_STUDY PREDICTION_STUDY [OUTPUT]` validates score-report hashes,
+the frozen endpoint plan, prediction shard hashes and independent scoring
+receipts before pooling errors. It reports pooled and per-origin RMSE, MAE,
+excluded cases, point masses and every worse donor. Incomplete groups retain a
+null development pass result, even if their partial gains exceed 5%. Missing
+folds remain listed against the original 13-fold protocol. No complete-run or
+independent-biological-validation claim is inferred from completed subsets.
+
+The summary checker reconstructs aggregate metrics directly from every scored
+gene row and checks that an empty run cannot pass, an altered score is rejected,
+and an altered endpoint plan is rejected. The retained software-validation
+snapshot covers 24,490 gene-folds from the first three locally scored Kang folds;
+it is a partial progress summary, not a replacement for full-fold evidence.

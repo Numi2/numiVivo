@@ -1,0 +1,22 @@
+{
+  "frozenBeforePrediction": true,
+  "origins": [
+    "Kang",
+    "HIRISA"
+  ],
+  "folds": 13,
+  "primaryEndpoint": "Per-donor RMSE of log1p measured treated pseudobulk CPM against log1p conditional treated mean CPM, on every qualified model feature; matched no-change and training-only mean-log-response baselines. Report eligibility and solver exclusions over all source genes.",
+  "secondaryEndpoints": [
+    "Per-donor MAE on the same log1p CPM scale",
+    "Fraction of matched genes improved over no change",
+    "Latent point-mass and numerical underflow frequencies"
+  ],
+  "threshold": "Development improvement requires at least 5 percent pooled RMSE reduction versus each matched baseline; additionally report every donor with worse RMSE. No independent biological validation claim.",
+  "intervals": "No coverage claim: latent plug-in posterior spread lacks parameter uncertainty and is not a calibrated treated-count interval.",
+  "plannedCountScenario": [
+    10000
+  ],
+  "outcomeReads": "Only after each complete fold prediction has been hashed and independently numerically checked. All studies already reused development data.",
+  "exactBaseline": "max(0, log1p(query control pseudobulk CPM) + arithmetic mean over training donors of log1p(treated pseudobulk CPM) - log1p(control pseudobulk CPM)); no-change equals log1p(query control pseudobulk CPM).",
+  "pooledRMSE": "sqrt(sum squared errors across scored genes and folds / total scored gene-folds), compared on identical eligible indices for every model"
+}
