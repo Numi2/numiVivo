@@ -9,8 +9,10 @@ annotation benchmark.
 The executable SHA256 is
 `67343146e05b783b1bb0806cb765a536890109a6b50816d34617144e0af7c114`,
 from the frozen sequential-ridge/runtime build. This is the distinct buffered
-reader qualification. The earlier mapped-reader executable remains a separate
-running baseline and is not reported complete or replaced by this result.
+reader qualification. The earlier mapped-reader publication has now finished
+and produces the identical complete result. Its own reconstruction failed for
+lack of disk space; that historical failure remains separate from this passing
+buffered-reader qualification.
 
 ## Native and independent evidence
 
@@ -61,3 +63,33 @@ This closes this full native clustering/replay gate. Rare-cell preservation,
 cluster annotation, prospective reference transfer and phenotype prediction
 require separate evidence. In particular, the [program-preservation failures](INTEGRATION_PROGRAMS.md)
 remain failures; correct graph arithmetic cannot qualify biological integration.
+
+
+## Original mapped-reader baseline, completed 2026-09-11
+
+The original executable `ee332d69aa3b3514444f00c4474f03332c296e236ed61d26cf2e2fb933e3d699`
+finished publication in **32,819.665 seconds** with peak RSS **4,445,929,472 bytes**.
+Its 118,692,184-byte result is exactly identical to the qualified buffered-reader
+result, SHA-256 `94c7b1113226676bf865bcebe38939b2447f98b8d56dc054e77d943b7c0b32f3`.
+The original plan is also byte-identical. The waiting original coordinator ran
+its own complete independent check: all 1,612,594 cell identities/labels, graph
+edges in the objective and community connectivity pass, with the same modularity
+and three reference comparisons reported above.
+
+The subsequent original reconstruction **failed after 330.650 seconds with
+ENOSPC**. The original coordinator and worker have exited; no restart was made.
+The historical reconstruction therefore remains failed. The already completed
+buffered-reader publication/replay and independently checked identical result
+remain valid separate evidence, rather than being used to relabel that failure.
+
+Original publication took 23.249 times the buffered run's observed 1,411.683
+seconds. These were different executables on a shared host with changing competing
+workloads, not a controlled repeated benchmark. The original log records
+31,538.98 seconds of system time and 1,268.74 seconds of user time; the observation
+supports investigating storage/mapping overhead but is not isolated causal proof.
+Future reconstruction runs need sufficient temporary-disk headroom before launch.
+
+The [terminal baseline archive](evidence/2026-09-11-mapped-baseline/manifest.json)
+preserves original publication/failure logs, receipts, process outcomes, independent
+checks and source. Its manifest reuses the exact complete result already stored
+in the full-clustering archive, avoiding another copy of every label.

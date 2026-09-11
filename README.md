@@ -56,7 +56,9 @@ meets the same loss margins with 28/32 sensitive controls; four remain insuffici
 This development result preserves the original failures and does not establish
 complete biological preservation. Full-cohort
 [clustering publication, replay and independent checks](Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md)
-now pass. [Native program scoring](Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
+now pass. The original 9.1-hour clustering baseline has also finished with an
+identical complete result; its separate reconstruction failed for disk space.
+[Native program scoring](Tools/Omics/Benchmarks/HIRISA/NATIVE_PROGRAM_RESULTS.md)
 also reproduces the complete cohort’s reference scores exactly and passes replay.
 The new [annotation-retention diagnostic](Tools/Omics/Benchmarks/HIRISA/ANNOTATION_RETENTION.md)
 finds native losses beyond its margins in **37/146** supported, sensitive
