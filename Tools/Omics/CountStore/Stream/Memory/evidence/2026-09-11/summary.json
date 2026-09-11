@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "evidence": "Synthetic allocator and exact integer controls, not biological prediction or full Parse qualification",
+  "originalBinarySHA256": "146cba39ff175a16191b0cda5a65cede65cbf88fdab18aa11f65314b388ec347",
+  "pooledBinarySHA256": "20b13e585e1526dba7be566484373a3e4775efebd66f22b3b20dff31c1ee3516",
+  "cases": [
+    {
+      "rows": 100,
+      "features": 100000,
+      "records": 10000000,
+      "streamBytes": 160000000,
+      "originalPeakRSS": 265240576,
+      "pooledPeakRSS": 104792064,
+      "originalSeconds": 1.1565836248919368,
+      "pooledSeconds": 1.5791182909160852,
+      "allPlanReportAndStreamBytesMatch": true
+    },
+    {
+      "rows": 1000,
+      "features": 100000,
+      "records": 100000000,
+      "streamBytes": 1600000000,
+      "originalPeakRSS": 1711636480,
+      "pooledPeakRSS": 105742336,
+      "originalSeconds": 6.577653666958213,
+      "pooledSeconds": 6.519800791051239,
+      "allPlanReportAndStreamBytesMatch": true
+    }
+  ],
+  "pooledPeakGrowthBytes": 950272
+}

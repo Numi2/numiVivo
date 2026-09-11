@@ -7,18 +7,21 @@ RUNS=json.loads((ROOT/'prepared/runs.json').read_text());VERIFY='--verify' in sy
 def fetch(start,stop,receipts):
  # Retry only transport failures, with the same immutable If-Match condition.
  errors=[]
- for attempt in range(3):
+ for attempt in range(6):
   if not hasattr(LOCAL,'connection'):LOCAL.connection=http.client.HTTPSConnection(PARSED.netloc,timeout=90,context=ssl.create_default_context())
   before=time.monotonic()
   try:
    LOCAL.connection.request('GET',PARSED.path,headers={'Range':f'bytes={start}-{stop}','If-Match':ETAG,'Accept-Encoding':'identity'})
    response=LOCAL.connection.getresponse()
+   if response.status in {500,502,503,504}:
+    body=response.read(4096);raise http.client.HTTPException(f'Retryable source HTTP {response.status}; body prefix SHA256 {hashlib.sha256(body).hexdigest()}')
    assert response.status==206 and response.getheader('Content-Range')==f'bytes {start}-{stop}/{SIZE}' and response.getheader('ETag')==ETAG,(response.status,response.getheader('Content-Range'))
    data=response.read(stop-start+2);assert len(data)==stop-start+1
    receipts.append(dict(start=start,stop=stop,SHA256=hashlib.sha256(data).hexdigest(),seconds=time.monotonic()-before,transportErrors=errors));return data
   except (OSError,http.client.HTTPException) as error:
    errors.append(dict(type=type(error).__name__,message=str(error)));LOCAL.connection.close();del LOCAL.connection
-   if attempt==2:raise
+   if attempt==5:raise
+   time.sleep(min(16,2**attempt))
  raise AssertionError('unreachable')
 
 def read_array(spec,start,end,receipts):

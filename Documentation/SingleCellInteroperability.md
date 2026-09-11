@@ -40,6 +40,12 @@ bounded; metadata and QC are resident, and unread source bytes are not assigned
 a fabricated whole-file fingerprint. No acceleration or biological-prediction
 claim follows from count-stream validation.
 
+A [temporary-memory correction](../Tools/Omics/CountStore/Stream/Memory/README.md)
+keeps the native allocator control near 105 MB across 160 MB and 1.6 GB streams;
+the original implementation grew to 1.71 GB. Exact counts/reports and four native
+tests pass. These synthetic controls qualify the buffer-lifetime repair; the
+complete Parse requalification is still pending.
+
 ## Use
 
 ```

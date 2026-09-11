@@ -29,8 +29,10 @@ independent totals, native totals are computed from the records and should be
 checked against an independent reader. No normalization or inferred annotation
 is applied. Missing mitochondrial annotation leaves its fraction unavailable.
 
-The matrix buffer is at most 1 MiB plus an incomplete record. Metadata, per-cell
-QC and donor aggregates remain resident: this is **not** fully out-of-core cell
+Input reads are at most 1 MiB. A read chunk and a parser buffer of up to 1 MiB
+plus 15 bytes can coexist. A pool drains Foundation temporaries each iteration;
+[paired allocator controls](Memory/README.md) verify this correction. Metadata,
+per-cell QC and donor aggregates remain resident: this is **not** fully out-of-core cell
 metadata. Bounds are two million cells, 100,000 features, four billion records,
 five million aggregate nonzeros, a 256 MiB plan and a 512 MiB report. Serialized
 size can impose a tighter bound. No Metal acceleration is claimed for this owner.

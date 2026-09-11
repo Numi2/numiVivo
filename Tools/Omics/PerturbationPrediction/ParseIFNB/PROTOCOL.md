@@ -55,3 +55,16 @@ these outcomes and then described as independently validated.
 Original data are attributed to Parse Biosciences and licensed **CC BY-NC 4.0**.
 Retained source extracts and count derivatives keep that attribution and license;
 the repository's software license does not relicense them.
+
+## Execution amendment after a source failure
+
+The first monolithic stream received upstream HTTP 500 after 1,166,913,217
+records. Native truncation rejection prevented a complete result from being
+published. The retry preserves that failed attempt, the original complete cohort,
+all features and all biological sample identities. It uses the corrected temporary
+memory owner, bounded retries for transient responses, and twelve disjoint complete
+donor partitions. Every source row/run must occur exactly once across those
+partitions. Native donor outputs are independently checked before a restart receipt
+is saved, and all twelve must pass full native replay. Count-stream SHA-256 values
+are now per donor; no monolithic digest is fabricated from those hashes. The
+execution amendment does not fit a model, filter outcomes or alter scoring gates.

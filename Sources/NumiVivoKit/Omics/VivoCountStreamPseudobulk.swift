@@ -76,33 +76,47 @@ public enum VivoCountStreamPseudobulk {
     public static let maximumPlanBytes = 268_435_456
     static let maximumReportBytes = 536_870_912
 
+    /// Foundation FileHandle may return autoreleased NSData. Drain those
+    /// temporaries once per chunk, rather than retaining an entire long stream.
+    private static func withChunkPool<T>(_ body: () throws -> T) rethrows -> T {
+        #if canImport(ObjectiveC)
+        return try autoreleasepool(invoking: body)
+        #else
+        return try body()
+        #endif
+    }
+
     static func evaluate(plan: VivoCountStreamPlan, read: () throws -> Data) throws -> (VivoCountStreamReport, VivoFingerprint, Int) {
         let expected = try plan.validate(), accumulator = try VivoH5ADPseudobulk.Accumulator(plan.metadata)
         var buffer = Data(), hash = SHA256(), entries = 0, previousRow = -1, previousFeature = -1
         while true {
-            try Task.checkCancellation()
-            let chunk = try read()
-            guard chunk.count <= maximumChunkBytes else { throw VivoOmicsError.limit("count stream read exceeds 1 MiB") }
-            if chunk.isEmpty { break }
-            guard chunk.count <= expected * 16 - entries * 16 - buffer.count else {
-                throw VivoOmicsError.invalid("count stream exceeds declared entry count")
-            }
-            hash.update(data: chunk); buffer.append(chunk)
-            let complete = buffer.count / 16 * 16
-            try buffer.withUnsafeBytes { bytes in
-                for offset in stride(from: 0, to: complete, by: 16) {
-                    let packed = UInt64(littleEndian: bytes.loadUnaligned(fromByteOffset: offset, as: UInt64.self))
-                    let row = Int(packed & 0xffff_ffff), feature = Int(packed >> 32)
-                    let count = UInt64(littleEndian: bytes.loadUnaligned(fromByteOffset: offset + 8, as: UInt64.self))
-                    guard row < plan.metadata.cells.count, feature < plan.metadata.features.count, count > 0,
-                          row > previousRow || (row == previousRow && feature > previousFeature) else {
-                        throw VivoOmicsError.invalid("count stream requires ordered unique positive in-axis records")
-                    }
-                    try accumulator.add(row: row, feature: feature, count: count)
-                    previousRow = row; previousFeature = feature; entries += 1
+            let ended = try withChunkPool {
+                try Task.checkCancellation()
+                let chunk = try read()
+                guard chunk.count <= maximumChunkBytes else { throw VivoOmicsError.limit("count stream read exceeds 1 MiB") }
+                if chunk.isEmpty { return true }
+                guard chunk.count <= expected * 16 - entries * 16 - buffer.count else {
+                    throw VivoOmicsError.invalid("count stream exceeds declared entry count")
                 }
+                hash.update(data: chunk); buffer.append(chunk)
+                let complete = buffer.count / 16 * 16
+                try buffer.withUnsafeBytes { bytes in
+                    for offset in stride(from: 0, to: complete, by: 16) {
+                        let packed = UInt64(littleEndian: bytes.loadUnaligned(fromByteOffset: offset, as: UInt64.self))
+                        let row = Int(packed & 0xffff_ffff), feature = Int(packed >> 32)
+                        let count = UInt64(littleEndian: bytes.loadUnaligned(fromByteOffset: offset + 8, as: UInt64.self))
+                        guard row < plan.metadata.cells.count, feature < plan.metadata.features.count, count > 0,
+                              row > previousRow || (row == previousRow && feature > previousFeature) else {
+                            throw VivoOmicsError.invalid("count stream requires ordered unique positive in-axis records")
+                        }
+                        try accumulator.add(row: row, feature: feature, count: count)
+                        previousRow = row; previousFeature = feature; entries += 1
+                    }
+                }
+                buffer = Data(buffer.suffix(buffer.count - complete))
+                return false
             }
-            buffer = Data(buffer.suffix(buffer.count - complete))
+            if ended { break }
         }
         guard buffer.isEmpty, entries == expected else { throw VivoOmicsError.invalid("count stream truncated or missing entries") }
         let accumulated = try accumulator.finish(version: "", contrasts: [])
