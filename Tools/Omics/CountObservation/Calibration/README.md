@@ -229,3 +229,9 @@ pseudobulk intervals. Propagate or assess parameter estimation uncertainty,
 measure behavior of unsupported genes and validate coverage and useful width
 on new biological observations. The original GSE181897 treated-interval failure
 and the rest of the twelve-part development goal remain open.
+
+The subsequent [paired-donor diagnosis](../Paired/README.md) completes all-gene
+and all-donor-omission checks. Independently corrected marginals do not guarantee
+a valid joint covariance: 7,489 Kang and 6,373 HIRISA genes fail that condition.
+The full endpoint comparison and covariance failures are retained before any
+treatment-response connection is promoted.

@@ -134,6 +134,17 @@ cases. This completes a numerical observation-model path, with a full replay
 reducing HIRISA native peak RSS from 4.70 GB to 284 MB; treatment-response coupling,
 parameter uncertainty and new biological validation remain unresolved.
 
+The [complete paired-donor analysis](../Tools/Omics/CountObservation/Paired/README.md)
+shows why the marginals cannot be connected by simple variance subtraction.
+The resulting joint covariance is indefinite for 7,489 Kang and 6,373 HIRISA
+genes; separately clipping marginal variances does not repair it. Mean per-cell
+CPM and RNA-weighted pseudobulk CPM also give different mean log-response
+directions for 699 and 1,537 genes respectively, without a significance claim.
+All 249,846 feature records across full fits and every donor omission match
+independent calculations. This identifies an integration failure and endpoint
+choice; it does not fit a joint model, repair treated intervals or add biological
+validation.
+
 The [complete GSE226572 external experiment](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
 now evaluates native whole-population predictions across all three new donors
 and all 18 released IFN-beta donor/time profiles. Every one of the 24 source

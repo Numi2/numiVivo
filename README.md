@@ -149,6 +149,11 @@ conditional on its prior and dispersion. [Training calibration](Tools/Omics/Coun
 now fits these from all 122,164 original Kang/HIRISA training cells and verifies
 the path to available query-control posteriors. Unsupported genes remain explicit;
 donor-response integration and independent biological calibration remain open.
+The [paired-donor diagnosis](Tools/Omics/CountObservation/Paired/README.md) now
+checks every training gene and every donor omission. Separate noise corrections
+produce invalid joint covariance for 7,489 Kang and 6,373 HIRISA genes; per-cell
+and pseudobulk endpoint differences also matter. A coherent joint response model
+is still required.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five

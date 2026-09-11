@@ -1,0 +1,28 @@
+{
+  "status": "removed-verified-temporary-restorations",
+  "records": [
+    {
+      "directory": "/Users/home/numivivo-paired-counts-20260911/restored-evidence",
+      "files": 50,
+      "logicalBytes": 110516150,
+      "allocatedBytes": 110641152
+    },
+    {
+      "directory": "/Users/home/numivivo-paired-counts-20260911/restored-paired-final",
+      "files": 51,
+      "logicalBytes": 110532014,
+      "allocatedBytes": 110661632
+    }
+  ],
+  "finalArchiveSHA256": "321847e2fbcc1873ec254953d5d170ae5f34a2ac96f7734dc03dea99263b4b67",
+  "additionalRetainedHistoricalRecipe": {
+    "15da9970645479a2274535ed7c3e8d77159e82ea4815d54c61f0039aef6d5524": "/Users/home/numivivo-expression-memory-20260911/Tools/Omics/CountObservation/Paired/evidence/2026-09-11/initial-retain.py"
+  },
+  "allFinalArchiveObjectsRestoredAndVerified": 51,
+  "bothRestoredScientificVerifiers": "passed",
+  "freeBefore": 2441707520,
+  "freeAfter": 2663051264,
+  "measuredFreeDelta": 221343744,
+  "unix": 1789153396.559514,
+  "note": "Reclaims only verification copies created during this turn; all original scientific outputs and final archive parts remain."
+}

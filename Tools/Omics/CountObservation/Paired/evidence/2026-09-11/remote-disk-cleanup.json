@@ -1,0 +1,32 @@
+{
+  "status": "removed-verified-Git-retained-working-copies",
+  "host": "macmini",
+  "checkout": "/Users/n/numivivo-h5ad-20260909",
+  "head": "05c01ba1a8f4fc4efcefa5df7684a51a9f7f7444",
+  "files": [
+    {
+      "path": "Tools/Omics/PerturbationPrediction/Norman/evidence/2026-09-10-go-transfer/objects/3a4b32f3bd6571a65e56e4bcbaf94b11e1da8ffac8ae42b51d6f9b7da5fcd498.gz",
+      "blob": "170d23ce1dca5b46cfdd9aab7f0c14e9a5fbb8ca",
+      "bytes": 49537291,
+      "allocatedBytes": 49541120,
+      "SHA256": "71c3dcaf430a8459a216bdad2063fbf6782a38e5c30cdb99e796d03c58fd6365",
+      "inode": 5394722,
+      "mtimeNS": 1788996608094340764
+    },
+    {
+      "path": "Tools/Omics/PerturbationPrediction/Norman/evidence/2026-09-10-go-transfer/objects/b45876c197a9ae550cd10eb6923b219be6488404e551992f803d6893109a36a2.gz",
+      "blob": "e36bdfb078ff87da3b85ed150d1417b817c2e579",
+      "bytes": 18640545,
+      "allocatedBytes": 18640896,
+      "SHA256": "d911eff30858b8e218cdec619239d9d2f44776a5b057880be6927a9a9c36ca90",
+      "inode": 5394795,
+      "mtimeNS": 1788996608148085756
+    }
+  ],
+  "freeBefore": 150040576,
+  "freeAfter": 218185728,
+  "measuredFreeDelta": 68145152,
+  "unix": 1789153244.633794,
+  "restore": "git restore --ignore-skip-worktree-bits --worktree -- PATH; git update-index --no-skip-worktree -- PATH",
+  "uniqueEvidenceDeleted": false
+}
