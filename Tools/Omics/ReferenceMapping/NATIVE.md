@@ -1,5 +1,11 @@
 # Native frozen reference mapping
 
+[Explicit feature panels](CrossStudy/README.md) now allow reference mapping
+across declared different gene universes while preserving full measured library
+normalization. The complete Kang–Ding test passes numerical checks and fails both
+coarse-family annotation targets. The complete-universe default below remains in
+force when no panel is declared.
+
 `singlecell-reference-fit` trains sparse HVG/PCA from a labelled training H5AD and
 archives the exact source, mapping, label provenance, feature namespace, complete
 gene universe, normalization target, selected features, training means, loadings,

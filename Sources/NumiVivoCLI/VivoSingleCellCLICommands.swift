@@ -169,7 +169,8 @@ struct VivoSingleCellCLICommands {
             }
             if command == "singlecell-reference-fit" {
                 guard arguments.count==6,arguments[2]=="--plan",arguments[4]=="--output" else { throw VivoOmicsError.invalid("singlecell-reference-fit <training.h5ad> --plan <fit.json> --output <new-bundle>") }
-                let plan=try load(VivoSingleCellReferencePlan.self,URL(fileURLWithPath: arguments[3]))
+                let bytes=try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[3]),maximumBytes: 2_097_152)
+                let plan=try VivoCanonicalJSON.decode(VivoSingleCellReferencePlan.self,from: bytes)
                 try printJSON(VivoSingleCellReference.fit(source: URL(fileURLWithPath: arguments[1]),plan: plan,implementation: VivoWorkflowCLIImplementation.fingerprint(),to: canonicalURL(URL(fileURLWithPath: arguments[5]))));return 0
             }
             if command == "singlecell-reference-map" {

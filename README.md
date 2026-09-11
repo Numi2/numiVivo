@@ -95,6 +95,12 @@ Macro-F1 improves over kNN in all four donors, while overall accuracy falls in
 two and rare-class misses remain. These are candidate source labels with
 uncalibrated probabilities; broader biological prediction claims remain unchanged.
 
+The [complete Kang–Ding reference-transfer test](Tools/Omics/ReferenceMapping/CrossStudy/README.md)
+now maps all 68,704 query cells through an explicit 14,976-gene panel while
+preserving complete RNA-library denominators. Independent numerical checks pass,
+but both coarse-family transfer targets fail (macro-F1 0.613/0.666), with zero
+megakaryocyte recall in both directions. Cross-study annotation remains unqualified.
+
 The [single-cell program](Documentation/SingleCellInteroperability.md) now includes
 native H5AD interchange, negative-binomial DE, sparse PCA/neighbors/clustering,
 integration, marker scoring and multimodal count interchange. The complete

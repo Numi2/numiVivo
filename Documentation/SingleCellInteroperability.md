@@ -531,6 +531,12 @@ The complete development objective remains open:
    match the external classifier, and independent probability/objective checks
    pass. Macro-F1 improves over kNN in all four donors, while accuracy falls in
    two and acinar/Schwann failures persist. The default kNN bytes remain exact.
+   An optional [explicit PCA feature panel and complete Kang–Ding transfer](../Tools/Omics/ReferenceMapping/CrossStudy/README.md)
+   now permit different gene universes while retaining full source normalization.
+   All 68,704 query cells pass independent sparse/PCA/probability checks, but both
+   coarse-family targets fail (macro-F1 0.613/0.666); megakaryocyte recall is zero
+   in both directions. Ding's partial label coverage and differing fine-label
+   taxonomies remain explicit. The original default bytes remain exact.
    Calibrated annotation, novel-class rejection and independent multi-study
    biological qualification remain; labels are not authoritative.
 7. **Perturbation prediction:** [real donor-held-out response baselines](../Tools/Omics/PerturbationPrediction/README.md)

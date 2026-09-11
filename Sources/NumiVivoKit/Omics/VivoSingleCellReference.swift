@@ -135,8 +135,12 @@ public enum VivoSingleCellReference {
         var metadata: VivoSingleCellCountMetadata?,totals: [UInt64]=[],local: [Int]=[]
         var operations=0, classifierOperations=0
         let version=try VivoSingleCellH5AD.scanSnapshot(snapshot,plan: plan.mapping,limits: VivoH5ADPseudobulk.sourceLimits,onMetadata: { value in
-            guard Set(value.samples.map(\.organism))==[model.organism],value.features.count==model.featureIDs.count,
-                  Set(value.features.map(\.id))==Set(model.featureIDs) else { throw VivoOmicsError.invalid("query must match the complete reference gene universe and organism") }
+            let queryFeatures=Set(value.features.map(\.id))
+            let matchesFeatures = model.plan.reduction.pca.featurePanel.map { Set($0).isSubset(of: queryFeatures) }
+                ?? (value.features.count==model.featureIDs.count && queryFeatures==Set(model.featureIDs))
+            guard Set(value.samples.map(\.organism))==[model.organism],matchesFeatures else {
+                throw VivoOmicsError.invalid("query must contain the complete declared reference feature panel, or match the full reference gene universe when no panel is declared; organism must match")
+            }
             let referenceCells=Set(reduction.cells)
             guard value.cells.allSatisfy({ !referenceCells.contains(.init(sampleID: $0.sampleID,barcode: $0.barcode)) }) else {
                 throw VivoOmicsError.invalid("query overlaps reference cell identities")
@@ -192,6 +196,6 @@ public enum VivoSingleCellReference {
         let donors=Set(model.plan.mapping.samples.compactMap(\.donorID)).intersection(metadata.samples.compactMap(\.donorID)).sorted()
         return .init(method: model.method,referenceSource: model.source,classes: model.classes,cells: predictions,overlappingDonorIDs: donors,
             distanceOperations: operations,projectionUpdates: updates,hdf5Version: version,
-            qualification: model.logistic == nil ? "Frozen training-only projection and uniform kNN votes; labels are candidates and votes are uncalibrated. Empty libraries remain unmapped. No novel-class rejection or biological identity guarantee. No query labels read or query fitting performed." : "Frozen training-only projection, standardization and class-balanced logistic classifier. Probabilities are uncalibrated and labels are candidates. Empty libraries remain unmapped; no novel-class rejection, query fitting or query labels.",classifierOperations: model.logistic == nil ? nil : classifierOperations)
+            qualification: (model.logistic == nil ? "Frozen training-only projection and uniform kNN votes; labels are candidates and votes are uncalibrated. Empty libraries remain unmapped. No novel-class rejection or biological identity guarantee. No query labels read or query fitting performed." : "Frozen training-only projection, standardization and class-balanced logistic classifier. Probabilities are uncalibrated and labels are candidates. Empty libraries remain unmapped; no novel-class rejection, query fitting or query labels.") + (model.plan.reduction.pca.featurePanel == nil ? "" : " Explicit training feature panel; query must measure every panel gene. Normalization uses each source library's complete measured gene universe; assay comparability requires separate evidence."),classifierOperations: model.logistic == nil ? nil : classifierOperations)
     }
 }

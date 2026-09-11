@@ -78,6 +78,15 @@ the annotation step; calibrated confidence, authoritative biological identities
 and independent context transfer remain unqualified. It adds no perturbation
 response, tissue-function or clinical outcome evidence.
 
+The [complete Kang–Ding annotation-transfer experiment](../Tools/Omics/ReferenceMapping/CrossStudy/README.md)
+now retains all 68,704 query cells and each original RNA-library denominator using
+an explicit shared gene panel. Numerical reconstruction and independent checks
+pass, but both declared coarse-family targets fail: macro-F1 is 0.613 and 0.666,
+and every source-labelled megakaryocyte is missed in each direction (800 and 132).
+Ding labels cover only 66.80% of its query cells; original fine taxonomies differ.
+This is evidence against generalizing the earlier within-study annotation success,
+not evidence of reliable biological identity or outcome prediction across studies.
+
 ## What information is sufficient for the implemented predictors?
 
 | Question | Information available before prediction | Output and present evidence |

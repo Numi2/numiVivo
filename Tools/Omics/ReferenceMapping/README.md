@@ -1,5 +1,10 @@
 # Donor-held-out learned reference benchmark
 
+The subsequent [native shared-panel Kang–Ding transfer](CrossStudy/README.md)
+checks every cell in both directions. Numerical agreement passes, but macro-F1
+0.613/0.666 and zero megakaryocyte recall fail the declared coarse-family targets;
+within-study reference results do not qualify general transfer.
+
 This benchmark combines native H5AD projection and training-only native sparse
 PCA with two external scikit-learn reference classifiers. It establishes a target
 for [native frozen reference mapping](NATIVE.md). The original reference runner

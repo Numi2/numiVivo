@@ -8,12 +8,14 @@ public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
     public var relativeResidualTolerance: Double = 1e-6
     public var seed: UInt64 = 7
     public var retainProjectionCenters: Bool? = nil
+    /// Candidate genes for HVG binning/selection; all source counts still normalize each cell.
+    public var featurePanel: [String]? = nil
     public init() {}
     private enum CodingKeys: String,CodingKey {
-        case highlyVariableFeatures,meanBins,components,maximumBasis,relativeResidualTolerance,seed,retainProjectionCenters
+        case highlyVariableFeatures,meanBins,components,maximumBasis,relativeResidualTolerance,seed,retainProjectionCenters,featurePanel
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["highlyVariableFeatures","meanBins","components","maximumBasis","relativeResidualTolerance","seed","retainProjectionCenters"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["highlyVariableFeatures","meanBins","components","maximumBasis","relativeResidualTolerance","seed","retainProjectionCenters","featurePanel"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         highlyVariableFeatures=try c.decodeIfPresent(Int.self,forKey: .highlyVariableFeatures) ?? 2_000
         meanBins=try c.decodeIfPresent(Int.self,forKey: .meanBins) ?? 20
@@ -22,8 +24,13 @@ public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
         relativeResidualTolerance=try c.decodeIfPresent(Double.self,forKey: .relativeResidualTolerance) ?? 1e-6
         seed=try c.decodeIfPresent(UInt64.self,forKey: .seed) ?? 7
         retainProjectionCenters=try c.decodeIfPresent(Bool.self,forKey: .retainProjectionCenters)
+        featurePanel=try c.decodeIfPresent([String].self,forKey: .featurePanel)
     }
     public func validate() throws {
+        if let featurePanel {
+            guard featurePanel.count >= components, featurePanel.count <= 200_000, Set(featurePanel).count == featurePanel.count,
+                  featurePanel.allSatisfy(vivoOmicsID) else { throw VivoOmicsError.invalid("PCA feature panel") }
+        }
         guard (1...10_000).contains(highlyVariableFeatures),(1...128).contains(meanBins),
               (1...64).contains(components),(components...256).contains(maximumBasis),
               relativeResidualTolerance.isFinite,(1e-10...1e-3).contains(relativeResidualTolerance) else {
@@ -111,6 +118,11 @@ enum VivoSingleCellReduction {
         let m=featureIDs.count
         guard n>options.components, m>0, seen.count==m, nonzeroMeans.count==m, m2.count==m,
               seen.allSatisfy({ $0>=0 && $0<=n }) else { throw VivoOmicsError.invalid("HVG moments or axes") }
+        let panel = options.featurePanel.map(Set.init)
+        guard panel.map({ $0.isSubset(of: Set(featureIDs)) }) ?? true else {
+            throw VivoOmicsError.invalid("PCA feature panel contains unmeasured training genes")
+        }
+        let eligible = (0..<m).filter { panel?.contains(featureIDs[$0]) ?? true }
         var means=nonzeroMeans
         var variance=means,logMean=means,dispersion=[Double?](repeating: nil,count: m)
         for j in 0..<m {
@@ -120,7 +132,7 @@ enum VivoSingleCellReduction {
             logMean[j]=log1p(means[j]==0 ? 1e-12:means[j])
             if variance[j]>0,means[j]>0 { dispersion[j]=log(variance[j]/means[j]) }
         }
-        let minimum=logMean.min()!,maximum=logMean.max()!
+        let minimum=eligible.map { logMean[$0] }.min()!,maximum=eligible.map { logMean[$0] }.max()!
         var edges: [Double]
         if minimum==maximum {
             let delta=minimum==0 ? 0.001:abs(minimum)*0.001
@@ -129,8 +141,8 @@ enum VivoSingleCellReduction {
             edges=(0...options.meanBins).map { minimum+(maximum-minimum)*Double($0)/Double(options.meanBins) }
             edges[0]-=(maximum-minimum)*0.001
         }
-        var bins=[Int](repeating: 0,count: m),members=[[Double]](repeating: [],count: options.meanBins)
-        for j in 0..<m {
+        var bins=[Int](repeating: -1,count: m),members=[[Double]](repeating: [],count: options.meanBins)
+        for j in eligible {
             var bin=0;while bin+1<options.meanBins && logMean[j]>edges[bin+1] { bin+=1 }
             bins[j]=bin;if let d=dispersion[j] { members[bin].append(d) }
         }
@@ -141,7 +153,7 @@ enum VivoSingleCellReduction {
             else { averages[b]=average;deviations[b]=sqrt(values.reduce(0) { $0+pow($1-average,2) }/Double(values.count-1)) }
         }
         var standardized=[Double?](repeating: nil,count: m)
-        for j in 0..<m {
+        for j in eligible {
             if let d=dispersion[j],deviations[bins[j]] != 0 {
                 let value=(d-averages[bins[j]])/deviations[bins[j]]
                 if value.isFinite { standardized[j]=value }
