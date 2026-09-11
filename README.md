@@ -24,7 +24,7 @@ inputs does not establish accuracy for a new query.
 | Average RNA response with matched training and untreated query measurements | **Supported as a conditional research estimate.** Performance depends on the treatment and population; retain no-change and training-mean baselines. |
 | RNA response to an unseen gene target with training perturbations, controls and gene annotations | **Limited validation.** Fixed GO prediction improves mean RMSE by 1.41–2.12% across five Replogle technical groups, but loses to the mean in 37/150 target/group folds; these are not independent biological replications. |
 | Exposure-dependent RNA response | **Development result.** Duration mean improves RMSE by 24.83% over the matched time-invariant mean in three donor holdouts; independent validation remains open. |
-| Reliable transfer to another study or biological context | **Not established.** Kang–HIRISA ridge fails both transfer directions; fixed-response GSE226572 transfer misses its declared improvement target. |
+| RNA response in another study | **Mixed external validation.** HIRISA-trained mean passes the GSE181897 5% improvement target; Kang-trained mean fails. Earlier transfer failures stand, and reliable uncertainty remains unestablished. |
 | Molecular effects of a DNA substitution | **External hypothesis source.** AlphaGenome Atlas can contribute variant evidence; its results do not qualify a NumiVivo phenotype prediction. |
 | Individual-cell behavior, tissue function, disease progression or treatment benefit | **Not established.** These endpoints need their own outcome models and experimental validation. |
 
@@ -130,11 +130,15 @@ Average treated-expression coverage is 92.94% / 94.70% within Kang / HIRISA,
 versus 42.39% / 99.21% across studies. Width, missing intervals and donor-level
 variation prevent interpreting these averages as general predictive calibration.
 
-The separate [external B-cell prediction cohort](Tools/Omics/PerturbationPrediction/GSE181897/README.md)
-now has verified original counts and native B-lineage aggregation across all
-64 donor IDs. The IFN-beta test remains unscored pending primary treatment-code
-identity; this input qualification does not strengthen the biological prediction
-claim.
+The [complete external GSE181897 B-cell prediction test](Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md)
+now covers all 62 eligible donor pairs and 11,800 shared genes. Historical author
+code resolves the treatment labels before fitting. HIRISA-trained mean reduces
+average RMSE by **5.62%**, passing the frozen 5% target and beating no-change in
+all 62 donors. Kang-trained mean worsens error by 0.89% and fails. All 124 native
+predictions reconstruct; 496 estimate vectors match independent calculations.
+HIRISA-trained nominal 95% treated-expression intervals cover only **35.54%** of
+available features on average. This supports a bounded RNA point-prediction result,
+with failed uncertainty and model-dependent transfer retained explicitly.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five

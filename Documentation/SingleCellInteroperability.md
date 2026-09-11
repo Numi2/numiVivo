@@ -771,7 +771,7 @@ to the original axis. The [Adamson author cohort](../Tools/Omics/PerturbationPre
 verifies 50,440 cells and 781,977,660 UMIs against independent sparse aggregation;
 control definitions and predictive scoring remain pending.
 
-### GSE181897 candidate cohort count handoff (2026-09-11)
+### GSE181897 count handoff and external prediction (2026-09-11)
 
 The [complete source audit and native handoff](../Tools/Omics/PerturbationPrediction/GSE181897/README.md)
 validates 292,741,570 original RNA/antibody records and matches each modality's
@@ -781,8 +781,13 @@ codes, retaining 20,303 RNA features. Native streamed aggregation processes
 34,287,682 selected records and agrees exactly on all 3,818,645 nonzero values
 in 379 observed groups. Reconstruction and repeated report bytes agree.
 
-This is source preparation plus a native RNA count handoff; it does not qualify
-native direct gzip-H5AD import, full AnnData slot preservation, multimodal outcome
-prediction or independent IFN-beta transfer. Treatment-code admission is still
-incomplete, so the frozen external prediction protocol has not been fitted or
-scored. All incomplete donor pairs and absent panel genes remain reported.
+This count handoff does not qualify native direct gzip-H5AD import, full AnnData
+slot preservation or multimodal outcome prediction. Historical primary author
+code subsequently resolved the treatment codes. The [complete external prediction
+test](../Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md) now checks all
+124 native predictions across 62 paired donors and 11,800 shared genes.
+HIRISA-trained mean passes the frozen 5% improvement target with a 5.62% gain;
+Kang-trained mean fails. Independent checks and repeated scoring pass, but
+HIRISA-trained nominal 95% treated-expression interval coverage averages only
+35.54%. All incomplete pairs, absent genes, individual failures and insufficient
+uncertainty remain reported.

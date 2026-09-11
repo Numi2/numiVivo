@@ -28,8 +28,9 @@ identities; this review does not requalify historical receipts under a new build
 
 ## Current completion and admission gates
 
-This is the decision as of the published `71ce4fff` implementation and its
-retained experiments. A completed execution check and a passed biological
+This includes the published `71ce4fff` implementation evidence and the subsequent
+complete GSE181897 test using its separately identified native executable.
+A completed execution check and a passed biological
 comparison answer different questions. An unscored cohort is neither a prediction
 success nor a failure.
 
@@ -38,24 +39,24 @@ success nor a failure.
 | Preserve and analyze real counts | Full Parse ingestion and source replay pass; paired native DE and all six edgeR/limma/DESeq2 comparisons complete. Analysis peaks at 202.3 MiB with unchanged report bytes. | Other pipeline stages retain separate memory bounds; numerical agreement does not establish biological accuracy or false-discovery calibration. |
 | Preserve biology through integration | Complete HIRISA execution and coarse response checks pass. Native annotation retention fails 37/146 supported, sensitive comparisons, including 10/29 rare comparisons. | Resolve preservation losses and validate independently; do not promote the protected-stratum candidate, which still fails 37/146. |
 | Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. It loses to the mean in 37/150 target/group folds. | Independent biological contexts, target selection and replication; technical groups do not supply these. |
-| Transfer RNA response across studies | GSE226572 mean gains 2.00% against a declared 5% target; ridge fails. Kang–HIRISA ridge fails both directions. | A useful improvement under a frozen independent protocol; retain the external failures after subsequent model development. |
-| Quantify predictive uncertainty | Mean-response intervals are implemented and assessed, with context-dependent undercoverage and width. | Independent biological-replicate calibration and useful width; nominal coverage alone is insufficient. |
+| Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
+| Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
 | Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
 
-The next prediction work should clear one prepared cohort's input contract and
-execute its frozen comparison. The immediate choices and their exact missing
-inputs are:
+The GSE181897 input contract is now resolved and its frozen comparison is complete.
+The remaining prepared cohorts and the completed external test are:
 
 | Prepared cohort | Ready | Required before fitting or scoring |
 | --- | --- | --- |
 | [Adamson](../Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md) | 50,440 selected cells and a fixed unseen-target protocol | Primary control/construct assignments and reconciliation of 94 observed guide groups versus the paper's 93-guide roster. |
 | [Parse IFN-beta](../Tools/Omics/PerturbationPrediction/ParseIFNB/FEATURE_IDENTITY.md) | Complete counts, donor aggregates and DE | Intervention dose/reagent identity and an explicit feature contract: 409 duration-panel symbols are absent by exact name; naming candidates are not verified replacements. |
-| [GSE181897](../Tools/Omics/PerturbationPrediction/GSE181897/README.md) | Original counts and native B-lineage aggregates across 64 donor IDs | Primary condition-code mapping; an external curator's B/C interpretation does not establish the original intervention. |
+| [GSE181897](../Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md) | Primary author condition mapping; all 124 predictions, native reconstruction and independent scoring complete | HIRISA mean primary PASS, Kang mean primary FAIL; uncertainty remains deficient. New development on these now-scored outcomes needs a new validation cohort. |
 
-None has been fitted or scored for its proposed prediction test. Resolve roles
-from experimental records, not RNA patterns. Freeze any justified protocol
-revision before prediction and disclose earlier outcome inspection, including
-Parse DE. Further storage improvements do not clear these admission gates.
+Adamson and Parse remain unfitted and unscored for their proposed prediction tests.
+Resolve their roles from experimental records, not RNA patterns. Freeze any
+justified protocol revision before prediction and disclose earlier outcome
+inspection, including Parse DE. Further storage improvements do not clear these
+remaining admission gates.
 
 The latest [native legacy H5AD check](../Tools/Omics/H5AD/Projection/README.md#original-legacy-kang-2026-09-11)
 preserves every original Kang cell, gene, annotation and embedding, including
@@ -90,10 +91,22 @@ has passed complete source-count validation and native B-lineage aggregation:
 136,142 source cells, 64 donor IDs, and all 34,287,682 selected RNA records are
 checked. The source labels all features as gene expression, but its genome
 field separates RNA from antibody counts and reproduces both author modality
-totals exactly. Prediction fitting and scoring remain unstarted because the
-primary single-letter condition-to-intervention mapping is not established;
-external curator labels are not promoted to experimental ground truth. This
-adds a verified candidate input, not a new predictive success or failure.
+totals exactly. Historical primary author notebooks now resolve B as IFN-beta
+and C as control. The [complete frozen prediction test](../Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md)
+uses all 62 eligible pairs, 4,938 source B-lineage cells and 11,800 exact shared
+genes, retaining unmatched donors 5/23 and 84 absent panel genes. All 124 native
+predictions reconstruct; all 496 estimate vectors and interval bounds match
+independent calculations, and repeated scoring is byte-identical.
+
+HIRISA-trained mean improves equal-donor RMSE by 5.62%, passing the frozen 5%
+criterion and beating no-change in every donor. Kang-trained mean worsens RMSE
+by 0.89% and loses in 41/62 donors. Kang ridge passes its secondary comparison;
+HIRISA ridge loses to its mean in all 62 donors. Nominal 95% treated-expression
+coverage averages 92.39% for Kang and 35.54% for HIRISA, with donor ranges
+79.14–97.47% and 30.95–42.84%. The HIRISA intervals are much narrower and severely
+under-cover. This adds an external RNA point-prediction success for one frozen
+training origin, not calibrated uncertainty, universal transfer, verified
+participant independence or a measured phenotype model.
 
 The [complete GSE226572 external experiment](../Tools/Omics/PerturbationPrediction/GSE226572/README.md)
 now evaluates native whole-population predictions across all three new donors

@@ -1,9 +1,13 @@
-# GSE181897: complete count handoff; prediction admission incomplete
+# GSE181897: complete count handoff and external prediction
 
-**The released counts and native B-cell aggregation are verified. The proposed
-external IFN-beta prediction experiment has not been fitted or scored.** Its
-[protocol](PROTOCOL.md) was frozen before count inspection. Original treatment
-codes remain untranslated pending primary code-to-intervention evidence.
+**The complete external test passes its primary prediction target for the
+HIRISA-trained mean and fails for the Kang-trained mean.** All 124 predictions
+and their native reconstructions complete across 62 paired donors. HIRISA mean
+improves RMSE by 5.62%, but its nominal 95% treated-expression intervals cover
+only 35.54% of available features on average. [Full results](RESULTS.md) retain
+every donor, baseline, interval assessment and failure. The original
+[protocol](PROTOCOL.md) remains unchanged; historical primary author code
+resolved the treatment labels before fitting.
 
 ## Source and verification
 
@@ -67,7 +71,7 @@ Native publication, reconstruction and repeated publication took respectively
 3.72, 3.75 and 3.69 seconds on the shared physical Mac mini. No controlled speed
 comparison, GPU gain, new prediction fit or biological success is claimed.
 
-## Why prediction scoring remains gated
+## Initial treatment-code gate and its resolution
 
 The original `cond` values are `0`, `A`, `B`, `C`, `G`, `P`, `R`. The
 [author repository](https://github.com/yelabucsf/clue/tree/6775f8f73096b594a836bfb0b9708e7032971a9e)
@@ -79,14 +83,16 @@ maps `B` to IFN-beta and `C` to Control, but explicitly comments `C = control?`.
 The retained source record pins that curator revision. This is supporting
 interpretation, not the missing primary experiment mapping.
 
-Native aggregation therefore uses `source-code:<letter>` without guessing
-intervention names. The prospective test requires that mapping to be established
-before fitting or scoring. Neither 62 apparent pairs nor canonical interferon
-expression patterns resolve experimental identity. Once it is resolved, retain
-both incomplete donors and the 84 absent panel genes; use all eligible pairs
-under the frozen protocol and report failed predictions and interval coverage.
-The broader [biological prediction assessment](../../../../Documentation/BiologicalPrediction.md)
-remains unchanged by this input qualification.
+The original aggregation preserves `source-code:<letter>` and its initial
+unqualified-role receipt. The author repository history before its reset contains
+the missing production notebooks: its IFN comparison identifies B as IFN-beta,
+and its all-stimulation preprocessing uses C as control. The [primary-source
+identity audit and completed test](RESULTS.md#primary-treatment-identity) pin that
+historical commit, every inspected source hash and the exact notebook cells.
+The comparison then used all 62 eligible pairs, retaining the two incomplete
+donors and 84 absent genes. Neither RNA patterns nor external curator guesses
+were used to resolve the roles. The [biological prediction assessment](../../../../Documentation/BiologicalPrediction.md)
+now includes this mixed external result and its deficient uncertainty.
 
 ## Storage, reproduction and retained failures
 
