@@ -8,10 +8,18 @@ count records and all 40,352 RNA features** across twelve PBS/IFN-beta donor
 pairs. It is the exact metadata selection in [BCellAdmission](../BCellAdmission/README.md).
 No donor, selected row or feature is removed on QC disagreement or response.
 
-All twelve native ingestions and their offline independent aggregate checks have
-passed. Source replay is running; **complete count validation is not yet claimed**.
-The metadata-only archive does not become count evidence until every native
-donor ingestion and replay finishes with independently matching counts.
+All twelve native ingestions and source replays passed. The terminal review
+validated every donor bundle, independent cell and donor/condition counts,
+source range hashes and canonical stream hashes. The complete cohort contains
+**253,128,870 total counts**. No prediction was fitted or scored.
+
+The [complete evidence archive](numivivo-bcell-complete-20260912.tar.gz) and
+[member manifest](numivivo-bcell-complete-20260912.tar.gz.manifest.json) retain
+13,990 files, including the exact native binary and source dependencies.
+The 33,834,827-byte archive passed independent member verification remotely and
+again after transfer. SHA256:
+`5309bf51927b7abec526257cac948af899b67996c47be6d1859a24590a4d9e37`.
+This qualifies selected count handling, not biological predictive accuracy.
 
 ## Execution and ownership
 
@@ -73,8 +81,8 @@ Keep the verifier outside the running study so its frozen driver files remain
 unchanged. It exits nonzero with `not-verified` for incomplete or inconsistent
 evidence. The admission tests cover missing completion, altered preparation,
 wrong cohort totals and escaping paths. The live incomplete remote run was also
-rejected. Full successful-cohort verification remains pending; these checks do
-not claim that the success path or biological prediction has been qualified.
+rejected. The full successful-cohort terminal review now passes; biological prediction
+remains unqualified.
 The verifier reuses the retained independent bundle checker and rejects Python
 optimization mode because that checker requires assertions. Use a trusted
 published preparation manifest; a self-authored manifest is not a provenance
@@ -95,9 +103,8 @@ python package_complete.py /path/to/study --preparation-manifest manifest.json -
 ```
 
 Six software tests passed. A real invocation also rejected the active remote
-controller without creating an archive. Complete-cohort packaging remains
-unexecuted until ingestion and replay finish; archive integrity alone does not
-establish biological accuracy. Keep both Python tools together outside the study.
+controller without creating an archive. Complete-cohort packaging and independent member verification passed; archive
+integrity alone does not establish biological accuracy. Keep both Python tools together outside the study.
 
 verify_archive.py checks this preparation archive. It embeds the twelve plans,
 their row maps, scripts and software verification. Original source axes/chunk
@@ -121,9 +128,8 @@ receipts. Historical source gene-count and transcript-count QC each disagree
 for 3,188 cells; their aggregate excesses are 3,305 detected features and 3,345
 counts. No affected row was removed. The source and preparation hashes match.
 
-This is complete ingestion evidence with replay still pending. The retained
-script and summary do not embed every donor bundle; those remain in the remote
-study until terminal packaging. No prediction was fitted or scored.
+This historical ingestion review preceded replay. The complete archive above
+now embeds every donor bundle and replay receipt. No prediction was fitted or scored.
 
 [The retained offline review](donor1-ingest-review.json) rechecked Donor1's
 native bundle against independent counts: 4,649 cells, 9,621,618 records and
@@ -136,5 +142,4 @@ cells; their totals exceed the selected matrix by 306 detected features and
 [The review script](review_donor1.py) records its original remote paths and
 requires the retained study dependencies. This is an offline ingestion review
 of one real donor, not a second source replay, a complete-cohort result, or a
-successful run of the full terminal verifier. Remaining donors and replay must
-finish before terminal qualification.
+successful run of the full terminal verifier. The later complete terminal review above supersedes this partial status.

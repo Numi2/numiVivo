@@ -105,7 +105,7 @@ All native reconstructions and independent checks pass. This supports conditiona
 RNA prediction when exposure time and matched training observations are available;
 new independent validation is still required, and the earlier external failure stands.
 
-The [Parse B-cell metadata audit](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) identifies 72,446 source-labeled B cells across all twelve paired donors. The context model has 200 absent exact-name features; dose/reagent and the feature contract remain unresolved. No Parse prediction has been fitted or scored. The [native B-cell count workflow](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellCounts/README.md) now has verified plans for all 124,909,573 selected records; complete ingestion/replay results are pending.
+The [Parse B-cell metadata audit](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) identifies 72,446 source-labeled B cells across all twelve paired donors. The context model has 200 absent exact-name features; dose/reagent and the feature contract remain unresolved. No Parse prediction has been fitted or scored. The [native B-cell count workflow](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellCounts/README.md) now has all twelve native ingestions and source replays independently verified: 124,909,573 records and 253,128,870 total counts. The complete archive and its 13,990 members passed verification. This is count-handling evidence, not predictive validation.
 
 The next [independent Parse IFN-beta cohort](Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
 contains all 725,031 released IFN-beta/PBS cells from 12 donors. Native count
