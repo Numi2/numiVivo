@@ -334,6 +334,11 @@ retains every Kang neighbor and edge coordinate, with median graph construction
 of 2.35 s Metal versus 4.62 s Scanpy. Its narrower stage timing excludes full CLI
 source reconstruction and must not be read as a whole-workflow speedup.
 
+A [full Kang sparse PCA traversal experiment](Tools/Omics/Reduction/WindowTraversal/README.md)
+preserves scores, loadings and metadata, but moving mapping checks outside the
+record loop shows no useful end-to-end acceleration (4.031 s versus 4.018 s median).
+The candidate is retained as experimental evidence and is not promoted.
+
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical
 M4/M4 Pro GPUs. The explicit FP32 option passes its declared numerical tolerance

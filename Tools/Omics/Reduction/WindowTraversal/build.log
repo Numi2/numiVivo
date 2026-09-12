@@ -1,0 +1,32 @@
+/Users/n/numivivo-pca-window-20260912/source/Sources/NumiVivoKit/Omics/VivoH5ADAnnotations.swift:228:23: warning: no calls to throwing functions occur within 'try' expression
+226 |         try Task.checkCancellation()
+227 |         let output = try VivoOmicsFileSnapshot.fingerprint(staging, maximumBytes: outputLimit)
+228 |         let receipt = try VivoH5ADAnnotationReceipt(schemaVersion: 1, source: plan.source, plan: planID,
+    |                       `- warning: no calls to throwing functions occur within 'try' expression
+229 |             output: output, implementation: implementation, hdf5Version: version)
+230 |         guard destination.isFileURL else { throw VivoOmicsError.invalid("local H5AD output required") }
+/Users/n/numivivo-pca-window-20260912/source/Sources/NumiVivoKit/Omics/VivoMetalCountNormalization.swift:38:17: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 36 |         }
+ 37 |         let options = MTLCompileOptions()
+ 38 |         options.fastMathEnabled = false
+    |                 `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 39 |         let library = try device.makeLibrary(source: source, options: options)
+ 40 |         guard let function = library.makeFunction(name: "vivo_count_log1p") else {
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+/Users/n/numivivo-pca-window-20260912/source/Sources/NumiVivoKit/Omics/VivoMetalPCANeighbors.swift:35:50: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+33 |             throw VivoOmicsError.invalid("Metal PCA neighbors require a physical Apple GPU")
+34 |         }
+35 |         let compile=MTLCompileOptions(); compile.fastMathEnabled=false
+   |                                                  `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+36 |         let library=try device.makeLibrary(source: source, options: compile)
+37 |         guard let function=library.makeFunction(name:"distances") else { throw VivoOmicsError.invalid("Metal PCA neighbor kernel") }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+/Users/n/numivivo-pca-window-20260912/source/Sources/NumiVivoKit/Omics/VivoH5ADAnnotations.swift:228:23: warning: no calls to throwing functions occur within 'try' expression
+226 |         try Task.checkCancellation()
+227 |         let output = try VivoOmicsFileSnapshot.fingerprint(staging, maximumBytes: outputLimit)
+228 |         let receipt = try VivoH5ADAnnotationReceipt(schemaVersion: 1, source: plan.source, plan: planID,
+    |                       `- warning: no calls to throwing functions occur within 'try' expression
+229 |             output: output, implementation: implementation, hdf5Version: version)
+230 |         guard destination.isFileURL else { throw VivoOmicsError.invalid("local H5AD output required") }
