@@ -466,3 +466,5 @@ Report reproducible bugs through the repository's Issues tab, including the comm
 NumiVivo models biological systems; it does not validate a therapy, authorize an experiment or establish safety in a living organism. An executable model is not proof of a realizable biological construct. Numerical checks, calibration evidence and biological validation are distinct.
 
 Licensed under [Apache License 2.0](LICENSE). See [NOTICE](NOTICE). External datasets, force-field parameters, model weights and third-party materials retain their own terms. For research use, cite the exact repository revision and the methods and source data used by the calculation.
+
+The completed donor-exclusion evaluation now also has a [post-hoc support diagnostic](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/evidence/2026-09-12-support-diagnostic/README.md): HIRISA’s loss to the training-mean baseline persists within the training rate range in every donor. General biological outcome prediction remains unestablished.

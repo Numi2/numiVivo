@@ -744,3 +744,7 @@ and 23.04% gains), while the HIRISA criterion fails. Of 216,058 source gene-fold
 converge. These reused development donors do not establish independent biological
 validation or calibrated uncertainty. The linked snapshot retains reports and
 shard hashes; remaining raw evidence is retained locally pending archival capacity.
+
+### Post-hoc training support diagnostic
+
+HIRISA loses to the training-mean response baseline inside and outside the training rate range in all five completed donors; Kang wins in both strata in all eight. Expanding the range alone is not an established remedy. This exploratory association does not change the frozen scores or establish causality. See the [diagnostic report](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/evidence/2026-09-12-support-diagnostic/README.md) for per-donor ratios, estimator limitations and hash-bound evidence.
