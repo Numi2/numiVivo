@@ -26,6 +26,30 @@ integration. An omitted neighbor representation continues to use original PCA;
 requesting integration alone does not silently change the graph. UMAP initializes
 from the same representation used for its graph. Clustering consumes that graph.
 
+## Optional protected sample groups
+
+Both ridge and MNN options accept an explicit `protectedSampleGroups` map:
+
+```json
+{"covariate":"donor","protectedSampleGroups":{"s0":"PBMC","s1":"PBMC"}}
+```
+
+Provide exactly one meaningful categorical group for every observed sample ID.
+The admission check connects correction-covariate levels only when they share a
+joint condition/group stratum. Disconnected designs reject before correction;
+checking condition and group separately would miss some confounding interactions.
+Empty maps, missing or extra sample IDs, `unreported` groups and mappings above
+4,096 entries or 32 KiB of canonical JSON are rejected. Omit the option to retain
+historical behavior and encoding. This sample-level map cannot represent mixed
+cell-level labels within one sample.
+
+This is a design-admission guard. It does not constrain the correction to preserve
+a protected signal, qualify biological preservation, fit multiple nuisance
+covariates, or provide an unseen-donor transform. The retained Hagai regression
+checks unchanged numerical output; HIRISA library-design checks test rejection
+of the documented preparation/batch confounding. Neither changes the historical
+preservation failures or establishes a new biological success.
+
 ## Algorithm and numerical evidence
 
 The method alternates diversity-weighted soft clustering in cosine-normalized PCA

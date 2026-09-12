@@ -6,6 +6,9 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     public enum RidgeScaling: String, Codable, Sendable { case expectedClusterBatchMass }
     /// Nil preserves the original fixed penalty; otherwise ridge is the expected-mass coefficient.
     public var ridgeScaling: RidgeScaling? = nil
+    /// Optional, complete observation-sample map for an explicitly protected
+    /// categorical group. Nil preserves historical encoding and behavior.
+    public var protectedSampleGroups: [String: String]? = nil
     public var covariate: Covariate = .donor
     public var clusters: Int = 88
     public var diversity: Double = 2
@@ -16,10 +19,11 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     public var seed: UInt64 = 7
     public var maximumWork: Int = 200_000_000
     public init() {}
-    private enum CodingKeys: String, CodingKey { case covariate, clusters, diversity, ridge, ridgeScaling, temperature, maximumIterations, relativeTolerance, seed, maximumWork }
+    private enum CodingKeys: String, CodingKey { case protectedSampleGroups, covariate, clusters, diversity, ridge, ridgeScaling, temperature, maximumIterations, relativeTolerance, seed, maximumWork }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["covariate","clusters","diversity","ridge","ridgeScaling","temperature","maximumIterations","relativeTolerance","seed","maximumWork"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["protectedSampleGroups","covariate","clusters","diversity","ridge","ridgeScaling","temperature","maximumIterations","relativeTolerance","seed","maximumWork"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
+        protectedSampleGroups = try c.decodeIfPresent([String: String].self, forKey: .protectedSampleGroups)
         covariate = try c.decodeIfPresent(Covariate.self,forKey: .covariate) ?? .donor
         clusters = try c.decodeIfPresent(Int.self,forKey: .clusters) ?? 88
         diversity = try c.decodeIfPresent(Double.self,forKey: .diversity) ?? 2
@@ -32,6 +36,7 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
         maximumWork = try c.decodeIfPresent(Int.self,forKey: .maximumWork) ?? 200_000_000
     }
     public func validate() throws {
+        try VivoIntegrationProtection.validate(protectedSampleGroups)
         guard (2...Self.maximumClusters).contains(clusters), diversity.isFinite, (0...10).contains(diversity),
               ridge.isFinite, (0.001...100).contains(ridge), temperature.isFinite, (0.01...1).contains(temperature),
               (2...100).contains(maximumIterations), relativeTolerance.isFinite, (1e-8...0.05).contains(relativeTolerance),
@@ -58,6 +63,54 @@ public struct VivoSingleCellIntegrationResult: Codable, Sendable, Equatable {
     public let qualification: String
     /// Final cluster-by-level penalties; absent for the original fixed-ridge mode.
     public var ridgePenalties: [[Double]]? = nil
+}
+
+
+/// Categorical design admission only. Connectivity does not qualify preservation
+/// of expression programs, cell identities, or any undeclared biological factor.
+enum VivoIntegrationProtection {
+    static func validate(_ groups: [String: String]?) throws {
+        guard let groups else { return }
+        guard !groups.isEmpty, groups.count <= 4_096,
+              groups.allSatisfy({ vivoOmicsID($0.key) && vivoOmicsID($0.value) && $0.value != "unreported" }),
+              try VivoCanonicalJSON.encode(groups).count <= 32_768 else {
+            throw VivoOmicsError.invalid("protected integration sample groups or byte budget")
+        }
+    }
+    static func check(_ groups: [String: String]?, cells: [VivoOmicsCellIdentity],
+                      samples: [String: VivoOmicsSample],
+                      covariate: VivoSingleCellIntegrationOptions.Covariate,
+                      levelIDs: [String: Int]) throws {
+        guard let groups else { return }
+        try validate(groups)
+        let observed = Set(cells.lazy.map(\.sampleID))
+        guard Set(groups.keys) == observed else {
+            throw VivoOmicsError.invalid("protected integration groups must match every observed sample exactly")
+        }
+        var strata: [[String]: Set<Int>] = [:]
+        for id in observed.sorted() {
+            try Task.checkCancellation()
+            guard let sample = samples[id], let group = groups[id],
+                  let name = covariate == .donor ? sample.donorID : sample.batchID,
+                  let level = levelIDs[name] else {
+                throw VivoOmicsError.invalid("protected integration sample or covariate identity")
+            }
+            // An array key keeps condition/group pairs distinct even if labels
+            // contain punctuation. Protect their joint strata, not just marginals.
+            strata[[sample.condition, group], default: []].insert(level)
+        }
+        var reachable: Set<Int> = [0]
+        for _ in 0..<levelIDs.count {
+            let before = reachable.count
+            for levels in strata.values where !reachable.isDisjoint(with: levels) {
+                reachable.formUnion(levels)
+            }
+            if reachable.count == before { break }
+        }
+        guard reachable.count == levelIDs.count else {
+            throw VivoOmicsError.invalid("integration covariate is confounded with protected condition/group strata")
+        }
+    }
 }
 
 enum VivoSingleCellIntegration {
@@ -209,6 +262,8 @@ enum VivoSingleCellIntegration {
             if reachable.count == before { break }
         }
         guard reachable.count == bCount else { throw VivoOmicsError.invalid("integration covariate is confounded with condition; no connected shared-condition design") }
+        try VivoIntegrationProtection.check(o.protectedSampleGroups, cells: cells,
+            samples: lookup, covariate: o.covariate, levelIDs: ids)
         var sizes = [Double](repeating: 0,count: bCount)
         for b in batch { sizes[b] += 1 }
         var state = o.seed

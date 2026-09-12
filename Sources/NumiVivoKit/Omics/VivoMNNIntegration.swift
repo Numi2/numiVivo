@@ -9,6 +9,9 @@ public struct VivoMNNIntegrationOptions: Codable, Sendable, Equatable {
     /// Nil retains the historical scalar reduction and canonical plan encoding.
     public var kernel: Kernel? = nil
     static let maximumNeighbors = 100
+    /// Optional, complete observation-sample map for an explicitly protected
+    /// categorical group. Nil preserves historical encoding and behavior.
+    public var protectedSampleGroups: [String: String]? = nil
     public var covariate: VivoSingleCellIntegrationOptions.Covariate = .donor
     public var neighbors: Int = 20
     public var sigma: Double = 15
@@ -16,10 +19,11 @@ public struct VivoMNNIntegrationOptions: Codable, Sendable, Equatable {
     public var maximumWork: Int = 100_000_000_000
     public var maximumResidentBytes: Int = 536_870_912
     public init() {}
-    private enum CodingKeys: String, CodingKey { case covariate, neighbors, sigma, minimumAlignment, maximumWork, maximumResidentBytes, kernel }
+    private enum CodingKeys: String, CodingKey { case protectedSampleGroups, covariate, neighbors, sigma, minimumAlignment, maximumWork, maximumResidentBytes, kernel }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["covariate","neighbors","sigma","minimumAlignment","maximumWork","maximumResidentBytes","kernel"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["protectedSampleGroups","covariate","neighbors","sigma","minimumAlignment","maximumWork","maximumResidentBytes","kernel"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
+        protectedSampleGroups = try c.decodeIfPresent([String: String].self, forKey: .protectedSampleGroups)
         kernel = try c.decodeIfPresent(Kernel.self, forKey: .kernel)
         covariate = try c.decodeIfPresent(VivoSingleCellIntegrationOptions.Covariate.self, forKey: .covariate) ?? .donor
         neighbors = try c.decodeIfPresent(Int.self, forKey: .neighbors) ?? 20
@@ -29,6 +33,7 @@ public struct VivoMNNIntegrationOptions: Codable, Sendable, Equatable {
         maximumResidentBytes = try c.decodeIfPresent(Int.self, forKey: .maximumResidentBytes) ?? 536_870_912
     }
     public func validate() throws {
+        try VivoIntegrationProtection.validate(protectedSampleGroups)
         guard (1...Self.maximumNeighbors).contains(neighbors), sigma.isFinite, (0.001...1000).contains(sigma),
               minimumAlignment.isFinite, (0...1).contains(minimumAlignment),
               (1...10_000_000_000_000).contains(maximumWork),
@@ -147,6 +152,8 @@ enum VivoMNNIntegration {
             if connected.count == before { break }
         }
         guard connected.count == bCount else { throw VivoOmicsError.invalid("MNN covariate is confounded with condition") }
+        try VivoIntegrationProtection.check(o.protectedSampleGroups, cells: cells,
+            samples: sampleMap, covariate: o.covariate, levelIDs: levelMap)
         var pairCount = 0, preceding = 0
         for group in rows { pairCount += preceding*group.count; preceding += group.count }
         let distanceTerms = try product([pairCount,d], limit: o.maximumWork, reason: "MNN matching work budget")
