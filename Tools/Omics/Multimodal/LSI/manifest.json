@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS-numerical-product-not-biological",
+  "baseCommit": "5491f8036b45b03ad592540f9804c27b09798f82",
+  "archive": {
+    "bytes": 89581510,
+    "sha256": "971eae4bf253eeeca2881fba6a7efe18064794c295a847a93f7023f2459eee62"
+  },
+  "members": {
+    "reference-checks.json": {
+      "bytes": 1084,
+      "sha256": "4ebd79720adb7da2b5bc25b19eb231568941f2e66a5a6618375795ae6f44ddb7"
+    },
+    "VivoAccessibilityLSI-initial.swift": {
+      "bytes": 5293,
+      "sha256": "4c482061fc22895e10f3b645d68a2e66df87dc98fa1d8e2af1f9a3394d2e874a"
+    },
+    "constant-check-product.log": {
+      "bytes": 776,
+      "sha256": "aadf4e7f30d9b0ffca3be5397b5d5b890f62d720b0d4dd1888b62f39766e7eb7"
+    },
+    "check_product.py": {
+      "bytes": 2554,
+      "sha256": "1129b6dbc9eb2177fcea28081c3c983219bb182dbee12ed6ddee3b948510f145"
+    },
+    "VivoAccessibilityLSI.swift": {
+      "bytes": 5669,
+      "sha256": "6733fc49f378a22c0f07888114011ee88f4bc70f54566b0bbdb3e3797b1016e5"
+    },
+    "product-build-fixed.log": {
+      "bytes": 2252,
+      "sha256": "cd6b50055643ddcfcd110941369c055dcbb3f0ced345bed8afc8a4b646a16a12"
+    },
+    "tfidf-verification.log": {
+      "bytes": 1118,
+      "sha256": "2b8b59791d07ffaedb96448fdfac5a742b2fc80cd567e80af1fc2b5a774f4cb9"
+    },
+    "invalid-schema.json": {
+      "bytes": 106,
+      "sha256": "fe6777fffca28339c221c44c9fed3c99924f798e7a814fcd9ae9d7623d00cf32"
+    },
+    "constant-check-fixed.log": {
+      "bytes": 776,
+      "sha256": "aadf4e7f30d9b0ffca3be5397b5d5b890f62d720b0d4dd1888b62f39766e7eb7"
+    },
+    "constant-check-product": {
+      "bytes": 708456,
+      "sha256": "3ab89fe1524e145225965579c67482f3adf134460a70c082c3bee0510c2d260e"
+    },
+    "invalid-unknown-key.json": {
+      "bytes": 126,
+      "sha256": "7cc444bacbab63ed9bf3dea071fd36bb6d611fcd9d2832ee8e9d9a65432c7c7f"
+    },
+    "invalid-components.json": {
+      "bytes": 105,
+      "sha256": "f8e1fa63806ccdb3d000a6a63b6f438c9cdedf7e093b0767859e74cdbb25bc85"
+    },
+    "comparison.json": {
+      "bytes": 2600,
+      "sha256": "58f0ec9f1fb6fbabef8ee3d085bef88d09041c88fc690265f52354f1b0e3330c"
+    },
+    "ConstantCheck.swift": {
+      "bytes": 624,
+      "sha256": "428497b3f82830183c2e65f5ef4f47183494a423f58e75d6e9bc4f5b1fb60937"
+    },
+    "native.json": {
+      "bytes": 71767764,
+      "sha256": "c3252252028a9649defeca622119952d7254e7d6a00fbfd55016676eea720e5b"
+    },
+    "product-build.log": {
+      "bytes": 2252,
+      "sha256": "cd6b50055643ddcfcd110941369c055dcbb3f0ced345bed8afc8a4b646a16a12"
+    },
+    "verifier-check.log": {
+      "bytes": 1605,
+      "sha256": "32fafa4407871d31c764dedffa9bf152ee920fcde8df9d99d5346e1be497fea1"
+    },
+    "native.log": {
+      "bytes": 362,
+      "sha256": "860e0638758faa2bd9255d43129502d9716bd70a1de672df9b2c663e4606ec02"
+    },
+    "product-run.log": {
+      "bytes": 1125,
+      "sha256": "a9699809fcfaa8c9b2285ed629397f6b141b2c42d7897f8bcf41f7d09c80132c"
+    },
+    "reference.log": {
+      "bytes": 940,
+      "sha256": "e72cecff944a73fc9839f675ddf8ec183cc992171538d404117bab2ad77f851f"
+    },
+    "product-checks.json": {
+      "bytes": 3893,
+      "sha256": "83a24eaf3954dccc1dcf145e651d94f2ae4425a06813f9ddb1c7891254c0cd8c"
+    },
+    "tfidf-rehashed-tamper.log": {
+      "bytes": 74,
+      "sha256": "69adcabce7efdfb0e0a9baf1352594a2cd45b1e855d372d56a5cc5845fc17a06"
+    },
+    "protocol.json": {
+      "bytes": 745,
+      "sha256": "c1066b7cbbee4825754dd850d79f6708b28faee851517a68f01dbd87ce4dff2c"
+    },
+    "reference.py": {
+      "bytes": 1623,
+      "sha256": "857d70178d56aa3661ac3fcd08c40ee3544a9d8781398ae11749a99896e9d939"
+    },
+    "invalid-basis.json": {
+      "bytes": 104,
+      "sha256": "0d31749c5fe3c135d1d4c7849426be9310b93865bd32038890518aceab93164b"
+    },
+    "scipy-svd.npz": {
+      "bytes": 23234124,
+      "sha256": "e95ebf55e232817455398bbbf8828974c496a324adf6dacb286c39d2d83360da"
+    },
+    "check_tfidf_verifier.py": {
+      "bytes": 1749,
+      "sha256": "586481bfb6216f496075cbf54534ec0210f03dfd8429c2ad4d6e579d8bf5ea74"
+    },
+    "Main.swift": {
+      "bytes": 2315,
+      "sha256": "4e29da3df577b229bb32727522f2f6db76e1f4dd17da0326311fdc4569e86e1c"
+    },
+    "compare.py": {
+      "bytes": 2885,
+      "sha256": "94c4cc2938d5dcaded3ad19e2814b3b2e69d376d1909c53eb50ade1f80043fa9"
+    },
+    "check_admission.py": {
+      "bytes": 1679,
+      "sha256": "c31e1ed9c33a2fcc15c3997d04773001be36e26d2de358521c0bb0b5adfd2268"
+    },
+    "admission-checks.json": {
+      "bytes": 968,
+      "sha256": "f379223c51315aecd889496d24c67cb3182d3d1fe1641958e454998eb4b9c6b2"
+    },
+    "lsi-plan.json": {
+      "bytes": 106,
+      "sha256": "dfbc3e6b510f1b35f0136e20039c13dc647ade93794c2f34b5b3a376638cb389"
+    },
+    "lsi": {
+      "bytes": 732960,
+      "sha256": "9e39afa516cef6f300c6c26bce202123e81182135c888cf1a7921f3aaa6d2c93"
+    },
+    "tfidf-verifier-checks.json": {
+      "bytes": 4057,
+      "sha256": "8c1f28c9b540ff569b37b2253d3491e5fc51edb45d350008c6b27ac31b3bdf59"
+    },
+    "product-bundle/model.json": {
+      "bytes": 2237,
+      "sha256": "e989621ae1b55d16d7c4f583f0630736eca18545ecda84671baffd0bf8ba74db"
+    },
+    "product-bundle/plan.json": {
+      "bytes": 97,
+      "sha256": "2abe34c53d3d49ae47c62b11494fee5c2413f16c48bed35126317e41d320942c"
+    },
+    "product-bundle/axes.json": {
+      "bytes": 12781883,
+      "sha256": "d5e85d9f9218f32d95901616dff340cadc26e67f2d1ae748c985a44e7075c966"
+    },
+    "product-bundle/loadings.bin": {
+      "bytes": 47193120,
+      "sha256": "84697ac89adcea7a5b1f2d187e9364b80b64ed7298d2ed59877d8274a446cdf9"
+    },
+    "product-bundle/embeddings.bin": {
+      "bytes": 1301280,
+      "sha256": "9322acbd45ee79983b81d201161e394b94c842142281d92b5e3feb6f95fcd3de"
+    },
+    "product-bundle/left-singular-vectors.bin": {
+      "bytes": 1301280,
+      "sha256": "5c8e9540c8698c7c39bc1d98e34d465a0fc49d1c015b1a36e1c230cddab94ba9"
+    },
+    "product-bundle/input-receipt.json": {
+      "bytes": 974,
+      "sha256": "9cdac7e9a87be5ca7016106af089cf947527378fe104381eb568209024ff763e"
+    },
+    "product-bundle/receipt.json": {
+      "bytes": 1124,
+      "sha256": "69e204a7ab6506cc38de76938dab7149f1d32a11b3f3797e3c29b0fb4903c800"
+    },
+    "source/Sources/NumiVivoKit/Omics/VivoAccessibilityLSI.swift": {
+      "bytes": 5640,
+      "sha256": "33f4157082f8f2371ded9fd3551a98b0593611f2c8f3c95b5c2ea1a4a45c702a"
+    },
+    "source/Sources/NumiVivoKit/Omics/VivoAccessibilityLSIIO.swift": {
+      "bytes": 7465,
+      "sha256": "2bbe7138e4ea3cde5293ed93234521f92ee5c7e0c072ec95b1b53c6a4b5bc351"
+    },
+    "source/Sources/NumiVivoKit/Omics/VivoAccessibilityTFIDFIO.swift": {
+      "bytes": 8596,
+      "sha256": "d99c811fea39afda886318221bb0329491c7d83c3b457fb8cd0e9d69fed48cda"
+    },
+    "source/Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift": {
+      "bytes": 60772,
+      "sha256": "b81b498454533bc3bd5ac13e2ce144adb39c444509f74eb48292c164938b4191"
+    },
+    "source/Tools/Omics/H5AD/build.sh": {
+      "bytes": 4944,
+      "sha256": "7284b948674225610e5cd5a3c6989957653a3c545639715c3a4560687eddd762"
+    },
+    "build/numivivo-omics": {
+      "bytes": 8132560,
+      "sha256": "391ad068525cb75ab808a16cfda7801e74130678e99ad915fa856dc5ed6092ec"
+    },
+    "build/sources.sha256": {
+      "bytes": 22035,
+      "sha256": "8d19f9d0a95056da38a5854ee531b5b3a7fcca39dbd6e48fd63a6dfa1c5b34b4"
+    }
+  }
+}

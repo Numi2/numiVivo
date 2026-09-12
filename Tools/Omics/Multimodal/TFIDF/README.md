@@ -28,8 +28,11 @@ Output contains `original.h5`, `mapping.json`, `axes.json`, `statistics.json`,
 UInt32 assay-local row, UInt32 feature and Float64 value. Axes bind local rows
 to source observations. The receipt binds all artifacts and implementation.
 Publication stays private until the complete calculation succeeds; existing
-destinations are preserved. A separate product replay-verification command
-has not yet been added; the retained checker verifies hashes and the full result.
+destinations are preserved. The `multiassay-tfidf-verify <tfidf-bundle>` command now reconstructs the
+complete normalization from the retained HDF5 source and checks every artifact.
+The LSI command requires this verification and scans a private immutable values
+snapshot. A deliberately changed value with a recomputed receipt hash is rejected
+by source reconstruction; producer and verifier fingerprints remain distinct.
 
 ## Complete measured benchmark
 

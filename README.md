@@ -18,7 +18,7 @@ The [full-HIRISA rigid-correction experiment](Tools/Omics/Benchmarks/HIRISA/Rigi
 
 ## Biological prediction: current evidence
 
-The [native ATAC TF-IDF command](Tools/Omics/Multimodal/TFIDF/README.md) now matches the executed Signac method on the complete 2,711-nucleus paired benchmark, with assay identities and units preserved. LSI, joint RNA/ATAC integration and regulatory prediction remain separate unfinished steps.
+The [native ATAC TF-IDF command](Tools/Omics/Multimodal/TFIDF/README.md) now matches the executed Signac method on the complete 2,711-nucleus paired benchmark, with assay identities and units preserved. The [native LSI command](Tools/Omics/Multimodal/LSI/README.md) now passes complete 30-component numerical comparison and product checks on that dataset. Joint RNA/ATAC integration and regulatory prediction remain unfinished.
 
 The [exact Parse-compatible panel evaluation](Tools/Omics/PerturbationPrediction/StudyContextKernel/ExactParsePanel/README.md) reran all 75 development donors with a frozen 11,600-feature contract. HIRISA passes the existing transfer gate; Kang and GSE181897 fail. The candidate remains unpromoted, and no Parse prediction was scored.
 
