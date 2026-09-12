@@ -1,9 +1,10 @@
 import Foundation
+import CryptoKit
 import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        if ["multiassay-paired-verify", "multiassay-10x-paired", "multiassay-tfidf-verify", "multiassay-lsi", "multiassay-10x-tfidf", "singlecell-h5ad-celltypist", "singlecell-celltypist-stream", "singlecell-file-expression", "singlecell-file-expression-verify", "singlecell-cell-axis-import", "singlecell-cell-axis-verify", "singlecell-file-count-stream", "singlecell-file-count-stream-verify", "singlecell-count-stream-pseudobulk", "singlecell-count-stream-verify", "singlecell-duration-fit", "singlecell-duration-predict", "singlecell-duration-verify", "singlecell-duration-prediction-verify", "singlecell-perturbation-batch","singlecell-perturbation-batch-verify"].contains(name ?? "") { return true }
+        if ["singlecell-logcpm-stream", "multiassay-paired-verify", "multiassay-10x-paired", "multiassay-tfidf-verify", "multiassay-lsi", "multiassay-10x-tfidf", "singlecell-h5ad-celltypist", "singlecell-celltypist-stream", "singlecell-file-expression", "singlecell-file-expression-verify", "singlecell-cell-axis-import", "singlecell-cell-axis-verify", "singlecell-file-count-stream", "singlecell-file-count-stream-verify", "singlecell-count-stream-pseudobulk", "singlecell-count-stream-verify", "singlecell-duration-fit", "singlecell-duration-predict", "singlecell-duration-verify", "singlecell-duration-prediction-verify", "singlecell-perturbation-batch","singlecell-perturbation-batch-verify"].contains(name ?? "") { return true }
         return ["singlecell-h5ad-programs", "singlecell-h5ad-programs-verify", "singlecell-target-kernel-fit", "singlecell-target-kernel-predict", "singlecell-target-kernel-verify", "singlecell-target-kernel-prediction-verify", "singlecell-pca-integrate", "singlecell-pca-integrate-verify", "singlecell-graph-embed", "singlecell-graph-embed-verify", "singlecell-graph-cluster", "singlecell-graph-cluster-verify", "singlecell-pca-neighbors", "singlecell-pca-neighbors-verify", "singlecell-h5ad-pca-query", "singlecell-h5ad-pca-query-verify", "singlecell-h5ad-pca", "singlecell-h5ad-pca-verify", "singlecell-h5ad-store", "singlecell-count-store-verify", "singlecell-count-store-normalize", "singlecell-count-store-normalize-verify", "multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-visium-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
@@ -360,6 +361,35 @@ struct VivoSingleCellCLICommands {
                 guard arguments.count == 2 else { throw VivoOmicsError.invalid("singlecell-cell-axis-verify <axis>") }
                 try printJSON(VivoFileCellAxis.open(URL(fileURLWithPath: arguments[1]), implementation: VivoWorkflowCLIImplementation.fingerprint()).receipt); return 0
             }
+            if command == "singlecell-logcpm-stream" {
+                guard arguments.count == 7, arguments[1] == "--plan", arguments[3] == "--stream-sha256", arguments[5] == "--output" else {
+                    throw VivoOmicsError.invalid("singlecell-logcpm-stream --plan <plan.json> --stream-sha256 <sha256> --output <new-report.json> < records.bin")
+                }
+                struct Plan: Decodable {
+                    let featureIDs: [String], groupIDs: [String]
+                    let rowGroups: [Int], rowTotals: [UInt64]
+                }
+                let expected = arguments[4]
+                guard expected.utf8.count == 64, expected.utf8.allSatisfy({ (48...57).contains($0) || (97...102).contains($0) }) else {
+                    throw VivoOmicsError.invalid("expected lowercase SHA256")
+                }
+                let output = try canonicalURL(URL(fileURLWithPath: arguments[6]))
+                guard !FileManager.default.fileExists(atPath: output.path) else { throw VivoOmicsError.invalid("output already exists") }
+                let bytes = try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[2]), maximumBytes: 268_435_456)
+                let plan = try VivoCanonicalJSON.decode(Plan.self, from: bytes)
+                var digest = SHA256()
+                let report = try VivoStreamedLogCPM.consume(featureIDs: plan.featureIDs, groupIDs: plan.groupIDs, rowGroups: plan.rowGroups, rowTotals: plan.rowTotals) {
+                    let chunk = try FileHandle.standardInput.read(upToCount: 1_048_576) ?? Data()
+                    digest.update(data: chunk)
+                    return chunk
+                }
+                let actual = digest.finalize().map { String(format: "%02x", $0) }.joined()
+                guard actual == expected else { throw VivoOmicsError.invalid("count stream SHA256 differs") }
+                try Task.checkCancellation()
+                try JSONEncoder().encode(report).write(to: output, options: .withoutOverwriting)
+                try printJSON(["status": "completed-logcpm-stream", "streamSHA256": actual, "output": output.path])
+                return 0
+            }
             if command == "singlecell-file-count-stream" {
                 guard arguments.count == 5, arguments[1] == "--axis", arguments[3] == "--output" else { throw VivoOmicsError.invalid("singlecell-file-count-stream --axis <axis> --output <new-bundle> < records.bin") }
                 try printJSON(VivoFileCountStream.publish(axis: URL(fileURLWithPath: arguments[2]), input: .standardInput, implementation: VivoWorkflowCLIImplementation.fingerprint(), to: canonicalURL(URL(fileURLWithPath: arguments[4])))); return 0
@@ -596,6 +626,7 @@ struct VivoSingleCellCLICommands {
       singlecell-file-expression-verify <bundle>
       singlecell-cell-axis-import --header <header.json> --output <new-axis> < cells.jsonl
       singlecell-cell-axis-verify <axis>
+      singlecell-logcpm-stream --plan <plan.json> --stream-sha256 <sha256> --output <new-report.json> < records.bin
       singlecell-file-count-stream --axis <axis> --output <new-bundle> < records.bin
       singlecell-file-count-stream-verify <bundle> < records.bin
       singlecell-count-stream-pseudobulk --plan <axes.json> --output <new-bundle> < records.bin

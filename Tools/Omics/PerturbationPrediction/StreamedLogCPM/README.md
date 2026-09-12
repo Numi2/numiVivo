@@ -71,3 +71,7 @@ missing completion, forged completion without donors, changed tolerance, and
 driver mismatch. The positive complete-cohort review now passes for all 72,446 cells and
 40,352 features, with maximum absolute error 7.99e-15. test_parse_complete.py uses a separate temporary directory
 and does not change the running study.
+
+The [native CLI](CLI/README.md) now exposes the shared bounded count-stream
+consumer with required SHA256 verification and output protection. Real-matrix
+and malformed-input checks pass; this adds no biological prediction claim.
