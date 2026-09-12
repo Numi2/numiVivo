@@ -20,6 +20,22 @@ cell counts.
 
 ## Remaining experimental and model contract
 
+The [context-panel correspondence audit](context-feature-correspondence.json)
+uses the retained HGNC approved/previous-symbol table to investigate all 200
+missing names. It finds **192 unique candidate correspondences** after checking
+collisions against all 11,600 exact matches and the other candidates. A separate
+direct table scan verifies every candidate identity and source coordinate.
+These are nomenclature candidates, not proven sequence/annotation equivalence;
+the existing exact-name admission gate and model panel remain unchanged.
+
+Eight entries remain unresolved: CARD17, CTAG2, HBQ1, NPPC and ZNF781 have no
+corresponding source symbol; QARS has ambiguous HGNC identity; TIAF1 conflicts
+with another panel coordinate; VARS has ambiguous source correspondence.
+Resolving names therefore cannot by itself admit the complete current model.
+No generic aliases, fuzzy matches, count values or prediction outcomes were used.
+[The script](context_feature_correspondence.py) retains original local paths and
+input hashes; reproduction requires the existing metadata and HGNC dependencies.
+
 The [primary preprint](https://pmc.ncbi.nlm.nih.gov/articles/PMC12724453/) links
 its [supplementary workbook](https://pmc.ncbi.nlm.nih.gov/articles/instance/12724453/bin/media-2.xlsx).
 The workbook download presented a browser challenge and was not bypassed.

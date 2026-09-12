@@ -1,0 +1,3401 @@
+{
+  "status": "complete-context-feature-correspondence-audit",
+  "modelFeatures": 11800,
+  "exactMatches": 11600,
+  "missing": 200,
+  "classification": {
+    "unique-candidate": 192,
+    "no-corresponding-source-symbol": 5,
+    "HGNC-identity-ambiguous": 1,
+    "source-coordinate-conflict": 1,
+    "source-correspondence-ambiguous": 1
+  },
+  "records": [
+    {
+      "modelIndex": 11,
+      "modelID": "symbol|AARS",
+      "matchedHGNCIDs": [
+        "HGNC:20"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:20",
+          "approvedSymbol": "AARS1",
+          "sourceSymbol": "AARS1",
+          "sourceIndex": 1882,
+          "ensemblGeneID": "ENSG00000090861"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 123,
+      "modelID": "symbol|ACPP",
+      "matchedHGNCIDs": [
+        "HGNC:125"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:125",
+          "approvedSymbol": "ACP3",
+          "sourceSymbol": "ACP3",
+          "sourceIndex": 346,
+          "ensemblGeneID": "ENSG00000014257"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 222,
+      "modelID": "symbol|ADPRHL2",
+      "matchedHGNCIDs": [
+        "HGNC:21304"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:21304",
+          "approvedSymbol": "ADPRS",
+          "sourceSymbol": "ADPRS",
+          "sourceIndex": 4563,
+          "ensemblGeneID": "ENSG00000116863"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 227,
+      "modelID": "symbol|ADSS",
+      "matchedHGNCIDs": [
+        "HGNC:292"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:292",
+          "approvedSymbol": "ADSS2",
+          "sourceSymbol": "ADSS2",
+          "sourceIndex": 518,
+          "ensemblGeneID": "ENSG00000035687"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 228,
+      "modelID": "symbol|ADSSL1",
+      "matchedHGNCIDs": [
+        "HGNC:20093"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:20093",
+          "approvedSymbol": "ADSS1",
+          "sourceSymbol": "ADSS1",
+          "sourceIndex": 15139,
+          "ensemblGeneID": "ENSG00000185100"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 345,
+      "modelID": "symbol|ALG1L",
+      "matchedHGNCIDs": [
+        "HGNC:33721"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:33721",
+          "approvedSymbol": "ALG1L1P",
+          "sourceSymbol": "ALG1L1P",
+          "sourceIndex": 16032,
+          "ensemblGeneID": "ENSG00000189366"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 676,
+      "modelID": "symbol|ARNTL",
+      "matchedHGNCIDs": [
+        "HGNC:701"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:701",
+          "approvedSymbol": "BMAL1",
+          "sourceSymbol": "BMAL1",
+          "sourceIndex": 6640,
+          "ensemblGeneID": "ENSG00000133794"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 677,
+      "modelID": "symbol|ARNTL2",
+      "matchedHGNCIDs": [
+        "HGNC:18984"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:18984",
+          "approvedSymbol": "BMAL2",
+          "sourceSymbol": "BMAL2",
+          "sourceIndex": 470,
+          "ensemblGeneID": "ENSG00000029153"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1092,
+      "modelID": "symbol|BTBD11",
+      "matchedHGNCIDs": [
+        "HGNC:23844"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:23844",
+          "approvedSymbol": "ABTB3",
+          "sourceSymbol": "ABTB3",
+          "sourceIndex": 9145,
+          "ensemblGeneID": "ENSG00000151136"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1128,
+      "modelID": "symbol|C11orf45",
+      "matchedHGNCIDs": [
+        "HGNC:28584"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28584",
+          "approvedSymbol": "KCNJ5-AS1",
+          "sourceSymbol": "KCNJ5-AS1",
+          "sourceIndex": 13224,
+          "ensemblGeneID": "ENSG00000174370"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1129,
+      "modelID": "symbol|C11orf49",
+      "matchedHGNCIDs": [
+        "HGNC:28720"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28720",
+          "approvedSymbol": "CSTPP1",
+          "sourceSymbol": "CSTPP1",
+          "sourceIndex": 8957,
+          "ensemblGeneID": "ENSG00000149179"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1130,
+      "modelID": "symbol|C11orf53",
+      "matchedHGNCIDs": [
+        "HGNC:30527"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:30527",
+          "approvedSymbol": "POU2AF2",
+          "sourceSymbol": "POU2AF2",
+          "sourceIndex": 9104,
+          "ensemblGeneID": "ENSG00000150750"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1136,
+      "modelID": "symbol|C11orf74",
+      "matchedHGNCIDs": [
+        "HGNC:25142"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25142",
+          "approvedSymbol": "IFTAP",
+          "sourceSymbol": "IFTAP",
+          "sourceIndex": 11526,
+          "ensemblGeneID": "ENSG00000166352"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1138,
+      "modelID": "symbol|C11orf95",
+      "matchedHGNCIDs": [
+        "HGNC:28449"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28449",
+          "approvedSymbol": "ZFTA",
+          "sourceSymbol": "ZFTA",
+          "sourceIndex": 15744,
+          "ensemblGeneID": "ENSG00000188070"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1140,
+      "modelID": "symbol|C12orf10",
+      "matchedHGNCIDs": [
+        "HGNC:17590"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:17590",
+          "approvedSymbol": "MYG1",
+          "sourceSymbol": "MYG1",
+          "sourceIndex": 7678,
+          "ensemblGeneID": "ENSG00000139637"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1145,
+      "modelID": "symbol|C12orf45",
+      "matchedHGNCIDs": [
+        "HGNC:28628"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28628",
+          "approvedSymbol": "NOPCHAP1",
+          "sourceSymbol": "NOPCHAP1",
+          "sourceIndex": 9143,
+          "ensemblGeneID": "ENSG00000151131"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1146,
+      "modelID": "symbol|C12orf49",
+      "matchedHGNCIDs": [
+        "HGNC:26128"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26128",
+          "approvedSymbol": "SPRING1",
+          "sourceSymbol": "SPRING1",
+          "sourceIndex": 3838,
+          "ensemblGeneID": "ENSG00000111412"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1149,
+      "modelID": "symbol|C12orf65",
+      "matchedHGNCIDs": [
+        "HGNC:26784"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26784",
+          "approvedSymbol": "MTRFR",
+          "sourceSymbol": "MTRFR",
+          "sourceIndex": 6225,
+          "ensemblGeneID": "ENSG00000130921"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1150,
+      "modelID": "symbol|C12orf66",
+      "matchedHGNCIDs": [
+        "HGNC:26517"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26517",
+          "approvedSymbol": "KICS2",
+          "sourceSymbol": "KICS2",
+          "sourceIndex": 13200,
+          "ensemblGeneID": "ENSG00000174206"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1152,
+      "modelID": "symbol|C12orf74",
+      "matchedHGNCIDs": [
+        "HGNC:33829"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:33829",
+          "approvedSymbol": "PLEKHG7",
+          "sourceSymbol": "PLEKHG7",
+          "sourceIndex": 15607,
+          "ensemblGeneID": "ENSG00000187510"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1161,
+      "modelID": "symbol|C15orf41",
+      "matchedHGNCIDs": [
+        "HGNC:26929"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26929",
+          "approvedSymbol": "CDIN1",
+          "sourceSymbol": "CDIN1",
+          "sourceIndex": 15359,
+          "ensemblGeneID": "ENSG00000186073"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1165,
+      "modelID": "symbol|C15orf65",
+      "matchedHGNCIDs": [
+        "HGNC:44654"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:44654",
+          "approvedSymbol": "PIERCE2",
+          "sourceSymbol": "PIERCE2",
+          "sourceIndex": 31484,
+          "ensemblGeneID": "ENSG00000261652"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1168,
+      "modelID": "symbol|C16orf58",
+      "matchedHGNCIDs": [
+        "HGNC:25848"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25848",
+          "approvedSymbol": "RUSF1",
+          "sourceSymbol": "RUSF1",
+          "sourceIndex": 7826,
+          "ensemblGeneID": "ENSG00000140688"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1169,
+      "modelID": "symbol|C16orf70",
+      "matchedHGNCIDs": [
+        "HGNC:29564"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29564",
+          "approvedSymbol": "PHAF1",
+          "sourceSymbol": "PHAF1",
+          "sourceIndex": 5511,
+          "ensemblGeneID": "ENSG00000125149"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1170,
+      "modelID": "symbol|C16orf72",
+      "matchedHGNCIDs": [
+        "HGNC:30103"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:30103",
+          "approvedSymbol": "HAPSTR1",
+          "sourceSymbol": "HAPSTR1",
+          "sourceIndex": 14645,
+          "ensemblGeneID": "ENSG00000182831"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1179,
+      "modelID": "symbol|C17orf53",
+      "matchedHGNCIDs": [
+        "HGNC:28460"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28460",
+          "approvedSymbol": "HROB",
+          "sourceSymbol": "HROB",
+          "sourceIndex": 5523,
+          "ensemblGeneID": "ENSG00000125319"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1199,
+      "modelID": "symbol|C19orf57",
+      "matchedHGNCIDs": [
+        "HGNC:28153"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28153",
+          "approvedSymbol": "BRME1",
+          "sourceSymbol": "BRME1",
+          "sourceIndex": 6386,
+          "ensemblGeneID": "ENSG00000132016"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1221,
+      "modelID": "symbol|C1orf194",
+      "matchedHGNCIDs": [
+        "HGNC:32331"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:32331",
+          "approvedSymbol": "CFAP276",
+          "sourceSymbol": "CFAP276",
+          "sourceIndex": 14157,
+          "ensemblGeneID": "ENSG00000179902"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1231,
+      "modelID": "symbol|C1orf61",
+      "matchedHGNCIDs": [
+        "HGNC:30780"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:30780",
+          "approvedSymbol": "MIR9-1HG",
+          "sourceSymbol": "MIR9-1HG",
+          "sourceIndex": 5551,
+          "ensemblGeneID": "ENSG00000125462"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1234,
+      "modelID": "symbol|C20orf194",
+      "matchedHGNCIDs": [
+        "HGNC:17721"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:17721",
+          "approvedSymbol": "DNAAF9",
+          "sourceSymbol": "DNAAF9",
+          "sourceIndex": 1778,
+          "ensemblGeneID": "ENSG00000088854"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1266,
+      "modelID": "symbol|C3orf67",
+      "matchedHGNCIDs": [
+        "HGNC:24763"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:24763",
+          "approvedSymbol": "CFAP20DC",
+          "sourceSymbol": "CFAP20DC",
+          "sourceIndex": 10821,
+          "ensemblGeneID": "ENSG00000163689"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1279,
+      "modelID": "symbol|C5orf30",
+      "matchedHGNCIDs": [
+        "HGNC:25052"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25052",
+          "approvedSymbol": "MACIR",
+          "sourceSymbol": "MACIR",
+          "sourceIndex": 14441,
+          "ensemblGeneID": "ENSG00000181751"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1281,
+      "modelID": "symbol|C5orf51",
+      "matchedHGNCIDs": [
+        "HGNC:27750"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:27750",
+          "approvedSymbol": "RIMOC1",
+          "sourceSymbol": "RIMOC1",
+          "sourceIndex": 17668,
+          "ensemblGeneID": "ENSG00000205765"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1286,
+      "modelID": "symbol|C6orf223",
+      "matchedHGNCIDs": [
+        "HGNC:28692"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28692",
+          "approvedSymbol": "LINC03040",
+          "sourceSymbol": "LINC03040",
+          "sourceIndex": 14419,
+          "ensemblGeneID": "ENSG00000181577"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1293,
+      "modelID": "symbol|C7orf26",
+      "matchedHGNCIDs": [
+        "HGNC:21702"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:21702",
+          "approvedSymbol": "INTS15",
+          "sourceSymbol": "INTS15",
+          "sourceIndex": 8658,
+          "ensemblGeneID": "ENSG00000146576"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1297,
+      "modelID": "symbol|C7orf61",
+      "matchedHGNCIDs": [
+        "HGNC:22135"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:22135",
+          "approvedSymbol": "SPACDR",
+          "sourceSymbol": "SPACDR",
+          "sourceIndex": 15334,
+          "ensemblGeneID": "ENSG00000185955"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1299,
+      "modelID": "symbol|C8orf37",
+      "matchedHGNCIDs": [
+        "HGNC:27232"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:27232",
+          "approvedSymbol": "CFAP418",
+          "sourceSymbol": "CFAP418",
+          "sourceIndex": 9718,
+          "ensemblGeneID": "ENSG00000156172"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1304,
+      "modelID": "symbol|C9orf116",
+      "matchedHGNCIDs": [
+        "HGNC:28435"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28435",
+          "approvedSymbol": "PIERCE1",
+          "sourceSymbol": "PIERCE1",
+          "sourceIndex": 10227,
+          "ensemblGeneID": "ENSG00000160345"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1305,
+      "modelID": "symbol|C9orf135",
+      "matchedHGNCIDs": [
+        "HGNC:31422"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:31422",
+          "approvedSymbol": "CFAP95",
+          "sourceSymbol": "CFAP95",
+          "sourceIndex": 17458,
+          "ensemblGeneID": "ENSG00000204711"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1307,
+      "modelID": "symbol|C9orf16",
+      "matchedHGNCIDs": [
+        "HGNC:17823"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:17823",
+          "approvedSymbol": "BBLN",
+          "sourceSymbol": "BBLN",
+          "sourceIndex": 12595,
+          "ensemblGeneID": "ENSG00000171159"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1399,
+      "modelID": "symbol|CARD17",
+      "matchedHGNCIDs": [
+        "HGNC:33827"
+      ],
+      "candidates": [],
+      "status": "no-corresponding-source-symbol"
+    },
+    {
+      "modelIndex": 1406,
+      "modelID": "symbol|CARS",
+      "matchedHGNCIDs": [
+        "HGNC:1493"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:1493",
+          "approvedSymbol": "CARS1",
+          "sourceSymbol": "CARS1",
+          "sourceIndex": 3735,
+          "ensemblGeneID": "ENSG00000110619"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1408,
+      "modelID": "symbol|CASC1",
+      "matchedHGNCIDs": [
+        "HGNC:29599"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29599",
+          "approvedSymbol": "DNAI7",
+          "sourceSymbol": "DNAI7",
+          "sourceIndex": 4725,
+          "ensemblGeneID": "ENSG00000118307"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1410,
+      "modelID": "symbol|CASC4",
+      "matchedHGNCIDs": [
+        "HGNC:24892"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:24892",
+          "approvedSymbol": "GOLM2",
+          "sourceSymbol": "GOLM2",
+          "sourceIndex": 11606,
+          "ensemblGeneID": "ENSG00000166734"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1471,
+      "modelID": "symbol|CCDC130",
+      "matchedHGNCIDs": [
+        "HGNC:28118"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28118",
+          "approvedSymbol": "YJU2B",
+          "sourceSymbol": "YJU2B",
+          "sourceIndex": 2978,
+          "ensemblGeneID": "ENSG00000104957"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1483,
+      "modelID": "symbol|CCDC151",
+      "matchedHGNCIDs": [
+        "HGNC:28303"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28303",
+          "approvedSymbol": "ODAD3",
+          "sourceSymbol": "ODAD3",
+          "sourceIndex": 16613,
+          "ensemblGeneID": "ENSG00000198003"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1493,
+      "modelID": "symbol|CCDC173",
+      "matchedHGNCIDs": [
+        "HGNC:25064"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25064",
+          "approvedSymbol": "CFAP210",
+          "sourceSymbol": "CFAP210",
+          "sourceIndex": 9542,
+          "ensemblGeneID": "ENSG00000154479"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1527,
+      "modelID": "symbol|CCDC84",
+      "matchedHGNCIDs": [
+        "HGNC:30460"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:30460",
+          "approvedSymbol": "CENATAC",
+          "sourceSymbol": "CENATAC",
+          "sourceIndex": 15386,
+          "ensemblGeneID": "ENSG00000186166"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1656,
+      "modelID": "symbol|CD3EAP",
+      "matchedHGNCIDs": [
+        "HGNC:24219"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:24219",
+          "approvedSymbol": "POLR1G",
+          "sourceSymbol": "POLR1G",
+          "sourceIndex": 4691,
+          "ensemblGeneID": "ENSG00000117877"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 1808,
+      "modelID": "symbol|CENPBD1",
+      "matchedHGNCIDs": [
+        "HGNC:28272"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28272",
+          "approvedSymbol": "CENPBD1P",
+          "sourceSymbol": "CENPBD1P",
+          "sourceIndex": 13839,
+          "ensemblGeneID": "ENSG00000177946"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 2023,
+      "modelID": "symbol|CLECL1",
+      "matchedHGNCIDs": [
+        "HGNC:24462"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:24462",
+          "approvedSymbol": "CLECL1",
+          "sourceSymbol": "CLECL1P",
+          "sourceIndex": 14965,
+          "ensemblGeneID": "ENSG00000184293"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 2039,
+      "modelID": "symbol|CLLU1OS",
+      "matchedHGNCIDs": [
+        "HGNC:24070"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:24070",
+          "approvedSymbol": "CLLU1-AS1",
+          "sourceSymbol": "CLLU1-AS1",
+          "sourceIndex": 17533,
+          "ensemblGeneID": "ENSG00000205057"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 2344,
+      "modelID": "symbol|CTAG2",
+      "matchedHGNCIDs": [
+        "HGNC:2492"
+      ],
+      "candidates": [],
+      "status": "no-corresponding-source-symbol"
+    },
+    {
+      "modelIndex": 2430,
+      "modelID": "symbol|CXorf21",
+      "matchedHGNCIDs": [
+        "HGNC:25667"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25667",
+          "approvedSymbol": "TASL",
+          "sourceSymbol": "TASL",
+          "sourceIndex": 4953,
+          "ensemblGeneID": "ENSG00000120280"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 2432,
+      "modelID": "symbol|CXorf40A",
+      "matchedHGNCIDs": [
+        "HGNC:28089"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28089",
+          "approvedSymbol": "EOLA1",
+          "sourceSymbol": "EOLA1",
+          "sourceIndex": 16500,
+          "ensemblGeneID": "ENSG00000197620"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 2433,
+      "modelID": "symbol|CXorf56",
+      "matchedHGNCIDs": [
+        "HGNC:26239"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26239",
+          "approvedSymbol": "STEEP1",
+          "sourceSymbol": "STEEP1",
+          "sourceIndex": 379,
+          "ensemblGeneID": "ENSG00000018610"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 2457,
+      "modelID": "symbol|CYHR1",
+      "matchedHGNCIDs": [
+        "HGNC:17806"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:17806",
+          "approvedSymbol": "ZFTRAF1",
+          "sourceSymbol": "ZFTRAF1",
+          "sourceIndex": 15712,
+          "ensemblGeneID": "ENSG00000187954"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 2503,
+      "modelID": "symbol|DARS",
+      "matchedHGNCIDs": [
+        "HGNC:2678"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:2678",
+          "approvedSymbol": "DARS1",
+          "sourceSymbol": "DARS1",
+          "sourceIndex": 4427,
+          "ensemblGeneID": "ENSG00000115866"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 2602,
+      "modelID": "symbol|DDX58",
+      "matchedHGNCIDs": [
+        "HGNC:19102"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:19102",
+          "approvedSymbol": "RIGI",
+          "sourceSymbol": "RIGI",
+          "sourceIndex": 3358,
+          "ensemblGeneID": "ENSG00000107201"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3100,
+      "modelID": "symbol|ELMSAN1",
+      "matchedHGNCIDs": [
+        "HGNC:19853"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:19853",
+          "approvedSymbol": "MIDEAS",
+          "sourceSymbol": "MIDEAS",
+          "sourceIndex": 9700,
+          "ensemblGeneID": "ENSG00000156030"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3192,
+      "modelID": "symbol|EPRS",
+      "matchedHGNCIDs": [
+        "HGNC:3418"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:3418",
+          "approvedSymbol": "EPRS1",
+          "sourceSymbol": "EPRS1",
+          "sourceIndex": 7140,
+          "ensemblGeneID": "ENSG00000136628"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3352,
+      "modelID": "symbol|FAM122A",
+      "matchedHGNCIDs": [
+        "HGNC:23490"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:23490",
+          "approvedSymbol": "PABIR1",
+          "sourceSymbol": "PABIR1",
+          "sourceIndex": 15696,
+          "ensemblGeneID": "ENSG00000187866"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3353,
+      "modelID": "symbol|FAM122B",
+      "matchedHGNCIDs": [
+        "HGNC:30490"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:30490",
+          "approvedSymbol": "PABIR2",
+          "sourceSymbol": "PABIR2",
+          "sourceIndex": 9758,
+          "ensemblGeneID": "ENSG00000156504"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3354,
+      "modelID": "symbol|FAM122C",
+      "matchedHGNCIDs": [
+        "HGNC:25202"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25202",
+          "approvedSymbol": "PABIR3",
+          "sourceSymbol": "PABIR3",
+          "sourceIndex": 9756,
+          "ensemblGeneID": "ENSG00000156500"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3356,
+      "modelID": "symbol|FAM126A",
+      "matchedHGNCIDs": [
+        "HGNC:24587"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:24587",
+          "approvedSymbol": "HYCC1",
+          "sourceSymbol": "HYCC1",
+          "sourceIndex": 5197,
+          "ensemblGeneID": "ENSG00000122591"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3357,
+      "modelID": "symbol|FAM126B",
+      "matchedHGNCIDs": [
+        "HGNC:28593"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28593",
+          "approvedSymbol": "HYCC2",
+          "sourceSymbol": "HYCC2",
+          "sourceIndex": 9661,
+          "ensemblGeneID": "ENSG00000155744"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3368,
+      "modelID": "symbol|FAM160A1",
+      "matchedHGNCIDs": [
+        "HGNC:34237"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:34237",
+          "approvedSymbol": "FHIP1A",
+          "sourceSymbol": "FHIP1A",
+          "sourceIndex": 10984,
+          "ensemblGeneID": "ENSG00000164142"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3369,
+      "modelID": "symbol|FAM160A2",
+      "matchedHGNCIDs": [
+        "HGNC:25378"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25378",
+          "approvedSymbol": "FHIP1B",
+          "sourceSymbol": "FHIP1B",
+          "sourceIndex": 680,
+          "ensemblGeneID": "ENSG00000051009"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3370,
+      "modelID": "symbol|FAM160B1",
+      "matchedHGNCIDs": [
+        "HGNC:29320"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29320",
+          "approvedSymbol": "FHIP2A",
+          "sourceSymbol": "FHIP2A",
+          "sourceIndex": 9197,
+          "ensemblGeneID": "ENSG00000151553"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3371,
+      "modelID": "symbol|FAM160B2",
+      "matchedHGNCIDs": [
+        "HGNC:16492"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:16492",
+          "approvedSymbol": "FHIP2B",
+          "sourceSymbol": "FHIP2B",
+          "sourceIndex": 10033,
+          "ensemblGeneID": "ENSG00000158863"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3390,
+      "modelID": "symbol|FAM189B",
+      "matchedHGNCIDs": [
+        "HGNC:1233"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:1233",
+          "approvedSymbol": "ENTREP3",
+          "sourceSymbol": "ENTREP3",
+          "sourceIndex": 10274,
+          "ensemblGeneID": "ENSG00000160767"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3391,
+      "modelID": "symbol|FAM192A",
+      "matchedHGNCIDs": [
+        "HGNC:29856"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29856",
+          "approvedSymbol": "PSME3IP1",
+          "sourceSymbol": "PSME3IP1",
+          "sourceIndex": 12938,
+          "ensemblGeneID": "ENSG00000172775"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3398,
+      "modelID": "symbol|FAM207A",
+      "matchedHGNCIDs": [
+        "HGNC:15811"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:15811",
+          "approvedSymbol": "SLX9",
+          "sourceSymbol": "SLX9",
+          "sourceIndex": 10208,
+          "ensemblGeneID": "ENSG00000160256"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3405,
+      "modelID": "symbol|FAM214A",
+      "matchedHGNCIDs": [
+        "HGNC:25609"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25609",
+          "approvedSymbol": "ATOSA",
+          "sourceSymbol": "ATOSA",
+          "sourceIndex": 611,
+          "ensemblGeneID": "ENSG00000047346"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3406,
+      "modelID": "symbol|FAM214B",
+      "matchedHGNCIDs": [
+        "HGNC:25666"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25666",
+          "approvedSymbol": "ATOSB",
+          "sourceSymbol": "ATOSB",
+          "sourceIndex": 87,
+          "ensemblGeneID": "ENSG00000005238"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3426,
+      "modelID": "symbol|FAM49A",
+      "matchedHGNCIDs": [
+        "HGNC:25373"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25373",
+          "approvedSymbol": "CYRIA",
+          "sourceSymbol": "CYRIA",
+          "sourceIndex": 16567,
+          "ensemblGeneID": "ENSG00000197872"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3427,
+      "modelID": "symbol|FAM49B",
+      "matchedHGNCIDs": [
+        "HGNC:25216"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25216",
+          "approvedSymbol": "CYRIB",
+          "sourceSymbol": "CYRIB",
+          "sourceIndex": 9421,
+          "ensemblGeneID": "ENSG00000153310"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3433,
+      "modelID": "symbol|FAM71A",
+      "matchedHGNCIDs": [
+        "HGNC:26541"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26541",
+          "approvedSymbol": "GARIN4",
+          "sourceSymbol": "GARIN4",
+          "sourceIndex": 10564,
+          "ensemblGeneID": "ENSG00000162771"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3434,
+      "modelID": "symbol|FAM71D",
+      "matchedHGNCIDs": [
+        "HGNC:20101"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:20101",
+          "approvedSymbol": "GARIN2",
+          "sourceSymbol": "GARIN2",
+          "sourceIndex": 12921,
+          "ensemblGeneID": "ENSG00000172717"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3435,
+      "modelID": "symbol|FAM71E1",
+      "matchedHGNCIDs": [
+        "HGNC:25107"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25107",
+          "approvedSymbol": "GARIN5A",
+          "sourceSymbol": "GARIN5A",
+          "sourceIndex": 8057,
+          "ensemblGeneID": "ENSG00000142530"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3436,
+      "modelID": "symbol|FAM71F2",
+      "matchedHGNCIDs": [
+        "HGNC:27998"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:27998",
+          "approvedSymbol": "GARIN1A",
+          "sourceSymbol": "GARIN1A",
+          "sourceIndex": 17537,
+          "ensemblGeneID": "ENSG00000205085"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3550,
+      "modelID": "symbol|FCGR1B",
+      "matchedHGNCIDs": [
+        "HGNC:3614"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:3614",
+          "approvedSymbol": "FCGR1BP",
+          "sourceSymbol": "FCGR1BP",
+          "sourceIndex": 16617,
+          "ensemblGeneID": "ENSG00000198019"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3597,
+      "modelID": "symbol|FGFR1OP",
+      "matchedHGNCIDs": [
+        "HGNC:17012"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:17012",
+          "approvedSymbol": "CEP43",
+          "sourceSymbol": "CEP43",
+          "sourceIndex": 18107,
+          "ensemblGeneID": "ENSG00000213066"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3673,
+      "modelID": "symbol|FOPNL",
+      "matchedHGNCIDs": [
+        "HGNC:26435"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26435",
+          "approvedSymbol": "CEP20",
+          "sourceSymbol": "CEP20",
+          "sourceIndex": 6601,
+          "ensemblGeneID": "ENSG00000133393"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3810,
+      "modelID": "symbol|GARS",
+      "matchedHGNCIDs": [
+        "HGNC:4162"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4162",
+          "approvedSymbol": "GARS1",
+          "sourceSymbol": "GARS1",
+          "sourceIndex": 3222,
+          "ensemblGeneID": "ENSG00000106105"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 3827,
+      "modelID": "symbol|GBA",
+      "matchedHGNCIDs": [
+        "HGNC:4177"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4177",
+          "approvedSymbol": "GBA1",
+          "sourceSymbol": "GBA1",
+          "sourceIndex": 13787,
+          "ensemblGeneID": "ENSG00000177628"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4127,
+      "modelID": "symbol|GRASP",
+      "matchedHGNCIDs": [
+        "HGNC:18707"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:18707",
+          "approvedSymbol": "TAMALIN",
+          "sourceSymbol": "TAMALIN",
+          "sourceIndex": 10380,
+          "ensemblGeneID": "ENSG00000161835"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4217,
+      "modelID": "symbol|H1F0",
+      "matchedHGNCIDs": [
+        "HGNC:4714"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4714",
+          "approvedSymbol": "H1-0",
+          "sourceSymbol": "H1-0",
+          "sourceIndex": 15967,
+          "ensemblGeneID": "ENSG00000189060"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4218,
+      "modelID": "symbol|H1FX",
+      "matchedHGNCIDs": [
+        "HGNC:4722"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4722",
+          "approvedSymbol": "H1-10",
+          "sourceSymbol": "H1-10",
+          "sourceIndex": 15082,
+          "ensemblGeneID": "ENSG00000184897"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4219,
+      "modelID": "symbol|H2AFJ",
+      "matchedHGNCIDs": [
+        "HGNC:14456"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:14456",
+          "approvedSymbol": "H2AJ",
+          "sourceSymbol": "H2AJ",
+          "sourceIndex": 26358,
+          "ensemblGeneID": "ENSG00000246705"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4220,
+      "modelID": "symbol|H2AFX",
+      "matchedHGNCIDs": [
+        "HGNC:4739"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4739",
+          "approvedSymbol": "H2AX",
+          "sourceSymbol": "H2AX",
+          "sourceIndex": 15825,
+          "ensemblGeneID": "ENSG00000188486"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4221,
+      "modelID": "symbol|H2AFY",
+      "matchedHGNCIDs": [
+        "HGNC:4740"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4740",
+          "approvedSymbol": "MACROH2A1",
+          "sourceSymbol": "MACROH2A1",
+          "sourceIndex": 4148,
+          "ensemblGeneID": "ENSG00000113648"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4222,
+      "modelID": "symbol|H2AFY2",
+      "matchedHGNCIDs": [
+        "HGNC:14453"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:14453",
+          "approvedSymbol": "MACROH2A2",
+          "sourceSymbol": "MACROH2A2",
+          "sourceIndex": 2068,
+          "ensemblGeneID": "ENSG00000099284"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4223,
+      "modelID": "symbol|H2AFZ",
+      "matchedHGNCIDs": [
+        "HGNC:4741"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4741",
+          "approvedSymbol": "H2AZ1",
+          "sourceSymbol": "H2AZ1",
+          "sourceIndex": 10927,
+          "ensemblGeneID": "ENSG00000164032"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4224,
+      "modelID": "symbol|H3F3A",
+      "matchedHGNCIDs": [
+        "HGNC:4764"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4764",
+          "approvedSymbol": "H3-3A",
+          "sourceSymbol": "H3-3A",
+          "sourceIndex": 10635,
+          "ensemblGeneID": "ENSG00000163041"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4225,
+      "modelID": "symbol|H3F3B",
+      "matchedHGNCIDs": [
+        "HGNC:4765"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4765",
+          "approvedSymbol": "H3-3B",
+          "sourceSymbol": "H3-3B",
+          "sourceIndex": 6449,
+          "ensemblGeneID": "ENSG00000132475"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4226,
+      "modelID": "symbol|H3F3C",
+      "matchedHGNCIDs": [
+        "HGNC:33164"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:33164",
+          "approvedSymbol": "H3-5",
+          "sourceSymbol": "H3-5",
+          "sourceIndex": 15805,
+          "ensemblGeneID": "ENSG00000188375"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4242,
+      "modelID": "symbol|HARS",
+      "matchedHGNCIDs": [
+        "HGNC:4816"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4816",
+          "approvedSymbol": "HARS1",
+          "sourceSymbol": "HARS1",
+          "sourceIndex": 12446,
+          "ensemblGeneID": "ENSG00000170445"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4262,
+      "modelID": "symbol|HBQ1",
+      "matchedHGNCIDs": [
+        "HGNC:4833"
+      ],
+      "candidates": [],
+      "status": "no-corresponding-source-symbol"
+    },
+    {
+      "modelIndex": 4364,
+      "modelID": "symbol|HIST1H1A",
+      "matchedHGNCIDs": [
+        "HGNC:4715"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4715",
+          "approvedSymbol": "H1-1",
+          "sourceSymbol": "H1-1",
+          "sourceIndex": 5454,
+          "ensemblGeneID": "ENSG00000124610"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4365,
+      "modelID": "symbol|HIST1H1B",
+      "matchedHGNCIDs": [
+        "HGNC:4719"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4719",
+          "approvedSymbol": "H1-5",
+          "sourceSymbol": "H1-5",
+          "sourceIndex": 14977,
+          "ensemblGeneID": "ENSG00000184357"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4366,
+      "modelID": "symbol|HIST1H1C",
+      "matchedHGNCIDs": [
+        "HGNC:4716"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4716",
+          "approvedSymbol": "H1-2",
+          "sourceSymbol": "H1-2",
+          "sourceIndex": 15688,
+          "ensemblGeneID": "ENSG00000187837"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4367,
+      "modelID": "symbol|HIST1H1D",
+      "matchedHGNCIDs": [
+        "HGNC:4717"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4717",
+          "approvedSymbol": "H1-3",
+          "sourceSymbol": "H1-3",
+          "sourceIndex": 5447,
+          "ensemblGeneID": "ENSG00000124575"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4368,
+      "modelID": "symbol|HIST1H1E",
+      "matchedHGNCIDs": [
+        "HGNC:4718"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4718",
+          "approvedSymbol": "H1-4",
+          "sourceSymbol": "H1-4",
+          "sourceIndex": 11997,
+          "ensemblGeneID": "ENSG00000168298"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4369,
+      "modelID": "symbol|HIST1H2AC",
+      "matchedHGNCIDs": [
+        "HGNC:4733"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4733",
+          "approvedSymbol": "H2AC6",
+          "sourceSymbol": "H2AC6",
+          "sourceIndex": 14267,
+          "ensemblGeneID": "ENSG00000180573"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4370,
+      "modelID": "symbol|HIST1H2AE",
+      "matchedHGNCIDs": [
+        "HGNC:4724"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4724",
+          "approvedSymbol": "H2AC8",
+          "sourceSymbol": "H2AC8",
+          "sourceIndex": 35160,
+          "ensemblGeneID": "ENSG00000277075"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4371,
+      "modelID": "symbol|HIST1H2AG",
+      "matchedHGNCIDs": [
+        "HGNC:4737"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4737",
+          "approvedSymbol": "H2AC11",
+          "sourceSymbol": "H2AC11",
+          "sourceIndex": 16267,
+          "ensemblGeneID": "ENSG00000196787"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4372,
+      "modelID": "symbol|HIST1H2AI",
+      "matchedHGNCIDs": [
+        "HGNC:4725"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4725",
+          "approvedSymbol": "H2AC13",
+          "sourceSymbol": "H2AC13",
+          "sourceIndex": 16257,
+          "ensemblGeneID": "ENSG00000196747"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4373,
+      "modelID": "symbol|HIST1H2AK",
+      "matchedHGNCIDs": [
+        "HGNC:4726"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4726",
+          "approvedSymbol": "H2AC15",
+          "sourceSymbol": "H2AC15",
+          "sourceIndex": 34811,
+          "ensemblGeneID": "ENSG00000275221"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4374,
+      "modelID": "symbol|HIST1H2BG",
+      "matchedHGNCIDs": [
+        "HGNC:4746"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4746",
+          "approvedSymbol": "H2BC8",
+          "sourceSymbol": "H2BC8",
+          "sourceIndex": 34540,
+          "ensemblGeneID": "ENSG00000273802"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4375,
+      "modelID": "symbol|HIST1H2BH",
+      "matchedHGNCIDs": [
+        "HGNC:4755"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4755",
+          "approvedSymbol": "H2BC9",
+          "sourceSymbol": "H2BC9",
+          "sourceIndex": 34917,
+          "ensemblGeneID": "ENSG00000275713"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4376,
+      "modelID": "symbol|HIST1H2BN",
+      "matchedHGNCIDs": [
+        "HGNC:4749"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4749",
+          "approvedSymbol": "H2BC15",
+          "sourceSymbol": "H2BC15",
+          "sourceIndex": 23286,
+          "ensemblGeneID": "ENSG00000233822"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4377,
+      "modelID": "symbol|HIST1H3E",
+      "matchedHGNCIDs": [
+        "HGNC:4769"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4769",
+          "approvedSymbol": "H3C6",
+          "sourceSymbol": "H3C6",
+          "sourceIndex": 34721,
+          "ensemblGeneID": "ENSG00000274750"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4378,
+      "modelID": "symbol|HIST1H3G",
+      "matchedHGNCIDs": [
+        "HGNC:4772"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4772",
+          "approvedSymbol": "H3C8",
+          "sourceSymbol": "H3C8",
+          "sourceIndex": 34576,
+          "ensemblGeneID": "ENSG00000273983"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4379,
+      "modelID": "symbol|HIST1H3H",
+      "matchedHGNCIDs": [
+        "HGNC:4775"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4775",
+          "approvedSymbol": "H3C10",
+          "sourceSymbol": "H3C10",
+          "sourceIndex": 35476,
+          "ensemblGeneID": "ENSG00000278828"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4380,
+      "modelID": "symbol|HIST1H4B",
+      "matchedHGNCIDs": [
+        "HGNC:4789"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4789",
+          "approvedSymbol": "H4C2",
+          "sourceSymbol": "H4C2",
+          "sourceIndex": 35455,
+          "ensemblGeneID": "ENSG00000278705"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4381,
+      "modelID": "symbol|HIST1H4C",
+      "matchedHGNCIDs": [
+        "HGNC:4787"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4787",
+          "approvedSymbol": "H4C3",
+          "sourceSymbol": "H4C3",
+          "sourceIndex": 16340,
+          "ensemblGeneID": "ENSG00000197061"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4382,
+      "modelID": "symbol|HIST1H4E",
+      "matchedHGNCIDs": [
+        "HGNC:4790"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4790",
+          "approvedSymbol": "H4C5",
+          "sourceSymbol": "H4C5",
+          "sourceIndex": 35138,
+          "ensemblGeneID": "ENSG00000276966"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4383,
+      "modelID": "symbol|HIST1H4I",
+      "matchedHGNCIDs": [
+        "HGNC:4793"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4793",
+          "approvedSymbol": "H4C9",
+          "sourceSymbol": "H4C9",
+          "sourceIndex": 35001,
+          "ensemblGeneID": "ENSG00000276180"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4384,
+      "modelID": "symbol|HIST1H4J",
+      "matchedHGNCIDs": [
+        "HGNC:4785"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4785",
+          "approvedSymbol": "H4C11",
+          "sourceSymbol": "H4C11",
+          "sourceIndex": 16387,
+          "ensemblGeneID": "ENSG00000197238"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4385,
+      "modelID": "symbol|HIST2H2BE",
+      "matchedHGNCIDs": [
+        "HGNC:4760"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:4760",
+          "approvedSymbol": "H2BC21",
+          "sourceSymbol": "H2BC21",
+          "sourceIndex": 15048,
+          "ensemblGeneID": "ENSG00000184678"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4386,
+      "modelID": "symbol|HIST3H2A",
+      "matchedHGNCIDs": [
+        "HGNC:20507"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:20507",
+          "approvedSymbol": "H2AC25",
+          "sourceSymbol": "H2AC25",
+          "sourceIndex": 14375,
+          "ensemblGeneID": "ENSG00000181218"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4387,
+      "modelID": "symbol|HIST3H2BB",
+      "matchedHGNCIDs": [
+        "HGNC:20514"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:20514",
+          "approvedSymbol": "H2BC26",
+          "sourceSymbol": "H2BC26",
+          "sourceIndex": 16293,
+          "ensemblGeneID": "ENSG00000196890"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4388,
+      "modelID": "symbol|HIST4H4",
+      "matchedHGNCIDs": [
+        "HGNC:20510"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:20510",
+          "approvedSymbol": "H4C16",
+          "sourceSymbol": "H4C16",
+          "sourceIndex": 16555,
+          "ensemblGeneID": "ENSG00000197837"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4551,
+      "modelID": "symbol|IARS",
+      "matchedHGNCIDs": [
+        "HGNC:5330"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:5330",
+          "approvedSymbol": "IARS1",
+          "sourceSymbol": "IARS1",
+          "sourceIndex": 16118,
+          "ensemblGeneID": "ENSG00000196305"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4561,
+      "modelID": "symbol|ICK",
+      "matchedHGNCIDs": [
+        "HGNC:21219"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:21219",
+          "approvedSymbol": "CILK1",
+          "sourceSymbol": "CILK1",
+          "sourceIndex": 3949,
+          "ensemblGeneID": "ENSG00000112144"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4720,
+      "modelID": "symbol|IMPAD1",
+      "matchedHGNCIDs": [
+        "HGNC:26019"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26019",
+          "approvedSymbol": "BPNT2",
+          "sourceSymbol": "BPNT2",
+          "sourceIndex": 2872,
+          "ensemblGeneID": "ENSG00000104331"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 4905,
+      "modelID": "symbol|KARS",
+      "matchedHGNCIDs": [
+        "HGNC:6215"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:6215",
+          "approvedSymbol": "KARS1",
+          "sourceSymbol": "KARS1",
+          "sourceIndex": 917,
+          "ensemblGeneID": "ENSG00000065427"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5005,
+      "modelID": "symbol|KIAA0100",
+      "matchedHGNCIDs": [
+        "HGNC:28960"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28960",
+          "approvedSymbol": "BLTP2",
+          "sourceSymbol": "BLTP2",
+          "sourceIndex": 168,
+          "ensemblGeneID": "ENSG00000007202"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5008,
+      "modelID": "symbol|KIAA0355",
+      "matchedHGNCIDs": [
+        "HGNC:29016"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29016",
+          "approvedSymbol": "GARRE1",
+          "sourceSymbol": "GARRE1",
+          "sourceIndex": 11533,
+          "ensemblGeneID": "ENSG00000166398"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5011,
+      "modelID": "symbol|KIAA0556",
+      "matchedHGNCIDs": [
+        "HGNC:29068"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29068",
+          "approvedSymbol": "KATNIP",
+          "sourceSymbol": "KATNIP",
+          "sourceIndex": 615,
+          "ensemblGeneID": "ENSG00000047578"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5015,
+      "modelID": "symbol|KIAA0895",
+      "matchedHGNCIDs": [
+        "HGNC:22206"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:22206",
+          "approvedSymbol": "MATCAP2",
+          "sourceSymbol": "MATCAP2",
+          "sourceIndex": 11090,
+          "ensemblGeneID": "ENSG00000164542"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5016,
+      "modelID": "symbol|KIAA0895L",
+      "matchedHGNCIDs": [
+        "HGNC:34408"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:34408",
+          "approvedSymbol": "MATCAP1",
+          "sourceSymbol": "MATCAP1",
+          "sourceIndex": 16062,
+          "ensemblGeneID": "ENSG00000196123"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5018,
+      "modelID": "symbol|KIAA1109",
+      "matchedHGNCIDs": [
+        "HGNC:26953"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26953",
+          "approvedSymbol": "BLTP1",
+          "sourceSymbol": "BLTP1",
+          "sourceIndex": 7539,
+          "ensemblGeneID": "ENSG00000138688"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5021,
+      "modelID": "symbol|KIAA1211L",
+      "matchedHGNCIDs": [
+        "HGNC:33454"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:33454",
+          "approvedSymbol": "CRACDL",
+          "sourceSymbol": "CRACDL",
+          "sourceIndex": 16289,
+          "ensemblGeneID": "ENSG00000196872"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5022,
+      "modelID": "symbol|KIAA1324",
+      "matchedHGNCIDs": [
+        "HGNC:29618"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29618",
+          "approvedSymbol": "ELAPOR1",
+          "sourceSymbol": "ELAPOR1",
+          "sourceIndex": 4494,
+          "ensemblGeneID": "ENSG00000116299"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5023,
+      "modelID": "symbol|KIAA1324L",
+      "matchedHGNCIDs": [
+        "HGNC:21945"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:21945",
+          "approvedSymbol": "ELAPOR2",
+          "sourceSymbol": "ELAPOR2",
+          "sourceIndex": 11117,
+          "ensemblGeneID": "ENSG00000164659"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5029,
+      "modelID": "symbol|KIAA1841",
+      "matchedHGNCIDs": [
+        "HGNC:29387"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29387",
+          "approvedSymbol": "SANBR",
+          "sourceSymbol": "SANBR",
+          "sourceIndex": 10604,
+          "ensemblGeneID": "ENSG00000162929"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5221,
+      "modelID": "symbol|LARS",
+      "matchedHGNCIDs": [
+        "HGNC:6512"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:6512",
+          "approvedSymbol": "LARS1",
+          "sourceSymbol": "LARS1",
+          "sourceIndex": 6632,
+          "ensemblGeneID": "ENSG00000133706"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5358,
+      "modelID": "symbol|LOR",
+      "matchedHGNCIDs": [
+        "HGNC:6663"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:6663",
+          "approvedSymbol": "LORICRIN",
+          "sourceSymbol": "LORICRIN",
+          "sourceIndex": 17184,
+          "ensemblGeneID": "ENSG00000203782"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5389,
+      "modelID": "symbol|LRMP",
+      "matchedHGNCIDs": [
+        "HGNC:6690"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:6690",
+          "approvedSymbol": "IRAG2",
+          "sourceSymbol": "IRAG2",
+          "sourceIndex": 4726,
+          "ensemblGeneID": "ENSG00000118308"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5413,
+      "modelID": "symbol|LRRC29",
+      "matchedHGNCIDs": [
+        "HGNC:13605"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:13605",
+          "approvedSymbol": "FBXL9P",
+          "sourceSymbol": "FBXL9P",
+          "sourceIndex": 5507,
+          "ensemblGeneID": "ENSG00000125122"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5433,
+      "modelID": "symbol|LRRC6",
+      "matchedHGNCIDs": [
+        "HGNC:16725"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:16725",
+          "approvedSymbol": "DNAAF11",
+          "sourceSymbol": "DNAAF11",
+          "sourceIndex": 6000,
+          "ensemblGeneID": "ENSG00000129295"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5523,
+      "modelID": "symbol|MAATS1",
+      "matchedHGNCIDs": [
+        "HGNC:24010"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:24010",
+          "approvedSymbol": "CFAP91",
+          "sourceSymbol": "CFAP91",
+          "sourceIndex": 14878,
+          "ensemblGeneID": "ENSG00000183833"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5635,
+      "modelID": "symbol|MARC2",
+      "matchedHGNCIDs": [
+        "HGNC:26064"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26064",
+          "approvedSymbol": "MTARC2",
+          "sourceSymbol": "MTARC2",
+          "sourceIndex": 4686,
+          "ensemblGeneID": "ENSG00000117791"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5636,
+      "modelID": "symbol|MARCH1",
+      "matchedHGNCIDs": [
+        "HGNC:26077"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26077",
+          "approvedSymbol": "MARCHF1",
+          "sourceSymbol": "MARCHF1",
+          "sourceIndex": 8502,
+          "ensemblGeneID": "ENSG00000145416"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5637,
+      "modelID": "symbol|MARCH2",
+      "matchedHGNCIDs": [
+        "HGNC:28038"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28038",
+          "approvedSymbol": "MARCHF2",
+          "sourceSymbol": "MARCHF2",
+          "sourceIndex": 2092,
+          "ensemblGeneID": "ENSG00000099785"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5638,
+      "modelID": "symbol|MARCH3",
+      "matchedHGNCIDs": [
+        "HGNC:28728"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28728",
+          "approvedSymbol": "MARCHF3",
+          "sourceSymbol": "MARCHF3",
+          "sourceIndex": 13159,
+          "ensemblGeneID": "ENSG00000173926"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5639,
+      "modelID": "symbol|MARCH5",
+      "matchedHGNCIDs": [
+        "HGNC:26025"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26025",
+          "approvedSymbol": "MARCHF5",
+          "sourceSymbol": "MARCHF5",
+          "sourceIndex": 16631,
+          "ensemblGeneID": "ENSG00000198060"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5640,
+      "modelID": "symbol|MARCH6",
+      "matchedHGNCIDs": [
+        "HGNC:30550"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:30550",
+          "approvedSymbol": "MARCHF6",
+          "sourceSymbol": "MARCHF6",
+          "sourceIndex": 8512,
+          "ensemblGeneID": "ENSG00000145495"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5641,
+      "modelID": "symbol|MARCH7",
+      "matchedHGNCIDs": [
+        "HGNC:17393"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:17393",
+          "approvedSymbol": "MARCHF7",
+          "sourceSymbol": "MARCHF7",
+          "sourceIndex": 7132,
+          "ensemblGeneID": "ENSG00000136536"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5642,
+      "modelID": "symbol|MARCH8",
+      "matchedHGNCIDs": [
+        "HGNC:23356"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:23356",
+          "approvedSymbol": "MARCHF8",
+          "sourceSymbol": "MARCHF8",
+          "sourceIndex": 11289,
+          "ensemblGeneID": "ENSG00000165406"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5643,
+      "modelID": "symbol|MARCH9",
+      "matchedHGNCIDs": [
+        "HGNC:25139"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25139",
+          "approvedSymbol": "MARCHF9",
+          "sourceSymbol": "MARCHF9",
+          "sourceIndex": 7623,
+          "ensemblGeneID": "ENSG00000139266"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5650,
+      "modelID": "symbol|MARS",
+      "matchedHGNCIDs": [
+        "HGNC:6898"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:6898",
+          "approvedSymbol": "MARS1",
+          "sourceSymbol": "MARS1",
+          "sourceIndex": 11682,
+          "ensemblGeneID": "ENSG00000166986"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5981,
+      "modelID": "symbol|MPP5",
+      "matchedHGNCIDs": [
+        "HGNC:18669"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:18669",
+          "approvedSymbol": "PALS1",
+          "sourceSymbol": "PALS1",
+          "sourceIndex": 1179,
+          "ensemblGeneID": "ENSG00000072415"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 5982,
+      "modelID": "symbol|MPP6",
+      "matchedHGNCIDs": [
+        "HGNC:18167"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:18167",
+          "approvedSymbol": "PALS2",
+          "sourceSymbol": "PALS2",
+          "sourceIndex": 3181,
+          "ensemblGeneID": "ENSG00000105926"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 6145,
+      "modelID": "symbol|MYLPF",
+      "matchedHGNCIDs": [
+        "HGNC:29824"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29824",
+          "approvedSymbol": "MYL11",
+          "sourceSymbol": "MYL11",
+          "sourceIndex": 14210,
+          "ensemblGeneID": "ENSG00000180209"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 6221,
+      "modelID": "symbol|NARS",
+      "matchedHGNCIDs": [
+        "HGNC:7643"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:7643",
+          "approvedSymbol": "NARS1",
+          "sourceSymbol": "NARS1",
+          "sourceIndex": 6749,
+          "ensemblGeneID": "ENSG00000134440"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 6528,
+      "modelID": "symbol|NPPC",
+      "matchedHGNCIDs": [
+        "HGNC:7941"
+      ],
+      "candidates": [],
+      "status": "no-corresponding-source-symbol"
+    },
+    {
+      "modelIndex": 7086,
+      "modelID": "symbol|PHB",
+      "matchedHGNCIDs": [
+        "HGNC:8912"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:8912",
+          "approvedSymbol": "PHB1",
+          "sourceSymbol": "PHB1",
+          "sourceIndex": 11698,
+          "ensemblGeneID": "ENSG00000167085"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 7536,
+      "modelID": "symbol|PPP5D1",
+      "matchedHGNCIDs": [
+        "HGNC:44209"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:44209",
+          "approvedSymbol": "PPP5D1P",
+          "sourceSymbol": "PPP5D1P",
+          "sourceIndex": 22005,
+          "ensemblGeneID": "ENSG00000230510"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 7835,
+      "modelID": "symbol|QARS",
+      "matchedHGNCIDs": [
+        "HGNC:3418",
+        "HGNC:9751"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:9751",
+          "approvedSymbol": "QARS1",
+          "sourceSymbol": "QARS1",
+          "sourceIndex": 12797,
+          "ensemblGeneID": "ENSG00000172053"
+        },
+        {
+          "hgncID": "HGNC:3418",
+          "approvedSymbol": "EPRS1",
+          "sourceSymbol": "EPRS1",
+          "sourceIndex": 7140,
+          "ensemblGeneID": "ENSG00000136628"
+        }
+      ],
+      "status": "HGNC-identity-ambiguous"
+    },
+    {
+      "modelIndex": 7985,
+      "modelID": "symbol|RARS",
+      "matchedHGNCIDs": [
+        "HGNC:9870"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:9870",
+          "approvedSymbol": "RARS1",
+          "sourceSymbol": "RARS1",
+          "sourceIndex": 4146,
+          "ensemblGeneID": "ENSG00000113643"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 8388,
+      "modelID": "symbol|RRNAD1",
+      "matchedHGNCIDs": [
+        "HGNC:24273"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:24273",
+          "approvedSymbol": "METTL25B",
+          "sourceSymbol": "METTL25B",
+          "sourceIndex": 8167,
+          "ensemblGeneID": "ENSG00000143303"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 8503,
+      "modelID": "symbol|SARS",
+      "matchedHGNCIDs": [
+        "HGNC:10537"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:10537",
+          "approvedSymbol": "SARS1",
+          "sourceSymbol": "SARS1",
+          "sourceIndex": 486,
+          "ensemblGeneID": "ENSG00000031698"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 8826,
+      "modelID": "symbol|SKIV2L",
+      "matchedHGNCIDs": [
+        "HGNC:10898"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:10898",
+          "approvedSymbol": "SKIC2",
+          "sourceSymbol": "SKIC2",
+          "sourceIndex": 17329,
+          "ensemblGeneID": "ENSG00000204351"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 9692,
+      "modelID": "symbol|TARS",
+      "matchedHGNCIDs": [
+        "HGNC:11572"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:11572",
+          "approvedSymbol": "TARS1",
+          "sourceSymbol": "TARS1",
+          "sourceIndex": 4117,
+          "ensemblGeneID": "ENSG00000113407"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 9694,
+      "modelID": "symbol|TARSL2",
+      "matchedHGNCIDs": [
+        "HGNC:24728"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:24728",
+          "approvedSymbol": "TARS3",
+          "sourceSymbol": "TARS3",
+          "sourceIndex": 15210,
+          "ensemblGeneID": "ENSG00000185418"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 9703,
+      "modelID": "symbol|TAZ",
+      "matchedHGNCIDs": [
+        "HGNC:11577"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:11577",
+          "approvedSymbol": "TAFAZZIN",
+          "sourceSymbol": "TAFAZZIN",
+          "sourceIndex": 2605,
+          "ensemblGeneID": "ENSG00000102125"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 9790,
+      "modelID": "symbol|TCTEX1D2",
+      "matchedHGNCIDs": [
+        "HGNC:28482"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28482",
+          "approvedSymbol": "DYNLT2B",
+          "sourceSymbol": "DYNLT2B",
+          "sourceIndex": 18130,
+          "ensemblGeneID": "ENSG00000213123"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 9791,
+      "modelID": "symbol|TCTEX1D4",
+      "matchedHGNCIDs": [
+        "HGNC:32315"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:32315",
+          "approvedSymbol": "DYNLT4",
+          "sourceSymbol": "DYNLT4",
+          "sourceIndex": 15814,
+          "ensemblGeneID": "ENSG00000188396"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 9915,
+      "modelID": "symbol|TIAF1",
+      "matchedHGNCIDs": [
+        "HGNC:31104"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:31104",
+          "approvedSymbol": "MYO18A",
+          "sourceSymbol": "MYO18A",
+          "sourceIndex": 16194,
+          "ensemblGeneID": "ENSG00000196535"
+        }
+      ],
+      "status": "source-coordinate-conflict"
+    },
+    {
+      "modelIndex": 10052,
+      "modelID": "symbol|TMEM159",
+      "matchedHGNCIDs": [
+        "HGNC:30136"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:30136",
+          "approvedSymbol": "LDAF1",
+          "sourceSymbol": "LDAF1",
+          "sourceIndex": 304,
+          "ensemblGeneID": "ENSG00000011638"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10066,
+      "modelID": "symbol|TMEM173",
+      "matchedHGNCIDs": [
+        "HGNC:27962"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:27962",
+          "approvedSymbol": "STING1",
+          "sourceSymbol": "STING1",
+          "sourceIndex": 15025,
+          "ensemblGeneID": "ENSG00000184584"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10083,
+      "modelID": "symbol|TMEM189",
+      "matchedHGNCIDs": [
+        "HGNC:16735"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:16735",
+          "approvedSymbol": "PEDS1",
+          "sourceSymbol": "PEDS1",
+          "sourceIndex": 25420,
+          "ensemblGeneID": "ENSG00000240849"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10115,
+      "modelID": "symbol|TMEM246",
+      "matchedHGNCIDs": [
+        "HGNC:28180"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28180",
+          "approvedSymbol": "PGAP4",
+          "sourceSymbol": "PGAP4",
+          "sourceIndex": 11237,
+          "ensemblGeneID": "ENSG00000165152"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10168,
+      "modelID": "symbol|TMEM8A",
+      "matchedHGNCIDs": [
+        "HGNC:17205"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:17205",
+          "approvedSymbol": "PGAP6",
+          "sourceSymbol": "PGAP6",
+          "sourceIndex": 6053,
+          "ensemblGeneID": "ENSG00000129925"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10173,
+      "modelID": "symbol|TMEM99",
+      "matchedHGNCIDs": [
+        "HGNC:28305"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28305",
+          "approvedSymbol": "KRT10-AS1",
+          "sourceSymbol": "KRT10-AS1",
+          "sourceIndex": 11904,
+          "ensemblGeneID": "ENSG00000167920"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10514,
+      "modelID": "symbol|TSTA3",
+      "matchedHGNCIDs": [
+        "HGNC:12390"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:12390",
+          "approvedSymbol": "GFUS",
+          "sourceSymbol": "GFUS",
+          "sourceIndex": 2902,
+          "ensemblGeneID": "ENSG00000104522"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10538,
+      "modelID": "symbol|TTC37",
+      "matchedHGNCIDs": [
+        "HGNC:23639"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:23639",
+          "approvedSymbol": "SKIC3",
+          "sourceSymbol": "SKIC3",
+          "sourceIndex": 16794,
+          "ensemblGeneID": "ENSG00000198677"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10597,
+      "modelID": "symbol|TWISTNB",
+      "matchedHGNCIDs": [
+        "HGNC:18027"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:18027",
+          "approvedSymbol": "POLR1F",
+          "sourceSymbol": "POLR1F",
+          "sourceIndex": 3167,
+          "ensemblGeneID": "ENSG00000105849"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10742,
+      "modelID": "symbol|UHRF1BP1",
+      "matchedHGNCIDs": [
+        "HGNC:21216"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:21216",
+          "approvedSymbol": "BLTP3A",
+          "sourceSymbol": "BLTP3A",
+          "sourceIndex": 902,
+          "ensemblGeneID": "ENSG00000065060"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10743,
+      "modelID": "symbol|UHRF1BP1L",
+      "matchedHGNCIDs": [
+        "HGNC:29102"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:29102",
+          "approvedSymbol": "BLTP3B",
+          "sourceSymbol": "BLTP3B",
+          "sourceIndex": 3860,
+          "ensemblGeneID": "ENSG00000111647"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10867,
+      "modelID": "symbol|VARS",
+      "matchedHGNCIDs": [
+        "HGNC:12651"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:12651",
+          "approvedSymbol": "VARS1",
+          "sourceSymbol": "VARS1",
+          "sourceIndex": 17347,
+          "ensemblGeneID": "ENSG00000204394"
+        },
+        {
+          "hgncID": "HGNC:12651",
+          "approvedSymbol": "VARS1",
+          "sourceSymbol": "VARS2",
+          "sourceIndex": 7290,
+          "ensemblGeneID": "ENSG00000204394"
+        }
+      ],
+      "status": "source-correspondence-ambiguous"
+    },
+    {
+      "modelIndex": 10911,
+      "modelID": "symbol|VNN3",
+      "matchedHGNCIDs": [
+        "HGNC:16431"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:16431",
+          "approvedSymbol": "VNN3P",
+          "sourceSymbol": "VNN3P",
+          "sourceIndex": 1980,
+          "ensemblGeneID": "ENSG00000093134"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10963,
+      "modelID": "symbol|WARS",
+      "matchedHGNCIDs": [
+        "HGNC:12729"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:12729",
+          "approvedSymbol": "WARS1",
+          "sourceSymbol": "WARS1",
+          "sourceIndex": 7741,
+          "ensemblGeneID": "ENSG00000140105"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 10996,
+      "modelID": "symbol|WDR34",
+      "matchedHGNCIDs": [
+        "HGNC:28296"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28296",
+          "approvedSymbol": "DYNC2I2",
+          "sourceSymbol": "DYNC2I2",
+          "sourceIndex": 4814,
+          "ensemblGeneID": "ENSG00000119333"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11017,
+      "modelID": "symbol|WDR60",
+      "matchedHGNCIDs": [
+        "HGNC:21862"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:21862",
+          "approvedSymbol": "DYNC2I1",
+          "sourceSymbol": "DYNC2I1",
+          "sourceIndex": 5750,
+          "ensemblGeneID": "ENSG00000126870"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11018,
+      "modelID": "symbol|WDR61",
+      "matchedHGNCIDs": [
+        "HGNC:30300"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:30300",
+          "approvedSymbol": "SKIC8",
+          "sourceSymbol": "SKIC8",
+          "sourceIndex": 7775,
+          "ensemblGeneID": "ENSG00000140395"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11020,
+      "modelID": "symbol|WDR63",
+      "matchedHGNCIDs": [
+        "HGNC:30711"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:30711",
+          "approvedSymbol": "DNAI3",
+          "sourceSymbol": "DNAI3",
+          "sourceIndex": 10526,
+          "ensemblGeneID": "ENSG00000162643"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11022,
+      "modelID": "symbol|WDR66",
+      "matchedHGNCIDs": [
+        "HGNC:28506"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28506",
+          "approvedSymbol": "CFAP251",
+          "sourceSymbol": "CFAP251",
+          "sourceIndex": 9927,
+          "ensemblGeneID": "ENSG00000158023"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11030,
+      "modelID": "symbol|WDR78",
+      "matchedHGNCIDs": [
+        "HGNC:26252"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26252",
+          "approvedSymbol": "DNAI4",
+          "sourceSymbol": "DNAI4",
+          "sourceIndex": 9351,
+          "ensemblGeneID": "ENSG00000152763"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11039,
+      "modelID": "symbol|WDR92",
+      "matchedHGNCIDs": [
+        "HGNC:25176"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25176",
+          "approvedSymbol": "DNAAF10",
+          "sourceSymbol": "DNAAF10",
+          "sourceIndex": 25988,
+          "ensemblGeneID": "ENSG00000243667"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11043,
+      "modelID": "symbol|WDYHV1",
+      "matchedHGNCIDs": [
+        "HGNC:25490"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:25490",
+          "approvedSymbol": "NTAQ1",
+          "sourceSymbol": "NTAQ1",
+          "sourceIndex": 9785,
+          "ensemblGeneID": "ENSG00000156795"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11110,
+      "modelID": "symbol|YARS",
+      "matchedHGNCIDs": [
+        "HGNC:12840"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:12840",
+          "approvedSymbol": "YARS1",
+          "sourceSymbol": "YARS1",
+          "sourceIndex": 6786,
+          "ensemblGeneID": "ENSG00000134684"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11151,
+      "modelID": "symbol|ZADH2",
+      "matchedHGNCIDs": [
+        "HGNC:28697"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:28697",
+          "approvedSymbol": "PTGR3",
+          "sourceSymbol": "PTGR3",
+          "sourceIndex": 14182,
+          "ensemblGeneID": "ENSG00000180011"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11157,
+      "modelID": "symbol|ZBED6CL",
+      "matchedHGNCIDs": [
+        "HGNC:21720"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:21720",
+          "approvedSymbol": "ZBED10P",
+          "sourceSymbol": "ZBED10P",
+          "sourceIndex": 15876,
+          "ensemblGeneID": "ENSG00000188707"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11688,
+      "modelID": "symbol|ZNF720",
+      "matchedHGNCIDs": [
+        "HGNC:26987"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:26987",
+          "approvedSymbol": "KRABD5",
+          "sourceSymbol": "KRBOX5",
+          "sourceIndex": 16406,
+          "ensemblGeneID": "ENSG00000197302"
+        }
+      ],
+      "status": "unique-candidate"
+    },
+    {
+      "modelIndex": 11713,
+      "modelID": "symbol|ZNF781",
+      "matchedHGNCIDs": [
+        "HGNC:26745"
+      ],
+      "candidates": [],
+      "status": "no-corresponding-source-symbol"
+    },
+    {
+      "modelIndex": 11763,
+      "modelID": "symbol|ZNRD1",
+      "matchedHGNCIDs": [
+        "HGNC:13182"
+      ],
+      "candidates": [
+        {
+          "hgncID": "HGNC:13182",
+          "approvedSymbol": "POLR1H",
+          "sourceSymbol": "POLR1H",
+          "sourceIndex": 960,
+          "ensemblGeneID": "ENSG00000066379"
+        }
+      ],
+      "status": "unique-candidate"
+    }
+  ],
+  "sources": {
+    "/Users/home/numivivo-parse-bcell-admission-20260912/audit.json": "82583e8eb72b59f60f59d8547275aef2ed037db788ce0a1f1d08595f077ac152",
+    "/Users/home/numivivo-parse-bcell-admission-20260912/source-roster.json": "465e3e80b52bf9be6026a949fc7d5fb36c79cb8bafc834f32e9d3b898088a741",
+    "/Users/home/numivivo-parse-ifnb-20260911/feature-identity/hgnc_complete_set.txt.gz": "a42bd17222e990ab785a5e9c6fb57f969a55cbfe2f9a2593b95ee3a87c176793",
+    "/Users/home/numivivo-parse-ifnb-20260911/feature-identity/source.json": "4959714512b6f345e0f85791aa8145a027485d9038ed2bb1915cb0db4535c3be"
+  },
+  "independentIdentityAndCoordinateCheck": true,
+  "modelPanelModified": false,
+  "sourceCountsModified": false,
+  "predictionScored": false,
+  "policy": "Frozen retained HGNC approved/previous symbols only; no alias_symbol or expression outcomes. Candidates do not establish sequence/annotation equivalence or authorize remapping."
+}
