@@ -329,6 +329,10 @@ The [full Kang comparison](Tools/Omics/Reduction/MetalDistanceBlocks/Kang/README
 now preserves all source-annotation metrics and three clustering partitions, with
 30.4% lower median native graph-publication time across three runs per backend.
 This is cohort-specific preservation and timing, not biological generalization.
+A separate [exact Scanpy comparison](Tools/Omics/Reduction/MetalDistanceBlocks/Scverse/README.md)
+retains every Kang neighbor and edge coordinate, with median graph construction
+of 2.35 s Metal versus 4.62 s Scanpy. Its narrower stage timing excludes full CLI
+source reconstruction and must not be read as a whole-workflow speedup.
 
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical
