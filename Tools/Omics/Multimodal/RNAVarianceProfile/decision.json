@@ -1,0 +1,194 @@
+{
+  "promotionGatePassed": false,
+  "modalities": {
+    "rna": {
+      "passed": false,
+      "checks": {
+        "knn/original": {
+          "aggregateSSE": {
+            "passed": false,
+            "changePercent": 0.646759873961722
+          },
+          "macroVarianceNormalizedMSE": {
+            "passed": false,
+            "changePercent": 0.2481936521946393
+          },
+          "detected1to19": {
+            "passed": true,
+            "changePercent": -0.00430451999519077
+          },
+          "detected20to99": {
+            "passed": false,
+            "changePercent": 0.09094095079245079
+          },
+          "detected100plus": {
+            "passed": false,
+            "changePercent": 0.6849617212479675
+          }
+        },
+        "knn/matched": {
+          "aggregateSSE": {
+            "passed": false,
+            "changePercent": 0.7040996226974849
+          },
+          "macroVarianceNormalizedMSE": {
+            "passed": false,
+            "changePercent": 0.3106552684012387
+          },
+          "detected1to19": {
+            "passed": false,
+            "changePercent": 0.10129214407885723
+          },
+          "detected20to99": {
+            "passed": false,
+            "changePercent": 0.1657895413653021
+          },
+          "detected100plus": {
+            "passed": false,
+            "changePercent": 0.7406921273792166
+          }
+        },
+        "fuzzy/original": {
+          "aggregateSSE": {
+            "passed": true,
+            "changePercent": -0.36731827945252205
+          },
+          "macroVarianceNormalizedMSE": {
+            "passed": true,
+            "changePercent": -0.5183078046668399
+          },
+          "detected1to19": {
+            "passed": true,
+            "changePercent": -0.6523288437920383
+          },
+          "detected20to99": {
+            "passed": true,
+            "changePercent": -0.5395730178487268
+          },
+          "detected100plus": {
+            "passed": true,
+            "changePercent": -0.3542861528176511
+          }
+        },
+        "fuzzy/matched": {
+          "aggregateSSE": {
+            "passed": false,
+            "changePercent": 0.0692830172037695
+          },
+          "macroVarianceNormalizedMSE": {
+            "passed": true,
+            "changePercent": -0.1963127753270566
+          },
+          "detected1to19": {
+            "passed": true,
+            "changePercent": -0.2980839766342114
+          },
+          "detected20to99": {
+            "passed": true,
+            "changePercent": -0.2789215812643575
+          },
+          "detected100plus": {
+            "passed": false,
+            "changePercent": 0.09268295498081613
+          }
+        }
+      }
+    },
+    "atac": {
+      "passed": false,
+      "checks": {
+        "knn/original": {
+          "aggregateSSE": {
+            "passed": false,
+            "changePercent": 0.08413573273524655
+          },
+          "macroVarianceNormalizedMSE": {
+            "passed": false,
+            "changePercent": 0.08840029534140648
+          },
+          "detected1to19": {
+            "passed": false,
+            "changePercent": 0.10131573909866187
+          },
+          "detected20to99": {
+            "passed": false,
+            "changePercent": 0.09766883903004064
+          },
+          "detected100plus": {
+            "passed": false,
+            "changePercent": 0.06942141190762197
+          }
+        },
+        "knn/matched": {
+          "aggregateSSE": {
+            "passed": false,
+            "changePercent": 0.08413573273524655
+          },
+          "macroVarianceNormalizedMSE": {
+            "passed": false,
+            "changePercent": 0.08840029534140648
+          },
+          "detected1to19": {
+            "passed": false,
+            "changePercent": 0.10131573909866187
+          },
+          "detected20to99": {
+            "passed": false,
+            "changePercent": 0.09766883903004064
+          },
+          "detected100plus": {
+            "passed": false,
+            "changePercent": 0.06942141190762197
+          }
+        },
+        "fuzzy/original": {
+          "aggregateSSE": {
+            "passed": true,
+            "changePercent": -0.3328709059763013
+          },
+          "macroVarianceNormalizedMSE": {
+            "passed": true,
+            "changePercent": -0.3289099575762955
+          },
+          "detected1to19": {
+            "passed": true,
+            "changePercent": -0.3396775220936843
+          },
+          "detected20to99": {
+            "passed": true,
+            "changePercent": -0.31582081756239555
+          },
+          "detected100plus": {
+            "passed": true,
+            "changePercent": -0.3496206329791418
+          }
+        },
+        "fuzzy/matched": {
+          "aggregateSSE": {
+            "passed": true,
+            "changePercent": -0.3328709059763013
+          },
+          "macroVarianceNormalizedMSE": {
+            "passed": true,
+            "changePercent": -0.3289099575762955
+          },
+          "detected1to19": {
+            "passed": true,
+            "changePercent": -0.3396775220936843
+          },
+          "detected20to99": {
+            "passed": true,
+            "changePercent": -0.31582081756239555
+          },
+          "detected100plus": {
+            "passed": true,
+            "changePercent": -0.3496206329791418
+          }
+        }
+      }
+    }
+  },
+  "productDefaultChanged": false,
+  "independentBiologicalValidation": false,
+  "numericalScope": "Exact RNA and ATAC neighbor IDs/distances plus independent modality-weight formulas; candidate joint/weighted graph and fuzzy reference comparison not yet rerun."
+}

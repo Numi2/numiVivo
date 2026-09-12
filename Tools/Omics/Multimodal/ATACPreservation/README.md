@@ -72,3 +72,5 @@ this observation is not a claim of full Seurat parity or an improved outcome.
 The current results must remain visible in that development comparison. Any
 candidate improvement on these already inspected data still requires separately
 specified experimental evidence before broad biological promotion.
+
+The [variance-retaining candidate](../RNAVarianceProfile/README.md) has now been executed. Both modality gates still fail; its full results and numerical-verification limits are retained.
