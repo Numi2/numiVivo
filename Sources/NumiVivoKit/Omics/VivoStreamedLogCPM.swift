@@ -5,6 +5,7 @@ import Foundation
 /// order. Totals must cover that complete feature axis, before any projection.
 /// Zero-count rows contribute zero and remain in the group denominator.
 public struct VivoStreamedLogCPM {
+    public enum Ordering: String, Codable, Sendable { case rowMajor, featureMajor }
     public enum Failure: Error { case invalidPlan, invalidRecord, incompleteRow, closed }
     public struct Result: Codable, Sendable, Equatable {
         public let method: String
@@ -20,11 +21,13 @@ public struct VivoStreamedLogCPM {
     private var sizes: [Int], zeros: [Int]
     private var sums: [Double], corrections: [Double]
     private var row = -1, feature = -1
+    private let ordering: Ordering
+    private var observedTotals: [UInt64]
     private var rowSum: UInt64 = 0
     private var closed = false
 
     public init(featureIDs: [String], groupIDs: [String],
-                rowGroups: [Int], rowTotals: [UInt64]) throws {
+                rowGroups: [Int], rowTotals: [UInt64], ordering: Ordering = .rowMajor) throws {
         guard !featureIDs.isEmpty, featureIDs.count <= 1_000_000,
               !groupIDs.isEmpty, groupIDs.count <= 4096,
               featureIDs.count <= 16_000_000 / groupIDs.count,
@@ -37,6 +40,8 @@ public struct VivoStreamedLogCPM {
               rowGroups.allSatisfy({ groupIDs.indices.contains($0) }) else {
             throw Failure.invalidPlan
         }
+        self.ordering = ordering
+        observedTotals = ordering == .featureMajor ? Array(repeating: 0, count: rowTotals.count) : []
         features = featureIDs; groups = groupIDs
         assignments = rowGroups; totals = rowTotals
         sizes = Array(repeating: 0, count: groupIDs.count)
@@ -54,9 +59,12 @@ public struct VivoStreamedLogCPM {
         guard !closed else { throw Failure.closed }
         do {
             guard assignments.indices.contains(nextRow), features.indices.contains(nextFeature),
-                  count > 0, nextRow > row || (nextRow == row && nextFeature > feature) else {
+                  count > 0, (ordering == .rowMajor
+                    ? nextRow > row || (nextRow == row && nextFeature > feature)
+                    : nextFeature > feature || (nextFeature == feature && nextRow > row)) else {
                 throw Failure.invalidRecord
             }
+            if ordering == .rowMajor {
             if nextRow != row {
                 if row >= 0, rowSum != totals[row] { throw Failure.incompleteRow }
                 for skipped in (row + 1)..<nextRow {
@@ -67,6 +75,12 @@ public struct VivoStreamedLogCPM {
             let (total, overflow) = rowSum.addingReportingOverflow(count)
             guard !overflow, total <= totals[row], totals[row] > 0 else { throw Failure.invalidRecord }
             rowSum = total; feature = nextFeature
+            } else {
+                let (total, overflow) = observedTotals[nextRow].addingReportingOverflow(count)
+                guard !overflow, total <= totals[nextRow], totals[nextRow] > 0 else { throw Failure.invalidRecord }
+                observedTotals[nextRow] = total
+                row = nextRow; feature = nextFeature
+            }
             let value = log1p((Double(count) / Double(totals[row])) * 1_000_000)
             let index = assignments[row] * features.count + nextFeature
             let adjusted = value - corrections[index]
@@ -82,9 +96,13 @@ public struct VivoStreamedLogCPM {
     public mutating func finish() throws -> Result {
         guard !closed else { throw Failure.closed }
         closed = true
+        if ordering == .featureMajor {
+            guard observedTotals == totals else { throw Failure.incompleteRow }
+        } else {
         if row >= 0, rowSum != totals[row] { throw Failure.incompleteRow }
         for skipped in (row + 1)..<totals.count {
             guard totals[skipped] == 0 else { throw Failure.incompleteRow }
+        }
         }
         let means = groups.indices.map { group in
             (0..<features.count).map { sums[group * features.count + $0] / Double(sizes[group]) }
@@ -107,10 +125,10 @@ extension VivoStreamedLogCPM {
     /// Consume canonical little-endian row-u32/feature-u32/count-u64 records.
     /// The caller owns the input. Incomplete or invalid streams return no result.
     public static func consume(featureIDs: [String], groupIDs: [String],
-                               rowGroups: [Int], rowTotals: [UInt64],
+                               rowGroups: [Int], rowTotals: [UInt64], ordering: Ordering = .rowMajor,
                                read: () throws -> Data) throws -> Result {
         var accumulator = try Self(featureIDs: featureIDs, groupIDs: groupIDs,
-                                   rowGroups: rowGroups, rowTotals: rowTotals)
+                                   rowGroups: rowGroups, rowTotals: rowTotals, ordering: ordering)
         var buffer = Data()
         while true {
             try Task.checkCancellation()

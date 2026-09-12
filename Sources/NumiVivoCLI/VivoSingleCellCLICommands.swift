@@ -368,6 +368,7 @@ struct VivoSingleCellCLICommands {
                 struct Plan: Decodable {
                     let featureIDs: [String], groupIDs: [String]
                     let rowGroups: [Int], rowTotals: [UInt64]
+                    let ordering: VivoStreamedLogCPM.Ordering?
                 }
                 let expected = arguments[4]
                 guard expected.utf8.count == 64, expected.utf8.allSatisfy({ (48...57).contains($0) || (97...102).contains($0) }) else {
@@ -378,7 +379,7 @@ struct VivoSingleCellCLICommands {
                 let bytes = try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: arguments[2]), maximumBytes: 268_435_456)
                 let plan = try VivoCanonicalJSON.decode(Plan.self, from: bytes)
                 var digest = SHA256()
-                let report = try VivoStreamedLogCPM.consume(featureIDs: plan.featureIDs, groupIDs: plan.groupIDs, rowGroups: plan.rowGroups, rowTotals: plan.rowTotals) {
+                let report = try VivoStreamedLogCPM.consume(featureIDs: plan.featureIDs, groupIDs: plan.groupIDs, rowGroups: plan.rowGroups, rowTotals: plan.rowTotals, ordering: plan.ordering ?? .rowMajor) {
                     let chunk = try FileHandle.standardInput.read(upToCount: 1_048_576) ?? Data()
                     digest.update(data: chunk)
                     return chunk

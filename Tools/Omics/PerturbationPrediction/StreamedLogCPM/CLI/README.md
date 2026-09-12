@@ -7,7 +7,8 @@ numivivo-omics singlecell-logcpm-stream --plan plan.json \
 
 The plan contains featureIDs, groupIDs, rowGroups and full-axis UInt64 rowTotals.
 Canonical records are little-endian row-u32, feature-u32, count-u64, strictly
-ordered with positive counts. Plan loading is capped at 256 MiB; the accumulator
+ordered with positive counts. Optional `ordering` is `rowMajor` (default) or
+`featureMajor`; the coordinate order must match the declared layout. Plan loading is capped at 256 MiB; the accumulator
 retains row assignments/totals and group-by-feature sums, not a cell-by-gene
 matrix. Therefore this is bounded streaming, not fully disk-backed metadata.
 All source features must contribute to row totals before any panel projection.
@@ -35,3 +36,6 @@ this qualification.
 
 [Per-chunk buffer cleanup](Memory/README.md) reduces measured CLI peak RSS
 from 109.4 MB to 25.6 MB on the same real matrix with identical results.
+
+[Feature-major qualification](../FeatureMajor/README.md) now covers the complete
+111,445-cell Norman store and all 237 conditions without count reordering.
