@@ -1,4 +1,4 @@
-# Nested training-target regularization: selection complete, native run pending
+# Nested training-target regularization: complete, unchanged predictions
 
 All 150 outer target/gemgroup folds select **lambda 1**, the original fixed value,
 from 0.01, 0.1, 1, 10 and 100. Selection minimizes equal-inner-target mean
@@ -16,12 +16,28 @@ were previously inspected, so this is development reuse, not independent study
 validation. Identical selected regularization offers no expected repair of the
 identified target failures.
 
-The native driver freezes all selected plans before issuing actual fit, model
-replay, prediction and prediction replay commands. Its complete 150-fold run is
-in progress at `/Users/n/numivivo-replogle-nested-20260912/native`; no new outer
-score or completed-run claim is made here. Full native predictions must be frozen
-before the independent scorer reads held responses. The current run uses the
-original qualified study executable, not a new full application build.
+The complete native run passes all 601 commands: 150 fits, model replays,
+predictions and prediction replays, plus one repeated prediction. All **150 full
+reports are byte-identical** to the original fixed-lambda reports. Independent
+NumPy and centered scikit-learn reconstruction passes all 750 vectors, with
+maximum prediction error 1.78e-15 and weight error 3.33e-16. All five original
+aggregate criteria still pass; 37/150 individual folds still lose to training
+mean and 34/150 to no change. There is **no predictive improvement**.
+
+All predictions were frozen before the new scorer read held responses. The run
+uses the original qualified study executable, not a new full application build.
+`python3 verify.py` checks the retained selection losses, source hashes, complete
+execution record and original failure counts. The evidence archive includes the
+executed checker and dependencies, command logs, plans, receipts, full scores,
+report-comparison hashes and setup failures. Large inputs, models and prediction
+arrays remain externally hash-bound in the recorded remote workspace. Retained
+evidence verification does not execute a new prediction experiment.
+
+This closes the proposed regularization search. Changing lambda within this
+predeclared grid does not repair the target failures; repeated tuning on these
+same outcomes cannot establish generalization. Further model changes need a
+specific hypothesis and training-only selection, followed by a new untouched
+study for an independent claim.
 
 `protocol.json` and `select_regularization.py` were written before this selection
 execution; `selection.json.gz` binds protocol, selector, original input freeze,

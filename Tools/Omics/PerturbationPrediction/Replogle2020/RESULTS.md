@@ -12,6 +12,11 @@ finds that SCYL1, SRP68 and SRP72 lose to training mean in all five technical
 groups; SRP72 also loses to no change in every group. This does not change the
 original aggregate result or establish independent biological replication.
 
+The [completed nested regularization search](NestedRegularization/README.md)
+selects lambda 1 in all 150 folds and reproduces every original native report
+byte-for-byte. Training-only selection over the declared grid adds no predictive
+gain; the original individual-target failures remain.
+
 ## Complete primary results
 
 The [protocol](PROTOCOL.md) preceded expression-matrix acquisition. It fixes the
