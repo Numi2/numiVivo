@@ -273,7 +273,7 @@ The studies' same-named rare classes have sharply different RNA profiles; their
 biological equivalence remains unqualified. Both original transfer failures stand.
 
 The [single-cell program](Documentation/SingleCellInteroperability.md) now includes
-native H5AD interchange (including [bounded tensor annotations](Tools/Omics/H5AD/Tensors/README.md)), negative-binomial DE, sparse PCA/neighbors/clustering,
+native H5AD interchange (including [bounded tensor annotations](Tools/Omics/H5AD/Tensors/README.md) and [ragged receptor records with LZF decoding](Tools/Omics/H5AD/Projection/Awkward/README.md)), negative-binomial DE, sparse PCA/neighbors/clustering,
 integration, marker scoring and multimodal count interchange. The complete
 [1.61-million-cell HIRISA cohort](Tools/Omics/Benchmarks/HIRISA/README.md) has
 published ingestion, DE, donor-response prediction, PCA, graph and seed-7

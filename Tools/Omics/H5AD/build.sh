@@ -28,7 +28,7 @@ fi
 xcrun clang++ -std=c++23 -O3 -I "$ROOT/Sources/NumiVivoCore/include" -c "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" -o "$OUT/OmicsHNSW.o"
 xcrun clang++ -std=c++23 -O3 -I "$ROOT/Sources/NumiVivoCore/include" -c "$ROOT/Sources/NumiVivoCore/OmicsGaussian.cpp" -o "$OUT/OmicsGaussian.o"
 xcrun clang++ -std=c++23 -O3 -I "$ROOT/Sources/NumiVivoCore/include" -c "$ROOT/Sources/NumiVivoCore/OmicsMNN.cpp" -o "$OUT/OmicsMNN.o"
-shasum -a 256 "$ROOT/Sources/NumiVivoCore/OmicsMNN.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsMNN.h" "$ROOT/Sources/NumiVivoCore/OmicsGaussian.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsGaussian.h" "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsHNSW.h" "$ROOT/Sources/NumiVivoCore/ThirdParty/hnswlib/"*.h "${FILES[@]}" "$ROOT/Tools/Omics/H5AD/Main.swift" > "$OUT/sources.sha256"
+shasum -a 256 "$ROOT/Sources/NumiVivoCore/include/module.modulemap" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoHDF5Filter.h" "$ROOT/Sources/NumiVivoCore/OmicsMNN.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsMNN.h" "$ROOT/Sources/NumiVivoCore/OmicsGaussian.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsGaussian.h" "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsHNSW.h" "$ROOT/Sources/NumiVivoCore/ThirdParty/hnswlib/"*.h "${FILES[@]}" "$ROOT/Tools/Omics/H5AD/Main.swift" > "$OUT/sources.sha256"
 if [[ "${2:-}" == "--with-cli" ]]; then
   shasum -a 256 "${CLI[@]}" >> "$OUT/sources.sha256"
 fi

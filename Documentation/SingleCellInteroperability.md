@@ -382,8 +382,12 @@ The complete development objective remains open:
    inferring biological IDs or silently coercing index values. [Native tensor
    annotation](../Tools/Omics/H5AD/Tensors/README.md) now writes bounded rank-eight
    arrays and preserves repeated-axis projection, verified with AnnData on all
-   24,673 Kang cells and the existing annotation regression suite. Ragged embedding
-   fields and arbitrary nested records remain unsupported; storage/work bounds
+   24,673 Kang cells and the existing annotation regression suite. [Native ragged
+   projection](../Tools/Omics/H5AD/Projection/Awkward/README.md) now preserves modern
+   Awkward buffers, including all 7,544 receptor chains in the public Wu 2020 3k
+   release, with native decoding of its original LZF compression. Unselected
+   payload remains stored; this is not compaction. Legacy ragged compound fields
+   and arbitrary nested compound records remain unsupported; storage/work bounds
    still apply. The [complete original Kang analytical route](../Tools/Omics/H5AD/Projection/LEGACY_COUNT_ROUTE.md)
    now passes native annotation, streaming count import and pseudobulk:
    14,184,532 exact count records and 124 exact donor/condition/cell-type groups.

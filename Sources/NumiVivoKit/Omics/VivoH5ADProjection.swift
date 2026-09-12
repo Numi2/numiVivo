@@ -268,11 +268,116 @@ private final class VivoH5ADProjector {
         guard cursor==total else { throw VivoOmicsError.invalid("projection sparse pass disagreement") }
         fields.append(.init(path: path,encoding: kind,sourceShape: shape,outputShape: [rows.count,cols.count]))
     }
+    /// Select the outer axis without decoding or padding the nested payload.
+    /// Retained buffers can contain unreachable rows; this is projection, not
+    /// storage compaction. Indexed/masked/union roots must be composed rather
+    /// than wrapped in an invalid nested IndexedArray.
+    func awkward(_ source: Int64,_ destination: Int64,_ name: String,selection: [Int]?,length: Int,path: String) throws {
+        try encoding(source,"awkward-array","0.1.0")
+        let attribute=try h.attribute(source,"length");defer { h.close(attribute,"H5Aclose") }
+        guard try h.projectionShape(attribute,attribute: true).isEmpty,
+              try h.integers(attribute,attribute: true,maximum: 1)==[UInt64(length)] else {
+            throw VivoOmicsError.invalid("ragged array aligned length")
+        }
+        let text=try h.text(source,"form")
+        guard let original=try JSONSerialization.jsonObject(with: Data(text.utf8)) as? [String:Any],
+              let kind=original["class"] as? String,
+              ["NumpyArray","EmptyArray","RegularArray","ListArray","ListOffsetArray","RecordArray",
+               "IndexedArray","IndexedOptionArray","ByteMaskedArray","BitMaskedArray","UnmaskedArray","UnionArray"].contains(kind) else {
+            throw VivoOmicsError.invalid("ragged array root form")
+        }
+        let rows=try indices(selection,length: length),children=try h.projectionNames(source)
+        let output=try h.projectionGroup(destination,name);defer { h.close(output,"H5Gclose") }
+        try h.projectionAttributes(source,output)
+        for child in children {
+            let d=try h.dataset(source,child);defer { h.close(d,"H5Dclose") }
+            try encoding(d,"array","0.2.0")
+            let t=try h.type(d,attribute: false);defer { h.close(t,"H5Tclose") }
+            guard try [0,1,8].contains(h.legacyTypeKind(t)),try h.projectionShape(d).count==1 else {
+                throw VivoOmicsError.invalid("ragged buffers must be numeric vectors")
+            }
+            try rawArray(d,output,child,selections: [],expected: [],path: path+"/"+child,kind: "array")
+        }
+        func rootBuffer(_ component: String,_ count: Int) throws -> [Int64] {
+            guard let key=original["form_key"] as? String else { throw VivoOmicsError.invalid("ragged root buffer key") }
+            let d=try h.dataset(source,key+"-"+component);defer { h.close(d,"H5Dclose") }
+            let t=try h.type(d,attribute: false);defer { h.close(t,"H5Tclose") }
+            let shape=try h.projectionShape(d)
+            let formats: [String:(Int,Int32)] = ["i8":(1,1),"u8":(1,0),"i32":(4,1),"u32":(4,0),"i64":(8,1)]
+            let sign: @convention(c) (Int64) -> Int32 = try h.symbol("H5Tget_sign")
+            guard let format=original[component] as? String,let required=formats[format],
+                  try h.legacyTypeKind(t)==0,try typeWidth(t)==required.0,sign(t)==required.1,
+                  shape.count==1,shape[0]>=UInt64(count) else {
+                throw VivoOmicsError.invalid("ragged root integer buffer")
+            }
+            try consume(count)
+            var values=[Int64](repeating: 0,count: count)
+            if count>0 { try values.withUnsafeMutableBytes { try h.read(d,type: h.native("NATIVE_LLONG"),attribute: false,into: $0.baseAddress,range: 0..<count) } }
+            return values
+        }
+        var key="numivivo_selection",suffix=0
+        while children.contains(where: { $0.hasPrefix(key+"-") }) { suffix+=1;key="numivivo_selection_"+String(suffix) }
+        var form=original,index=rows.map(Int64.init),tags: [Int8]?
+        switch kind {
+        case "IndexedArray","IndexedOptionArray":
+            guard ["i32","u32","i64"].contains(original["index"] as? String ?? "") else { throw VivoOmicsError.invalid("ragged index encoding") }
+            let values=try rootBuffer("index",length)
+            guard values.allSatisfy({ $0 >= (kind=="IndexedArray" ? 0 : -1) }) else { throw VivoOmicsError.invalid("ragged index value") }
+            index=rows.map { values[$0] };form["index"]="i64"
+        case "ByteMaskedArray","BitMaskedArray","UnmaskedArray":
+            guard original["content"] is [String:Any] else { throw VivoOmicsError.invalid("ragged masked content") }
+            if kind != "UnmaskedArray" {
+                guard let valid=original["valid_when"] as? Bool else { throw VivoOmicsError.invalid("ragged mask validity") }
+                let bit=kind=="BitMaskedArray",values=try rootBuffer("mask",bit ? (length+7)/8 : length)
+                let lsb=original["lsb_order"] as? Bool
+                guard !bit || lsb != nil else { throw VivoOmicsError.invalid("ragged bit order") }
+                if bit { guard values.allSatisfy({ (0...255).contains($0) }) else { throw VivoOmicsError.invalid("ragged bit mask") } }
+                index=rows.map { row in
+                    let present=bit ? ((values[row/8] >> (lsb! ? row%8 : 7-row%8)) & 1) != 0 : values[row] != 0
+                    return present==valid ? Int64(row) : -1
+                }
+            }
+            form=["class":"IndexedOptionArray","index":"i64","content":original["content"]!,"parameters":original["parameters"] ?? NSNull()]
+        case "UnionArray":
+            guard let contents=original["contents"] as? [Any],(1...128).contains(contents.count),
+                  original["tags"] as? String == "i8",["i32","u32","i64"].contains(original["index"] as? String ?? "") else {
+                throw VivoOmicsError.invalid("ragged union form")
+            }
+            let sourceTags=try rootBuffer("tags",length),sourceIndex=try rootBuffer("index",length)
+            guard sourceTags.allSatisfy({ $0>=0 && $0<contents.count }),sourceIndex.allSatisfy({ $0>=0 }) else { throw VivoOmicsError.invalid("ragged union index") }
+            tags=rows.map { Int8(sourceTags[$0]) };index=rows.map { sourceIndex[$0] };form["index"]="i64"
+        default:
+            form=["class":"IndexedArray","index":"i64","content":original,"parameters":NSNull()]
+        }
+        form["form_key"]=key
+        let encoded=try JSONSerialization.data(withJSONObject: form,options: [.sortedKeys])
+        guard encoded.count<=16_384 else { throw VivoOmicsError.limit("projected ragged form size") }
+        try consume(index.count);try reserveStorage(index.count*8,output: output)
+        let d=try h.projectionDataset(output,key+"-index",type: h.native("NATIVE_LLONG"),shape: [UInt64(index.count)])
+        defer { h.close(d,"H5Dclose") };try h.encoding(d,"array","0.2.0");try h.projectionIntegers(d,values: index)
+        if let tags {
+            try consume(tags.count);try reserveStorage(tags.count,output: output)
+            let td=try h.projectionDataset(output,key+"-tags",type: h.native("NATIVE_SCHAR"),shape: [UInt64(tags.count)])
+            defer { h.close(td,"H5Dclose") };try h.encoding(td,"array","0.2.0")
+            let write: @convention(c) (Int64,Int64,Int64,Int64,Int64,UnsafeRawPointer?) -> Int32 = try h.symbol("H5Dwrite")
+            if !tags.isEmpty { try tags.withUnsafeBytes { try h.check(write(td,h.native("NATIVE_SCHAR"),0,0,0,$0.baseAddress),"write projected ragged tags") } }
+        }
+        let remove: @convention(c) (Int64,UnsafePointer<CChar>) -> Int32 = try h.symbol("H5Adelete")
+        try h.check(remove(output,"form"),"replace ragged form");try h.check(remove(output,"length"),"replace ragged length")
+        try h.writeStrings(output,"form",[String(decoding: encoded,as: UTF8.self)],attribute: true,scalar: true)
+        var count=Int64(rows.count)
+        try h.write(output,"length",type: h.native("NATIVE_LLONG"),dimensions: [],attribute: true,buffer: &count)
+        try h.projectionStorageLimit(output)
+        fields.append(.init(path: path,encoding: "awkward-array",sourceShape: [length],outputShape: [rows.count]))
+    }
     func element(_ source: Int64,_ name: String,_ destination: Int64,selections: [[Int]?],expected: [Int?],path: String,frameAllowed: Bool = true,outputName: String? = nil) throws {
         guard fields.count<100_000 else { throw VivoOmicsError.limit("projection field count") }
         let object=try h.object(source,name);defer { h.close(object,"H5Oclose") }
         let kind=try elementKind(object)
         switch kind {
+        case "awkward-array":
+            guard frameAllowed,selections.count==1,expected.count==1,let length=expected[0] else { throw VivoOmicsError.invalid("ragged array projection context") }
+            try awkward(object,destination,outputName ?? name,selection: selections[0],length: length,path: path)
         case "array","string-array":
             try encoding(object,kind,"0.2.0")
             let dataset=try h.dataset(source,name);defer { h.close(dataset,"H5Dclose") }

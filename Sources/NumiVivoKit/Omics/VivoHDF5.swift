@@ -1,4 +1,5 @@
 import Foundation
+import NumiVivoCore
 #if canImport(Darwin)
 import Darwin
 #else
@@ -25,9 +26,65 @@ final class VivoHDF5 {
         do {
             let open: @convention(c) () -> Int32 = try symbol("H5open")
             try check(open(), "initialize HDF5")
+            try registerLZFDecoder()
         } catch { dlclose(handle); throw error }
     }
     deinit { dlclose(library) }
+    /// Decode h5py's LZF chunks without loading Python or an external plugin.
+    /// Existing runtime filters take precedence. New output remains uncompressed
+    /// unless the caller explicitly configures an available encoder.
+    private func registerLZFDecoder() throws {
+        let available: @convention(c) (Int32) -> Int32 = try symbol("H5Zfilter_avail")
+        if available(32000)>0 { return }
+        let register: @convention(c) (UnsafeRawPointer) -> Int32 = try symbol("H5Zregister")
+        var descriptor=NVivoHDF5FilterDescriptor()
+        descriptor.version=1;descriptor.id=32000;descriptor.encoder_present=0;descriptor.decoder_present=1
+        descriptor.filter = { flags,n,parameters,bytes,capacity,buffer in
+            guard flags & 0x0100 != 0,let capacity,let buffer,let input=buffer.pointee,
+                  bytes>0,bytes<=capacity.pointee else { return 0 }
+            // Older h5py releases omit the uncompressed-size hint. Variable-
+            // length storage can also exceed a supplied hint; grow only when
+            // the decoder specifically reports insufficient output capacity.
+            let maximum=64*1_024*1_024
+            var size=(n>=3 && parameters != nil && parameters![2]>0) ? Int(parameters![2]) : capacity.pointee
+            guard size>0,size<=maximum else { return 0 }
+            while true {
+                guard let output=malloc(size) else { return 0 }
+                let count=VivoHDF5.decodeLZF(input: input.assumingMemoryBound(to: UInt8.self),count: bytes,
+                    output: output.assumingMemoryBound(to: UInt8.self),capacity: size)
+                if count>0 { free(input);buffer.pointee=output;capacity.pointee=size;return count }
+                free(output)
+                guard count == -1,size<maximum else { return 0 }
+                size=min(maximum,size*2)
+            }
+        }
+        try check(withUnsafePointer(to: &descriptor) { register(UnsafeRawPointer($0)) },"register native LZF decoder")
+    }
+    /// LZF literal/back-reference stream. Offsets are checked before pointer
+    /// access; overlapping references copy forward, as required by the format.
+    /// Zero means malformed input; -1 means insufficient output capacity.
+    static func decodeLZF(input: UnsafePointer<UInt8>,count: Int,output: UnsafeMutablePointer<UInt8>,capacity: Int) -> Int {
+        guard count>0,capacity>0 else { return 0 }
+        var read=0,written=0
+        while read<count {
+            let control=Int(input[read]);read+=1
+            if control<32 {
+                let length=control+1
+                guard length<=count-read else { return 0 }
+                guard length<=capacity-written else { return -1 }
+                for _ in 0..<length { output[written]=input[read];written+=1;read+=1 }
+            } else {
+                var length=control>>5
+                if length==7 { guard read<count else { return 0 };length+=Int(input[read]);read+=1 }
+                guard read<count else { return 0 }
+                let distance=((control & 31)<<8)+Int(input[read])+1;read+=1;length+=2
+                guard distance<=written else { return 0 }
+                guard length<=capacity-written else { return -1 }
+                for _ in 0..<length { output[written]=output[written-distance];written+=1 }
+            }
+        }
+        return written
+    }
     func symbol<T>(_ name: String) throws -> T {
         guard let address = dlsym(library, name) else { throw VivoOmicsError.invalid("HDF5 lacks \(name)") }
         return unsafeBitCast(address, to: T.self)
