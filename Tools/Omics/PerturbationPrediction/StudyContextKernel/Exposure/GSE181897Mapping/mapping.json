@@ -1,0 +1,2246 @@
+{
+  "status": "all-eligible-donor-condition-joins-verified-primary-pool-accession-mapping-open",
+  "sourceHashes": {
+    "/Users/n/numivivo-gse181897-20260911/handoff/B-source-codes-RNA.h5ad": "240902526941acb45740cd9ee3c4f0ccda2f51ac5a087ee4b65e6c6d5eea78c6",
+    "/Users/n/numivivo-gse181897-20260911/prediction-inputs/primary-condition-roles.json": "a3168002b7fb3511f84dc176e0fc8fae15472c8d94bc5be2da21f36662f11024",
+    "/Users/n/numivivo-parse-context-evaluation-20260912/source-metadata.json": "c3ab84a4b897a5d79e8b4f94b5885d9023ffa46434e6e493a57775d4debacba0"
+  },
+  "allSourceBCells": 15272,
+  "retainedPairedDonors": 62,
+  "pairedCells": 4938,
+  "rows": [
+    {
+      "modelDonorID": "GSE181897:exp_id:0",
+      "sourceExperimentID": "0",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 20,
+          "nativeSampleIDs": [
+            "0|B|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "6-7-8-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 23,
+          "nativeSampleIDs": [
+            "0|C|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "6-7-8-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:1",
+      "sourceExperimentID": "1",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 34,
+          "nativeSampleIDs": [
+            "1|B|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "5-6-7-8-9-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 84,
+          "nativeSampleIDs": [
+            "1|C|6"
+          ],
+          "batchIDs": [
+            "6"
+          ],
+          "poolCodes": [
+            "5-6-7-8-9-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:2",
+      "sourceExperimentID": "2",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 51,
+          "nativeSampleIDs": [
+            "2|B|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "4-6-7-8-9-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 16,
+          "nativeSampleIDs": [
+            "2|C|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "4-6-7-8-9-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:3",
+      "sourceExperimentID": "3",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 52,
+          "nativeSampleIDs": [
+            "3|B|6"
+          ],
+          "batchIDs": [
+            "6"
+          ],
+          "poolCodes": [
+            "4-5-6-7-8-9"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 9,
+          "nativeSampleIDs": [
+            "3|C|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "4-5-6-7-8-9"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:4",
+      "sourceExperimentID": "4",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 57,
+          "nativeSampleIDs": [
+            "4|B|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "3-6-7-8-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 96,
+          "nativeSampleIDs": [
+            "4|C|6"
+          ],
+          "batchIDs": [
+            "6"
+          ],
+          "poolCodes": [
+            "3-6-7-8-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:6",
+      "sourceExperimentID": "6",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 27,
+          "nativeSampleIDs": [
+            "6|B|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "3-4-6-7-8-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 4,
+          "nativeSampleIDs": [
+            "6|C|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "3-4-6-7-8-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:7",
+      "sourceExperimentID": "7",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 59,
+          "nativeSampleIDs": [
+            "7|B|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "3-4-5-6-7-8"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 58,
+          "nativeSampleIDs": [
+            "7|C|6"
+          ],
+          "batchIDs": [
+            "6"
+          ],
+          "poolCodes": [
+            "3-4-5-6-7-8"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:8",
+      "sourceExperimentID": "8",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 46,
+          "nativeSampleIDs": [
+            "8|B|6"
+          ],
+          "batchIDs": [
+            "6"
+          ],
+          "poolCodes": [
+            "2-6-7-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 31,
+          "nativeSampleIDs": [
+            "8|C|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "2-6-7-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:9",
+      "sourceExperimentID": "9",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 45,
+          "nativeSampleIDs": [
+            "9|B|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "2-5-6-7-9-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 44,
+          "nativeSampleIDs": [
+            "9|C|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "2-5-6-7-9-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:10",
+      "sourceExperimentID": "10",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 45,
+          "nativeSampleIDs": [
+            "10|B|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "2-4-6-7-9-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 69,
+          "nativeSampleIDs": [
+            "10|C|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "2-4-6-7-9-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:11",
+      "sourceExperimentID": "11",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 31,
+          "nativeSampleIDs": [
+            "11|B|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "2-4-5-6-7-9"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 98,
+          "nativeSampleIDs": [
+            "11|C|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "2-4-5-6-7-9"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:12",
+      "sourceExperimentID": "12",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 106,
+          "nativeSampleIDs": [
+            "12|B|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "2-3-6-7-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 72,
+          "nativeSampleIDs": [
+            "12|C|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "2-3-6-7-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:13",
+      "sourceExperimentID": "13",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 86,
+          "nativeSampleIDs": [
+            "13|B|6"
+          ],
+          "batchIDs": [
+            "6"
+          ],
+          "poolCodes": [
+            "2-3-5-6-7-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 56,
+          "nativeSampleIDs": [
+            "13|C|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "2-3-5-6-7-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:14",
+      "sourceExperimentID": "14",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 58,
+          "nativeSampleIDs": [
+            "14|B|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "2-3-4-6-7-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 58,
+          "nativeSampleIDs": [
+            "14|C|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "2-3-4-6-7-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:15",
+      "sourceExperimentID": "15",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 47,
+          "nativeSampleIDs": [
+            "15|B|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "2-3-4-5-6-7"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 39,
+          "nativeSampleIDs": [
+            "15|C|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "2-3-4-5-6-7"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:16",
+      "sourceExperimentID": "16",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 40,
+          "nativeSampleIDs": [
+            "16|B|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "1-6-8-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 17,
+          "nativeSampleIDs": [
+            "16|C|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "1-6-8-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:17",
+      "sourceExperimentID": "17",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 80,
+          "nativeSampleIDs": [
+            "17|B|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "1-5-6-8-9-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 20,
+          "nativeSampleIDs": [
+            "17|C|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "1-5-6-8-9-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:18",
+      "sourceExperimentID": "18",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 10,
+          "nativeSampleIDs": [
+            "18|B|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "1-4-6-8-9-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 12,
+          "nativeSampleIDs": [
+            "18|C|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "1-4-6-8-9-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:19",
+      "sourceExperimentID": "19",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 45,
+          "nativeSampleIDs": [
+            "19|B|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "1-4-5-6-8-9"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 11,
+          "nativeSampleIDs": [
+            "19|C|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "1-4-5-6-8-9"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:20",
+      "sourceExperimentID": "20",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 18,
+          "nativeSampleIDs": [
+            "20|B|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "1-3-6-8-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 19,
+          "nativeSampleIDs": [
+            "20|C|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "1-3-6-8-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:21",
+      "sourceExperimentID": "21",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 30,
+          "nativeSampleIDs": [
+            "21|B|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "1-3-5-6-8-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 21,
+          "nativeSampleIDs": [
+            "21|C|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "1-3-5-6-8-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:22",
+      "sourceExperimentID": "22",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 60,
+          "nativeSampleIDs": [
+            "22|B|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "1-3-4-6-8-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 38,
+          "nativeSampleIDs": [
+            "22|C|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "1-3-4-6-8-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:24",
+      "sourceExperimentID": "24",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 30,
+          "nativeSampleIDs": [
+            "24|B|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "1-2-6-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 37,
+          "nativeSampleIDs": [
+            "24|C|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "1-2-6-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:25",
+      "sourceExperimentID": "25",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 17,
+          "nativeSampleIDs": [
+            "25|B|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "1-2-5-6-9-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 26,
+          "nativeSampleIDs": [
+            "25|C|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "1-2-5-6-9-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:26",
+      "sourceExperimentID": "26",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 53,
+          "nativeSampleIDs": [
+            "26|B|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "1-2-4-6-9-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 35,
+          "nativeSampleIDs": [
+            "26|C|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "1-2-4-6-9-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:27",
+      "sourceExperimentID": "27",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 61,
+          "nativeSampleIDs": [
+            "27|B|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "1-2-4-5-6-9"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 51,
+          "nativeSampleIDs": [
+            "27|C|6"
+          ],
+          "batchIDs": [
+            "6"
+          ],
+          "poolCodes": [
+            "1-2-4-5-6-9"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:28",
+      "sourceExperimentID": "28",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 69,
+          "nativeSampleIDs": [
+            "28|B|6"
+          ],
+          "batchIDs": [
+            "6"
+          ],
+          "poolCodes": [
+            "1-2-3-6-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 33,
+          "nativeSampleIDs": [
+            "28|C|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "1-2-3-6-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:29",
+      "sourceExperimentID": "29",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 57,
+          "nativeSampleIDs": [
+            "29|B|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "1-2-3-5-6-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 39,
+          "nativeSampleIDs": [
+            "29|C|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "1-2-3-5-6-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:30",
+      "sourceExperimentID": "30",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 34,
+          "nativeSampleIDs": [
+            "30|B|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "1-2-3-4-6-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 55,
+          "nativeSampleIDs": [
+            "30|C|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "1-2-3-4-6-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:31",
+      "sourceExperimentID": "31",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 87,
+          "nativeSampleIDs": [
+            "31|B|6"
+          ],
+          "batchIDs": [
+            "6"
+          ],
+          "poolCodes": [
+            "1-2-3-4-5-6"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 59,
+          "nativeSampleIDs": [
+            "31|C|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "1-2-3-4-5-6"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:32",
+      "sourceExperimentID": "32",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 9,
+          "nativeSampleIDs": [
+            "32|B|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "0-7-8-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 24,
+          "nativeSampleIDs": [
+            "32|C|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "0-7-8-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:33",
+      "sourceExperimentID": "33",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 40,
+          "nativeSampleIDs": [
+            "33|B|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "0-5-7-8-9-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 13,
+          "nativeSampleIDs": [
+            "33|C|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "0-5-7-8-9-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:34",
+      "sourceExperimentID": "34",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 77,
+          "nativeSampleIDs": [
+            "34|B|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "0-4-7-8-9-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 69,
+          "nativeSampleIDs": [
+            "34|C|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-4-7-8-9-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:35",
+      "sourceExperimentID": "35",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 27,
+          "nativeSampleIDs": [
+            "35|B|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "0-4-5-7-8-9"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 56,
+          "nativeSampleIDs": [
+            "35|C|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-4-5-7-8-9"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:36",
+      "sourceExperimentID": "36",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 55,
+          "nativeSampleIDs": [
+            "36|B|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-3-7-8-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 27,
+          "nativeSampleIDs": [
+            "36|C|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "0-3-7-8-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:37",
+      "sourceExperimentID": "37",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 68,
+          "nativeSampleIDs": [
+            "37|B|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "0-3-5-7-8-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 68,
+          "nativeSampleIDs": [
+            "37|C|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "0-3-5-7-8-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:38",
+      "sourceExperimentID": "38",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 6,
+          "nativeSampleIDs": [
+            "38|B|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "0-3-4-7-8-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 12,
+          "nativeSampleIDs": [
+            "38|C|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "0-3-4-7-8-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:39",
+      "sourceExperimentID": "39",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 35,
+          "nativeSampleIDs": [
+            "39|B|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "0-3-4-5-7-8"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 72,
+          "nativeSampleIDs": [
+            "39|C|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "0-3-4-5-7-8"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:40",
+      "sourceExperimentID": "40",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 18,
+          "nativeSampleIDs": [
+            "40|B|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "0-2-7-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 32,
+          "nativeSampleIDs": [
+            "40|C|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "0-2-7-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:41",
+      "sourceExperimentID": "41",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 33,
+          "nativeSampleIDs": [
+            "41|B|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-2-5-7-9-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 29,
+          "nativeSampleIDs": [
+            "41|C|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "0-2-5-7-9-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:42",
+      "sourceExperimentID": "42",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 7,
+          "nativeSampleIDs": [
+            "42|B|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "0-2-4-7-9-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 11,
+          "nativeSampleIDs": [
+            "42|C|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "0-2-4-7-9-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:43",
+      "sourceExperimentID": "43",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 43,
+          "nativeSampleIDs": [
+            "43|B|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "0-2-4-5-7-9"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 29,
+          "nativeSampleIDs": [
+            "43|C|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "0-2-4-5-7-9"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:44",
+      "sourceExperimentID": "44",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 34,
+          "nativeSampleIDs": [
+            "44|B|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "0-2-3-7-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 39,
+          "nativeSampleIDs": [
+            "44|C|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "0-2-3-7-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:45",
+      "sourceExperimentID": "45",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 64,
+          "nativeSampleIDs": [
+            "45|B|7"
+          ],
+          "batchIDs": [
+            "7"
+          ],
+          "poolCodes": [
+            "0-2-3-5-7-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 44,
+          "nativeSampleIDs": [
+            "45|C|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-2-3-5-7-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:46",
+      "sourceExperimentID": "46",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 21,
+          "nativeSampleIDs": [
+            "46|B|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "0-2-3-4-7-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 10,
+          "nativeSampleIDs": [
+            "46|C|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "0-2-3-4-7-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:47",
+      "sourceExperimentID": "47",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 30,
+          "nativeSampleIDs": [
+            "47|B|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "0-2-3-4-5-7"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 41,
+          "nativeSampleIDs": [
+            "47|C|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "0-2-3-4-5-7"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:48",
+      "sourceExperimentID": "48",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 58,
+          "nativeSampleIDs": [
+            "48|B|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "0-1-8-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 23,
+          "nativeSampleIDs": [
+            "48|C|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "0-1-8-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:49",
+      "sourceExperimentID": "49",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 112,
+          "nativeSampleIDs": [
+            "49|B|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-1-5-8-9-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 122,
+          "nativeSampleIDs": [
+            "49|C|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "0-1-5-8-9-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:50",
+      "sourceExperimentID": "50",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 14,
+          "nativeSampleIDs": [
+            "50|B|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "0-1-4-8-9-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 7,
+          "nativeSampleIDs": [
+            "50|C|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "0-1-4-8-9-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:51",
+      "sourceExperimentID": "51",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 15,
+          "nativeSampleIDs": [
+            "51|B|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "0-1-4-5-8-9"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 6,
+          "nativeSampleIDs": [
+            "51|C|9"
+          ],
+          "batchIDs": [
+            "9"
+          ],
+          "poolCodes": [
+            "0-1-4-5-8-9"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:52",
+      "sourceExperimentID": "52",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 13,
+          "nativeSampleIDs": [
+            "52|B|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-1-3-8-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 4,
+          "nativeSampleIDs": [
+            "52|C|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "0-1-3-8-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:53",
+      "sourceExperimentID": "53",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 20,
+          "nativeSampleIDs": [
+            "53|B|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "0-1-3-5-8-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 47,
+          "nativeSampleIDs": [
+            "53|C|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "0-1-3-5-8-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:54",
+      "sourceExperimentID": "54",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 38,
+          "nativeSampleIDs": [
+            "54|B|8"
+          ],
+          "batchIDs": [
+            "8"
+          ],
+          "poolCodes": [
+            "0-1-3-4-8-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 29,
+          "nativeSampleIDs": [
+            "54|C|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "0-1-3-4-8-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:55",
+      "sourceExperimentID": "55",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 32,
+          "nativeSampleIDs": [
+            "55|B|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "0-1-3-4-5-8"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 20,
+          "nativeSampleIDs": [
+            "55|C|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "0-1-3-4-5-8"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:56",
+      "sourceExperimentID": "56",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 21,
+          "nativeSampleIDs": [
+            "56|B|11"
+          ],
+          "batchIDs": [
+            "11"
+          ],
+          "poolCodes": [
+            "0-1-2-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 15,
+          "nativeSampleIDs": [
+            "56|C|10"
+          ],
+          "batchIDs": [
+            "10"
+          ],
+          "poolCodes": [
+            "0-1-2-9-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:57",
+      "sourceExperimentID": "57",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 46,
+          "nativeSampleIDs": [
+            "57|B|5"
+          ],
+          "batchIDs": [
+            "5"
+          ],
+          "poolCodes": [
+            "0-1-2-5-9-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 41,
+          "nativeSampleIDs": [
+            "57|C|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-1-2-5-9-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:58",
+      "sourceExperimentID": "58",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 47,
+          "nativeSampleIDs": [
+            "58|B|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "0-1-2-4-9-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 62,
+          "nativeSampleIDs": [
+            "58|C|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-1-2-4-9-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:59",
+      "sourceExperimentID": "59",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 52,
+          "nativeSampleIDs": [
+            "59|B|4"
+          ],
+          "batchIDs": [
+            "4"
+          ],
+          "poolCodes": [
+            "0-1-2-4-5-9"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 24,
+          "nativeSampleIDs": [
+            "59|C|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "0-1-2-4-5-9"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:60",
+      "sourceExperimentID": "60",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 69,
+          "nativeSampleIDs": [
+            "60|B|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-1-2-3-10-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 52,
+          "nativeSampleIDs": [
+            "60|C|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "0-1-2-3-10-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:61",
+      "sourceExperimentID": "61",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 26,
+          "nativeSampleIDs": [
+            "61|B|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "0-1-2-3-5-10"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 16,
+          "nativeSampleIDs": [
+            "61|C|1"
+          ],
+          "batchIDs": [
+            "1"
+          ],
+          "poolCodes": [
+            "0-1-2-3-5-10"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:62",
+      "sourceExperimentID": "62",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 7,
+          "nativeSampleIDs": [
+            "62|B|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "0-1-2-3-4-11"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 10,
+          "nativeSampleIDs": [
+            "62|C|2"
+          ],
+          "batchIDs": [
+            "2"
+          ],
+          "poolCodes": [
+            "0-1-2-3-4-11"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    },
+    {
+      "modelDonorID": "GSE181897:exp_id:63",
+      "sourceExperimentID": "63",
+      "conditions": [
+        {
+          "sourceCode": "B",
+          "role": "IFNB",
+          "cells": 37,
+          "nativeSampleIDs": [
+            "63|B|0"
+          ],
+          "batchIDs": [
+            "0"
+          ],
+          "poolCodes": [
+            "0-1-2-3-4-5"
+          ],
+          "primaryPoolAccessions": null
+        },
+        {
+          "sourceCode": "C",
+          "role": "control",
+          "cells": 25,
+          "nativeSampleIDs": [
+            "63|C|3"
+          ],
+          "batchIDs": [
+            "3"
+          ],
+          "poolCodes": [
+            "0-1-2-3-4-5"
+          ],
+          "primaryPoolAccessions": null
+        }
+      ]
+    }
+  ],
+  "exposureCovariatesAdmitted": false
+}

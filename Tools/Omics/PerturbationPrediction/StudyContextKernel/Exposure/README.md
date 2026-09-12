@@ -79,3 +79,7 @@ no exposure-response model has been fitted.
 The [Kang identity join](KangMapping/README.md) verifies all eight model donors
 and sixteen derived condition IDs, but primary library accessions and batch
 provenance remain unresolved. This partial join does not admit exposure covariates.
+
+The [GSE181897 metadata join](GSE181897Mapping/README.md) now verifies all 62
+model donors against both source treatment codes, retaining batch and pooling codes
+for 4,938 paired-condition B cells. Primary pool-accession mapping remains open.
