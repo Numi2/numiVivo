@@ -132,7 +132,7 @@ final class VivoRootedFileStore: @unchecked Sendable {
     /// Publish a regular file with fixed-size copying and the same atomic,
     /// descriptor-rooted destination semantics as in-memory artifacts.
     @discardableResult
-    func writeFile(from source: URL, relative: String, maximumBytes: Int, immutable: Bool) throws -> Bool {
+    func writeFile(from source: URL, relative: String, maximumBytes: Int, immutable: Bool, preferClone: Bool = true) throws -> Bool {
         guard source.isFileURL, maximumBytes >= 0 else { throw Failure.invalidPath(source.path) }
         let input = open(source.path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_CLOEXEC)
         guard input >= 0 else { throw Failure.io("open copy source", errno) }
@@ -141,6 +141,11 @@ final class VivoRootedFileStore: @unchecked Sendable {
         guard fstat(input, &before) == 0 else { throw Failure.io("stat copy source", errno) }
         guard before.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG) else { throw Failure.invalidPath(source.path) }
         guard before.st_size >= 0, before.st_size <= maximumBytes else { throw Failure.exceededLimit(source.path) }
+        #if canImport(Darwin)
+        if preferClone, let result = try cloneFile(input, size: before.st_size, relative: relative, immutable: immutable) {
+            return result
+        }
+        #endif
         return try writeFile(relative: relative, immutable: immutable) { output in
             var buffer = [UInt8](repeating: 0, count: 1_048_576), total = 0
             while true {
@@ -159,6 +164,36 @@ final class VivoRootedFileStore: @unchecked Sendable {
             }
         }
     }
+
+    #if canImport(Darwin)
+    /// Keep publication rooted at pinned descriptors while sharing APFS blocks.
+    /// The clone has separate inode/content ownership; unsupported filesystems
+    /// use the bounded streaming path, without weakening atomic publication.
+    private func cloneFile(_ input: Int32, size: off_t, relative: String, immutable: Bool) throws -> Bool? {
+        let parts = try components(relative)
+        let parent = try directory(parts.dropLast(), create: true)
+        defer { _ = close(parent) }
+        let temporary = ".nv-\(UUID().uuidString).tmp"
+        try Task.checkCancellation()
+        if fclonefileat(input, parent, temporary, UInt32(CLONE_NOOWNERCOPY)) != 0 {
+            let code = errno
+            if [ENOTSUP, EXDEV, EINVAL, ENOSYS].contains(code) { return nil }
+            throw Failure.io("clone copy source", code)
+        }
+        defer { _ = unlinkat(parent, temporary, 0) }
+        let fd = openat(parent, temporary, O_RDONLY | O_NOFOLLOW | O_CLOEXEC)
+        guard fd >= 0 else { throw Failure.io("open cloned object", errno) }
+        defer { _ = close(fd) }
+        var info = stat()
+        guard fstat(fd, &info) == 0, info.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG), info.st_size == size else {
+            throw Failure.io("cloned object type or size", EIO)
+        }
+        guard fchmod(fd, 0o600) == 0 else { throw Failure.io("cloned object permissions", errno) }
+        try Task.checkCancellation()
+        guard fsync(fd) == 0 else { throw Failure.io("fsync cloned object", errno) }
+        return try publish(parent: parent, temporary: temporary, name: parts.last!, immutable: immutable)
+    }
+    #endif
 
     private static func write(_ bytes: UnsafeRawBufferPointer, to fd: Int32) throws {
         var position = 0
@@ -185,12 +220,16 @@ final class VivoRootedFileStore: @unchecked Sendable {
         try body(fd)
         try Task.checkCancellation()
         guard fsync(fd) == 0 else { throw Failure.io("fsync object", errno) }
+        return try publish(parent: parent, temporary: temporary, name: parts.last!, immutable: immutable)
+    }
+
+    private func publish(parent: Int32, temporary: String, name: String, immutable: Bool) throws -> Bool {
         if immutable {
-            if linkat(parent, temporary, parent, parts.last!, 0) != 0 {
+            if linkat(parent, temporary, parent, name, 0) != 0 {
                 if errno == EEXIST { return false }
                 throw Failure.io("publish immutable object", errno)
             }
-        } else if renameat(parent, temporary, parent, parts.last!) != 0 {
+        } else if renameat(parent, temporary, parent, name) != 0 {
             throw Failure.io("publish reference", errno)
         }
         // Some file systems do not implement directory fsync. Atomic name

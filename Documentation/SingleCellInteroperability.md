@@ -191,12 +191,17 @@ Existing destinations and conflicting add/replace modes fail. Failures and
 cancellation before publication leave no output. Edited parent groups are copied
 before mutation so hard-linked backups retain their old values.
 
-Annotation now snapshots and hashes the source and publishes the result using
-fixed 1 MiB buffers, accepting up to 1 GiB source files and 2 GiB outputs without
-whole-file `Data` allocations. The 100,000-cell/feature annotation axes and payload
-limits still apply. Publication uses a pinned destination directory, a private
-temporary file, and atomic no-overwrite linking. HDF5 metadata/decompression
-allocations are separate from the fixed copy buffer. The complete
+Annotation accepts up to 16 GiB source files, 32 GiB outputs and two million
+rows/features; the existing plan payload limits still apply. Snapshot and
+publication use APFS copy-on-write when available, with bounded 1 MiB streaming
+fallback. Publication keeps pinned destination directories, private temporaries
+and atomic no-overwrite linking. Edited groups copy attributes and retain links
+to untouched children, preserving aliases without copying all their datasets.
+HDF5 metadata/decompression allocations remain separate from the copy buffer.
+The [full real HIRISA annotation run](../Tools/Omics/H5AD/Annotation/Atlas/README.md)
+adds exact source-row provenance to all 1,612,594 cells and verifies all 46 original
+datasets (7,735,703,364 stored elements), their attributes and the unchanged source
+hash. This is annotation/storage qualification, not biological labels or predictions. The complete
 [Adamson UPR ingestion check](../Tools/Omics/PerturbationPrediction/Adamson/README.md)
 preserves the original 65,337 cells and 237,812,947 sparse entries and verifies
 native aggregates against an independent SciPy reference.

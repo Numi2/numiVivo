@@ -281,6 +281,13 @@ pseudobulk groups agree with the original Kang information. RNA assay totals
 match every cell, and donor/treatment identities remain explicit. This verifies
 input preservation and arithmetic, without adding a new prediction claim.
 
+The [full HIRISA annotation route](Tools/Omics/H5AD/Annotation/Atlas/README.md)
+now preserves the 6.1 GB atlas while adding source-row provenance to all
+1,612,594 cells. All 46 original datasets and 7.74 billion stored elements match;
+the native run used 180.9 MiB peak resident memory on an Apple M4. APFS publication
+and shallow group detachment avoid duplicating untouched data. This qualifies
+annotation/storage handling, not new biological labels or predictions.
+
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical
 M4/M4 Pro GPUs. The explicit FP32 option passes its declared numerical tolerance

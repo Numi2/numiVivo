@@ -71,10 +71,17 @@ extension VivoHDF5 {
     /// Copy before changing a group's attributes or children. Hard-link aliases
     /// elsewhere in the source continue to refer to the original unedited data.
     func detachGroup(_ file: ID, _ path: String) throws {
-        let current = try object(file, path); close(current, "H5Oclose") // Reject external group links.
+        let current = try object(file, path); defer { close(current, "H5Oclose") }
         let temporary = ".numivivo-edit-" + UUID().uuidString
-        let copy: @convention(c) (ID, UnsafePointer<CChar>, ID, UnsafePointer<CChar>, ID, ID) -> Int32 = try symbol("H5Ocopy")
-        try check(copy(file, path, file, temporary, 0, 0), "copy edited group")
+        let detached = try group(file, temporary); defer { close(detached, "H5Gclose") }
+        // Edits replace immediate child links; untouched datasets and nested
+        // groups need no physical copy. Copy attributes onto a new group so
+        // aliases to the original group retain their original metadata.
+        try projectionAttributes(current, detached)
+        let link: @convention(c) (ID, UnsafePointer<CChar>, ID, UnsafePointer<CChar>, ID, ID) -> Int32 = try symbol("H5Lcreate_hard")
+        for child in try projectionNames(current) {
+            try check(link(current, child, detached, child, 0, 0), "retain unedited annotation child")
+        }
         try unlink(file, path)
         let move: @convention(c) (ID, UnsafePointer<CChar>, ID, UnsafePointer<CChar>, ID, ID) -> Int32 = try symbol("H5Lmove")
         try check(move(file, temporary, file, path, 0, 0), "install edited group")
@@ -93,6 +100,7 @@ extension VivoSingleCellH5AD {
     public static func annotate(_ sourceURL: URL, plan: VivoH5ADAnnotationPlan, implementation: VivoFingerprint,
                                 to destination: URL) throws -> VivoH5ADAnnotationReceipt {
         try plan.validate()
+        let outputLimit = 32 * 1_024 * 1_024 * 1_024
         let planBytes = try VivoCanonicalJSON.encode(plan), planID = try VivoCanonicalJSON.fingerprint(planBytes)
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-annotation-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
@@ -100,11 +108,13 @@ extension VivoSingleCellH5AD {
         let staging = directory.appendingPathComponent("annotated.h5ad")
         // Hash the exact private copy HDF5 will edit, without retaining the
         // complete file in Data. Axis/value limits remain independently bounded.
-        guard try VivoOmicsFileSnapshot.fingerprint(sourceURL, copyTo: staging, maximumBytes: 1_024 * 1_024 * 1_024) == plan.source else {
+        guard try VivoOmicsFileSnapshot.fingerprint(sourceURL, copyTo: staging, maximumBytes: 16 * 1_024 * 1_024 * 1_024) == plan.source else {
             throw VivoOmicsError.invalid("annotation source fingerprint mismatch")
         }
         let version = try VivoHDF5.lock.withLock {
-            let h = try VivoHDF5(), file = try h.file(staging.path, writable: true)
+            let h = try VivoHDF5()
+            h.projectionMaximumOutputBytes = outputLimit
+            let file = try h.file(staging.path, writable: true)
             defer { h.close(file, "H5Fclose") }
             guard try h.text(file, "encoding-type") == "anndata", try h.text(file, "encoding-version") == "0.1.0" else {
                 throw VivoOmicsError.invalid("unsupported AnnData root encoding")
@@ -126,16 +136,16 @@ extension VivoSingleCellH5AD {
                 else { throw VivoOmicsError.invalid("unsupported dataframe index encoding") }
                 let d = try h.dataset(g, dataPath); defer { h.close(d, "H5Dclose") }
                 let shape = try h.shape(d, attribute: false)
-                guard shape.count == 1, shape[0] <= 100_000 else { throw VivoOmicsError.limit("annotation dataframe index shape") }
+                guard shape.count == 1, shape[0] <= 2_000_000 else { throw VivoOmicsError.limit("annotation dataframe index shape") }
                 if ["nullable-string-array", "nullable-integer", "nullable-boolean"].contains(encoding) {
                     let mask = try h.dataset(index, "mask"); defer { h.close(mask, "H5Dclose") }
-                    guard try h.shape(mask, attribute: false) == shape, try h.mask(mask, maximum: 100_000).allSatisfy({ !$0 }) else {
+                    guard try h.shape(mask, attribute: false) == shape, try h.mask(mask, maximum: 2_000_000).allSatisfy({ !$0 }) else {
                         throw VivoOmicsError.invalid("missing or inconsistent dataframe index")
                     }
                 } else if encoding == "categorical" {
                     let categories = try h.dataset(index, "categories"); defer { h.close(categories, "H5Dclose") }
                     let labels = try h.strings(categories, maximum: 100_000)
-                    guard try h.categoricalCodes(d, maximum: 100_000).allSatisfy({ $0 >= 0 && $0 < labels.count }) else {
+                    guard try h.categoricalCodes(d, maximum: 2_000_000).allSatisfy({ $0 >= 0 && $0 < labels.count }) else {
                         throw VivoOmicsError.invalid("missing or out-of-range categorical index")
                     }
                 }
@@ -214,7 +224,6 @@ extension VivoSingleCellH5AD {
             return runtime
         }
         try Task.checkCancellation()
-        let outputLimit = 2 * 1_024 * 1_024 * 1_024
         let output = try VivoOmicsFileSnapshot.fingerprint(staging, maximumBytes: outputLimit)
         let receipt = try VivoH5ADAnnotationReceipt(schemaVersion: 1, source: plan.source, plan: planID,
             output: output, implementation: implementation, hdf5Version: version)
