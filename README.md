@@ -180,6 +180,13 @@ response on their eligible genes. These are reused development donors; the
 remaining folds, parameter uncertainty and independent biological validation
 remain open.
 
+The [five-fold progress snapshot](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/evidence/2026-09-12-five-fold-progress/current-summary.json)
+now shows a cohort-dependent limitation: both scored HIRISA omissions lose to
+the training-mean response, with pooled RMSE 65.5% worse despite beating no change.
+The three scored Kang omissions improve against both baselines. Eight folds are
+still pending in this snapshot, so the full-run criterion remains unset. These
+are development results; pooled gains do not establish consistent utility.
+
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five
 technical gemgroups. All 150 native fits and predictions pass replay; all 750

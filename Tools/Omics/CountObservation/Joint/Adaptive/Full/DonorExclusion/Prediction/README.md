@@ -88,3 +88,20 @@ gene row and checks that an empty run cannot pass, an altered score is rejected,
 and an altered endpoint plan is rejected. The retained software-validation
 snapshot covers 24,490 gene-folds from the first three locally scored Kang folds;
 it is a partial progress summary, not a replacement for full-fold evidence.
+
+
+## Five-fold progress snapshot
+
+The [retained reports](evidence/2026-09-12-five-fold-progress/manifest.json)
+cover three Kang and two HIRISA omissions. Both HIRISA donors lose to the
+training-mean response: RMSE is 57.5% worse for HIRISA-00 and 74.4% worse for
+HIRISA-01. Their pooled joint RMSE is 0.143048 versus 0.086439 for training mean
+and 0.332588 for no change. The three Kang folds improve pooled RMSE by 26.1%
+versus no change and 22.5% versus training mean.
+
+Pooling all five gives gains of 28.1% and 21.6%, respectively, but masks the
+HIRISA losses. All groups retain a null full-run criterion because eight of the
+thirteen declared folds are pending in this snapshot. The new directory retains
+reports and hash bindings; complete raw shards remain in the live study pending
+full archival publication. It does not replace the earlier complete two-fold
+archive or establish independent biological validation.
