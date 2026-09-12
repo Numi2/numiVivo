@@ -33,6 +33,8 @@ The [earlier-duration-only follow-up](Tools/Omics/PerturbationPrediction/GSE2265
 also passes all three donor gates, with 11–13% lower error than its matched mean
 baseline. It retains two no-history fallbacks and does not imply wall-clock forecasting.
 
+The [cross-study temporal test](Tools/Omics/PerturbationPrediction/GSE226572/CrossStudyTemporal/README.md) failed its predefined gate in all eight Kang donors: duration-aware predictions improved only 0.39–1.88% over mean response, below the required 5%, despite passing independent numerical verification. Within-study temporal gains therefore do not establish cross-study prediction.
+
 ## Biological prediction: current evidence
 
 A [training-only response-shrinkage candidate](Tools/Omics/PerturbationPrediction/StudyContextKernel/ResponseShrinkage/README.md) improves HIRISA but still fails Kang and GSE181897 transfer gates. All 75 donors pass numerical verification; the candidate remains unpromoted.

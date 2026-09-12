@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/n/numivivo-duration-crossstudy-20260912/run.py", line 23, in <module>
+    ci=[j for j,s in enumerate(k.obs['sample']) if samples[s]['donorID']==d and samples[s]['condition']=='control'][0];ti=[j for j,s in enumerate(k.obs['sample']) if samples[s]['donorID']==d and samples[s]['condition']=='IFNB'];assert len(ti)==1;b=json.loads((r/'outputs'/f'{i}.json').read_text());err=float(np.max(abs(np.maximum(0,v[ci]+response)-b['predicted'])));assert err<1e-12
+                                                                                                                                                                                                                                                                                                                                                                                     ^^^^^^^^^
+AssertionError

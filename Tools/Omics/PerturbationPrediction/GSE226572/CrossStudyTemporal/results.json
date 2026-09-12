@@ -1,0 +1,126 @@
+{
+  "rows": [
+    {
+      "donor": "kang:patient_101",
+      "rmse": {
+        "candidate": 0.485516770412037,
+        "trainingMean": 0.48940989526827083,
+        "noChange": 0.6288259496684447
+      },
+      "gains": {
+        "trainingMean": 0.007954732615489513,
+        "noChange": 0.22789959500235168
+      },
+      "pass": false,
+      "maxReferenceDifference": 1.7763568394002505e-15,
+      "maxBaselineReferenceDifference": 8.881784197001252e-16
+    },
+    {
+      "donor": "kang:patient_1015",
+      "rmse": {
+        "candidate": 0.39769330154911103,
+        "trainingMean": 0.4053211344381173,
+        "noChange": 0.5538006208630524
+      },
+      "gains": {
+        "trainingMean": 0.01881923304981481,
+        "noChange": 0.2818836119588689
+      },
+      "pass": false,
+      "maxReferenceDifference": 1.7763568394002505e-15,
+      "maxBaselineReferenceDifference": 8.881784197001252e-16
+    },
+    {
+      "donor": "kang:patient_1016",
+      "rmse": {
+        "candidate": 0.4044289447784994,
+        "trainingMean": 0.41111396932141375,
+        "noChange": 0.5289166325088035
+      },
+      "gains": {
+        "trainingMean": 0.016260757458445574,
+        "noChange": 0.23536353383296582
+      },
+      "pass": false,
+      "maxReferenceDifference": 1.7763568394002505e-15,
+      "maxBaselineReferenceDifference": 8.881784197001252e-16
+    },
+    {
+      "donor": "kang:patient_1039",
+      "rmse": {
+        "candidate": 0.5858598358927382,
+        "trainingMean": 0.5881396849632143,
+        "noChange": 0.6930823647378271
+      },
+      "gains": {
+        "trainingMean": 0.0038763734683517903,
+        "noChange": 0.1547038769131691
+      },
+      "pass": false,
+      "maxReferenceDifference": 1.7763568394002505e-15,
+      "maxBaselineReferenceDifference": 8.881784197001252e-16
+    },
+    {
+      "donor": "kang:patient_107",
+      "rmse": {
+        "candidate": 0.6223680307321403,
+        "trainingMean": 0.6278590883597003,
+        "noChange": 0.7539499964959129
+      },
+      "gains": {
+        "trainingMean": 0.008745684707544,
+        "noChange": 0.17452346491851978
+      },
+      "pass": false,
+      "maxReferenceDifference": 1.7763568394002505e-15,
+      "maxBaselineReferenceDifference": 8.881784197001252e-16
+    },
+    {
+      "donor": "kang:patient_1244",
+      "rmse": {
+        "candidate": 0.4480003254979316,
+        "trainingMean": 0.4512537247926855,
+        "noChange": 0.5862717522265969
+      },
+      "gains": {
+        "trainingMean": 0.0072096896180714465,
+        "noChange": 0.23584869338071512
+      },
+      "pass": false,
+      "maxReferenceDifference": 1.7763568394002505e-15,
+      "maxBaselineReferenceDifference": 1.7763568394002505e-15
+    },
+    {
+      "donor": "kang:patient_1256",
+      "rmse": {
+        "candidate": 0.3958280261686523,
+        "trainingMean": 0.4006992082417562,
+        "noChange": 0.5344721979024389
+      },
+      "gains": {
+        "trainingMean": 0.012156705011917346,
+        "noChange": 0.2594038984214747
+      },
+      "pass": false,
+      "maxReferenceDifference": 1.7763568394002505e-15,
+      "maxBaselineReferenceDifference": 8.881784197001252e-16
+    },
+    {
+      "donor": "kang:patient_1488",
+      "rmse": {
+        "candidate": 0.3886247421134645,
+        "trainingMean": 0.3908502078036804,
+        "noChange": 0.5404411274009131
+      },
+      "gains": {
+        "trainingMean": 0.005693909446080503,
+        "noChange": 0.28091197651363664
+      },
+      "pass": false,
+      "maxReferenceDifference": 1.7763568394002505e-15,
+      "maxBaselineReferenceDifference": 1.7763568394002505e-15
+    }
+  ],
+  "passingDonors": 0,
+  "allDonorsPass": false
+}
