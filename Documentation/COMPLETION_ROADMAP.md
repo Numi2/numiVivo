@@ -37,13 +37,18 @@ also completes all 120 frozen folds: cross-preparation ridge beats both required
 baselines in only 3/12 contrast means and is worse than matched within-preparation
 ridge in all twelve. These completed experiments are no longer pending work.
 
-The next prediction milestone is to complete and independently score all thirteen
-[donor-excluded joint count-response folds](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/README.md)
-under the frozen endpoint plan. The retained two-fold Kang snapshot shows improved
-development RMSE; the partial three-fold summary cannot establish an all-fold
-pass. These reused donors cannot supply fresh independent biological validation.
-Follow that development assessment with a separately frozen external validation
-and uncertainty-calibration experiment; retain the failed historical coverage.
+The thirteen [donor-excluded joint count-response folds](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/README.md)
+are now fully fitted, predicted, independently verified and scored under the
+frozen endpoint plan. Kang improves RMSE 23.80% over training mean across eight
+donors; HIRISA is 75.84% worse and loses in all five donors. The pooled criterion
+passes, but the HIRISA criterion fails. These reused development donors do not
+provide fresh external validation or repair the failed historical interval coverage.
+
+The next prediction work is to explain the cross-dataset failure using training-only
+model diagnostics, then freeze an external validation and uncertainty-calibration
+experiment before inspecting its outcomes. Keep the training-mean baseline and
+per-donor failures visible. The complete reports and shard hashes are published;
+remaining raw-shard archival requires additional capacity and is not complete.
 
 Integration still requires resolving sensitive marker/program and rare-cell
 preservation losses. Resolve Adamson's experimental controls before fitting its
