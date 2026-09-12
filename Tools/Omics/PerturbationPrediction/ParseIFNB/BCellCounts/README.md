@@ -62,6 +62,24 @@ With NumPy and the exact native runtime available:
 4. Require ingest-complete.json, verify-complete.json and complete.json plus
    independent bundle checks before claiming completion.
 
+Run the read-only terminal review with the repository's preparation manifest:
+
+```sh
+python verify_complete.py /path/to/study --preparation-manifest manifest.json
+python -m unittest test_verify_complete.py
+```
+
+Keep the verifier outside the running study so its frozen driver files remain
+unchanged. It exits nonzero with `not-verified` for incomplete or inconsistent
+evidence. The admission tests cover missing completion, altered preparation,
+wrong cohort totals and escaping paths. The live incomplete remote run was also
+rejected. Full successful-cohort verification remains pending; these checks do
+not claim that the success path or biological prediction has been qualified.
+The verifier reuses the retained independent bundle checker and rejects Python
+optimization mode because that checker requires assertions. Use a trusted
+published preparation manifest; a self-authored manifest is not a provenance
+anchor. Archival packaging and independent archive verification remain separate.
+
 verify_archive.py checks this preparation archive. It embeds the twelve plans,
 their row maps, scripts and software verification. Original source axes/chunk
 maps and the native binary remain in the hash-bound published dependencies,
