@@ -343,6 +343,10 @@ reduces measured full-CLI medians by 8.0% on Kang and 11.1% on Hagai, preserving
 scores, loadings and metadata byte-for-byte across twelve runs. Focused sanitizer
 checks pass. A separate Kang run has higher observed peak RSS, so this adds no
 memory-reduction or GPU-PCA claim.
+A [matched-feature Scanpy PCA comparison](Tools/Omics/Reduction/ScversePCA/README.md)
+now confirms the full Kang and Hagai PCA subspaces and variances, with maximum
+sign-aligned score differences below 1.2e-9. This validates PCA numerics on the same
+selected features; it does not establish a matched pipeline speed comparison.
 
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical

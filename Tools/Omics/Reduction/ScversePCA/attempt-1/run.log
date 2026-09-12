@@ -1,0 +1,6 @@
+{"cohort": "kang", "cells": 24673, "selectedFeatures": 2000, "sourceSHA256": "1d48c1ff10bcfad7c1bc75863ce702a491c6c71b08e921a5e9754a986a9d19f3", "modelSHA256": "52a7cc16ac7cc3e2c17fe0cf80c34526efb96dc702d4cb0c678f1c640ed88dca", "loadingsSHA256": "e65667bf4805232d7067f87be67f7f8ec3f24536a3e46a1ea53df828e8038e42", "scoresSHA256": "efcdded1c6586c29d84809d28bd74a1cd887e36161f0bd12d0334046e2cfa159", "preparationSeconds": 1.251255958341062, "scanpyPCASeconds": 0.35341712506487966, "minimumSubspaceSingularValue": 0.9999999999999987, "maximumRelativeVarianceDifference": 5.10702591327572e-15, "maximumCenterDifference": 9.325873406851315e-14, "maximumSignAlignedLoadingDifference": 1.8365226006622493e-11, "maximumSignAlignedScoreDifference": 2.0899459940437737e-10, "gatePass": true}
+Traceback (most recent call last):
+  File "/Users/n/numivivo-pca-scverse-20260912/run.py", line 23, in <module>
+    assert list(a.obs_names)==[x['barcode'] for x in metadata['cells']]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

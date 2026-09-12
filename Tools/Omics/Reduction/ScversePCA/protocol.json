@@ -1,0 +1,13 @@
+{
+  "scope": "Full cohort sparse normalized matrix and same native-selected 2000 features; numerical PCA comparison, not matched full-pipeline timing",
+  "cohorts": [
+    "kang",
+    "hagai"
+  ],
+  "components": 20,
+  "solver": "arpack",
+  "seed": 7,
+  "dtype": "float64",
+  "minimumSubspaceSingularValue": 0.99999,
+  "maximumRelativeVarianceDifference": 1e-05
+}
