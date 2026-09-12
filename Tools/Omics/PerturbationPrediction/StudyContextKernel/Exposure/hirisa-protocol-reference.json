@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "status": "primary-protocol-reference-located-not-donor-mapped",
+  "study": "HIRISA",
+  "series": "GSE306664",
+  "sourceURL": "https://apps.allenimmunology.org/aifi/resources/ifn-response/methods/",
+  "sourceSection": "IFN treatment of immune cell populations",
+  "retrievedDate": "2026-09-12",
+  "perturbation": "IFN-beta",
+  "dose": 100,
+  "doseUnit": "units/mL",
+  "durationHours": 21,
+  "temperatureCelsius": 37,
+  "vendor": null,
+  "catalogue": null,
+  "preparation": "Immune subsets enriched from frozen Ficoll-purified PBMC; methods also describe total PBMC",
+  "assay": "10x Genomics Flex fixed scRNA-seq",
+  "limitations": [
+    "Vendor stated for IFN-alpha2A is not assigned to IFN-beta.",
+    "No equivalence between units/mL, U/mL, IU/mL and ng/mL is inferred.",
+    "Exact retained donor and condition mapping remains required.",
+    "No exposure effect is identifiable separately from unrestricted study effects when exposure is constant within study.",
+    "No new predictions or accuracy claim."
+  ]
+}
