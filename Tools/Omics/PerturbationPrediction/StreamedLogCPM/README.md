@@ -75,3 +75,6 @@ and does not change the running study.
 The [native CLI](CLI/README.md) now exposes the shared bounded count-stream
 consumer with required SHA256 verification and output protection. Real-matrix
 and malformed-input checks pass; this adds no biological prediction claim.
+
+The [feature-stream bundle](FeatureStream/README.md) emits one feature at a time
+and qualifies the full Norman result at 44.1 MB peak CLI RSS.

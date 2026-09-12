@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "fullNormanBinaryExact": true,
+  "metadataExact": true,
+  "allZeroFeaturesPreserved": true,
+  "zeroCellsPreserved": true,
+  "failureChecks": {
+    "duplicate": 65,
+    "decreasing": 65,
+    "missing-total": 65,
+    "partial": 65,
+    "excess": 65,
+    "wrong-hash": 65,
+    "overwrite": 65,
+    "write-failure": 65
+  },
+  "stagingClean": true,
+  "binarySHA256": "79f02e4e3f3c0083018e55b3968f3a1404aae8ccecbf58f998b81b25322ec087",
+  "scriptSHA256": "24af173cf1b13c083b0dfd198f56dfc844a3924fcb3fca93afff9407af4cd83a",
+  "sourceSHA256": "47bc3b9b58532e8c7e0f8ecf7e69e70bca1c1f335359ad8c3701afc1f322e709",
+  "cliSHA256": "62fd48f8c1e3c63e4e9e4ea7a9a9872fbbc2da30ae6c9e0f21f81f71e210399b",
+  "bundleReceiptSHA256": "0108e93198099d1f53e7f1e829768a6fafe074dd63f89edb4366a307c510875d"
+}

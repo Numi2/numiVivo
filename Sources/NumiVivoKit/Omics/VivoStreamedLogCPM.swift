@@ -190,3 +190,83 @@ extension VivoStreamedLogCPM.Result {
         try literal("]}")
     }
 }
+
+extension VivoStreamedLogCPM {
+    public struct FeatureStreamSummary: Codable, Sendable, Equatable {
+        public let method: String
+        public let featureIDs: [String]
+        public let groupIDs: [String]
+        public let cellCounts: [Int]
+        public let zeroCellCounts: [Int]
+    }
+
+    /// Emits every feature, including all-zero features, in declared axis order.
+    /// Sink writes are provisional until this call succeeds: callers must stage
+    /// output because row-total validation finishes only at end of input.
+    public static func consumeFeatures(featureIDs: [String], groupIDs: [String],
+                                       rowGroups: [Int], rowTotals: [UInt64],
+                                       read: () throws -> Data,
+                                       emit: (Int, [Double]) throws -> Void) throws -> FeatureStreamSummary {
+        guard !featureIDs.isEmpty, featureIDs.count <= 1_000_000,
+              !groupIDs.isEmpty, groupIDs.count <= 4096,
+              featureIDs.count <= 16_000_000 / groupIDs.count,
+              !rowGroups.isEmpty, rowGroups.count <= 10_000_000,
+              rowGroups.count == rowTotals.count,
+              Set(featureIDs).count == featureIDs.count,
+              Set(groupIDs).count == groupIDs.count,
+              featureIDs.allSatisfy({ !$0.isEmpty }), groupIDs.allSatisfy({ !$0.isEmpty }),
+              rowGroups.allSatisfy({ groupIDs.indices.contains($0) }) else { throw Failure.invalidPlan }
+        var sizes = Array(repeating: 0, count: groupIDs.count), zeros = sizes
+        for row in rowGroups.indices {
+            sizes[rowGroups[row]] += 1
+            if rowTotals[row] == 0 { zeros[rowGroups[row]] += 1 }
+        }
+        guard sizes.allSatisfy({ $0 > 0 }) else { throw Failure.invalidPlan }
+        var observed = Array(repeating: UInt64(0), count: rowTotals.count)
+        var sums = Array(repeating: 0.0, count: groupIDs.count), corrections = sums
+        var feature = 0, previousRow = -1, buffer = Data()
+        func flush() throws {
+            try Task.checkCancellation()
+            try emit(feature, sums.indices.map { sums[$0] / Double(sizes[$0]) })
+            sums = Array(repeating: 0, count: groupIDs.count); corrections = sums
+            feature += 1; previousRow = -1
+        }
+        while true {
+            try Task.checkCancellation()
+            let ended = try chunkPool { () throws -> Bool in
+                let chunk = try read()
+                guard chunk.count <= 1_048_576 else { throw Failure.invalidRecord }
+                if chunk.isEmpty { return true }
+                buffer.append(chunk)
+                let complete = buffer.count / 16 * 16
+                try buffer.withUnsafeBytes { bytes in
+                    for offset in stride(from: 0, to: complete, by: 16) {
+                        if offset % 16_384 == 0 { try Task.checkCancellation() }
+                        let row = Int(UInt32(littleEndian: bytes.loadUnaligned(fromByteOffset: offset, as: UInt32.self)))
+                        let column = Int(UInt32(littleEndian: bytes.loadUnaligned(fromByteOffset: offset + 4, as: UInt32.self)))
+                        let count = UInt64(littleEndian: bytes.loadUnaligned(fromByteOffset: offset + 8, as: UInt64.self))
+                        guard rowGroups.indices.contains(row), featureIDs.indices.contains(column),
+                              count > 0, column >= feature,
+                              column > feature || row > previousRow else { throw Failure.invalidRecord }
+                        while feature < column { try flush() }
+                        let (total, overflow) = observed[row].addingReportingOverflow(count)
+                        guard !overflow, rowTotals[row] > 0, total <= rowTotals[row] else { throw Failure.invalidRecord }
+                        observed[row] = total; previousRow = row
+                        let group = rowGroups[row]
+                        let value = log1p(Double(count) / Double(rowTotals[row]) * 1_000_000)
+                        let adjusted = value - corrections[group], updated = sums[group] + adjusted
+                        corrections[group] = (updated - sums[group]) - adjusted; sums[group] = updated
+                    }
+                }
+                buffer = Data(buffer.suffix(buffer.count - complete))
+                return false
+            }
+            if ended { break }
+        }
+        guard buffer.isEmpty else { throw Failure.invalidRecord }
+        guard observed == rowTotals else { throw Failure.incompleteRow }
+        while feature < featureIDs.count { try flush() }
+        return .init(method: "mean-per-cell-log1p-cpm-full-axis-v1", featureIDs: featureIDs,
+                     groupIDs: groupIDs, cellCounts: sizes, zeroCellCounts: zeros)
+    }
+}
