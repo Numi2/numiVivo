@@ -25,6 +25,13 @@ biological preservation → perturbation prediction. The
 required capabilities, including annotation, multimodal assays, out-of-core
 execution, later Metal acceleration and cross-scale biology.
 
+The [million-cell AnnData annotation and graph-label export](../Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md)
+now complete with exact cell-identity/metadata checks and backed AnnData reopening.
+Numeric legacy categories, scalar embeddings and numeric-index analytical
+handoff are also implemented with their declared conformance checks; remaining
+format and consumer bounds are listed in the interoperability roadmap. These
+completed repairs should not be scheduled again as missing capabilities.
+
 The [prediction assessment](BiologicalPrediction.md) records the current
 scientific answer: bounded expression-response prediction is demonstrated,
 while reliable general biological-outcome prediction remains open. Complete
@@ -44,11 +51,24 @@ donors; HIRISA is 75.84% worse and loses in all five donors. The pooled criterio
 passes, but the HIRISA criterion fails. These reused development donors do not
 provide fresh external validation or repair the failed historical interval coverage.
 
-The next prediction work is to explain the cross-dataset failure using training-only
-model diagnostics, then freeze an external validation and uncertainty-calibration
-experiment before inspecting its outcomes. Keep the training-mean baseline and
-per-donor failures visible. The complete reports and shard hashes are published;
-remaining raw-shard archival requires additional capacity and is not complete.
+Training-only response diagnostics, donor-selected shrinkage, native two-study
+transfer and the range/error decomposition are complete. The
+[three-study held-out follow-up](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/StudyHeldOut/README.md)
+now selects penalties by held-out training studies with equal study weights.
+All 75 donors and 885,000 predictions pass independent numerical verification.
+It still fails HIRISA in every donor; no study reaches a 5% gain over both
+baselines. These are completed development tests on previously inspected
+cohorts, including explicit reuse of GSE181897. They are not pending jobs or
+fresh external qualification.
+
+The next prediction design must address the differences between study contexts
+that this shared response model cannot capture. Further donor-only penalty
+search or an observed-range filter is not an established solution: failure also
+persists inside training ranges. A new external validation and uncertainty
+calibration protocol must be frozen before its outcomes are inspected. Preserve
+all original baselines and per-study failures. The joint-count reports and shard
+hashes are published; full raw joint-shard archival remains incomplete. The newer
+shrinkage experiments retain their complete declared archives separately.
 
 Integration still requires resolving sensitive marker/program and rare-cell
 preservation losses. Resolve Adamson's experimental controls before fitting its

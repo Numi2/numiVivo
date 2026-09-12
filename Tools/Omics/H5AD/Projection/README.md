@@ -259,8 +259,10 @@ column and definition in place. Valid codes retain missing `-1`, unused labels
 and label order, with `ordered=false`. Successfully migrated definitions leave
 `uns`; unrelated unstructured data remains copied. Raw feature annotations do
 not inherit obs/var category migration. Contradictory metadata and invalid codes
-fail. Nonstring indices, scalar embedding members and
-arbitrary nested/ragged records remain unsupported rather than inferred.
+fail. The original legacy qualification did not support nonstring indices or
+scalar embedding members; the later numeric-index and scalar-embedding sections
+below record those implemented extensions. Arbitrary nested/ragged records
+remain unsupported rather than inferred.
 
 `check_legacy.py` compared the complete **original** Kang file, SHA256
 `e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830`,

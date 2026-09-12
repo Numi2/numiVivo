@@ -372,8 +372,14 @@ The complete development objective remains open:
    slots and raw, with exact prior unique-selection bytes. Native legacy
    projection now preserves the complete original Kang file, including compound
    obs/var, structured PCA/UMAP and categories previously held in uns. Both full
-   and repeated selections agree with AnnData and reconstruct exactly. Numeric
-   legacy category labels, nonstring legacy indices, scalar/ragged embedding
+   and repeated selections agree with AnnData and reconstruct exactly. Subsequent
+   [numeric-category migration](../Tools/Omics/H5AD/Projection/README.md#numeric-legacy-categories-2026-09-12),
+   [scalar embeddings](../Tools/Omics/H5AD/Projection/README.md#scalar-legacy-embeddings-2026-09-12)
+   and [numeric indices](../Tools/Omics/H5AD/Projection/README.md#numeric-dataframe-indices-2026-09-12)
+   now pass their declared native/AnnData conformance checks. The
+   [explicit identity route](../Tools/Omics/H5AD/Projection/NUMERIC_INDEX_ROUTE.md)
+   connects numeric-index files to annotation, count-store and pseudobulk without
+   inferring biological IDs or silently coercing index values. Ragged embedding
    fields and arbitrary nested records remain unsupported; storage/work bounds
    still apply. The [complete original Kang analytical route](../Tools/Omics/H5AD/Projection/LEGACY_COUNT_ROUTE.md)
    now passes native annotation, streaming count import and pseudobulk:
@@ -381,6 +387,15 @@ The complete development objective remains open:
    A missing legacy uns dictionary tag was repaired as projection v2; the earlier
    failed annotation remains retained. Full PBMC3K count/QC
    and annotation preservation now pass; this single library is not a donor-DE benchmark.
+   [Full-atlas annotation](../Tools/Omics/H5AD/Annotation/Atlas/README.md) now adds
+   an exact source-row column to all 1,612,594 HIRISA observations and verifies
+   every original HDF5 dataset element. The later
+   [graph-community export](../Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md)
+   binds all cell/sample identities and labels and reopens in backed AnnData;
+   that export's count check is sampled, while all original metadata are checked.
+   Annotation admits 16 GiB source/32 GiB output and two-million-element axes;
+   existing total edit and string-byte budgets still apply. These are qualified
+   interchange routes, not cell-type or outcome validation.
 2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
    tuft-cell count/QC passes. A third treatment study,
@@ -663,6 +678,18 @@ The complete development objective remains open:
    context ridge fails its secondary gate. This is development on inspected data,
    with only two training donors per fold, broad nominal intervals and two losses
    to the matched mean. Independent temporal/context validation remains open.
+   The [complete joint-count donor study](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/README.md)
+   now fits, predicts and scores all thirteen Kang/HIRISA donor omissions. Kang
+   improves over training mean; HIRISA loses in all five donors. Later response
+   shrinkage and transfer experiments retain those original failures.
+   The [three-study held-out native experiment](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/StudyHeldOut/README.md)
+   selects penalties using only training studies and balances study weights.
+   All 75 donors, 11,800 genes and 885,000 predictions pass independent numerical
+   checks. It improves slightly over balanced training mean in Kang/GSE181897,
+   but fails both baselines in every HIRISA donor; no study reaches a 5% gain over
+   both baselines. GSE181897 is explicitly reused for development here; its
+   earlier external-test result is unchanged. These completed experiments do
+   not establish calibrated uncertainty or reliable context transfer.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)
