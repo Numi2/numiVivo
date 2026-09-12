@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "status": "COMPLETE-ATAC-diagnostic-gate-failed-not-promoted",
+  "baseCommit": "939c67e706b1325351cfc29ca4885499790ce21e",
+  "archive": {
+    "bytes": 8641874,
+    "sha256": "920b40995b369c5097f31395f434c1b650201c64f8d9779434488024d6ed765a"
+  },
+  "members": {
+    "report.json": {
+      "bytes": 3865,
+      "sha256": "a5afd7ff08a0fe9ba2af361e093489e469ffc1fd589a774b710624979b9c0c84"
+    },
+    "next-preprocessing-check.json": {
+      "bytes": 622,
+      "sha256": "a19b2afe0ff80851686283f21a62d269ba26b717ebf6b61a00faec317597a227"
+    },
+    "null-comparison.json": {
+      "bytes": 224,
+      "sha256": "61b6aed06045eb022a73643c11c00af3533891080e850d6a01be6755f07945f2"
+    },
+    "score.log": {
+      "bytes": 3531,
+      "sha256": "ee7cd3fd10215bbd1641e10929a328d95c5285abd2796159a3e116a0ebb06585"
+    },
+    "label-correction.json": {
+      "bytes": 186,
+      "sha256": "b2acc78787b99724ebf1c6ac113f22ad3066779801b22de65dae07f313a866aa"
+    },
+    "score-original-labels.py": {
+      "bytes": 5489,
+      "sha256": "4ae21126f3335f913392106bd3926ef334d32176bd9a222dd69831c95a3c31f6"
+    },
+    "protocol.json": {
+      "bytes": 2355,
+      "sha256": "4f5fbf706a22044aaf0774f657ded6e3d62d21749efb0accb170d4450b31e195"
+    },
+    "report-original-labels.json": {
+      "bytes": 3804,
+      "sha256": "698fbb954b6ef75333fd3e6797e73c73a410f474facb92a8e43842fddef7cb69"
+    },
+    "per-feature.npz": {
+      "bytes": 8800132,
+      "sha256": "ac9b2911264b8c7a7c267ae17bb5746d97dc8645f39e2998475a9359f9f363b3"
+    },
+    "score.py": {
+      "bytes": 5550,
+      "sha256": "2722644f501be08945225569e692e02e43843168e64171a2fcfdee794d43915b"
+    }
+  }
+}

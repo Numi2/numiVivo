@@ -93,3 +93,6 @@ combined no-worsening rule: primary neighbor averaging worsens versus RNA-only,
 while fuzzy averaging improves slightly. Numerical/source replay remains valid,
 but biological promotion is withheld. Independently specified experimental
 evidence is still required for reliable biological outcome prediction.
+
+The subsequent [ATAC diagnostic](../ATACPreservation/README.md) also fails its
+combined gate. Neither modality currently supports preservation promotion.
