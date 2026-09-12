@@ -1,0 +1,201 @@
+{
+  "status": "passed-all-donor-ingestion-offline-review",
+  "createdUnix": 1789201159.4958,
+  "donors": [
+    {
+      "donor": "Donor1",
+      "totals": {
+        "selectedCells": 4649,
+        "selectedNonzeros": 9621618,
+        "selectedTotalCounts": 22464566,
+        "sourceGeneCountMismatch": 293,
+        "sourceTscpCountMismatch": 293,
+        "sourceMinusMatrixTotal": 310,
+        "sourceMinusMatrixGeneCount": 306
+      },
+      "sourceRuns": 288,
+      "rangeReceipts": 576,
+      "streamSHA256": "cf9801872ddd3b39f42b08acfea842f1f6e09f1db00dfb4c000559df29758bad"
+    },
+    {
+      "donor": "Donor10",
+      "totals": {
+        "selectedCells": 3153,
+        "selectedNonzeros": 6121766,
+        "selectedTotalCounts": 12950874,
+        "sourceGeneCountMismatch": 157,
+        "sourceTscpCountMismatch": 157,
+        "sourceMinusMatrixTotal": 161,
+        "sourceMinusMatrixGeneCount": 158
+      },
+      "sourceRuns": 286,
+      "rangeReceipts": 572,
+      "streamSHA256": "e480db22d1cc22e47c0b24bf15d1c7b137c826180268d7fbb5cbc9c068bfce7a"
+    },
+    {
+      "donor": "Donor11",
+      "totals": {
+        "selectedCells": 6734,
+        "selectedNonzeros": 10163226,
+        "selectedTotalCounts": 18413377,
+        "sourceGeneCountMismatch": 253,
+        "sourceTscpCountMismatch": 253,
+        "sourceMinusMatrixTotal": 266,
+        "sourceMinusMatrixGeneCount": 258
+      },
+      "sourceRuns": 288,
+      "rangeReceipts": 576,
+      "streamSHA256": "07e13950644cfe0ab430aa2b56976f585e0686190c5c817b864b980f1a7902db"
+    },
+    {
+      "donor": "Donor12",
+      "totals": {
+        "selectedCells": 9480,
+        "selectedNonzeros": 10877588,
+        "selectedTotalCounts": 18019680,
+        "sourceGeneCountMismatch": 342,
+        "sourceTscpCountMismatch": 342,
+        "sourceMinusMatrixTotal": 360,
+        "sourceMinusMatrixGeneCount": 357
+      },
+      "sourceRuns": 288,
+      "rangeReceipts": 576,
+      "streamSHA256": "436b56d2341de2017b9e8a79d4b57004d9603ee32af3011fd982fc3f036fb1c4"
+    },
+    {
+      "donor": "Donor2",
+      "totals": {
+        "selectedCells": 13847,
+        "selectedNonzeros": 24001251,
+        "selectedTotalCounts": 48476667,
+        "sourceGeneCountMismatch": 554,
+        "sourceTscpCountMismatch": 554,
+        "sourceMinusMatrixTotal": 573,
+        "sourceMinusMatrixGeneCount": 570
+      },
+      "sourceRuns": 288,
+      "rangeReceipts": 576,
+      "streamSHA256": "d3f5dabc510c5dc8b824a38a0a9dd93e791dcbebd556a18d1e8de07f0e6c5917"
+    },
+    {
+      "donor": "Donor3",
+      "totals": {
+        "selectedCells": 6183,
+        "selectedNonzeros": 12728199,
+        "selectedTotalCounts": 28692205,
+        "sourceGeneCountMismatch": 386,
+        "sourceTscpCountMismatch": 386,
+        "sourceMinusMatrixTotal": 408,
+        "sourceMinusMatrixGeneCount": 405
+      },
+      "sourceRuns": 284,
+      "rangeReceipts": 568,
+      "streamSHA256": "2c90b9f491f8626df3f1b410132a5d5ec9936bced6143e6fa5a9928209d2781f"
+    },
+    {
+      "donor": "Donor4",
+      "totals": {
+        "selectedCells": 11196,
+        "selectedNonzeros": 21871760,
+        "selectedTotalCounts": 45573972,
+        "sourceGeneCountMismatch": 513,
+        "sourceTscpCountMismatch": 513,
+        "sourceMinusMatrixTotal": 540,
+        "sourceMinusMatrixGeneCount": 533
+      },
+      "sourceRuns": 288,
+      "rangeReceipts": 576,
+      "streamSHA256": "de1f97efbc1423a85763ee2b76b4e3ce4e9d7584578c66d5b2451be27e24e3d8"
+    },
+    {
+      "donor": "Donor5",
+      "totals": {
+        "selectedCells": 1859,
+        "selectedNonzeros": 3068626,
+        "selectedTotalCounts": 5565042,
+        "sourceGeneCountMismatch": 81,
+        "sourceTscpCountMismatch": 81,
+        "sourceMinusMatrixTotal": 86,
+        "sourceMinusMatrixGeneCount": 84
+      },
+      "sourceRuns": 279,
+      "rangeReceipts": 558,
+      "streamSHA256": "b47ce31e95ba3a43716a5b8444e850fadea3e2a01825d8dbe267f16d96ff429e"
+    },
+    {
+      "donor": "Donor6",
+      "totals": {
+        "selectedCells": 4863,
+        "selectedNonzeros": 8317519,
+        "selectedTotalCounts": 16458256,
+        "sourceGeneCountMismatch": 174,
+        "sourceTscpCountMismatch": 174,
+        "sourceMinusMatrixTotal": 189,
+        "sourceMinusMatrixGeneCount": 184
+      },
+      "sourceRuns": 288,
+      "rangeReceipts": 576,
+      "streamSHA256": "dec99a35d0495d536df61c2b94b74e9c2e1dac940afbe3404f5c45faedcaa71b"
+    },
+    {
+      "donor": "Donor7",
+      "totals": {
+        "selectedCells": 4244,
+        "selectedNonzeros": 7259586,
+        "selectedTotalCounts": 14406337,
+        "sourceGeneCountMismatch": 163,
+        "sourceTscpCountMismatch": 163,
+        "sourceMinusMatrixTotal": 168,
+        "sourceMinusMatrixGeneCount": 168
+      },
+      "sourceRuns": 288,
+      "rangeReceipts": 576,
+      "streamSHA256": "aa9ee1e5e3ad6314b65d613717a861be78cca13836b129e1920ae394200640ba"
+    },
+    {
+      "donor": "Donor8",
+      "totals": {
+        "selectedCells": 3697,
+        "selectedNonzeros": 6995934,
+        "selectedTotalCounts": 14556034,
+        "sourceGeneCountMismatch": 171,
+        "sourceTscpCountMismatch": 171,
+        "sourceMinusMatrixTotal": 180,
+        "sourceMinusMatrixGeneCount": 178
+      },
+      "sourceRuns": 287,
+      "rangeReceipts": 574,
+      "streamSHA256": "060bb4098a8a96ae0e77af380312cd89dc13d43055c1962a3c1b434f835d3890"
+    },
+    {
+      "donor": "Donor9",
+      "totals": {
+        "selectedCells": 2541,
+        "selectedNonzeros": 3882500,
+        "selectedTotalCounts": 7551860,
+        "sourceGeneCountMismatch": 101,
+        "sourceTscpCountMismatch": 101,
+        "sourceMinusMatrixTotal": 104,
+        "sourceMinusMatrixGeneCount": 104
+      },
+      "sourceRuns": 281,
+      "rangeReceipts": 562,
+      "streamSHA256": "b368b36d72118301b8d0fb4a73421a48504fc8ec7f590ae1fc90e6cc2e33a7ab"
+    }
+  ],
+  "totals": {
+    "selectedCells": 72446,
+    "selectedNonzeros": 124909573,
+    "selectedTotalCounts": 253128870,
+    "sourceGeneCountMismatch": 3188,
+    "sourceTscpCountMismatch": 3188,
+    "sourceMinusMatrixTotal": 3345,
+    "sourceMinusMatrixGeneCount": 3305
+  },
+  "sourceRuns": 3433,
+  "rangeReceipts": 6866,
+  "completeIngestionCohort": true,
+  "sourceReplay": false,
+  "predictionScored": false,
+  "preparationManifestSHA256": "a3ceda16bca4effee9c88bd0abc4bfc08a17dc7b1d632ee94ef7a066d35828d0"
+}

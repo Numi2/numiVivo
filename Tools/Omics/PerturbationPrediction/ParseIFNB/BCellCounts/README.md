@@ -8,8 +8,8 @@ count records and all 40,352 RNA features** across twelve PBS/IFN-beta donor
 pairs. It is the exact metadata selection in [BCellAdmission](../BCellAdmission/README.md).
 No donor, selected row or feature is removed on QC disagreement or response.
 
-This publication records preparation and the execution recipe. Native ingestion
-and source replay were launched; **complete count validation is not yet claimed**.
+All twelve native ingestions and their offline independent aggregate checks have
+passed. Source replay is running; **complete count validation is not yet claimed**.
 The metadata-only archive does not become count evidence until every native
 donor ingestion and replay finishes with independently matching counts.
 
@@ -111,6 +111,19 @@ No prediction is fitted or scored by this workflow. Original Parse metadata and
 count derivatives retain **Parse Biosciences, CC BY-NC 4.0** attribution.
 
 ## First completed donor: partial execution evidence
+
+The later [complete ingestion review](ingestion-review.json), executed by
+[review_ingestion.py](review_ingestion.py), checks all twelve native bundles,
+their planned identities and independent counts, per-run QC sums, stream/receipt
+hashes and the complete ingestion receipt. It covers 72,446 cells, 124,909,573
+records and **253,128,870 total counts**, with 3,433 source runs and 6,866 range
+receipts. Historical source gene-count and transcript-count QC each disagree
+for 3,188 cells; their aggregate excesses are 3,305 detected features and 3,345
+counts. No affected row was removed. The source and preparation hashes match.
+
+This is complete ingestion evidence with replay still pending. The retained
+script and summary do not embed every donor bundle; those remain in the remote
+study until terminal packaging. No prediction was fitted or scored.
 
 [The retained offline review](donor1-ingest-review.json) rechecked Donor1's
 native bundle against independent counts: 4,649 cells, 9,621,618 records and
