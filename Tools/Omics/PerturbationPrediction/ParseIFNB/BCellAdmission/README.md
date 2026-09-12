@@ -10,7 +10,9 @@ The newer context model has **11,600 exact correspondences and 200 absent
 features** among its 11,800 genes. The full coordinate mapping and missing list
 are retained. No alias mapping, zero filling, merging or panel change was applied.
 The earlier 409 missing duration-model features describe a different, unchanged
-panel. No B-cell-specific count aggregation, model fitting or scoring occurred.
+panel. This metadata audit did not aggregate counts or fit/score a model.
+The subsequent [complete count workflow](../BCellCounts/README.md) now has all
+twelve ingestions and replays verified; predictive admission remains unresolved.
 
 The audit preserves label codes for all 725,031 original rows, all 432
 donor/condition/label counts and exact original B-cell source row coordinates.

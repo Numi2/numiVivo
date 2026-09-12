@@ -1,8 +1,8 @@
 # From validated B-cell counts to a predictive test
 
-The running count workflow prepares a possible external RNA-response test.
-Completion establishes faithful count processing; it does not establish predictive
-accuracy. Leave its frozen inputs and live driver unchanged while it runs.
+The count workflow and complete archive review passed, published in c4b4f1dd.
+This establishes faithful selected count processing; it does not establish
+predictive accuracy. Preserve the frozen execution and its evidence.
 
 ## Final count evidence review
 
@@ -58,6 +58,27 @@ response, immune recognition, disease progression or clinical benefit. The curre
 three-study context model remains unpromoted because two held-out studies fail
 its existing transfer gate.
 
-While ingestion runs, useful work is limited to checks, provenance resolution and
-protocol preparation that do not alter the frozen execution or tune against its
-treated outcomes. Another heavy fit is not a prerequisite for these steps.
+The next prediction work is experimental provenance resolution and an explicit
+feature contract, followed by renewed development validation if the panel changes.
+Do not tune against Parse treated outcomes to resolve these requirements.
+
+## Annotation reference lead inspected 2026-09-12
+
+The [Allen Institute downloads](https://apps.allenimmunology.org/aifi/resources/parse-10m-cytokines/downloads/)
+provide AIFI L1/L2 CellTypist models trained from labeled Parse PBS controls and
+DESeq2 pseudobulk results across twelve subjects. These are concrete candidates
+for reference-mapping interoperability and a method comparison. Their presence
+is not evidence that NumiVivo has imported, executed or matched them. No model
+or outcome file was downloaded in this inspection.
+
+Because these models use this dataset's PBS controls, evaluation on the same
+Parse donors would be a compatibility/development check, not independent donor
+validation. Preserve the existing literal B-cell selection; do not substitute
+new labels after seeing predictive scores. Before execution, record model file
+hashes, feature/preprocessing requirements and reference cohort provenance.
+The published DESeq2 results use different labels; direct numerical agreement
+requires matched cell membership, filtering and design, not just gene names.
+
+The [Parse experimental description](https://www.parsebiosciences.com/datasets/10-million-human-pbmcs-in-a-single-experiment/)
+confirms 24-hour exposure but does not specify IFNB dose/reagent in the inspected
+text. The dose admission requirement remains unresolved.
