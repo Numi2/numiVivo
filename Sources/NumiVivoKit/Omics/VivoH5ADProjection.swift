@@ -469,16 +469,39 @@ private extension VivoH5ADProjector {
         if tooLarge { return false }
         guard !tooSmall else { throw VivoOmicsError.invalid("legacy categorical code below missing sentinel") }
         let ct=try h.type(cats,attribute: false);defer { h.close(ct,"H5Tclose") }
-        guard try h.legacyTypeKind(ct)==3 else { throw VivoOmicsError.invalid("legacy category migration currently requires string labels") }
-        if !shape.isEmpty { try h.legacyStringReadBound(cats,type: ct) }
-        let labels=try shape.isEmpty ? [h.legacyScalarString(cats,type: ct)] : h.strings(cats,maximum: 100_000)
-        guard labels.count==count,Set(labels).count==count else { throw VivoOmicsError.invalid("duplicate legacy category labels") }
+        let categoryKind=try h.legacyTypeKind(ct)
+        if categoryKind==3 {
+            if !shape.isEmpty { try h.legacyStringReadBound(cats,type: ct) }
+            let labels=try shape.isEmpty ? [h.legacyScalarString(cats,type: ct)] : h.strings(cats,maximum: 100_000)
+            guard labels.count==count,Set(labels).count==count else { throw VivoOmicsError.invalid("duplicate legacy category labels") }
+        } else if categoryKind==0 {
+            guard try typeWidth(ct)<=8 else { throw VivoOmicsError.invalid("legacy category integer width") }
+            let sign: @convention(c) (Int64) -> Int32 = try h.symbol("H5Tget_sign")
+            switch sign(ct) {
+            case 0:
+                var labels=[UInt64](repeating: 0,count: count)
+                if count>0 { try labels.withUnsafeMutableBytes { try h.read(cats,type: h.native("NATIVE_ULLONG"),attribute: false,into: $0.baseAddress) } }
+                guard Set(labels).count==count else { throw VivoOmicsError.invalid("duplicate legacy category labels") }
+            case 1:
+                var labels=[Int64](repeating: 0,count: count)
+                if count>0 { try labels.withUnsafeMutableBytes { try h.read(cats,type: h.native("NATIVE_LLONG"),attribute: false,into: $0.baseAddress) } }
+                guard Set(labels).count==count else { throw VivoOmicsError.invalid("duplicate legacy category labels") }
+            default:throw VivoOmicsError.invalid("legacy category integer sign")
+            }
+        } else if categoryKind==1 {
+            guard try [4,8].contains(typeWidth(ct)) else { throw VivoOmicsError.invalid("legacy category floating width") }
+            var labels=[Double](repeating: 0,count: count)
+            if count>0 { try labels.withUnsafeMutableBytes { try h.read(cats,type: h.native("NATIVE_DOUBLE"),attribute: false,into: $0.baseAddress) } }
+            guard !labels.contains(where: { $0.isNaN }) else { throw VivoOmicsError.invalid("null legacy category labels") }
+            // Set equality deliberately treats positive and negative zero as duplicates.
+            guard Set(labels).count==count else { throw VivoOmicsError.invalid("duplicate legacy category labels") }
+        } else { throw VivoOmicsError.invalid("unsupported legacy category datatype") }
         let group=try h.projectionGroup(destination,column);defer { h.close(group,"H5Gclose") }
         try h.encoding(group,"categorical","0.2.0");try h.writeBooleans(group,"ordered",shape: [],values: [false],attribute: true)
         try legacyMember(source,group,"codes",member: column,type: type,rows: rows,length: length,trailing: [],path: path+"/"+column+"/codes")
         try consume(count);try reserveStorage(count*typeWidth(ct),output: group)
         let output=try h.projectionDataset(group,"categories",type: ct,shape: [UInt64(count)]);defer { h.close(output,"H5Dclose") }
-        try h.projectionAttributes(cats,output,excluding: ["encoding-type","encoding-version"]);try h.encoding(output,"string-array","0.2.0")
+        try h.projectionAttributes(cats,output,excluding: ["encoding-type","encoding-version"]);try h.encoding(output,categoryKind==3 ? "string-array" : "array","0.2.0")
         for start in stride(from: 0,to: count,by: 65_536) {
             let end=min(count,start+65_536)
             try h.legacyTransfer(cats,output,memoryType: ct,outputType: ct,rows: (start..<end).map(UInt64.init),components: 1,

@@ -259,7 +259,7 @@ column and definition in place. Valid codes retain missing `-1`, unused labels
 and label order, with `ordered=false`. Successfully migrated definitions leave
 `uns`; unrelated unstructured data remains copied. Raw feature annotations do
 not inherit obs/var category migration. Contradictory metadata and invalid codes
-fail. Numeric category labels, nonstring indices, scalar embedding members and
+fail. Nonstring indices, scalar embedding members and
 arbitrary nested/ragged records remain unsupported rather than inferred.
 
 `check_legacy.py` compared the complete **original** Kang file, SHA256
@@ -324,3 +324,26 @@ remain valid historical AnnData-preservation evidence; their native annotation
 handoff failure is separately retained. Modern projections keep their exact
 historical bytes. The linked report gives every count, group, memory measurement,
 source identity and remaining biological limit.
+
+
+## Numeric legacy categories, 2026-09-12
+
+Legacy numeric category labels now migrate with their original datatype and
+bytes. Signed and unsigned integers up to 64 bits are checked without floating
+conversion; Float32/Float64 labels retain signed zero and infinities. Duplicate
+labels (including opposite-signed zero) and NaN labels are rejected before
+publication. Missing category codes retain their original meaning.
+
+The isolated local native build passes 24 reference cases over full, repeated
+and empty selections. Cases cover Int64 extrema, UInt64 values above 2^63,
+big-endian integers, floats, duplicates and nulls. Pandas cannot read big-endian
+category indices directly: that case uses byte-order-normalized disposable
+reference copies, with a separate exact datatype/byte check on native output.
+Four historical string-category cases preserve all four payload hashes exactly
+and pass native reconstruction. These are format tests, not biological evidence.
+
+The [retained evidence](evidence/2026-09-12-numeric-categories/manifest.json)
+binds the executable, compiled sources, checker, original failure and all outputs.
+Run `check_numeric_categories.py --binary H5AD_CHECK --source integer.h5ad
+--out NEW_DIRECTORY` with the retained seed file after extracting the archive.
+The broader legacy checker also now expects numeric-category migration to succeed.

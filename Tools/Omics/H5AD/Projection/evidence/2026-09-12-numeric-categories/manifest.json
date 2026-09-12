@@ -1,0 +1,16 @@
+{
+  "status": "passed-scoped-native-interoperability",
+  "baseCommit": "9b7b6e7ff770b8d675aae2ccb6cc2b1a4001b032",
+  "binarySHA256": "897ed45ec08db366f6d242a6ebb5e8642903b1e5554f8042d35be8d5e7b6d80b",
+  "archiveSHA256": "f189c94d32cbdfaf8f53a514edf18102cbd6a13acfb3391d86b975e2ceca571e",
+  "archiveBytes": 2194059,
+  "numericCases": 24,
+  "unchangedStringCases": 4,
+  "sourceChangeSHA256": "768a1f22ec2fa4385b6ea0c59e9a5e58b72e786b9b60f147f61bcdd19abd5f6e",
+  "checkerSHA256": "8fa720748c798d8137ca39ecc8893e72217c8e18037e6d76e84521244540978f",
+  "limitations": [
+    "No biological validation",
+    "Big-endian categories require normalized disposable reference copies because of pandas buffer limitation",
+    "Scoped local build; no full product or Metal qualification"
+  ]
+}

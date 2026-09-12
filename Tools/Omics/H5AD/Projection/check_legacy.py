@@ -122,7 +122,7 @@ for kind in ['csr','csc','dense']:
  run(kind+'-full',src);run(kind+'-repeated',src,[6,0,3,0],[4,1,1,0]);run(kind+'-empty',src,[],[])
 for special in ['scalar','bad-code','duplicate','mixed-raw','partial','numeric-categories','oversized-scalar','frame-metadata','scalar-embedding','oversized-categories']:
  src=a.out/(special+'.h5ad');fixture(src,special=special)
- reject={'bad-code':'below missing sentinel','duplicate':'duplicate legacy category labels','mixed-raw':'mixed legacy raw','partial':'encoding-type','numeric-categories':'requires string labels','oversized-scalar':'bounded legacy scalar string','frame-metadata':'contradictory legacy dataframe','scalar-embedding':'must be a fixed array','oversized-categories':'bounded scalar or vector'}.get(special)
+ reject={'bad-code':'below missing sentinel','duplicate':'duplicate legacy category labels','mixed-raw':'mixed legacy raw','partial':'encoding-type','oversized-scalar':'bounded legacy scalar string','frame-metadata':'contradictory legacy dataframe','scalar-embedding':'must be a fixed array','oversized-categories':'bounded scalar or vector'}.get(special)
  run(special,src,reject=reject)
 assert sha(a.kang)=='e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830'
 run('kang-original-complete',a.kang)
