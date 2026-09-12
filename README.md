@@ -12,6 +12,8 @@ The ambition is to follow a molecular change across scales: how a structure move
 
 The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md) now carries all 1,612,594 native graph-community labels into a backed AnnData-readable H5AD, with complete cell-identity and metadata checks. This is interoperability evidence, not biological annotation validation.
 
+The latest [training-selected RNA response model](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/README.md) beats training mean in all 13 development donor holdouts, but HIRISA's 1.41% gain still misses the 5% gate. This is progress in conditional RNA estimation, not general biological prediction.
+
 ## Biological prediction: current evidence
 
 **Available data supports conditional estimates of average RNA responses;

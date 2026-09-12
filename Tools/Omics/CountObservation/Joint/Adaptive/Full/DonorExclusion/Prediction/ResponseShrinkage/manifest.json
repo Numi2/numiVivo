@@ -1,0 +1,181 @@
+{
+  "archiveSHA256": "777160991ef5e2548c0b9814c7830a02716a90284b69b410f95a0c14d3ab7703",
+  "files": {
+    "HIRISA-00-model.npz": {
+      "bytes": 420012,
+      "sha256": "69b5783a47e465689f27d615cc7188ef1f675fc301ad69f35685af912821f864"
+    },
+    "HIRISA-01-model.npz": {
+      "bytes": 418895,
+      "sha256": "70ae733f1578277ef60da293ad72385fcb300472d8b1e29022530d9e8a3b8150"
+    },
+    "HIRISA-02-model.npz": {
+      "bytes": 416867,
+      "sha256": "cf914440101799b1bc8df13d7d90bc8f27d242a51981d2dde17ffbfaeb23dea3"
+    },
+    "HIRISA-03-model.npz": {
+      "bytes": 407986,
+      "sha256": "5b65a613323028846546790c53cab9f2f012bba93c12e0e8c3f1358eb72d1848"
+    },
+    "HIRISA-04-model.npz": {
+      "bytes": 415197,
+      "sha256": "4ad6cab7f66703cf9ce1e6841d744e726b1294f79bf2ea1c483155ab42db2ca3"
+    },
+    "Kang-00-model.npz": {
+      "bytes": 264721,
+      "sha256": "9b3b58bc6489abd1f5cf35d9bf48e73d51488eec2ecaaa934d54c7ce2e5e0821"
+    },
+    "Kang-01-model.npz": {
+      "bytes": 246709,
+      "sha256": "f9e42dd0f05f8493fbcdfadbc72fd15530fa35fe6f05a06666e8c739e785eff4"
+    },
+    "Kang-02-model.npz": {
+      "bytes": 264322,
+      "sha256": "b473384f4d2cd7afc94617288bee2b2411b1b5fa21ddfdc52605d43de57c7c4d"
+    },
+    "Kang-03-model.npz": {
+      "bytes": 267399,
+      "sha256": "3dcb0e26b01ff60d617ac34b5bd8ff739819bdd2bf5be9303d98c38fdd02f820"
+    },
+    "Kang-04-model.npz": {
+      "bytes": 267201,
+      "sha256": "852efd8200d15ebb33c8a9ea639330f1b4813da9e53ab59ce868cd0bffbffa7f"
+    },
+    "Kang-05-model.npz": {
+      "bytes": 264651,
+      "sha256": "2a709b741a3fc5550bf08145c350ce5bf66e4ef0c707942cdb13dfadbcfdd032"
+    },
+    "Kang-06-model.npz": {
+      "bytes": 259307,
+      "sha256": "9b019f4fa59bf23b6679950aee478ac1ce33518c5fcfd9f82aa6d363a939bf4b"
+    },
+    "Kang-07-model.npz": {
+      "bytes": 254631,
+      "sha256": "866a96e420f1f7eeca7120a5496ecdd37eabbe8ba1a02adda71116aab0164b4a"
+    },
+    "README.md": {
+      "bytes": 4240,
+      "sha256": "23af14d3562583b1cdd562fab0ffeaf8b66fe48c07afd7f1288ef41da53ad574"
+    },
+    "freeze.json": {
+      "bytes": 577,
+      "sha256": "d20202becbe7e19f0f9d1464b576bb8898185f42911ea4b6611a3fb7348434e3"
+    },
+    "model-verification.json": {
+      "bytes": 1730,
+      "sha256": "d6161cdb0837f33adca6cca296484ed79f3392c3ea12bd64e362d3ce554bd825"
+    },
+    "pre-score-bindings.json": {
+      "bytes": 927,
+      "sha256": "306bcda51892f6b3d637bd6e975daca0905c9e11514ce07c5d7703d2425f63e4"
+    },
+    "predict.log": {
+      "bytes": 184,
+      "sha256": "c8e604ac01696aca49231ddd5fe2ec79dc78a85d45ad2a68a05b973d17e77157"
+    },
+    "predict.py": {
+      "bytes": 2447,
+      "sha256": "6d1f6d8c6129b1d834c525b0cbcd79a38793cebfcc3274d3472a384719c92ebc"
+    },
+    "prediction-verification.json": {
+      "bytes": 1619,
+      "sha256": "d2619163ead97bfcae9d23d9c3a670ee45e61e16495497e52f3f62a86c0ad066"
+    },
+    "predictions/HIRISA-00.jsonl.gz": {
+      "bytes": 238016,
+      "sha256": "760eea695a322a98ee41708e10d0d14909f5cd3c412c5299c63061a08126b052"
+    },
+    "predictions/HIRISA-01.jsonl.gz": {
+      "bytes": 240088,
+      "sha256": "c8c5fe32816b69a1146bca9df4f7bd75e1294c18c11a3bd75e73889b76bc036f"
+    },
+    "predictions/HIRISA-02.jsonl.gz": {
+      "bytes": 238493,
+      "sha256": "316444a0ec57db5d47ff9bdc5e6dd1de37faa9cfa2b41e19a3f298baec666867"
+    },
+    "predictions/HIRISA-03.jsonl.gz": {
+      "bytes": 234150,
+      "sha256": "f32780c90019f1de75be94e10a7489e2c4a8e74e0301c803f03f6e9a289a5748"
+    },
+    "predictions/HIRISA-04.jsonl.gz": {
+      "bytes": 237366,
+      "sha256": "6bf2d3bdfecddb404769116471df72c83a3eedade8c097e3272c8f15ff6005ac"
+    },
+    "predictions/Kang-00.jsonl.gz": {
+      "bytes": 153849,
+      "sha256": "154ee01c25d1cf5e0143febce46ba03371e7e94335a394621455fd04db23d827"
+    },
+    "predictions/Kang-01.jsonl.gz": {
+      "bytes": 144052,
+      "sha256": "a5cce49fca6b51bec8b59a01016107b2688a9bbedaa416d217b5a0068a3b5172"
+    },
+    "predictions/Kang-02.jsonl.gz": {
+      "bytes": 153999,
+      "sha256": "9aee6ba19a191d8d66d0de7d1d1f923fd5259ebb580834c4710606bf3560c97c"
+    },
+    "predictions/Kang-03.jsonl.gz": {
+      "bytes": 153321,
+      "sha256": "7a7e781929e5ef746030b6e674ca9681184dd3b63edda958d94e82a2787428ac"
+    },
+    "predictions/Kang-04.jsonl.gz": {
+      "bytes": 153689,
+      "sha256": "5885cb3660f174b958cf2ef693dc916539de9334311ee11cedcdec47c84c5f2b"
+    },
+    "predictions/Kang-05.jsonl.gz": {
+      "bytes": 153965,
+      "sha256": "68f88ecd7f9a54cc806a7b447084ab06d7011f77c62e82859ee1fb47b237395e"
+    },
+    "predictions/Kang-06.jsonl.gz": {
+      "bytes": 151359,
+      "sha256": "941a055a6a3afe89e6ace52f2664b7a527f1b89d9a82a091ee4548937d619893"
+    },
+    "predictions/Kang-07.jsonl.gz": {
+      "bytes": 148559,
+      "sha256": "bf39286bcf4b5474581e0f0ab13a9de18ad4908f97bec19498fc2b12d8abc0e9"
+    },
+    "predictions/receipt.json": {
+      "bytes": 723916,
+      "sha256": "d9862c7fb80d5adf15565ff1ff154cecffd389e52a333caafbc0faf5133355c6"
+    },
+    "run.log": {
+      "bytes": 2103,
+      "sha256": "84e5bafe325bd4408fac6f0bb694862d6a6190565726916b5c4fa35152a088a5"
+    },
+    "score.log": {
+      "bytes": 701,
+      "sha256": "4b2ae2c09b89b07b10ffc46782d227f5194128ffa74c3a4e96cc78277ce25d83"
+    },
+    "score.py": {
+      "bytes": 2509,
+      "sha256": "aaea1af67016459df539014470d53fd01f75d0ffbb0e72564396640f3258a80b"
+    },
+    "scores.json": {
+      "bytes": 9060,
+      "sha256": "ff66c90ee681d94761f9b9f92901264d55de7aa54fd65e8f909d04834326d6a5"
+    },
+    "select.py": {
+      "bytes": 3089,
+      "sha256": "84c0456a658e93522b18ce76453bf3acecd78c6c2aebd5994cd30d73edf228eb"
+    },
+    "selection.json": {
+      "bytes": 368992,
+      "sha256": "da7a2cd07744cee65b886b7fabe6ae34bcae500af177c8c4582ffc0d8c7b17d9"
+    },
+    "verify-models.log": {
+      "bytes": 455,
+      "sha256": "f36001be28f0efafe377061f8a277f056e8590e7563cf1bf390914f48fa7ea93"
+    },
+    "verify-predictions.log": {
+      "bytes": 481,
+      "sha256": "484360e8dd3524af72ed4a955b098fdaa6884f72092b89d85dd573caff2f197f"
+    },
+    "verify_models.py": {
+      "bytes": 2001,
+      "sha256": "143799d9438361d57ca45a356d520df166222cb79c6644055fd72d6a375f3991"
+    },
+    "verify_predictions.py": {
+      "bytes": 1955,
+      "sha256": "e8aaa116cf055233b5077c61e13350c8325a516b10eebbe7ccfa7b04897fc3b2"
+    }
+  }
+}

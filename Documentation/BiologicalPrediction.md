@@ -20,11 +20,13 @@ their own measured endpoints and held-out validation.
 
 This assessment reviews the expression-prediction evidence and subsequent
 full-cohort scoring, clustering, decoder calibration, preparation transfer and
-annotation retention through 2026-09-11, with the retained Adamson experimental-role audit.
+annotation retention through 2026-09-12, with the retained Adamson experimental-role audit.
 It distinguishes measured held-out expression outcomes from numerical
 reconstruction, integration diagnostics and conditional molecular simulations.
 Each linked experiment retains its actual source, executable and platform
 identities; this review does not requalify historical receipts under a new build.
+
+The subsequent [training-selected response-shrinkage experiment](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/README.md) improves over training mean in all 13 development donor holdouts. Pooled RMSE improves 19.96% in Kang and 1.41% in HIRISA. HIRISA still misses the existing 5% gate; Kang remains less accurate than the original joint model. These reused development outcomes do not establish fresh validation or calibrated uncertainty. Original joint-model failures remain unchanged.
 
 ## Current completion and admission gates
 
