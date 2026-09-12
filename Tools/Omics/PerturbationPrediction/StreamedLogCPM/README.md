@@ -57,3 +57,18 @@ The shared source controller lock prevents overlap with an exclusive ingestion.
 No Parse prediction is fitted or scored, and these numerical checks do not
 establish biological predictive accuracy. Full-app build, performance and
 Parse completion remain outside this result.
+
+## Terminal review
+
+verify_parse_complete.py independently inventories all twelve donor plans,
+cell denominators and zero counts, 40,352-feature axes, retained source range
+receipts, canonical stream identities, native outputs and reference arrays.
+Supply --driver-sha256 from the trusted published run_parse.py, not a digest
+chosen by the study itself. It rejects incomplete cohorts and mismatched inputs.
+It rechecks retained evidence; it does not independently refetch source counts.
+
+The live incomplete study was rejected, and four admission checks passed:
+missing completion, forged completion without donors, changed tolerance, and
+driver mismatch. The positive complete-cohort review remains pending while
+the replay runs. test_parse_complete.py uses a separate temporary directory
+and does not change the running study.
