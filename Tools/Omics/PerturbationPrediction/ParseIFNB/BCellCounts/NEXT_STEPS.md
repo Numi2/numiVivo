@@ -94,3 +94,23 @@ or supply independent annotation or prediction validation.
 The [Parse experimental description](https://www.parsebiosciences.com/datasets/10-million-human-pbmcs-in-a-single-experiment/)
 confirms 24-hour exposure but does not specify IFNB dose/reagent in the inspected
 text. The dose admission requirement remains unresolved.
+
+## Prediction endpoint audit: 2026-09-12
+
+The executed [twelve-donor audit](endpoint-audit.json) inspected the current
+native report schema and bound every report hash across all 72,446 cells.
+The reports contain integer pseudobulk sums and cell QC, but no per-cell
+log-normalized feature means. The context model requires the latter:
+mean over cells of log1p(1e6 × count / full-source cell total).
+
+Taking log1p after summing counts would change the endpoint. The next concrete
+implementation is therefore a bounded count-stream accumulator for the frozen
+per-cell transformation, with independent sparse-reference verification and
+explicit treatment of zero-count cells. Preserve all 40,352 features in library
+totals before projecting to the frozen 11,600-feature panel. This preparation
+can proceed while dose/reagent provenance remains unresolved; prediction scoring
+still requires the admission conditions above. No prediction was fitted or scored.
+
+The read-only audit script records its original host paths and requires a new
+output directory. Its receipt checks are an endpoint inventory, not a replacement
+for the complete count/source replay verifier.
