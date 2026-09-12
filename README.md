@@ -27,6 +27,8 @@ The [exact CPU matcher is now integrated into the Swift MNN owner](Tools/Omics/R
 ## Biological prediction: current evidence
 
 A [training-only response-shrinkage candidate](Tools/Omics/PerturbationPrediction/StudyContextKernel/ResponseShrinkage/README.md) improves HIRISA but still fails Kang and GSE181897 transfer gates. All 75 donors pass numerical verification; the candidate remains unpromoted.
+The [native nonlinear RBF context candidate](Tools/Omics/PerturbationPrediction/StudyContextKernel/RBF/README.md) also fails Kang and GSE181897 under the unchanged three-study gate. All 870,000 predictions pass independent numerical checks; nonlinear control similarity has not repaired transfer.
+
 
 The [completed Parse context prediction test](Tools/Omics/PerturbationPrediction/ParseIFNB/ContextEvaluation/README.md) fails: mean donor RMSE is 20.93% worse than training-mean response and 32.14% worse than no change. All twelve donors lose to training mean. All 139,200 native predictions and every donor score pass independent numerical checks. This supersedes earlier statements that Parse prediction is pending; the candidate remains unpromoted, and participant independence and matched exposure remain unverified.
 

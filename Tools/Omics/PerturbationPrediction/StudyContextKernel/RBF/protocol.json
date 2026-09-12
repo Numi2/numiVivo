@@ -1,0 +1,16 @@
+{
+  "scope": "Reused three-study development evaluation; no Parse queries or targets used",
+  "kernel": "study-weighted centered RBF; exp(-mean squared control distance/(2*median training pair distance)); median recomputed in every inner and outer training fold; zero median fallback 1",
+  "penalties": [
+    0.01,
+    0.1,
+    1,
+    10,
+    100,
+    null
+  ],
+  "selection": "equal-study mean inner MSE; ties strongest penalty; no scale tuning",
+  "gate": "at least 5 percent lower equal-donor mean RMSE than both unchanged baselines in each held-out study",
+  "sourceSHA256": "acfee42d2377d0e14269d714797f5b4ba6682a5d683993c373ee8c16efa1ad71",
+  "createdUnix": 1789232778.993909
+}
