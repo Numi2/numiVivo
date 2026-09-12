@@ -39,8 +39,9 @@ includes the new C++ source through the existing target directory.
 
 ## Checks and reproduction
 
-- The actual scoped library and product CLI compile. Full package/app builds and
-  fresh CLI bundle publication were not run in this qualification.
+- The actual scoped library and product CLI compile. A subsequent [fresh real-Hagai
+  CLI lifecycle](CLILifecycle/README.md) passes PCA, MNN publication, reconstruction
+  and three rejection checks. Full package/app builds remain untested here.
 - Complete owner execution checks prior source artifacts against the retained
   original manifest, then compares every output byte and report on all cohorts.
 - ASan/UBSan tests pass for interleaved levels, exact ties, budget/capacity errors,
