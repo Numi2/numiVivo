@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "sourceDescription": "REPLACE_WITH_REVIEWED_OFFICIAL_RELEASE_IDENTITY_AND_CONTEXT_BINDING",
+  "contexts": [
+    {
+      "id": "A",
+      "controlsSHA256": "<exact released query control SHA-256>",
+      "targetsSHA256": "<exact retained target list SHA-256>",
+      "referenceH5AD": "/absolute/scoring-only/A-reference.h5ad",
+      "referenceSHA256": "<exact released reference SHA-256>",
+      "realBundle": "/absolute/scoring-only/A-bundle",
+      "realBundleManifestSHA256": "<exact released bundle manifest SHA-256>"
+    },
+    {
+      "id": "B",
+      "controlsSHA256": "<exact released query control SHA-256>",
+      "targetsSHA256": "<exact retained target list SHA-256>",
+      "referenceH5AD": "/absolute/scoring-only/B-reference.h5ad",
+      "referenceSHA256": "<exact released reference SHA-256>",
+      "realBundle": "/absolute/scoring-only/B-bundle",
+      "realBundleManifestSHA256": "<exact released bundle manifest SHA-256>"
+    },
+    {
+      "id": "C",
+      "controlsSHA256": "<exact released query control SHA-256>",
+      "targetsSHA256": "<exact retained target list SHA-256>",
+      "referenceH5AD": "/absolute/scoring-only/C-reference.h5ad",
+      "referenceSHA256": "<exact released reference SHA-256>",
+      "realBundle": "/absolute/scoring-only/C-bundle",
+      "realBundleManifestSHA256": "<exact released bundle manifest SHA-256>"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/ArcInstitute/cell-eval2",
+  "commit": "5e64833518a6603a0301cbe28185d49c30f4a986",
+  "version": "0.16.0",
+  "ruleVersion": 3,
+  "preset": "vcc2026",
+  "scoredMetrics": [
+    "pds_cosine",
+    "expr_mse_unbiased_capped_norm",
+    "de_wilcoxon_direction_fidelity_yield_raw",
+    "de_wilcoxon_direction_reach_raw",
+    "de_wilcoxon_sig_jaccard",
+    "de_wilcoxon_lfc_nmae"
+  ],
+  "comparisonStatistic": "mean",
+  "scoreColumn": "from_replicate",
+  "inputType": "counts",
+  "controlSource": "real",
+  "control": "non-targeting",
+  "features": 18533,
+  "targets": 300,
+  "contextsPerPhase": 3,
+  "maximumCountsPerCell": 1000000,
+  "submissionCellsPerPerturbation": null,
+  "sources": [
+    "https://arcinstitute.org/news/virtual-cell-challenge-2026",
+    "https://github.com/ArcInstitute/cell-eval2/blob/5e64833518a6603a0301cbe28185d49c30f4a986/docs/vcc2026_metrics/vcc2026-metrics-brief.md",
+    "https://github.com/ArcInstitute/cell-eval2/blob/5e64833518a6603a0301cbe28185d49c30f4a986/src/cell_eval2/configs/vcc2026.yaml"
+  ],
+  "sourceBlobIDs": {
+    "src/cell_eval2/configs/vcc2026.yaml": "12b68945eb9833e3e9150421b5980645854ce963",
+    "src/cell_eval2/cli.py": "cbef204e8c3abb1345fa0014a2dece747e7df9c1"
+  }
+}

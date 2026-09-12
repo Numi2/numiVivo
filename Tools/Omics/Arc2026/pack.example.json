@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "modelID": "REPLACE_WITH_ACTUAL_MODEL_ID",
+  "modelArtifact": "/absolute/model/weights-or-immutable-model-manifest",
+  "trainingDataManifest": "/absolute/model/training-data.json",
+  "excludedPerturbedContexts": [
+    "A",
+    "B",
+    "C"
+  ],
+  "contexts": [
+    {
+      "id": "A",
+      "predictionH5AD": "/absolute/predictions/A.h5ad"
+    },
+    {
+      "id": "B",
+      "predictionH5AD": "/absolute/predictions/B.h5ad"
+    },
+    {
+      "id": "C",
+      "predictionH5AD": "/absolute/predictions/C.h5ad"
+    }
+  ]
+}

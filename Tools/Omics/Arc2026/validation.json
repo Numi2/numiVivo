@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "scope": "source-and-portable-adapter-only",
+  "portable": {
+    "command": "python -m unittest discover -s Tools/Omics/Arc2026 -p test_adapter.py -v",
+    "testsPassed": 15,
+    "failures": 0
+  },
+  "swift": "new-source syntax parse only; not Apple type checking",
+  "nativeH5ADExecuted": false,
+  "officialEvaluatorExecuted": false,
+  "realArcContextsScored": 0,
+  "benchmarkScore": null
+}

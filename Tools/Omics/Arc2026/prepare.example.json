@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "phase": "validation",
+  "contexts": [
+    {
+      "id": "A",
+      "controlsH5AD": "/absolute/released/A-controls.h5ad",
+      "targetsJSON": "/absolute/released/A-targets.json",
+      "perturbationColumn": "perturbation"
+    },
+    {
+      "id": "B",
+      "controlsH5AD": "/absolute/released/B-controls.h5ad",
+      "targetsJSON": "/absolute/released/B-targets.json",
+      "perturbationColumn": "perturbation"
+    },
+    {
+      "id": "C",
+      "controlsH5AD": "/absolute/released/C-controls.h5ad",
+      "targetsJSON": "/absolute/released/C-targets.json",
+      "perturbationColumn": "perturbation"
+    }
+  ]
+}

@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoGenomicEvidenceCLICommands.handles(arguments.first) {
+if VivoArc2026CLICommands.handles(arguments.first) {
+    status = VivoArc2026CLICommands().run(arguments: arguments)
+} else if VivoGenomicEvidenceCLICommands.handles(arguments.first) {
     status = await VivoGenomicEvidenceCLICommands().run(arguments: arguments)
 } else if VivoNeoantigenCLICommands.handles(arguments.first) {
     status = await VivoNeoantigenCLICommands().run(arguments: arguments)
@@ -53,6 +55,7 @@ if VivoGenomicEvidenceCLICommands.handles(arguments.first) {
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
         FileHandle.standardOutput.write(Data("\nGenomic evidence: neoantigen-atlas-request, neoantigen-splice-job, neoantigen-evidence-import, neoantigen-evidence-verify, neoantigen-evidence-review, neoantigen-evidence-example, neoantigen-evidence-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nNeoantigen research review: neoantigen-example, neoantigen-import, neoantigen-verify, neoantigen-review, neoantigen-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("\nArc VCC 2026: arc2026-prepare, arc2026-pack, arc2026-verify-query, arc2026-verify, arc2026-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nSingle-cell counts: singlecell-run, singlecell-verify, singlecell-export, singlecell-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nGeneral workflows: workflow-catalog, workflow-template, workflow-plan, workflow-run, workflow-import, workflow-export, workflow-verify, workflow-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nQM/MM free energy and chemical qualification: qmmm-free-energy-analyze, qmmm-transmission-analyze, qmmm-transmission-apply, qmmm-free-energy-rate, qmmm-free-energy-replicated-rate, qmmm-chemical-qualify, qmmm-chemical-state-populations, qmmm-chemical-state-network, qmmm-chemical-exchange-network, qmmm-chemical-exchange-validate, qmmm-free-energy-help.\n".utf8))
