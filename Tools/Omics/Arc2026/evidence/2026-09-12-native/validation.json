@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "cases": 10,
+  "scope": "Apple native scoped Omics build and synthetic Arc HDF5 conformance; not full product build, official metrics, or biological validation",
+  "artifacts": {
+    "arc-native": {
+      "bytes": 4302520,
+      "sha256": "3d5766bfaac61ed7d06791bc93d3badae104651cfd20942fb5498c58fcc09f51"
+    },
+    "build/libNumiVivoKit.a": {
+      "bytes": 15314776,
+      "sha256": "7816457400dffd3831b7b819a8bf027979a81a6cd7b7b48606013f9c1c5dba9d"
+    },
+    "build/sources.sha256": {
+      "bytes": 18099,
+      "sha256": "4ad9b354e018eee8a6c4c140ecd89ab9c272950328e124b090b6929aaf980d6d"
+    },
+    "build.log": {
+      "bytes": 2234,
+      "sha256": "790d2b867d2b75a17d6b68f818bcc6fa1192841b8b3638da31b67c61c124c985"
+    },
+    "Main.swift": {
+      "bytes": 165,
+      "sha256": "dcf0f3049acc7967f17e3968d7cda3876a66ed9573b5763abe8c49f2e6f3f6e9"
+    },
+    "link-and-check.sh": {
+      "bytes": 604,
+      "sha256": "0bd584a2036111a0529e32f7371105e5d6236e94516c3b9aa2573751387c2849"
+    },
+    "check.log": {
+      "bytes": 1086,
+      "sha256": "fe2672d6e22c2478d0e1ff84b6e1b21fb9bf69acbf1af33553decce709f3076e"
+    },
+    "checks/result.json": {
+      "bytes": 1086,
+      "sha256": "fe2672d6e22c2478d0e1ff84b6e1b21fb9bf69acbf1af33553decce709f3076e"
+    },
+    "provenance.json": {
+      "bytes": 460,
+      "sha256": "7e653a8bf783fb90e39f5959a5eca19c4ce10a1fe4dca89f4a12e29b51875c69"
+    }
+  }
+}

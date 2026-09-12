@@ -1,0 +1,56 @@
+{
+  "scope": "synthetic-native-input-conformance-not-metric-parity-or-biological-validation",
+  "nativeSHA256": "3d5766bfaac61ed7d06791bc93d3badae104651cfd20942fb5498c58fcc09f51",
+  "cases": [
+    {
+      "case": "prepare",
+      "exit": 0,
+      "expectedSuccess": true
+    },
+    {
+      "case": "verify-query",
+      "exit": 0,
+      "expectedSuccess": true
+    },
+    {
+      "case": "pack",
+      "exit": 0,
+      "expectedSuccess": true
+    },
+    {
+      "case": "verify",
+      "exit": 0,
+      "expectedSuccess": true
+    },
+    {
+      "case": "existing-output",
+      "exit": 65,
+      "expectedSuccess": false
+    },
+    {
+      "case": "fractional",
+      "exit": 65,
+      "expectedSuccess": false
+    },
+    {
+      "case": "over-depth",
+      "exit": 65,
+      "expectedSuccess": false
+    },
+    {
+      "case": "axis-order",
+      "exit": 65,
+      "expectedSuccess": false
+    },
+    {
+      "case": "missing-target",
+      "exit": 65,
+      "expectedSuccess": false
+    },
+    {
+      "case": "mutation",
+      "exit": 65,
+      "expectedSuccess": false
+    }
+  ]
+}

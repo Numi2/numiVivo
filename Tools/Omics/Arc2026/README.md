@@ -165,3 +165,17 @@ Development in this increment executed 15 standard-library adapter tests and Swi
 syntax parsing. Full Apple type checking/HDF5 execution, the authored native tests,
 installation/execution of the official evaluator and scoring on Arc's released
 contexts were **not run**. There is no retained benchmark score or performance claim.
+
+## Native execution evidence (2026-09-12)
+
+The isolated Apple-native Omics build and the unchanged Arc CLI command router
+now pass all 10 cases in `check_native.py`: prepare, query verification, pack,
+submission verification, existing-output rejection, fractional-count rejection,
+excess-depth rejection, axis-order rejection, missing-target rejection and altered
+file rejection. [Retained evidence](evidence/2026-09-12-native/archive.json) includes
+the exact source snapshot, launcher, executable, fixtures, reports and logs.
+
+This supersedes only the native type-check/HDF5 execution gap above. The scoped
+launcher is not a full product build; Swift test-suite execution, official
+evaluator execution and scoring of released experimental contexts remain unrun.
+Synthetic conformance supplies no biological prediction or performance result.
