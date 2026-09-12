@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "cells": 2711,
+  "features": 36601,
+  "nonzeros": 5218473,
+  "counts": 11786194,
+  "maximumAbsoluteMeanError": 1.9539925233402755e-14,
+  "tolerance": 1e-11,
+  "partitionPurpose": "deterministic numerical verification only; not biological groups",
+  "biologicalPrediction": false,
+  "fullProductBuild": false,
+  "nativeSourceSHA256": "60a153401f61cba607b985a6dd3d9f74a8ccd51ab71a76fcd57a58855693cedc",
+  "sourceSHA256": "5fbff5a4d85e0df345f6502e966ec787a8a4c429fd6b88a8772c43fd915cf3ff",
+  "files": {
+    "Main.swift": "068a7eb245207d4ce0d259f5fc16842f33137367a28c459fb1e37a1bfca1f3b8",
+    "check": "4b29e355696fed101f497898c56cc728d2e0b4ce65d9c3263987e9bb190bb007",
+    "prepare.py": "3befe4156a182946a944a0ecd8a2e87c529f2c6e0d572973d38aa8c15bf20288",
+    "plan.json": "7a25f686c5133e2aea757197f8a0c0ac75674c853ce19754c6338f71e43a2965",
+    "counts.bin": "7e93d55fac418714ef24cb47aa52e6a94ee989d2193092787b125a937bad199b",
+    "native.json": "a535378ee77f328bf952c7d18570ec693586ccbb73065888a804398ef96df6c1",
+    "reference.npy": "0e2690cebc7f475dff7d95b3c2c9e9f8f845b9e727865da9e9b9022975f8bf61"
+  }
+}

@@ -495,3 +495,5 @@ The completed donor-exclusion evaluation now also has a [post-hoc support diagno
 A [response-transport development experiment](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseTransport/README.md) is now complete: it reduces HIRISA error but still fails against the mean-response baseline and worsens Kang against the original joint model. It is not promoted; independent biological validation remains open.
 
 The [Parse prediction endpoint audit](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellCounts/NEXT_STEPS.md#prediction-endpoint-audit-2026-09-12) identifies a remaining input gap: validated pseudobulk count sums cannot substitute for the frozen model’s mean per-cell log-normalized expression. All twelve donor reports were checked; no Parse prediction has been scored.
+
+The [streaming log-CPM accumulator](Tools/Omics/PerturbationPrediction/StreamedLogCPM/README.md) now passes complete real-matrix numerical verification (maximum mean error 1.95e-14). Parse stream integration remains pending; no prediction claim follows from this kernel check.
