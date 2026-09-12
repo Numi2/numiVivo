@@ -387,7 +387,22 @@ struct VivoSingleCellCLICommands {
                 let actual = digest.finalize().map { String(format: "%02x", $0) }.joined()
                 guard actual == expected else { throw VivoOmicsError.invalid("count stream SHA256 differs") }
                 try Task.checkCancellation()
-                try JSONEncoder().encode(report).write(to: output, options: .withoutOverwriting)
+                let staging = output.deletingLastPathComponent().appendingPathComponent(".numivivo-logcpm-" + UUID().uuidString)
+                try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
+                defer { try? FileManager.default.removeItem(at: staging) }
+                let temporary = staging.appendingPathComponent("report.json")
+                guard FileManager.default.createFile(atPath: temporary.path, contents: nil, attributes: [.posixPermissions: 0o600]) else { throw VivoOmicsError.invalid("cannot create report staging file") }
+                let file = try FileHandle(forWritingTo: temporary)
+                do {
+                    try report.writeJSON { try file.write(contentsOf: $0) }
+                    try file.synchronize()
+                    try file.close()
+                    try Task.checkCancellation()
+                    try FileManager.default.linkItem(at: temporary, to: output)
+                } catch {
+                    try? file.close()
+                    throw error
+                }
                 try printJSON(["status": "completed-logcpm-stream", "streamSHA256": actual, "output": output.path])
                 return 0
             }

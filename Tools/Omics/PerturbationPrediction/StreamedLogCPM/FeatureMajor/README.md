@@ -39,3 +39,6 @@ Reproduction requires the separately retained full Norman count store and
 metadata at `/Users/n/numivivo-count-store-final-20260909/store`, or reconstructing
 that [qualified store](../../../CountStore/README.md). Use a new output directory;
 the checks refuse to overwrite previous completed outputs.
+
+[Chunked report output](ChunkedOutput/README.md) subsequently reduces actual
+CLI peak RSS from 771 MB to 238 MB with exact complete-report equality.

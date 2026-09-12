@@ -157,3 +157,36 @@ extension VivoStreamedLogCPM {
         return try accumulator.finish()
     }
 }
+
+extension VivoStreamedLogCPM.Result {
+    /// Emit the existing report schema in bounded numeric chunks. The caller
+    /// owns transactional publication and must discard partial output on error.
+    public func writeJSON(write: (Data) throws -> Void) throws {
+        let encoder = JSONEncoder()
+        func literal(_ text: String) throws { try write(Data(text.utf8)) }
+        try literal("{\"method\":")
+        try write(encoder.encode(method))
+        try literal(",\"featureIDs\":")
+        try write(encoder.encode(featureIDs))
+        try literal(",\"groupIDs\":")
+        try write(encoder.encode(groupIDs))
+        try literal(",\"cellCounts\":")
+        try write(encoder.encode(cellCounts))
+        try literal(",\"zeroCellCounts\":")
+        try write(encoder.encode(zeroCellCounts))
+        try literal(",\"means\":[")
+        for (index, row) in means.enumerated() {
+            try Task.checkCancellation()
+            if index > 0 { try literal(",") }
+            try literal("[")
+            for start in stride(from: 0, to: row.count, by: 4096) {
+                try Task.checkCancellation()
+                if start > 0 { try literal(",") }
+                let bytes = try encoder.encode(Array(row[start..<min(start + 4096, row.count)]))
+                try write(Data(bytes.dropFirst().dropLast()))
+            }
+            try literal("]")
+        }
+        try literal("]}")
+    }
+}
