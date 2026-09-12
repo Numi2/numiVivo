@@ -347,3 +347,24 @@ binds the executable, compiled sources, checker, original failure and all output
 Run `check_numeric_categories.py --binary H5AD_CHECK --source integer.h5ad
 --out NEW_DIRECTORY` with the retained seed file after extracting the archive.
 The broader legacy checker also now expects numeric-category migration to succeed.
+
+
+## Scalar legacy embeddings, 2026-09-12
+
+Scalar compound fields in legacy `obsm`, `varm`, and `raw.varm` now migrate as
+aligned one-dimensional arrays; AnnData exposes them as one-column embeddings.
+Their original scalar datatype and selected bytes are retained. Fixed-array
+fields retain their existing behavior, and raw keeps its original feature axis.
+
+The scoped native build passes 18 independent AnnData cases covering Float64,
+big-endian Float32, signed/unsigned 64-bit extremes, boolean and fixed strings
+under full, repeated/reordered and empty selections. All three embedding
+locations match AnnData; exact scalar datatype/bytes and native replay pass.
+Four historical string-category projections retain original, plan, projected
+H5AD and report bytes exactly and replay successfully. These qualify format
+interoperability, not biological predictions or unrestricted legacy datatypes.
+
+[Complete retained evidence](evidence/2026-09-12-scalar-embeddings/manifest.json)
+includes the original rejection, source snapshot, executable and every check.
+Run `check_scalar_embeddings.py --binary H5AD_CHECK --source scalar.h5ad
+--out NEW_DIRECTORY` with the archived fixture and independent AnnData environment.

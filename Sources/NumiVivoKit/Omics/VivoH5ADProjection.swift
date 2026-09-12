@@ -547,7 +547,9 @@ private extension VivoH5ADProjector {
         for (i,member) in names.enumerated() {
             let type=try h.legacyMemberType(source,i);defer { h.close(type,"H5Tclose") }
             let trailing=try h.legacyArrayShape(type)
-            guard !trailing.isEmpty else { throw VivoOmicsError.invalid("legacy embedding member must be a fixed array") }
+            // Scalar compound members are one-dimensional aligned arrays.
+            // AnnData exposes these as one-column embeddings on read; retain
+            // their scalar storage and exact datatype during projection.
             try legacyMember(source,output,member,member: member,type: type,rows: rows,length: length,trailing: trailing,path: path+"/"+member)
         }
     }
