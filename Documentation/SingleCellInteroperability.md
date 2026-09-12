@@ -379,7 +379,10 @@ The complete development objective remains open:
    now pass their declared native/AnnData conformance checks. The
    [explicit identity route](../Tools/Omics/H5AD/Projection/NUMERIC_INDEX_ROUTE.md)
    connects numeric-index files to annotation, count-store and pseudobulk without
-   inferring biological IDs or silently coercing index values. Ragged embedding
+   inferring biological IDs or silently coercing index values. [Native tensor
+   annotation](../Tools/Omics/H5AD/Tensors/README.md) now writes bounded rank-eight
+   arrays and preserves repeated-axis projection, verified with AnnData on all
+   24,673 Kang cells and the existing annotation regression suite. Ragged embedding
    fields and arbitrary nested records remain unsupported; storage/work bounds
    still apply. The [complete original Kang analytical route](../Tools/Omics/H5AD/Projection/LEGACY_COUNT_ROUTE.md)
    now passes native annotation, streaming count import and pseudobulk:

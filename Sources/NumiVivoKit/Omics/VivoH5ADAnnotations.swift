@@ -179,8 +179,20 @@ extension VivoSingleCellH5AD {
                     guard name != frame.index, name != "_index", shape == [frame.count] else { throw VivoOmicsError.invalid("annotation column changes index or has wrong length") }
                     guard frame.columns.contains(name) == (edit.mode == .replace) else { throw VivoOmicsError.invalid("column add/replace mode disagrees with dataframe") }
                 } else if parent == "obsm" || parent == "varm" {
-                    guard let shape, shape.count == 2, shape[0] == (parent == "obsm" ? cells : features),
-                          edit.value.isSparse || shape[1] <= 256 else { throw VivoOmicsError.invalid("embedding shape or dense component allowance") }
+                    guard let shape, (2...8).contains(shape.count), shape[0] == (parent == "obsm" ? cells : features) else {
+                        throw VivoOmicsError.invalid("embedding shape or aligned axis")
+                    }
+                    // Bound the complete per-row tensor, including empty axes.
+                    // Multiplication is guarded independently of the total element budget.
+                    if !edit.value.isSparse {
+                        var components = 1
+                        for dimension in shape.dropFirst() {
+                            guard dimension <= 256, dimension == 0 || components <= 256 / dimension else {
+                                throw VivoOmicsError.invalid("embedding dense component allowance")
+                            }
+                            components *= dimension
+                        }
+                    }
                     switch edit.value { case .float64, .int64, .uint64, .boolean, .csrFloat64, .csrUInt64: break
                     default: throw VivoOmicsError.invalid("embedding must be numeric") }
                 } else if parent == "obsp" || parent == "varp" || parent == "layers" {

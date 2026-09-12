@@ -37,7 +37,7 @@ public indirect enum VivoH5ADElement: Codable, Sendable, Equatable {
         guard depth < 16, remaining > 0 else { throw VivoOmicsError.limit("H5AD element depth or element allowance") }
         remaining -= 1
         func array(_ shape: [Int], _ n: Int) throws {
-            guard shape.count <= 2, n <= remaining else { throw VivoOmicsError.limit("H5AD array rank or element allowance") }
+            guard shape.count <= 8, n <= remaining else { throw VivoOmicsError.limit("H5AD array rank or element allowance") }
             var size = 1
             for dimension in shape {
                 guard dimension >= 0, dimension <= 2_000_000, dimension == 0 || size <= 2_000_000 / dimension else {
