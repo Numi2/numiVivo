@@ -137,6 +137,25 @@ final class VivoWindowedCountRecords {
         count = entries
     }
     deinit { if let address { _ = munmap(address, length) }; _ = close(fd) }
+    /// Visit immutable records in source order with one mapping check per window.
+    /// The borrowed pointer never escapes the synchronous body.
+    @inline(__always)
+    func forEachRecord(_ body: (Int, Int, UInt64) throws -> Void) throws {
+        var index = 0
+        while index < count {
+            try Task.checkCancellation()
+            _ = try record(index)
+            let pointer = address!
+            let recordsInWindow = length / 16
+            for localIndex in 0..<recordsInWindow {
+                let local = localIndex * 16
+                let packed = UInt64(littleEndian: pointer.load(fromByteOffset: local, as: UInt64.self))
+                let bits = UInt64(littleEndian: pointer.load(fromByteOffset: local + 8, as: UInt64.self))
+                try body(Int(packed & 0xffff_ffff), Int(packed >> 32), bits)
+            }
+            index += recordsInWindow
+        }
+    }
     func record(_ index: Int) throws -> (row: Int, feature: Int, bits: UInt64) {
         guard index >= 0, index < count else { throw VivoOmicsError.invalid("count record index") }
         let byte = index * 16, next = (byte / Self.windowBytes) * Self.windowBytes

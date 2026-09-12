@@ -76,9 +76,12 @@ final class VivoMappedReductionEntries {
             throw VivoOmicsError.invalid("reduction projection dimensions")
         }
         var result = [Double](repeating: -shift, count: rows)
-        for i in 0..<count {
-            let record = try records.record(i)
-            result[record.row] += Double(bitPattern: record.bits) * vector[record.feature]
+        try result.withUnsafeMutableBufferPointer { output in
+            try vector.withUnsafeBufferPointer { input in
+                try records.forEachRecord { row, feature, bits in
+                    output[row] += Double(bitPattern: bits) * input[feature]
+                }
+            }
         }
         visits += count; return result
     }
@@ -87,9 +90,12 @@ final class VivoMappedReductionEntries {
             throw VivoOmicsError.invalid("reduction transpose dimensions")
         }
         var result = initial
-        for i in 0..<count {
-            let record = try records.record(i)
-            result[record.feature] += Double(bitPattern: record.bits) * vector[record.row]
+        try result.withUnsafeMutableBufferPointer { output in
+            try vector.withUnsafeBufferPointer { input in
+                try records.forEachRecord { row, feature, bits in
+                    output[feature] += Double(bitPattern: bits) * input[row]
+                }
+            }
         }
         visits += count; return result
     }

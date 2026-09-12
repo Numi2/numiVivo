@@ -338,6 +338,11 @@ A [full Kang sparse PCA traversal experiment](Tools/Omics/Reduction/WindowTraver
 preserves scores, loadings and metadata, but moving mapping checks outside the
 record loop shows no useful end-to-end acceleration (4.031 s versus 4.018 s median).
 The candidate is retained as experimental evidence and is not promoted.
+The subsequent [borrowed-buffer sparse PCA implementation](Tools/Omics/Reduction/BorrowedTraversal/README.md)
+reduces measured full-CLI medians by 8.0% on Kang and 11.1% on Hagai, preserving
+scores, loadings and metadata byte-for-byte across twelve runs. Focused sanitizer
+checks pass. A separate Kang run has higher observed peak RSS, so this adds no
+memory-reduction or GPU-PCA claim.
 
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical
