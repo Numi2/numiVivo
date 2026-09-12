@@ -1,0 +1,10 @@
+{
+  "createdUnix": 1789220831.610146,
+  "scope": "Three reused development studies; no Parse inputs or outcomes. Motivated by post-hoc Parse failure, so no independent validation claim.",
+  "panel": "context-parse-exact11600-v1",
+  "outerSplit": "Each complete study held out; all 75 donors retained.",
+  "selection": "Joint penalty .01,.1,1,10,100,infinity and response scale 1,.75,.5,.25,0 using equal-study mean inner MSE; ties prefer smaller scale then larger penalty.",
+  "endpoint": "Equal-donor mean RMSE per held-out study; at least 5% improvement over unchanged training-mean response and no change, separately in every study.",
+  "sourceSHA256": "9f230043e2b88ae140357617017f4cc90d1cc6a939719b0b15d3902d3dfb32d3",
+  "predictionScored": false
+}

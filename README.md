@@ -18,6 +18,8 @@ The [full-HIRISA rigid-correction experiment](Tools/Omics/Benchmarks/HIRISA/Rigi
 
 ## Biological prediction: current evidence
 
+A [training-only response-shrinkage candidate](Tools/Omics/PerturbationPrediction/StudyContextKernel/ResponseShrinkage/README.md) improves HIRISA but still fails Kang and GSE181897 transfer gates. All 75 donors pass numerical verification; the candidate remains unpromoted.
+
 The [completed Parse context prediction test](Tools/Omics/PerturbationPrediction/ParseIFNB/ContextEvaluation/README.md) fails: mean donor RMSE is 20.93% worse than training-mean response and 32.14% worse than no change. All twelve donors lose to training mean. All 139,200 native predictions and every donor score pass independent numerical checks. This supersedes earlier statements that Parse prediction is pending; the candidate remains unpromoted, and participant independence and matched exposure remain unverified.
 
 
