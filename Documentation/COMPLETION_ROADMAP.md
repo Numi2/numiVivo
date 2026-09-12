@@ -29,12 +29,27 @@ The [prediction assessment](BiologicalPrediction.md) records the current
 scientific answer: bounded expression-response prediction is demonstrated,
 while reliable general biological-outcome prediction remains open. Complete
 HIRISA ingestion, DE, 79 donor folds, PCA/graph and seed-7 integration have
-published evidence. Finish the running full-cohort clustering checks, sensitive
-marker/program and rare-cell preservation, and independent-study prediction.
-Resolve Adamson's experimental controls before fitting its frozen transfer test;
-freeze HIRISA cross-preparation transfer before inspecting its prediction scores.
-Retain all negative results and simple baselines. Prediction uncertainty and
-measured phenotype links need their own acceptance experiments.
+published evidence. [Full-cohort clustering](../Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md)
+now completes native publication, replay and independent partition checks on all
+1,612,594 cells. This qualifies graph partitions, not calibrated cell types.
+The [preparation-transfer experiment](../Tools/Omics/Benchmarks/HIRISA/CONTEXT_TRANSFER.md)
+also completes all 120 frozen folds: cross-preparation ridge beats both required
+baselines in only 3/12 contrast means and is worse than matched within-preparation
+ridge in all twelve. These completed experiments are no longer pending work.
+
+The next prediction milestone is to complete and independently score all thirteen
+[donor-excluded joint count-response folds](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/README.md)
+under the frozen endpoint plan. The retained two-fold Kang snapshot shows improved
+development RMSE; the partial three-fold summary cannot establish an all-fold
+pass. These reused donors cannot supply fresh independent biological validation.
+Follow that development assessment with a separately frozen external validation
+and uncertainty-calibration experiment; retain the failed historical coverage.
+
+Integration still requires resolving sensitive marker/program and rare-cell
+preservation losses. Resolve Adamson's experimental controls before fitting its
+frozen transfer test, and Parse's intervention and feature identities before
+admitting its proposed prediction test. Retain all negative results and simple
+baselines. Measured phenotype links need their own acceptance experiments.
 
 The following molecular milestones remain part of the wider product roadmap;
 they do not replace this immediate single-cell priority.
