@@ -12,10 +12,6 @@ The ambition is to follow a molecular change across scales: how a structure move
 
 The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md) now carries all 1,612,594 native graph-community labels into a backed AnnData-readable H5AD, with complete cell-identity and metadata checks. This is interoperability evidence, not biological annotation validation.
 
-The latest [training-selected RNA response model](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/README.md) beats training mean in all 13 development donor holdouts, but HIRISA's 1.41% gain still misses the 5% gate. This is progress in conditional RNA estimation, not general biological prediction.
-
-[Native cross-study evaluation](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/CrossStudy/README.md) confirms that this improvement does not reliably transfer: Kang-trained shrinkage loses to both baselines on HIRISA despite complete numerical agreement with the independent reference.
-
 ## Biological prediction: current evidence
 
 **Available data supports conditional estimates of average RNA responses;
@@ -24,6 +20,8 @@ NumiVivo can generate these estimates when the required training measurements,
 control profile and biological identities are available. Held-out experiments
 show useful results in some settings and failures in others; having compatible
 inputs does not establish accuracy for a new query.
+
+The latest [three-study native evaluation](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/StudyHeldOut/README.md) holds each entire study out and selects shrinkage using only the other studies. All 75 donor predictions are verified, but HIRISA loses to both baselines in every donor; none of the three study outcomes reaches a 5% gain over both baselines. Reliable transfer remains unestablished. These are reused development cohorts, not a fresh external test.
 
 | Requested outcome | Decision from the available evidence |
 | --- | --- |
