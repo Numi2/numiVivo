@@ -7,6 +7,11 @@ folds completed, with no failed or omitted predictions. This is a modest measure
 gain in a separately collected K562 UPR experiment; it does not establish reliable
 prediction for every target or new biological contexts.
 
+The subsequent [complete target-consistency diagnostic](TargetConsistency/README.md)
+finds that SCYL1, SRP68 and SRP72 lose to training mean in all five technical
+groups; SRP72 also loses to no change in every group. This does not change the
+original aggregate result or establish independent biological replication.
+
 ## Complete primary results
 
 The [protocol](PROTOCOL.md) preceded expression-matrix acquisition. It fixes the

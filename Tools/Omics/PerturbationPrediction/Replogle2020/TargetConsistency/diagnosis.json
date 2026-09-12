@@ -1,0 +1,2442 @@
+{
+  "schemaVersion": 1,
+  "scope": "Retrospective all-target consistency across technical groups; no new fit or independent validation",
+  "sourceScoringSHA256": "30604c75615da922d5642ae07d3413655117b115b4e8c8fde570425a78557854",
+  "groups": [
+    "gemgroup-1",
+    "gemgroup-2",
+    "gemgroup-3",
+    "gemgroup-4",
+    "gemgroup-5"
+  ],
+  "targets": 30,
+  "folds": 150,
+  "results": [
+    {
+      "target": "sgATP5B",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.17886240775089154,
+            "meanSingleResponse": 0.1498868314625364,
+            "meanSupportedResponse": 0.1498868314625364,
+            "goRidgeFixed": 0.15000638123928625,
+            "shuffledGoRidgeFixed": 0.15324885351312398
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.21530460955841363,
+            "meanSingleResponse": 0.1862717622625726,
+            "meanSupportedResponse": 0.1862717622625726,
+            "goRidgeFixed": 0.18600437634314693,
+            "shuffledGoRidgeFixed": 0.18936841822789818
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.23725312097879242,
+            "meanSingleResponse": 0.21159488407535484,
+            "meanSupportedResponse": 0.21159488407535484,
+            "goRidgeFixed": 0.21112003885868236,
+            "shuffledGoRidgeFixed": 0.2146877230027021
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.2132510933506961,
+            "meanSingleResponse": 0.18864040989975714,
+            "meanSupportedResponse": 0.18864040989975714,
+            "goRidgeFixed": 0.18900947565853832,
+            "shuffledGoRidgeFixed": 0.19211734615972123
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.2024355147193309,
+            "meanSingleResponse": 0.17491757138349148,
+            "meanSupportedResponse": 0.17491757138349148,
+            "goRidgeFixed": 0.1753414468610035,
+            "shuffledGoRidgeFixed": 0.1780248887047972
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 3,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.20942134927162492,
+        "meanSingleResponse": 0.1822622918167425,
+        "meanSupportedResponse": 0.1822622918167425,
+        "goRidgeFixed": 0.18229634379213147,
+        "shuffledGoRidgeFixed": 0.18548944592164854
+      }
+    },
+    {
+      "target": "sgCARS",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.2946619516978119,
+            "meanSingleResponse": 0.2600058810224422,
+            "meanSupportedResponse": 0.2600058810224422,
+            "goRidgeFixed": 0.24679386513109136,
+            "shuffledGoRidgeFixed": 0.263853972969135
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.31958187880292505,
+            "meanSingleResponse": 0.28060885863315876,
+            "meanSupportedResponse": 0.28060885863315876,
+            "goRidgeFixed": 0.26683634014396235,
+            "shuffledGoRidgeFixed": 0.2870917458316336
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.3238576724465195,
+            "meanSingleResponse": 0.28753649618971466,
+            "meanSupportedResponse": 0.28753649618971466,
+            "goRidgeFixed": 0.27467994875956203,
+            "shuffledGoRidgeFixed": 0.29288297998881047
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.32190696209042485,
+            "meanSingleResponse": 0.2893799810732552,
+            "meanSupportedResponse": 0.2893799810732552,
+            "goRidgeFixed": 0.27808917455015536,
+            "shuffledGoRidgeFixed": 0.29354276037105226
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.3050383846213501,
+            "meanSingleResponse": 0.27033399381901313,
+            "meanSupportedResponse": 0.27033399381901313,
+            "goRidgeFixed": 0.25784844417796815,
+            "shuffledGoRidgeFixed": 0.2730768551974031
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.3130093699318063,
+        "meanSingleResponse": 0.27757304214751677,
+        "meanSupportedResponse": 0.27757304214751677,
+        "goRidgeFixed": 0.26484955455254783,
+        "shuffledGoRidgeFixed": 0.28208966287160686
+      }
+    },
+    {
+      "target": "sgDAD1",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.15318525912766168,
+            "meanSingleResponse": 0.15532968917353818,
+            "meanSupportedResponse": 0.15532968917353818,
+            "goRidgeFixed": 0.15351382830806723,
+            "shuffledGoRidgeFixed": 0.16292596210299523
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.16190474394638862,
+            "meanSingleResponse": 0.16224232586365625,
+            "meanSupportedResponse": 0.16224232586365625,
+            "goRidgeFixed": 0.1609006962777728,
+            "shuffledGoRidgeFixed": 0.1711824032296973
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.19254514824000526,
+            "meanSingleResponse": 0.1947888315103847,
+            "meanSupportedResponse": 0.1947888315103847,
+            "goRidgeFixed": 0.19200622390463784,
+            "shuffledGoRidgeFixed": 0.20225028762814307
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.15676364785000985,
+            "meanSingleResponse": 0.15814593850616285,
+            "meanSupportedResponse": 0.15814593850616285,
+            "goRidgeFixed": 0.15694381375618396,
+            "shuffledGoRidgeFixed": 0.1642560064944538
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.14944852115974258,
+            "meanSingleResponse": 0.14697245193502861,
+            "meanSupportedResponse": 0.14697245193502861,
+            "goRidgeFixed": 0.14685604099103763,
+            "shuffledGoRidgeFixed": 0.1523441106160316
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 2,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.1627694640647616,
+        "meanSingleResponse": 0.1634958473977541,
+        "meanSupportedResponse": 0.1634958473977541,
+        "goRidgeFixed": 0.1620441206475399,
+        "shuffledGoRidgeFixed": 0.17059175401426419
+      }
+    },
+    {
+      "target": "sgDDOST",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.16434012153182412,
+            "meanSingleResponse": 0.15802280907339714,
+            "meanSupportedResponse": 0.15802280907339714,
+            "goRidgeFixed": 0.15797523721572365,
+            "shuffledGoRidgeFixed": 0.16484334058928943
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.19479910133060116,
+            "meanSingleResponse": 0.18700320902597878,
+            "meanSupportedResponse": 0.18700320902597878,
+            "goRidgeFixed": 0.1855910088905952,
+            "shuffledGoRidgeFixed": 0.19404812990015805
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.1814507943535634,
+            "meanSingleResponse": 0.1784660730343585,
+            "meanSupportedResponse": 0.1784660730343585,
+            "goRidgeFixed": 0.17713356043472323,
+            "shuffledGoRidgeFixed": 0.1862113693905404
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.16275363740121482,
+            "meanSingleResponse": 0.15622498222918504,
+            "meanSupportedResponse": 0.15622498222918504,
+            "goRidgeFixed": 0.15665720908128894,
+            "shuffledGoRidgeFixed": 0.16290942308445389
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.17639077122593624,
+            "meanSingleResponse": 0.16899622434338343,
+            "meanSupportedResponse": 0.16899622434338343,
+            "goRidgeFixed": 0.16778514213139825,
+            "shuffledGoRidgeFixed": 0.1736164845322443
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 1,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.17594688516862794,
+        "meanSingleResponse": 0.16974265954126058,
+        "meanSupportedResponse": 0.16974265954126058,
+        "goRidgeFixed": 0.16902843155074584,
+        "shuffledGoRidgeFixed": 0.17632574949933721
+      }
+    },
+    {
+      "target": "sgDDRGK1",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.12935276467707993,
+            "meanSingleResponse": 0.13910023832073606,
+            "meanSupportedResponse": 0.13910023832073606,
+            "goRidgeFixed": 0.1318334704067856,
+            "shuffledGoRidgeFixed": 0.1333433740442623
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.15738150873272597,
+            "meanSingleResponse": 0.16451778115854304,
+            "meanSupportedResponse": 0.16451778115854304,
+            "goRidgeFixed": 0.15756146311967198,
+            "shuffledGoRidgeFixed": 0.15863894095473807
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.1642706949400538,
+            "meanSingleResponse": 0.16711482826655877,
+            "meanSupportedResponse": 0.16711482826655877,
+            "goRidgeFixed": 0.16296534890159683,
+            "shuffledGoRidgeFixed": 0.16320249361698536
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.14632322281789162,
+            "meanSingleResponse": 0.15422121196718855,
+            "meanSupportedResponse": 0.15422121196718855,
+            "goRidgeFixed": 0.147079317940697,
+            "shuffledGoRidgeFixed": 0.14911854527719975
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.14156378512522771,
+            "meanSingleResponse": 0.14399567504975155,
+            "meanSupportedResponse": 0.14399567504975155,
+            "goRidgeFixed": 0.13880699670986776,
+            "shuffledGoRidgeFixed": 0.13990973783698823
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 3,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.14777839525859582,
+        "meanSingleResponse": 0.1537899469525556,
+        "meanSupportedResponse": 0.1537899469525556,
+        "goRidgeFixed": 0.14764931941572385,
+        "shuffledGoRidgeFixed": 0.14884261834603474
+      }
+    },
+    {
+      "target": "sgEIF2B2",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.21672128088780615,
+            "meanSingleResponse": 0.1810989764312066,
+            "meanSupportedResponse": 0.1810989764312066,
+            "goRidgeFixed": 0.16576596467681737,
+            "shuffledGoRidgeFixed": 0.17187690771073294
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.24937323848741458,
+            "meanSingleResponse": 0.21248853781144772,
+            "meanSupportedResponse": 0.21248853781144772,
+            "goRidgeFixed": 0.19981609616314755,
+            "shuffledGoRidgeFixed": 0.21108875620322512
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.26979618541360667,
+            "meanSingleResponse": 0.23763127522286684,
+            "meanSupportedResponse": 0.23763127522286684,
+            "goRidgeFixed": 0.2232400605011252,
+            "shuffledGoRidgeFixed": 0.23050137872449863
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.25827322162968036,
+            "meanSingleResponse": 0.22800570139944806,
+            "meanSupportedResponse": 0.22800570139944806,
+            "goRidgeFixed": 0.2126519206477376,
+            "shuffledGoRidgeFixed": 0.2207013654791058
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.22114304288158215,
+            "meanSingleResponse": 0.18510573393232152,
+            "meanSupportedResponse": 0.18510573393232152,
+            "goRidgeFixed": 0.17387622650511206,
+            "shuffledGoRidgeFixed": 0.18066352792743837
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.243061393860018,
+        "meanSingleResponse": 0.20886604495945815,
+        "meanSupportedResponse": 0.20886604495945815,
+        "goRidgeFixed": 0.19507005369878797,
+        "shuffledGoRidgeFixed": 0.20296638720900018
+      }
+    },
+    {
+      "target": "sgEIF2B3",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.236169227505178,
+            "meanSingleResponse": 0.1976681241884648,
+            "meanSupportedResponse": 0.1976681241884648,
+            "goRidgeFixed": 0.18122556311287152,
+            "shuffledGoRidgeFixed": 0.1853793818862922
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.2699096258930719,
+            "meanSingleResponse": 0.22765923720281292,
+            "meanSupportedResponse": 0.22765923720281292,
+            "goRidgeFixed": 0.20970969740882642,
+            "shuffledGoRidgeFixed": 0.21486672425692707
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.2582748724096817,
+            "meanSingleResponse": 0.22354793356570005,
+            "meanSupportedResponse": 0.22354793356570005,
+            "goRidgeFixed": 0.2077405728925547,
+            "shuffledGoRidgeFixed": 0.21297247336673417
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.2356615696698712,
+            "meanSingleResponse": 0.20608019222774757,
+            "meanSupportedResponse": 0.20608019222774757,
+            "goRidgeFixed": 0.1951543903221057,
+            "shuffledGoRidgeFixed": 0.1989691544493872
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.2568134132421534,
+            "meanSingleResponse": 0.22330553082033883,
+            "meanSupportedResponse": 0.22330553082033883,
+            "goRidgeFixed": 0.2084774414613724,
+            "shuffledGoRidgeFixed": 0.21213034618373874
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.25136574174399123,
+        "meanSingleResponse": 0.21565220360101284,
+        "meanSupportedResponse": 0.21565220360101284,
+        "goRidgeFixed": 0.20046153303954614,
+        "shuffledGoRidgeFixed": 0.20486361602861589
+      }
+    },
+    {
+      "target": "sgEIF2B4",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.20141361887755455,
+            "meanSingleResponse": 0.17294155531841632,
+            "meanSupportedResponse": 0.17294155531841632,
+            "goRidgeFixed": 0.16617554080266866,
+            "shuffledGoRidgeFixed": 0.172349622148744
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.21943479530623702,
+            "meanSingleResponse": 0.1867221972169718,
+            "meanSupportedResponse": 0.1867221972169718,
+            "goRidgeFixed": 0.18279887662409497,
+            "shuffledGoRidgeFixed": 0.18904930950707002
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.2612556735979008,
+            "meanSingleResponse": 0.22663469048426854,
+            "meanSupportedResponse": 0.22663469048426854,
+            "goRidgeFixed": 0.21157103915209588,
+            "shuffledGoRidgeFixed": 0.21314922159700295
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.24078010686319934,
+            "meanSingleResponse": 0.20706218368992732,
+            "meanSupportedResponse": 0.20706218368992732,
+            "goRidgeFixed": 0.1918549816143127,
+            "shuffledGoRidgeFixed": 0.1966882381718521
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.21038390850173389,
+            "meanSingleResponse": 0.18036619810942792,
+            "meanSupportedResponse": 0.18036619810942792,
+            "goRidgeFixed": 0.17581603415828892,
+            "shuffledGoRidgeFixed": 0.18233604310958343
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.22665362062932512,
+        "meanSingleResponse": 0.19474536496380238,
+        "meanSupportedResponse": 0.19474536496380238,
+        "goRidgeFixed": 0.18564329447029224,
+        "shuffledGoRidgeFixed": 0.1907144869068505
+      }
+    },
+    {
+      "target": "sgHARS",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.2586327100657875,
+            "meanSingleResponse": 0.2226409487328532,
+            "meanSupportedResponse": 0.2226409487328532,
+            "goRidgeFixed": 0.2097789460825754,
+            "shuffledGoRidgeFixed": 0.2295674618992106
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.3081606571613585,
+            "meanSingleResponse": 0.26961086414929497,
+            "meanSupportedResponse": 0.26961086414929497,
+            "goRidgeFixed": 0.256127056935915,
+            "shuffledGoRidgeFixed": 0.276766488706598
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.24348513181613607,
+            "meanSingleResponse": 0.21409517535477168,
+            "meanSupportedResponse": 0.21409517535477168,
+            "goRidgeFixed": 0.20720716554182594,
+            "shuffledGoRidgeFixed": 0.2201079275892161
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.23817741976647733,
+            "meanSingleResponse": 0.21366298277218457,
+            "meanSupportedResponse": 0.21366298277218457,
+            "goRidgeFixed": 0.20774107029107725,
+            "shuffledGoRidgeFixed": 0.21914149889739204
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.28175279306572176,
+            "meanSingleResponse": 0.24960483876428147,
+            "meanSupportedResponse": 0.24960483876428147,
+            "goRidgeFixed": 0.23795243937105054,
+            "shuffledGoRidgeFixed": 0.25439072885070235
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.2660417423750962,
+        "meanSingleResponse": 0.23392296195467718,
+        "meanSupportedResponse": 0.23392296195467718,
+        "goRidgeFixed": 0.22376133564448883,
+        "shuffledGoRidgeFixed": 0.2399948211886238
+      }
+    },
+    {
+      "target": "sgIER3IP1",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.14812868254952807,
+            "meanSingleResponse": 0.14975679635734926,
+            "meanSupportedResponse": 0.14975679635734926,
+            "goRidgeFixed": 0.1460915378038854,
+            "shuffledGoRidgeFixed": 0.1505227744383524
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.18637159634351738,
+            "meanSingleResponse": 0.1917178782121572,
+            "meanSupportedResponse": 0.1917178782121572,
+            "goRidgeFixed": 0.18658780724535637,
+            "shuffledGoRidgeFixed": 0.19227074402002542
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.18425706371743694,
+            "meanSingleResponse": 0.18464404631034045,
+            "meanSupportedResponse": 0.18464404631034045,
+            "goRidgeFixed": 0.1807910035118969,
+            "shuffledGoRidgeFixed": 0.1849452908210203
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.15566251676577458,
+            "meanSingleResponse": 0.15356296972789948,
+            "meanSupportedResponse": 0.15356296972789948,
+            "goRidgeFixed": 0.1504505031125297,
+            "shuffledGoRidgeFixed": 0.15439052527388236
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.1692858244424055,
+            "meanSingleResponse": 0.16605214758593811,
+            "meanSupportedResponse": 0.16605214758593811,
+            "goRidgeFixed": 0.16316752762417666,
+            "shuffledGoRidgeFixed": 0.16628320533182817
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 1,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.1687411367637325,
+        "meanSingleResponse": 0.1691467676387369,
+        "meanSupportedResponse": 0.1691467676387369,
+        "goRidgeFixed": 0.165417675859569,
+        "shuffledGoRidgeFixed": 0.16968250797702172
+      }
+    },
+    {
+      "target": "sgMRPL39",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.15566906348821882,
+            "meanSingleResponse": 0.14305244865979808,
+            "meanSupportedResponse": 0.14305244865979808,
+            "goRidgeFixed": 0.14214858012547826,
+            "shuffledGoRidgeFixed": 0.14444853849819556
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.18144356401679368,
+            "meanSingleResponse": 0.16406041157443912,
+            "meanSupportedResponse": 0.16406041157443912,
+            "goRidgeFixed": 0.1635134610401559,
+            "shuffledGoRidgeFixed": 0.1656471349477478
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.18876295694030776,
+            "meanSingleResponse": 0.1786151138093427,
+            "meanSupportedResponse": 0.1786151138093427,
+            "goRidgeFixed": 0.17818392145777626,
+            "shuffledGoRidgeFixed": 0.18003743136806247
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.17921763252513123,
+            "meanSingleResponse": 0.1686423009820711,
+            "meanSupportedResponse": 0.1686423009820711,
+            "goRidgeFixed": 0.16868997360415314,
+            "shuffledGoRidgeFixed": 0.169989571797837
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.19058379021823812,
+            "meanSingleResponse": 0.1804119832927062,
+            "meanSupportedResponse": 0.1804119832927062,
+            "goRidgeFixed": 0.1810402123674103,
+            "shuffledGoRidgeFixed": 0.18129726930409842
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 2,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.17913540143773793,
+        "meanSingleResponse": 0.16695645166367143,
+        "meanSupportedResponse": 0.16695645166367143,
+        "goRidgeFixed": 0.16671522971899477,
+        "shuffledGoRidgeFixed": 0.16828398918318824
+      }
+    },
+    {
+      "target": "sgOST4",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.14425899166794914,
+            "meanSingleResponse": 0.1513767247075009,
+            "meanSupportedResponse": 0.1513767247075009,
+            "goRidgeFixed": 0.14703661085258693,
+            "shuffledGoRidgeFixed": 0.14711720630027533
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.16365217077053829,
+            "meanSingleResponse": 0.1694600779449832,
+            "meanSupportedResponse": 0.1694600779449832,
+            "goRidgeFixed": 0.1652007656593422,
+            "shuffledGoRidgeFixed": 0.16611803250672508
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.17812158207182757,
+            "meanSingleResponse": 0.18123059085798357,
+            "meanSupportedResponse": 0.18123059085798357,
+            "goRidgeFixed": 0.17785171244184217,
+            "shuffledGoRidgeFixed": 0.17838696225234343
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.15874709304203782,
+            "meanSingleResponse": 0.16499947408186488,
+            "meanSupportedResponse": 0.16499947408186488,
+            "goRidgeFixed": 0.16084053146101415,
+            "shuffledGoRidgeFixed": 0.161361448461288
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.14821262361844598,
+            "meanSingleResponse": 0.14433402687947686,
+            "meanSupportedResponse": 0.14433402687947686,
+            "goRidgeFixed": 0.14218300738040224,
+            "shuffledGoRidgeFixed": 0.14175608396201028
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 3,
+      "worseThanShuffleGroups": 1,
+      "meanRMSE": {
+        "noChange": 0.15859849223415975,
+        "meanSingleResponse": 0.1622801788943619,
+        "meanSupportedResponse": 0.1622801788943619,
+        "goRidgeFixed": 0.15862252555903752,
+        "shuffledGoRidgeFixed": 0.15894794669652842
+      }
+    },
+    {
+      "target": "sgQARS",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.2905908595085946,
+            "meanSingleResponse": 0.2618288006216569,
+            "meanSupportedResponse": 0.2618288006216569,
+            "goRidgeFixed": 0.2551310763104385,
+            "shuffledGoRidgeFixed": 0.26400062889439574
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.3140949178385741,
+            "meanSingleResponse": 0.2803862399502743,
+            "meanSupportedResponse": 0.2803862399502743,
+            "goRidgeFixed": 0.2724980211525881,
+            "shuffledGoRidgeFixed": 0.2832289101927403
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.28636689748667876,
+            "meanSingleResponse": 0.2535767634495421,
+            "meanSupportedResponse": 0.2535767634495421,
+            "goRidgeFixed": 0.24580680735848745,
+            "shuffledGoRidgeFixed": 0.2554698505550683
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.258838224154071,
+            "meanSingleResponse": 0.22810011165730115,
+            "meanSupportedResponse": 0.22810011165730115,
+            "goRidgeFixed": 0.22128964797753536,
+            "shuffledGoRidgeFixed": 0.2292521672354718
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.23898554440759326,
+            "meanSingleResponse": 0.20860594145812844,
+            "meanSupportedResponse": 0.20860594145812844,
+            "goRidgeFixed": 0.202754516549999,
+            "shuffledGoRidgeFixed": 0.20966734687743904
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.27777528867910234,
+        "meanSingleResponse": 0.24649957142738058,
+        "meanSupportedResponse": 0.24649957142738058,
+        "goRidgeFixed": 0.23949601386980968,
+        "shuffledGoRidgeFixed": 0.24832378075102304
+      }
+    },
+    {
+      "target": "sgSCYL1",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.17446168052186461,
+            "meanSingleResponse": 0.17014922121928092,
+            "meanSupportedResponse": 0.17014922121928092,
+            "goRidgeFixed": 0.17281331012454448,
+            "shuffledGoRidgeFixed": 0.1704691540391003
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.18181439021566057,
+            "meanSingleResponse": 0.179204326308151,
+            "meanSupportedResponse": 0.179204326308151,
+            "goRidgeFixed": 0.1824681132994964,
+            "shuffledGoRidgeFixed": 0.17934505150347888
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.2052682874948561,
+            "meanSingleResponse": 0.2023233185106997,
+            "meanSupportedResponse": 0.2023233185106997,
+            "goRidgeFixed": 0.20462827614934345,
+            "shuffledGoRidgeFixed": 0.20303771073611152
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.19737554449567243,
+            "meanSingleResponse": 0.19482715750888005,
+            "meanSupportedResponse": 0.19482715750888005,
+            "goRidgeFixed": 0.1971841505698473,
+            "shuffledGoRidgeFixed": 0.19499684605596407
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.17224519059942098,
+            "meanSingleResponse": 0.1661414778517149,
+            "meanSupportedResponse": 0.1661414778517149,
+            "goRidgeFixed": 0.1688483686960071,
+            "shuffledGoRidgeFixed": 0.16669825273381858
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        }
+      ],
+      "worseThanMeanGroups": 5,
+      "worseThanNoChangeGroups": 1,
+      "worseThanShuffleGroups": 5,
+      "meanRMSE": {
+        "noChange": 0.18623301866549494,
+        "meanSingleResponse": 0.1825291002797453,
+        "meanSupportedResponse": 0.1825291002797453,
+        "goRidgeFixed": 0.18518844376784774,
+        "shuffledGoRidgeFixed": 0.18290940301369465
+      }
+    },
+    {
+      "target": "sgSEC61A1",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.2115539517709532,
+            "meanSingleResponse": 0.18177774202473695,
+            "meanSupportedResponse": 0.18177774202473695,
+            "goRidgeFixed": 0.1801576855730386,
+            "shuffledGoRidgeFixed": 0.179192987660859
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.24688883076256385,
+            "meanSingleResponse": 0.21304152637325885,
+            "meanSupportedResponse": 0.21304152637325885,
+            "goRidgeFixed": 0.21311367737277068,
+            "shuffledGoRidgeFixed": 0.21080011876364763
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.24097686924283485,
+            "meanSingleResponse": 0.2103448859160808,
+            "meanSupportedResponse": 0.2103448859160808,
+            "goRidgeFixed": 0.2125939286630047,
+            "shuffledGoRidgeFixed": 0.2084889462606419
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.21984255638984704,
+            "meanSingleResponse": 0.19461201119334273,
+            "meanSupportedResponse": 0.19461201119334273,
+            "goRidgeFixed": 0.19424808243464867,
+            "shuffledGoRidgeFixed": 0.19305646297040277
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.25250170845357295,
+            "meanSingleResponse": 0.22300711991956454,
+            "meanSupportedResponse": 0.22300711991956454,
+            "goRidgeFixed": 0.22529103226735794,
+            "shuffledGoRidgeFixed": 0.22113026754618426
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        }
+      ],
+      "worseThanMeanGroups": 3,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 5,
+      "meanRMSE": {
+        "noChange": 0.23435278332395437,
+        "meanSingleResponse": 0.20455665708539678,
+        "meanSupportedResponse": 0.20455665708539678,
+        "goRidgeFixed": 0.20508088126216412,
+        "shuffledGoRidgeFixed": 0.20253375664034712
+      }
+    },
+    {
+      "target": "sgSEC61G",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.20004287385817057,
+            "meanSingleResponse": 0.17417722952381057,
+            "meanSupportedResponse": 0.17417722952381057,
+            "goRidgeFixed": 0.1704494661832673,
+            "shuffledGoRidgeFixed": 0.1710669633061992
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.2295781426452413,
+            "meanSingleResponse": 0.2042935129322549,
+            "meanSupportedResponse": 0.2042935129322549,
+            "goRidgeFixed": 0.20147057384002853,
+            "shuffledGoRidgeFixed": 0.20352803255021845
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.18708198952773752,
+            "meanSingleResponse": 0.17200979869348984,
+            "meanSupportedResponse": 0.17200979869348984,
+            "goRidgeFixed": 0.1711089409210745,
+            "shuffledGoRidgeFixed": 0.1710418806565081
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.16775859561873438,
+            "meanSingleResponse": 0.14784960334493197,
+            "meanSupportedResponse": 0.14784960334493197,
+            "goRidgeFixed": 0.14539251910777506,
+            "shuffledGoRidgeFixed": 0.1468303231619057
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.17670154123359508,
+            "meanSingleResponse": 0.15854272839922431,
+            "meanSupportedResponse": 0.15854272839922431,
+            "goRidgeFixed": 0.1582423670784053,
+            "shuffledGoRidgeFixed": 0.15915386106259571
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 1,
+      "meanRMSE": {
+        "noChange": 0.19223262857669576,
+        "meanSingleResponse": 0.1713745745787423,
+        "meanSupportedResponse": 0.1713745745787423,
+        "goRidgeFixed": 0.16933277342611014,
+        "shuffledGoRidgeFixed": 0.17032421214748544
+      }
+    },
+    {
+      "target": "sgSRP68",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.20602518547419488,
+            "meanSingleResponse": 0.1749853828955007,
+            "meanSupportedResponse": 0.1749853828955007,
+            "goRidgeFixed": 0.17986189987065218,
+            "shuffledGoRidgeFixed": 0.1817176184882227
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.24933226530064068,
+            "meanSingleResponse": 0.21434309897927026,
+            "meanSupportedResponse": 0.21434309897927026,
+            "goRidgeFixed": 0.22174625710822446,
+            "shuffledGoRidgeFixed": 0.2226955908680192
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.19945715767787223,
+            "meanSingleResponse": 0.17676294797384873,
+            "meanSupportedResponse": 0.17676294797384873,
+            "goRidgeFixed": 0.18349644262503254,
+            "shuffledGoRidgeFixed": 0.18545596661032573
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.1828279720698506,
+            "meanSingleResponse": 0.16026684167976904,
+            "meanSupportedResponse": 0.16026684167976904,
+            "goRidgeFixed": 0.1642955088034256,
+            "shuffledGoRidgeFixed": 0.1655452421259323
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.23481839197363108,
+            "meanSingleResponse": 0.20798819524110457,
+            "meanSupportedResponse": 0.20798819524110457,
+            "goRidgeFixed": 0.21305943347792905,
+            "shuffledGoRidgeFixed": 0.21441061661894942
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 5,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.2144921944992379,
+        "meanSingleResponse": 0.18686929335389865,
+        "meanSupportedResponse": 0.18686929335389865,
+        "goRidgeFixed": 0.19249190837705277,
+        "shuffledGoRidgeFixed": 0.19396500694228988
+      }
+    },
+    {
+      "target": "sgSRP72",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.14077995026715115,
+            "meanSingleResponse": 0.13804242484881132,
+            "meanSupportedResponse": 0.13804242484881132,
+            "goRidgeFixed": 0.15099978299983555,
+            "shuffledGoRidgeFixed": 0.14034392086522177
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.17372579902737334,
+            "meanSingleResponse": 0.1717053075434047,
+            "meanSupportedResponse": 0.1717053075434047,
+            "goRidgeFixed": 0.1879299034562603,
+            "shuffledGoRidgeFixed": 0.17307804011405947
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.17779639536316405,
+            "meanSingleResponse": 0.17987516673340054,
+            "meanSupportedResponse": 0.17987516673340054,
+            "goRidgeFixed": 0.18772641890955408,
+            "shuffledGoRidgeFixed": 0.1829275753222474
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.15311929999689522,
+            "meanSingleResponse": 0.14910796361247675,
+            "meanSupportedResponse": 0.14910796361247675,
+            "goRidgeFixed": 0.15559742069020077,
+            "shuffledGoRidgeFixed": 0.15152919167907328
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.16713174609921816,
+            "meanSingleResponse": 0.16028171623173806,
+            "meanSupportedResponse": 0.16028171623173806,
+            "goRidgeFixed": 0.17394101305526966,
+            "shuffledGoRidgeFixed": 0.16038239579453253
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        }
+      ],
+      "worseThanMeanGroups": 5,
+      "worseThanNoChangeGroups": 5,
+      "worseThanShuffleGroups": 5,
+      "meanRMSE": {
+        "noChange": 0.1625106381507604,
+        "meanSingleResponse": 0.1598025157939663,
+        "meanSupportedResponse": 0.1598025157939663,
+        "goRidgeFixed": 0.17123890782222406,
+        "shuffledGoRidgeFixed": 0.16165222475502689
+      }
+    },
+    {
+      "target": "sgSRPR",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.1507899384055163,
+            "meanSingleResponse": 0.15342986746649914,
+            "meanSupportedResponse": 0.15342986746649914,
+            "goRidgeFixed": 0.15379324315822188,
+            "shuffledGoRidgeFixed": 0.1537592938950682
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.1650338426222649,
+            "meanSingleResponse": 0.16590103242407833,
+            "meanSupportedResponse": 0.16590103242407833,
+            "goRidgeFixed": 0.16818969782674215,
+            "shuffledGoRidgeFixed": 0.16622931847274125
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.1876184643633031,
+            "meanSingleResponse": 0.1890190202832721,
+            "meanSupportedResponse": 0.1890190202832721,
+            "goRidgeFixed": 0.19016694604672393,
+            "shuffledGoRidgeFixed": 0.18890979628051013
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.16031099445227634,
+            "meanSingleResponse": 0.15992761619301066,
+            "meanSupportedResponse": 0.15992761619301066,
+            "goRidgeFixed": 0.15900286723104048,
+            "shuffledGoRidgeFixed": 0.1599263338968771
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.14955150296822906,
+            "meanSingleResponse": 0.1513784375653947,
+            "meanSupportedResponse": 0.1513784375653947,
+            "goRidgeFixed": 0.15205570089810944,
+            "shuffledGoRidgeFixed": 0.15019571886442998
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        }
+      ],
+      "worseThanMeanGroups": 4,
+      "worseThanNoChangeGroups": 4,
+      "worseThanShuffleGroups": 4,
+      "meanRMSE": {
+        "noChange": 0.16266094856231794,
+        "meanSingleResponse": 0.163931194786451,
+        "meanSupportedResponse": 0.163931194786451,
+        "goRidgeFixed": 0.16464169103216758,
+        "shuffledGoRidgeFixed": 0.16380409228192533
+      }
+    },
+    {
+      "target": "sgSRPRB",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.18768848538050062,
+            "meanSingleResponse": 0.16702847298017273,
+            "meanSupportedResponse": 0.16702847298017273,
+            "goRidgeFixed": 0.16728193285889775,
+            "shuffledGoRidgeFixed": 0.1685079670592472
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.21567662747418112,
+            "meanSingleResponse": 0.19365834049465805,
+            "meanSupportedResponse": 0.19365834049465805,
+            "goRidgeFixed": 0.1947470050481149,
+            "shuffledGoRidgeFixed": 0.19585675633476954
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.21849308261062952,
+            "meanSingleResponse": 0.19999517153078472,
+            "meanSupportedResponse": 0.19999517153078472,
+            "goRidgeFixed": 0.20201095219561999,
+            "shuffledGoRidgeFixed": 0.20109544645988048
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.18197549801292578,
+            "meanSingleResponse": 0.16736577215336854,
+            "meanSupportedResponse": 0.16736577215336854,
+            "goRidgeFixed": 0.16743592227886622,
+            "shuffledGoRidgeFixed": 0.1688993497079107
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.19802496488618393,
+            "meanSingleResponse": 0.18614912148571486,
+            "meanSupportedResponse": 0.18614912148571486,
+            "goRidgeFixed": 0.1858637522211154,
+            "shuffledGoRidgeFixed": 0.18719243464307028
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 4,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 1,
+      "meanRMSE": {
+        "noChange": 0.2003717316728842,
+        "meanSingleResponse": 0.18283937572893977,
+        "meanSupportedResponse": 0.18283937572893977,
+        "goRidgeFixed": 0.18346791292052286,
+        "shuffledGoRidgeFixed": 0.18431039084097564
+      }
+    },
+    {
+      "target": "sgTELO2",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.17567769828771268,
+            "meanSingleResponse": 0.17656140810291535,
+            "meanSupportedResponse": 0.17656140810291535,
+            "goRidgeFixed": 0.17631942068501322,
+            "shuffledGoRidgeFixed": 0.17360708775246966
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.19354455823679775,
+            "meanSingleResponse": 0.19803957289710697,
+            "meanSupportedResponse": 0.19803957289710697,
+            "goRidgeFixed": 0.20196766827868332,
+            "shuffledGoRidgeFixed": 0.19556471644803747
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.1685112213158098,
+            "meanSingleResponse": 0.1690111859026675,
+            "meanSupportedResponse": 0.1690111859026675,
+            "goRidgeFixed": 0.17143360139368718,
+            "shuffledGoRidgeFixed": 0.16764319179891254
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.1662075554998635,
+            "meanSingleResponse": 0.16673080819518568,
+            "meanSupportedResponse": 0.16673080819518568,
+            "goRidgeFixed": 0.16744747693364037,
+            "shuffledGoRidgeFixed": 0.16447738160094263
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": true,
+          "worseThanShuffle": true
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.17086074974435908,
+            "meanSingleResponse": 0.16897604438574212,
+            "meanSupportedResponse": 0.16897604438574212,
+            "goRidgeFixed": 0.1679075503705946,
+            "shuffledGoRidgeFixed": 0.16776884299445494
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        }
+      ],
+      "worseThanMeanGroups": 3,
+      "worseThanNoChangeGroups": 4,
+      "worseThanShuffleGroups": 5,
+      "meanRMSE": {
+        "noChange": 0.17496035661690856,
+        "meanSingleResponse": 0.17586380389672351,
+        "meanSupportedResponse": 0.17586380389672351,
+        "goRidgeFixed": 0.17701514353232373,
+        "shuffledGoRidgeFixed": 0.17381224411896345
+      }
+    },
+    {
+      "target": "sgTIMM23",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.15748258501830936,
+            "meanSingleResponse": 0.1377816376074256,
+            "meanSupportedResponse": 0.1377816376074256,
+            "goRidgeFixed": 0.13768461639919577,
+            "shuffledGoRidgeFixed": 0.13966008035412028
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.17501016917402576,
+            "meanSingleResponse": 0.1507636953576067,
+            "meanSupportedResponse": 0.1507636953576067,
+            "goRidgeFixed": 0.1505940151638947,
+            "shuffledGoRidgeFixed": 0.15338291934697865
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.19227339236277488,
+            "meanSingleResponse": 0.1697969753898195,
+            "meanSupportedResponse": 0.1697969753898195,
+            "goRidgeFixed": 0.16958384294614154,
+            "shuffledGoRidgeFixed": 0.17158273877916572
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.16692824008463017,
+            "meanSingleResponse": 0.1453990163941927,
+            "meanSupportedResponse": 0.1453990163941927,
+            "goRidgeFixed": 0.1461128998790198,
+            "shuffledGoRidgeFixed": 0.1470938349786049
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.17990466019161466,
+            "meanSingleResponse": 0.154036572179261,
+            "meanSupportedResponse": 0.154036572179261,
+            "goRidgeFixed": 0.15534193341009034,
+            "shuffledGoRidgeFixed": 0.15510379674053193
+          },
+          "worseThanMean": true,
+          "worseThanNoChange": false,
+          "worseThanShuffle": true
+        }
+      ],
+      "worseThanMeanGroups": 2,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 1,
+      "meanRMSE": {
+        "noChange": 0.17431980936627098,
+        "meanSingleResponse": 0.1515555793856611,
+        "meanSupportedResponse": 0.1515555793856611,
+        "goRidgeFixed": 0.15186346155966843,
+        "shuffledGoRidgeFixed": 0.1533646740398803
+      }
+    },
+    {
+      "target": "sgTMED10",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.12997096819087572,
+            "meanSingleResponse": 0.13264860002671172,
+            "meanSupportedResponse": 0.13264860002671172,
+            "goRidgeFixed": 0.1264541921801779,
+            "shuffledGoRidgeFixed": 0.1334580584957305
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.16015097691341174,
+            "meanSingleResponse": 0.1629618663330538,
+            "meanSupportedResponse": 0.1629618663330538,
+            "goRidgeFixed": 0.15700776459475851,
+            "shuffledGoRidgeFixed": 0.16461830785648382
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.1733999187926889,
+            "meanSingleResponse": 0.1798104641083159,
+            "meanSupportedResponse": 0.1798104641083159,
+            "goRidgeFixed": 0.1742247439651998,
+            "shuffledGoRidgeFixed": 0.18047503729535663
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.16606397817834206,
+            "meanSingleResponse": 0.16692280095823986,
+            "meanSupportedResponse": 0.16692280095823986,
+            "goRidgeFixed": 0.16295028020728652,
+            "shuffledGoRidgeFixed": 0.16817770093288728
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.16384992872130924,
+            "meanSingleResponse": 0.16159400887407338,
+            "meanSupportedResponse": 0.16159400887407338,
+            "goRidgeFixed": 0.15794690568341016,
+            "shuffledGoRidgeFixed": 0.16243821950847595
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 1,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.15868715415932552,
+        "meanSingleResponse": 0.16078754806007892,
+        "meanSupportedResponse": 0.16078754806007892,
+        "goRidgeFixed": 0.15571677732616657,
+        "shuffledGoRidgeFixed": 0.16183346481778685
+      }
+    },
+    {
+      "target": "sgTMED2",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.1325552454528106,
+            "meanSingleResponse": 0.14092450885633814,
+            "meanSupportedResponse": 0.14092450885633814,
+            "goRidgeFixed": 0.1335547498725528,
+            "shuffledGoRidgeFixed": 0.14139674256728366
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.16385674892715413,
+            "meanSingleResponse": 0.1688129248902799,
+            "meanSupportedResponse": 0.1688129248902799,
+            "goRidgeFixed": 0.16174206124409682,
+            "shuffledGoRidgeFixed": 0.17002458714798968
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.17617574386708815,
+            "meanSingleResponse": 0.1843769929830689,
+            "meanSupportedResponse": 0.1843769929830689,
+            "goRidgeFixed": 0.17823461352015532,
+            "shuffledGoRidgeFixed": 0.185376328547618
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.15075140185203423,
+            "meanSingleResponse": 0.15779596710094188,
+            "meanSupportedResponse": 0.15779596710094188,
+            "goRidgeFixed": 0.15283823611379072,
+            "shuffledGoRidgeFixed": 0.15877289043097853
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.1529581899770621,
+            "meanSingleResponse": 0.1530224817363453,
+            "meanSupportedResponse": 0.1530224817363453,
+            "goRidgeFixed": 0.1485634126739861,
+            "shuffledGoRidgeFixed": 0.15365460031644357
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 3,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.15525946601522983,
+        "meanSingleResponse": 0.16098657511339481,
+        "meanSupportedResponse": 0.16098657511339481,
+        "goRidgeFixed": 0.15498661468491634,
+        "shuffledGoRidgeFixed": 0.1618450298020627
+      }
+    },
+    {
+      "target": "sgTMEM167A",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.15849825062204834,
+            "meanSingleResponse": 0.16121740702667722,
+            "meanSupportedResponse": 0.16121740702667722,
+            "goRidgeFixed": 0.1598874756825611,
+            "shuffledGoRidgeFixed": 0.16298001187844707
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.19058664535705278,
+            "meanSingleResponse": 0.19118795208027745,
+            "meanSupportedResponse": 0.19118795208027745,
+            "goRidgeFixed": 0.1895028702024397,
+            "shuffledGoRidgeFixed": 0.19324648459100152
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.19332988925348651,
+            "meanSingleResponse": 0.19504708848564797,
+            "meanSupportedResponse": 0.19504708848564797,
+            "goRidgeFixed": 0.19425255836947952,
+            "shuffledGoRidgeFixed": 0.19709843160116092
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.18273620691238587,
+            "meanSingleResponse": 0.183585521158494,
+            "meanSupportedResponse": 0.183585521158494,
+            "goRidgeFixed": 0.18269706423505372,
+            "shuffledGoRidgeFixed": 0.1853665273232595
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.17226984701576326,
+            "meanSingleResponse": 0.17070359687923553,
+            "meanSupportedResponse": 0.17070359687923553,
+            "goRidgeFixed": 0.16960419843245517,
+            "shuffledGoRidgeFixed": 0.17255655387177907
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 2,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.17948416783214735,
+        "meanSingleResponse": 0.18034831312606645,
+        "meanSupportedResponse": 0.18034831312606645,
+        "goRidgeFixed": 0.17918883338439784,
+        "shuffledGoRidgeFixed": 0.1822496018531296
+      }
+    },
+    {
+      "target": "sgTTI1",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.270814520244292,
+            "meanSingleResponse": 0.25477409862636347,
+            "meanSupportedResponse": 0.25477409862636347,
+            "goRidgeFixed": 0.25067237802257814,
+            "shuffledGoRidgeFixed": 0.25898086473371434
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.31612834775924664,
+            "meanSingleResponse": 0.29901362119073516,
+            "meanSupportedResponse": 0.29901362119073516,
+            "goRidgeFixed": 0.29691080844718215,
+            "shuffledGoRidgeFixed": 0.3043290710447937
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.2936659632834486,
+            "meanSingleResponse": 0.28161833170141054,
+            "meanSupportedResponse": 0.28161833170141054,
+            "goRidgeFixed": 0.27598117537171085,
+            "shuffledGoRidgeFixed": 0.2847862909828375
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.262881150095938,
+            "meanSingleResponse": 0.25196688476187495,
+            "meanSupportedResponse": 0.25196688476187495,
+            "goRidgeFixed": 0.2462256037573682,
+            "shuffledGoRidgeFixed": 0.2569573117092801
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.26529939036248545,
+            "meanSingleResponse": 0.2506275265775383,
+            "meanSupportedResponse": 0.2506275265775383,
+            "goRidgeFixed": 0.2448756043106592,
+            "shuffledGoRidgeFixed": 0.25381604198529406
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.2817578743490821,
+        "meanSingleResponse": 0.26760009257158446,
+        "meanSupportedResponse": 0.26760009257158446,
+        "goRidgeFixed": 0.2629331139818997,
+        "shuffledGoRidgeFixed": 0.27177391609118395
+      }
+    },
+    {
+      "target": "sgTTI2",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.1706446108260433,
+            "meanSingleResponse": 0.17215307996293225,
+            "meanSupportedResponse": 0.17215307996293225,
+            "goRidgeFixed": 0.16903589339592648,
+            "shuffledGoRidgeFixed": 0.1721083981217244
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.2036390442540305,
+            "meanSingleResponse": 0.20073490958599555,
+            "meanSupportedResponse": 0.20073490958599555,
+            "goRidgeFixed": 0.19796425469062784,
+            "shuffledGoRidgeFixed": 0.20144905783866343
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.19214934071581316,
+            "meanSingleResponse": 0.1863970635777912,
+            "meanSupportedResponse": 0.1863970635777912,
+            "goRidgeFixed": 0.18236025583300403,
+            "shuffledGoRidgeFixed": 0.18881042514388888
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.1620279417250234,
+            "meanSingleResponse": 0.15900479845144166,
+            "meanSupportedResponse": 0.15900479845144166,
+            "goRidgeFixed": 0.15386740253999692,
+            "shuffledGoRidgeFixed": 0.16048927067713872
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.18971522977452726,
+            "meanSingleResponse": 0.18563125875722172,
+            "meanSupportedResponse": 0.18563125875722172,
+            "goRidgeFixed": 0.18140930555870396,
+            "shuffledGoRidgeFixed": 0.1864721424332011
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.18363523345908753,
+        "meanSingleResponse": 0.18078422206707648,
+        "meanSupportedResponse": 0.18078422206707648,
+        "goRidgeFixed": 0.17692742240365184,
+        "shuffledGoRidgeFixed": 0.1818658588429233
+      }
+    },
+    {
+      "target": "sgUFL1",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.13640423140930316,
+            "meanSingleResponse": 0.14310371339327688,
+            "meanSupportedResponse": 0.14310371339327688,
+            "goRidgeFixed": 0.13757118400060464,
+            "shuffledGoRidgeFixed": 0.14614109357885907
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.1723065667696886,
+            "meanSingleResponse": 0.176307102174515,
+            "meanSupportedResponse": 0.176307102174515,
+            "goRidgeFixed": 0.1706360946228565,
+            "shuffledGoRidgeFixed": 0.17945080665478125
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.17952164685614153,
+            "meanSingleResponse": 0.18117929521786053,
+            "meanSupportedResponse": 0.18117929521786053,
+            "goRidgeFixed": 0.1781481118914073,
+            "shuffledGoRidgeFixed": 0.18556917908073328
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.1466124293767261,
+            "meanSingleResponse": 0.15543301421011232,
+            "meanSupportedResponse": 0.15543301421011232,
+            "goRidgeFixed": 0.14914210741115677,
+            "shuffledGoRidgeFixed": 0.16041370077857744
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.13749736820525352,
+            "meanSingleResponse": 0.13935168098443593,
+            "meanSupportedResponse": 0.13935168098443593,
+            "goRidgeFixed": 0.13471281271768612,
+            "shuffledGoRidgeFixed": 0.14340875513004153
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 2,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.1544684485234226,
+        "meanSingleResponse": 0.15907496119604014,
+        "meanSupportedResponse": 0.15907496119604014,
+        "goRidgeFixed": 0.15404206212874227,
+        "shuffledGoRidgeFixed": 0.1629967070445985
+      }
+    },
+    {
+      "target": "sgUFM1",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.14221718272191167,
+            "meanSingleResponse": 0.15024629520023253,
+            "meanSupportedResponse": 0.15024629520023253,
+            "goRidgeFixed": 0.14633909497034062,
+            "shuffledGoRidgeFixed": 0.15196739438742787
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.17155277236361,
+            "meanSingleResponse": 0.1761495420129391,
+            "meanSupportedResponse": 0.1761495420129391,
+            "goRidgeFixed": 0.17189490944820157,
+            "shuffledGoRidgeFixed": 0.1778606322812716
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.15530535740710538,
+            "meanSingleResponse": 0.15909945584860327,
+            "meanSupportedResponse": 0.15909945584860327,
+            "goRidgeFixed": 0.15652593595940448,
+            "shuffledGoRidgeFixed": 0.1629616838834638
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": true,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.13693327723233295,
+            "meanSingleResponse": 0.139879268947354,
+            "meanSupportedResponse": 0.139879268947354,
+            "goRidgeFixed": 0.13623566144962257,
+            "shuffledGoRidgeFixed": 0.14372081275198728
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.14563139131254438,
+            "meanSingleResponse": 0.145341353560138,
+            "meanSupportedResponse": 0.145341353560138,
+            "goRidgeFixed": 0.14225161399897757,
+            "shuffledGoRidgeFixed": 0.1476247930786045
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 3,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.15032799620750087,
+        "meanSingleResponse": 0.1541431831138534,
+        "meanSupportedResponse": 0.1541431831138534,
+        "goRidgeFixed": 0.15064944316530937,
+        "shuffledGoRidgeFixed": 0.15682706327655102
+      }
+    },
+    {
+      "target": "sgYIPF5",
+      "folds": [
+        {
+          "gemgroup": "gemgroup-1",
+          "rmse": {
+            "noChange": 0.169301914659718,
+            "meanSingleResponse": 0.17080087241086098,
+            "meanSupportedResponse": 0.17080087241086098,
+            "goRidgeFixed": 0.16721627541714568,
+            "shuffledGoRidgeFixed": 0.17109287181948887
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-2",
+          "rmse": {
+            "noChange": 0.18779060189908808,
+            "meanSingleResponse": 0.18558709263854697,
+            "meanSupportedResponse": 0.18558709263854697,
+            "goRidgeFixed": 0.18191379500555324,
+            "shuffledGoRidgeFixed": 0.1861624236549988
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-3",
+          "rmse": {
+            "noChange": 0.19145689734795313,
+            "meanSingleResponse": 0.19144143235141617,
+            "meanSupportedResponse": 0.19144143235141617,
+            "goRidgeFixed": 0.18760489617653534,
+            "shuffledGoRidgeFixed": 0.1917320710761981
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-4",
+          "rmse": {
+            "noChange": 0.16332248524780182,
+            "meanSingleResponse": 0.16432276626875145,
+            "meanSupportedResponse": 0.16432276626875145,
+            "goRidgeFixed": 0.1606337613975204,
+            "shuffledGoRidgeFixed": 0.16492440920311574
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        },
+        {
+          "gemgroup": "gemgroup-5",
+          "rmse": {
+            "noChange": 0.19754193570335657,
+            "meanSingleResponse": 0.19336875607047443,
+            "meanSupportedResponse": 0.19336875607047443,
+            "goRidgeFixed": 0.190738559187386,
+            "shuffledGoRidgeFixed": 0.19374914311159427
+          },
+          "worseThanMean": false,
+          "worseThanNoChange": false,
+          "worseThanShuffle": false
+        }
+      ],
+      "worseThanMeanGroups": 0,
+      "worseThanNoChangeGroups": 0,
+      "worseThanShuffleGroups": 0,
+      "meanRMSE": {
+        "noChange": 0.1818827669715835,
+        "meanSingleResponse": 0.18110418394801,
+        "meanSupportedResponse": 0.18110418394801,
+        "goRidgeFixed": 0.17762145743682814,
+        "shuffledGoRidgeFixed": 0.18153218377307917
+      }
+    }
+  ],
+  "histograms": {
+    "worseThanMeanGroups": {
+      "0": 19,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 2,
+      "5": 3
+    },
+    "worseThanNoChangeGroups": {
+      "0": 17,
+      "1": 3,
+      "2": 3,
+      "3": 4,
+      "4": 2,
+      "5": 1
+    },
+    "worseThanShuffleGroups": {
+      "0": 21,
+      "1": 4,
+      "2": 0,
+      "3": 0,
+      "4": 1,
+      "5": 4
+    }
+  }
+}
