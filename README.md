@@ -347,6 +347,9 @@ A [matched-feature Scanpy PCA comparison](Tools/Omics/Reduction/ScversePCA/READM
 now confirms the full Kang and Hagai PCA subspaces and variances, with maximum
 sign-aligned score differences below 1.2e-9. This validates PCA numerics on the same
 selected features; it does not establish a matched pipeline speed comparison.
+The [independent Scanpy feature-selection check](Tools/Omics/Reduction/ScverseHVG/README.md)
+also selects exactly the same 2,000 features from each full cohort's original counts.
+This closes the selected-feature assumption for these two numerical comparisons.
 
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical
