@@ -1,0 +1,64 @@
+{
+  "status": "completed-development-test-not-promoted",
+  "nativePredictionsVerified": 885000,
+  "maximumPredictionError": 3.552713678800501e-15,
+  "maximumWeightError": 6.38378239159465e-16,
+  "folds": {
+    "GSE181897": {
+      "donors": 62,
+      "features": 11800,
+      "selectedPenalty": 1,
+      "equalDonorMeanRMSE": {
+        "candidate": 1.0730593003902744,
+        "equalStudyTrainingMean": 1.069742452648226,
+        "noChange": 1.1216164194513722
+      },
+      "gainOverMeanPercent": -0.31006040134589075,
+      "gainOverNoChangePercent": 4.329209007554391,
+      "strictImprovementOverBoth": false,
+      "fivePercentGainOverBoth": false,
+      "donorsWorseThanMean": 55,
+      "donorsWorseThanNoChange": 1
+    },
+    "HIRISA": {
+      "donors": 5,
+      "features": 11800,
+      "selectedPenalty": 1,
+      "equalDonorMeanRMSE": {
+        "candidate": 0.2650966625301616,
+        "equalStudyTrainingMean": 0.336025669166299,
+        "noChange": 0.34245777334692995
+      },
+      "gainOverMeanPercent": 21.10821081380977,
+      "gainOverNoChangePercent": 22.589970746085807,
+      "strictImprovementOverBoth": true,
+      "fivePercentGainOverBoth": true,
+      "donorsWorseThanMean": 0,
+      "donorsWorseThanNoChange": 0
+    },
+    "Kang": {
+      "donors": 8,
+      "features": 11800,
+      "selectedPenalty": 1,
+      "equalDonorMeanRMSE": {
+        "candidate": 1.1388146569782378,
+        "equalStudyTrainingMean": 1.1358520610592442,
+        "noChange": 1.2241969747848942
+      },
+      "gainOverMeanPercent": -0.26082586109239525,
+      "gainOverNoChangePercent": 6.9745571640265736,
+      "strictImprovementOverBoth": false,
+      "fivePercentGainOverBoth": false,
+      "donorsWorseThanMean": 6,
+      "donorsWorseThanNoChange": 0
+    }
+  },
+  "versions": {
+    "python": "3.13.14 (main, Jun 10 2026, 12:24:04) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "numpy": "2.5.3",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O"
+  },
+  "attempts": [
+    "Local disk rejected heredoc-backed writes of test/run scripts before execution. Scripts were written directly on the remote host; no prediction was restarted. Five inactive regenerable Swift library/module intermediates from prior integration build reclaimed 20037632 measured bytes; source snapshots and executables retained."
+  ]
+}

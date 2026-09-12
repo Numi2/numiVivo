@@ -25,7 +25,7 @@ control profile and biological identities are available. Held-out experiments
 show useful results in some settings and failures in others; having compatible
 inputs does not establish accuracy for a new query.
 
-The latest [three-study native evaluation](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/StudyHeldOut/README.md) holds each entire study out and selects shrinkage using only the other studies. All 75 donor predictions are verified, but HIRISA loses to both baselines in every donor; none of the three study outcomes reaches a 5% gain over both baselines. Reliable transfer remains unestablished. These are reused development cohorts, not a fresh external test.
+The [native multigene context model](Tools/Omics/PerturbationPrediction/StudyContextKernel/README.md) now uses the full untreated expression profile. It improves held-out HIRISA RMSE by 21.1% over the training-mean response, but is slightly worse than that baseline on Kang and GSE181897. All 75 donors and 885,000 predictions are verified. Reliable across-study transfer remains unestablished; these are reused development cohorts, not a fresh external test.
 
 | Requested outcome | Decision from the available evidence |
 | --- | --- |

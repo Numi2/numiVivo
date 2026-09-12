@@ -61,14 +61,16 @@ baselines. These are completed development tests on previously inspected
 cohorts, including explicit reuse of GSE181897. They are not pending jobs or
 fresh external qualification.
 
-The next prediction design must address the differences between study contexts
-that this shared response model cannot capture. Further donor-only penalty
-search or an observed-range filter is not an established solution: failure also
-persists inside training ranges. A new external validation and uncertainty
-calibration protocol must be frozen before its outcomes are inspected. Preserve
-all original baselines and per-study failures. The joint-count reports and shard
-hashes are published; full raw joint-shard archival remains incomplete. The newer
-shrinkage experiments retain their complete declared archives separately.
+The [multigene context-kernel follow-up](../Tools/Omics/PerturbationPrediction/StudyContextKernel/README.md)
+now uses the full control profile to predict shared response weights. Native
+execution and independent verification complete for all 75 donors and 885,000
+predictions. HIRISA improves 21.11% over the training mean, but Kang and
+GSE181897 lose to that baseline. The original gene-wise failures remain retained;
+neither model establishes across-study reliability. Further work must represent
+relevant study context and uncertainty, with a new external protocol frozen
+before outcome inspection. Do not select a winner per inspected study or change
+the required baselines. Full raw joint-shard archival remains incomplete; the
+context-kernel and shrinkage experiments retain complete declared archives.
 
 Integration still requires resolving sensitive marker/program and rare-cell
 preservation losses. The [full-HIRISA rigid projection](../Tools/Omics/Benchmarks/HIRISA/RigidProjection/README.md) now tests all original cells with unchanged diagnostics: 31/146 annotation failures remain, including 9/29 rare failures. Within-donor isometry does not repair cross-donor preservation; the method is not promoted. The [source design audit](../Tools/Omics/Reduction/IntegrationDesign/README.md)
