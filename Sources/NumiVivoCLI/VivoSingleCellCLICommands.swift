@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoSingleCellCLICommands {
     static func handles(_ name: String?) -> Bool {
-        if ["singlecell-h5ad-celltypist", "singlecell-celltypist-stream", "singlecell-file-expression", "singlecell-file-expression-verify", "singlecell-cell-axis-import", "singlecell-cell-axis-verify", "singlecell-file-count-stream", "singlecell-file-count-stream-verify", "singlecell-count-stream-pseudobulk", "singlecell-count-stream-verify", "singlecell-duration-fit", "singlecell-duration-predict", "singlecell-duration-verify", "singlecell-duration-prediction-verify", "singlecell-perturbation-batch","singlecell-perturbation-batch-verify"].contains(name ?? "") { return true }
+        if ["multiassay-10x-tfidf", "singlecell-h5ad-celltypist", "singlecell-celltypist-stream", "singlecell-file-expression", "singlecell-file-expression-verify", "singlecell-cell-axis-import", "singlecell-cell-axis-verify", "singlecell-file-count-stream", "singlecell-file-count-stream-verify", "singlecell-count-stream-pseudobulk", "singlecell-count-stream-verify", "singlecell-duration-fit", "singlecell-duration-predict", "singlecell-duration-verify", "singlecell-duration-prediction-verify", "singlecell-perturbation-batch","singlecell-perturbation-batch-verify"].contains(name ?? "") { return true }
         return ["singlecell-h5ad-programs", "singlecell-h5ad-programs-verify", "singlecell-target-kernel-fit", "singlecell-target-kernel-predict", "singlecell-target-kernel-verify", "singlecell-target-kernel-prediction-verify", "singlecell-pca-integrate", "singlecell-pca-integrate-verify", "singlecell-graph-embed", "singlecell-graph-embed-verify", "singlecell-graph-cluster", "singlecell-graph-cluster-verify", "singlecell-pca-neighbors", "singlecell-pca-neighbors-verify", "singlecell-h5ad-pca-query", "singlecell-h5ad-pca-query-verify", "singlecell-h5ad-pca", "singlecell-h5ad-pca-verify", "singlecell-h5ad-store", "singlecell-count-store-verify", "singlecell-count-store-normalize", "singlecell-count-store-normalize-verify", "multiassay-h5mu-import", "multiassay-h5mu-write", "multiassay-10x-import", "multiassay-visium-import", "multiassay-verify", "singlecell-composition-prepare", "singlecell-composition-fit", "singlecell-composition-predict", "singlecell-composition-verify", "singlecell-composition-prediction-verify", "singlecell-perturbation-fit", "singlecell-perturbation-predict", "singlecell-perturbation-verify", "singlecell-perturbation-prediction-verify", "singlecell-reference-fit", "singlecell-reference-map", "singlecell-reference-verify", "singlecell-reference-map-verify", "singlecell-h5ad-project", "singlecell-h5ad-project-verify", "singlecell-h5ad-pseudobulk", "singlecell-h5ad-pseudobulk-verify", "singlecell-h5ad-annotate", "singlecell-h5ad-import", "singlecell-h5ad-write", "singlecell-run", "singlecell-verify", "singlecell-export", "singlecell-mex", "singlecell-help", "singlecell-example",
          "singlecell-analyze", "singlecell-analysis-verify", "singlecell-analysis-export", "singlecell-analysis-mex", "singlecell-analysis-tables"].contains(name ?? "")
     }
@@ -31,6 +31,15 @@ struct VivoSingleCellCLICommands {
     func run(arguments: [String]) async -> Int32 {
         do {
             guard let command = arguments.first else { throw VivoOmicsError.invalid("missing command") }
+            if command == "multiassay-10x-tfidf" {
+                guard arguments.count == 8, arguments[2] == "--plan", arguments[4] == "--assay", arguments[6] == "--output" else {
+                    throw VivoOmicsError.invalid("multiassay-10x-tfidf <source.h5> --plan <mapping.json> --assay <accessibility-id> --output <new-bundle>")
+                }
+                let plan = try load(VivoTenXMultiAssayPlan.self, URL(fileURLWithPath: arguments[3]))
+                try printJSON(VivoAccessibilityTFIDFIO.publishTenX(source: URL(fileURLWithPath: arguments[1]), plan: plan,
+                    assayID: arguments[5], implementation: VivoWorkflowCLIImplementation.fingerprint(),
+                    to: canonicalURL(URL(fileURLWithPath: arguments[7])))); return 0
+            }
             if command == "singlecell-h5ad-celltypist" {
                 guard arguments.count == 8, arguments[2] == "--plan", arguments[4] == "--model", arguments[6] == "--output" else {
                     throw VivoOmicsError.invalid("singlecell-h5ad-celltypist <source.h5ad> --plan <mapping.json> --model <model.json> --output <new-bundle>")
@@ -569,6 +578,7 @@ struct VivoSingleCellCLICommands {
       singlecell-count-stream-verify <bundle> < records.bin
       singlecell-celltypist-stream --model <model.json> --plan <count-plan.json> --stream-sha256 <sha256> --output <new-bundle> < records.bin
       singlecell-h5ad-celltypist <source.h5ad> --plan <mapping.json> --model <model.json> --output <new-bundle>
+      multiassay-10x-tfidf <source.h5> --plan <mapping.json> --assay <accessibility-id> --output <new-bundle>
       singlecell-h5ad-pseudobulk <source.h5ad> --plan <stream-plan.json> --output <new-bundle-directory>
       singlecell-h5ad-project <source.h5ad> --plan <projection.json> --output <new-directory>
       singlecell-h5ad-project-verify <bundle-directory>

@@ -1,0 +1,160 @@
+{
+  "archiveBytes": 5499764,
+  "archiveSHA256": "c991d0ca17f72fd22731469a5e2bc60fb7c4fbe618702cc7de010e37634f273d",
+  "members": {
+    "main.swift": {
+      "bytes": 1954,
+      "SHA256": "90adec8e8a85d3750602dd112ece64e5599ea53aada78c1e96143ec88ee18662"
+    },
+    "EdgeChecks.swift": {
+      "bytes": 2476,
+      "SHA256": "9c2f9aea0ec8b7482639a4b981b84a581148d87c3cd4cf4c8a9586aa79325bd9"
+    },
+    "tfidf": {
+      "bytes": 109976,
+      "SHA256": "cd495f6f480bdb7d9895005103c9ed8fc3f50598767823554ed579ef125df3de"
+    },
+    "edge-checks": {
+      "bytes": 102200,
+      "SHA256": "35bfe53061fee54eadad795c57fd1a334bc6f32877ec6a5bcf22e2b21ffc5a17"
+    },
+    "check.py": {
+      "bytes": 3788,
+      "SHA256": "f27b833d78deeb6bd53f6faba461b60ee2d44a9a05c7d32810e7610556e20f78"
+    },
+    "check_signac.py": {
+      "bytes": 2512,
+      "SHA256": "11d9fb782eb399a6a01c585a9f3f9c146aa260d5e0c0e8ef1aef519057d4de45"
+    },
+    "check_product.py": {
+      "bytes": 3292,
+      "SHA256": "99c9f171cc992dc4455774a910fe4facce8d86de8064900ce2715737306454ee"
+    },
+    "checks.json": {
+      "bytes": 439,
+      "SHA256": "127a480c7074ce7c7c7c16e53059f69562a404e6f46d34564b46167d1474fd1e"
+    },
+    "signac-checks.json": {
+      "bytes": 527,
+      "SHA256": "2c56ee816f253ede72887ab32cc48bbbad336673a40d7a81e3a25521dcfac398"
+    },
+    "product-checks.json": {
+      "bytes": 3705,
+      "SHA256": "6f3ec80192489d13afb43c632180f73bfa44c3063b68e283c9efae8f95ebf172"
+    },
+    "edge-checks.json": {
+      "bytes": 81,
+      "SHA256": "88ad8b1c3898ff1f92cca2bfdda9cce26d3b62d83ad3b6c2280cd7c9b3f713b6"
+    },
+    "signac.R": {
+      "bytes": 1015,
+      "SHA256": "91835156d2d010e02ec18abe758d9a30509454e41638a0710f63ae4aa843f8c6"
+    },
+    "signac-preprocessing.R": {
+      "bytes": 23062,
+      "SHA256": "884b46b18499ba6b593543bb9e2ae14f5ddb6913c399fe4ac17d7cf6361657d5"
+    },
+    "signac-LICENSE": {
+      "bytes": 40,
+      "SHA256": "89915a1a5fe98ce46eaa59f600f593f6b9fd1f913f28274ac149cb1b5d5a3083"
+    },
+    "signac-MIT-template": {
+      "bytes": 1380,
+      "SHA256": "dabc720ac4a1dacea5f2d72070cef67e9fafb623e0db6e86aae3ff6e31db0d91"
+    },
+    "signac.log": {
+      "bytes": 241,
+      "SHA256": "e37e552fa81bcd3da05c4a53e9f629cf08fccd31d184272db00e1d0f75dccd73"
+    },
+    "signac-first.log": {
+      "bytes": 132,
+      "SHA256": "51e3eeab1e77cb9f843acefa1082f5f9a078530e7cb6a0d2997fc551f6fdfa35"
+    },
+    "R-session.txt": {
+      "bytes": 627,
+      "SHA256": "eb1102fb59ff197d4e31153dab8b38032d839c69418588b6573ad98981c66bb8"
+    },
+    "runtime.json": {
+      "bytes": 502,
+      "SHA256": "3c06b6858a66a72b89b85bdf026fea8c3dfbe4a562ab8e56fc13ff7abbdfff2e"
+    },
+    "reference-remote-copy.json": {
+      "bytes": 316,
+      "SHA256": "90197ab8d87f50dc52217f9845fbd2a30233eed4c408bf730e80e866d41a91b2"
+    },
+    "product-build-enospc.log": {
+      "bytes": 2142,
+      "SHA256": "f468d95f6d0ed16ab6de6353deae29878d7007db11b15fd326db2058d4c7c754"
+    },
+    "product-build-retry.log": {
+      "bytes": 2252,
+      "SHA256": "cd6b50055643ddcfcd110941369c055dcbb3f0ced345bed8afc8a4b646a16a12"
+    },
+    "product-run.log": {
+      "bytes": 975,
+      "SHA256": "51787a1e1cd99cd0d1aad183bbb1a41dec1b59b72c214da1b2ba051f8feca060"
+    },
+    "native-report.json": {
+      "bytes": 385348,
+      "SHA256": "edded6be0daafa5dbd7cd5699b43c60b7724ee5859ac3c950d42bf7eee2ba7cb"
+    },
+    "axis.json": {
+      "bytes": 2602371,
+      "SHA256": "51feb4994d2aac4df0979db63a6027cba2de2128397e52b79bae6f84dca5302f"
+    },
+    "product-bundle/axes.json": {
+      "bytes": 12781883,
+      "SHA256": "d5e85d9f9218f32d95901616dff340cadc26e67f2d1ae748c985a44e7075c966"
+    },
+    "product-bundle/statistics.json": {
+      "bytes": 385368,
+      "SHA256": "cf61b42841e7cc587e4e1eec452257fb8d6657ff66c2d27addbd58a87cdb7672"
+    },
+    "product-bundle/mapping.json": {
+      "bytes": 799,
+      "SHA256": "7271513e90f91a8517a82104730680895d604aeda2485b7feff16ef42ad60e9e"
+    },
+    "product-bundle/receipt.json": {
+      "bytes": 974,
+      "SHA256": "9cdac7e9a87be5ca7016106af089cf947527378fe104381eb568209024ff763e"
+    },
+    "source/Sources/NumiVivoKit/Omics/VivoAccessibilityTFIDF.swift": {
+      "bytes": 4808,
+      "SHA256": "fba4ccb6d3bba36e09127d07cb3da5115fdc6fd2a05bfacbf85c7cbaa790fa9d"
+    },
+    "source/Sources/NumiVivoKit/Omics/VivoAccessibilityTFIDFIO.swift": {
+      "bytes": 4445,
+      "SHA256": "a522fa5cdd7acf7abddba2f95a5aa9f9eaa6698adb1ac2a4827405ecc7e296ac"
+    },
+    "source/Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift": {
+      "bytes": 59567,
+      "SHA256": "752985c6888f0c4df83f0bec65aa6191eb3f67bf4198f8fa57cdda5ecba4f708"
+    },
+    "source/Tools/Omics/H5AD/build.sh": {
+      "bytes": 4900,
+      "SHA256": "975d2d826304fca74acb9b1f1f2ccf4d222509d6b69e306f5fac9b1333e2c8a8"
+    },
+    "numivivo-omics": {
+      "bytes": 7994208,
+      "SHA256": "17e96792273574a1a56ec27a03d981574ea4fbd4d917be916d2da9570c6705f2"
+    },
+    "sources.sha256": {
+      "bytes": 21667,
+      "SHA256": "f44fc5865fa491a898aa8dbd0bd485c74f5fa4bff0f7781207a3ade3a871195a"
+    }
+  },
+  "externalDependencies": [
+    {
+      "path": "original 10x filtered HDF5",
+      "bytes": 38844318,
+      "SHA256": "5fbff5a4d85e0df345f6502e966ec787a8a4c429fd6b88a8772c43fd915cf3ff",
+      "publishedPath": "Tools/Omics/Multimodal/evidence/2026-09-09-multiome/bundle/original.h5"
+    },
+    {
+      "path": "/Users/home/numivivo-atac-tfidf-20260912/product-bundle/values.bin",
+      "bytes": 308683408,
+      "SHA256": "97e18cdc7e82e3b5fa5c3bfaf68d4c96ccc342b7334a1618c5e2d4cac72cfb55",
+      "role": "Full normalized output retained locally; reproducible from source and model method, not embedded"
+    }
+  ]
+}
