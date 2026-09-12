@@ -16,6 +16,8 @@ The [integration design guard](Tools/Omics/Reduction/INTEGRATION.md#optional-pro
 
 The [full-HIRISA rigid-correction experiment](Tools/Omics/Benchmarks/HIRISA/RigidProjection/README.md) preserves within-donor distances but still fails 31/146 sensitive annotation comparisons. No new integration method is promoted.
 
+The [translation-only ablation](Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) reduces annotation failures to 22/146 but fails a B-cell IFNa response comparison and leaves more donor scatter. Fewer failures do not establish adequate integration; no method is promoted.
+
 ## Biological prediction: current evidence
 
 A [training-only response-shrinkage candidate](Tools/Omics/PerturbationPrediction/StudyContextKernel/ResponseShrinkage/README.md) improves HIRISA but still fails Kang and GSE181897 transfer gates. All 75 donors pass numerical verification; the candidate remains unpromoted.
