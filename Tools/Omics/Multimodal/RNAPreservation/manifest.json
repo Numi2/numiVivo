@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "status": "COMPLETE-diagnostic-gate-failed-not-promoted",
+  "baseCommit": "6b3711ea7a2f6d018f5dd9ffdf272d9d36b2e770",
+  "archive": {
+    "bytes": 2121911,
+    "sha256": "c5c6fbdf8af46fcc014e99f0f4301db218db8ae04192cc083cfdc2e6e740d372"
+  },
+  "members": {
+    "report.json": {
+      "bytes": 3849,
+      "sha256": "6bd0467df8345f0597d2ee1b5c5e0655c1f258e91bf20c61f6c6afc33db42419"
+    },
+    "null-comparison.json": {
+      "bytes": 229,
+      "sha256": "9e26ef2336953b9f0d7809620350dbb81c0faf1aba576e00b0630c804d2cc096"
+    },
+    "score.log": {
+      "bytes": 3272,
+      "sha256": "a20d44bcd8333424343cdbefb6f12e1b1147efb3b1a16cc5fbd94b0105d10afa"
+    },
+    "protocol-before-transfer-completed.json": {
+      "bytes": 2452,
+      "sha256": "541611af8ac7309201caf0be385bcff3b91e852a5228d90e2c955d5b2c95c43f"
+    },
+    "protocol.json": {
+      "bytes": 2452,
+      "sha256": "3732b25ef904d7617317601d906d1d101547c847ef604f97d5733b2543371998"
+    },
+    "per-gene.npz": {
+      "bytes": 2158179,
+      "sha256": "b76c23edb81833d4ab9c412e864a75c4122c4b08bc275b4caed1c156b781c54f"
+    },
+    "protocol-before-reference-transfer.json": {
+      "bytes": 2017,
+      "sha256": "1daa4f05a0d37e00834c6a92623c65af04e9535f7531c6a04e59ba4f676fb3ed"
+    },
+    "score.py": {
+      "bytes": 5290,
+      "sha256": "019747cee940047b5b767ebd5c4432af46d3b449b72d92e504cb79326510f9b6"
+    }
+  }
+}

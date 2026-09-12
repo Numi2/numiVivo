@@ -18,7 +18,7 @@ The [full-HIRISA rigid-correction experiment](Tools/Omics/Benchmarks/HIRISA/Rigi
 
 ## Biological prediction: current evidence
 
-The [paired RNA/ATAC product workflow](Tools/Omics/Multimodal/PairedWorkflow/README.md) now runs original 10x counts through native RNA PCA, ATAC TF-IDF/LSI, cell-specific modality weights and weighted graphs. All stages match the separately qualified 2,711-nucleus benchmark, and complete source reconstruction passes. Execution remains bounded and resident; biological preservation, unseen-context prediction and regulatory validity remain unproven.
+The [paired RNA/ATAC product workflow](Tools/Omics/Multimodal/PairedWorkflow/README.md) now runs original 10x counts through native RNA PCA, ATAC TF-IDF/LSI, cell-specific modality weights and weighted graphs. All stages match the separately qualified 2,711-nucleus benchmark, and complete source reconstruction passes. Execution remains bounded and resident. The [RNA preservation diagnostic](Tools/Omics/Multimodal/RNAPreservation/README.md) fails its combined no-worsening rule: primary neighbor reconstruction is 0.85% worse than RNA-only, while fuzzy reconstruction improves slightly. Biological preservation, unseen-context prediction and regulatory validity remain unproven.
 
 The [exact Parse-compatible panel evaluation](Tools/Omics/PerturbationPrediction/StudyContextKernel/ExactParsePanel/README.md) reran all 75 development donors with a frozen 11,600-feature contract. HIRISA passes the existing transfer gate; Kang and GSE181897 fail. The candidate remains unpromoted, and no Parse prediction was scored.
 

@@ -88,6 +88,8 @@ the previously qualified exact weighted-neighbor/fuzzy-union method. Cell labels
 are not authoritative and this single donor cannot validate donor integration,
 unseen perturbations, regulatory links or clinical outcomes.
 
-The next scientific target is biological-preservation evaluation with separately
-specified experimental evidence. Numerical and source-replay passes alone do not
-establish reliable biological outcome prediction.
+The [RNA preservation diagnostic](../RNAPreservation/README.md) now fails its
+combined no-worsening rule: primary neighbor averaging worsens versus RNA-only,
+while fuzzy averaging improves slightly. Numerical/source replay remains valid,
+but biological promotion is withheld. Independently specified experimental
+evidence is still required for reliable biological outcome prediction.
