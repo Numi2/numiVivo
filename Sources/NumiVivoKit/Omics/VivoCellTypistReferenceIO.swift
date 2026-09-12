@@ -13,6 +13,76 @@ public struct VivoCellTypistStreamReceipt: Codable, Sendable {
 }
 
 public enum VivoCellTypistReferenceIO {
+    public struct H5ADReceipt: Codable, Sendable {
+        public let schemaVersion: Int
+        public let source: VivoFingerprint
+        public let mapping: VivoFingerprint
+        public let metadata: VivoFingerprint
+        public let modelSHA256: String
+        public let resultsSHA256: String
+        public let cells: Int
+        public let records: Int
+        public let hdf5Version: String
+        public let implementation: VivoFingerprint
+    }
+
+    /// Two scans of a retained immutable H5AD snapshot. Both CSR and CSC use
+    /// canonical feature order per cell; only cell-by-class scores are retained.
+    public static func publishH5AD(source: URL, mapping: VivoH5ADImportPlan,
+                                   modelData: Data, implementation: VivoFingerprint,
+                                   to destination: URL) throws -> H5ADReceipt {
+        try VivoH5ADCountStore.requireNew(destination)
+        guard modelData.count <= 67_108_864 else { throw VivoOmicsError.limit("CellTypist model bytes") }
+        let model = try VivoCanonicalJSON.decode(VivoCellTypistReferenceModel.self, from: modelData)
+        let temp = destination.deletingLastPathComponent().appendingPathComponent(".numivivo-celltypist-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: temp, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
+        defer { try? FileManager.default.removeItem(at: temp) }
+        let snapshot = temp.appendingPathComponent("original.h5ad")
+        let sourceHash = try VivoH5ADPseudobulk.fingerprint(source, copyTo: snapshot)
+        var quality: VivoSingleCellQualityAccumulator?
+        let version = try VivoSingleCellH5AD.scanSnapshot(snapshot, plan: mapping, limits: VivoH5ADPseudobulk.sourceLimits,
+            onMetadata: { quality = VivoSingleCellQualityAccumulator($0) },
+            onEntry: { row, feature, count in
+                guard let quality else { throw VivoOmicsError.invalid("CellTypist metadata missing") }
+                try quality.add(row: row, feature: feature, count: count)
+            })
+        guard let quality else { throw VivoOmicsError.invalid("CellTypist metadata missing") }
+        let metadata = quality.metadata
+        let predictor = try VivoCellTypistReference(model: model, sourceFeatures: metadata.features.map(\.id))
+        let totals = quality.finish().map(\.totalCounts)
+        let mappingData = try VivoCanonicalJSON.encode(mapping)
+        let metadataData = try VivoCanonicalJSON.encode(metadata)
+        try mappingData.write(to: temp.appendingPathComponent("mapping.json"), options: .withoutOverwriting)
+        try metadataData.write(to: temp.appendingPathComponent("metadata.json"), options: .withoutOverwriting)
+        try modelData.write(to: temp.appendingPathComponent("model.json"), options: .withoutOverwriting)
+        let output = temp.appendingPathComponent("results.jsonl")
+        try Data().write(to: output, options: .withoutOverwriting)
+        let handle = try FileHandle(forWritingTo: output)
+        defer { try? handle.close() }
+        var hash = SHA256(), records = 0
+        try predictor.predictSparseMatrix(rowTotals: totals, scan: { accept in
+            _ = try VivoSingleCellH5AD.scanSnapshot(snapshot, plan: mapping, limits: VivoH5ADPseudobulk.sourceLimits,
+                onMetadata: { replay in
+                    guard try VivoCanonicalJSON.encode(replay) == metadataData else { throw VivoOmicsError.invalid("CellTypist metadata changed") }
+                }, onEntry: { row, feature, count in
+                    try accept(row, feature, count); records += 1
+                })
+        }, emit: { row, result in
+            var data = try VivoCanonicalJSON.encode(Row(sourceRow: row, label: result.label,
+                decisions: result.decisions, probabilities: result.probabilities))
+            data.append(10); try handle.write(contentsOf: data); hash.update(data: data)
+        })
+        guard records == quality.nonzeros else { throw VivoOmicsError.invalid("CellTypist count cardinality changed") }
+        try handle.synchronize(); try handle.close()
+        let receipt = H5ADReceipt(schemaVersion: 1, source: sourceHash,
+            mapping: try VivoCanonicalJSON.fingerprint(mappingData), metadata: try VivoCanonicalJSON.fingerprint(metadataData),
+            modelSHA256: hex(SHA256.hash(data: modelData)), resultsSHA256: hex(hash.finalize()),
+            cells: totals.count, records: records, hdf5Version: version, implementation: implementation)
+        try VivoCanonicalJSON.encode(receipt).write(to: temp.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+        try Task.checkCancellation(); try FileManager.default.moveItem(at: temp, to: destination)
+        return receipt
+    }
+
     private struct Row: Encodable {
         let sourceRow: Int
         let label: String

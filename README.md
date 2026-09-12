@@ -18,7 +18,7 @@ The [full-HIRISA rigid-correction experiment](Tools/Omics/Benchmarks/HIRISA/Rigi
 
 ## Biological prediction: current evidence
 
-The CellTypist streaming CLI now reproduces imported-model inference on 267 real Parse cells (529,404 count records), with source-bound output receipts. Input digest, truncation, row-total and cardinality failures leave no completed output; existing destinations are preserved. This scoped CLI verification does not establish held-out annotation accuracy or general biological prediction.
+The [CellTypist CLI](Tools/Omics/ReferenceMapping/CellTypist/README.md) reproduces imported-model inference on 267 real Parse cells (529,404 count records), from canonical streams or native AnnData CSR/CSC files. H5AD runs retain the complete source and exact cell/feature identities; both sparse layouts produce identical output. Invalid inputs leave no completed bundle. This scoped verification does not establish held-out annotation accuracy or general biological prediction.
 
 **Available data supports conditional estimates of average RNA responses;
 reliable prediction of general biological outcomes is not established.**

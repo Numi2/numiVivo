@@ -19,7 +19,11 @@ independent sigmoid scores. It does not fit models or make labels authoritative.
   results exactly across 529,404 count records. Output receipt hashes were verified;
   incorrect stream hashes, truncated records, incorrect row totals/cardinalities
   and existing destinations were rejected without publishing partial output.
-  Full-package qualification and H5AD orchestration, whole-cohort comparison, measured
+  The native H5AD command also passes AnnData CSR and CSC round trips on this
+  retained window: identical layout outputs, maximum decision error 9.06e-14,
+  exact source-file and cell/feature identity preservation. Negative counts,
+  missing model features and existing outputs are rejected transactionally.
+  Full-package qualification, whole-cohort comparison, measured
   memory scaling and held-out annotation accuracy remain unfinished.
 
 The source window was chosen by control condition and original order, without
@@ -54,6 +58,36 @@ or features. It verifies exact retained results, receipt hashes and five
 transactional rejection cases. This test harness materializes the small window;
 the product command streams count records. The original archive retains the
 standalone harness version; the CLI extension lives in the repository sources.
+
+### Direct H5AD command
+
+`numivivo-omics singlecell-h5ad-celltypist source.h5ad --plan mapping.json --model model.json --output new-bundle`
+
+The mapping is the existing explicit H5AD import plan (matrix path `X`,
+`raw/X` or `layers/<name>`; source sample identities and design are supplied).
+The command retains the complete source H5AD and makes two native sparse scans:
+full cell totals, then frozen-model inference. It supports CSR/CSC without
+reordering the full matrix. Cell-by-class scores are resident, capped at ten
+million scores (80 MB for score storage alone); metadata, totals and reader
+buffers add memory. Whole-cohort peak memory and performance are not measured.
+Results remain candidate labels in a separate bundle, not edits to source labels.
+
+Replay the real-window test with AnnData, SciPy, NumPy and h5py installed:
+
+```sh
+python check_h5ad_cli.py <build-directory>/numivivo-omics <unpacked-evidence> <new-check-directory>
+```
+
+The test writes AnnData files from the original real sparse rows, invokes the
+actual CLI, checks score agreement, all receipt hashes and identity preservation,
+and checks transactional rejection. These are reformatted real measurements,
+not a new independent biological cohort.
+
+[H5AD evidence](h5ad-evidence.tar.gz) retains both AnnData files, mappings,
+results, receipts and checks. The [manifest](h5ad-manifest.json) binds each
+archive member, product source and qualified executable. All archived member
+hashes were independently verified. The first test attempt used an invalid
+`/X` mapping and was rejected; the corrected explicit mapping is `X`.
 
 ### Original numerical evidence
 

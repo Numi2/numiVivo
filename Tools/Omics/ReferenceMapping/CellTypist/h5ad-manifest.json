@@ -1,0 +1,27 @@
+{
+  "archiveSHA256": "49ac790345a0a9f058eba142d7e0ae28757d6553cf2338b87417b2b59f709467",
+  "archiveBytes": 3362876,
+  "members": {
+    "csr.h5ad": "eb459e4200c83ce41aed2d98a525da1237fff28109293721f147ba943952b821",
+    "csc.h5ad": "664a9196870e6d49a1bff00daae3f80399076b3a07547160ce7daf68af09e8f3",
+    "mapping.json": "8645c6539d26200d15bfe8f187570faef1e389bd5ee54424489ea79596bc6c0c",
+    "checks.json": "a8ca92cfbef5fdd1586467675bee856853b5ca35c1c1992df2646cedd0756e41",
+    "csr-bundle/results.jsonl": "9205a2fe668674dc47f0187ba05022df591e96caddfb1413ec813d9af1516874",
+    "csc-bundle/results.jsonl": "9205a2fe668674dc47f0187ba05022df591e96caddfb1413ec813d9af1516874",
+    "csr-bundle/receipt.json": "e405d46d78ddf9276ab99ed2afbab827a17ad24bff425ed92862cd89abcb4766",
+    "csc-bundle/receipt.json": "81e6c2a6998e413be69f0566f965ad188cdd321c3a5d9334ac3332fc0862d481",
+    "csr-bundle/metadata.json": "abd578117b707c5caf8ada230e1674502b4a18abd76dce14f178ee95e2e4d6f5"
+  },
+  "sourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoCellTypistReference.swift": "85540e5191c0733594b47af3d5e99a9e9e84fff9061143cf868d3ee250de438c",
+    "Sources/NumiVivoKit/Omics/VivoCellTypistReferenceIO.swift": "637a55d8964b286c9a09289ca4aa51d5df1c3106511d573d544c4db317a357ea",
+    "Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift": "d6df3dc594d1f7d3d268377d3ba71b01ad8488d0a6dbefe59ae5475896a3b076",
+    "Tools/Omics/ReferenceMapping/CellTypist/check_h5ad_cli.py": "0680d2f9d0b251db031357758b3097aa69abc3eaa66ab3b7fbe8b817839fff47"
+  },
+  "binarySHA256": "7e4744394101964380dbf45260370b7ea35c5b9684350f7a95d8ecc867ab6eeb",
+  "scope": "Scoped native CPU CLI, actual AnnData files reformatted from 267 real Parse cells. Not full package or independent biological validation.",
+  "retainedInitialFailure": "First test mapping used /X and was rejected. Correct explicit mapping is X; no product workaround.",
+  "externalDependencies": [
+    "Original evidence.tar.gz model.json and real-input.json; repository stream-plan.json.gz; native HDF5; Python AnnData ecosystem for replay"
+  ]
+}

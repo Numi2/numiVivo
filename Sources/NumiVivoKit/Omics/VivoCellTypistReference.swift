@@ -103,6 +103,49 @@ public struct VivoCellTypistReference: Sendable {
         return VivoCellTypistReferenceResult(label: model.classes[best], decisions: decisions, probabilities: probabilities)
     }
 
+    /// Accumulate canonical CSR or CSC entries after a first pass supplies full
+    /// source-row totals. Retains cells x classes, never cells x model features.
+    /// Each row's feature coordinates must increase even when rows interleave.
+    /// All counts and totals are validated before any result is emitted.
+    public func predictSparseMatrix(rowTotals: [UInt64],
+                                    scan: (_ accept: (Int, Int, UInt64) throws -> Void) throws -> Void,
+                                    emit: (Int, VivoCellTypistReferenceResult) throws -> Void) throws {
+        let cells = rowTotals.count, classes = model.classes.count
+        guard cells <= 10_000_000 / classes else { throw VivoCellTypistReferenceError.invalidCounts }
+        let baseline = try predict(indices: [], counts: []).decisions
+        var scores = [Double](repeating: 0, count: cells * classes)
+        for row in 0..<cells {
+            for c in 0..<classes { scores[row * classes + c] = baseline[c] }
+        }
+        var totals = [UInt64](repeating: 0, count: cells)
+        var previous = [Int](repeating: -1, count: cells)
+        try scan { row, feature, count in
+            try Task.checkCancellation()
+            guard row >= 0, row < cells, feature >= 0, feature < sourceToModel.count,
+                  feature > previous[row], count > 0 else { throw VivoCellTypistReferenceError.invalidCounts }
+            let next = totals[row].addingReportingOverflow(count)
+            guard !next.overflow, next.partialValue <= rowTotals[row] else { throw VivoCellTypistReferenceError.invalidCounts }
+            totals[row] = next.partialValue; previous[row] = feature
+            let j = sourceToModel[feature]
+            if j >= 0 {
+                let logValue = log1p(Double(count) / Double(rowTotals[row]) * 10_000)
+                let value = min(10, (logValue - (model.withMean ? model.means[j] : 0)) / model.scales[j])
+                let delta = value - zeros[j]
+                guard delta.isFinite else { throw VivoCellTypistReferenceError.nonfiniteScore }
+                for c in 0..<classes { scores[row * classes + c] += delta * model.coefficients[c][j] }
+            }
+        }
+        guard totals == rowTotals, scores.allSatisfy(\.isFinite) else { throw VivoCellTypistReferenceError.invalidCounts }
+        for row in 0..<cells {
+            try Task.checkCancellation()
+            let decisions = Array(scores[(row * classes)..<((row + 1) * classes)])
+            let probabilities = decisions.map { $0 >= 0 ? 1 / (1 + exp(-$0)) : exp($0) / (1 + exp($0)) }
+            var best = 0
+            for c in 1..<classes where decisions[c] > decisions[best] { best = c }
+            try emit(row, .init(label: model.classes[best], decisions: decisions, probabilities: probabilities))
+        }
+    }
+
     /// Read canonical little-endian (row UInt32, feature UInt32, count UInt64)
     /// records. Chunk boundaries may split records. A zero-byte read means EOF.
     /// The caller must publish emitted results transactionally: a later malformed
