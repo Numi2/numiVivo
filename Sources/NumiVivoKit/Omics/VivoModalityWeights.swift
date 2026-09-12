@@ -17,6 +17,10 @@ public struct VivoModalityWeightResult: Codable, Sendable {
 public enum VivoModalityWeights {
     public static func fit(first: [[Double]], second: [[Double]], cells: [VivoOmicsCellIdentity],
                            neighborsIncludingSelf k: Int = 15) throws -> VivoModalityWeightResult {
+        try fitWithGraphs(first: first, second: second, cells: cells, neighborsIncludingSelf: k).result
+    }
+    static func fitWithGraphs(first: [[Double]], second: [[Double]], cells: [VivoOmicsCellIdentity],
+                              neighborsIncludingSelf k: Int) throws -> (result: VivoModalityWeightResult, graphs: [VivoSingleCellNeighborGraph]) {
         let n = cells.count
         guard n >= k, Set(cells).count == n, cells.allSatisfy({ vivoOmicsID($0.sampleID) && vivoOmicsID($0.barcode) }) else {
             throw VivoOmicsError.invalid("modality cell identities")
@@ -80,8 +84,8 @@ public enum VivoModalityWeights {
             let a = exp(scores[0][i]-shift), b = exp(scores[1][i]-shift)
             weights[0][i] = a/(a+b); weights[1][i] = b/(a+b)
         }
-        return .init(method: "paired-two-modality-snn-predictability-v1", cells: cells,
+        return (result: .init(method: "paired-two-modality-snn-predictability-v1", cells: cells,
             neighborsIncludingSelf: k, bandwidths: widths, withinDistances: within,
-            crossDistances: cross, scores: scores, weights: weights)
+            crossDistances: cross, scores: scores, weights: weights), graphs: graphs)
     }
 }
