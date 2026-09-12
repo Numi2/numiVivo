@@ -468,3 +468,5 @@ NumiVivo models biological systems; it does not validate a therapy, authorize an
 Licensed under [Apache License 2.0](LICENSE). See [NOTICE](NOTICE). External datasets, force-field parameters, model weights and third-party materials retain their own terms. For research use, cite the exact repository revision and the methods and source data used by the calculation.
 
 The completed donor-exclusion evaluation now also has a [post-hoc support diagnostic](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/evidence/2026-09-12-support-diagnostic/README.md): HIRISA’s loss to the training-mean baseline persists within the training rate range in every donor. General biological outcome prediction remains unestablished.
+
+A [response-transport development experiment](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseTransport/README.md) is now complete: it reduces HIRISA error but still fails against the mean-response baseline and worsens Kang against the original joint model. It is not promoted; independent biological validation remains open.

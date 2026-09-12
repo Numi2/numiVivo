@@ -748,3 +748,7 @@ shard hashes; remaining raw evidence is retained locally pending archival capaci
 ### Post-hoc training support diagnostic
 
 HIRISA loses to the training-mean response baseline inside and outside the training rate range in all five completed donors; Kang wins in both strata in all eight. Expanding the range alone is not an established remedy. This exploratory association does not change the frozen scores or establish causality. See the [diagnostic report](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/evidence/2026-09-12-support-diagnostic/README.md) for per-donor ratios, estimator limitations and hash-bound evidence.
+
+### Response transport candidate
+
+A single frozen response-transport heuristic was executed on all 13 reused development folds and independently checked across 131,342 predictions. It improves HIRISA RMSE to 0.100816 but still loses to the training-mean baseline in every donor; Kang RMSE worsens to 1.222553 compared with the original joint model. The candidate is rejected for promotion. See the [complete experiment](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseTransport/README.md) for formulas, per-donor scores, all candidate predictions and limitations. The original benchmark is unchanged.
