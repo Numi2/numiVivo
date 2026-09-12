@@ -325,6 +325,10 @@ one order difference and small distance errors. The subsequent [native backend](
 passes fresh CLI publication/reconstruction with bounded tiles and explicit FP32
 provenance. CPU FP64 remains the default; full-pipeline speedup and downstream
 biological preservation remain unqualified.
+The [full Kang comparison](Tools/Omics/Reduction/MetalDistanceBlocks/Kang/README.md)
+now preserves all source-annotation metrics and three clustering partitions, with
+30.4% lower median native graph-publication time across three runs per backend.
+This is cohort-specific preservation and timing, not biological generalization.
 
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical
