@@ -24,6 +24,12 @@ The [matched-control donor-shift experiment](Tools/Omics/Benchmarks/HIRISA/Match
 
 The [exact CPU matcher is now integrated into the Swift MNN owner](Tools/Omics/Reduction/ExactNativeMNN/README.md). Actual execution reproduces scores, anchors and reports byte-for-byte across all 82,567 Hagai/Kang/Ding cells; sanitizer and cancellation checks pass. The earlier [biological benchmark](Tools/Omics/Reduction/ExactCPUMNN/README.md) passes every evaluable gate, with four Kang classifier strata still unavailable. Million-cell and independent biological qualification remain open.
 
+A [native time-aware response baseline](Tools/Omics/PerturbationPrediction/GSE226572/TemporalInterpolation/README.md)
+now passes all three donor-level development gates on GSE226572 while holding out
+both donor and query time. It reduces error by 16–23% versus a time-independent
+mean; two of eighteen individual cases still lose to that baseline. This reused
+whole-PBMC endpoint does not establish cross-study or B-cell prediction accuracy.
+
 ## Biological prediction: current evidence
 
 A [training-only response-shrinkage candidate](Tools/Omics/PerturbationPrediction/StudyContextKernel/ResponseShrinkage/README.md) improves HIRISA but still fails Kang and GSE181897 transfer gates. All 75 donors pass numerical verification; the candidate remains unpromoted.

@@ -1,0 +1,11 @@
+{
+  "scope": "Reused GSE226572 development endpoint; full QC-admitted PBMC population, not B-cell prediction",
+  "split": "Exclude entire query donor and query time across all training donors in each of 18 folds",
+  "model": "linear interpolation in hours of equal-donor mean response at each training time; zero-response anchor at 0; constant boundary extension after final training time",
+  "baseline": "equal-donor, equal-within-donor-time mean response from identical training subset; plus no change",
+  "features": 12993,
+  "gate": "at least 5 percent lower equal-within-donor-time mean RMSE against both baselines in each of three held-out donors",
+  "sourceSHA256": "534a0f5bcd676af37cda6af9b7085da012dc68edc90ac99c3fdffc06b971e341",
+  "nativeSourceSHA256": "fcbc153b045bc3cf5def8f4d74d88e808bcbc6616d44d31f5a5a2726ae6cc38b",
+  "createdUnix": 1789233882.470622
+}

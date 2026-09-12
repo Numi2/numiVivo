@@ -170,3 +170,8 @@ remain unresolved. This completed whole-population experiment does not replace
 those planned B-cell/target tests. The broader goal still needs reliable context
 transfer, calibrated uncertainty, biological annotation/integration, multimodal
 and cross-scale validation; see the [prediction assessment](../../../../Documentation/BiologicalPrediction.md).
+
+The subsequent [native temporal interpolation experiment](TemporalInterpolation/README.md)
+uses this now-inspected cohort for donor-and-time-held-out development. All three
+donor gates pass against two baselines, while two individual observations lose to
+the training mean. It does not replace the original failed cross-study test.
