@@ -1,0 +1,120 @@
+{
+  "archiveSHA256": "97216adc7b38d6a11a430b9f02ae466012079d7e886470098834bda9b418a86a",
+  "archiveBytes": 1778558,
+  "members": {
+    "VivoCellTypistReference.swift": {
+      "bytes": 5272,
+      "SHA256": "1dc68e989d7b1744c34fe485907bcd794befa95cd6e0605716d59fd1c87e8f24"
+    },
+    "aifi_parse_pbmc_celltypist_model_AIFI_L1.pkl": {
+      "bytes": 55216,
+      "SHA256": "959938f78eb6e0394a9da0d31a65d57316fcf1be0df9cdde3222cea3842f9a63"
+    },
+    "check.py": {
+      "bytes": 1671,
+      "SHA256": "c2ab776327f44d2ba287b7e17c0df2eadaf32833fc2304ed6c8eb5bafc02ebb3"
+    },
+    "check_real.py": {
+      "bytes": 2279,
+      "SHA256": "f5630176dbef1917995b246be90c8842a67b7a1ead0d7b7cdbbf174d9a12b071"
+    },
+    "check_sklearn.py": {
+      "bytes": 1580,
+      "SHA256": "75ce1de5a7b0c9570caad3d1f0e4a24fbba851a33ff5265dadb833d91bd702d3"
+    },
+    "checks-input.json": {
+      "bytes": 41804,
+      "SHA256": "6f1fe973cdb3c3ad726958662811c6e55787159a7e40c5255a9cc0dd14860ad1"
+    },
+    "checks-output.json": {
+      "bytes": 11102,
+      "SHA256": "a7c9e9a8f204c62fa4e4acfda74c46bebeb6957a41b3b68acce45ccb4ef1d097"
+    },
+    "checks.json": {
+      "bytes": 197,
+      "SHA256": "9130e7809c6ce5bc71346eda1ff7fd0e52a99fd72adae512358a1514ed32e15c"
+    },
+    "extract.py": {
+      "bytes": 1793,
+      "SHA256": "77019a12027bdf98ff3db52489a2ae475cd4053ff7ef50ddeaa3e06a6cd09d38"
+    },
+    "feature-admission.json": {
+      "bytes": 9445,
+      "SHA256": "02b2cf368bc92e7a409eedc9ecb62c944d0db6268c55935da7abfc69062a2187"
+    },
+    "main.swift": {
+      "bytes": 891,
+      "SHA256": "77191af75340b849fca295c86bce3599312059d8506675de1d4e323529fd9aea"
+    },
+    "model.json": {
+      "bytes": 220371,
+      "SHA256": "95bfa2b7668e7e5bad66000094e6bd1d2b3a670c1c6f761c076634b11b29ad9f"
+    },
+    "native": {
+      "bytes": 132008,
+      "SHA256": "38bffaf188897a2579dc1ac27d3d316c239d2a0936bd4e0bde0c315dc4af67d4"
+    },
+    "pickle-strings.json": {
+      "bytes": 11312,
+      "SHA256": "b7addac682f844e3136adac4e0de8159c9ba4342e2fc4ef33b1542c2e629d49c"
+    },
+    "real-check.json": {
+      "bytes": 232,
+      "SHA256": "6d336a563cd3795d7620da8116ec7962636c06cb65e7d3c3dbe266a3a219a097"
+    },
+    "real-input.json": {
+      "bytes": 5467511,
+      "SHA256": "9f9a375b240f82790916c6151d1f56bfd60b8390266738324006d1d82b4e2994"
+    },
+    "real-output.json": {
+      "bytes": 92278,
+      "SHA256": "e28e51bec9df9f38f9644c79be8be3ab049044563e51fab4a64d24bc94d898f0"
+    },
+    "real-source.json": {
+      "bytes": 1180,
+      "SHA256": "053ece65fd296491f2107ae1f2e44a5d21151208cfcd8378289fc6bf337a5386"
+    },
+    "rejections": {
+      "bytes": 122408,
+      "SHA256": "5b319076062e060d7068fdb6b0224fd0189d2642b46cb8358ed0883f1ed10910"
+    },
+    "rejections.json": {
+      "bytes": 36,
+      "SHA256": "472da5e4f15c4b3930786a76fa29fbae8331d10061d7f330cfe61290a1f8f77a"
+    },
+    "rejections.swift": {
+      "bytes": 1836,
+      "SHA256": "5ca3874a367f008cc681afcecbe86b14a8b896840cf2e5e9df6cbc32826e60ea"
+    },
+    "runtime.json": {
+      "bytes": 535,
+      "SHA256": "56ba108644117151a59dd00bd47826096402069a5aea0ba6fa1659416bc6611d"
+    },
+    "sklearn-check.json": {
+      "bytes": 323,
+      "SHA256": "496c498b7e3ee73a1cd55e96a8b29062d03f6b0215c541b9c388c30ea0ebca36"
+    },
+    "source.json": {
+      "bytes": 402,
+      "SHA256": "8423a60c75e8add8e5416780d3474ab52633fd2ce7789b0d9e912e228c1d18e8"
+    },
+    "upstream-LICENSE": {
+      "bytes": 1056,
+      "SHA256": "2703ac51a54fb519e99476f0b17d52b48522d54bb2186f3c1e66c3527a2ad4fc"
+    },
+    "upstream-classifier.py": {
+      "bytes": 28600,
+      "SHA256": "79e44e71275c0ce002a081ae6b8449425dd96370f6a57767e17155ceba13e4f0"
+    },
+    "upstream-models.py": {
+      "bytes": 24529,
+      "SHA256": "8184182a3f55bba8eb5899d5f49c69b7df9e18488c1292240c7ca4efefe9da42"
+    },
+    "upstream-source.json": {
+      "bytes": 610,
+      "SHA256": "50a69af02e390c2e4042a56b099a7974bea765e7f5bc31bfc2a812c32742e8ae"
+    }
+  },
+  "externalDependencies": "Original Parse source axes/chunk maps and frozen range reader for online check_real.py; real-input.json permits offline comparison",
+  "biologicalAccuracyQualified": false
+}
