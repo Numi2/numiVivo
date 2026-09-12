@@ -113,8 +113,11 @@ rather than being duplicated here. It does not embed raw count streams or
 completed biological validation. The retained scripts' original absolute paths
 describe their execution host and must be adjusted on another host.
 
-The IFN-beta dose/reagent and model feature contract remain unresolved.
-No prediction is fitted or scored by this workflow. Original Parse metadata and
+This count workflow itself fits no predictions. Subsequent work resolved the
+[primary IFN-beta dose and reagent](NEXT_STEPS.md#primary-dose-and-reagent-resolved)
+and froze the [exact 11,600-feature model contract](../../StudyContextKernel/ExactParsePanel/README.md).
+The later [completed context prediction test](../ContextEvaluation/README.md) failed.
+Cross-study exposure equivalence and participant independence remain unverified. Original Parse metadata and
 count derivatives retain **Parse Biosciences, CC BY-NC 4.0** attribution.
 
 ## First completed donor: partial execution evidence

@@ -41,14 +41,18 @@ input hashes; reproduction requires the existing metadata and HGNC dependencies.
 The [primary preprint](https://pmc.ncbi.nlm.nih.gov/articles/PMC12724453/) links
 its [supplementary workbook](https://pmc.ncbi.nlm.nih.gov/articles/instance/12724453/bin/media-2.xlsx).
 The workbook download presented a browser challenge and was not bypassed.
-Research Square returned 403. The IFN-beta dose/reagent remains unresolved;
-24-hour exposure alone does not supply those details.
+Research Square returned 403 during this historical admission audit. Subsequent
+[primary-source retrieval](../BCellCounts/NEXT_STEPS.md#primary-dose-and-reagent-resolved)
+resolved IFN-beta at 100 ng/mL, Biotechne / R&D systems, catalogue 8499-IF-010/CF.
+The retrieval failures remain evidence of those attempts, not a current dose gap.
 
-Resolve the experimental definition, establish the supported feature contract
-before fitting and verify counts for the declared population before scoring.
-Do not silently pass the current model an incomplete axis. Parse counts and DE
-were previously inspected; a later prediction test must disclose that history.
-No success or failure of the proposed prediction test is claimed here.
+Later work established the [exact 11,600-feature contract](../../StudyContextKernel/ExactParsePanel/README.md),
+verified the declared count population and executed the
+[context prediction test](../ContextEvaluation/README.md), which failed. This audit
+itself fitted no prediction and its original incomplete axis was not silently filled.
+Parse counts and outcomes have been inspected; future reuse is development, not
+an untouched evaluation. Exposure comparability and participant independence remain
+unverified.
 
 ## Evidence and reproduction
 

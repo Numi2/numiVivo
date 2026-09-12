@@ -99,7 +99,8 @@ or supply independent annotation or prediction validation.
 
 The [Parse experimental description](https://www.parsebiosciences.com/datasets/10-million-human-pbmcs-in-a-single-experiment/)
 confirms 24-hour exposure but does not specify IFNB dose/reagent in the inspected
-text. The dose admission requirement remains unresolved.
+text. Dose was unresolved at that inspection; the later primary-workbook
+receipt below resolves it.
 
 ## Prediction endpoint audit: 2026-09-12
 
@@ -114,8 +115,9 @@ implementation is therefore a bounded count-stream accumulator for the frozen
 per-cell transformation, with independent sparse-reference verification and
 explicit treatment of zero-count cells. Preserve all 40,352 features in library
 totals before projecting to the frozen 11,600-feature panel. This preparation
-can proceed while dose/reagent provenance remains unresolved; prediction scoring
-still requires the admission conditions above. No prediction was fitted or scored.
+was the next step at the time of this audit. The subsequent normalization replay
+and exact-panel prediction test are complete; the prediction test failed, as recorded
+in the current status below. This historical audit itself fitted no prediction.
 
 The read-only audit script records its original host paths and requires a new
 output directory. Its receipt checks are an endpoint inventory, not a replacement
@@ -130,7 +132,8 @@ training cohort metadata inspected. Different identifier spellings or numerical
 values across studies do not prove that participants differ. A verified
 cross-study identifier namespace or supplier provenance is still needed before
 claiming participant independence. No demographic or medical attributes were
-used for model fitting or matching. IFN-beta dose/reagent remain unresolved.
+used for model fitting or matching. Dose/reagent was unresolved at this point in
+the investigation and was resolved by the subsequent workbook receipt below.
 
 ## Primary dose and reagent resolved
 
