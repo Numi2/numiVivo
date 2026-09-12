@@ -1,0 +1,203 @@
+{
+  "scope": "Retrospective frozen-model weight audit; no targets read, fitting, prediction changes or new validation",
+  "sourceHashes": {
+    "/Users/n/numivivo-parse-context-evaluation-20260912/inputs/Parse.json": "f68d55774b70e62d931876552756543467a68b7566271245df894d204f694169",
+    "/Users/n/numivivo-parse-context-evaluation-20260912/native/Parse.json": "d9fe231a74e301f82f6793544f588cd08796f24664d818218a7a33bc4f6883a6"
+  },
+  "studies": {
+    "GSE181897": {
+      "donors": 62,
+      "baseWeight": 0.33333333333333337
+    },
+    "HIRISA": {
+      "donors": 5,
+      "baseWeight": 0.3333333333333333
+    },
+    "Kang": {
+      "donors": 8,
+      "baseWeight": 0.3333333333333333
+    }
+  },
+  "queries": [
+    {
+      "donor": "Parse:Donor1",
+      "weightSum": 1.0,
+      "minimumDonorWeight": 0.005092209949621697,
+      "maximumDonorWeight": 0.0879731842250038,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 1.0,
+      "responseStudyWeights": {
+        "GSE181897": 0.40645396815744594,
+        "HIRISA": 0.10801626966022096,
+        "Kang": 0.48552976218233307
+      },
+      "nearestControlDonor": "Kang:patient_1015",
+      "nearestControlRMSDistance": 2.1187016396629907
+    },
+    {
+      "donor": "Parse:Donor10",
+      "weightSum": 1.0,
+      "minimumDonorWeight": 0.005053909944999406,
+      "maximumDonorWeight": 0.08924064401737809,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 1.0,
+      "responseStudyWeights": {
+        "GSE181897": 0.40591720307477275,
+        "HIRISA": 0.10162042015223316,
+        "Kang": 0.49246237677299404
+      },
+      "nearestControlDonor": "Kang:patient_1015",
+      "nearestControlRMSDistance": 2.111959484322381
+    },
+    {
+      "donor": "Parse:Donor11",
+      "weightSum": 1.0,
+      "minimumDonorWeight": 0.004923169316073881,
+      "maximumDonorWeight": 0.09388822668025444,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 1.0,
+      "responseStudyWeights": {
+        "GSE181897": 0.4034396431133584,
+        "HIRISA": 0.08573299839855603,
+        "Kang": 0.5108273584880856
+      },
+      "nearestControlDonor": "Kang:patient_1039",
+      "nearestControlRMSDistance": 2.1671966060232553
+    },
+    {
+      "donor": "Parse:Donor12",
+      "weightSum": 0.9999999999999999,
+      "minimumDonorWeight": 0.004823462424042954,
+      "maximumDonorWeight": 0.10068153396908079,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 0.9999999999999999,
+      "responseStudyWeights": {
+        "GSE181897": 0.40626466149988244,
+        "HIRISA": 0.049489678839585334,
+        "Kang": 0.5442456596605322
+      },
+      "nearestControlDonor": "Kang:patient_1039",
+      "nearestControlRMSDistance": 2.150896811070364
+    },
+    {
+      "donor": "Parse:Donor2",
+      "weightSum": 1.0,
+      "minimumDonorWeight": 0.004972241275623369,
+      "maximumDonorWeight": 0.0917456322242915,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 1.0,
+      "responseStudyWeights": {
+        "GSE181897": 0.4040437817436284,
+        "HIRISA": 0.09312583390121043,
+        "Kang": 0.502830384355161
+      },
+      "nearestControlDonor": "Kang:patient_1039",
+      "nearestControlRMSDistance": 2.1254825894320133
+    },
+    {
+      "donor": "Parse:Donor3",
+      "weightSum": 1.0,
+      "minimumDonorWeight": 0.005116358868072742,
+      "maximumDonorWeight": 0.08763997098859477,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 1.0,
+      "responseStudyWeights": {
+        "GSE181897": 0.4080356823778265,
+        "HIRISA": 0.10731889447784991,
+        "Kang": 0.4846454231443236
+      },
+      "nearestControlDonor": "Kang:patient_1015",
+      "nearestControlRMSDistance": 2.1042342887032253
+    },
+    {
+      "donor": "Parse:Donor4",
+      "weightSum": 0.9999999999999999,
+      "minimumDonorWeight": 0.005052023502891889,
+      "maximumDonorWeight": 0.0884187136611477,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 0.9999999999999999,
+      "responseStudyWeights": {
+        "GSE181897": 0.4045529252287952,
+        "HIRISA": 0.10872210323184192,
+        "Kang": 0.48672497153936295
+      },
+      "nearestControlDonor": "Kang:patient_1015",
+      "nearestControlRMSDistance": 2.136472603876477
+    },
+    {
+      "donor": "Parse:Donor5",
+      "weightSum": 1.0,
+      "minimumDonorWeight": 0.004942980845453745,
+      "maximumDonorWeight": 0.09347843303230532,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 1.0,
+      "responseStudyWeights": {
+        "GSE181897": 0.4044117913684452,
+        "HIRISA": 0.08521464130273909,
+        "Kang": 0.5103735673288158
+      },
+      "nearestControlDonor": "Kang:patient_1039",
+      "nearestControlRMSDistance": 2.118751327530975
+    },
+    {
+      "donor": "Parse:Donor6",
+      "weightSum": 0.9999999999999999,
+      "minimumDonorWeight": 0.005003622099178913,
+      "maximumDonorWeight": 0.09168099635888474,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 0.9999999999999999,
+      "responseStudyWeights": {
+        "GSE181897": 0.40583648186293386,
+        "HIRISA": 0.09243431851450012,
+        "Kang": 0.501729199622566
+      },
+      "nearestControlDonor": "Kang:patient_1039",
+      "nearestControlRMSDistance": 2.135990347369735
+    },
+    {
+      "donor": "Parse:Donor7",
+      "weightSum": 1.0000000000000002,
+      "minimumDonorWeight": 0.004947528954779712,
+      "maximumDonorWeight": 0.09171174308300203,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 1.0000000000000002,
+      "responseStudyWeights": {
+        "GSE181897": 0.4026099114611448,
+        "HIRISA": 0.09712847231367278,
+        "Kang": 0.5002616162251825
+      },
+      "nearestControlDonor": "Kang:patient_1039",
+      "nearestControlRMSDistance": 2.1523481264195476
+    },
+    {
+      "donor": "Parse:Donor8",
+      "weightSum": 1.0,
+      "minimumDonorWeight": 0.004982922432718965,
+      "maximumDonorWeight": 0.09036163931600391,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 1.0,
+      "responseStudyWeights": {
+        "GSE181897": 0.4038152141855044,
+        "HIRISA": 0.10048813719256858,
+        "Kang": 0.4956966486219269
+      },
+      "nearestControlDonor": "Kang:patient_1039",
+      "nearestControlRMSDistance": 2.1106350047391906
+    },
+    {
+      "donor": "Parse:Donor9",
+      "weightSum": 1.0,
+      "minimumDonorWeight": 0.004899935863047486,
+      "maximumDonorWeight": 0.09384686696837811,
+      "negativeWeightMass": -0.0,
+      "totalAbsoluteWeight": 1.0,
+      "responseStudyWeights": {
+        "GSE181897": 0.4021322104663022,
+        "HIRISA": 0.08854886933803495,
+        "Kang": 0.5093189201956627
+      },
+      "nearestControlDonor": "Kang:patient_1039",
+      "nearestControlRMSDistance": 2.1766916195928756
+    }
+  ]
+}

@@ -57,3 +57,7 @@ cohort before an independent transfer claim.
 The [retrospective error decomposition](Diagnosis/README.md) identifies excessive
 response magnitude in all twelve donors together with imperfect directional
 alignment. It does not fit or validate a correction.
+
+The [frozen weight audit](WeightAudit/README.md) confirms equal study base weights
+and nonnegative response weights for every query. A nonnegative-weight constraint
+would not repair this failure.
