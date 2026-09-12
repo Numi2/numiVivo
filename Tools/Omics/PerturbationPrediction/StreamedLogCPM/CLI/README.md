@@ -32,3 +32,6 @@ without --with-cli, so the initial CLI check could not locate the binary; the
 corrected isolated build and checks above passed. Existing Metal deprecation
 warnings remain. Full-app build, performance and biological accuracy are outside
 this qualification.
+
+[Per-chunk buffer cleanup](Memory/README.md) reduces measured CLI peak RSS
+from 109.4 MB to 25.6 MB on the same real matrix with identical results.

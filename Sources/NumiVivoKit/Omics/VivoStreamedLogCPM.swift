@@ -97,6 +97,13 @@ public struct VivoStreamedLogCPM {
 
 
 extension VivoStreamedLogCPM {
+    private static func chunkPool<T>(_ body: () throws -> T) rethrows -> T {
+        #if canImport(ObjectiveC)
+        return try autoreleasepool(invoking: body)
+        #else
+        return try body()
+        #endif
+    }
     /// Consume canonical little-endian row-u32/feature-u32/count-u64 records.
     /// The caller owns the input. Incomplete or invalid streams return no result.
     public static func consume(featureIDs: [String], groupIDs: [String],
@@ -107,21 +114,25 @@ extension VivoStreamedLogCPM {
         var buffer = Data()
         while true {
             try Task.checkCancellation()
-            let chunk = try read()
-            guard chunk.count <= 1_048_576 else { throw Failure.invalidRecord }
-            if chunk.isEmpty { break }
-            buffer.append(chunk)
-            let complete = buffer.count / 16 * 16
-            try buffer.withUnsafeBytes { bytes in
-                for offset in stride(from: 0, to: complete, by: 16) {
-                    if offset % 16_384 == 0 { try Task.checkCancellation() }
-                    try accumulator.add(
-                        row: Int(UInt32(littleEndian: bytes.loadUnaligned(fromByteOffset: offset, as: UInt32.self))),
-                        feature: Int(UInt32(littleEndian: bytes.loadUnaligned(fromByteOffset: offset + 4, as: UInt32.self))),
-                        count: UInt64(littleEndian: bytes.loadUnaligned(fromByteOffset: offset + 8, as: UInt64.self)))
+            let ended = try chunkPool { () throws -> Bool in
+                let chunk = try read()
+                guard chunk.count <= 1_048_576 else { throw Failure.invalidRecord }
+                if chunk.isEmpty { return true }
+                buffer.append(chunk)
+                let complete = buffer.count / 16 * 16
+                try buffer.withUnsafeBytes { bytes in
+                    for offset in stride(from: 0, to: complete, by: 16) {
+                        if offset % 16_384 == 0 { try Task.checkCancellation() }
+                        try accumulator.add(
+                            row: Int(UInt32(littleEndian: bytes.loadUnaligned(fromByteOffset: offset, as: UInt32.self))),
+                            feature: Int(UInt32(littleEndian: bytes.loadUnaligned(fromByteOffset: offset + 4, as: UInt32.self))),
+                            count: UInt64(littleEndian: bytes.loadUnaligned(fromByteOffset: offset + 8, as: UInt64.self)))
+                    }
                 }
+                buffer = Data(buffer.suffix(buffer.count - complete))
+                return false
             }
-            buffer = Data(buffer.suffix(buffer.count - complete))
+            if ended { break }
         }
         guard buffer.isEmpty else { throw Failure.invalidRecord }
         try Task.checkCancellation()

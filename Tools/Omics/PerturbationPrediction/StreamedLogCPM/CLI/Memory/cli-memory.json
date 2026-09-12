@@ -1,0 +1,40 @@
+{
+  "scope": "Alternating process-level warm-cache real-matrix CLI comparison; three runs per binary; all outputs exact.",
+  "binarySHA256": {
+    "old": "705d3770db564e611137d11b32984271870c08e950d8a9bb092a94bdb02b08ad",
+    "pool": "20b83650c6cf61db73ee913aa638b8458e524fea5680eb8823a3443196408f42"
+  },
+  "inputSHA256": "7e93d55fac418714ef24cb47aa52e6a94ee989d2193092787b125a937bad199b",
+  "runs": [
+    {
+      "kind": "old",
+      "seconds": 0.11,
+      "maxRSSBytes": 109395968
+    },
+    {
+      "kind": "pool",
+      "seconds": 0.1,
+      "maxRSSBytes": 25575424
+    },
+    {
+      "kind": "pool",
+      "seconds": 0.11,
+      "maxRSSBytes": 25575424
+    },
+    {
+      "kind": "old",
+      "seconds": 0.11,
+      "maxRSSBytes": 109395968
+    },
+    {
+      "kind": "old",
+      "seconds": 0.11,
+      "maxRSSBytes": 109395968
+    },
+    {
+      "kind": "pool",
+      "seconds": 0.11,
+      "maxRSSBytes": 25575424
+    }
+  ]
+}
