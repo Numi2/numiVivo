@@ -14,6 +14,8 @@ The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/REA
 
 The [integration design guard](Tools/Omics/Reduction/INTEGRATION.md#optional-protected-sample-groups) can reject correction designs confounded with explicitly protected sample groups. Admission does not establish preservation of biological signals.
 
+The [full-HIRISA rigid-correction experiment](Tools/Omics/Benchmarks/HIRISA/RigidProjection/README.md) preserves within-donor distances but still fails 31/146 sensitive annotation comparisons. No new integration method is promoted.
+
 ## Biological prediction: current evidence
 
 **Available data supports conditional estimates of average RNA responses;

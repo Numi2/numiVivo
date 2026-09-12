@@ -71,11 +71,12 @@ hashes are published; full raw joint-shard archival remains incomplete. The newe
 shrinkage experiments retain their complete declared archives separately.
 
 Integration still requires resolving sensitive marker/program and rare-cell
-preservation losses. The [source design audit](../Tools/Omics/Reduction/IntegrationDesign/README.md)
+preservation losses. The [full-HIRISA rigid projection](../Tools/Omics/Benchmarks/HIRISA/RigidProjection/README.md) now tests all original cells with unchanged diagnostics: 31/146 annotation failures remain, including 9/29 rare failures. Within-donor isometry does not repair cross-donor preservation; the method is not promoted. The [source design audit](../Tools/Omics/Reduction/IntegrationDesign/README.md)
 now verifies full-atlas donor/batch crossing, subset rank deficiencies, and exact
-monocyte-preparation/batch overlap. Before multiple-covariate correction, add
-explicit protected-covariate and identifiability handling; retain the existing
-scientific preservation gates. Resolve Adamson's experimental controls before fitting its
+monocyte-preparation/batch overlap. The [protected sample-group admission guard](../Tools/Omics/Reduction/IntegrationProtection/README.md) now rejects disconnected
+joint condition/group designs in ridge and MNN. It does not constrain correction
+or establish biological preservation. Multiple-covariate fitting and its
+identifiability handling remain open; retain the existing scientific gates. Resolve Adamson's experimental controls before fitting its
 frozen transfer test, and Parse's intervention and feature identities before
 admitting its proposed prediction test. Retain all negative results and simple
 baselines. Measured phenotype links need their own acceptance experiments.

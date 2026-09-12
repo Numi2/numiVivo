@@ -1,0 +1,57 @@
+{
+  "status": "completed-development-experiment-not-promoted",
+  "cells": 1612594,
+  "folds": 114,
+  "comparisons": 471,
+  "eligible": 146,
+  "failures": 31,
+  "rareEligible": 29,
+  "rareFailures": 9,
+  "originalFailures": 37,
+  "resolvedFailures": 10,
+  "newFailures": 4,
+  "meanEligibleRecall": 0.650730209397901,
+  "numerical": {
+    "allCells": 1612594,
+    "maximumCoordinateOracleError": 0.0,
+    "maximumRelativeCenteredNormError": 4.25101891997688e-15,
+    "targetSSE": [
+      117627.59220123845,
+      99654.16871998418,
+      139055.62090759104,
+      269533.1892028402,
+      195729.55254068907
+    ]
+  },
+  "versions": {
+    "python": "3.13.14 (main, Jun 10 2026, 12:24:04) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "numpy": "2.5.3",
+    "scipy": "1.16.3",
+    "h5py": "3.16.0",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O"
+  },
+  "setupFailures": [
+    "Missing SciPy; 1.13.1 source installation failed without Fortran on Python 3.13; binary SciPy 1.16.3 installed.",
+    "First evaluator failed before scoring because candidate directory was outside original study; resumed with explicit absolute candidate path."
+  ],
+  "response": {
+    "comparisons": 16,
+    "sensitive": 16,
+    "passedAmongSensitive": 16,
+    "completeGate": true,
+    "meanConditionalDonorScatter": 0.028972339444499763,
+    "meanRelativeResponseDrift": 0.050338607000469555
+  },
+  "mixed-programs": {
+    "comparisons": 32,
+    "sensitive": 14,
+    "passedAmongSensitive": 12,
+    "completeGate": false
+  },
+  "within-programs": {
+    "comparisons": 32,
+    "sensitive": 28,
+    "passedAmongSensitive": 28,
+    "completeGate": false
+  }
+}
