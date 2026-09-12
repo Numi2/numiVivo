@@ -45,8 +45,8 @@ passed the malformed/zero-cell checks again. product-verification.json binds
 the library, CLI, source inventory, stream harness and product output. Existing
 Metal API deprecation warnings remain in the build log.
 
-The twelve-donor Parse normalized-mean replay has started in the separate
-/Users/n/numivivo-parse-logcpm-20260912 study. Completion is not yet claimed.
+The [twelve-donor Parse normalized-mean replay](ParseReplay/README.md) has completed
+in /Users/n/numivivo-parse-logcpm-20260912 and passed terminal review.
 run_parse.py uses the previously qualified adapter, verifies source range and
 complete canonical-stream hashes, retains all frozen B cells, and compares every
 group/feature mean to independent NumPy accumulation at absolute tolerance 1e-10.
@@ -55,8 +55,7 @@ uses the actual product library and handles records split across pipe reads.
 The shared source controller lock prevents overlap with an exclusive ingestion.
 
 No Parse prediction is fitted or scored, and these numerical checks do not
-establish biological predictive accuracy. Full-app build, performance and
-Parse completion remain outside this result.
+establish biological predictive accuracy. Full-app build and end-to-end performance remain outside this result.
 
 ## Terminal review
 
@@ -69,6 +68,6 @@ It rechecks retained evidence; it does not independently refetch source counts.
 
 The live incomplete study was rejected, and four admission checks passed:
 missing completion, forged completion without donors, changed tolerance, and
-driver mismatch. The positive complete-cohort review remains pending while
-the replay runs. test_parse_complete.py uses a separate temporary directory
+driver mismatch. The positive complete-cohort review now passes for all 72,446 cells and
+40,352 features, with maximum absolute error 7.99e-15. test_parse_complete.py uses a separate temporary directory
 and does not change the running study.

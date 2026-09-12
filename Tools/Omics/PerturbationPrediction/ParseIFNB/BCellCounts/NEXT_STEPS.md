@@ -28,10 +28,10 @@ even when a later attempt succeeds.
 
 - Resolve the original IFN-beta dose and reagent from an accessible primary
   source. The established 24-hour duration does not resolve dose comparability.
-- Resolve the feature contract: the current 11,800-feature context model has
-  11,600 exact source matches and 200 absent features. Do not silently zero-fill,
-  alias or choose a panel after inspecting outcomes. A changed panel requires an
-  explicitly versioned model and renewed development validation.
+- Preserve the versioned 11,600-feature exact-match contract and its renewed
+  development results: HIRISA passes, while Kang and GSE181897 fail the transfer
+  gate. This resolves source compatibility but does not promote the candidate.
+  Do not silently zero-fill, alias or choose a panel after inspecting outcomes.
 - Freeze source-label inclusion, normalization, training inputs, baseline
   definitions, metric, aggregation, margin and failure handling before exposing
   treated Parse values to model selection. The existing 72,446-row selection
@@ -58,8 +58,12 @@ response, immune recognition, disease progression or clinical benefit. The curre
 three-study context model remains unpromoted because two held-out studies fail
 its existing transfer gate.
 
-The next prediction work is experimental provenance resolution and an explicit
-feature contract, followed by renewed development validation if the panel changes.
+The frozen per-cell normalization replay and terminal review now pass for all
+twelve donors; see the [retained evidence](../../StreamedLogCPM/ParseReplay/README.md).
+The next prediction work is experimental provenance resolution and a documented
+admission decision for the unpromoted candidate. The versioned
+feature contract and renewed development evaluation are complete; their failed
+transfer gates remain part of the admission decision.
 Do not tune against Parse treated outcomes to resolve these requirements.
 
 The [versioned exact 11,600-feature panel](../../StudyContextKernel/ExactParsePanel/README.md)

@@ -1,0 +1,69 @@
+{
+  "status": "PASS-terminal-review",
+  "donors": [
+    {
+      "donor": "Donor1",
+      "cells": 4649,
+      "maximumAbsoluteError": 6.217248937900877e-15
+    },
+    {
+      "donor": "Donor10",
+      "cells": 3153,
+      "maximumAbsoluteError": 7.993605777301127e-15
+    },
+    {
+      "donor": "Donor11",
+      "cells": 6734,
+      "maximumAbsoluteError": 7.105427357601002e-15
+    },
+    {
+      "donor": "Donor12",
+      "cells": 9480,
+      "maximumAbsoluteError": 5.329070518200751e-15
+    },
+    {
+      "donor": "Donor2",
+      "cells": 13847,
+      "maximumAbsoluteError": 7.105427357601002e-15
+    },
+    {
+      "donor": "Donor3",
+      "cells": 6183,
+      "maximumAbsoluteError": 7.105427357601002e-15
+    },
+    {
+      "donor": "Donor4",
+      "cells": 11196,
+      "maximumAbsoluteError": 7.105427357601002e-15
+    },
+    {
+      "donor": "Donor5",
+      "cells": 1859,
+      "maximumAbsoluteError": 7.105427357601002e-15
+    },
+    {
+      "donor": "Donor6",
+      "cells": 4863,
+      "maximumAbsoluteError": 6.217248937900877e-15
+    },
+    {
+      "donor": "Donor7",
+      "cells": 4244,
+      "maximumAbsoluteError": 7.105427357601002e-15
+    },
+    {
+      "donor": "Donor8",
+      "cells": 3697,
+      "maximumAbsoluteError": 7.105427357601002e-15
+    },
+    {
+      "donor": "Donor9",
+      "cells": 2541,
+      "maximumAbsoluteError": 6.217248937900877e-15
+    }
+  ],
+  "cells": 72446,
+  "predictionFitted": false,
+  "predictionScored": false,
+  "limitation": "Rechecks retained source range receipts and independent reference arrays; does not refetch raw counts."
+}
