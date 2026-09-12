@@ -114,3 +114,14 @@ still requires the admission conditions above. No prediction was fitted or score
 The read-only audit script records its original host paths and requires a new
 output directory. Its receipt checks are an endpoint inventory, not a replacement
 for the complete count/source replay verifier.
+
+## Primary donor metadata located
+
+The authors' [donor workbook at a pinned revision](https://github.com/theislab/HumanCytokineDict/blob/6f9bc00381227fe8b1aa8dcb4e3f6f168cfc3229/annotations/donor_metadata.xlsx)
+contains twelve donor rows and source donor identifiers. The
+[provenance review](donor-provenance-review.json) binds its SHA256 and the
+training cohort metadata inspected. Different identifier spellings or numerical
+values across studies do not prove that participants differ. A verified
+cross-study identifier namespace or supplier provenance is still needed before
+claiming participant independence. No demographic or medical attributes were
+used for model fitting or matching. IFN-beta dose/reagent remain unresolved.
