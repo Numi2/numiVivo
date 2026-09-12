@@ -10,6 +10,8 @@ The ambition is to follow a molecular change across scales: how a structure move
 
 > **Research software, under active development.** The capabilities below describe source implementations and their intended workflows—not a fully qualified release. Apple package integration, GPU numerical behavior and performance require qualification. The [capability map](Documentation/CAPABILITIES.md) separates implemented methods, current restrictions and planned work.
 
+The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md) now carries all 1,612,594 native graph-community labels into a backed AnnData-readable H5AD, with complete cell-identity and metadata checks. This is interoperability evidence, not biological annotation validation.
+
 ## Biological prediction: current evidence
 
 **Available data supports conditional estimates of average RNA responses;

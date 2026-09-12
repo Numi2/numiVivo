@@ -1,0 +1,1 @@
+Initial check used obs/sampleID and rejected all sample comparisons before annotation. All barcodes matched. Frozen PCA plan specifies geo_accession as sampleColumn; corrected checker reads that bound plan, rather than assuming field semantics. No output was written by the failed check.
