@@ -119,14 +119,15 @@ public enum VivoSingleCellH5AD {
                     throw VivoOmicsError.invalid("unsupported AnnData raw encoding")
                 }
             }
-            let obs = try index("obs", maximum: limits.maximumCells), featureIndex = try index(featureFrame, maximum: limits.maximumFeatures)
-            let features = try plan.featureIDColumn.map { try required(column(featureFrame, $0, maximum: limits.maximumFeatures)) } ?? featureIndex
+            let observationCount = try reader.indexLength("obs", maximum: limits.maximumCells)
+            let featureCount = try reader.indexLength(featureFrame, maximum: limits.maximumFeatures)
+            let features = try plan.featureIDColumn.map { try required(column(featureFrame, $0, maximum: limits.maximumFeatures)) } ?? index(featureFrame, maximum: limits.maximumFeatures)
             let sampleIDs = try required(column("obs", plan.sampleColumn, maximum: limits.maximumCells))
-            let barcodes = try plan.barcodeColumn.map { try required(column("obs", $0, maximum: limits.maximumCells)) } ?? obs
+            let barcodes = try plan.barcodeColumn.map { try required(column("obs", $0, maximum: limits.maximumCells)) } ?? index("obs", maximum: limits.maximumCells)
             let groups = try plan.groupColumn.map { try column("obs", $0, maximum: limits.maximumCells) }
-            let names = try plan.featureNameColumn.map { try required(column(featureFrame, $0, maximum: limits.maximumFeatures)) } ?? featureIndex
-            guard sampleIDs.count == obs.count, barcodes.count == obs.count, groups == nil || groups!.count == obs.count,
-                  names.count == features.count, features.count == featureIndex.count else { throw VivoOmicsError.invalid("AnnData annotation dimensions disagree") }
+            let names = try plan.featureNameColumn.map { try required(column(featureFrame, $0, maximum: limits.maximumFeatures)) } ?? index(featureFrame, maximum: limits.maximumFeatures)
+            guard sampleIDs.count == observationCount, barcodes.count == observationCount, groups == nil || groups!.count == observationCount,
+                  names.count == features.count, features.count == featureCount else { throw VivoOmicsError.invalid("AnnData annotation dimensions disagree") }
             guard plan.matrixPath == "X" || plan.matrixPath == "raw/X" || (plan.matrixPath.hasPrefix("layers/") && plan.matrixPath.split(separator: "/", omittingEmptySubsequences: false).count == 2) else {
                 throw VivoOmicsError.invalid("select X, raw/X or layers/<name> explicitly")
             }
@@ -136,10 +137,10 @@ public enum VivoSingleCellH5AD {
             let metadata = VivoSingleCellCountMetadata(id: plan.id,evidence: plan.evidence,sourceDescription: plan.sourceDescription,
                 countUnit: plan.countUnit,samples: plan.samples,
                 features: features.enumerated().map { .init(id: $0.element,name: names[$0.offset],mitochondrial: mitochondrial.contains($0.element)) },
-                cells: obs.indices.map { .init(barcode: barcodes[$0],sampleID: sampleIDs[$0],group: groups?[$0]) })
+                cells: (0..<observationCount).map { .init(barcode: barcodes[$0],sampleID: sampleIDs[$0],group: groups?[$0]) })
             try metadata.validate(limits: limits)
             try onMetadata(metadata)
-            try VivoH5ADCountReader.scan(h, file: file, path: plan.matrixPath, rows: obs.count, features: features.count, limits: limits, onEntry: onEntry)
+            try VivoH5ADCountReader.scan(h, file: file, path: plan.matrixPath, rows: observationCount, features: features.count, limits: limits, onEntry: onEntry)
             return try h.version()
         }
     }

@@ -120,14 +120,14 @@ extension VivoSingleCellH5AD {
                 let index = try h.object(g, name); defer { h.close(index, "H5Oclose") }
                 let encoding = try h.text(index, "encoding-type"), version = try h.text(index, "encoding-version")
                 let dataPath: String
-                if encoding == "string-array", version == "0.2.0" { dataPath = name }
-                else if encoding == "nullable-string-array", version == "0.1.0" { dataPath = name + "/values" }
+                if ["string-array", "array"].contains(encoding), version == "0.2.0" { dataPath = name }
+                else if ["nullable-string-array", "nullable-integer", "nullable-boolean"].contains(encoding), version == "0.1.0" { dataPath = name + "/values" }
                 else if encoding == "categorical", version == "0.2.0" { dataPath = name + "/codes" }
                 else { throw VivoOmicsError.invalid("unsupported dataframe index encoding") }
                 let d = try h.dataset(g, dataPath); defer { h.close(d, "H5Dclose") }
                 let shape = try h.shape(d, attribute: false)
                 guard shape.count == 1, shape[0] <= 100_000 else { throw VivoOmicsError.limit("annotation dataframe index shape") }
-                if encoding == "nullable-string-array" {
+                if ["nullable-string-array", "nullable-integer", "nullable-boolean"].contains(encoding) {
                     let mask = try h.dataset(index, "mask"); defer { h.close(mask, "H5Dclose") }
                     guard try h.shape(mask, attribute: false) == shape, try h.mask(mask, maximum: 100_000).allSatisfy({ !$0 }) else {
                         throw VivoOmicsError.invalid("missing or inconsistent dataframe index")

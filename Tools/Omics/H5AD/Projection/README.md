@@ -391,3 +391,13 @@ The [evidence archive](evidence/2026-09-12-numeric-indices/manifest.json) retain
 both initial native rejections, source snapshot, executable and all comparisons.
 Run `check_numeric_indices.py --binary H5AD_CHECK --legacy legacy.h5ad
 --modern modern.h5ad --out NEW_DIRECTORY` with the archived fixtures and AnnData.
+
+
+## Numeric-index analytical handoff
+
+The [explicit identity route](NUMERIC_INDEX_ROUTE.md) now executes native
+annotation → count-store → pseudobulk for numeric-index sources using declared
+barcode, feature-ID and feature-name columns. All 24 conformance routes and
+seven rejection checks pass. The updated reader also reconstructs the complete
+original Kang counts and pseudobulk against retained hashes. Index coercion and
+biological identity inference are not introduced.

@@ -45,6 +45,30 @@ struct VivoH5ADFrameReader {
     func required(_ values: [String?]) throws -> [String] {
         try values.map { guard let value = $0 else { throw VivoOmicsError.invalid("missing selected design identity") }; return value }
     }
+    /// Validate axis shape independently of identity values. Explicit mapping
+    /// columns must not require coercion of an unused dataframe index.
+    func indexLength(_ frame: String, maximum: Int) throws -> Int {
+        let group = try h.object(file, frame); defer { h.close(group, "H5Oclose") }
+        guard try h.text(group, "encoding-type") == "dataframe", try h.text(group, "encoding-version") == "0.2.0" else {
+            throw VivoOmicsError.invalid("unsupported AnnData dataframe")
+        }
+        let name = try component(h.text(group, "_index")), object = try h.object(group, name)
+        defer { h.close(object, "H5Oclose") }
+        let kind = try h.text(object, "encoding-type"), version = try h.text(object, "encoding-version")
+        let path: String
+        if ["array", "string-array"].contains(kind), version == "0.2.0" { path = name }
+        else if ["nullable-integer", "nullable-boolean", "nullable-string-array"].contains(kind), version == "0.1.0" { path = name + "/values" }
+        else if kind == "categorical", version == "0.2.0" { path = name + "/codes" }
+        else { throw VivoOmicsError.invalid("unsupported dataframe index encoding") }
+        let data = try h.dataset(group, path); defer { h.close(data, "H5Dclose") }
+        let shape = try h.shape(data, attribute: false)
+        guard shape.count == 1, shape[0] <= maximum else { throw VivoOmicsError.limit("dataframe index shape") }
+        if kind.hasPrefix("nullable-") {
+            let mask = try h.dataset(object, "mask"); defer { h.close(mask, "H5Dclose") }
+            guard try h.shape(mask, attribute: false) == shape else { throw VivoOmicsError.invalid("nullable index mask shape differs") }
+        }
+        return Int(shape[0])
+    }
     func index(_ frame: String, maximum: Int) throws -> [String] {
         let group = try h.object(file, frame); defer { h.close(group, "H5Oclose") }
         guard try h.text(group, "encoding-type") == "dataframe", try h.text(group, "encoding-version") == "0.2.0" else {
