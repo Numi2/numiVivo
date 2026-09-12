@@ -1,0 +1,82 @@
+{
+  "archiveSHA256": "13b5989b7f844ef75b1cd07ab7a74eb15babca282edf952b70b68fa954032413",
+  "members": {
+    "verification.json": "0325dd3aedcc0e6d80e8260cca4637bbd8d03acbba2b1bfa856b27ee4a768d9f",
+    "Main.swift": "9f299fd06ea152dd959bf47ab2f6cfa0785b857fba1457412436958416b39a97",
+    "Cancel.swift": "c6a148fb507c049a71f1d9cd30abf831ff9fe42b7e152d182a216154814cc750",
+    "Test.cpp": "7b11e13823e3665d8e4215f4ec8210a18521ac382c36d0a04df45cf29a604bfa",
+    "package.py": "93827632ab64c97660b7bfcebfb5f50663c2b85e4d2d866fb15ba87781500134",
+    "build.log": "cc5faad73b6f4715809424f548b4421df30a801f8e6aba10f5ce2230c6669079",
+    "owner-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "owner.log": "e628a0791a38bdd408eee0bf83f5dcca6eb42a9afa40cd9ca595d6b13c54f8be",
+    "cancel-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cancel.log": "7356fd4722dc885ea3714c69d17ac00bbc83159759c33032a3a0ce221def32e3",
+    "sanitizers.log": "4a89ee7d3bbf821fd3fa0b47fcbcb68bdcaa3307667a63223150d30e643323c0",
+    "build/sources.sha256": "33afcae6d10be9b9ddc0dc9af7f0501856dbb5047ec9e6e76da0dcb26d11b754",
+    "driver-attempt-1/Main.swift": "f558d456a558a6172e67a351ca4a5373d55b2c8a8510a871e6f6ed9b90fb02ca",
+    "driver-attempt-1/owner.log": "b556eea8bd0a8bf820f83e1ac475f348ff76e0f8e05c7a82b696b3efc699a6f2",
+    "source/Sources/NumiVivoCore/OmicsMNN.cpp": "75067ced53b792ffee953c6b33e5fd01029bf1c814f28c91e0ef050100f650a1",
+    "source/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsMNN.h": "ac7aabacf08558107f9ec2a985df9eb2c6ee4f7dc0516dba4771377ce9b8748c",
+    "source/Sources/NumiVivoCore/include/module.modulemap": "5a3c5a10bef1a6263d565bd1332472f46f22606c442200464259eaff91a6660e",
+    "source/Sources/NumiVivoKit/Omics/VivoMNNIntegration.swift": "00d325a8da7b2074246918eb6e6b85e2134240c6a1e587a059dd7d6d1b94472e",
+    "source/Tools/Omics/H5AD/build.sh": "8b8d0a3527c82996cc6c6aae1013d322fecd362e3ee5731245a3f00268847c6a",
+    "owner-output/hagai/report.json": "fe28fb8ad37e8ab7ea073636b5a22f8f3df858d2d67105c570ccc26c9098392a",
+    "owner-output/hagai/check.json": "a6b4c2db249a8cfcaf3516e46ae521e43b98e24a0798b2de36c0d0e5f449ee6a",
+    "owner-output/kang/report.json": "1ff5bce2148f67bbe00b0311f627d33cce4b408d4b2a7b5484d3a48197571ef1",
+    "owner-output/kang/check.json": "14735a25f0bebce074b3ac2d3952bb70b53bddb1cb78104744bc27ede30883e6",
+    "owner-output/ding/report.json": "1c0dab32b1509eeaa2c93a6b9f33c0de9a4aef5a62228da0f3f14e1f846cc09c",
+    "owner-output/ding/check.json": "a1941b96051db97da261d9856fb3c1fd1bd786efda8d627f88995152d1e8d6c0"
+  },
+  "externalArtifacts": {
+    "build/numivivo-omics": {
+      "bytes": 8382240,
+      "SHA256": "04b2f225157bb072703b5b69c9f2a94b366358ce9b9080de7310f036726e064a"
+    },
+    "build/libNumiVivoKit.a": {
+      "bytes": 17134712,
+      "SHA256": "58c69903b1dde90b977f7da5e316cd9a52c25554c48f2fd55cef3a2509751f61"
+    },
+    "owner-check": {
+      "bytes": 4781816,
+      "SHA256": "5f6810186b76bcd76452451752a49757e77cf77ee3693b76aa49c1adab81b986"
+    },
+    "cancel-check": {
+      "bytes": 4765456,
+      "SHA256": "15a74a87e9f2c95e8b0eb3d6fe7fadcbccfec850239975f9315abe231d9897ca"
+    },
+    "test-sanitized": {
+      "bytes": 173600,
+      "SHA256": "c959aea68ca8de6301811a93a08322123222ab92a3fa5caedec3dbb60ecb994e"
+    },
+    "driver-attempt-1/owner-check": {
+      "bytes": 4781720,
+      "SHA256": "7109bf39a7661e55f22cb021f5611858656e0086176a65406dcade09025f3eac"
+    },
+    "owner-output/hagai/scores.bin": {
+      "bytes": 4436160,
+      "SHA256": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c"
+    },
+    "owner-output/hagai/anchors.bin": {
+      "bytes": 798288,
+      "SHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4"
+    },
+    "owner-output/kang/scores.bin": {
+      "bytes": 7895360,
+      "SHA256": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5"
+    },
+    "owner-output/kang/anchors.bin": {
+      "bytes": 2552208,
+      "SHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74"
+    },
+    "owner-output/ding/scores.bin": {
+      "bytes": 14089920,
+      "SHA256": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee"
+    },
+    "owner-output/ding/anchors.bin": {
+      "bytes": 2100512,
+      "SHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640"
+    }
+  },
+  "remoteRoot": "/Users/n/numivivo-native-exact-mnn-20260912",
+  "scope": "Executed scoped Swift owner, CLI build, native sanitizer/cancellation checks; full package/app and fresh biological validation not performed"
+}

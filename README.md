@@ -22,7 +22,7 @@ The [matched-control donor-shift experiment](Tools/Omics/Benchmarks/HIRISA/Match
 
 
 
-The [exhaustive native CPU MNN benchmark](Tools/Omics/Reduction/ExactCPUMNN/README.md) recovers every exact anchor across all 82,567 Hagai/Kang/Ding cells and passes every evaluable original biological gate. Four Kang classifier strata remain unavailable. The [wider-query](Tools/Omics/Reduction/WideQueryMNN/README.md) and [hybrid](Tools/Omics/Reduction/DistanceTailMNN/README.md) failures remain retained; production integration and million-cell qualification are still open.
+The [exact CPU matcher is now integrated into the Swift MNN owner](Tools/Omics/Reduction/ExactNativeMNN/README.md). Actual execution reproduces scores, anchors and reports byte-for-byte across all 82,567 Hagai/Kang/Ding cells; sanitizer and cancellation checks pass. The earlier [biological benchmark](Tools/Omics/Reduction/ExactCPUMNN/README.md) passes every evaluable gate, with four Kang classifier strata still unavailable. Million-cell and independent biological qualification remain open.
 
 ## Biological prediction: current evidence
 

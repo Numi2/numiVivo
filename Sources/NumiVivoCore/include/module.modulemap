@@ -7,5 +7,6 @@ module NumiVivoCore {
     header "NumiVivoCore/NumiVivoNetworkAnalysis.h"
     header "NumiVivoCore/NumiVivoOmicsHNSW.h"
     header "NumiVivoCore/NumiVivoOmicsGaussian.h"
+    header "NumiVivoCore/NumiVivoOmicsMNN.h"
     export *
 }

@@ -16,5 +16,5 @@ xcrun swiftc -swift-version 6 -parse-as-library -F "$FRAMEWORKS" \
   "$ROOT/Tests/NumiVivoIntegrationTests/SingleCellNBSupportTests.swift" \
   "$ROOT/Tests/NumiVivoIntegrationTests/SingleCellFileExpressionTests.swift" \
   "$ROOT/Tools/Omics/Reduction/GaussianKernel/TestMain.swift" \
-  "$OUT/OmicsHNSW.o" "$OUT/OmicsGaussian.o" -framework Accelerate -lc++ -o "$OUT/file-expression-tests"
+  "$OUT/OmicsHNSW.o" "$OUT/OmicsGaussian.o" "$OUT/OmicsMNN.o" -framework Accelerate -lc++ -o "$OUT/file-expression-tests"
 "$OUT/file-expression-tests"

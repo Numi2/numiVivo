@@ -27,7 +27,8 @@ if [[ "${2:-}" == "--with-cli" ]]; then
 fi
 xcrun clang++ -std=c++23 -O3 -I "$ROOT/Sources/NumiVivoCore/include" -c "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" -o "$OUT/OmicsHNSW.o"
 xcrun clang++ -std=c++23 -O3 -I "$ROOT/Sources/NumiVivoCore/include" -c "$ROOT/Sources/NumiVivoCore/OmicsGaussian.cpp" -o "$OUT/OmicsGaussian.o"
-shasum -a 256 "$ROOT/Sources/NumiVivoCore/OmicsGaussian.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsGaussian.h" "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsHNSW.h" "$ROOT/Sources/NumiVivoCore/ThirdParty/hnswlib/"*.h "${FILES[@]}" "$ROOT/Tools/Omics/H5AD/Main.swift" > "$OUT/sources.sha256"
+xcrun clang++ -std=c++23 -O3 -I "$ROOT/Sources/NumiVivoCore/include" -c "$ROOT/Sources/NumiVivoCore/OmicsMNN.cpp" -o "$OUT/OmicsMNN.o"
+shasum -a 256 "$ROOT/Sources/NumiVivoCore/OmicsMNN.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsMNN.h" "$ROOT/Sources/NumiVivoCore/OmicsGaussian.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsGaussian.h" "$ROOT/Sources/NumiVivoCore/OmicsHNSW.cpp" "$ROOT/Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsHNSW.h" "$ROOT/Sources/NumiVivoCore/ThirdParty/hnswlib/"*.h "${FILES[@]}" "$ROOT/Tools/Omics/H5AD/Main.swift" > "$OUT/sources.sha256"
 if [[ "${2:-}" == "--with-cli" ]]; then
   shasum -a 256 "${CLI[@]}" >> "$OUT/sources.sha256"
 fi
@@ -35,9 +36,9 @@ swiftc -swift-version 6 -O -parse-as-library -enable-testing -module-name NumiVi
   -I "$ROOT/Sources/CNumiVivoZlib" -I "$ROOT/Sources/NumiVivoCore/include" -emit-module -emit-library -static "${FILES[@]}" \
   -emit-module-path "$OUT/NumiVivoKit.swiftmodule" -o "$OUT/libNumiVivoKit.a"
 swiftc -swift-version 6 -O -parse-as-library -I "$OUT" -I "$ROOT/Sources/CNumiVivoZlib" -I "$ROOT/Sources/NumiVivoCore/include" -L "$OUT" -lNumiVivoKit \
-  "$ROOT/Tools/Omics/H5AD/Main.swift" "$OUT/OmicsHNSW.o" "$OUT/OmicsGaussian.o" -framework Accelerate -lc++ -o "$OUT/h5ad-check"
+  "$ROOT/Tools/Omics/H5AD/Main.swift" "$OUT/OmicsHNSW.o" "$OUT/OmicsGaussian.o" "$OUT/OmicsMNN.o" -framework Accelerate -lc++ -o "$OUT/h5ad-check"
 
 if [[ "${2:-}" == "--with-cli" ]]; then
   swiftc -swift-version 6 -O -parse-as-library -I "$OUT" -I "$ROOT/Sources/CNumiVivoZlib" -I "$ROOT/Sources/NumiVivoCore/include" -L "$OUT" -lNumiVivoKit \
-    "${CLI[@]}" "$OUT/OmicsHNSW.o" "$OUT/OmicsGaussian.o" -framework Accelerate -lc++ -o "$OUT/numivivo-omics"
+    "${CLI[@]}" "$OUT/OmicsHNSW.o" "$OUT/OmicsGaussian.o" "$OUT/OmicsMNN.o" -framework Accelerate -lc++ -o "$OUT/numivivo-omics"
 fi

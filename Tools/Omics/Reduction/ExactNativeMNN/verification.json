@@ -1,0 +1,87 @@
+{
+  "status": "all-original-owner-artifacts-byte-identical",
+  "results": [
+    {
+      "cells": 13863,
+      "cohort": "hagai",
+      "maximumCoordinateError": 0,
+      "reportExact": true,
+      "scoresBitwiseExact": true,
+      "seconds": 2.8506879806518555,
+      "inputs": {
+        "pca/scores.bin": "f7f2d7cfdcd0dff7b7f113570ea6bbebddd344d3516aaed81bf5a2971d2517b1",
+        "pca/metadata.json": "4916e0d99308f241d4e024f29fcdda2e22dd043828765719e257201b45311bd1",
+        "mnn/plan.json": "c6293652e19a7b8a0ca0ec0f1a70b581165343fb3731eb0effe8941205eeeafe",
+        "mnn/report.json": "fe28fb8ad37e8ab7ea073636b5a22f8f3df858d2d67105c570ccc26c9098392a",
+        "mnn/scores.bin": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+        "mnn/anchors.bin": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4"
+      },
+      "outputs": {
+        "scores.bin": "bf4367849c344810d1815d64bb15ec30c9b141eb96daa22fea1ba82be0da720c",
+        "anchors.bin": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+        "report.json": "fe28fb8ad37e8ab7ea073636b5a22f8f3df858d2d67105c570ccc26c9098392a"
+      }
+    },
+    {
+      "cells": 24673,
+      "cohort": "kang",
+      "maximumCoordinateError": 0,
+      "reportExact": true,
+      "scoresBitwiseExact": true,
+      "seconds": 21.81630802154541,
+      "inputs": {
+        "pca/scores.bin": "efcdded1c6586c29d84809d28bd74a1cd887e36161f0bd12d0334046e2cfa159",
+        "pca/metadata.json": "7c963578630cf4210d1311bc3934a31d1e8de5961cbd6da059d21882ff9f9121",
+        "mnn/plan.json": "c6293652e19a7b8a0ca0ec0f1a70b581165343fb3731eb0effe8941205eeeafe",
+        "mnn/report.json": "1ff5bce2148f67bbe00b0311f627d33cce4b408d4b2a7b5484d3a48197571ef1",
+        "mnn/scores.bin": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+        "mnn/anchors.bin": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74"
+      },
+      "outputs": {
+        "scores.bin": "059f6eed1db77eb339b99463a92e83c1f53986fff7f356d1534c4913b13467e5",
+        "anchors.bin": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+        "report.json": "1ff5bce2148f67bbe00b0311f627d33cce4b408d4b2a7b5484d3a48197571ef1"
+      }
+    },
+    {
+      "cells": 44031,
+      "cohort": "ding",
+      "maximumCoordinateError": 0,
+      "reportExact": true,
+      "scoresBitwiseExact": true,
+      "seconds": 47.550655007362366,
+      "inputs": {
+        "pca/scores.bin": "98099a86d86f293df2a817349c1cc55bc0c34ca416fd77a7e6a9153690c67d86",
+        "pca/metadata.json": "faff58b0697ce3e278f032a7617aaeeb3c5de05439041f06bd425a926610480f",
+        "mnn/plan.json": "67b8611803f4c34211c67eaaa0673574fc554e491a4c895145e4f8169ffa76b6",
+        "mnn/report.json": "1c0dab32b1509eeaa2c93a6b9f33c0de9a4aef5a62228da0f3f14e1f846cc09c",
+        "mnn/scores.bin": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+        "mnn/anchors.bin": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640"
+      },
+      "outputs": {
+        "scores.bin": "d1f43c623fa3c769902c941cfd6bc95b8a995c72e1d81dd9e56adc4af7c5caee",
+        "anchors.bin": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+        "report.json": "1c0dab32b1509eeaa2c93a6b9f33c0de9a4aef5a62228da0f3f14e1f846cc09c"
+      }
+    }
+  ],
+  "cliSHA256": "04b2f225157bb072703b5b69c9f2a94b366358ce9b9080de7310f036726e064a",
+  "ownerDriverSHA256": "5f6810186b76bcd76452451752a49757e77cf77ee3693b76aa49c1adab81b986",
+  "driverSourceSHA256": "9f299fd06ea152dd959bf47ab2f6cfa0785b857fba1457412436958416b39a97",
+  "sourceSHA256": {
+    "Sources/NumiVivoCore/OmicsMNN.cpp": "75067ced53b792ffee953c6b33e5fd01029bf1c814f28c91e0ef050100f650a1",
+    "Sources/NumiVivoCore/include/NumiVivoCore/NumiVivoOmicsMNN.h": "ac7aabacf08558107f9ec2a985df9eb2c6ee4f7dc0516dba4771377ce9b8748c",
+    "Sources/NumiVivoCore/include/module.modulemap": "5a3c5a10bef1a6263d565bd1332472f46f22606c442200464259eaff91a6660e",
+    "Sources/NumiVivoKit/Omics/VivoMNNIntegration.swift": "00d325a8da7b2074246918eb6e6b85e2134240c6a1e587a059dd7d6d1b94472e",
+    "Tools/Omics/H5AD/build.sh": "8b8d0a3527c82996cc6c6aae1013d322fecd362e3ee5731245a3f00268847c6a"
+  },
+  "sourceBaseCommit": "095aacc64a991dbed8ca4bbdfee52064b8f9fc88",
+  "sanitizerTestsPassed": true,
+  "swiftCancellationPassed": true,
+  "maximumRSSBytes": 133906432,
+  "testSources": {
+    "Main.swift": "9f299fd06ea152dd959bf47ab2f6cfa0785b857fba1457412436958416b39a97",
+    "Cancel.swift": "c6a148fb507c049a71f1d9cd30abf831ff9fe42b7e152d182a216154814cc750",
+    "Test.cpp": "7b11e13823e3665d8e4215f4ec8210a18521ac382c36d0a04df45cf29a604bfa"
+  }
+}

@@ -1,5 +1,7 @@
 # Native scale-aware mutual-neighbor integration
 
+The [exact CPU matcher now runs through the Swift owner](ExactNativeMNN/README.md), reproducing all original Hagai/Kang/Ding score, anchor and report bytes. Matching remains exhaustive with unchanged scalar-work accounting; this does not promote an approximate method or qualify million-cell execution.
+
 A subsequent [exact spatial-tree trial](MNN_TREE.md) reproduced every coordinate
 and anchor on all three original cohorts but ran slower. It was not promoted;
 the exhaustive matcher remains unchanged. A subsequent

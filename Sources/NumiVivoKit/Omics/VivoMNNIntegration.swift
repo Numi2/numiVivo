@@ -172,44 +172,27 @@ enum VivoMNNIntegration {
             corrected[i*d+j] /= scale
         } }
         guard corrected.allSatisfy(\.isFinite) else { throw VivoOmicsError.invalid("MNN scaled PCA overflow") }
-        var rank = [Int](repeating: 0, count: n)
-        for (position,i) in rows.flatMap({ $0 }).enumerated() { rank[i] = position }
         var lower = [Int](repeating: -1, count: n*k), upper = lower
         var lowerD = [Double](repeating: .infinity, count: n*k), upperD = lowerD
         var lowerN = [Int](repeating: 0, count: n), upperN = lowerN
-        func worse(_ a: Int, _ ad: Double, _ b: Int, _ bd: Double) -> Bool { ad > bd || (ad == bd && rank[a] > rank[b]) }
-        func offer(row: Int, candidate: Int, distance: Double, ids: inout [Int], ds: inout [Double], counts: inout [Int]) {
-            let base = row*k
-            if counts[row] < k {
-                var slot = counts[row]; counts[row] += 1
-                ids[base+slot] = candidate; ds[base+slot] = distance
-                while slot > 0 {
-                    let parent = (slot-1)/2
-                    if !worse(ids[base+slot],ds[base+slot],ids[base+parent],ds[base+parent]) { break }
-                    ids.swapAt(base+slot,base+parent); ds.swapAt(base+slot,base+parent); slot = parent
-                }
-            } else {
-                if !worse(ids[base],ds[base],candidate,distance) { return }
-                ids[base] = candidate; ds[base] = distance; var slot = 0
-                while slot*2+1 < k {
-                    var child = slot*2+1
-                    if child+1 < k && worse(ids[base+child+1],ds[base+child+1],ids[base+child],ds[base+child]) { child += 1 }
-                    if !worse(ids[base+child],ds[base+child],ids[base+slot],ds[base+slot]) { break }
-                    ids.swapAt(base+slot,base+child); ds.swapAt(base+slot,base+child); slot = child
-                }
-            }
-        }
-        for first in 0..<bCount { for second in (first+1)..<bCount {
-            for i in rows[first] {
-                try Task.checkCancellation()
-                for j in rows[second] {
-                    var distance = 0.0
-                    for column in 0..<d { distance += abs(unit[i*d+column]-unit[j*d+column]) }
-                    offer(row: i, candidate: j, distance: distance, ids: &upper, ds: &upperD, counts: &upperN)
-                    offer(row: j, candidate: i, distance: distance, ids: &lower, ds: &lowerD, counts: &lowerN)
-                }
-            }
+        var evaluated: UInt64 = 0
+        let status = unit.withUnsafeBufferPointer { source in batch.withUnsafeBufferPointer { levels in
+            lower.withUnsafeMutableBufferPointer { li in lowerD.withUnsafeMutableBufferPointer { ld in
+                upper.withUnsafeMutableBufferPointer { ui in upperD.withUnsafeMutableBufferPointer { ud in
+                    lowerN.withUnsafeMutableBufferPointer { lc in upperN.withUnsafeMutableBufferPointer { uc in
+                        nvivo_omics_mnn_exact(source.baseAddress, levels.baseAddress, UInt32(n), UInt32(d), UInt32(k), UInt32(bCount),
+                            UInt64(source.count), UInt64(levels.count), UInt64(distanceTerms),
+                            li.baseAddress, ld.baseAddress, ui.baseAddress, ud.baseAddress, UInt64(li.count),
+                            lc.baseAddress, uc.baseAddress, UInt64(lc.count), &evaluated, { _ in Task.isCancelled ? 1 : 0 }, nil)
+                    } }
+                } }
+            } }
         } }
+        if status == 5 { throw CancellationError() }
+        guard status == 0, evaluated == UInt64(distanceTerms) else {
+            throw VivoOmicsError.invalid("MNN exact matching status or work count: \(status)")
+        }
+        try Task.checkCancellation()
         var pairs = [[VivoMNNAnchor]](repeating: [], count: bCount*bCount)
         for i in 0..<n { for slot in 0..<upperN[i] {
             let j = upper[i*k+slot]
