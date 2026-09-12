@@ -75,3 +75,7 @@ batch and pool. The retained sample-level protocols identify R&D catalogue
 8499-IF-010/CF for IFN-beta, resolving the vendor/catalogue gap in the shorter
 institute methods reference above. Kang and GSE181897 donor mappings remain open;
 no exposure-response model has been fitted.
+
+The [Kang identity join](KangMapping/README.md) verifies all eight model donors
+and sixteen derived condition IDs, but primary library accessions and batch
+provenance remain unresolved. This partial join does not admit exposure covariates.
