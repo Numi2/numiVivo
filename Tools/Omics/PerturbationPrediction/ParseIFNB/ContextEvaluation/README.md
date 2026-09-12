@@ -53,3 +53,7 @@ The next modeling decision should address the observed cross-study failure
 using development cohorts and explicit exposure/population information. Any
 revision using Parse outcomes is development reuse and needs a new untouched
 cohort before an independent transfer claim.
+
+The [retrospective error decomposition](Diagnosis/README.md) identifies excessive
+response magnitude in all twelve donors together with imperfect directional
+alignment. It does not fit or validate a correction.
