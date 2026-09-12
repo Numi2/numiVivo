@@ -124,15 +124,16 @@ All native reconstructions and independent checks pass. This supports conditiona
 RNA prediction when exposure time and matched training observations are available;
 new independent validation is still required, and the earlier external failure stands.
 
-The [Parse B-cell metadata audit](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) identifies 72,446 source-labeled B cells across all twelve paired donors. The original context model has 200 absent exact-name features. A versioned 11,600-feature panel now resolves exact source compatibility, but its renewed development evaluation fails transfer gates on two of three studies; the [primary dose/reagent is now known](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellCounts/NEXT_STEPS.md#primary-dose-and-reagent-resolved), while cross-study exposure comparability and participant overlap remain unverified. No Parse prediction has been fitted or scored. The [native B-cell count workflow](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellCounts/README.md) now has all twelve native ingestions and source replays independently verified: 124,909,573 records and 253,128,870 total counts. The complete archive and its 13,990 members passed verification. This is count-handling evidence, not predictive validation.
+The [Parse B-cell metadata audit](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) identifies 72,446 source-labeled B cells across all twelve paired donors. The original context model has 200 absent exact-name features. A versioned 11,600-feature panel now resolves exact source compatibility, but its renewed development evaluation fails transfer gates on two of three studies; the [primary dose/reagent is now known](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellCounts/NEXT_STEPS.md#primary-dose-and-reagent-resolved), while cross-study exposure comparability and participant overlap remain unverified. The [completed Parse context prediction test](Tools/Omics/PerturbationPrediction/ParseIFNB/ContextEvaluation/README.md) now fails on this full frozen B-cell cohort: mean donor RMSE is 20.93% worse than training mean and 32.14% worse than no change. The [native B-cell count workflow](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellCounts/README.md) now has all twelve native ingestions and source replays independently verified: 124,909,573 records and 253,128,870 total counts. The complete archive and its 13,990 members passed verification. This is count-handling evidence, not predictive validation.
 
-The next [independent Parse IFN-beta cohort](Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
+The [Parse IFN-beta source cohort](Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
 contains all 725,031 released IFN-beta/PBS cells from 12 donors. Native count
 admission now passes all 1,373,870,697 selected records through resumable donor
 streams; [all twelve native source replays and offline artifact restoration now pass](Tools/Omics/PerturbationPrediction/ParseIFNB/COUNT_RESULTS.md). This avoids a 227 GB local source copy. An initial upstream HTTP 500 failure and a
 subsequently repaired temporary-memory defect are retained explicitly. Historical QC differs from retained matrix counts;
-409 duration-panel symbols are absent by exact name, and the source dose remains
-unresolved. These input checks do not add a prediction success or failure.
+409 duration-panel symbols are absent by exact name. The source dose and reagent
+are resolved; cross-study exposure equivalence remains unverified. These count
+checks are separate from the failed B-cell context prediction test above.
 
 The new [native file-backed cell axis and count consumer](Tools/Omics/CountStore/CellAxis/README.md)
 remove resident cell identities, QC and membership arrays from the count path.

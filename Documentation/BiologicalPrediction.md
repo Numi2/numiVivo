@@ -63,19 +63,15 @@ success nor a failure.
 The GSE181897 input contract is now resolved and its frozen comparison is complete.
 The remaining prepared cohorts and the completed external test are:
 
-| Prepared cohort | Ready | Required before fitting or scoring |
+| Cohort | Completed evidence | Remaining requirements |
 | --- | --- | --- |
 | [Adamson](../Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md) | 50,440 selected cells and a fixed unseen-target protocol | Primary control/construct assignments and reconciliation of 94 observed guide groups versus the paper's 93-guide roster. |
-| [Parse IFN-beta](../Tools/Omics/PerturbationPrediction/ParseIFNB/FEATURE_IDENTITY.md) | Complete counts, donor aggregates and DE | Intervention dose/reagent identity and an explicit feature contract: 409 duration-panel symbols are absent by exact name; naming candidates are not verified replacements. |
+| [Parse IFN-beta](../Tools/Omics/PerturbationPrediction/ParseIFNB/ContextEvaluation/README.md) | Complete counts, donor aggregates, DE and failed B-cell context prediction test on 11,600 exact features; primary dose/reagent resolved | Cross-study exposure equivalence and participant independence remain unverified. Further tuning needs a new untouched evaluation cohort. The separate duration panel retains 409 absent exact-name symbols. |
 | [GSE181897](../Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md) | Primary author condition mapping; all 124 predictions, native reconstruction and independent scoring complete | HIRISA mean primary PASS, Kang mean primary FAIL; uncertainty remains deficient. New development on these now-scored outcomes needs a new validation cohort. |
 
-The [Parse B-cell admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) now verifies 72,446 source-labeled B-cell rows across twelve paired donors and all 11,800 context-model feature decisions: 11,600 exact matches and 200 absences. This is metadata-only qualification; B-cell counts, the experimental definition and the model feature contract still need resolution before prediction.
+The [Parse B-cell admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) originally established metadata eligibility for 72,446 source-labeled B-cell rows across twelve paired donors. Subsequent full count verification and the versioned 11,600-feature contract enabled the completed prediction test above. Its failure remains the current transfer result; the earlier metadata-only status is historical.
 
-Adamson and Parse remain unfitted and unscored for their proposed prediction tests.
-Resolve their roles from experimental records, not RNA patterns. Freeze any
-justified protocol revision before prediction and disclose earlier outcome
-inspection, including Parse DE. Further storage improvements do not clear these
-remaining admission gates.
+Adamson remains unfitted and unscored for its proposed unseen-target test. Resolve its experimental roles from primary records before fitting, freeze any justified protocol revision, and disclose earlier outcome inspection. Parse is now an inspected evaluation cohort. Storage improvements do not establish predictive accuracy or clear the remaining validation requirements.
 
 The latest [native legacy H5AD check](../Tools/Omics/H5AD/Projection/README.md#original-legacy-kang-2026-09-11)
 preserves every original Kang cell, gene, annotation and embedding, including
