@@ -39,6 +39,21 @@ Sources/NumiVivoKit/Omics/VivoStreamedLogCPM.swift file and Main.swift using
 with the study path, and verify.py. NumPy, SciPy and h5py are required.
 The retained remote study is /Users/n/numivivo-streamed-logcpm-20260912.
 
-A complete library/CLI build and Parse source-stream integration remain to be
-executed. No Parse prediction is fitted or scored, and this numerical result
-does not establish biological predictive accuracy.
+The complete scoped library/CLI build at 1a2f6bba passed. Linking the harness
+against that library reproduced every standalone result value exactly and
+passed the malformed/zero-cell checks again. product-verification.json binds
+the library, CLI, source inventory, stream harness and product output. Existing
+Metal API deprecation warnings remain in the build log.
+
+The twelve-donor Parse normalized-mean replay has started in the separate
+/Users/n/numivivo-parse-logcpm-20260912 study. Completion is not yet claimed.
+run_parse.py uses the previously qualified adapter, verifies source range and
+complete canonical-stream hashes, retains all frozen B cells, and compares every
+group/feature mean to independent NumPy accumulation at absolute tolerance 1e-10.
+Its protocol binds the driver and runtime before execution. StreamMain.swift
+uses the actual product library and handles records split across pipe reads.
+The shared source controller lock prevents overlap with an exclusive ingestion.
+
+No Parse prediction is fitted or scored, and these numerical checks do not
+establish biological predictive accuracy. Full-app build, performance and
+Parse completion remain outside this result.
