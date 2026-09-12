@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS-numerical-not-biological",
+  "archive": {
+    "bytes": 6267900,
+    "sha256": "0836e5e5b951b968c98530a69b3da2c70cb3895b4bd4e9bcedf28cfb9512fb9a"
+  },
+  "members": {
+    "reference-checks.json": {
+      "bytes": 330,
+      "sha256": "f47b8eb56a254613f78266d60add7a2c2a4af2f0c5e4c6667897ad715dd6918b"
+    },
+    "rna-pca": {
+      "bytes": 4316120,
+      "sha256": "4a5363623ef1f2feb7998a2e5049a8855756bfa6dd84dfdc02c90c1f01e7fb26"
+    },
+    "build-fingerprints.json": {
+      "bytes": 181,
+      "sha256": "6d00c566009df4d338850be66eb2d34ff0ec9744cd2b87917d41385cca8d9a1d"
+    },
+    "metadata.json": {
+      "bytes": 2501757,
+      "sha256": "7b9e7dfb014e6cf96a157dc922cf10cada04936ee825f5deec6f941b03703588"
+    },
+    "reference.npz": {
+      "bytes": 1594888,
+      "sha256": "82475987f763560adff539214b710516406cf4121dd6aaed0735d49ccad050b9"
+    },
+    "comparison.json": {
+      "bytes": 478,
+      "sha256": "73e1e59f5b4450ae35b8abe86bc4e1d95a477d39d19d688b7343f29615286e11"
+    },
+    "native.json": {
+      "bytes": 12045633,
+      "sha256": "965ac33d00fd44fd5989d41caec87db7ed59630b719687a49a456d542eed6e82"
+    },
+    "native.log": {
+      "bytes": 83,
+      "sha256": "0831635526d2cd2ffddb2c560e829b581ab5fc0b23e0e19410fdde2956429dfd"
+    },
+    "reference.log": {
+      "bytes": 287,
+      "sha256": "9567f9ecc76d5e9a34431a9ba7522057c806ca160bfced774130cef5ecd15f9a"
+    },
+    "reference-fixed.log": {
+      "bytes": 288,
+      "sha256": "77af416cbf307a42aa9987108847311dba663a60501029a95a482f43bf78204f"
+    },
+    "protocol.json": {
+      "bytes": 772,
+      "sha256": "32bcf20a6743d8c6f57479c0e203da221b15e6095529bd566023ae340975e587"
+    },
+    "reference.py": {
+      "bytes": 2399,
+      "sha256": "d0af5cdb1f59e2283c2822b650be1e48b9a58623b0779517a9818d1bd40994bb"
+    },
+    "reference-checks-before-report-fix.json": {
+      "bytes": 329,
+      "sha256": "c1d9af9793656ac370d785b215a0511885496d12a17fc2fd235f6f3a48f918a4"
+    },
+    "Main.swift": {
+      "bytes": 2374,
+      "sha256": "9c96198649a1ac7482f0f64a7f2ef88f8a2c85f029a764b1256b69cc4a35a0f6"
+    },
+    "compare.py": {
+      "bytes": 1626,
+      "sha256": "97d8087e76ec6228b66fc4dae1e3086aad2edbf50b7555d5e22e3698e53d2d46"
+    },
+    "build/sources.sha256": {
+      "bytes": 22035,
+      "sha256": "8d19f9d0a95056da38a5854ee531b5b3a7fcca39dbd6e48fd63a6dfa1c5b34b4"
+    }
+  }
+}
