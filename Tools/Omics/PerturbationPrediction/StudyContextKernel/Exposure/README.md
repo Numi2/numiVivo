@@ -31,3 +31,16 @@ settings or explicit, testable structural assumptions would be needed. Additiona
 models should not silently replace missing exposures with study labels or inferred
 unit conversions. The existing failed outcomes remain unchanged; any use of them
 continues development reuse and does not create an untouched validation cohort.
+
+## Kang primary protocol
+
+The [original demuxlet paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC5784859/)
+reports recombinant IFN-beta from PBL Assay Science at 100 U/mL for 6 hours.
+The [structured reference](kang-protocol-reference.json) preserves the reported
+unit literally. It does not silently equate U/mL with IU/mL, supply a catalogue
+number, or map the protocol to every retained donor.
+
+The located protocol references therefore describe Kang at 6 hours and GSE181897
+at 9 hours, versus the separately documented Parse 24-hour exposure. Duration
+differences are observable metadata; their causal contribution to prediction error
+has not been established. HIRISA curation and exact cohort mappings remain open.

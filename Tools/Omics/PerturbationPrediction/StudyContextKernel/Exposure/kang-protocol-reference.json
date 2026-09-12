@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "status": "primary-protocol-reference-located-not-donor-mapped",
+  "study": "Kang",
+  "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5784859/",
+  "doi": "10.1038/nbt.4042",
+  "retrievedDate": "2026-09-12",
+  "perturbation": "recombinant IFN-beta",
+  "dose": 100,
+  "doseUnit": "U/mL",
+  "durationHours": 6,
+  "vendor": "PBL Assay Science",
+  "catalogue": null,
+  "limitations": [
+    "Reported U/mL is retained literally; no assumption of equivalence to IU/mL or ng/mL.",
+    "Exact retained donor and sample mapping still requires source linkage.",
+    "Catalogue and batch-specific activity are not established by this protocol reference.",
+    "No exposure-response model has been fitted."
+  ]
+}
