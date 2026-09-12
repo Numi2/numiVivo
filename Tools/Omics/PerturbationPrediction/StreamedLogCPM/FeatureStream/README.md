@@ -52,3 +52,6 @@ Full bundle and original runtime remain under
 study. Large payloads are not embedded here; hashes bind them. Reproduction needs
 the separately retained Norman count store and a new output directory. No
 biological prediction or independent-replication evidence follows from this work.
+
+[Native reconstruction verification](Verification/README.md) now rechecks all
+Norman means from counts at 42.0 MB peak RSS and rejects rehashed value tampering.
