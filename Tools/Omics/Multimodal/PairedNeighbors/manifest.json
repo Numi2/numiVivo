@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS-numerical-baselines-not-biological",
+  "archive": {
+    "bytes": 7377918,
+    "sha256": "eba5a8020d7919c2af59ed88b121c4d5c89d21f1d5d3e54f307dbd4d201ad69c"
+  },
+  "members": {
+    "atac-graph.json": {
+      "bytes": 2507452,
+      "sha256": "98509d76c0abe0bc2e42a063f5aab39a3700114bdcb5f03bc0809f767edf7bb7"
+    },
+    "joint-graph.json": {
+      "bytes": 2422676,
+      "sha256": "428ef3a6f2938a9549cb7cc51dcbca8b8cd58ed15060faf250d96ca8b54f4ba2"
+    },
+    "build-fingerprints.json": {
+      "bytes": 181,
+      "sha256": "6d00c566009df4d338850be66eb2d34ff0ec9744cd2b87917d41385cca8d9a1d"
+    },
+    "rna-graph.json": {
+      "bytes": 2363134,
+      "sha256": "363fe1d9e0aada81135bd08bae51da6babfdfc44cd3cc90102c33a165eca4b5d"
+    },
+    "comparison.json": {
+      "bytes": 1499,
+      "sha256": "fcb096bc4cd25887d59e2ccd8bda6dff02db30eb49999f19d69fac2671377ae7"
+    },
+    "rna-scores.json": {
+      "bytes": 1668565,
+      "sha256": "c1bf29de92e5c7a3fcb32976bc69c5292fd40194625e7bda62b56cc1fe8efa28"
+    },
+    "atac-scores.json": {
+      "bytes": 1676538,
+      "sha256": "acad6aa4efe8f9ff1312e8f493084d6c172a42a35b087b687a3d58e7a90d2355"
+    },
+    "native.log": {
+      "bytes": 132,
+      "sha256": "766e2b3d14488b524dc959972f77bae6dc904ac23b13c8f114fd62d7ace64414"
+    },
+    "reference.log": {
+      "bytes": 1239,
+      "sha256": "63b63138eaa6501d3680d68791ff148433635bd07a7957fc6bafd2e9998fb0dd"
+    },
+    "protocol.json": {
+      "bytes": 1380,
+      "sha256": "5a9c52817d5bb8e003efd2ab125fca5092080ec20aa4536276cb24df8078ec67"
+    },
+    "reference.py": {
+      "bytes": 2990,
+      "sha256": "31a7aee6b07e1d0a6b5e666eb06f4fdbee0a2c8a9ab6c51dd01b25c248bffb7e"
+    },
+    "joint-scores.json": {
+      "bytes": 3363242,
+      "sha256": "32d8e2518713da6105065888a0382a6fc1616ed231a167bf62e6d5206d9933dd"
+    },
+    "Main.swift": {
+      "bytes": 3317,
+      "sha256": "9de2b86550d021a982ed215a2f69d9fea5b86d3258d4a2a7971857244ace91af"
+    },
+    "neighbors": {
+      "bytes": 4604824,
+      "sha256": "323434db64e56708ff624bfbfa153880c979f47756e31b3c17ded8815c667f13"
+    },
+    "build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build/sources.sha256": {
+      "bytes": 22035,
+      "sha256": "8d19f9d0a95056da38a5854ee531b5b3a7fcca39dbd6e48fd63a6dfa1c5b34b4"
+    }
+  }
+}
