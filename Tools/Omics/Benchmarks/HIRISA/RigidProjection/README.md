@@ -63,3 +63,5 @@ The first dependency attempt selected an unsupported source build; SciPy 1.16.3
 binary installation resolved it. The first evaluator stopped before scoring on
 an output-directory assumption; only that path handling was corrected before
 resuming, without refitting. Both failures are retained.
+
+The [retrospective label breakdown](Diagnosis/README.md) localizes all 31 failures without changing eligibility, thresholds or fitting. Twelve occur in B intermediate and CD14 Mono comparisons; the problem is not limited to rare labels.

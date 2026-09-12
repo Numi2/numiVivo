@@ -1,0 +1,427 @@
+{
+  "archiveSHA256": "aed5c71f73b57e8ebe29488d39377b3f0240ba6fce0f00ca065775ef37b9cb07",
+  "comparisons": 471,
+  "eligible": 146,
+  "evaluationSHA256": "23a13845453b5b83afe30535bc6a8f48bfcb56893b23229c8b89f7697169f03f",
+  "failures": 31,
+  "labels": [
+    {
+      "comparisons": 7,
+      "eligible": 0,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 7,
+      "label": "ASDC",
+      "maximumFoldRecallLoss": null,
+      "maximumMeanRecallLoss": null,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 17,
+      "eligible": 8,
+      "failedStrata": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        15,
+        17
+      ],
+      "failures": 7,
+      "insufficientSupport": 9,
+      "label": "B intermediate",
+      "maximumFoldRecallLoss": 0.37271511368702626,
+      "maximumMeanRecallLoss": 0.12451856906783013,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 14,
+      "eligible": 8,
+      "failedStrata": [
+        2,
+        3,
+        15
+      ],
+      "failures": 3,
+      "insufficientSupport": 6,
+      "label": "B memory",
+      "maximumFoldRecallLoss": 0.17582417582417575,
+      "maximumMeanRecallLoss": 0.03134980008549801,
+      "rareFailures": 1,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 21,
+      "eligible": 8,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 13,
+      "label": "B naive",
+      "maximumFoldRecallLoss": 0.07981984236206685,
+      "maximumMeanRecallLoss": -0.00113709079149511,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 17,
+      "eligible": 8,
+      "failedStrata": [
+        5,
+        6,
+        7,
+        9,
+        16
+      ],
+      "failures": 5,
+      "insufficientSupport": 9,
+      "label": "CD14 Mono",
+      "maximumFoldRecallLoss": 0.35607110575474543,
+      "maximumMeanRecallLoss": 0.08017444086748285,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 19,
+      "eligible": 4,
+      "failedStrata": [
+        15,
+        16
+      ],
+      "failures": 2,
+      "insufficientSupport": 15,
+      "label": "CD16 Mono",
+      "maximumFoldRecallLoss": 0.3043728423475259,
+      "maximumMeanRecallLoss": 0.08332587368754144,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 8,
+      "eligible": 2,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 6,
+      "label": "CD4 CTL",
+      "maximumFoldRecallLoss": -0.03359173126614989,
+      "maximumMeanRecallLoss": -0.05090137857900323,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 13,
+      "eligible": 5,
+      "failedStrata": [
+        18,
+        21
+      ],
+      "failures": 2,
+      "insufficientSupport": 8,
+      "label": "CD4 Naive",
+      "maximumFoldRecallLoss": 0.15465655288664137,
+      "maximumMeanRecallLoss": 0.03492089303409633,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 10,
+      "eligible": 0,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 10,
+      "label": "CD4 Proliferating",
+      "maximumFoldRecallLoss": null,
+      "maximumMeanRecallLoss": null,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 23,
+      "eligible": 13,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 4,
+      "label": "CD4 TCM",
+      "maximumFoldRecallLoss": 0.08993576017130622,
+      "maximumMeanRecallLoss": 0.01689388684364826,
+      "rareFailures": 0,
+      "supportedButInsensitive": 6
+    },
+    {
+      "comparisons": 16,
+      "eligible": 5,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 10,
+      "label": "CD4 TEM",
+      "maximumFoldRecallLoss": 0.04634146341463413,
+      "maximumMeanRecallLoss": 0.00030347883780976745,
+      "rareFailures": 0,
+      "supportedButInsensitive": 1
+    },
+    {
+      "comparisons": 16,
+      "eligible": 8,
+      "failedStrata": [
+        16
+      ],
+      "failures": 1,
+      "insufficientSupport": 8,
+      "label": "CD8 Naive",
+      "maximumFoldRecallLoss": 0.10810810810810811,
+      "maximumMeanRecallLoss": 0.025395206527282,
+      "rareFailures": 1,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 3,
+      "eligible": 0,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 3,
+      "label": "CD8 Proliferating",
+      "maximumFoldRecallLoss": null,
+      "maximumMeanRecallLoss": null,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 10,
+      "eligible": 4,
+      "failedStrata": [
+        15,
+        18,
+        21,
+        22
+      ],
+      "failures": 4,
+      "insufficientSupport": 6,
+      "label": "CD8 TCM",
+      "maximumFoldRecallLoss": 0.1716171617161716,
+      "maximumMeanRecallLoss": 0.06887171323713101,
+      "rareFailures": 1,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 14,
+      "eligible": 9,
+      "failedStrata": [
+        11
+      ],
+      "failures": 1,
+      "insufficientSupport": 5,
+      "label": "CD8 TEM",
+      "maximumFoldRecallLoss": 0.20238095238095244,
+      "maximumMeanRecallLoss": 0.10169689316101216,
+      "rareFailures": 1,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 1,
+      "eligible": 0,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 1,
+      "label": "Doublet",
+      "maximumFoldRecallLoss": null,
+      "maximumMeanRecallLoss": null,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 8,
+      "eligible": 0,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 8,
+      "label": "Eryth",
+      "maximumFoldRecallLoss": null,
+      "maximumMeanRecallLoss": null,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 23,
+      "eligible": 11,
+      "failedStrata": [
+        2
+      ],
+      "failures": 1,
+      "insufficientSupport": 12,
+      "label": "HSPC",
+      "maximumFoldRecallLoss": 0.1614173228346456,
+      "maximumMeanRecallLoss": 0.02565439416489166,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 20,
+      "eligible": 6,
+      "failedStrata": [
+        0,
+        4
+      ],
+      "failures": 2,
+      "insufficientSupport": 13,
+      "label": "ILC",
+      "maximumFoldRecallLoss": 0.14678899082568808,
+      "maximumMeanRecallLoss": 0.023060109289617492,
+      "rareFailures": 2,
+      "supportedButInsensitive": 1
+    },
+    {
+      "comparisons": 18,
+      "eligible": 8,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 10,
+      "label": "MAIT",
+      "maximumFoldRecallLoss": 0.011627906976744207,
+      "maximumMeanRecallLoss": 0.0018497949419002068,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 23,
+      "eligible": 11,
+      "failedStrata": [
+        22
+      ],
+      "failures": 1,
+      "insufficientSupport": 12,
+      "label": "NK",
+      "maximumFoldRecallLoss": 0.15000000000000002,
+      "maximumMeanRecallLoss": 0.025822815242216635,
+      "rareFailures": 1,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 20,
+      "eligible": 0,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 20,
+      "label": "NK Proliferating",
+      "maximumFoldRecallLoss": null,
+      "maximumMeanRecallLoss": null,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 16,
+      "eligible": 8,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 8,
+      "label": "NK_CD56bright",
+      "maximumFoldRecallLoss": 0.029999999999999916,
+      "maximumMeanRecallLoss": 0.0008116883116883189,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 23,
+      "eligible": 5,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 18,
+      "label": "Plasmablast",
+      "maximumFoldRecallLoss": 0.013513513513513487,
+      "maximumMeanRecallLoss": 0.00304693678187653,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 18,
+      "eligible": 1,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 17,
+      "label": "Platelet",
+      "maximumFoldRecallLoss": 0.013513513513513542,
+      "maximumMeanRecallLoss": -0.009672296437002306,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 11,
+      "eligible": 5,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 6,
+      "label": "Treg",
+      "maximumFoldRecallLoss": 0.06130268199233718,
+      "maximumMeanRecallLoss": 0.026511017799787977,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 15,
+      "eligible": 0,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 15,
+      "label": "cDC1",
+      "maximumFoldRecallLoss": null,
+      "maximumMeanRecallLoss": null,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 18,
+      "eligible": 2,
+      "failedStrata": [
+        1,
+        15
+      ],
+      "failures": 2,
+      "insufficientSupport": 16,
+      "label": "cDC2",
+      "maximumFoldRecallLoss": 0.14569536423841067,
+      "maximumMeanRecallLoss": 0.05912308721862976,
+      "rareFailures": 2,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 14,
+      "eligible": 1,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 13,
+      "label": "dnT",
+      "maximumFoldRecallLoss": 0.05769230769230768,
+      "maximumMeanRecallLoss": 0.02282228640924293,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    },
+    {
+      "comparisons": 17,
+      "eligible": 0,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 8,
+      "label": "gdT",
+      "maximumFoldRecallLoss": null,
+      "maximumMeanRecallLoss": null,
+      "rareFailures": 0,
+      "supportedButInsensitive": 9
+    },
+    {
+      "comparisons": 18,
+      "eligible": 6,
+      "failedStrata": [],
+      "failures": 0,
+      "insufficientSupport": 12,
+      "label": "pDC",
+      "maximumFoldRecallLoss": 0.05294117647058827,
+      "maximumMeanRecallLoss": 0.004266010880786953,
+      "rareFailures": 0,
+      "supportedButInsensitive": 0
+    }
+  ],
+  "rareFailures": 9,
+  "schemaVersion": 1,
+  "scope": "Retrospective accounting of existing full-cohort annotation evaluation; no refit"
+}
