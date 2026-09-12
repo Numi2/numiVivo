@@ -1,0 +1,30 @@
+{
+  "comparisons": {
+    "cpu": {
+      "nativeGraphSHA256": "dbccaabbcbf7a9ff7d1fd898a6bf0fa8d05831d103c2e8f3ff7da99f0eb9339f",
+      "referenceNeighborEntries": 468787,
+      "missingNeighbors": 0,
+      "extraNeighbors": 0,
+      "maximumCommonNeighborDistanceDifference": 7.66418040143435e-11,
+      "nativeEdges": 706016,
+      "referenceEdges": 706016,
+      "exactEdgeCoordinates": true,
+      "maximumWeightDifference": 4.510364532972488e-06,
+      "gatePass": true
+    },
+    "metal": {
+      "nativeGraphSHA256": "203b32aabe35c0295e2211602715bcd8ba3988a9b1a73819f8d334cf26e6a6a7",
+      "referenceNeighborEntries": 468787,
+      "missingNeighbors": 0,
+      "extraNeighbors": 0,
+      "maximumCommonNeighborDistanceDifference": 1.4779044086310478e-06,
+      "nativeEdges": 706016,
+      "referenceEdges": 706016,
+      "exactEdgeCoordinates": true,
+      "maximumWeightDifference": 1.528563519803683e-05,
+      "gatePass": true
+    }
+  },
+  "scanpyReadNormalizeHVGPCAGraphSeconds": 6.46853637509048,
+  "sourceSHA256": "1d48c1ff10bcfad7c1bc75863ce702a491c6c71b08e921a5e9754a986a9d19f3"
+}

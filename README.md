@@ -350,6 +350,9 @@ selected features; it does not establish a matched pipeline speed comparison.
 The [independent Scanpy feature-selection check](Tools/Omics/Reduction/ScverseHVG/README.md)
 also selects exactly the same 2,000 features from each full cohort's original counts.
 This closes the selected-feature assumption for these two numerical comparisons.
+An [independent raw-count-to-graph Scanpy run](Tools/Omics/Reduction/ScverseChain/README.md)
+also preserves every Kang neighbor and graph edge coordinate against both native
+backends, without using native PCA scores or feature selections as inputs.
 
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical

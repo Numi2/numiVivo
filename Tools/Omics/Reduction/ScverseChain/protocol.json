@@ -1,0 +1,28 @@
+{
+  "cohort": "Kang",
+  "cells": 24673,
+  "normalizationTarget": 10000,
+  "HVG": {
+    "flavor": "seurat",
+    "n_top_genes": 2000,
+    "n_bins": 20
+  },
+  "PCA": {
+    "n_comps": 20,
+    "svd_solver": "arpack",
+    "dtype": "float64",
+    "random_state": 7
+  },
+  "neighbors": {
+    "n_neighbors": 20,
+    "n_pcs": 20,
+    "use_rep": "X_pca",
+    "knn": true,
+    "method": "umap",
+    "metric": "euclidean",
+    "transformer": "sklearn",
+    "random_state": 7
+  },
+  "gate": "exact nonself neighbor sets and graph edge coordinates; weight and distance differences retained",
+  "scope": "independent raw-count-to-graph numerical comparison, single run, not biological validation or matched timing"
+}
