@@ -1,0 +1,178 @@
+{
+  "scope": "Retrospective changed-anchor endpoint accounting; repeated endpoints are not independent cells and labels are not authoritative",
+  "results": [
+    {
+      "cohort": "hagai",
+      "inputsSHA256": "fe2922ae46f261bcde4fbfdacdd941e50f65bc3710cc5eaf34a57ed582582f7c",
+      "exactAnchorsSHA256": "7523409a24829d18d02a6d650272600aef7c58fe6cd3b31510d777c9ff7708e4",
+      "candidateAnchorsSHA256": "c0c7b60c0a645ece1dcd8979f87ce8c5edfdf56793156fff640c40dfb766ac68",
+      "allExact": {
+        "anchors": 49893,
+        "uniqueEndpointCells": 11621,
+        "endpointOccurrences": {
+          "unreported": 99786
+        },
+        "uniqueEndpointLabels": {
+          "unreported": 11621
+        }
+      },
+      "missing": {
+        "anchors": 2,
+        "uniqueEndpointCells": 3,
+        "endpointOccurrences": {
+          "unreported": 4
+        },
+        "uniqueEndpointLabels": {
+          "unreported": 3
+        }
+      },
+      "added": {
+        "anchors": 0,
+        "uniqueEndpointCells": 0,
+        "endpointOccurrences": {},
+        "uniqueEndpointLabels": {}
+      }
+    },
+    {
+      "cohort": "kang",
+      "inputsSHA256": "21b7c281466f38e4ca857ff75a3f1c9b98136f595fb211120d236a7934304ac8",
+      "exactAnchorsSHA256": "3a046c562adb636a26b179e37d022fc5ed9e6306257fbacd9be5518bb6b3fd74",
+      "candidateAnchorsSHA256": "0182da20f94597b48aee3f4fd09b554137cf5a2229711dac465bd7dd9f743fb1",
+      "allExact": {
+        "anchors": 159513,
+        "uniqueEndpointCells": 24303,
+        "endpointOccurrences": {
+          "B cells": 34877,
+          "CD14+ Monocytes": 69357,
+          "CD4 T cells": 150142,
+          "CD8 T cells": 16502,
+          "Dendritic cells": 8580,
+          "FCGR3A+ Monocytes": 14434,
+          "Megakaryocytes": 1081,
+          "NK cells": 24053
+        },
+        "uniqueEndpointLabels": {
+          "B cells": 2605,
+          "CD14+ Monocytes": 5565,
+          "CD4 T cells": 11141,
+          "CD8 T cells": 1583,
+          "Dendritic cells": 524,
+          "FCGR3A+ Monocytes": 1063,
+          "Megakaryocytes": 118,
+          "NK cells": 1704
+        }
+      },
+      "missing": {
+        "anchors": 26,
+        "uniqueEndpointCells": 28,
+        "endpointOccurrences": {
+          "CD14+ Monocytes": 19,
+          "FCGR3A+ Monocytes": 1,
+          "Megakaryocytes": 32
+        },
+        "uniqueEndpointLabels": {
+          "CD14+ Monocytes": 5,
+          "FCGR3A+ Monocytes": 1,
+          "Megakaryocytes": 22
+        }
+      },
+      "added": {
+        "anchors": 2,
+        "uniqueEndpointCells": 3,
+        "endpointOccurrences": {
+          "CD4 T cells": 2,
+          "Megakaryocytes": 2
+        },
+        "uniqueEndpointLabels": {
+          "CD4 T cells": 1,
+          "Megakaryocytes": 2
+        }
+      }
+    },
+    {
+      "cohort": "ding",
+      "inputsSHA256": "e25668d96ba9cbee7ef2fa0796d71a1ad5cea3ce9e40a242e6a5ec15543af769",
+      "exactAnchorsSHA256": "cfd701534e940db43dfaace2664407742c8a6ef9bc1c6e32a578a3c22493c640",
+      "candidateAnchorsSHA256": "57eee7ed9e584df0a56979043c1a6eceef118259ff635ac84de4c3670a6b1e1a",
+      "allExact": {
+        "anchors": 131282,
+        "uniqueEndpointCells": 33469,
+        "endpointOccurrences": {
+          "B cell": 32540,
+          "CD14+ monocyte": 28678,
+          "CD16+ monocyte": 4556,
+          "CD4+ T cell": 40303,
+          "Cytotoxic T cell": 57217,
+          "Dendritic cell": 2691,
+          "Megakaryocyte": 7726,
+          "Natural killer cell": 11367,
+          "Plasmacytoid dendritic cell": 919,
+          "unreported": 76567
+        },
+        "uniqueEndpointLabels": {
+          "B cell": 3922,
+          "CD14+ monocyte": 3835,
+          "CD16+ monocyte": 592,
+          "CD4+ T cell": 5255,
+          "Cytotoxic T cell": 6926,
+          "Dendritic cell": 306,
+          "Megakaryocyte": 767,
+          "Natural killer cell": 1195,
+          "Plasmacytoid dendritic cell": 119,
+          "unreported": 10552
+        }
+      },
+      "missing": {
+        "anchors": 103,
+        "uniqueEndpointCells": 176,
+        "endpointOccurrences": {
+          "B cell": 12,
+          "CD14+ monocyte": 17,
+          "CD16+ monocyte": 3,
+          "CD4+ T cell": 30,
+          "Cytotoxic T cell": 45,
+          "Dendritic cell": 1,
+          "Megakaryocyte": 2,
+          "Natural killer cell": 3,
+          "Plasmacytoid dendritic cell": 2,
+          "unreported": 91
+        },
+        "uniqueEndpointLabels": {
+          "B cell": 12,
+          "CD14+ monocyte": 17,
+          "CD16+ monocyte": 2,
+          "CD4+ T cell": 25,
+          "Cytotoxic T cell": 42,
+          "Dendritic cell": 1,
+          "Megakaryocyte": 2,
+          "Natural killer cell": 3,
+          "Plasmacytoid dendritic cell": 2,
+          "unreported": 70
+        }
+      },
+      "added": {
+        "anchors": 38,
+        "uniqueEndpointCells": 76,
+        "endpointOccurrences": {
+          "B cell": 3,
+          "CD14+ monocyte": 3,
+          "CD16+ monocyte": 1,
+          "CD4+ T cell": 10,
+          "Cytotoxic T cell": 21,
+          "Megakaryocyte": 2,
+          "unreported": 36
+        },
+        "uniqueEndpointLabels": {
+          "B cell": 3,
+          "CD14+ monocyte": 3,
+          "CD16+ monocyte": 1,
+          "CD4+ T cell": 10,
+          "Cytotoxic T cell": 21,
+          "Megakaryocyte": 2,
+          "unreported": 36
+        }
+      }
+    }
+  ],
+  "scriptSHA256": "85665eae780ddbb384cf24e5cf0575ec1d2fe15584661bbff0cd72ae8cb35d3f"
+}

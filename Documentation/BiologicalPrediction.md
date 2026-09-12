@@ -36,6 +36,8 @@ The [completed Parse context test](../Tools/Omics/PerturbationPrediction/ParseIF
 
 The [wider-query MNN experiment](../Tools/Omics/Reduction/WideQueryMNN/README.md) retains all 82,567 original Hagai/Kang/Ding cells and passes complete numerical reconstruction. Kang still fails megakaryocyte recall (0.644707 versus baseline 0.750000) and condition preservation, despite 99.984% exact-anchor recall. This is development evidence against using anchor recall alone as a biological admission gate.
 
+The [exact-anchor assembly control](../Tools/Omics/Reduction/ExactAnchorControl/README.md) reproduces native coordinates on all three MNN cohorts, isolating the approximate-coordinate divergence to matching within numerical tolerance. Kang’s 26 missing anchors involve 22 distinct reference-labeled megakaryocytes. This diagnostic does not qualify a new matcher or establish individual-anchor causality.
+
 ## Current completion and admission gates
 
 This includes the published `71ce4fff` implementation evidence and the subsequent

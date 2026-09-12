@@ -1,0 +1,183 @@
+{
+  "archiveSHA256": "07fd1648e551d39dc796702f343a4911691c9b8389e7491e3b87f449d58f7037",
+  "members": {
+    "run.py": "1429b0ac5ebce082833bdb0ad543030b909a89c42908f2833098902718880a52",
+    "runner.py": "35d21e8e0c89bfd18b2e4f7dd558cf41e380e9b210b01b02f8ae8349c5334215",
+    "changed_anchors.py": "85665eae780ddbb384cf24e5cf0575ec1d2fe15584661bbff0cd72ae8cb35d3f",
+    "fit.py": "e740843c167399eb6ca81ff1de73a376dc30a6464d0bc3462a41ec78191d126e",
+    "run.log": "9d87ad8bd85b14d39711800d0292626a9eaa1cec0aa042a3948c9ced0cc7711a",
+    "results.json": "a675f3cb8654b45da583a878d6811b3893cd19b172a68278943b9547c3d2e7c7",
+    "changed-anchors.json": "cf8620a3d536b124752f7fd7e2f8b68fb127418241450eca1fe20ee81c348f8e",
+    "terminal.json": "299e7018103fa0db2e53d92c01df48f64c1e700f62186a6597458c354bd50115",
+    "process.json": "ed733200e8278c7ac16d2405586df441880c3ecf224418b6fd612c17259dd655",
+    "freeze.json": "19d722a4dcb70973b375bcb013a1c53fb865d92b4181b849408234ff9c193ab5",
+    "protocol.md": "0de81a7b491d6a6344cacf59ba6008e3019001945736ff5b57ca88b8c6825cea",
+    "hagai/report.json": "20f9939e26a49d46cfa58316787c6c0da500fc35e4e09cfebd71d1a04f8d28ba",
+    "kang/report.json": "fc21c0a24bb871b891845d802d79b7ab8f8b77b9e2f38dc591defcf9337cf832",
+    "ding/report.json": "2ec60d8e37afba3d621b45906496545a158446856ce7859eb52f6d12d99eeafd"
+  },
+  "externalArrays": {
+    "hagai/anchors.npz": {
+      "bytes": 143995,
+      "SHA256": "aba81086e3bfa000843fb849f170ad5ddec90fc327b74e948e9dbb5b966dba51"
+    },
+    "hagai/step-0.npz": {
+      "bytes": 12522044,
+      "SHA256": "056c443581597ca25d08d19eea86de0a5b1360a8f9fa952384ad9dd6b53d3506"
+    },
+    "hagai/step-1.npz": {
+      "bytes": 3499998,
+      "SHA256": "022e329405c00d1e395ab16e8f470c1116c06f8e8c2543f14835907c714e5f64"
+    },
+    "hagai/step-2.npz": {
+      "bytes": 4908037,
+      "SHA256": "a2d6f34c18ce8603670434d707f749f468057de17225f240236d4bb8c6b92c13"
+    },
+    "hagai/scores.npz": {
+      "bytes": 2142546,
+      "SHA256": "e121a9f6650e253af8cf6d630e01cb15ca8ea7359c994bcc8859238535a60da3"
+    },
+    "kang/step-6.npz": {
+      "bytes": 6355111,
+      "SHA256": "b398227424647bd9d3cab10ca5856558bda5a005e1eb02adab150b8cad56dae8"
+    },
+    "kang/step-17.npz": {
+      "bytes": 8837778,
+      "SHA256": "b63abdbde2252cab84f3ab2d0f610613eb7a5eba3adf4f4d9a311ea87e5bc1c9"
+    },
+    "kang/step-7.npz": {
+      "bytes": 5250710,
+      "SHA256": "b54666533b8c49e70ab99d23b4a9ae87df63c857211badf0109a87cfe8a7dbdf"
+    },
+    "kang/step-5.npz": {
+      "bytes": 1906435,
+      "SHA256": "7707fb0cf1c443678996a69eea4ef96f0423a2fa709e31f72687c06f561f9e7c"
+    },
+    "kang/anchors.npz": {
+      "bytes": 562483,
+      "SHA256": "6a6e6404ea529a472cb260ce11d151d460e47e95be499ea31ec8f7200f95cc53"
+    },
+    "kang/step-14.npz": {
+      "bytes": 8834573,
+      "SHA256": "bb931290665bf3eefdee1c5d55ffe51ef3eeef7bda7719171e7d0c3fa6d852ea"
+    },
+    "kang/step-4.npz": {
+      "bytes": 8633503,
+      "SHA256": "9e093d9352cd6b11f69f01d70dab900ec3cb1b5385c7770712a62c63d844a394"
+    },
+    "kang/step-0.npz": {
+      "bytes": 4541951,
+      "SHA256": "5afbcd54ee11358b01525a0cbc0b71c499a6aa5382c50a68e44eadbf72bfeba7"
+    },
+    "kang/step-10.npz": {
+      "bytes": 8950718,
+      "SHA256": "db0e40f3c8bde4e6f033262e7f5303401f7debb7ad9aa74c04e7813fe3c14917"
+    },
+    "kang/step-11.npz": {
+      "bytes": 11335005,
+      "SHA256": "241a8c210f9de35a5391454cfdac80257fe0431dd87a1a45ea2b9fd46d277dc7"
+    },
+    "kang/step-1.npz": {
+      "bytes": 2244247,
+      "SHA256": "58dd06d243f5d487ce480a53fd436a93b678d0802da3d2a131f5ddab136153b2"
+    },
+    "kang/step-3.npz": {
+      "bytes": 1672138,
+      "SHA256": "aaa6f7d0f015cf36b4c9cc322a1879b4b70e82fe4771177fc3278fc0fccc49c6"
+    },
+    "kang/step-13.npz": {
+      "bytes": 8898226,
+      "SHA256": "68b52d67a5d448da762607a0353e9d7a7f7b50e21e034d9f28599ee89fc917ac"
+    },
+    "kang/step-2.npz": {
+      "bytes": 5790881,
+      "SHA256": "7cc2304e73faea6b6dba658d4dc8492d80ed32d8640702b90efa35f273b8dab3"
+    },
+    "kang/scores.npz": {
+      "bytes": 3816515,
+      "SHA256": "62c017adfc7621fc900c8cfa5949b7f0d77e2d1fc8e3f1fef7c9699534944c45"
+    },
+    "kang/step-9.npz": {
+      "bytes": 8896973,
+      "SHA256": "c619ef1e95b084d138454b1e796ace8eccb081888cc844b216b33c0b7f11062d"
+    },
+    "kang/step-19.npz": {
+      "bytes": 9380767,
+      "SHA256": "365239fb906707ab66d6918482665ac78582812e761cc382da331551f0a05827"
+    },
+    "kang/step-18.npz": {
+      "bytes": 9407653,
+      "SHA256": "9d3c8ef85c9ec3f59cd40d6c584223ebd90c8bc2096f7b0d71ae10362d3a43fa"
+    },
+    "ding/step-6.npz": {
+      "bytes": 7785192,
+      "SHA256": "2f424a621e450dd7ffc3ea6d2e8fb3ef2e1d541b8ff0dbf9c9575427389f46c2"
+    },
+    "ding/step-16.npz": {
+      "bytes": 15262726,
+      "SHA256": "dbfccee533d07e9ebf5fd71d94767dba1ed32947843758b1f5ffe610c0bff5e2"
+    },
+    "ding/step-7.npz": {
+      "bytes": 18696939,
+      "SHA256": "9b814c3f0788b98af21855ea5d72b6f419654a302ade75eb92ef697d30d1aa3f"
+    },
+    "ding/step-5.npz": {
+      "bytes": 6236692,
+      "SHA256": "370ab831a7d283f9fd544230842c4aece90a781ee97307d74ba7bed0de163b6c"
+    },
+    "ding/step-15.npz": {
+      "bytes": 14377609,
+      "SHA256": "09eb17f7b7c051149e02073991e3a5504ed9cbfe3ced2f4c2595d6e973d71eb4"
+    },
+    "ding/anchors.npz": {
+      "bytes": 416137,
+      "SHA256": "d0d1b4a5b54effe7dcd05504efbae1166fc7f22ab8d6e6c294542ede5fd6ec2d"
+    },
+    "ding/step-14.npz": {
+      "bytes": 14729843,
+      "SHA256": "6f61b8beeb3408b8e7687d7cb7f1628762d913d07e7f1e52ac2b91b00d8b4ee2"
+    },
+    "ding/step-4.npz": {
+      "bytes": 12783932,
+      "SHA256": "47fcfb531725efa51e71cbd56e9c73e9dd0921770122f794b950cc8fe1401ea1"
+    },
+    "ding/step-0.npz": {
+      "bytes": 4017114,
+      "SHA256": "5bbc26efbd5a8e871be2b7d3916d2e6556adf57da7365b8236ac90abd31cd0a7"
+    },
+    "ding/step-11.npz": {
+      "bytes": 14080187,
+      "SHA256": "4e0aaf7ef43ab249012d88a280210100233d6bf94d2208cc92709d602a94bfad"
+    },
+    "ding/step-1.npz": {
+      "bytes": 5345390,
+      "SHA256": "8bd714bb551c8f6eb6abaf8a5a9d11ec60bf64cb6eeb5eb4e8d828ed3b5c1451"
+    },
+    "ding/step-3.npz": {
+      "bytes": 623593,
+      "SHA256": "a06936021d64bfbebe7503a86df30a480416f1709a436c727be24bd5722cbe1c"
+    },
+    "ding/step-13.npz": {
+      "bytes": 14029178,
+      "SHA256": "bf7e31a44f2183b2c273da50235f017bdac5248e16ca8072c9d607d29ad46471"
+    },
+    "ding/step-2.npz": {
+      "bytes": 7823558,
+      "SHA256": "5f56c79061ac40a3a5600e329d722e96f2c221a1883dc4d0983327b52fa97f01"
+    },
+    "ding/scores.npz": {
+      "bytes": 6773720,
+      "SHA256": "a359a3acf50fe929d4c45361d3a4733291e59c18d6d0f6175b80489e3692d496"
+    },
+    "ding/step-9.npz": {
+      "bytes": 15683226,
+      "SHA256": "7ba0477185cb15cf5a583387ff15cb8737d17d920f018437702c789896c8fd59"
+    },
+    "ding/step-8.npz": {
+      "bytes": 19539773,
+      "SHA256": "eddcbc6ead323b1e1a1a8e02ab21d4a78d25fe5e4898454a0d52bf1a92cd91c0"
+    }
+  },
+  "remoteRoot": "/Users/n/numivivo-mnn-anchor-control-20260912",
+  "scope": "Exact-anchor assembly control; source cohort and qualified Gaussian library are external dependencies, all full NPZ witnesses retained on host"
+}

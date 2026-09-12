@@ -1,0 +1,38 @@
+{
+  "allCohortsChecked": true,
+  "allCoordinatesPassed": true,
+  "freezeSHA256": "19d722a4dcb70973b375bcb013a1c53fb865d92b4181b849408234ff9c193ab5",
+  "results": [
+    {
+      "anchors": 49893,
+      "cells": 13863,
+      "cohort": "hagai",
+      "coordinateRMSE": 3.047300305515181e-16,
+      "fitSeconds": 1.1707141231745481,
+      "maximumCoordinateError": 1.509903313490213e-14,
+      "orderExact": true,
+      "passed": true
+    },
+    {
+      "anchors": 159513,
+      "cells": 24673,
+      "cohort": "kang",
+      "coordinateRMSE": 7.774521370441962e-16,
+      "fitSeconds": 9.71412387304008,
+      "maximumCoordinateError": 1.2989609388114332e-13,
+      "orderExact": true,
+      "passed": true
+    },
+    {
+      "anchors": 131282,
+      "cells": 44031,
+      "cohort": "ding",
+      "coordinateRMSE": 5.221082981007632e-16,
+      "fitSeconds": 20.62929999595508,
+      "maximumCoordinateError": 2.3342439092743916e-14,
+      "orderExact": true,
+      "passed": true
+    }
+  ],
+  "scope": "Exact-anchor assembly implementation control, no new biological qualification"
+}

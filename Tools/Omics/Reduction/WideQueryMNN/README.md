@@ -64,3 +64,5 @@ Further width tuning on Kang would be development reuse. The remaining problem
 requires investigating how small anchor changes affect assembly and cell-type
 boundaries, while retaining all original biological gates. Neither near-exact
 anchor recall nor the faster approximate matcher is sufficient for promotion.
+
+The subsequent [exact-anchor assembly control](../ExactAnchorControl/README.md) reproduces native coordinates within 1.3e-13 on all three cohorts. Kang's 26 missing anchors involve 22 distinct reference-labeled megakaryocytes; aggregate recall obscures this concentration.
