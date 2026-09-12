@@ -1,0 +1,11 @@
+{
+  "files": {
+    "backed-verification.json": "21755d466bc4fe56f2e98149f871223c85936db5ac3470749ac159164c7f3773",
+    "backed-verification.log": "44869bc23b6bea803268c4737662ee6e12179939836b1c1261616ae0a533a081",
+    "backed-verification-time.log": "40ed367672014cfb6ecc8682a0bde36e3406925e4550643e70725398bb6f9cfa",
+    "check_backed.py": "441b4fbacd22a0fee91f199ed86642e5684d0747b6808c8ad4e9587c167c2d98"
+  },
+  "sourceSHA256": "0873e698ebf8770a54e6dba09724ffbeda5e1a67dbf24d4e223552d4aca7969c",
+  "annotatedSHA256": "2a7ca2736e724ae4d01299b27bf259a650be1594136140c876093a5d9902c412",
+  "scope": "Complete backed AnnData open and full obs/var metadata equivalence; count slicing is sampled here. The separate HDF5 verifier checked every original stored element. AnnData metadata remain resident; not a biological prediction or end-to-end speedup test."
+}

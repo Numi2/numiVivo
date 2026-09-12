@@ -67,3 +67,25 @@ python verify_atlas.py --source ORIGINAL_HIRISA.h5ad --output NEW_OUTPUT.h5ad --
 
 Use the recorded AnnData/h5py environment for the independent format checks.
 The native annotation command requires no Python or scverse runtime.
+
+
+## Full backed AnnData reopening
+
+AnnData 0.13.3.post0 reopens the complete annotated file with `backed="r"` as
+1,612,594 cells × 18,082 features, retaining a `_CSRDataset` backed matrix.
+Both original indices and all 29 original observation/feature columns match the
+source through the actual AnnData reader. Every new row value is correct.
+Six deterministic count-row windows (14,931 stored entries) match exactly.
+Count-window checking is sampled here; the earlier independent HDF5 check covered
+all original stored elements.
+
+The complete reference check took 26.85 seconds and peaked at 2,998,566,912 bytes
+RSS. That includes metadata and reference-column comparisons; metadata remain
+resident. It is not a comparable workload to native annotation and establishes
+no native/scverse speedup. Both large file hashes were rechecked after the run.
+
+[Backed-open evidence](evidence/2026-09-12-backed/manifest.json) retains the checker,
+versions, full report and logs. Run `check_backed.py --source ORIGINAL_HIRISA.h5ad
+--annotated ANNOTATED_HIRISA.h5ad --report backed-verification.json` in the recorded
+AnnData environment. This closes the full-file reader check, not downstream
+biological or prediction validation.

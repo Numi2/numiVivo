@@ -201,7 +201,10 @@ HDF5 metadata/decompression allocations remain separate from the copy buffer.
 The [full real HIRISA annotation run](../Tools/Omics/H5AD/Annotation/Atlas/README.md)
 adds exact source-row provenance to all 1,612,594 cells and verifies all 46 original
 datasets (7,735,703,364 stored elements), their attributes and the unchanged source
-hash. This is annotation/storage qualification, not biological labels or predictions. The complete
+hash. The complete annotated file also reopens in backed AnnData with both indices,
+all 29 original obs/var columns and every added row value verified; sparse count
+windows match while the matrix stays backed. Metadata remain resident. This is
+annotation/storage qualification, not biological labels or predictions. The complete
 [Adamson UPR ingestion check](../Tools/Omics/PerturbationPrediction/Adamson/README.md)
 preserves the original 65,337 cells and 237,812,947 sparse entries and verifies
 native aggregates against an independent SciPy reference.
