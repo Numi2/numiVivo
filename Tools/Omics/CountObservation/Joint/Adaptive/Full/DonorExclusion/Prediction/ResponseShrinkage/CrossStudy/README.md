@@ -80,3 +80,5 @@ output paths must not already exist. The archive retains exact native sources,
 binaries, all normalized model inputs and outputs, protocol, hash bindings,
 verification, tests, scores and logs; historical H5AD/count arrays remain in their
 original study. It does not duplicate the atlas or claim a Metal speedup.
+
+The [observed-range and error decomposition](Support/README.md) shows that Kang → HIRISA fails even inside the training range in every donor (1.82–1.88× mean-baseline RMSE). Greater range coverage does not identify the more accurate direction. A range filter is not a validated fix; the next selection design needs held-out study/context structure, not further tuning on these query outcomes.

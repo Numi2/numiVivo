@@ -30,6 +30,8 @@ The subsequent [training-selected response-shrinkage experiment](../Tools/Omics/
 
 The [native shrinkage transfer test](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/CrossStudy/README.md) reproduces every model and prediction independently across 26 full-panel folds. HIRISA → Kang gains only 0.47% over training mean; Kang → HIRISA has 216.98% higher error and loses all five donors. Improved within-study estimation therefore does not establish cross-study generalization. These development results do not replace the original transfer failures.
 
+The [transfer applicability diagnostic](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/CrossStudy/Support/README.md) preserves all predictions and finds failure inside as well as outside observed training ranges. Range membership is therefore not a validated accuracy gate. The next model-selection experiment needs held-out study/context structure among the training cohorts; reused outcome inspection must remain explicit.
+
 ## Current completion and admission gates
 
 This includes the published `71ce4fff` implementation evidence and the subsequent
