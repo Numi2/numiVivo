@@ -1,0 +1,301 @@
+{
+  "archiveSHA256": "0fe8a4b6002e9121b988284df3e54968b651781cd54928312f8aca09cf062631",
+  "files": {
+    "Driver.swift": {
+      "bytes": 958,
+      "sha256": "5640d719f697da875ccc5c42746900b4ef57e4d5c2115c70332e3fabc109a37d"
+    },
+    "README.md": {
+      "bytes": 4913,
+      "sha256": "47821099ac03e4b9029522978d4016685f8f014cd4f2111d4216b0b9cfb925f3"
+    },
+    "ResponseShrinkage.swift": {
+      "bytes": 5045,
+      "sha256": "db96880bc8b50bf90405ea6edb5b015cd4ea7a0c08e994576358c41c195843ca"
+    },
+    "Tests.swift": {
+      "bytes": 2084,
+      "sha256": "c63f7a8205883b9a917af203b9fec63246e8c58d7178142883c38e5f7dae23dc"
+    },
+    "build-attempt1.log": {
+      "bytes": 1791,
+      "sha256": "c4e30c0d0b5ccc1cecd7c475b4f971831351ce2db760f9006b9ecbef0cd79a34"
+    },
+    "build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "native/cross-HIRISA-to-Kang-patient_101-input.json": {
+      "bytes": 2498351,
+      "sha256": "b474c5c4929a7a921b7a799e169fc27886687b76457dffa5e31cf18878c4cd56"
+    },
+    "native/cross-HIRISA-to-Kang-patient_101-output.json": {
+      "bytes": 1060512,
+      "sha256": "867e1683f77571abc875e9ea4060e39095190611264277c9aa1bb81cf2037b61"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1015-input.json": {
+      "bytes": 2531514,
+      "sha256": "ef09c43705f754ef27a4544e41892682c9738bff8cb88158e4dcd58023526563"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1015-output.json": {
+      "bytes": 1085712,
+      "sha256": "ff766b99310074693594ac62e1a27426b1abb52ae31e0b0ee3c1b927d71bdb68"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1016-input.json": {
+      "bytes": 2504390,
+      "sha256": "9de822cb2adb0f77de589b87e7b8bad816fce62b95ce16da263009233b5384e5"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1016-output.json": {
+      "bytes": 1064597,
+      "sha256": "57465c5f230313a0d3235bb9a82bd783bcb9f2466d6d71b71d7474522e66e2ad"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1039-input.json": {
+      "bytes": 2459319,
+      "sha256": "cda499075846357532e38d4ee4461dddb1e7e5d317ceee0f73e4e4ea0ccd2e8a"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1039-output.json": {
+      "bytes": 1033348,
+      "sha256": "a9463003931b64d77b151ffaedbf9e99eb045d85a78804f5dbb03a204b9904e4"
+    },
+    "native/cross-HIRISA-to-Kang-patient_107-input.json": {
+      "bytes": 2471758,
+      "sha256": "b74f2c79c9b73dea8d720359c63df05e64e41de07edee65745fec01a6070bab5"
+    },
+    "native/cross-HIRISA-to-Kang-patient_107-output.json": {
+      "bytes": 1040618,
+      "sha256": "3fa97d336189c58346ff1fda3aa0bc64b8f3a2be74dfd890646f7524648785f3"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1244-input.json": {
+      "bytes": 2503031,
+      "sha256": "e858611d7cb5c06b87744421e37a16cedf6accecb6da339777a580b0532feaa5"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1244-output.json": {
+      "bytes": 1063750,
+      "sha256": "bd48008498f1718988026b7f5a48b9dde3c3e31549e451e97cec5dc4157847e2"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1256-input.json": {
+      "bytes": 2516224,
+      "sha256": "cc8f2e5086f8dfac5709a3be38d1b5a823b990e6ab10952171ef1e767b504df3"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1256-output.json": {
+      "bytes": 1074818,
+      "sha256": "0ecd52e4640e13d3203c0e932698f7edafd587d1ae9fd69988e8e6bfc149e5ab"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1488-input.json": {
+      "bytes": 2518560,
+      "sha256": "b64fa67c951493d0f67e8bf512ff23f6740c2307b55945be0506438c3549bb08"
+    },
+    "native/cross-HIRISA-to-Kang-patient_1488-output.json": {
+      "bytes": 1076585,
+      "sha256": "d15e01c70482cc294712ec77c5f0b62fbc30137d4f4b41019e76a3f54fd25507"
+    },
+    "native/cross-Kang-to-HIRISA-2616BW-input.json": {
+      "bytes": 2720205,
+      "sha256": "a6cdc5ee5c4c47d5e449f4157ca13d9ce95b6ce174889d54a0042f77ab1a1b8c"
+    },
+    "native/cross-Kang-to-HIRISA-2616BW-output.json": {
+      "bytes": 1002351,
+      "sha256": "e93feec4ef07f3ef4e3c76897f70389cfb2bfe0e548ae4d1c642542d93f65193"
+    },
+    "native/cross-Kang-to-HIRISA-3283BW-input.json": {
+      "bytes": 2722332,
+      "sha256": "de8a2ac56d59d7361ac77b5dcd051b6d2b012a9cee81fb7ca12a445362ec67a2"
+    },
+    "native/cross-Kang-to-HIRISA-3283BW-output.json": {
+      "bytes": 1004157,
+      "sha256": "7d3b24b2ce91a31aee1a4156368f260cfd7e12240b159c63e976af9071956d93"
+    },
+    "native/cross-Kang-to-HIRISA-3491BW-input.json": {
+      "bytes": 2722985,
+      "sha256": "359c79501b954e968708238abae489354ef6cb4f7e701ea5927387670434eaf1"
+    },
+    "native/cross-Kang-to-HIRISA-3491BW-output.json": {
+      "bytes": 1004315,
+      "sha256": "dab361629bf758c972b1474186d121b8f7007f609cc736b52e8c552077decfbc"
+    },
+    "native/cross-Kang-to-HIRISA-3955BW-input.json": {
+      "bytes": 2722086,
+      "sha256": "fd16f3816737923b959f9c987d1731d01d88551a88785e0dd4da7ea6f031f65d"
+    },
+    "native/cross-Kang-to-HIRISA-3955BW-output.json": {
+      "bytes": 1004570,
+      "sha256": "c242694fc552aa547e08b8d03557f116d6d9dd9170a287ff847bca2760cc1075"
+    },
+    "native/cross-Kang-to-HIRISA-6811BW-input.json": {
+      "bytes": 2721995,
+      "sha256": "70a77fef4391e62cb7dc604980984c1e6e3a4c29d93682a51dfe49110028f597"
+    },
+    "native/cross-Kang-to-HIRISA-6811BW-output.json": {
+      "bytes": 1004201,
+      "sha256": "05ea54b98a93cc22c374e1d94b824f6f75e444472a50456c61f97ba6fb94fccd"
+    },
+    "native/within-HIRISA-to-HIRISA-2616BW-input.json": {
+      "bytes": 2139497,
+      "sha256": "56c46097c94c5538313c31ec0fd9f512ea645b3fe0c2c355d5bf28565077a372"
+    },
+    "native/within-HIRISA-to-HIRISA-2616BW-output.json": {
+      "bytes": 1122955,
+      "sha256": "13fa9616139f659b9edf47da3202c311a673181b37006fbfd68c5d2b3ae681db"
+    },
+    "native/within-HIRISA-to-HIRISA-3283BW-input.json": {
+      "bytes": 2138987,
+      "sha256": "ad01919a94d7012455c5e97834feeaa7053d4cd851db069293370630735b654f"
+    },
+    "native/within-HIRISA-to-HIRISA-3283BW-output.json": {
+      "bytes": 1124908,
+      "sha256": "2df1d93d0f5b1c8d49948086cb958cdf9c9388f216e3aadb0826fb431a23ae85"
+    },
+    "native/within-HIRISA-to-HIRISA-3491BW-input.json": {
+      "bytes": 2137990,
+      "sha256": "19d1bb651278b35f126059e68e649e552b6d1fe48e650b241b70ccb7a287b043"
+    },
+    "native/within-HIRISA-to-HIRISA-3491BW-output.json": {
+      "bytes": 1123998,
+      "sha256": "33ac96a5d645abacd6d5b0477bfc7f5b8de2f8d8194a94a74bd28822a0cfc241"
+    },
+    "native/within-HIRISA-to-HIRISA-3955BW-input.json": {
+      "bytes": 2137516,
+      "sha256": "5f2e29f57972728dda014e040e4ee97459d4e954ce9778bfe1709173cfe99304"
+    },
+    "native/within-HIRISA-to-HIRISA-3955BW-output.json": {
+      "bytes": 1115823,
+      "sha256": "313c3ce6b1a770914adbbf5dcbc6cc127cc83f3f0128d5f21f5d4c0fd82911a5"
+    },
+    "native/within-HIRISA-to-HIRISA-6811BW-input.json": {
+      "bytes": 2138692,
+      "sha256": "f9d838ea61c1263af66c251c545062522d36fdec5cbe7c84f6747b3c01211fdd"
+    },
+    "native/within-HIRISA-to-HIRISA-6811BW-output.json": {
+      "bytes": 1125279,
+      "sha256": "56de57a7cd632c41e02b555b824db890e7ddc1119c5f53fe0cdd16ddcb83869f"
+    },
+    "native/within-Kang-to-Kang-patient_101-input.json": {
+      "bytes": 2358268,
+      "sha256": "1c7024638404faec614884461376516b2cfbdedbf66ae75b521c764e91b4aaeb"
+    },
+    "native/within-Kang-to-Kang-patient_101-output.json": {
+      "bytes": 968396,
+      "sha256": "8ba85b9f25308d2d26136f75701592d8a20eaa498bf85b29831215c582f60dd8"
+    },
+    "native/within-Kang-to-Kang-patient_1015-input.json": {
+      "bytes": 2336017,
+      "sha256": "ad19f748e03003f2d86967b2fefd82a3676295d258098922d7c47b0fae359758"
+    },
+    "native/within-Kang-to-Kang-patient_1015-output.json": {
+      "bytes": 957508,
+      "sha256": "39df0bb9549ed737f0f5bbad6207b08a28e68e521095d2bc5a54cc35740d2875"
+    },
+    "native/within-Kang-to-Kang-patient_1016-input.json": {
+      "bytes": 2365402,
+      "sha256": "e7d985a50883ba5416bc0c0ac2f4548a4380e8b887b61d041a81b1336a048d63"
+    },
+    "native/within-Kang-to-Kang-patient_1016-output.json": {
+      "bytes": 968591,
+      "sha256": "0b62cbe64e65272d5777f32705681883918358aa67d772fd04e1f985691b8c2c"
+    },
+    "native/within-Kang-to-Kang-patient_1039-input.json": {
+      "bytes": 2381772,
+      "sha256": "90ede6321d751a1f1107c8312d6e52e69fae0ca5da7c4f95d071d5d69bb4accf"
+    },
+    "native/within-Kang-to-Kang-patient_1039-output.json": {
+      "bytes": 966527,
+      "sha256": "1b6ccdf155796dcc6a98d2a8da0a5cc758972f2d0293346ec7d704153d37e772"
+    },
+    "native/within-Kang-to-Kang-patient_107-input.json": {
+      "bytes": 2376436,
+      "sha256": "cbf3715a430aece38be3802d9c12ecb1327afb2a11c1501e25e3306b79089529"
+    },
+    "native/within-Kang-to-Kang-patient_107-output.json": {
+      "bytes": 967964,
+      "sha256": "2ce8129eedd86e3f4d8315711979e0b1540838ee528e3cd4a0d89b6d8605a22e"
+    },
+    "native/within-Kang-to-Kang-patient_1244-input.json": {
+      "bytes": 2366363,
+      "sha256": "64ef12681121603e443f4b683e5cbda178a042afd08200829626f9ef9ce4121c"
+    },
+    "native/within-Kang-to-Kang-patient_1244-output.json": {
+      "bytes": 969286,
+      "sha256": "560cb090d8aa6f3d968e850eb7d1a9c77917e463497bb4fc793941c20269b458"
+    },
+    "native/within-Kang-to-Kang-patient_1256-input.json": {
+      "bytes": 2345827,
+      "sha256": "0ac689e540f5726d7e015156ed20cfeb326eb2838c02f1787fb0a7b336e35074"
+    },
+    "native/within-Kang-to-Kang-patient_1256-output.json": {
+      "bytes": 965633,
+      "sha256": "014bcdbc5f70f132261f4334062b550ad805fab9fa5774c3059e492badc3f895"
+    },
+    "native/within-Kang-to-Kang-patient_1488-input.json": {
+      "bytes": 2340229,
+      "sha256": "f42fc90c97249686671c0cddbaa682312ab406b8da69bde47c4a929521e65e0c"
+    },
+    "native/within-Kang-to-Kang-patient_1488-output.json": {
+      "bytes": 965121,
+      "sha256": "176cfc7cc3bd1949b217c08bdaaa934e941777b0eb05aea1556a6fc6a1dc995a"
+    },
+    "prediction-freeze.json": {
+      "bytes": 7105,
+      "sha256": "7e690ac413bfbf340d85f1049c5e4b9835fe9d406f3ba6240717b9ad016047d0"
+    },
+    "protocol.json": {
+      "bytes": 1281,
+      "sha256": "230febaacf0eefb2e42362a4dd1a99de0466d28bc478fa48478961bd6b4757f6"
+    },
+    "response-shrinkage": {
+      "bytes": 126592,
+      "sha256": "afe439a8e18e30387dc324eb5e0342e8518990b568f1cb10517ceba03595ecdc"
+    },
+    "run.log": {
+      "bytes": 827,
+      "sha256": "3208f0a9edbca919c51a5b616d96bfe3278847d7f82f4d6e92aaccfdf4149683"
+    },
+    "run.py": {
+      "bytes": 2476,
+      "sha256": "a3dead32104dce75591c21b4c0667a9abe60b5b319c33143b5164a89d9af7d1e"
+    },
+    "score-repeat.json": {
+      "bytes": 110,
+      "sha256": "9cca700c7f5bdfa16f445be0a0e6a4a678bf5b3fe19a092f46cdc898c6390066"
+    },
+    "score-repeat.log": {
+      "bytes": 1708,
+      "sha256": "875c04f18a6944e7acf3e74c9de4c6d1028b3cfcf729d89df88f78ba616169a4"
+    },
+    "score.log": {
+      "bytes": 1708,
+      "sha256": "875c04f18a6944e7acf3e74c9de4c6d1028b3cfcf729d89df88f78ba616169a4"
+    },
+    "score.py": {
+      "bytes": 3449,
+      "sha256": "a60d2b218ca4d352cac7253cd0ced706540c313ddbacbab32b81f9462bdfebb0"
+    },
+    "scores.json": {
+      "bytes": 11371,
+      "sha256": "e90524ebdb338855c9e3989ef4870075cdf6a2f0d495cfe8d85946d3158ee8ee"
+    },
+    "test-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "tests": {
+      "bytes": 98776,
+      "sha256": "d9bcc38f615598a1bda9ac548dddb2c30ba831fab962af5ee79c22c955659c6e"
+    },
+    "tests.log": {
+      "bytes": 55,
+      "sha256": "07a5f9d3b278026c2adb0d9c56a0e2934743157761aca6c2b1d60132595012b6"
+    },
+    "verification.json": {
+      "bytes": 5780,
+      "sha256": "4b9a7769f207a589fcb16225ce3f47a43f98f485c3977968f3bbfcd410d89ec8"
+    },
+    "verify.log": {
+      "bytes": 49,
+      "sha256": "dfa19c813d94727a941cad58ed2dad108b11353a8a1ad11ac3be390a771e534b"
+    },
+    "verify.py": {
+      "bytes": 2318,
+      "sha256": "3987e7b5be0d10e84bc0f934403b0441d5e92302378206d123d5949507fc5105"
+    }
+  }
+}

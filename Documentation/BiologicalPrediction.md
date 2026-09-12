@@ -28,6 +28,8 @@ identities; this review does not requalify historical receipts under a new build
 
 The subsequent [training-selected response-shrinkage experiment](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/README.md) improves over training mean in all 13 development donor holdouts. Pooled RMSE improves 19.96% in Kang and 1.41% in HIRISA. HIRISA still misses the existing 5% gate; Kang remains less accurate than the original joint model. These reused development outcomes do not establish fresh validation or calibrated uncertainty. Original joint-model failures remain unchanged.
 
+The [native shrinkage transfer test](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/CrossStudy/README.md) reproduces every model and prediction independently across 26 full-panel folds. HIRISA → Kang gains only 0.47% over training mean; Kang → HIRISA has 216.98% higher error and loses all five donors. Improved within-study estimation therefore does not establish cross-study generalization. These development results do not replace the original transfer failures.
+
 ## Current completion and admission gates
 
 This includes the published `71ce4fff` implementation evidence and the subsequent

@@ -14,6 +14,8 @@ The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/REA
 
 The latest [training-selected RNA response model](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/README.md) beats training mean in all 13 development donor holdouts, but HIRISA's 1.41% gain still misses the 5% gate. This is progress in conditional RNA estimation, not general biological prediction.
 
+[Native cross-study evaluation](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/CrossStudy/README.md) confirms that this improvement does not reliably transfer: Kang-trained shrinkage loses to both baselines on HIRISA despite complete numerical agreement with the independent reference.
+
 ## Biological prediction: current evidence
 
 **Available data supports conditional estimates of average RNA responses;

@@ -1,0 +1,4 @@
+import Foundation
+struct Input: Decodable { let featureIDs:[String]; let trainingDonorIDs:[String]; let controls:[[Double]]; let treated:[[Double]]; let queryDonorID:String; let queryControl:[Double] }
+struct Output: Encodable { let model:VivoResponseShrinkage.Model; let predictedTreated:[Double] }
+@main struct Driver { static func main() throws { let input=try JSONDecoder().decode(Input.self,from:Data(contentsOf:URL(fileURLWithPath:CommandLine.arguments[1])));let model=try VivoResponseShrinkage.fit(featureIDs:input.featureIDs,trainingDonorIDs:input.trainingDonorIDs,controls:input.controls,treated:input.treated);let values=try VivoResponseShrinkage.predict(model,featureIDs:input.featureIDs,queryDonorID:input.queryDonorID,control:input.queryControl);let e=JSONEncoder();e.outputFormatting=[.sortedKeys];try e.encode(Output(model:model,predictedTreated:values)).write(to:URL(fileURLWithPath:CommandLine.arguments[2]),options:.withoutOverwriting) } }

@@ -42,3 +42,5 @@ original evaluation files were retained unchanged.
 `evidence.tar.gz` retains scripts, the pre-execution selection freeze, all 13
 fitted models and predictions, input/model hash bindings, verification, scores
 and logs. Raw training/query shards remain in their original retained studies.
+
+The subsequent [native cross-study check](CrossStudy/README.md) completes all 26 matched-panel fits and predictions with independent verification. HIRISA → Kang gains only 0.47% over training mean; Kang → HIRISA loses by 216.98%, with all five donors worse. The candidate remains unqualified for transfer. Its full-panel within-study metrics have different feature eligibility and weighting from the table above.
