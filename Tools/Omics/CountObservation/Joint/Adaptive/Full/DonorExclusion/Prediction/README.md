@@ -105,3 +105,17 @@ thirteen declared folds are pending in this snapshot. The new directory retains
 reports and hash bindings; complete raw shards remain in the live study pending
 full archival publication. It does not replace the earlier complete two-fold
 archive or establish independent biological validation.
+
+## Complete 13-fold result
+
+The [complete 13-fold development evaluation](evidence/2026-09-12-complete-reports/full-thirteen-fold-summary.json)
+now includes all native fits, control-only predictions and independent numerical
+and scoring checks. Kang improves RMSE 28.07% versus no change and 23.80% versus
+training-mean response; all eight donors improve against both. HIRISA improves
+50.84% versus no change but has **75.84% higher RMSE than training mean**, with
+all five donors worse. The frozen pooled development criterion passes (29.05%
+and 23.04% gains), while the HIRISA criterion fails. Of 216,058 source gene-folds,
+131,342 are scored; 84,171 lack dispersion, 543 reach leaf limits and two do not
+converge. These reused development donors do not establish independent biological
+validation or calibrated uncertainty. The linked snapshot retains reports and
+shard hashes; remaining raw evidence is retained locally pending archival capacity.

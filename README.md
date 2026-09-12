@@ -177,15 +177,20 @@ qualify the complete folds. The first two complete Kang donor omissions now
 produce [control-only joint predictions](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/README.md):
 RMSE improves 20.7–30.8% versus no change and 21.2–25.6% versus training-mean
 response on their eligible genes. These are reused development donors; the
-remaining folds, parameter uncertainty and independent biological validation
-remain open.
+parameter uncertainty and independent biological validation remain open; the
+completed all-fold result below supersedes this initial two-fold snapshot.
 
-The [five-fold progress snapshot](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/evidence/2026-09-12-five-fold-progress/current-summary.json)
-now shows a cohort-dependent limitation: both scored HIRISA omissions lose to
-the training-mean response, with pooled RMSE 65.5% worse despite beating no change.
-The three scored Kang omissions improve against both baselines. Eight folds are
-still pending in this snapshot, so the full-run criterion remains unset. These
-are development results; pooled gains do not establish consistent utility.
+The [complete 13-fold development evaluation](Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/evidence/2026-09-12-complete-reports/full-thirteen-fold-summary.json)
+now includes all native fits, control-only predictions and independent numerical
+and scoring checks. Kang improves RMSE 28.07% versus no change and 23.80% versus
+training-mean response; all eight donors improve against both. HIRISA improves
+50.84% versus no change but has **75.84% higher RMSE than training mean**, with
+all five donors worse. The frozen pooled development criterion passes (29.05%
+and 23.04% gains), while the HIRISA criterion fails. Of 216,058 source gene-folds,
+131,342 are scored; 84,171 lack dispersion, 543 reach leaf limits and two do not
+converge. These reused development donors do not establish independent biological
+validation or calibrated uncertainty. The linked snapshot retains reports and
+shard hashes; remaining raw evidence is retained locally pending archival capacity.
 
 The [complete Replogle experiment](Tools/Omics/PerturbationPrediction/Replogle2020/RESULTS.md)
 retains all 32,829 confident cells, 30 targets and 33,694 RNA features across five

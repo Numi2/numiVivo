@@ -41,7 +41,7 @@ success nor a failure.
 | Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. It loses to the mean in 37/150 target/group folds. | Independent biological contexts, target selection and replication; technical groups do not supply these. |
 | Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
 | Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
-| Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene fitting completes: nine eligible Kang limits and 185 HIRISA leaf limits remain. Training-only dispersions and manifests are verified for all 13 donor omissions; two 64-gene joint-fit pilots pass. Two complete Kang omissions have numerically verified, control-only predictions and improved development RMSE; the subsequent five-fold progress snapshot includes two HIRISA omissions that both lose to training mean (65.5% worse pooled RMSE). Eight folds, parameter uncertainty and new biological calibration remain open. |
+| Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene fitting completes: nine eligible Kang limits and 185 HIRISA leaf limits remain. Training-only dispersions and manifests are verified for all 13 donor omissions; two 64-gene joint-fit pilots pass. Two complete Kang omissions have numerically verified, control-only predictions and improved development RMSE; the complete 13-fold development evaluation passes the pooled criterion but fails HIRISA: all five HIRISA donors lose to training mean (75.84% higher pooled RMSE). All eight Kang donors improve against both baselines. Parameter uncertainty and new biological calibration remain open. |
 | Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
 
 The GSE181897 input contract is now resolved and its frozen comparison is complete.
@@ -730,3 +730,17 @@ python Tools/Omics/Benchmarks/HIRISA/verify_archive.py \
 python Tools/Omics/PerturbationPrediction/Norman/archive_native_target_kernel.py \
   --verify --out Tools/Omics/PerturbationPrediction/Norman/evidence/2026-09-10-native-target-kernel
 ```
+
+## Complete joint donor-exclusion development evaluation
+
+The [complete 13-fold development evaluation](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/evidence/2026-09-12-complete-reports/full-thirteen-fold-summary.json)
+now includes all native fits, control-only predictions and independent numerical
+and scoring checks. Kang improves RMSE 28.07% versus no change and 23.80% versus
+training-mean response; all eight donors improve against both. HIRISA improves
+50.84% versus no change but has **75.84% higher RMSE than training mean**, with
+all five donors worse. The frozen pooled development criterion passes (29.05%
+and 23.04% gains), while the HIRISA criterion fails. Of 216,058 source gene-folds,
+131,342 are scored; 84,171 lack dispersion, 543 reach leaf limits and two do not
+converge. These reused development donors do not establish independent biological
+validation or calibrated uncertainty. The linked snapshot retains reports and
+shard hashes; remaining raw evidence is retained locally pending archival capacity.

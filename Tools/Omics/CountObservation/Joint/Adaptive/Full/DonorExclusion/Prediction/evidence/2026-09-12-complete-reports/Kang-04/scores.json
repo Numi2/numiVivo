@@ -1,0 +1,42 @@
+{
+  "tag": "Kang-04",
+  "status": "scored-development-fold",
+  "queryDonorID": "Kang:patient_107",
+  "sourceGenes": 15706,
+  "scoredGenes": 8404,
+  "excludedStates": {
+    "unavailableCellDispersion": 7296,
+    "oracleLeafLimit": 6
+  },
+  "metrics": {
+    "joint": {
+      "genes": 8404,
+      "RMSE": 1.2892090533634601,
+      "MAE": 0.9533631142951398,
+      "sumSquaredError": 13967.95209943729
+    },
+    "noChange": {
+      "genes": 8404,
+      "RMSE": 1.8350323974850933,
+      "MAE": 1.2404710308551228,
+      "sumSquaredError": 28299.15813408635
+    },
+    "trainingMeanResponse": {
+      "genes": 8404,
+      "RMSE": 1.6919143595666395,
+      "MAE": 1.1770318537569955,
+      "sumSquaredError": 24057.07357770588
+    }
+  },
+  "relativeRMSEGain": {
+    "noChange": 0.297446162187481,
+    "trainingMeanResponse": 0.2380175473576137
+  },
+  "fractionGenesBetterThanNoChange": 0.6099476439790575,
+  "pointMassPredictions": 894,
+  "scoresSHA256": "021cd249bc2d4c5f03e4bb0f4be6a4fa1818cb0bc5a32658f372aea61a5a06fd",
+  "verifiedPredictionManifestSHA256": "cbb6d0f31bdc743f74dfb51ebd9d95410d52d65563215adfeac77c33b0ce0e5a",
+  "scoringPlanSHA256": "3b9f44fa0ed0d4678d7a5372bb5f7d2fdd30c103c51fa1bd71ebef873f993507",
+  "finishedUnix": 1789178985.4055538,
+  "qualification": "One reused development donor; no all-fold success or calibrated interval claim."
+}

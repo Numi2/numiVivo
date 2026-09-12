@@ -1,0 +1,42 @@
+{
+  "tag": "HIRISA-03",
+  "status": "scored-development-fold",
+  "queryDonorID": "HIRISA:3955BW",
+  "sourceGenes": 18082,
+  "scoredGenes": 12830,
+  "excludedStates": {
+    "unavailableCellDispersion": 5161,
+    "oracleLeafLimit": 91
+  },
+  "metrics": {
+    "joint": {
+      "genes": 12830,
+      "RMSE": 0.17845394768018433,
+      "MAE": 0.11096485571296465,
+      "sumSquaredError": 408.58176080909647
+    },
+    "noChange": {
+      "genes": 12830,
+      "RMSE": 0.3115194855866487,
+      "MAE": 0.18238245386193636,
+      "sumSquaredError": 1245.0795224191838
+    },
+    "trainingMeanResponse": {
+      "genes": 12830,
+      "RMSE": 0.09733102253882392,
+      "MAE": 0.06571277901138628,
+      "sumSquaredError": 121.54279757865264
+    }
+  },
+  "relativeRMSEGain": {
+    "noChange": 0.42714996673764216,
+    "trainingMeanResponse": -0.8334744979074031
+  },
+  "fractionGenesBetterThanNoChange": 0.6461418550272798,
+  "pointMassPredictions": 261,
+  "scoresSHA256": "d7a70cee784db834692a349560a1365e28b9323bfb0a3cb1abb4c9685885fdac",
+  "verifiedPredictionManifestSHA256": "ec8268418fbd73be66ec2c519cd6100bb74a8bc1acd5be9668d94a0e0c1700e9",
+  "scoringPlanSHA256": "3b9f44fa0ed0d4678d7a5372bb5f7d2fdd30c103c51fa1bd71ebef873f993507",
+  "finishedUnix": 1789179355.79256,
+  "qualification": "One reused development donor; no all-fold success or calibrated interval claim."
+}
