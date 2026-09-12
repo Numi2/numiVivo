@@ -20,6 +20,8 @@ The [translation-only ablation](Tools/Omics/Benchmarks/HIRISA/TranslationOnly/RE
 
 The [matched-control donor-shift experiment](Tools/Omics/Benchmarks/HIRISA/MatchedControlShift/README.md) estimates shifts from 403,449 control cells but still fails 34/146 annotation comparisons and one response contrast. Control-only shift estimation does not resolve the preservation gap.
 
+A [wider-query MNN test](Tools/Omics/Reduction/WideQueryMNN/README.md) improves exact-anchor recall across all 82,567 Hagai/Kang/Ding cells, but Kang still fails rare-cell recall and condition preservation. Approximate matching remains experimental.
+
 ## Biological prediction: current evidence
 
 A [training-only response-shrinkage candidate](Tools/Omics/PerturbationPrediction/StudyContextKernel/ResponseShrinkage/README.md) improves HIRISA but still fails Kang and GSE181897 transfer gates. All 75 donors pass numerical verification; the candidate remains unpromoted.

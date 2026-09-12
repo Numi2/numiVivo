@@ -34,6 +34,8 @@ The earlier [donor-selected experiment](../Tools/Omics/CountObservation/Joint/Ad
 
 The [completed Parse context test](../Tools/Omics/PerturbationPrediction/ParseIFNB/ContextEvaluation/README.md) fails on the full frozen B-cell cohort: mean donor RMSE is 20.93% worse than training mean and 32.14% worse than no change. All twelve donors lose to training mean. Independent numerical verification passes for all 139,200 predictions, but does not establish biological accuracy. Parse is now an inspected evaluation cohort; further tuning against it requires a new untouched cohort for an independent transfer claim. Participant independence and exposure matching remain unverified.
 
+The [wider-query MNN experiment](../Tools/Omics/Reduction/WideQueryMNN/README.md) retains all 82,567 original Hagai/Kang/Ding cells and passes complete numerical reconstruction. Kang still fails megakaryocyte recall (0.644707 versus baseline 0.750000) and condition preservation, despite 99.984% exact-anchor recall. This is development evidence against using anchor recall alone as a biological admission gate.
+
 ## Current completion and admission gates
 
 This includes the published `71ce4fff` implementation evidence and the subsequent
