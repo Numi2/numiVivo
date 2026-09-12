@@ -48,7 +48,9 @@ and scoring. To regenerate preparation, restore the original cohort dependencies
 identified by SHA256 in `panel-freeze.json`, adjust only their local paths, and
 run `prepare.py` in a new directory. Do not overwrite the retained execution.
 
-Parse IFNB dose/reagent and participant-overlap provenance remain unresolved.
+The [Parse primary dose/reagent](../../ParseIFNB/BCellCounts/NEXT_STEPS.md#primary-dose-and-reagent-resolved)
+is now known. Cross-study exposure comparability and participant overlap remain
+unverified.
 This revision supplies an explicit panel contract and its failed development
 evaluation; it does not authorize describing a future Parse result as protocol-
 matched independent validation.

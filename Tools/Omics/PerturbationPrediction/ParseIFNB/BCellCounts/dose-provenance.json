@@ -1,0 +1,38 @@
+{
+  "status": "primary-dose-and-reagent-located",
+  "sourceURL": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12724453/supplementaryFiles",
+  "articleURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12724453/",
+  "workbookMember": "media-2.xlsx",
+  "workbookBytes": 100749624,
+  "workbookSHA256": "9a8e91c4fccbd91a2660bd1cfcdd30ad8370cf615f471223522b62850d0611a4",
+  "sheet": "2.cytokine_screen",
+  "headers": {
+    "A1": "Cytokine",
+    "B1": "Gene(s)",
+    "C1": "Family",
+    "D1": "Receptor gene(s)",
+    "E1": "concentration (ng/mL)",
+    "F1": "Source/Vendor",
+    "G1": "Catalogue #"
+  },
+  "sourceRow": {
+    "A43": "IFN-\u03b2",
+    "B43": "IFNB1",
+    "C43": "Interferon",
+    "D43": "IFNAR1, IFNAR2",
+    "E43": "100",
+    "F43": "Biotechne / R&D systems",
+    "G43": "8499-IF-010/CF"
+  },
+  "dose": 100,
+  "doseUnit": "ng/mL",
+  "vendor": "Biotechne / R&D systems",
+  "catalogue": "8499-IF-010/CF",
+  "limitations": [
+    "Does not establish cross-study dose equivalence or participant independence.",
+    "No IU conversion inferred.",
+    "No response-analysis worksheet used for model selection."
+  ],
+  "predictionFitted": false,
+  "predictionScored": false
+}

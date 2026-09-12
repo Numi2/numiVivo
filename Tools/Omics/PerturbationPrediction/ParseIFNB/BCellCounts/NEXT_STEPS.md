@@ -26,8 +26,10 @@ even when a later attempt succeeds.
 
 ## Admission before any prediction score
 
-- Resolve the original IFN-beta dose and reagent from an accessible primary
-  source. The established 24-hour duration does not resolve dose comparability.
+- The primary supplement identifies IFN-beta at 100 ng/mL, Biotechne / R&D
+  Systems catalogue 8499-IF-010/CF; see [dose provenance](dose-provenance.json).
+  Resolve cross-study protocol comparability separately. Do not infer an IU
+  conversion or equivalent biological exposure from mass concentration.
 - Preserve the versioned 11,600-feature exact-match contract and its renewed
   development results: HIRISA passes, while Kang and GSE181897 fail the transfer
   gate. This resolves source compatibility but does not promote the candidate.
@@ -129,3 +131,22 @@ values across studies do not prove that participants differ. A verified
 cross-study identifier namespace or supplier provenance is still needed before
 claiming participant independence. No demographic or medical attributes were
 used for model fitting or matching. IFN-beta dose/reagent remain unresolved.
+
+## Primary dose and reagent resolved
+
+Europe PMC's supplementary-file service supplied the original `media-2.xlsx`
+workbook for PMC12724453 after earlier browser retrieval attempts failed.
+Sheet `2.cytokine_screen`, row 43, identifies IFNB1 / IFN-beta at **100 ng/mL**,
+**Biotechne / R&D systems**, catalogue **8499-IF-010/CF**. The
+[dose receipt](dose-provenance.json) records the exact header/row and workbook
+SHA256. The complete workbook is retained on the execution host; response-analysis
+sheets were not used for model selection. This supersedes earlier missing-dose
+statements in the historical audit above.
+
+Dose/reagent identity is now known. Cross-study exposure equivalence and
+participant independence remain unverified. Neither this metadata result nor
+the completed normalization replay overrides the candidate's failed development
+transfer gates. A Parse evaluation must preserve the frozen model, all donors,
+full-axis normalization, both simple baselines and the existing improvement
+criterion; it cannot be presented as protocol-matched independent validation
+without the additional provenance. No Parse prediction has been fitted or scored.
