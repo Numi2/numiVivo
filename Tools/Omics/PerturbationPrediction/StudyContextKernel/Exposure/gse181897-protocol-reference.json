@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "status": "primary-protocol-reference-located-not-donor-mapped",
+  "series": "GSE181897",
+  "sample": "GSM5513970",
+  "sampleTitle": "Pool_3",
+  "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM5513970",
+  "sourceField": "Treatment protocol",
+  "retrievedDate": "2026-09-12",
+  "perturbation": "IFN-beta",
+  "dose": 500,
+  "doseUnit": "IU/mL",
+  "durationHours": 9,
+  "temperatureCelsius": 37,
+  "carbonDioxidePercent": 5,
+  "vendor": null,
+  "catalogue": null,
+  "limitations": [
+    "Sample record links to GSE181897 and describes the stimulation protocol; all retained donors and pools have not yet been mapped to this record.",
+    "No conversion from IU/mL to ng/mL is inferred.",
+    "No exposure column has been added to the frozen model inputs.",
+    "No exposure-response coefficients have been fitted.",
+    "This metadata difference does not establish the cause of the failed transfer."
+  ]
+}

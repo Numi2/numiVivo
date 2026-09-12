@@ -72,3 +72,7 @@ external, uncertainty, clinical or general biological-outcome qualification foll
 Local storage failures occurred before prediction execution. Native runs moved
 to the Mac mini with the same binary and frozen inputs. No failed biological
 result was dropped or prediction run restarted.
+
+The [exposure metadata admission review](Exposure/README.md) identifies a primary
+GSE181897 protocol reference and distinguishes it from donor-level exposure mapping.
+The current model inputs contain no explicit dose or duration predictors.
