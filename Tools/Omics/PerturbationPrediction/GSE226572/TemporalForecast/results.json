@@ -1,0 +1,349 @@
+{
+  "rows": [
+    {
+      "donor": "D34",
+      "time": 12.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 4,
+      "upperTime": 4,
+      "rmse": {
+        "candidate": 0.2545064694262901,
+        "trainingMean": 0.2566823842054516,
+        "noChange": 0.3193374974770887
+      }
+    },
+    {
+      "donor": "D34",
+      "time": 24.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0,
+        12.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 12,
+      "upperTime": 12,
+      "rmse": {
+        "candidate": 0.2200035032942123,
+        "trainingMean": 0.291478908284428,
+        "noChange": 0.35064283891225395
+      }
+    },
+    {
+      "donor": "D34",
+      "time": 2.0,
+      "trainingTimes": [
+        1.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 1,
+      "upperTime": 1,
+      "rmse": {
+        "candidate": 0.22872472340179298,
+        "trainingMean": 0.22872472340179298,
+        "noChange": 0.4131894838326174
+      }
+    },
+    {
+      "donor": "D34",
+      "time": 36.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0,
+        12.0,
+        24.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 24,
+      "upperTime": 24,
+      "rmse": {
+        "candidate": 0.26780059228418496,
+        "trainingMean": 0.3583925280822781,
+        "noChange": 0.38656759255975726
+      }
+    },
+    {
+      "donor": "D34",
+      "time": 4.0,
+      "trainingTimes": [
+        1.0,
+        2.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 2,
+      "upperTime": 2,
+      "rmse": {
+        "candidate": 0.21627614714221471,
+        "trainingMean": 0.22230787875474659,
+        "noChange": 0.39680752038937306
+      }
+    },
+    {
+      "donor": "D34",
+      "time": 8.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 4,
+      "upperTime": 4,
+      "rmse": {
+        "candidate": 0.2248882023239117,
+        "trainingMean": 0.2271312406788007,
+        "noChange": 0.30285367970887256
+      }
+    },
+    {
+      "donor": "D38",
+      "time": 12.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0,
+        8.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 8,
+      "upperTime": 8,
+      "rmse": {
+        "candidate": 0.19724803789643192,
+        "trainingMean": 0.2442233867254238,
+        "noChange": 0.4093644622873528
+      }
+    },
+    {
+      "donor": "D38",
+      "time": 1.0,
+      "trainingTimes": [],
+      "noEarlierTreatedObservation": true,
+      "lowerTime": 0,
+      "upperTime": 0,
+      "rmse": {
+        "candidate": 0.329167682758769,
+        "trainingMean": 0.329167682758769,
+        "noChange": 0.329167682758769
+      }
+    },
+    {
+      "donor": "D38",
+      "time": 24.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0,
+        8.0,
+        12.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 12,
+      "upperTime": 12,
+      "rmse": {
+        "candidate": 0.18466244318475153,
+        "trainingMean": 0.26079363375246883,
+        "noChange": 0.3865454988477745
+      }
+    },
+    {
+      "donor": "D38",
+      "time": 2.0,
+      "trainingTimes": [
+        1.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 1,
+      "upperTime": 1,
+      "rmse": {
+        "candidate": 0.2673136594932385,
+        "trainingMean": 0.2673136594932385,
+        "noChange": 0.43671852364797664
+      }
+    },
+    {
+      "donor": "D38",
+      "time": 36.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0,
+        8.0,
+        12.0,
+        24.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 24,
+      "upperTime": 24,
+      "rmse": {
+        "candidate": 0.24436498714423432,
+        "trainingMean": 0.31725130287863784,
+        "noChange": 0.4244857374602548
+      }
+    },
+    {
+      "donor": "D38",
+      "time": 4.0,
+      "trainingTimes": [
+        1.0,
+        2.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 2,
+      "upperTime": 2,
+      "rmse": {
+        "candidate": 0.24247858220783375,
+        "trainingMean": 0.24665701564391754,
+        "noChange": 0.4220312419548013
+      }
+    },
+    {
+      "donor": "D39",
+      "time": 12.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0,
+        8.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 8,
+      "upperTime": 8,
+      "rmse": {
+        "candidate": 0.17750883427163763,
+        "trainingMean": 0.23207379986290905,
+        "noChange": 0.3629037844275956
+      }
+    },
+    {
+      "donor": "D39",
+      "time": 1.0,
+      "trainingTimes": [],
+      "noEarlierTreatedObservation": true,
+      "lowerTime": 0,
+      "upperTime": 0,
+      "rmse": {
+        "candidate": 0.3200557572972776,
+        "trainingMean": 0.3200557572972776,
+        "noChange": 0.3200557572972776
+      }
+    },
+    {
+      "donor": "D39",
+      "time": 24.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0,
+        8.0,
+        12.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 12,
+      "upperTime": 12,
+      "rmse": {
+        "candidate": 0.17137000747066655,
+        "trainingMean": 0.23790965750837056,
+        "noChange": 0.3406693539829231
+      }
+    },
+    {
+      "donor": "D39",
+      "time": 2.0,
+      "trainingTimes": [
+        1.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 1,
+      "upperTime": 1,
+      "rmse": {
+        "candidate": 0.2717821998426138,
+        "trainingMean": 0.2717821998426138,
+        "noChange": 0.45025030144797745
+      }
+    },
+    {
+      "donor": "D39",
+      "time": 36.0,
+      "trainingTimes": [
+        1.0,
+        2.0,
+        4.0,
+        8.0,
+        12.0,
+        24.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 24,
+      "upperTime": 24,
+      "rmse": {
+        "candidate": 0.19188245278978322,
+        "trainingMean": 0.2649901979883955,
+        "noChange": 0.35492132660201775
+      }
+    },
+    {
+      "donor": "D39",
+      "time": 4.0,
+      "trainingTimes": [
+        1.0,
+        2.0
+      ],
+      "noEarlierTreatedObservation": false,
+      "lowerTime": 2,
+      "upperTime": 2,
+      "rmse": {
+        "candidate": 0.23598658295998629,
+        "trainingMean": 0.24820747827810433,
+        "noChange": 0.41680596692801314
+      }
+    }
+  ],
+  "donors": {
+    "D34": {
+      "meanRMSE": {
+        "candidate": 0.23536660631210116,
+        "trainingMean": 0.2641196105679163,
+        "noChange": 0.36156643547999384
+      },
+      "gainFraction": {
+        "trainingMean": 0.10886357205354702,
+        "noChange": 0.3490363506788383
+      },
+      "pass": true
+    },
+    "D38": {
+      "meanRMSE": {
+        "candidate": 0.2442058987808765,
+        "trainingMean": 0.2775677802087426,
+        "noChange": 0.4013855244928215
+      },
+      "gainFraction": {
+        "trainingMean": 0.12019363847913678,
+        "noChange": 0.39159266122153347
+      },
+      "pass": true
+    },
+    "D39": {
+      "meanRMSE": {
+        "candidate": 0.22809763910532752,
+        "trainingMean": 0.26250318179627846,
+        "noChange": 0.37426774844763416
+      },
+      "gainFraction": {
+        "trainingMean": 0.13106714537903064,
+        "noChange": 0.3905495729957563
+      },
+      "pass": true
+    }
+  },
+  "maximumNativeReferenceDifference": 1.7763568394002505e-15,
+  "allDonorsPass": true,
+  "predictedValues": 233874
+}

@@ -29,6 +29,9 @@ now passes all three donor-level development gates on GSE226572 while holding ou
 both donor and query time. It reduces error by 16–23% versus a time-independent
 mean; two of eighteen individual cases still lose to that baseline. This reused
 whole-PBMC endpoint does not establish cross-study or B-cell prediction accuracy.
+The [earlier-duration-only follow-up](Tools/Omics/PerturbationPrediction/GSE226572/TemporalForecast/README.md)
+also passes all three donor gates, with 11–13% lower error than its matched mean
+baseline. It retains two no-history fallbacks and does not imply wall-clock forecasting.
 
 ## Biological prediction: current evidence
 
