@@ -40,6 +40,8 @@ The [exact-anchor assembly control](../Tools/Omics/Reduction/ExactAnchorControl/
 
 The [distance-tail exact-refinement candidate](../Tools/Omics/Reduction/DistanceTailMNN/README.md) restores Kang’s per-type recall and condition gates while failing within-stratum program preservation (Spearman 0.535757 versus baseline 0.587057). All 82,567 cells and original margins are retained. Numerical correctness and rare-cell recovery do not erase this biological trade-off.
 
+The [exhaustive native CPU matcher](../Tools/Omics/Reduction/ExactCPUMNN/README.md) subsequently recovers all exact anchors and original coordinates across 82,567 cells. Fresh evaluation passes every available gate, with four Kang classifier strata still missing. This supports a production implementation step; it does not qualify unseen contexts or million-cell MNN integration.
+
 ## Current completion and admission gates
 
 This includes the published `71ce4fff` implementation evidence and the subsequent

@@ -20,9 +20,9 @@ The [translation-only ablation](Tools/Omics/Benchmarks/HIRISA/TranslationOnly/RE
 
 The [matched-control donor-shift experiment](Tools/Omics/Benchmarks/HIRISA/MatchedControlShift/README.md) estimates shifts from 403,449 control cells but still fails 34/146 annotation comparisons and one response contrast. Control-only shift estimation does not resolve the preservation gap.
 
-A [wider-query MNN test](Tools/Omics/Reduction/WideQueryMNN/README.md) improves exact-anchor recall across all 82,567 Hagai/Kang/Ding cells, but Kang still fails rare-cell recall and condition preservation. Approximate matching remains experimental.
 
-The [distance-tail hybrid MNN](Tools/Omics/Reduction/DistanceTailMNN/README.md) recovers Kang’s condition and rare-cell recall gates, but fails within-stratum program preservation. Its exact refinement checks pass for all 6,828 selected queries; the biological trade-off prevents promotion.
+
+The [exhaustive native CPU MNN benchmark](Tools/Omics/Reduction/ExactCPUMNN/README.md) recovers every exact anchor across all 82,567 Hagai/Kang/Ding cells and passes every evaluable original biological gate. Four Kang classifier strata remain unavailable. The [wider-query](Tools/Omics/Reduction/WideQueryMNN/README.md) and [hybrid](Tools/Omics/Reduction/DistanceTailMNN/README.md) failures remain retained; production integration and million-cell qualification are still open.
 
 ## Biological prediction: current evidence
 

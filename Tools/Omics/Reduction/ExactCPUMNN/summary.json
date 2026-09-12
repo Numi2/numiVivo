@@ -1,0 +1,109 @@
+{
+  "status": "completed-development-experiment-not-promoted",
+  "cohorts": [
+    {
+      "cohort": "hagai",
+      "cells": 13863,
+      "fitSeconds": 1.8090715426951647,
+      "gates": {
+        "completeClassifierStrata": true,
+        "conditionPreserved": true,
+        "mixingImproved": true,
+        "programPreserved": true,
+        "withinStratumProgramPreserved": true
+      },
+      "allAnchorsExact": true,
+      "matchingDistanceEvaluations": 126392182,
+      "matchingSeconds": 0.6311259171925485,
+      "maximumCoordinateError": 1.509903313490213e-14,
+      "baselineTypeRecall": {},
+      "candidateTypeRecall": {}
+    },
+    {
+      "cohort": "kang",
+      "cells": 24673,
+      "fitSeconds": 12.48933083191514,
+      "gates": {
+        "cellTypesPreserved": true,
+        "completeClassifierStrata": false,
+        "conditionPreserved": true,
+        "everyTypeRecallPreserved": true,
+        "mixingImproved": true,
+        "programPreserved": true,
+        "withinStratumProgramPreserved": true
+      },
+      "allAnchorsExact": true,
+      "matchingDistanceEvaluations": 515933916,
+      "matchingSeconds": 2.799013332929462,
+      "maximumCoordinateError": 1.2989609388114332e-13,
+      "baselineTypeRecall": {
+        "B cells": 0.9912226514801945,
+        "CD14+ Monocytes": 0.9911603530791143,
+        "CD4 T cells": 0.9880979227535212,
+        "CD8 T cells": 0.7132635037102275,
+        "Dendritic cells": 0.9546549160453488,
+        "FCGR3A+ Monocytes": 0.9580887830488907,
+        "Megakaryocytes": 0.75,
+        "NK cells": 0.9397374293270033
+      },
+      "candidateTypeRecall": {
+        "B cells": 0.9862639308534525,
+        "CD14+ Monocytes": 0.9897572198789039,
+        "CD4 T cells": 0.9895901960944118,
+        "CD8 T cells": 0.6892746825868977,
+        "Dendritic cells": 0.9489083796676906,
+        "FCGR3A+ Monocytes": 0.959423089525884,
+        "Megakaryocytes": 0.7584459459459459,
+        "NK cells": 0.9362168840817515
+      }
+    },
+    {
+      "cohort": "ding",
+      "cells": 44031,
+      "fitSeconds": 26.85906987544149,
+      "gates": {
+        "cellTypesPreserved": true,
+        "everyTypeRecallPreserved": true,
+        "mixingImproved": true,
+        "programsPreserved": true,
+        "withinStratumProgramsPreserved": true
+      },
+      "allAnchorsExact": true,
+      "matchingDistanceEvaluations": 1600487330,
+      "matchingSeconds": 6.933387957978994,
+      "maximumCoordinateError": 2.3342439092743916e-14,
+      "baselineTypeRecall": {
+        "B cell": 0.9400322658157394,
+        "CD14+ monocyte": 0.8559768112559598,
+        "CD16+ monocyte": 0.7435123859806256,
+        "CD4+ T cell": 0.5831475667660102,
+        "Cytotoxic T cell": 0.6734736725717739,
+        "Dendritic cell": 0.47352472089314196,
+        "Megakaryocyte": 0.9619200244200243,
+        "Natural killer cell": 0.34679311038134175,
+        "Plasmacytoid dendritic cell": 0.36973641915782707
+      },
+      "candidateTypeRecall": {
+        "B cell": 0.9546691288312551,
+        "CD14+ monocyte": 0.8177970693161738,
+        "CD16+ monocyte": 0.741905704700623,
+        "CD4+ T cell": 0.5766759849435812,
+        "Cytotoxic T cell": 0.6302503065316692,
+        "Dendritic cell": 0.5460925039872409,
+        "Megakaryocyte": 0.9192612942612943,
+        "Natural killer cell": 0.3764784002765442,
+        "Plasmacytoid dendritic cell": 0.3289135326261652
+      }
+    }
+  ],
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.0",
+    "anndata": "0.13.3.post0",
+    "harmonypy": "2.0.0",
+    "pandas": "3.0.5"
+  },
+  "python": "3.13.14 (main, Jun 10 2026, 12:24:04) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.6-arm64-arm-64bit-Mach-O"
+}
