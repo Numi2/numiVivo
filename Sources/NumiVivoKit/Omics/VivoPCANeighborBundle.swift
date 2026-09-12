@@ -25,6 +25,7 @@ public struct VivoPCANeighborPlan: Codable, Sendable, Equatable {
     }
     public func validate() throws {
         try neighbors.validate(); try execution.validate()
+        guard execution.backend == nil || approximation == nil else { throw VivoOmicsError.invalid("Metal PCA distances cannot be combined with HNSW") }
         try approximation?.validate(neighbors: neighbors.neighbors)
         guard approximation == nil || execution.workers == 1 else { throw VivoOmicsError.invalid("HNSW currently requires one serial worker") }
         guard schemaVersion == 1, (inputKind == .integrated) == (neighbors.representation == .integrated) else { throw VivoOmicsError.invalid("PCA neighbor plan schema or representation") }
@@ -131,13 +132,13 @@ public enum VivoPCANeighborBundle {
             let hash = try writer.finish()
             let work = hnsw.map { $0.constructionDistances + $0.queryDistances }
             let stored = try VivoPCAGraphStore.build(root: temp, rows: n, dimensions: dimensions, options: plan.neighbors,
-                distancePairs: work ?? n*(n-1)/2, approximate: hnsw != nil, neighborsHash: hash)
-            report = .init(method: hnsw == nil ? "exact-row-owned-dispatch-windowed-PCA-knn-v1" : "serial-HNSW-cached-FP64-PCA-knn-v1",
+                distancePairs: work ?? n*(n-1)/2, approximate: hnsw != nil, neighborsHash: hash, method: plan.execution.backend == .metalFP32 ? VivoMetalPCANeighbors.method : nil, qualification: plan.execution.backend == .metalFP32 ? VivoMetalPCANeighbors.qualification : nil)
+            report = .init(method: hnsw == nil ? (plan.execution.backend == .metalFP32 ? VivoMetalPCANeighbors.method : "exact-row-owned-dispatch-windowed-PCA-knn-v1") : "serial-HNSW-cached-FP64-PCA-knn-v1",
                 cells: n, dimensions: dimensions, directedDistanceEvaluations: work ?? n*(n-1),
                 scalarDistanceTerms: (work ?? n*(n-1))*dimensions,
                 scoreRecordReads: hnsw.map { $0.scoreReadBytes/16 } ?? n*dimensions*((n+plan.execution.queryBlockRows-1)/plan.execution.queryBlockRows+1),
                 scoreFileBytes: n*dimensions*16, maximumMappedBytesPerWorker: hnsw == nil ? VivoWindowedCountRecords.windowBytes : 0,
-                execution: plan.execution, qualification: stored.qualification)
+                execution: plan.execution, qualification: plan.execution.backend == .metalFP32 ? VivoMetalPCANeighbors.qualification : stored.qualification)
             report.hnsw = hnsw
             graphHash = try write(stored, root: temp, name: "graph.json", maximum: 65_536)
         } else {
@@ -154,11 +155,11 @@ public enum VivoPCANeighborBundle {
                 report.hnsw = result.1
             } else {
                 graph = try VivoWindowedPCANeighbors.run(source: source.appendingPathComponent("scores.bin"), cells: cells, dimensions: dimensions, options: plan.neighbors, execution: plan.execution)
-                report = VivoPCANeighborExecutionReport(method: "exact-row-owned-dispatch-windowed-PCA-knn-v1", cells: n, dimensions: dimensions,
+                report = VivoPCANeighborExecutionReport(method: plan.execution.backend == .metalFP32 ? VivoMetalPCANeighbors.method : "exact-row-owned-dispatch-windowed-PCA-knn-v1", cells: n, dimensions: dimensions,
                 directedDistanceEvaluations: n*(n-1), scalarDistanceTerms: n*(n-1)*dimensions,
                 scoreRecordReads: n*dimensions*((n+plan.execution.queryBlockRows-1)/plan.execution.queryBlockRows+1), scoreFileBytes: n*dimensions*16,
                 maximumMappedBytesPerWorker: VivoWindowedCountRecords.windowBytes, execution: plan.execution,
-                qualification: "Independent row heaps and score readers; deterministic ordered merge, shared fuzzy graph. Exact search evaluates both directions; graph distancePairs counts unique unordered pairs. Scores use bounded tiles and 16 MiB mapping windows per worker; input reconstruction, identities and final graph remain resident. No approximate search, million-cell, Metal, embedding or biological qualification.")
+                qualification: plan.execution.backend == .metalFP32 ? VivoMetalPCANeighbors.qualification : "Independent row heaps and score readers; deterministic ordered merge, shared fuzzy graph. Exact search evaluates both directions; graph distancePairs counts unique unordered pairs. Scores use bounded tiles and 16 MiB mapping windows per worker; input reconstruction, identities and final graph remain resident. No approximate search, million-cell, Metal, embedding or biological qualification.")
             }
             graphHash = try write(graph, root: temp, name: "graph.json", maximum: 536_870_912)
         }

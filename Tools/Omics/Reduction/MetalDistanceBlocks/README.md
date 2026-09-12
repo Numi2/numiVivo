@@ -1,5 +1,9 @@
 # Metal kNN distance blocks: real-Hagai research benchmark
 
+A subsequent [native owner integration](NativeOwner/README.md) adds an explicit
+FP32 backend with bounded tiles, cancellation and actual CLI qualification.
+The timing results below describe the preceding research harness.
+
 A Metal FP32 squared-Euclidean distance kernel reduces median process time by
 **35.1% (1.54x)** versus the same harness's scalar Swift FP32 CPU path, after
 moving the Metal output-buffer pointer lookup outside the selection loop.

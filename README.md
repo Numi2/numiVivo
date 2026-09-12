@@ -321,8 +321,10 @@ annotation/storage handling, not new biological labels or predictions.
 A [real-Hagai Metal kNN distance-block experiment](Tools/Omics/Reduction/MetalDistanceBlocks/README.md)
 now reduces research-harness median elapsed time by 35.1% versus scalar FP32 CPU
 on all 13,863 cells. Neighbor membership matches the full FP64 reference, with
-one order difference and small distance errors. This is not yet a product
-backend, full-pipeline speedup or biological-preservation qualification.
+one order difference and small distance errors. The subsequent [native backend](Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/README.md)
+passes fresh CLI publication/reconstruction with bounded tiles and explicit FP32
+provenance. CPU FP64 remains the default; full-pipeline speedup and downstream
+biological preservation remain unqualified.
 
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical

@@ -31,7 +31,7 @@ public struct VivoPCAGraphStoreReport: Codable, Sendable, Equatable {
 enum VivoPCAGraphStore {
     static let files = ["neighbors.bin", "bandwidths.bin", "offsets.bin", "edges.bin"]
     static func build(root: URL, rows n: Int, dimensions: Int, options: VivoSingleCellNeighborOptions,
-                      distancePairs: Int, approximate: Bool, neighborsHash: VivoFingerprint) throws -> VivoPCAGraphStoreReport {
+                      distancePairs: Int, approximate: Bool, neighborsHash: VivoFingerprint, method: String? = nil, qualification: String? = nil) throws -> VivoPCAGraphStoreReport {
         try options.validate()
         let k = options.neighbors
         guard n >= k, n <= VivoPCAStorageLimits.maximumRows, (1...64).contains(dimensions) else { throw VivoOmicsError.limit("binary graph axes") }
@@ -151,10 +151,10 @@ enum VivoPCAGraphStore {
         try offsets.append(row: n, feature: 0, bits: UInt64(edges.entries))
         let offsetsHash = try offsets.finish(), edgesHash = try edges.finish()
         return .init(schemaVersion: 1, format: "PCA-knn-fuzzy-CSR-records-u32-u32-u64-le/v1",
-            method: approximate ? "approximate-HNSW-euclidean-PCA-knn-umap-fuzzy-union-v1" : "exact-euclidean-PCA-knn-umap-fuzzy-union-v1",
+            method: method ?? (approximate ? "approximate-HNSW-euclidean-PCA-knn-umap-fuzzy-union-v1" : "exact-euclidean-PCA-knn-umap-fuzzy-union-v1"),
             cells: n, dimensions: dimensions, options: options, neighborEntries: n*k, connectivityEntries: edges.entries,
             connectedComponents: components, isolatedCells: isolated, distancePairs: distancePairs,
             neighbors: neighborsHash, bandwidths: bandwidthHash, offsets: offsetsHash, edges: edgesHash,
-            qualification: "Fixed-width neighbors, bandwidths and CSR edges are binary files; cell identities are bound by the input receipt. Disk transpose and row merge use bounded edge buffers and 16 MiB file windows. Degree, offset, component arrays, input PCA state and any HNSW index remain resident. Approximate distancePairs counts repeated metric calls; exact counts unique pairs. No million-cell, downstream biological or Metal qualification.")
+            qualification: qualification ?? "Fixed-width neighbors, bandwidths and CSR edges are binary files; cell identities are bound by the input receipt. Disk transpose and row merge use bounded edge buffers and 16 MiB file windows. Degree, offset, component arrays, input PCA state and any HNSW index remain resident. Approximate distancePairs counts repeated metric calls; exact counts unique pairs. No million-cell, downstream biological or Metal qualification.")
     }
 }

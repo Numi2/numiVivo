@@ -2,19 +2,23 @@ import Foundation
 import Dispatch
 
 public struct VivoPCANeighborExecution: Codable, Sendable, Equatable {
+    public enum Backend: String, Codable, Sendable { case metalFP32 }
+    public var backend: Backend? = nil
     public var workers: Int = 4
     public var queryBlockRows: Int = 128
     public var candidateBlockRows: Int = 2_048
     public init() {}
-    private enum CodingKeys: String, CodingKey { case workers, queryBlockRows, candidateBlockRows }
+    private enum CodingKeys: String, CodingKey { case workers, queryBlockRows, candidateBlockRows, backend }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["workers", "queryBlockRows", "candidateBlockRows"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["workers", "queryBlockRows", "candidateBlockRows", "backend"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
+        backend = try c.decodeIfPresent(Backend.self, forKey: .backend)
         workers = try c.decodeIfPresent(Int.self, forKey: .workers) ?? 4
         queryBlockRows = try c.decodeIfPresent(Int.self, forKey: .queryBlockRows) ?? 128
         candidateBlockRows = try c.decodeIfPresent(Int.self, forKey: .candidateBlockRows) ?? 2_048
     }
     public func validate() throws {
+        guard backend == nil || workers == 1 else { throw VivoOmicsError.invalid("Metal PCA neighbors require one worker") }
         guard (1...16).contains(workers), (1...512).contains(queryBlockRows), (1...8_192).contains(candidateBlockRows) else {
             throw VivoOmicsError.invalid("PCA neighbor worker or tile bounds")
         }
@@ -93,6 +97,10 @@ enum VivoWindowedPCANeighbors {
     static func stream(source: URL, rows n: Int, dimensions: Int, options: VivoSingleCellNeighborOptions,
                        execution: VivoPCANeighborExecution, sink: (Int, [Int], [Double]) throws -> Void) throws {
         try options.validate(); try execution.validate()
+        if execution.backend == .metalFP32 {
+            try VivoMetalPCANeighbors.stream(source: source, rows: n, dimensions: dimensions, options: options, execution: execution, sink: sink)
+            return
+        }
         let k = options.neighbors
         guard n >= k, n <= VivoPCAStorageLimits.maximumRows, (1...64).contains(dimensions) else {
             throw VivoOmicsError.limit("PCA neighbor axes, graph-entry bound or unsupported integrated representation")
@@ -131,6 +139,6 @@ enum VivoWindowedPCANeighbors {
         try stream(source: source, rows: cells.count, dimensions: dimensions, options: options, execution: execution) { _, i, d in
             indices.append(contentsOf: i); distances.append(contentsOf: d)
         }
-        return try VivoSingleCellNeighbors.finish(indices: indices, distances: distances, cells: cells, dimensions: dimensions, options: options, distancePairs: cells.count*(cells.count-1)/2)
+        return try VivoSingleCellNeighbors.finish(indices: indices, distances: distances, cells: cells, dimensions: dimensions, options: options, distancePairs: cells.count*(cells.count-1)/2, method: execution.backend == .metalFP32 ? VivoMetalPCANeighbors.method : nil, qualification: execution.backend == .metalFP32 ? VivoMetalPCANeighbors.qualification : nil)
     }
 }
