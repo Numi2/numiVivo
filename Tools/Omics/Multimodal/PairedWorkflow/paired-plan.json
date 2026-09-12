@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "mapping": {
+    "assays": [
+      {
+        "countUnit": "umiCount",
+        "featureNamespace": "Ensembl:GRCh38-ARC-2.0-source-release",
+        "featureType": "Gene Expression",
+        "genomeAssembly": "GRCh38",
+        "id": "rna",
+        "kind": "rna"
+      },
+      {
+        "countUnit": "cutSiteCount",
+        "featureNamespace": "10x:GRCh38-ARC-2.0-pbmc3k-peaks",
+        "featureType": "Peaks",
+        "genomeAssembly": "GRCh38",
+        "id": "atac",
+        "kind": "chromatinAccessibility"
+      }
+    ],
+    "evidence": "measured",
+    "id": "10x-pbmc3k-multiome",
+    "sample": {
+      "batchID": "one-library",
+      "biologicalReplicateID": "donor1",
+      "condition": "healthy",
+      "donorID": "donor1",
+      "id": "pbmc3k",
+      "organism": "NCBITaxon:9606"
+    },
+    "schemaVersion": 1,
+    "sourceDescription": "10x Genomics PBMC granulocyte-sorted 3k Multiome; Cell Ranger ARC 2.0.0; 2021-05-03; full filtered release; CC BY 4.0. One healthy human donor, no independent replication. RNA UMIs and ATAC cut-site counts."
+  },
+  "rnaAssayID": "rna",
+  "atacAssayID": "atac",
+  "rnaPCA": {
+    "highlyVariableFeatures": 2000,
+    "meanBins": 20,
+    "components": 30,
+    "maximumBasis": 256,
+    "relativeResidualTolerance": 1e-06,
+    "seed": 7,
+    "retainProjectionCenters": true
+  },
+  "atacLSI": {
+    "schemaVersion": 1,
+    "components": 30,
+    "maximumBasis": 256,
+    "relativeResidualTolerance": 1e-05,
+    "seed": 7
+  },
+  "neighborsIncludingSelf": 15
+}
