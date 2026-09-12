@@ -582,6 +582,13 @@ The complete development objective remains open:
    Missing rare-type strata and the insensitive original Kang erasure control
    remain explicit. Full Baron is rejected for confounding. Multiple covariates,
    prospective mapping and general multi-donor competitiveness remain open.
+   The [full source design audit](../Tools/Omics/Reduction/IntegrationDesign/README.md)
+   checks all 131 HIRISA libraries and 1,612,594 observation memberships. Donor
+   and batch columns are separable across the full atlas but redundant in Bcell,
+   Monocyte and NK subsets; monocyte preparation exactly matches five batches.
+   Condition connectivity alone does not protect that preparation signal.
+   Explicit protected-covariate handling remains a prerequisite for qualifying
+   multiple-covariate correction. No historical integration score is changed.
 6. **Annotation:** [standalone native binary program bundles](../Tools/Omics/Programs/BUNDLES.md)
    separate per-cell arrays from pseudobulk JSON and preserve explicit source
    IDs, exact-name matching, missing scores and native replay. [Full HIRISA

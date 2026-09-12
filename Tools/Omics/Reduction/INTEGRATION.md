@@ -59,6 +59,13 @@ covariate cannot be separated across components. Condition labels participate in
 this eligibility check and subsequent evaluation, not in fitting the correction.
 Unknown options and resource-budget violations are controlled errors.
 
+That condition-connectivity check is not a general biological-protection check.
+The [full HIRISA design audit](IntegrationDesign/README.md) finds an exact overlap
+between monocyte preparation and five batch labels. Donor/batch columns are also
+redundant in three preparation subsets. Multiple-covariate correction remains
+unimplemented; it needs explicit protected-covariate handling and preservation
+qualification, not an assumption that batch effects are biologically neutral.
+
 The preflight work index is `cells * clusters * dimensions * (maximumIterations +
 10)`, capped by `maximumWork` (default 200 million). It bounds problem dimensions;
 it is not a measured instruction count or performance guarantee. Dense storage
