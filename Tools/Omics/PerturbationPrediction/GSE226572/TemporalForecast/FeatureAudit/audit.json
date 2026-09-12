@@ -1,0 +1,108 @@
+{
+  "scope": "Retrospective all-feature error audit, no refit or feature selection; equal donor then equal within-donor time weighting",
+  "features": 12993,
+  "absoluteMSETieTolerance": 1e-12,
+  "sourceSHA256": "534a0f5bcd676af37cda6af9b7085da012dc68edc90ac99c3fdffc06b971e341",
+  "predictionFreezeSHA256": "6affdbbe902bcc1e5d5cfc0485e5f82e8242f6f52446f67e90bf05464cc005bd",
+  "tableSHA256": "3d8833b4889b8c6bc9a6407120698c4a4f98167bec38af9cc2c4f4a9df0fc386",
+  "comparisons": {
+    "trainingMean": {
+      "lowerMSEGenes": 9202,
+      "higherMSEGenes": 3769,
+      "tiedWithin1e12": 22,
+      "meanGeneMSECandidate": 0.05753162493698789,
+      "meanGeneMSEBaseline": 0.07334205947309887,
+      "largestRegressions": [
+        {
+          "featureID": "symbol|CXCL13",
+          "excessMSE": 0.5966014504879738
+        },
+        {
+          "featureID": "symbol|SERPINB2",
+          "excessMSE": 0.255857376984042
+        },
+        {
+          "featureID": "symbol|OLR1",
+          "excessMSE": 0.254310238000023
+        },
+        {
+          "featureID": "symbol|HBA1",
+          "excessMSE": 0.21788513002120025
+        },
+        {
+          "featureID": "symbol|HBA2",
+          "excessMSE": 0.18632858836815924
+        },
+        {
+          "featureID": "symbol|CCL18",
+          "excessMSE": 0.18396550000930045
+        },
+        {
+          "featureID": "symbol|CCL23",
+          "excessMSE": 0.1671241129701273
+        },
+        {
+          "featureID": "symbol|CD300E",
+          "excessMSE": 0.14496021351653987
+        },
+        {
+          "featureID": "symbol|ADAM12",
+          "excessMSE": 0.12757093014654736
+        },
+        {
+          "featureID": "symbol|IFITM1",
+          "excessMSE": 0.11912632366680564
+        }
+      ]
+    },
+    "noChange": {
+      "lowerMSEGenes": 9662,
+      "higherMSEGenes": 3308,
+      "tiedWithin1e12": 23,
+      "meanGeneMSECandidate": 0.05753162493698789,
+      "meanGeneMSEBaseline": 0.14562473490509717,
+      "largestRegressions": [
+        {
+          "featureID": "symbol|IL2",
+          "excessMSE": 1.4001908496394777
+        },
+        {
+          "featureID": "symbol|CCL1",
+          "excessMSE": 0.870621200744313
+        },
+        {
+          "featureID": "symbol|SERPINB2",
+          "excessMSE": 0.4068453121514111
+        },
+        {
+          "featureID": "symbol|CCL13",
+          "excessMSE": 0.3419467451836251
+        },
+        {
+          "featureID": "symbol|SPP1",
+          "excessMSE": 0.29786708806529183
+        },
+        {
+          "featureID": "symbol|SLC4A10",
+          "excessMSE": 0.2847619127240312
+        },
+        {
+          "featureID": "symbol|VCAN",
+          "excessMSE": 0.27979028837399245
+        },
+        {
+          "featureID": "symbol|HBA1",
+          "excessMSE": 0.2717653215909387
+        },
+        {
+          "featureID": "symbol|CXCL13",
+          "excessMSE": 0.2340531843537852
+        },
+        {
+          "featureID": "symbol|APOC1",
+          "excessMSE": 0.2308994719762678
+        }
+      ]
+    }
+  }
+}

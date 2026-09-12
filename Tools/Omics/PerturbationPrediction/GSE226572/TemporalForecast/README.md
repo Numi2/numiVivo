@@ -45,3 +45,7 @@ and the committed original outcome artifact. Reproduce in a fresh directory by
 compiling `swiftc -O -parse-as-library Temporal.swift -o temporal`, then running
 `run.py` with NumPy and one BLAS thread. Additional donors and independent cohorts
 remain required before a general temporal prediction claim.
+
+The [all-feature audit](FeatureAudit/README.md) finds lower MSE than training mean
+for 9,202 genes, but higher MSE for 3,769. Donor-average success must not be read
+as uniform gene-level prediction accuracy. Every feature remains included.
