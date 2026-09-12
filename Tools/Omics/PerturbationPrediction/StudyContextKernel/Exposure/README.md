@@ -66,3 +66,12 @@ it does not establish reagent equivalence or completed donor linkage. Exposure,
 preparation and study differ together. Treating duration alone as the causal
 explanation would exceed the evidence. A future exposure-aware model needs an
 explicit admitted covariate contract and a design that can distinguish these effects.
+
+## HIRISA donor mapping completed
+
+The [executed metadata join](HIRISAMapping/README.md) now verifies all five HIRISA
+model donors against ten original B-cell IFNb/control libraries, including duration,
+batch and pool. The retained sample-level protocols identify R&D catalogue
+8499-IF-010/CF for IFN-beta, resolving the vendor/catalogue gap in the shorter
+institute methods reference above. Kang and GSE181897 donor mappings remain open;
+no exposure-response model has been fitted.

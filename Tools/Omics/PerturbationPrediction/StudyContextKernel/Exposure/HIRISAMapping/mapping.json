@@ -1,0 +1,327 @@
+{
+  "scope": "Retained deposited-metadata join for five HIRISA B-cell IFNb/control donor pairs; no count reprocessing or prediction",
+  "inputs": {
+    "/Users/n/numivivo-hirisa-20260910/design.json": "ace6e6eb5dad1ff8fcc43d748753b05a9e6d9a7d989a14efc6fe54cb066885e8",
+    "/Users/n/numivivo-parse-context-evaluation-20260912/source-metadata.json": "c3ab84a4b897a5d79e8b4f94b5885d9023ffa46434e6e493a57775d4debacba0"
+  },
+  "upstreamSOFTSHA256": "4445a73d5d5db1ac669ff67ecbd6894bd0536ee0ee4cf0620a77414e3a4d1951",
+  "rows": [
+    {
+      "batch": "EXP-00602",
+      "control": "GSM9205453",
+      "donor": "3955BW",
+      "pool": "PB",
+      "treated": "GSM9205455",
+      "modelDonorID": "HIRISA:3955BW",
+      "dose": 100,
+      "doseUnit": "units/mL",
+      "durationHours": 21,
+      "vendor": "R&D",
+      "catalogue": "8499-IF-010/CF",
+      "evidence": {
+        "control": {
+          "accession": "GSM9205453",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205453",
+          "fields": {
+            "subject id": [
+              "3955BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "none"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00602"
+            ],
+            "pool id": [
+              "PB"
+            ]
+          }
+        },
+        "treated": {
+          "accession": "GSM9205455",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205455",
+          "fields": {
+            "subject id": [
+              "3955BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "IFNb"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00602"
+            ],
+            "pool id": [
+              "PB"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "batch": "EXP-00633",
+      "control": "GSM9205471",
+      "donor": "3283BW",
+      "pool": "PB",
+      "treated": "GSM9205473",
+      "modelDonorID": "HIRISA:3283BW",
+      "dose": 100,
+      "doseUnit": "units/mL",
+      "durationHours": 21,
+      "vendor": "R&D",
+      "catalogue": "8499-IF-010/CF",
+      "evidence": {
+        "control": {
+          "accession": "GSM9205471",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205471",
+          "fields": {
+            "subject id": [
+              "3283BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "none"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00633"
+            ],
+            "pool id": [
+              "PB"
+            ]
+          }
+        },
+        "treated": {
+          "accession": "GSM9205473",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205473",
+          "fields": {
+            "subject id": [
+              "3283BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "IFNb"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00633"
+            ],
+            "pool id": [
+              "PB"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "batch": "EXP-00667",
+      "control": "GSM9205504",
+      "donor": "2616BW",
+      "pool": "PB",
+      "treated": "GSM9205506",
+      "modelDonorID": "HIRISA:2616BW",
+      "dose": 100,
+      "doseUnit": "units/mL",
+      "durationHours": 21,
+      "vendor": "R&D",
+      "catalogue": "8499-IF-010/CF",
+      "evidence": {
+        "control": {
+          "accession": "GSM9205504",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205504",
+          "fields": {
+            "subject id": [
+              "2616BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "none"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00667"
+            ],
+            "pool id": [
+              "PB"
+            ]
+          }
+        },
+        "treated": {
+          "accession": "GSM9205506",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205506",
+          "fields": {
+            "subject id": [
+              "2616BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "IFNb"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00667"
+            ],
+            "pool id": [
+              "PB"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "batch": "EXP-00671",
+      "control": "GSM9205522",
+      "donor": "6811BW",
+      "pool": "PD",
+      "treated": "GSM9205524",
+      "modelDonorID": "HIRISA:6811BW",
+      "dose": 100,
+      "doseUnit": "units/mL",
+      "durationHours": 21,
+      "vendor": "R&D",
+      "catalogue": "8499-IF-010/CF",
+      "evidence": {
+        "control": {
+          "accession": "GSM9205522",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205522",
+          "fields": {
+            "subject id": [
+              "6811BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "none"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00671"
+            ],
+            "pool id": [
+              "PD"
+            ]
+          }
+        },
+        "treated": {
+          "accession": "GSM9205524",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205524",
+          "fields": {
+            "subject id": [
+              "6811BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "IFNb"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00671"
+            ],
+            "pool id": [
+              "PD"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "batch": "EXP-00679",
+      "control": "GSM9205540",
+      "donor": "3491BW",
+      "pool": "PD",
+      "treated": "GSM9205542",
+      "modelDonorID": "HIRISA:3491BW",
+      "dose": 100,
+      "doseUnit": "units/mL",
+      "durationHours": 21,
+      "vendor": "R&D",
+      "catalogue": "8499-IF-010/CF",
+      "evidence": {
+        "control": {
+          "accession": "GSM9205540",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205540",
+          "fields": {
+            "subject id": [
+              "3491BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "none"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00679"
+            ],
+            "pool id": [
+              "PD"
+            ]
+          }
+        },
+        "treated": {
+          "accession": "GSM9205542",
+          "sourceURL": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9205542",
+          "fields": {
+            "subject id": [
+              "3491BW"
+            ],
+            "cell type": [
+              "Bcell"
+            ],
+            "treatment": [
+              "IFNb"
+            ],
+            "treatment time": [
+              "21 hours"
+            ],
+            "batch id": [
+              "EXP-00679"
+            ],
+            "pool id": [
+              "PD"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "allFiveDonorsAndTenLibrariesMatched": true,
+  "unitConversionPerformed": false
+}
