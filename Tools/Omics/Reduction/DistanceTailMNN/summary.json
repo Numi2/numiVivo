@@ -1,0 +1,127 @@
+{
+  "status": "completed-development-experiment-not-promoted",
+  "cohorts": [
+    {
+      "refinement": {
+        "cohort": "hagai",
+        "refinedQueries": 978,
+        "maximumDistanceError": 0.0,
+        "allSelectedExact": true,
+        "unselectedUnchanged": true
+      },
+      "cohort": "hagai",
+      "cells": 13863,
+      "fitSeconds": 3.838720957748592,
+      "gates": {
+        "completeClassifierStrata": true,
+        "conditionPreserved": true,
+        "mixingImproved": true,
+        "programPreserved": true,
+        "withinStratumProgramPreserved": true
+      },
+      "anchorPrecision": 1.0,
+      "anchorRecall": 1.0,
+      "maximumKernelDeltaError": 2.0095036745715333e-14,
+      "baselineTypeRecall": {},
+      "candidateTypeRecall": {}
+    },
+    {
+      "refinement": {
+        "cohort": "kang",
+        "refinedQueries": 2145,
+        "maximumDistanceError": 0.0,
+        "allSelectedExact": true,
+        "unselectedUnchanged": true
+      },
+      "cohort": "kang",
+      "cells": 24673,
+      "fitSeconds": 15.89250370906666,
+      "gates": {
+        "cellTypesPreserved": true,
+        "completeClassifierStrata": false,
+        "conditionPreserved": true,
+        "everyTypeRecallPreserved": true,
+        "mixingImproved": true,
+        "programPreserved": true,
+        "withinStratumProgramPreserved": false
+      },
+      "anchorPrecision": 0.9999874611295014,
+      "anchorRecall": 0.9999310401033145,
+      "maximumKernelDeltaError": 7.216449660063518e-14,
+      "baselineTypeRecall": {
+        "B cells": 0.9912226514801945,
+        "CD14+ Monocytes": 0.9911603530791143,
+        "CD4 T cells": 0.9880979227535212,
+        "CD8 T cells": 0.7132635037102275,
+        "Dendritic cells": 0.9546549160453488,
+        "FCGR3A+ Monocytes": 0.9580887830488907,
+        "Megakaryocytes": 0.75,
+        "NK cells": 0.9397374293270033
+      },
+      "candidateTypeRecall": {
+        "B cells": 0.9856083834438729,
+        "CD14+ Monocytes": 0.9891100822986804,
+        "CD4 T cells": 0.9899242559044181,
+        "CD8 T cells": 0.6892746825868977,
+        "Dendritic cells": 0.9489083796676906,
+        "FCGR3A+ Monocytes": 0.959423089525884,
+        "Megakaryocytes": 0.7781531531531531,
+        "NK cells": 0.9362168840817515
+      }
+    },
+    {
+      "refinement": {
+        "cohort": "ding",
+        "refinedQueries": 3705,
+        "maximumDistanceError": 0.0,
+        "allSelectedExact": true,
+        "unselectedUnchanged": true
+      },
+      "cohort": "ding",
+      "cells": 44031,
+      "fitSeconds": 33.16676187654957,
+      "gates": {
+        "cellTypesPreserved": true,
+        "everyTypeRecallPreserved": true,
+        "mixingImproved": true,
+        "programsPreserved": true,
+        "withinStratumProgramsPreserved": true
+      },
+      "anchorPrecision": 0.9997104541298385,
+      "anchorRecall": 0.9993906247619628,
+      "maximumKernelDeltaError": 8.415490526658687e-14,
+      "baselineTypeRecall": {
+        "B cell": 0.9400322658157394,
+        "CD14+ monocyte": 0.8559768112559598,
+        "CD16+ monocyte": 0.7435123859806256,
+        "CD4+ T cell": 0.5831475667660102,
+        "Cytotoxic T cell": 0.6734736725717739,
+        "Dendritic cell": 0.47352472089314196,
+        "Megakaryocyte": 0.9619200244200243,
+        "Natural killer cell": 0.34679311038134175,
+        "Plasmacytoid dendritic cell": 0.36973641915782707
+      },
+      "candidateTypeRecall": {
+        "B cell": 0.9544489615040865,
+        "CD14+ monocyte": 0.8196875672505403,
+        "CD16+ monocyte": 0.737926320503453,
+        "CD4+ T cell": 0.5754465114647322,
+        "Cytotoxic T cell": 0.6318283718963754,
+        "Dendritic cell": 0.5460925039872409,
+        "Megakaryocyte": 0.9185744810744811,
+        "Natural killer cell": 0.3759748711635667,
+        "Plasmacytoid dendritic cell": 0.33871745419479266
+      }
+    }
+  ],
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.0",
+    "anndata": "0.13.3.post0",
+    "harmonypy": "2.0.0",
+    "pandas": "3.0.5"
+  },
+  "python": "3.13.14 (main, Jun 10 2026, 12:24:04) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.6-arm64-arm-64bit-Mach-O"
+}

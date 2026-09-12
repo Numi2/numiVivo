@@ -38,6 +38,8 @@ The [wider-query MNN experiment](../Tools/Omics/Reduction/WideQueryMNN/README.md
 
 The [exact-anchor assembly control](../Tools/Omics/Reduction/ExactAnchorControl/README.md) reproduces native coordinates on all three MNN cohorts, isolating the approximate-coordinate divergence to matching within numerical tolerance. Kang’s 26 missing anchors involve 22 distinct reference-labeled megakaryocytes. This diagnostic does not qualify a new matcher or establish individual-anchor causality.
 
+The [distance-tail exact-refinement candidate](../Tools/Omics/Reduction/DistanceTailMNN/README.md) restores Kang’s per-type recall and condition gates while failing within-stratum program preservation (Spearman 0.535757 versus baseline 0.587057). All 82,567 cells and original margins are retained. Numerical correctness and rare-cell recovery do not erase this biological trade-off.
+
 ## Current completion and admission gates
 
 This includes the published `71ce4fff` implementation evidence and the subsequent

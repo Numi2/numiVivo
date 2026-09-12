@@ -22,6 +22,8 @@ The [matched-control donor-shift experiment](Tools/Omics/Benchmarks/HIRISA/Match
 
 A [wider-query MNN test](Tools/Omics/Reduction/WideQueryMNN/README.md) improves exact-anchor recall across all 82,567 Hagai/Kang/Ding cells, but Kang still fails rare-cell recall and condition preservation. Approximate matching remains experimental.
 
+The [distance-tail hybrid MNN](Tools/Omics/Reduction/DistanceTailMNN/README.md) recovers Kang’s condition and rare-cell recall gates, but fails within-stratum program preservation. Its exact refinement checks pass for all 6,828 selected queries; the biological trade-off prevents promotion.
+
 ## Biological prediction: current evidence
 
 A [training-only response-shrinkage candidate](Tools/Omics/PerturbationPrediction/StudyContextKernel/ResponseShrinkage/README.md) improves HIRISA but still fails Kang and GSE181897 transfer gates. All 75 donors pass numerical verification; the candidate remains unpromoted.
