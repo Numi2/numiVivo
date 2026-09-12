@@ -83,3 +83,8 @@ provenance remain unresolved. This partial join does not admit exposure covariat
 The [GSE181897 metadata join](GSE181897Mapping/README.md) now verifies all 62
 model donors against both source treatment codes, retaining batch and pooling codes
 for 4,938 paired-condition B cells. Primary pool-accession mapping remains open.
+
+The [executed identifiability audit](Identifiability/README.md) confirms exact
+duration/study confounding across the 75 training donors under the provisional
+protocol assignments: adding duration leaves design rank at three. This does not
+resolve the pending exposure-admission gaps or support a causal duration coefficient.
