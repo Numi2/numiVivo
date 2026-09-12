@@ -18,6 +18,9 @@ The [full-HIRISA rigid-correction experiment](Tools/Omics/Benchmarks/HIRISA/Rigi
 
 ## Biological prediction: current evidence
 
+The [completed Parse context prediction test](Tools/Omics/PerturbationPrediction/ParseIFNB/ContextEvaluation/README.md) fails: mean donor RMSE is 20.93% worse than training-mean response and 32.14% worse than no change. All twelve donors lose to training mean. All 139,200 native predictions and every donor score pass independent numerical checks. This supersedes earlier statements that Parse prediction is pending; the candidate remains unpromoted, and participant independence and matched exposure remain unverified.
+
+
 The [paired RNA/ATAC product workflow](Tools/Omics/Multimodal/PairedWorkflow/README.md) now runs original 10x counts through native RNA PCA, ATAC TF-IDF/LSI, cell-specific modality weights and weighted graphs. All stages match the separately qualified 2,711-nucleus benchmark, and complete source reconstruction passes. Execution remains bounded and resident. The [paired reconstruction diagnostics](Tools/Omics/Multimodal/ATACPreservation/README.md) fail both modalities’ combined no-worsening rules: primary RNA/ATAC reconstruction worsens versus modality-only baselines, despite small fuzzy-graph improvements. Biological preservation, unseen-context prediction and regulatory validity remain unproven. A [variance-retaining RNA candidate](Tools/Omics/Multimodal/RNAVarianceProfile/README.md) also fails both preservation gates against fixed and matched baselines; the product default is unchanged.
 
 The [exact Parse-compatible panel evaluation](Tools/Omics/PerturbationPrediction/StudyContextKernel/ExactParsePanel/README.md) reran all 75 development donors with a frozen 11,600-feature contract. HIRISA passes the existing transfer gate; Kang and GSE181897 fail. The candidate remains unpromoted, and no Parse prediction was scored.

@@ -1,0 +1,118 @@
+{
+  "createdUnix": 1789220505.616374,
+  "status": "FAIL",
+  "donors": [
+    {
+      "donor": "Donor1",
+      "rmse": {
+        "candidate": 0.43145441840033905,
+        "trainingMean": 0.3773027859920168,
+        "noChange": 0.1998117632840068
+      }
+    },
+    {
+      "donor": "Donor10",
+      "rmse": {
+        "candidate": 0.4145106599356789,
+        "trainingMean": 0.3475119521819805,
+        "noChange": 0.14704835348326734
+      }
+    },
+    {
+      "donor": "Donor11",
+      "rmse": {
+        "candidate": 0.3511252686603407,
+        "trainingMean": 0.27408112814769076,
+        "noChange": 0.29484268720735346
+      }
+    },
+    {
+      "donor": "Donor12",
+      "rmse": {
+        "candidate": 0.3532538238748256,
+        "trainingMean": 0.27603863823812264,
+        "noChange": 0.3367935216052052
+      }
+    },
+    {
+      "donor": "Donor2",
+      "rmse": {
+        "candidate": 0.33577332829896933,
+        "trainingMean": 0.26144224874932365,
+        "noChange": 0.2909432188542364
+      }
+    },
+    {
+      "donor": "Donor3",
+      "rmse": {
+        "candidate": 0.45583205790253867,
+        "trainingMean": 0.395002621503318,
+        "noChange": 0.12062195270531258
+      }
+    },
+    {
+      "donor": "Donor4",
+      "rmse": {
+        "candidate": 0.3757761100359443,
+        "trainingMean": 0.32147105729809294,
+        "noChange": 0.20580833983522936
+      }
+    },
+    {
+      "donor": "Donor5",
+      "rmse": {
+        "candidate": 0.3591794385247492,
+        "trainingMean": 0.30186168072596264,
+        "noChange": 0.3824620345736689
+      }
+    },
+    {
+      "donor": "Donor6",
+      "rmse": {
+        "candidate": 0.3679561897946823,
+        "trainingMean": 0.29274771590355037,
+        "noChange": 0.2587377021465376
+      }
+    },
+    {
+      "donor": "Donor7",
+      "rmse": {
+        "candidate": 0.3526485875654892,
+        "trainingMean": 0.29258172499757845,
+        "noChange": 0.4055480750736678
+      }
+    },
+    {
+      "donor": "Donor8",
+      "rmse": {
+        "candidate": 0.3349280493255438,
+        "trainingMean": 0.2759252328425708,
+        "noChange": 0.34618719363774786
+      }
+    },
+    {
+      "donor": "Donor9",
+      "rmse": {
+        "candidate": 0.3765099496882446,
+        "trainingMean": 0.3125515765120951,
+        "noChange": 0.42352342328531667
+      }
+    }
+  ],
+  "meanRMSE": {
+    "candidate": 0.37574565683394545,
+    "trainingMean": 0.3107098635910252,
+    "noChange": 0.28436068880762916
+  },
+  "gainFraction": {
+    "trainingMean": -0.20931357791886596,
+    "noChange": -0.3213699066826303
+  },
+  "maximumIndependentScoreDifference": 5.551115123125783e-17,
+  "protocolSHA256": "85f84a58b47f811779013d26ac5a90d4d3cde913974d388cef8f4700cf77d44d",
+  "predictionFreezeSHA256": "5c620f988687b647e60f172c5b86b7419742546b0fdc3f8a0946bf16fa0a689f",
+  "scorerSHA256": "47a2f22ed0afc9f44b1ad6f812c25eb6714ad6c8b15f883299ba1c797737ccea",
+  "predictionScored": true,
+  "claim": "External-study transfer stress test only; participant independence and matched exposure unverified; candidate remains unpromoted.",
+  "targetsSHA256": "cad05378bc156b5166fa0a000612de48478e2b9e79dcf5d81d83dbc57d19d181"
+}

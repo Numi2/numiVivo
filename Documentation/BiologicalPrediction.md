@@ -772,3 +772,5 @@ full-cohort per-cell normalization are complete; the duration model's separate
 feature contract is unchanged. No Parse prediction has been fitted or scored,
 and the context candidate remains unpromoted after failing two development-study
 transfer gates.
+
+The [completed Parse context prediction test](../Tools/Omics/PerturbationPrediction/ParseIFNB/ContextEvaluation/README.md) fails: mean donor RMSE is 20.93% worse than training-mean response and 32.14% worse than no change. All twelve donors lose to training mean. All 139,200 native predictions and every donor score pass independent numerical checks. This supersedes earlier statements that Parse prediction is pending; the candidate remains unpromoted, and participant independence and matched exposure remain unverified.

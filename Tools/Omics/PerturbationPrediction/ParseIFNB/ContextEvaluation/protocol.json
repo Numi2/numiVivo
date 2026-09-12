@@ -1,0 +1,61 @@
+{
+  "createdUnix": 1789220380.816287,
+  "status": "frozen-before-Parse-prediction",
+  "evaluationID": "parse-context-exact11600-transfer-v1",
+  "scope": "External-study transfer stress test; participant independence and matched exposure unverified. Candidate unpromoted. Not confirmatory independent biological validation.",
+  "panelID": "context-parse-exact11600-v1",
+  "trainingStudies": [
+    "GSE181897",
+    "HIRISA",
+    "Kang"
+  ],
+  "trainingDonors": 75,
+  "queryDonors": [
+    "Donor1",
+    "Donor10",
+    "Donor11",
+    "Donor12",
+    "Donor2",
+    "Donor3",
+    "Donor4",
+    "Donor5",
+    "Donor6",
+    "Donor7",
+    "Donor8",
+    "Donor9"
+  ],
+  "queryCells": 72446,
+  "queryMembership": "All frozen B Naive and B Intermediate/Memory cells; no donor or subtype selection.",
+  "features": 11600,
+  "normalization": "Mean per-cell log1p CPM using all 40352 source features in each library total; project by frozen parseFeatureIndices without renormalization.",
+  "selection": "Hold each training study out; equal donor/all-gene treated log1p CPM MSE within it, then equal study mean; penalties .01,.1,1,10,100,infinity; exact ties prefer strongest.",
+  "endpoint": "Equal-donor mean RMSE separately per study; retain both no-change and equal-study mean-response baselines. Report >=5% gain over both; no pooled success hiding a failed study.",
+  "baselines": [
+    "no-change query control",
+    "equal-study training mean response using native clipping at zero"
+  ],
+  "successCriterion": "Equal-donor mean RMSE at least 5 percent lower than each baseline; retain every donor result and failures. Passing does not override failed development studies or establish participant independence.",
+  "outcomeAccess": "Parse treated counts and normalized means were accessed for engineering verification before this protocol. They have not been used for predictive model selection or scored. Native prediction input must include only Parse PBS values. Freeze prediction hashes before loading Parse IFN-beta values into scoring.",
+  "changesForbidden": [
+    "penalty grid or selection rule",
+    "feature panel or aliases",
+    "donor exclusions",
+    "cell subtype selection",
+    "endpoint or metric",
+    "baseline definitions",
+    "success margin"
+  ],
+  "priorDevelopment": "HIRISA passes; Kang and GSE181897 fail. Candidate remains unpromoted regardless of an isolated Parse pass.",
+  "dependencies": {
+    "/Users/home/numivivo-context-exact-panel-20260912/protocol.json": "3a8d50bac959a6df4383827b578ae8b5952fe1f313a35b868c46eefe53e50fa4",
+    "/Users/home/numivivo-context-exact-panel-20260912/panel-freeze.json": "a9d69a4071b235bc2b0d277fed0ac08fc0770b61c785c104085876688c9b371a",
+    "/Users/home/numivivo-context-exact-panel-20260912/source-cohorts.npz": "31930a97a0ddfcba0b07c194aeb524017333aadfd1240c4100f9ac2f1d54afc5",
+    "/Users/home/numivivo-context-exact-panel-20260912/source-metadata.json": "c3ab84a4b897a5d79e8b4f94b5885d9023ffa46434e6e493a57775d4debacba0",
+    "/Users/home/numivivo-context-exact-panel-20260912/context-kernel": "71ee867b80d5ea6afe078d52f31d63c00c56d4f97f45ad26f3086306d1369c7f",
+    "/Users/home/numivivo-context-exact-panel-20260912/ContextKernel.swift": "5d9fcc9b8e8862149422919705a433e3302b584f3726256928c756bcf07415a6"
+  },
+  "terminalReviewSHA256": "5f643a7994ef243cb76307a5aea5e07aca93b48215d34d138cde725cb7ca28dc",
+  "doseProvenanceSHA256": "a69cbb2c010c0b08c520307e11d96e2aa730395787f73b8d16dcb603598c3372",
+  "predictionFitted": false,
+  "predictionScored": false
+}
