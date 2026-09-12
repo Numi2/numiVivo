@@ -90,3 +90,19 @@ describe their execution host and must be adjusted on another host.
 The IFN-beta dose/reagent and model feature contract remain unresolved.
 No prediction is fitted or scored by this workflow. Original Parse metadata and
 count derivatives retain **Parse Biosciences, CC BY-NC 4.0** attribution.
+
+## First completed donor: partial execution evidence
+
+[The retained offline review](donor1-ingest-review.json) rechecked Donor1's
+native bundle against independent counts: 4,649 cells, 9,621,618 records and
+22,464,566 total counts across 288 source runs with 576 range receipts.
+All preparation members and bound dependencies matched their published hashes.
+Historical source gene-count and transcript-count QC each disagree for 293
+cells; their totals exceed the selected matrix by 306 detected features and
+310 counts, respectively. These discrepancies were retained, with no row removal.
+
+[The review script](review_donor1.py) records its original remote paths and
+requires the retained study dependencies. This is an offline ingestion review
+of one real donor, not a second source replay, a complete-cohort result, or a
+successful run of the full terminal verifier. Remaining donors and replay must
+finish before terminal qualification.

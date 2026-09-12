@@ -1,0 +1,22 @@
+{
+  "status": "passed-Donor1-ingest-offline-review",
+  "createdUnix": 1789197177.6647959,
+  "donor": "Donor1",
+  "phase": "ingest",
+  "sourceRuns": 288,
+  "rangeReceipts": 576,
+  "totals": {
+    "selectedCells": 4649,
+    "selectedNonzeros": 9621618,
+    "selectedTotalCounts": 22464566,
+    "sourceGeneCountMismatch": 293,
+    "sourceTscpCountMismatch": 293,
+    "sourceMinusMatrixTotal": 310,
+    "sourceMinusMatrixGeneCount": 306
+  },
+  "streamSHA256": "cf9801872ddd3b39f42b08acfea842f1f6e09f1db00dfb4c000559df29758bad",
+  "preparationManifestSHA256": "a3ceda16bca4effee9c88bd0abc4bfc08a17dc7b1d632ee94ef7a066d35828d0",
+  "completeCohort": false,
+  "sourceReplay": false,
+  "predictionScored": false
+}
