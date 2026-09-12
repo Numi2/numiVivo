@@ -80,6 +80,25 @@ optimization mode because that checker requires assertions. Use a trusted
 published preparation manifest; a self-authored manifest is not a provenance
 anchor. Archival packaging and independent archive verification remain separate.
 
+After terminal review, `package_complete.py` takes a shared controller lock,
+reruns the review and streams every study file into a compressed archive outside
+the study. Only the controller lock and Python bytecode caches are excluded;
+failed attempts, source dependencies and the exact native binary are retained.
+It checks the source inventory again and independently reads every archived
+member to verify exact membership, sizes and hashes before finalizing the archive.
+Failed packaging retains its `.partial` file and never overwrites an existing
+destination. A sidecar records the reviewed inventory and archive hash.
+
+```sh
+python -m unittest test_verify_complete.py test_package_complete.py
+python package_complete.py /path/to/study --preparation-manifest manifest.json --output /separate/path/complete.tar.gz
+```
+
+Six software tests passed. A real invocation also rejected the active remote
+controller without creating an archive. Complete-cohort packaging remains
+unexecuted until ingestion and replay finish; archive integrity alone does not
+establish biological accuracy. Keep both Python tools together outside the study.
+
 verify_archive.py checks this preparation archive. It embeds the twelve plans,
 their row maps, scripts and software verification. Original source axes/chunk
 maps and the native binary remain in the hash-bound published dependencies,
