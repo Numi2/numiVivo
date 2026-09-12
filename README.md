@@ -105,6 +105,8 @@ All native reconstructions and independent checks pass. This supports conditiona
 RNA prediction when exposure time and matched training observations are available;
 new independent validation is still required, and the earlier external failure stands.
 
+The [Parse B-cell metadata audit](Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) identifies 72,446 source-labeled B cells across all twelve paired donors. The context model has 200 absent exact-name features; dose/reagent and the feature contract remain unresolved. No Parse prediction has been fitted or scored.
+
 The next [independent Parse IFN-beta cohort](Tools/Omics/PerturbationPrediction/ParseIFNB/README.md)
 contains all 725,031 released IFN-beta/PBS cells from 12 donors. Native count
 admission now passes all 1,373,870,697 selected records through resumable donor

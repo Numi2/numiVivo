@@ -59,6 +59,8 @@ The remaining prepared cohorts and the completed external test are:
 | [Parse IFN-beta](../Tools/Omics/PerturbationPrediction/ParseIFNB/FEATURE_IDENTITY.md) | Complete counts, donor aggregates and DE | Intervention dose/reagent identity and an explicit feature contract: 409 duration-panel symbols are absent by exact name; naming candidates are not verified replacements. |
 | [GSE181897](../Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md) | Primary author condition mapping; all 124 predictions, native reconstruction and independent scoring complete | HIRISA mean primary PASS, Kang mean primary FAIL; uncertainty remains deficient. New development on these now-scored outcomes needs a new validation cohort. |
 
+The [Parse B-cell admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) now verifies 72,446 source-labeled B-cell rows across twelve paired donors and all 11,800 context-model feature decisions: 11,600 exact matches and 200 absences. This is metadata-only qualification; B-cell counts, the experimental definition and the model feature contract still need resolution before prediction.
+
 Adamson and Parse remain unfitted and unscored for their proposed prediction tests.
 Resolve their roles from experimental records, not RNA patterns. Freeze any
 justified protocol revision before prediction and disclose earlier outcome
