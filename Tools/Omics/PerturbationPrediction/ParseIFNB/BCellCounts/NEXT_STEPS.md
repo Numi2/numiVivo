@@ -62,6 +62,13 @@ The next prediction work is experimental provenance resolution and an explicit
 feature contract, followed by renewed development validation if the panel changes.
 Do not tune against Parse treated outcomes to resolve these requirements.
 
+The [versioned exact 11,600-feature panel](../../StudyContextKernel/ExactParsePanel/README.md)
+now has a frozen metadata-only contract and a complete renewed three-study
+development evaluation. HIRISA passes the unchanged gate; Kang and GSE181897
+fail. The candidate remains unpromoted, the original model is unchanged, and
+no Parse prediction was fitted or scored. Dose/reagent and participant-overlap
+provenance remain unresolved.
+
 ## Annotation reference lead inspected 2026-09-12
 
 The [Allen Institute downloads](https://apps.allenimmunology.org/aifi/resources/parse-10m-cytokines/downloads/)
@@ -78,6 +85,11 @@ new labels after seeing predictive scores. Before execution, record model file
 hashes, feature/preprocessing requirements and reference cohort provenance.
 The published DESeq2 results use different labels; direct numerical agreement
 requires matched cell membership, filtering and design, not just gene names.
+
+Subsequent [CellTypist execution](../../../ReferenceMapping/CellTypist/README.md)
+now qualifies imported-model numerical agreement and native H5AD CSR/CSC
+orchestration on 267 retained real cells. It does not change the B-cell selection
+or supply independent annotation or prediction validation.
 
 The [Parse experimental description](https://www.parsebiosciences.com/datasets/10-million-human-pbmcs-in-a-single-experiment/)
 confirms 24-hour exposure but does not specify IFNB dose/reagent in the inspected

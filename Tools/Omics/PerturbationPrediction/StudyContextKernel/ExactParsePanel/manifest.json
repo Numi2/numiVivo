@@ -1,0 +1,115 @@
+{
+  "archiveBytes": 24537525,
+  "archiveSHA256": "1f561a02d6827789559f009a3b93d926150b9f6d97ab910d12fe81cde88bde76",
+  "members": {
+    "parse-feature-axis.json": {
+      "bytes": 485779,
+      "SHA256": "4e394818b6cc8f2981ffc08cada01372735c80ed8248dff7cf6fff9d635dc5ad"
+    },
+    "run.py": {
+      "bytes": 1175,
+      "SHA256": "64c04bccb815671a082fdaaa64675a4c8a53b4c134c747fa14e8a4442cef9be4"
+    },
+    "runtime.json": {
+      "bytes": 468,
+      "SHA256": "72332bd2b39a65c19653d4e990edaa36d2528ccb9c7c6514b8f3211b7e9e847d"
+    },
+    "source-cohorts.npz": {
+      "bytes": 4345007,
+      "SHA256": "31930a97a0ddfcba0b07c194aeb524017333aadfd1240c4100f9ac2f1d54afc5"
+    },
+    "verify_scores.py": {
+      "bytes": 1333,
+      "SHA256": "da9d27039f99c310a95ce3582c1cbab854bc707b4bdae06b5ec8a83d10cdfe5a"
+    },
+    "scores.json": {
+      "bytes": 17645,
+      "SHA256": "73bae8429039d5262cc76bd6b027c04f4b7706b0b82dd0bebab4dc9906942f92"
+    },
+    "ContextKernel.swift": {
+      "bytes": 6757,
+      "SHA256": "5d9fcc9b8e8862149422919705a433e3302b584f3726256928c756bcf07415a6"
+    },
+    "score-verification.json": {
+      "bytes": 222,
+      "SHA256": "19e0f07f785827d05b41f18d681a1ac0398dcc82cdd127ed186734b1cf012e72"
+    },
+    "prediction-freeze.json": {
+      "bytes": 503,
+      "SHA256": "4f9a07341217e4b79e806b8cd9ad85e318d37b24701758bfc1a17d68540f8c11"
+    },
+    "panel-verification.json": {
+      "bytes": 310,
+      "SHA256": "3aa3a9471e941ae0c294b8afd7184d69f81dd40110ac2558de7d75d69a66014b"
+    },
+    "protocol.json": {
+      "bytes": 1999,
+      "SHA256": "3a8d50bac959a6df4383827b578ae8b5952fe1f313a35b868c46eefe53e50fa4"
+    },
+    "verification.json": {
+      "bytes": 2405,
+      "SHA256": "983f25da5c338aff93391200ca7c1f9f987964dcf79ce93b17dd65b80e127564"
+    },
+    "verify.py": {
+      "bytes": 2447,
+      "SHA256": "2eaf17072d2b400f45745304f94549dbed7259fd73566f55c6fcdcf7e76f8e7a"
+    },
+    "panel-freeze.json": {
+      "bytes": 478046,
+      "SHA256": "a9d69a4071b235bc2b0d277fed0ac08fc0770b61c785c104085876688c9b371a"
+    },
+    "source-metadata.json": {
+      "bytes": 179449,
+      "SHA256": "c3ab84a4b897a5d79e8b4f94b5885d9023ffa46434e6e493a57775d4debacba0"
+    },
+    "prepare.py": {
+      "bytes": 2286,
+      "SHA256": "035cc10f93d3d5f9248b20380fa28052448027360b0a08ba7af7fdc37c90e2dd"
+    },
+    "score.py": {
+      "bytes": 3132,
+      "SHA256": "19f3a0d9489763c3c39ece01816a0e4604fb92757d578b9c44d7cf5e2c1c2487"
+    },
+    "context-kernel": {
+      "bytes": 150960,
+      "SHA256": "71ee867b80d5ea6afe078d52f31d63c00c56d4f97f45ad26f3086306d1369c7f"
+    },
+    "native/HIRISA.json.log": {
+      "bytes": 0,
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "native/GSE181897.json.log": {
+      "bytes": 0,
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "native/Kang.json": {
+      "bytes": 2858444,
+      "SHA256": "7735c568f8c07944b09074c4f2a4683577f09634b629dc4c88a6eec0c2bf1a8a"
+    },
+    "native/Kang.json.log": {
+      "bytes": 0,
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "native/HIRISA.json": {
+      "bytes": 2300531,
+      "SHA256": "4f517473fb56ae2f1aed2e62b25ef9f9b688482a030a8e158fdf4cbed87f1223"
+    },
+    "native/GSE181897.json": {
+      "bytes": 22084470,
+      "SHA256": "fa6961067e3ce7d872ad21e4626e2a6c5423ca618d3a5d2c54dd9cca1de08440"
+    },
+    "inputs/Kang.json": {
+      "bytes": 23511684,
+      "SHA256": "8963232f91df09a13497b7bd99689554952269db93e3ef4394e468ffe92a9144"
+    },
+    "inputs/HIRISA.json": {
+      "bytes": 23594725,
+      "SHA256": "2e7502dbdc23016536b444dc77adf07d273c177af3f2c18d3ad18e11e97f8250"
+    },
+    "inputs/GSE181897.json": {
+      "bytes": 14513599,
+      "SHA256": "15880fe35ee1dfe75b16df44ff4b073fd6d329f778253a84b00f70b92532c082"
+    }
+  },
+  "externalDependencies": "Original 11800-feature cohort arrays and metadata are hash-bound in panel-freeze.json and retained in the prior study evidence; needed only to rerun preparation. Projected cohorts, all native inputs, binary, outputs and scoring scripts embedded for offline rerun."
+}

@@ -1,0 +1,45 @@
+{
+  "panelID": "context-parse-exact11600-v1",
+  "promoted": false,
+  "folds": {
+    "GSE181897": {
+      "donors": 62,
+      "features": 11600,
+      "selectedPenalty": 1,
+      "equalDonorMeanRMSE": {
+        "candidate": 1.0739193408668344,
+        "equalStudyTrainingMean": 1.0706067105819768,
+        "noChange": 1.122623088917783
+      },
+      "gainOverMeanPercent": -0.30941617048680925,
+      "gainOverNoChangePercent": 4.338388238380119,
+      "fivePercentGainOverBoth": false
+    },
+    "HIRISA": {
+      "donors": 5,
+      "features": 11600,
+      "selectedPenalty": 1,
+      "equalDonorMeanRMSE": {
+        "candidate": 0.2652818889892984,
+        "equalStudyTrainingMean": 0.3364558488546895,
+        "noChange": 0.34359846683895834
+      },
+      "gainOverMeanPercent": 21.15402663014193,
+      "gainOverNoChangePercent": 22.79305218389297,
+      "fivePercentGainOverBoth": true
+    },
+    "Kang": {
+      "donors": 8,
+      "features": 11600,
+      "selectedPenalty": 1,
+      "equalDonorMeanRMSE": {
+        "candidate": 1.1395494592434334,
+        "equalStudyTrainingMean": 1.1365593311367652,
+        "noChange": 1.2252317978625924
+      },
+      "gainOverMeanPercent": -0.2630859669840113,
+      "gainOverNoChangePercent": 6.993153358297688,
+      "fivePercentGainOverBoth": false
+    }
+  }
+}
