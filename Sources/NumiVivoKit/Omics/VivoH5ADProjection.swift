@@ -106,8 +106,8 @@ private final class VivoH5ADProjector {
         let obj=try h.object(frame,name);defer { h.close(obj,"H5Oclose") }
         let kind=try h.text(obj,"encoding-type"),path: String
         switch kind {
-        case "string-array":path=name
-        case "nullable-string-array":path=name+"/values"
+        case "string-array","array":path=name
+        case "nullable-string-array","nullable-integer","nullable-boolean":path=name+"/values"
         case "categorical":path=name+"/codes"
         default:throw VivoOmicsError.invalid("unsupported projection dataframe index")
         }
@@ -522,7 +522,8 @@ private extension VivoH5ADProjector {
         for (i,column) in names.enumerated() {
             let type=try h.legacyMemberType(source,i);defer { h.close(type,"H5Tclose") }
             guard try h.legacyArrayShape(type).isEmpty else { throw VivoOmicsError.invalid("legacy dataframe field must be scalar") }
-            if i==0 { guard try h.legacyTypeKind(type)==3 else { throw VivoOmicsError.invalid("legacy dataframe index must be string") } }
+            // Numeric indices retain their scalar storage; AnnData owns its
+            // index string interpretation when the projected file is read.
             if i>0,try legacyCategory(source,group,column: column,type: type,rows: rows,length: length,path: path) { continue }
             if try h.legacyTypeKind(type)==3 {
                 // Preserve string semantics on empty axes as well as nonempty

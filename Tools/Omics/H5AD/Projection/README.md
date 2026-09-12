@@ -368,3 +368,26 @@ interoperability, not biological predictions or unrestricted legacy datatypes.
 includes the original rejection, source snapshot, executable and every check.
 Run `check_scalar_embeddings.py --binary H5AD_CHECK --source scalar.h5ad
 --out NEW_DIRECTORY` with the archived fixture and independent AnnData environment.
+
+
+## Numeric dataframe indices, 2026-09-12
+
+Projection now accepts numeric scalar indices in legacy compound dataframes and
+modern array indices, including modern nullable integer/boolean encodings.
+Stored datatypes, numeric bytes and masks are preserved through selection;
+AnnData determines loaded index semantics. NumiVivo does not silently convert
+stored numeric identifiers through floating point or invent string labels.
+
+The scoped native build passes 36 AnnData comparisons over legacy and modern
+`obs`, `var` and raw feature indices: signed/unsigned large integers, big-endian
+integers, floating special values, booleans and modern nullable cases, each with
+full, repeated/reordered and empty selections. Exact index bytes and native
+replay pass. Eighteen scalar-embedding cases remain green, and four historical
+string-category projections retain original/plan/output/report bytes exactly.
+This qualifies projection interchange, not numeric-index admission by every
+annotation/count consumer, unrestricted legacy formats or biological validity.
+
+The [evidence archive](evidence/2026-09-12-numeric-indices/manifest.json) retains
+both initial native rejections, source snapshot, executable and all comparisons.
+Run `check_numeric_indices.py --binary H5AD_CHECK --legacy legacy.h5ad
+--modern modern.h5ad --out NEW_DIRECTORY` with the archived fixtures and AnnData.
