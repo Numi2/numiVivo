@@ -15,7 +15,11 @@ independent sigmoid scores. It does not fit models or make labels authoritative.
   maximum independent sigmoid error is 2.95e-15. The model records training
   with scikit-learn 1.7.2.
 - Product source compiled with Swift optimization in a standalone harness.
-  Full-package and CLI/H5AD orchestration, whole-cohort comparison, measured
+  The actual scoped Omics CLI also built and reproduced all 267 retained real-cell
+  results exactly across 529,404 count records. Output receipt hashes were verified;
+  incorrect stream hashes, truncated records, incorrect row totals/cardinalities
+  and existing destinations were rejected without publishing partial output.
+  Full-package qualification and H5AD orchestration, whole-cohort comparison, measured
   memory scaling and held-out annotation accuracy remain unfinished.
 
 The source window was chosen by control condition and original order, without
@@ -24,6 +28,34 @@ interoperability evidence, not independent biological validation. It does not
 change the frozen B-cell cohort or establish perturbation prediction.
 
 ## Evidence and reproduction
+
+### Streaming command
+
+Build the actual scoped CLI with `Tools/Omics/H5AD/build.sh <build-directory> --with-cli`.
+Run `numivivo-omics singlecell-celltypist-stream --model model.json --plan count-plan.json --stream-sha256 <sha256> --output new-bundle < counts.bin`.
+The binary stream contains little-endian UInt64 pairs: row in the low 32 bits
+and feature in the high 32 bits, followed by the positive integer count.
+Rows and feature indices must be ordered; normalization includes every source
+feature. The embedded count plan binds cell and feature identities, row
+cardinalities and optional row totals. The receipt binds model, plan, results,
+input stream and implementation identity. Predictions are independent sigmoid
+scores, not calibrated probabilities or authoritative labels. The cell axis
+remains resident; million-cell memory scaling is unqualified.
+
+After unpacking the original archive below into a new directory, run:
+
+```sh
+python3 check_stream_cli.py <build-directory>/numivivo-omics <unpacked-evidence> <new-check-directory>
+```
+
+The check uses the retained real inputs and the adjacent compressed window
+plan. It rebases original prepared rows 42:309 to 0:267 without filtering cells
+or features. It verifies exact retained results, receipt hashes and five
+transactional rejection cases. This test harness materializes the small window;
+the product command streams count records. The original archive retains the
+standalone harness version; the CLI extension lives in the repository sources.
+
+### Original numerical evidence
 
 [Archive](evidence.tar.gz) and [manifest](manifest.json) retain 28 files,
 including model, JSON export, source, binaries, sparse real inputs, outputs,

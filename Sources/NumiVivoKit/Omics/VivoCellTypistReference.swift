@@ -102,4 +102,51 @@ public struct VivoCellTypistReference: Sendable {
         for c in decisions.indices where decisions[c] > decisions[best] { best = c }
         return VivoCellTypistReferenceResult(label: model.classes[best], decisions: decisions, probabilities: probabilities)
     }
+
+    /// Read canonical little-endian (row UInt32, feature UInt32, count UInt64)
+    /// records. Chunk boundaries may split records. A zero-byte read means EOF.
+    /// The caller must publish emitted results transactionally: a later malformed
+    /// record or cancellation can invalidate the entire stream.
+    public func predictStream(cellCount: Int, maximumRecords: Int,
+                              read: () throws -> Data,
+                              validateRow: (Int, [Int], [UInt64]) throws -> Void = { _, _, _ in },
+                              emit: (Int, VivoCellTypistReferenceResult) throws -> Void) throws -> Int {
+        guard cellCount >= 0, cellCount <= Int(UInt32.max), maximumRecords >= 0 else {
+            throw VivoCellTypistReferenceError.invalidCounts
+        }
+        var row = 0, indices: [Int] = [], counts: [UInt64] = []
+        var tail = Data(), records = 0
+        func finish() throws {
+            try Task.checkCancellation()
+            try validateRow(row, indices, counts)
+            try emit(row, predict(indices: indices, counts: counts))
+            row += 1; indices.removeAll(keepingCapacity: true); counts.removeAll(keepingCapacity: true)
+        }
+        while true {
+            try Task.checkCancellation()
+            let next = try read()
+            guard next.count <= 1_048_576 else { throw VivoCellTypistReferenceError.invalidCounts }
+            if next.isEmpty { break }
+            tail.append(next)
+            let complete = tail.count / 16 * 16
+            try tail.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) in
+                for offset in stride(from: 0, to: complete, by: 16) {
+                    let coordinate = UInt64(littleEndian: bytes.loadUnaligned(fromByteOffset: offset, as: UInt64.self))
+                    let count = UInt64(littleEndian: bytes.loadUnaligned(fromByteOffset: offset + 8, as: UInt64.self))
+                    let target = Int(coordinate & 0xffff_ffff), feature = Int(coordinate >> 32)
+                    guard target >= row, target < cellCount, feature < sourceToModel.count,
+                          count > 0, records < maximumRecords else {
+                        throw VivoCellTypistReferenceError.invalidCounts
+                    }
+                    while row < target { try finish() }
+                    guard feature > (indices.last ?? -1) else { throw VivoCellTypistReferenceError.invalidCounts }
+                    indices.append(feature); counts.append(count); records += 1
+                }
+            }
+            tail = Data(tail.suffix(tail.count - complete))
+        }
+        guard tail.isEmpty else { throw VivoCellTypistReferenceError.invalidCounts }
+        while row < cellCount { try finish() }
+        return records
+    }
 }

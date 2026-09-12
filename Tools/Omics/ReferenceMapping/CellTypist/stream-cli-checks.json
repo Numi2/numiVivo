@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "cells": 267,
+  "records": 529404,
+  "receipt": {
+    "cells": 267,
+    "implementation": {
+      "bytes": [
+        250,
+        254,
+        82,
+        205,
+        24,
+        238,
+        125,
+        130,
+        182,
+        255,
+        51,
+        5,
+        56,
+        131,
+        96,
+        29,
+        115,
+        3,
+        95,
+        229,
+        171,
+        218,
+        234,
+        74,
+        145,
+        202,
+        221,
+        247,
+        206,
+        83,
+        118,
+        217
+      ]
+    },
+    "modelSHA256": "95bfa2b7668e7e5bad66000094e6bd1d2b3a670c1c6f761c076634b11b29ad9f",
+    "planSHA256": "87f548f8cd50a9c7e97f5d73fc729730961ec8353038a37dc6e9fc12ad76f455",
+    "records": 529404,
+    "resultsSHA256": "2859ca77ef41d7a10f8b7f0c73ca77748f73486cd64079915df8ce47676c407b",
+    "schemaVersion": 1,
+    "streamSHA256": "64ecc0d4b5337a16daab3cefc1645ac9137f8a3405c3b0f89dcf302c42ade673"
+  },
+  "exactRetainedResults": true,
+  "failures": [
+    {
+      "case": "wrong-digest",
+      "error": "numivivo singlecell: invalid(\"CellTypist stream differs from frozen input\")\n"
+    },
+    {
+      "case": "truncated",
+      "error": "numivivo singlecell: invalidCounts\n"
+    },
+    {
+      "case": "wrong-total",
+      "error": "numivivo singlecell: invalid(\"CellTypist stream row total\")\n"
+    },
+    {
+      "case": "wrong-cardinality",
+      "error": "numivivo singlecell: invalid(\"CellTypist stream row cardinality\")\n"
+    },
+    {
+      "case": "existing",
+      "error": "numivivo singlecell: invalid(\"CellTypist model size, stream digest or output path\")\n"
+    }
+  ],
+  "biologicalAccuracyEstablished": false,
+  "compiler": "Apple Swift version 6.3 (swiftlang-6.3.0.123.5 clang-2100.0.123.102)\nTarget: arm64-apple-macosx26.0",
+  "runtime": "Darwin Ts-MacBook-Air.local 25.6.0 Darwin Kernel Version 25.6.0: Fri May 15 01:56:36 PDT 2026; root:xnu-12377.160.49.0.1~42/RELEASE_ARM64_T8132 arm64",
+  "binarySHA256": "44c5797a6d3f0068a10e5dd54f0ce2430dde9def206751804177929e67208e1a",
+  "sourceSHA256": {
+    "Sources/NumiVivoKit/Omics/VivoCellTypistReference.swift": "96d0812edb04e0c6dd18ff2f6ebcd23da469d2fbecfa2fb471c122fede2c6ec8",
+    "Sources/NumiVivoKit/Omics/VivoCellTypistReferenceIO.swift": "daf229fb4c2e29b2e60b807a1be2a9bc5ce6db2388a40a55aa2f9b9a2d61a3cd",
+    "Sources/NumiVivoCLI/VivoSingleCellCLICommands.swift": "041a1c08d3b37b6880082fd0253f767c5f3ecf62f44ad23d0d2706bf79fa894b",
+    "Tools/Omics/H5AD/build.sh": "87f89849f489d3e6b873eb0cb8058400bb319c758f86593c35970c0b8b702234",
+    "Tools/Omics/ReferenceMapping/CellTypist/check_stream_cli.py": "66a7466099f4feb14b979f76743cb2654df17f4f992d931e63535544826b9f68",
+    "Tools/Omics/ReferenceMapping/CellTypist/stream-plan.json.gz": "fd9e3538d15f9ab2e7cc665facdebaf6c57040e50c8abf139b25f2d2b0118791"
+  },
+  "scope": "Actual scoped Omics library and CLI, native CPU; not full package or held-out biological validation"
+}
