@@ -80,3 +80,7 @@ its source and error log are retained. The corrected driver passed. Product
 source compilation passed with retained deprecation warnings. No failed run was
 reclassified as a successful one. Downstream biological checks and broader
 CPU/scverse performance comparison remain the next qualification gates.
+
+The subsequent [three-seed Hagai clustering check](../Clustering/README.md)
+preserves every CPU partition under Metal. Cross-seed variability remains, and
+this establishes backend consistency rather than biological accuracy.
