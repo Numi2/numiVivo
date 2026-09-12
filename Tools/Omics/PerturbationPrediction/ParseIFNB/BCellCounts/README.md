@@ -1,5 +1,8 @@
 # Complete Parse B-cell count workflow
 
+See [the final evidence review and prediction admission steps](NEXT_STEPS.md) for
+the work that can proceed during ingestion and the remaining scientific gates.
+
 The frozen cohort contains **72,446 source-labeled B cells, 124,909,573 stored
 count records and all 40,352 RNA features** across twelve PBS/IFN-beta donor
 pairs. It is the exact metadata selection in [BCellAdmission](../BCellAdmission/README.md).
