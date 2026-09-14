@@ -1,0 +1,32 @@
+{
+  "schema": "numivivo.org/vcf-native-qualification-manifest/v1",
+  "sourceCommit": "2115751232a22ddb28c3119df3e0daf55bd7752f",
+  "status": "passed",
+  "files": {
+    "README.md": "8b47c9843f9d228849bd1a79bc816ff9bf1aaa44cd5357784cebf1c6cac03efb",
+    "execution.json": "fa4e48e2365a5ace82d9016ec63bbd7352f57b011c4d67b961f4ab1962969186",
+    "native-vcf.log": "a3c8b6ea127406a7dc809e1c3b5916d04d9d11ca2b6bc2eaf6429d505b874387",
+    "cli-stdout.json": "346c5a8bf8a3d4d851ea7028e9a202a1f54d2e32e38521a436753aad30f19ae0",
+    "source.vcf": "a39b864478c09fa5f31bcb1241a63a21ea9a09563e044e691248fd9ae1612f09",
+    "variant-import.json": "7d82358a3a31674b6ba0e478464fcf50a513241f30b48582abf54a61b3df7110",
+    "atlas-projection.json": "ba9e51400ad8819d8fd6d96c11feccb62d6cbcd939d1565545901f5c747a75dc"
+  },
+  "sourceFiles": {
+    "Sources/NumiVivoKit/Neoantigen/VivoVCFReader.swift": {
+      "bytes": 19481,
+      "sha256": "d790442f5ba51534daebb87940ef16b9be8d30b57f7e3623487d4e0ea0b14a3e"
+    },
+    "Tests/NumiVivoIntegrationTests/VivoVCFTests.swift": {
+      "bytes": 4320,
+      "sha256": "e925c755597e43b340aa967c426f6bbaaeb3d7aeaae0d80da87cee246772bb9d"
+    },
+    "Sources/NumiVivoCLI/VivoGenomicEvidenceCLICommands.swift": {
+      "bytes": 15492,
+      "sha256": "28bb9f00b9c0e0887d5f69da37fe17a68bca55d789451d0f41e2fee4f5eba2c2"
+    },
+    "Sources/NumiVivoCLI/main.swift": {
+      "bytes": 7457,
+      "sha256": "f3be792865a0c742cf8049f98220a0c7883b90b14806c5b0df27d566d23143a3"
+    }
+  }
+}

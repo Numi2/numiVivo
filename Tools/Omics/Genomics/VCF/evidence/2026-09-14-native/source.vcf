@@ -1,0 +1,6 @@
+##fileformat=VCFv4.3
+##reference=file:///references/GRCh38.fa
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	tumor	normal
+1	10	rs1	A	C,G	50	PASS	DP=9;SOMATIC	GT:DP	0/1:6	0/0:3
+chrX	20	.	T	TA	10	q10	DP=4	GT	1/1	0/1
+chrM	30	.	C	<DEL>	.	.	.	GT	.	./.
