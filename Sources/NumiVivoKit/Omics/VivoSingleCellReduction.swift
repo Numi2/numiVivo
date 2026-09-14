@@ -1,6 +1,11 @@
 import Foundation
 
 public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
+    /// Optional FP32 Metal feature-moment reduction. The default remains the
+    /// deterministic FP64 CPU owner; Metal is an explicit numerical profile.
+    public enum FeatureStatisticsBackend: String, Codable, Sendable {
+        case metalFP32
+    }
     public var highlyVariableFeatures: Int = 2_000
     public var meanBins: Int = 20
     public var components: Int = 20
@@ -8,14 +13,15 @@ public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
     public var relativeResidualTolerance: Double = 1e-6
     public var seed: UInt64 = 7
     public var retainProjectionCenters: Bool? = nil
+    public var featureStatisticsBackend: FeatureStatisticsBackend? = nil
     /// Candidate genes for HVG binning/selection; all source counts still normalize each cell.
     public var featurePanel: [String]? = nil
     public init() {}
     private enum CodingKeys: String,CodingKey {
-        case highlyVariableFeatures,meanBins,components,maximumBasis,relativeResidualTolerance,seed,retainProjectionCenters,featurePanel
+        case highlyVariableFeatures,meanBins,components,maximumBasis,relativeResidualTolerance,seed,retainProjectionCenters,featurePanel,featureStatisticsBackend
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["highlyVariableFeatures","meanBins","components","maximumBasis","relativeResidualTolerance","seed","retainProjectionCenters","featurePanel"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["highlyVariableFeatures","meanBins","components","maximumBasis","relativeResidualTolerance","seed","retainProjectionCenters","featurePanel","featureStatisticsBackend"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         highlyVariableFeatures=try c.decodeIfPresent(Int.self,forKey: .highlyVariableFeatures) ?? 2_000
         meanBins=try c.decodeIfPresent(Int.self,forKey: .meanBins) ?? 20
@@ -25,6 +31,7 @@ public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
         seed=try c.decodeIfPresent(UInt64.self,forKey: .seed) ?? 7
         retainProjectionCenters=try c.decodeIfPresent(Bool.self,forKey: .retainProjectionCenters)
         featurePanel=try c.decodeIfPresent([String].self,forKey: .featurePanel)
+        featureStatisticsBackend=try c.decodeIfPresent(FeatureStatisticsBackend.self,forKey: .featureStatisticsBackend)
     }
     public func validate() throws {
         if let featurePanel {
@@ -78,12 +85,20 @@ enum VivoSingleCellReduction {
         try options.validate()
         let data=processed.dataset,normal=processed.normalized,n=data.cells.count,m=data.features.count
         guard n>options.components else { throw VivoOmicsError.invalid("PCA needs more cells than requested components") }
-        var seen=[Int](repeating: 0,count: m),means=[Double](repeating: 0,count: m),m2=means
-        for k in normal.values.indices {
-            if k%65_536==0 { try Task.checkCancellation() }
-            let j=normal.featureIndices[k],value=expm1(normal.values[k])
-            seen[j]+=1;let delta=value-means[j];means[j]+=delta/Double(seen[j]);m2[j]+=delta*(value-means[j])
+        let moments: (seen: [Int], means: [Double], m2: [Double])
+        switch options.featureStatisticsBackend {
+        case .metalFP32:
+            moments = try VivoMetalFeatureStatistics.run(values: normal.values, featureIndices: normal.featureIndices, featureCount: m)
+        case nil:
+            var seen=[Int](repeating: 0,count: m),means=[Double](repeating: 0,count: m),m2=means
+            for k in normal.values.indices {
+                if k%65_536==0 { try Task.checkCancellation() }
+                let j=normal.featureIndices[k],value=expm1(normal.values[k])
+                seen[j]+=1;let delta=value-means[j];means[j]+=delta/Double(seen[j]);m2[j]+=delta*(value-means[j])
+            }
+            moments = (seen, means, m2)
         }
+        let seen=moments.seen,means=moments.means,m2=moments.m2
         let selection = try selectFeatures(featureIDs: data.features.map(\.id), cells: n, seen: seen, nonzeroMeans: means, m2: m2, options: options)
         let selected = selection.selected, statistics = selection.statistics
         var local=[Int](repeating: -1,count: m)
@@ -242,11 +257,18 @@ enum VivoSingleCellReduction {
         var orthogonality=0.0
         for i in vectors.indices { for j in vectors.indices { orthogonality=max(orthogonality,abs(dot(vectors[i],vectors[j])-(i==j ? 1:0))) } }
         guard orthogonality<1e-8 else { throw VivoOmicsError.invalid("PCA loadings lost orthogonality") }
-        return .init(method: "sparse-seurat-dispersion-centered-krylov-PCA-v1",options: options,features: statistics,
+        let method = options.featureStatisticsBackend == .metalFP32
+            ? "sparse-seurat-dispersion-centered-krylov-PCA-v1+metal-feature-statistics"
+            : "sparse-seurat-dispersion-centered-krylov-PCA-v1"
+        let qualification = "Descriptive unscaled log-normalized PCA; residual-qualified components, not donor integration or biological validation" +
+            (options.featureStatisticsBackend == .metalFP32
+                ? ". HVG moments use the opt-in Metal FP32 sparse feature-statistics profile; ranking and values may differ from CPU FP64."
+                : "")
+        return .init(method: method,options: options,features: statistics,
             selectedFeatureIndices: selected,cells: cells,scores: embedding,
             loadings: loadings,explainedVariance: variances,explainedVarianceRatio: variances.map { $0/totalVariance },
             relativeResiduals: residuals,maximumLoadingOrthogonalityError: orthogonality,basisSize: capacity,
-            qualification: "Descriptive unscaled log-normalized PCA; residual-qualified components, not donor integration or biological validation",
+            qualification: qualification,
             projectionCenters: options.retainProjectionCenters == true ? centers : nil)
     }
     /// Only the bounded Krylov projection is dense, never cells by genes or the full covariance.
