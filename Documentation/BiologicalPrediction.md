@@ -379,8 +379,11 @@ now support explicit open-set gates (distance/vote gates for kNN or a probabilit
 gate for logistic mapping); a failed gate preserves the score and records
 `rejectedNovel` while withholding the candidate label. These thresholds are
 caller supplied and uncalibrated, so calibrated confidence, authoritative
-biological identities and independent context transfer remain unqualified. It
-adds no perturbation response, tissue-function or clinical outcome evidence.
+biological identities and independent context transfer remain unqualified. A
+fresh physical M4 Pro run passes all three native reference-mapping tests, with
+its [source-bound execution record](../Tools/Omics/ReferenceMapping/evidence/2026-09-14-novelty-regression/)
+retained separately from biological evidence. It adds no perturbation response,
+tissue-function or clinical outcome evidence.
 
 The [complete Kang–Ding annotation-transfer experiment](../Tools/Omics/ReferenceMapping/CrossStudy/README.md)
 now retains all 68,704 query cells and each original RNA-library denominator using

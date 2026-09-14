@@ -1,0 +1,25 @@
+{
+  "schema": "numivivo.org/reference-mapping-native-regression/v1",
+  "sourceCommit": "5537fb5f34ab543b5a672596c3ad8d46d0ae4f06",
+  "command": [
+    "swift",
+    "test",
+    "--filter",
+    "SingleCellReferenceTests"
+  ],
+  "host": "Mac.domain_not_set.invalid",
+  "machine": "arm64",
+  "os": "macOS-26.6-arm64-arm-64bit",
+  "result": "passed",
+  "testCount": 3,
+  "testSuite": "SingleCellReferenceTests",
+  "log": {
+    "path": "native-singlecell-reference.log.gz",
+    "bytes": 16537,
+    "sha256": "3880f070430f69024f7422651362d9a166b4f1d47057de78186eb16fc1d03d4b",
+    "uncompressedBytes": 402829,
+    "uncompressedSHA256": "8ee8c424fe730708282c381b0c79cda53d71eac4798a25a91ed1d1e0b296c2c7"
+  },
+  "biologicalScope": "Native software regression only; no held-out annotation accuracy or biological outcome qualification.",
+  "recordedUnix": 1789406672.905419
+}

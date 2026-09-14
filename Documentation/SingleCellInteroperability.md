@@ -660,7 +660,11 @@ The complete development objective remains open:
    largest-class probability. A failed gate emits the scores and a
    `rejectedNovel` status while suppressing the candidate label. These thresholds
    are caller-supplied, uncalibrated gates; they are not a learned novel-class
-   model or biological identity validation.
+   model or biological identity validation. A fresh physical M4 Pro regression at
+   the published revision passes all three reference-mapping tests; its
+   [execution record](../Tools/Omics/ReferenceMapping/evidence/2026-09-14-novelty-regression/)
+   binds the source, host, command and compressed log without adding biological
+   qualification.
 7. **Perturbation prediction:** [real donor-held-out response baselines](../Tools/Omics/PerturbationPrediction/README.md)
    now evaluate all eight Kang and three Hagai donors using supplied controls and
    sealed treated outcomes. [Native donor-response prediction](../Tools/Omics/PerturbationPrediction/NATIVE.md)
