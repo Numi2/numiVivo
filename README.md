@@ -125,6 +125,9 @@ now has a [primary control roster](Documentation/AdamsonPrimaryRoster.md): the
 UPR paper identifies NegCtrl-2 and NegCtrl-3 and their protospacer sequences.
 The deposited `pBA580`/`pBA582` labels still need mapping to those names, and
 the 94-versus-93 guide discrepancy remains open before authoritative fitting.
+A source-count cross-check supports a provisional `pBA580`/NegCtrl-2 and
+`pBA582`/NegCtrl-3 correspondence, but it is not an author construct mapping
+and does not clear the qualification gate.
 A separate [provisional role-sensitivity run](Documentation/AdamsonProvisionalRoleSensitivity.md)
 held out all 82 selected target prefixes after pooling those two labels as an
 explicit provisional control: 80 supported targets scored, with mean RMSE

@@ -73,6 +73,13 @@ The [retrieval manifest](evidence/2026-09-14-table-s1-retrieval/manifest.json)
 retains the request log and inventory metadata; the workbook remains external
 and is bound by its recorded SHA-256.
 
+The same manifest records a non-authoritative paper count cross-check: the
+646 selected `Gal4-4(mod)_pBA582` cells exactly match the paper's HSPA5
+NegCtrl-3 control population, while the 4,595 selected `pBA580` cells are
+7.11 times larger, consistent with the stated eight-fold NegCtrl-2 excess.
+This supports a provisional correspondence only; it does not map either
+deposited label to a Table S1 sequence, and the role flags remain false.
+
 Public GEO supplement directory listings succeeded and contain barcodes, guide
 assignments, gene identities and the count matrix; they expose no separate
 control/construct roster. The existing author repository inventory leads to the

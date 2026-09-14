@@ -41,6 +41,14 @@ Table S1's vector column; an exhaustive value check found no `pBA580`,
 | `Gal4-4(mod)_pBA582` | 646 | Candidate for one UPR control; label-to-sequence mapping not supplied |
 | `62(mod)_pBA581` | 0 | No selected cells in the frozen UPR cohort |
 
+The [paper count cross-check](../Tools/Omics/PerturbationPrediction/Adamson/evidence/2026-09-14-table-s1-retrieval/control-count-crosscheck.json)
+provides provisional support for `Gal4-4(mod)_pBA582` corresponding to
+NegCtrl-3: its 646 selected cells exactly match the paper's HSPA5 control
+population, whose methods name NegCtrl-3. The 4,595 selected `pBA580` cells
+are 7.11 times that count, consistent with the paper's stated eight-fold
+NegCtrl-2 excess. This is a source-count cross-check, not an author construct
+record or sequence mapping, so the authoritative role flags remain closed.
+
 These are the two selected non-gene labels in the restored cohort, but their
 mapping to NegCtrl-2 versus NegCtrl-3 is not stated in the primary supplement
 or the GEO guide CSV. The source also contains 94 selected guide groups while

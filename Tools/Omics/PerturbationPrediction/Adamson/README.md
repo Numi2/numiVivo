@@ -65,7 +65,11 @@ S1](../../../../Documentation/AdamsonPrimaryRoster.md) workbook is now available
 and confirms the NegCtrl-2/NegCtrl-3 sequences, but an exhaustive check found
 none of these three deposited `pBA` identifiers in its vector column. Author
 demo code found so far describes another experiment. The missing deposited-label
-mapping prevents the frozen response benchmark from proceeding to fitting.
+mapping prevents the frozen response benchmark from proceeding to fitting. A
+[paper count cross-check](evidence/2026-09-14-table-s1-retrieval/control-count-crosscheck.json)
+supports a provisional `pBA582`/NegCtrl-3 and `pBA580`/NegCtrl-2
+correspondence, but it is not an author construct mapping and leaves the role
+flags closed.
 
 ## Native change and verification
 

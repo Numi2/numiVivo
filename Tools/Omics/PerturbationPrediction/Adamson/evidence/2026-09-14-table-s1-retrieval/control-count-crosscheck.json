@@ -1,0 +1,76 @@
+{
+  "authoritativeMappingResolved": false,
+  "derivedChecks": {
+    "pBA580RelativeToGeneLikeMedian": 9.180819180819181,
+    "pBA580ToPBA582SelectedCellRatio": 7.113003095975232,
+    "pBA582SelectedEqualsPaperHSPA5ControlCells": true
+  },
+  "evidenceClass": "metadata/count cross-check; no expression values used",
+  "note": "Do not substitute this count cross-check for an author construct record or sequence mapping; authoritative control and target role flags remain false.",
+  "predictionQualification": false,
+  "provisionalCorrespondenceSupport": [
+    {
+      "basis": "The selected count exactly matches the paper HSPA5 control population, whose methods name NegCtrl-3.",
+      "depositedLabel": "Gal4-4(mod)_pBA582",
+      "paperRole": "NegCtrl-3",
+      "status": "supported-by-count-cross-check-only"
+    },
+    {
+      "basis": "Its selected count is overrepresented relative to other guide groups and the paired control ratio is near the paper's stated eight-fold NegCtrl-2 excess.",
+      "depositedLabel": "63(mod)_pBA580",
+      "paperRole": "NegCtrl-2",
+      "status": "supported-by-count-pattern-only"
+    }
+  ],
+  "referenceGuideSelection": {
+    "geneLikeGuideGroups": 92,
+    "selectedCellMean": 491.29347826086956,
+    "selectedCellMedian": 500.5
+  },
+  "retrievedDate": "2026-09-14",
+  "schemaVersion": 1,
+  "source": {
+    "articleURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5315571/",
+    "passages": [
+      {
+        "anchor": "Two negative control sgRNAs were included",
+        "label": "UPR Perturb-seq methods",
+        "passageSHA256": "c14781dee393dab3ab3aab345544d8647d012220cb0addb4cd3976dc93275ca4",
+        "reported": {
+          "controls": [
+            "NegCtrl-2",
+            "NegCtrl-3"
+          ],
+          "negCtrl2RelativeRepresentation": "8-fold"
+        }
+      },
+      {
+        "anchor": "646 control cells and 1002 perturbed cells",
+        "label": "HSPA5 analysis methods",
+        "passageSHA256": "1b77f0af0ae887f6437b23ea135b13fad3367a962ad228f15f534d402a255900",
+        "reported": {
+          "control": "NegCtrl-3",
+          "controlCellsAfterApoptosisFilter": 620,
+          "controlCellsBeforeApoptosisFilter": 646
+        }
+      }
+    ],
+    "textMiningResponseBytes": 182941,
+    "textMiningResponseSHA256": "ad0a9961bffd6b97768ba0ceb44bce45ce67d4017294933374a8fd24f87b6484",
+    "textMiningURL": "https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_json/PMC5315571/unicode"
+  },
+  "sourceGuideCounts": {
+    "62(mod)_pBA581": {
+      "selectedCells": 0,
+      "sourceCells": 2
+    },
+    "63(mod)_pBA580": {
+      "selectedCells": 4595,
+      "sourceCells": 6284
+    },
+    "Gal4-4(mod)_pBA582": {
+      "selectedCells": 646,
+      "sourceCells": 1343
+    }
+  }
+}
