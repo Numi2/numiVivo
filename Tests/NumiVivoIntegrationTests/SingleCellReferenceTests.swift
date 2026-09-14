@@ -31,4 +31,21 @@ import Testing
             for c in 0..<2 { #expect(abs(score[c]-frozen.scores[row][c])<1e-10) }
         }
     }
+
+    @Test func noveltyPolicyIsExplicitAndFailClosed() throws {
+        let kNN=VivoSingleCellReferenceNoveltyPolicy(maximumNearestSquaredDistance: 0.5,minimumVoteFraction: 0.6)
+        #expect(try VivoSingleCellReference.passesNovelty(kNN,nearestSquaredDistance: 0.5,largestClassProbability: nil,winningVoteFraction: 0.6,logistic: false))
+        #expect(!(try VivoSingleCellReference.passesNovelty(kNN,nearestSquaredDistance: 0.500001,largestClassProbability: nil,winningVoteFraction: 1,logistic: false)))
+        #expect(!(try VivoSingleCellReference.passesNovelty(kNN,nearestSquaredDistance: 0,largestClassProbability: nil,winningVoteFraction: 0.59,logistic: false)))
+
+        let logistic=VivoSingleCellReferenceNoveltyPolicy(minimumClassProbability: 0.75)
+        #expect(try VivoSingleCellReference.passesNovelty(logistic,nearestSquaredDistance: nil,largestClassProbability: 0.75,winningVoteFraction: nil,logistic: true))
+        #expect(!(try VivoSingleCellReference.passesNovelty(logistic,nearestSquaredDistance: nil,largestClassProbability: 0.749,winningVoteFraction: nil,logistic: true)))
+        #expect(throws: (any Error).self) {
+            try VivoSingleCellReference.passesNovelty(.init(maximumNearestSquaredDistance: 1),nearestSquaredDistance: nil,largestClassProbability: nil,winningVoteFraction: nil,logistic: true)
+        }
+        #expect(throws: (any Error).self) {
+            try VivoSingleCellReferenceNoveltyPolicy(minimumClassProbability: .nan).validate()
+        }
+    }
 }

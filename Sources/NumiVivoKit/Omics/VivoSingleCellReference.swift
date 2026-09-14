@@ -40,25 +40,62 @@ public struct VivoSingleCellReferenceQueryPlan: Codable, Sendable, Equatable {
     public let maximumDistanceOperations: Int
     public let maximumProjectionUpdates: Int
     public var maximumClassifierOperations: Int? = nil
-    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,maximumDistanceOperations: Int = 2_000_000_000,maximumProjectionUpdates: Int = 2_000_000_000, maximumClassifierOperations: Int? = nil) {
+    /// Optional, caller-supplied open-set gates. They suppress a candidate
+    /// label when a query is outside declared reference support.
+    public var novelty: VivoSingleCellReferenceNoveltyPolicy = .init()
+    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,maximumDistanceOperations: Int = 2_000_000_000,maximumProjectionUpdates: Int = 2_000_000_000, maximumClassifierOperations: Int? = nil, novelty: VivoSingleCellReferenceNoveltyPolicy = .init()) {
         schemaVersion=1;self.mapping=mapping;self.featureNamespace=featureNamespace
-        self.maximumDistanceOperations=maximumDistanceOperations;self.maximumProjectionUpdates=maximumProjectionUpdates;self.maximumClassifierOperations=maximumClassifierOperations
+        self.maximumDistanceOperations=maximumDistanceOperations;self.maximumProjectionUpdates=maximumProjectionUpdates;self.maximumClassifierOperations=maximumClassifierOperations;self.novelty=novelty
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,maximumDistanceOperations,maximumProjectionUpdates,maximumClassifierOperations }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,maximumDistanceOperations,maximumProjectionUpdates,maximumClassifierOperations,novelty }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","maximumDistanceOperations","maximumProjectionUpdates","maximumClassifierOperations"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","maximumDistanceOperations","maximumProjectionUpdates","maximumClassifierOperations","novelty"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);mapping=try c.decode(VivoH5ADImportPlan.self,forKey: .mapping)
         featureNamespace=try c.decode(String.self,forKey: .featureNamespace)
         maximumDistanceOperations=try c.decodeIfPresent(Int.self,forKey: .maximumDistanceOperations) ?? 2_000_000_000
         maximumProjectionUpdates=try c.decodeIfPresent(Int.self,forKey: .maximumProjectionUpdates) ?? 2_000_000_000
         maximumClassifierOperations=try c.decodeIfPresent(Int.self,forKey: .maximumClassifierOperations)
+        novelty=try c.decodeIfPresent(VivoSingleCellReferenceNoveltyPolicy.self,forKey: .novelty) ?? .init()
     }
     func validate() throws {
         guard schemaVersion==1,mapping.groupColumn==nil,vivoOmicsID(featureNamespace),
               (1...20_000_000_000).contains(maximumDistanceOperations),(1...20_000_000_000).contains(maximumProjectionUpdates),
               maximumClassifierOperations.map({ (1...20_000_000_000).contains($0) }) ?? true else {
             throw VivoOmicsError.invalid("query schema, namespace or work budget; query label mapping is prohibited")
+        }
+        try novelty.validate()
+    }
+}
+
+/// Explicit query-time open-set gates for a frozen reference model. A gate
+/// only suppresses a candidate label; it never makes a candidate authoritative.
+/// Thresholds are caller supplied and require independent calibration.
+public struct VivoSingleCellReferenceNoveltyPolicy: Codable, Sendable, Equatable {
+    /// Maximum nearest-reference squared distance for kNN mapping.
+    public var maximumNearestSquaredDistance: Double? = nil
+    /// Minimum largest class probability for the optional logistic mapper.
+    public var minimumClassProbability: Double? = nil
+    /// Minimum winning-vote fraction for uniform kNN mapping.
+    public var minimumVoteFraction: Double? = nil
+    public init(maximumNearestSquaredDistance: Double? = nil, minimumClassProbability: Double? = nil, minimumVoteFraction: Double? = nil) {
+        self.maximumNearestSquaredDistance=maximumNearestSquaredDistance
+        self.minimumClassProbability=minimumClassProbability
+        self.minimumVoteFraction=minimumVoteFraction
+    }
+    private enum CodingKeys: String,CodingKey { case maximumNearestSquaredDistance,minimumClassProbability,minimumVoteFraction }
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["maximumNearestSquaredDistance","minimumClassProbability","minimumVoteFraction"])
+        let c=try decoder.container(keyedBy: CodingKeys.self)
+        maximumNearestSquaredDistance=try c.decodeIfPresent(Double.self,forKey: .maximumNearestSquaredDistance)
+        minimumClassProbability=try c.decodeIfPresent(Double.self,forKey: .minimumClassProbability)
+        minimumVoteFraction=try c.decodeIfPresent(Double.self,forKey: .minimumVoteFraction)
+    }
+    public func validate() throws {
+        guard maximumNearestSquaredDistance.map({ $0.isFinite && $0 >= 0 }) ?? true,
+              minimumClassProbability.map({ $0.isFinite && (0...1).contains($0) }) ?? true,
+              minimumVoteFraction.map({ $0.isFinite && (0...1).contains($0) }) ?? true else {
+            throw VivoOmicsError.invalid("reference novelty thresholds")
         }
     }
 }
@@ -83,6 +120,9 @@ public struct VivoSingleCellReferencePrediction: Codable, Sendable, Equatable {
     public let votes: [Int]
     public let candidateLabel: String?
     public var classProbabilities: [Double]? = nil
+    /// `candidate`, `rejectedNovel`, or `emptyLibrary`; labels remain
+    /// candidates in every state.
+    public var noveltyStatus: String? = nil
 }
 public struct VivoSingleCellReferenceReport: Codable, Sendable, Equatable {
     public let method: String
@@ -98,6 +138,35 @@ public struct VivoSingleCellReferenceReport: Codable, Sendable, Equatable {
 }
 
 public enum VivoSingleCellReference {
+    /// Apply explicit open-set gates without inspecting query labels or
+    /// outcomes. Every configured gate must pass.
+    static func passesNovelty(_ policy: VivoSingleCellReferenceNoveltyPolicy,
+                              nearestSquaredDistance: Double?, largestClassProbability: Double?, winningVoteFraction: Double?,
+                              logistic: Bool) throws -> Bool {
+        try policy.validate()
+        if logistic {
+            guard policy.maximumNearestSquaredDistance == nil, policy.minimumVoteFraction == nil else {
+                throw VivoOmicsError.invalid("logistic novelty policy requires class probability only")
+            }
+            if let threshold=policy.minimumClassProbability {
+                guard let value=largestClassProbability, value.isFinite else { throw VivoOmicsError.invalid("missing logistic novelty metric") }
+                if value < threshold { return false }
+            }
+        } else {
+            guard policy.minimumClassProbability == nil else {
+                throw VivoOmicsError.invalid("kNN novelty policy cannot use class probability")
+            }
+            if let threshold=policy.maximumNearestSquaredDistance {
+                guard let value=nearestSquaredDistance, value.isFinite, value >= 0 else { throw VivoOmicsError.invalid("missing kNN distance novelty metric") }
+                if value > threshold { return false }
+            }
+            if let threshold=policy.minimumVoteFraction {
+                guard let value=winningVoteFraction, value.isFinite, (0...1).contains(value) else { throw VivoOmicsError.invalid("missing kNN vote novelty metric") }
+                if value < threshold { return false }
+            }
+        }
+        return true
+    }
     static func model(_ report: VivoH5ADPseudobulkReport,plan: VivoSingleCellReferencePlan,source: VivoFingerprint) throws -> VivoSingleCellReferenceModel {
         try plan.validate()
         let labels=report.metadata.cells.compactMap(\.group),organisms=Set(report.metadata.samples.map(\.organism))
@@ -130,6 +199,18 @@ public enum VivoSingleCellReference {
         try plan.validate()
         guard plan.featureNamespace==model.plan.featureNamespace,plan.mapping.countUnit==model.plan.mapping.countUnit else {
             throw VivoOmicsError.invalid("reference/query namespace or count unit mismatch")
+        }
+        // Reject thresholds that cannot be evaluated by the selected frozen
+        // mapper before scanning the query. This keeps an invalid policy from
+        // silently producing un-gated labels on empty or partial inputs.
+        if model.logistic != nil {
+            guard plan.novelty.maximumNearestSquaredDistance == nil, plan.novelty.minimumVoteFraction == nil else {
+                throw VivoOmicsError.invalid("logistic novelty policy requires class probability only")
+            }
+        } else {
+            guard plan.novelty.minimumClassProbability == nil else {
+                throw VivoOmicsError.invalid("kNN novelty policy cannot use class probability")
+            }
         }
         let reduction=model.reduction,d=reduction.options.components,centers=reduction.projectionCenters!
         var metadata: VivoSingleCellCountMetadata?,totals: [UInt64]=[],local: [Int]=[]
@@ -178,24 +259,26 @@ public enum VivoSingleCellReference {
             if totals[row]==0 {
                 if model.logistic == nil { operations-=d*reduction.cells.count }
                 else { classifierOperations-=(d+1)*model.classes.count }
-                predictions.append(.init(cell: identity,totalCounts: 0,scores: nil,neighborIndices: [],squaredDistances: [],votes: [],candidateLabel: nil));continue
+                predictions.append(.init(cell: identity,totalCounts: 0,scores: nil,neighborIndices: [],squaredDistances: [],votes: [],candidateLabel: nil,noveltyStatus: "emptyLibrary"));continue
             }
             guard scores[row].allSatisfy(\.isFinite) else { throw VivoOmicsError.invalid("query scores nonfinite") }
             if let logistic=model.logistic {
                 let probabilities=try VivoReferenceLogistic.probabilities(scores[row],model: logistic)
-                let winner=probabilities.firstIndex(of: probabilities.max()!)!
-                predictions.append(.init(cell: identity,totalCounts: totals[row],scores: scores[row],neighborIndices: [],squaredDistances: [],votes: [],candidateLabel: model.classes[winner],classProbabilities: probabilities));continue
+                let maximum=probabilities.max()!,winner=probabilities.firstIndex(of: maximum)!
+                let accepted=try passesNovelty(plan.novelty,nearestSquaredDistance: nil,largestClassProbability: maximum,winningVoteFraction: nil,logistic: true)
+                predictions.append(.init(cell: identity,totalCounts: totals[row],scores: scores[row],neighborIndices: [],squaredDistances: [],votes: [],candidateLabel: accepted ? model.classes[winner] : nil,classProbabilities: probabilities,noveltyStatus: accepted ? "candidate" : "rejectedNovel"));continue
             }
             let neighbors=try nearest(scores[row],reference: reduction.scores,neighbors: model.plan.neighbors)
             var votes=[Int](repeating: 0,count: model.classes.count)
             for neighbor in neighbors { votes[labelIndex[model.referenceLabels[neighbor.index]]!]+=1 }
-            let winner=votes.firstIndex(of: votes.max()!)!
+            let maximum=votes.max()!,winner=votes.firstIndex(of: maximum)!
+            let accepted=try passesNovelty(plan.novelty,nearestSquaredDistance: neighbors.first?.squaredDistance,largestClassProbability: nil,winningVoteFraction: Double(maximum)/Double(neighbors.count),logistic: false)
             predictions.append(.init(cell: identity,totalCounts: totals[row],scores: scores[row],neighborIndices: neighbors.map(\.index),
-                squaredDistances: neighbors.map(\.squaredDistance),votes: votes,candidateLabel: model.classes[winner]))
+                squaredDistances: neighbors.map(\.squaredDistance),votes: votes,candidateLabel: accepted ? model.classes[winner] : nil,noveltyStatus: accepted ? "candidate" : "rejectedNovel"))
         }
         let donors=Set(model.plan.mapping.samples.compactMap(\.donorID)).intersection(metadata.samples.compactMap(\.donorID)).sorted()
         return .init(method: model.method,referenceSource: model.source,classes: model.classes,cells: predictions,overlappingDonorIDs: donors,
             distanceOperations: operations,projectionUpdates: updates,hdf5Version: version,
-            qualification: (model.logistic == nil ? "Frozen training-only projection and uniform kNN votes; labels are candidates and votes are uncalibrated. Empty libraries remain unmapped. No novel-class rejection or biological identity guarantee. No query labels read or query fitting performed." : "Frozen training-only projection, standardization and class-balanced logistic classifier. Probabilities are uncalibrated and labels are candidates. Empty libraries remain unmapped; no novel-class rejection, query fitting or query labels.") + (model.plan.reduction.pca.featurePanel == nil ? "" : " Explicit training feature panel; query must measure every panel gene. Normalization uses each source library's complete measured gene universe; assay comparability requires separate evidence."),classifierOperations: model.logistic == nil ? nil : classifierOperations)
+            qualification: (model.logistic == nil ? "Frozen training-only projection and uniform kNN votes; labels are candidates and votes are uncalibrated. Empty libraries remain unmapped. No biological identity guarantee. No query labels read or query fitting performed." : "Frozen training-only projection, standardization and class-balanced logistic classifier. Probabilities are uncalibrated and labels are candidates. Empty libraries remain unmapped; no query fitting or query labels.") + (plan.novelty == .init() ? " No query novelty gate was requested." : " Explicit caller-supplied query novelty gate suppresses out-of-support candidates; thresholds are not calibrated probabilities or a novel-class model.") + (model.plan.reduction.pca.featurePanel == nil ? "" : " Explicit training feature panel; query must measure every panel gene. Normalization uses each source library's complete measured gene universe; assay comparability requires separate evidence."),classifierOperations: model.logistic == nil ? nil : classifierOperations)
     }
 }

@@ -653,8 +653,14 @@ The complete development objective remains open:
    then reconstructs both frozen gene-space classifiers. Same-named rare classes
    have sharply different measured RNA profiles, limiting source-label equivalence.
    Both transfer failures remain; no cells were relabelled or excluded.
-   Calibrated annotation, novel-class rejection and independent multi-study
-   biological qualification remain; labels are not authoritative.
+   Calibrated annotation and independent multi-study biological qualification
+   remain; labels are not authoritative. Query plans now also accept explicit
+   open-set gates: kNN can require a maximum nearest-reference squared distance
+   and winning-vote fraction, while the logistic mapper can require a minimum
+   largest-class probability. A failed gate emits the scores and a
+   `rejectedNovel` status while suppressing the candidate label. These thresholds
+   are caller-supplied, uncalibrated gates; they are not a learned novel-class
+   model or biological identity validation.
 7. **Perturbation prediction:** [real donor-held-out response baselines](../Tools/Omics/PerturbationPrediction/README.md)
    now evaluate all eight Kang and three Hagai donors using supplied controls and
    sealed treated outcomes. [Native donor-response prediction](../Tools/Omics/PerturbationPrediction/NATIVE.md)

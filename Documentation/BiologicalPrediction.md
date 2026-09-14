@@ -374,10 +374,13 @@ response model, deconvolution, tissue function or variant-to-phenotype endpoint.
 The [native balanced reference classifier](../Tools/Omics/ReferenceMapping/Logistic/README.md)
 now predicts candidate source labels for all 8,569 Baron query cells, reproducing
 the previous external classifier. Macro-F1 improves over kNN in every donor,
-with lower overall accuracy in two and retained rare-class misses. This advances
-the annotation step; calibrated confidence, authoritative biological identities
-and independent context transfer remain unqualified. It adds no perturbation
-response, tissue-function or clinical outcome evidence.
+with lower overall accuracy in two and retained rare-class misses. Query plans
+now support explicit open-set gates (distance/vote gates for kNN or a probability
+gate for logistic mapping); a failed gate preserves the score and records
+`rejectedNovel` while withholding the candidate label. These thresholds are
+caller supplied and uncalibrated, so calibrated confidence, authoritative
+biological identities and independent context transfer remain unqualified. It
+adds no perturbation response, tissue-function or clinical outcome evidence.
 
 The [complete Kang–Ding annotation-transfer experiment](../Tools/Omics/ReferenceMapping/CrossStudy/README.md)
 now retains all 68,704 query cells and each original RNA-library denominator using
