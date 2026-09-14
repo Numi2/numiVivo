@@ -1,0 +1,73 @@
+{
+  "binary": {
+    "path": "/tmp/numivivo-h5ad-scan-build/arm64-apple-macosx/debug/numivivo",
+    "sha256": "939387c25629880fe4e40ee0bc55e75e7bfd79385544ce06f2cc20999c9baef6"
+  },
+  "cli": {
+    "receiptSource": {
+      "bytes": [
+        254,
+        110,
+        231,
+        28,
+        167,
+        120,
+        166,
+        156,
+        80,
+        163,
+        226,
+        35,
+        48,
+        220,
+        199,
+        31,
+        4,
+        245,
+        243,
+        230,
+        177,
+        56,
+        111,
+        42,
+        20,
+        194,
+        244,
+        231,
+        166,
+        239,
+        184,
+        234
+      ]
+    },
+    "reportNonzeros": 4,
+    "reportSourceCells": 4,
+    "retainedCompressedSourceExactly": true,
+    "retainedOriginalSHA256": "fe6ee71ca778a69c50a3e22330dcc71f04f5f3e6b1386f2a14c2f4e7a6efb8ea",
+    "scanPseudobulkPublish": "passed",
+    "scanPseudobulkVerify": "passed",
+    "sourceGzipBytes": 2932,
+    "sourceGzipSHA256": "fe6ee71ca778a69c50a3e22330dcc71f04f5f3e6b1386f2a14c2f4e7a6efb8ea",
+    "sourcePlainBytes": 18289,
+    "writer": "passed"
+  },
+  "date": "2026-09-14",
+  "focusedTests": {
+    "command": "swift test --build-path /tmp/numivivo-h5ad-scan-build --filter SingleCellInterchangeTests",
+    "failed": 0,
+    "passed": 7
+  },
+  "hdf5": {
+    "libraryPath": "/opt/homebrew/opt/hdf5/lib/libhdf5.dylib",
+    "sha256": "b96f5a824802e985198fb58fc336da80fc6a4990249f4038656b433231c7da51"
+  },
+  "host": {
+    "machine": "arm64",
+    "swift": "Apple Swift version 6.3 (swiftlang-6.3.0.123.5 clang-2100.0.123.102)\nTarget: arm64-apple-macosx26.0",
+    "system": "macOS-26.6-arm64-arm-64bit-Mach-O"
+  },
+  "qualification": "bounded external-gzip handling for scan-based H5AD workflows; no biological outcome claim",
+  "schema": "numivivo.org/h5ad-gzip-scan-qualification/v1",
+  "scope": "The private expanded view is removed after each scan. Axis projection and annotation remain plain-HDF5-only until separately qualified.",
+  "sourceCommit": "8b5f4be7665b370c77dc186624cabd6cda329fcc"
+}

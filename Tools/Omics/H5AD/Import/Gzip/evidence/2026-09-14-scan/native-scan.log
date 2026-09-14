@@ -1,0 +1,44 @@
+$ swift build --build-path /tmp/numivivo-h5ad-scan-build
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.26s)
+$ swift test --build-path /tmp/numivivo-h5ad-scan-build --filter SingleCellInterchangeTests
+[0/1] Planning build
+Building for debugging...
+[0/4] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.26s)
+Test Suite 'Selected tests' started at 2026-09-14 22:35:11.325.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-14 22:35:11.326.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-14 22:35:11.326.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-14 22:35:11.326.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1743
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellInterchangeTests started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test gzipReadableSnapshotIsPrivateAndPlainSourcesStayInPlace() started.
+◇ Test h5adDerivedPlansRejectInvalidMappingsBeforeSourceWork() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test h5adImportMappingRejectsAmbiguousPathsAndColumns() started.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.001 seconds.
+✔ Test h5adImportMappingRejectsAmbiguousPathsAndColumns() passed after 0.001 seconds.
+✔ Test h5adDerivedPlansRejectInvalidMappingsBeforeSourceWork() passed after 0.001 seconds.
+✔ Test gzipReadableSnapshotIsPrivateAndPlainSourcesStayInPlace() passed after 0.003 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.013 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.013 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.027 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.027 seconds.
+✔ Test run with 7 tests in 1 suite passed after 0.027 seconds.
+$ numivivo singlecell-h5ad-write dataset.json --output source.h5ad
+{"file":"/tmp/numivivo-gzip-scan-smoke/source.h5ad","status":"written-native-count-anndata"}
+$ gzip source.h5ad -> source.h5ad.gz (mtime=0)
+plain_bytes 18289 gzip_bytes 2932
+$ numivivo singlecell-h5ad-pseudobulk source.h5ad.gz --plan plan.json --output bundle
+{"implementation":{"bytes":[155,228,132,193,175,227,207,53,248,8,119,206,118,13,251,218,157,183,149,88,240,108,168,159,62,250,19,221,61,139,117,127]},"plan":{"bytes":[126,88,41,182,241,174,224,47,245,210,188,100,173,177,159,124,102,99,36,67,21,121,191,8,142,255,87,71,109,189,235,94]},"report":{"bytes":[11,231,253,86,24,61,233,70,165,13,33,150,211,71,26,222,96,0,236,66,132,118,52,180,19,62,12,186,122,213,7,108]},"schemaVersion":1,"source":{"bytes":[254,110,231,28,167,120,166,156,80,163,226,35,48,220,199,31,4,245,243,230,177,56,111,42,20,194,244,231,166,239,184,234]}}
+$ numivivo singlecell-h5ad-pseudobulk-verify bundle
+{"nonzeros":"4","sourceCells":"4","status":"verified-streamed-pseudobulk"}
