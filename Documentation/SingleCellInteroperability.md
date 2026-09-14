@@ -902,6 +902,14 @@ The complete development objective remains open:
     reduction path. This is a bounded FP32 numerical profile; CPU remains the
     default, and no general speedup, million-cell or biological qualification
     follows.
+    An opt-in `pcaOperatorsBackend = metalFP32` now runs sparse CSR projection
+    and CSC transpose on the physical Apple GPU inside the resident Krylov PCA
+    owner. The [native PCA-operator receipt](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-operators/)
+    passes its three focused tests, including a direct CPU-oracle comparison and
+    an integrated reduction with the declared `2e-4` FP32 residual tolerance.
+    Streamed H5AD PCA rejects this resident-only backend explicitly. CPU remains
+    the default; this is a bounded operator contract, not a general speedup,
+    million-cell or biological qualification.
 11. **Other omics:** a [SEQC technical bulk-RNA benchmark](../Tools/Omics/Benchmarks/SEQC/README.md)
     now runs all six public Illumina RefSeq sites through the native negative-
     binomial owner and compares the same counts/design with edgeR, limma-voom

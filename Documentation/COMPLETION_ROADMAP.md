@@ -40,6 +40,11 @@ The [opt-in Metal sparse feature-statistics profile](../Tools/Omics/Reduction/Me
 now feeds HVG/PCA moments from sparse nonzero values on a physical Apple GPU,
 with CPU FP64 still the default. It is a bounded numerical qualification and
 does not close general Metal acceleration or biological-outcome validation.
+The [opt-in Metal sparse PCA-operator profile](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-operators/README.md)
+now runs resident Krylov projection and transpose over sparse CSR/CSC streams on
+a physical Apple GPU. Its three focused tests pass with an explicit FP32
+residual tolerance; CPU FP64 remains the default and broad acceleration remains
+unqualified.
 
 The [prediction assessment](BiologicalPrediction.md) records the current
 scientific answer: bounded expression-response prediction is demonstrated,

@@ -484,6 +484,12 @@ feeds the existing sparse PCA owner. Its two focused tests agree with the CPU FP
 moments within their declared FP32 bounds. CPU remains the default; this receipt
 does not establish broad GPU speedup, million-cell scaling or biological outcome
 prediction.
+An opt-in [Metal sparse PCA-operator path](Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-operators/)
+now performs resident Krylov projection and transpose over sparse CSR/CSC streams
+on a physical Apple GPU. Three focused tests pass against the CPU sparse oracle
+and the integrated reduction path at its declared FP32 residual tolerance. CPU
+remains the default; no broad speedup, million-cell scaling or biological
+qualification follows.
 
 ## One scientific question, several scales
 

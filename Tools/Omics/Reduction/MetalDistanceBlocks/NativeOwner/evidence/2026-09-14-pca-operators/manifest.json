@@ -1,0 +1,28 @@
+{
+  "schema": "numivivo.org/metal-sparse-pca-operators-native-manifest/v1",
+  "sourceCommit": "fdcd8f5b39804cd65aa690c4669a0f6e7078cf15",
+  "status": "passed",
+  "files": {
+    "README.md": "6f92ac6951bab51ec7e29f41ce4d5625e1086d8cb3eda7de5a22cd216d9c6c53",
+    "execution.json": "46be24717607b211144cef0a0a9e21bf9c500e09ca6bfc64b6ce9a6d5486720e",
+    "native-metal-pca-operators.log.gz": "52b2be28189303470529c81d8b486eca89e6bc3f39e8b68090e705d7efc582f0"
+  },
+  "sourceFiles": {
+    "Sources/NumiVivoKit/Omics/VivoMetalSparsePCAOperators.swift": {
+      "bytes": 13155,
+      "sha256": "27d1f28e8f3a5ebf388f36cae8faf35a66ec8dabda1ce9853d594b1099faa6e3"
+    },
+    "Sources/NumiVivoKit/Omics/VivoSingleCellReduction.swift": {
+      "bytes": 20142,
+      "sha256": "7245d3b668f2a887c71bac4b89667266d6fd1fdfb4f5b238c956cfb572b807ac"
+    },
+    "Sources/NumiVivoKit/Omics/VivoH5ADReduction.swift": {
+      "bytes": 11353,
+      "sha256": "eb0ea51fcd28da05738d6ee1080ee0f8d6fa1213152b7cec8e6ef3e0ba32f4a7"
+    },
+    "Tests/NumiVivoIntegrationTests/SingleCellMetalPCAOperatorsTests.swift": {
+      "bytes": 3060,
+      "sha256": "cddd36800e21eeeddcbe12259197467e01f80cf22e4271d90a710e7826a1678b"
+    }
+  }
+}

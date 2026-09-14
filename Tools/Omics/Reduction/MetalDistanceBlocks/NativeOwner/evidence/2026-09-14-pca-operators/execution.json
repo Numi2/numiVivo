@@ -1,0 +1,69 @@
+{
+  "schema": "numivivo.org/metal-sparse-pca-operators-native/v1",
+  "sourceCommit": "fdcd8f5b39804cd65aa690c4669a0f6e7078cf15",
+  "command": [
+    "env",
+    "NUMIVIVO_TEST_METAL=1",
+    "swift",
+    "test",
+    "--build-path",
+    "/tmp/numivivo-metal-pca-operators-build",
+    "--filter",
+    "SingleCellMetalPCAOperatorsTests"
+  ],
+  "result": "passed",
+  "testCount": 3,
+  "testSuite": "SingleCellMetalPCAOperatorsTests",
+  "passedTests": [
+    "pcaOperatorBackendIsOptionalAndUnknownKeysRemainRejected",
+    "sparseProjectAndTransposeMatchCPUOracle",
+    "residentReductionRecordsOptInMetalOperators"
+  ],
+  "host": "Mac16,12",
+  "machine": "arm64",
+  "chip": "Apple M4",
+  "memoryBytes": 25769803776,
+  "os": "macOS 26.6 (25G5028f)",
+  "sourceFiles": {
+    "Sources/NumiVivoKit/Omics/VivoMetalSparsePCAOperators.swift": {
+      "bytes": 13155,
+      "sha256": "27d1f28e8f3a5ebf388f36cae8faf35a66ec8dabda1ce9853d594b1099faa6e3"
+    },
+    "Sources/NumiVivoKit/Omics/VivoSingleCellReduction.swift": {
+      "bytes": 20142,
+      "sha256": "7245d3b668f2a887c71bac4b89667266d6fd1fdfb4f5b238c956cfb572b807ac"
+    },
+    "Sources/NumiVivoKit/Omics/VivoH5ADReduction.swift": {
+      "bytes": 11353,
+      "sha256": "eb0ea51fcd28da05738d6ee1080ee0f8d6fa1213152b7cec8e6ef3e0ba32f4a7"
+    },
+    "Tests/NumiVivoIntegrationTests/SingleCellMetalPCAOperatorsTests.swift": {
+      "bytes": 3060,
+      "sha256": "cddd36800e21eeeddcbe12259197467e01f80cf22e4271d90a710e7826a1678b"
+    }
+  },
+  "log": {
+    "path": "native-metal-pca-operators.log.gz",
+    "bytes": 557,
+    "sha256": "52b2be28189303470529c81d8b486eca89e6bc3f39e8b68090e705d7efc582f0",
+    "uncompressedBytes": 1298,
+    "uncompressedSHA256": "51512556d26e3a62f997a2be4512d5faf63010c1ccc6d82803e3d21e09abc110"
+  },
+  "fixture": {
+    "directRows": 4,
+    "directColumns": 3,
+    "directNonzeroEntries": 7,
+    "integrationCohort": "SingleCellCohortTests.fixture",
+    "integrationCells": 24,
+    "integrationFeatures": 32,
+    "fp32ResidualTolerance": 0.0002,
+    "assertions": [
+      "CSR project agrees with CPU within 1e-5",
+      "CSC transpose agrees with CPU within 1e-5",
+      "integrated sparse PCA reduction completes with declared residual tolerance",
+      "scores are finite"
+    ]
+  },
+  "scope": "Physical Apple GPU dispatch and bounded FP32 sparse PCA projection/transpose qualification only; CPU FP64 remains default; no cohort timing, million-cell scaling, model-fitting acceleration, biological preservation or biological outcome prediction.",
+  "recordedUnix": 1789422019.145814
+}
