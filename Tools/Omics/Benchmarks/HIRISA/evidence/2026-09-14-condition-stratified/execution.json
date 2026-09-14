@@ -1,0 +1,86 @@
+{
+  "status": "verified",
+  "commit": "f1b882f1b4d545ab8a40e149a514e4a1b2be8a99",
+  "input": "/Users/n/numivivo-hirisa-20260910/integration-full/pca",
+  "plan": "/Users/n/numivivo-hirisa-20260910/integration-condition-20260914/plan.json",
+  "output": "/Users/n/numivivo-hirisa-20260910/integration-condition-20260914/native",
+  "inputPlanSHA256": "33a3535ba250c7a9c0f2814db73add683b7255feccd6934ba3aaaa2d920b58a7",
+  "candidatePlanSHA256": "6f1953e25cec2018ed31d18e252502f1d656a9b2e4804dfe7a4c46feb1be0e2e",
+  "preparedUnix": 1789397530.882338,
+  "host": "ns-Mac-mini.local",
+  "model": "Mac16,11",
+  "macOS": "26.6",
+  "binary": "/Users/n/numivivo-hirisa-20260910/binaries/numivivo-f1",
+  "binarySHA256": "99f42307df8ced1dd3a827bbeeeaa4d8c132487a73d8846fc4d263d7abd48025",
+  "binaryBytes": 55755736,
+  "builtUnix": 1789397555.8257651,
+  "swiftVersion": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)",
+  "cliHelp": "numivivo singlecell: invalid(\"singlecell-pca-integrate <PCA-bundle> --plan <plan.json> --output <new-bundle>\")\n",
+  "worktreeRemovedUnix": 1789397704.476247,
+  "worktreeRemoved": true,
+  "inputCandidate": "/Users/n/numivivo-hirisa-20260910/integration-condition-20260914/input-candidate",
+  "inputCandidateReceiptImplementation": "b9290407651a6d4c2ef434021fa1a2d412fc0807d27274dd18a3d68a487cb2cd",
+  "inputCandidateReceiptSHA256": "d4e9da9b167d4e5c546e1b62bdb076a28c363b34bcb75bdd71dc70b0713856ae",
+  "inputCandidateHardlinkSnapshot": true,
+  "inputCandidatePreparedUnix": 1789397750.4712589,
+  "publishCompletedUnix": 1789398747.991223,
+  "publishExitCode": 0,
+  "publishCommand": "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib DYLD_LIBRARY_PATH=/Users/n/numivivo-multiassay-hdf5-20260909:/opt/homebrew/opt/hdf5/lib numivivo-f1 singlecell-pca-integrate input-candidate --plan plan.json --output native",
+  "nativeFiles": {
+    "assignment-scores.bin": {
+      "bytes": 516030080,
+      "SHA256": "97ed5ad573b9095107101712e887a31e623f4d8f860402c4df71f511b26a8686"
+    },
+    "memberships.bin": {
+      "bytes": 2580150400,
+      "SHA256": "b9a133c566fd321db7bfccc86abe7e11a6851c86181258250b32884d3bf06fc5"
+    },
+    "metadata.json": {
+      "bytes": 149506727,
+      "SHA256": "f81771d3a3f2db3fc23a4ec21b6d52f160ed2b56f843e567dfdf443e8cfc2b7f"
+    },
+    "plan.json": {
+      "bytes": 253,
+      "SHA256": "0e25642d5f3e2a4ce3a205631d3c9d6528239c4e22b4a40f11866786afaa219b"
+    },
+    "receipt.json": {
+      "bytes": 1117,
+      "SHA256": "1eb5d0c55b1f7e11e59599b8099f33d3a728f5089937daee9590ce824ae84bea"
+    },
+    "report.json": {
+      "bytes": 3268855,
+      "SHA256": "aabb27fa3bc267166f6f195d451d8799ddd10ef99139d75990d271d97537263e"
+    },
+    "scores.bin": {
+      "bytes": 516030080,
+      "SHA256": "bcd3cc6582f77fcf6e3d565daed5f42c7c2fbaef37b6ce1c2a2cf59ceafdebe6"
+    }
+  },
+  "nativeReceiptSHA256": "1eb5d0c55b1f7e11e59599b8099f33d3a728f5089937daee9590ce824ae84bea",
+  "nativeReportSHA256": "aabb27fa3bc267166f6f195d451d8799ddd10ef99139d75990d271d97537263e",
+  "attempts": [
+    "/Users/n/numivivo-hirisa-20260910/integration-condition-20260914/attempts/001.json",
+    "/Users/n/numivivo-hirisa-20260910/integration-condition-20260914/attempts/002.json"
+  ],
+  "verifyCompletedUnix": 1789399711.771447,
+  "verifyExitCode": 0,
+  "verifyCommand": "NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib DYLD_LIBRARY_PATH=/Users/n/numivivo-multiassay-hdf5-20260909:/opt/homebrew/opt/hdf5/lib numivivo-f1 singlecell-pca-integrate-verify native",
+  "verifyLogSHA256": "19b92248a10af67a79a985e080d21bfb1f0e6241fe7f473cd14b0a0af0c5537a",
+  "verifyLogBytes": 1165,
+  "verifyReceiptMatches": true,
+  "retentionAbsoluteResult": "/Users/n/numivivo-hirisa-20260910/annotation-retention/condition-f1/condition-f1-vs-baseline.json",
+  "retentionAbsoluteResultSHA256": "a1fed0d5b13e1081a73b91ae2ed389a400d5ca6112573327161f242b7a89c480",
+  "retentionAbsoluteOracle": "/Users/n/numivivo-hirisa-20260910/annotation-retention/condition-f1/condition-f1-vs-baseline-oracle.json",
+  "retentionAbsoluteOracleSHA256": "e8d75c56757d406768ff53ed4b04143a67102f66ce654a5839f12afd44683ca4",
+  "retentionAbsoluteOracleStatus": "passed",
+  "retentionNativeRelativeResult": "/Users/n/numivivo-hirisa-20260910/annotation-retention/condition-f1/condition-f1.json",
+  "retentionNativeRelativeResultSHA256": "34e14317d7d72be5e34654b568766d27023b9cfbea3ffb9719c34bdf136935c5",
+  "retentionNativeRelativeOracle": "/Users/n/numivivo-hirisa-20260910/annotation-retention/condition-f1/condition-f1-oracle.json",
+  "retentionNativeRelativeOracleSHA256": "e901e19f575344811a457952c7745a2c178844070607a8c350efc76d6222d8a0",
+  "retentionNativeRelativeOracleStatus": "passed",
+  "retentionAbsoluteCompleteGate": false,
+  "retentionAbsoluteMarginFailures": 40,
+  "retentionAbsoluteRareMarginFailures": 10,
+  "retentionNativeBaselineMarginFailures": 37,
+  "retentionDecision": "rejected-for-promotion"
+}

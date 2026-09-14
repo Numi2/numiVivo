@@ -14,6 +14,14 @@ integration setting was selected from these results. Earlier program-preservatio
 passes and failures remain valid at their stated scopes; they do not substitute
 for this separate annotation endpoint. No integration model was refitted.
 
+The subsequent [condition-stratified candidate](CONDITION_STRATIFIED.md) fits
+donor effects separately inside each declared condition. Its native publish,
+replay and independent per-cell SVD oracle all pass, but the absolute comparison
+fails **40/146** supported, control-sensitive comparisons, including **10/29**
+rare comparisons. The existing native global correction fails 37/146. The
+candidate's aggregate recall improvement therefore does not qualify complete
+preservation and it is not promoted.
+
 ## Complete cohort and controls
 
 All **1,612,594 original cells**, 131 libraries, five donors, 23 original
@@ -57,6 +65,7 @@ candidate/label/stratum rows, including insufficient and improved outcomes.
 | harmony-7 | 146 | 41 | 29 | 10 | fail |
 | harmony-19 | 146 | 39 | 29 | 12 | fail |
 | harmony-41 | 146 | 38 | 29 | 11 | fail |
+| condition-stratified candidate | 146 | 40 | 29 | 10 | fail |
 
 ## Every native margin failure
 

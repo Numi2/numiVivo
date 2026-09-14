@@ -603,6 +603,13 @@ The complete development objective remains open:
    remain explicit. Full Baron is rejected for confounding. Covariate models
    beyond the donor+batch pair, prospective mapping and general multi-donor
    competitiveness remain open.
+   The [condition-stratified donor candidate](../Tools/Omics/Benchmarks/HIRISA/CONDITION_STRATIFIED.md)
+   was subsequently executed and replayed on the complete HIRISA bundle. It
+   improves mean sensitive recall relative to the original PCA, but fails 40/146
+   supported comparisons (10/29 rare), versus 37/146 for the existing native
+   global correction. The native receipt and independent SVD oracle pass, while
+   the complete preservation gate remains failed and the candidate is not
+   promoted.
    The [full source design audit](../Tools/Omics/Reduction/IntegrationDesign/README.md)
    checks all 131 HIRISA libraries and 1,612,594 observation memberships. Donor
    and batch columns are separable across the full atlas but redundant in Bcell,

@@ -1,0 +1,7 @@
+{
+  "attempt": 2,
+  "status": "rejected-before-output",
+  "error": "numivivo singlecell: invalid(\\\"H5AD requires native HDF5; install hdf5 or set NUMIVIVO_HDF5_LIBRARY\\\")",
+  "command": "numivivo-f1 singlecell-pca-integrate input-candidate --plan plan.json --output native",
+  "note": "rerun required the pinned native HDF5 runtime"
+}

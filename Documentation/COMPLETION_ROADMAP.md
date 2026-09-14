@@ -91,6 +91,14 @@ development evidence. It does not constrain correction or establish biological
 preservation, interactions or unseen-donor mapping; retain the existing
 scientific gates. The primary Adamson paper and Table S1 now confirm the two UPR controls and their sequences. A separate [provisional role-sensitivity run](AdamsonProvisionalRoleSensitivity.md) fits and scores 80 supported held targets under an explicitly pooled `pBA580`/`pBA582` control assumption, but deposited-label mapping and the 94-versus-93 roster discrepancy remain open before authoritative fitting of its frozen transfer test, and Parse's intervention and feature identities before admitting its proposed prediction test. Retain all negative results and simple baselines. Measured phenotype links need their own acceptance experiments.
 
+The [condition-stratified donor candidate](../Tools/Omics/Benchmarks/HIRISA/CONDITION_STRATIFIED.md)
+was executed on the complete HIRISA bundle and passes native replay plus an
+independent per-cell SVD oracle. Its absolute retention result still fails
+40/146 supported comparisons, including 10/29 rare comparisons, versus 37/146
+for the existing native correction. The candidate remains a rejected development
+experiment; local composition/alignment and independent biological endpoints are
+still required.
+
 The following molecular milestones remain part of the wider product roadmap;
 they do not replace this immediate single-cell priority.
 

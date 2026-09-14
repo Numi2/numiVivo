@@ -5,6 +5,14 @@ conditional donor correction on all original cells with frozen native membership
 It leaves 37/146 annotation failures, with four resolved and four introduced;
 no native solver change is promoted.
 
+The [condition-stratified integration candidate](CONDITION_STRATIFIED.md) was
+then executed natively on all 1,612,594 cells. It improves the mean sensitive
+annotation recall relative to the original PCA, but fails 40/146 supported,
+control-sensitive comparisons (10/29 rare), three more than the existing native
+global correction. The candidate is fully replayed and independently checked,
+yet remains rejected for promotion; complete biological preservation is still
+unqualified.
+
 A subsequent [within-library decoder development experiment](PROGRAM_CALIBRATION.md)
 meets the unchanged program-loss margins with 28/32 sensitive controls, four
 insufficient. It identifies objective dependence without replacing the original

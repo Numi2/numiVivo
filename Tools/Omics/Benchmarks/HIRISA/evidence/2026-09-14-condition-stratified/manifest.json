@@ -1,0 +1,59 @@
+{
+  "external": {
+    "baselineRetention": "annotation-retention/baseline.json",
+    "candidateAssignmentScores": "/Users/n/numivivo-hirisa-20260910/integration-condition-20260914/native/assignment-scores.bin",
+    "candidateMemberships": "/Users/n/numivivo-hirisa-20260910/integration-condition-20260914/native/memberships.bin",
+    "candidateOutputSHA256": {
+      "assignment-scores.bin": "97ed5ad573b9095107101712e887a31e623f4d8f860402c4df71f511b26a8686",
+      "memberships.bin": "b9a133c566fd321db7bfccc86abe7e11a6851c86181258250b32884d3bf06fc5",
+      "metadata.json": "f81771d3a3f2db3fc23a4ec21b6d52f160ed2b56f843e567dfdf443e8cfc2b7f",
+      "plan.json": "0e25642d5f3e2a4ce3a205631d3c9d6528239c4e22b4a40f11866786afaa219b",
+      "receipt.json": "1eb5d0c55b1f7e11e59599b8099f33d3a728f5089937daee9590ce824ae84bea",
+      "report.json": "aabb27fa3bc267166f6f195d451d8799ddd10ef99139d75990d271d97537263e",
+      "scores.bin": "bcd3cc6582f77fcf6e3d565daed5f42c7c2fbaef37b6ce1c2a2cf59ceafdebe6"
+    },
+    "candidateScores": "/Users/n/numivivo-hirisa-20260910/integration-condition-20260914/native/scores.bin",
+    "nativeRetention": "annotation-retention/native.json",
+    "study": "/Users/n/numivivo-hirisa-20260910"
+  },
+  "files": {
+    "attempt-001.json": {
+      "SHA256": "45fd4c1c9e9c0479cf9ad6244ae0a334c11feb092d0c8036dd9a59c8ab5c4292",
+      "bytes": 313
+    },
+    "attempt-002.json": {
+      "SHA256": "1abedea206a8f039aa50b969080d33f2ea9aa0f9a3e36a74b500af30f72d5a50",
+      "bytes": 339
+    },
+    "condition-f1-vs-baseline-oracle.json.gz": {
+      "SHA256": "97b3b5db4c10b71ecceea136fbb22f9f7a6b6045621f3c8bc5e636079bff808b",
+      "bytes": 3060
+    },
+    "condition-f1-vs-baseline.json.gz": {
+      "SHA256": "74121fc1e2cb00cb78c52ad794af377d4bc83bf63b34b43012e417120d5033c9",
+      "bytes": 753245
+    },
+    "condition-f1-vs-native-oracle.json.gz": {
+      "SHA256": "25a7cff01b8d45b0d05bcba71779dd1549c4e88736e57900c377df9543911433",
+      "bytes": 3059
+    },
+    "condition-f1-vs-native.json.gz": {
+      "SHA256": "c59aa626cf32c1d1bb98054054abc9d0f35ccc23bc364866dd451589c09bdb7b",
+      "bytes": 752414
+    },
+    "execution.json": {
+      "SHA256": "614102135f80df1a5cae3926bf78c35dd72a5fa1462ef384469e637c2592c2e9",
+      "bytes": 4969
+    },
+    "plan.json": {
+      "SHA256": "6f1953e25cec2018ed31d18e252502f1d656a9b2e4804dfe7a4c46feb1be0e2e",
+      "bytes": 330
+    },
+    "summary.json": {
+      "SHA256": "55f0748e9e95aa448fd906aebfcf0c0c4735eddf292c36e6ec18bf5e7950c47d",
+      "bytes": 15056
+    }
+  },
+  "scope": "Compact repository evidence; full 1.6M-cell matrices remain on the Mac mini under external hashes.",
+  "status": "archived-summary-and-diagnostics"
+}

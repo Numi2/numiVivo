@@ -1,0 +1,428 @@
+{
+  "absoluteComparison": {
+    "baselineMatrix": "baseline",
+    "baselineScoreSHA256": "62e6b0644e2c954749b77946ba748e184c33580614f5756b1bc1b0980df86296",
+    "candidateMatrix": "condition-f1",
+    "candidateScoreSHA256": "bcd3cc6582f77fcf6e3d565daed5f42c7c2fbaef37b6ce1c2a2cf59ceafdebe6",
+    "completePreservationQualified": false,
+    "marginFailures": [
+      {
+        "baselineMeanRecall": 0.44231796582834065,
+        "candidateMeanRecall": 0.29174181895499995,
+        "label": "B intermediate",
+        "maximumFoldRecallLoss": 0.29340196537201685,
+        "meanRecallLoss": 0.1505761468733407,
+        "rare": false,
+        "stratum": 0
+      },
+      {
+        "baselineMeanRecall": 0.37187403993855606,
+        "candidateMeanRecall": 0.34004864311315924,
+        "label": "ILC",
+        "maximumFoldRecallLoss": 0.17857142857142855,
+        "meanRecallLoss": 0.0318253968253968,
+        "rare": true,
+        "stratum": 0
+      },
+      {
+        "baselineMeanRecall": 0.5423593837022727,
+        "candidateMeanRecall": 0.3822641864709781,
+        "label": "B intermediate",
+        "maximumFoldRecallLoss": 0.36424431564868476,
+        "meanRecallLoss": 0.1600951972312945,
+        "rare": false,
+        "stratum": 1
+      },
+      {
+        "baselineMeanRecall": 0.6593985728072058,
+        "candidateMeanRecall": 0.6018235130304759,
+        "label": "B intermediate",
+        "maximumFoldRecallLoss": 0.33957553058676654,
+        "meanRecallLoss": 0.05757505977673004,
+        "rare": false,
+        "stratum": 2
+      },
+      {
+        "baselineMeanRecall": 0.6806325257008237,
+        "candidateMeanRecall": 0.6926891854041236,
+        "label": "B memory",
+        "maximumFoldRecallLoss": 0.11917659804983749,
+        "meanRecallLoss": -0.012056659703299943,
+        "rare": false,
+        "stratum": 2
+      },
+      {
+        "baselineMeanRecall": 0.7794736237363067,
+        "candidateMeanRecall": 0.7334025098156618,
+        "label": "HSPC",
+        "maximumFoldRecallLoss": 0.26771653543307083,
+        "meanRecallLoss": 0.04607111392064487,
+        "rare": false,
+        "stratum": 2
+      },
+      {
+        "baselineMeanRecall": 0.3103886953515568,
+        "candidateMeanRecall": 0.2367383659865736,
+        "label": "B intermediate",
+        "maximumFoldRecallLoss": 0.22061965811965814,
+        "meanRecallLoss": 0.07365032936498314,
+        "rare": false,
+        "stratum": 3
+      },
+      {
+        "baselineMeanRecall": 0.3693358852917828,
+        "candidateMeanRecall": 0.2918237910112452,
+        "label": "B intermediate",
+        "maximumFoldRecallLoss": 0.20060445787684172,
+        "meanRecallLoss": 0.07751209428053753,
+        "rare": false,
+        "stratum": 4
+      },
+      {
+        "baselineMeanRecall": 0.16019261304173069,
+        "candidateMeanRecall": 0.15757520259107635,
+        "label": "ILC",
+        "maximumFoldRecallLoss": 0.1926605504587156,
+        "meanRecallLoss": 0.0026174104506543395,
+        "rare": true,
+        "stratum": 4
+      },
+      {
+        "baselineMeanRecall": 0.6561336224755324,
+        "candidateMeanRecall": 0.6939524347025067,
+        "label": "CD14 Mono",
+        "maximumFoldRecallLoss": 0.24887104867034615,
+        "meanRecallLoss": -0.0378188122269741,
+        "rare": false,
+        "stratum": 5
+      },
+      {
+        "baselineMeanRecall": 0.6744005086305881,
+        "candidateMeanRecall": 0.8396040294462402,
+        "label": "CD16 Mono",
+        "maximumFoldRecallLoss": 0.25764192139737996,
+        "meanRecallLoss": -0.16520352081565207,
+        "rare": false,
+        "stratum": 5
+      },
+      {
+        "baselineMeanRecall": 0.7121426157969195,
+        "candidateMeanRecall": 0.6655306070130917,
+        "label": "CD14 Mono",
+        "maximumFoldRecallLoss": 0.289090653811953,
+        "meanRecallLoss": 0.04661200878382782,
+        "rare": false,
+        "stratum": 6
+      },
+      {
+        "baselineMeanRecall": 0.6301293973985942,
+        "candidateMeanRecall": 0.5701348227023001,
+        "label": "CD14 Mono",
+        "maximumFoldRecallLoss": 0.3808978608014463,
+        "meanRecallLoss": 0.059994574696294066,
+        "rare": false,
+        "stratum": 7
+      },
+      {
+        "baselineMeanRecall": 0.22754338309760636,
+        "candidateMeanRecall": 0.20146465770302419,
+        "label": "CD4 TCM",
+        "maximumFoldRecallLoss": 0.10256410256410259,
+        "meanRecallLoss": 0.026078725394582187,
+        "rare": false,
+        "stratum": 8
+      },
+      {
+        "baselineMeanRecall": 0.5291341604613793,
+        "candidateMeanRecall": 0.5435576095435822,
+        "label": "HSPC",
+        "maximumFoldRecallLoss": 0.14960629921259838,
+        "meanRecallLoss": -0.014423449082202921,
+        "rare": true,
+        "stratum": 8
+      },
+      {
+        "baselineMeanRecall": 0.7508529915531825,
+        "candidateMeanRecall": 0.6860014501793864,
+        "label": "CD14 Mono",
+        "maximumFoldRecallLoss": 0.23187695924764895,
+        "meanRecallLoss": 0.06485154137379626,
+        "rare": false,
+        "stratum": 9
+      },
+      {
+        "baselineMeanRecall": 0.40608063627509033,
+        "candidateMeanRecall": 0.34657904436260323,
+        "label": "CD4 TCM",
+        "maximumFoldRecallLoss": 0.2226980728051392,
+        "meanRecallLoss": 0.05950159191248714,
+        "rare": false,
+        "stratum": 11
+      },
+      {
+        "baselineMeanRecall": 0.4453104050495396,
+        "candidateMeanRecall": 0.3257035595679288,
+        "label": "CD8 TEM",
+        "maximumFoldRecallLoss": 0.21428571428571436,
+        "meanRecallLoss": 0.11960684548161087,
+        "rare": true,
+        "stratum": 11
+      },
+      {
+        "baselineMeanRecall": 0.5944775901394366,
+        "candidateMeanRecall": 0.5571177851934248,
+        "label": "CD4 TCM",
+        "maximumFoldRecallLoss": 0.18181818181818177,
+        "meanRecallLoss": 0.03735980494601182,
+        "rare": true,
+        "stratum": 14
+      },
+      {
+        "baselineMeanRecall": 0.3649954017933891,
+        "candidateMeanRecall": 0.2724798333392569,
+        "label": "B intermediate",
+        "maximumFoldRecallLoss": 0.16310845431255339,
+        "meanRecallLoss": 0.09251556845413218,
+        "rare": false,
+        "stratum": 15
+      },
+      {
+        "baselineMeanRecall": 0.8019673305862448,
+        "candidateMeanRecall": 0.802988186949167,
+        "label": "B memory",
+        "maximumFoldRecallLoss": 0.15384615384615385,
+        "meanRecallLoss": -0.001020856362922179,
+        "rare": true,
+        "stratum": 15
+      },
+      {
+        "baselineMeanRecall": 0.22622341782871047,
+        "candidateMeanRecall": 0.22426758405180994,
+        "label": "CD16 Mono",
+        "maximumFoldRecallLoss": 0.128099173553719,
+        "meanRecallLoss": 0.001955833776900562,
+        "rare": false,
+        "stratum": 15
+      },
+      {
+        "baselineMeanRecall": 0.4889913053048646,
+        "candidateMeanRecall": 0.526869604030621,
+        "label": "CD8 TCM",
+        "maximumFoldRecallLoss": 0.14124293785310732,
+        "meanRecallLoss": -0.03787829872575636,
+        "rare": true,
+        "stratum": 15
+      },
+      {
+        "baselineMeanRecall": 0.2771507242485399,
+        "candidateMeanRecall": 0.24365352675693824,
+        "label": "CD8 TEM",
+        "maximumFoldRecallLoss": 0.155096011816839,
+        "meanRecallLoss": 0.033497197491601606,
+        "rare": false,
+        "stratum": 15
+      },
+      {
+        "baselineMeanRecall": 0.38025233933795377,
+        "candidateMeanRecall": 0.3690847480160235,
+        "label": "Platelet",
+        "maximumFoldRecallLoss": 0.14851485148514848,
+        "meanRecallLoss": 0.011167591321930292,
+        "rare": true,
+        "stratum": 15
+      },
+      {
+        "baselineMeanRecall": 0.8456491738474512,
+        "candidateMeanRecall": 0.7690945171466195,
+        "label": "B intermediate",
+        "maximumFoldRecallLoss": 0.18707940780619114,
+        "meanRecallLoss": 0.0765546567008317,
+        "rare": false,
+        "stratum": 16
+      },
+      {
+        "baselineMeanRecall": 0.14848651215520256,
+        "candidateMeanRecall": 0.2871158229942901,
+        "label": "B memory",
+        "maximumFoldRecallLoss": 0.10864745011086475,
+        "meanRecallLoss": -0.13862931083908756,
+        "rare": false,
+        "stratum": 16
+      },
+      {
+        "baselineMeanRecall": 0.6460791549232818,
+        "candidateMeanRecall": 0.6460856196460534,
+        "label": "CD8 TEM",
+        "maximumFoldRecallLoss": 0.15264948954788538,
+        "meanRecallLoss": -6.464722771437614e-06,
+        "rare": false,
+        "stratum": 16
+      },
+      {
+        "baselineMeanRecall": 0.6714123288668302,
+        "candidateMeanRecall": 0.6839057637253689,
+        "label": "NK",
+        "maximumFoldRecallLoss": 0.10835509138381194,
+        "meanRecallLoss": -0.012493434858538589,
+        "rare": false,
+        "stratum": 16
+      },
+      {
+        "baselineMeanRecall": 0.42953654918633877,
+        "candidateMeanRecall": 0.2432782276940903,
+        "label": "B intermediate",
+        "maximumFoldRecallLoss": 0.3673469387755103,
+        "meanRecallLoss": 0.18625832149224847,
+        "rare": false,
+        "stratum": 17
+      },
+      {
+        "baselineMeanRecall": 0.23025011664211492,
+        "candidateMeanRecall": 0.25185980391301055,
+        "label": "CD8 TEM",
+        "maximumFoldRecallLoss": 0.1279835390946502,
+        "meanRecallLoss": -0.021609687270895572,
+        "rare": false,
+        "stratum": 17
+      },
+      {
+        "baselineMeanRecall": 0.649399511178871,
+        "candidateMeanRecall": 0.6807686924358356,
+        "label": "NK",
+        "maximumFoldRecallLoss": 0.12086513994910941,
+        "meanRecallLoss": -0.031369181256964654,
+        "rare": false,
+        "stratum": 17
+      },
+      {
+        "baselineMeanRecall": 0.8219114528101803,
+        "candidateMeanRecall": 0.7121884941675504,
+        "label": "CD4 CTL",
+        "maximumFoldRecallLoss": 0.24390243902439024,
+        "meanRecallLoss": 0.10972295864262988,
+        "rare": true,
+        "stratum": 18
+      },
+      {
+        "baselineMeanRecall": 0.9085972815549358,
+        "candidateMeanRecall": 0.8648750086654615,
+        "label": "CD4 Naive",
+        "maximumFoldRecallLoss": 0.16013485040033715,
+        "meanRecallLoss": 0.04372227288947426,
+        "rare": false,
+        "stratum": 18
+      },
+      {
+        "baselineMeanRecall": 0.33099485311713694,
+        "candidateMeanRecall": 0.30518756860279755,
+        "label": "CD8 TCM",
+        "maximumFoldRecallLoss": 0.11551155115511552,
+        "meanRecallLoss": 0.02580728451433941,
+        "rare": false,
+        "stratum": 18
+      },
+      {
+        "baselineMeanRecall": 0.44073410190104684,
+        "candidateMeanRecall": 0.5180867833464009,
+        "label": "CD8 TEM",
+        "maximumFoldRecallLoss": 0.12011304757418745,
+        "meanRecallLoss": -0.07735268144535393,
+        "rare": false,
+        "stratum": 19
+      },
+      {
+        "baselineMeanRecall": 0.8860983917954929,
+        "candidateMeanRecall": 0.8593127021546568,
+        "label": "CD4 Naive",
+        "maximumFoldRecallLoss": 0.13655244029075797,
+        "meanRecallLoss": 0.026785689640836073,
+        "rare": false,
+        "stratum": 21
+      },
+      {
+        "baselineMeanRecall": 0.9030158184722195,
+        "candidateMeanRecall": 0.8753809185683528,
+        "label": "CD4 Naive",
+        "maximumFoldRecallLoss": 0.1012210012210012,
+        "meanRecallLoss": 0.027634899903866673,
+        "rare": false,
+        "stratum": 22
+      },
+      {
+        "baselineMeanRecall": 0.25598407316902344,
+        "candidateMeanRecall": 0.2469777462155907,
+        "label": "CD8 TCM",
+        "maximumFoldRecallLoss": 0.11801242236024845,
+        "meanRecallLoss": 0.009006326953432748,
+        "rare": false,
+        "stratum": 22
+      },
+      {
+        "baselineMeanRecall": 0.6424468194385252,
+        "candidateMeanRecall": 0.6414794610366192,
+        "label": "NK",
+        "maximumFoldRecallLoss": 0.10909090909090913,
+        "meanRecallLoss": 0.0009673584019058046,
+        "rare": true,
+        "stratum": 22
+      }
+    ],
+    "metrics": {
+      "allComparisons": 471,
+      "marginFailures": 40,
+      "maximumFoldRecallLossSensitive": 0.3808978608014463,
+      "meanRecallLossRareSensitive": -0.0007030059436199944,
+      "meanRecallLossSensitive": -0.007493235849414847,
+      "qualified": 106,
+      "rareMarginFailures": 10,
+      "rareSensitive": 29,
+      "sensitiveSufficient": 146
+    }
+  },
+  "assessmentDate": "2026-09-14",
+  "cells": 1612594,
+  "commit": "f1b882f1b4d545ab8a40e149a514e4a1b2be8a99",
+  "components": 20,
+  "conditionScope": "withinCondition",
+  "decision": "Do not promote condition-stratified correction. It improves aggregate sensitive recall relative to the original PCA but increases complete-gate failures from 37/146 native to 40/146; retain as measured development evidence and pursue local composition/alignment or independent held-out outcome endpoints.",
+  "folds": 114,
+  "method": "diversity-soft-clustering-condition-stratified-categorical-ridge-Double-v1",
+  "nativeRelativeComparison": {
+    "baselineMatrix": "native",
+    "candidateMatrix": "condition-f1",
+    "completePreservationQualified": false,
+    "metrics": {
+      "allComparisons": 471,
+      "marginFailures": 11,
+      "maximumFoldRecallLossSensitive": 0.2645045045045046,
+      "meanRecallLossRareSensitive": -0.005000662893413446,
+      "meanRecallLossSensitive": -0.0037768126559593537,
+      "qualified": 135,
+      "rareMarginFailures": 3,
+      "rareSensitive": 29,
+      "sensitiveSufficient": 146
+    },
+    "nativeScoreSHA256": "51a37c9f2184ebf706348cacf4142d8cf005ca69e4fd5bdb4fd81c1e9601c756"
+  },
+  "nativeVerification": {
+    "HDF5Library": "/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+    "binarySHA256": "99f42307df8ced1dd3a827bbeeeaa4d8c132487a73d8846fc4d263d7abd48025",
+    "candidatePlanSHA256": "6f1953e25cec2018ed31d18e252502f1d656a9b2e4804dfe7a4c46feb1be0e2e",
+    "candidateReceiptSHA256": "1eb5d0c55b1f7e11e59599b8099f33d3a728f5089937daee9590ce824ae84bea",
+    "candidateReportSHA256": "aabb27fa3bc267166f6f195d451d8799ddd10ef99139d75990d271d97537263e",
+    "publishExitCode": 0,
+    "verifyExitCode": 0,
+    "verifyReceiptMatches": true
+  },
+  "oracle": {
+    "absoluteOracleSHA256": "e8d75c56757d406768ff53ed4b04143a67102f66ce654a5839f12afd44683ca4",
+    "absoluteOracleStatus": "passed",
+    "absoluteResultSHA256": "a1fed0d5b13e1081a73b91ae2ed389a400d5ca6112573327161f242b7a89c480",
+    "relativeOracleSHA256": "e901e19f575344811a457952c7745a2c178844070607a8c350efc76d6222d8a0",
+    "relativeOracleStatus": "passed",
+    "relativeResultSHA256": "34e14317d7d72be5e34654b568766d27023b9cfbea3ffb9719c34bdf136935c5"
+  },
+  "schemaVersion": 1,
+  "scope": "Native transductive full-cohort HIRISA integration plus donor-held-out author-label retention diagnostic; labels are comparison annotations, not biological ground truth; no phenotype or clinical qualification.",
+  "status": "partial-candidate-rejected-complete-preservation"
+}

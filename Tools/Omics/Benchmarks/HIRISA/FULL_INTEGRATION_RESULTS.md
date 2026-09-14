@@ -11,6 +11,13 @@ including ten rare-label failures. All three Harmony references also fail.
 This separate endpoint preserves the program results below and leaves complete
 biological preservation unqualified.
 
+The opt-in [condition-stratified candidate](CONDITION_STRATIFIED.md) was then
+run and replayed on the same 1,612,594-cell PCA input. It improves aggregate
+sensitive recall relative to the original PCA, but fails 40/146 supported,
+control-sensitive comparisons, including 10/29 rare comparisons, versus 37/146
+for the existing native global correction. The candidate is retained as a
+fully checked development result and rejected for promotion.
+
 A subsequent [within-library decoder development experiment](PROGRAM_CALIBRATION.md)
 meets the unchanged program-loss margins with 28/32 sensitive controls, four
 insufficient. It identifies objective dependence without replacing the original
