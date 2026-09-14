@@ -50,8 +50,8 @@ struct VivoCrossScaleCLICommands {
                 // macOS /tmp) while preserving the leaf for O_NOFOLLOW input
                 // admission in VivoSingleCellCampaignIO.
                 let parent = try Self.resolveExistingParent(rawURL.deletingLastPathComponent())
-                let url = parent.appendingPathComponent(rawURL.lastPathComponent).standardizedFileURL
-                let bytes = try VivoSingleCellCampaignIO.readDocument(url, maximumBytes: Self.maximumGraphBytes)
+                let bytes = try VivoSingleCellCampaignIO.readDocument(
+                    fromRoot: parent, fileName: rawURL.lastPathComponent, maximumBytes: Self.maximumGraphBytes)
                 let graph = try VivoCanonicalJSON.decode(VivoCrossScaleEvidenceGraph.self, from: bytes)
                 let assessment = try graph.assess()
                 FileHandle.standardOutput.write(try VivoCanonicalJSON.encode(assessment))

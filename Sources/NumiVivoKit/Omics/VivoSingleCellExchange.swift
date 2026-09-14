@@ -163,4 +163,16 @@ extension VivoSingleCellCampaignIO {
         let files = try VivoRootedFileStore(rootURL: path.deletingLastPathComponent(), createIfNeeded: false)
         return try files.readFile(path.lastPathComponent, maximumBytes: maximumBytes)
     }
+
+    /// Reads a document from a caller-pinned, already-resolved directory.
+    /// Keeping the directory and leaf separate avoids re-normalizing a
+    /// symlinked alias such as macOS `/tmp` after the parent was resolved.
+    public static func readDocument(fromRoot rootURL: URL, fileName: String, maximumBytes: Int) throws -> Data {
+        guard rootURL.isFileURL, rootURL.path.utf8.count <= 8_192,
+              !rootURL.path.contains("\0"), !fileName.isEmpty else {
+            throw VivoOmicsError.invalid("document root or file name is invalid")
+        }
+        let files = try VivoRootedFileStore(rootURL: rootURL, createIfNeeded: false)
+        return try files.readFile(fileName, maximumBytes: maximumBytes)
+    }
 }
