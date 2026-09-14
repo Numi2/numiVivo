@@ -670,6 +670,10 @@ The complete development objective remains open:
    sealed treated outcomes. [Native donor-response prediction](../Tools/Omics/PerturbationPrediction/NATIVE.md)
    now fits and freezes all four baselines through streamed H5AD aggregation,
    with reconstruction and real-data numerical agreement on all eleven folds.
+   The [Arc Virtual Cell Challenge 2026 adapter](../Tools/Omics/Arc2026/README.md)
+   now pins the official evaluator contract and passes 15 portable adapter tests;
+   native synthetic H5AD conformance passes its ten cases, but no predictor or
+   released-context outcome score exists.
    The [complete Norman filtered release](../Tools/Omics/PerturbationPrediction/Norman/README.md)
    supplies 105 single-target and 131 paired-target conditions with explicit
    unseen-combination and unseen-target splits.

@@ -22,6 +22,13 @@ that AlphaGenome is not validated or approved for clinical use. Those outputs ca
 prioritize hypotheses; the downstream outcomes still require their own measured
 endpoints and held-out validation.
 
+The [Arc Virtual Cell Challenge 2026 adapter](../Tools/Omics/Arc2026/README.md)
+now pins the official `cell-eval2` evaluator and its six metrics, validates the
+zero-shot input/submission contract and passes 15 portable tests. The retained
+native check is synthetic H5AD conformance; no trained predictor, released Arc
+context score or biological qualification is available, so it remains a ready
+benchmark boundary rather than evidence of outcome prediction.
+
 The native perturbation owner also has an opt-in paired-donor negative-binomial
 response mode. It fits native NB2 count effects, preserves per-feature
 dispersion, standard-error and boundary diagnostics, and exposes only identified

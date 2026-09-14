@@ -1,0 +1,41 @@
+{
+  "schema": "numivivo.org/arc2026-adapter-verification/v1",
+  "sourceCommit": "785543fef5c45a705ddfbcb6bb2d5678595c93fb",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Tools/Omics/Arc2026",
+    "-p",
+    "test_adapter.py",
+    "-v"
+  ],
+  "result": "passed",
+  "testCount": 15,
+  "sourceFiles": {
+    "Tools/Omics/Arc2026/test_adapter.py": {
+      "bytes": 5071,
+      "sha256": "997d42a23b44819f9826d949aeda1f703957c5649e05c977845f925bea8c39ee"
+    },
+    "Tools/Omics/Arc2026/evaluate.py": {
+      "bytes": 23966,
+      "sha256": "3baa4b2b96b2ae496c04c50992a15e3777ad03b364f005776e81eb2bf454bfb1"
+    },
+    "Tools/Omics/Arc2026/evaluator-lock.json": {
+      "bytes": 1269,
+      "sha256": "1f9211a0147ae3edcd87c6854ff5485c6f75f083193458c83bd252f98b20cade"
+    },
+    "Tools/Omics/Arc2026/README.md": {
+      "bytes": 10415,
+      "sha256": "6a68c2f543f3eb640c5317798f62f001c7977cb059d9bb00524259349ba750ee"
+    }
+  },
+  "testLog": {
+    "bytes": 1722,
+    "sha256": "6eb7d5e77980aa5f050967c33a715bb40aed8108f5c61958d7c1f569f450773a"
+  },
+  "scope": "Portable adapter contract only; no predictor, released Arc context outcomes, official evaluator score or biological qualification.",
+  "recordedUnix": 1789407073.24785
+}

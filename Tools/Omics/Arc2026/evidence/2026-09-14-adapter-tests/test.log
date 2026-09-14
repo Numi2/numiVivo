@@ -1,0 +1,20 @@
+test_diagnostic_average_rejected (test_adapter.AdapterTests.test_diagnostic_average_rejected) ... ok
+test_duplicate_json_fields_rejected (test_adapter.AdapterTests.test_duplicate_json_fields_rejected) ... ok
+test_duplicate_or_extra_metric_rejected (test_adapter.AdapterTests.test_duplicate_or_extra_metric_rejected) ... ok
+test_empty_run_cannot_score (test_adapter.AdapterTests.test_empty_run_cannot_score) ... ok
+test_equal_context_mean_and_no_global_clipping (test_adapter.AdapterTests.test_equal_context_mean_and_no_global_clipping) ... ok
+test_foreign_context_and_duplicate_context_rejected (test_adapter.AdapterTests.test_foreign_context_and_duplicate_context_rejected) ... ok
+test_missing_anchor_rejected (test_adapter.AdapterTests.test_missing_anchor_rejected) ... ok
+test_missing_metric_rejected (test_adapter.AdapterTests.test_missing_metric_rejected) ... ok
+test_nonfinite_json_rejected (test_adapter.AdapterTests.test_nonfinite_json_rejected) ... ok
+test_nonfinite_rejected (test_adapter.AdapterTests.test_nonfinite_rejected) ... ok
+test_official_output_column_and_negative_scores (test_adapter.AdapterTests.test_official_output_column_and_negative_scores) ... ok
+test_partial_run_cannot_score (test_adapter.AdapterTests.test_partial_run_cannot_score) ... ok
+test_pins_match_native_contract_and_lock (test_adapter.AdapterTests.test_pins_match_native_contract_and_lock) ... ok
+test_snapshot_symlink_rejected_and_bytes_preserved (test_adapter.AdapterTests.test_snapshot_symlink_rejected_and_bytes_preserved) ... ok
+test_wrong_metric_mean_rejected (test_adapter.AdapterTests.test_wrong_metric_mean_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.004s
+
+OK

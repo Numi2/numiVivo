@@ -68,6 +68,8 @@ The [paired RNA/ATAC product workflow](Tools/Omics/Multimodal/PairedWorkflow/REA
 
 The [exact Parse-compatible panel evaluation](Tools/Omics/PerturbationPrediction/StudyContextKernel/ExactParsePanel/README.md) reran all 75 development donors with a frozen 11,600-feature contract. HIRISA passes the existing transfer gate; Kang and GSE181897 fail. That development experiment did not score Parse outcomes; the subsequent completed Parse test above fails, and the candidate remains unpromoted.
 
+The [Arc Virtual Cell Challenge 2026 adapter](Tools/Omics/Arc2026/README.md) pins the official evaluator contract and passes 15 portable safety/aggregation tests. Its native check is synthetic input conformance only: NumiVivo has no trained Arc predictor or released-context score, so this does not add biological-outcome evidence.
+
 The [CellTypist CLI](Tools/Omics/ReferenceMapping/CellTypist/README.md) reproduces imported-model inference on 267 real Parse cells (529,404 count records), from canonical streams or native AnnData CSR/CSC files. H5AD runs retain the complete source and exact cell/feature identities; both sparse layouts produce identical output. Invalid inputs leave no completed bundle. Query plans can apply explicit, caller-supplied open-set gates that suppress out-of-support candidate labels while retaining their scores and rejection status; thresholds are uncalibrated and do not establish held-out annotation accuracy or general biological prediction.
 
 **Available data supports conditional estimates of average RNA responses;

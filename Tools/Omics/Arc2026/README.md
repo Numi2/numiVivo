@@ -166,6 +166,12 @@ syntax parsing. Full Apple type checking/HDF5 execution, the authored native tes
 installation/execution of the official evaluator and scoring on Arc's released
 contexts were **not run**. There is no retained benchmark score or performance claim.
 
+A portable recheck on 2026-09-14 passes all 15 adapter tests at source
+revision `785543fef5c45a705ddfbcb6bb2d5678595c93fb`; the [source-bound execution record](evidence/2026-09-14-adapter-tests/)
+retains the command, source hashes and log. This remains input/score-contract
+verification only: no predictor, released-context outcome score or biological
+qualification is present.
+
 ## Native execution evidence (2026-09-12)
 
 The isolated Apple-native Omics build and the unchanged Arc CLI command router
