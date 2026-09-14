@@ -1,0 +1,28 @@
+{
+  "schema": "numivivo.org/metal-pca-native-regression-manifest/v1",
+  "sourceCommit": "0ca4d1efb3e0fd0be95643ff6d54704705eb90a4",
+  "status": "passed",
+  "files": {
+    "README.md": "add543081b3f560bc0b6491b45577fb4b06badaf6a3682e7fef5513fe3e44767",
+    "execution.json": "59eeae337636829080aad1f2b5c664db788fbd2bc8912d17989adae1875d2d78",
+    "native-metal-pca.log.gz": "14001b5e74014565f95806f2f26ee7fdb14c17e013ca0e2261c1407eb80f5d45"
+  },
+  "sourceFiles": {
+    "Tests/NumiVivoIntegrationTests/SingleCellWindowedNeighborTests.swift": {
+      "bytes": 5243,
+      "sha256": "8f2279314f8b9c4846c46cba7ebf57a0fd01d94acc9389ac87bdf02bb768a26f"
+    },
+    "Sources/NumiVivoKit/Omics/VivoWindowedPCANeighbors.swift": {
+      "bytes": 8834,
+      "sha256": "f819d76b53954f57b76cf054895dc01ce73a8bd42e32ea567ea5e97566a0d554"
+    },
+    "Sources/NumiVivoKit/Omics/VivoMetalPCANeighbors.swift": {
+      "bytes": 6115,
+      "sha256": "ff9a1bd3931e5394b73ee46cf31d088a6aabe5d50b0eb467528128cd409fce72"
+    },
+    "Sources/NumiVivoKit/Omics/VivoH5ADReduction.swift": {
+      "bytes": 11124,
+      "sha256": "ce7db23e55de8f179507edcf8d4457744ee24cf37bea5e72be25a3565603d6d7"
+    }
+  }
+}

@@ -67,6 +67,22 @@ cross-device replay, concurrent source-mutation safety or exhaustive memory
 safety. Million-cell execution remains limited by the existing pair budget and
 other pipeline stages; it is not claimed here.
 
+## Fresh physical PCA-neighbor regression (2026-09-14)
+
+The source revision `0ca4d1efb3e0fd0be95643ff6d54704705eb90a4` was built and
+executed on the physical Apple M4 Pro Mac mini. All three
+`SingleCellWindowedNeighborTests` passed, including a new Metal-gated test that
+exercises the product `VivoWindowedPCANeighbors` owner with FP32 conversion,
+tiled dispatch and CPU-oracle comparison. The bounded 257-by-4 fixture uses
+23-by-31 query/candidate tiles and seven neighbors; indices, CSR structure and
+`distancePairs` match exactly, while distances and weights stay within `1e-6`.
+The [retained regression evidence](evidence/2026-09-14-pca-neighbor-regression/)
+binds the command, source hashes, machine metadata and compressed native log.
+
+This closes a physical dispatch and numerical regression gate for the backend.
+It does not establish cohort timing, million-cell scaling, clustering,
+integration, biological preservation or biological outcome prediction.
+
 ## Retained evidence
 
 `verify.py` checks the archive, current owner source hashes and complete receipts.

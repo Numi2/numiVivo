@@ -1,0 +1,67 @@
+{
+  "schema": "numivivo.org/metal-pca-native-regression/v1",
+  "sourceCommit": "0ca4d1efb3e0fd0be95643ff6d54704705eb90a4",
+  "command": [
+    "env",
+    "NUMIVIVO_TEST_METAL=1",
+    "swift",
+    "test",
+    "--filter",
+    "SingleCellWindowedNeighborTests"
+  ],
+  "result": "passed",
+  "testCount": 3,
+  "testSuite": "SingleCellWindowedNeighborTests",
+  "passedTests": [
+    "metalFP32TilesMatchCPUOracleOnBoundedFixture",
+    "parallelTilesMatchResidentGraphIncludingDistanceTies",
+    "scoreTilesCrossMappingBoundaryAndRewind"
+  ],
+  "host": "Mac.domain_not_set.invalid",
+  "machine": "arm64",
+  "chip": "Apple M4 Pro",
+  "memoryBytes": 25769803776,
+  "os": "macOS 26.6 (25G72)",
+  "sourceFiles": {
+    "Tests/NumiVivoIntegrationTests/SingleCellWindowedNeighborTests.swift": {
+      "bytes": 5243,
+      "sha256": "8f2279314f8b9c4846c46cba7ebf57a0fd01d94acc9389ac87bdf02bb768a26f"
+    },
+    "Sources/NumiVivoKit/Omics/VivoWindowedPCANeighbors.swift": {
+      "bytes": 8834,
+      "sha256": "f819d76b53954f57b76cf054895dc01ce73a8bd42e32ea567ea5e97566a0d554"
+    },
+    "Sources/NumiVivoKit/Omics/VivoMetalPCANeighbors.swift": {
+      "bytes": 6115,
+      "sha256": "ff9a1bd3931e5394b73ee46cf31d088a6aabe5d50b0eb467528128cd409fce72"
+    },
+    "Sources/NumiVivoKit/Omics/VivoH5ADReduction.swift": {
+      "bytes": 11124,
+      "sha256": "ce7db23e55de8f179507edcf8d4457744ee24cf37bea5e72be25a3565603d6d7"
+    }
+  },
+  "log": {
+    "path": "native-metal-pca.log.gz",
+    "bytes": 17446,
+    "sha256": "14001b5e74014565f95806f2f26ee7fdb14c17e013ca0e2261c1407eb80f5d45",
+    "uncompressedBytes": 403769,
+    "uncompressedSHA256": "af13a4381ae93a569ecd1f73b66cb19d63076d256903f9f51037f7cc7e5ad03b"
+  },
+  "fixture": {
+    "rows": 257,
+    "dimensions": 4,
+    "neighbors": 7,
+    "queryBlockRows": 23,
+    "candidateBlockRows": 31,
+    "scoreEncoding": "sparse count-record file with integer-valued coordinates",
+    "oracle": "resident CPU FP64 neighbor graph",
+    "assertions": [
+      "exact neighbor indices",
+      "exact CSR row/column structure",
+      "exact distancePairs",
+      "distance and weight absolute error <= 1e-6"
+    ]
+  },
+  "scope": "Physical Apple GPU dispatch and bounded Metal FP32 PCA-neighbor regression only; no cohort timing, million-cell scaling, clustering, integration or biological qualification.",
+  "recordedUnix": 1789408804.2056
+}
