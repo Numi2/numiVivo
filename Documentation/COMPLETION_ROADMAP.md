@@ -45,6 +45,13 @@ now runs resident Krylov projection and transpose over sparse CSR/CSC streams on
 a physical Apple GPU. Its three focused tests pass with an explicit FP32
 residual tolerance; CPU FP64 remains the default and broad acceleration remains
 unqualified.
+The [opt-in Metal batched NB objective profile](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-nb-objective/README.md)
+now evaluates the mean-dependent NB2 line-search objective in bounded FP32
+Metal batches. Count-only gamma terms, coefficient updates, diagnostics and
+the published log likelihood remain on the exact FP64 CPU owner. Its four
+focused native tests pass, but this is only an objective component: full GPU
+model fitting, timing, FDR/interval calibration, million-cell scaling and
+biological-outcome validation remain open.
 
 The [prediction assessment](BiologicalPrediction.md) records the current
 scientific answer: bounded expression-response prediction is demonstrated,
