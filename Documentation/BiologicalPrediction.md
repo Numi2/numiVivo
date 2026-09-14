@@ -20,7 +20,7 @@ their own measured endpoints and held-out validation.
 
 This assessment reviews the expression-prediction evidence and subsequent
 full-cohort scoring, clustering, decoder calibration, preparation transfer and
-annotation retention through 2026-09-12, with the retained Adamson experimental-role audit.
+annotation retention through 2026-09-14, with the retained Adamson experimental-role audit.
 It distinguishes measured held-out expression outcomes from numerical
 reconstruction, integration diagnostics and conditional molecular simulations.
 Each linked experiment retains its actual source, executable and platform
@@ -39,6 +39,14 @@ adds fresh native CPU/Metal and exact Scanpy timing, memory and graph-equivalenc
 evidence. It qualifies a bounded computation path only; it does not change the
 conclusion that DNA or RNA information alone has no validated mapping here to a
 cellular, tissue, disease or treatment outcome.
+
+The [primary Adamson control roster](AdamsonPrimaryRoster.md) now confirms from
+the paper and Table S1 that the large UPR screen used NegCtrl-2 and NegCtrl-3,
+including their protospacer sequences. The restored GEO labels
+`63(mod)_pBA580` and `Gal4-4(mod)_pBA582` still have no primary mapping to those
+sequence names, and the restored cohort still has 94 selected guide groups
+against the paper's 93-guide summary. The control set is therefore partially
+resolved, but the independent Adamson predictor remains unfitted and unscored.
 
 The [native multigene context kernel](../Tools/Omics/PerturbationPrediction/StudyContextKernel/README.md) uses all control genes to weight training donor responses, with the same study exclusions and 11,800-gene panel. HIRISA improves 21.11% over the balanced mean and 22.59% over no change; all five donors improve. Kang and GSE181897 are 0.26% and 0.31% worse than the mean, respectively. Only HIRISA meets the unchanged 5% gain over both baselines. All 885,000 predictions and 225 scores are independently checked. This addresses a missing model dependency but does not establish reliable transfer, fresh external validation or calibrated uncertainty.
 
@@ -85,7 +93,13 @@ The remaining prepared cohorts and the completed external test are:
 
 The [Parse B-cell admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) originally established metadata eligibility for 72,446 source-labeled B-cell rows across twelve paired donors. Subsequent full count verification and the versioned 11,600-feature contract enabled the completed prediction test above. Its failure remains the current transfer result; the earlier metadata-only status is historical.
 
-Adamson remains unfitted and unscored for its proposed unseen-target test. Resolve its experimental roles from primary records before fitting, freeze any justified protocol revision, and disclose earlier outcome inspection. Parse is now an inspected evaluation cohort. Storage improvements do not establish predictive accuracy or clear the remaining validation requirements.
+Adamson remains unfitted and unscored for its proposed unseen-target test. Its
+primary control set and protospacer sequences are now documented, but the
+deposited-label mapping and 94-versus-93 roster discrepancy still require an
+authoritative reconciliation before fitting. Freeze any justified protocol
+revision and disclose earlier outcome inspection. Parse is now an inspected
+evaluation cohort. Storage improvements do not establish predictive accuracy
+or clear the remaining validation requirements.
 
 The latest [native legacy H5AD check](../Tools/Omics/H5AD/Projection/README.md#original-legacy-kang-2026-09-11)
 preserves every original Kang cell, gene, annotation and embedding, including
@@ -641,10 +655,11 @@ sequence table; the original full guide supplement was not retrieved.
 The independent [Adamson preparation](../Tools/Omics/PerturbationPrediction/Adamson/COHORT.md)
 has restored deposited cell-to-guide identities and verified its original-author
 assignment cohort. The [experimental-role audit](../Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md)
-reconstructs all 50,440 selected cells from original GEO records, but controls and
-guide-to-target roles remain unverified. Its 94 selected guide groups also need
-reconciliation with the paper's stated 93-guide experiment. No independent
-prediction scores are claimed. Primary experimental roles and the complete
+now has a primary sequence roster for the two UPR controls, as recorded in the
+[primary roster note](AdamsonPrimaryRoster.md). The deposited `pBA580` and
+`pBA582` labels still lack a primary mapping to NegCtrl-2/3, and the 94 selected
+guide groups still need reconciliation with the paper's 93-guide summary. No
+independent prediction scores are claimed. The label mapping and complete
 roster must be resolved before this fixed algorithm is fitted in Adamson.
 
 ## What the million-cell work establishes

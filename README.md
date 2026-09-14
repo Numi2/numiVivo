@@ -109,8 +109,10 @@ explain what would justify extending the present claims. Existing Bayesian
 kinetic-model intervals do not provide uncertainty for the single-cell predictors.
 
 The independent [Adamson validation](Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md)
-has verified 50,440 selected cells, but still needs primary control assignments
-and reconciliation of its guide roster before fitting. [AlphaGenome Atlas](Documentation/AlphaGenomeAtlas.md)
+now has a [primary control roster](Documentation/AdamsonPrimaryRoster.md): the
+UPR paper identifies NegCtrl-2 and NegCtrl-3 and their protospacer sequences.
+The deposited `pBA580`/`pBA582` labels still need mapping to those names, and
+the 94-versus-93 guide discrepancy remains open before fitting. [AlphaGenome Atlas](Documentation/AlphaGenomeAtlas.md)
 can supply variant-level molecular hypotheses; its predictions do not establish
 NumiVivo's downstream cellular or tissue outcomes.
 
