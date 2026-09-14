@@ -935,6 +935,11 @@ The complete development objective remains open:
     establishes a bounded variant evidence boundary; variant calling, regulatory
     validation, phenotype prediction, proteomics, metabolomics, spatial imaging
     and metabolic modeling remain open.
+    The shared `VivoQuantitativeAssayDataset` core now preserves finite sparse
+    proteomics, metabolomics and spatial-imaging values with explicit missing
+    versus measured-zero semantics on the common observation axis. It is a
+    bounded JSON foundation; continuous H5MU import/export, assay-specific
+    transforms and biological analysis remain open.
 12. **Cross-scale biology:** variant → regulation → RNA/cell state → protein and
     molecular mechanism → reaction/kinetics → cellular phenotype → tissue
     prediction requires executable, independently qualified links at each boundary.

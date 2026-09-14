@@ -60,6 +60,12 @@ fingerprints and held-out-observation requirements. It reports incomplete and
 hypothesis-only paths explicitly; no current graph satisfies the complete
 research-path gate.
 
+The shared `VivoQuantitativeAssayDataset` adds a bounded sparse real-valued
+container for proteomics, metabolomics and spatial-imaging observations. It
+retains explicit zeros, missing entries and common sample/observation identity;
+it does not yet provide continuous H5MU I/O, assay-specific inference or outcome
+validation.
+
 ## Molecular preparation and dynamics
 
 | Capability | Implemented source | Important boundary |

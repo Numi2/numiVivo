@@ -38,6 +38,8 @@ The [SEQC technical bulk-RNA benchmark](Tools/Omics/Benchmarks/SEQC/README.md) n
 
 The native [`genomic-vcf-plan` command](Documentation/Design/ALPHAGENOME_ATLAS.md#native-vcf-variant-foundation) now preserves an exact uncompressed VCF source hash, header, samples, INFO/FORMAT fields and multiallelic records, then emits an explicit GRCh38 primary-contig SNV projection for the Atlas request boundary. `VivoVCFWriter` can export that parsed document back to a canonical VCF while retaining multiallelic grouping and sample fields; the export is semantic rather than byte-identical and rebinds its source fingerprint on reimport. Unsupported assemblies, contigs and allele classes remain recorded as exclusions; this is variant ingestion/export and provenance evidence, not variant calling or phenotype prediction.
 
+The new `VivoQuantitativeAssayDataset` core carries sparse finite-valued proteomics, metabolomics and spatial-imaging measurements on the same sample/observation identity axis. Explicit measured zeros remain distinct from missing values, and no count unit or biological imputation is inferred. This is a bounded JSON interchange foundation; continuous H5MU I/O, assay-specific analysis and outcome validation remain open.
+
 The [cross-scale evidence contract](Documentation/Design/CROSS_SCALE_EVIDENCE.md)
 now keeps the variant → regulation → RNA/cell state → protein → mechanism →
 kinetics → phenotype → tissue path explicit. It requires source, model,
