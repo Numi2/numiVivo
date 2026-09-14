@@ -2,12 +2,17 @@
 
 This is a source-backed map of the implementation, not a feature certification. The public package combines mature contracts, new numerical source and experimental methods. A successful import, a function named after a method, or a committed example does not establish numerical agreement or biological applicability.
 
-The navigation and implementation references below describe the reviewed source at `fb149c86bbfcbd494b0b30812b8454683b623051` for the current single-cell evidence, with historical receipts retaining their named runtime identities. Consult the actual revision when a method changes. This map deliberately does not assign an unmeasured speedup or maximum biological scale.
+The navigation and implementation references below describe the reviewed source at
+`ee3d5242e0a7e6b723c2fc5691d8f979b0bfe3ad` for the current single-cell evidence,
+including the native gzip H5AD and cross-scale CLI qualification receipts. Historical
+receipts retain their named runtime identities. Consult the actual revision when a
+method changes. This map deliberately does not assign an unmeasured speedup or
+maximum biological scale.
 
 ## Single-cell analysis and biological prediction
 
 The single-cell entries were reviewed against published evidence available at
-`fb149c86bbfcbd494b0b30812b8454683b623051` on 2026-09-14. Historical receipts retain their named runtime identities.
+`ee3d5242e0a7e6b723c2fc5691d8f979b0bfe3ad` on 2026-09-14. Historical receipts retain their named runtime identities.
 
 | Capability | Implemented and measured scope | Remaining boundary |
 | --- | --- | --- |
@@ -40,8 +45,9 @@ Virtual Cell Challenge 2026 adapter](../Tools/Omics/Arc2026/README.md) now has
 context outcome score; it therefore remains benchmark-conformance evidence rather
 than biological-outcome validation.
 
-The native [cross-scale evidence contract](Design/CROSS_SCALE_EVIDENCE.md)
-now validates ordered variant → regulation → RNA/cell state → protein →
+The native [cross-scale evidence contract](Design/CROSS_SCALE_EVIDENCE.md) and its
+[M4 CLI qualification](../Tools/Omics/CrossScale/evidence/2026-09-14-native-cli/README.md)
+now validate ordered variant → regulation → RNA/cell state → protein →
 mechanism → kinetics → phenotype → tissue boundaries, source/model/validation
 fingerprints and held-out-observation requirements. It reports incomplete and
 hypothesis-only paths explicitly; no current graph satisfies the complete

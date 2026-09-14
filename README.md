@@ -42,7 +42,9 @@ The [cross-scale evidence contract](Documentation/Design/CROSS_SCALE_EVIDENCE.md
 now keeps the variant → regulation → RNA/cell state → protein → mechanism →
 kinetics → phenotype → tissue path explicit. It requires source, model,
 validation and held-out evidence for every boundary, and reports incomplete or
-hypothesis-only paths without converting them into outcome claims.
+hypothesis-only paths without converting them into outcome claims. The [native M4
+CLI qualification](Tools/Omics/CrossScale/evidence/2026-09-14-native-cli/README.md)
+records that the current graph stops at the missing variant → regulation evidence.
 
 The [translation-only ablation](Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) reduces annotation failures to 22/146 but fails a B-cell IFNa response comparison and leaves more donor scatter. Fewer failures do not establish adequate integration; no method is promoted.
 
