@@ -3,6 +3,10 @@ import Foundation
 public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     static let maximumClusters = 100
     public enum Covariate: String, Codable, Sendable, CaseIterable { case donor, batch }
+    /// Controls whether categorical effects are fitted over the complete
+    /// cohort or separately inside each declared biological condition.
+    /// Nil preserves the historical global correction and its encoding.
+    public enum CorrectionScope: String, Codable, Sendable { case global, withinCondition }
     public enum RidgeScaling: String, Codable, Sendable { case expectedClusterBatchMass }
     /// Nil preserves the original fixed penalty; otherwise ridge is the expected-mass coefficient.
     public var ridgeScaling: RidgeScaling? = nil
@@ -10,6 +14,9 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     /// categorical group. Nil preserves historical encoding and behavior.
     public var protectedSampleGroups: [String: String]? = nil
     public var covariate: Covariate = .donor
+    /// Nil preserves the historical global correction. `withinCondition` is an
+    /// opt-in development candidate and currently uses the fixed ridge only.
+    public var correctionScope: CorrectionScope? = nil
     /// Optional joint correction factors. Omission preserves the historical
     /// single-covariate representation and output bytes. When supplied, use
     /// both donor and batch exactly once; the correction is additive across
@@ -24,12 +31,13 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     public var seed: UInt64 = 7
     public var maximumWork: Int = 200_000_000
     public init() {}
-    private enum CodingKeys: String, CodingKey { case protectedSampleGroups, covariate, covariates, clusters, diversity, ridge, ridgeScaling, temperature, maximumIterations, relativeTolerance, seed, maximumWork }
+    private enum CodingKeys: String, CodingKey { case protectedSampleGroups, covariate, correctionScope, covariates, clusters, diversity, ridge, ridgeScaling, temperature, maximumIterations, relativeTolerance, seed, maximumWork }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["protectedSampleGroups","covariate","covariates","clusters","diversity","ridge","ridgeScaling","temperature","maximumIterations","relativeTolerance","seed","maximumWork"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["protectedSampleGroups","covariate","correctionScope","covariates","clusters","diversity","ridge","ridgeScaling","temperature","maximumIterations","relativeTolerance","seed","maximumWork"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         protectedSampleGroups = try c.decodeIfPresent([String: String].self, forKey: .protectedSampleGroups)
         covariate = try c.decodeIfPresent(Covariate.self,forKey: .covariate) ?? .donor
+        correctionScope = try c.decodeIfPresent(CorrectionScope.self, forKey: .correctionScope)
         covariates = try c.decodeIfPresent([Covariate].self, forKey: .covariates)
         clusters = try c.decodeIfPresent(Int.self,forKey: .clusters) ?? 88
         diversity = try c.decodeIfPresent(Double.self,forKey: .diversity) ?? 2
@@ -48,6 +56,12 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
                   Set(covariates) == Set(Covariate.allCases) else {
                 throw VivoOmicsError.invalid("joint integration requires donor and batch exactly once")
             }
+        }
+        if correctionScope == .withinCondition, ridgeScaling != nil {
+            throw VivoOmicsError.invalid("condition-stratified integration requires fixed ridge")
+        }
+        if correctionScope == .withinCondition, covariates != nil {
+            throw VivoOmicsError.invalid("condition-stratified integration currently supports one covariate")
         }
         guard (2...Self.maximumClusters).contains(clusters), diversity.isFinite, (0...10).contains(diversity),
               ridge.isFinite, (0.001...100).contains(ridge), temperature.isFinite, (0.01...1).contains(temperature),
@@ -80,6 +94,10 @@ public struct VivoSingleCellIntegrationResult: Codable, Sendable, Equatable {
     public var factorLevels: [[String]]? = nil
     public var cellFactorLevels: [[Int]]? = nil
     public var factorRidgePenalties: [[[Double]]]? = nil
+    /// Condition levels and cell assignments for the opt-in
+    /// condition-stratified single-covariate path.
+    public var conditionLevels: [String]? = nil
+    public var cellConditionLevels: [Int]? = nil
 }
 
 
@@ -665,7 +683,8 @@ enum VivoSingleCellIntegration {
             assignmentScores: assignmentScores, assignmentCenters: assignmentCenters, objectives: objectives,
             relativeImprovements: improvements, stoppingReason: stopping, maximumRidgeResidual: maxResidual,
             ridgePenalties: factorPenalties?[0], factorLevels: factorLevels, cellFactorLevels: factorIDs,
-            factorRidgePenalties: factorPenalties)
+            factorRidgePenalties: factorPenalties, conditionLevels: nil,
+            cellConditionLevels: nil)
     }
     static func run(cells: [VivoOmicsCellIdentity], x: VivoIntegrationMatrix, samples: [VivoOmicsSample],
                     options o: VivoSingleCellIntegrationOptions, matrix: (Int, Int) throws -> VivoIntegrationMatrix) throws -> VivoIntegrationSolution {
@@ -686,6 +705,23 @@ enum VivoSingleCellIntegration {
         guard (2...128).contains(bCount) else { throw VivoOmicsError.invalid("integration requires 2...128 covariate levels") }
         let ids = Dictionary(uniqueKeysWithValues: levels.enumerated().map { ($0.element,$0.offset) })
         let batch = names.map { ids[$0]! }
+        let rawConditions = cells.map { lookup[$0.sampleID]!.condition }
+        let conditionNames: [String]
+        let condition: [Int]
+        if o.correctionScope == .withinCondition {
+            guard rawConditions.allSatisfy({ !$0.isEmpty }) else {
+                throw VivoOmicsError.invalid("integration requires known condition")
+            }
+            conditionNames = Set(rawConditions).sorted()
+            guard conditionNames.count <= 256 else {
+                throw VivoOmicsError.limit("integration condition level budget")
+            }
+            let conditionIDs = Dictionary(uniqueKeysWithValues: conditionNames.enumerated().map { ($0.element, $0.offset) })
+            condition = rawConditions.map { conditionIDs[$0]! }
+        } else {
+            conditionNames = []
+            condition = []
+        }
         // Reject disconnected designs in which condition and covariate cannot be
         // separated. This eligibility check does not feed labels into correction.
         var conditionLevels: [String:Set<Int>] = [:]
@@ -822,51 +858,117 @@ enum VivoSingleCellIntegration {
             objectives.append(value); improvements.append(improvement)
             // Every correction is fitted to and subtracted from original PCA.
             try scores.copy(from: x)
-            let streamRidge = x.benefitsFromBatchedAccess || r.benefitsFromBatchedAccess || scores.benefitsFromBatchedAccess
-            let activeLevels = (0..<k).map { c in (0..<bCount).filter { observed[c*bCount+$0]/sizes[$0] > 1e-5 } }
-            let streamedSums = try streamRidge ? streamedRidgeSums(x: x, memberships: r, batch: batch,
-                levels: bCount, activeClusters: (0..<k).filter { activeLevels[$0].count >= 2 }) : nil
-            var streamedEffects = streamRidge ? [[Double]?](repeating: nil, count: k * bCount) : []
-            for c in 0..<k {
-                if o.ridgeScaling == .expectedClusterBatchMass {
-                    ridgePenalties![c] = sizes.map { size in
-                        let expected = max(0, masses[c]) * size / Double(n)
-                        return o.ridge * expected
+            if o.correctionScope == .withinCondition {
+                // Fit each covariate effect inside a declared condition. This
+                // preserves condition contrasts by construction; it is an
+                // opt-in candidate and deliberately does not use adaptive
+                // penalties or the historical global representation.
+                let conditionCount = conditionNames.count
+                var massesByCondition = [Double](repeating: 0, count: conditionCount * k * bCount)
+                var sumsByCondition = [[[Double]]](
+                    repeating: [[Double]](repeating: [Double](repeating: 0, count: d), count: bCount),
+                    count: conditionCount * k)
+                for i in 0..<n {
+                    if i % 2_048 == 0 { try Task.checkCancellation() }
+                    let row = try x.row(i), q = condition[i]
+                    for c in 0..<k {
+                        let weight = try r.value(i, c)
+                        let index = (q * k + c) * bCount + batch[i]
+                        massesByCondition[index] += weight
+                        for j in 0..<d { sumsByCondition[q * k + c][batch[i]][j] += weight * row[j] }
                     }
                 }
-                let active = activeLevels[c]
-                if active.count < 2 { continue }
-                var sums = [[Double]](repeating: [Double](repeating: 0,count: d),count: bCount)
-                if let streamedSums {
-                    for b in 0..<bCount {
-                        let offset = (c * bCount + b) * d
-                        sums[b] = Array(streamedSums[offset..<(offset + d)])
+                var conditionEffects = [[Double]?](repeating: nil, count: conditionCount * k * bCount)
+                for q in 0..<conditionCount {
+                    for c in 0..<k {
+                        let base = (q * k + c) * bCount
+                        let active = (0..<bCount).filter { massesByCondition[base + $0] > 1e-5 }
+                        guard active.count >= 2 else { continue }
+                        let fit = try ridgeFit(
+                            masses: active.map { massesByCondition[base + $0] },
+                            sums: active.map { sumsByCondition[q * k + c][$0] },
+                            ridge: o.ridge)
+                        maxResidual = max(maxResidual, fit.residual)
+                        for (slot, b) in active.enumerated() {
+                            conditionEffects[base + b] = fit.effects[slot]
+                        }
                     }
-                } else {
-                    for i in 0..<n {
-                        let weight = try r.value(i, c), row = try x.row(i)
-                        for j in 0..<d { sums[batch[i]][j] += weight*row[j] }
+                }
+                // Use a mass-weighted aggregate intercept for the next
+                // assignment step while retaining condition-specific effects.
+                for c in 0..<k {
+                    var numerator = [Double](repeating: 0, count: d), denominator = 0.0
+                    for q in 0..<conditionCount {
+                        let base = (q * k + c) * bCount
+                        let active = (0..<bCount).filter { massesByCondition[base + $0] > 1e-5 }
+                        guard active.count >= 2 else { continue }
+                        let mass = active.reduce(0) { $0 + massesByCondition[base + $1] }
+                        let fit = try ridgeFit(
+                            masses: active.map { massesByCondition[base + $0] },
+                            sums: active.map { sumsByCondition[q * k + c][$0] },
+                            ridge: o.ridge)
+                        denominator += mass
+                        for j in 0..<d { numerator[j] += mass * fit.intercept[j] }
+                    }
+                    if denominator > 0 { centers[c] = numerator.map { $0 / denominator } }
+                }
+                for i in 0..<n {
+                    let q = condition[i]
+                    var row = try scores.row(i)
+                    for c in 0..<k {
+                        guard let effect = conditionEffects[(q * k + c) * bCount + batch[i]] else { continue }
+                        let weight = try r.value(i, c)
+                        for j in 0..<d { row[j] -= weight * effect[j] }
+                    }
+                    try scores.setRow(i, row)
+                }
+            } else {
+                let streamRidge = x.benefitsFromBatchedAccess || r.benefitsFromBatchedAccess || scores.benefitsFromBatchedAccess
+                let activeLevels = (0..<k).map { c in (0..<bCount).filter { observed[c*bCount+$0]/sizes[$0] > 1e-5 } }
+                let streamedSums = try streamRidge ? streamedRidgeSums(x: x, memberships: r, batch: batch,
+                    levels: bCount, activeClusters: (0..<k).filter { activeLevels[$0].count >= 2 }) : nil
+                var streamedEffects = streamRidge ? [[Double]?](repeating: nil, count: k * bCount) : []
+                for c in 0..<k {
+                    if o.ridgeScaling == .expectedClusterBatchMass {
+                        ridgePenalties![c] = sizes.map { size in
+                            let expected = max(0, masses[c]) * size / Double(n)
+                            return o.ridge * expected
+                        }
+                    }
+                    let active = activeLevels[c]
+                    if active.count < 2 { continue }
+                    var sums = [[Double]](repeating: [Double](repeating: 0,count: d),count: bCount)
+                    if let streamedSums {
+                        for b in 0..<bCount {
+                            let offset = (c * bCount + b) * d
+                            sums[b] = Array(streamedSums[offset..<(offset + d)])
+                        }
+                    } else {
+                        for i in 0..<n {
+                            let weight = try r.value(i, c), row = try x.row(i)
+                            for j in 0..<d { sums[batch[i]][j] += weight*row[j] }
+                        }
+                    }
+                    let fit: (intercept: [Double], effects: [[Double]], residual: Double)
+                    if let ridgePenalties {
+                        fit = try ridgeFit(masses: active.map { max(0, observed[c*bCount+$0]) }, sums: active.map { sums[$0] }, penalties: active.map { ridgePenalties[c][$0] })
+                    } else {
+                        fit = try ridgeFit(masses: active.map { max(0,observed[c*bCount+$0]) },sums: active.map { sums[$0] },ridge: o.ridge)
+                    }
+                    maxResidual = max(maxResidual,fit.residual); centers[c] = fit.intercept
+                    if streamRidge {
+                        for (slot, b) in active.enumerated() { streamedEffects[c * bCount + b] = fit.effects[slot] }
+                    } else {
+                        for (slot,b) in active.enumerated() { for i in 0..<n where batch[i] == b {
+                            let weight = try r.value(i, c); var row = try scores.row(i)
+                            for j in 0..<d { row[j] -= weight*fit.effects[slot][j] }
+                            try scores.setRow(i, row)
+                        } }
                     }
                 }
-                let fit: (intercept: [Double], effects: [[Double]], residual: Double)
-                if let ridgePenalties {
-                    fit = try ridgeFit(masses: active.map { max(0, observed[c*bCount+$0]) }, sums: active.map { sums[$0] }, penalties: active.map { ridgePenalties[c][$0] })
-                } else {
-                    fit = try ridgeFit(masses: active.map { max(0,observed[c*bCount+$0]) },sums: active.map { sums[$0] },ridge: o.ridge)
-                }
-                maxResidual = max(maxResidual,fit.residual); centers[c] = fit.intercept
-                if streamRidge {
-                    for (slot, b) in active.enumerated() { streamedEffects[c * bCount + b] = fit.effects[slot] }
-                } else {
-                    for (slot,b) in active.enumerated() { for i in 0..<n where batch[i] == b {
-                        let weight = try r.value(i, c); var row = try scores.row(i)
-                        for j in 0..<d { row[j] -= weight*fit.effects[slot][j] }
-                        try scores.setRow(i, row)
-                    } }
-                }
+                if streamRidge { try applyStreamedRidgeEffects(scores: scores, memberships: r,
+                    batch: batch, levels: bCount, effects: streamedEffects) }
             }
-            if streamRidge { try applyStreamedRidgeEffects(scores: scores, memberships: r,
-                batch: batch, levels: bCount, effects: streamedEffects) }
             centers = normalized(centers)
             // Each matrix row write rejects nonfinite corrected values.
             if improvement < 0 { stopping = "objective-increase"; break }
@@ -875,7 +977,9 @@ enum VivoSingleCellIntegration {
         return .init(levels: levels, cellLevels: batch, scores: scores, memberships: r,
             assignmentScores: assignmentScores, assignmentCenters: assignmentCenters, objectives: objectives,
             relativeImprovements: improvements, stoppingReason: stopping, maximumRidgeResidual: maxResidual,
-            ridgePenalties: ridgePenalties, factorLevels: nil, cellFactorLevels: nil, factorRidgePenalties: nil)
+            ridgePenalties: ridgePenalties, factorLevels: nil, cellFactorLevels: nil, factorRidgePenalties: nil,
+            conditionLevels: o.correctionScope == .withinCondition ? conditionNames : nil,
+            cellConditionLevels: o.correctionScope == .withinCondition ? condition : nil)
     }
 }
 
@@ -884,11 +988,15 @@ struct VivoIntegrationSolution {
         if options.covariates != nil {
             return options.ridgeScaling == nil ? "diversity-soft-clustering-multi-categorical-ridge-Double-v1" : "diversity-soft-clustering-multi-categorical-expected-mass-ridge-Double-v1"
         }
+        if options.correctionScope == .withinCondition {
+            return "diversity-soft-clustering-condition-stratified-categorical-ridge-Double-v1"
+        }
         return options.ridgeScaling == nil ? "diversity-soft-clustering-categorical-ridge-Double-v1" : "diversity-soft-clustering-expected-mass-ridge-Double-v1"
     }
     static func qualification(options: VivoSingleCellIntegrationOptions) -> String {
         let scope = options.covariates == nil ? "single-covariate" : "additive multi-covariate"
-        return "Transductive \(scope) PCA correction with Harmony2 objective and intercept centers; independent initialization. Original counts/PCA preserved. Stopping diagnostics are not biological preservation or prospective prediction evidence."
+        let conditioning = options.correctionScope == .withinCondition ? "condition-stratified donor correction" : "global categorical correction"
+        return "Transductive \(scope) PCA correction with Harmony2 objective, \(conditioning) and intercept centers; independent initialization. Original counts/PCA preserved. Stopping diagnostics are not biological preservation or prospective prediction evidence."
     }
     let levels: [String]
     let cellLevels: [Int]
@@ -904,12 +1012,15 @@ struct VivoIntegrationSolution {
     let factorLevels: [[String]]?
     let cellFactorLevels: [[Int]]?
     let factorRidgePenalties: [[[Double]]]?
+    let conditionLevels: [String]?
+    let cellConditionLevels: [Int]?
     func materialize(cells: [VivoOmicsCellIdentity], options: VivoSingleCellIntegrationOptions) throws -> VivoSingleCellIntegrationResult {
         try .init(method: Self.method(options: options), options: options, cells: cells, levels: levels, cellLevels: cellLevels,
             scores: scores.materialize(), memberships: memberships.materialize(), assignmentScores: assignmentScores.materialize(),
             assignmentCenters: assignmentCenters, objectives: objectives, relativeImprovements: relativeImprovements,
             stoppingReason: stoppingReason, maximumRidgeResidual: maximumRidgeResidual, qualification: Self.qualification(options: options),
             ridgePenalties: ridgePenalties, factorLevels: factorLevels, cellFactorLevels: cellFactorLevels,
-            factorRidgePenalties: factorRidgePenalties)
+            factorRidgePenalties: factorRidgePenalties, conditionLevels: conditionLevels,
+            cellConditionLevels: cellConditionLevels)
     }
 }

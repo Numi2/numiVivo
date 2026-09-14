@@ -82,6 +82,39 @@ import Testing
             try VivoSingleCellIntegration.run(confoundedInput, samples: confoundedSamples, options: options)
         }
     }
+    @Test func conditionStratifiedCorrectionRetainsConditionAxes() throws {
+        let cells: [VivoOmicsCellIdentity] = (0..<160).map { .init(sampleID: "s\($0 % 4)", barcode: "conditioned\($0)") }
+        let scores: [[Double]] = (0..<160).map { i in
+            let t = Double(i), donor = Double((i % 4) / 2), treated = Double(i % 2)
+            return [cos(t / 7) + 2 * donor + 3 * treated, sin(t / 11) + donor, t / 160]
+        }
+        let input = VivoSingleCellReductionResult(method: "numerical-fixture", options: .init(), features: [],
+            selectedFeatureIndices: [], cells: cells, scores: scores, loadings: [], explainedVariance: [],
+            explainedVarianceRatio: [], relativeResiduals: [], maximumLoadingOrthogonalityError: 0, basisSize: 0,
+            qualification: "numerical fixture only")
+        let samples = [
+            VivoOmicsSample(id: "s0", biologicalReplicateID: "d0-c", donorID: "d0", condition: "control", batchID: "b0", organism: "human"),
+            VivoOmicsSample(id: "s1", biologicalReplicateID: "d0-t", donorID: "d0", condition: "treated", batchID: "b0", organism: "human"),
+            VivoOmicsSample(id: "s2", biologicalReplicateID: "d1-c", donorID: "d1", condition: "control", batchID: "b1", organism: "human"),
+            VivoOmicsSample(id: "s3", biologicalReplicateID: "d1-t", donorID: "d1", condition: "treated", batchID: "b1", organism: "human")
+        ]
+        var options = VivoSingleCellIntegrationOptions(); options.clusters = 3; options.correctionScope = .withinCondition
+        let result = try VivoSingleCellIntegration.run(input, samples: samples, options: options)
+        #expect(result.method == "diversity-soft-clustering-condition-stratified-categorical-ridge-Double-v1")
+        #expect(result.conditionLevels == ["control", "treated"])
+        #expect(result.cellConditionLevels == cells.map { $0.sampleID == "s0" || $0.sampleID == "s2" ? 0 : 1 })
+        #expect(result.maximumRidgeResidual < 1e-8)
+        #expect(result.qualification.contains("condition-stratified donor correction"))
+        #expect(result == (try VivoSingleCellIntegration.run(input, samples: samples, options: options)))
+        let encoded = try VivoCanonicalJSON.encode(result)
+        #expect(try VivoCanonicalJSON.decode(VivoSingleCellIntegrationResult.self, from: encoded) == result)
+        var adaptive = options; adaptive.ridgeScaling = .expectedClusterBatchMass
+        #expect(throws: (any Error).self) { try adaptive.validate() }
+        var global = options; global.correctionScope = nil
+        let legacy = try VivoSingleCellIntegration.run(input, samples: samples, options: global)
+        #expect(legacy.method == "diversity-soft-clustering-categorical-ridge-Double-v1")
+        #expect(legacy != result)
+    }
     @Test func representationDependenciesAreExplicit() throws {
         #expect(throws: (any Error).self) { try VivoSingleCellAnalysisPlan(id: "missing-pca",integration: .init()).validate() }
         var neighbor = VivoSingleCellNeighborOptions(); neighbor.representation = .integrated

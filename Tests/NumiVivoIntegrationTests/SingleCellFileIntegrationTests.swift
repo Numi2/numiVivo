@@ -246,6 +246,45 @@ import Testing
         for matrix in owned { try matrix.remove() }
         #expect(try FileManager.default.contentsOfDirectory(atPath: root.path).isEmpty)
     }
+    @Test func fileAndResidentConditionStratifiedTrajectoriesMatch() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let n = 641, d = 5
+        let cells: [VivoOmicsCellIdentity] = (0..<n).map { .init(sampleID: "s\($0 % 4)", barcode: "conditioned\($0)") }
+        let samples = [
+            VivoOmicsSample(id: "s0", biologicalReplicateID: "d0-c", donorID: "d0", condition: "control", batchID: "b0", organism: "human"),
+            VivoOmicsSample(id: "s1", biologicalReplicateID: "d0-t", donorID: "d0", condition: "treated", batchID: "b0", organism: "human"),
+            VivoOmicsSample(id: "s2", biologicalReplicateID: "d1-c", donorID: "d1", condition: "control", batchID: "b1", organism: "human"),
+            VivoOmicsSample(id: "s3", biologicalReplicateID: "d1-t", donorID: "d1", condition: "treated", batchID: "b1", organism: "human")
+        ]
+        var options = VivoSingleCellIntegrationOptions(); options.clusters = 17; options.correctionScope = .withinCondition
+        let resident = try VivoIntegrationMatrix(rows: n, columns: d)
+        let file = try VivoIntegrationMatrix(rows: n, columns: d, scratch: root, windowBytes: 16_384)
+        var owned = [file]
+        func make(_ rows: Int, _ columns: Int) throws -> VivoIntegrationMatrix {
+            let matrix = try VivoIntegrationMatrix(rows: rows, columns: columns, scratch: root, windowBytes: 16_384)
+            owned.append(matrix); return matrix
+        }
+        for i in 0..<n {
+            let row = (0..<d).map { j in sin(Double(i * (j + 1)) / 17) + Double(i % 4) / Double(j + 1) }
+            try resident.setRow(i, row); try file.setRow(i, row)
+        }
+        let a = try VivoSingleCellIntegration.run(cells: cells, x: resident, samples: samples, options: options) {
+            try VivoIntegrationMatrix(rows: $0, columns: $1)
+        }
+        let b = try VivoSingleCellIntegration.run(cells: cells, x: file, samples: samples, options: options, matrix: make)
+        #expect(a.conditionLevels == ["control", "treated"])
+        #expect(a.cellConditionLevels == b.cellConditionLevels)
+        #expect(try a.materialize(cells: cells, options: options) == b.materialize(cells: cells, options: options))
+        for (left, right) in [(a.scores, b.scores), (a.memberships, b.memberships), (a.assignmentScores, b.assignmentScores)] {
+            for i in 0..<n { #expect(try left.row(i).map(\.bitPattern) == right.row(i).map(\.bitPattern)) }
+        }
+        #expect(a.objectives.map(\.bitPattern) == b.objectives.map(\.bitPattern))
+        #expect(a.relativeImprovements.map(\.bitPattern) == b.relativeImprovements.map(\.bitPattern))
+        for matrix in owned { try matrix.remove() }
+        #expect(try FileManager.default.contentsOfDirectory(atPath: root.path).isEmpty)
+    }
     @Test func sortedBatchesPreserveLogicalBitsAndRejectBeforeWriting() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)

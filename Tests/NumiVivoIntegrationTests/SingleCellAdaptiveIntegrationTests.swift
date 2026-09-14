@@ -47,7 +47,12 @@ import Testing
         let options = VivoSingleCellIntegrationOptions()
         let raw = try VivoCanonicalJSON.encode(options)
         #expect(!String(decoding: raw, as: UTF8.self).contains("ridgeScaling"))
+        #expect(!String(decoding: raw, as: UTF8.self).contains("correctionScope"))
         #expect(try VivoCanonicalJSON.decode(VivoSingleCellIntegrationOptions.self, from: raw) == options)
+        var explicitGlobal = options
+        explicitGlobal.correctionScope = .global
+        let explicitRaw = try VivoCanonicalJSON.encode(explicitGlobal)
+        #expect(try VivoCanonicalJSON.decode(VivoSingleCellIntegrationOptions.self, from: explicitRaw) == explicitGlobal)
         #expect(throws: (any Error).self) { try VivoCanonicalJSON.decode(VivoSingleCellIntegrationOptions.self, from: Data("{\"ridgeScaling\":\"automatic\"}".utf8)) }
         var adaptive = options; adaptive.ridgeScaling = .expectedClusterBatchMass; adaptive.ridge = 0
         #expect(throws: (any Error).self) { try adaptive.validate() }
