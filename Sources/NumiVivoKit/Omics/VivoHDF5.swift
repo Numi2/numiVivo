@@ -270,6 +270,50 @@ final class VivoHDF5 {
         try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_ULLONG"), attribute: attribute, into: $0.baseAddress, row: row, range: range) }
         return values
     }
+
+    /// Read a bounded numeric vector/matrix selection as Double.  Quantitative
+    /// assays use this path instead of `integers(... allowFloat:)`, whose
+    /// contract deliberately rejects fractional values.  Integer sources are
+    /// accepted only when every value is exactly representable by Double;
+    /// callers still decide whether non-finite floating values are allowed.
+    func doubles(_ value: ID, attribute: Bool = false, maximum: Int, allowInteger: Bool = true,
+                 row: Int? = nil, range: Range<Int>? = nil) throws -> [Double] {
+        let dimensions = try shape(value, attribute: attribute)
+        if row != nil && (attribute || dimensions.count != 2) { throw VivoOmicsError.invalid("dense row requires a matrix dataset") }
+        if let range {
+            guard !attribute, row == nil, dimensions.count == 1, range.lowerBound >= 0,
+                  UInt64(range.upperBound) <= dimensions[0] else { throw VivoOmicsError.invalid("numeric vector slice") }
+        }
+        let selected = range.map { [UInt64($0.count)] } ?? (row == nil ? dimensions : [dimensions[1]])
+        let n = try count(selected, maximum: maximum)
+        let t = try type(value, attribute: attribute); defer { close(t, "H5Tclose") }
+        let kind: @convention(c) (ID) -> Int32 = try symbol("H5Tget_class")
+        let size: @convention(c) (ID) -> Int = try symbol("H5Tget_size")
+        guard size(t) <= 8 else { throw VivoOmicsError.invalid("unsupported numeric precision") }
+        if kind(t) == 1 {
+            var values = [Double](repeating: 0, count: n)
+            try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_DOUBLE"), attribute: attribute, into: $0.baseAddress, row: row, range: range) }
+            return values
+        }
+        guard allowInteger, kind(t) == 0 else { throw VivoOmicsError.invalid("expected numeric array") }
+        let sign: @convention(c) (ID) -> Int32 = try symbol("H5Tget_sign")
+        if sign(t) == 1 {
+            var values = [Int64](repeating: 0, count: n)
+            try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_LLONG"), attribute: attribute, into: $0.baseAddress, row: row, range: range) }
+            return try values.map {
+                let result = Double($0)
+                guard result.isFinite, Int64(exactly: result) == $0 else { throw VivoOmicsError.invalid("integer exceeds exact Double range") }
+                return result
+            }
+        }
+        var values = [UInt64](repeating: 0, count: n)
+        try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_ULLONG"), attribute: attribute, into: $0.baseAddress, row: row, range: range) }
+        return try values.map {
+            let result = Double($0)
+            guard result.isFinite, UInt64(exactly: result) == $0 else { throw VivoOmicsError.invalid("integer exceeds exact Double range") }
+            return result
+        }
+    }
 }
 
 extension VivoHDF5 {
@@ -317,6 +361,10 @@ extension VivoHDF5 {
     }
     func writeIntegers(_ object: ID, _ name: String, _ values: [UInt64], attribute: Bool = false) throws {
         try values.withUnsafeBytes { try write(object, name, type: native("NATIVE_ULLONG"), dimensions: [UInt64(values.count)], attribute: attribute, buffer: $0.baseAddress) }
+    }
+    func writeDoubles(_ object: ID, _ name: String, _ values: [Double], attribute: Bool = false) throws {
+        guard values.allSatisfy(\.isFinite) else { throw VivoOmicsError.invalid("non-finite numeric write") }
+        try values.withUnsafeBytes { try write(object, name, type: native("NATIVE_DOUBLE"), dimensions: [UInt64(values.count)], attribute: attribute, buffer: $0.baseAddress) }
     }
 }
 

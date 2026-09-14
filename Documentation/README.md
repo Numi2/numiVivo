@@ -12,6 +12,7 @@ Start with the [project overview](../README.md) for the scientific scope and fir
 | Inspect the conditional Adamson target-prediction sensitivity result | [Provisional Adamson role sensitivity](AdamsonProvisionalRoleSensitivity.md) |
 | Import/export AnnData H5AD and continue the single-cell pipeline | [Single-cell interoperability and roadmap](SingleCellInteroperability.md) |
 | Preserve separate RNA/protein/ATAC feature spaces and export MuData | [Native multi-assay counts and CITE-seq](../Tools/Omics/Multimodal/README.md) |
+| Exchange continuous proteomics, metabolomics or spatial-imaging values | [Quantitative assay H5MU route](SingleCellInteroperability.md#quantitative-assay-interchange) |
 | Build the Apple package and run a supplied experiment | [Get started](../README.md#get-started) |
 | Calculate a small native electronic-structure example | [H₂/STO-3G chemistry](../Examples/native-chemistry/README.md) |
 | Refine a fixed-geometry electronic space by measured profile sensitivity | [Property-directed refinement](../Examples/property-directed-refinement/README.md) |

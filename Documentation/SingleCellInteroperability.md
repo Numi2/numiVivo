@@ -802,8 +802,12 @@ The complete development objective remains open:
    preserve every count and coordinate in the full release and reproduce the
    earlier qualified dataset/H5MU bytes. Native replay, 13 Swift tests and 16
    lifecycle/regression commands pass. This is a bounded resident RNA/spot path;
-   HD Parquet, Matrix Market directories and biological ATAC/spatial analysis,
-   continuous measurements and joint multimodal analysis remain open. A fresh
+   HD Parquet and Matrix Market directories, biological ATAC/spatial analysis,
+   and joint multimodal analysis remain open. The separate
+   `VivoQuantitativeH5MU` route carries finite proteomics, metabolomics and
+   spatial-imaging values through native H5MU CSR export and explicit-plan
+   import, preserving measured zeros, missing rows, units and spatial positions.
+   A fresh
    M4 Pro regression at the published revision passes 13 native multimodal tests;
    its [host and binary record](../Tools/Omics/Multimodal/evidence/2026-09-14-native-regression.json)
    confirms source/runtime continuity without changing those biological limits.
@@ -937,9 +941,10 @@ The complete development objective remains open:
     and metabolic modeling remain open.
     The shared `VivoQuantitativeAssayDataset` core now preserves finite sparse
     proteomics, metabolomics and spatial-imaging values with explicit missing
-    versus measured-zero semantics on the common observation axis. It is a
-    bounded JSON foundation; continuous H5MU import/export, assay-specific
-    transforms and biological analysis remain open.
+    versus measured-zero semantics on the common observation axis. Native
+    `VivoQuantitativeH5MU` import/export adds bounded CSR output plus dense/CSC
+    numeric input under an explicit plan. Assay-specific transforms, joint
+    biological analysis and outcome validation remain open.
 12. **Cross-scale biology:** variant → regulation → RNA/cell state → protein and
     molecular mechanism → reaction/kinetics → cellular phenotype → tissue
     prediction requires executable, independently qualified links at each boundary.
@@ -956,6 +961,20 @@ The complete development objective remains open:
     every transition has source/model/validation fingerprints and held-out
     observations. Its focused tests cover qualified, hypothesis-only, missing
     and out-of-order links; no current graph passes the complete-path gate.
+
+### Quantitative assay interchange
+
+`VivoQuantitativeAssayDataset` is the common identity/provenance container for
+finite real-valued proteomics, metabolomics and spatial-imaging measurements.
+`VivoQuantitativeH5MU.writeSnapshot` emits a MuData file with one AnnData
+modality per assay, float64 CSR `X`, explicit `obsmap`/`varmap` row maps and
+standard `obsm` spatial arrays. `VivoQuantitativeH5MUImport.readSnapshot`
+requires a `VivoH5MUQuantitativePlan` that names the selected design columns,
+feature columns, units and matrix path. It accepts CSR, CSC and bounded dense
+numeric arrays; explicit zeros are retained, NaN dense entries are missing and
+infinite values are rejected. The route preserves the declared interchange
+semantics only. It does not normalize, impute, fit an assay model or infer a
+biological outcome.
 ## Source-bound aggregation cohorts
 
 [Cell selection](../Tools/Omics/H5AD/CELL_SELECTION.md) now applies explicit,

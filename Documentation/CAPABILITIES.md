@@ -17,7 +17,7 @@ The single-cell entries were reviewed against published evidence available at
 
 | Capability | Implemented and measured scope | Remaining boundary |
 | --- | --- | --- |
-| H5AD and multi-assay interchange | Native count import/export, explicit metadata mapping and source preservation; separate RNA/protein/ATAC spaces and H5MU routes. | Supported encodings and bounds are explicit; interchange does not validate experimental labels or joint biological inference. |
+| H5AD and multi-assay interchange | Native count import/export, explicit metadata mapping and source preservation; separate RNA/protein/ATAC spaces and H5MU routes. Continuous-valued proteomics, metabolomics and spatial-imaging assays have a separate native H5MU CSR/dense/CSC route. | Supported encodings and bounds are explicit; interchange does not validate experimental labels, assay transforms or joint biological inference. |
 | Count inference | Native negative-binomial fitting, dispersion/shrinkage, offsets and paired/batch designs; real-data numerical and R-reference comparisons. | Null-benchmark failures, varying support and broader FDR/interval calibration remain. Method concordance is not ground truth. |
 | Reduction and integration | Sparse HVG/PCA, neighbors, Louvain, UMAP-compatible optimization and donor correction. Full HIRISA PCA/graph and seed-7 integration have numerical/replay evidence. | Full HIRISA clustering publication/replay and independent partition checks pass; cluster annotation remains unqualified. Coarse margins pass. [Original program failures](../Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md) are decoder-dependent: [within-library development fitting](../Tools/Omics/Benchmarks/HIRISA/PROGRAM_CALIBRATION.md) meets loss margins with 28/32 sensitive controls, four insufficient. This is not independent biological qualification. Rare-cell and native multi-seed preservation remain open. |
 | Known-treatment donor prediction | Native control-context ridge plus three simple baselines. All 79 HIRISA folds complete; ridge beats no-change in 14/16 contrasts and mean response in 4/16. | Requires the new donor's control profile and matching context. Two contrasts fail against no-change; no calibrated intervals or general phenotype claim. |
@@ -60,11 +60,11 @@ fingerprints and held-out-observation requirements. It reports incomplete and
 hypothesis-only paths explicitly; no current graph satisfies the complete
 research-path gate.
 
-The shared `VivoQuantitativeAssayDataset` adds a bounded sparse real-valued
-container for proteomics, metabolomics and spatial-imaging observations. It
-retains explicit zeros, missing entries and common sample/observation identity;
-it does not yet provide continuous H5MU I/O, assay-specific inference or outcome
-validation.
+The shared `VivoQuantitativeAssayDataset` and `VivoQuantitativeH5MU` route add a
+bounded sparse real-valued container and native H5MU import/export for
+proteomics, metabolomics and spatial-imaging observations. They retain explicit
+zeros, missing entries, units and common sample/observation identity; they do
+not provide assay-specific transforms, joint inference or outcome validation.
 
 ## Molecular preparation and dynamics
 
