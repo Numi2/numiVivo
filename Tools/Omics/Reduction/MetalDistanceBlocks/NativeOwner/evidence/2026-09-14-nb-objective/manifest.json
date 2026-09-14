@@ -1,0 +1,24 @@
+{
+  "files": {
+    "README.md": "68774141649eab162265e33619e29fb9ea3bbd71cd50df355e0394ac79c23e45",
+    "execution.json": "a2d3a9cbcb90c6b227fe868b7ee519a243894b7f2f0c8f87a5a11d63645061b0",
+    "native-metal-nb-objective.log.gz": "3060d4bdd3c55d7224e1c1deaca28931c7a6ea36deaaf409a6f6080338119cd5"
+  },
+  "schema": "numivivo.org/metal-nb-objective-native-manifest/v1",
+  "sourceCommit": "b976d7a296107362133cb44bd58a24c553ded723",
+  "sourceFiles": {
+    "Sources/NumiVivoKit/Omics/VivoMetalNegativeBinomialLikelihood.swift": {
+      "bytes": 7844,
+      "sha256": "302c03a53980658469caadb6d8426a73658f3f02c9272b8edcef042dfdfe58bd"
+    },
+    "Sources/NumiVivoKit/Omics/VivoOmicsNegativeBinomial.swift": {
+      "bytes": 26911,
+      "sha256": "14f422478271977e9ef8f62aa5bc6c4682edadc157509aad63d51bace04535c7"
+    },
+    "Tests/NumiVivoIntegrationTests/SingleCellMetalNegativeBinomialTests.swift": {
+      "bytes": 2765,
+      "sha256": "8d76104937ca22791b5d23d53e8e93b34ce4d40dd9d90d760d66e43a5f7d2256"
+    }
+  },
+  "status": "passed"
+}

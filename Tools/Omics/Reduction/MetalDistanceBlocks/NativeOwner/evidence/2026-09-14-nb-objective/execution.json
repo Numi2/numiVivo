@@ -1,0 +1,65 @@
+{
+  "chip": "Apple M4",
+  "command": [
+    "env",
+    "NUMIVIVO_TEST_METAL=1",
+    "swift",
+    "test",
+    "--build-path",
+    "/tmp/numivivo-metal-nb-objective-build",
+    "--filter",
+    "SingleCellMetalNegativeBinomialTests"
+  ],
+  "fixture": {
+    "assertions": [
+      "batched variable objective agrees with an FP64 CPU oracle within 5e-6 relative tolerance",
+      "opt-in fit records metalFP32 while retaining an exact CPU FP64 logLikelihood",
+      "counts above 2^24 are rejected by the explicit FP32 contract",
+      "default CPU fit encoding omits the optional backend field"
+    ],
+    "batchObservations": 262144,
+    "dispersion": 0.1,
+    "fitCoefficients": 2,
+    "fitObservations": 6,
+    "maximumCount": 16777216,
+    "objectiveObservations": 10
+  },
+  "host": "Mac16,12",
+  "log": {
+    "bytes": 491,
+    "path": "native-metal-nb-objective.log.gz",
+    "sha256": "3060d4bdd3c55d7224e1c1deaca28931c7a6ea36deaaf409a6f6080338119cd5",
+    "uncompressedBytes": 1335,
+    "uncompressedSHA256": "9048c7b0a966a9734a1254e076dc33cdbf81a9c554a88a3b21df732aff392bdf"
+  },
+  "machine": "arm64",
+  "memoryBytes": 25769803776,
+  "os": "macOS 26.6 (25G5028f)",
+  "passedTests": [
+    "backendIsAbsentFromDefaultFitEncoding",
+    "batchedVariableObjectiveMatchesFP64CPUOracle",
+    "objectiveRejectsCountsOutsideFP32Contract",
+    "optInFitUsesMetalObjectiveAndRetainsExactReport"
+  ],
+  "recordedUnix": 1789422994.859742,
+  "result": "passed",
+  "schema": "numivivo.org/metal-nb-objective-native/v1",
+  "scope": "Physical Apple GPU dispatch and bounded FP32 batched NB2 objective qualification only; CPU FP64 remains the default and the authoritative gamma terms, coefficient updates, diagnostics and final logLikelihood; no full GPU model-fitting, cohort timing, FDR/interval calibration, million-cell scaling or biological outcome prediction.",
+  "sourceCommit": "b976d7a296107362133cb44bd58a24c553ded723",
+  "sourceFiles": {
+    "Sources/NumiVivoKit/Omics/VivoMetalNegativeBinomialLikelihood.swift": {
+      "bytes": 7844,
+      "sha256": "302c03a53980658469caadb6d8426a73658f3f02c9272b8edcef042dfdfe58bd"
+    },
+    "Sources/NumiVivoKit/Omics/VivoOmicsNegativeBinomial.swift": {
+      "bytes": 26911,
+      "sha256": "14f422478271977e9ef8f62aa5bc6c4682edadc157509aad63d51bace04535c7"
+    },
+    "Tests/NumiVivoIntegrationTests/SingleCellMetalNegativeBinomialTests.swift": {
+      "bytes": 2765,
+      "sha256": "8d76104937ca22791b5d23d53e8e93b34ce4d40dd9d90d760d66e43a5f7d2256"
+    }
+  },
+  "testCount": 4,
+  "testSuite": "SingleCellMetalNegativeBinomialTests"
+}
