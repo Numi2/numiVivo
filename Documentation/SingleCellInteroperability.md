@@ -20,9 +20,11 @@ also publishes and verifies a gzip-wrapped H5AD through streamed pseudobulk,
 retaining the compressed source in the result bundle. The [axis-projection
 regression](../Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-projection/README.md)
 extends the same private decode boundary to complete-object projection while
-retaining the compressed source in its result bundle. Annotation still requires
-an HDF5-readable (plain) source file because it stages and edits the complete
-source object.
+retaining the compressed source in its result bundle. The [annotation regression](../Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-annotation/README.md)
+also accepts an external gzip source: it edits a private decoded copy and
+records the exact compressed source fingerprint in the output receipt. The
+published annotated file is a new plain H5AD because it stages and edits the
+complete source object.
 
 ## Current outcome and scale evidence
 
@@ -216,8 +218,9 @@ Existing destinations and conflicting add/replace modes fail. Failures and
 cancellation before publication leave no output. Edited parent groups are copied
 before mutation so hard-linked backups retain their old values.
 
-Annotation accepts up to 16 GiB source files, 32 GiB outputs and two million
-rows/features; the existing plan payload limits still apply. Snapshot and
+Annotation accepts plain or externally gzip-wrapped H5AD source files up to
+16 GiB, writes up to 32 GiB outputs and supports two million rows/features; the
+existing plan payload limits still apply. Snapshot and
 publication use APFS copy-on-write when available, with bounded 1 MiB streaming
 fallback. Publication keeps pinned destination directories, private temporaries
 and atomic no-overwrite linking. Edited groups copy attributes and retain links

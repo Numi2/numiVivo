@@ -363,7 +363,7 @@ gzip-wrapped H5AD while retaining the exact source bytes, and includes
 [a native M4 qualification](Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-m4/README.md),
 [bounded scan](Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-scan/README.md) and
 [axis-projection](Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-projection/README.md)
-gzip qualifications,
+gzip qualifications, plus [gzip annotation](Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-annotation/README.md),
 [bounded tensor annotations](Tools/Omics/H5AD/Tensors/README.md) and [ragged receptor records with LZF decoding](Tools/Omics/H5AD/Projection/Awkward/README.md)), negative-binomial DE, sparse PCA/neighbors/clustering,
 integration, marker scoring and multimodal count interchange. The complete
 [1.61-million-cell HIRISA cohort](Tools/Omics/Benchmarks/HIRISA/README.md) has
