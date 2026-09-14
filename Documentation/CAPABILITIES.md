@@ -2,12 +2,12 @@
 
 This is a source-backed map of the implementation, not a feature certification. The public package combines mature contracts, new numerical source and experimental methods. A successful import, a function named after a method, or a committed example does not establish numerical agreement or biological applicability.
 
-The navigation and implementation references below describe the reviewed source at `b643f49a1c106ed1ae01c9d855ff8b0a6e65f4e6` for the current single-cell evidence, with historical receipts retaining their named runtime identities. Consult the actual revision when a method changes. This map deliberately does not assign an unmeasured speedup or maximum biological scale.
+The navigation and implementation references below describe the reviewed source at `fb149c86bbfcbd494b0b30812b8454683b623051` for the current single-cell evidence, with historical receipts retaining their named runtime identities. Consult the actual revision when a method changes. This map deliberately does not assign an unmeasured speedup or maximum biological scale.
 
 ## Single-cell analysis and biological prediction
 
 The single-cell entries were reviewed against published evidence available at
-`b643f49a1c106ed1ae01c9d855ff8b0a6e65f4e6` on 2026-09-14. Historical receipts retain their named runtime identities.
+`fb149c86bbfcbd494b0b30812b8454683b623051` on 2026-09-14. Historical receipts retain their named runtime identities.
 
 | Capability | Implemented and measured scope | Remaining boundary |
 | --- | --- | --- |
@@ -31,7 +31,11 @@ qualify selected Apple-GPU arithmetic and one cohort-scale distance path; the
 [SEQC other-omics benchmark](../Tools/Omics/Benchmarks/SEQC/README.md) is a
 technical reference-RNA comparison; and the [AlphaGenome Atlas assessment](AlphaGenomeAtlas.md)
 retains an offline adapter contract. None supplies a validated general biological
-outcome model, and live cross-scale coupling remains open.
+outcome model, and live cross-scale coupling remains open. The separate [Arc
+Virtual Cell Challenge 2026 adapter](../Tools/Omics/Arc2026/README.md) now has
+15 portable and five native contract tests, but no trained predictor or released-
+context outcome score; it therefore remains benchmark-conformance evidence rather
+than biological-outcome validation.
 
 ## Molecular preparation and dynamics
 
