@@ -80,4 +80,37 @@ import Testing
             #expect(try h.doubles(values, maximum: 4, allowInteger: false) == [0, 1.25])
         }
     }
+
+    @Test(.enabled(if: ProcessInfo.processInfo.environment["NUMIVIVO_TEST_HDF5"] == "1"))
+    func nativeH5MUImportAcceptsDenseAndCSCFloatMatrices() throws {
+        let data = Self.fixture(), plan = Self.plan(for: data)
+        for representation in ["dense", "csc"] {
+            let url = FileManager.default.temporaryDirectory.appendingPathComponent("quantitative-\(representation)-" + UUID().uuidString + ".h5mu")
+            defer { try? FileManager.default.removeItem(at: url) }
+            try VivoQuantitativeH5MU.writeSnapshot(data, to: url)
+            try VivoHDF5.lock.withLock {
+                let h = try VivoHDF5(), file = try h.file(url.path, writable: true)
+                defer { h.close(file, "H5Fclose") }
+                let delete: @convention(c) (Int64, UnsafePointer<CChar>, Int64) -> Int32 = try h.symbol("H5Ldelete")
+                try h.check(delete(file, "mod/protein/X", 0), "replace quantitative matrix")
+                let modality = try h.object(file, "mod/protein"); defer { h.close(modality, "H5Oclose") }
+                if representation == "dense" {
+                    let matrix = try h.projectionDataset(modality, "X", type: h.native("NATIVE_DOUBLE"), shape: [2, 1])
+                    defer { h.close(matrix, "H5Dclose") }
+                    let write: @convention(c) (Int64, Int64, Int64, Int64, Int64, UnsafeRawPointer?) -> Int32 = try h.symbol("H5Dwrite")
+                    let values = [0.0, 1.25]
+                    try values.withUnsafeBytes { try h.check(write(matrix, h.native("NATIVE_DOUBLE"), 0, 0, 0, $0.baseAddress), "write quantitative dense fixture") }
+                    try h.encoding(matrix, "array", "0.2.0")
+                } else {
+                    let matrix = try h.projectionGroup(modality, "X"); defer { h.close(matrix, "H5Gclose") }
+                    try h.encoding(matrix, "csc_matrix", "0.1.0")
+                    try h.writeIntegers(matrix, "shape", [2, 1], attribute: true)
+                    try h.writeIndices(matrix, "indptr", [0, 2])
+                    try h.writeIndices(matrix, "indices", [0, 1])
+                    try h.writeDoubles(matrix, "data", [0, 1.25])
+                }
+            }
+            #expect(try VivoQuantitativeH5MUImport.readSnapshot(url, plan: plan) == data)
+        }
+    }
 }
