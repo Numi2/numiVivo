@@ -107,10 +107,27 @@ public enum VivoVCFReader {
         guard let originalText = String(data: data, encoding: .utf8), !originalText.isEmpty else {
             throw VivoGenomicEvidenceError.invalid("VCF must be nonempty UTF-8 text.")
         }
-        var text = originalText
-        if text.contains("\r") {
-            text = text.replacingOccurrences(of: "\r\n", with: "\n")
-            try VivoAtlasEvidence.require(!text.contains("\r"), "Bare carriage returns are not supported in VCF.")
+        // Validate line endings against the source bytes first, then normalize
+        // with an explicit byte pass.  This avoids making parser identity
+        // depend on Foundation's text normalization behavior while retaining
+        // the original bytes for `sourceSHA256`.
+        let sourceBytes = Array(data)
+        for (index, byte) in sourceBytes.enumerated() where byte == 0x0d {
+            try VivoAtlasEvidence.require(index + 1 < sourceBytes.count && sourceBytes[index + 1] == 0x0a,
+                "Bare carriage returns are not supported in VCF.")
+        }
+        var normalizedBytes: [UInt8] = []
+        normalizedBytes.reserveCapacity(data.count)
+        var index = 0
+        while index < sourceBytes.count {
+            if sourceBytes[index] == 0x0d {
+                index += 1 // the following LF was validated above
+            }
+            normalizedBytes.append(sourceBytes[index])
+            index += 1
+        }
+        guard let text = String(bytes: normalizedBytes, encoding: .utf8) else {
+            throw VivoGenomicEvidenceError.invalid("VCF line-ending normalization produced invalid UTF-8.")
         }
         var lines = text.split(separator: "\n", omittingEmptySubsequences: false).map(String.init)
         if lines.last == "" { lines.removeLast() }
