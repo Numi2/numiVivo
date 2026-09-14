@@ -41,6 +41,29 @@ public struct VivoH5ADImportPlan: Codable, Sendable, Equatable {
         self.matrixPath = matrixPath; self.samples = samples; self.sampleColumn = sampleColumn; self.barcodeColumn = barcodeColumn
         self.groupColumn = groupColumn; self.featureIDColumn = featureIDColumn; self.featureNameColumn = featureNameColumn; self.mitochondrialFeatureIDs = mitochondrialFeatureIDs
     }
+    /// Validate the explicit mapping before opening an untrusted HDF5 source.
+    /// Column values are names within `obs`/`var`, while the matrix path is one
+    /// of the three supported AnnData locations. No biological identity is
+    /// inferred from a name or from the selected matrix.
+    public func validate() throws {
+        let columnNames = [sampleColumn, barcodeColumn, groupColumn, featureIDColumn, featureNameColumn].compactMap { $0 }
+        let layerName = matrixPath.hasPrefix("layers/") ? String(matrixPath.dropFirst(7)) : ""
+        let validColumnName: (String) -> Bool = { name in
+            vivoOmicsID(name) && !name.contains("/") && name != "." && name != ".."
+        }
+        guard schemaVersion == 1, vivoOmicsID(id),
+              !sourceDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              sourceDescription.utf8.count <= 16_384,
+              columnNames.allSatisfy(validColumnName),
+              !samples.isEmpty, samples.count <= 2_000_000,
+              matrixPath == "X" || matrixPath == "raw/X" ||
+                (matrixPath.hasPrefix("layers/") && !layerName.isEmpty && !layerName.contains("/") && vivoOmicsID(layerName)),
+              Set(mitochondrialFeatureIDs).count == mitochondrialFeatureIDs.count,
+              mitochondrialFeatureIDs.allSatisfy(vivoOmicsID) else {
+            throw VivoOmicsError.invalid("H5AD import mapping identity or matrix path")
+        }
+        try vivoOmicsValidateIdentities(samples: samples, cells: [])
+    }
 }
 
 /// The native count projection is deliberately distinct from the AnnData source.
@@ -67,7 +90,7 @@ public enum VivoSingleCellH5AD {
     }
     public static func read(_ url: URL, plan: VivoH5ADImportPlan, limits: VivoOmicsLimits = .init()) throws -> VivoH5ADDocument {
         try limits.validate()
-        guard plan.schemaVersion == 1 else { throw VivoOmicsError.invalid("unsupported H5AD mapping schema") }
+        try plan.validate()
         let bytes = try VivoSingleCellCampaignIO.readDocument(url, maximumBytes: limits.maximumInputBytes)
         // Snapshot before HDF5 reads so the retained source and projection always
         // refer to the same file, including during concurrent external changes.
@@ -100,7 +123,7 @@ public enum VivoSingleCellH5AD {
         onMetadata: (VivoSingleCellCountMetadata) throws -> Void,
         onEntry: (Int,Int,UInt64) throws -> Void) throws -> String {
         try limits.validate()
-        guard plan.schemaVersion == 1 else { throw VivoOmicsError.invalid("unsupported H5AD mapping schema") }
+        try plan.validate()
         return try VivoHDF5.lock.withLock {
             let h = try VivoHDF5(), file = try h.file(url.path)
             defer { h.close(file, "H5Fclose") }

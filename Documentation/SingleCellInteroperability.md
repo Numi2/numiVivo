@@ -113,6 +113,11 @@ identify biological replicates. For example:
 }
 ```
 
+The native owner validates this mapping before opening the HDF5 source: matrix
+locations are limited to `X`, `raw/X` or one named `layers/<name>` entry, and
+all metadata columns and declared samples must be explicit and internally
+consistent. Invalid mappings fail before source bytes are read.
+
 Supply every actual sample, with the study's actual replicate structure.
 `barcodeColumn` is optional; otherwise the observation index supplies barcodes.
 `groupColumn`, `featureIDColumn` and `featureNameColumn` are optional.

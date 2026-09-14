@@ -3,6 +3,26 @@ import Testing
 @testable import NumiVivoKit
 
 @Suite struct SingleCellInterchangeTests {
+    @Test func h5adImportMappingRejectsAmbiguousPathsAndColumns() throws {
+        let source = try VivoSingleCellExamples.pairedCounts()
+        func mapping(matrixPath: String = "X", sampleColumn: String = "sample",
+                     samples: [VivoOmicsSample] = source.samples,
+                     mitochondrial: [String] = []) -> VivoH5ADImportPlan {
+            .init(id: "mapping", evidence: .synthetic, sourceDescription: "mapping fixture",
+                  countUnit: .umiCount, matrixPath: matrixPath, samples: samples,
+                  sampleColumn: sampleColumn, mitochondrialFeatureIDs: mitochondrial)
+        }
+        try mapping(matrixPath: "layers/counts").validate()
+        for invalid in [
+            mapping(matrixPath: "layers/counts/extra"),
+            mapping(sampleColumn: "obs/sample"),
+            mapping(samples: []),
+            mapping(mitochondrial: [source.features[0].id, source.features[0].id])
+        ] {
+            #expect(throws: (any Error).self) { try invalid.validate() }
+        }
+    }
+
     @Test func gzipChecksumsMembersAndExpansionLimits() throws {
         let plain = Data("native compressed count fixture\n".utf8)
         let gzip = Data(base64Encoded: "H4sIAAAAAAAC/8tLLMksS1VIzs8tKEotLk5NATJL80oU0jIrSkqLUrkA65t8niAAAAA=")!
