@@ -30,7 +30,12 @@ now complete with exact cell-identity/metadata checks and backed AnnData reopeni
 Numeric legacy categories, scalar embeddings and numeric-index analytical
 handoff are also implemented with their declared conformance checks; remaining
 format and consumer bounds are listed in the interoperability roadmap. These
-completed repairs should not be scheduled again as missing capabilities.
+completed repairs should not be scheduled again as missing capabilities. The
+external gzip-wrapped H5AD path now has native import, streamed scan, axis
+projection and annotation qualifications. The [annotation receipt](../Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-annotation/README.md)
+binds the exact compressed source and publishes a new plain H5AD after bounded
+private decoding; this remains interoperability/storage evidence, not biological
+annotation or outcome validation.
 
 The [prediction assessment](BiologicalPrediction.md) records the current
 scientific answer: bounded expression-response prediction is demonstrated,
