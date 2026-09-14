@@ -105,11 +105,21 @@ extension VivoSingleCellH5AD {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-annotation-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
         defer { try? FileManager.default.removeItem(at: directory) }
+        let sourceLimit = 16 * 1_024 * 1_024 * 1_024
+        let sourceSnapshot = directory.appendingPathComponent("source.h5ad")
         let staging = directory.appendingPathComponent("annotated.h5ad")
-        // Hash the exact private copy HDF5 will edit, without retaining the
-        // complete file in Data. Axis/value limits remain independently bounded.
-        guard try VivoOmicsFileSnapshot.fingerprint(sourceURL, copyTo: staging, maximumBytes: 16 * 1_024 * 1_024 * 1_024) == plan.source else {
+        // Snapshot the exact source bytes before decoding. The source fingerprint
+        // therefore remains authoritative for plain and externally gzip-wrapped
+        // H5AD, even though HDF5 edits the private uncompressed view.
+        guard try VivoOmicsFileSnapshot.fingerprint(sourceURL, copyTo: sourceSnapshot, maximumBytes: sourceLimit) == plan.source else {
             throw VivoOmicsError.invalid("annotation source fingerprint mismatch")
+        }
+        var readableLimits = VivoOmicsLimits()
+        readableLimits.maximumInputBytes = sourceLimit
+        try VivoSingleCellH5AD.withReadableSnapshot(sourceSnapshot, limits: readableLimits) { readable in
+            // Use the same bounded descriptor copy path for the writable edit
+            // staging file; the decoded view is removed when this closure ends.
+            _ = try VivoOmicsFileSnapshot.fingerprint(readable, copyTo: staging, maximumBytes: outputLimit)
         }
         let version = try VivoHDF5.lock.withLock {
             let h = try VivoHDF5()
