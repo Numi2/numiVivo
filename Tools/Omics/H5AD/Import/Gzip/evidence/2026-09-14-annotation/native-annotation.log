@@ -1,0 +1,128 @@
+$ swift build --build-path /tmp/numivivo-h5ad-annotation-build
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.26s)
+exit 0
+$ swift test --build-path /tmp/numivivo-h5ad-annotation-build --filter SingleCellInterchangeTests
+Test Suite 'Selected tests' started at 2026-09-14 22:53:10.645.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-14 22:53:10.646.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-14 22:53:10.646.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-14 22:53:10.646.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1743
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellInterchangeTests started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test gzipReadableSnapshotIsPrivateAndPlainSourcesStayInPlace() started.
+◇ Test h5adImportMappingRejectsAmbiguousPathsAndColumns() started.
+◇ Test h5adDerivedPlansRejectInvalidMappingsBeforeSourceWork() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+✔ Test h5adDerivedPlansRejectInvalidMappingsBeforeSourceWork() passed after 0.001 seconds.
+✔ Test h5adImportMappingRejectsAmbiguousPathsAndColumns() passed after 0.001 seconds.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.002 seconds.
+✔ Test gzipReadableSnapshotIsPrivateAndPlainSourcesStayInPlace() passed after 0.003 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.013 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.013 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.026 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.026 seconds.
+✔ Test run with 7 tests in 1 suite passed after 0.026 seconds.
+[0/1] Planning build
+Building for debugging...
+[0/4] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.26s)
+exit 0
+$ /tmp/numivivo-h5ad-annotation-build/arm64-apple-macosx/debug/numivivo singlecell-h5ad-write /tmp/numivivo-gzip-annotation-qualification/dataset.json --output /tmp/numivivo-gzip-annotation-qualification/source.h5ad
+{"file":"/tmp/numivivo-gzip-annotation-qualification/source.h5ad","status":"written-native-count-anndata"}
+exit 0
+$ python3 external gzip wrapper (mtime=0)
+plain_bytes 18289
+gzip_bytes 2937
+gzip_sha256 9b9ef2785151c22c6e6a96f7aa24ec6dd81cf81c836d7e671a59a839a7a18808
+$ /tmp/numivivo-h5ad-annotation-build/arm64-apple-macosx/debug/numivivo singlecell-h5ad-annotate /tmp/numivivo-gzip-annotation-qualification/source.h5ad.gz --plan /tmp/numivivo-gzip-annotation-qualification/annotation-plan.json --output /tmp/numivivo-gzip-annotation-qualification/annotated.h5ad
+{"hdf5Version":"2.2.0","implementation":{"bytes":[201,247,187,232,2,180,17,102,7,1,130,147,81,246,5,160,16,136,145,238,173,239,143,146,242,47,164,35,86,167,75,117]},"output":{"bytes":[230,97,113,160,91,214,216,228,70,54,167,118,199,16,42,23,61,24,141,142,249,133,56,114,168,96,102,236,41,170,96,10]},"plan":{"bytes":[139,224,155,43,173,75,207,60,96,157,226,231,88,21,132,1,235,164,116,253,99,75,168,85,78,149,160,235,155,153,15,80]},"schemaVersion":1,"source":{"bytes":[155,158,242,120,81,81,194,44,110,106,150,247,170,36,236,109,216,28,248,28,131,109,126,103,26,89,168,57,167,161,136,8]}}
+exit 0
+$ /opt/homebrew/bin/h5ls -r /tmp/numivivo-gzip-annotation-qualification/annotated.h5ad
+/                        Group
+/X                       Group
+/X/data                  Dataset {4}
+/X/indices               Dataset {4}
+/X/indptr                Dataset {5}
+/layers                  Group
+/obs                     Group
+/obs/_index              Dataset {4}
+/obs/barcode             Dataset {4}
+/obs/batch               Dataset {4}
+/obs/biological_replicate Dataset {4}
+/obs/condition           Dataset {4}
+/obs/donor               Group
+/obs/donor/mask          Dataset {4}
+/obs/donor/values        Dataset {4}
+/obs/group               Group
+/obs/group/mask          Dataset {4}
+/obs/group/values        Dataset {4}
+/obs/native_score        Dataset {4}
+/obs/organism            Dataset {4}
+/obs/sample              Dataset {4}
+/obsm                    Group
+/obsp                    Group
+/uns                     Group
+/uns/numivivo            Dataset {SCALAR}
+/uns/numivivo_edits      Group
+/uns/numivivo_edits/8be09b2bad4bcf3c609de2e758158401eba474fd634ba8554e95a0eb9b990f50 Group
+/uns/numivivo_edits/8be09b2bad4bcf3c609de2e758158401eba474fd634ba8554e95a0eb9b990f50/hdf5_version Dataset {SCALAR}
+/uns/numivivo_edits/8be09b2bad4bcf3c609de2e758158401eba474fd634ba8554e95a0eb9b990f50/implementation_sha256 Dataset {SCALAR}
+/uns/numivivo_edits/8be09b2bad4bcf3c609de2e758158401eba474fd634ba8554e95a0eb9b990f50/plan_json Dataset {SCALAR}
+/uns/numivivo_edits/8be09b2bad4bcf3c609de2e758158401eba474fd634ba8554e95a0eb9b990f50/plan_sha256 Dataset {SCALAR}
+/uns/numivivo_edits/8be09b2bad4bcf3c609de2e758158401eba474fd634ba8554e95a0eb9b990f50/source_sha256 Dataset {SCALAR}
+/var                     Group
+/var/_index              Dataset {3}
+/var/mitochondrial       Dataset {3}
+/var/name                Dataset {3}
+/varm                    Group
+/varp                    Group
+exit 0
+$ /opt/homebrew/bin/h5dump -d /obs/native_score /tmp/numivivo-gzip-annotation-qualification/annotated.h5ad
+HDF5 "/tmp/numivivo-gzip-annotation-qualification/annotated.h5ad" {
+DATASET "/obs/native_score" {
+   DATATYPE  H5T_IEEE_F64LE
+   DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+   DATA {
+   (0): 0.5, nan, -0.5, 0
+   }
+   ATTRIBUTE "encoding-type" {
+      DATATYPE  H5T_STRING {
+         STRSIZE H5T_VARIABLE;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_UTF8;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "array"
+      }
+   }
+   ATTRIBUTE "encoding-version" {
+      DATATYPE  H5T_STRING {
+         STRSIZE H5T_VARIABLE;
+         STRPAD H5T_STR_NULLTERM;
+         CSET H5T_CSET_UTF8;
+         CTYPE H5T_C_S1;
+      }
+      DATASPACE  SCALAR
+      DATA {
+      (0): "0.2.0"
+      }
+   }
+}
+}
+exit 0
+annotated_output_hdf5 true
+native_score_values_verified true
+receipt_source_fingerprint_matches_gzip true
+annotated_bytes 26593
+output_sha256 e66171a05bd6d8e44636a776c7102a173d188d8ef9853872a86066ec29aa600a

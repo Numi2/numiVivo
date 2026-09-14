@@ -1,0 +1,49 @@
+{
+  "binary": {
+    "path": "/tmp/numivivo-h5ad-annotation-build/arm64-apple-macosx/debug/numivivo",
+    "sha256": "ee32465435c191202a7d510556dbd67df376cb93c529fa09ae9d92cc9b6def1f"
+  },
+  "cli": {
+    "addedPath": "obs/native_score",
+    "addedValues": [
+      0.5,
+      "NaN",
+      -0.5,
+      0.0
+    ],
+    "annotationPublish": "passed",
+    "hdf5Version": "2.2.0",
+    "outputBytes": 26593,
+    "outputHDF5": true,
+    "outputSHA256": "e66171a05bd6d8e44636a776c7102a173d188d8ef9853872a86066ec29aa600a",
+    "receiptSourceMatchesGzip": true,
+    "sourceGzipBytes": 2937,
+    "sourceGzipSHA256": "9b9ef2785151c22c6e6a96f7aa24ec6dd81cf81c836d7e671a59a839a7a18808",
+    "sourcePlainBytes": 18289,
+    "sourceShape": [
+      4,
+      3
+    ],
+    "writer": "passed"
+  },
+  "date": "2026-09-14",
+  "focusedTests": {
+    "command": "swift test --build-path /tmp/numivivo-h5ad-annotation-build --filter SingleCellInterchangeTests",
+    "failed": 0,
+    "passed": 7
+  },
+  "hdf5": {
+    "libraryPath": "/opt/homebrew/opt/hdf5/lib/libhdf5.dylib",
+    "sha256": "b96f5a824802e985198fb58fc336da80fc6a4990249f4038656b433231c7da51"
+  },
+  "host": {
+    "machine": "arm64",
+    "swift": "Apple Swift version 6.3 (swiftlang-6.3.0.123.5 clang-2100.0.123.102)\nTarget: arm64-apple-macosx26.0",
+    "system": "macOS-26.6-arm64-arm-64bit-Mach-O"
+  },
+  "qualification": "bounded external-gzip handling for H5AD annotation; no biological outcome claim",
+  "repositoryHead": "65192da0c7ef0f76c881d7ce21b55eb112f0c089",
+  "schema": "numivivo.org/h5ad-gzip-annotation-qualification/v1",
+  "scope": "The exact compressed source is snapshotted and fingerprinted. A private decoded view is copied into writable staging and removed after the copy; the published annotation is a new plain H5AD.",
+  "sourceCommit": "856a94526f4d4508a75e743574c4b09079c42e31"
+}
