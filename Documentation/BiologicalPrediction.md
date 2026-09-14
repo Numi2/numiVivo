@@ -251,10 +251,11 @@ also completes all 13 donor omissions: 432,116 gene/condition records and
 eligible Kang genes and 109–532 HIRISA genes unavailable, depending on the fold.
 Those changes are retained in all 13 prepared joint-fit manifests: 131,887 of
 216,058 origin/gene folds have both dispersions available. The first 64-gene
-Kang and HIRISA shards pass 102,608 independent numerical comparisons; the full
-fold runs started on September 12, 2026 and are not yet qualified. Each fold
-selects only its training donors from the verified sparse cache and starts a
-fresh model, with no full-cohort fitted weights. [The first two complete Kang
+Kang and HIRISA shards pass 102,608 independent numerical comparisons; the
+complete 13-fold development run is now fitted, independently checked and
+scored for its declared scope. Each fold selects only its training donors from
+the verified sparse cache and starts a fresh model, with no full-cohort fitted
+weights. [The first two complete Kang
 omissions](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/README.md)
 now score 8,353 and 7,790 eligible genes: RMSE falls 30.83% and 20.74% versus
 no change, and 25.60% and 21.18% versus the training-mean response baseline.
