@@ -872,8 +872,11 @@ The complete development objective remains open:
     [AlphaGenome Atlas integration assessment](AlphaGenomeAtlas.md) identifies
     an external prediction source for the variant/regulation/RNA link. A separate
     [native genomic evidence layer and retrieval adapter](Design/ALPHAGENOME_ATLAS.md)
-    already exists for bounded public-reference research. RNA/ATAC integration,
-    live service qualification and downstream biological coupling remain open.
+    already exists for bounded public-reference research. Its pinned Python
+    sources compile and all eight offline contract tests pass at `bfafd4bb`;
+    the [retained run](../ReferenceAdapters/AlphaGenomeAtlas/evidence/2026-09-14-adapter-tests/)
+    contains the source hashes and test log. RNA/ATAC integration, live service
+    qualification and downstream biological coupling remain open.
 ## Source-bound aggregation cohorts
 
 [Cell selection](../Tools/Omics/H5AD/CELL_SELECTION.md) now applies explicit,

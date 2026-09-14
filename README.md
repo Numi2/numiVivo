@@ -119,7 +119,9 @@ RNA, protein, mechanism and phenotype chain still needs independent measurement
 and held-out validation. The announcement presents Atlas as a research baseline
 and states that AlphaGenome has not been validated or approved for clinical use;
 NumiVivo therefore does not report an Atlas score as a clinical or phenotype
-prediction.
+prediction. The pinned local adapter now has a retained offline conformance run:
+Python compilation and all eight contract tests pass at `bfafd4bb`. This does
+not add a live Atlas call or a biological outcome result.
 
 Successful count ingestion, numerical replay and large-cohort processing establish
 that information can be processed correctly. They do not establish that an

@@ -205,6 +205,13 @@ A passing adapter test is not a live-provider, biological, clinical, or regulato
 validation. Live Atlas access, an actual public-reference pVACsplice reproduction,
 and the repository's native Apple test suite remain separate qualification gates.
 
+The pinned sources were rechecked on 2026-09-14 at commit
+`bfafd4bbd1d3dba528136a0a7b06440c87475394`: Python bytecode compilation and all
+eight offline contract tests passed (five Atlas-bridge tests and three splice-
+runner tests). The [retained execution record and log](../../ReferenceAdapters/AlphaGenomeAtlas/evidence/2026-09-14-adapter-tests/)
+bind the source hashes and commands. This is adapter conformance evidence only;
+no live service call or biological outcome is added.
+
 ## External references
 
 Contract checked against pVACtools 7.1.x documentation and RegTools' public command

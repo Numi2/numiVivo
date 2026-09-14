@@ -1,0 +1,16 @@
+$ python3 -m py_compile atlas_bridge.py run_pvacsplice.py test_atlas_bridge.py test_splice_runner.py
+
+$ python3 -m unittest -v
+test_fetch_preserves_explicit_status_and_tables (test_atlas_bridge.AtlasBridgeTests.test_fetch_preserves_explicit_status_and_tables) ... ok
+test_reference_mismatch_is_failure_not_zero (test_atlas_bridge.AtlasBridgeTests.test_reference_mismatch_is_failure_not_zero) ... ok
+test_request_rejects_duplicate_candidate_mapping (test_atlas_bridge.AtlasBridgeTests.test_request_rejects_duplicate_candidate_mapping) ... ok
+test_usage_requires_matching_terms_and_no_training (test_atlas_bridge.AtlasBridgeTests.test_usage_requires_matching_terms_and_no_training) ... ok
+test_wrong_reference_bytes_reject_entire_batch (test_atlas_bridge.AtlasBridgeTests.test_wrong_reference_bytes_reject_entire_batch) ... ok
+test_input_digest_mismatch_rejected_before_execution (test_splice_runner.SpliceRunnerTests.test_input_digest_mismatch_rejected_before_execution) ... ok
+test_non_public_reference_rejected (test_splice_runner.SpliceRunnerTests.test_non_public_reference_rejected) ... ok
+test_runner_writes_importable_bundle_contract (test_splice_runner.SpliceRunnerTests.test_runner_writes_importable_bundle_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.587s
+
+OK
