@@ -1,0 +1,750 @@
+{
+  "binary": {
+    "bytes": 55729096,
+    "path": "/Users/n/numivivo-nb-real-f287/.build-nb/arm64-apple-macosx/release/numivivo",
+    "sha256": "63ca5e565235b45a642e52fb70541e8fe1567814a824d38231cdd53f8b748dbb"
+  },
+  "hdf5": {
+    "bytes": 4007360,
+    "path": "/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+    "sha256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e"
+  },
+  "models": {
+    "HIRISA": {
+      "adjustForBatch": false,
+      "fitLog": {
+        "bytes": 601,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-fit-b7.log",
+        "sha256": "e4e9b3fd07c1b972a8ea1c5a6fee5cbf593ee6c4cd0f21059367ebdbe6786a66"
+      },
+      "model": {
+        "bytes": 5021627,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/model-HIRISA-nb/model.json",
+        "sha256": "a5e1749e5f6e45ca7136bffe11c81836dfdb2528df2a6de5b02775c6439ba17d"
+      },
+      "panelFeatures": 11800,
+      "selectedContextFeatures": 11711,
+      "statusCounts": {
+        "filteredLowExpression": 89,
+        "rankDeficientSupport": 95,
+        "tested": 11616
+      },
+      "testedFeatures": 11616,
+      "trainingDonors": 5,
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-model-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    "Kang": {
+      "adjustForBatch": false,
+      "fitLog": {
+        "bytes": 599,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-fit-b7.log",
+        "sha256": "a4c876c6733bb089d769056cf7a5eb025e11d2bb9d1575faed79aba27b338245"
+      },
+      "model": {
+        "bytes": 4910058,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/model-Kang-nb/model.json",
+        "sha256": "22c92da8a490bafc29810074e6fa85ea4535556c6eaa5438f418896960988c4c"
+      },
+      "panelFeatures": 11800,
+      "selectedContextFeatures": 7689,
+      "statusCounts": {
+        "filteredLowExpression": 4114,
+        "rankDeficientSupport": 2991,
+        "tested": 4695
+      },
+      "testedFeatures": 4695,
+      "trainingDonors": 8,
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-model-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    }
+  },
+  "preservedPreGuardFailure": {
+    "bytes": 121,
+    "path": "/Users/n/numivivo-gse181897-20260911/nb-response-f2879caa/HIRISA-fit.log",
+    "sha256": "195ad546d63e15f21a6c6dd438934eb7127e772334516a7971c6a98c30326740"
+  },
+  "queries": [
+    {
+      "chunk": "00",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 711,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-00-predict-b7.log",
+        "sha256": "924b9a45c058a768ad49fb571697d8bba51c3f1f4c089e451ed758473f36ae59"
+      },
+      "report": {
+        "bytes": 12433145,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-00-nb/report.json",
+        "sha256": "a045f496634ed6eec648f5a9c636736587077f1523e831f168e8653d08e1020c"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-00-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "01",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 710,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-01-predict-b7.log",
+        "sha256": "ad656e7d69b9f53d5ae575fa5ebf3e038a1b7945fcf580b4f7ca808f3435ef3e"
+      },
+      "report": {
+        "bytes": 12375759,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-01-nb/report.json",
+        "sha256": "56305459a611dda167d485e549afee80970baff79271bc948448e98201b91bca"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-01-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "02",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 704,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-02-predict-b7.log",
+        "sha256": "0bacdf332bb4e40da713f9eb33aa4c1add8b217f96c0c4d948af81bfefc74d16"
+      },
+      "report": {
+        "bytes": 13037347,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-02-nb/report.json",
+        "sha256": "a792a06091da436c3cb90990c68b5190611811408d3d2b68792fc91077d17801"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-02-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "03",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 719,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-03-predict-b7.log",
+        "sha256": "cbe2e5b99d6e232855c3ef3b4142362aa29eeb1dd6706547f0179d880e98560d"
+      },
+      "report": {
+        "bytes": 12694035,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-03-nb/report.json",
+        "sha256": "e49a35568416cd44b9cec09dad69a23b40db0b4700167dc7b426e8f0f0a183d7"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-03-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "04",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 715,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-04-predict-b7.log",
+        "sha256": "c8e95f6efaacd2c9501961b92c69d2d3b014521cd8a5a98b1e3886f929668824"
+      },
+      "report": {
+        "bytes": 12083713,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-04-nb/report.json",
+        "sha256": "f0ec78c0af5f02676ebd372ff86912aebf60e806f9c16543ddbb18919a56e1ed"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-04-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "05",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 706,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-05-predict-b7.log",
+        "sha256": "78d8eda01517bac397c60fc9be318acde32c30aba887d8ea12ba048a4084290e"
+      },
+      "report": {
+        "bytes": 12608670,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-05-nb/report.json",
+        "sha256": "f77637ab165ca8bc5b5ffe80d0e440f8eb00c386203a62f898b4c5b40380d9d0"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-05-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "06",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 712,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-06-predict-b7.log",
+        "sha256": "a6d55a244554587d8f7577f6f33452e27d587219bfa79339c736dcd705bd25a4"
+      },
+      "report": {
+        "bytes": 12738192,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-06-nb/report.json",
+        "sha256": "ec033f52f4c0f951a83c6067767d5bbe9136137bd2b41700e90b05668a8bdbfc"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-06-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "07",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 711,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-07-predict-b7.log",
+        "sha256": "43b4a1b67d79ccce45540f589ca7b902cd104b6343cf2aa49fdefaf3f6b3a866"
+      },
+      "report": {
+        "bytes": 12650819,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-07-nb/report.json",
+        "sha256": "0b04e04a40d632437dd8649f6daa0f326260b62ac29eaf5ee5363acf7e2ba856"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-07-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "08",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 706,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-08-predict-b7.log",
+        "sha256": "10a88a65cfd5fefbd221adac430694f13fdfe93e63935fd3dde5a47555f8558b"
+      },
+      "report": {
+        "bytes": 12895482,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-08-nb/report.json",
+        "sha256": "a13d5ad743448913feac2fc2453fb0e5f66fe712216ed9d23652a05915d8e0d0"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-08-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "09",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 699,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-09-predict-b7.log",
+        "sha256": "4aa903cf3162ce4c0e1750cf78b014d4074f88df3d4bd416fe268854b4f014bf"
+      },
+      "report": {
+        "bytes": 12489317,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-09-nb/report.json",
+        "sha256": "54833205d3f601249f40ec77545506af3fdded90a7e3dc493fdca0fe5af3021d"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-09-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "10",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 714,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-10-predict-b7.log",
+        "sha256": "34f558c444fdebef07fa6e7ba1b5b55b035f0a5b4755247c01c9df0cfa15ed1a"
+      },
+      "report": {
+        "bytes": 12453509,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-10-nb/report.json",
+        "sha256": "13faae65b4a01e9ef66d836813e6e77a5e15c34787e622dd72f790ba1f1927d5"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-10-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "11",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 709,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-11-predict-b7.log",
+        "sha256": "3110382c798a5a61bb219408b5cee4c110524730d107b26120cf82494eead07d"
+      },
+      "report": {
+        "bytes": 12485969,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-11-nb/report.json",
+        "sha256": "5f4effd263b0ef9dd445d6d5a17055d941f41580ddad62f3c08420eb563a0ada"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-11-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "12",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 712,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-12-predict-b7.log",
+        "sha256": "28c01521f7af9b0b362d7352a3efac648d226c657d0d0495dc5140713cfd31fa"
+      },
+      "report": {
+        "bytes": 11557929,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-12-nb/report.json",
+        "sha256": "74f16de8d0d29dc8740751694bc0656a284588153a34f1ed56a6f1f3755cd896"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-12-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "13",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 715,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-13-predict-b7.log",
+        "sha256": "1a1c30f69a6d0ddd22c19135a1c87ed4ce7dd95f4b228f87585f032ab21b35dd"
+      },
+      "report": {
+        "bytes": 12508528,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-13-nb/report.json",
+        "sha256": "eac652dcc77075247e7ca95fc7aa9c06c489ffaee71e9e64a1910a32302772fd"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-13-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "14",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 709,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-14-predict-b7.log",
+        "sha256": "7c3e45652aa4b1eb34550c71ca40217c7c5db7e750983c82135ba1f3a6815de3"
+      },
+      "report": {
+        "bytes": 12719926,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-14-nb/report.json",
+        "sha256": "100767a03226dc0e82f4852bda8471d8129b5760ce64460de77f3c9f41640f61"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-14-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "15",
+      "origin": "Kang",
+      "predictLog": {
+        "bytes": 717,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-15-predict-b7.log",
+        "sha256": "adbbab9c69c4742c434f7793a3dfbff6998a5a9cc3e9899329976b69cc6ad740"
+      },
+      "report": {
+        "bytes": 6149603,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-Kang-15-nb/report.json",
+        "sha256": "9d4cad4328c92ce033cd0580f36ab354d3d002305f77adedd3dec48c0ac8dbaa"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-15-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "00",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 717,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-00-predict-b7.log",
+        "sha256": "11b0f30ea811fe02d7de74ec3fd93fa8edf69ea93fd2bd334ca90b3e93bf2df4"
+      },
+      "report": {
+        "bytes": 14389204,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-00-nb/report.json",
+        "sha256": "b009e5c7853750dedbc598cde762606f6ef144d20a42bffa96e1fbacf80218f5"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-00-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "01",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 710,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-01-predict-b7.log",
+        "sha256": "e31529d413fc2bfadf72ed134bca1b1fef58d2d5ff5eade4fa89e41fed8cf1b7"
+      },
+      "report": {
+        "bytes": 14358095,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-01-nb/report.json",
+        "sha256": "d1f4d4ca6657d800505512e41af8ba70dbff5ecfab725c8d388c7fdc19087bc8"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-01-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "02",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 707,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-02-predict-b7.log",
+        "sha256": "1423b3e15d50dee850608aa0cab21e16d5fce033e6e4c310abb5feba081a172e"
+      },
+      "report": {
+        "bytes": 15362493,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-02-nb/report.json",
+        "sha256": "5a9d9f9e1f825672532bc7bfce134abf0c44bb1cbcbf45b73f4b5e76bd9250ae"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-02-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "03",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 721,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-03-predict-b7.log",
+        "sha256": "425153c6899f82816d2844fbacb5a125b3daeab0df9ceba53a1d397fc109e756"
+      },
+      "report": {
+        "bytes": 14788527,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-03-nb/report.json",
+        "sha256": "1c6e3d8b8e45c9c2a727609ed488118da7a31810aff1f143c5283bec36f4cff8"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-03-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "04",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 716,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-04-predict-b7.log",
+        "sha256": "eb37f453fb34aea49fb15064e5a192fdaa72388ba1387b8bd91b1c4c0a5e450a"
+      },
+      "report": {
+        "bytes": 13806793,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-04-nb/report.json",
+        "sha256": "724b1ab5fee6b7d4282cd713771fa889078887fcc3b96a4aadaec33cac555f0c"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-04-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "05",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 715,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-05-predict-b7.log",
+        "sha256": "4dda0fcd070a9aad6c80ef757fbcd0894ccce43c8549132b8fb288a4b1954684"
+      },
+      "report": {
+        "bytes": 14633288,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-05-nb/report.json",
+        "sha256": "7da74dfe9a8293f89b818ed8b2a9728ec3913910d1bef7f4b6139fc63bcde512"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-05-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "06",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 721,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-06-predict-b7.log",
+        "sha256": "380329f8778b5b8b640639e43f356f9bfe938d21badc8425cc20adaee36add9a"
+      },
+      "report": {
+        "bytes": 14854657,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-06-nb/report.json",
+        "sha256": "e427c862fd680c419f4efbbf25ef7cc1da666859e96e5a97c9e96a93b0e91766"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-06-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "07",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 713,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-07-predict-b7.log",
+        "sha256": "4ff5331d5ac32668fd4d320348b932ac65da0516fcfd1e985181ea93d9b14d59"
+      },
+      "report": {
+        "bytes": 14727413,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-07-nb/report.json",
+        "sha256": "0452289c37e985d3b42c1ab93b1981cdf65530317e43df5bfd06ef57ddfcc7e6"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-07-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "08",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 711,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-08-predict-b7.log",
+        "sha256": "71dc0e9dbbb8dac870aa003f580b0dc40d694ce0c4cdda7a23cbbb8dc02e5d55"
+      },
+      "report": {
+        "bytes": 15126974,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-08-nb/report.json",
+        "sha256": "4d0efd54fa369f40b67738c9dbb6224a1fb66493d26be4878abffff0ebffd103"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-08-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "09",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 706,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-09-predict-b7.log",
+        "sha256": "919ef0dbf56b1b6e0fc840a1cc343290d64becc23ff5aa2cebf5d37cb640b499"
+      },
+      "report": {
+        "bytes": 14469778,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-09-nb/report.json",
+        "sha256": "e843eda05be9172b18ddcc184a48619dc4bf907b6fa84a7b450cca7813ed5fda"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-09-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "10",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 711,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-10-predict-b7.log",
+        "sha256": "49ffdc8064a351abe67ee128b3f1aa85eb5e5b5f9babe414754b71035b4a1f1e"
+      },
+      "report": {
+        "bytes": 14407888,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-10-nb/report.json",
+        "sha256": "822f3c068c722b7f53f109b9661720f3a00e65fd76ae853e4ecfc5a66f1b9c10"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-10-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "11",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 708,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-11-predict-b7.log",
+        "sha256": "1b50164600fe21252554e80fdac89461913bec1f786b99dcb8ccee8faaf16fae"
+      },
+      "report": {
+        "bytes": 14467974,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-11-nb/report.json",
+        "sha256": "213d9bc663d82663d79a0f5a42d784627ea5d7b54c4a262d8b5dc88fc2159e9b"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-11-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "12",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 713,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-12-predict-b7.log",
+        "sha256": "049711ee3eb1611b3d28e4b356f3f13d9f44e960f913ff5d063d42763dcaec09"
+      },
+      "report": {
+        "bytes": 13081324,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-12-nb/report.json",
+        "sha256": "155a1125e3a757f9aa8740a0e18d1aa9a5ca6ec28739f5b7050c2881f2f47d9c"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-12-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "13",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 715,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-13-predict-b7.log",
+        "sha256": "29f4ab21f655067c658bccc51a11bfaa4910dd3655df69a1d44a94a541053fdf"
+      },
+      "report": {
+        "bytes": 14487616,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-13-nb/report.json",
+        "sha256": "6cad11c741c85b5830f122c90cbbdac02d976d9532f846fd0d917be64ffcb4f2"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-13-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "14",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 715,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-14-predict-b7.log",
+        "sha256": "ec75aa838d25fb537e1f0cda5d2601a95e089b385f48052fc05af04cef0683a9"
+      },
+      "report": {
+        "bytes": 14850642,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-14-nb/report.json",
+        "sha256": "af6812935cbc3dff7ea2bea4e811d8ef208930e544fce41a07b92ed2159ffafc"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-14-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    },
+    {
+      "chunk": "15",
+      "origin": "HIRISA",
+      "predictLog": {
+        "bytes": 716,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-15-predict-b7.log",
+        "sha256": "c280410897961d3263b6fc3d98608ae71d999378a49869a2102e388b6aa5b63b"
+      },
+      "report": {
+        "bytes": 7028901,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/prediction-HIRISA-15-nb/report.json",
+        "sha256": "3e4ae961c97de1e1f9810a1f5c639fd9cb0b1234feb817675add8ece0937880b"
+      },
+      "verifyLog": {
+        "bytes": 39,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-15-verify-b7.log",
+        "sha256": "025988126b2b29ff941accffe8aa78a311401b7b8666db833048b94bf30e7073"
+      }
+    }
+  ],
+  "queryCount": 32,
+  "revision": "b7c3fc942b341629786e47bf1739faea85f3525c",
+  "scorer": {
+    "bytes": 10830,
+    "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/score_nb_response.py",
+    "sha256": "0ddbe32f8cf565e50cbfc5074367cd241bc8142e0d9277e98529892aab5706ab"
+  },
+  "scoring": {
+    "checks.json": {
+      "bytes": 803,
+      "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/scoring/checks.json",
+      "sha256": "f2bd73d1d61ae090529c95b0070de64b2c44655d461c07fd789e82b25db631b4"
+    },
+    "scores.json": {
+      "bytes": 179896,
+      "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/scoring/scores.json",
+      "sha256": "ba96de28158efab819c126b56c2c7978c3cd0647a445871dd877b5f80d97482c"
+    },
+    "summary.json": {
+      "bytes": 1793,
+      "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/scoring/summary.json",
+      "sha256": "11ba40f74c415c85b5d8d8391b6790995d3b3976e05110db2733bf441b7ab8f2"
+    }
+  },
+  "sourceAggregate": {
+    "bytes": 34844323,
+    "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/source-aggregate-b7/report.json",
+    "sha256": "4fc2f93b1165c70a32bac68e8295ff0979a67a78ec48fe87c0da1f43df41fbee"
+  },
+  "sourceInput": {
+    "bytes": 80437151,
+    "path": "/Users/n/numivivo-gse181897-20260911/handoff/B-source-codes-RNA.h5ad",
+    "sha256": "240902526941acb45740cd9ee3c4f0ccda2f51ac5a087ee4b65e6c6d5eea78c6"
+  },
+  "sourcePlan": {
+    "bytes": 96540,
+    "path": "/Users/n/numivivo-gse181897-20260911/handoff/aggregate-plan.json",
+    "sha256": "cdcea7023c327de4092e38d8e0d8faf145a20d638400d9a453c444a0aaef72b4"
+  },
+  "status": "passed-complete-native-nb2-held-out-run",
+  "trainingInputs": {
+    "HIRISA": {
+      "h5ad": {
+        "bytes": 1357840,
+        "path": "/Users/n/numivivo-gse181897-20260911/prediction-inputs/HIRISA/training.h5ad",
+        "sha256": "8d75fa4cb4dba9f71c5216c91d322e6ed8253edc5e060f951a6affe45c8c0cc2"
+      },
+      "plan": {
+        "bytes": 243396,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/HIRISA-training-nb.json",
+        "sha256": "76bafd7c2e3899eb4acce01320c54a54f52ae4a4852b47c3a0d46571ab52f225"
+      }
+    },
+    "Kang": {
+      "h5ad": {
+        "bytes": 931890,
+        "path": "/Users/n/numivivo-gse181897-20260911/prediction-inputs/Kang/training.h5ad",
+        "sha256": "6274bd19a631751a9a7f755af8fc2d1ff33a0e49f4cdaf26956e11e224892324"
+      },
+      "plan": {
+        "bytes": 245002,
+        "path": "/Users/n/numivivo-gse181897-20260911/nb-response-b7c3fc94/Kang-training-nb.json",
+        "sha256": "7d286047c801e884af13b372a92a01536cdb66b181c1fa3ef83add50403345f0"
+      }
+    }
+  },
+  "verifiedQueryCount": 32
+}

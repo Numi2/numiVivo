@@ -27,6 +27,13 @@ and conditional molecular-response evidence. No real-cohort qualification of an
 unseen perturbation, causal mechanism, calibrated uncertainty or phenotype
 outcome follows from the new mode.
 
+The complete [GSE181897 NB2 run](../Tools/Omics/PerturbationPrediction/GSE181897/NB_RESPONSE.md)
+executes and verifies 124 donor predictions. Its all-panel RMSE improves over
+no-change by 0.35% from Kang training and 2.72% from HIRISA training, below the
+frozen 5% transfer target; HIRISA NB2 loses to the existing mean response in
+all 62 donors. This reused comparison strengthens software and conditional RNA
+evidence while leaving general biological-outcome prediction unestablished.
+
 This assessment reviews the expression-prediction evidence and subsequent
 full-cohort scoring, clustering, decoder calibration, preparation transfer and
 annotation retention through 2026-09-14, with the retained Adamson experimental-role audit.
@@ -92,7 +99,7 @@ success nor a failure.
 | Preserve and analyze real counts | Full Parse ingestion and source replay pass; paired native DE and all six edgeR/limma/DESeq2 comparisons complete. Analysis peaks at 202.3 MiB with unchanged report bytes. | Other pipeline stages retain separate memory bounds; numerical agreement does not establish biological accuracy or false-discovery calibration. |
 | Preserve biology through integration | Complete HIRISA execution and coarse response checks pass. Native annotation retention fails 37/146 supported, sensitive comparisons, including 10/29 rare comparisons. | The rigid projection still fails 31/146; its [label breakdown](../Tools/Omics/Benchmarks/HIRISA/RigidProjection/Diagnosis/README.md) includes 7 B intermediate and 5 CD14 Mono failures. The [translation-only ablation](../Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) still fails 22/146 annotation comparisons and one coarse response contrast. The [matched-control shift](../Tools/Omics/Benchmarks/HIRISA/MatchedControlShift/README.md) also fails 34/146 and increases donor scatter above original PCA. Resolve preservation losses and validate independently; no candidate is promoted. |
 | Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. The separate Adamson role-sensitivity run is conditional on a pooled unresolved-control assumption: 80 supported held targets score 0.115722 mean RMSE versus 0.122101 for the all-single mean. | Independent biological contexts, target selection and replication; technical groups do not supply these. Resolve Adamson control identities and its 94-versus-93 roster before treating that result as an authoritative qualification. |
-| Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
+| Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. The native NB2 response route improves over no-change by 0.35% (Kang) and 2.72% (HIRISA), so it does not meet the same target and HIRISA NB2 loses to its mean baseline in all donors. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
 | Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
 | Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene fitting completes: nine eligible Kang limits and 185 HIRISA leaf limits remain. Training-only dispersions and manifests are verified for all 13 donor omissions; two 64-gene joint-fit pilots pass. Two complete Kang omissions have numerically verified, control-only predictions and improved development RMSE; the complete 13-fold development evaluation passes the pooled criterion but fails HIRISA: all five HIRISA donors lose to training mean (75.84% higher pooled RMSE). All eight Kang donors improve against both baselines. Parameter uncertainty and new biological calibration remain open. |
 | Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
@@ -104,7 +111,7 @@ The remaining prepared cohorts and the completed external test are:
 | --- | --- | --- |
 | [Adamson](../Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md) | 50,440 selected cells, a fixed unseen-target protocol and a provisional pooled-control sensitivity score | Primary control/construct assignments and reconciliation of 94 observed guide groups versus the paper's 93-guide roster before authoritative qualification. |
 | [Parse IFN-beta](../Tools/Omics/PerturbationPrediction/ParseIFNB/ContextEvaluation/README.md) | Complete counts, donor aggregates, DE and failed B-cell context prediction test on 11,600 exact features; primary dose/reagent resolved | Cross-study exposure equivalence and participant independence remain unverified. Further tuning needs a new untouched evaluation cohort. The separate duration panel retains 409 absent exact-name symbols. |
-| [GSE181897](../Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md) | Primary author condition mapping; all 124 predictions, native reconstruction and independent scoring complete | HIRISA mean primary PASS, Kang mean primary FAIL; uncertainty remains deficient. New development on these now-scored outcomes needs a new validation cohort. |
+| [GSE181897](../Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md) | Primary author condition mapping; all 124 legacy predictions and the complete native NB2 run are independently scored | HIRISA mean primary PASS, Kang mean primary FAIL; NB2 gains 0.35% / 2.72% and misses the 5% target for both origins; uncertainty remains deficient. New development on these now-scored outcomes needs a new validation cohort. |
 
 The [Parse B-cell admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) originally established metadata eligibility for 72,446 source-labeled B-cell rows across twelve paired donors. Subsequent full count verification and the versioned 11,600-feature contract enabled the completed prediction test above. Its failure remains the current transfer result; the earlier metadata-only status is historical.
 
@@ -167,6 +174,16 @@ coverage averages 92.39% for Kang and 35.54% for HIRISA, with donor ranges
 under-cover. This adds an external RNA point-prediction success for one frozen
 training origin, not calibrated uncertainty, universal transfer, verified
 participant independence or a measured phenotype model.
+
+The [native NB2 response follow-up](../Tools/Omics/PerturbationPrediction/GSE181897/NB_RESPONSE.md)
+uses the same frozen controls and held-out treated rows with an explicit
+count-based response model. All 124 predictions and 32 native verifications
+pass. NB2 improves over no-change by 0.35% for Kang training and 2.72% for
+HIRISA training, below the 5% target; the HIRISA mean response remains better
+than NB2 in all 62 donors. The HIRISA donor-nested batch is omitted after the
+published identifiability guard, and the earlier rank-deficient attempt is
+retained. This is conditional molecular evidence on a reused cohort, not
+phenotype, mechanistic or calibrated-outcome validation.
 
 The [retrospective cell-sampling diagnosis](../Tools/Omics/PerturbationPrediction/GSE181897/Uncertainty/README.md)
 then resamples all 4,938 admitted original cells within the 124 donor/condition

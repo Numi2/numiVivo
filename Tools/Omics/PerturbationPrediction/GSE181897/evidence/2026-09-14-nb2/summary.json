@@ -1,0 +1,64 @@
+[
+  {
+    "donors": 62,
+    "mean": {
+      "contextRidge": {
+        "meanMAE": 0.746722644018071,
+        "meanRMSE": 1.1101576196764487
+      },
+      "meanResponse": {
+        "meanMAE": 0.7684710760023482,
+        "meanRMSE": 1.131580759607717
+      },
+      "medianResponse": {
+        "meanMAE": 0.7337058714181961,
+        "meanRMSE": 1.1211350311019064
+      },
+      "negativeBinomialEffect": {
+        "meanMAE": 0.717888456532453,
+        "meanRMSE": 1.1176986103500357
+      },
+      "noChange": {
+        "meanMAE": 0.7185255636767978,
+        "meanRMSE": 1.121616419451372
+      }
+    },
+    "negativeBinomialBetterThanMean": 44,
+    "negativeBinomialBetterThanNoChange": 46,
+    "negativeBinomialGainPercent": 0.3493002628521369,
+    "negativeBinomialIdentifiedMeanMAE": 0.6691752799121716,
+    "negativeBinomialIdentifiedMeanRMSE": 0.9763063418837236,
+    "origin": "Kang"
+  },
+  {
+    "donors": 62,
+    "mean": {
+      "contextRidge": {
+        "meanMAE": 0.7073297716600874,
+        "meanRMSE": 1.0791927569098707
+      },
+      "meanResponse": {
+        "meanMAE": 0.6837906167981415,
+        "meanRMSE": 1.0585434276321135
+      },
+      "medianResponse": {
+        "meanMAE": 0.6837254583538467,
+        "meanRMSE": 1.0585791448895359
+      },
+      "negativeBinomialEffect": {
+        "meanMAE": 0.6937565021611183,
+        "meanRMSE": 1.0911399607888175
+      },
+      "noChange": {
+        "meanMAE": 0.7185255636767978,
+        "meanRMSE": 1.121616419451372
+      }
+    },
+    "negativeBinomialBetterThanMean": 0,
+    "negativeBinomialBetterThanNoChange": 62,
+    "negativeBinomialGainPercent": 2.7171908447508164,
+    "negativeBinomialIdentifiedMeanMAE": 0.7021913997564474,
+    "negativeBinomialIdentifiedMeanRMSE": 1.0974029799870268,
+    "origin": "HIRISA"
+  }
+]

@@ -58,11 +58,13 @@ query refitting occurs.
 An opt-in `responseModel: "negativeBinomial"` uses the native paired-donor NB2
 count likelihood for response effects. It requires at least three training
 donors and enough interior trend features, and retains per-feature status,
-dispersion and standard-error diagnostics. Aggregate folds may include a
-categorical batch covariate when each aggregate row has one batch identity. The
-result adds a `negativeBinomialEffect` estimate; `availableFeatureIndices` lists
-only identified effects, while unavailable, boundary and failed features fall
-back explicitly to no change. This is a conditional molecular response
+dispersion and standard-error diagnostics. Aggregate folds include a
+categorical batch covariate only when it is identifiable: a single shared batch
+or a batch nested within donor is omitted from the paired design, while other
+rank-deficient designs are rejected. The result adds a
+`negativeBinomialEffect` estimate; `availableFeatureIndices` lists only
+identified effects, while unavailable, boundary and failed features fall back
+explicitly to no change. This is a conditional molecular response
 estimate, not an unseen-perturbation, causal, mechanistic, uncertainty-calibrated
 or phenotype prediction. The aggregate publisher accepts the same opt-in model
 when source metadata is supplied; old plans and log-linear artifacts remain

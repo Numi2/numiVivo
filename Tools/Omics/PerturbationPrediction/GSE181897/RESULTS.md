@@ -28,6 +28,26 @@ MAE, clipping count and source stratum size is retained in
 [scores.json.gz](evidence/2026-09-11-prediction/scores.json.gz), alongside all
 independent comparisons and interval assessments.
 
+## Native NB2 response run
+
+The [separate NB2 evidence](NB_RESPONSE.md) reruns the same 62-donor held-out
+comparison with `responseModel: "negativeBinomial"`. It uses the native paired
+donor count effect and keeps the four legacy estimates in every report. All 124
+predictions, 32 query-bundle verifications and the fresh 379-row source
+aggregate pass at revision `b7c3fc94`.
+
+| Training origin | NB tested / panel | No-change RMSE | Mean-response RMSE | NB2 RMSE | NB2 gain vs no-change | NB2 better than no-change | NB2 better than mean |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Kang (8 donors) | 4,695 / 11,800 | 1.121616 | 1.131581 | 1.117699 | 0.35% | 46 / 62 | 44 / 62 |
+| HIRISA (5 donors) | 11,616 / 11,800 | 1.121616 | 1.058543 | 1.091140 | 2.72% | 62 / 62 | 0 / 62 |
+
+Neither NB2 origin reaches the frozen 5% primary target. HIRISA NB2 beats
+no-change for every donor but loses to its mean-response baseline for every
+donor. The identified-feature-only NB2 RMSE is 0.976306 for Kang and 1.097403
+for HIRISA; those denominators are reported as support diagnostics and do not
+replace the all-panel gate. The earlier f287 HIRISA rank-deficient fit remains
+retained in the NB2 evidence and is not treated as a pass.
+
 ## Predictive intervals
 
 The frozen normal-donor model uses Student-t critical values and the

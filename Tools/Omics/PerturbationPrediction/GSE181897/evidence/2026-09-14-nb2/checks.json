@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "donors": 62,
+      "features": 11800,
+      "identifiedFeatures": 4695,
+      "modelSHA256": "22c92da8a490bafc29810074e6fa85ea4535556c6eaa5438f418896960988c4c",
+      "origin": "Kang",
+      "predictions": 62
+    },
+    {
+      "donors": 62,
+      "features": 11800,
+      "identifiedFeatures": 11616,
+      "modelSHA256": "a5e1749e5f6e45ca7136bffe11c81836dfdb2528df2a6de5b02775c6439ba17d",
+      "origin": "HIRISA",
+      "predictions": 62
+    }
+  ],
+  "estimateVectors": 620,
+  "origins": [
+    "Kang",
+    "HIRISA"
+  ],
+  "panelFeatures": 11800,
+  "predictions": 124,
+  "sourceAggregateSHA256": "4fc2f93b1165c70a32bac68e8295ff0979a67a78ec48fe87c0da1f43df41fbee",
+  "sourceFeatures": 20303,
+  "sourceRows": 379,
+  "status": "passed-independent-source-aggregate-scoring"
+}

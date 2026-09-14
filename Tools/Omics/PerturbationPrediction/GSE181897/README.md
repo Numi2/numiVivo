@@ -9,6 +9,13 @@ every donor, baseline, interval assessment and failure. The original
 [protocol](PROTOCOL.md) remains unchanged; historical primary author code
 resolved the treatment labels before fitting.
 
+The separate [native NB2 response run](NB_RESPONSE.md) now executes and
+verifies all 124 donor predictions on the same frozen inputs. Its count-based
+estimate improves over no-change by 0.35% from Kang training and 2.72% from
+HIRISA training, below the frozen 5% transfer target; HIRISA's existing mean
+response remains better than NB2. This is conditional RNA evidence, not
+general biological-outcome validation.
+
 ## Source and verification
 
 [GEO GSE181897](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE181897)

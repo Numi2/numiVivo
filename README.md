@@ -75,6 +75,13 @@ with no claim of unseen-target, causal, mechanistic, uncertainty-calibrated or
 phenotype prediction. The legacy log-linear path and serialized plans remain
 unchanged by default.
 
+The complete [GSE181897 NB2 run](Tools/Omics/PerturbationPrediction/GSE181897/NB_RESPONSE.md)
+verifies all 124 held-out donor predictions. Its all-panel gain over no-change
+is 0.35% from Kang training and 2.72% from HIRISA training, below the frozen 5%
+transfer target; HIRISA NB2 loses to its mean-response baseline in all 62
+donors. The result supports a bounded RNA-response estimate, not reliable
+prediction of a general biological outcome.
+
 | Requested outcome | Decision from the available evidence |
 | --- | --- |
 | Average RNA response with matched training and untreated query measurements | **Supported as a conditional research estimate.** Performance depends on the treatment and population; retain no-change and training-mean baselines. |

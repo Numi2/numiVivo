@@ -883,3 +883,12 @@ Kang-trained mean fails. Independent checks and repeated scoring pass, but
 HIRISA-trained nominal 95% treated-expression interval coverage averages only
 35.54%. All incomplete pairs, absent genes, individual failures and insufficient
 uncertainty remain reported.
+
+The [native NB2 response follow-up](../Tools/Omics/PerturbationPrediction/GSE181897/NB_RESPONSE.md)
+reruns those frozen control-only queries with an explicit count-based response
+model. All 124 predictions and 32 native verifications pass. NB2 gains 0.35%
+over no-change from Kang training and 2.72% from HIRISA training, below the
+5% transfer target; HIRISA NB2 is worse than its mean-response baseline in all
+62 donors. Donor-nested HIRISA batches are omitted after identifiability checks.
+This remains conditional molecular-response evidence and does not qualify
+phenotype or general biological-outcome prediction.
