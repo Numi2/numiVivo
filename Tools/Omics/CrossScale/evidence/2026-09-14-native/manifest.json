@@ -1,0 +1,20 @@
+{
+  "schema": "numivivo.org/cross-scale-native-qualification-manifest/v1",
+  "sourceCommit": "0ca6dcb8c52d714ccd5ba5bdde81bb791395d2fc",
+  "status": "passed",
+  "files": {
+    "README.md": "638dfed06be4602d52abe561c3a38be011a64ad4adedfbcc58c86b012daf047b",
+    "execution.json": "1cc6479bcc7e6f44d3c0e819a8034e90dc082da414236351a4b73a3a93135a03",
+    "native-cross-scale.log": "ff36b03782fc89dfb1d2c91728413bcfb733578f1d6ed01044b7557785a7d80a"
+  },
+  "sourceFiles": {
+    "Sources/NumiVivoKit/Omics/VivoCrossScaleEvidence.swift": {
+      "bytes": 12955,
+      "sha256": "8cfbf8b987860d529d84defe35bfc8d65d70dd6031238d85db385a02fb0392df"
+    },
+    "Tests/NumiVivoIntegrationTests/VivoCrossScaleEvidenceTests.swift": {
+      "bytes": 5311,
+      "sha256": "ba03a3e4ddbd0d09d6901b32dd2ec3b7231b0c9855bed0a78305869fc5f74506"
+    }
+  }
+}
