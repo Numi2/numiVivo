@@ -803,9 +803,17 @@ The complete development objective remains open:
     record checks and thirteen actual CLI checks pass.
     PCA/kNN/model-fitting acceleration and matched end-to-end scverse speed and
     memory comparisons remain open.
-11. **Other omics:** genomics/variants, bulk RNA, proteomics, metabolomics, spatial
-    imaging, metabolic modeling and regulatory prediction on shared provenance
-    remain outside this initial interoperability block.
+11. **Other omics:** a [SEQC technical bulk-RNA benchmark](../Tools/Omics/Benchmarks/SEQC/README.md)
+    now runs all six public Illumina RefSeq sites through the native negative-
+    binomial owner and compares the same counts/design with edgeR, limma-voom
+    and DESeq2. The independent TaqMan reference has 785 eligible rows after
+    the frozen literal-ID, detection and positive-value checks. Every method
+    passes the narrow descriptive coverage/correlation/direction gate on every
+    site; native shrinkage lowers RMSE at all six sites. These are shared
+    reference-RNA technical preparations, not biological donors. The benchmark
+    does not establish FDR calibration, biological replication or outcome
+    prediction. Genomics/variants, proteomics, metabolomics, spatial imaging,
+    metabolic modeling and regulatory prediction remain open.
 12. **Cross-scale biology:** variant → regulation → RNA/cell state → protein and
     molecular mechanism → reaction/kinetics → cellular phenotype → tissue
     prediction requires executable, independently qualified links at each boundary.

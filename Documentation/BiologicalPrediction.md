@@ -26,6 +26,14 @@ reconstruction, integration diagnostics and conditional molecular simulations.
 Each linked experiment retains its actual source, executable and platform
 identities; this review does not requalify historical receipts under a new build.
 
+The [SEQC technical bulk-RNA benchmark](../Tools/Omics/Benchmarks/SEQC/README.md)
+adds six public reference-RNA sites and an independent TaqMan comparison to the
+count-model evidence. All five compared methods pass its narrow descriptive
+measurement gate, but the libraries are technical preparations of shared
+reference materials. This result strengthens reproducible count handling and
+method comparison; it does not add biological donors or establish prediction of
+a phenotype, treatment benefit or other general outcome.
+
 The [native multigene context kernel](../Tools/Omics/PerturbationPrediction/StudyContextKernel/README.md) uses all control genes to weight training donor responses, with the same study exclusions and 11,800-gene panel. HIRISA improves 21.11% over the balanced mean and 22.59% over no change; all five donors improve. Kang and GSE181897 are 0.26% and 0.31% worse than the mean, respectively. Only HIRISA meets the unchanged 5% gain over both baselines. All 885,000 predictions and 225 scores are independently checked. This addresses a missing model dependency but does not establish reliable transfer, fresh external validation or calibrated uncertainty.
 
 The gene-wise [three-study held-out experiment](../Tools/Omics/CountObservation/Joint/Adaptive/Full/DonorExclusion/Prediction/ResponseShrinkage/StudyHeldOut/README.md) fits natively with equal weight per training study and selects shrinkage by inner held-out studies. All 75 donors and 11,800 genes are retained. Candidate RMSE improves over the balanced mean by 1.37% in Kang and 0.22% in GSE181897, but is 103.63% worse in HIRISA; every HIRISA donor loses to both baselines. No study reaches a 5% gain over both baselines. All 885,000 predictions and 225 donor/baseline scores are independently verified. This is development reuse of all three previously inspected cohorts; GSE181897 now enters training in two folds, without changing its original external-test results.

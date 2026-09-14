@@ -16,6 +16,8 @@ The [integration design guard](Tools/Omics/Reduction/INTEGRATION.md#optional-pro
 
 The [full-HIRISA rigid-correction experiment](Tools/Omics/Benchmarks/HIRISA/RigidProjection/README.md) preserves within-donor distances but still fails 31/146 sensitive annotation comparisons. No new integration method is promoted.
 
+The [SEQC technical bulk-RNA benchmark](Tools/Omics/Benchmarks/SEQC/README.md) now runs all six public Illumina RefSeq sites through native negative-binomial DE and compares the same counts with edgeR, limma-voom and DESeq2. All methods pass the preregistered descriptive measurement gate against 785 eligible independent TaqMan rows; this is technical reference-RNA evidence, not biological-donor or general outcome-prediction validation.
+
 The [translation-only ablation](Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) reduces annotation failures to 22/146 but fails a B-cell IFNa response comparison and leaves more donor scatter. Fewer failures do not establish adequate integration; no method is promoted.
 
 The [matched-control donor-shift experiment](Tools/Omics/Benchmarks/HIRISA/MatchedControlShift/README.md) estimates shifts from 403,449 control cells but still fails 34/146 annotation comparisons and one response contrast. Control-only shift estimation does not resolve the preservation gap.

@@ -65,7 +65,8 @@ func vivoOmicsSum(_ a: UInt64, _ b: UInt64) throws -> UInt64 {
 }
 
 /// Measurement units describe assay counts, not a claim of absolute molecules.
-public enum VivoOmicsCountUnit: String, Codable, Sendable { case umiCount, readCount }
+/// Preserve paired-end fragment units without relabeling them as individual reads.
+public enum VivoOmicsCountUnit: String, Codable, Sendable { case umiCount, readCount, fragmentCount }
 public enum VivoOmicsEvidence: String, Codable, Sendable { case measured, synthetic, simulated }
 
 public struct VivoOmicsSample: Codable, Sendable, Equatable {
