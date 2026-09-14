@@ -83,4 +83,40 @@ import Testing
         #expect(a.variants.map(\.candidateID) != b.variants.map(\.candidateID))
         #expect(a.variants.map(\.alternate) == b.variants.map(\.alternate))
     }
+
+    @Test func canonicalExportRoundTripsMultiallelicRecords() throws {
+        let source = fixture()
+        let document = try VivoVCFReader.parse(data: source, assembly: "GRCh38", referenceSHA256: referenceSHA256)
+        let encoded = try VivoVCFWriter.encode(document)
+        let roundTrip = try VivoVCFReader.parse(data: encoded, assembly: "GRCh38", referenceSHA256: referenceSHA256)
+        #expect(roundTrip.header.fileFormat == document.header.fileFormat)
+        #expect(roundTrip.header.metadataLines == document.header.metadataLines)
+        #expect(roundTrip.header.columns == document.header.columns)
+        #expect(roundTrip.variants.count == document.variants.count)
+        for (left, right) in zip(document.variants, roundTrip.variants) {
+            #expect(right.chromosome == left.chromosome)
+            #expect(right.position1 == left.position1)
+            #expect(right.identifier == left.identifier)
+            #expect(right.reference == left.reference)
+            #expect(right.alternate == left.alternate)
+            #expect(right.alleleClass == left.alleleClass)
+            #expect(right.quality == left.quality)
+            #expect(right.filters == left.filters)
+            #expect(right.info == left.info)
+            #expect(right.formatKeys == left.formatKeys)
+            #expect(right.calls == left.calls)
+        }
+        #expect(roundTrip.sourceSHA256 != document.sourceSHA256)
+    }
+
+    @Test func exportRejectsInconsistentProvenanceAndDelimiterInjection() throws {
+        let document = try VivoVCFReader.parse(data: fixture(), assembly: "GRCh38", referenceSHA256: referenceSHA256)
+        var inconsistent = document
+        inconsistent.variants[1].sourceRecordSHA256 = String(repeating: "b", count: 64)
+        #expect(throws: (any Error).self) { try VivoVCFWriter.encode(inconsistent) }
+
+        var injected = document
+        injected.variants[0].info[0].value = "unsafe;value"
+        #expect(throws: (any Error).self) { try VivoVCFWriter.encode(injected) }
+    }
 }

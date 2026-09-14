@@ -44,7 +44,9 @@ a bounded FP32 NB objective; the
 technical reference-RNA comparison; and the [AlphaGenome Atlas assessment](AlphaGenomeAtlas.md)
 now has a native VCF import/projection boundary plus an offline adapter contract.
 None supplies a validated general biological
-outcome model, and live cross-scale coupling remains open. The separate [Arc
+outcome model, and live cross-scale coupling remains open. The VCF boundary also
+has a canonical semantic export with explicit reimport fingerprinting; it does
+not add variant calling or phenotype evidence. The separate [Arc
 Virtual Cell Challenge 2026 adapter](../Tools/Omics/Arc2026/README.md) now has
 15 portable and five native contract tests, but no trained predictor or released-
 context outcome score; it therefore remains benchmark-conformance evidence rather
