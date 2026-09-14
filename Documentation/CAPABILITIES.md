@@ -27,7 +27,9 @@ No general Metal speedup for this pipeline is established.
 
 The current roadmap also has bounded evidence for the final three single-cell
 requirements: [Metal sparse normalization and graph timing](../Tools/Omics/CountStore/Metal/README.md)
-qualify selected Apple-GPU arithmetic and one cohort-scale distance path; the
+and a fresh [physical PCA-neighbor regression](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-neighbor-regression/)
+qualify selected Apple-GPU arithmetic, one cohort-scale distance path and a
+bounded CPU-oracle dispatch check; the
 [SEQC other-omics benchmark](../Tools/Omics/Benchmarks/SEQC/README.md) is a
 technical reference-RNA comparison; and the [AlphaGenome Atlas assessment](AlphaGenomeAtlas.md)
 retains an offline adapter contract. None supplies a validated general biological

@@ -868,7 +868,12 @@ The complete development objective remains open:
     coordinates match, with distance and weight deltas retained. This closes
     this cohort/stage comparison only; output formats and provenance costs
     differ, CPU FP64 remains the default, and model-fitting acceleration,
-    million-cell scaling and biological outcome prediction remain open.
+    million-cell scaling and biological outcome prediction remain open. A fresh physical M4 Pro
+    [bounded PCA-neighbor regression](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-neighbor-regression/)
+    now passes all three `SingleCellWindowedNeighborTests`, including exact CPU-oracle
+    membership/CSR agreement for a 257-by-4 fixture and `1e-6` distance/weight bounds.
+    This verifies Metal dispatch and the numerical contract only; it adds no new
+    cohort-scale, biological-preservation or outcome-prediction claim.
 11. **Other omics:** a [SEQC technical bulk-RNA benchmark](../Tools/Omics/Benchmarks/SEQC/README.md)
     now runs all six public Illumina RefSeq sites through the native negative-
     binomial owner and compares the same counts/design with edgeR, limma-voom
