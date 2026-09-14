@@ -91,7 +91,13 @@ public enum VivoSingleCellH5AD {
     public static func read(_ url: URL, plan: VivoH5ADImportPlan, limits: VivoOmicsLimits = .init()) throws -> VivoH5ADDocument {
         try limits.validate()
         try plan.validate()
-        let bytes = try VivoSingleCellCampaignIO.readDocument(url, maximumBytes: limits.maximumInputBytes)
+        // Keep the exact source bytes for provenance/export, but decode an
+        // externally gzip-wrapped H5AD before handing the snapshot to HDF5.
+        // The decoder enforces the same aggregate expansion bound as the
+        // uncompressed source limit and validates concatenated members/trailing
+        // bytes. HDF5's own dataset filters remain the responsibility of HDF5.
+        let sourceBytes = try VivoSingleCellCampaignIO.readDocument(url, maximumBytes: limits.maximumInputBytes)
+        let bytes = try VivoOmicsSourceDecoder.decode(sourceBytes, maximumExpandedBytes: limits.maximumInputBytes)
         // Snapshot before HDF5 reads so the retained source and projection always
         // refer to the same file, including during concurrent external changes.
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-" + UUID().uuidString)
@@ -115,7 +121,7 @@ public enum VivoSingleCellH5AD {
             countUnit: metadata.countUnit,samples: metadata.samples,features: metadata.features,cells: metadata.cells,
             matrix: .init(cellCount: metadata.cells.count,featureCount: metadata.features.count,rowOffsets: offsets,featureIndices: columns,counts: counts))
         try result.validate(limits: limits)
-        return .init(source: bytes,hdf5Version: version,dataset: result,plan: plan)
+        return .init(source: sourceBytes,hdf5Version: version,dataset: result,plan: plan)
     }
     /// The caller owns an immutable source snapshot. Sparse arrays are read in
     /// bounded slices and duplicate coordinates merged per major segment.

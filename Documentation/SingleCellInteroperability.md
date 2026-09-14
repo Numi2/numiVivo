@@ -1,7 +1,9 @@
 # AnnData interoperability and the single-cell development sequence
 
-NumiVivo reads local H5AD through the native HDF5 library; those import/export
-and analysis commands do not require Python. The optional remote-source adapter
+NumiVivo reads local H5AD through the native HDF5 library; import accepts both
+plain H5AD and externally gzip-wrapped H5AD while retaining the exact source
+bytes for provenance/export. These import/export and analysis commands do not
+require Python. The optional remote-source adapter
 described below uses Python/HDF5 to produce records for a separate native stream
 reader, and independent interoperability tests also use Python.
 Install HDF5 (`brew install hdf5` on macOS), or set `NUMIVIVO_HDF5_LIBRARY` to
@@ -137,7 +139,8 @@ that deposited experimental labels are correct.
 
 ## Preservation contract
 
-- Import publishes the **unchanged original.h5ad**, a native `dataset.json`, the
+- Import publishes the **unchanged original.h5ad** (including an external gzip
+  wrapper when supplied), a native `dataset.json`, the
   mapping, a source/dataset/mapping fingerprint receipt with executable identity
   and HDF5 version, and a MEX manifest usable by the existing replayable workflow.
 - The count projection reads X, raw/X or a named layer. Raw import uses
@@ -928,8 +931,8 @@ codes, retaining 20,303 RNA features. Native streamed aggregation processes
 34,287,682 selected records and agrees exactly on all 3,818,645 nonzero values
 in 379 observed groups. Reconstruction and repeated report bytes agree.
 
-This count handoff does not qualify native direct gzip-H5AD import, full AnnData
-slot preservation or multimodal outcome prediction. Historical primary author
+This count handoff does not qualify full AnnData slot preservation or multimodal
+outcome prediction. Historical primary author
 code subsequently resolved the treatment codes. The [complete external prediction
 test](../Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md) now checks all
 124 native predictions across 62 paired donors and 11,800 shared genes.
