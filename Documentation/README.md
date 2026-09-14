@@ -39,6 +39,8 @@ Examples are computational fixtures, not experimental protocols. Their README fi
 
 **Experiments and evidence.** Read [Artifacts and provenance](Design/ARTIFACTS_AND_PROVENANCE.md), [surrogate authority](Design/SURROGATE_AUTHORITY.md), and [artifact-store hardening](Audit/ARTIFACT_STORE_HARDENING.md). Experiment definitions, source identity, numerical configuration and evidence are separate data objects; a checksum is not a scientific validation result.
 
+For an explicit variant-to-tissue evidence graph, run `numivivo cross-scale-assess graph.json`. Add `--require-qualified` when a workflow should fail closed unless all seven adjacent boundaries have source, model, validation and held-out observation evidence; the command preserves incomplete and hypothesis-only assessments as machine-readable output.
+
 ## Status and qualification
 
 [Completion roadmap](COMPLETION_ROADMAP.md) · [Capability map](CAPABILITIES.md) · [Audit entry point](../AUDIT.md) · [Execution audit](Audit/2026-09-04_EXECUTION_AUDIT.md) · [Wave B audit](Audit/WAVE_B_CONSOLIDATION.md)

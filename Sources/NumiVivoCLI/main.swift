@@ -4,6 +4,8 @@ let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
 if VivoArc2026CLICommands.handles(arguments.first) {
     status = VivoArc2026CLICommands().run(arguments: arguments)
+} else if VivoCrossScaleCLICommands.handles(arguments.first) {
+    status = VivoCrossScaleCLICommands().run(arguments: arguments)
 } else if VivoGenomicEvidenceCLICommands.handles(arguments.first) {
     status = await VivoGenomicEvidenceCLICommands().run(arguments: arguments)
 } else if VivoNeoantigenCLICommands.handles(arguments.first) {
@@ -54,6 +56,7 @@ if VivoArc2026CLICommands.handles(arguments.first) {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
         FileHandle.standardOutput.write(Data("\nGenomic evidence: genomic-vcf-plan, neoantigen-atlas-request, neoantigen-splice-job, neoantigen-evidence-import, neoantigen-evidence-verify, neoantigen-evidence-review, neoantigen-evidence-example, neoantigen-evidence-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("\nCross-scale evidence: cross-scale-assess, cross-scale-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nNeoantigen research review: neoantigen-example, neoantigen-import, neoantigen-verify, neoantigen-review, neoantigen-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nArc VCC 2026: arc2026-prepare, arc2026-pack, arc2026-verify-query, arc2026-verify, arc2026-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nSingle-cell counts: singlecell-run, singlecell-verify, singlecell-export, singlecell-help.\n".utf8))

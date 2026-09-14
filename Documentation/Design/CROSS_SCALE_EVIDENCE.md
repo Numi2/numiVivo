@@ -28,6 +28,19 @@ passes `requireQualifiedResearchPath()`, and it means only that the declared
 research evidence path is complete. It does not grant clinical, treatment or
 patient-specific authorization.
 
+The same gate is available from the native CLI:
+
+```text
+numivivo cross-scale-assess graph.json
+numivivo cross-scale-assess graph.json --require-qualified
+```
+
+The first form prints a canonical JSON assessment for incomplete graphs as
+well as qualified ones, preserving the missing and hypothesis boundaries. The
+`--require-qualified` form prints that assessment and returns exit code `2`
+when the research-path gate is not satisfied. A successful gate still reports
+only research-path evidence status.
+
 The source contract and focused regression tests live in
 `Sources/NumiVivoKit/Omics/VivoCrossScaleEvidence.swift` and
 `Tests/NumiVivoIntegrationTests/VivoCrossScaleEvidenceTests.swift`. The tests
