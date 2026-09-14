@@ -1,5 +1,10 @@
 import Foundation
 import NumiVivoKit
+#if canImport(Darwin)
+import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#endif
 
 /// Read-only assessment of a cross-scale evidence graph. The command reports
 /// the contract state for every declared boundary; it never invents missing
@@ -44,8 +49,8 @@ struct VivoCrossScaleCLICommands {
                 // Resolve symlinks in existing parent directories (for example
                 // macOS /tmp) while preserving the leaf for O_NOFOLLOW input
                 // admission in VivoSingleCellCampaignIO.
-                let url = rawURL.deletingLastPathComponent().resolvingSymlinksInPath()
-                    .appendingPathComponent(rawURL.lastPathComponent).standardizedFileURL
+                let parent = try Self.resolveExistingParent(rawURL.deletingLastPathComponent())
+                let url = parent.appendingPathComponent(rawURL.lastPathComponent).standardizedFileURL
                 let bytes = try VivoSingleCellCampaignIO.readDocument(url, maximumBytes: Self.maximumGraphBytes)
                 let graph = try VivoCanonicalJSON.decode(VivoCrossScaleEvidenceGraph.self, from: bytes)
                 let assessment = try graph.assess()
@@ -71,6 +76,14 @@ struct VivoCrossScaleCLICommands {
 
     private static func message(_ error: Error) -> String {
         (error as? LocalizedError)?.errorDescription ?? String(describing: error)
+    }
+
+    private static func resolveExistingParent(_ url: URL) throws -> URL {
+        guard let pointer = url.path.withCString({ realpath($0, nil) }) else {
+            throw VivoOmicsError.invalid("cross-scale graph parent cannot be resolved")
+        }
+        defer { free(pointer) }
+        return URL(fileURLWithPath: String(cString: pointer), isDirectory: true)
     }
 
     static let help = """
