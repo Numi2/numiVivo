@@ -2,7 +2,7 @@ import Foundation
 
 public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     static let maximumClusters = 100
-    public enum Covariate: String, Codable, Sendable { case donor, batch }
+    public enum Covariate: String, Codable, Sendable, CaseIterable { case donor, batch }
     public enum RidgeScaling: String, Codable, Sendable { case expectedClusterBatchMass }
     /// Nil preserves the original fixed penalty; otherwise ridge is the expected-mass coefficient.
     public var ridgeScaling: RidgeScaling? = nil
@@ -10,6 +10,11 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     /// categorical group. Nil preserves historical encoding and behavior.
     public var protectedSampleGroups: [String: String]? = nil
     public var covariate: Covariate = .donor
+    /// Optional joint correction factors. Omission preserves the historical
+    /// single-covariate representation and output bytes. When supplied, use
+    /// both donor and batch exactly once; the correction is additive across
+    /// their categorical effects rather than an interaction-level table.
+    public var covariates: [Covariate]? = nil
     public var clusters: Int = 88
     public var diversity: Double = 2
     public var ridge: Double = 1
@@ -19,12 +24,13 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     public var seed: UInt64 = 7
     public var maximumWork: Int = 200_000_000
     public init() {}
-    private enum CodingKeys: String, CodingKey { case protectedSampleGroups, covariate, clusters, diversity, ridge, ridgeScaling, temperature, maximumIterations, relativeTolerance, seed, maximumWork }
+    private enum CodingKeys: String, CodingKey { case protectedSampleGroups, covariate, covariates, clusters, diversity, ridge, ridgeScaling, temperature, maximumIterations, relativeTolerance, seed, maximumWork }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["protectedSampleGroups","covariate","clusters","diversity","ridge","ridgeScaling","temperature","maximumIterations","relativeTolerance","seed","maximumWork"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["protectedSampleGroups","covariate","covariates","clusters","diversity","ridge","ridgeScaling","temperature","maximumIterations","relativeTolerance","seed","maximumWork"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         protectedSampleGroups = try c.decodeIfPresent([String: String].self, forKey: .protectedSampleGroups)
         covariate = try c.decodeIfPresent(Covariate.self,forKey: .covariate) ?? .donor
+        covariates = try c.decodeIfPresent([Covariate].self, forKey: .covariates)
         clusters = try c.decodeIfPresent(Int.self,forKey: .clusters) ?? 88
         diversity = try c.decodeIfPresent(Double.self,forKey: .diversity) ?? 2
         ridge = try c.decodeIfPresent(Double.self,forKey: .ridge) ?? 1
@@ -37,6 +43,12 @@ public struct VivoSingleCellIntegrationOptions: Codable, Sendable, Equatable {
     }
     public func validate() throws {
         try VivoIntegrationProtection.validate(protectedSampleGroups)
+        if let covariates {
+            guard covariates.count == 2, Set(covariates).count == covariates.count,
+                  Set(covariates) == Set(Covariate.allCases) else {
+                throw VivoOmicsError.invalid("joint integration requires donor and batch exactly once")
+            }
+        }
         guard (2...Self.maximumClusters).contains(clusters), diversity.isFinite, (0...10).contains(diversity),
               ridge.isFinite, (0.001...100).contains(ridge), temperature.isFinite, (0.01...1).contains(temperature),
               (2...100).contains(maximumIterations), relativeTolerance.isFinite, (1e-8...0.05).contains(relativeTolerance),
@@ -63,6 +75,11 @@ public struct VivoSingleCellIntegrationResult: Codable, Sendable, Equatable {
     public let qualification: String
     /// Final cluster-by-level penalties; absent for the original fixed-ridge mode.
     public var ridgePenalties: [[Double]]? = nil
+    /// Factor-major levels and cell assignments for the opt-in joint path.
+    /// Nil preserves the historical single-covariate result representation.
+    public var factorLevels: [[String]]? = nil
+    public var cellFactorLevels: [[Int]]? = nil
+    public var factorRidgePenalties: [[[Double]]]? = nil
 }
 
 
@@ -109,6 +126,38 @@ enum VivoIntegrationProtection {
         }
         guard reachable.count == levelIDs.count else {
             throw VivoOmicsError.invalid("integration covariate is confounded with protected condition/group strata")
+        }
+    }
+    static func check(_ groups: [String: String]?, cells: [VivoOmicsCellIdentity],
+                      samples: [String: VivoOmicsSample],
+                      covariates: [VivoSingleCellIntegrationOptions.Covariate],
+                      levelIDs: [[String: Int]]) throws {
+        guard let groups else { return }
+        try validate(groups)
+        let observed = Set(cells.lazy.map(\.sampleID))
+        guard Set(groups.keys) == observed, levelIDs.count == covariates.count else {
+            throw VivoOmicsError.invalid("protected integration groups or joint covariate axes")
+        }
+        for factor in covariates.indices {
+            var strata: [[String]: Set<Int>] = [:]
+            for id in observed.sorted() {
+                try Task.checkCancellation()
+                guard let sample = samples[id], let group = groups[id],
+                      let name = covariates[factor] == .donor ? sample.donorID : sample.batchID,
+                      let level = levelIDs[factor][name] else {
+                    throw VivoOmicsError.invalid("protected integration sample or joint covariate identity")
+                }
+                strata[[sample.condition, group], default: []].insert(level)
+            }
+            var reachable: Set<Int> = [0]
+            for _ in 0..<levelIDs[factor].count {
+                let before = reachable.count
+                for levels in strata.values where !reachable.isDisjoint(with: levels) { reachable.formUnion(levels) }
+                if reachable.count == before { break }
+            }
+            guard reachable.count == levelIDs[factor].count else {
+                throw VivoOmicsError.invalid("joint integration covariate is confounded with protected condition/group strata")
+            }
         }
     }
 }
@@ -213,6 +262,121 @@ enum VivoSingleCellIntegration {
         return (intercept, effects, residual)
     }
 
+    /// Solve an additive intercept plus multiple categorical ridge model. The
+    /// cross-factor masses are retained explicitly so a donor effect cannot be
+    /// mistaken for a batch effect when the two factors are correlated. Ridge
+    /// penalties make the bounded normal system positive definite; the solved
+    /// coefficients and normalized normal-equation residual remain inspectable.
+    static func additiveRidgeFit(totalMass: Double, totalSums: [Double], masses: [[Double]],
+                                 sums: [[[Double]]], pairMasses: [[Double]],
+                                 penalties: [[Double]]) throws -> (intercept: [Double], effects: [[[Double]]], residual: Double) {
+        let factorCount = masses.count, d = totalSums.count
+        guard factorCount >= 2, factorCount == sums.count, factorCount == penalties.count,
+              pairMasses.count == factorCount * (factorCount - 1) / 2,
+              totalMass.isFinite, totalMass > 0, totalSums.allSatisfy(\.isFinite) else {
+            throw VivoOmicsError.invalid("joint integration ridge inputs")
+        }
+        let coefficientCounts = masses.map(\.count)
+        let sumsShapeValid = sums.indices.allSatisfy { factor in
+            sums[factor].count == coefficientCounts[factor] &&
+            sums[factor].allSatisfy { $0.count == d && $0.allSatisfy(\.isFinite) }
+        }
+        let penaltiesShapeValid = penalties.indices.allSatisfy { factor in
+            penalties[factor].count == coefficientCounts[factor] &&
+            penalties[factor].allSatisfy { $0.isFinite && $0 > 0 }
+        }
+        guard coefficientCounts.allSatisfy({ $0 >= 2 }),
+              masses.allSatisfy({ $0.allSatisfy({ $0.isFinite && $0 > 0 }) }),
+              penalties.count == coefficientCounts.count,
+              sumsShapeValid,
+              penaltiesShapeValid else {
+            throw VivoOmicsError.invalid("joint integration ridge factor axes")
+        }
+        let p = 1 + coefficientCounts.reduce(0, +)
+        guard p <= 256 else { throw VivoOmicsError.limit("joint integration ridge coefficient budget") }
+        var offsets = [Int](), next = 1
+        for count in coefficientCounts { offsets.append(next); next += count }
+        var normal = [[Double]](repeating: [Double](repeating: 0, count: p), count: p)
+        normal[0][0] = totalMass
+        var rhs = [[Double]](repeating: [Double](repeating: 0, count: d), count: p)
+        rhs[0] = totalSums
+        for factor in 0..<factorCount {
+            for level in masses[factor].indices {
+                let index = offsets[factor] + level, mass = masses[factor][level]
+                normal[0][index] = mass; normal[index][0] = mass
+                normal[index][index] = mass + penalties[factor][level]
+                rhs[index] = sums[factor][level]
+            }
+        }
+        var pair = 0
+        for left in 0..<factorCount {
+            for right in (left + 1)..<factorCount {
+                let leftCount = coefficientCounts[left], rightCount = coefficientCounts[right]
+                let table = pairMasses[pair]; pair += 1
+                guard table.count == leftCount * rightCount,
+                      table.allSatisfy({ $0.isFinite && $0 >= 0 }) else {
+                    throw VivoOmicsError.invalid("joint integration ridge cross-factor masses")
+                }
+                for i in 0..<leftCount { for j in 0..<rightCount {
+                    let value = table[i * rightCount + j]
+                    normal[offsets[left] + i][offsets[right] + j] = value
+                    normal[offsets[right] + j][offsets[left] + i] = value
+                } }
+            }
+        }
+        // Cholesky is used only for this small (at most 256-square) positive
+        // ridge system; it avoids a per-component QR allocation in the cell
+        // loop while retaining an explicit residual check below.
+        var lower = [[Double]](repeating: [Double](repeating: 0, count: p), count: p)
+        let scale = max(1, totalMass)
+        for i in 0..<p {
+            for j in 0...i {
+                var value = normal[i][j]
+                if j > 0 { for q in 0..<j { value -= lower[i][q] * lower[j][q] } }
+                if i == j {
+                    guard value.isFinite, value > 1e-14 * scale else {
+                        throw VivoOmicsError.invalid("joint integration ridge system is not positive definite")
+                    }
+                    lower[i][j] = sqrt(value)
+                } else {
+                    lower[i][j] = value / lower[j][j]
+                }
+            }
+        }
+        var solution = [[Double]](repeating: [Double](repeating: 0, count: d), count: p)
+        for j in 0..<d {
+            var forward = [Double](repeating: 0, count: p)
+            for i in 0..<p {
+                var value = rhs[i][j]
+                if i > 0 { for q in 0..<i { value -= lower[i][q] * forward[q] } }
+                forward[i] = value / lower[i][i]
+            }
+            for i in stride(from: p - 1, through: 0, by: -1) {
+                var value = forward[i]
+                if i + 1 < p { for q in (i + 1)..<p { value -= lower[q][i] * solution[q][j] } }
+                solution[i][j] = value / lower[i][i]
+            }
+        }
+        var residual = 0.0
+        for i in 0..<p {
+            for j in 0..<d {
+                var value = 0.0
+                for q in 0..<p { value += normal[i][q] * solution[q][j] }
+                let error = abs(value - rhs[i][j]) / (1 + abs(rhs[i][j]))
+                guard error.isFinite else { throw VivoOmicsError.invalid("joint integration ridge residual overflow") }
+                residual = max(residual, error)
+            }
+        }
+        guard residual < 1e-9, solution.allSatisfy({ $0.allSatisfy(\.isFinite) }) else {
+            throw VivoOmicsError.invalid("joint integration ridge normal-equation residual")
+        }
+        var effects: [[[Double]]] = []
+        for factor in 0..<factorCount {
+            effects.append((0..<coefficientCounts[factor]).map { solution[offsets[factor] + $0] })
+        }
+        return (solution[0], effects, residual)
+    }
+
     static func run(_ reduction: VivoSingleCellReductionResult, samples: [VivoOmicsSample], options o: VivoSingleCellIntegrationOptions) throws -> VivoSingleCellIntegrationResult {
         let n = reduction.scores.count, d = reduction.scores.first?.count ?? 0
         try validateAxes(rows: n, columns: d, options: o)
@@ -235,11 +399,282 @@ enum VivoSingleCellIntegration {
             work = product.partialValue
         }
     }
+
+    /// Opt-in additive correction for both donor and batch. The historical
+    /// single-factor path below is intentionally left byte-for-byte stable;
+    /// this route has its own explicit factor axes and normal-equation witness.
+    static func runJoint(cells: [VivoOmicsCellIdentity], x: VivoIntegrationMatrix, samples: [VivoOmicsSample],
+                         options o: VivoSingleCellIntegrationOptions, matrix: (Int, Int) throws -> VivoIntegrationMatrix) throws -> VivoIntegrationSolution {
+        guard let selected = o.covariates, selected.count == 2 else {
+            throw VivoOmicsError.invalid("joint integration requires donor and batch covariates")
+        }
+        let n = x.rows, d = x.columns, k = o.clusters
+        try validateAxes(rows: n, columns: d, options: o)
+        guard cells.count == n, Set(samples.map(\.id)).count == samples.count else {
+            throw VivoOmicsError.invalid("joint integration PCA identities or samples")
+        }
+        let lookup = Dictionary(uniqueKeysWithValues: samples.map { ($0.id, $0) })
+        let names: [[String]] = try selected.map { covariate in
+            try cells.map { cell in
+                guard let sample = lookup[cell.sampleID],
+                      let value = covariate == .donor ? sample.donorID : sample.batchID,
+                      !value.isEmpty, value != "unreported" else {
+                    throw VivoOmicsError.invalid("joint integration requires known selected covariates")
+                }
+                return value
+            }
+        }
+        let factorLevels = names.map { Set($0).sorted() }
+        guard factorLevels.allSatisfy({ (2...128).contains($0.count) }) else {
+            throw VivoOmicsError.invalid("joint integration requires 2...128 levels per covariate")
+        }
+        let factorIDs = factorLevels.indices.map { factor in
+            let ids = Dictionary(uniqueKeysWithValues: factorLevels[factor].enumerated().map { ($0.element, $0.offset) })
+            return names[factor].map { ids[$0]! }
+        }
+        let levelCounts = factorLevels.map(\.count), totalLevels = levelCounts.reduce(0, +)
+        var work = n
+        for factor in [k, d, o.maximumIterations + 10, max(1, totalLevels)] {
+            let product = work.multipliedReportingOverflow(by: factor)
+            guard !product.overflow, product.partialValue <= o.maximumWork else {
+                throw VivoOmicsError.limit("joint integration work budget")
+            }
+            work = product.partialValue
+        }
+        // Every factor must be connected through shared condition labels. A
+        // pairwise factor graph additionally rejects perfect donor/batch
+        // confounding, for which additive effects have no data identification.
+        for factor in factorIDs.indices {
+            var conditionLevels: [String: Set<Int>] = [:]
+            for i in cells.indices {
+                conditionLevels[lookup[cells[i].sampleID]!.condition, default: []].insert(factorIDs[factor][i])
+            }
+            var reachable: Set<Int> = [0]
+            for _ in 0..<levelCounts[factor] {
+                let before = reachable.count
+                for levels in conditionLevels.values where !reachable.isDisjoint(with: levels) { reachable.formUnion(levels) }
+                if reachable.count == before { break }
+            }
+            guard reachable.count == levelCounts[factor] else {
+                throw VivoOmicsError.invalid("joint integration covariate is confounded with condition")
+            }
+        }
+        for left in factorIDs.indices {
+            for right in (left + 1)..<factorIDs.count {
+                var adjacency = [[Int]](repeating: [], count: levelCounts[left] + levelCounts[right])
+                for i in cells.indices {
+                    let a = factorIDs[left][i], b = factorIDs[right][i] + levelCounts[left]
+                    adjacency[a].append(b); adjacency[b].append(a)
+                }
+                var reachable: Set<Int> = [0]
+                for _ in adjacency.indices {
+                    let before = reachable.count
+                    for node in Array(reachable).sorted() { reachable.formUnion(adjacency[node]) }
+                    if reachable.count == before { break }
+                }
+                guard reachable.count == adjacency.count else {
+                    throw VivoOmicsError.invalid("joint integration covariates are perfectly confounded")
+                }
+            }
+        }
+        try VivoIntegrationProtection.check(o.protectedSampleGroups, cells: cells, samples: lookup,
+            covariates: selected, levelIDs: factorLevels.indices.map { factor in
+                Dictionary(uniqueKeysWithValues: factorLevels[factor].enumerated().map { ($0.element, $0.offset) })
+            })
+        let factorSizes = factorIDs.map { ids in
+            var result = [Double](repeating: 0, count: (ids.max() ?? -1) + 1)
+            for id in ids { result[id] += 1 }
+            return result
+        }
+        guard factorSizes.count == factorLevels.count else { throw VivoOmicsError.invalid("joint integration factor sizes") }
+        var state = o.seed
+        func uniform() -> Double {
+            state &+= 0x9E3779B97F4A7C15; var z = state
+            z = (z ^ (z >> 30)) &* 0xBF58476D1CE4E5B9; z = (z ^ (z >> 27)) &* 0x94D049BB133111EB
+            return Double((z ^ (z >> 31)) >> 11) / 9007199254740992.0
+        }
+        func normalized(_ rows: [[Double]]) -> [[Double]] {
+            rows.map { row in let norm = sqrt(row.reduce(0) { $0 + $1 * $1 }); return norm > 0 ? row.map { $0 / norm } : row }
+        }
+        func distance(_ a: [Double], _ b: [Double]) -> Double { zip(a, b).reduce(0) { $0 + ($1.0 - $1.1) * ($1.0 - $1.1) } }
+        let unit = try matrix(n, d); try unit.copy(from: x, normalize: true)
+        var centers = [try unit.row(min(n - 1, Int(uniform() * Double(n))))]
+        var nearest = [Double](repeating: .infinity, count: n)
+        while centers.count < k {
+            for i in 0..<n { nearest[i] = min(nearest[i], distance(try unit.row(i), centers.last!)) }
+            let total = nearest.reduce(0, +)
+            guard total > 1e-14 else { throw VivoOmicsError.invalid("joint integration clusters exceed distinct PCA directions") }
+            var threshold = uniform() * total, chosen = n - 1
+            for i in 0..<n { threshold -= nearest[i]; if threshold <= 0 { chosen = i; break } }
+            centers.append(try unit.row(chosen))
+        }
+        for _ in 0..<10 {
+            var sums = [[Double]](repeating: [Double](repeating: 0, count: d), count: k), counts = [Int](repeating: 0, count: k)
+            for i in 0..<n {
+                let row = try unit.row(i), c = (0..<k).min { distance(row, centers[$0]) < distance(row, centers[$1]) }!
+                counts[c] += 1; for j in 0..<d { sums[c][j] += row[j] }
+            }
+            for c in 0..<k where counts[c] > 0 { centers[c] = sums[c].map { $0 / Double(counts[c]) } }
+        }
+        centers = normalized(centers)
+        let scores = try matrix(n, d), r = try matrix(n, k), distances = try matrix(n, k), assignmentScores = try matrix(n, d)
+        try scores.copy(from: x)
+        var observed = factorLevels.indices.map { factor in [Double](repeating: 0, count: k * levelCounts[factor]) }
+        var masses = [Double](repeating: 0, count: k)
+        func probabilities(_ i: Int, _ row: [Double], _ diversity: Bool) -> [Double] {
+            var logits = [Double](repeating: 0, count: k)
+            for c in 0..<k {
+                logits[c] = -row[c] / o.temperature
+                if diversity {
+                    for factor in factorIDs.indices {
+                        let level = factorIDs[factor][i]
+                        let expected = max(0, masses[c]) * factorSizes[factor][level] / Double(n)
+                        let value = max(0, observed[factor][c * levelCounts[factor] + level])
+                        logits[c] += o.diversity * log((2 * expected + 1) / (value + expected + 1))
+                    }
+                }
+            }
+            let peak = logits.max()!, weights = logits.map { exp($0 - peak) }, total = weights.reduce(0, +)
+            return weights.map { $0 / total }
+        }
+        func addRow(_ i: Int, _ row: [Double], _ sign: Double) {
+            for c in 0..<k {
+                let value = sign * row[c]; masses[c] += value
+                for factor in factorIDs.indices {
+                    observed[factor][c * levelCounts[factor] + factorIDs[factor][i]] += value
+                }
+            }
+        }
+        func objective() throws -> Double {
+            var result = 0.0
+            for i in 0..<n {
+                let row = try r.row(i), distance = try distances.row(i)
+                for c in 0..<k where row[c] > 0 { result += row[c] * distance[c] + o.temperature * row[c] * log(row[c]) }
+            }
+            for factor in factorIDs.indices {
+                for c in 0..<k { for level in 0..<levelCounts[factor] {
+                    let value = max(0, observed[factor][c * levelCounts[factor] + level])
+                    let expected = max(0, masses[c]) * factorSizes[factor][level] / Double(n)
+                    result += o.temperature * o.diversity * value * log((value + expected + 1) / (2 * expected + 1))
+                } }
+            }
+            return result * 2000 / Double(n)
+        }
+        var objectives: [Double] = [], improvements: [Double] = [], maxResidual = 0.0, stopping = "iteration-limit"
+        var assignmentCenters: [[Double]] = []
+        var factorPenalties: [[[Double]]]? = o.ridgeScaling == nil ? nil : factorLevels.map { levels in
+            Array(repeating: [Double](repeating: 0, count: levels.count), count: k)
+        }
+        var factorEffects = factorLevels.map { levels in Array<[Double]?>(repeating: nil, count: k * levels.count) }
+        for iteration in 0..<o.maximumIterations {
+            try Task.checkCancellation(); try assignmentScores.copy(from: scores, normalize: true); assignmentCenters = centers
+            observed = factorLevels.indices.map { factor in [Double](repeating: 0, count: k * levelCounts[factor]) }
+            masses = [Double](repeating: 0, count: k)
+            for i in 0..<n {
+                let current = try assignmentScores.row(i)
+                try distances.setRow(i, (0..<k).map { c in 2 * (1 - zip(current, centers[c]).reduce(0) { $0 + $1.0 * $1.1 }) })
+                try r.setRow(i, probabilities(i, distances.row(i), false)); addRow(i, try r.row(i), 1)
+            }
+            if iteration == 0 { objectives.append(try objective()) }
+            for _ in 0..<4 {
+                var order = Array(0..<n)
+                for i in stride(from: n - 1, through: 1, by: -1) { order.swapAt(i, min(i, Int(uniform() * Double(i + 1)))) }
+                let blockSize = max(1, n / 20)
+                for block in 0..<20 {
+                    let start = block * blockSize, end = block == 19 ? n : min(n, start + blockSize)
+                    if start >= n { break }
+                    for t in start..<end { let i = order[t]; addRow(i, try r.row(i), -1) }
+                    for t in start..<end { let i = order[t]; try r.setRow(i, probabilities(i, try distances.row(i), true)) }
+                    for t in start..<end { let i = order[t]; addRow(i, try r.row(i), 1) }
+                }
+            }
+            let value = try objective(); guard value.isFinite else { throw VivoOmicsError.invalid("joint integration objective nonfinite") }
+            let previous = objectives.last!, improvement = (previous - value) / max(abs(previous), 1e-12)
+            objectives.append(value); improvements.append(improvement)
+            try scores.copy(from: x)
+            factorEffects = factorLevels.map { levels in Array<[Double]?>(repeating: nil, count: k * levels.count) }
+            for c in 0..<k {
+                let active = factorIDs.indices.map { factor in
+                    (0..<levelCounts[factor]).filter { observed[factor][c * levelCounts[factor] + $0] / factorSizes[factor][$0] > 1e-5 }
+                }
+                guard active.allSatisfy({ $0.count >= 2 }) else { continue }
+                let activeSets = active.map { Set($0) }
+                var factorMasses = active.map { [Double](repeating: 0, count: $0.count) }
+                var factorSums = active.map { levels in levels.map { _ in [Double](repeating: 0, count: d) } }
+                var pairMasses = [[Double]]()
+                for left in factorIDs.indices { for right in (left + 1)..<factorIDs.count {
+                    pairMasses.append([Double](repeating: 0, count: active[left].count * active[right].count))
+                } }
+                var totalMass = 0.0, totalSums = [Double](repeating: 0, count: d), pairIndex = 0
+                for i in 0..<n where factorIDs.indices.allSatisfy({ activeSets[$0].contains(factorIDs[$0][i]) }) {
+                    let weight = try r.value(i, c); guard weight > 0 else { continue }
+                    let row = try x.row(i); totalMass += weight
+                    for j in 0..<d { totalSums[j] += weight * row[j] }
+                    for factor in factorIDs.indices {
+                        let slot = active[factor].firstIndex(of: factorIDs[factor][i])!
+                        factorMasses[factor][slot] += weight
+                        for j in 0..<d { factorSums[factor][slot][j] += weight * row[j] }
+                    }
+                    pairIndex = 0
+                    for left in factorIDs.indices { for right in (left + 1)..<factorIDs.count {
+                        let a = active[left].firstIndex(of: factorIDs[left][i])!, b = active[right].firstIndex(of: factorIDs[right][i])!
+                        pairMasses[pairIndex][a * active[right].count + b] += weight; pairIndex += 1
+                    } }
+                }
+                guard totalMass > 1e-14 else { continue }
+                // A marginally active level can lose all support after the
+                // complete factor-product filter. Leave that cluster
+                // uncorrected instead of constructing a singular design.
+                guard factorMasses.allSatisfy({ $0.allSatisfy({ $0 > 1e-14 }) }) else { continue }
+                var penalties = active.map { levels in [Double](repeating: o.ridge, count: levels.count) }
+                if o.ridgeScaling == .expectedClusterBatchMass {
+                    for factor in factorIDs.indices { for slot in active[factor].indices {
+                        let level = active[factor][slot]
+                        penalties[factor][slot] = o.ridge * max(0, masses[c]) * factorSizes[factor][level] / Double(n)
+                    } }
+                }
+                if factorPenalties != nil {
+                    for factor in factorIDs.indices { for slot in active[factor].indices {
+                        factorPenalties![factor][c][active[factor][slot]] = penalties[factor][slot]
+                    } }
+                }
+                let fit = try additiveRidgeFit(totalMass: totalMass, totalSums: totalSums, masses: factorMasses,
+                    sums: factorSums, pairMasses: pairMasses, penalties: penalties)
+                maxResidual = max(maxResidual, fit.residual); centers[c] = fit.intercept
+                for factor in factorIDs.indices { for slot in active[factor].indices {
+                    factorEffects[factor][c * levelCounts[factor] + active[factor][slot]] = fit.effects[factor][slot]
+                } }
+            }
+            for i in 0..<n {
+                var row = try scores.row(i)
+                for c in 0..<k {
+                    let weight = try r.value(i, c); if weight == 0 { continue }
+                    for factor in factorIDs.indices {
+                        if let effect = factorEffects[factor][c * levelCounts[factor] + factorIDs[factor][i]] {
+                            for j in 0..<d { row[j] -= weight * effect[j] }
+                        }
+                    }
+                }
+                try scores.setRow(i, row)
+            }
+            centers = normalized(centers)
+            if improvement < 0 { stopping = "objective-increase"; break }
+            if improvement < o.relativeTolerance { stopping = "relative-objective-tolerance"; break }
+        }
+        return .init(levels: factorLevels[0], cellLevels: factorIDs[0], scores: scores, memberships: r,
+            assignmentScores: assignmentScores, assignmentCenters: assignmentCenters, objectives: objectives,
+            relativeImprovements: improvements, stoppingReason: stopping, maximumRidgeResidual: maxResidual,
+            ridgePenalties: factorPenalties?[0], factorLevels: factorLevels, cellFactorLevels: factorIDs,
+            factorRidgePenalties: factorPenalties)
+    }
     static func run(cells: [VivoOmicsCellIdentity], x: VivoIntegrationMatrix, samples: [VivoOmicsSample],
                     options o: VivoSingleCellIntegrationOptions, matrix: (Int, Int) throws -> VivoIntegrationMatrix) throws -> VivoIntegrationSolution {
         let n = x.rows, d = x.columns, k = o.clusters
         try validateAxes(rows: n, columns: d, options: o)
         guard cells.count == n else { throw VivoOmicsError.invalid("integration PCA identities") }
+        if o.covariates != nil {
+            return try runJoint(cells: cells, x: x, samples: samples, options: o, matrix: matrix)
+        }
         guard Set(samples.map(\.id)).count == samples.count else { throw VivoOmicsError.invalid("duplicate integration sample identities") }
         let lookup = Dictionary(uniqueKeysWithValues: samples.map { ($0.id,$0) })
         let names = try cells.map { cell -> String in
@@ -439,15 +874,22 @@ enum VivoSingleCellIntegration {
         }
         return .init(levels: levels, cellLevels: batch, scores: scores, memberships: r,
             assignmentScores: assignmentScores, assignmentCenters: assignmentCenters, objectives: objectives,
-            relativeImprovements: improvements, stoppingReason: stopping, maximumRidgeResidual: maxResidual, ridgePenalties: ridgePenalties)
+            relativeImprovements: improvements, stoppingReason: stopping, maximumRidgeResidual: maxResidual,
+            ridgePenalties: ridgePenalties, factorLevels: nil, cellFactorLevels: nil, factorRidgePenalties: nil)
     }
 }
 
 struct VivoIntegrationSolution {
     static func method(options: VivoSingleCellIntegrationOptions) -> String {
-        options.ridgeScaling == nil ? "diversity-soft-clustering-categorical-ridge-Double-v1" : "diversity-soft-clustering-expected-mass-ridge-Double-v1"
+        if options.covariates != nil {
+            return options.ridgeScaling == nil ? "diversity-soft-clustering-multi-categorical-ridge-Double-v1" : "diversity-soft-clustering-multi-categorical-expected-mass-ridge-Double-v1"
+        }
+        return options.ridgeScaling == nil ? "diversity-soft-clustering-categorical-ridge-Double-v1" : "diversity-soft-clustering-expected-mass-ridge-Double-v1"
     }
-    static let qualification = "Transductive single-covariate PCA correction with Harmony2 objective and intercept centers; independent initialization. Original counts/PCA preserved. Stopping diagnostics are not biological preservation or prospective prediction evidence."
+    static func qualification(options: VivoSingleCellIntegrationOptions) -> String {
+        let scope = options.covariates == nil ? "single-covariate" : "additive multi-covariate"
+        return "Transductive \(scope) PCA correction with Harmony2 objective and intercept centers; independent initialization. Original counts/PCA preserved. Stopping diagnostics are not biological preservation or prospective prediction evidence."
+    }
     let levels: [String]
     let cellLevels: [Int]
     let scores: VivoIntegrationMatrix
@@ -459,10 +901,15 @@ struct VivoIntegrationSolution {
     let stoppingReason: String
     let maximumRidgeResidual: Double
     let ridgePenalties: [[Double]]?
+    let factorLevels: [[String]]?
+    let cellFactorLevels: [[Int]]?
+    let factorRidgePenalties: [[[Double]]]?
     func materialize(cells: [VivoOmicsCellIdentity], options: VivoSingleCellIntegrationOptions) throws -> VivoSingleCellIntegrationResult {
         try .init(method: Self.method(options: options), options: options, cells: cells, levels: levels, cellLevels: cellLevels,
             scores: scores.materialize(), memberships: memberships.materialize(), assignmentScores: assignmentScores.materialize(),
             assignmentCenters: assignmentCenters, objectives: objectives, relativeImprovements: relativeImprovements,
-            stoppingReason: stoppingReason, maximumRidgeResidual: maximumRidgeResidual, qualification: Self.qualification, ridgePenalties: ridgePenalties)
+            stoppingReason: stoppingReason, maximumRidgeResidual: maximumRidgeResidual, qualification: Self.qualification(options: options),
+            ridgePenalties: ridgePenalties, factorLevels: factorLevels, cellFactorLevels: cellFactorLevels,
+            factorRidgePenalties: factorRidgePenalties)
     }
 }

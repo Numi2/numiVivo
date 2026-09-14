@@ -76,9 +76,12 @@ Integration still requires resolving sensitive marker/program and rare-cell
 preservation losses. The [full-HIRISA rigid projection](../Tools/Omics/Benchmarks/HIRISA/RigidProjection/README.md) now tests all original cells with unchanged diagnostics: 31/146 annotation failures remain, including 9/29 rare failures. Within-donor isometry does not repair cross-donor preservation; the method is not promoted. The [source design audit](../Tools/Omics/Reduction/IntegrationDesign/README.md)
 now verifies full-atlas donor/batch crossing, subset rank deficiencies, and exact
 monocyte-preparation/batch overlap. The [protected sample-group admission guard](../Tools/Omics/Reduction/IntegrationProtection/README.md) now rejects disconnected
-joint condition/group designs in ridge and MNN. It does not constrain correction
-or establish biological preservation. Multiple-covariate fitting and its
-identifiability handling remain open; retain the existing scientific gates. The primary Adamson paper and Table S1 now confirm the two UPR controls and their sequences. A separate [provisional role-sensitivity run](AdamsonProvisionalRoleSensitivity.md) fits and scores 80 supported held targets under an explicitly pooled `pBA580`/`pBA582` control assumption, but deposited-label mapping and the 94-versus-93 roster discrepancy remain open before authoritative fitting of its frozen transfer test, and Parse's intervention and feature identities before admitting its proposed prediction test. Retain all negative results and simple baselines. Measured phenotype links need their own acceptance experiments.
+joint condition/group designs in ridge and MNN. An opt-in additive donor+batch
+ridge path also checks pairwise factor co-occurrence and retains factor-major
+axes, but it is bounded to two covariates and remains transductive numerical
+development evidence. It does not constrain correction or establish biological
+preservation, interactions or unseen-donor mapping; retain the existing
+scientific gates. The primary Adamson paper and Table S1 now confirm the two UPR controls and their sequences. A separate [provisional role-sensitivity run](AdamsonProvisionalRoleSensitivity.md) fits and scores 80 supported held targets under an explicitly pooled `pBA580`/`pBA582` control assumption, but deposited-label mapping and the 94-versus-93 roster discrepancy remain open before authoritative fitting of its frozen transfer test, and Parse's intervention and feature identities before admitting its proposed prediction test. Retain all negative results and simple baselines. Measured phenotype links need their own acceptance experiments.
 
 The following molecular milestones remain part of the wider product roadmap;
 they do not replace this immediate single-cell priority.

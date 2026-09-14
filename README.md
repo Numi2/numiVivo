@@ -14,6 +14,11 @@ The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/REA
 
 The [integration design guard](Tools/Omics/Reduction/INTEGRATION.md#optional-protected-sample-groups) can reject correction designs confounded with explicitly protected sample groups. Admission does not establish preservation of biological signals.
 
+The same integration owner now exposes an opt-in additive donor+batch correction
+(`covariates:["donor","batch"]`) with factor-level witnesses and bounded
+pairwise identifiability checks. It is transductive numerical development
+evidence; biological preservation and unseen-donor prediction remain open.
+
 The [full-HIRISA rigid-correction experiment](Tools/Omics/Benchmarks/HIRISA/RigidProjection/README.md) preserves within-donor distances but still fails 31/146 sensitive annotation comparisons. No new integration method is promoted.
 
 The [SEQC technical bulk-RNA benchmark](Tools/Omics/Benchmarks/SEQC/README.md) now runs all six public Illumina RefSeq sites through native negative-binomial DE and compares the same counts with edgeR, limma-voom and DESeq2. All methods pass the preregistered descriptive measurement gate against 785 eligible independent TaqMan rows; this is technical reference-RNA evidence, not biological-donor or general outcome-prediction validation.

@@ -561,6 +561,11 @@ The complete development objective remains open:
    cells × genes; resident, pair-work and embedding-update limits still apply.
 5. **Batch integration:** native single-covariate donor/batch correction now
    preserves original PCA and explicitly selects corrected downstream coordinates.
+   An opt-in additive donor+batch route (`covariates:["donor","batch"]`)
+   now checks factor connectivity and pairwise co-occurrence, fits a bounded
+   joint categorical ridge system, and retains factor-major level and cell maps.
+   This is solver and schema evidence on numerical fixtures; it does not qualify
+   biological preservation, interactions, prospective mapping or unseen donors.
    [Kang qualification](../Tools/Omics/Reduction/INTEGRATION.md) compares donor
    mixing, cross-donor condition accuracy, and measured RNA program preservation
    with three pinned Harmony reference runs and a response-erasure control.
@@ -595,8 +600,9 @@ The complete development objective remains open:
    comparisons lack sufficient support or control sensitivity. These are
    annotation-recoverability measurements, not authoritative cell identities.
    Missing rare-type strata and the insensitive original Kang erasure control
-   remain explicit. Full Baron is rejected for confounding. Multiple covariates,
-   prospective mapping and general multi-donor competitiveness remain open.
+   remain explicit. Full Baron is rejected for confounding. Covariate models
+   beyond the donor+batch pair, prospective mapping and general multi-donor
+   competitiveness remain open.
    The [full source design audit](../Tools/Omics/Reduction/IntegrationDesign/README.md)
    checks all 131 HIRISA libraries and 1,612,594 observation memberships. Donor
    and batch columns are separable across the full atlas but redundant in Bcell,
@@ -605,8 +611,8 @@ The complete development objective remains open:
    Ridge and MNN now accept an opt-in complete `protectedSampleGroups` map and
    reject disconnected joint condition/group designs before correction. This
    admission guard does not constrain fitted corrections or qualify biological
-   preservation. Multiple-covariate correction remains open; no historical
-   integration score is changed.
+   preservation. MNN remains single-covariate, and the joint ridge route is
+   limited to donor plus batch; no historical integration score is changed.
 6. **Annotation:** [standalone native binary program bundles](../Tools/Omics/Programs/BUNDLES.md)
    separate per-cell arrays from pseudobulk JSON and preserve explicit source
    IDs, exact-name matching, missing scores and native replay. [Full HIRISA

@@ -5,8 +5,10 @@ The ridge method below remains the default. An opt-in
 PCA-bundle workflow, with separate anchor witnesses and full-cohort evaluation.
 
 The native analysis path supports transductive correction of PCA coordinates for
-one explicitly selected categorical donor or batch covariate. Counts, normalized
-RNA and original PCA remain unchanged. To use corrected coordinates downstream:
+one explicitly selected categorical donor or batch covariate. It also has an
+opt-in additive donor+batch route for designs where both factors are observed
+and identifiable. Counts, normalized RNA and original PCA remain unchanged. To
+use corrected coordinates downstream:
 
 ```json
 {
@@ -86,20 +88,27 @@ Unknown options and resource-budget violations are controlled errors.
 That condition-connectivity check is not a general biological-protection check.
 The [full HIRISA design audit](IntegrationDesign/README.md) finds an exact overlap
 between monocyte preparation and five batch labels. Donor/batch columns are also
-redundant in three preparation subsets. Multiple-covariate correction remains
-unimplemented; it needs explicit protected-covariate handling and preservation
-qualification, not an assumption that batch effects are biologically neutral.
+redundant in three preparation subsets. The opt-in joint route is selected with
+`covariates:["donor","batch"]`; it admits exactly those two factors, checks
+condition connectivity and donor/batch co-occurrence, fits an additive
+categorical ridge system with explicit pairwise masses, and retains factor-major
+levels and cell assignments in the result. It is bounded to two covariates and
+is a transductive development path: it does not qualify preservation, model
+interactions, provide an unseen-donor transform, or change any historical
+single-covariate score. MNN remains single-covariate. These limitations keep
+biological neutrality from being assumed merely because a joint solve exists.
 
 The preflight work index is `cells * clusters * dimensions * (maximumIterations +
 10)`, capped by `maximumWork` (default 200 million). It bounds problem dimensions;
 it is not a measured instruction count or performance guarantee. Dense storage
-is limited to scores, memberships, centers and small batch systems, never a
-cells-by-genes expression matrix. The original analysis route remains resident.
+is limited to scores, memberships, centers and small categorical systems, never
+a cells-by-genes expression matrix. The original analysis route remains resident.
 [File-backed integration](FILE_INTEGRATION.md) now shares the same solver with
 bounded latent-matrix mappings and explicit integrated graph inputs. Both use
-one categorical correction covariate, at most 100 clusters and 128 levels;
-neither is an unseen-donor transform. An explicit work maximum up to 100 billion
-is supported, with the unchanged 200-million default.
+one categorical correction covariate, at most 100 clusters and 128 levels; the
+resident joint route uses two factor axes with the same cluster and level
+bounds. Neither is an unseen-donor transform. An explicit work maximum up to
+100 billion is supported, with the unchanged 200-million default.
 
 ## Experimental benchmark
 

@@ -43,6 +43,10 @@ public struct VivoPCAIntegrationReport: Codable, Sendable, Equatable {
     public let maximumSimultaneousMatrices: Int
     public let qualification: String
     public var ridgePenalties: [[Double]]? = nil
+    /// Factor-major axes for the opt-in additive donor+batch correction.
+    public var factorLevels: [[String]]? = nil
+    public var cellFactorLevels: [[Int]]? = nil
+    public var factorRidgePenalties: [[[Double]]]? = nil
     /// Maximum batch value payload; excludes array/index overhead and mapped pages.
     public var maximumBufferedValueBytes: Int? = nil
 }
@@ -139,7 +143,8 @@ public enum VivoPCAIntegration {
             relativeImprovements: result.relativeImprovements, stoppingReason: result.stoppingReason, maximumRidgeResidual: result.maximumRidgeResidual,
             scratchBytes: matrices.reduce(0) { $0 + $1.fileBytes }, maximumMappedBytesPerMatrix: VivoIntegrationMatrix.maximumWindowBytes,
             maximumSimultaneousMatrices: matrices.count,
-            qualification: VivoIntegrationSolution.qualification + " Latent matrices use private row-major f64 scratch with one 64 MiB mapping per matrix. Shuffled access beyond a window gathers/scatters at most 8192 rows in physical order while retaining logical arithmetic order and all three whole-block phases. Buffered value bytes exclude array/index overhead and mapped pages; cell identities, covariate indices, permutations and cluster statistics remain resident. Count and PCA parent reconstruction is included. Final matrices use complete row-major u32-row/u32-column/f64 little-endian records. Work budget is an admission index, not an operation counter. No million-cell, Metal or biological qualification follows from file storage.", ridgePenalties: result.ridgePenalties,
+            qualification: VivoIntegrationSolution.qualification(options: plan.integration!) + " Latent matrices use private row-major f64 scratch with one 64 MiB mapping per matrix. Shuffled access beyond a window gathers/scatters at most 8192 rows in physical order while retaining logical arithmetic order and all three whole-block phases. Buffered value bytes exclude array/index overhead and mapped pages; cell identities, covariate indices, permutations and cluster statistics remain resident. Count and PCA parent reconstruction is included. Final matrices use complete row-major u32-row/u32-column/f64 little-endian records. Work budget is an admission index, not an operation counter. No million-cell, Metal or biological qualification follows from file storage.", ridgePenalties: result.ridgePenalties,
+            factorLevels: result.factorLevels, cellFactorLevels: result.cellFactorLevels, factorRidgePenalties: result.factorRidgePenalties,
             maximumBufferedValueBytes: result.memberships.benefitsFromBatchedAccess
                 ? min(n, VivoIntegrationMatrix.maximumBatchRows) * plan.integration!.clusters * 8 : 0)
         // Solving is complete: original, normalized and distance scratch no
