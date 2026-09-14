@@ -665,7 +665,9 @@ an independently collected experiment with shared investigators, K562 systems
 and prior UPR target selection. It does not transfer Norman-trained coefficients,
 provide temporal independence of current GO knowledge, or establish prospective
 biological contexts. Nominal target identity relies partly on FBA's reproduced
-sequence table; the original full guide supplement was not retrieved.
+sequence table. The retrieved [Adamson Table S1 roster](AdamsonPrimaryRoster.md)
+supplies protospacers for the named controls but no deposited `pBA` labels, so
+the original guide-to-control mapping remains unresolved.
 
 The independent [Adamson preparation](../Tools/Omics/PerturbationPrediction/Adamson/COHORT.md)
 has restored deposited cell-to-guide identities and verified its original-author
