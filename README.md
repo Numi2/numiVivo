@@ -66,6 +66,15 @@ inputs does not establish accuracy for a new query.
 
 The [native multigene context model](Tools/Omics/PerturbationPrediction/StudyContextKernel/README.md) now uses the full untreated expression profile. It improves held-out HIRISA RMSE by 21.1% over the training-mean response, but is slightly worse than that baseline on Kang and GSE181897. All 75 donors and 885,000 predictions are verified. Reliable across-study transfer remains unestablished; these are reused development cohorts, not a fresh external test.
 
+The native perturbation owner now also offers an opt-in
+`responseModel: "negativeBinomial"` path using paired-donor NB2 count effects.
+It retains feature-level dispersion/status diagnostics and marks which effects
+are identified in each query estimate; unavailable features remain explicit
+no-change fallbacks. This extends conditional molecular response modeling only,
+with no claim of unseen-target, causal, mechanistic, uncertainty-calibrated or
+phenotype prediction. The legacy log-linear path and serialized plans remain
+unchanged by default.
+
 | Requested outcome | Decision from the available evidence |
 | --- | --- |
 | Average RNA response with matched training and untreated query measurements | **Supported as a conditional research estimate.** Performance depends on the treatment and population; retain no-change and training-mean baselines. |

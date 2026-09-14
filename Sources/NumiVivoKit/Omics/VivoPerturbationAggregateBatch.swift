@@ -42,16 +42,23 @@ public struct VivoPerturbationAggregateBatchPlan: Codable, Sendable, Equatable {
     public let featureNamespace: String
     public let provenance: String
     public let folds: [VivoPerturbationAggregateFold]
-    private enum CodingKeys: String, CodingKey { case schemaVersion, sourceReport, featureNamespace, provenance, folds }
-    public init(sourceReport: VivoFingerprint,featureNamespace: String,provenance: String,folds: [VivoPerturbationAggregateFold]) {
+    /// Optional response model. Nil retains the historical log-linear batch path.
+    public let responseModel: VivoPerturbationResponseModel?
+    public let negativeBinomialOptions: VivoOmicsNBCohortOptions?
+    private enum CodingKeys: String, CodingKey { case schemaVersion, sourceReport, featureNamespace, provenance, folds, responseModel, negativeBinomialOptions }
+    public init(sourceReport: VivoFingerprint,featureNamespace: String,provenance: String,folds: [VivoPerturbationAggregateFold],
+                responseModel: VivoPerturbationResponseModel? = nil,negativeBinomialOptions: VivoOmicsNBCohortOptions? = nil) {
         schemaVersion=1;self.sourceReport=sourceReport;self.featureNamespace=featureNamespace;self.provenance=provenance;self.folds=folds
+        self.responseModel=responseModel;self.negativeBinomialOptions=negativeBinomialOptions
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","sourceReport","featureNamespace","provenance","folds"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","sourceReport","featureNamespace","provenance","folds","responseModel","negativeBinomialOptions"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);sourceReport=try c.decode(VivoFingerprint.self,forKey: .sourceReport)
         featureNamespace=try c.decode(String.self,forKey: .featureNamespace);provenance=try c.decode(String.self,forKey: .provenance)
         folds=try c.decode([VivoPerturbationAggregateFold].self,forKey: .folds)
+        responseModel=try c.decodeIfPresent(VivoPerturbationResponseModel.self,forKey: .responseModel)
+        negativeBinomialOptions=try c.decodeIfPresent(VivoOmicsNBCohortOptions.self,forKey: .negativeBinomialOptions)
     }
     func validate() throws {
         guard schemaVersion==1,vivoOmicsID(featureNamespace),!provenance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
@@ -59,6 +66,11 @@ public struct VivoPerturbationAggregateBatchPlan: Codable, Sendable, Equatable {
             throw VivoOmicsError.invalid("aggregate prediction batch schema, provenance or fold identities")
         }
         for fold in folds { try fold.validate() }
+        if responseModel == .negativeBinomial {
+            try (negativeBinomialOptions ?? .init()).validate()
+        } else if negativeBinomialOptions != nil {
+            throw VivoOmicsError.invalid("negative-binomial options require negativeBinomial response model")
+        }
     }
 }
 
@@ -130,6 +142,13 @@ public enum VivoPerturbationAggregateBatch {
     }
     static func evaluateFold(_ source: VivoPseudobulkCounts,mapping original: VivoH5ADImportPlan,
                              batch: VivoPerturbationAggregateBatchPlan,fold: VivoPerturbationAggregateFold) throws -> (VivoPerturbationAggregateFoldReceipt,Data?,Data?) {
+        try evaluateFold(source,mapping: original,metadata: nil,batch: batch,fold: fold)
+    }
+    /// The metadata overload enables the opt-in NB response model while keeping
+    /// the legacy bulk-only entry point source-compatible.
+    static func evaluateFold(_ source: VivoPseudobulkCounts,mapping original: VivoH5ADImportPlan,
+                             metadata: VivoSingleCellCountMetadata?,batch: VivoPerturbationAggregateBatchPlan,
+                             fold: VivoPerturbationAggregateFold) throws -> (VivoPerturbationAggregateFoldReceipt,Data?,Data?) {
         var trainingID: VivoFingerprint?,queryID: VivoFingerprint?
         do {
             let (training,query)=try isolatedInputs(source,fold: fold)
@@ -137,11 +156,12 @@ public enum VivoPerturbationAggregateBatch {
             queryID=try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(query))
             let fit=try VivoPerturbationPlan(mapping: mapping(original,bulk: training,id: fold.id+"-training",provenance: batch.provenance),
                 featureNamespace: batch.featureNamespace,perturbationID: fold.perturbationID,controlCondition: fold.controlCondition,
-                treatmentCondition: fold.treatmentCondition,provenance: batch.provenance)
+                treatmentCondition: fold.treatmentCondition,provenance: batch.provenance,
+                responseModel: batch.responseModel,negativeBinomialOptions: batch.negativeBinomialOptions)
             let queryPlan=try VivoPerturbationQueryPlan(mapping: mapping(original,bulk: query,id: fold.id+"-query",provenance: batch.provenance),
                 featureNamespace: batch.featureNamespace,perturbationID: fold.perturbationID)
             // Neither function receives the complete source, a target URL, or held-out treated rows.
-            let model=try VivoPerturbation.model(training,plan: fit,source: trainingID!)
+            let model=try VivoPerturbation.model(training,plan: fit,source: trainingID!,metadata: metadata)
             let prediction=try VivoPerturbation.evaluate(query,plan: queryPlan,model: model)
             let modelBytes=try VivoCanonicalJSON.encode(model),predictionBytes=try VivoCanonicalJSON.encode(prediction)
             guard modelBytes.count<=67_108_864,predictionBytes.count<=67_108_864 else { throw VivoOmicsError.limit("aggregate prediction fold document") }
@@ -190,7 +210,7 @@ public enum VivoPerturbationAggregateBatch {
         var receipts: [VivoPerturbationAggregateFoldReceipt]=[]
         for (index,fold) in plan.folds.enumerated() {
             try Task.checkCancellation()
-            let (receipt,model,prediction)=try evaluateFold(report.pseudobulk,mapping: sourcePlan.mapping,batch: plan,fold: fold)
+            let (receipt,model,prediction)=try evaluateFold(report.pseudobulk,mapping: sourcePlan.mapping,metadata: report.metadata,batch: plan,fold: fold)
             let folder=output.appendingPathComponent(String(format: "%03d",index));try FileManager.default.createDirectory(at: folder,withIntermediateDirectories: false)
             try VivoCanonicalJSON.encode(receipt).write(to: folder.appendingPathComponent("receipt.json"),options: .withoutOverwriting)
             if let model,let prediction {
@@ -218,7 +238,7 @@ public enum VivoPerturbationAggregateBatch {
               receipt.folds.count==plan.folds.count else { throw VivoOmicsError.invalid("aggregate prediction source or fold inventory changed") }
         for (index,fold) in plan.folds.enumerated() {
             try Task.checkCancellation()
-            let (rebuilt,model,prediction)=try evaluateFold(report.pseudobulk,mapping: sourcePlan.mapping,batch: plan,fold: fold)
+            let (rebuilt,model,prediction)=try evaluateFold(report.pseudobulk,mapping: sourcePlan.mapping,metadata: report.metadata,batch: plan,fold: fold)
             let folder=directory.appendingPathComponent("folds").appendingPathComponent(String(format: "%03d",index))
             guard rebuilt==receipt.folds[index],try VivoCanonicalJSON.encode(rebuilt)==read(folder,"receipt.json",maximum: 65_536) else {
                 throw VivoOmicsError.invalid("aggregate prediction fold receipt does not reconstruct")

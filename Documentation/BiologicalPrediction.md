@@ -18,6 +18,15 @@ information alone does not supply a validated mapping to survival, tissue
 function, disease progression or treatment benefit. Those outcomes require
 their own measured endpoints and held-out validation.
 
+The native perturbation owner also has an opt-in paired-donor negative-binomial
+response mode. It fits native NB2 count effects, preserves per-feature
+dispersion, standard-error and boundary diagnostics, and exposes only identified
+features in its response estimate; the existing log-linear baselines remain the
+default. Focused fixture and held-out-control tests pass, but this is software
+and conditional molecular-response evidence. No real-cohort qualification of an
+unseen perturbation, causal mechanism, calibrated uncertainty or phenotype
+outcome follows from the new mode.
+
 This assessment reviews the expression-prediction evidence and subsequent
 full-cohort scoring, clustering, decoder calibration, preparation transfer and
 annotation retention through 2026-09-14, with the retained Adamson experimental-role audit.

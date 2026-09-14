@@ -93,6 +93,8 @@ import Testing
         let object=try JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(original)) as! [String: Any]
         #expect(object["responseFeatureIDs"]==nil)
         #expect(object["donorResponseIntervalCoverage"]==nil)
+        #expect(object["responseModel"]==nil)
+        #expect(object["negativeBinomialOptions"]==nil)
     }
     @Test func futureDonorIntervalsIncludeIndividualVariationAndClipQuery() throws {
         let (report,original)=try Self.fixture()
@@ -146,5 +148,44 @@ import Testing
         for coverage in [0,0.49,1,Double.infinity,Double.nan] {
             #expect(throws: (any Error).self) { try plan(coverage).validate() }
         }
+    }
+    @Test func negativeBinomialResponseUsesIdentifiedFeaturesOnly() throws {
+        let data=try SingleCellNBCohortTests.fixture(),bulk=try VivoSingleCellAnalysis.pseudobulk(data)
+        let metadata=data.metadata,report=VivoH5ADPseudobulkReport(schemaVersion: 1,method: "synthetic-nb-control",
+            metadata: metadata,quality: try VivoSingleCellAnalysis.quality(data),pseudobulk: bulk,
+            canonicalNonzeros: data.matrix.counts.count,hdf5Version: "fixture",contrasts: [])
+        let mapping=VivoH5ADImportPlan(id: "nb-fixture",evidence: .synthetic,sourceDescription: "NB control fixture",
+            countUnit: data.countUnit,matrixPath: "X",samples: data.samples,sampleColumn: "sample")
+        let original=VivoPerturbationPlan(mapping: mapping,featureNamespace: "synthetic",perturbationID: "synthetic-treatment",
+            controlCondition: "ctrl",treatmentCondition: "stim",provenance: "Synthetic numerical control, not biological qualification")
+        var options=VivoOmicsNBCohortOptions(); options.trend = .mean
+        let plan=VivoPerturbationPlan(mapping: original.mapping,featureNamespace: original.featureNamespace,
+            perturbationID: original.perturbationID,controlCondition: original.controlCondition,
+            treatmentCondition: original.treatmentCondition,provenance: original.provenance,
+            responseModel: .negativeBinomial,negativeBinomialOptions: options)
+        let source=try VivoFingerprint(bytes: Array(repeating: 0,count: 32))
+        let model=try VivoPerturbation.model(report,plan: plan,source: source)
+        let nb=try #require(model.negativeBinomial)
+        #expect(model.method.contains("negative-binomial"))
+        #expect(!nb.testedFeatureIndices.isEmpty && nb.testedFeatureIndices.count <= model.featureIDs.count)
+        let panelIDs=Array(model.featureIDs.prefix(3).reversed())
+        let panelPlan=VivoPerturbationPlan(mapping: original.mapping,featureNamespace: original.featureNamespace,
+            perturbationID: original.perturbationID,controlCondition: original.controlCondition,
+            treatmentCondition: original.treatmentCondition,provenance: original.provenance,
+            responseFeatureIDs: panelIDs,responseModel: .negativeBinomial,negativeBinomialOptions: options)
+        let panelModel=try VivoPerturbation.model(report,plan: panelPlan,source: source)
+        #expect(panelModel.featureIDs == panelIDs && panelModel.negativeBinomial?.logEffects.count == panelIDs.count)
+        let first=report.pseudobulk.groups[0],m=model.featureIDs.count
+        let group=VivoPseudobulkGroup(biologicalReplicateID: "query",donorID: "query",condition: original.controlCondition,
+            organism: first.organism,cellGroup: first.cellGroup,sampleIDs: ["query"],batchIDs: [],sourceCellIndices: [0])
+        let query=VivoPseudobulkCounts(method: "synthetic-query",countUnit: .umiCount,groups: [group],featureIDs: model.featureIDs,
+            matrix: .init(cellCount: 1,featureCount: m,rowOffsets: [0,1],featureIndices: [0],counts: [100]))
+        let queryPlan=VivoPerturbationQueryPlan(mapping: .init(id: "query",evidence: .synthetic,sourceDescription: "query control",
+            countUnit: .umiCount,matrixPath: "X",samples: [],sampleColumn: "sample"),featureNamespace: plan.featureNamespace,perturbationID: plan.perturbationID)
+        let prediction=try VivoPerturbation.evaluate(query,plan: queryPlan,model: model).predictions[0]
+        let estimate=try #require(prediction.estimates.first { $0.baseline == "negativeBinomialEffect" })
+        #expect(estimate.availableFeatureIndices == nb.testedFeatureIndices)
+        #expect(estimate.unclippedResponse.count == m && estimate.predictedTreated.count == m)
+        #expect(try VivoCanonicalJSON.decode(VivoPerturbationModel.self,from: VivoCanonicalJSON.encode(model)) == model)
     }
 }

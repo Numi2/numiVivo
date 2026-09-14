@@ -55,9 +55,24 @@ mean/SD. The ridge system solves `(K+I) dual = centered response` and rejects a
 maximum scaled residual above 1e-9. No validation-donor hyperparameter tuning or
 query refitting occurs.
 
+An opt-in `responseModel: "negativeBinomial"` uses the native paired-donor NB2
+count likelihood for response effects. It requires at least three training
+donors and enough interior trend features, and retains per-feature status,
+dispersion and standard-error diagnostics. Aggregate folds may include a
+categorical batch covariate when each aggregate row has one batch identity. The
+result adds a `negativeBinomialEffect` estimate; `availableFeatureIndices` lists
+only identified effects, while unavailable, boundary and failed features fall
+back explicitly to no change. This is a conditional molecular response
+estimate, not an unseen-perturbation, causal, mechanistic, uncertainty-calibrated
+or phenotype prediction. The aggregate publisher accepts the same opt-in model
+when source metadata is supplied; old plans and log-linear artifacts remain
+unchanged.
+
 Every result contains no-change, mean-response, median-response and context-ridge
 estimates, each with the unclipped change, nonnegative predicted treated profile,
-applied change and implied CPM sum. Feature IDs and control profiles are retained.
+applied change and implied CPM sum. An opted-in NB plan adds a fifth
+`negativeBinomialEffect` estimate with its identified-feature availability list.
+Feature IDs and control profiles are retained.
 These are uncalibrated log-expression point estimates; they do not necessarily
 form a closed CPM composition and are not raw count libraries. The previously
 observed weaker folds and composition deviations remain visible. There is no

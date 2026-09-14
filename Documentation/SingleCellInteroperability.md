@@ -721,6 +721,13 @@ The complete development objective remains open:
    both baselines. GSE181897 is explicitly reused for development here; its
    earlier external-test result is unchanged. These completed experiments do
    not establish calibrated uncertainty or reliable context transfer.
+   The perturbation owner now exposes an opt-in `responseModel:
+   "negativeBinomial"` route that fits paired-donor NB2 count effects and retains
+   per-feature dispersion, status and standard-error diagnostics. Focused fixture
+   and held-out-control tests pass, with unavailable features listed rather than
+   imputed. This is a conditional molecular-response implementation result;
+   real-cohort unseen-target, causal, mechanistic, uncertainty and phenotype
+   qualification remain open. Legacy plans and log-linear outputs are unchanged.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)

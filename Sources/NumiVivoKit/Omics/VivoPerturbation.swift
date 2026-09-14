@@ -1,5 +1,12 @@
 import Foundation
 
+public enum VivoPerturbationResponseModel: String, Codable, Sendable {
+    /// The historical paired-donor log1p-CPM response model.
+    case logLinear
+    /// A paired-donor negative-binomial count-likelihood response model.
+    case negativeBinomial
+}
+
 public struct VivoPerturbationPlan: Codable, Sendable, Equatable {
     public let schemaVersion: Int
     public let mapping: VivoH5ADImportPlan
@@ -13,15 +20,23 @@ public struct VivoPerturbationPlan: Codable, Sendable, Equatable {
     public let responseFeatureIDs: [String]?
     /// Optional nominal coverage for a normal-model future-donor interval about the mean response.
     public let donorResponseIntervalCoverage: Double?
-    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,perturbationID: String,controlCondition: String,treatmentCondition: String,provenance: String,responseFeatureIDs: [String]? = nil,donorResponseIntervalCoverage: Double? = nil) {
+    /// Optional count-likelihood model. Nil retains the historical log-linear path.
+    /// The option is intentionally opt-in because existing perturbation artifacts
+    /// must retain their original serialized plan and response semantics.
+    public let responseModel: VivoPerturbationResponseModel?
+    /// Explicit NB dispersion/shrinkage options when `responseModel` is NB.
+    public let negativeBinomialOptions: VivoOmicsNBCohortOptions?
+    public init(mapping: VivoH5ADImportPlan,featureNamespace: String,perturbationID: String,controlCondition: String,treatmentCondition: String,provenance: String,responseFeatureIDs: [String]? = nil,donorResponseIntervalCoverage: Double? = nil,responseModel: VivoPerturbationResponseModel? = nil,negativeBinomialOptions: VivoOmicsNBCohortOptions? = nil) {
         schemaVersion=1;self.mapping=mapping;self.featureNamespace=featureNamespace;self.perturbationID=perturbationID
         self.controlCondition=controlCondition;self.treatmentCondition=treatmentCondition;self.provenance=provenance
         self.responseFeatureIDs=responseFeatureIDs
         self.donorResponseIntervalCoverage=donorResponseIntervalCoverage
+        self.responseModel=responseModel
+        self.negativeBinomialOptions=negativeBinomialOptions
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,perturbationID,controlCondition,treatmentCondition,provenance,responseFeatureIDs,donorResponseIntervalCoverage }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,mapping,featureNamespace,perturbationID,controlCondition,treatmentCondition,provenance,responseFeatureIDs,donorResponseIntervalCoverage,responseModel,negativeBinomialOptions }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","perturbationID","controlCondition","treatmentCondition","provenance","responseFeatureIDs","donorResponseIntervalCoverage"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","mapping","featureNamespace","perturbationID","controlCondition","treatmentCondition","provenance","responseFeatureIDs","donorResponseIntervalCoverage","responseModel","negativeBinomialOptions"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);mapping=try c.decode(VivoH5ADImportPlan.self,forKey: .mapping)
         featureNamespace=try c.decode(String.self,forKey: .featureNamespace);perturbationID=try c.decode(String.self,forKey: .perturbationID)
@@ -29,6 +44,8 @@ public struct VivoPerturbationPlan: Codable, Sendable, Equatable {
         provenance=try c.decode(String.self,forKey: .provenance)
         responseFeatureIDs=try c.decodeIfPresent([String].self,forKey: .responseFeatureIDs)
         donorResponseIntervalCoverage=try c.decodeIfPresent(Double.self,forKey: .donorResponseIntervalCoverage)
+        responseModel=try c.decodeIfPresent(VivoPerturbationResponseModel.self,forKey: .responseModel)
+        negativeBinomialOptions=try c.decodeIfPresent(VivoOmicsNBCohortOptions.self,forKey: .negativeBinomialOptions)
     }
     func validate() throws {
         guard schemaVersion==1,[featureNamespace,perturbationID,controlCondition,treatmentCondition].allSatisfy(vivoOmicsID),
@@ -45,6 +62,11 @@ public struct VivoPerturbationPlan: Codable, Sendable, Equatable {
             guard coverage.isFinite,(0.5...0.99).contains(coverage) else {
                 throw VivoOmicsError.invalid("perturbation donor-response interval coverage")
             }
+        }
+        if responseModel == .negativeBinomial {
+            try (negativeBinomialOptions ?? .init()).validate()
+        } else if negativeBinomialOptions != nil {
+            throw VivoOmicsError.invalid("negative-binomial options require negativeBinomial response model")
         }
     }
     var trainingPlan: VivoH5ADPseudobulkPlan { .init(mapping: mapping) }
@@ -87,6 +109,20 @@ public struct VivoPerturbationModel: Codable, Sendable, Equatable {
     public let qualification: String
     /// Unavailable for exactly constant/zero-variance responses; absent when intervals were not requested.
     public let donorResponseVariances: [Double?]?
+    /// Count-likelihood response effects, present only for an opt-in NB model.
+    public var negativeBinomial: VivoPerturbationNBModel? = nil
+}
+public struct VivoPerturbationNBModel: Codable, Sendable, Equatable {
+    public let method: String
+    public let request: VivoOmicsExpressionContrast
+    /// Natural-log treatment effects in `featureIDs` order. Missing values are
+    /// deliberately retained for filtered, boundary or failed NB features.
+    public let logEffects: [Double?]
+    public let standardErrors: [Double?]
+    public let dispersions: [Double?]
+    public let statuses: [VivoOmicsExpressionStatus]
+    public let testedFeatureIndices: [Int]
+    public let qualification: String
 }
 public struct VivoPerturbationEstimate: Codable, Sendable, Equatable {
     public let baseline: String
@@ -94,6 +130,9 @@ public struct VivoPerturbationEstimate: Codable, Sendable, Equatable {
     public let predictedTreated: [Double]
     public let predictedResponse: [Double]
     public let impliedCPMSum: Double
+    /// For NB estimates, only these feature positions use identified effects;
+    /// unavailable positions retain the query control as an explicit fallback.
+    public var availableFeatureIndices: [Int]? = nil
 }
 public struct VivoPerturbationPrediction: Codable, Sendable, Equatable {
     public let group: VivoPseudobulkGroup
@@ -139,10 +178,14 @@ public enum VivoPerturbation {
         return (counts,logs,totals)
     }
     static func model(_ report: VivoH5ADPseudobulkReport,plan: VivoPerturbationPlan,source: VivoFingerprint) throws -> VivoPerturbationModel {
-        try model(report.pseudobulk,plan: plan,source: source)
+        try model(report.pseudobulk,plan: plan,source: source,metadata: report.metadata)
     }
     /// The caller validates and isolates aggregate membership before fitting.
     static func model(_ bulk: VivoPseudobulkCounts,plan: VivoPerturbationPlan,source: VivoFingerprint) throws -> VivoPerturbationModel {
+        try model(bulk,plan: plan,source: source,metadata: nil)
+    }
+    static func model(_ bulk: VivoPseudobulkCounts,plan: VivoPerturbationPlan,source: VivoFingerprint,
+                      metadata: VivoSingleCellCountMetadata?) throws -> VivoPerturbationModel {
         try plan.validate()
         let featureIDs=plan.responseFeatureIDs ?? bulk.featureIDs
         guard Set(featureIDs).isSubset(of: Set(bulk.featureIDs)) else {
@@ -225,10 +268,82 @@ public enum VivoPerturbation {
             }
         }
         guard maximumResidual.isFinite,maximumResidual<=1e-9 else { throw VivoOmicsError.invalid("perturbation ridge solve residual") }
-        return .init(method: plan.responseFeatureIDs == nil ? "paired-donor-log1p-CPM-response-baselines-alpha1-v1" : "paired-donor-log1p-CPM-explicit-panel-response-baselines-alpha1-v1",plan: plan,source: source,featureIDs: featureIDs,
+        let responseModel = plan.responseModel ?? .logLinear
+        let negativeBinomial: VivoPerturbationNBModel?
+        if responseModel == .negativeBinomial {
+            guard let metadata else { throw VivoOmicsError.invalid("negative-binomial perturbation fitting requires count metadata; use the H5AD report model overload") }
+            negativeBinomial = try fitNegativeBinomial(metadata: metadata,bulk: bulk,plan: plan,featureIDs: featureIDs,donorCount: n)
+        } else {
+            negativeBinomial = nil
+        }
+        let method: String
+        if responseModel == .negativeBinomial {
+            method = plan.responseFeatureIDs == nil ? "paired-donor-negative-binomial-response-v1" : "paired-donor-negative-binomial-explicit-panel-response-v1"
+        } else {
+            method = plan.responseFeatureIDs == nil ? "paired-donor-log1p-CPM-response-baselines-alpha1-v1" : "paired-donor-log1p-CPM-explicit-panel-response-baselines-alpha1-v1"
+        }
+        let qualification = "Known perturbation donor-response baselines, equal donor weighting; no Bayesian uncertainty, unseen-perturbation or mechanistic qualification." +
+            (negativeBinomial == nil ? "" : " Opt-in NB response effects use the native paired-donor count likelihood with explicit dispersion diagnostics; unavailable, boundary and failed features remain unavailable and are not imputed.")
+        return .init(method: method,plan: plan,source: source,featureIDs: featureIDs,
             organism: organisms.first!,cellGroup: groups.first!.cellGroup,trainingDonors: donors,selectedFeatureIndices: selected,
             contextCenters: centers,contextScales: scales,contexts: contexts,meanResponse: mean,medianResponse: median,dualCoefficients: dual,
-            maximumSolveResidual: maximumResidual,qualification: "Known perturbation donor-response baselines, equal donor weighting; no Bayesian uncertainty, unseen-perturbation or mechanistic qualification.",donorResponseVariances: responseVariances)
+            maximumSolveResidual: maximumResidual,qualification: qualification,donorResponseVariances: responseVariances,
+            negativeBinomial: negativeBinomial)
+    }
+    private static func fitNegativeBinomial(metadata: VivoSingleCellCountMetadata,bulk: VivoPseudobulkCounts,
+                                            plan: VivoPerturbationPlan,featureIDs: [String],donorCount: Int) throws -> VivoPerturbationNBModel {
+        let options = plan.negativeBinomialOptions ?? .init()
+        guard donorCount >= 3, bulk.featureIDs.count >= options.minimumTrendGenes,
+              metadata.features.map(\.id) == bulk.featureIDs,
+              metadata.features.count == bulk.featureIDs.count else {
+            throw VivoOmicsError.invalid("negative-binomial perturbation requires at least three donors, enough trend features and an ordered source feature dictionary")
+        }
+        var request = VivoOmicsExpressionContrast(id: plan.perturbationID + "-nb-response",
+            controlCondition: plan.controlCondition,treatmentCondition: plan.treatmentCondition,
+            cellGroup: bulk.groups.first?.cellGroup,design: .pairedDonors)
+        request.model = .negativeBinomial
+        request.negativeBinomialOptions = options
+        request.minimumCellsPerPseudobulk = 1
+        request.minimumReplicatesPerCondition = 3
+        request.minimumFeatureCounts = 10
+        request.minimumExpressingPseudobulks = 3
+        request.minimumReferenceFeatures = min(10,featureIDs.count)
+        // A batch column is included only when every aggregate row names one
+        // batch. Pooled rows cannot be assigned a categorical batch effect.
+        request.adjustForBatch = bulk.groups.allSatisfy { $0.batchIDs.count == 1 }
+        let result = try VivoPseudobulkDifferentialExpression.evaluate(metadata: metadata,bulk: bulk,contrast: request)
+        guard result.features.count == bulk.featureIDs.count,let diagnostics = result.negativeBinomial,
+              diagnostics.features.count == bulk.featureIDs.count else {
+            throw VivoOmicsError.invalid("negative-binomial perturbation diagnostics do not cover the source feature dictionary")
+        }
+        let order: [Int]
+        if featureIDs == bulk.featureIDs {
+            order = Array(featureIDs.indices)
+        } else {
+            let lookup = Dictionary(uniqueKeysWithValues: bulk.featureIDs.enumerated().map { ($0.element,$0.offset) })
+            order = try featureIDs.map { id in
+                guard let index = lookup[id] else { throw VivoOmicsError.invalid("negative-binomial response panel feature lookup") }
+                return index
+            }
+        }
+        let effects = order.map { index -> Double? in
+            let feature = result.features[index]
+            guard feature.status == .tested,let value = feature.log2FoldChange else { return nil }
+            let natural = value * log(2)
+            return natural.isFinite ? natural : nil
+        }
+        let standardErrors = order.map { index -> Double? in
+            let feature = result.features[index]
+            guard feature.status == .tested,let value = feature.standardError else { return nil }
+            let natural = value * log(2)
+            return natural.isFinite ? natural : nil
+        }
+        let dispersions = order.map { diagnostics.features[$0].finalDispersion }
+        let tested = effects.indices.filter { effects[$0] != nil }
+        guard !tested.isEmpty else { throw VivoOmicsError.invalid("negative-binomial perturbation has no identified response features") }
+        return .init(method: result.method,request: request,logEffects: effects,standardErrors: standardErrors,
+            dispersions: dispersions,statuses: order.map { result.features[$0].status },testedFeatureIndices: tested,
+            qualification: diagnostics.qualification + "; response effects are natural-log NB treatment contrasts; no unseen-perturbation outcome or biological calibration claim")
     }
     static func evaluate(snapshot: URL,plan: VivoPerturbationQueryPlan,model: VivoPerturbationModel) throws -> VivoPerturbationReport {
         try validateQuery(plan,model: model)
@@ -256,6 +371,17 @@ public enum VivoPerturbation {
         }
         guard Set(bulk.groups.compactMap(\.donorID)).isDisjoint(with: model.trainingDonors) else { throw VivoOmicsError.invalid("perturbation query donor overlaps training") }
         let (_,logs,totals)=try dense(bulk),m=model.featureIDs.count,n=model.trainingDonors.count
+        guard (model.plan.responseModel == .negativeBinomial) == (model.negativeBinomial != nil) else {
+            throw VivoOmicsError.invalid("perturbation response-model payload mismatch")
+        }
+        if let negativeBinomial = model.negativeBinomial {
+            guard negativeBinomial.logEffects.count == m,negativeBinomial.standardErrors.count == m,
+                  negativeBinomial.dispersions.count == m,negativeBinomial.statuses.count == m,
+                  Set(negativeBinomial.testedFeatureIndices).count == negativeBinomial.testedFeatureIndices.count,
+                  negativeBinomial.testedFeatureIndices.allSatisfy({ (0..<m).contains($0) && negativeBinomial.logEffects[$0] != nil }) else {
+                throw VivoOmicsError.invalid("negative-binomial perturbation model dimensions or availability")
+            }
+        }
         guard bulk.groups.count<=20_000_000/m else { throw VivoOmicsError.limit("perturbation prediction output budget") }
         let lookup=Dictionary(uniqueKeysWithValues: bulk.featureIDs.enumerated().map { ($0.element,$0.offset) })
         let order=model.featureIDs.map { lookup[$0]! },selected=model.selectedFeatureIndices
@@ -282,6 +408,30 @@ public enum VivoPerturbation {
                 guard response.allSatisfy(\.isFinite),predicted.allSatisfy(\.isFinite),implied.isFinite else { throw VivoOmicsError.invalid("perturbation prediction is nonfinite") }
                 estimates.append(.init(baseline: name,unclippedResponse: response,predictedTreated: predicted,predictedResponse: applied,impliedCPMSum: implied))
             }
+            if let negativeBinomial = model.negativeBinomial {
+                var predicted = [Double](repeating: 0,count: m)
+                for gene in 0..<m {
+                    guard let effect = negativeBinomial.logEffects[gene] else {
+                        // Keep the unavailable feature explicit: no effect is
+                        // imputed, so its estimate falls back to no change.
+                        predicted[gene] = control[gene]
+                        continue
+                    }
+                    let base = expm1(control[gene]), multiplier = exp(effect), cpm = base * multiplier
+                    guard base.isFinite,multiplier.isFinite,cpm.isFinite,cpm >= 0 else {
+                        throw VivoOmicsError.invalid("negative-binomial perturbation prediction is nonfinite")
+                    }
+                    predicted[gene] = log1p(cpm)
+                }
+                let response = predicted.indices.map { predicted[$0]-control[$0] }
+                let implied = predicted.reduce(0.0) { $0+expm1($1) }
+                guard response.allSatisfy(\.isFinite),predicted.allSatisfy(\.isFinite),implied.isFinite else {
+                    throw VivoOmicsError.invalid("negative-binomial perturbation prediction is nonfinite")
+                }
+                estimates.append(.init(baseline: "negativeBinomialEffect",unclippedResponse: response,
+                    predictedTreated: predicted,predictedResponse: response,impliedCPMSum: implied,
+                    availableFeatureIndices: negativeBinomial.testedFeatureIndices))
+            }
             var interval: VivoDonorResponsePredictiveInterval?
             if let critical,let coverage=model.plan.donorResponseIntervalCoverage,let variances=model.donorResponseVariances {
                 var lower=[Double?](repeating: nil,count: m),upper=lower,treatedLower=lower,treatedUpper=lower,unavailable: [Int]=[]
@@ -299,6 +449,6 @@ public enum VivoPerturbation {
             predictions.append(.init(group: bulk.groups[row],libraryCounts: totals[row],control: control,estimates: estimates,meanResponsePredictiveInterval: interval))
         }
         return .init(method: model.method,referenceSource: model.source,featureIDs: model.featureIDs,predictions: predictions,
-            qualification: "Frozen known-perturbation response estimates for supplied held-out control donors. Log1p-CPM point estimates are not reclosed compositions or raw count libraries; implied CPM sums are reported. No treated query outcomes used. No calibrated intervals, single-cell distributions, unseen perturbation identity or causal/mechanistic claims." + (model.plan.responseFeatureIDs == nil ? "" : " Explicit panel: each source library is normalized over all its own measured features before projection; implied CPM is a panel subtotal. Feature identities and differing assay/context comparability require external evidence.") + (critical == nil ? "" : " Nominal pointwise intervals apply only to the mean-response baseline under independent identically distributed normal donor responses; the query control is treated as fixed. Constant-response variance is unavailable. These are future-donor intervals, not confidence intervals for the mean, simultaneous gene coverage or calibrated context-ridge uncertainty."))
+            qualification: "Frozen known-perturbation response estimates for supplied held-out control donors. Log1p-CPM point estimates are not reclosed compositions or raw count libraries; implied CPM sums are reported. No treated query outcomes used. No calibrated intervals, single-cell distributions, unseen perturbation identity or causal/mechanistic claims." + (model.plan.responseFeatureIDs == nil ? "" : " Explicit panel: each source library is normalized over all its own measured features before projection; implied CPM is a panel subtotal. Feature identities and differing assay/context comparability require external evidence.") + (model.negativeBinomial == nil ? "" : " The negativeBinomialEffect estimate applies identified native NB treatment effects; unavailable, boundary and failed features use an explicit no-change fallback and are listed by availableFeatureIndices. This remains a conditional molecular response estimate, not an outcome or causal prediction.") + (critical == nil ? "" : " Nominal pointwise intervals apply only to the mean-response baseline under independent identically distributed normal donor responses; the query control is treated as fixed. Constant-response variance is unavailable. These are future-donor intervals, not confidence intervals for the mean, simultaneous gene coverage or calibrated context-ridge uncertainty."))
     }
 }

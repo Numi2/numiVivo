@@ -70,9 +70,31 @@ import Testing
         let result=try VivoPerturbationAggregateBatch.evaluateFold(source,mapping: original.mapping,batch: batch,fold: fold)
         #expect(result.0.status=="failed" && result.0.trainingAggregate==nil)
         var json=try #require(JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(batch)) as? [String:Any])
+        #expect(json["responseModel"]==nil && json["negativeBinomialOptions"]==nil)
         json["useHeldOutTreated"]=true
         #expect(throws: (any Error).self) {
             try VivoCanonicalJSON.decode(VivoPerturbationAggregateBatchPlan.self,from: JSONSerialization.data(withJSONObject: json))
         }
+    }
+    @Test func optInNegativeBinomialBatchUsesSourceMetadata() throws {
+        let data=try SingleCellNBCohortTests.fixture(),bulk=try VivoSingleCellAnalysis.pseudobulk(data)
+        let groups=bulk.groups,heldOut=try #require(groups.last?.donorID)
+        let training=groups.indices.filter { groups[$0].donorID != heldOut }
+        let query=groups.indices.filter { groups[$0].donorID == heldOut && groups[$0].condition == "ctrl" }
+        let fold=VivoPerturbationAggregateFold(id: "nb-held-out",perturbationID: "nb-treatment",
+            controlCondition: "ctrl",treatmentCondition: "stim",cellGroup: "synthetic-population",
+            trainingGroupIndices: training,queryGroupIndices: query)
+        let mapping=VivoH5ADImportPlan(id: "nb-fixture",evidence: .synthetic,sourceDescription: "NB batch fixture",
+            countUnit: data.countUnit,matrixPath: "X",samples: data.samples,sampleColumn: "sample")
+        var options=VivoOmicsNBCohortOptions();options.trend = .mean
+        let batch=VivoPerturbationAggregateBatchPlan(sourceReport: try VivoFingerprint(bytes: Array(repeating: 0,count: 32)),
+            featureNamespace: "synthetic",provenance: "Synthetic numerical control, not biological qualification",
+            folds: [fold],responseModel: .negativeBinomial,negativeBinomialOptions: options)
+        let result=try VivoPerturbationAggregateBatch.evaluateFold(bulk,mapping: mapping,metadata: data.metadata,batch: batch,fold: fold)
+        #expect(result.0.status == "completed")
+        let model=try VivoCanonicalJSON.decode(VivoPerturbationModel.self,from: try #require(result.1))
+        #expect(model.negativeBinomial?.testedFeatureIndices.isEmpty == false)
+        let prediction=try VivoCanonicalJSON.decode(VivoPerturbationReport.self,from: try #require(result.2))
+        #expect(prediction.predictions.count == 1 && prediction.predictions[0].estimates.contains { $0.baseline == "negativeBinomialEffect" })
     }
 }
