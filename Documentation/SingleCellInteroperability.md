@@ -850,7 +850,11 @@ source-fingerprinted observation indices during native streamed pseudobulk
 aggregation. It retains the full input and maps every selected report row back
 to the original axis. The [Adamson author cohort](../Tools/Omics/PerturbationPrediction/Adamson/COHORT.md)
 verifies 50,440 cells and 781,977,660 UMIs against independent sparse aggregation;
-control definitions and predictive scoring remain pending.
+the primary paper and Table S1 define the two UPR controls, while the deposited
+`pBA580`/`pBA582` labels still lack an authoritative mapping to those constructs.
+A provisional pooled-control sensitivity run has scored 80 supported held targets,
+but authoritative control definitions and the frozen predictive score remain gated
+on that label mapping and the 94-versus-93 guide-roster reconciliation.
 
 ### GSE181897 count handoff and external prediction (2026-09-11)
 
