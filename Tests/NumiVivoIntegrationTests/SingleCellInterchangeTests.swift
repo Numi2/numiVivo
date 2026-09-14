@@ -23,6 +23,21 @@ import Testing
         }
     }
 
+    @Test func h5adDerivedPlansRejectInvalidMappingsBeforeSourceWork() throws {
+        let source = try VivoSingleCellExamples.pairedCounts()
+        let invalid = VivoH5ADImportPlan(id: source.id, evidence: source.evidence,
+            sourceDescription: source.sourceDescription, countUnit: source.countUnit,
+            matrixPath: "layers/counts/extra", samples: source.samples, sampleColumn: "sample")
+        let program = VivoSingleCellProgramDefinition(id: "fixture", organism: "human",
+            featureNamespace: "fixture-id", sourceURI: "urn:numivivo:fixture", sourceVersion: "1",
+            sourceDescription: "Numerical fixture only", members: [.init(featureID: source.features[0].id)])
+        let options = VivoSingleCellProgramOptions(definitions: [program])
+        #expect(throws: (any Error).self) { try VivoH5ADPseudobulkPlan(mapping: invalid).validate() }
+        #expect(throws: (any Error).self) { try VivoH5ADPCAPlan(mapping: invalid).validate() }
+        #expect(throws: (any Error).self) { try VivoH5ADProgramPlan(mapping: invalid, programs: options).validate() }
+        #expect(throws: (any Error).self) { try VivoH5ADPCAQueryPlan(mapping: invalid, featureNamespace: "fixture-id").validate() }
+    }
+
     @Test func gzipChecksumsMembersAndExpansionLimits() throws {
         let plain = Data("native compressed count fixture\n".utf8)
         let gzip = Data(base64Encoded: "H4sIAAAAAAAC/8tLLMksS1VIzs8tKEotLk5NATJL80oU0jIrSkqLUrkA65t8niAAAAA=")!

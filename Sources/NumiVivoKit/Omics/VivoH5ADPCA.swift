@@ -20,6 +20,7 @@ public struct VivoH5ADPCAPlan: Codable, Sendable, Equatable {
         if reduction.pca.retainProjectionCenters == nil { reduction.pca.retainProjectionCenters = true }
     }
     public func validate() throws {
+        try mapping.validate()
         guard schemaVersion == 1, reduction.pca.retainProjectionCenters == true,
               featureNamespace.map(vivoOmicsID) ?? true else {
             throw VivoOmicsError.invalid("standalone PCA schema or required projection centers")

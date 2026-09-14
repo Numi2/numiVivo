@@ -19,6 +19,7 @@ public struct VivoH5ADPCAQueryPlan: Codable, Sendable, Equatable {
         maximumProjectionUpdates = try c.decodeIfPresent(Int.self, forKey: .maximumProjectionUpdates) ?? 2_000_000_000
     }
     public func validate() throws {
+        try mapping.validate()
         guard schemaVersion == 1, vivoOmicsID(featureNamespace), mapping.groupColumn == nil,
               (1...20_000_000_000).contains(maximumProjectionUpdates) else {
             throw VivoOmicsError.invalid("PCA query schema, namespace, label mapping or work budget")

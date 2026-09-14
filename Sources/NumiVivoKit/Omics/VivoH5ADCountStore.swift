@@ -212,6 +212,7 @@ public enum VivoH5ADCountStore {
         return (metadata, quality, writer.entries, try writer.finish())
     }
     public static func publish(source: URL, plan: VivoH5ADImportPlan, implementation: VivoFingerprint, to destination: URL) throws -> VivoH5ADCountStoreReceipt {
+        try plan.validate()
         try requireNew(destination)
         let temp = try staging(destination.deletingLastPathComponent()); defer { try? FileManager.default.removeItem(at: temp) }
         let planData = try VivoCanonicalJSON.encode(plan)

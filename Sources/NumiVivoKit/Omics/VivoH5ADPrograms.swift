@@ -22,6 +22,7 @@ public struct VivoH5ADProgramPlan: Codable, Sendable, Equatable {
         normalizationTarget=try c.decodeIfPresent(Double.self,forKey: .normalizationTarget) ?? 10_000
     }
     public func validate() throws {
+        try mapping.validate()
         guard schemaVersion==1,normalizationTarget.isFinite,normalizationTarget>0 else {
             throw VivoOmicsError.invalid("standalone program schema or normalization")
         }

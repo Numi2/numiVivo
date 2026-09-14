@@ -49,6 +49,7 @@ public struct VivoH5ADPseudobulkPlan: Codable, Sendable, Equatable {
         contrasts=try c.decodeIfPresent([VivoOmicsExpressionContrast].self,forKey: .contrasts) ?? []
     }
     public func validate() throws {
+        try mapping.validate()
         guard schemaVersion == 1, contrasts.count <= 32, Set(contrasts.map(\.id)).count == contrasts.count else {
             throw VivoOmicsError.invalid("streamed pseudobulk plan schema or contrasts")
         }

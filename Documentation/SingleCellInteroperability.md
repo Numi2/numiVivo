@@ -117,6 +117,9 @@ The native owner validates this mapping before opening the HDF5 source: matrix
 locations are limited to `X`, `raw/X` or one named `layers/<name>` entry, and
 all metadata columns and declared samples must be explicit and internally
 consistent. Invalid mappings fail before source bytes are read.
+Every higher-level H5AD plan (streamed pseudobulk, PCA, program scoring, query
+projection and count-store creation) applies this same admission before taking
+its source snapshot.
 
 Supply every actual sample, with the study's actual replicate structure.
 `barcodeColumn` is optional; otherwise the observation index supplies barcodes.
