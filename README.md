@@ -36,6 +36,8 @@ promotion and does not change the biological-outcome boundary.
 
 The [SEQC technical bulk-RNA benchmark](Tools/Omics/Benchmarks/SEQC/README.md) now runs all six public Illumina RefSeq sites through native negative-binomial DE and compares the same counts with edgeR, limma-voom and DESeq2. All methods pass the preregistered descriptive measurement gate against 785 eligible independent TaqMan rows; this is technical reference-RNA evidence, not biological-donor or general outcome-prediction validation.
 
+The native [`genomic-vcf-plan` command](Documentation/Design/ALPHAGENOME_ATLAS.md#native-vcf-variant-foundation) now preserves an exact uncompressed VCF source hash, header, samples, INFO/FORMAT fields and multiallelic records, then emits an explicit GRCh38 primary-contig SNV projection for the Atlas request boundary. Unsupported assemblies, contigs and allele classes remain recorded as exclusions; this is variant ingestion and provenance evidence, not variant calling or phenotype prediction.
+
 The [translation-only ablation](Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) reduces annotation failures to 22/146 but fails a B-cell IFNa response comparison and leaves more donor scatter. Fewer failures do not establish adequate integration; no method is promoted.
 
 The [matched-control donor-shift experiment](Tools/Omics/Benchmarks/HIRISA/MatchedControlShift/README.md) estimates shifts from 403,449 control cells but still fails 34/146 annotation comparisons and one response contrast. Control-only shift estimation does not resolve the preservation gap.

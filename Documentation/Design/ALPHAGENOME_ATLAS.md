@@ -24,6 +24,34 @@ release path in this feature.
 
 ## Atlas workflow
 
+## Native VCF variant foundation
+
+The native `genomic-vcf-plan` command creates a new output directory from an
+explicit uncompressed VCF and a caller-supplied assembly/reference SHA-256:
+
+```sh
+swift run numivivo genomic-vcf-plan source.vcf \
+  --assembly GRCh38 \
+  --reference-sha256 SHA256_OF_REFERENCE_FASTA \
+  --output variant-plan
+```
+
+The output retains the exact source as `source.vcf`, a source-bound
+`variant-import.json`, and an `atlas-projection.json`. The reader validates VCF
+4.x headers, column/sample identity, one-based coordinates, uppercase REF/ALT
+syntax, multiallelic expansion, QUAL/FILTER/INFO fields and textual FORMAT/sample
+values. It does not call variants, infer ploidy or phasing, normalize indels,
+perform liftover, or infer somatic origin. The assembly and reference identity
+are explicit inputs; they are never guessed from a header URL.
+
+Only GRCh38 SNVs on primary `chr1`–`chr22`, `chrX` and `chrY` enter the current
+Atlas projection. Indels, symbolic/breakend alleles, other contigs and GRCh37
+records remain in a machine-readable exclusion list with their source line and
+stable candidate identity. The projection can be supplied to the existing Atlas
+request planner after selectors and the applicable usage terms are independently
+resolved. This is a genomics/provenance capability and adds no variant-effect,
+cell-state, tissue or clinical outcome claim.
+
 The Atlas bridge uses the official AlphaGenome Python SDK pinned to commit
 `aa6fc8f6faadcb8c910fa2b85b57386fbd5c7b5d`. NumiVivo archives the exact response
 rather than inventing a remote model/dataset version; the inspected API does not

@@ -883,8 +883,12 @@ The complete development objective remains open:
     site; native shrinkage lowers RMSE at all six sites. These are shared
     reference-RNA technical preparations, not biological donors. The benchmark
     does not establish FDR calibration, biological replication or outcome
-    prediction. Genomics/variants, proteomics, metabolomics, spatial imaging,
-    metabolic modeling and regulatory prediction remain open.
+    prediction. A new native [VCF variant import and Atlas projection](Design/ALPHAGENOME_ATLAS.md#native-vcf-variant-foundation)
+    preserves exact source bytes, sample/genotype text, INFO/FORMAT fields and
+    multiallelic records, with explicit exclusions for unsupported assembly,
+    contigs and allele classes. This establishes a bounded variant evidence
+    boundary; variant calling, regulatory validation, phenotype prediction,
+    proteomics, metabolomics, spatial imaging and metabolic modeling remain open.
 12. **Cross-scale biology:** variant → regulation → RNA/cell state → protein and
     molecular mechanism → reaction/kinetics → cellular phenotype → tissue
     prediction requires executable, independently qualified links at each boundary.

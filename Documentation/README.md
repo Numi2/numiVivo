@@ -7,6 +7,7 @@ Start with the [project overview](../README.md) for the scientific scope and fir
 | Task | Entry point |
 |---|---|
 | Determine which biological outcomes NumiVivo can predict from available inputs | [Prediction assessment, results and limits](BiologicalPrediction.md) |
+| Import a VCF and prepare an explicit variant evidence projection | [AlphaGenome Atlas and genomic evidence](Design/ALPHAGENOME_ATLAS.md#native-vcf-variant-foundation) |
 | Inspect the conditional Adamson target-prediction sensitivity result | [Provisional Adamson role sensitivity](AdamsonProvisionalRoleSensitivity.md) |
 | Import/export AnnData H5AD and continue the single-cell pipeline | [Single-cell interoperability and roadmap](SingleCellInteroperability.md) |
 | Preserve separate RNA/protein/ATAC feature spaces and export MuData | [Native multi-assay counts and CITE-seq](../Tools/Omics/Multimodal/README.md) |

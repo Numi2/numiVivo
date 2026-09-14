@@ -32,7 +32,8 @@ qualify selected Apple-GPU arithmetic, one cohort-scale distance path and a
 bounded CPU-oracle dispatch check; the
 [SEQC other-omics benchmark](../Tools/Omics/Benchmarks/SEQC/README.md) is a
 technical reference-RNA comparison; and the [AlphaGenome Atlas assessment](AlphaGenomeAtlas.md)
-retains an offline adapter contract. None supplies a validated general biological
+now has a native VCF import/projection boundary plus an offline adapter contract.
+None supplies a validated general biological
 outcome model, and live cross-scale coupling remains open. The separate [Arc
 Virtual Cell Challenge 2026 adapter](../Tools/Omics/Arc2026/README.md) now has
 15 portable and five native contract tests, but no trained predictor or released-

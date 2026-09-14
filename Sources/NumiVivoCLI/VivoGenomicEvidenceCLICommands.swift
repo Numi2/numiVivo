@@ -3,7 +3,7 @@ import NumiVivoKit
 
 struct VivoGenomicEvidenceCLICommands {
     static func handles(_ name: String?) -> Bool {
-        ["neoantigen-atlas-request", "neoantigen-splice-job", "neoantigen-evidence-import", "neoantigen-evidence-verify", "neoantigen-evidence-review", "neoantigen-evidence-example", "neoantigen-evidence-help"].contains(name ?? "")
+        ["genomic-vcf-plan", "neoantigen-atlas-request", "neoantigen-splice-job", "neoantigen-evidence-import", "neoantigen-evidence-verify", "neoantigen-evidence-review", "neoantigen-evidence-example", "neoantigen-evidence-help"].contains(name ?? "")
     }
     private struct Completion: Codable { var schema: String; var files: [String: String] }
     private func read(_ path: String, maximum: Int = 128 * 1024) throws -> Data {
@@ -19,7 +19,7 @@ struct VivoGenomicEvidenceCLICommands {
         var values: [String: String] = [:], index = args.startIndex
         while index < args.endIndex {
             let key = args[index]
-            guard ["--store", "--output", "--selectors", "--atlas-bundle", "--splice-bundle", "--receipt"].contains(key), values[key] == nil,
+            guard ["--store", "--output", "--selectors", "--atlas-bundle", "--splice-bundle", "--receipt", "--assembly", "--reference-sha256"].contains(key), values[key] == nil,
                   index + 1 < args.endIndex, !args[index + 1].isEmpty, args[index + 1] != "-", !args[index + 1].hasPrefix("--") else {
                 throw VivoGenomicEvidenceError.invalid("Unknown, duplicate or incomplete option.\n" + Self.help)
             }
@@ -31,10 +31,18 @@ struct VivoGenomicEvidenceCLICommands {
         guard required.isSubset(of: Set(options.keys)), Set(options.keys).isSubset(of: required.union(optional)) else { throw VivoGenomicEvidenceError.invalid(Self.help) }
     }
     private func destination(_ path: String, store: String) throws -> URL {
-        let url = URL(fileURLWithPath: path).standardizedFileURL.resolvingSymlinksInPath()
+        let url = try newDestination(path)
         let root = URL(fileURLWithPath: store).standardizedFileURL.resolvingSymlinksInPath().path
-        guard !FileManager.default.fileExists(atPath: url.path), url.path != root, !url.path.hasPrefix(root == "/" ? "/" : root + "/") else {
+        guard url.path != root, !url.path.hasPrefix(root == "/" ? "/" : root + "/") else {
             throw VivoGenomicEvidenceError.invalid("Output must be new and outside the artifact store.")
+        }
+        return url
+    }
+    private func newDestination(_ path: String) throws -> URL {
+        let url = URL(fileURLWithPath: path).standardizedFileURL.resolvingSymlinksInPath()
+        guard !path.isEmpty, path != "-", !FileManager.default.fileExists(atPath: url.path),
+              (try? FileManager.default.attributesOfItem(atPath: url.path)) == nil else {
+            throw VivoGenomicEvidenceError.invalid("Output must be a new directory.")
         }
         return url
     }
@@ -90,6 +98,22 @@ struct VivoGenomicEvidenceCLICommands {
                 try printJSON(["status": "synthetic-example-only", "open": output.appendingPathComponent("report.html").path]); return 0
             }
             switch command {
+            case "genomic-vcf-plan":
+                try check(opts, required: ["--assembly", "--reference-sha256", "--output"])
+                let output = try newDestination(opts["--output"]!)
+                let source = try read(arguments[1], maximum: VivoVCFReader.maximumDocumentBytes)
+                let document = try VivoVCFReader.parse(data: source, assembly: opts["--assembly"]!, referenceSHA256: opts["--reference-sha256"]!)
+                let projection = try VivoVCFReader.atlasProjection(document)
+                try VivoOmicsDirectoryExport.write([
+                    "source.vcf": source,
+                    "variant-import.json": try VivoCanonicalJSON.encode(document),
+                    "atlas-projection.json": try VivoCanonicalJSON.encode(projection)
+                ], to: output)
+                try printJSON(["status": projection.exclusions.isEmpty ? "all-atlas-eligible" : "imported-with-explicit-exclusions",
+                               "records": String(document.variants.count), "atlasEligible": String(projection.eligibleVariants.count),
+                               "excluded": String(projection.exclusions.count), "sourceSHA256": document.sourceSHA256,
+                               "open": output.appendingPathComponent("variant-import.json").path])
+                return 0
             case "neoantigen-atlas-request", "neoantigen-splice-job":
                 let atlas = command == "neoantigen-atlas-request"
                 try check(opts, required: atlas ? ["--store", "--output", "--selectors"] : ["--store", "--output"], optional: atlas ? ["--splice-bundle"] : [])
@@ -147,6 +171,7 @@ struct VivoGenomicEvidenceCLICommands {
     }
     static let help = """
     Genomic evidence extensions (public-reference research, not patient care):
+      genomic-vcf-plan <source.vcf> --assembly <GRCh37|GRCh38> --reference-sha256 <sha256> --output <new-directory>
       neoantigen-evidence-example --store <directory> --output <new-directory>
       neoantigen-atlas-request <parent-receipt.json> --store <directory> --selectors <selectors.json> --output <new-directory> [--splice-bundle <directory>]
       neoantigen-splice-job <parent-receipt.json> --store <directory> --output <new-directory>
@@ -158,6 +183,8 @@ struct VivoGenomicEvidenceCLICommands {
     Selectors contain requestedScorers and ontologyTerms, using exact captured SDK metadata names.
     External retrieval/execution adapters are in ReferenceAdapters/AlphaGenomeAtlas.
     No network requests are made by these native commands. Bundles require complete.json.
+    genomic-vcf-plan preserves exact source bytes and emits a bounded Atlas SNV projection;
+    it performs no liftover, variant calling, genotype interpretation or phenotype prediction.
     Use originating executable identities; reimport parent inputs after rebuilding.
     Exit 0: completed; 1: invalid input/I/O failure; 2: recorded Atlas query failures.
     The demonstration intentionally contains a failed query and invented predictions.
