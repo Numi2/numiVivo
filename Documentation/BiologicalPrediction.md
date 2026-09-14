@@ -380,7 +380,9 @@ response model, deconvolution, tissue function or variant-to-phenotype endpoint.
 
 The separate [`VivoQuantitativeH5MU` route](SingleCellInteroperability.md#quantitative-assay-interchange)
 now carries finite proteomics, metabolomics and spatial-imaging values with
-explicit units, missingness and measured-zero semantics. This expands the
+explicit units, missingness and measured-zero semantics. Its
+`VivoQuantitativeH5MUIO` bundle preserves the source and explicit plan while
+replaying the normalized export under a fingerprinted receipt. This expands the
 available evidence surface, but it does not add an assay-specific predictor,
 multi-omic fusion model or measured endpoint. These values therefore remain
 inputs for a future held-out analysis rather than biological-outcome evidence.

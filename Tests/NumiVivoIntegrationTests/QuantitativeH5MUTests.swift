@@ -113,4 +113,27 @@ import Testing
             #expect(try VivoQuantitativeH5MUImport.readSnapshot(url, plan: plan) == data)
         }
     }
+
+    @Test(.enabled(if: ProcessInfo.processInfo.environment["NUMIVIVO_TEST_HDF5"] == "1"))
+    func quantitativeH5MUBundleReplaysSourceAndRejectsTampering() throws {
+        let data = Self.fixture(), plan = Self.plan(for: data)
+        let source = FileManager.default.temporaryDirectory.appendingPathComponent("quantitative-source-" + UUID().uuidString + ".h5mu")
+        let bundle = FileManager.default.temporaryDirectory.appendingPathComponent("quantitative-bundle-" + UUID().uuidString)
+        defer {
+            try? FileManager.default.removeItem(at: source)
+            try? FileManager.default.removeItem(at: bundle)
+        }
+        try VivoQuantitativeH5MU.writeSnapshot(data, to: source)
+        let implementation = try VivoCanonicalJSON.fingerprint(Data("quantitative-h5mu-tests-v1".utf8))
+        let receipt = try VivoQuantitativeH5MUIO.importH5MU(source: source, plan: plan,
+                                                            implementation: implementation, to: bundle)
+        #expect(try VivoQuantitativeH5MUIO.verify(bundle, implementation: implementation) == receipt)
+
+        var planObject = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: bundle.appendingPathComponent("plan.json"))) as? [String: Any])
+        planObject["id"] = "tampered"
+        try JSONSerialization.data(withJSONObject: planObject, options: [.sortedKeys]).write(to: bundle.appendingPathComponent("plan.json"), options: .atomic)
+        #expect(throws: (any Error).self) {
+            try VivoQuantitativeH5MUIO.verify(bundle, implementation: implementation)
+        }
+    }
 }

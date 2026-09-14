@@ -807,6 +807,9 @@ The complete development objective remains open:
    `VivoQuantitativeH5MU` route carries finite proteomics, metabolomics and
    spatial-imaging values through native H5MU CSR export and explicit-plan
    import, preserving measured zeros, missing rows, units and spatial positions.
+   `VivoQuantitativeH5MUIO` adds a transactional bundle containing the original
+   source, plan, normalized H5MU, canonical dataset and implementation-bound
+   receipt; verification replays the source and checks all fingerprints.
    A fresh
    M4 Pro regression at the published revision passes 13 native multimodal tests;
    its [host and binary record](../Tools/Omics/Multimodal/evidence/2026-09-14-native-regression.json)
@@ -943,8 +946,10 @@ The complete development objective remains open:
     proteomics, metabolomics and spatial-imaging values with explicit missing
     versus measured-zero semantics on the common observation axis. Native
     `VivoQuantitativeH5MU` import/export adds bounded CSR output plus dense/CSC
-    numeric input under an explicit plan. Assay-specific transforms, joint
-    biological analysis and outcome validation remain open.
+    numeric input under an explicit plan. `VivoQuantitativeH5MUIO` packages the
+    source, plan, normalized H5MU and canonical dataset with an implementation-
+    bound receipt and source-replay verification. Assay-specific transforms,
+    joint biological analysis and outcome validation remain open.
 12. **Cross-scale biology:** variant → regulation → RNA/cell state → protein and
     molecular mechanism → reaction/kinetics → cellular phenotype → tissue
     prediction requires executable, independently qualified links at each boundary.
@@ -974,7 +979,12 @@ feature columns, units and matrix path. It accepts CSR, CSC and bounded dense
 numeric arrays; explicit zeros are retained, NaN dense entries are missing and
 infinite values are rejected. The route preserves the declared interchange
 semantics only. It does not normalize, impute, fit an assay model or infer a
-biological outcome.
+biological outcome. `VivoQuantitativeH5MUIO.importH5MU` packages the source and
+plan beside a normalized H5MU and canonical dataset, with a receipt binding
+their fingerprints to an implementation identity. `verify` re-reads the source,
+rebuilds the dataset and export, and rejects changed source, plan, dataset or
+implementation bytes.
+
 ## Source-bound aggregation cohorts
 
 [Cell selection](../Tools/Omics/H5AD/CELL_SELECTION.md) now applies explicit,

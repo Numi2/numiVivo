@@ -63,8 +63,12 @@ research-path gate.
 The shared `VivoQuantitativeAssayDataset` and `VivoQuantitativeH5MU` route add a
 bounded sparse real-valued container and native H5MU import/export for
 proteomics, metabolomics and spatial-imaging observations. They retain explicit
-zeros, missing entries, units and common sample/observation identity; they do
-not provide assay-specific transforms, joint inference or outcome validation.
+zeros, missing entries, units and common sample/observation identity. The
+`VivoQuantitativeH5MUIO` bundle stores the original source, explicit plan,
+normalized H5MU and canonical dataset under an implementation-bound receipt;
+verification re-reads the source and reconstructs the exported artifacts.
+These routes do not provide assay-specific transforms, joint inference or
+outcome validation.
 
 ## Molecular preparation and dynamics
 
