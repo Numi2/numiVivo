@@ -69,6 +69,9 @@ sgGuide_ID)`, and `Perturb-seq_Vector_ID`. It contains the four named
 non-targeting sequences, including the UPR controls NegCtrl-2 and NegCtrl-3,
 but no `pBA580`, `pBA582` or `pBA581` value. This closes the workbook
 availability question without closing the deposited-label-to-sequence mapping.
+The [retrieval manifest](evidence/2026-09-14-table-s1-retrieval/manifest.json)
+retains the request log and inventory metadata; the workbook remains external
+and is bound by its recorded SHA-256.
 
 Public GEO supplement directory listings succeeded and contain barcodes, guide
 assignments, gene identities and the count matrix; they expose no separate

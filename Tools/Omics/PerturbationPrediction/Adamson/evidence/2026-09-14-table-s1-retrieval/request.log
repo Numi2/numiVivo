@@ -1,0 +1,11 @@
+curl -fL --retry 1 --connect-timeout 10 --max-time 30 -A Mozilla/5.0 -o /tmp/numivivo-adamson-mmc1-20260914.xlsx https://ars.els-cdn.com/content/image/1-s2.0-S0092867416316609-mmc1.xlsx
+stdout:
+
+stderr:
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 48003  100 48003    0     0   176k      0 --:--:-- --:--:-- --:--:--  176k
+
+returncode: 0

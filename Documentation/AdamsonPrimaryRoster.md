@@ -8,6 +8,10 @@ It contains 102 data rows: 91 rows with a `Perturb-seq_Vector_ID`, 98 rows
 with a gene label (some labels cover more than one gene), and four explicit
 non-targeting sequences. Its columns are `Gene`, `Protospacer`,
 `Guide_ID (synonymous with sgGuide_ID)`, and `Perturb-seq_Vector_ID`.
+The [retrieval manifest](../Tools/Omics/PerturbationPrediction/Adamson/evidence/2026-09-14-table-s1-retrieval/manifest.json)
+and [inventory record](../Tools/Omics/PerturbationPrediction/Adamson/evidence/2026-09-14-table-s1-retrieval/table-s1.json)
+retain the request log and the bounded content check; the workbook itself is
+retained externally by this hash.
 
 The paper's methods make the UPR screen's control set explicit: the large
 UPR Perturb-seq experiment included **NegCtrl-2 and NegCtrl-3**. Their
