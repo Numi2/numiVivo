@@ -88,6 +88,30 @@ public enum VivoSingleCellH5AD {
             throw VivoOmicsError.invalid("H5AD output already exists")
         }
     }
+    /// Run an HDF5 consumer against an immutable, uncompressed view of an
+    /// H5AD source. External gzip is detected from the bytes, never a filename;
+    /// the compressed source remains the caller's fingerprinted authority. The
+    /// expanded view is private and removed as soon as the consumer returns.
+    static func withReadableSnapshot<T>(_ url: URL, limits: VivoOmicsLimits,
+                                        _ body: (URL) throws -> T) throws -> T {
+        let handle = try FileHandle(forReadingFrom: url)
+        let magic = try handle.read(upToCount: 2) ?? Data()
+        try handle.close()
+        guard magic.count == 2, magic[0] == 0x1f, magic[1] == 0x8b else {
+            return try body(url)
+        }
+        let compressed = try VivoSingleCellCampaignIO.readDocument(url, maximumBytes: limits.maximumInputBytes)
+        let decoded = try VivoOmicsSourceDecoder.decode(compressed, maximumExpandedBytes: limits.maximumInputBytes)
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-decoded-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false,
+                                                attributes: [.posixPermissions: 0o700])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let snapshot = directory.appendingPathComponent("source.h5ad")
+        try decoded.write(to: snapshot, options: .withoutOverwriting)
+        try Task.checkCancellation()
+        return try body(snapshot)
+    }
+
     public static func read(_ url: URL, plan: VivoH5ADImportPlan, limits: VivoOmicsLimits = .init()) throws -> VivoH5ADDocument {
         try limits.validate()
         try plan.validate()
@@ -130,6 +154,13 @@ public enum VivoSingleCellH5AD {
         onEntry: (Int,Int,UInt64) throws -> Void) throws -> String {
         try limits.validate()
         try plan.validate()
+        return try withReadableSnapshot(url, limits: limits) { readable in
+            try scanDecodedSnapshot(readable, plan: plan, limits: limits, onMetadata: onMetadata, onEntry: onEntry)
+        }
+    }
+    private static func scanDecodedSnapshot(_ url: URL, plan: VivoH5ADImportPlan, limits: VivoOmicsLimits,
+        onMetadata: (VivoSingleCellCountMetadata) throws -> Void,
+        onEntry: (Int,Int,UInt64) throws -> Void) throws -> String {
         return try VivoHDF5.lock.withLock {
             let h = try VivoHDF5(), file = try h.file(url.path)
             defer { h.close(file, "H5Fclose") }

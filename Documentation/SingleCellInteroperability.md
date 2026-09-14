@@ -2,8 +2,10 @@
 
 NumiVivo reads local H5AD through the native HDF5 library; import accepts both
 plain H5AD and externally gzip-wrapped H5AD while retaining the exact source
-bytes for provenance/export. These import/export and analysis commands do not
-require Python. The optional remote-source adapter
+bytes for provenance/export. Scan-based analysis commands (streamed
+pseudobulk, count-store, PCA, program scoring and reference queries) use the
+same bounded private decode boundary. These import/export and analysis commands
+do not require Python. The optional remote-source adapter
 described below uses Python/HDF5 to produce records for a separate native stream
 reader, and independent interoperability tests also use Python.
 Install HDF5 (`brew install hdf5` on macOS), or set `NUMIVIVO_HDF5_LIBRARY` to
@@ -13,6 +15,11 @@ because installed libraries may not be thread safe.
 The [native M4 gzip qualification](../Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-m4/README.md)
 builds and tests the direct import path with a gzip-wrapped H5AD, verifies the
 reconstructed CSR counts, and checks that the exact compressed source is retained.
+The [scan-path regression](../Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-scan/README.md)
+also publishes and verifies a gzip-wrapped H5AD through streamed pseudobulk,
+retaining the compressed source in the result bundle. Axis projection and
+annotation currently require an HDF5-readable (plain) source file because they
+operate on the complete source object rather than the count scan.
 
 ## Current outcome and scale evidence
 

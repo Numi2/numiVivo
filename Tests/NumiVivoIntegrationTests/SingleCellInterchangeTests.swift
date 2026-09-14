@@ -49,6 +49,28 @@ import Testing
         var corrupt = gzip; corrupt[corrupt.count - 8] ^= 1
         #expect(throws: (any Error).self) { try VivoOmicsSourceDecoder.decode(corrupt, maximumExpandedBytes: 1000) }
     }
+    @Test func gzipReadableSnapshotIsPrivateAndPlainSourcesStayInPlace() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-readable-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let plain = Data("native compressed count fixture\n".utf8)
+        let gzip = Data(base64Encoded: "H4sIAAAAAAAC/8tLLMksS1VIzs8tKEotLk5NATJL80oU0jIrSkqLUrkA65t8niAAAAA=")!
+        let plainURL = root.appendingPathComponent("plain.h5ad"), gzipURL = root.appendingPathComponent("wrapped.h5ad")
+        try plain.write(to: plainURL); try gzip.write(to: gzipURL)
+        let plainResult = try VivoSingleCellH5AD.withReadableSnapshot(plainURL, limits: .init()) { readable in
+            #expect(readable == plainURL)
+            return try Data(contentsOf: readable)
+        }
+        #expect(plainResult == plain)
+        var decodedURL: URL?
+        let gzipResult = try VivoSingleCellH5AD.withReadableSnapshot(gzipURL, limits: .init()) { readable in
+            decodedURL = readable
+            #expect(readable != gzipURL)
+            return try Data(contentsOf: readable)
+        }
+        #expect(gzipResult == plain)
+        if let decodedURL { #expect(!FileManager.default.fileExists(atPath: decodedURL.path)) }
+    }
     @Test func nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-mex-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
