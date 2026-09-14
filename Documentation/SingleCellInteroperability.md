@@ -17,9 +17,12 @@ builds and tests the direct import path with a gzip-wrapped H5AD, verifies the
 reconstructed CSR counts, and checks that the exact compressed source is retained.
 The [scan-path regression](../Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-scan/README.md)
 also publishes and verifies a gzip-wrapped H5AD through streamed pseudobulk,
-retaining the compressed source in the result bundle. Axis projection and
-annotation currently require an HDF5-readable (plain) source file because they
-operate on the complete source object rather than the count scan.
+retaining the compressed source in the result bundle. The [axis-projection
+regression](../Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-projection/README.md)
+extends the same private decode boundary to complete-object projection while
+retaining the compressed source in its result bundle. Annotation still requires
+an HDF5-readable (plain) source file because it stages and edits the complete
+source object.
 
 ## Current outcome and scale evidence
 

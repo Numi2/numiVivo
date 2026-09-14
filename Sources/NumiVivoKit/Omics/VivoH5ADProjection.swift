@@ -418,6 +418,11 @@ private final class VivoH5ADProjector {
 public enum VivoH5ADProjection {
     static func evaluate(_ source: URL,plan: VivoH5ADProjectionPlan,to output: URL) throws -> VivoH5ADProjectionReport {
         try plan.validate()
+        return try VivoSingleCellH5AD.withReadableSnapshot(source, limits: VivoH5ADPseudobulk.sourceLimits) {
+            try evaluateReadable($0, plan: plan, to: output)
+        }
+    }
+    private static func evaluateReadable(_ source: URL, plan: VivoH5ADProjectionPlan, to output: URL) throws -> VivoH5ADProjectionReport {
         return try VivoHDF5.lock.withLock {
             let h=try VivoHDF5(),input=try h.file(source.path);defer { h.close(input,"H5Fclose") }
             h.projectionMaximumOutputBytes=plan.maximumOutputBytes ?? 1_073_741_824
