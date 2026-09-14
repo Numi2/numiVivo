@@ -161,16 +161,20 @@ H5ADs. It tests complete phase preparation/pack/replay, non-400 cell counts,
 fractional counts, excessive depth, axis changes, missing targets, immutable output
 and altered prediction bytes. It does not use real outcomes or produce a score.
 
-Development in this increment executed 15 standard-library adapter tests and Swift
-syntax parsing. Full Apple type checking/HDF5 execution, the authored native tests,
-installation/execution of the official evaluator and scoring on Arc's released
-contexts were **not run**. There is no retained benchmark score or performance claim.
+The initial development increment executed 15 standard-library adapter tests and
+Swift syntax parsing. A subsequent physical M4 Pro regression at
+`308c0fc5071c216b6b179a639cf860f2d29d51a3` runs all five authored
+`VivoArc2026Tests`; its [native execution record](evidence/2026-09-14-native-regression/)
+retains the source, host, command and log. The ten-case synthetic H5AD CLI check
+remains separately recorded below. Installation/execution of the official evaluator
+and scoring on Arc's released contexts were **not run**. There is no retained
+benchmark score or performance claim.
 
 A portable recheck on 2026-09-14 passes all 15 adapter tests at source
 revision `785543fef5c45a705ddfbcb6bb2d5678595c93fb`; the [source-bound execution record](evidence/2026-09-14-adapter-tests/)
-retains the command, source hashes and log. This remains input/score-contract
-verification only: no predictor, released-context outcome score or biological
-qualification is present.
+retains the command, source hashes and log. These native and portable checks remain
+input/score-contract verification only: no predictor, released-context outcome
+score or biological qualification is present.
 
 ## Native execution evidence (2026-09-12)
 

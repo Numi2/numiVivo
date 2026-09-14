@@ -1,0 +1,25 @@
+{
+  "schema": "numivivo.org/arc2026-native-regression/v1",
+  "sourceCommit": "308c0fc5071c216b6b179a639cf860f2d29d51a3",
+  "command": [
+    "swift",
+    "test",
+    "--filter",
+    "VivoArc2026Tests"
+  ],
+  "result": "passed",
+  "testCount": 5,
+  "testSuite": "VivoArc2026Tests",
+  "host": "Mac.domain_not_set.invalid",
+  "machine": "arm64",
+  "os": "macOS-26.6-arm64-arm-64bit",
+  "log": {
+    "path": "native-arc2026.log.gz",
+    "bytes": 16815,
+    "sha256": "294da4f25b5981278a26ba48bcbd4e160e681ec40bae7368d909c28000413741",
+    "uncompressedBytes": 403615,
+    "uncompressedSHA256": "f01a900d0073220a916d27d0419bfe1da1508ed9ad8e20d8dfc92670b2648aa5"
+  },
+  "scope": "Native Swift contract regression only; no official evaluator, released Arc context score, predictor or biological qualification.",
+  "recordedUnix": 1789407316.028621
+}
