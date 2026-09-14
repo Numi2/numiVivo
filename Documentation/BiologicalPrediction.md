@@ -34,6 +34,14 @@ frozen 5% transfer target; HIRISA NB2 loses to the existing mean response in
 all 62 donors. This reused comparison strengthens software and conditional RNA
 evidence while leaving general biological-outcome prediction unestablished.
 
+The [Kang-HIRISA NB2 follow-up](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/NB2_CROSS_STUDY.md)
+then ran the opt-in count model on all 26 cross and within-study folds. The
+independent source-count scorer verifies 130 estimate vectors. HIRISA-trained
+NB2 improves Kang no-change RMSE by 2.98% but remains worse than the
+cross-study mean; Kang-trained NB2 is 0.56% worse than no change for HIRISA.
+Neither direction passes the fixed transfer comparison, so the result does not
+establish reliable context transfer or a general biological-outcome predictor.
+
 This assessment reviews the expression-prediction evidence and subsequent
 full-cohort scoring, clustering, decoder calibration, preparation transfer and
 annotation retention through 2026-09-14, with the retained Adamson experimental-role audit.
@@ -99,7 +107,7 @@ success nor a failure.
 | Preserve and analyze real counts | Full Parse ingestion and source replay pass; paired native DE and all six edgeR/limma/DESeq2 comparisons complete. Analysis peaks at 202.3 MiB with unchanged report bytes. | Other pipeline stages retain separate memory bounds; numerical agreement does not establish biological accuracy or false-discovery calibration. |
 | Preserve biology through integration | Complete HIRISA execution and coarse response checks pass. Native annotation retention fails 37/146 supported, sensitive comparisons, including 10/29 rare comparisons. | The rigid projection still fails 31/146; its [label breakdown](../Tools/Omics/Benchmarks/HIRISA/RigidProjection/Diagnosis/README.md) includes 7 B intermediate and 5 CD14 Mono failures. The [translation-only ablation](../Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) still fails 22/146 annotation comparisons and one coarse response contrast. The [matched-control shift](../Tools/Omics/Benchmarks/HIRISA/MatchedControlShift/README.md) also fails 34/146 and increases donor scatter above original PCA. Resolve preservation losses and validate independently; no candidate is promoted. |
 | Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. The separate Adamson role-sensitivity run is conditional on a pooled unresolved-control assumption: 80 supported held targets score 0.115722 mean RMSE versus 0.122101 for the all-single mean. | Independent biological contexts, target selection and replication; technical groups do not supply these. Resolve Adamson control identities and its 94-versus-93 roster before treating that result as an authoritative qualification. |
-| Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. The native NB2 response route improves over no-change by 0.35% (Kang) and 2.72% (HIRISA), so it does not meet the same target and HIRISA NB2 loses to its mean baseline in all donors. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
+| Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. The GSE181897 NB2 route improves over no-change by 0.35% (Kang) and 2.72% (HIRISA), below the target. In the separate Kang–HIRISA cross-study NB2 run, HIRISA → Kang improves no-change by 2.98% but loses to the cross-study mean, while Kang → HIRISA is 0.56% worse than no change. Neither NB2 direction passes. GSE226572 and the historical Kang–HIRISA ridge failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
 | Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
 | Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene fitting completes: nine eligible Kang limits and 185 HIRISA leaf limits remain. Training-only dispersions and manifests are verified for all 13 donor omissions; two 64-gene joint-fit pilots pass. Two complete Kang omissions have numerically verified, control-only predictions and improved development RMSE; the complete 13-fold development evaluation passes the pooled criterion but fails HIRISA: all five HIRISA donors lose to training mean (75.84% higher pooled RMSE). All eight Kang donors improve against both baselines. Parameter uncertainty and new biological calibration remain open. |
 | Predict tissue, disease or treatment outcomes | No validated RNA/variant-to-endpoint chain is established by these experiments. | Explicit measured endpoints, models linking the quantities and held-out outcome validation. |
@@ -596,10 +604,10 @@ effect. All twelve direction/lineage outcomes and every fold remain reported.
 The [Kang–HIRISA experiment](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
 uses all eight Kang and five HIRISA B-cell donor pairs, with 11,884 exact, unique
 source-symbol matches. Each library retains all its own measured genes in the
-normalization denominator. Native fits/replays and independent reconstruction
-pass for all 26 cross/within folds and all 104 prediction vectors; repeated
-scoring is identical. Source-qualified pseudobulk transport is explicitly
-distinguished from re-running raw single-cell ingestion.
+normalization denominator. The historical log-linear fits/replays and independent
+reconstruction pass for all 26 cross/within folds and all 104 prediction vectors;
+source-qualified pseudobulk transport is explicitly distinguished from re-running
+raw single-cell ingestion.
 
 | Training → query | No change | Cross mean | Cross ridge | Within ridge |
 | --- | ---: | ---: | ---: | ---: |
@@ -619,6 +627,14 @@ a new cross-study test on reused observations, not untouched external validation
 Matching gene symbols also does not prove a common reference annotation release
 or assay equivalence. The negative result strengthens the present limit on
 generalizing the donor-context predictor.
+
+The [NB2 follow-up](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/NB2_CROSS_STUDY.md)
+runs the opt-in paired-donor count model on the same 26 folds. All 130 estimate
+vectors pass native verification and independent source-count scoring. HIRISA →
+Kang NB2 has RMSE 1.184337 versus 1.220670 for no change and 1.135572 for the
+cross-study mean; Kang → HIRISA NB2 has RMSE 0.343493 versus 0.341591 for no
+change. Thus NB2 remains a conditional molecular estimate and fails the fixed
+transfer comparison in both directions.
 
 ### Mean-response intervals: measured coverage is context dependent
 

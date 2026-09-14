@@ -1,0 +1,170 @@
+[
+  {
+    "donors": 8,
+    "mean": {
+      "contextRidge": {
+        "meanIdentifiedMAE": 0.7590176928439171,
+        "meanIdentifiedRMSE": 1.185823690834062,
+        "meanMAE": 0.7492019207224017,
+        "meanRMSE": 1.1786736430931202
+      },
+      "meanResponse": {
+        "meanIdentifiedMAE": 0.7105028632141465,
+        "meanIdentifiedRMSE": 1.1422615489457117,
+        "meanMAE": 0.7009167573476794,
+        "meanRMSE": 1.1355722426833348
+      },
+      "medianResponse": {
+        "meanIdentifiedMAE": 0.7103059454319441,
+        "meanIdentifiedRMSE": 1.1422531899147854,
+        "meanMAE": 0.7006995745407528,
+        "meanRMSE": 1.1355727851711241
+      },
+      "negativeBinomialEffect": {
+        "meanIdentifiedMAE": 0.7280858472499037,
+        "meanIdentifiedRMSE": 1.1915858245077693,
+        "meanMAE": 0.7181471633422746,
+        "meanRMSE": 1.1843370217235711
+      },
+      "noChange": {
+        "meanIdentifiedMAE": 0.753046848144057,
+        "meanIdentifiedRMSE": 1.2283771564263357,
+        "meanMAE": 0.7426691833220153,
+        "meanRMSE": 1.2206698681569532
+      }
+    },
+    "mode": "cross",
+    "negativeBinomialBetterThanMean": 0,
+    "negativeBinomialBetterThanNoChange": 8,
+    "negativeBinomialGainPercent": 2.97646787073067,
+    "negativeBinomialIdentifiedMeanMAE": 0.7280858472499037,
+    "negativeBinomialIdentifiedMeanRMSE": 1.1915858245077693,
+    "queryStudy": "Kang"
+  },
+  {
+    "donors": 8,
+    "mean": {
+      "contextRidge": {
+        "meanIdentifiedMAE": 0.7710484058158493,
+        "meanIdentifiedRMSE": 1.0988808370912713,
+        "meanMAE": 0.7241824762063386,
+        "meanRMSE": 1.1326249193186966
+      },
+      "meanResponse": {
+        "meanIdentifiedMAE": 0.8139385360133955,
+        "meanIdentifiedRMSE": 1.1472942961163823,
+        "meanMAE": 0.74574463322328,
+        "meanRMSE": 1.1560714417973987
+      },
+      "medianResponse": {
+        "meanIdentifiedMAE": 0.7768637328193664,
+        "meanIdentifiedRMSE": 1.1233887466553052,
+        "meanMAE": 0.710674631526208,
+        "meanRMSE": 1.155630905142833
+      },
+      "negativeBinomialEffect": {
+        "meanIdentifiedMAE": 0.7831991161931783,
+        "meanIdentifiedRMSE": 1.1615721748179066,
+        "meanMAE": 0.7152020426512348,
+        "meanRMSE": 1.187742986194027
+      },
+      "noChange": {
+        "meanIdentifiedMAE": 0.8511817029115186,
+        "meanIdentifiedRMSE": 1.2515223324122076,
+        "meanMAE": 0.7426691833220153,
+        "meanRMSE": 1.2206698681569532
+      }
+    },
+    "mode": "within",
+    "negativeBinomialBetterThanMean": 3,
+    "negativeBinomialBetterThanNoChange": 8,
+    "negativeBinomialGainPercent": 2.697443659573695,
+    "negativeBinomialIdentifiedMeanMAE": 0.7831991161931783,
+    "negativeBinomialIdentifiedMeanRMSE": 1.1615721748179066,
+    "queryStudy": "Kang"
+  },
+  {
+    "donors": 5,
+    "mean": {
+      "contextRidge": {
+        "meanIdentifiedMAE": 0.4003345907532365,
+        "meanIdentifiedRMSE": 0.5467750320174286,
+        "meanMAE": 0.43869197524907105,
+        "meanRMSE": 0.5968285864894513
+      },
+      "meanResponse": {
+        "meanIdentifiedMAE": 0.424874585093828,
+        "meanIdentifiedRMSE": 0.5796507129918776,
+        "meanMAE": 0.3819255890899157,
+        "meanRMSE": 0.521068396865095
+      },
+      "medianResponse": {
+        "meanIdentifiedMAE": 0.34336114360251635,
+        "meanIdentifiedRMSE": 0.5091561130695436,
+        "meanMAE": 0.30022750871394194,
+        "meanRMSE": 0.4533880344490041
+      },
+      "negativeBinomialEffect": {
+        "meanIdentifiedMAE": 0.2793522431342136,
+        "meanIdentifiedRMSE": 0.40181062879836915,
+        "meanMAE": 0.2346902385253263,
+        "meanRMSE": 0.3434928376080707
+      },
+      "noChange": {
+        "meanIdentifiedMAE": 0.19068359110178243,
+        "meanIdentifiedRMSE": 0.39764928944894345,
+        "meanMAE": 0.1996525416266142,
+        "meanRMSE": 0.3415907155488717
+      }
+    },
+    "mode": "cross",
+    "negativeBinomialBetterThanMean": 5,
+    "negativeBinomialBetterThanNoChange": 2,
+    "negativeBinomialGainPercent": -0.5568424352935475,
+    "negativeBinomialIdentifiedMeanMAE": 0.2793522431342136,
+    "negativeBinomialIdentifiedMeanRMSE": 0.40181062879836915,
+    "queryStudy": "HIRISA"
+  },
+  {
+    "donors": 5,
+    "mean": {
+      "contextRidge": {
+        "meanIdentifiedMAE": 0.06714128484444894,
+        "meanIdentifiedRMSE": 0.10825082668876178,
+        "meanMAE": 0.06644594656555805,
+        "meanRMSE": 0.10754894311650513
+      },
+      "meanResponse": {
+        "meanIdentifiedMAE": 0.0668130138220251,
+        "meanIdentifiedRMSE": 0.10673803586473556,
+        "meanMAE": 0.06610907112592856,
+        "meanRMSE": 0.10603927638500003
+      },
+      "medianResponse": {
+        "meanIdentifiedMAE": 0.06764947340011192,
+        "meanIdentifiedRMSE": 0.10843029909871241,
+        "meanMAE": 0.06692284223548618,
+        "meanRMSE": 0.10770397578015523
+      },
+      "negativeBinomialEffect": {
+        "meanIdentifiedMAE": 0.1174181056022862,
+        "meanIdentifiedRMSE": 0.15032271261105964,
+        "meanMAE": 0.11585568383878415,
+        "meanRMSE": 0.14917669093895683
+      },
+      "noChange": {
+        "meanIdentifiedMAE": 0.20272557193537133,
+        "meanIdentifiedRMSE": 0.34457127052195735,
+        "meanMAE": 0.1996525416266142,
+        "meanRMSE": 0.3415907155488717
+      }
+    },
+    "mode": "within",
+    "negativeBinomialBetterThanMean": 0,
+    "negativeBinomialBetterThanNoChange": 5,
+    "negativeBinomialGainPercent": 56.3288215549834,
+    "negativeBinomialIdentifiedMeanMAE": 0.1174181056022862,
+    "negativeBinomialIdentifiedMeanRMSE": 0.15032271261105964,
+    "queryStudy": "HIRISA"
+  }
+]

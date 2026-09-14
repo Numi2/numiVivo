@@ -1,9 +1,13 @@
 # Kang–HIRISA IFN-beta transfer
 
-**Biological primary comparison: FAIL in both directions. Numerical execution:
-PASS for all 26 folds and all 104 prediction vectors.** This experiment tests the
-frozen donor-response baselines across two previously inspected studies. It adds
-an actual cross-study prediction result, not untouched external validation.
+**Biological primary comparison: FAIL in both directions for the historical
+log-linear context-ridge endpoint and the opt-in NB2 endpoint. Numerical
+execution: PASS for all 26 folds and all 130 NB2 prediction vectors.** This
+experiment tests frozen donor-response baselines across two previously inspected
+studies. It adds an actual cross-study prediction result, not untouched external
+validation. The historical four-baseline result and its 104 vectors remain
+retained below; the [NB2 follow-up](NB2_CROSS_STUDY.md) adds a fifth,
+count-based response estimate.
 
 All 2,651 Kang B cells and 119,513 HIRISA enriched-Bcell cells contribute to the
 admitted cohorts: eight and five paired donors respectively. The fixed panel has
@@ -32,6 +36,26 @@ no-change for all eight donors; in HIRISA it is worse than no-change for all fiv
 The simple HIRISA mean response has some transfer signal toward Kang, but neither
 direction qualifies the context-ridge primary comparison. No model is tuned or
 promoted from these scores. Full donor/method errors and correlations are archived.
+
+## Opt-in NB2 follow-up
+
+The native negative-binomial route was then run on the same frozen folds from
+the updated executable. It fits paired-donor NB2 count effects and keeps
+per-feature dispersion, standard-error and status diagnostics. The independent
+[NB2 report](NB2_CROSS_STUDY.md) records the complete source-count scorer and
+compact evidence.
+
+| Training → query | No change | Cross mean | Cross ridge | NB2 | NB2 vs no change | NB2 better no change / mean |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| HIRISA → Kang | 1.220670 | 1.135572 | 1.178674 | 1.184337 | +2.98% | 8 / 0 |
+| Kang → HIRISA | 0.341591 | 0.521068 | 0.596829 | 0.343493 | −0.56% | 2 / 5 |
+
+NB2 therefore still fails the fixed transfer comparison in both directions:
+the HIRISA-trained estimate remains worse than the cross-study mean, while the
+Kang-trained estimate is slightly worse than no change. All 26 fits, model
+verifications, predictions and prediction verifications pass, but this is
+conditional molecular-response evidence on reused studies and does not qualify
+general biological outcome prediction.
 
 ## What this comparison means
 
@@ -68,13 +92,20 @@ attempts lacked the Testing framework/plugin paths; `test.sh` records the workin
 physical-Xcode invocation. These are retained software failures, not failed
 biological fits or reasons to change the prediction protocol.
 
-All 26 native fits, model verifications, predictions and prediction verifications
-completed, plus one exact repeated prediction: **105 successful commands**.
+The historical log-linear run completed all 26 native fits, model verifications,
+predictions and prediction verifications, plus one exact repeated prediction:
+**105 successful commands** for its four baselines and 104 estimate vectors.
 Five Swift tests pass, including full-denominator behavior, feature reordering,
 missing/duplicate/empty panel rejection and legacy plan encoding. Eight additional
 actual CLI regression commands pass their declared success/rejection outcomes.
 The default 18,082-gene HIRISA fit has exactly the historical numerical model and
 all four prediction vectors; only transport identities differ.
+
+The separate NB2 replay uses the updated executable and the same frozen inputs:
+all 26 folds and 130 estimate vectors pass native verification. The independent
+source-count scorer reconstructs the model moments and every prediction
+transformation with a maximum model difference of `4.30e-13`; its full result
+and hashes are in [NB2_CROSS_STUDY.md](NB2_CROSS_STUDY.md).
 
 Independent NumPy 2.5.3 / SciPy 1.18.1 / scikit-learn 1.9.0 reconstruction verifies
 all native training count vectors, feature selection, moments, coefficients and
@@ -109,6 +140,18 @@ NUMIVIVO_HDF5_LIBRARY=/path/to/libhdf5.dylib python run.py \
   --inputs /new/inputs --binary /new/runtime/numivivo-omics --out /new/native
 python score.py --inputs /new/inputs --native /new/native --out /new/score
 ```
+
+The NB2 follow-up uses the same frozen inputs but the opt-in runner and
+dependency-free scorer:
+
+```sh
+NUMIVIVO_HDF5_LIBRARY=/path/to/libhdf5.dylib python run_nb2.py --inputs /new/inputs --binary /new/runtime/numivivo-omics --out /new/nb2-native
+python score_nb2.py --inputs /new/inputs --native /new/nb2-native --out /new/nb2-score
+```
+
+The NB2 scorer uses only the Python standard library. It independently reads
+the frozen NPZ source counts and verifies every training sparse row, model
+moment and held-out prediction before producing its summary.
 
 Use the scripts in this directory and the repository-relative build/test paths
 from the checkout root as appropriate. Python preparation requires AnnData,

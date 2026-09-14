@@ -72,6 +72,14 @@ before outcome inspection. Do not select a winner per inspected study or change
 the required baselines. Full raw joint-shard archival remains incomplete; the
 context-kernel and shrinkage experiments retain complete declared archives.
 
+The [Kang-HIRISA NB2 follow-up](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/NB2_CROSS_STUDY.md)
+now runs the opt-in paired-donor count model on all 26 cross and within-study
+folds. Native execution and independent source-count scoring pass all 130
+estimate vectors. HIRISA → Kang gains 2.98% over no change but loses to the
+cross-study mean; Kang → HIRISA is 0.56% worse than no change. The result
+strengthens the implementation evidence without closing context transfer or
+general biological-outcome prediction.
+
 Integration still requires resolving sensitive marker/program and rare-cell
 preservation losses. The [full-HIRISA rigid projection](../Tools/Omics/Benchmarks/HIRISA/RigidProjection/README.md) now tests all original cells with unchanged diagnostics: 31/146 annotation failures remain, including 9/29 rare failures. Within-donor isometry does not repair cross-donor preservation; the method is not promoted. The [source design audit](../Tools/Omics/Reduction/IntegrationDesign/README.md)
 now verifies full-atlas donor/batch crossing, subset rank deficiencies, and exact

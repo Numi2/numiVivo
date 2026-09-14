@@ -82,12 +82,19 @@ transfer target; HIRISA NB2 loses to its mean-response baseline in all 62
 donors. The result supports a bounded RNA-response estimate, not reliable
 prediction of a general biological outcome.
 
+The [Kang-HIRISA NB2 cross-study follow-up](Tools/Omics/PerturbationPrediction/CrossStudyIFNB/NB2_CROSS_STUDY.md)
+verifies all 26 cross and within-study folds and independently scores 130
+count-based estimate vectors. HIRISA → Kang improves no-change RMSE by 2.98%
+but loses to the cross-study mean; Kang → HIRISA is 0.56% worse than no change.
+Neither direction qualifies reliable context transfer or biological-outcome
+prediction.
+
 | Requested outcome | Decision from the available evidence |
 | --- | --- |
 | Average RNA response with matched training and untreated query measurements | **Supported as a conditional research estimate.** Performance depends on the treatment and population; retain no-change and training-mean baselines. |
 | RNA response to an unseen gene target with training perturbations, controls and gene annotations | **Limited validation.** Fixed GO prediction improves mean RMSE by 1.41–2.12% across five Replogle technical groups, but loses to the mean in 37/150 target/group folds; these are not independent biological replications. |
 | Exposure-dependent RNA response | **Development result.** Duration mean improves RMSE by 24.83% over the matched time-invariant mean in three donor holdouts; independent validation remains open. |
-| RNA response in another study | **Unreliable transfer.** HIRISA-trained mean passes the GSE181897 target, but Kang-trained mean fails. The completed Parse context test is 20.93% worse than training mean and 32.14% worse than no change; reliable uncertainty remains unestablished. |
+| RNA response in another study | **Unreliable transfer.** HIRISA-trained mean passes the GSE181897 target, but Kang-trained mean fails. The completed Parse context test is 20.93% worse than training mean and 32.14% worse than no change. The Kang-HIRISA NB2 follow-up improves no change by 2.98% in one direction but loses to the cross-study mean, and is 0.56% worse than no change in the reverse direction; reliable transfer and uncertainty remain unestablished. |
 | Molecular effects of a DNA substitution | **External hypothesis source.** AlphaGenome Atlas can contribute variant evidence; its results do not qualify a NumiVivo phenotype prediction. |
 | Individual-cell behavior, tissue function, disease progression or treatment benefit | **Not established.** These endpoints need their own outcome models and experimental validation. |
 
@@ -159,6 +166,13 @@ fails the primary comparison in both transfer directions and is worse than the
 cross-study training mean for all thirteen donors. The studies differ in health
 status, stimulation time, preparation and assay; their gene alignment does not
 establish reliable biological-context transfer.
+
+The opt-in [NB2 follow-up](Tools/Omics/PerturbationPrediction/CrossStudyIFNB/NB2_CROSS_STUDY.md)
+adds a native count model to those same folds. It improves Kang no-change RMSE
+by 2.98% when trained on HIRISA but remains worse than the cross-study mean;
+the reverse direction is 0.56% worse than no change. Independent source-count
+scoring passes all 130 vectors, while the biological transfer conclusion remains
+negative in both directions.
 
 The [complete external PBMC duration-transfer experiment](Tools/Omics/PerturbationPrediction/GSE226572/README.md)
 now checks all 24 GSE226572 libraries and 126,633 cells admitted by frozen initial

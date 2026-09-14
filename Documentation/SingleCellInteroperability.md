@@ -679,12 +679,16 @@ The complete development objective remains open:
    scoring is identical. This separately collected K562/UPR experiment shares
    investigators and earlier target selection; it does not supply independent
    laboratory, temporal-knowledge or new-tissue validation.
-   The [Kang–HIRISA cross-study comparison](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
+   The [Kang-HIRISA cross-study comparison](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/README.md)
    now completes 26 cross/within donor folds over 11,884 exact shared symbols.
    An explicit native panel preserves full source-library denominators. Numerical
-   checks pass for all 104 vectors, but ridge fails both directional primary
-   comparisons and is worse than cross mean for all thirteen donors. These reused
-   studies expose a combined context-transfer failure, not prospective validation.
+   checks pass for all 104 historical log-linear vectors, but ridge fails both
+   directional primary comparisons and is worse than cross mean for all thirteen
+   donors. The opt-in [NB2 follow-up](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/NB2_CROSS_STUDY.md)
+   adds 130 independently scored count-based vectors: HIRISA → Kang gains 2.98%
+   over no change but loses to cross mean, while Kang → HIRISA is 0.56% worse
+   than no change. These reused studies expose a combined context-transfer
+   failure, not prospective validation.
    Optional [normal-model donor-response intervals](../Tools/Omics/PerturbationPrediction/Intervals/README.md)
    now pass all 26 native folds and 104 independent bound-array checks, retaining
    every prior point vector. Nominal 95% treated-expression coverage ranges from
@@ -728,6 +732,11 @@ The complete development objective remains open:
    imputed. This is a conditional molecular-response implementation result;
    real-cohort unseen-target, causal, mechanistic, uncertainty and phenotype
    qualification remain open. Legacy plans and log-linear outputs are unchanged.
+   The [Kang-HIRISA NB2 follow-up](../Tools/Omics/PerturbationPrediction/CrossStudyIFNB/NB2_CROSS_STUDY.md)
+   completes all 26 cross/within folds and independently scores 130 estimate
+   vectors from frozen source counts. HIRISA → Kang gains 2.98% over no change
+   but loses to the cross-study mean; Kang → HIRISA is 0.56% worse than no
+   change. Neither direction qualifies context transfer.
    Bayesian/mechanistic integration, reliable unseen-target gene prediction, unseen
    cell/tissue contexts and single-cell response distributions remain open.
 8. **Multimodal:** the [native multi-assay core and 10x CITE-seq path](../Tools/Omics/Multimodal/README.md)

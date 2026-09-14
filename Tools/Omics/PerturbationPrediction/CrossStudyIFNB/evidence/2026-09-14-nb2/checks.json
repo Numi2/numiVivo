@@ -1,0 +1,275 @@
+{
+  "checks": [
+    {
+      "donor": "Kang:patient_101",
+      "fold": "cross-HIRISA-to-Kang-patient_101",
+      "mode": "cross",
+      "modelMaximumDifference": 1.509903313490213e-14,
+      "modelSHA256": "f0bb90ce3cd17cf0a4a9a6a34d3d72d245913732ce74c418a004cdfda8d95267",
+      "queryStudy": "Kang",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "Kang:patient_101",
+      "fold": "within-Kang-to-Kang-patient_101",
+      "mode": "within",
+      "modelMaximumDifference": 3.7289615839597445e-13,
+      "modelSHA256": "0810028d2108c3d9a6f0c25b704473421a16cf78fea95793f596146a18a664aa",
+      "queryStudy": "Kang",
+      "testedFeatures": 4770,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "Kang:patient_1015",
+      "fold": "cross-HIRISA-to-Kang-patient_1015",
+      "mode": "cross",
+      "modelMaximumDifference": 1.509903313490213e-14,
+      "modelSHA256": "f1ddba9d2a547a8f1e34074c13ea0c020d469c3485f561588b1aaaa6a60cca19",
+      "queryStudy": "Kang",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "Kang:patient_1015",
+      "fold": "within-Kang-to-Kang-patient_1015",
+      "mode": "within",
+      "modelMaximumDifference": 1.0480505352461478e-13,
+      "modelSHA256": "5278dc38eda1c68b30e9f10d2f831bd0e742810d496a1ac80737a895ebacd19a",
+      "queryStudy": "Kang",
+      "testedFeatures": 4686,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "Kang:patient_1016",
+      "fold": "cross-HIRISA-to-Kang-patient_1016",
+      "mode": "cross",
+      "modelMaximumDifference": 1.509903313490213e-14,
+      "modelSHA256": "e8ee31c96b0535bf9ef0d2115ec19a79f53ed47733825b72bca85110cea13dc1",
+      "queryStudy": "Kang",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "Kang:patient_1016",
+      "fold": "within-Kang-to-Kang-patient_1016",
+      "mode": "within",
+      "modelMaximumDifference": 4.2982284398362935e-13,
+      "modelSHA256": "d16693665cc57240c01173446d88230087ee2d19a7041f3557da329ee5d1aac1",
+      "queryStudy": "Kang",
+      "testedFeatures": 4753,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "Kang:patient_1039",
+      "fold": "cross-HIRISA-to-Kang-patient_1039",
+      "mode": "cross",
+      "modelMaximumDifference": 1.509903313490213e-14,
+      "modelSHA256": "800ae41bccb6acd1454612ace23e03fa0045c7f956e7b08c977e26176fff29e0",
+      "queryStudy": "Kang",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "Kang:patient_1039",
+      "fold": "within-Kang-to-Kang-patient_1039",
+      "mode": "within",
+      "modelMaximumDifference": 9.547918011776346e-14,
+      "modelSHA256": "bc019a5df2ea64b11cc9becd2c04c373930c68dc4fd03206e75cfadbced18096",
+      "queryStudy": "Kang",
+      "testedFeatures": 5416,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "Kang:patient_107",
+      "fold": "cross-HIRISA-to-Kang-patient_107",
+      "mode": "cross",
+      "modelMaximumDifference": 1.509903313490213e-14,
+      "modelSHA256": "c0883aed806e8e57e03df0242dc51cf7f53fc2323b976726a37c24f8e6415614",
+      "queryStudy": "Kang",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "Kang:patient_107",
+      "fold": "within-Kang-to-Kang-patient_107",
+      "mode": "within",
+      "modelMaximumDifference": 1.5831780331154732e-13,
+      "modelSHA256": "c20fa461596b18932882d9a486bc81c4b8912d361e6e30785ec211ec27463ff0",
+      "queryStudy": "Kang",
+      "testedFeatures": 5175,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "Kang:patient_1244",
+      "fold": "cross-HIRISA-to-Kang-patient_1244",
+      "mode": "cross",
+      "modelMaximumDifference": 1.509903313490213e-14,
+      "modelSHA256": "d6130387e63790f762dedaacf073eb2053b6a3be1821a31580da1babfefaed11",
+      "queryStudy": "Kang",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "Kang:patient_1244",
+      "fold": "within-Kang-to-Kang-patient_1244",
+      "mode": "within",
+      "modelMaximumDifference": 6.150635556423367e-14,
+      "modelSHA256": "59b44a50ec65b13d010d9489ce72df3d1372c8ddd0f77677a158bb77168fbf49",
+      "queryStudy": "Kang",
+      "testedFeatures": 4774,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "Kang:patient_1256",
+      "fold": "cross-HIRISA-to-Kang-patient_1256",
+      "mode": "cross",
+      "modelMaximumDifference": 1.509903313490213e-14,
+      "modelSHA256": "eebd5231da0ae86954aabf5145315afcfdfca96e96ca88fc9c689ab2d7f00359",
+      "queryStudy": "Kang",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "Kang:patient_1256",
+      "fold": "within-Kang-to-Kang-patient_1256",
+      "mode": "within",
+      "modelMaximumDifference": 3.7969627442180354e-14,
+      "modelSHA256": "ffdbe5714586ae9f24de03774b13eb5630d6dad6871edf009e86cb0076ee3398",
+      "queryStudy": "Kang",
+      "testedFeatures": 4702,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "Kang:patient_1488",
+      "fold": "cross-HIRISA-to-Kang-patient_1488",
+      "mode": "cross",
+      "modelMaximumDifference": 1.509903313490213e-14,
+      "modelSHA256": "4f11790241e9a4dcf47c0ed77f420814b66652d9906f1e9fc069d8ba825aad84",
+      "queryStudy": "Kang",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "Kang:patient_1488",
+      "fold": "within-Kang-to-Kang-patient_1488",
+      "mode": "within",
+      "modelMaximumDifference": 2.786659791809143e-13,
+      "modelSHA256": "f6dbefbcb6b0efd01721424a113a27a0cbe2117dff97272d2cef800ef0023ea5",
+      "queryStudy": "Kang",
+      "testedFeatures": 4700,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "HIRISA:2616BW",
+      "fold": "cross-Kang-to-HIRISA-2616BW",
+      "mode": "cross",
+      "modelMaximumDifference": 1.936228954946273e-13,
+      "modelSHA256": "fd0fcaa300ffedfe598e0474b51cf5e399f80a6a7b3509103bc57802aee662c1",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 4696,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "HIRISA:2616BW",
+      "fold": "within-HIRISA-to-HIRISA-2616BW",
+      "mode": "within",
+      "modelMaximumDifference": 1.7763568394002505e-15,
+      "modelSHA256": "b9fe7fd94adfea0e96ecd13fe8325991bbae8cb08713693a47691bb7d30fd5a5",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 11707,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "HIRISA:3283BW",
+      "fold": "cross-Kang-to-HIRISA-3283BW",
+      "mode": "cross",
+      "modelMaximumDifference": 1.936228954946273e-13,
+      "modelSHA256": "e56f7f935935afd4253c8d66204c661557b6296e6946af655d3b3d9d82611dd7",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 4696,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "HIRISA:3283BW",
+      "fold": "within-HIRISA-to-HIRISA-3283BW",
+      "mode": "within",
+      "modelMaximumDifference": 1.7763568394002505e-15,
+      "modelSHA256": "63718b043f40425e64e60ffd73daa60e54d09989a234eec085fe7c8a9c894714",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "HIRISA:3491BW",
+      "fold": "cross-Kang-to-HIRISA-3491BW",
+      "mode": "cross",
+      "modelMaximumDifference": 1.936228954946273e-13,
+      "modelSHA256": "39b4cb0d6bc5d45571866cd8f727e19ae35bbdd31ee3875312b0be22e637797a",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 4696,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "HIRISA:3491BW",
+      "fold": "within-HIRISA-to-HIRISA-3491BW",
+      "mode": "within",
+      "modelMaximumDifference": 1.7763568394002505e-15,
+      "modelSHA256": "44f2b2a7b81008bc400823cf0227ee1d1b18e585c87bbbfbca5d3cb34f727794",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 11657,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "HIRISA:3955BW",
+      "fold": "cross-Kang-to-HIRISA-3955BW",
+      "mode": "cross",
+      "modelMaximumDifference": 1.936228954946273e-13,
+      "modelSHA256": "317bbbd29272d33fed259d047b4f877bee97de0b694eb365c47edaf65a06f802",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 4696,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "HIRISA:3955BW",
+      "fold": "within-HIRISA-to-HIRISA-3955BW",
+      "mode": "within",
+      "modelMaximumDifference": 1.7763568394002505e-15,
+      "modelSHA256": "8aee0767eb3ca1690d3d2215aee7241a7d14069e709b78d1caf4e0b93ac2a467",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 11652,
+      "trainingStudy": "HIRISA"
+    },
+    {
+      "donor": "HIRISA:6811BW",
+      "fold": "cross-Kang-to-HIRISA-6811BW",
+      "mode": "cross",
+      "modelMaximumDifference": 1.936228954946273e-13,
+      "modelSHA256": "4556a5caae43a12e6d2acf5f1f2382b2d9a90673cdb32879f4557b1caf0ed9e6",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 4696,
+      "trainingStudy": "Kang"
+    },
+    {
+      "donor": "HIRISA:6811BW",
+      "fold": "within-HIRISA-to-HIRISA-6811BW",
+      "mode": "within",
+      "modelMaximumDifference": 1.7763568394002505e-15,
+      "modelSHA256": "97fc16200b05cef50070e41fa2865b0e0615f9699b47e10ceaa16a0411dc9bbb",
+      "queryStudy": "HIRISA",
+      "testedFeatures": 11675,
+      "trainingStudy": "HIRISA"
+    }
+  ],
+  "estimateVectors": 130,
+  "folds": 26,
+  "panelFeatures": 11884,
+  "predictionFreezeSHA256": "3eb80ac012a19fb53546faf835d2971bece4b15c098e501fe107ce6c7685d39f",
+  "predictions": 26,
+  "sourceCountsSHA256": {
+    "HIRISA": "39c07d0e4e1b95861306907f5c4c5c6a8058dbcd0cbf0cc5f3d004e42871cf82",
+    "Kang": "727ec9365497597d6cfb3aecc1ac832c1ea4f78fa439aa4cdcdff089593f0fe4"
+  },
+  "sourceInputFreezeSHA256": "3fde88150541b518f6bbd0e69c87f6d7fa35bafb7877b23703f9163cbbce8c5f",
+  "status": "passed-independent-source-npz-scoring"
+}

@@ -1,0 +1,1213 @@
+[
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_101/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_101/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_101/model"
+    ],
+    "elapsedSeconds": 25.047942876815796,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_101/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_101/model"
+    ],
+    "elapsedSeconds": 24.751579999923706,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_101/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_101/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_101/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_101/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_101/prediction"
+    ],
+    "elapsedSeconds": 25.537891149520874,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_101/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_101/prediction"
+    ],
+    "elapsedSeconds": 28.40872597694397,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_101/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_101/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_101/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_101/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_101/repeat"
+    ],
+    "elapsedSeconds": 28.131164073944092,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_101/repeat.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_101/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_101/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_101/model"
+    ],
+    "elapsedSeconds": 21.27747416496277,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_101/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_101/model"
+    ],
+    "elapsedSeconds": 19.049426078796387,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_101/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_101/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_101/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_101/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_101/prediction"
+    ],
+    "elapsedSeconds": 18.786025047302246,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_101/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_101/prediction"
+    ],
+    "elapsedSeconds": 18.727673768997192,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_101/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1015/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1015/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1015/model"
+    ],
+    "elapsedSeconds": 25.610507011413574,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1015/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1015/model"
+    ],
+    "elapsedSeconds": 25.615521669387817,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1015/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1015/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1015/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1015/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1015/prediction"
+    ],
+    "elapsedSeconds": 25.74264097213745,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1015/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1015/prediction"
+    ],
+    "elapsedSeconds": 25.77839684486389,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1015/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1015/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1015/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1015/model"
+    ],
+    "elapsedSeconds": 18.44347095489502,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1015/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1015/model"
+    ],
+    "elapsedSeconds": 18.316869020462036,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1015/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1015/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1015/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1015/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1015/prediction"
+    ],
+    "elapsedSeconds": 18.472147941589355,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1015/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1015/prediction"
+    ],
+    "elapsedSeconds": 18.35131001472473,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1015/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1016/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1016/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1016/model"
+    ],
+    "elapsedSeconds": 25.796159029006958,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1016/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1016/model"
+    ],
+    "elapsedSeconds": 25.672532081604004,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1016/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1016/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1016/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1016/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1016/prediction"
+    ],
+    "elapsedSeconds": 25.850918769836426,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1016/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1016/prediction"
+    ],
+    "elapsedSeconds": 25.86406707763672,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1016/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1016/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1016/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1016/model"
+    ],
+    "elapsedSeconds": 18.655709981918335,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1016/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1016/model"
+    ],
+    "elapsedSeconds": 18.650594234466553,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1016/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1016/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1016/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1016/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1016/prediction"
+    ],
+    "elapsedSeconds": 18.74705982208252,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1016/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1016/prediction"
+    ],
+    "elapsedSeconds": 18.727998971939087,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1016/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1039/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1039/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1039/model"
+    ],
+    "elapsedSeconds": 25.644081830978394,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1039/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1039/model"
+    ],
+    "elapsedSeconds": 25.849744081497192,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1039/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1039/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1039/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1039/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1039/prediction"
+    ],
+    "elapsedSeconds": 25.851670026779175,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1039/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1039/prediction"
+    ],
+    "elapsedSeconds": 25.903218269348145,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1039/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1039/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1039/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1039/model"
+    ],
+    "elapsedSeconds": 20.96109700202942,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1039/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1039/model"
+    ],
+    "elapsedSeconds": 20.907020092010498,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1039/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1039/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1039/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1039/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1039/prediction"
+    ],
+    "elapsedSeconds": 21.081740856170654,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1039/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1039/prediction"
+    ],
+    "elapsedSeconds": 20.982226848602295,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1039/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_107/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_107/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_107/model"
+    ],
+    "elapsedSeconds": 25.769131898880005,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_107/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_107/model"
+    ],
+    "elapsedSeconds": 25.768985986709595,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_107/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_107/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_107/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_107/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_107/prediction"
+    ],
+    "elapsedSeconds": 25.84743595123291,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_107/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_107/prediction"
+    ],
+    "elapsedSeconds": 26.02986216545105,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_107/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_107/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_107/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_107/model"
+    ],
+    "elapsedSeconds": 20.252470016479492,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_107/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_107/model"
+    ],
+    "elapsedSeconds": 20.29821014404297,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_107/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_107/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_107/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_107/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_107/prediction"
+    ],
+    "elapsedSeconds": 20.294875860214233,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_107/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_107/prediction"
+    ],
+    "elapsedSeconds": 20.369046926498413,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_107/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1244/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1244/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1244/model"
+    ],
+    "elapsedSeconds": 25.885114192962646,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1244/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1244/model"
+    ],
+    "elapsedSeconds": 25.882357835769653,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1244/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1244/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1244/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1244/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1244/prediction"
+    ],
+    "elapsedSeconds": 25.85024905204773,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1244/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1244/prediction"
+    ],
+    "elapsedSeconds": 25.95131492614746,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1244/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1244/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1244/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1244/model"
+    ],
+    "elapsedSeconds": 18.905447006225586,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1244/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1244/model"
+    ],
+    "elapsedSeconds": 18.89694833755493,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1244/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1244/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1244/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1244/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1244/prediction"
+    ],
+    "elapsedSeconds": 18.846580028533936,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1244/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1244/prediction"
+    ],
+    "elapsedSeconds": 18.868144989013672,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1244/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1256/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1256/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1256/model"
+    ],
+    "elapsedSeconds": 25.890363931655884,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1256/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1256/model"
+    ],
+    "elapsedSeconds": 25.887831687927246,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1256/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1256/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1256/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1256/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1256/prediction"
+    ],
+    "elapsedSeconds": 25.939162969589233,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1256/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1256/prediction"
+    ],
+    "elapsedSeconds": 25.914159059524536,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1256/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1256/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1256/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1256/model"
+    ],
+    "elapsedSeconds": 18.630404233932495,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1256/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1256/model"
+    ],
+    "elapsedSeconds": 18.58030414581299,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1256/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1256/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1256/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1256/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1256/prediction"
+    ],
+    "elapsedSeconds": 18.710270166397095,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1256/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1256/prediction"
+    ],
+    "elapsedSeconds": 18.75137424468994,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1256/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1488/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1488/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1488/model"
+    ],
+    "elapsedSeconds": 25.85329794883728,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1488/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1488/model"
+    ],
+    "elapsedSeconds": 25.810234785079956,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1488/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1488/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-HIRISA-to-Kang-patient_1488/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1488/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1488/prediction"
+    ],
+    "elapsedSeconds": 26.480686902999878,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1488/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-HIRISA-to-Kang-patient_1488/prediction"
+    ],
+    "elapsedSeconds": 29.141025066375732,
+    "exitCode": 0,
+    "log": "cross-HIRISA-to-Kang-patient_1488/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1488/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1488/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1488/model"
+    ],
+    "elapsedSeconds": 19.143935203552246,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1488/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1488/model"
+    ],
+    "elapsedSeconds": 18.675724029541016,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1488/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1488/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-Kang-to-Kang-patient_1488/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1488/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1488/prediction"
+    ],
+    "elapsedSeconds": 18.79780602455139,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1488/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-Kang-to-Kang-patient_1488/prediction"
+    ],
+    "elapsedSeconds": 18.726023197174072,
+    "exitCode": 0,
+    "log": "within-Kang-to-Kang-patient_1488/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-2616BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-2616BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-2616BW/model"
+    ],
+    "elapsedSeconds": 24.075232982635498,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-2616BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-2616BW/model"
+    ],
+    "elapsedSeconds": 23.999968767166138,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-2616BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-2616BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-2616BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-2616BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-2616BW/prediction"
+    ],
+    "elapsedSeconds": 23.976606845855713,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-2616BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-2616BW/prediction"
+    ],
+    "elapsedSeconds": 24.11000108718872,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-2616BW/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-2616BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-2616BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-2616BW/model"
+    ],
+    "elapsedSeconds": 19.420865058898926,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-2616BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-2616BW/model"
+    ],
+    "elapsedSeconds": 19.406567811965942,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-2616BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-2616BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-2616BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-2616BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-2616BW/prediction"
+    ],
+    "elapsedSeconds": 19.52430009841919,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-2616BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-2616BW/prediction"
+    ],
+    "elapsedSeconds": 19.51128077507019,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-2616BW/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-3283BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3283BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3283BW/model"
+    ],
+    "elapsedSeconds": 24.006693124771118,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3283BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3283BW/model"
+    ],
+    "elapsedSeconds": 24.117126941680908,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3283BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-3283BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-3283BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3283BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3283BW/prediction"
+    ],
+    "elapsedSeconds": 27.03339695930481,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3283BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3283BW/prediction"
+    ],
+    "elapsedSeconds": 24.82879376411438,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3283BW/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-3283BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3283BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3283BW/model"
+    ],
+    "elapsedSeconds": 18.85297417640686,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3283BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3283BW/model"
+    ],
+    "elapsedSeconds": 18.84905171394348,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3283BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-3283BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-3283BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3283BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3283BW/prediction"
+    ],
+    "elapsedSeconds": 18.889248847961426,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3283BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3283BW/prediction"
+    ],
+    "elapsedSeconds": 19.167850971221924,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3283BW/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-3491BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3491BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3491BW/model"
+    ],
+    "elapsedSeconds": 24.067331075668335,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3491BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3491BW/model"
+    ],
+    "elapsedSeconds": 23.98047375679016,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3491BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-3491BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-3491BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3491BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3491BW/prediction"
+    ],
+    "elapsedSeconds": 24.0802800655365,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3491BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3491BW/prediction"
+    ],
+    "elapsedSeconds": 24.111265659332275,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3491BW/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-3491BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3491BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3491BW/model"
+    ],
+    "elapsedSeconds": 19.205746173858643,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3491BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3491BW/model"
+    ],
+    "elapsedSeconds": 18.90094304084778,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3491BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-3491BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-3491BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3491BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3491BW/prediction"
+    ],
+    "elapsedSeconds": 18.9907169342041,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3491BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3491BW/prediction"
+    ],
+    "elapsedSeconds": 18.83643388748169,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3491BW/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-3955BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3955BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3955BW/model"
+    ],
+    "elapsedSeconds": 24.05364203453064,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3955BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3955BW/model"
+    ],
+    "elapsedSeconds": 24.05065608024597,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3955BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-3955BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-3955BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3955BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3955BW/prediction"
+    ],
+    "elapsedSeconds": 24.182490825653076,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3955BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-3955BW/prediction"
+    ],
+    "elapsedSeconds": 26.477256059646606,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-3955BW/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-3955BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3955BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3955BW/model"
+    ],
+    "elapsedSeconds": 20.2498140335083,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3955BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3955BW/model"
+    ],
+    "elapsedSeconds": 18.822408199310303,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3955BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-3955BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-3955BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3955BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3955BW/prediction"
+    ],
+    "elapsedSeconds": 18.979387998580933,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3955BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-3955BW/prediction"
+    ],
+    "elapsedSeconds": 18.852466106414795,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-3955BW/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-6811BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-6811BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-6811BW/model"
+    ],
+    "elapsedSeconds": 24.20290780067444,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-6811BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-6811BW/model"
+    ],
+    "elapsedSeconds": 24.185898065567017,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-6811BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-6811BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/cross-Kang-to-HIRISA-6811BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-6811BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-6811BW/prediction"
+    ],
+    "elapsedSeconds": 24.125000953674316,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-6811BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/cross-Kang-to-HIRISA-6811BW/prediction"
+    ],
+    "elapsedSeconds": 24.137391805648804,
+    "exitCode": 0,
+    "log": "cross-Kang-to-HIRISA-6811BW/verify-prediction.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-fit",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-6811BW/training.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-6811BW/training-nb.json",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-6811BW/model"
+    ],
+    "elapsedSeconds": 19.12763285636902,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-6811BW/fit.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-6811BW/model"
+    ],
+    "elapsedSeconds": 18.969298124313354,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-6811BW/verify-model.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-predict",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-6811BW/query.h5ad",
+      "--plan",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/inputs/within-HIRISA-to-HIRISA-6811BW/query.json",
+      "--reference",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-6811BW/model",
+      "--output",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-6811BW/prediction"
+    ],
+    "elapsedSeconds": 19.008888006210327,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-6811BW/predict.log"
+  },
+  {
+    "arguments": [
+      "singlecell-perturbation-prediction-verify",
+      "/Users/n/numivivo-cross-study-ifnb-20260911/nb2-8e534a11/within-HIRISA-to-HIRISA-6811BW/prediction"
+    ],
+    "elapsedSeconds": 18.83366298675537,
+    "exitCode": 0,
+    "log": "within-HIRISA-to-HIRISA-6811BW/verify-prediction.log"
+  }
+]
