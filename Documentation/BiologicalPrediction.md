@@ -378,6 +378,13 @@ matches independent readers and the earlier qualified interchange product.
 These measured spatial inputs do not themselves supply a validated spatial
 response model, deconvolution, tissue function or variant-to-phenotype endpoint.
 
+The separate [`VivoQuantitativeH5MU` route](SingleCellInteroperability.md#quantitative-assay-interchange)
+now carries finite proteomics, metabolomics and spatial-imaging values with
+explicit units, missingness and measured-zero semantics. This expands the
+available evidence surface, but it does not add an assay-specific predictor,
+multi-omic fusion model or measured endpoint. These values therefore remain
+inputs for a future held-out analysis rather than biological-outcome evidence.
+
 The [native balanced reference classifier](../Tools/Omics/ReferenceMapping/Logistic/README.md)
 now predicts candidate source labels for all 8,569 Baron query cells, reproducing
 the previous external classifier. Macro-F1 improves over kNN in every donor,
@@ -425,6 +432,7 @@ support before a new annotation-transfer qualification.
 | Can the IFN-beta response transfer between Kang and HIRISA? | Paired counts from the other study, query-donor control counts and an explicit shared-gene mapping, preserving each library's full measured-feature denominator. | All 26 cross/within folds completed over 11,884 matched genes. Cross ridge fails both directional primary comparisons and is worse than cross mean for all 13 donors. This is a combined health, duration, preparation and assay shift on reused studies. |
 | What will happen in a new tissue, species, disease state or patient? | Would require a validated transfer model and measured outcomes in that destination context. | No qualifying result in this evidence set. Existing point estimates cannot be promoted to those outcomes. |
 | Can a DNA variant predict a cellular or tissue phenotype? | Would require assembly/allele-resolved regulatory evidence and validated connections through RNA, proteins, mechanisms and phenotype. | [AlphaGenome integration work](AlphaGenomeAtlas.md) provides a direction and separate evidence interface; a validated end-to-end phenotype predictor is not established. |
+| Can proteomic, metabolomic or spatial-imaging values predict an outcome? | Requires declared assay units, sample/observation identity, a model linking those values to the requested endpoint and held-out measured outcomes. | Native quantitative JSON and H5MU interchange now preserves these inputs, including missing values and measured zeros; no assay-specific outcome model or validation is available. |
 
 The [AlphaGenome Atlas announcement](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
 describes precomputed molecular-effect predictions for roughly nine billion
