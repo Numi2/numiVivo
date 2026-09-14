@@ -374,6 +374,13 @@ support before a new annotation-transfer qualification.
 | What will happen in a new tissue, species, disease state or patient? | Would require a validated transfer model and measured outcomes in that destination context. | No qualifying result in this evidence set. Existing point estimates cannot be promoted to those outcomes. |
 | Can a DNA variant predict a cellular or tissue phenotype? | Would require assembly/allele-resolved regulatory evidence and validated connections through RNA, proteins, mechanisms and phenotype. | [AlphaGenome integration work](AlphaGenomeAtlas.md) provides a direction and separate evidence interface; a validated end-to-end phenotype predictor is not established. |
 
+The [AlphaGenome Atlas announcement](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
+describes precomputed molecular-effect predictions for roughly nine billion
+single-nucleotide variants and an AlphaGenome Variant Impact (AVI) score. Those
+outputs can supply external variant hypotheses to a NumiVivo review, but they do
+not measure a NumiVivo phenotype. Allele-resolved RNA, protein, mechanistic and
+phenotype links still require independent data and held-out validation.
+
 The expression outputs are compositional pseudobulk point estimates, not absolute
 molecule counts or individual-cell response distributions. Negative predicted
 log-expression is clipped to zero; implied CPM totals are retained rather than

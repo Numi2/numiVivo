@@ -75,6 +75,13 @@ The [native multigene context model](Tools/Omics/PerturbationPrediction/StudyCon
 | Molecular effects of a DNA substitution | **External hypothesis source.** AlphaGenome Atlas can contribute variant evidence; its results do not qualify a NumiVivo phenotype prediction. |
 | Individual-cell behavior, tissue function, disease progression or treatment benefit | **Not established.** These endpoints need their own outcome models and experimental validation. |
 
+The [AlphaGenome Atlas announcement](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
+describes precomputed molecular-effect predictions for roughly nine billion
+single-nucleotide variants and an AlphaGenome Variant Impact (AVI) score. NumiVivo
+can treat those variant-level outputs as external hypotheses; an allele-resolved
+RNA, protein, mechanism and phenotype chain still needs independent measurement
+and held-out validation.
+
 Successful count ingestion, numerical replay and large-cohort processing establish
 that information can be processed correctly. They do not establish that an
 unmeasured biological outcome can be predicted accurately. The
