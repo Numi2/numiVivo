@@ -899,7 +899,12 @@ The complete development objective remains open:
     sources compile and all eight offline contract tests pass at `bfafd4bb`;
     the [retained run](../ReferenceAdapters/AlphaGenomeAtlas/evidence/2026-09-14-adapter-tests/)
     contains the source hashes and test log. RNA/ATAC integration, live service
-    qualification and downstream biological coupling remain open.
+    qualification and downstream biological coupling remain open. The native
+    [cross-scale evidence contract](Design/CROSS_SCALE_EVIDENCE.md) now owns
+    the ordered boundaries and refuses an end-to-end research outcome unless
+    every transition has source/model/validation fingerprints and held-out
+    observations. Its focused tests cover qualified, hypothesis-only, missing
+    and out-of-order links; no current graph passes the complete-path gate.
 ## Source-bound aggregation cohorts
 
 [Cell selection](../Tools/Omics/H5AD/CELL_SELECTION.md) now applies explicit,

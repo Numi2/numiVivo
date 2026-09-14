@@ -40,6 +40,13 @@ Virtual Cell Challenge 2026 adapter](../Tools/Omics/Arc2026/README.md) now has
 context outcome score; it therefore remains benchmark-conformance evidence rather
 than biological-outcome validation.
 
+The native [cross-scale evidence contract](Design/CROSS_SCALE_EVIDENCE.md)
+now validates ordered variant → regulation → RNA/cell state → protein →
+mechanism → kinetics → phenotype → tissue boundaries, source/model/validation
+fingerprints and held-out-observation requirements. It reports incomplete and
+hypothesis-only paths explicitly; no current graph satisfies the complete
+research-path gate.
+
 ## Molecular preparation and dynamics
 
 | Capability | Implemented source | Important boundary |

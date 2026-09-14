@@ -38,6 +38,12 @@ The [SEQC technical bulk-RNA benchmark](Tools/Omics/Benchmarks/SEQC/README.md) n
 
 The native [`genomic-vcf-plan` command](Documentation/Design/ALPHAGENOME_ATLAS.md#native-vcf-variant-foundation) now preserves an exact uncompressed VCF source hash, header, samples, INFO/FORMAT fields and multiallelic records, then emits an explicit GRCh38 primary-contig SNV projection for the Atlas request boundary. Unsupported assemblies, contigs and allele classes remain recorded as exclusions; this is variant ingestion and provenance evidence, not variant calling or phenotype prediction.
 
+The [cross-scale evidence contract](Documentation/Design/CROSS_SCALE_EVIDENCE.md)
+now keeps the variant → regulation → RNA/cell state → protein → mechanism →
+kinetics → phenotype → tissue path explicit. It requires source, model,
+validation and held-out evidence for every boundary, and reports incomplete or
+hypothesis-only paths without converting them into outcome claims.
+
 The [translation-only ablation](Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) reduces annotation failures to 22/146 but fails a B-cell IFNa response comparison and leaves more donor scatter. Fewer failures do not establish adequate integration; no method is promoted.
 
 The [matched-control donor-shift experiment](Tools/Omics/Benchmarks/HIRISA/MatchedControlShift/README.md) estimates shifts from 403,449 control cells but still fails 34/146 annotation comparisons and one response contrast. Control-only shift estimation does not resolve the preservation gap.
