@@ -10,6 +10,10 @@ Install HDF5 (`brew install hdf5` on macOS), or set `NUMIVIVO_HDF5_LIBRARY` to
 its shared library. Other workflows do not require HDF5. HDF5 calls are serialized
 because installed libraries may not be thread safe.
 
+The [native M4 gzip qualification](../Tools/Omics/H5AD/Import/Gzip/evidence/2026-09-14-m4/README.md)
+builds and tests the direct import path with a gzip-wrapped H5AD, verifies the
+reconstructed CSR counts, and checks that the exact compressed source is retained.
+
 ## Current outcome and scale evidence
 
 The [biological prediction assessment](BiologicalPrediction.md) states what can

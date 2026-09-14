@@ -1,0 +1,44 @@
+{
+  "binary": {
+    "path": "/Users/n/numivivo-h5ad-gzip-edf-build/arm64-apple-macosx/debug/numivivo",
+    "sha256": "97654f2708eb95af7a9f2b371bf41f3c0c844666d4468d4e5a99de2dcdeb6d75"
+  },
+  "cli": {
+    "counts": [
+      4,
+      5,
+      6
+    ],
+    "datasetShape": [
+      2,
+      2
+    ],
+    "externalGzipWrapper": "passed",
+    "import": "passed",
+    "sourceBytesRetainedExactly": true,
+    "sourceSha256": "7399744e0fd62b1e8eee294c1d50da6f48c0553437ce9d9fa7a88fbdee686141",
+    "uncompressedBytes": 18289,
+    "wrappedBytes": 2777,
+    "writer": "passed"
+  },
+  "date": "2026-09-14",
+  "focusedTests": {
+    "command": "swift test --build-path /Users/n/numivivo-h5ad-gzip-edf-build --filter SingleCellInterchangeTests",
+    "failed": 0,
+    "passed": 6
+  },
+  "hdf5": {
+    "libraryPath": "/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib",
+    "sha256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e",
+    "version": "2.2.0"
+  },
+  "host": {
+    "build": "25G72",
+    "model": "Apple M4 Pro",
+    "os": "macOS 26.6",
+    "swift": "Apple Swift 6.3.3"
+  },
+  "qualification": "bounded external-gzip handling for direct H5AD count-projection import; no biological outcome claim",
+  "schema": "numivivo.org/h5ad-gzip-import-qualification/v1",
+  "sourceCommit": "edf8407ead6b1af1c0c8037af1c86d8397227943"
+}

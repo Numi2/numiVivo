@@ -1,0 +1,16 @@
+$ swift build --build-path /Users/n/numivivo-h5ad-gzip-edf-build
+PASS (fresh native build; existing deprecation warnings only)
+$ swift test --build-path /Users/n/numivivo-h5ad-gzip-edf-build --filter SingleCellInterchangeTests
+PASS: 6 tests
+$ numivivo singlecell-h5ad-write dataset.json --output native.h5ad
+PASS: written-native-count-anndata
+$ python3 gzip(native.h5ad -> native.h5ad.gz, mtime=0)
+PASS: 18,289 uncompressed bytes; 2,777 wrapped bytes
+$ numivivo singlecell-h5ad-import native.h5ad.gz --plan mapping.json --output imported
+PASS: imported-count-projection-with-original-anndata
+$ verify original.h5ad bytes and dataset.json
+PASS: exact_original_bytes=true; shape=2x2; counts=[4,5,6]
+
+Preflight (retained): without NUMIVIVO_HDF5_LIBRARY, the isolated shell returned
+`invalid("H5AD requires native HDF5; install hdf5 or set NUMIVIVO_HDF5_LIBRARY")`.
+The qualified rerun set NUMIVIVO_HDF5_LIBRARY to the existing host library.
