@@ -43,12 +43,13 @@ selected labels, not proof that a particular guide is erroneous. No guide is
 removed, merged or assigned a role to force agreement. The frozen cohort,
 annotations and [prediction protocol](PROTOCOL.md) remain unchanged.
 
-The next required source is Table S1 (protospacer sequences, including its
-experiment-specific annotations), or original-author UPR analysis records
-explicitly mapping these construct IDs to controls and targets. Reconcile each
-selected guide with that roster and retain any unresolved or excluded identities
-with reasons. The separate author demo's three-guide epistasis controls do not
-establish controls for this pooled UPR screen.
+Table S1 has now been retrieved and inspected, but it does not contain the
+deposited `pBA580`, `pBA582` or `pBA581` identifiers. The remaining required
+source is therefore an original-author UPR analysis record, or another primary
+construct record, explicitly mapping those identifiers to controls and targets.
+Reconcile each selected guide with that record and retain any unresolved or
+excluded identities with reasons. The separate author demo's three-guide
+epistasis controls do not establish controls for this pooled UPR screen.
 
 ## Retrieval status and next execution step
 
@@ -57,8 +58,17 @@ record returned HTTP 401; browser retrieval of PMC and eScholarship required
 human verification. No access challenge was bypassed. The previously retrieved
 164-byte `supplementary.zip` is an XML error saying supplementary access is
 unavailable, and `author-manuscript.pdf` is empty. Neither is a scientific source
-file. The indexed primary paper supports the experiment-level count above, but
-its guide table was not retrieved or inspected.
+file. Those failures are retained as historical retrieval evidence.
+
+On 2026-09-14, a bounded direct request to [Table
+S1](https://ars.els-cdn.com/content/image/1-s2.0-S0092867416316609-mmc1.xlsx)
+succeeded. The 48,003-byte workbook has SHA-256
+`9b5935cb15ba2f6d60d3017832de2918e7d4f172db6f202be7999cba5feea82b`, 102 data
+rows, and columns `Gene`, `Protospacer`, `Guide_ID (synonymous with
+sgGuide_ID)`, and `Perturb-seq_Vector_ID`. It contains the four named
+non-targeting sequences, including the UPR controls NegCtrl-2 and NegCtrl-3,
+but no `pBA580`, `pBA582` or `pBA581` value. This closes the workbook
+availability question without closing the deposited-label-to-sequence mapping.
 
 Public GEO supplement directory listings succeeded and contain barcodes, guide
 assignments, gene identities and the count matrix; they expose no separate

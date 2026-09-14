@@ -60,10 +60,12 @@ such separators. The 101-cell `*` category also remains explicit.
 `62(mod)_pBA581` (2 cells), `63(mod)_pBA580` (6,010) and
 `Gal4-4(mod)_pBA582` (1,283) have not yet been verified against primary
 control/guide records. They remain separate source-guide aggregates. No
-negative-control assignment is inferred from the labels. Author demo code found
-so far describes another experiment, and the public supplementary API reported
-the requested article unavailable for that route. These missing identities
-prevent the frozen response benchmark from proceeding to fitting.
+negative-control assignment is inferred from the labels. The primary [Table
+S1](../../../../Documentation/AdamsonPrimaryRoster.md) workbook is now available
+and confirms the NegCtrl-2/NegCtrl-3 sequences, but an exhaustive check found
+none of these three deposited `pBA` identifiers in its vector column. Author
+demo code found so far describes another experiment. The missing deposited-label
+mapping prevents the frozen response benchmark from proceeding to fitting.
 
 ## Native change and verification
 

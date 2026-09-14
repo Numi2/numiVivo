@@ -1,12 +1,13 @@
 # Adamson primary control roster
 
-The primary Adamson supplement is now available as
+The primary Adamson supplement was retrieved directly on 2026-09-14 as
 [Table S1](https://ars.els-cdn.com/content/image/1-s2.0-S0092867416316609-mmc1.xlsx).
-The downloaded workbook is `mmc1.xlsx`, SHA-256
+The 48,003-byte workbook is `mmc1.xlsx`, SHA-256
 `9b5935cb15ba2f6d60d3017832de2918e7d4f172db6f202be7999cba5feea82b`.
 It contains 102 data rows: 91 rows with a `Perturb-seq_Vector_ID`, 98 rows
 with a gene label (some labels cover more than one gene), and four explicit
-non-targeting sequences.
+non-targeting sequences. Its columns are `Gene`, `Protospacer`,
+`Guide_ID (synonymous with sgGuide_ID)`, and `Perturb-seq_Vector_ID`.
 
 The paper's methods make the UPR screen's control set explicit: the large
 UPR Perturb-seq experiment included **NegCtrl-2 and NegCtrl-3**. Their
@@ -27,7 +28,8 @@ confirms the experiment-level control identities and the fixed sequence
 roster without using expression outcomes.
 
 The restored GEO records still use deposited labels that are absent from
-Table S1's vector column:
+Table S1's vector column; an exhaustive value check found no `pBA580`,
+`pBA582`, or `pBA581` entry:
 
 | Restored source label | Selected cells | Current interpretation |
 | --- | ---: | --- |
