@@ -369,6 +369,16 @@ An [independent raw-count-to-graph Scanpy run](Tools/Omics/Reduction/ScverseChai
 also preserves every Kang neighbor and graph edge coordinate against both native
 backends, without using native PCA scores or feature selections as inputs.
 
+A fresh [matched raw-count-to-graph timing and memory run](Tools/Omics/Reduction/MetalDistanceBlocks/EndToEnd/README.md)
+executes the same 24,673-cell Kang source three times through the native PCA and
+neighbor CLIs and independently through Scanpy. Native Metal's median is 10.843 s
+versus 13.957 s CPU (22.3% lower), with 410.9 MiB versus 399.0 MiB median peak
+RSS; Scanpy is 8.228 s at 1,067.8 MiB under its separate sparse-output and
+provenance boundary. Every native run verifies successfully, and the final run
+matches Scanpy's 468,787 non-self neighbor memberships and 706,016 edge
+coordinates. This is a bounded cohort/stage measurement, not a universal GPU,
+million-cell, or biological outcome-prediction claim.
+
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical
 M4/M4 Pro GPUs. The explicit FP32 option passes its declared numerical tolerance

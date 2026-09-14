@@ -800,9 +800,16 @@ The complete development objective remains open:
     preserves every bundle byte, with final medians 0.918 s CPU / 0.912 s Metal.
     CPU's slower first call leaves its three-run mean slightly worse; this does
     not establish general acceleration or a GPU advantage. Final release/ASAN
-    record checks and thirteen actual CLI checks pass.
-    PCA/kNN/model-fitting acceleration and matched end-to-end scverse speed and
-    memory comparisons remain open.
+    record checks and thirteen actual CLI checks pass. A fresh three-repetition
+    [raw-count-to-graph comparison](../Tools/Omics/Reduction/MetalDistanceBlocks/EndToEnd/README.md)
+    on the same 24,673-cell Kang H5AD measures native Metal at 10.843 s versus
+    13.957 s CPU (22.3% lower), with median peak RSS 410.9 MiB versus 399.0 MiB;
+    Scanpy's exact path is 8.228 s with 1,067.8 MiB RSS under its separate
+    sparse-output boundary. All 468,787 non-self neighbors and 706,016 edge
+    coordinates match, with distance and weight deltas retained. This closes
+    this cohort/stage comparison only; output formats and provenance costs
+    differ, CPU FP64 remains the default, and model-fitting acceleration,
+    million-cell scaling and biological outcome prediction remain open.
 11. **Other omics:** a [SEQC technical bulk-RNA benchmark](../Tools/Omics/Benchmarks/SEQC/README.md)
     now runs all six public Illumina RefSeq sites through the native negative-
     binomial owner and compares the same counts/design with edgeR, limma-voom

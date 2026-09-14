@@ -46,10 +46,17 @@ execution is not qualified. The harness rejects sizes outside 20–50,000 cells
 and 1–64 components; broader admission/cancellation/rejection coverage is still
 required before owner integration.
 
-The next gate is integration into the native tiled neighbor owner with explicit
-FP32 provenance, cancellation and bounded buffers, followed by complete-cohort
-CPU/scverse comparisons and downstream biological-preservation checks. A single
-cohort's timing gain cannot justify changing the default.
+The next gate for this research harness was integration into the native tiled
+neighbor owner with explicit FP32 provenance, cancellation and bounded buffers,
+followed by complete-cohort CPU/scverse comparisons. A single cohort's timing
+gain cannot justify changing the default.
+
+The owner integration and complete Kang CPU/scverse checks are now retained in
+the [native-owner](NativeOwner/README.md), [full Kang](Kang/README.md), and
+[matched end-to-end](EndToEnd/README.md) receipts. The latter measures the raw
+count-to-graph product path three times against an independent Scanpy pipeline;
+it closes this cohort/stage timing and memory comparison while leaving broader
+model-fitting, scaling and biological-preservation checks open.
 
 ## Reproduction and evidence
 
