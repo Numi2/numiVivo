@@ -2,12 +2,12 @@
 
 This is a source-backed map of the implementation, not a feature certification. The public package combines mature contracts, new numerical source and experimental methods. A successful import, a function named after a method, or a committed example does not establish numerical agreement or biological applicability.
 
-The navigation and implementation references below describe the reviewed source beginning at `b77fb7885ce2c484a10f2509798cb4a05a294047`, with subsequent integration corrections. Consult the actual revision when a method changes. This map deliberately does not assign an unmeasured speedup or maximum biological scale.
+The navigation and implementation references below describe the reviewed source at `b643f49a1c106ed1ae01c9d855ff8b0a6e65f4e6` for the current single-cell evidence, with historical receipts retaining their named runtime identities. Consult the actual revision when a method changes. This map deliberately does not assign an unmeasured speedup or maximum biological scale.
 
 ## Single-cell analysis and biological prediction
 
 The single-cell entries were reviewed against published evidence available at
-`aa85e1a0` on 2026-09-10. Historical receipts retain their named runtime identities.
+`b643f49a1c106ed1ae01c9d855ff8b0a6e65f4e6` on 2026-09-14. Historical receipts retain their named runtime identities.
 
 | Capability | Implemented and measured scope | Remaining boundary |
 | --- | --- | --- |
@@ -16,7 +16,7 @@ The single-cell entries were reviewed against published evidence available at
 | Reduction and integration | Sparse HVG/PCA, neighbors, Louvain, UMAP-compatible optimization and donor correction. Full HIRISA PCA/graph and seed-7 integration have numerical/replay evidence. | Full HIRISA clustering publication/replay and independent partition checks pass; cluster annotation remains unqualified. Coarse margins pass. [Original program failures](../Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md) are decoder-dependent: [within-library development fitting](../Tools/Omics/Benchmarks/HIRISA/PROGRAM_CALIBRATION.md) meets loss margins with 28/32 sensitive controls, four insufficient. This is not independent biological qualification. Rare-cell and native multi-seed preservation remain open. |
 | Known-treatment donor prediction | Native control-context ridge plus three simple baselines. All 79 HIRISA folds complete; ridge beats no-change in 14/16 contrasts and mean response in 4/16. | Requires the new donor's control profile and matching context. Two contrasts fail against no-change; no calibrated intervals or general phenotype claim. |
 | Target/composition prediction | Native composition models reproduce all 131 Norman held-out pairs; native GO kernel evaluates 105 held-target folds, with 101 supported descriptors. | GO gain over mean is only 0.58% on reused data, with 29/101 worse than no-change. Reliable independent-study, unseen-context and mechanistic prediction remain unqualified. |
-| Annotation | Sparse fixed marker/program scores and provenance-bound candidate reference labels. | Labels remain nonauthoritative; annotation calibration and novel-class rejection remain separate. |
+| Annotation | Sparse fixed marker/program scores and provenance-bound candidate reference labels. Explicit caller-supplied kNN distance/vote or logistic probability gates can suppress out-of-support labels while retaining scores. | Labels remain nonauthoritative; thresholds are uncalibrated and do not validate biological identity. |
 
 Use the [prediction assessment](BiologicalPrediction.md) for input requirements,
 positive and negative results and next evidence gates, and the
@@ -24,6 +24,14 @@ positive and negative results and next evidence gates, and the
 owner-specific limits. Count/latent storage is bounded or streamed in specific
 stages; cell-scale metadata and several model arrays still reside in memory.
 No general Metal speedup for this pipeline is established.
+
+The current roadmap also has bounded evidence for the final three single-cell
+requirements: [Metal sparse normalization and graph timing](../Tools/Omics/CountStore/Metal/README.md)
+qualify selected Apple-GPU arithmetic and one cohort-scale distance path; the
+[SEQC other-omics benchmark](../Tools/Omics/Benchmarks/SEQC/README.md) is a
+technical reference-RNA comparison; and the [AlphaGenome Atlas assessment](AlphaGenomeAtlas.md)
+retains an offline adapter contract. None supplies a validated general biological
+outcome model, and live cross-scale coupling remains open.
 
 ## Molecular preparation and dynamics
 
