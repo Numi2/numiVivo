@@ -1,0 +1,57 @@
+$ swift build --build-path /tmp/numivivo-h5ad-projection-build
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.27s)
+exit 0
+$ swift test --build-path /tmp/numivivo-h5ad-projection-build --filter SingleCellInterchangeTests
+Test Suite 'Selected tests' started at 2026-09-14 22:43:13.203.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-14 22:43:13.204.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-14 22:43:13.204.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-14 22:43:13.204.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1743
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SingleCellInterchangeTests started.
+◇ Test gzipReadableSnapshotIsPrivateAndPlainSourcesStayInPlace() started.
+◇ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() started.
+◇ Test h5adImportMappingRejectsAmbiguousPathsAndColumns() started.
+◇ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() started.
+◇ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() started.
+◇ Test gzipChecksumsMembersAndExpansionLimits() started.
+◇ Test h5adDerivedPlansRejectInvalidMappingsBeforeSourceWork() started.
+✔ Test h5adDerivedPlansRejectInvalidMappingsBeforeSourceWork() passed after 0.001 seconds.
+✔ Test h5adImportMappingRejectsAmbiguousPathsAndColumns() passed after 0.001 seconds.
+✔ Test gzipChecksumsMembersAndExpansionLimits() passed after 0.001 seconds.
+✔ Test gzipReadableSnapshotIsPrivateAndPlainSourcesStayInPlace() passed after 0.003 seconds.
+✔ Test rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() passed after 0.013 seconds.
+✔ Test completeNativeAnalysisReconstructsAndTablesRetainDesign() passed after 0.013 seconds.
+✔ Test nativeMEXRoundTripPreservesCountsAnnotationsAndIdentities() passed after 0.026 seconds.
+✔ Suite SingleCellInterchangeTests passed after 0.027 seconds.
+✔ Test run with 7 tests in 1 suite passed after 0.027 seconds.
+[0/1] Planning build
+Building for debugging...
+[0/4] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.26s)
+exit 0
+$ /tmp/numivivo-h5ad-projection-build/arm64-apple-macosx/debug/numivivo singlecell-h5ad-write /tmp/numivivo-gzip-scan-smoke/dataset.json --output /tmp/numivivo-gzip-projection-run/source.h5ad
+{"file":"/tmp/numivivo-gzip-projection-run/source.h5ad","status":"written-native-count-anndata"}
+exit 0
+$ python3 external gzip wrapper (mtime=0)
+plain_bytes 18289
+gzip_bytes 2935
+$ /tmp/numivivo-h5ad-projection-build/arm64-apple-macosx/debug/numivivo singlecell-h5ad-project /tmp/numivivo-gzip-projection-run/source.h5ad.gz --plan /tmp/numivivo-gzip-projection-run/projection-plan.json --output /tmp/numivivo-gzip-projection-run/projection
+{"implementation":{"bytes":[145,131,24,173,156,244,137,223,243,150,199,104,39,185,224,110,103,92,233,222,144,151,237,152,57,235,241,29,153,68,48,96]},"output":{"bytes":[7,220,27,222,116,93,125,47,35,34,254,163,94,143,108,20,128,142,216,224,38,243,224,201,42,111,125,143,178,161,132,216]},"plan":{"bytes":[179,48,45,170,224,152,143,237,18,155,96,225,42,163,12,49,52,91,41,208,7,1,130,88,46,66,25,137,65,78,138,139]},"report":{"bytes":[204,222,61,5,0,192,187,23,6,33,216,96,121,114,163,233,5,75,52,178,100,243,122,45,113,74,77,96,189,45,153,130]},"schemaVersion":1,"source":{"bytes":[216,21,97,145,217,120,243,51,76,44,221,19,116,233,194,168,209,153,59,49,32,209,14,103,74,112,229,56,178,50,198,166]}}
+exit 0
+$ /tmp/numivivo-h5ad-projection-build/arm64-apple-macosx/debug/numivivo singlecell-h5ad-project-verify /tmp/numivivo-gzip-projection-run/projection
+{"elementVisits":33,"fields":[{"encoding":"string-array","outputShape":[2],"path":"obs/_index","sourceShape":[4]},{"encoding":"string-array","outputShape":[2],"path":"obs/barcode","sourceShape":[4]},{"encoding":"string-array","outputShape":[2],"path":"obs/sample","sourceShape":[4]},{"encoding":"string-array","outputShape":[2],"path":"obs/biological_replicate","sourceShape":[4]},{"encoding":"string-array","outputShape":[2],"path":"obs/condition","sourceShape":[4]},{"encoding":"string-array","outputShape":[2],"path":"obs/batch","sourceShape":[4]},{"encoding":"string-array","outputShape":[2],"path":"obs/organism","sourceShape":[4]},{"encoding":"nullable-string-array","outputShape":[2],"path":"obs/donor/mask","sourceShape":[4]},{"encoding":"nullable-string-array","outputShape":[2],"path":"obs/donor/values","sourceShape":[4]},{"encoding":"nullable-string-array","outputShape":[2],"path":"obs/group/mask","sourceShape":[4]},{"encoding":"nullable-string-array","outputShape":[2],"path":"obs/group/values","sourceShape":[4]},{"encoding":"string-array","outputShape":[2],"path":"var/_index","sourceShape":[3]},{"encoding":"string-array","outputShape":[2],"path":"var/name","sourceShape":[3]},{"encoding":"string-array","outputShape":[2],"path":"var/mitochondrial","sourceShape":[3]},{"encoding":"csr_matrix","outputShape":[2,2],"path":"X","sourceShape":[4,3]}],"hdf5Version":"2.2.0","method":"native-H5AD-axis-projection-v1","outputShape":[2,2],"qualification":"Unique cell/feature selection and reordering; raw retains its feature axis. Stored values/datatypes and categories retained; sparse structural indices become int64. Unstructured data copied without inferred axis semantics. No biological validation claim.","sourceShape":[4,3]}
+exit 0
+source_gzip_sha256 d8156191d978f3334c2cdd1374e9c2a8d1993b3120d10e674a70e538b232c6a6
+retained_compressed_source_exactly true
+projection_source_shape [4, 3]
+projection_output_shape [2, 2]
+projection_element_visits 33
+projected_h5ad_bytes 17694
+receipt_source_bytes [216, 21, 97, 145, 217, 120, 243, 51, 76, 44, 221, 19, 116, 233, 194, 168, 209, 153, 59, 49, 32, 209, 14, 103, 74, 112, 229, 56, 178, 50, 198, 166]

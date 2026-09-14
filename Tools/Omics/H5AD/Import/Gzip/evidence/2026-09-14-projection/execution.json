@@ -1,0 +1,46 @@
+{
+  "binary": {
+    "path": "/tmp/numivivo-h5ad-projection-build/arm64-apple-macosx/debug/numivivo",
+    "sha256": "7b02cd6c25b48e2005bd208018bcac2babd4100d3df63a2dbdf7f9ef8cfd9425"
+  },
+  "cli": {
+    "elementVisits": 33,
+    "hdf5Version": "2.2.0",
+    "method": "native-H5AD-axis-projection-v1",
+    "outputShape": [
+      2,
+      2
+    ],
+    "projectionPublish": "passed",
+    "projectionVerify": "passed",
+    "retainedCompressedSourceExactly": true,
+    "retainedOriginalSHA256": "d8156191d978f3334c2cdd1374e9c2a8d1993b3120d10e674a70e538b232c6a6",
+    "sourceGzipBytes": 2935,
+    "sourceGzipSHA256": "d8156191d978f3334c2cdd1374e9c2a8d1993b3120d10e674a70e538b232c6a6",
+    "sourcePlainBytes": 18289,
+    "sourceShape": [
+      4,
+      3
+    ],
+    "writer": "passed"
+  },
+  "date": "2026-09-14",
+  "focusedTests": {
+    "command": "swift test --build-path /tmp/numivivo-h5ad-projection-build --filter SingleCellInterchangeTests",
+    "failed": 0,
+    "passed": 7
+  },
+  "hdf5": {
+    "libraryPath": "/opt/homebrew/opt/hdf5/lib/libhdf5.dylib",
+    "sha256": "b96f5a824802e985198fb58fc336da80fc6a4990249f4038656b433231c7da51"
+  },
+  "host": {
+    "machine": "arm64",
+    "swift": "Apple Swift version 6.3 (swiftlang-6.3.0.123.5 clang-2100.0.123.102)\nTarget: arm64-apple-macosx26.0",
+    "system": "macOS-26.6-arm64-arm-64bit-Mach-O"
+  },
+  "qualification": "bounded external-gzip handling for complete-object H5AD axis projection; no biological outcome claim",
+  "schema": "numivivo.org/h5ad-gzip-projection-qualification/v1",
+  "scope": "The private expanded view is removed after projection. Annotation remains plain-HDF5-only until separately qualified.",
+  "sourceCommit": "65b9e80ef536c848164a7c104205b091e5984a95"
+}
