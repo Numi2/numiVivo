@@ -1,0 +1,25 @@
+{
+  "schema": "numivivo.org/cross-scale-native-fix-qualification-manifest/v1",
+  "sourceCommit": "c8604b8c923df4e88f02e4265467d69898fb0fcc",
+  "parentCommit": "1f4dde0a42de7ba84b864358cf52a6b06252e5f1",
+  "status": "passed",
+  "files": {
+    "README.md": "f481ec1402a8a99212da54f10ab521fbac82d69cdc8d05d0bf99fc7657f31ad6",
+    "execution.json": "d9646db2f6c582f38e99b01d8f0d35467d8bc25e7d32ca64d80aec408c48d51e",
+    "native-cross-scale-fix.log": "971c8c529e00a867f40178865f2f7ff758771a998193da4020d1c1a9f314f609"
+  },
+  "sourceFiles": {
+    "Sources/NumiVivoKit/Omics/VivoCrossScaleEvidence.swift": {
+      "bytes": 13148,
+      "sha256": "ea1c73c34fd855aa9c1e99e0c838ede59191d332f3fcbd38790a2b34cedf9e73"
+    },
+    "Tests/NumiVivoIntegrationTests/VivoCrossScaleEvidenceTests.swift": {
+      "bytes": 5918,
+      "sha256": "0613907c2a301abf9b9b7a62651614435d09443639716ecb3f80a0ba823796b8"
+    },
+    "Documentation/Design/CROSS_SCALE_EVIDENCE.md": {
+      "bytes": 1986,
+      "sha256": "3c1c14da7e26136ae0e23c17734eedbc7f48b2f87a52b73966ce46c2d736948e"
+    }
+  }
+}
