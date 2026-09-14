@@ -3,7 +3,7 @@
 This is a source-backed map of the implementation, not a feature certification. The public package combines mature contracts, new numerical source and experimental methods. A successful import, a function named after a method, or a committed example does not establish numerical agreement or biological applicability.
 
 The navigation and implementation references below describe the reviewed source at
-`9b92986281619b823f04e2dfbfc45ff0b1c49310` for the current single-cell evidence,
+`8e10488d81b7c951962f50c6e3d4e902b921d780` for the current single-cell evidence,
 including native gzip H5AD import, scan, axis-projection, annotation and cross-scale
 CLI qualification receipts. Historical
 receipts retain their named runtime identities. Consult the actual revision when a
@@ -13,7 +13,7 @@ maximum biological scale.
 ## Single-cell analysis and biological prediction
 
 The single-cell entries were reviewed against published evidence available at
-`9b92986281619b823f04e2dfbfc45ff0b1c49310` on 2026-09-14. Historical receipts retain their named runtime identities.
+`8e10488d81b7c951962f50c6e3d4e902b921d780` on 2026-09-14. Historical receipts retain their named runtime identities.
 
 | Capability | Implemented and measured scope | Remaining boundary |
 | --- | --- | --- |
@@ -32,10 +32,11 @@ stages; cell-scale metadata and several model arrays still reside in memory.
 No general Metal speedup for this pipeline is established.
 
 The current roadmap also has bounded evidence for the final three single-cell
-requirements: [Metal sparse normalization and graph timing](../Tools/Omics/CountStore/Metal/README.md)
-and a fresh [physical PCA-neighbor regression](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-neighbor-regression/)
+requirements: [Metal sparse normalization and graph timing](../Tools/Omics/CountStore/Metal/README.md),
+a fresh [physical PCA-neighbor regression](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-neighbor-regression/),
+and an opt-in [sparse feature-statistics/HVG qualification](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-feature-statistics/)
 qualify selected Apple-GPU arithmetic, one cohort-scale distance path and a
-bounded CPU-oracle dispatch check; the
+bounded CPU-oracle dispatch check and a sparse FP32 moment path; the
 [SEQC other-omics benchmark](../Tools/Omics/Benchmarks/SEQC/README.md) is a
 technical reference-RNA comparison; and the [AlphaGenome Atlas assessment](AlphaGenomeAtlas.md)
 now has a native VCF import/projection boundary plus an offline adapter contract.

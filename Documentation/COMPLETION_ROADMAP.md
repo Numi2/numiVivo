@@ -36,6 +36,10 @@ projection and annotation qualifications. The [annotation receipt](../Tools/Omic
 binds the exact compressed source and publishes a new plain H5AD after bounded
 private decoding; this remains interoperability/storage evidence, not biological
 annotation or outcome validation.
+The [opt-in Metal sparse feature-statistics profile](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-feature-statistics/README.md)
+now feeds HVG/PCA moments from sparse nonzero values on a physical Apple GPU,
+with CPU FP64 still the default. It is a bounded numerical qualification and
+does not close general Metal acceleration or biological-outcome validation.
 
 The [prediction assessment](BiologicalPrediction.md) records the current
 scientific answer: bounded expression-response prediction is demonstrated,

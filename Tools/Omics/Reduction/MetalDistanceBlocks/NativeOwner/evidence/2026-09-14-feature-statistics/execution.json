@@ -1,0 +1,62 @@
+{
+  "schema": "numivivo.org/metal-feature-statistics-native/v1",
+  "sourceCommit": "8e10488d81b7c951962f50c6e3d4e902b921d780",
+  "command": [
+    "env",
+    "NUMIVIVO_TEST_METAL=1",
+    "swift",
+    "test",
+    "--build-path",
+    "/tmp/numivivo-metal-feature-stats-build",
+    "--filter",
+    "SingleCellMetalFeatureStatisticsTests"
+  ],
+  "result": "passed",
+  "testCount": 2,
+  "testSuite": "SingleCellMetalFeatureStatisticsTests",
+  "passedTests": [
+    "backendIsOptionalAndUnknownReductionKeysRemainRejected",
+    "sparseMomentsMatchCPUAndReductionUsesExplicitMetalProfile"
+  ],
+  "host": "Mac16,12",
+  "machine": "arm64",
+  "chip": "Apple M4",
+  "memoryBytes": 25769803776,
+  "os": "macOS 26.6 (25G5028f)",
+  "sourceFiles": {
+    "Sources/NumiVivoKit/Omics/VivoMetalFeatureStatistics.swift": {
+      "bytes": 7514,
+      "sha256": "cbb3e702c25cd2911f0887c50b51a1585044a77574d0efb7fb69f4df60a81009"
+    },
+    "Sources/NumiVivoKit/Omics/VivoSingleCellReduction.swift": {
+      "bytes": 18611,
+      "sha256": "e241d1e1da83c8e0fe82d31824b8799d2c88f4aa5dfb3a53142f91d13aac61e9"
+    },
+    "Tests/NumiVivoIntegrationTests/SingleCellMetalFeatureStatisticsTests.swift": {
+      "bytes": 2794,
+      "sha256": "6372e740103bc8af8de541103c50e8fdbf2cb6da6bb6db9c97e5f402293d2d12"
+    }
+  },
+  "log": {
+    "path": "native-metal-feature-statistics.log.gz",
+    "bytes": 539,
+    "sha256": "ac8b924cd4fa36251ddf9b21b69513995fb7e1f3f65000f895c5514bd6cadbcc",
+    "uncompressedBytes": 1193,
+    "uncompressedSHA256": "d74d60fd0008eb85ef42176a67a7ab5ff1260dfc7c837e81555a805e0c029525"
+  },
+  "fixture": {
+    "cohort": "SingleCellCohortTests.fixture",
+    "cells": 24,
+    "features": 32,
+    "nonzeroValues": "native log-normalized sparse entries",
+    "comparison": "CPU FP64 nonzero Welford moments and implicit-zero reduction",
+    "assertions": [
+      "exact nonzero counts",
+      "mean absolute/relative error <= 2e-4/2e-5",
+      "m2 absolute/relative error <= 5e-3/5e-5",
+      "opt-in reduction completes"
+    ]
+  },
+  "scope": "Physical Apple GPU dispatch and bounded FP32 sparse feature-statistics/HVG integration only; CPU FP64 remains default; no cohort timing, million-cell scaling, model-fitting acceleration, biological preservation or biological outcome prediction.",
+  "recordedUnix": 1789421363.0166342
+}

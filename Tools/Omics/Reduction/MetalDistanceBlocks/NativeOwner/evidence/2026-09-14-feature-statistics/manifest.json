@@ -1,0 +1,24 @@
+{
+  "schema": "numivivo.org/metal-feature-statistics-native-manifest/v1",
+  "sourceCommit": "8e10488d81b7c951962f50c6e3d4e902b921d780",
+  "status": "passed",
+  "files": {
+    "README.md": "284efb39a820e031163c46af8cdded898d1d82eadcff76e22f2d2e52e6131d9e",
+    "execution.json": "58cd2685f14ad793ef6199c28389d84341f6cd846626450fa8cacb422fcae26d",
+    "native-metal-feature-statistics.log.gz": "ac8b924cd4fa36251ddf9b21b69513995fb7e1f3f65000f895c5514bd6cadbcc"
+  },
+  "sourceFiles": {
+    "Sources/NumiVivoKit/Omics/VivoMetalFeatureStatistics.swift": {
+      "bytes": 7514,
+      "sha256": "cbb3e702c25cd2911f0887c50b51a1585044a77574d0efb7fb69f4df60a81009"
+    },
+    "Sources/NumiVivoKit/Omics/VivoSingleCellReduction.swift": {
+      "bytes": 18611,
+      "sha256": "e241d1e1da83c8e0fe82d31824b8799d2c88f4aa5dfb3a53142f91d13aac61e9"
+    },
+    "Tests/NumiVivoIntegrationTests/SingleCellMetalFeatureStatisticsTests.swift": {
+      "bytes": 2794,
+      "sha256": "6372e740103bc8af8de541103c50e8fdbf2cb6da6bb6db9c97e5f402293d2d12"
+    }
+  }
+}

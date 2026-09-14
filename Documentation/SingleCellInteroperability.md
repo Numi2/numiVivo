@@ -894,6 +894,14 @@ The complete development objective remains open:
     membership/CSR agreement for a 257-by-4 fixture and `1e-6` distance/weight bounds.
     This verifies Metal dispatch and the numerical contract only; it adds no new
     cohort-scale, biological-preservation or outcome-prediction claim.
+    An opt-in `featureStatisticsBackend = metalFP32` now reduces sparse
+    log-normalized feature moments on the physical Apple GPU before the existing
+    HVG/PCA owner applies its implicit-zero correction. The [native
+    feature-statistics receipt](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-feature-statistics/)
+    passes its two focused tests against the CPU FP64 moments and the integrated
+    reduction path. This is a bounded FP32 numerical profile; CPU remains the
+    default, and no general speedup, million-cell or biological qualification
+    follows.
 11. **Other omics:** a [SEQC technical bulk-RNA benchmark](../Tools/Omics/Benchmarks/SEQC/README.md)
     now runs all six public Illumina RefSeq sites through the native negative-
     binomial owner and compares the same counts/design with edgeR, limma-voom

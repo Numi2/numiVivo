@@ -478,6 +478,12 @@ preserves every output byte and lowers final medians to 0.918 s CPU / 0.912 s
 Metal. The first CPU call is slower and its three-run mean is slightly worse;
 these are bounded measurements, not a general speedup claim. The real single-cell
 CLI and bounded memory-safety checks pass; downstream biological claims are unchanged.
+An opt-in [Metal sparse feature-statistics/HVG path](Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-feature-statistics/)
+now reduces nonzero log-normalized feature moments on a physical Apple GPU and
+feeds the existing sparse PCA owner. Its two focused tests agree with the CPU FP64
+moments within their declared FP32 bounds. CPU remains the default; this receipt
+does not establish broad GPU speedup, million-cell scaling or biological outcome
+prediction.
 
 ## One scientific question, several scales
 
