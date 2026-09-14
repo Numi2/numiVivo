@@ -910,6 +910,13 @@ The complete development objective remains open:
     Streamed H5AD PCA rejects this resident-only backend explicitly. CPU remains
     the default; this is a bounded operator contract, not a general speedup,
     million-cell or biological qualification.
+    An opt-in `backend: .metalFP32` NB2 fit now batches the mean-dependent
+    line-search objective on a physical Apple GPU. Count-only log-gamma terms,
+    coefficient updates, diagnostics and the published `logLikelihood` remain
+    on the exact FP64 CPU owner. The [native NB objective receipt](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-nb-objective/)
+    passes focused CPU-oracle, fit-contract and FP32-domain tests. This is a
+    bounded objective component, not full GPU model fitting, a speedup claim,
+    FDR/interval calibration or biological outcome validation.
 11. **Other omics:** a [SEQC technical bulk-RNA benchmark](../Tools/Omics/Benchmarks/SEQC/README.md)
     now runs all six public Illumina RefSeq sites through the native negative-
     binomial owner and compares the same counts/design with edgeR, limma-voom

@@ -1,5 +1,12 @@
 import Foundation
 
+/// Optional execution profile for the fixed-dispersion NB2 coefficient fit.
+/// The default is the exact FP64 CPU owner; Metal only accelerates the
+/// mean-dependent line-search objective under an explicit FP32 contract.
+public enum VivoOmicsNBBackend: String, Codable, Sendable {
+    case metalFP32
+}
+
 /// A conditional NB2 GLM fit: Var(Y) = mu + dispersion * mu^2.
 /// Coefficients/effects use natural logs. No Wald p-value is reported until
 /// dispersion estimation and its cohort-level diagnostics are qualified.
@@ -19,6 +26,8 @@ public struct VivoOmicsNBFit: Codable, Sendable, Equatable {
     public let leverage: [Double]
     /// Unavailable on deficient support or unit-leverage observations.
     public let cooksDistances: [Double]?
+    /// Set only when the opt-in Metal FP32 objective profile was used.
+    public let backend: VivoOmicsNBBackend?
 }
 public struct VivoOmicsNBDispersionFit: Codable, Sendable, Equatable {
     public let fit: VivoOmicsNBFit
@@ -213,7 +222,8 @@ public enum VivoOmicsNegativeBinomial {
         return support.count < p || (try? VivoOmicsQR(design: rows)) == nil
     }
     public static func fit(counts: [UInt64], design: [[Double]], offsets: [Double],
-                           contrast: [Double], dispersion: Double, maximumIterations: Int = 100) throws -> VivoOmicsNBFit {
+                           contrast: [Double], dispersion: Double, maximumIterations: Int = 100,
+                           backend: VivoOmicsNBBackend? = nil) throws -> VivoOmicsNBFit {
         let base = try VivoOmicsQR(design: design)
         let n = base.observationCount, p = base.coefficientCount
         guard counts.count == n, offsets.count == n, contrast.count == p,
@@ -233,6 +243,18 @@ public enum VivoOmicsNegativeBinomial {
         }
         guard var mu = means(beta) else { throw VivoOmicsStatisticsError.invalid("NB initialization overflows") }
         func likelihood(_ m: [Double]) -> Double { (0..<n).reduce(0) { $0 + mass(y[$1],m[$1],dispersion) } }
+        let metalObjective: VivoMetalNegativeBinomialLikelihood?
+        switch backend {
+        case .metalFP32:
+            metalObjective = try VivoMetalNegativeBinomialLikelihood(counts: counts, dispersion: dispersion)
+        case nil:
+            metalObjective = nil
+        }
+        func lineSearchObjective(_ m: [Double]) throws -> Double {
+            if let metalObjective { return try metalObjective.evaluate(means: m) }
+            return likelihood(m)
+        }
+        let objectiveTolerance = metalObjective == nil ? 1e-10 : 1e-6
         func weighted(_ m: [Double]) throws -> (VivoOmicsQR, [Double]) {
             let roots = m.map { sqrt($0 / (1 + dispersion * $0)) }
             return (try VivoOmicsQR(design: (0..<n).map { i in design[i].map { $0 * roots[i] } }), roots)
@@ -247,8 +269,9 @@ public enum VivoOmicsNegativeBinomial {
                 return abs(value) / sqrt(info)
             }.max() ?? .infinity
         }
-        var ll = likelihood(mu), iterations = 0, converged = false
+        var ll = likelihood(mu), objective = try lineSearchObjective(mu), iterations = 0, converged = false
         guard ll.isFinite else { throw VivoOmicsStatisticsError.invalid("nonfinite NB likelihood") }
+        guard objective.isFinite else { throw VivoOmicsStatisticsError.invalid("nonfinite NB line-search objective") }
         for iteration in 1...maximumIterations {
             try Task.checkCancellation()
             iterations = iteration
@@ -268,9 +291,11 @@ public enum VivoOmicsNegativeBinomial {
             for _ in 0..<30 {
                 let candidate = zip(beta,proposed).map { $0 + fraction * ($1-$0) }
                 if let next = means(candidate) {
-                    let nextLL = likelihood(next)
-                    if nextLL.isFinite && nextLL >= ll - 1e-10 * max(1,abs(ll)) {
-                        beta = candidate; mu = next; ll = nextLL; accepted = true; break
+                    let nextObjective = try lineSearchObjective(next)
+                    if nextObjective.isFinite && nextObjective >= objective - objectiveTolerance * max(1,abs(objective)) {
+                        let nextLL = likelihood(next)
+                        guard nextLL.isFinite else { throw VivoOmicsStatisticsError.invalid("nonfinite NB likelihood") }
+                        beta = candidate; mu = next; ll = nextLL; objective = nextObjective; accepted = true; break
                     }
                 }
                 fraction *= 0.5
@@ -293,7 +318,7 @@ public enum VivoOmicsNegativeBinomial {
             coxReidLogLikelihood: deficient ? nil : ll-0.5*qr.logInformationDeterminant,
             positiveCountDesignRankDeficient: deficient, dispersion: dispersion,
             iterations: iterations, converged: converged, maximumScaledScore: scaledScore,
-            pearsonResiduals: residuals, leverage: h, cooksDistances: cooks)
+            pearsonResiduals: residuals, leverage: h, cooksDistances: cooks, backend: backend)
     }
     /// Shrinks the requested contrast while jointly refitting nuisance coefficients.
     /// A prior never rescues rank-deficient support or an unconverged initial MLE.

@@ -36,8 +36,10 @@ requirements: [Metal sparse normalization and graph timing](../Tools/Omics/Count
 a fresh [physical PCA-neighbor regression](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-neighbor-regression/),
 an opt-in [sparse feature-statistics/HVG qualification](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-feature-statistics/),
 and an opt-in [sparse PCA-operator qualification](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-operators/)
+plus an opt-in [batched NB objective qualification](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-nb-objective/)
 qualify selected Apple-GPU arithmetic, one cohort-scale distance path and a
-bounded CPU-oracle dispatch check, sparse FP32 moments and sparse PCA operators; the
+bounded CPU-oracle dispatch check, sparse FP32 moments, sparse PCA operators and
+a bounded FP32 NB objective; the
 [SEQC other-omics benchmark](../Tools/Omics/Benchmarks/SEQC/README.md) is a
 technical reference-RNA comparison; and the [AlphaGenome Atlas assessment](AlphaGenomeAtlas.md)
 now has a native VCF import/projection boundary plus an offline adapter contract.
