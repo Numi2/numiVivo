@@ -11,13 +11,17 @@ The current [experimental-role audit](EXPERIMENTAL_ROLES.md) reconstructs all
 50,440 selected cells from original records. Controls and target assignments
 remain unverified; 94 selected guide groups also need reconciliation with the
 paper's 93-guide experiment summary. This prerequisite remains open before any
-independent prediction score is reported.
+authoritative independent prediction score is reported. A separate
+[provisional role-sensitivity run](../../../../Documentation/AdamsonProvisionalRoleSensitivity.md)
+uses an explicitly pooled control candidate set and is kept conditional on that
+unresolved assumption.
 
 The complete scPerturb Adamson UPR source now passes native annotation and
 streamed pseudobulk reconstruction. An independent HDF5/SciPy check verifies
-all original datasets and every aggregate/QC count. No perturbation predictor
-has been fitted or scored on this study. The [frozen protocol](PROTOCOL.md)
-remains unchanged, SHA-256
+all original datasets and every aggregate/QC count. No authoritative predictor
+has been fitted or scored under the frozen protocol; the separately declared
+provisional run is documented above. The [frozen protocol](PROTOCOL.md) remains
+unchanged, SHA-256
 `d6e73cda0945d0e8c9f86f2ea2ab30ebfe5e59f0d6edc90871a8b34e146fb297`.
 
 ## Source and identities

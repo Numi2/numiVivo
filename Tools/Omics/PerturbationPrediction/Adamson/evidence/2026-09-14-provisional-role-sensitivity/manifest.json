@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-provisional-role-sensitivity",
+  "date": "2026-09-14",
+  "outputRoot": "/Users/n/numivivo-adamson-provisional-role-sensitivity-20260914-retry",
+  "controlCandidates": ["63(mod)_pBA580", "Gal4-4(mod)_pBA582"],
+  "controlMappingAuthoritative": false,
+  "predictionQualification": false,
+  "selectedCells": 50440,
+  "selectedGuideGroups": 94,
+  "selectedTargetPrefixes": 82,
+  "supportedTargetPrefixes": 80,
+  "noDataTargets": ["IER3IP1", "TIMM23"],
+  "features": 32738,
+  "nativeCommands": 328,
+  "nativeCommandFailures": 0,
+  "predictionsFrozen": true,
+  "retainedReportHashesVerified": true,
+  "trainingSHA256": "9ef74639c36ba2ed7bd8e2c881944d3bb933b41df1b160ac08351cef64c57a17",
+  "binarySHA256": "93986de58266a8cbc6f43f51537907ad1e39ba8a09a0bdbbfdfcdf95f9b72469",
+  "driverSHA256": "6672818d2e742b0801d9ba83b7aa8298d5fd13927f8b3d14f44c18fa8e4a3a5c",
+  "receiptSHA256": "7752f65e8182d0ff7673c781a7131ce4e3a40a8c06967ce6f3acb5611f674b0a",
+  "scoresSHA256": "31253574aee5c9575a010ec5f31b3fc6c7ce9fdb167facdf143eeb214da6b184",
+  "aggregateRMSE": {
+    "GO-term-kernel": 0.11572214436090009,
+    "meanSingleResponse": 0.12210136582883555,
+    "meanSupportedResponse": 0.12216682647310961,
+    "matched-supported-shuffle": 0.12291518254631004,
+    "noChange": 0.130077183016917
+  },
+  "supersededDiagnosticRoot": "/Users/n/numivivo-adamson-provisional-role-sensitivity-20260914",
+  "supersededDiagnosticIssue": "Retained gzip reports were valid but the first run recorded the uncompressed report hash; the corrected retry changed only that bookkeeping and reproduced the scores."
+}

@@ -112,7 +112,13 @@ The independent [Adamson validation](Tools/Omics/PerturbationPrediction/Adamson/
 now has a [primary control roster](Documentation/AdamsonPrimaryRoster.md): the
 UPR paper identifies NegCtrl-2 and NegCtrl-3 and their protospacer sequences.
 The deposited `pBA580`/`pBA582` labels still need mapping to those names, and
-the 94-versus-93 guide discrepancy remains open before fitting. [AlphaGenome Atlas](Documentation/AlphaGenomeAtlas.md)
+the 94-versus-93 guide discrepancy remains open before authoritative fitting.
+A separate [provisional role-sensitivity run](Documentation/AdamsonProvisionalRoleSensitivity.md)
+held out all 82 selected target prefixes after pooling those two labels as an
+explicit provisional control: 80 supported targets scored, with mean RMSE
+0.115722 for the GO kernel versus 0.122101 for the all-single mean. This is
+conditional expression evidence and does not close the role gate or qualify a
+general biological predictor. [AlphaGenome Atlas](Documentation/AlphaGenomeAtlas.md)
 can supply variant-level molecular hypotheses; its predictions do not establish
 NumiVivo's downstream cellular or tissue outcomes.
 

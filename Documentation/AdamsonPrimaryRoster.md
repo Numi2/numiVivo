@@ -41,9 +41,13 @@ or the GEO guide CSV. The source also contains 94 selected guide groups while
 the paper summarizes 93 guides for this experiment. The role gate therefore
 remains **partially closed**: the primary control set and sequences are known,
 while deposited-label mapping and the 94-versus-93 roster discrepancy still
-need an author record or an explicitly declared sensitivity protocol.
+need an author record. The separately declared sensitivity protocol below
+provides conditional evidence without resolving that authoritative identity
+gap.
 
 No control assignment is inferred from abundance, the label spelling, or an
-expression profile. The Adamson predictor remains unfitted and unscored until
-that mapping is resolved or a role-sensitivity experiment is separately
-declared and reported as provisional.
+expression profile. The authoritative Adamson predictor remains unfitted and
+unscored under the frozen role protocol. A separately declared
+[provisional role-sensitivity experiment](AdamsonProvisionalRoleSensitivity.md)
+now reports the conditional result obtained by pooling the two candidate labels;
+it does not resolve their mapping or qualify the predictor.

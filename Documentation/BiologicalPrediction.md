@@ -46,7 +46,13 @@ including their protospacer sequences. The restored GEO labels
 `63(mod)_pBA580` and `Gal4-4(mod)_pBA582` still have no primary mapping to those
 sequence names, and the restored cohort still has 94 selected guide groups
 against the paper's 93-guide summary. The control set is therefore partially
-resolved, but the independent Adamson predictor remains unfitted and unscored.
+resolved. A separate [provisional role-sensitivity run](AdamsonProvisionalRoleSensitivity.md)
+pooled those labels explicitly, held out all 82 selected target prefixes and
+scored 80 supported targets: the GO kernel's mean all-gene log-response RMSE was
+0.115722 versus 0.122101 for the all-training-single mean, with predictions
+frozen before scoring. This conditional expression result does not resolve the
+deposited labels or qualify the Adamson protocol as an authoritative biological
+prediction.
 
 The [native multigene context kernel](../Tools/Omics/PerturbationPrediction/StudyContextKernel/README.md) uses all control genes to weight training donor responses, with the same study exclusions and 11,800-gene panel. HIRISA improves 21.11% over the balanced mean and 22.59% over no change; all five donors improve. Kang and GSE181897 are 0.26% and 0.31% worse than the mean, respectively. Only HIRISA meets the unchanged 5% gain over both baselines. All 885,000 predictions and 225 scores are independently checked. This addresses a missing model dependency but does not establish reliable transfer, fresh external validation or calibrated uncertainty.
 
@@ -76,7 +82,7 @@ success nor a failure.
 | --- | --- | --- |
 | Preserve and analyze real counts | Full Parse ingestion and source replay pass; paired native DE and all six edgeR/limma/DESeq2 comparisons complete. Analysis peaks at 202.3 MiB with unchanged report bytes. | Other pipeline stages retain separate memory bounds; numerical agreement does not establish biological accuracy or false-discovery calibration. |
 | Preserve biology through integration | Complete HIRISA execution and coarse response checks pass. Native annotation retention fails 37/146 supported, sensitive comparisons, including 10/29 rare comparisons. | The rigid projection still fails 31/146; its [label breakdown](../Tools/Omics/Benchmarks/HIRISA/RigidProjection/Diagnosis/README.md) includes 7 B intermediate and 5 CD14 Mono failures. The [translation-only ablation](../Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) still fails 22/146 annotation comparisons and one coarse response contrast. The [matched-control shift](../Tools/Omics/Benchmarks/HIRISA/MatchedControlShift/README.md) also fails 34/146 and increases donor scatter above original PCA. Resolve preservation losses and validate independently; no candidate is promoted. |
-| Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. It loses to the mean in 37/150 target/group folds. | Independent biological contexts, target selection and replication; technical groups do not supply these. |
+| Predict an unseen target | Replogle's fixed GO model passes its aggregate primary comparison in all five technical groups. The separate Adamson role-sensitivity run is conditional on a pooled unresolved-control assumption: 80 supported held targets score 0.115722 mean RMSE versus 0.122101 for the all-single mean. | Independent biological contexts, target selection and replication; technical groups do not supply these. Resolve Adamson control identities and its 94-versus-93 roster before treating that result as an authoritative qualification. |
 | Transfer RNA response across studies | HIRISA-trained mean improves GSE181897 RMSE by 5.62%, passing the frozen 5% target across 62 query donors; Kang-trained mean fails. GSE226572 and Kang–HIRISA failures stand. | Establish reproducible utility across contexts and training origins; one origin's pass does not erase another's failure. |
 | Quantify predictive uncertainty | Mean-response intervals are implemented and assessed. In GSE181897, HIRISA-trained nominal 95% treated-expression coverage averages only 35.54%; Kang coverage averages 92.39% with much wider intervals. | Independent calibration and useful width; both missing features and donor-level undercoverage remain explicit. |
 | Couple control counts to treated RNA uncertainty | Adaptive joint support now meets the continuous likelihood bound and initialization-sensitivity criterion for all 19 available models on the fixed 16-gene panel; 13 origin/gene cases remain unavailable. | Full-gene fitting completes: nine eligible Kang limits and 185 HIRISA leaf limits remain. Training-only dispersions and manifests are verified for all 13 donor omissions; two 64-gene joint-fit pilots pass. Two complete Kang omissions have numerically verified, control-only predictions and improved development RMSE; the complete 13-fold development evaluation passes the pooled criterion but fails HIRISA: all five HIRISA donors lose to training mean (75.84% higher pooled RMSE). All eight Kang donors improve against both baselines. Parameter uncertainty and new biological calibration remain open. |
@@ -87,19 +93,21 @@ The remaining prepared cohorts and the completed external test are:
 
 | Cohort | Completed evidence | Remaining requirements |
 | --- | --- | --- |
-| [Adamson](../Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md) | 50,440 selected cells and a fixed unseen-target protocol | Primary control/construct assignments and reconciliation of 94 observed guide groups versus the paper's 93-guide roster. |
+| [Adamson](../Tools/Omics/PerturbationPrediction/Adamson/EXPERIMENTAL_ROLES.md) | 50,440 selected cells, a fixed unseen-target protocol and a provisional pooled-control sensitivity score | Primary control/construct assignments and reconciliation of 94 observed guide groups versus the paper's 93-guide roster before authoritative qualification. |
 | [Parse IFN-beta](../Tools/Omics/PerturbationPrediction/ParseIFNB/ContextEvaluation/README.md) | Complete counts, donor aggregates, DE and failed B-cell context prediction test on 11,600 exact features; primary dose/reagent resolved | Cross-study exposure equivalence and participant independence remain unverified. Further tuning needs a new untouched evaluation cohort. The separate duration panel retains 409 absent exact-name symbols. |
 | [GSE181897](../Tools/Omics/PerturbationPrediction/GSE181897/RESULTS.md) | Primary author condition mapping; all 124 predictions, native reconstruction and independent scoring complete | HIRISA mean primary PASS, Kang mean primary FAIL; uncertainty remains deficient. New development on these now-scored outcomes needs a new validation cohort. |
 
 The [Parse B-cell admission](../Tools/Omics/PerturbationPrediction/ParseIFNB/BCellAdmission/README.md) originally established metadata eligibility for 72,446 source-labeled B-cell rows across twelve paired donors. Subsequent full count verification and the versioned 11,600-feature contract enabled the completed prediction test above. Its failure remains the current transfer result; the earlier metadata-only status is historical.
 
-Adamson remains unfitted and unscored for its proposed unseen-target test. Its
-primary control set and protospacer sequences are now documented, but the
-deposited-label mapping and 94-versus-93 roster discrepancy still require an
-authoritative reconciliation before fitting. Freeze any justified protocol
-revision and disclose earlier outcome inspection. Parse is now an inspected
-evaluation cohort. Storage improvements do not establish predictive accuracy
-or clear the remaining validation requirements.
+Adamson remains unqualified for its proposed unseen-target test. Its primary
+control set and protospacer sequences are documented, and the separate
+[provisional role-sensitivity run](AdamsonProvisionalRoleSensitivity.md) gives a
+conditional 80-target expression score under an explicit pooled-control
+assumption. The deposited-label mapping and 94-versus-93 roster discrepancy
+still require authoritative reconciliation before the frozen protocol is
+qualified. Freeze any justified protocol revision and disclose earlier outcome
+inspection. Parse is now an inspected evaluation cohort. Storage improvements do
+not establish predictive accuracy or clear the remaining validation requirements.
 
 The latest [native legacy H5AD check](../Tools/Omics/H5AD/Projection/README.md#original-legacy-kang-2026-09-11)
 preserves every original Kang cell, gene, annotation and embedding, including
@@ -658,9 +666,12 @@ assignment cohort. The [experimental-role audit](../Tools/Omics/PerturbationPred
 now has a primary sequence roster for the two UPR controls, as recorded in the
 [primary roster note](AdamsonPrimaryRoster.md). The deposited `pBA580` and
 `pBA582` labels still lack a primary mapping to NegCtrl-2/3, and the 94 selected
-guide groups still need reconciliation with the paper's 93-guide summary. No
-independent prediction scores are claimed. The label mapping and complete
-roster must be resolved before this fixed algorithm is fitted in Adamson.
+guide groups still need reconciliation with the paper's 93-guide summary. The
+[provisional role-sensitivity run](AdamsonProvisionalRoleSensitivity.md) records
+80 conditional supported-target scores under a declared pooled-control
+assumption; it is not an independent qualification and does not change the
+role flags. The label mapping and complete roster must be resolved before this
+fixed algorithm is fitted authoritatively in Adamson.
 
 ## What the million-cell work establishes
 
@@ -720,7 +731,10 @@ Lower donor-associated variance also does not isolate technical batch removal.
    now passes full-cohort publication, replay and independent comparison.
 3. Resolve Adamson controls and its 94-versus-93 guide roster from primary records, then execute the
    frozen independent-study target-prediction protocol with coverage, all
-   failures and matched simple/shuffled baselines. Do not tune it on test scores.
+   failures and matched simple/shuffled baselines. The [provisional
+   role-sensitivity result](AdamsonProvisionalRoleSensitivity.md) is retained as
+   conditional evidence only; do not tune the authoritative protocol on it or
+   on its test scores.
    The complete Replogle fixed-model experiment now passes its declared primary
    comparison in all five technical groups. Preserve all 150 folds and failures,
    and extend validation to an independently selected target panel and laboratory

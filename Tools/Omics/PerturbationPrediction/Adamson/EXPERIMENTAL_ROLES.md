@@ -78,12 +78,18 @@ no raw sequencing download was started, and no expression-derived control
 assignment was substituted. Continue unblocked prediction work while seeking an
 authoritative roster; repeating these inventory lookups is not a new validation.
 
-After verification, freeze the exact roles and all target folds, then execute
-the existing native target kernel with lambda 1 and its unchanged baselines.
-Freeze predictions before reading held-out outcomes. This will test the fixed
-algorithm in an independent study; it will not test transfer of Norman-trained
-coefficients, unseen tissues or clinical outcomes. No Adamson prediction result
-is claimed by this audit.
+A separate [provisional role-sensitivity experiment](../../../../Documentation/AdamsonProvisionalRoleSensitivity.md)
+has now run all 82 selected target folds by explicitly pooling the two unresolved
+non-gene labels as a control candidate set. It scores 80 supported targets after
+freezing the native predictions, but it is conditional sensitivity evidence and
+does not alter this metadata audit or its role flags.
+
+After authoritative verification, freeze the exact roles and all target folds,
+then execute the existing native target kernel with lambda 1 and its unchanged
+baselines. Freeze predictions before reading held-out outcomes. That run will
+test the fixed algorithm in an independent study; it will not test transfer of
+Norman-trained coefficients, unseen tissues or clinical outcomes. No
+authoritative Adamson prediction result is claimed by this audit.
 
 ## Reproduce the metadata audit
 
