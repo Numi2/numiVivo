@@ -6,6 +6,11 @@ public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
     public enum FeatureStatisticsBackend: String, Codable, Sendable {
         case metalFP32
     }
+    /// Optional FP32 Metal sparse projection/transpose operators for resident
+    /// Krylov PCA. The default remains the deterministic FP64 CPU owner.
+    public enum PCAOperatorsBackend: String, Codable, Sendable {
+        case metalFP32
+    }
     public var highlyVariableFeatures: Int = 2_000
     public var meanBins: Int = 20
     public var components: Int = 20
@@ -14,14 +19,15 @@ public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
     public var seed: UInt64 = 7
     public var retainProjectionCenters: Bool? = nil
     public var featureStatisticsBackend: FeatureStatisticsBackend? = nil
+    public var pcaOperatorsBackend: PCAOperatorsBackend? = nil
     /// Candidate genes for HVG binning/selection; all source counts still normalize each cell.
     public var featurePanel: [String]? = nil
     public init() {}
     private enum CodingKeys: String,CodingKey {
-        case highlyVariableFeatures,meanBins,components,maximumBasis,relativeResidualTolerance,seed,retainProjectionCenters,featurePanel,featureStatisticsBackend
+        case highlyVariableFeatures,meanBins,components,maximumBasis,relativeResidualTolerance,seed,retainProjectionCenters,featurePanel,featureStatisticsBackend,pcaOperatorsBackend
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["highlyVariableFeatures","meanBins","components","maximumBasis","relativeResidualTolerance","seed","retainProjectionCenters","featurePanel","featureStatisticsBackend"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["highlyVariableFeatures","meanBins","components","maximumBasis","relativeResidualTolerance","seed","retainProjectionCenters","featurePanel","featureStatisticsBackend","pcaOperatorsBackend"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         highlyVariableFeatures=try c.decodeIfPresent(Int.self,forKey: .highlyVariableFeatures) ?? 2_000
         meanBins=try c.decodeIfPresent(Int.self,forKey: .meanBins) ?? 20
@@ -32,6 +38,7 @@ public struct VivoSingleCellReductionOptions: Codable, Sendable, Equatable {
         retainProjectionCenters=try c.decodeIfPresent(Bool.self,forKey: .retainProjectionCenters)
         featurePanel=try c.decodeIfPresent([String].self,forKey: .featurePanel)
         featureStatisticsBackend=try c.decodeIfPresent(FeatureStatisticsBackend.self,forKey: .featureStatisticsBackend)
+        pcaOperatorsBackend=try c.decodeIfPresent(PCAOperatorsBackend.self,forKey: .pcaOperatorsBackend)
     }
     public func validate() throws {
         if let featurePanel {
@@ -114,13 +121,25 @@ enum VivoSingleCellReduction {
         let centers=selected.map { processed.features[$0].meanLogNormalized! }
         let totalVariance=selected.reduce(0) { $0+processed.features[$1].varianceLogNormalized! }
         guard totalVariance.isFinite,totalVariance>0 else { throw VivoOmicsError.invalid("PCA has no positive variance") }
+        let pcaOperators: VivoMetalSparsePCAOperators?
+        switch options.pcaOperatorsBackend {
+        case .metalFP32:
+            pcaOperators = try VivoMetalSparsePCAOperators(rowOffsets: rowOffsets, columns: columns, values: values,
+                                                            rows: n, columnCount: selected.count)
+        case nil:
+            pcaOperators = nil
+        }
         return try fit(cells: data.cells.map { .init(sampleID: $0.sampleID,barcode: $0.barcode) }, statistics: statistics,
             selected: selected, centers: centers, totalVariance: totalVariance, options: options,
+            featureStatisticsUsed: options.featureStatisticsBackend == .metalFP32,
+            pcaOperatorsUsed: pcaOperators != nil,
             project: { v,shift in
+                if let pcaOperators { return try pcaOperators.project(v, shift: shift) }
                 var result=[Double](repeating: -shift,count: n)
                 for row in 0..<n { for k in rowOffsets[row]..<rowOffsets[row+1] { result[row]+=values[k]*v[columns[k]] } }
                 return result
             }, transpose: { projected,initial in
+                if let pcaOperators { return try pcaOperators.transpose(projected, initial: initial) }
                 var result=initial
                 for row in 0..<n { for k in rowOffsets[row]..<rowOffsets[row+1] { result[columns[k]]+=values[k]*projected[row] } }
                 return result
@@ -187,6 +206,7 @@ enum VivoSingleCellReduction {
 
     static func fit(cells: [VivoOmicsCellIdentity], statistics: [VivoSingleCellVariableFeature], selected: [Int],
                     centers: [Double], totalVariance: Double, options: VivoSingleCellReductionOptions,
+                    featureStatisticsUsed: Bool = false, pcaOperatorsUsed: Bool = false,
                     project: ([Double],Double) throws -> [Double],
                     transpose: ([Double],[Double]) throws -> [Double]) throws -> VivoSingleCellReductionResult {
         try options.validate()
@@ -257,14 +277,18 @@ enum VivoSingleCellReduction {
         var orthogonality=0.0
         for i in vectors.indices { for j in vectors.indices { orthogonality=max(orthogonality,abs(dot(vectors[i],vectors[j])-(i==j ? 1:0))) } }
         guard orthogonality<1e-8 else { throw VivoOmicsError.invalid("PCA loadings lost orthogonality") }
-        let method = options.featureStatisticsBackend == .metalFP32
+        let method = featureStatisticsUsed
             ? "sparse-seurat-dispersion-centered-krylov-PCA-v1+metal-feature-statistics"
             : "sparse-seurat-dispersion-centered-krylov-PCA-v1"
+        let methodWithOperators = pcaOperatorsUsed ? method + "+metal-pca-operators" : method
         let qualification = "Descriptive unscaled log-normalized PCA; residual-qualified components, not donor integration or biological validation" +
-            (options.featureStatisticsBackend == .metalFP32
+            (featureStatisticsUsed
                 ? ". HVG moments use the opt-in Metal FP32 sparse feature-statistics profile; ranking and values may differ from CPU FP64."
+                : "") +
+            (pcaOperatorsUsed
+                ? " Sparse FP32 projection and transpose use the opt-in Metal PCA-operators profile; scores and residuals may differ from CPU FP64."
                 : "")
-        return .init(method: method,options: options,features: statistics,
+        return .init(method: methodWithOperators,options: options,features: statistics,
             selectedFeatureIndices: selected,cells: cells,scores: embedding,
             loadings: loadings,explainedVariance: variances,explainedVarianceRatio: variances.map { $0/totalVariance },
             relativeResiduals: residuals,maximumLoadingOrthogonalityError: orthogonality,basisSize: capacity,

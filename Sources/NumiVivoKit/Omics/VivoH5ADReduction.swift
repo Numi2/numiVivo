@@ -105,6 +105,9 @@ enum VivoH5ADReduction {
     static func run(snapshot: URL,mapping: VivoH5ADImportPlan,metadata: VivoSingleCellCountMetadata,
                     quality: [VivoCellQuality],options: VivoH5ADReductionOptions) throws -> (VivoSingleCellReductionResult,VivoH5ADReductionStorage) {
         try options.validate()
+        guard options.pca.featureStatisticsBackend == nil, options.pca.pcaOperatorsBackend == nil else {
+            throw VivoOmicsError.invalid("streamed H5AD PCA Metal backends require the resident reduction owner")
+        }
         let n=metadata.cells.count,m=metadata.features.count
         guard n>options.pca.components, quality.count==n else { throw VivoOmicsError.invalid("streamed PCA cell count") }
         var seen=[Int](repeating: 0,count: m),means=[Double](repeating: 0,count: m),m2=means,logMeans=means,logM2=means
