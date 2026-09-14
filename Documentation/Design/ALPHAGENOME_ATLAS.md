@@ -52,6 +52,16 @@ request planner after selectors and the applicable usage terms are independently
 resolved. This is a genomics/provenance capability and adds no variant-effect,
 cell-state, tissue or clinical outcome claim.
 
+An imported document can be exported with the public `VivoVCFWriter.encode` API
+or written directly with `VivoVCFWriter.write`. The writer checks the source and
+candidate digests, reconstructs each source-line multiallelic group and retains
+the textual FORMAT/sample fields. It emits canonical UTF-8 VCF text rather than
+promising byte identity; parsing the export therefore creates a new source
+fingerprint while preserving the variant semantics. Delimiter injection,
+inconsistent source-line groups and candidate identities that no longer bind to
+the source digest are rejected. This is a reversible interchange boundary, not
+variant calling or a biological validation step.
+
 The Atlas bridge uses the official AlphaGenome Python SDK pinned to commit
 `aa6fc8f6faadcb8c910fa2b85b57386fbd5c7b5d`. NumiVivo archives the exact response
 rather than inventing a remote model/dataset version; the inspected API does not
