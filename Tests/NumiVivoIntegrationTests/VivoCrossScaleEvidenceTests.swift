@@ -90,5 +90,14 @@ import Testing
             try VivoCrossScaleEvidenceGraph(id: "bad-evidence", sourceDescription: "Synthetic structural fixture",
                                             nodes: baseNodes, links: [missingReceipt], gaps: []).validate()
         }
+
+        let duplicateGap = VivoCrossScaleGap(from: .variant, to: .regulation,
+                                              reason: "contradictory fixture gap",
+                                              requiredEvidence: "held-out regulatory observation")
+        #expect(throws: (any Error).self) {
+            try VivoCrossScaleEvidenceGraph(id: "bad-gap", sourceDescription: "Synthetic structural fixture",
+                                            nodes: baseNodes, links: [try links(status: .qualified)[0]],
+                                            gaps: [duplicateGap]).validate()
+        }
     }
 }

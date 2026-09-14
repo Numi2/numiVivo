@@ -19,7 +19,8 @@ The validator enforces these rules:
   least one held-out observation;
 - a `hypothesis` link is retained as a hypothesis and cannot authorize an
   outcome report; and
-- an `unavailable` link carries no invented evidence and is reported as a gap.
+- an `unavailable` link carries no invented evidence and is reported as a gap;
+  an explicit gap cannot contradict an existing linked boundary.
 
 `assess()` reports the seven required boundaries as `incomplete`,
 `hypothesisOnly` or `qualifiedResearchPath`. The latter is the only state that

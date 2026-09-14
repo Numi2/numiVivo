@@ -220,7 +220,11 @@ public struct VivoCrossScaleEvidenceGraph: Codable, Sendable, Equatable {
                   gap.reason.utf8.count <= 4_096, gap.requiredEvidence.utf8.count <= 4_096 else {
                 throw VivoOmicsError.invalid("cross-scale gap must name one adjacent boundary")
             }
-            guard gapPairs.insert("\(gap.from.rawValue)->\(gap.to.rawValue)").inserted else {
+            let pair = "\(gap.from.rawValue)->\(gap.to.rawValue)"
+            guard !stagePairs.contains(pair) else {
+                throw VivoOmicsError.invalid("cross-scale gap cannot duplicate a linked boundary")
+            }
+            guard gapPairs.insert(pair).inserted else {
                 throw VivoOmicsError.invalid("cross-scale gaps must be unique")
             }
         }
