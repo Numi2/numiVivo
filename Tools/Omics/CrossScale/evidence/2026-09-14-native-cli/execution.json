@@ -1,0 +1,94 @@
+{
+  "schema": "numivivo.org/cross-scale-native-cli-qualification/v1",
+  "sourceCommit": "85a098c30f4d906a22c4d75a236cd8d98efa2ac5",
+  "parentCommit": "c21ee62c4cd3efa441403640c786a3b5058a12b2",
+  "commands": [
+    [
+      "swift",
+      "build"
+    ],
+    [
+      "swift",
+      "test",
+      "--filter",
+      "VivoCrossScaleEvidenceTests"
+    ],
+    [
+      "numivivo",
+      "cross-scale-assess",
+      "/tmp/numivivo-cross-scale-cli-smoke-c21.json"
+    ],
+    [
+      "numivivo",
+      "cross-scale-assess",
+      "/tmp/numivivo-cross-scale-cli-smoke-c21.json",
+      "--require-qualified"
+    ]
+  ],
+  "result": "passed",
+  "build": "passed",
+  "testSuite": "VivoCrossScaleEvidenceTests",
+  "testCount": 3,
+  "passedTests": [
+    "qualifiedPathRequiresEveryAdjacentHeldOutLink",
+    "hypothesisAndMissingLinksCannotAuthorizeOutcome",
+    "invalidStageOrderAndQualifiedEvidenceAreRejected"
+  ],
+  "cliSmoke": {
+    "assessmentExit": 0,
+    "assessmentReadiness": "incomplete",
+    "assessmentCanReportResearchOutcome": false,
+    "requiredQualificationExit": 2,
+    "requiredQualificationMessage": "cross-scale research outcome path is not qualified at variant → regulation"
+  },
+  "host": "n’s Mac mini",
+  "machine": "arm64",
+  "chip": "Apple M4 Pro",
+  "memoryBytes": 25769803776,
+  "os": "macOS 26.6 (25G72)",
+  "swift": "swift-driver version: 1.148.6 Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: arm64-apple-macosx26.0",
+  "sourceFiles": {
+    "Sources/NumiVivoCLI/VivoCrossScaleCLICommands.swift": {
+      "bytes": 4860,
+      "sha256": "05fd92b4c89274355fcd5e22b090d62a8122621dbc62a317304defac5c657e1e"
+    },
+    "Sources/NumiVivoCLI/main.swift": {
+      "bytes": 7705,
+      "sha256": "578a964e725563a077f02620661a9ac82c1d405b11293d51e50fc4dc17504b6e"
+    },
+    "Sources/NumiVivoKit/Artifacts/VivoRootedFileStore.swift": {
+      "bytes": 14322,
+      "sha256": "a8d8995235046d72fcd6f7b419996dd8594464e79de42ebd6c3dc2e0dd69adb8"
+    },
+    "Sources/NumiVivoKit/Omics/VivoSingleCellCampaignIO.swift": {
+      "bytes": 1621,
+      "sha256": "09c849255df47db212a4e2a810f26378c39b36d713cff3120e55cc1c0502cd40"
+    },
+    "Sources/NumiVivoKit/Omics/VivoSingleCellExchange.swift": {
+      "bytes": 12381,
+      "sha256": "62854b2db516ecda272f85c455076b001aecd7f51a521f4adad1c2c388444420"
+    },
+    "Sources/NumiVivoKit/Omics/VivoCrossScaleEvidence.swift": {
+      "bytes": 13148,
+      "sha256": "ea1c73c34fd855aa9c1e99e0c838ede59191d332f3fcbd38790a2b34cedf9e73"
+    },
+    "Tests/NumiVivoIntegrationTests/VivoCrossScaleEvidenceTests.swift": {
+      "bytes": 5918,
+      "sha256": "0613907c2a301abf9b9b7a62651614435d09443639716ecb3f80a0ba823796b8"
+    },
+    "Documentation/Design/CROSS_SCALE_EVIDENCE.md": {
+      "bytes": 2490,
+      "sha256": "e674afebc60d390f6a1d1b8fd45d20b659dbe0bf785523e359cdde2e84c2d6d4"
+    },
+    "Documentation/README.md": {
+      "bytes": 6985,
+      "sha256": "16653937a4c2ce3419968715fa20756083cb09c178e273d602c930513b2b83ee"
+    }
+  },
+  "log": {
+    "bytes": 4229,
+    "sha256": "18ba0268558430884b56e9264c918016e6f55b671f94fa618790c2bff8845af0"
+  },
+  "scope": "Native build, focused evidence-contract tests, and CLI admission behavior only. The smoke graph is synthetic and intentionally incomplete; no public biological dataset, trained cross-scale predictor, live biological graph, phenotype, tissue, clinical, or patient-specific outcome was qualified.",
+  "recordedUTC": "2026-09-14T19:52:08Z"
+}

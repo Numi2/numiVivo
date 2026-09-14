@@ -1,0 +1,57 @@
+source=85a098c30f4d906a22c4d75a236cd8d98efa2ac5
+command=swift build
+[0/1] Planning build
+Building for debugging...
+[0/4] Write sources
+[1/4] Write swift-version-3CD7052B146186F2.txt
+[3/7] Compiling NumiVivoKit VivoRootedFileStore.swift
+[4/7] Compiling NumiVivoKit VivoSingleCellExchange.swift
+[5/7] Emitting module NumiVivoKit
+/Users/n/numivivo-cross-scale-cli-0270e752/Sources/NumiVivoKit/Surrogates/VivoReactiveMetalBackend.swift:54:52: warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 52 |         coefficients = try buffer(payload.coefficientsKJPerMol.flatMap { $0 })
+ 53 |         scales = try buffer(payload.configuration.features.map { 1/($0.scaleNM*$0.scaleNM) })
+ 54 |         let options = MTLCompileOptions(); options.fastMathEnabled = false
+    |                                                    `- warning: 'fastMathEnabled' was deprecated in macOS 15.0: Use mathMode instead [#DeprecatedDeclaration]
+ 55 |         let library = try device.makeLibrary(source: Self.source,options: options)
+ 56 |         guard let function = library.makeFunction(name: "vivo_reactive_delta") else { throw VivoChemistryError.invalid("missing reactive Metal kernel") }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[5/8] Write Objects.LinkFileList
+[6/8] Linking numivivo
+[7/8] Applying numivivo
+Build complete! (8.00s)
+command=swift test --filter VivoCrossScaleEvidenceTests
+[0/1] Planning build
+Building for debugging...
+[0/4] Write swift-version-3CD7052B146186F2.txt
+[2/6] Compiling NumiVivoIntegrationTests RootedStreamingPublicationTests.swift
+[3/6] Compiling NumiVivoIntegrationTests MDTrajectoryArchiveValidationTests.swift
+[4/6] Emitting module NumiVivoIntegrationTests
+[5/6] Compiling NumiVivoIntegrationTests MolecularSamplingExporterTests.swift
+[5/7] Write Objects.LinkFileList
+[6/7] Linking NumiVivoPackageTests
+Build complete! (4.52s)
+Test Suite 'Selected tests' started at 2026-09-14 21:50:21.079.
+Test Suite 'NumiVivoPackageTests.xctest' started at 2026-09-14 21:50:21.085.
+Test Suite 'NumiVivoPackageTests.xctest' passed at 2026-09-14 21:50:21.085.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-09-14 21:50:21.085.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.006) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VivoCrossScaleEvidenceTests started.
+◇ Test qualifiedPathRequiresEveryAdjacentHeldOutLink() started.
+◇ Test hypothesisAndMissingLinksCannotAuthorizeOutcome() started.
+◇ Test invalidStageOrderAndQualifiedEvidenceAreRejected() started.
+✔ Test hypothesisAndMissingLinksCannotAuthorizeOutcome() passed after 0.001 seconds.
+✔ Test invalidStageOrderAndQualifiedEvidenceAreRejected() passed after 0.001 seconds.
+✔ Test qualifiedPathRequiresEveryAdjacentHeldOutLink() passed after 0.001 seconds.
+✔ Suite VivoCrossScaleEvidenceTests passed after 0.002 seconds.
+✔ Test run with 3 tests in 1 suite passed after 0.002 seconds.
+command=numivivo cross-scale-assess /tmp/numivivo-cross-scale-cli-smoke-c21.json
+{"canReportResearchOutcome":false,"hypothesisBoundaries":[],"missingBoundaries":["variant → regulation","regulation → RNA/cell state","RNA/cell state → protein","protein → molecular mechanism","molecular mechanism → reaction/kinetics","reaction/kinetics → cellular phenotype","cellular phenotype → tissue prediction"],"qualifiedBoundaries":[],"readiness":"incomplete"}
+command=numivivo cross-scale-assess /tmp/numivivo-cross-scale-cli-smoke-c21.json --require-qualified (expected exit 2)
+{"canReportResearchOutcome":false,"hypothesisBoundaries":[],"missingBoundaries":["variant → regulation","regulation → RNA/cell state","RNA/cell state → protein","protein → molecular mechanism","molecular mechanism → reaction/kinetics","reaction/kinetics → cellular phenotype","cellular phenotype → tissue prediction"],"qualifiedBoundaries":[],"readiness":"incomplete"}
+numivivo cross-scale: omics: cross-scale research outcome path is not qualified at variant → regulation
+smoke_required_exit=2
