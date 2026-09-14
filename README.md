@@ -103,7 +103,10 @@ describes precomputed molecular-effect predictions for roughly nine billion
 single-nucleotide variants and an AlphaGenome Variant Impact (AVI) score. NumiVivo
 can treat those variant-level outputs as external hypotheses; an allele-resolved
 RNA, protein, mechanism and phenotype chain still needs independent measurement
-and held-out validation.
+and held-out validation. The announcement presents Atlas as a research baseline
+and states that AlphaGenome has not been validated or approved for clinical use;
+NumiVivo therefore does not report an Atlas score as a clinical or phenotype
+prediction.
 
 Successful count ingestion, numerical replay and large-cohort processing establish
 that information can be processed correctly. They do not establish that an

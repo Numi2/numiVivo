@@ -15,8 +15,12 @@ For an unseen target, gene identity and annotations are additional inputs;
 the fixed GO model now has a modest separately collected UPR validation result,
 but reliable generalization across targets and biological contexts remains unproven. DNA or RNA
 information alone does not supply a validated mapping to survival, tissue
-function, disease progression or treatment benefit. Those outcomes require
-their own measured endpoints and held-out validation.
+function, disease progression or treatment benefit. The [AlphaGenome Atlas
+announcement](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
+describes its genome-scale molecular effects as a research baseline and states
+that AlphaGenome is not validated or approved for clinical use. Those outputs can
+prioritize hypotheses; the downstream outcomes still require their own measured
+endpoints and held-out validation.
 
 The native perturbation owner also has an opt-in paired-donor negative-binomial
 response mode. It fits native NB2 count effects, preserves per-feature

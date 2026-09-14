@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "scope": "Native multimodal structural regression only; no biological outcome or preservation claim",
+  "date": "2026-09-14",
+  "commit": "07d91974b31efdf705e1aebfd271a60f152a98cf",
+  "host": "ns-Mac-mini.local",
+  "model": "Mac16,11",
+  "os": "macOS 26.6 (25G72)",
+  "command": "NUMIVIVO_TEST_HDF5=1 NUMIVIVO_HDF5_LIBRARY=/Users/n/numivivo-multiassay-hdf5-20260909/libhdf5.dylib DYLD_LIBRARY_PATH=/Users/n/numivivo-multiassay-hdf5-20260909:/opt/homebrew/opt/hdf5/lib swift test --filter MultiAssay",
+  "tests": 13,
+  "suites": [
+    "MultiAssayTests",
+    "MultiAssayH5MUImportTests",
+    "MultiAssayVisiumTests"
+  ],
+  "coverage": [
+    "HDF5 H5MU export and import",
+    "partial modality observation maps",
+    "exact UInt64 counts above 2^53",
+    "spatial positions and missing rows",
+    "genomic interval/unit validation",
+    "malformed map and identity rejection"
+  ],
+  "testBinarySHA256": "d6030275906da1ceb3e22233870305274e209435f2954af761082e026c54c57b",
+  "hdf5Libraries": {
+    "libhdf5.dylib": {
+      "sha256": "a00ffbf8ab94ad81f67231a1ae01df748689e1c35a3615a57f88f4710b8d213e",
+      "bytes": 4007360
+    },
+    "libsz.2.dylib": "e553aa5b2770b66005ce40b59653d9bfc7f371e68f69f3c4cc0bc75c4ca9d531",
+    "libaec.0.dylib": "6d3a4455baacac9af8238eb5ee72af10ef4a854e79fbbc75dce3da4af56524ab"
+  },
+  "qualification": "Regression of native structural behavior at the published commit. The test does not qualify joint multimodal inference, regulatory validity, biological preservation, unseen contexts, or clinical outcomes."
+}

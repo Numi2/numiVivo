@@ -191,6 +191,18 @@ cross-space duplicate-variable-name warnings remain in the logs.
 The [complete paired RNA/ATAC benchmark](MULTIOME.md) documents the separate
 Cell Ranger ARC cut-site unit and the full-source qualification protocol.
 
+## Native regression recheck on 2026-09-14
+
+At the published `07d91974` source revision, an isolated M4 Pro run passed all
+13 `MultiAssayTests`, `MultiAssayH5MUImportTests` and `MultiAssayVisiumTests`
+with native HDF5 enabled. The run rechecked H5MU round trips, partial modality
+maps, UInt64 values above 2^53, spatial positions and malformed-input rejection;
+the exact command, host, test-binary and HDF5 hashes are in the
+[regression record](evidence/2026-09-14-native-regression.json). This is a
+source/runtime regression check. It does not change the failed paired RNA/ATAC
+preservation gate or establish joint multimodal, regulatory, tissue or clinical
+prediction.
+
 ## Native Visium directory input
 
 The [Visium importer](Visium/README.md) now accepts original filtered RNA HDF5

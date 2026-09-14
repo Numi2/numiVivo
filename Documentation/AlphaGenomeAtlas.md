@@ -1,6 +1,6 @@
 # AlphaGenome Atlas integration assessment
 
-Assessed 2026-09-09 and sources rechecked 2026-09-11: the [DeepMind announcement, 2026-09-08](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
+Assessed 2026-09-09 and sources rechecked 2026-09-14: the [DeepMind announcement, 2026-09-08](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
 and the [official API repository](https://github.com/google-deepmind/alphagenome).
 The single-cell integration below remains proposed. The repository now also has
 a [native Atlas evidence layer and external retrieval adapter](Design/ALPHAGENOME_ATLAS.md)
@@ -15,6 +15,12 @@ predictions; feature attributions and sequence motifs support interpretation.
 The API exposes Atlas alongside model predictions for expression, splicing,
 chromatin features and contact maps. This is directly relevant to the planned
 variant → regulation → RNA/cell-state connection and future RNA/ATAC comparisons.
+
+The announcement describes Atlas as a starting point for research and says that
+AlphaGenome has not been validated or approved for clinical use. NumiVivo therefore
+records an Atlas result as an external molecular hypothesis. It cannot be promoted
+to a measured cell state, treatment response, tissue function or clinical endpoint
+without an allele-resolved experiment and an independent held-out outcome test.
 
 For the current [biological prediction decision](BiologicalPrediction.md#available-information-does-not-imply-a-validated-outcome),
 Atlas adds predicted molecular effects for identified DNA variants. It does not

@@ -757,7 +757,10 @@ The complete development objective remains open:
    earlier qualified dataset/H5MU bytes. Native replay, 13 Swift tests and 16
    lifecycle/regression commands pass. This is a bounded resident RNA/spot path;
    HD Parquet, Matrix Market directories and biological ATAC/spatial analysis,
-   continuous measurements and joint multimodal analysis remain open.
+   continuous measurements and joint multimodal analysis remain open. A fresh
+   M4 Pro regression at the published revision passes 13 native multimodal tests;
+   its [host and binary record](../Tools/Omics/Multimodal/evidence/2026-09-14-native-regression.json)
+   confirms source/runtime continuity without changing those biological limits.
 9. **Out-of-core:** streamed H5AD normalization/HVG and explicitly memory-mapped
    selected-entry PCA now pass full Baron and Hagai comparisons against Scanpy;
    see [storage and qualification](../Tools/Omics/Reduction/STREAMING.md).

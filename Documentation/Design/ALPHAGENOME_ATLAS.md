@@ -1,5 +1,12 @@
 # AlphaGenome Atlas + RNA-supported splice evidence
 
+The [official AlphaGenome Atlas announcement](https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/)
+describes the atlas as a genome-scale molecular-effect resource and a baseline
+for further work. It also states that AlphaGenome has not been validated or
+approved for clinical use. These source statements are part of this boundary:
+the adapter can preserve variant-level hypotheses, but it must not label them as
+phenotype, treatment-benefit or clinical predictions.
+
 ## Status
 
 NumiVivo now has a native, immutable genomic-evidence layer for public-reference
