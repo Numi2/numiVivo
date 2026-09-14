@@ -1,0 +1,22 @@
+{
+  "candidate": "global fixed ridge=4",
+  "cells": 1612594,
+  "comparisons": 471,
+  "completePreservationQualified": false,
+  "decision": "Do not promote ridge=4. It leaves the native 37/146 and 10/29 preservation failures, with a slightly worse maximum fold loss. Numerical replay and the independent oracle pass; biological preservation remains unqualified.",
+  "labelsAuthoritative": false,
+  "marginFailures": 37,
+  "maximumFoldRecallLoss": 0.6156462585034013,
+  "meanSensitiveRecallLoss": -0.003823540999999123,
+  "method": "diversity-soft-clustering-categorical-ridge-Double-v1",
+  "nativeComparison": {
+    "marginFailures": 37,
+    "meanSensitiveRecallLoss": -0.003809612576037156,
+    "rareMarginFailures": 10
+  },
+  "rareMarginFailures": 10,
+  "rareSensitive": 29,
+  "sensitiveSufficient": 146,
+  "status": "rejected-for-promotion",
+  "study": "HIRISA complete deposited release"
+}

@@ -1,0 +1,15 @@
+{
+  "inputKind": "fitted",
+  "integration": {
+    "clusters": 100,
+    "covariate": "donor",
+    "diversity": 2,
+    "maximumIterations": 10,
+    "maximumWork": 100000000000,
+    "relativeTolerance": 0.01,
+    "ridge": 4,
+    "seed": 7,
+    "temperature": 0.1
+  },
+  "schemaVersion": 1
+}

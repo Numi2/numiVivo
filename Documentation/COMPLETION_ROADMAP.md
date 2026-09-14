@@ -99,6 +99,12 @@ for the existing native correction. The candidate remains a rejected development
 experiment; local composition/alignment and independent biological endpoints are
 still required.
 
+The predeclared [ridge-4 global candidate](../Tools/Omics/Benchmarks/HIRISA/RIDGE4.md)
+then changed only the fixed donor-effect penalty from 1 to 4. Native replay and
+the independent SVD oracle passed, but absolute retention remained 37/146
+failures, including 10/29 rare comparisons, with a slightly worse worst-fold
+loss. The preservation gate remains open and no correction method is promoted.
+
 The following molecular milestones remain part of the wider product roadmap;
 they do not replace this immediate single-cell priority.
 

@@ -13,6 +13,12 @@ global correction. The candidate is fully replayed and independently checked,
 yet remains rejected for promotion; complete biological preservation is still
 unqualified.
 
+The predeclared [ridge-4 global candidate](RIDGE4.md) changes only the fixed
+donor-effect penalty from 1 to 4. Native publication/replay and the independent
+SVD oracle pass, but the absolute retention comparison remains 37/146 failures
+(10/29 rare) and the worst fold loss is slightly worse than native. It is
+rejected for promotion and does not change the preservation boundary.
+
 A subsequent [within-library decoder development experiment](PROGRAM_CALIBRATION.md)
 meets the unchanged program-loss margins with 28/32 sensitive controls, four
 insufficient. It identifies objective dependence without replacing the original

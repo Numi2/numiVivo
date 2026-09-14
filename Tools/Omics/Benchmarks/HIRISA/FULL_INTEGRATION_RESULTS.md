@@ -18,6 +18,12 @@ control-sensitive comparisons, including 10/29 rare comparisons, versus 37/146
 for the existing native global correction. The candidate is retained as a
 fully checked development result and rejected for promotion.
 
+The predeclared [ridge-4 global candidate](RIDGE4.md) changes only the fixed
+donor-effect penalty from 1 to 4. It completes native publication/replay and
+the independent SVD oracle, but still fails 37/146 supported comparisons,
+including 10/29 rare comparisons, with a slightly worse maximum fold loss.
+No integration method is promoted from these preservation results.
+
 A subsequent [within-library decoder development experiment](PROGRAM_CALIBRATION.md)
 meets the unchanged program-loss margins with 28/32 sensitive controls, four
 insufficient. It identifies objective dependence without replacing the original

@@ -610,6 +610,11 @@ The complete development objective remains open:
    global correction. The native receipt and independent SVD oracle pass, while
    the complete preservation gate remains failed and the candidate is not
    promoted.
+   The predeclared [ridge-4 global candidate](../Tools/Omics/Benchmarks/HIRISA/RIDGE4.md)
+   changes only the fixed donor-effect penalty from 1 to 4. Native replay and
+   the independent SVD oracle pass, but absolute retention remains 37/146
+   failures (10/29 rare) with a slightly worse worst-fold loss; it is rejected
+   for promotion.
    The [full source design audit](../Tools/Omics/Reduction/IntegrationDesign/README.md)
    checks all 131 HIRISA libraries and 1,612,594 observation memberships. Donor
    and batch columns are separable across the full atlas but redundant in Bcell,

@@ -28,6 +28,12 @@ comparisons, including 10/29 rare comparisons, versus 37/146 for the existing
 native correction. It remains a rejected development candidate; integration
 does not yet establish biological preservation.
 
+The predeclared [ridge-4 global candidate](Tools/Omics/Benchmarks/HIRISA/RIDGE4.md)
+changes only the fixed donor-effect penalty from 1 to 4. Native replay and an
+independent SVD oracle pass, but absolute retention remains 37/146 failures
+(10/29 rare), with a slightly worse worst-fold loss. It is rejected for
+promotion and does not change the biological-outcome boundary.
+
 The [SEQC technical bulk-RNA benchmark](Tools/Omics/Benchmarks/SEQC/README.md) now runs all six public Illumina RefSeq sites through native negative-binomial DE and compares the same counts with edgeR, limma-voom and DESeq2. All methods pass the preregistered descriptive measurement gate against 785 eligible independent TaqMan rows; this is technical reference-RNA evidence, not biological-donor or general outcome-prediction validation.
 
 The [translation-only ablation](Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) reduces annotation failures to 22/146 but fails a B-cell IFNa response comparison and leaves more donor scatter. Fewer failures do not establish adequate integration; no method is promoted.

@@ -22,6 +22,12 @@ rare comparisons. The existing native global correction fails 37/146. The
 candidate's aggregate recall improvement therefore does not qualify complete
 preservation and it is not promoted.
 
+The predeclared [ridge-4 global candidate](RIDGE4.md) changes only the fixed
+donor-effect penalty from 1 to 4. Native publication/replay and the independent
+SVD oracle pass, while the absolute comparison remains **37/146** with **10/29**
+rare failures. Its maximum fold loss is slightly worse than native, so the
+candidate is also rejected for promotion.
+
 ## Complete cohort and controls
 
 All **1,612,594 original cells**, 131 libraries, five donors, 23 original
@@ -57,7 +63,9 @@ The primary limits are mean donor recall loss at most 0.05 and loss at most 0.10
 in every donor fold, conditional on sufficient support and control sensitivity.
 These engineering margins do not establish biological utility. The
 [complete comparison TSV](ANNOTATION_RETENTION_RESULTS.tsv) retains all 1,884
-candidate/label/stratum rows, including insufficient and improved outcomes.
+historical candidate/label/stratum rows, including insufficient and improved
+outcomes. The ridge-4 rows and their full per-cell diagnostics are archived
+separately in the [ridge-4 evidence bundle](evidence/2026-09-14-ridge4/manifest.json).
 
 | Candidate | Supported, sensitive comparisons | Failures | Rare supported, sensitive | Rare failures | Complete gate |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -66,6 +74,7 @@ candidate/label/stratum rows, including insufficient and improved outcomes.
 | harmony-19 | 146 | 39 | 29 | 12 | fail |
 | harmony-41 | 146 | 38 | 29 | 11 | fail |
 | condition-stratified candidate | 146 | 40 | 29 | 10 | fail |
+| ridge-4 global candidate | 146 | 37 | 29 | 10 | fail |
 
 ## Every native margin failure
 
