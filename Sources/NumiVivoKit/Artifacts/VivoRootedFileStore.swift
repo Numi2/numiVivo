@@ -25,9 +25,12 @@ final class VivoRootedFileStore: @unchecked Sendable {
     }
     let rootURL: URL
     private let root: Int32
-    init(rootURL: URL, createIfNeeded: Bool) throws {
+    init(rootURL: URL, createIfNeeded: Bool, preResolved: Bool = false) throws {
         guard rootURL.isFileURL else { throw Failure.invalidPath("root is not a file URL") }
-        self.rootURL = rootURL.standardizedFileURL
+        // A caller that resolved the existing parent with realpath must be
+        // able to retain that path. Foundation's standardizedFileURL resolves
+        // an existing `/private/tmp` directory back to the `/tmp` symlink.
+        self.rootURL = preResolved ? URL(fileURLWithPath: rootURL.path, isDirectory: true) : rootURL.standardizedFileURL
         if createIfNeeded {
             try FileManager.default.createDirectory(at: self.rootURL, withIntermediateDirectories: true,
                                                      attributes: [.posixPermissions: 0o700])

@@ -172,7 +172,7 @@ extension VivoSingleCellCampaignIO {
               !rootURL.path.contains("\0"), !fileName.isEmpty else {
             throw VivoOmicsError.invalid("document root or file name is invalid")
         }
-        let files = try VivoRootedFileStore(rootURL: rootURL, createIfNeeded: false)
+        let files = try VivoRootedFileStore(rootURL: rootURL, createIfNeeded: false, preResolved: true)
         return try files.readFile(fileName, maximumBytes: maximumBytes)
     }
 }
