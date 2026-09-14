@@ -188,4 +188,27 @@ import Testing
         #expect(estimate.unclippedResponse.count == m && estimate.predictedTreated.count == m)
         #expect(try VivoCanonicalJSON.decode(VivoPerturbationModel.self,from: VivoCanonicalJSON.encode(model)) == model)
     }
+    @Test func negativeBinomialOmitsDonorNestedBatchFromPairedDesign() throws {
+        let source=try SingleCellNBCohortTests.fixture()
+        let samples=source.samples.map { sample in
+            VivoOmicsSample(id: sample.id,biologicalReplicateID: sample.biologicalReplicateID,
+                donorID: sample.donorID,condition: sample.condition,batchID: sample.donorID!,organism: sample.organism)
+        }
+        let data=VivoSingleCellDataset(id: source.id,evidence: source.evidence,sourceDescription: source.sourceDescription,
+            countUnit: source.countUnit,samples: samples,features: source.features,cells: source.cells,matrix: source.matrix)
+        let metadata=data.metadata,bulk=try VivoSingleCellAnalysis.pseudobulk(data)
+        let report=VivoH5ADPseudobulkReport(schemaVersion: 1,method: "synthetic-nb-nested-batch",metadata: metadata,
+            quality: try VivoSingleCellAnalysis.quality(data),pseudobulk: bulk,canonicalNonzeros: data.matrix.counts.count,
+            hdf5Version: "fixture",contrasts: [])
+        let mapping=VivoH5ADImportPlan(id: "nb-nested-batch",evidence: .synthetic,sourceDescription: "NB nested-batch fixture",
+            countUnit: data.countUnit,matrixPath: "X",samples: samples,sampleColumn: "sample")
+        var options=VivoOmicsNBCohortOptions(); options.trend = .mean
+        let plan=VivoPerturbationPlan(mapping: mapping,featureNamespace: "synthetic",perturbationID: "synthetic-treatment",
+            controlCondition: "ctrl",treatmentCondition: "stim",provenance: "Synthetic numerical control, not biological qualification",
+            responseModel: .negativeBinomial,negativeBinomialOptions: options)
+        let model=try VivoPerturbation.model(report,plan: plan,source: VivoFingerprint(bytes: Array(repeating: 0,count: 32)))
+        let nb=try #require(model.negativeBinomial)
+        #expect(nb.request.adjustForBatch == false)
+        #expect(!nb.testedFeatureIndices.isEmpty)
+    }
 }

@@ -290,6 +290,34 @@ public enum VivoPerturbation {
             maximumSolveResidual: maximumResidual,qualification: qualification,donorResponseVariances: responseVariances,
             negativeBinomial: negativeBinomial)
     }
+    private static func batchAdjustmentIsIdentifiable(_ groups: [VivoPseudobulkGroup],
+                                                       control: String,treatment: String) throws -> Bool {
+        guard groups.allSatisfy({ $0.batchIDs.count == 1 }) else { return false }
+        let batches = Set(groups.flatMap(\.batchIDs)).sorted()
+        guard batches.count > 1 else { return false }
+        let donors = Set(groups.compactMap(\.donorID)).sorted()
+        var design = groups.map { [1.0, $0.condition == treatment ? 1.0 : 0.0] }
+        for donor in donors.dropFirst() {
+            for row in design.indices { design[row].append(groups[row].donorID == donor ? 1.0 : 0.0) }
+        }
+        for batch in batches.dropFirst() {
+            for row in design.indices { design[row].append(groups[row].batchIDs[0] == batch ? 1.0 : 0.0) }
+        }
+        do {
+            _ = try VivoOmicsQR(design: design)
+            return true
+        } catch {
+            let byDonor = Dictionary(grouping: groups, by: \.donorID)
+            let donorNested = byDonor.values.allSatisfy { rows in
+                Set(rows.map(\.condition)) == Set([control,treatment]) &&
+                    Set(rows.flatMap(\.batchIDs)).count == 1
+            }
+            guard donorNested else {
+                throw VivoOmicsError.invalid("negative-binomial batch adjustment is not identifiable")
+            }
+            return false
+        }
+    }
     private static func fitNegativeBinomial(metadata: VivoSingleCellCountMetadata,bulk: VivoPseudobulkCounts,
                                             plan: VivoPerturbationPlan,featureIDs: [String],donorCount: Int) throws -> VivoPerturbationNBModel {
         let options = plan.negativeBinomialOptions ?? .init()
@@ -308,9 +336,13 @@ public enum VivoPerturbation {
         request.minimumFeatureCounts = 10
         request.minimumExpressingPseudobulks = 3
         request.minimumReferenceFeatures = min(10,featureIDs.count)
-        // A batch column is included only when every aggregate row names one
-        // batch. Pooled rows cannot be assigned a categorical batch effect.
-        request.adjustForBatch = bulk.groups.allSatisfy { $0.batchIDs.count == 1 }
+        // A batch column is included only when it is identifiable after the
+        // paired-donor columns are present. Pooled rows cannot be assigned a
+        // categorical batch effect. A batch nested inside a donor is already
+        // represented by that donor's fixed effect and is therefore omitted;
+        // other rank failures remain hard errors below.
+        request.adjustForBatch = try batchAdjustmentIsIdentifiable(bulk.groups,
+            control: plan.controlCondition,treatment: plan.treatmentCondition)
         let result = try VivoPseudobulkDifferentialExpression.evaluate(metadata: metadata,bulk: bulk,contrast: request)
         guard result.features.count == bulk.featureIDs.count,let diagnostics = result.negativeBinomial,
               diagnostics.features.count == bulk.featureIDs.count else {
