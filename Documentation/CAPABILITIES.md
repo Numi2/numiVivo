@@ -3,8 +3,9 @@
 This is a source-backed map of the implementation, not a feature certification. The public package combines mature contracts, new numerical source and experimental methods. A successful import, a function named after a method, or a committed example does not establish numerical agreement or biological applicability.
 
 The navigation and implementation references below describe the reviewed source at
-`ee3d5242e0a7e6b723c2fc5691d8f979b0bfe3ad` for the current single-cell evidence,
-including the native gzip H5AD and cross-scale CLI qualification receipts. Historical
+`609a5ad8de241e251b25be9319d3d216755b96f1` for the current single-cell evidence,
+including native gzip H5AD import, scan, axis-projection and cross-scale CLI
+qualification receipts. Historical
 receipts retain their named runtime identities. Consult the actual revision when a
 method changes. This map deliberately does not assign an unmeasured speedup or
 maximum biological scale.
@@ -12,7 +13,7 @@ maximum biological scale.
 ## Single-cell analysis and biological prediction
 
 The single-cell entries were reviewed against published evidence available at
-`ee3d5242e0a7e6b723c2fc5691d8f979b0bfe3ad` on 2026-09-14. Historical receipts retain their named runtime identities.
+`609a5ad8de241e251b25be9319d3d216755b96f1` on 2026-09-14. Historical receipts retain their named runtime identities.
 
 | Capability | Implemented and measured scope | Remaining boundary |
 | --- | --- | --- |
