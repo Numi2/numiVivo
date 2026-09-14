@@ -983,7 +983,9 @@ biological outcome. `VivoQuantitativeH5MUIO.importH5MU` packages the source and
 plan beside a normalized H5MU and canonical dataset, with a receipt binding
 their fingerprints to an implementation identity. `verify` re-reads the source,
 rebuilds the dataset and export, and rejects changed source, plan, dataset or
-implementation bytes.
+implementation bytes. The same route is available from the native executable:
+`quantitative-h5mu-import <source.h5mu> --plan <plan.json> --output <bundle>`
+and `quantitative-h5mu-verify <bundle>`.
 
 ## Source-bound aggregation cohorts
 
