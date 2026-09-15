@@ -18,6 +18,34 @@ import Testing
     }
 
     @Test(.enabled(if: ProcessInfo.processInfo.environment["NUMIVIVO_TEST_METAL"] == "1"))
+    func packedIndependentObjectivesMatchIndividualMetalAndFP64Oracle() throws {
+        let inputs: [([UInt64], [Double], Double)] = [
+            ([0, 3, 12, 7, 1, 19], [0.25, 1.2, 4.5, 8.0, 2.1, 17.0], 0.2),
+            ([9, 2, 0, 31, 5, 15, 1, 8], [3.0, 0.75, 1.1, 29.0, 6.5, 11.0, 0.5, 4.2], 0.01),
+            ([2, 11, 4, 18, 0, 6, 23, 9, 3], [0.4, 8.5, 2.0, 13.0, 1.0, 7.2, 19.0, 5.5, 2.5], 1.7)
+        ]
+        let requests = try inputs.map { counts, means, dispersion in
+            try VivoMetalNegativeBinomialLikelihood.BatchRequest(counts: counts,
+                means: means, dispersion: dispersion)
+        }
+        let packed = try VivoMetalNegativeBinomialLikelihood.evaluateBatch(requests)
+        let replay = try VivoMetalNegativeBinomialLikelihood.evaluateBatch(requests)
+        #expect(packed.count == inputs.count)
+        #expect(packed == replay)
+        for index in inputs.indices {
+            let (counts, means, dispersion) = inputs[index]
+            let individual = try VivoMetalNegativeBinomialLikelihood(counts: counts, dispersion: dispersion)
+            let scalar = try individual.evaluate(means: means)
+            let expected = zip(counts, means).reduce(0.0) { total, pair in
+                let y = Double(pair.0), mu = pair.1
+                return total + y * log(mu) - (y + 1 / dispersion) * log1p(dispersion * mu)
+            }
+            #expect(abs(packed[index] - scalar) <= max(5e-5, abs(scalar) * 5e-6))
+            #expect(abs(packed[index] - expected) <= max(5e-5, abs(expected) * 5e-6))
+        }
+    }
+
+    @Test(.enabled(if: ProcessInfo.processInfo.environment["NUMIVIVO_TEST_METAL"] == "1"))
     func optInFitUsesMetalObjectiveAndRetainsExactReport() throws {
         let counts: [UInt64] = [11, 20, 12, 55, 43, 61]
         let design = [[1.0, 0], [1, 0], [1, 0], [1, 1], [1, 1], [1, 1]]
@@ -38,6 +66,10 @@ import Testing
     func objectiveRejectsCountsOutsideFP32Contract() throws {
         #expect(throws: (any Error).self) {
             _ = try VivoMetalNegativeBinomialLikelihood(counts: [16_777_217], dispersion: 0.2)
+        }
+        #expect(throws: (any Error).self) {
+            _ = try VivoMetalNegativeBinomialLikelihood.BatchRequest(counts: [1, 2],
+                means: [1.0], dispersion: 0.2)
         }
     }
 

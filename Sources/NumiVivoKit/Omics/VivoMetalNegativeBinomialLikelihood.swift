@@ -143,9 +143,11 @@ enum VivoMetalNBExecutionProfileContext {
 private struct VivoMetalNBResources {
     let device: MTLDevice
     let pipeline: MTLComputePipelineState
+    let batchPipeline: MTLComputePipelineState
     let queue: MTLCommandQueue
     let countBuffer: MTLBuffer
     let meanBuffer: MTLBuffer
+    let dispersionBuffer: MTLBuffer
     let termBuffer: MTLBuffer
 }
 
@@ -169,18 +171,25 @@ private final class VivoMetalNBPipelineCache: @unchecked Sendable {
         guard let function = library.makeFunction(name: "vivo_nb_variable_objective") else {
             throw VivoOmicsStatisticsError.invalid("missing Metal NB objective kernel")
         }
+        guard let batchFunction = library.makeFunction(name: "vivo_nb_variable_objective_batch") else {
+            throw VivoOmicsStatisticsError.invalid("missing packed Metal NB objective kernel")
+        }
         let pipeline = try device.makeComputePipelineState(function: function)
+        let batchPipeline = try device.makeComputePipelineState(function: batchFunction)
         guard let queue = device.makeCommandQueue(),
               let countBuffer = device.makeBuffer(length: VivoMetalNegativeBinomialLikelihood.batchObservations * MemoryLayout<UInt32>.stride,
                                                   options: .storageModeShared),
               let meanBuffer = device.makeBuffer(length: VivoMetalNegativeBinomialLikelihood.batchObservations * MemoryLayout<Float>.stride,
                                                  options: .storageModeShared),
+              let dispersionBuffer = device.makeBuffer(length: VivoMetalNegativeBinomialLikelihood.batchObservations * MemoryLayout<Float>.stride,
+                                                       options: .storageModeShared),
               let termBuffer = device.makeBuffer(length: VivoMetalNegativeBinomialLikelihood.batchObservations * MemoryLayout<Float>.stride,
                                                  options: .storageModeShared) else {
             throw VivoOmicsStatisticsError.invalid("Metal NB objective buffers")
         }
-        let result = VivoMetalNBResources(device: device, pipeline: pipeline, queue: queue,
-                                          countBuffer: countBuffer, meanBuffer: meanBuffer, termBuffer: termBuffer)
+        let result = VivoMetalNBResources(device: device, pipeline: pipeline, batchPipeline: batchPipeline,
+                                          queue: queue, countBuffer: countBuffer, meanBuffer: meanBuffer,
+                                          dispersionBuffer: dispersionBuffer, termBuffer: termBuffer)
         cached = result
         return try body(result)
     }
@@ -200,16 +209,8 @@ final class VivoMetalNegativeBinomialLikelihood {
     static let source = """
     #include <metal_stdlib>
     using namespace metal;
-    kernel void vivo_nb_variable_objective(
-        device const uint *counts [[buffer(0)]],
-        device const float *means [[buffer(1)]],
-        device float *terms [[buffer(2)]],
-        constant float &dispersion [[buffer(3)]],
-        constant uint &count [[buffer(4)]],
-        uint i [[thread_position_in_grid]]) {
-        if (i >= count) return;
-        float y = float(counts[i]);
-        float mu = means[i];
+    inline float vivo_nb_variable_term(uint count, float mu, float dispersion) {
+        float y = float(count);
         float x = dispersion * mu;
         // Separate the 1/a term before evaluating it. Directly multiplying
         // (y + 1/a) by log1p(a*mu) loses the Poisson-limit objective in FP32
@@ -225,7 +226,27 @@ final class VivoMetalNegativeBinomialLikelihood {
         float logOnePlus = fabs(x) < 1.0e-3f
             ? x - x * x * 0.5f + x * x * x / 3.0f - x * x * x * x * 0.25f
             : log(1.0f + x);
-        terms[i] = y * (log(mu) - logOnePlus) - scaledLog;
+        return y * (log(mu) - logOnePlus) - scaledLog;
+    }
+    kernel void vivo_nb_variable_objective(
+        device const uint *counts [[buffer(0)]],
+        device const float *means [[buffer(1)]],
+        device float *terms [[buffer(2)]],
+        constant float &dispersion [[buffer(3)]],
+        constant uint &count [[buffer(4)]],
+        uint i [[thread_position_in_grid]]) {
+        if (i >= count) return;
+        terms[i] = vivo_nb_variable_term(counts[i], means[i], dispersion);
+    }
+    kernel void vivo_nb_variable_objective_batch(
+        device const uint *counts [[buffer(0)]],
+        device const float *means [[buffer(1)]],
+        device const float *dispersions [[buffer(2)]],
+        device float *terms [[buffer(3)]],
+        constant uint &count [[buffer(4)]],
+        uint i [[thread_position_in_grid]]) {
+        if (i >= count) return;
+        terms[i] = vivo_nb_variable_term(counts[i], means[i], dispersions[i]);
     }
     """
 
@@ -234,18 +255,65 @@ final class VivoMetalNegativeBinomialLikelihood {
     private let dispersion: Float
     #endif
 
-    init(counts: [UInt64], dispersion: Double) throws {
-        guard !counts.isEmpty, counts.count <= Self.maximumObservations,
-              counts.allSatisfy({ $0 <= UInt64(Self.maximumCount) }),
-              dispersion.isFinite, (1e-8...100).contains(dispersion),
-              Float(dispersion).isFinite else {
-            throw VivoOmicsStatisticsError.invalid("Metal NB objective count or dispersion domain")
+    /// An intentionally internal request for the packed experimental objective.
+    /// It retains each request's own FP32 domain and dispersion so a future
+    /// deterministic cohort planner can group independent gene objectives
+    /// without treating them as one statistical fit.
+    struct BatchRequest: Sendable {
+        fileprivate let counts: [UInt32]
+        fileprivate let means: [Float]
+        fileprivate let dispersion: Float
+
+        init(counts: [UInt64], means: [Double], dispersion: Double) throws {
+            let validatedDispersion = try VivoMetalNegativeBinomialLikelihood.validatedDispersion(dispersion)
+            let validatedCounts = try VivoMetalNegativeBinomialLikelihood.validatedCounts(counts)
+            guard means.count == validatedCounts.count else {
+                throw VivoOmicsStatisticsError.invalid("Metal NB batch mean dimensions")
+            }
+            self.counts = validatedCounts
+            self.means = try VivoMetalNegativeBinomialLikelihood.fp32Means(means,
+                dispersion: validatedDispersion)
+            self.dispersion = validatedDispersion
         }
-        self.counts = counts.map(UInt32.init)
+    }
+
+    private static func validatedCounts(_ counts: [UInt64]) throws -> [UInt32] {
+        guard !counts.isEmpty, counts.count <= maximumObservations,
+              counts.allSatisfy({ $0 <= UInt64(maximumCount) }) else {
+            throw VivoOmicsStatisticsError.invalid("Metal NB objective count domain")
+        }
+        return counts.map(UInt32.init)
+    }
+
+    private static func validatedDispersion(_ dispersion: Double) throws -> Float {
+        guard dispersion.isFinite, (1e-8...100).contains(dispersion),
+              Float(dispersion).isFinite else {
+            throw VivoOmicsStatisticsError.invalid("Metal NB objective dispersion domain")
+        }
+        return Float(dispersion)
+    }
+
+    private static func fp32Means(_ means: [Double], dispersion: Float) throws -> [Float] {
+        try means.map { value -> Float in
+            guard value.isFinite, value > 0, value >= Double(Float.leastNormalMagnitude),
+                  value <= Double(Float.greatestFiniteMagnitude) else {
+                throw VivoOmicsStatisticsError.invalid("Metal NB objective mean outside FP32 domain")
+            }
+            let converted = Float(value)
+            guard converted.isFinite, converted > 0,
+                  (converted * dispersion).isFinite else {
+                throw VivoOmicsStatisticsError.invalid("Metal NB objective mean or product outside FP32 domain")
+            }
+            return converted
+        }
+    }
+
+    init(counts: [UInt64], dispersion: Double) throws {
+        self.counts = try Self.validatedCounts(counts)
         #if canImport(Metal)
+        self.dispersion = try Self.validatedDispersion(dispersion)
         try Task.checkCancellation()
         try Self.pipelineCache.withResources { _ in }
-        self.dispersion = Float(dispersion)
         #else
         throw VivoOmicsStatisticsError.invalid("Metal NB objective is unavailable")
         #endif
@@ -273,18 +341,7 @@ final class VivoMetalNegativeBinomialLikelihood {
         let conversionStarted = execution == nil ? nil : vivoMetalNBClock()
         let fp32Means: [Float]
         do {
-            fp32Means = try means.map { value -> Float in
-                guard value.isFinite, value > 0, value >= Double(Float.leastNormalMagnitude),
-                      value <= Double(Float.greatestFiniteMagnitude) else {
-                    throw VivoOmicsStatisticsError.invalid("Metal NB objective mean outside FP32 domain")
-                }
-                let converted = Float(value)
-                guard converted.isFinite, converted > 0,
-                      (converted * dispersion).isFinite else {
-                    throw VivoOmicsStatisticsError.invalid("Metal NB objective mean or product outside FP32 domain")
-                }
-                return converted
-            }
+            fp32Means = try Self.fp32Means(means, dispersion: dispersion)
         } catch {
             if let execution, let conversionStarted {
                 execution.recordFP64ToFP32Conversion(elapsedNanoseconds: vivoMetalNBClock() - conversionStarted)
@@ -354,6 +411,103 @@ final class VivoMetalNegativeBinomialLikelihood {
         }
         completed = true
         return result
+        #else
+        throw VivoOmicsStatisticsError.invalid("Metal NB objective is unavailable")
+        #endif
+    }
+
+    /// Packs independent bounded objectives into shared dispatches while
+    /// retaining request order and a compensated FP64 CPU sum per request.
+    /// This is deliberately not connected to the synchronous cohort fitter or
+    /// its v1 execution profile: it establishes the arithmetic and packing
+    /// contract needed before an end-to-end scheduler can be measured.
+    static func evaluateBatch(_ requests: [BatchRequest]) throws -> [Double] {
+        guard !requests.isEmpty else {
+            throw VivoOmicsStatisticsError.invalid("Metal NB batch requires requests")
+        }
+        #if canImport(Metal)
+        try Task.checkCancellation()
+        return try Self.pipelineCache.withResources { resources in
+            let countPointer = resources.countBuffer.contents().bindMemory(to: UInt32.self,
+                capacity: Self.batchObservations)
+            let meanPointer = resources.meanBuffer.contents().bindMemory(to: Float.self,
+                capacity: Self.batchObservations)
+            let dispersionPointer = resources.dispersionBuffer.contents().bindMemory(to: Float.self,
+                capacity: Self.batchObservations)
+            let termPointer = resources.termBuffer.contents().bindMemory(to: Float.self,
+                capacity: Self.batchObservations)
+            var totals = Array(repeating: 0.0, count: requests.count)
+            var compensations = Array(repeating: 0.0, count: requests.count)
+            var requestIndex = 0
+            var requestOffset = 0
+
+            while requestIndex < requests.count {
+                try Task.checkCancellation()
+                var packedCount = 0
+                var segments: [(requestIndex: Int, outputOffset: Int, count: Int)] = []
+                while requestIndex < requests.count, packedCount < Self.batchObservations {
+                    let request = requests[requestIndex]
+                    let remaining = request.counts.count - requestOffset
+                    let count = min(Self.batchObservations - packedCount, remaining)
+                    request.counts[requestOffset..<requestOffset + count].withUnsafeBufferPointer { values in
+                        countPointer.advanced(by: packedCount).update(from: values.baseAddress!, count: count)
+                    }
+                    request.means[requestOffset..<requestOffset + count].withUnsafeBufferPointer { values in
+                        meanPointer.advanced(by: packedCount).update(from: values.baseAddress!, count: count)
+                    }
+                    for offset in 0..<count {
+                        dispersionPointer[packedCount + offset] = request.dispersion
+                    }
+                    segments.append((requestIndex: requestIndex, outputOffset: packedCount, count: count))
+                    packedCount += count
+                    requestOffset += count
+                    if requestOffset == request.counts.count {
+                        requestIndex += 1
+                        requestOffset = 0
+                    }
+                }
+
+                guard let command = resources.queue.makeCommandBuffer(),
+                      let encoder = command.makeComputeCommandEncoder() else {
+                    throw VivoOmicsStatisticsError.invalid("packed Metal NB objective command")
+                }
+                encoder.setComputePipelineState(resources.batchPipeline)
+                encoder.setBuffer(resources.countBuffer, offset: 0, index: 0)
+                encoder.setBuffer(resources.meanBuffer, offset: 0, index: 1)
+                encoder.setBuffer(resources.dispersionBuffer, offset: 0, index: 2)
+                encoder.setBuffer(resources.termBuffer, offset: 0, index: 3)
+                var n = UInt32(packedCount)
+                encoder.setBytes(&n, length: MemoryLayout<UInt32>.size, index: 4)
+                let width = min(resources.batchPipeline.threadExecutionWidth,
+                                resources.batchPipeline.maxTotalThreadsPerThreadgroup)
+                encoder.dispatchThreads(MTLSize(width: packedCount, height: 1, depth: 1),
+                    threadsPerThreadgroup: MTLSize(width: width, height: 1, depth: 1))
+                encoder.endEncoding()
+                command.commit()
+                command.waitUntilCompleted()
+                guard command.status == .completed else {
+                    throw VivoOmicsStatisticsError.invalid("packed Metal NB objective failed: " +
+                        (command.error?.localizedDescription ?? "unknown"))
+                }
+
+                for segment in segments {
+                    for offset in 0..<segment.count {
+                        let term = Double(termPointer[segment.outputOffset + offset])
+                        guard term.isFinite else {
+                            throw VivoOmicsStatisticsError.invalid("nonfinite packed Metal NB objective term")
+                        }
+                        let corrected = term - compensations[segment.requestIndex]
+                        let next = totals[segment.requestIndex] + corrected
+                        compensations[segment.requestIndex] = (next - totals[segment.requestIndex]) - corrected
+                        totals[segment.requestIndex] = next
+                    }
+                }
+            }
+            guard totals.allSatisfy(\.isFinite) else {
+                throw VivoOmicsStatisticsError.invalid("nonfinite packed Metal NB objective")
+            }
+            return totals
+        }
         #else
         throw VivoOmicsStatisticsError.invalid("Metal NB objective is unavailable")
         #endif
