@@ -54,6 +54,12 @@ hypothesis-only paths without converting them into outcome claims. The [native M
 CLI qualification](Tools/Omics/CrossScale/evidence/2026-09-14-native-cli/README.md)
 records that the current graph stops at the missing variant → regulation evidence.
 
+The native `VivoCrossScaleAtlasBuilder` now projects a verified Atlas
+request/capture into that graph. Available molecular-effect scores are retained
+as a hypothesis-only variant → regulation edge; no-data and failed queries stay
+explicit, and every downstream boundary remains unavailable until independently
+validated evidence is supplied.
+
 The [translation-only ablation](Tools/Omics/Benchmarks/HIRISA/TranslationOnly/README.md) reduces annotation failures to 22/146 but fails a B-cell IFNa response comparison and leaves more donor scatter. Fewer failures do not establish adequate integration; no method is promoted.
 
 The [matched-control donor-shift experiment](Tools/Omics/Benchmarks/HIRISA/MatchedControlShift/README.md) estimates shifts from 403,449 control cells but still fails 34/146 annotation comparisons and one response contrast. Control-only shift estimation does not resolve the preservation gap.

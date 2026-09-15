@@ -62,6 +62,12 @@ Virtual Cell Challenge 2026 adapter](../Tools/Omics/Arc2026/README.md) now has
 context outcome score; it therefore remains benchmark-conformance evidence rather
 than biological-outcome validation.
 
+The native `VivoCrossScaleAtlasBuilder` can now turn an exact verified Atlas
+request/capture pair into a cross-scale projection with a hypothesis-only
+variant → regulation edge and explicit unavailable downstream boundaries.
+No-data and failed variant queries remain unavailable, and the projection does
+not add regulatory, phenotype or tissue validation.
+
 The native [cross-scale evidence contract](Design/CROSS_SCALE_EVIDENCE.md) and its
 [M4 CLI qualification](../Tools/Omics/CrossScale/evidence/2026-09-14-native-cli/README.md)
 now validate ordered variant → regulation → RNA/cell state → protein →

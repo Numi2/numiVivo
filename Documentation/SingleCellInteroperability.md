@@ -978,6 +978,11 @@ The complete development objective remains open:
     every transition has source/model/validation fingerprints and held-out
     observations. Its focused tests cover qualified, hypothesis-only, missing
     and out-of-order links; no current graph passes the complete-path gate.
+    `VivoCrossScaleAtlasBuilder` now projects an exact, verified Atlas request
+    and capture into that graph: available molecular-effect scores form a
+    hypothesis-only variant → regulation edge, while no-data/failed queries and
+    all downstream boundaries remain explicit gaps. This is a native provenance
+    handoff, not regulatory, phenotype or tissue validation.
 
 ### Quantitative assay interchange
 

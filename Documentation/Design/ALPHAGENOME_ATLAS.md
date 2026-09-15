@@ -52,6 +52,16 @@ request planner after selectors and the applicable usage terms are independently
 resolved. This is a genomics/provenance capability and adds no variant-effect,
 cell-state, tissue or clinical outcome claim.
 
+`VivoCrossScaleAtlasBuilder` can now consume the exact verified request and
+capture bytes and emit a native `VivoCrossScaleAtlasProjection`. When at least
+one requested variant has an available score, the projection records the
+variant → regulation edge as an Atlas molecular-effect hypothesis with request,
+capture and provider/client identity fingerprints. No-data and failed queries
+remain unavailable, and every regulation → RNA/cell-state and later boundary is
+also emitted as unavailable until its own validated model and held-out
+observations are supplied. This makes the handoff executable without turning an
+Atlas score into a phenotype or tissue prediction.
+
 An imported document can be exported with the public `VivoVCFWriter.encode` API
 or written directly with `VivoVCFWriter.write`. The writer checks the source and
 candidate digests, reconstructs each source-line multiallelic group and retains

@@ -100,4 +100,56 @@ import Testing
                                             gaps: [duplicateGap]).validate()
         }
     }
+
+    @Test func atlasCaptureProjectsHypothesisAndRetainsDownstreamGaps() throws {
+        let digest = String(repeating: "a", count: 64)
+        let binding = VivoGenomicCaseBinding(parentReportSHA256: digest, caseFingerprint: digest,
+            dataClass: "synthetic", assembly: "GRCh38", referenceSHA256: digest,
+            hlaAlleles: ["HLA-A*02:01"], tumorRNASampleID: "rna")
+        let candidateID = try VivoAtlasEvidence.digest(Data("candidate".utf8))
+        let input = VivoAtlasVariantInput(candidateID: candidateID, chromosome: "chr1",
+            start0: 9, stop0: 10, reference: "A", alternate: "C")
+        let request = try VivoAtlasEvidence.plan(binding: binding, inputs: [input],
+            requestedScorers: ["SYNTHETIC_RNA"], ontologyTerms: ["CL:0000000"])
+        let requestData = try VivoCanonicalJSON.encode(request)
+        let query = try #require(request.variants.first)
+        let capture = VivoAtlasCapture(schema: "numivivo.org/atlas-capture/v1",
+            requestSHA256: try VivoAtlasEvidence.digest(requestData), mode: "fixture",
+            provider: "google-deepmind/alphagenome-atlas", clientCommit: VivoAtlasEvidence.clientCommit,
+            clientVersion: "0.0.0-synthetic", adapterSHA256: digest,
+            retrievedAt: "2026-09-08T00:00:00Z", serviceVersion: nil,
+            serviceVersionStatus: "not-exposed-by-pinned-api",
+            termsURI: "https://deepmind.google.com/science/alphagenome/terms",
+            permittedUse: "noncommercialResearch", trainingPermitted: false,
+            referenceCheck: "synthetic-not-biological", referenceSHA256: digest,
+            outcomes: [.init(variantKey: query.key, status: .available, diagnostic: nil)],
+            tables: [.init(scorer: "SYNTHETIC_RNA", isSigned: true,
+                observations: [.init(variantKey: query.key, metadata: ["gene": .string("G1")])],
+                tracks: [["ontology": .string("CL:0000000")]], rawScores: [[0.4]], quantiles: [[0.7]])])
+
+        let projection = try VivoCrossScaleAtlasBuilder.build(request: request,
+            capture: capture, requestData: requestData)
+        try projection.validate()
+        #expect(projection.coverage.requestedVariants == 1)
+        #expect(projection.coverage.availableVariants == 1)
+        #expect(projection.coverage.scoreCells == 1)
+        #expect(projection.graph.links.first?.status == .hypothesis)
+        #expect(projection.graph.nodes[1].evidenceClass == .predicted)
+        let assessment = try projection.graph.assess()
+        #expect(assessment.hypothesisBoundaries == ["variant → regulation"])
+        #expect(assessment.missingBoundaries.count == 6)
+        #expect(!assessment.canReportResearchOutcome)
+        #expect(try VivoCanonicalJSON.decode(VivoCrossScaleAtlasProjection.self,
+            from: VivoCanonicalJSON.encode(projection)) == projection)
+
+        var unavailable = capture
+        unavailable.outcomes[0].status = .noData
+        unavailable.tables = []
+        let missing = try VivoCrossScaleAtlasBuilder.build(request: request,
+            capture: unavailable, requestData: requestData)
+        #expect(missing.coverage.availableVariants == 0)
+        #expect(missing.coverage.noDataVariants == 1)
+        #expect(missing.graph.links.first?.status == .unavailable)
+        #expect(try missing.graph.assess().readiness == .incomplete)
+    }
 }
