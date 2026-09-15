@@ -12,9 +12,9 @@ references. It is not a dependency of native NumiVivo count execution.
 ## Machine-readable registry
 
 [`benchmark-manifest.json`](benchmark-manifest.json) records the public releases,
-counts, replicate semantics, reference methods, executable evidence paths and
-limitations for the real suite. Validate the registry without downloading the
-large source or evidence payloads:
+counts, replicate semantics, expected biology or measurement signals, reference
+methods, executable evidence paths and limitations for the real suite. Validate
+the registry without downloading the large source or evidence payloads:
 
 ```sh
 python Tools/Omics/Benchmarks/check_manifest.py

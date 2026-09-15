@@ -6,7 +6,7 @@ NumiVivo is a research platform for molecular simulation and programmable biolog
 
 The ambition is to follow a molecular change across scales: how a structure moves, where electrons interact, which reactions become possible, and how those reactions affect a cell or physiological model. Every transition should preserve the quantities, assumptions and evidence needed to understand the result.
 
-The real-data benchmark registry now records source identity, replicate semantics, reference methods and limits in one machine-readable file: [`Tools/Omics/Benchmarks/benchmark-manifest.json`](Tools/Omics/Benchmarks/benchmark-manifest.json). It currently reports biological-outcome prediction as **not established**; conditional expression-response results and Atlas molecular-effect scores remain evidence at their own boundaries.
+The real-data benchmark registry now records source identity, replicate semantics, expected biology or measurement signals, reference methods and limits in one machine-readable file: [`Tools/Omics/Benchmarks/benchmark-manifest.json`](Tools/Omics/Benchmarks/benchmark-manifest.json). It currently reports biological-outcome prediction as **not established**; conditional expression-response results and Atlas molecular-effect scores remain evidence at their own boundaries.
 
 [Get started](#get-started) · [Explore the capabilities](#explore-the-capabilities) · [Examples](#choose-an-experiment) · [Documentation](Documentation/README.md) · [Implementation status](Documentation/CAPABILITIES.md) · [Completion roadmap](Documentation/COMPLETION_ROADMAP.md)
 

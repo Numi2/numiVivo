@@ -21,7 +21,7 @@ SCHEMA = "numivivo.org/benchmark-manifest/v1"
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 REQUIRED_ENTRY_KEYS = {
     "id", "status", "evidenceClass", "modality", "organism", "source",
-    "scope", "design", "references", "evidencePaths", "result", "limitations",
+    "scope", "design", "expectedBiology", "references", "evidencePaths", "result", "limitations",
 }
 
 
@@ -123,7 +123,7 @@ def validate(manifest: dict, root: Path) -> dict:
         require(isinstance(design, dict), f"{prefix}.design must be an object")
         for key in ("comparison", "formula", "holdout"):
             require(isinstance(design.get(key), str) and design[key].strip(), f"{prefix}.design.{key} is required")
-        for key in ("references", "evidencePaths", "limitations"):
+        for key in ("expectedBiology", "references", "evidencePaths", "limitations"):
             values = entry[key]
             require(isinstance(values, list) and values and all(isinstance(v, str) and v.strip() for v in values),
                     f"{prefix}.{key} must contain non-empty strings")

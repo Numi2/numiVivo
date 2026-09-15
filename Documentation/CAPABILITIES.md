@@ -30,9 +30,9 @@ positive and negative results and next evidence gates, and the
 owner-specific limits. Count/latent storage is bounded or streamed in specific
 stages; cell-scale metadata and several model arrays still reside in memory.
 The [benchmark registry](../Tools/Omics/Benchmarks/benchmark-manifest.json)
-provides the machine-readable public-source, replicate-semantics and reference
-method inventory; its outcome status remains `not-established`. No general
-Metal speedup for this pipeline is established.
+provides the machine-readable public-source, replicate-semantics, expected
+signal and reference-method inventory; its outcome status remains
+`not-established`. No general Metal speedup for this pipeline is established.
 
 The production cohort analysis now accepts `VivoOmicsNBCohortOptions.backend =
 .metalFP32` for the fixed-dispersion NB2 fit and LRT null fit. The cached Metal
