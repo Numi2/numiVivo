@@ -9,8 +9,11 @@ each request's input order and compensated FP64 CPU reduction separate.
 
 This is deliberately narrower than a cohort backend. It neither changes the
 default CPU likelihood nor submits a biological or statistical result from the
-GPU. The existing opt-in `metalFP32` fitter remains experimental and its v1
-execution profile deliberately does not describe this primitive.
+GPU. The existing opt-in `metalFP32` fitter remains experimental. Its v2
+execution profile now also records whether the current FP32 Metal line-search
+decision agrees with the exact FP64 likelihood for each candidate in a cohort
+run. That audit does not alter the chosen candidate, recover failed fits, or
+describe this packed primitive.
 
 ## Contract
 
@@ -38,3 +41,10 @@ acceptance owner, and be remeasured on the declared supported domain against
 the CPU-successful fits. The focused Metal test compares packed values with
 both the scalar Metal objective and an FP64 CPU oracle; it is an arithmetic
 guard, not a performance qualification.
+
+The v2 profile audit is deliberately a failure-isolation step before changing
+the solver: it records both directions of decision disagreement and the maximum
+normalized margin difference under the current objective tolerances. It is not
+evidence that FP32 line-search decisions explain every current failure, and it
+does not replace a profiler or a complete same-domain CPU coverage/performance
+comparison.

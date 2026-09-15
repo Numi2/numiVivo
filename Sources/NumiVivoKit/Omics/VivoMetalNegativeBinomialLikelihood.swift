@@ -24,6 +24,14 @@ public struct VivoMetalNBExecutionProfile: Codable, Sendable, Equatable {
     public let cpuExactLikelihoodEvaluations: Int
     public let cpuExactLikelihoodObservations: UInt64
     public let cpuExactLikelihoodNanoseconds: UInt64
+    /// Present for v2 profiles. Each value compares the current FP32 Metal
+    /// line-search decision with the exact FP64 likelihood decision for the
+    /// same candidate; it does not change the selected candidate.
+    public let lineSearchCandidateEvaluations: Int?
+    public let metalAcceptedCPURejectedLineSearchCandidates: Int?
+    public let cpuAcceptedMetalRejectedLineSearchCandidates: Int?
+    /// Maximum over candidates with finite margins from both evaluators.
+    public let maximumAbsoluteNormalizedLineSearchMarginDifference: Double?
     public let qualification: String
 }
 
@@ -49,6 +57,10 @@ final class VivoMetalNBExecutionProfileCollector: @unchecked Sendable {
     private var cpuExactLikelihoodEvaluations = 0
     private var cpuExactLikelihoodObservations: UInt64 = 0
     private var cpuExactLikelihoodNanoseconds: UInt64 = 0
+    private var lineSearchCandidateEvaluations = 0
+    private var metalAcceptedCPURejectedLineSearchCandidates = 0
+    private var cpuAcceptedMetalRejectedLineSearchCandidates = 0
+    private var maximumAbsoluteNormalizedLineSearchMarginDifference = 0.0
 
     func recordFitStarted() {
         lock.lock(); defer { lock.unlock() }
@@ -97,6 +109,28 @@ final class VivoMetalNBExecutionProfileCollector: @unchecked Sendable {
         cpuExactLikelihoodNanoseconds += elapsedNanoseconds
     }
 
+    /// Audit the candidate decision without changing the experimental Metal
+    /// line search. The two margins use their respective current objectives
+    /// and tolerances, so an observed disagreement captures both FP32
+    /// arithmetic and the distinct scaling of the partial Metal objective.
+    func recordLineSearchAcceptanceAudit(metalCurrent: Double, metalCandidate: Double,
+                                         cpuCurrent: Double, cpuCandidate: Double) {
+        let metalMargin = (metalCandidate - metalCurrent) / max(1, abs(metalCurrent))
+        let cpuMargin = (cpuCandidate - cpuCurrent) / max(1, abs(cpuCurrent))
+        let metalAccepted = metalMargin.isFinite && metalMargin >= -1e-6
+        let cpuAccepted = cpuMargin.isFinite && cpuMargin >= -1e-10
+        lock.lock(); defer { lock.unlock() }
+        lineSearchCandidateEvaluations += 1
+        if metalAccepted && !cpuAccepted { metalAcceptedCPURejectedLineSearchCandidates += 1 }
+        if cpuAccepted && !metalAccepted { cpuAcceptedMetalRejectedLineSearchCandidates += 1 }
+        if metalMargin.isFinite, cpuMargin.isFinite {
+            maximumAbsoluteNormalizedLineSearchMarginDifference = max(
+                maximumAbsoluteNormalizedLineSearchMarginDifference,
+                abs(metalMargin - cpuMargin)
+            )
+        }
+    }
+
     func recordCohortEvaluation(elapsedNanoseconds: UInt64) {
         lock.lock(); defer { lock.unlock() }
         cohortEvaluationWallClockNanoseconds = elapsedNanoseconds
@@ -104,7 +138,7 @@ final class VivoMetalNBExecutionProfileCollector: @unchecked Sendable {
 
     func snapshot() -> VivoMetalNBExecutionProfile {
         lock.lock(); defer { lock.unlock() }
-        return .init(schemaVersion: "numi.vivo.metal-nb-execution-profile.v1",
+        return .init(schemaVersion: "numi.vivo.metal-nb-execution-profile.v2",
             cohortEvaluationWallClockNanoseconds: cohortEvaluationWallClockNanoseconds,
             fixedDispersionFitAttempts: fixedDispersionFitAttempts,
             completedFixedDispersionFits: completedFixedDispersionFits,
@@ -122,7 +156,11 @@ final class VivoMetalNBExecutionProfileCollector: @unchecked Sendable {
             cpuExactLikelihoodEvaluations: cpuExactLikelihoodEvaluations,
             cpuExactLikelihoodObservations: cpuExactLikelihoodObservations,
             cpuExactLikelihoodNanoseconds: cpuExactLikelihoodNanoseconds,
-            qualification: "Experimental wall-clock accounting for the opt-in Metal FP32 fixed-dispersion NB path only. This is not a GPU-profiler trace or a performance, numerical-agreement, statistical, or biological qualification. CPU gene-wise dispersion profiling, import/export, aggregation and other analysis work are outside the component totals.")
+            lineSearchCandidateEvaluations: lineSearchCandidateEvaluations,
+            metalAcceptedCPURejectedLineSearchCandidates: metalAcceptedCPURejectedLineSearchCandidates,
+            cpuAcceptedMetalRejectedLineSearchCandidates: cpuAcceptedMetalRejectedLineSearchCandidates,
+            maximumAbsoluteNormalizedLineSearchMarginDifference: maximumAbsoluteNormalizedLineSearchMarginDifference,
+            qualification: "Experimental wall-clock accounting and line-search-decision audit for the opt-in Metal FP32 fixed-dispersion NB path only. The audit compares each Metal candidate with the exact FP64 likelihood but does not change the Metal-selected candidate. This is not a GPU-profiler trace or a performance, numerical-agreement, statistical, or biological qualification. CPU gene-wise dispersion profiling, import/export, aggregation and other analysis work are outside the component totals.")
     }
 }
 
@@ -419,7 +457,7 @@ final class VivoMetalNegativeBinomialLikelihood {
     /// Packs independent bounded objectives into shared dispatches while
     /// retaining request order and a compensated FP64 CPU sum per request.
     /// This is deliberately not connected to the synchronous cohort fitter or
-    /// its v1 execution profile: it establishes the arithmetic and packing
+    /// its v2 execution profile: it establishes the arithmetic and packing
     /// contract needed before an end-to-end scheduler can be measured.
     static func evaluateBatch(_ requests: [BatchRequest]) throws -> [Double] {
         guard !requests.isEmpty else {

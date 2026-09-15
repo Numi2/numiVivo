@@ -83,6 +83,19 @@ import Testing
         #expect(!String(decoding: encoded, as: UTF8.self).contains("backend"))
     }
 
+    @Test func legacyExecutionProfileDecodesWithoutTheV2Audit() throws {
+        let legacy = """
+        {"schemaVersion":"numi.vivo.metal-nb-execution-profile.v1","cohortEvaluationWallClockNanoseconds":1,"fixedDispersionFitAttempts":2,"completedFixedDispersionFits":2,"fixedDispersionFitWallClockNanoseconds":3,"metalObjectiveAttempts":4,"completedMetalObjectiveEvaluations":4,"metalObjectiveWallClockNanoseconds":5,"metalObjectiveBatches":6,"metalObjectiveObservations":7,"fp64ToFP32ConversionNanoseconds":8,"sharedBufferWriteNanoseconds":9,"commandEncodingAndSubmissionNanoseconds":10,"commandCompletionNanoseconds":11,"cpuReductionNanoseconds":12,"cpuExactLikelihoodEvaluations":13,"cpuExactLikelihoodObservations":14,"cpuExactLikelihoodNanoseconds":15,"qualification":"legacy"}
+        """
+        let profile = try JSONDecoder().decode(VivoMetalNBExecutionProfile.self,
+            from: Data(legacy.utf8))
+        #expect(profile.schemaVersion == "numi.vivo.metal-nb-execution-profile.v1")
+        #expect(profile.lineSearchCandidateEvaluations == nil)
+        #expect(profile.metalAcceptedCPURejectedLineSearchCandidates == nil)
+        #expect(profile.cpuAcceptedMetalRejectedLineSearchCandidates == nil)
+        #expect(profile.maximumAbsoluteNormalizedLineSearchMarginDifference == nil)
+    }
+
     @Test(.enabled(if: ProcessInfo.processInfo.environment["NUMIVIVO_TEST_METAL"] == "1"))
     func cohortAnalysisCarriesExplicitMetalNBProfile() throws {
         let data = try SingleCellNBCohortTests.fixture()
@@ -103,7 +116,7 @@ import Testing
         #expect(result.negativeBinomial != nil)
         #expect(fits.count >= 20)
         #expect(fits.allSatisfy { $0.backend == .metalFP32 })
-        #expect(execution.schemaVersion == "numi.vivo.metal-nb-execution-profile.v1")
+        #expect(execution.schemaVersion == "numi.vivo.metal-nb-execution-profile.v2")
         #expect(execution.cohortEvaluationWallClockNanoseconds > 0)
         #expect(execution.fixedDispersionFitAttempts > 0)
         #expect(execution.completedFixedDispersionFits > 0)
@@ -113,11 +126,20 @@ import Testing
         #expect(execution.metalObjectiveObservations > 0)
         #expect(execution.cpuExactLikelihoodEvaluations > 0)
         #expect(execution.cpuExactLikelihoodObservations > 0)
+        let candidateEvaluations = try #require(execution.lineSearchCandidateEvaluations)
+        let metalAcceptedCPURejected = try #require(execution.metalAcceptedCPURejectedLineSearchCandidates)
+        let cpuAcceptedMetalRejected = try #require(execution.cpuAcceptedMetalRejectedLineSearchCandidates)
+        let maximumMarginDifference = try #require(execution.maximumAbsoluteNormalizedLineSearchMarginDifference)
+        #expect(candidateEvaluations > 0)
+        #expect(metalAcceptedCPURejected >= 0)
+        #expect(cpuAcceptedMetalRejected >= 0)
+        #expect(maximumMarginDifference.isFinite)
         let cohortDiagnostics = try #require(result.negativeBinomial)
         let encodedDiagnostics = try VivoCanonicalJSON.encode(cohortDiagnostics)
         #expect(!String(decoding: encodedDiagnostics, as: UTF8.self).contains("metalExecution"))
         let encodedExecution = try VivoCanonicalJSON.encode(execution)
         #expect(String(decoding: encodedExecution, as: UTF8.self).contains("cohortEvaluationWallClockNanoseconds"))
+        #expect(String(decoding: encodedExecution, as: UTF8.self).contains("lineSearchCandidateEvaluations"))
         #expect(result.features.filter { $0.status == .tested }.count == result.testedFeatures)
         let encodedPlan = try VivoCanonicalJSON.encode(report.plan)
         #expect(String(decoding: encodedPlan, as: UTF8.self).contains(#""backend":"metalFP32""#))

@@ -315,8 +315,19 @@ public enum VivoOmicsNegativeBinomial {
                 let candidate = zip(beta,proposed).map { $0 + fraction * ($1-$0) }
                 if let next = means(candidate) {
                     let nextObjective = try lineSearchObjective(next)
-                    if nextObjective.isFinite && nextObjective >= objective - objectiveTolerance * max(1,abs(objective)) {
-                        let nextLL = likelihood(next)
+                    let metalAccepted = nextObjective.isFinite && nextObjective >= objective - objectiveTolerance * max(1,abs(objective))
+                    // In a profiled cohort run, retain the exact CPU decision
+                    // for every finite Metal candidate. This is an audit only:
+                    // the experimental backend keeps its existing acceptance
+                    // owner and output until a measured result supports a
+                    // separate change to that contract.
+                    let auditedLL = execution.map { _ in likelihood(next) }
+                    if let execution, let auditedLL {
+                        execution.recordLineSearchAcceptanceAudit(metalCurrent: objective,
+                            metalCandidate: nextObjective, cpuCurrent: ll, cpuCandidate: auditedLL)
+                    }
+                    if metalAccepted {
+                        let nextLL = auditedLL ?? likelihood(next)
                         guard nextLL.isFinite else { throw VivoOmicsStatisticsError.invalid("nonfinite NB likelihood") }
                         beta = candidate; mu = next; ll = nextLL; objective = nextObjective; accepted = true; break
                     }
