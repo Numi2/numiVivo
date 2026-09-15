@@ -44,6 +44,13 @@ gene-wise dispersion profiles, trend, diagnostics, log likelihood and MAP
 shrinkage retain the FP64 CPU owner; adjusted QL rejects the profile. This
 changes execution placement only and adds no biological-outcome evidence.
 
+A fresh [public Kang B-cell run](Design/KANG_METAL_NB_2026-09-15.md) confirms
+that boundary on the current binary: the CPU control tests all 5,400 eligible
+features, while the Metal plan tests 3,803 and retains 1,597 explicit numerical
+failures. Common tested effects have matching signs, but this is a bounded
+same-count execution comparison and supplies no new phenotype, tissue or
+treatment-outcome validation.
+
 The complete [GSE181897 NB2 run](../Tools/Omics/PerturbationPrediction/GSE181897/NB_RESPONSE.md)
 executes and verifies 124 donor predictions. Its all-panel RMSE improves over
 no-change by 0.35% from Kang training and 2.72% from HIRISA training, below the

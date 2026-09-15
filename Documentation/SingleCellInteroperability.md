@@ -935,7 +935,13 @@ The complete development objective remains open:
     and current cohort regression pass focused CPU-oracle, fit-contract and
     FP32-domain checks. This is a bounded objective component, not full GPU model
     fitting, a speedup claim, FDR/interval calibration or biological outcome
-    validation.
+    validation. A fresh [matched public Kang run](Design/KANG_METAL_NB_2026-09-15.md)
+    on the current binary completes 3,803 of 5,400 eligible features with
+    3,766 Metal-tagged final fits and retains 1,597 explicit numerical failures;
+    the matched CPU control completes all 5,400. Common tested effects have
+    maximum absolute log2 difference `3.02e-6` and identical signs, but this
+    partial coverage remains a bounded execution comparison rather than a full
+    cohort Metal qualification.
 11. **Other omics:** a [SEQC technical bulk-RNA benchmark](../Tools/Omics/Benchmarks/SEQC/README.md)
     now runs all six public Illumina RefSeq sites through the native negative-
     binomial owner and compares the same counts/design with edgeR, limma-voom

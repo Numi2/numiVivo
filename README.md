@@ -516,7 +516,12 @@ receipt](Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-
 and current cohort regression pass the CPU-oracle, fit-contract and explicit
 FP32 count/mean-bound checks. This is a bounded objective component, not full
 GPU model fitting, a speedup claim, FDR/interval calibration or biological
-outcome validation.
+outcome validation. A fresh [matched public Kang run](Documentation/Design/KANG_METAL_NB_2026-09-15.md)
+completes 3,803 of 5,400 eligible features with 3,766 Metal-tagged final
+fits; 1,597 numerical failures remain explicit, while a matched CPU control
+completes all 5,400. Common tested effects differ by at most `3.02e-6` in
+log2 units with identical signs, which is a bounded numerical comparison,
+not biological outcome evidence.
 
 ## One scientific question, several scales
 

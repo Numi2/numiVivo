@@ -41,6 +41,10 @@ Examples are computational fixtures, not experimental protocols. Their README fi
 
 **Experiments and evidence.** Read [Artifacts and provenance](Design/ARTIFACTS_AND_PROVENANCE.md), [surrogate authority](Design/SURROGATE_AUTHORITY.md), and [artifact-store hardening](Audit/ARTIFACT_STORE_HARDENING.md). Experiment definitions, source identity, numerical configuration and evidence are separate data objects; a checksum is not a scientific validation result.
 
+The [current public Kang Metal NB run](Design/KANG_METAL_NB_2026-09-15.md)
+records the matched CPU/Metal result, the retained failed attempt and the
+explicit biological boundary.
+
 For an explicit variant-to-tissue evidence graph, run `numivivo cross-scale-assess graph.json`. Add `--require-qualified` when a workflow should fail closed unless all seven adjacent boundaries have source, model, validation and held-out observation evidence; the command preserves incomplete and hypothesis-only assessments as machine-readable output.
 
 ## Status and qualification
