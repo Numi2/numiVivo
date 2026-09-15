@@ -1,0 +1,43 @@
+{
+  "cells": 1612594,
+  "components": 20,
+  "declaredAtUnix": 1789079242.154269,
+  "designSHA256": "ace6e6eb5dad1ff8fcc43d748753b05a9e6d9a7d989a14efc6fe54cb066885e8",
+  "files": {
+    "ledger.json": "1ab6a26d26b7e82acbd2c57829f710a5c633dec82ddb0cc8b7f475052cf72464",
+    "protocol.md": "2ea388506056c6f11c8dc34406e22180d104221322ec8111dc5f68e1dcf6c38e",
+    "rows.npz": "e4d9a1cbe5c048efd15523f6a5a67a9574b35af3aeed1e2638332dec96fd13f2"
+  },
+  "folds": 114,
+  "matrices": {
+    "baseline": {
+      "SHA256": "62e6b0644e2c954749b77946ba748e184c33580614f5756b1bc1b0980df86296",
+      "path": "integration-full/pca/scores.bin"
+    },
+    "condition-f1": {
+      "SHA256": "bcd3cc6582f77fcf6e3d565daed5f42c7c2fbaef37b6ce1c2a2cf59ceafdebe6",
+      "path": "integration-condition-20260914/native/scores.bin"
+    },
+    "harmony-19": {
+      "SHA256": "508892427388f9ea3b997548f88269095cb1591a12a77bc40613a78fe7d3c34c",
+      "path": "integration-harmony/seed-19/scores.bin"
+    },
+    "harmony-41": {
+      "SHA256": "c816d5ced397248b6edffb5229a401d0f4186779422dc12d9cd85e377b148371",
+      "path": "integration-harmony/seed-41/scores.bin"
+    },
+    "harmony-7": {
+      "SHA256": "4e14bf44ff76b58fe566958bf582559d5f0321eb0fb0fda61722f680ebb8c4fa",
+      "path": "integration-harmony/seed-7/scores.bin"
+    },
+    "native": {
+      "SHA256": "51a37c9f2184ebf706348cacf4142d8cf005ca69e4fd5bdb4fd81c1e9601c756",
+      "path": "integration-full/native/scores.bin"
+    }
+  },
+  "metadataSHA256": "f81771d3a3f2db3fc23a4ec21b6d52f160ed2b56f843e567dfdf443e8cfc2b7f",
+  "metricsRead": false,
+  "preparerSHA256": "1abf818efb07b353ed1f6d924812517c3cba73d6789e21ca88638e81cdcb411b",
+  "schemaVersion": 1,
+  "sourceSHA256": "0873e698ebf8770a54e6dba09724ffbeda5e1a67dbf24d4e223552d4aca7969c"
+}

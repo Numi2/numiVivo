@@ -293,10 +293,12 @@
         "Tools/Omics/Benchmarks/HIRISA/ANNOTATION_RETENTION.md",
         "Tools/Omics/Benchmarks/HIRISA/CONDITION_STRATIFIED.md",
         "Tools/Omics/Benchmarks/HIRISA/RIDGE4.md",
+        "Tools/Omics/Benchmarks/HIRISA/FAILURE_TARGETING.md",
         "Tools/Omics/Benchmarks/HIRISA/evidence/2026-09-14-condition-stratified/manifest.json",
-        "Tools/Omics/Benchmarks/HIRISA/evidence/2026-09-14-ridge4/manifest.json"
+        "Tools/Omics/Benchmarks/HIRISA/evidence/2026-09-14-ridge4/manifest.json",
+        "Tools/Omics/Benchmarks/HIRISA/evidence/2026-09-15-failure-targeting/manifest.json"
       ],
-      "result": "Complete native ingestion/QC, DE, PCA, graph, frozen expression-fold replay and integration artifact reconstruction are independently checked. The native global, condition-stratified and ridge-4 integration candidates all fail the declared complete author-annotation preservation gate; none is promoted.",
+      "result": "Complete native ingestion/QC, DE, PCA, graph, frozen expression-fold replay and integration artifact reconstruction are independently checked. The native global, condition-stratified and ridge-4 integration candidates all fail the declared complete author-annotation preservation gate; none is promoted. A failure-targeting ledger retains the 29 shared and 11 newly introduced supported condition-stratified failures separately from 325 unsupported comparisons; it does not establish biological comparability or a corrected result.",
       "limitations": [
         "biological preservation and rare-cell retention remain unqualified; condition-stratified and ridge-4 candidates are rejected under the declared preservation gate",
         "conditional expression prediction does not establish tissue or treatment outcome prediction",

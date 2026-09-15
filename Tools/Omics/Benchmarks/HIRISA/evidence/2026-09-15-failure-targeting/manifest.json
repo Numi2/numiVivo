@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "status": "complete-failure-targeting-ledger",
+  "scope": "Derived from the frozen transductive author-annotation retention diagnostic; not a biological comparability, phenotype, or prospective integration qualification.",
+  "inputs": {
+    "ledger.json.gz": {
+      "SHA256": "2fc812492185c0521ac46b11dadf903bd171255889d1f1657e2bd04770b8d734"
+    },
+    "native.json.gz": {
+      "SHA256": "e1ea5f095b4121c870524b8a4914b7909d53caeb831fc25b09b302886c4083c2"
+    },
+    "condition-f1-vs-baseline.json.gz": {
+      "SHA256": "74121fc1e2cb00cb78c52ad794af377d4bc83bf63b34b43012e417120d5033c9"
+    },
+    "native-freeze.json": {
+      "SHA256": "0c6c9f5b5f36340e18f810a1591e3a8a44245f707189cb439722bb79bb64a425"
+    },
+    "condition-f1-freeze.json": {
+      "SHA256": "2a4cd29ad37a2d57cb75cc57cb23d2a847fdc496762f744e000e605cff2c1253"
+    }
+  },
+  "files": {
+    "failure-targets.json": {
+      "SHA256": "d586eb4e6030d000cdd39f9066839bf669e4e2b172db25739d33305904860784",
+      "bytes": 414405
+    },
+    "native-freeze.json": {
+      "SHA256": "0c6c9f5b5f36340e18f810a1591e3a8a44245f707189cb439722bb79bb64a425",
+      "bytes": 1598
+    },
+    "condition-f1-freeze.json": {
+      "SHA256": "2a4cd29ad37a2d57cb75cc57cb23d2a847fdc496762f744e000e605cff2c1253",
+      "bytes": 1776
+    }
+  },
+  "sourceFiles": {
+    "Tools/Omics/Benchmarks/HIRISA/summarize_annotation_retention_failures.py": {
+      "SHA256": "7a57e893e097b70ab356fbbdc25f9902c0a2c01129be8694f8546e4b50b7f90e",
+      "bytes": 13436
+    },
+    "Tools/Omics/Benchmarks/HIRISA/test_annotation_retention_failure_summary.py": {
+      "SHA256": "526a50e7da6512e4db443d832013d2cbe654f16357329b616f59e02964147272",
+      "bytes": 4232
+    },
+    "Tools/Omics/Benchmarks/HIRISA/FAILURE_TARGETING.md": {
+      "SHA256": "832b8f0ba914a254db34c4808b3dd2bd46fb8930b73a7f47a79fa922aa2af624",
+      "bytes": 2978
+    }
+  },
+  "result": {
+    "allComparisons": 471,
+    "supportedControlSensitive": 146,
+    "unsupported": 325,
+    "nativeMarginFailures": 37,
+    "candidateMarginFailures": 40,
+    "sharedMarginFailures": 29,
+    "newCandidateMarginFailures": 11,
+    "resolvedByCandidate": 8
+  },
+  "freezeProvenance": {
+    "relationship": "candidate_freeze_extends_native_freeze",
+    "addedMatrix": "condition-f1",
+    "addedMatrixSHA256": "bcd3cc6582f77fcf6e3d565daed5f42c7c2fbaef37b6ce1c2a2cf59ceafdebe6",
+    "verification": "All non-matrix fields and all pre-existing matrices are exact. The candidate score matrix is the only permitted addition."
+  },
+  "decision": "Do not promote the condition-stratified candidate. Investigate shared and newly introduced supported failures before a further correction experiment; retain unsupported comparisons explicitly without claiming biological comparability."
+}
