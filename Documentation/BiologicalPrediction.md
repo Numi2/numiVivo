@@ -2,7 +2,7 @@
 
 **Available information supports conditional RNA-response estimates with limited,
 context-dependent predictive value. Reliable prediction of general biological
-outcomes is not established.** The strongest evidence is
+outcomes is not established.** The benchmark registry ([`Tools/Omics/Benchmarks/benchmark-manifest.json`](../Tools/Omics/Benchmarks/benchmark-manifest.json)) makes the evidence boundary explicit: NumiVivo has measured, held-out expression-response results for selected donors and perturbations, plus verified quantitative and Atlas inputs, but it does not yet have a validated model and independent held-out endpoint for a cellular, tissue, disease or treatment outcome. The registry checker is a provenance/scope check, not a biological qualification. The strongest evidence is
 prediction of a known perturbation in an unseen donor from that donor's observed
 control profile. Native models also predict combinations of previously observed
 targets, and a GO-based prototype predicts some unseen targets with a small,

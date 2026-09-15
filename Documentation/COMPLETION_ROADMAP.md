@@ -25,6 +25,8 @@ biological preservation → perturbation prediction. The
 required capabilities, including annotation, multimodal assays, out-of-core
 execution, later Metal acceleration and cross-scale biology.
 
+The benchmark stage now has a checked-in [scope and provenance registry](../Tools/Omics/Benchmarks/benchmark-manifest.json). Its offline checker validates the seven declared public/technical entries and retains the current conclusion that biological-outcome prediction is not established.
+
 The [million-cell AnnData annotation and graph-label export](../Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md)
 now complete with exact cell-identity/metadata checks and backed AnnData reopening.
 Numeric legacy categories, scalar embeddings and numeric-index analytical

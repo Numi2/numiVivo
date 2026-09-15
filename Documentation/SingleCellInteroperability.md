@@ -439,7 +439,7 @@ The complete development objective remains open:
    Annotation admits 16 GiB source/32 GiB output and two-million-element axes;
    existing total edit and string-byte budgets still apply. These are qualified
    interchange routes, not cell-type or outcome validation.
-2. **Experimental benchmarks:** one eight-donor Kang B-cell contrast now passes
+2. **Experimental benchmarks:** the machine-readable [benchmark registry](../Tools/Omics/Benchmarks/benchmark-manifest.json) now binds each public release to its scope, replicate semantics, reference methods, executable evidence paths and limitations. Run `python Tools/Omics/Benchmarks/check_manifest.py` before a benchmark rerun; it checks the contract without downloading the source payloads. One eight-donor Kang B-cell contrast now passes
    exact Scanpy QC/pseudobulk checks and a descriptive PyDESeq2 comparison; Haber
    tuft-cell count/QC passes. A third treatment study,
    [Crowell cortex](../Tools/Omics/Benchmarks/Crowell/README.md), now adds all

@@ -1,0 +1,269 @@
+{
+  "schema": "numivivo.org/benchmark-manifest/v1",
+  "updated": "2026-09-15",
+  "status": "experimental-real-data-suite",
+  "purpose": "Machine-readable inventory of public count benchmarks, their replicate semantics, reference comparisons and remaining scientific limits.",
+  "biologicalOutcomePrediction": {
+    "status": "not-established",
+    "availableInputs": [
+      "source-count and quantitative-assay measurements with declared identities",
+      "conditional expression-response predictors for selected held-out donors and perturbations",
+      "variant-to-regulation hypothesis scores from a verified Atlas capture"
+    ],
+    "missingEvidence": [
+      "a measured cellular, tissue, disease or treatment endpoint",
+      "a model linking the available measurements to that endpoint",
+      "independent held-out outcome validation and uncertainty calibration"
+    ]
+  },
+  "benchmarks": [
+    {
+      "id": "kang2018-bcells",
+      "status": "completed",
+      "evidenceClass": "measured",
+      "modality": "scRNA-seq",
+      "organism": "NCBITaxon:9606",
+      "source": {
+        "study": "Kang et al. 2018",
+        "publication": "https://doi.org/10.1038/nbt.4042",
+        "download": "https://ndownloader.figshare.com/files/34464122",
+        "sha256": "e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830",
+        "hashScope": "downloaded H5AD release"
+      },
+      "scope": {
+        "cells": 2651,
+        "features": 15706,
+        "nonzeros": 1479543,
+        "donors": 8,
+        "replicateSemantics": "eight biological donors paired across IFNB stimulation and control; sixteen donor-condition pseudobulks"
+      },
+      "design": {
+        "comparison": "IFNB stimulation versus control in B cells",
+        "formula": "~ donor + condition",
+        "holdout": "none; descriptive same-cohort reference comparison"
+      },
+      "references": ["Scanpy", "PyDESeq2", "edgeR QL", "limma-voom", "DESeq2"],
+      "evidencePaths": [
+        "Tools/Omics/Benchmarks/run_kang.py",
+        "Tools/Omics/Bioconductor/README.md"
+      ],
+      "result": "Exact native counts, QC and pseudobulks; native and reference effects are compared descriptively.",
+      "limitations": [
+        "one cell type and one treatment contrast",
+        "support rejection and large p-value differences remain",
+        "no calibrated significance, causal or production claim"
+      ]
+    },
+    {
+      "id": "pbmc3k",
+      "status": "completed",
+      "evidenceClass": "measured",
+      "modality": "scRNA-seq",
+      "organism": "NCBITaxon:9606",
+      "source": {
+        "study": "Scanpy PBMC3K public dataset",
+        "publication": "https://scanpy.readthedocs.io/en/latest/generated/scanpy.datasets.pbmc3k.html",
+        "download": "https://scanpy.readthedocs.io/en/latest/generated/scanpy.datasets.pbmc3k.html"
+      },
+      "scope": {
+        "cells": 2700,
+        "features": 32738,
+        "nonzeros": 2286884,
+        "donors": 0,
+        "replicateSemantics": "single library; donor replication is unavailable"
+      },
+      "design": {
+        "comparison": "count, QC and annotation/interchange preservation",
+        "formula": "none",
+        "holdout": "none; interoperability and numerical reconstruction only"
+      },
+      "references": ["Scanpy", "AnnData"],
+      "evidencePaths": ["Tools/Omics/H5AD/check_public_data.py"],
+      "result": "Full native count/replay route and Scanpy QC agree within the declared numerical tolerance.",
+      "limitations": [
+        "one library with no donor inference",
+        "no differential expression or biological outcome endpoint"
+      ]
+    },
+    {
+      "id": "haber2017-tuft",
+      "status": "completed",
+      "evidenceClass": "measured",
+      "modality": "scRNA-seq",
+      "organism": "NCBITaxon:10090",
+      "source": {
+        "study": "Haber et al. 2017",
+        "publication": "https://doi.org/10.1038/nature24489",
+        "download": "https://ndownloader.figshare.com/files/54169301",
+        "sha256": "efcb49770529ec14e1ba6b45b3d0086b3829e4a63a85c02793f0d7ad90b6db21",
+        "hashScope": "downloaded H5AD release"
+      },
+      "scope": {
+        "cells": 409,
+        "features": 15215,
+        "nonzeros": 684794,
+        "donors": 0,
+        "replicateSemantics": "annotated tuft cells with two batch labels per treatment; individual donor IDs are not supplied"
+      },
+      "design": {
+        "comparison": "count and QC preservation only",
+        "formula": "none",
+        "holdout": "none; donor differential expression is not admitted"
+      },
+      "references": ["Scanpy", "AnnData"],
+      "evidencePaths": ["Tools/Omics/Benchmarks/run_haber.py"],
+      "result": "Exact native counts/replay and Scanpy QC pass for all annotated tuft cells and source genes.",
+      "limitations": [
+        "individual donors are unavailable",
+        "batch labels are not treated as biological replicates",
+        "no donor-level DE or outcome claim"
+      ]
+    },
+    {
+      "id": "hagai-original-emtabs",
+      "status": "completed",
+      "evidenceClass": "measured",
+      "modality": "scRNA-seq",
+      "organism": "NCBITaxon:10090",
+      "source": {
+        "study": "E-MTAB-6754 original author-filtered UMI matrices",
+        "publication": "https://doi.org/10.1038/s41586-018-0657-2",
+        "download": "https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-6754",
+        "hashScope": "six source files; per-file SHA-256 values are retained by audit_hagai_original.py"
+      },
+      "scope": {
+        "cells": 13863,
+        "features": 22048,
+        "nonzeros": 32848185,
+        "donors": 3,
+        "replicateSemantics": "three source mouse prefixes paired across unstimulated and six-hour LPS files; the prefix pairing is explicit inference"
+      },
+      "design": {
+        "comparison": "six-hour LPS versus unstimulated",
+        "formula": "~ donor + condition",
+        "holdout": "none; native NB/PyDESeq2 comparison on three paired donors"
+      },
+      "references": ["Scanpy", "PyDESeq2", "edgeR QL", "limma-voom", "DESeq2"],
+      "evidencePaths": [
+        "Tools/Omics/Benchmarks/audit_hagai_original.py",
+        "Tools/Omics/Benchmarks/run_hagai_nb.py",
+        "Tools/Omics/Bioconductor/README.md"
+      ],
+      "result": "Exact source counts/QC/pseudobulks and a descriptive paired NB comparison pass the recorded checks.",
+      "limitations": [
+        "pairing is source-name inference, not a direct table crosswalk",
+        "two residual degrees of freedom make reference dispersion estimates unreliable",
+        "the six-hour contrast is not the paper's four-hour DE reproduction"
+      ]
+    },
+    {
+      "id": "crowell-cortex",
+      "status": "completed",
+      "evidenceClass": "measured",
+      "modality": "single-nucleus RNA-seq",
+      "organism": "NCBITaxon:10090",
+      "source": {
+        "study": "Crowell et al. cortex",
+        "publication": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7705760/",
+        "download": "https://doi.org/10.6084/m9.figshare.8976473.v1",
+        "artifactSha256": [
+          {"kind": "Rda", "sha256": "3193a33fa7acb650fdb1e682822705d7c68057aba93d84dac63a364e40fdb1fe"},
+          {"kind": "prepared H5AD", "sha256": "a7ffac5f541409c4b0b55446f6b46f9c955e370b03aa2bc1f785be21c1353b66"}
+        ]
+      },
+      "scope": {
+        "cells": 25224,
+        "features": 11076,
+        "nonzeros": 38142743,
+        "donors": 8,
+        "replicateSemantics": "four Vehicle and four LPS independent mice; seven populations publish, CPE remains replication-insufficient"
+      },
+      "design": {
+        "comparison": "LPS versus Vehicle by population",
+        "formula": "intercept + LPS",
+        "holdout": "none; direct native versus edgeR/limma-voom/DESeq2 comparison"
+      },
+      "references": ["Scanpy", "edgeR QL", "limma-voom", "DESeq2"],
+      "evidencePaths": [
+        "Tools/Omics/Benchmarks/Crowell/README.md",
+        "Tools/Omics/Benchmarks/Crowell/check_models.py"
+      ],
+      "result": "Complete count/QC checks and seven native analyses plus 42 direct R fits pass; strict conditional-refit failures remain retained.",
+      "limitations": [
+        "significance disagreements remain substantial",
+        "strict p-value refit checks fail for eight cases",
+        "no FDR calibration or biological truth claim"
+      ]
+    },
+    {
+      "id": "hirisa-gse306664",
+      "status": "completed",
+      "evidenceClass": "measured",
+      "modality": "scRNA-seq",
+      "organism": "NCBITaxon:9606",
+      "source": {
+        "study": "GSE306664 complete deposited release",
+        "download": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE306664",
+        "artifactSha256": [
+          {"kind": "prepared H5AD", "sha256": "0873e698ebf8770a54e6dba09724ffbeda5e1a67dbf24d4e223552d4aca7969c"}
+        ],
+        "hashScope": "prepared complete-source H5AD; original 131 H5 files retain per-file hashes in the evidence"
+      },
+      "scope": {
+        "cells": 1612594,
+        "features": 18082,
+        "nonzeros": 3845991249,
+        "donors": 5,
+        "replicateSemantics": "all 131 deposited libraries across five original donors; donor-held-out folds are frozen separately"
+      },
+      "design": {
+        "comparison": "complete-source ingestion, DE, PCA/graph, integration and conditional response prediction",
+        "formula": "study-specific frozen designs",
+        "holdout": "79 donor-held-out expression folds; no phenotype or tissue endpoint"
+      },
+      "references": ["AnnData", "NumPy", "Scanpy", "Harmony"],
+      "evidencePaths": [
+        "Tools/Omics/Benchmarks/HIRISA/README.md",
+        "Tools/Omics/Benchmarks/HIRISA/PREDICTION_RESULTS.md"
+      ],
+      "result": "Complete native ingestion/QC, DE, PCA, graph and frozen expression-fold replay are independently checked.",
+      "limitations": [
+        "biological preservation and rare-cell retention remain unqualified",
+        "conditional expression prediction does not establish tissue or treatment outcome prediction",
+        "full million-cell clustering/integration performance and GPU qualification remain open"
+      ]
+    },
+    {
+      "id": "seqc-technical-bulk-rna",
+      "status": "completed",
+      "evidenceClass": "technical-measurement",
+      "modality": "bulk RNA-seq",
+      "organism": "reference RNA materials",
+      "source": {
+        "study": "Bioconductor seqc 1.46.0",
+        "download": "https://bioconductor.org/packages/release/data/experiment/html/seqc.html",
+        "sha256": "f54700f7ef029225455f8f6c83bf0211d106f68dc9656ed9ab9d7f82b5cce7ea",
+        "hashScope": "Bioconductor source archive"
+      },
+      "scope": {
+        "libraries": 54,
+        "features": 25794,
+        "sites": 6,
+        "replicateSemantics": "technical lane-derived libraries from UHRR/HBRR reference materials; not biological donors"
+      },
+      "design": {
+        "comparison": "native NB effects versus edgeR, limma-voom and DESeq2 with TaqMan reference",
+        "formula": "site-specific reference-RNA comparison",
+        "holdout": "none; descriptive technical measurement gate"
+      },
+      "references": ["edgeR", "limma-voom", "DESeq2", "TaqMan"],
+      "evidencePaths": ["Tools/Omics/Benchmarks/SEQC/README.md"],
+      "result": "All six sites pass the preregistered descriptive measurement gate across the compared methods.",
+      "limitations": [
+        "technical preparations are not biological replication",
+        "no intervention, phenotype, clinical benefit or general outcome endpoint",
+        "FDR and interval calibration remain open"
+      ]
+    }
+  ]
+}

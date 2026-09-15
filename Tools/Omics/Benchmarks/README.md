@@ -9,6 +9,22 @@ Completed native comparisons run the actual product commands and replay their re
 Python supplies public-data preparation and independent Scanpy/PyDESeq2
 references. It is not a dependency of native NumiVivo count execution.
 
+## Machine-readable registry
+
+[`benchmark-manifest.json`](benchmark-manifest.json) records the public releases,
+counts, replicate semantics, reference methods, executable evidence paths and
+limitations for the real suite. Validate the registry without downloading the
+large source or evidence payloads:
+
+```sh
+python Tools/Omics/Benchmarks/check_manifest.py
+```
+
+The checker uses the Git tree for sparse checkouts, so a passing registry check
+means the declared scope and provenance are present; it does not rerun a
+benchmark or promote biological-outcome claims. The registry currently records
+biological outcome prediction as **not established**.
+
 The [complete HIRISA source benchmark](HIRISA/README.md) adds all 131 deposited
 libraries: 1,612,594 cells and 3.846 billion count entries, with exact source and
 backed AnnData checks. Native release ingestion/reconstruction and independent

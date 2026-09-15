@@ -59,7 +59,7 @@ A useful qualification record includes the exact commit, input/configuration fin
 
 ## Contribute or report a problem
 
-Use [CONTRIBUTING.md](../CONTRIBUTING.md) for source ownership and change requirements. Use [SECURITY.md](../SECURITY.md) for the security-reporting boundary. Include small nonconfidential inputs and reproducible commands when reporting a numerical or integration failure.
+Use [CONTRIBUTING.md](../CONTRIBUTING.md) for source ownership and change requirements. The real-data [benchmark registry](../Tools/Omics/Benchmarks/benchmark-manifest.json) and its offline checker provide the current scope/provenance entry point. Use [SECURITY.md](../SECURITY.md) for the security-reporting boundary. Include small nonconfidential inputs and reproducible commands when reporting a numerical or integration failure.
 
 ## Prepared molecular integration
 
