@@ -76,6 +76,75 @@ import Testing
         try summary.validate()
     }
 
+    @Test func pairwiseAssociationUsesCompleteObservationsAndKeepsZerosMeasured() throws {
+        let base = Self.fixture()
+        let metabolite = VivoQuantitativeAssaySpace(
+            id: "metabolite", kind: .metabolomics, featureNamespace: "hmdb",
+            unit: "log10-concentration", sourceDescription: "Measured metabolite panel",
+            features: [
+                .init(id: "HMDB1", name: "metabolite-1", interval: nil),
+                .init(id: "HMDB0", name: "constant-zero", interval: nil)
+            ], observationIndices: [0, 1, 2],
+            matrix: .init(observationCount: 3, featureCount: 2,
+                          rowOffsets: [0, 2, 4, 6],
+                          featureIndices: [0, 1, 0, 1, 0, 1],
+                          values: [0, 1, 4, 1, 8, 1]))
+        let dataset = VivoQuantitativeAssayDataset(
+            id: base.id, evidence: base.evidence, sourceDescription: base.sourceDescription,
+            samples: base.samples, observations: base.observations,
+            spatialFrames: base.spatialFrames, assays: [base.assays[0], metabolite])
+        let pair = VivoQuantitativeAssayFeaturePair(leftAssayID: "protein", leftFeatureID: "P1",
+                                                     rightAssayID: "metabolite", rightFeatureID: "HMDB1")
+        let constantPair = VivoQuantitativeAssayFeaturePair(leftAssayID: "protein", leftFeatureID: "P1",
+                                                             rightAssayID: "metabolite", rightFeatureID: "HMDB0")
+        let summary = try dataset.pairwiseAssociationSummary([pair, constantPair])
+        let result = try #require(summary.associations.first { $0.rightFeatureID == "HMDB1" })
+        #expect(result.overlapCount == 2)
+        #expect(result.missingPairCount == 1)
+        #expect(result.leftMean == 0.625)
+        #expect(result.rightMean == 4)
+        #expect(result.leftVariance == 0.78125)
+        #expect(result.rightVariance == 32)
+        #expect(result.covariance == 5)
+        #expect(result.pearsonCorrelation == 1)
+        #expect(result.status == .computed)
+        let constant = try #require(summary.associations.first { $0.rightFeatureID == "HMDB0" })
+        #expect(constant.overlapCount == 2)
+        #expect(constant.status == .zeroVariance)
+        #expect(constant.rightVariance == 0)
+        #expect(constant.pearsonCorrelation == nil)
+        try summary.validate()
+        #expect(try VivoCanonicalJSON.decode(VivoQuantitativeAssayAssociationSummary.self,
+                                              from: VivoCanonicalJSON.encode(summary)) == summary)
+    }
+
+    @Test func pairwiseAssociationRetainsInsufficientOverlapAndRejectsDuplicatePairs() throws {
+        let pair = VivoQuantitativeAssayFeaturePair(leftAssayID: "protein", leftFeatureID: "P1",
+                                                     rightAssayID: "metabolite", rightFeatureID: "HMDB1")
+        let insufficient = try Self.fixture().pairwiseAssociationSummary([pair])
+        let result = try #require(insufficient.associations.first)
+        #expect(result.overlapCount == 0)
+        #expect(result.missingPairCount == 3)
+        #expect(result.leftMean == nil)
+        #expect(result.rightMean == nil)
+        #expect(result.status == .insufficientOverlap)
+
+        let reversed = VivoQuantitativeAssayFeaturePair(leftAssayID: pair.rightAssayID,
+                                                         leftFeatureID: pair.rightFeatureID,
+                                                         rightAssayID: pair.leftAssayID,
+                                                         rightFeatureID: pair.leftFeatureID)
+        #expect(throws: (any Error).self) {
+            try Self.fixture().pairwiseAssociationSummary([pair, reversed])
+        }
+        var object = try #require(JSONSerialization.jsonObject(
+            with: VivoCanonicalJSON.encode(insufficient)) as? [String: Any])
+        object["unexpected"] = true
+        #expect(throws: (any Error).self) {
+            try VivoCanonicalJSON.decode(VivoQuantitativeAssayAssociationSummary.self,
+                                         from: JSONSerialization.data(withJSONObject: object))
+        }
+    }
+
     @Test func rejectsNonfiniteValuesUnsortedIndicesAndDuplicateRows() throws {
         let base = Self.fixture()
         let badValue = VivoSparseValues(observationCount: 1, featureCount: 1,

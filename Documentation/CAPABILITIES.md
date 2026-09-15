@@ -3,7 +3,7 @@
 This is a source-backed map of the implementation, not a feature certification. The public package combines mature contracts, new numerical source and experimental methods. A successful import, a function named after a method, or a committed example does not establish numerical agreement or biological applicability.
 
 The navigation and implementation references below describe the reviewed source at
-`9df690091f486ee0e6b256e494999731b0369056` on 2026-09-15 for the current
+`58d591cc68c728f64fec08a98d5459f783264edd` on 2026-09-15 for the current
 single-cell evidence, including native gzip H5AD import, scan, axis-projection,
 annotation, quantitative H5MU bundle commands and cross-scale CLI qualification
 receipts. Historical receipts retain their named runtime identities. Consult the
@@ -13,11 +13,11 @@ unmeasured speedup or maximum biological scale.
 ## Single-cell analysis and biological prediction
 
 The single-cell entries were reviewed against published evidence available at
-`9df690091f486ee0e6b256e494999731b0369056` on 2026-09-15. Historical receipts retain their named runtime identities.
+`58d591cc68c728f64fec08a98d5459f783264edd` on 2026-09-15. Historical receipts retain their named runtime identities.
 
 | Capability | Implemented and measured scope | Remaining boundary |
 | --- | --- | --- |
-| H5AD and multi-assay interchange | Native count import/export, explicit metadata mapping and source preservation; separate RNA/protein/ATAC spaces and H5MU routes. Continuous-valued proteomics, metabolomics and spatial-imaging assays have a separate native H5MU CSR/dense/CSC route plus fingerprint-bound descriptive coverage and finite-moment summaries. | Supported encodings and bounds are explicit; interchange and descriptive summaries do not validate experimental labels, assay transforms or joint biological inference. |
+| H5AD and multi-assay interchange | Native count import/export, explicit metadata mapping and source preservation; separate RNA/protein/ATAC spaces and H5MU routes. Continuous-valued proteomics, metabolomics and spatial-imaging assays have a separate native H5MU CSR/dense/CSC route plus fingerprint-bound coverage, finite-moment summaries and bounded pairwise complete-case associations. | Supported encodings and bounds are explicit; interchange and descriptive summaries do not validate experimental labels, assay transforms or joint biological inference. |
 | Count inference | Native negative-binomial fitting, dispersion/shrinkage, offsets and paired/batch designs; real-data numerical and R-reference comparisons. An explicit `backend: .metalFP32` profile can carry the mean-dependent objective through cohort Wald/LRT fits on a physical Apple GPU. A current matched public Kang run completes 3,803/5,400 eligible features with 3,766 Metal-tagged final fits. | Gene-wise dispersion profiles, trend fitting and MAP shrinkage remain CPU FP64; adjusted QL rejects the Metal profile. The matched run retains 1,597 explicit Metal numerical failures, and null-benchmark failures, varying support and broader FDR/interval calibration remain. Method concordance is not ground truth. |
 | Reduction and integration | Sparse HVG/PCA, neighbors, Louvain, UMAP-compatible optimization and donor correction. A native analysis-plan regression composes NB cohort DE, sparse PCA, integrated neighbors, clustering and embedding with deterministic replay. Full HIRISA PCA/graph and seed-7 integration have numerical/replay evidence. | The composed-plan regression is a synthetic software contract, not a real-data or biological-preservation result. Full HIRISA clustering publication/replay and independent partition checks pass; cluster annotation remains unqualified. Coarse margins pass. [Original program failures](../Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md) are decoder-dependent: [within-library development fitting](../Tools/Omics/Benchmarks/HIRISA/PROGRAM_CALIBRATION.md) meets loss margins with 28/32 sensitive controls, four insufficient. This is not independent biological qualification. Rare-cell and native multi-seed preservation remain open. |
 | Known-treatment donor prediction | Native control-context ridge plus three simple baselines. All 79 HIRISA folds complete; ridge beats no-change in 14/16 contrasts and mean response in 4/16. | Requires the new donor's control profile and matching context. Two contrasts fail against no-change; no calibrated intervals or general phenotype claim. |
@@ -91,8 +91,10 @@ normalized H5MU and canonical dataset under an implementation-bound receipt;
 verification re-reads the source and reconstructs the exported artifacts.
 `VivoQuantitativeAssayDataset.descriptiveSummary()` adds a dataset-fingerprint-
 bound report of assay/feature coverage, missingness, measured-zero counts and
-finite moments. These routes do not provide assay-specific transforms, joint
-inference or outcome validation.
+finite moments. `pairwiseAssociationSummary(_:)` adds an explicit, bounded
+complete-case covariance/correlation report while retaining missing pairs and
+measured zeros as separate semantics. These routes do not provide assay-
+specific transforms, causal or outcome models, or held-out outcome validation.
 
 ## Molecular preparation and dynamics
 

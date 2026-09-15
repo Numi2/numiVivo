@@ -15,6 +15,7 @@ Start with the [project overview](../README.md) for the scientific scope and fir
 | Exchange continuous proteomics, metabolomics or spatial-imaging values | [Quantitative assay H5MU route](SingleCellInteroperability.md#quantitative-assay-interchange) |
 | Package and verify a quantitative H5MU handoff | [`quantitative-h5mu-import` / `quantitative-h5mu-verify`](SingleCellInteroperability.md#quantitative-assay-interchange) and [`VivoQuantitativeH5MUIO`](SingleCellInteroperability.md#quantitative-assay-interchange) |
 | Summarize quantitative assay coverage and finite moments | `quantitative-assay-summary <dataset.json> --output <summary.json>` or [`VivoQuantitativeAssayDataset.descriptiveSummary()`](SingleCellInteroperability.md#quantitative-assay-interchange) |
+| Describe pairwise associations across quantitative assays | `quantitative-association <dataset.json> --pairs <pairs.json> --output <summary.json>` or [`VivoQuantitativeAssayDataset.pairwiseAssociationSummary(_:)`](SingleCellInteroperability.md#quantitative-assay-interchange) |
 | Build the Apple package and run a supplied experiment | [Get started](../README.md#get-started) |
 | Calculate a small native electronic-structure example | [H₂/STO-3G chemistry](../Examples/native-chemistry/README.md) |
 | Refine a fixed-geometry electronic space by measured profile sensitivity | [Property-directed refinement](../Examples/property-directed-refinement/README.md) |

@@ -820,6 +820,8 @@ The complete development objective remains open:
    receipt; verification replays the source and checks all fingerprints.
    `VivoQuantitativeAssaySummaries` adds a dataset-fingerprint-bound report of
    assay/feature coverage, missingness, measured-zero counts and finite moments.
+   `VivoQuantitativeAssayAssociations` now adds bounded complete-case
+   covariance/correlation for explicitly selected cross-assay feature pairs.
    These are descriptive inputs only; assay-specific transforms, joint
    biological analysis and outcome validation remain open. A fresh
    M4 Pro regression at the published revision passes 13 native multimodal tests;
@@ -969,8 +971,9 @@ The complete development objective remains open:
     `VivoQuantitativeH5MU` import/export adds bounded CSR output plus dense/CSC
     numeric input under an explicit plan. `VivoQuantitativeH5MUIO` packages the
     source, plan, normalized H5MU and canonical dataset with an implementation-
-    bound receipt and source-replay verification. Assay-specific transforms,
-    joint biological analysis and outcome validation remain open.
+    bound receipt and source-replay verification. Pairwise complete-case
+    association is available as a descriptive primitive; assay-specific
+    transforms, joint biological analysis and outcome validation remain open.
 12. **Cross-scale biology:** variant → regulation → RNA/cell state → protein and
     molecular mechanism → reaction/kinetics → cellular phenotype → tissue
     prediction requires executable, independently qualified links at each boundary.
@@ -1009,7 +1012,19 @@ biological outcome. `VivoQuantitativeAssayDataset.descriptiveSummary()` reports
 coverage and finite moments bound to the dataset fingerprint; it does not fit
 an assay model. The native `quantitative-assay-summary <dataset.json>
 --output <summary.json>` command writes this report without replacing an
-existing output. `VivoQuantitativeH5MUIO.importH5MU` packages the source and
+existing output. `VivoQuantitativeAssayDataset.pairwiseAssociationSummary(_:)`
+computes a bounded, fingerprint-bound descriptive association report for an
+explicit list of feature pairs. Each pair uses complete observations on both
+assays; absent rows and sparse entries remain missing, measured zeros are
+included, and overlap below two or zero variance is reported as a status rather
+than converted into a correlation. The command
+`quantitative-association <dataset.json> --pairs <pairs.json> --output
+<summary.json>` accepts a canonical JSON array of
+`leftAssayID`/`leftFeatureID`/`rightAssayID`/`rightFeatureID` pairs. This is a
+descriptive joint-assay primitive only: it does not normalize, impute, fit a
+causal or outcome model, perform differential testing or establish biological
+prediction. `VivoQuantitativeAssayAssociations` bounds the request to 4,096
+pairs and 50 million observation-pair visits. `VivoQuantitativeH5MUIO.importH5MU` packages the source and
 plan beside a normalized H5MU and canonical dataset, with a receipt binding
 their fingerprints to an implementation identity. `verify` re-reads the source,
 rebuilds the dataset and export, and rejects changed source, plan, dataset or

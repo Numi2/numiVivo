@@ -86,6 +86,24 @@ import Testing
         #expect(throws: (any Error).self) { try VivoOmicsDirectoryExport.write(files, to: destination) }
         #expect(try VivoSingleCellCampaignIO.snapshot(manifestURL: destination.appendingPathComponent("manifest.json")) == input)
     }
+    @Test func nativeH5ADWriterRoundTripsThroughCountReaderAndPreservesSourceBytes() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-roundtrip-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = try VivoSingleCellExamples.pairedCounts()
+        let native = root.appendingPathComponent("native.h5ad")
+        try VivoSingleCellH5AD.write(source, to: native)
+        let mapping = VivoH5ADImportPlan(id: source.id, evidence: source.evidence,
+            sourceDescription: source.sourceDescription, countUnit: source.countUnit,
+            matrixPath: "X", samples: source.samples, sampleColumn: "sample",
+            barcodeColumn: "barcode", groupColumn: "group", featureNameColumn: "name",
+            mitochondrialFeatureIDs: ["g31"])
+        let document = try VivoSingleCellH5AD.read(native, plan: mapping)
+        #expect(document.dataset == source)
+        let exported = root.appendingPathComponent("exported.h5ad")
+        try document.exportOriginal(to: exported)
+        #expect(try Data(contentsOf: exported) == Data(contentsOf: native))
+    }
     @Test func rawExchangeDoesNotRoundCountsAboveDoubleIntegerPrecision() throws {
         let fixture = try VivoSingleCellExamples.pairedCounts()
         var counts = fixture.matrix.counts; counts[0] = 9_007_199_254_740_993
