@@ -25,6 +25,14 @@ means the declared scope and provenance are present; it does not rerun a
 benchmark or promote biological-outcome claims. The registry currently records
 biological outcome prediction as **not established**.
 
+A fresh [PBMC3K public-file run](evidence/2026-09-15-pbmc3k/README.md) now
+executes the current native CLI through annotation, count import, count
+processing, analysis and replay. All 2,700 cells, 32,738 genes and 2,286,884
+nonzeros survive; imported counts and Scanpy QC are exact, and the maximum
+log-normalization error is 8.88e-16. PBMC3K has one library and no donor
+replication, so this qualifies real AnnData/count/QC exchange rather than
+biological prediction or donor-level DE.
+
 The [complete HIRISA source benchmark](HIRISA/README.md) adds all 131 deposited
 libraries: 1,612,594 cells and 3.846 billion count entries, with exact source and
 backed AnnData checks. Native release ingestion/reconstruction and independent

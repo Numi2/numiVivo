@@ -92,7 +92,8 @@
         "AnnData"
       ],
       "evidencePaths": [
-        "Tools/Omics/H5AD/check_public_data.py"
+        "Tools/Omics/H5AD/check_public_data.py",
+        "Tools/Omics/Benchmarks/evidence/2026-09-15-pbmc3k/README.md"
       ],
       "result": "Full native count/replay route and Scanpy QC agree within the declared numerical tolerance.",
       "limitations": [

@@ -1,0 +1,49 @@
+{
+  "schema": "numivivo.org/benchmark-evidence/v1",
+  "date": "2026-09-15",
+  "repositoryRevision": "3db5709c81540c84c7600f75328e8103714ded00",
+  "benchmark": "pbmc3k",
+  "status": "passed-full-public-PBMC3K-annotation-counts-qc",
+  "biologicalBenchmark": false,
+  "sourceURL": "https://falexwolf.de/data/pbmc3k_raw.h5ad",
+  "sourceSHA256": "89a96f1beaa2dd83a687666d3f19a4513ac27a2a2d12581fcd77afed7ea653a1",
+  "cells": 2700,
+  "features": 32738,
+  "nonzeros": 2286884,
+  "dtype": "float32",
+  "anndata": "0.13.3.post0",
+  "h5py": "3.16.0",
+  "scanpy": "1.12.4",
+  "nativeHDF5": "2.2.0",
+  "binarySHA256": "9a18b2ecb477a335ed357b5b026686056f27627c8362f573288e7637a0ac6a3c",
+  "exactImportedCounts": true,
+  "exactScanpyQC": true,
+  "maxLogNormalizationError": 8.881784197001252e-16,
+  "nativeCommands": [
+    {
+      "label": "native-count-import",
+      "returncode": 0,
+      "elapsedSeconds": 2.2795671657659113,
+      "peakResidentBytes": 513769472
+    },
+    {
+      "label": "native-counts",
+      "returncode": 0,
+      "elapsedSeconds": 2.8303640000522137,
+      "peakResidentBytes": 462700544
+    },
+    {
+      "label": "native-analysis",
+      "returncode": 0,
+      "elapsedSeconds": 4.747916417196393,
+      "peakResidentBytes": 1011400704
+    },
+    {
+      "label": "native-replay-export",
+      "returncode": 0,
+      "elapsedSeconds": 6.2281139167025685,
+      "peakResidentBytes": 1413054464
+    }
+  ],
+  "sourceSetSHA256": "de1b2d0cba7e354880aabf730d6ea59ff973630cd8cee60083c15d940c17d972"
+}

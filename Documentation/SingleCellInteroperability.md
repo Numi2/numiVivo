@@ -404,6 +404,13 @@ binds the executable and source-set hashes to AnnData 0.13.3.post0, h5py 3.16.0,
 NumPy 2.5.3, pandas 3.0.5, SciPy 1.18.1 and native HDF5 2.2.0. This is a
 current software interoperability result, not biological validation.
 
+The same revision also completed the [public PBMC3K route](../Tools/Omics/Benchmarks/evidence/2026-09-15-pbmc3k/README.md):
+native annotation, count import, QC, normalization, analysis and replay match
+the 2,700-cell AnnData source exactly for counts and QC, with maximum
+normalization error 8.88e-16. The single-library source has no donor replication,
+so this real-data result does not qualify donor-level differential expression
+or a biological outcome.
+
 ## Required development order and remaining evidence
 
 The complete development objective remains open:
