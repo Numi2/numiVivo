@@ -818,7 +818,10 @@ The complete development objective remains open:
    `VivoQuantitativeH5MUIO` adds a transactional bundle containing the original
    source, plan, normalized H5MU, canonical dataset and implementation-bound
    receipt; verification replays the source and checks all fingerprints.
-   A fresh
+   `VivoQuantitativeAssaySummaries` adds a dataset-fingerprint-bound report of
+   assay/feature coverage, missingness, measured-zero counts and finite moments.
+   These are descriptive inputs only; assay-specific transforms, joint
+   biological analysis and outcome validation remain open. A fresh
    M4 Pro regression at the published revision passes 13 native multimodal tests;
    its [host and binary record](../Tools/Omics/Multimodal/evidence/2026-09-14-native-regression.json)
    confirms source/runtime continuity without changing those biological limits.
@@ -1002,7 +1005,9 @@ feature columns, units and matrix path. It accepts CSR, CSC and bounded dense
 numeric arrays; explicit zeros are retained, NaN dense entries are missing and
 infinite values are rejected. The route preserves the declared interchange
 semantics only. It does not normalize, impute, fit an assay model or infer a
-biological outcome. `VivoQuantitativeH5MUIO.importH5MU` packages the source and
+biological outcome. `VivoQuantitativeAssayDataset.descriptiveSummary()` reports
+coverage and finite moments bound to the dataset fingerprint; it does not fit
+an assay model. `VivoQuantitativeH5MUIO.importH5MU` packages the source and
 plan beside a normalized H5MU and canonical dataset, with a receipt binding
 their fingerprints to an implementation identity. `verify` re-reads the source,
 rebuilds the dataset and export, and rejects changed source, plan, dataset or

@@ -45,6 +45,37 @@ import Testing
                                               from: VivoCanonicalJSON.encode(dataset)) == dataset)
     }
 
+    @Test func descriptiveSummaryBindsCoverageMomentsAndMissingness() throws {
+        let dataset = Self.fixture()
+        let summary = try dataset.descriptiveSummary()
+        #expect(summary.method == VivoQuantitativeAssaySummaries.method)
+        let expectedFingerprint = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(dataset))
+        #expect(summary.datasetFingerprint == expectedFingerprint)
+        #expect(summary.observationCount == 3)
+        #expect(summary.assayCount == 2)
+        let protein = try #require(summary.coverage.first { $0.assayID == "protein" })
+        #expect(protein.assayRowCount == 2)
+        #expect(protein.featureCount == 1)
+        #expect(protein.measuredValueCount == 2)
+        #expect(protein.missingValueCount == 1)
+        #expect(protein.measuredZeroCount == 1)
+        let proteinFeature = try #require(summary.features.first { $0.featureID == "P1" })
+        #expect(proteinFeature.measuredValueCount == 2)
+        #expect(proteinFeature.missingValueCount == 1)
+        #expect(proteinFeature.measuredZeroCount == 1)
+        #expect(proteinFeature.minimum == 0)
+        #expect(proteinFeature.maximum == 1.25)
+        #expect(proteinFeature.mean == 0.625)
+        #expect(proteinFeature.variance == 0.78125)
+        let metabolite = try #require(summary.features.first { $0.featureID == "HMDB1" })
+        #expect(metabolite.measuredValueCount == 1)
+        #expect(metabolite.missingValueCount == 2)
+        #expect(metabolite.variance == nil)
+        #expect(try VivoCanonicalJSON.decode(VivoQuantitativeAssaySummary.self,
+                                              from: VivoCanonicalJSON.encode(summary)) == summary)
+        try summary.validate()
+    }
+
     @Test func rejectsNonfiniteValuesUnsortedIndicesAndDuplicateRows() throws {
         let base = Self.fixture()
         let badValue = VivoSparseValues(observationCount: 1, featureCount: 1,
