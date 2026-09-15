@@ -395,6 +395,15 @@ full-file PBMC3K preservation check with AnnData 0.13.3.post0, h5py 3.16.0 and
 HDF5 2.2.0. This adds real-file preservation evidence; it does not satisfy the
 multi-donor experimental benchmark requirement.
 
+A fresh current-revision run of the actual interoperability harness now passes
+27 checks across CSR, CSC and dense count layers, exact UInt64 values,
+duplicate/zero canonicalization, raw's independent feature axis,
+categorical/nullable metadata, explicit feature identities, malformed-input
+rejection and native reimport. The compact [2026-09-15 receipt](../Tools/Omics/H5AD/evidence/2026-09-15-interop/README.md)
+binds the executable and source-set hashes to AnnData 0.13.3.post0, h5py 3.16.0,
+NumPy 2.5.3, pandas 3.0.5, SciPy 1.18.1 and native HDF5 2.2.0. This is a
+current software interoperability result, not biological validation.
+
 ## Required development order and remaining evidence
 
 The complete development objective remains open:

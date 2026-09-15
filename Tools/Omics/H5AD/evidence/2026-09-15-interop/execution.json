@@ -1,0 +1,17 @@
+{
+  "schema": "numivivo.org/h5ad-interop-evidence/v1",
+  "date": "2026-09-15",
+  "repositoryRevision": "53bad30d75b4c65f0552381ec86db79f8172d913",
+  "harness": "Tools/Omics/H5AD/check_interop.py",
+  "status": "passed-interoperability-not-biological-validation",
+  "checks": 27,
+  "python": "3.13.3",
+  "anndata": "0.13.3.post0",
+  "h5py": "3.16.0",
+  "numpy": "2.5.3",
+  "pandas": "3.0.5",
+  "scipy": "1.18.1",
+  "nativeHDF5": "2.2.0",
+  "binarySHA256": "90aa101944410eaf1826e1a84d5cb0fa2e159f18f23e4dde3e1d6b07797caa8a",
+  "sourcesSHA256": "231ece85ec28334aa7a751ee176cda79e2e8656a372b13ab67d8abfc632fc96f"
+}

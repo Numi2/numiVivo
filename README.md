@@ -14,6 +14,8 @@ The real-data benchmark registry now records source identity, replicate semantic
 
 The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md) now carries all 1,612,594 native graph-community labels into a backed AnnData-readable H5AD, with complete cell-identity and metadata checks. This is interoperability evidence, not biological annotation validation.
 
+The current native [AnnData interoperability receipt](Tools/Omics/H5AD/evidence/2026-09-15-interop/README.md) passes 27 CSR/CSC/dense round-trip and rejection checks against the pinned scverse file-format stack. It binds exact counts, raw-axis identity, metadata semantics and native reimport to the current executable; it remains software exchange evidence rather than biological qualification.
+
 A focused native analysis-plan regression now runs negative-binomial cohort DE,
 sparse PCA, integrated neighbors, clustering and a UMAP-compatible embedding as
 one deterministic report, with explicit cell-order and integration-residual
