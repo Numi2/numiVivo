@@ -97,8 +97,12 @@ def main() -> None:
     parser.add_argument("--binary", type=Path, required=True)
     parser.add_argument("--scanpy-script", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--cohort", default=None, help="Human-readable cohort identifier for the protocol")
+    parser.add_argument("--cells-expected", type=int, default=None, help="Expected cell count recorded in the protocol")
     parser.add_argument("--repetitions", type=int, default=3)
     args = parser.parse_args()
+    if args.cells_expected is not None and args.cells_expected <= 0:
+        raise SystemExit("--cells-expected must be positive")
     for path in (args.source, args.pca_plan, args.binary, args.scanpy_script):
         if not path.is_file():
             raise SystemExit(f"missing input: {path}")
@@ -144,8 +148,8 @@ def main() -> None:
         PYTHONHASHSEED="0",
     )
     protocol = {
-        "cohort": "Kang",
-        "cellsExpected": 24_673,
+        "cohort": args.cohort or args.source.stem,
+        "cellsExpected": args.cells_expected,
         "repetitions": 3,
         "order": [list(item) for item in ORDER],
         "nativePipeline": "singlecell-h5ad-pca then singlecell-pca-neighbors",
@@ -284,6 +288,11 @@ def main() -> None:
         )
     if completed.returncode != 0:
         raise RuntimeError(f"numerical comparison failed; see {comparison_log}")
+    comparison = json.loads(comparison_path.read_text())
+    if args.cells_expected is not None and comparison.get("cells") != args.cells_expected:
+        raise RuntimeError(
+            f"source cell count {comparison.get('cells')} differs from --cells-expected {args.cells_expected}"
+        )
     summary = {
         "status": "PASS",
         "protocolSHA256": sha256(args.output / "protocol.json"),

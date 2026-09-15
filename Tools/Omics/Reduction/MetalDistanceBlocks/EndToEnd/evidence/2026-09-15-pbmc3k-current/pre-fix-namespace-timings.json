@@ -1,0 +1,114 @@
+{
+  "repetitionConsistency": {
+    "cpu": {
+      "allDeterministicArtifactHashesMatch": true,
+      "allOutputHashesMatch": true,
+      "repetitions": 3
+    },
+    "metal": {
+      "allDeterministicArtifactHashesMatch": true,
+      "allOutputHashesMatch": true,
+      "repetitions": 3
+    },
+    "scanpy": {
+      "allDeterministicArtifactHashesMatch": true,
+      "allOutputHashesMatch": false,
+      "repetitions": 3
+    }
+  },
+  "results": [
+    {
+      "backend": "cpu",
+      "deterministicOutputSHA256": "3b29a48eb8650a34fd870d846a3d8226854b1dfa21f33c0194bc46d8a5b303b2",
+      "graphWallSeconds": 1.149457833264023,
+      "outputSHA256": "3b29a48eb8650a34fd870d846a3d8226854b1dfa21f33c0194bc46d8a5b303b2",
+      "pcaWallSeconds": 1.4545237086713314,
+      "peakRSSBytes": 177995776,
+      "pipelineWallSeconds": 2.6039815419353545,
+      "repetition": 1,
+      "verified": true
+    },
+    {
+      "backend": "scanpy",
+      "deterministicOutputSHA256": "4f12cdea27d801d9959d9b7be66d4ecda869889331a80a798407d1c9b4937a85",
+      "outputSHA256": "31e6c8fca47ab67ec56787903a903d52d77657ad78f466532b92b9e82975edc2",
+      "peakRSSBytes": 709935104,
+      "pipelineWallSeconds": 10.575704040937126,
+      "repetition": 1,
+      "verified": true
+    },
+    {
+      "backend": "metal",
+      "deterministicOutputSHA256": "80049152d7a64a85e18b52306f884b733e5e982d2fcedda6e4f29540403546d5",
+      "graphWallSeconds": 1.2106282501481473,
+      "outputSHA256": "80049152d7a64a85e18b52306f884b733e5e982d2fcedda6e4f29540403546d5",
+      "pcaWallSeconds": 0.8958655828610063,
+      "peakRSSBytes": 185286656,
+      "pipelineWallSeconds": 2.1064938330091536,
+      "repetition": 1,
+      "verified": true
+    },
+    {
+      "backend": "scanpy",
+      "deterministicOutputSHA256": "4f12cdea27d801d9959d9b7be66d4ecda869889331a80a798407d1c9b4937a85",
+      "outputSHA256": "ea897d6018b505a2c60d81c78c0e202a6dc14fa55f6daa56ea4194d8cd21d4f6",
+      "peakRSSBytes": 623132672,
+      "pipelineWallSeconds": 6.130206374917179,
+      "repetition": 2,
+      "verified": true
+    },
+    {
+      "backend": "metal",
+      "deterministicOutputSHA256": "80049152d7a64a85e18b52306f884b733e5e982d2fcedda6e4f29540403546d5",
+      "graphWallSeconds": 1.1250810413621366,
+      "outputSHA256": "80049152d7a64a85e18b52306f884b733e5e982d2fcedda6e4f29540403546d5",
+      "pcaWallSeconds": 0.8919308329932392,
+      "peakRSSBytes": 198066176,
+      "pipelineWallSeconds": 2.0170118743553758,
+      "repetition": 2,
+      "verified": true
+    },
+    {
+      "backend": "cpu",
+      "deterministicOutputSHA256": "3b29a48eb8650a34fd870d846a3d8226854b1dfa21f33c0194bc46d8a5b303b2",
+      "graphWallSeconds": 1.143051624763757,
+      "outputSHA256": "3b29a48eb8650a34fd870d846a3d8226854b1dfa21f33c0194bc46d8a5b303b2",
+      "pcaWallSeconds": 0.9055479997768998,
+      "peakRSSBytes": 178339840,
+      "pipelineWallSeconds": 2.048599624540657,
+      "repetition": 2,
+      "verified": true
+    },
+    {
+      "backend": "metal",
+      "deterministicOutputSHA256": "80049152d7a64a85e18b52306f884b733e5e982d2fcedda6e4f29540403546d5",
+      "graphWallSeconds": 1.131918374914676,
+      "outputSHA256": "80049152d7a64a85e18b52306f884b733e5e982d2fcedda6e4f29540403546d5",
+      "pcaWallSeconds": 0.8998289159499109,
+      "peakRSSBytes": 184975360,
+      "pipelineWallSeconds": 2.031747290864587,
+      "repetition": 3,
+      "verified": true
+    },
+    {
+      "backend": "cpu",
+      "deterministicOutputSHA256": "3b29a48eb8650a34fd870d846a3d8226854b1dfa21f33c0194bc46d8a5b303b2",
+      "graphWallSeconds": 1.163238083012402,
+      "outputSHA256": "3b29a48eb8650a34fd870d846a3d8226854b1dfa21f33c0194bc46d8a5b303b2",
+      "pcaWallSeconds": 0.9057648750022054,
+      "peakRSSBytes": 186204160,
+      "pipelineWallSeconds": 2.0690029580146074,
+      "repetition": 3,
+      "verified": true
+    },
+    {
+      "backend": "scanpy",
+      "deterministicOutputSHA256": "4f12cdea27d801d9959d9b7be66d4ecda869889331a80a798407d1c9b4937a85",
+      "outputSHA256": "6fdabeb6dcc488ddae578b5872d9a1c8f3c1d8e86b9d2d30952d92b67f71cabe",
+      "peakRSSBytes": 623755264,
+      "pipelineWallSeconds": 6.180501208174974,
+      "repetition": 3,
+      "verified": true
+    }
+  ]
+}

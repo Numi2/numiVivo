@@ -97,6 +97,15 @@ evidence. It qualifies a bounded computation path only; it does not change the
 conclusion that DNA or RNA information alone has no validated mapping here to a
 cellular, tissue, disease or treatment outcome.
 
+The [current PBMC3K reduction receipt](../Tools/Omics/Reduction/MetalDistanceBlocks/EndToEnd/evidence/2026-09-15-pbmc3k-current/README.md)
+extends that path through native binary graphs and three seeded clustering
+replays. CPU and Metal agree exactly on the partition relations, but the source
+has one unreported library and no held-out outcome. The [current Kang donor
+integration receipt](../Tools/Omics/Reduction/evidence/2026-09-15-kang-donor-integration/README.md)
+passes matrix and solver residual checks on eight donors; it is transductive
+correction evidence without prospective donor prediction or biological
+preservation qualification.
+
 The [primary Adamson control roster](AdamsonPrimaryRoster.md) now confirms from
 the paper and Table S1 that the large UPR screen used NegCtrl-2 and NegCtrl-3,
 including their protospacer sequences. The restored GEO labels

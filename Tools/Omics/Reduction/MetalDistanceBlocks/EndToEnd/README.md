@@ -9,6 +9,26 @@ normalization to 10,000 → log1p → Seurat-flavor 2,000-feature HVG selection
 with 20 mean bins → float64 ARPACK PCA (20 components, seed 7) → exact
 sklearn-backed UMAP fuzzy neighbors (20 neighbors, one worker).
 
+## Current PBMC3K receipt (2026-09-15)
+
+The [current PBMC3K receipt](evidence/2026-09-15-pbmc3k-current/README.md)
+executes the same raw-count-to-PCA-to-neighbor route on the pinned public
+2,700-cell, 32,738-feature source. The native and independent Scanpy paths use
+the same 2,000 selected features and 20 components; the final repetition has
+zero missing or extra neighbors/edges and exact coordinates for all 77,916
+fuzzy-graph edges. Native CPU and Metal binary graphs then pass verification,
+and seeded Louvain replay at seeds 7, 19 and 42 gives identical label vectors
+and pair relations (ten communities, zero disconnected communities).
+
+The receipt retains the earlier failed namespace comparison: the first Scanpy
+driver exposed display-name indices while the native mapping used `gene_ids`.
+That failure is preserved, and the driver now selects the explicit mapped
+feature-ID column. Median pipeline times are 2.0487 s CPU, 2.0197 s Metal and
+6.1915 s Scanpy; these are one physical M4 Pro run with three repetitions and
+separate output formats. This closes current numerical interoperability and
+descriptive clustering for one unreported library. Donor replication,
+biological preservation and outcome prediction remain unqualified.
+
 ## Measured result
 
 | Path | Pipeline seconds (three runs) | Median | Peak RSS (three runs) | Median RSS |

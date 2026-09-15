@@ -1,0 +1,84 @@
+{
+  "artifactBytes": {
+    "assignment-scores.bin": 7895360,
+    "memberships.bin": 39476800,
+    "metadata.json": 2972473,
+    "plan.json": 215,
+    "receipt.json": 1126,
+    "report.json": 92840,
+    "scores.bin": 7895360
+  },
+  "artifactSHA256": {
+    "assignment-scores.bin": "66332f3e9ad8ee1c0b3a54333498108773e47c8205caf66377d7a0e3a26e12db",
+    "memberships.bin": "5f84485d9e6604f3ba3675f3a22bd2558186aae347ae57bd82a9882ae6c29ef5",
+    "metadata.json": "7c963578630cf4210d1311bc3934a31d1e8de5961cbd6da059d21882ff9f9121",
+    "plan.json": "fcad73b891d4a47e8a69271b89778cdb1822ab8b9393486e9cf3b326e06c5280",
+    "receipt.json": "77e96071990f320ffed7c49c8e464276e769504fa48c369715828e2c7f2d66c8",
+    "report.json": "11791ad1648a3124247e5b8c57076db4f824c22a1083ca8834a5e860f450f5b0",
+    "scores.bin": "a492cb00f30210c90e2071404a52f37b266120de413bcad396be2bdba519d56e"
+  },
+  "binarySHA256": "e5fd58fe1ddb38f982dc7145aa4bc04cb87cf4fb1cb80ad3b0c6fb909c6858e4",
+  "cells": 24673,
+  "clusters": 100,
+  "components": 20,
+  "donorLevels": [
+    "patient_101",
+    "patient_1015",
+    "patient_1016",
+    "patient_1039",
+    "patient_107",
+    "patient_1244",
+    "patient_1256",
+    "patient_1488"
+  ],
+  "integrationPlanSHA256": "a46bad1cde9ea1cbed4da4f6917634b82f6409e55a5e26d8086e4850c1331d07",
+  "integrationReceiptSHA256": "77e96071990f320ffed7c49c8e464276e769504fa48c369715828e2c7f2d66c8",
+  "maximumIndependentCorrectionError": 8.881784197001252e-14,
+  "maximumMembershipRowSumError": 1.9984014443252818e-15,
+  "nativeVerifier": "singlecell-pca-integrate-verify returned 0",
+  "pcaBundleSHA256": "a591e00376a8d9b4013efabf5dc6278ad2f28e60d137ca22167180119342cb06",
+  "peakRSSBytes": 217333760,
+  "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "qualification": "Current native donor integration and independent matrix/reconstruction checks only; transductive correction, no held-out prediction, no general biological outcome or multi-cell-type preservation claim.",
+  "report": {
+    "maximumMappedBytesPerMatrix": 67108864,
+    "maximumRidgeResidual": 4.5799824110277385e-15,
+    "maximumSimultaneousMatrices": 6,
+    "method": "diversity-soft-clustering-categorical-ridge-Double-v1",
+    "objectives": [
+      231.88023951785422,
+      224.35431599091527,
+      170.02223581062856,
+      160.25359193635444,
+      155.93946775655184,
+      153.28760862193803,
+      151.63834433704764,
+      150.49649347684795
+    ],
+    "qualification": "Transductive single-covariate PCA correction with Harmony2 objective, global categorical correction and intercept centers; independent initialization. Original counts/PCA preserved. Stopping diagnostics are not biological preservation or prospective prediction evidence. Latent matrices use private row-major f64 scratch with one 64 MiB mapping per matrix. Shuffled access beyond a window gathers/scatters at most 8192 rows in physical order while retaining logical arithmetic order and all three whole-block phases. Buffered value bytes exclude array/index overhead and mapped pages; cell identities, covariate indices, permutations and cluster statistics remain resident. Count and PCA parent reconstruction is included. Final matrices use complete row-major u32-row/u32-column/f64 little-endian records. Work budget is an admission index, not an operation counter. No million-cell, Metal or biological qualification follows from file storage.",
+    "relativeImprovements": [
+      0.032456079666760375,
+      0.2421708712859652,
+      0.05745509596259205,
+      0.026920608316323928,
+      0.017005695689264546,
+      0.010759279890379576,
+      0.007530093164705729
+    ],
+    "scratchBytes": 75795456,
+    "stoppingReason": "relative-objective-tolerance"
+  },
+  "sourceCommit": "476ad07914bd6edc1a92b075ca2bbc9057afa035",
+  "sourceH5ADSHA256": "1d48c1ff10bcfad7c1bc75863ce702a491c6c71b08e921a5e9754a986a9d19f3",
+  "sourceTypes": [
+    "B cells",
+    "CD14+ Monocytes",
+    "CD4 T cells",
+    "CD8 T cells",
+    "Dendritic cells",
+    "FCGR3A+ Monocytes",
+    "Megakaryocytes",
+    "NK cells"
+  ],
+  "status": "passed-current-kang-donor-integration"
+}

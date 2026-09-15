@@ -81,16 +81,7 @@ def main() -> None:
 
         if "native_sample" not in data.obs:
             raise SystemExit("source is missing native_sample identity column")
-        # The native H5AD mapping may bind feature identity to an explicit
-        # column (gene_ids here), while AnnData's index can remain a display
-        # name (gene symbols). Compare the same namespace used by the mapping
-        # instead of silently comparing unlike identifiers.
-        feature_column = "gene_ids" if "gene_ids" in data.var else None
-        selected = (
-            data.var[feature_column][data.var["highly_variable"]].astype(str).tolist()
-            if feature_column
-            else data.var_names[data.var["highly_variable"]].astype(str).tolist()
-        )
+        selected = data.var_names[data.var["highly_variable"]].astype(str).tolist()
         identity = {
             "cellBarcodes": [str(value) for value in data.obs_names.tolist()],
             "sampleIDs": [str(value) for value in data.obs["native_sample"].tolist()],
@@ -102,7 +93,6 @@ def main() -> None:
             "cells": int(data.n_obs),
             "sourceFeatures": int(data.n_vars),
             "selectedFeatures": len(selected),
-            "featureIDColumn": feature_column or "_index",
             "components": 20,
             "normalizationTarget": 10_000,
             "hvg": {"flavor": "seurat", "nTopGenes": 2_000, "nBins": 20},

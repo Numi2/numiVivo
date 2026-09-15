@@ -62,9 +62,17 @@ python check_reference.py --dataset /path/to/imported/dataset.json --report /new
 The 2026-09-09 comparisons use all 2,651 Kang B cells × 15,706 genes and all 2,700
 PBMC3k cells × 32,738 genes, each with 2,000 selected genes and 20 components.
 Source provenance and preparation are retained in the existing experimental
-benchmark suite. These establish numerical agreement on two real datasets;
-they do not establish biological validity, batch integration, neighborhood graph,
-clustering, or perturbation prediction. Those requirements remain open.
+benchmark suite. Those PCA comparisons establish numerical agreement on two
+real datasets; they do not establish biological validity or perturbation
+prediction.
+
+The [current PBMC3K PCA/neighbor/clustering receipt](MetalDistanceBlocks/EndToEnd/evidence/2026-09-15-pbmc3k-current/README.md)
+extends the PBMC3K route through native CPU/Metal binary graphs and seeded
+Louvain. Three repetitions have zero missing or extra Scanpy neighbors and
+edges, and seeds 7, 19 and 42 produce identical CPU/Metal partitions. The
+receipt retains a real feature-ID namespace failure and its explicit fix. This
+is numerical interoperability and descriptive clustering for one unreported
+library, not biological annotation or outcome validation.
 
 The preserved `pre-integration` evidence records the successful checks before
 the independent Atlas contract commit reached main. Final publication evidence

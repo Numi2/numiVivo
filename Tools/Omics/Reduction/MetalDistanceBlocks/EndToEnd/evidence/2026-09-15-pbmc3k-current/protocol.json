@@ -1,0 +1,47 @@
+{
+  "binarySHA256": "e5fd58fe1ddb38f982dc7145aa4bc04cb87cf4fb1cb80ad3b0c6fb909c6858e4",
+  "biologicalQualification": false,
+  "cellsExpected": 2700,
+  "cohort": "PBMC3K",
+  "memoryBoundary": "maximum resident set size reported by /usr/bin/time -l across timed commands",
+  "nativeGraphPlan": {
+    "execution": {
+      "candidateBlockRows": 8192,
+      "queryBlockRows": 128,
+      "workers": 1
+    },
+    "inputKind": "fitted",
+    "neighbors": {
+      "maximumDistancePairs": 500000000,
+      "neighbors": 20,
+      "representation": "pca"
+    },
+    "schemaVersion": 1,
+    "storage": "json"
+  },
+  "nativePipeline": "singlecell-h5ad-pca then singlecell-pca-neighbors",
+  "nativeVerification": "pca and graph verify commands run after each timed pipeline",
+  "order": [
+    [
+      "cpu",
+      "scanpy",
+      "metal"
+    ],
+    [
+      "scanpy",
+      "metal",
+      "cpu"
+    ],
+    [
+      "metal",
+      "cpu",
+      "scanpy"
+    ]
+  ],
+  "pcaPlanSHA256": "a54d5b26d6a89531eaf8d7dc9c8b3fb5ac2d62de6204a82d7e0c19c6763196e6",
+  "repetitions": 3,
+  "scanpyDriverSHA256": "052be7d3969db18da24e0db1079c9e7a6ba385055dbe9625e99a415c55fa37d3",
+  "scanpyPipeline": "raw sparse H5AD -> normalize_total(10000) -> log1p -> Seurat HVG(2000,20 bins) -> ARPACK PCA(20,seed 7) -> exact sklearn neighbors(20)",
+  "sourceSHA256": "d5bed3f71eb771484450369b17e11d4f7df9c38f965d3a8e2b72cda0de28004d",
+  "timingBoundary": "sum of fresh command wall times, including startup, source reads and output writes; verification is outside the timing interval"
+}

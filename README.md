@@ -494,6 +494,15 @@ matches Scanpy's 468,787 non-self neighbor memberships and 706,016 edge
 coordinates. This is a bounded cohort/stage measurement, not a universal GPU,
 million-cell, or biological outcome-prediction claim.
 
+The [current PBMC3K reduction receipt](Tools/Omics/Reduction/MetalDistanceBlocks/EndToEnd/evidence/2026-09-15-pbmc3k-current/README.md)
+extends the same audit to a pinned public 2,700-cell source. Native CPU and
+Metal and an independent Scanpy path agree on the selected IDs and all 77,916
+final graph edges; binary graph verification and seeded Louvain replays at 7,
+19 and 42 produce identical CPU/Metal partitions. The first feature-ID
+namespace failure is retained with its explicit `gene_ids` fix. This is current
+numerical interoperability and descriptive clustering for one unreported
+library, not cell-type, biological-preservation or outcome evidence.
+
 The first [Metal count-normalization check](Tools/Omics/CountStore/Metal/README.md)
 now covers every one of the original Kang dataset's 14,184,532 records on physical
 M4/M4 Pro GPUs. The explicit FP32 option passes its declared numerical tolerance
@@ -534,6 +543,12 @@ fits; 1,597 numerical failures remain explicit, while a matched CPU control
 completes all 5,400. Common tested effects differ by at most `3.02e-6` in
 log2 units with identical signs, which is a bounded numerical comparison,
 not biological outcome evidence.
+
+The current [Kang donor-integration receipt](Tools/Omics/Reduction/evidence/2026-09-15-kang-donor-integration/README.md)
+also completes a fitted-PCA donor correction on 24,673 cells across eight
+donors, with independent matrix, reconstruction and ridge-residual checks.
+The result is transductive numerical evidence; no held-out donor or biological
+outcome qualification follows.
 
 ## One scientific question, several scales
 

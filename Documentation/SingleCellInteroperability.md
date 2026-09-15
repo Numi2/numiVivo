@@ -609,6 +609,13 @@ The complete development objective remains open:
    [embedding limits](../Tools/Omics/Reduction/EMBEDDING.md) remain explicit.
    Partition/embedding stability and biological validation remain. Never densify
    cells × genes; resident, pair-work and embedding-update limits still apply.
+   The [current PBMC3K reduction receipt](../Tools/Omics/Reduction/MetalDistanceBlocks/EndToEnd/evidence/2026-09-15-pbmc3k-current/README.md)
+   runs a fresh 2,700-cell raw-count route through native CPU/Metal PCA, exact
+   Scanpy comparison, binary graphs and seeded Louvain. All 77,916 final edges
+   have matching coordinates, and seeds 7, 19 and 42 produce identical native
+   CPU/Metal partitions. A failed feature-ID namespace attempt is retained with
+   the explicit `gene_ids` fix. This is numerical/descriptive evidence for one
+   unreported library, not biological annotation or outcome validation.
 5. **Batch integration:** native single-covariate donor/batch correction now
    preserves original PCA and explicitly selects corrected downstream coordinates.
    An opt-in additive donor+batch route (`covariates:["donor","batch"]`)
@@ -616,6 +623,11 @@ The complete development objective remains open:
    joint categorical ridge system, and retains factor-major level and cell maps.
    This is solver and schema evidence on numerical fixtures; it does not qualify
    biological preservation, interactions, prospective mapping or unseen donors.
+   The [current Kang donor-integration receipt](../Tools/Omics/Reduction/evidence/2026-09-15-kang-donor-integration/README.md)
+   adds a current 24,673-cell, eight-donor fitted-PCA run with independent
+   membership, reconstruction and ridge-residual checks. It remains
+   transductive correction evidence: no held-out donor, prospective mapping or
+   biological-preservation gate is claimed.
    [Kang qualification](../Tools/Omics/Reduction/INTEGRATION.md) compares donor
    mixing, cross-donor condition accuracy, and measured RNA program preservation
    with three pinned Harmony reference runs and a response-erasure control.
@@ -969,6 +981,12 @@ The complete development objective remains open:
     maximum absolute log2 difference `3.02e-6` and identical signs, but this
     partial coverage remains a bounded execution comparison rather than a full
     cohort Metal qualification.
+    The [current PBMC3K owner receipt](../Tools/Omics/Reduction/MetalDistanceBlocks/EndToEnd/evidence/2026-09-15-pbmc3k-current/README.md)
+    provides the current reduction gate: three raw-count repetitions, exact
+    selected-ID/graph checks against Scanpy, verified binary graphs and seeded
+    CPU/Metal clustering. Its one-library scope and retained namespace failure
+    keep this at numerical interoperability and descriptive clustering; no
+    biological or outcome claim follows.
 11. **Other omics:** a [SEQC technical bulk-RNA benchmark](../Tools/Omics/Benchmarks/SEQC/README.md)
     now runs all six public Illumina RefSeq sites through the native negative-
     binomial owner and compares the same counts/design with edgeR, limma-voom

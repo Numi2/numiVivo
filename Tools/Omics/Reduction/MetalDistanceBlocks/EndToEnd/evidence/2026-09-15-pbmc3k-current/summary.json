@@ -1,0 +1,281 @@
+{
+  "binaryGraphPlanSHA256": {
+    "cpu-plan.json": "38c13b9d0ead534acb88a8f3a78978b2712b1802f282484fd361ee493e8a09f4",
+    "metal-plan.json": "b045fba05ec894ad500896f915ffc8e573fab6114477aa917574e1e5ff0283fe"
+  },
+  "binarySHA256": "e5fd58fe1ddb38f982dc7145aa4bc04cb87cf4fb1cb80ad3b0c6fb909c6858e4",
+  "biologicalQualification": false,
+  "cells": 2700,
+  "clustering": {
+    "allPairRelationsMatch": true,
+    "biologicalQualification": false,
+    "qualification": "Native CPU and Metal binary graph seeded Louvain replay only; community labels are descriptive and do not establish cell-type identity, differential biology, batch correction, or outcome prediction.",
+    "seeds": [
+      {
+        "cells": 2700,
+        "cpuClusterSizes": [
+          379,
+          352,
+          530,
+          226,
+          160,
+          147,
+          580,
+          290,
+          24,
+          12
+        ],
+        "cpuCommunities": 10,
+        "cpuDisconnectedCommunities": 0,
+        "cpuMethod": "seeded-multilevel-Louvain-fuzzy-modularity-v1",
+        "cpuModularity": 0.7501332186009334,
+        "cpuTermination": "no aggregate moves",
+        "exactLabelVectorMatch": true,
+        "metalClusterSizes": [
+          379,
+          352,
+          530,
+          226,
+          160,
+          147,
+          580,
+          290,
+          24,
+          12
+        ],
+        "metalCommunities": 10,
+        "metalDisconnectedCommunities": 0,
+        "metalMethod": "seeded-multilevel-Louvain-fuzzy-modularity-v1",
+        "metalModularity": 0.7501332152803517,
+        "metalTermination": "no aggregate moves",
+        "pairRelationAgreement": 1.0,
+        "seed": 7
+      },
+      {
+        "cells": 2700,
+        "cpuClusterSizes": [
+          227,
+          351,
+          525,
+          227,
+          150,
+          568,
+          180,
+          147,
+          313,
+          12
+        ],
+        "cpuCommunities": 10,
+        "cpuDisconnectedCommunities": 0,
+        "cpuMethod": "seeded-multilevel-Louvain-fuzzy-modularity-v1",
+        "cpuModularity": 0.7527419246584827,
+        "cpuTermination": "no aggregate moves",
+        "exactLabelVectorMatch": true,
+        "metalClusterSizes": [
+          227,
+          351,
+          525,
+          227,
+          150,
+          568,
+          180,
+          147,
+          313,
+          12
+        ],
+        "metalCommunities": 10,
+        "metalDisconnectedCommunities": 0,
+        "metalMethod": "seeded-multilevel-Louvain-fuzzy-modularity-v1",
+        "metalModularity": 0.7527419212600237,
+        "metalTermination": "no aggregate moves",
+        "pairRelationAgreement": 1.0,
+        "seed": 19
+      },
+      {
+        "cells": 2700,
+        "cpuClusterSizes": [
+          241,
+          351,
+          509,
+          217,
+          154,
+          586,
+          160,
+          155,
+          315,
+          12
+        ],
+        "cpuCommunities": 10,
+        "cpuDisconnectedCommunities": 0,
+        "cpuMethod": "seeded-multilevel-Louvain-fuzzy-modularity-v1",
+        "cpuModularity": 0.747723455399228,
+        "cpuTermination": "no aggregate moves",
+        "exactLabelVectorMatch": true,
+        "metalClusterSizes": [
+          241,
+          351,
+          509,
+          217,
+          154,
+          586,
+          160,
+          155,
+          315,
+          12
+        ],
+        "metalCommunities": 10,
+        "metalDisconnectedCommunities": 0,
+        "metalMethod": "seeded-multilevel-Louvain-fuzzy-modularity-v1",
+        "metalModularity": 0.7477234535742685,
+        "metalTermination": "no aggregate moves",
+        "pairRelationAgreement": 1.0,
+        "seed": 42
+      }
+    ],
+    "status": "passed-current-pbmc3k-native-clustering"
+  },
+  "comparisons": {
+    "cpu": {
+      "commonEdges": 77916,
+      "exactEdgeCoordinates": true,
+      "extraEdges": 0,
+      "extraNeighbors": 0,
+      "maximumCommonFuzzyWeightDifference": 3.0030269828618117e-06,
+      "maximumCommonNeighborDistanceDifference": 1.5122036955972362e-10,
+      "missingEdges": 0,
+      "missingNeighbors": 0,
+      "nativeEdges": 77916,
+      "neighborSetMatch": true,
+      "referenceNonSelfNeighborEntries": 51300,
+      "rowsWithDuplicateNativeNeighbors": 0,
+      "scanpyEdges": 77916
+    },
+    "metal": {
+      "commonEdges": 77916,
+      "exactEdgeCoordinates": true,
+      "extraEdges": 0,
+      "extraNeighbors": 0,
+      "maximumCommonFuzzyWeightDifference": 4.541294049920097e-06,
+      "maximumCommonNeighborDistanceDifference": 2.7322685482999987e-06,
+      "missingEdges": 0,
+      "missingNeighbors": 0,
+      "nativeEdges": 77916,
+      "neighborSetMatch": true,
+      "referenceNonSelfNeighborEntries": 51300,
+      "rowsWithDuplicateNativeNeighbors": 0,
+      "scanpyEdges": 77916
+    }
+  },
+  "components": 20,
+  "identities": {
+    "cpu": {
+      "cellBarcodesMatch": true,
+      "cells": 2700,
+      "sampleIDsMatch": true
+    },
+    "metal": {
+      "cellBarcodesMatch": true,
+      "cells": 2700,
+      "sampleIDsMatch": true
+    }
+  },
+  "neighbors": {
+    "nativeEdges": 77916,
+    "referenceNonSelfNeighborEntries": 51300,
+    "scanpyEdges": 77916
+  },
+  "nonzeros": 2286884,
+  "protocol": {
+    "binarySHA256": "e5fd58fe1ddb38f982dc7145aa4bc04cb87cf4fb1cb80ad3b0c6fb909c6858e4",
+    "biologicalQualification": false,
+    "cellsExpected": 2700,
+    "cohort": "PBMC3K",
+    "memoryBoundary": "maximum resident set size reported by /usr/bin/time -l across timed commands",
+    "nativeGraphPlan": {
+      "execution": {
+        "candidateBlockRows": 8192,
+        "queryBlockRows": 128,
+        "workers": 1
+      },
+      "inputKind": "fitted",
+      "neighbors": {
+        "maximumDistancePairs": 500000000,
+        "neighbors": 20,
+        "representation": "pca"
+      },
+      "schemaVersion": 1,
+      "storage": "json"
+    },
+    "nativePipeline": "singlecell-h5ad-pca then singlecell-pca-neighbors",
+    "nativeVerification": "pca and graph verify commands run after each timed pipeline",
+    "order": [
+      [
+        "cpu",
+        "scanpy",
+        "metal"
+      ],
+      [
+        "scanpy",
+        "metal",
+        "cpu"
+      ],
+      [
+        "metal",
+        "cpu",
+        "scanpy"
+      ]
+    ],
+    "pcaPlanSHA256": "a54d5b26d6a89531eaf8d7dc9c8b3fb5ac2d62de6204a82d7e0c19c6763196e6",
+    "repetitions": 3,
+    "scanpyDriverSHA256": "052be7d3969db18da24e0db1079c9e7a6ba385055dbe9625e99a415c55fa37d3",
+    "scanpyPipeline": "raw sparse H5AD -> normalize_total(10000) -> log1p -> Seurat HVG(2000,20 bins) -> ARPACK PCA(20,seed 7) -> exact sklearn neighbors(20)",
+    "sourceSHA256": "d5bed3f71eb771484450369b17e11d4f7df9c38f965d3a8e2b72cda0de28004d",
+    "timingBoundary": "sum of fresh command wall times, including startup, source reads and output writes; verification is outside the timing interval"
+  },
+  "protocolSHA256": "d0d6d742b696d7fb474e8525f5125ac42c60d227eba0010d10eb9130adf53956",
+  "qualification": "Current public PBMC3K sparse raw-count to native CPU/Metal PCA and exact Scanpy PCA/neighbor graph, plus native CPU/Metal seeded Louvain replay. Numerical interoperability and descriptive clustering only; one unreported library, no donor replication or biological outcome validation.",
+  "scanpyDriverSHA256": "052be7d3969db18da24e0db1079c9e7a6ba385055dbe9625e99a415c55fa37d3",
+  "selectedFeatureComparison": {
+    "cpu": {
+      "nativeCount": 2000,
+      "orderedMatch": true,
+      "scanpyCount": 2000,
+      "setMatch": true
+    },
+    "metal": {
+      "nativeCount": 2000,
+      "orderedMatch": true,
+      "scanpyCount": 2000,
+      "setMatch": true
+    }
+  },
+  "selectedFeatures": 2000,
+  "sourceCommit": "476ad07914bd6edc1a92b075ca2bbc9057afa035",
+  "sourceFeatures": 32738,
+  "sourceH5ADSHA256": "d5bed3f71eb771484450369b17e11d4f7df9c38f965d3a8e2b72cda0de28004d",
+  "status": "passed-current-pbmc3k-pca-neighbors-graph-cluster",
+  "timings": {
+    "cpu": {
+      "allDeterministicArtifactHashesMatch": true,
+      "allOutputHashesMatch": true,
+      "maxPeakRSSBytes": 178061312,
+      "medianPipelineWallSeconds": 2.0486928331665695,
+      "repetitions": 3
+    },
+    "metal": {
+      "allDeterministicArtifactHashesMatch": true,
+      "allOutputHashesMatch": true,
+      "maxPeakRSSBytes": 198819840,
+      "medianPipelineWallSeconds": 2.0197088341228664,
+      "repetitions": 3
+    },
+    "scanpy": {
+      "allDeterministicArtifactHashesMatch": true,
+      "allOutputHashesMatch": false,
+      "maxPeakRSSBytes": 627015680,
+      "medianPipelineWallSeconds": 6.191475874744356,
+      "repetitions": 3
+    }
+  },
+  "upstreamH5ADSHA256": "89a96f1beaa2dd83a687666d3f19a4513ac27a2a2d12581fcd77afed7ea653a1"
+}

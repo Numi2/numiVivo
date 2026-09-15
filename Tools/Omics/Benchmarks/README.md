@@ -43,6 +43,14 @@ predeclared IFNB genes are positive in both models. This is one descriptive
 paired-donor contrast; the retained support gap, reference trend warning and
 uncalibrated significance prevent a production or general-outcome claim.
 
+The current [PBMC3K reduction receipt](../Reduction/MetalDistanceBlocks/EndToEnd/evidence/2026-09-15-pbmc3k-current/README.md)
+adds a fresh raw-count PCA, neighbor-graph and native CPU/Metal clustering
+check. It is a one-library numerical/descriptive result; it does not add donor
+replication, biological preservation or outcome-prediction evidence. The
+current [Kang donor-integration receipt](../Reduction/evidence/2026-09-15-kang-donor-integration/README.md)
+is likewise transductive fitted-PCA correction with explicit residual checks,
+not held-out prediction or biological preservation qualification.
+
 The [complete HIRISA source benchmark](HIRISA/README.md) adds all 131 deposited
 libraries: 1,612,594 cells and 3.846 billion count entries, with exact source and
 backed AnnData checks. Native release ingestion/reconstruction and independent

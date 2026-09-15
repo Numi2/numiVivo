@@ -1,0 +1,66 @@
+{
+  "status": "FAIL",
+  "scope": "final repetition raw-count-to-graph numerical comparison; timing and memory are separate",
+  "sourceSHA256": "d5bed3f71eb771484450369b17e11d4f7df9c38f965d3a8e2b72cda0de28004d",
+  "cells": 2700,
+  "identities": {
+    "cpu": {
+      "cellBarcodesMatch": true,
+      "sampleIDsMatch": true,
+      "cells": 2700
+    },
+    "metal": {
+      "cellBarcodesMatch": true,
+      "sampleIDsMatch": true,
+      "cells": 2700
+    }
+  },
+  "selectedFeatures": {
+    "cpu": {
+      "nativeCount": 2000,
+      "scanpyCount": 2000,
+      "orderedMatch": false,
+      "setMatch": false
+    },
+    "metal": {
+      "nativeCount": 2000,
+      "scanpyCount": 2000,
+      "orderedMatch": false,
+      "setMatch": false
+    }
+  },
+  "comparisons": {
+    "cpu": {
+      "referenceNonSelfNeighborEntries": 51300,
+      "missingNeighbors": 0,
+      "extraNeighbors": 0,
+      "neighborSetMatch": true,
+      "rowsWithDuplicateNativeNeighbors": 0,
+      "maximumCommonNeighborDistanceDifference": 1.5122036955972362e-10,
+      "nativeEdges": 77916,
+      "scanpyEdges": 77916,
+      "commonEdges": 77916,
+      "missingEdges": 0,
+      "extraEdges": 0,
+      "exactEdgeCoordinates": true,
+      "maximumCommonFuzzyWeightDifference": 3.0030269828618117e-06
+    },
+    "metal": {
+      "referenceNonSelfNeighborEntries": 51300,
+      "missingNeighbors": 0,
+      "extraNeighbors": 0,
+      "neighborSetMatch": true,
+      "rowsWithDuplicateNativeNeighbors": 0,
+      "maximumCommonNeighborDistanceDifference": 2.7322685482999987e-06,
+      "nativeEdges": 77916,
+      "scanpyEdges": 77916,
+      "commonEdges": 77916,
+      "missingEdges": 0,
+      "extraEdges": 0,
+      "exactEdgeCoordinates": true,
+      "maximumCommonFuzzyWeightDifference": 4.541294049920097e-06
+    }
+  },
+  "biologicalQualification": false,
+  "matchedTimingClaim": false
+}

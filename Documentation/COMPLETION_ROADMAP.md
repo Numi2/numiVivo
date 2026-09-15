@@ -55,6 +55,25 @@ focused native tests pass, but this is only an objective component: full GPU
 model fitting, timing, FDR/interval calibration, million-cell scaling and
 biological-outcome validation remain open.
 
+The current [PBMC3K reduction receipt](../Tools/Omics/Reduction/MetalDistanceBlocks/EndToEnd/evidence/2026-09-15-pbmc3k-current/README.md)
+now closes the active PCA → neighbors → clustering owner check on a pinned
+2,700-cell public source. Native CPU/Metal and independent Scanpy agree on the
+selected feature IDs and all 77,916 final graph edges; binary graph verification
+and three seeded Louvain replays agree across native backends. A real feature-ID
+namespace failure is retained with its explicit `gene_ids` repair. This is
+numerical interoperability and descriptive clustering for one unreported
+library, not biological-outcome validation.
+The current [Kang donor-integration receipt](../Tools/Omics/Reduction/evidence/2026-09-15-kang-donor-integration/README.md)
+also completes the fitted-PCA donor correction and independent residual checks
+on eight donors. It remains transductive and does not establish held-out donor
+prediction or preservation of biological signals.
+
+The [AlphaGenome Atlas boundary](AlphaGenomeAtlas.md) remains hypothesis-only:
+its variant/regulatory molecular-effect scores do not provide measured RNA,
+protein, phenotype or tissue outcomes. The native cross-scale contract therefore
+still has no complete qualified path, even though the bounded VCF/Atlas
+provenance adapter and offline checks are implemented.
+
 The [prediction assessment](BiologicalPrediction.md) records the current
 scientific answer: bounded expression-response prediction is demonstrated,
 while reliable general biological-outcome prediction remains open. Complete
