@@ -131,13 +131,14 @@ public enum VivoOmicsNegativeBinomial {
     /// Fixed-dispersion NB likelihood ratio; asymptotic chi-square with one DF.
     /// This is not a quasi-likelihood test or dispersion-uncertainty adjustment.
     public static func fitContrastLikelihoodRatio(counts: [UInt64], design: [[Double]], offsets: [Double],
-        contrast: [Double], dispersion: Double) throws -> VivoOmicsNBLikelihoodRatioFit {
-        let full = try fit(counts: counts,design: design,offsets: offsets,contrast: contrast,dispersion: dispersion)
-        return try contrastLikelihoodRatio(counts: counts,design: design,offsets: offsets,contrast: contrast,full: full)
+        contrast: [Double], dispersion: Double, backend: VivoOmicsNBBackend? = nil) throws -> VivoOmicsNBLikelihoodRatioFit {
+        let full = try fit(counts: counts,design: design,offsets: offsets,contrast: contrast,dispersion: dispersion,backend: backend)
+        return try contrastLikelihoodRatio(counts: counts,design: design,offsets: offsets,contrast: contrast,full: full,backend: backend)
     }
     // Internal reuse only: full must be the unpenalized fit to these exact inputs.
     static func contrastLikelihoodRatio(counts: [UInt64], design: [[Double]], offsets: [Double],
-        contrast: [Double], full: VivoOmicsNBFit, maximumNullIterations: Int = 100) throws -> VivoOmicsNBLikelihoodRatioFit {
+        contrast: [Double], full: VivoOmicsNBFit, maximumNullIterations: Int = 100,
+        backend: VivoOmicsNBBackend? = nil) throws -> VivoOmicsNBLikelihoodRatioFit {
         guard full.converged, !full.positiveCountDesignRankDeficient,
               let pivot = contrast.indices.max(by: { abs(contrast[$0]) < abs(contrast[$1]) }),
               contrast[pivot] != 0 else {
@@ -162,7 +163,8 @@ public enum VivoOmicsNegativeBinomial {
             // the null constraint is already encoded by the reduced design.
             let nuisanceContrast = [1.0] + [Double](repeating: 0,count: free.count-1)
             let null = try fit(counts: counts,design: reduced,offsets: offsets,
-                contrast: nuisanceContrast,dispersion: full.dispersion,maximumIterations: maximumNullIterations)
+                contrast: nuisanceContrast,dispersion: full.dispersion,maximumIterations: maximumNullIterations,
+                backend: backend ?? full.backend)
             for (j,column) in free.enumerated() { beta[column] = null.coefficients[j] }
             beta[pivot] = -free.reduce(0) { $0 + beta[$1]*(contrast[$1]/contrast[pivot]) }
             mu = null.means; ll = null.logLikelihood; iterations = null.iterations
@@ -402,7 +404,8 @@ public enum VivoOmicsNegativeBinomial {
     /// The prior is explicit; this routine does not learn a cohort dispersion trend.
     public static func estimateDispersion(counts: [UInt64], design: [[Double]], offsets: [Double],
         contrast: [Double], lower: Double = 1e-8, upper: Double = 100,
-        logPriorMean: Double? = nil, logPriorVariance: Double? = nil) throws -> VivoOmicsNBDispersionFit {
+        logPriorMean: Double? = nil, logPriorVariance: Double? = nil,
+        backend: VivoOmicsNBBackend? = nil) throws -> VivoOmicsNBDispersionFit {
         guard lower.isFinite, upper.isFinite, lower >= 1e-8, upper <= 100, lower < upper,
               (logPriorMean == nil) == (logPriorVariance == nil),
               logPriorMean.map(\.isFinite) ?? true,
@@ -411,7 +414,8 @@ public enum VivoOmicsNegativeBinomial {
         }
         var evaluations = 0
         func evaluate(_ t: Double) throws -> (VivoOmicsNBFit, Double) {
-            let fit = try fit(counts: counts, design: design, offsets: offsets, contrast: contrast, dispersion: min(upper,max(lower,exp(t))))
+            let fit = try fit(counts: counts, design: design, offsets: offsets, contrast: contrast,
+                dispersion: min(upper,max(lower,exp(t))), backend: backend)
             guard fit.converged else { throw VivoOmicsStatisticsError.invalid("NB dispersion profile contains an unconverged coefficient fit at alpha=\(fit.dispersion), scaledScore=\(fit.maximumScaledScore), iterations=\(fit.iterations)") }
             guard let adjusted = fit.coxReidLogLikelihood else {
                 throw VivoOmicsStatisticsError.invalid("NB positive-count support is rank deficient; dispersion profile is not identified")

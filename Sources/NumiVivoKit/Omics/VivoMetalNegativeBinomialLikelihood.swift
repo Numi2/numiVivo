@@ -1,6 +1,37 @@
 import Foundation
 #if canImport(Metal)
 @preconcurrency import Metal
+
+/// The NB objective is evaluated many times during a dispersion profile. Keep
+/// the compiled pipeline per process so the opt-in cohort backend does not
+/// recompile the same shader for every line-search evaluation. The cache is
+/// protected because cohort callers may run independent contrasts concurrently.
+private final class VivoMetalNBPipelineCache: @unchecked Sendable {
+    private let lock = NSLock()
+    private let source: String
+    private var cached: (device: MTLDevice, pipeline: MTLComputePipelineState)?
+
+    init(source: String) { self.source = source }
+
+    func resources() throws -> (device: MTLDevice, pipeline: MTLComputePipelineState) {
+        lock.lock(); defer { lock.unlock() }
+        if let cached { return cached }
+        guard let device = MTLCreateSystemDefaultDevice(), device.hasUnifiedMemory,
+              device.supportsFamily(.apple7), !device.name.lowercased().contains("paravirtual") else {
+            throw VivoOmicsStatisticsError.invalid("Metal NB objective requires a physical Apple GPU")
+        }
+        let options = MTLCompileOptions()
+        options.fastMathEnabled = false
+        let library = try device.makeLibrary(source: source, options: options)
+        guard let function = library.makeFunction(name: "vivo_nb_variable_objective") else {
+            throw VivoOmicsStatisticsError.invalid("missing Metal NB objective kernel")
+        }
+        let pipeline = try device.makeComputePipelineState(function: function)
+        let result = (device: device, pipeline: pipeline)
+        cached = result
+        return result
+    }
+}
 #endif
 
 /// Bounded FP32 Metal evaluation of the mean-dependent part of an NB2 log
@@ -26,12 +57,27 @@ final class VivoMetalNegativeBinomialLikelihood {
         if (i >= count) return;
         float y = float(counts[i]);
         float mu = means[i];
-        float r = 1.0f / dispersion;
-        terms[i] = y * log(mu) - (y + r) * log(1.0f + dispersion * mu);
+        float x = dispersion * mu;
+        // Separate the 1/a term before evaluating it. Directly multiplying
+        // (y + 1/a) by log1p(a*mu) loses the Poisson-limit objective in FP32
+        // when a is small. The short series keeps log1p(a*mu)/a resolved.
+        float scaledLog;
+        if (fabs(x) < 1.0e-3f) {
+            float x2 = x * x;
+            float series = 1.0f - x * 0.5f + x2 / 3.0f - x2 * x * 0.25f;
+            scaledLog = mu * series;
+        } else {
+            scaledLog = log(1.0f + x) / dispersion;
+        }
+        float logOnePlus = fabs(x) < 1.0e-3f
+            ? x - x * x * 0.5f + x * x * x / 3.0f - x * x * x * x * 0.25f
+            : log(1.0f + x);
+        terms[i] = y * (log(mu) - logOnePlus) - scaledLog;
     }
     """
 
     #if canImport(Metal)
+    private static let pipelineCache = VivoMetalNBPipelineCache(source: source)
     private let queue: MTLCommandQueue
     private let pipeline: MTLComputePipelineState
     private let countBuffer: MTLBuffer
@@ -50,18 +96,11 @@ final class VivoMetalNegativeBinomialLikelihood {
         self.counts = counts.map(UInt32.init)
         #if canImport(Metal)
         try Task.checkCancellation()
-        guard let device = MTLCreateSystemDefaultDevice(), device.hasUnifiedMemory,
-              device.supportsFamily(.apple7), !device.name.lowercased().contains("paravirtual"),
-              let queue = device.makeCommandQueue() else {
-            throw VivoOmicsStatisticsError.invalid("Metal NB objective requires a physical Apple GPU")
+        let resources = try Self.pipelineCache.resources()
+        let device = resources.device, pipeline = resources.pipeline
+        guard let queue = device.makeCommandQueue() else {
+            throw VivoOmicsStatisticsError.invalid("Metal NB objective command queue")
         }
-        let options = MTLCompileOptions()
-        options.fastMathEnabled = false
-        let library = try device.makeLibrary(source: Self.source, options: options)
-        guard let function = library.makeFunction(name: "vivo_nb_variable_objective") else {
-            throw VivoOmicsStatisticsError.invalid("missing Metal NB objective kernel")
-        }
-        let pipeline = try device.makeComputePipelineState(function: function)
         guard let countBuffer = device.makeBuffer(length: Self.batchObservations * MemoryLayout<UInt32>.stride,
                                                    options: .storageModeShared),
               let meanBuffer = device.makeBuffer(length: Self.batchObservations * MemoryLayout<Float>.stride,

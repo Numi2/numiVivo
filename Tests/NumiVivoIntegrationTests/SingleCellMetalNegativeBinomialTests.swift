@@ -50,4 +50,44 @@ import Testing
         let encoded = try VivoCanonicalJSON.encode(fit)
         #expect(!String(decoding: encoded, as: UTF8.self).contains("backend"))
     }
+
+    @Test(.enabled(if: ProcessInfo.processInfo.environment["NUMIVIVO_TEST_METAL"] == "1"))
+    func cohortAnalysisCarriesExplicitMetalNBProfile() throws {
+        let data = try SingleCellNBCohortTests.fixture()
+        var contrast = VivoOmicsExpressionContrast(id: "metal-nb", controlCondition: "ctrl",
+            treatmentCondition: "stim", design: .pairedDonors)
+        contrast.model = .negativeBinomial
+        contrast.minimumCellsPerPseudobulk = 1
+        var options = VivoOmicsNBCohortOptions()
+        options.trend = .mean
+        options.backend = .metalFP32
+        contrast.negativeBinomialOptions = options
+        let plan = VivoSingleCellAnalysisPlan(id: "metal-nb-plan", contrasts: [contrast])
+        let report = try VivoSingleCellCohortAnalysis.run(data, plan: plan)
+        let result = try #require(report.contrasts.first)
+        let diagnostics = try #require(result.negativeBinomial?.features)
+        let fits = diagnostics.compactMap(\.finalFit)
+        #expect(result.negativeBinomial != nil)
+        #expect(fits.count >= 20)
+        #expect(fits.allSatisfy { $0.backend == .metalFP32 })
+        #expect(result.features.filter { $0.status == .tested }.count == result.testedFeatures)
+        let encodedPlan = try VivoCanonicalJSON.encode(report.plan)
+        #expect(String(decoding: encodedPlan, as: UTF8.self).contains(#""backend":"metalFP32""#))
+        options.testMethod = .likelihoodRatio
+        contrast.negativeBinomialOptions = options
+        let lrt = try VivoSingleCellCohortAnalysis.run(data,
+            plan: .init(id: "metal-nb-lrt-plan", contrasts: [contrast]))
+        let lrtResult = try #require(lrt.contrasts.first)
+        let lrtDiagnostics = try #require(lrtResult.negativeBinomial?.features)
+        #expect(lrtResult.method.hasSuffix("LRT-v1"))
+        #expect(lrtResult.features.filter { $0.status == .tested }.count == lrtResult.testedFeatures)
+        #expect(lrtDiagnostics.compactMap(\.likelihoodRatioFit).count >= 20)
+        var adjustedQL = options
+        adjustedQL.testMethod = .quasiLikelihoodAdjusted
+        contrast.negativeBinomialOptions = adjustedQL
+        #expect(throws: (any Error).self) {
+            _ = try VivoSingleCellCohortAnalysis.run(data,
+                plan: .init(id: "metal-ql-rejected", contrasts: [contrast]))
+        }
+    }
 }

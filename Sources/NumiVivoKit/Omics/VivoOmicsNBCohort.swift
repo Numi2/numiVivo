@@ -7,6 +7,12 @@ public enum VivoOmicsNBTestMethod: String, Codable, Sendable { case likelihoodRa
 public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     /// nil preserves the original Wald test. LRT uses the same full-fit dispersion.
     public var testMethod: VivoOmicsNBTestMethod?
+    /// Optional execution profile for the mean-dependent NB2 objective. The
+    /// count-only likelihood terms, coefficient updates, diagnostics and
+    /// published log likelihood remain owned by the exact FP64 CPU path.
+    /// Adjusted QL does not accept this profile until its global-fit owner is
+    /// covered by the same Metal contract.
+    public var backend: VivoOmicsNBBackend?
     public var zeroTotalDonorPolicy: VivoOmicsNBZeroDonorPolicy?
     public var trend: VivoOmicsNBTrendMethod = .parametric
     public var minimumTrendGenes: Int = 20
@@ -21,12 +27,13 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     public var effectPriorEstimation: VivoOmicsNBEffectPriorEstimation?
     public init() {}
     private enum CodingKeys: String, CodingKey {
-        case testMethod, zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance, effectPriorStandardDeviationLog2, effectPriorEstimation
+        case testMethod, backend, zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance, effectPriorStandardDeviationLog2, effectPriorEstimation
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["testMethod", "zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance", "effectPriorStandardDeviationLog2", "effectPriorEstimation"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["testMethod", "backend", "zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance", "effectPriorStandardDeviationLog2", "effectPriorEstimation"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         testMethod = try c.decodeIfPresent(VivoOmicsNBTestMethod.self,forKey: .testMethod)
+        backend = try c.decodeIfPresent(VivoOmicsNBBackend.self, forKey: .backend)
         zeroTotalDonorPolicy = try c.decodeIfPresent(VivoOmicsNBZeroDonorPolicy.self,forKey: .zeroTotalDonorPolicy)
         trend = try c.decodeIfPresent(VivoOmicsNBTrendMethod.self, forKey: .trend) ?? .parametric
         minimumTrendGenes = try c.decodeIfPresent(Int.self, forKey: .minimumTrendGenes) ?? 20
@@ -38,8 +45,8 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     }
     public func validate() throws {
         if testMethod == .quasiLikelihoodAdjusted {
-            guard zeroTotalDonorPolicy == nil, effectPriorStandardDeviationLog2 == nil, effectPriorEstimation == nil else {
-                throw VivoOmicsError.invalid("Adjusted QL does not yet support active-donor borrowing or effect-prior options")
+            guard backend == nil, zeroTotalDonorPolicy == nil, effectPriorStandardDeviationLog2 == nil, effectPriorEstimation == nil else {
+                throw VivoOmicsError.invalid("Adjusted QL does not yet support the Metal backend, active-donor borrowing or effect-prior options")
             }
         }
         guard (20...100_000).contains(minimumTrendGenes), minimumPriorVariance.isFinite,
@@ -322,7 +329,12 @@ public enum VivoOmicsNBCohort {
                     diagnostics[gene].error = "Positive-count support is rank deficient; no inferential fit"
                     continue
                 }
-                let profile = try VivoOmicsNegativeBinomial.estimateDispersion(counts: counts,design: matrix,offsets: localOffsets,contrast: contrast)
+                // Gene-wise dispersion profiles probe the near-Poisson boundary
+                // down to 1e-8, where FP32 cannot resolve the mean-dependent
+                // objective. Keep this nuisance profile on the exact CPU owner;
+                // the explicit backend is reserved for fixed-dispersion fits
+                // after the cohort trend has been established.
+                let profile = try VivoOmicsNegativeBinomial.estimateDispersion(counts: counts,design: matrix,offsets: localOffsets,contrast: contrast,backend: nil)
                 profiles[gene] = profile
                 diagnostics[gene].geneWiseDispersion = profile.fit.dispersion
                 diagnostics[gene].geneWiseLowerBoundary = profile.lowerBoundary
@@ -365,7 +377,7 @@ public enum VivoOmicsNBCohort {
                     let outlier = log(profile.fit.dispersion/target) > options.outlierStandardDeviations * sqrt(trend.robustLogResidualVariance)
                     diagnostics[gene].dispersionOutlier = outlier
                     let final = outlier ? profile : try VivoOmicsNegativeBinomial.estimateDispersion(counts: rows.map { y[$0] },design: resolution?.rows ?? design.rows,
-                        offsets: rows.map { offsets[$0] },contrast: resolution?.contrast ?? design.contrast,logPriorMean: log(target),logPriorVariance: trend.priorLogVariance)
+                        offsets: rows.map { offsets[$0] },contrast: resolution?.contrast ?? design.contrast,logPriorMean: log(target),logPriorVariance: trend.priorLogVariance,backend: options.backend)
                     diagnostics[gene].finalDispersion = final.fit.dispersion
                     diagnostics[gene].finalFit = final.fit
                     // A singleton batch can make Cook's distance unavailable
@@ -385,7 +397,8 @@ public enum VivoOmicsNBCohort {
                     if status == .tested, options.testMethod == .likelihoodRatio {
                         let likelihoodRatio = try VivoOmicsNegativeBinomial.contrastLikelihoodRatio(
                             counts: rows.map { y[$0] },design: resolution?.rows ?? design.rows,
-                            offsets: rows.map { offsets[$0] },contrast: resolution?.contrast ?? design.contrast,full: final.fit)
+                            offsets: rows.map { offsets[$0] },contrast: resolution?.contrast ?? design.contrast,full: final.fit,
+                            backend: options.backend)
                         diagnostics[gene].likelihoodRatioFit = likelihoodRatio
                         guard let value = likelihoodRatio.pValue else {
                             throw VivoOmicsError.invalid(likelihoodRatio.error ?? "NB likelihood ratio unavailable")
