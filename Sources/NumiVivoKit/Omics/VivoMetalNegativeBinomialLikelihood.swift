@@ -6,16 +6,25 @@ import Foundation
 /// the compiled pipeline per process so the opt-in cohort backend does not
 /// recompile the same shader for every line-search evaluation. The cache is
 /// protected because cohort callers may run independent contrasts concurrently.
+private struct VivoMetalNBResources {
+    let device: MTLDevice
+    let pipeline: MTLComputePipelineState
+    let queue: MTLCommandQueue
+    let countBuffer: MTLBuffer
+    let meanBuffer: MTLBuffer
+    let termBuffer: MTLBuffer
+}
+
 private final class VivoMetalNBPipelineCache: @unchecked Sendable {
     private let lock = NSLock()
     private let source: String
-    private var cached: (device: MTLDevice, pipeline: MTLComputePipelineState)?
+    private var cached: VivoMetalNBResources?
 
     init(source: String) { self.source = source }
 
-    func resources() throws -> (device: MTLDevice, pipeline: MTLComputePipelineState) {
+    func withResources<T>(_ body: (VivoMetalNBResources) throws -> T) throws -> T {
         lock.lock(); defer { lock.unlock() }
-        if let cached { return cached }
+        if let cached { return try body(cached) }
         guard let device = MTLCreateSystemDefaultDevice(), device.hasUnifiedMemory,
               device.supportsFamily(.apple7), !device.name.lowercased().contains("paravirtual") else {
             throw VivoOmicsStatisticsError.invalid("Metal NB objective requires a physical Apple GPU")
@@ -27,9 +36,19 @@ private final class VivoMetalNBPipelineCache: @unchecked Sendable {
             throw VivoOmicsStatisticsError.invalid("missing Metal NB objective kernel")
         }
         let pipeline = try device.makeComputePipelineState(function: function)
-        let result = (device: device, pipeline: pipeline)
+        guard let queue = device.makeCommandQueue(),
+              let countBuffer = device.makeBuffer(length: VivoMetalNegativeBinomialLikelihood.batchObservations * MemoryLayout<UInt32>.stride,
+                                                  options: .storageModeShared),
+              let meanBuffer = device.makeBuffer(length: VivoMetalNegativeBinomialLikelihood.batchObservations * MemoryLayout<Float>.stride,
+                                                 options: .storageModeShared),
+              let termBuffer = device.makeBuffer(length: VivoMetalNegativeBinomialLikelihood.batchObservations * MemoryLayout<Float>.stride,
+                                                 options: .storageModeShared) else {
+            throw VivoOmicsStatisticsError.invalid("Metal NB objective buffers")
+        }
+        let result = VivoMetalNBResources(device: device, pipeline: pipeline, queue: queue,
+                                          countBuffer: countBuffer, meanBuffer: meanBuffer, termBuffer: termBuffer)
         cached = result
-        return result
+        return try body(result)
     }
 }
 #endif
@@ -78,11 +97,6 @@ final class VivoMetalNegativeBinomialLikelihood {
 
     #if canImport(Metal)
     private static let pipelineCache = VivoMetalNBPipelineCache(source: source)
-    private let queue: MTLCommandQueue
-    private let pipeline: MTLComputePipelineState
-    private let countBuffer: MTLBuffer
-    private let meanBuffer: MTLBuffer
-    private let termBuffer: MTLBuffer
     private let dispersion: Float
     #endif
 
@@ -96,24 +110,7 @@ final class VivoMetalNegativeBinomialLikelihood {
         self.counts = counts.map(UInt32.init)
         #if canImport(Metal)
         try Task.checkCancellation()
-        let resources = try Self.pipelineCache.resources()
-        let device = resources.device, pipeline = resources.pipeline
-        guard let queue = device.makeCommandQueue() else {
-            throw VivoOmicsStatisticsError.invalid("Metal NB objective command queue")
-        }
-        guard let countBuffer = device.makeBuffer(length: Self.batchObservations * MemoryLayout<UInt32>.stride,
-                                                   options: .storageModeShared),
-              let meanBuffer = device.makeBuffer(length: Self.batchObservations * MemoryLayout<Float>.stride,
-                                                  options: .storageModeShared),
-              let termBuffer = device.makeBuffer(length: Self.batchObservations * MemoryLayout<Float>.stride,
-                                                  options: .storageModeShared) else {
-            throw VivoOmicsStatisticsError.invalid("Metal NB objective buffers")
-        }
-        self.queue = queue
-        self.pipeline = pipeline
-        self.countBuffer = countBuffer
-        self.meanBuffer = meanBuffer
-        self.termBuffer = termBuffer
+        try Self.pipelineCache.withResources { _ in }
         self.dispersion = Float(dispersion)
         #else
         throw VivoOmicsStatisticsError.invalid("Metal NB objective is unavailable")
@@ -141,51 +138,53 @@ final class VivoMetalNegativeBinomialLikelihood {
             }
             return converted
         }
-        let countPointer = countBuffer.contents().bindMemory(to: UInt32.self, capacity: Self.batchObservations)
-        let meanPointer = meanBuffer.contents().bindMemory(to: Float.self, capacity: Self.batchObservations)
-        let termPointer = termBuffer.contents().bindMemory(to: Float.self, capacity: Self.batchObservations)
-        var total = 0.0
-        var compensation = 0.0
-        for start in stride(from: 0, to: counts.count, by: Self.batchObservations) {
-            try Task.checkCancellation()
-            let count = min(Self.batchObservations, counts.count - start)
-            counts[start..<start + count].withUnsafeBufferPointer { values in
-                countPointer.update(from: values.baseAddress!, count: count)
+        return try Self.pipelineCache.withResources { resources in
+            let countPointer = resources.countBuffer.contents().bindMemory(to: UInt32.self, capacity: Self.batchObservations)
+            let meanPointer = resources.meanBuffer.contents().bindMemory(to: Float.self, capacity: Self.batchObservations)
+            let termPointer = resources.termBuffer.contents().bindMemory(to: Float.self, capacity: Self.batchObservations)
+            var total = 0.0
+            var compensation = 0.0
+            for start in stride(from: 0, to: counts.count, by: Self.batchObservations) {
+                try Task.checkCancellation()
+                let count = min(Self.batchObservations, counts.count - start)
+                counts[start..<start + count].withUnsafeBufferPointer { values in
+                    countPointer.update(from: values.baseAddress!, count: count)
+                }
+                fp32Means[start..<start + count].withUnsafeBufferPointer { values in
+                    meanPointer.update(from: values.baseAddress!, count: count)
+                }
+                guard let command = resources.queue.makeCommandBuffer(), let encoder = command.makeComputeCommandEncoder() else {
+                    throw VivoOmicsStatisticsError.invalid("Metal NB objective command")
+                }
+                encoder.setComputePipelineState(resources.pipeline)
+                encoder.setBuffer(resources.countBuffer, offset: 0, index: 0)
+                encoder.setBuffer(resources.meanBuffer, offset: 0, index: 1)
+                encoder.setBuffer(resources.termBuffer, offset: 0, index: 2)
+                var a = dispersion, n = UInt32(count)
+                encoder.setBytes(&a, length: MemoryLayout<Float>.size, index: 3)
+                encoder.setBytes(&n, length: MemoryLayout<UInt32>.size, index: 4)
+                let width = min(resources.pipeline.threadExecutionWidth, resources.pipeline.maxTotalThreadsPerThreadgroup)
+                encoder.dispatchThreads(MTLSize(width: count, height: 1, depth: 1),
+                                        threadsPerThreadgroup: MTLSize(width: width, height: 1, depth: 1))
+                encoder.endEncoding()
+                command.commit()
+                command.waitUntilCompleted()
+                guard command.status == .completed else {
+                    throw VivoOmicsStatisticsError.invalid("Metal NB objective failed: " +
+                        (command.error?.localizedDescription ?? "unknown"))
+                }
+                for i in 0..<count {
+                    let term = Double(termPointer[i])
+                    guard term.isFinite else { throw VivoOmicsStatisticsError.invalid("nonfinite Metal NB objective term") }
+                    let corrected = term - compensation
+                    let next = total + corrected
+                    compensation = (next - total) - corrected
+                    total = next
+                }
             }
-            fp32Means[start..<start + count].withUnsafeBufferPointer { values in
-                meanPointer.update(from: values.baseAddress!, count: count)
-            }
-            guard let command = queue.makeCommandBuffer(), let encoder = command.makeComputeCommandEncoder() else {
-                throw VivoOmicsStatisticsError.invalid("Metal NB objective command")
-            }
-            encoder.setComputePipelineState(pipeline)
-            encoder.setBuffer(countBuffer, offset: 0, index: 0)
-            encoder.setBuffer(meanBuffer, offset: 0, index: 1)
-            encoder.setBuffer(termBuffer, offset: 0, index: 2)
-            var a = dispersion, n = UInt32(count)
-            encoder.setBytes(&a, length: MemoryLayout<Float>.size, index: 3)
-            encoder.setBytes(&n, length: MemoryLayout<UInt32>.size, index: 4)
-            let width = min(pipeline.threadExecutionWidth, pipeline.maxTotalThreadsPerThreadgroup)
-            encoder.dispatchThreads(MTLSize(width: count, height: 1, depth: 1),
-                                    threadsPerThreadgroup: MTLSize(width: width, height: 1, depth: 1))
-            encoder.endEncoding()
-            command.commit()
-            command.waitUntilCompleted()
-            guard command.status == .completed else {
-                throw VivoOmicsStatisticsError.invalid("Metal NB objective failed: " +
-                    (command.error?.localizedDescription ?? "unknown"))
-            }
-            for i in 0..<count {
-                let term = Double(termPointer[i])
-                guard term.isFinite else { throw VivoOmicsStatisticsError.invalid("nonfinite Metal NB objective term") }
-                let corrected = term - compensation
-                let next = total + corrected
-                compensation = (next - total) - corrected
-                total = next
-            }
+            guard total.isFinite else { throw VivoOmicsStatisticsError.invalid("nonfinite Metal NB objective") }
+            return total
         }
-        guard total.isFinite else { throw VivoOmicsStatisticsError.invalid("nonfinite Metal NB objective") }
-        return total
         #else
         throw VivoOmicsStatisticsError.invalid("Metal NB objective is unavailable")
         #endif
