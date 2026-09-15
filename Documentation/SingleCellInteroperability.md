@@ -1007,7 +1007,9 @@ infinite values are rejected. The route preserves the declared interchange
 semantics only. It does not normalize, impute, fit an assay model or infer a
 biological outcome. `VivoQuantitativeAssayDataset.descriptiveSummary()` reports
 coverage and finite moments bound to the dataset fingerprint; it does not fit
-an assay model. `VivoQuantitativeH5MUIO.importH5MU` packages the source and
+an assay model. The native `quantitative-assay-summary <dataset.json>
+--output <summary.json>` command writes this report without replacing an
+existing output. `VivoQuantitativeH5MUIO.importH5MU` packages the source and
 plan beside a normalized H5MU and canonical dataset, with a receipt binding
 their fingerprints to an implementation identity. `verify` re-reads the source,
 rebuilds the dataset and export, and rejects changed source, plan, dataset or

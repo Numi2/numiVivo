@@ -60,7 +60,7 @@ if VivoArc2026CLICommands.handles(arguments.first) {
         FileHandle.standardOutput.write(Data("\nNeoantigen research review: neoantigen-example, neoantigen-import, neoantigen-verify, neoantigen-review, neoantigen-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nArc VCC 2026: arc2026-prepare, arc2026-pack, arc2026-verify-query, arc2026-verify, arc2026-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nSingle-cell counts: singlecell-run, singlecell-verify, singlecell-export, singlecell-help.\n".utf8))
-        FileHandle.standardOutput.write(Data("Quantitative H5MU: quantitative-h5mu-import, quantitative-h5mu-verify.\n".utf8))
+        FileHandle.standardOutput.write(Data("Quantitative assays: quantitative-h5mu-import, quantitative-h5mu-verify, quantitative-assay-summary.\n".utf8))
         FileHandle.standardOutput.write(Data("\nGeneral workflows: workflow-catalog, workflow-template, workflow-plan, workflow-run, workflow-import, workflow-export, workflow-verify, workflow-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nQM/MM free energy and chemical qualification: qmmm-free-energy-analyze, qmmm-transmission-analyze, qmmm-transmission-apply, qmmm-free-energy-rate, qmmm-free-energy-replicated-rate, qmmm-chemical-qualify, qmmm-chemical-state-populations, qmmm-chemical-state-network, qmmm-chemical-exchange-network, qmmm-chemical-exchange-validate, qmmm-free-energy-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nPrepared molecular workflows: molecule-prepare-template, molecule-prepare, molecule-sampling-template, molecule-sampling-run, molecule-sampling-analyze, molecule-sampling-export, molecule-rate, molecule-help.\n".utf8))
