@@ -96,6 +96,31 @@ public struct VivoSingleCellAnalysisReceipt: Codable, Sendable, Equatable {
         schemaVersion = 1; self.request = request; self.result = result; self.implementation = implementation
     }
 }
+
+/// A process-local observation produced only by an explicitly selected Metal
+/// NB cohort path. Unlike an analytical result, it contains wall-clock timing
+/// and is therefore emitted only through the opt-in profiler sidecar.
+public struct VivoSingleCellMetalNBExecutionProfile: Codable, Sendable, Equatable {
+    public let contrastID: String
+    public let profile: VivoMetalNBExecutionProfile
+}
+
+public struct VivoSingleCellMetalNBExecutionProfileArtifact: Codable, Sendable, Equatable {
+    public let schemaVersion: Int
+    public let analysisReceipt: VivoSingleCellAnalysisReceipt
+    public let profiles: [VivoSingleCellMetalNBExecutionProfile]
+    public let qualification: String
+    public init(analysisReceipt: VivoSingleCellAnalysisReceipt, profiles: [VivoSingleCellMetalNBExecutionProfile]) {
+        schemaVersion = 1; self.analysisReceipt = analysisReceipt; self.profiles = profiles
+        qualification = "Execution attribution for explicitly selected Metal FP32 NB contrasts on this host. Timing is wall-clock evidence for this invocation, not a reproducible analytical result, GPU-profiler trace, performance qualification, numerical-agreement result, statistical validation, or biological claim."
+    }
+}
+
+public struct VivoSingleCellAnalysisPublication: Sendable {
+    public let receipt: VivoSingleCellAnalysisReceipt
+    public let metalNBExecutionProfiles: [VivoSingleCellMetalNBExecutionProfile]
+}
+
 private struct VivoSingleCellStoredAnalysisRequest: Codable, Sendable, Equatable {
     let schemaVersion: Int
     let counts: VivoSingleCellRunReceipt
@@ -117,10 +142,15 @@ public enum VivoSingleCellAnalysisArtifacts {
         try plan.validate(); return plan
     }
     public static func publish(counts: VivoSingleCellRunReceipt, planBytes: Data, implementation: VivoFingerprint,
-                               store: VivoArtifactStore) async throws -> VivoSingleCellAnalysisReceipt {
+                               store: VivoArtifactStore) async throws -> VivoSingleCellAnalysisPublication {
         let plan = try decodePlan(planBytes)
         let source = try await VivoSingleCellArtifacts.verify(receipt: counts, implementation: implementation, store: store)
         let report = try VivoSingleCellCohortAnalysis.run(source.dataset, plan: plan)
+        let metalNBExecutionProfiles = report.contrasts.compactMap { contrast in
+            contrast.negativeBinomial?.metalExecution.map {
+                VivoSingleCellMetalNBExecutionProfile(contrastID: contrast.request.id, profile: $0)
+            }
+        }
         let request = try VivoCanonicalJSON.encode(VivoSingleCellStoredAnalysisRequest(schemaVersion: 1, counts: counts, planBytes: planBytes))
         let requestID = try VivoCanonicalJSON.fingerprint(request)
         let result = try VivoCanonicalJSON.encode(VivoSingleCellStoredAnalysisResult(schemaVersion: 1, request: requestID,
@@ -131,7 +161,8 @@ public enum VivoSingleCellAnalysisArtifacts {
         try Task.checkCancellation()
         let savedResult = try await store.put(data: result, kind: resultKind, mediaType: "application/json")
         try Task.checkCancellation()
-        return .init(request: requestID, result: savedResult.fingerprint, implementation: implementation)
+        return .init(receipt: .init(request: requestID, result: savedResult.fingerprint, implementation: implementation),
+                     metalNBExecutionProfiles: metalNBExecutionProfiles)
     }
     public static func verify(_ receipt: VivoSingleCellAnalysisReceipt, implementation: VivoFingerprint,
                               store: VivoArtifactStore) async throws -> VivoSingleCellCohortReport {

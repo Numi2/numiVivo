@@ -665,13 +665,16 @@ struct VivoSingleCellCLICommands {
             var options: [String: String] = [:], index = 2
             while index < arguments.count {
                 let key = arguments[index]
-                guard ["--store", "--output", "--plan"].contains(key), options[key] == nil,
+                guard ["--store", "--output", "--plan", "--metal-nb-profile-output"].contains(key), options[key] == nil,
                       index + 1 < arguments.count, !arguments[index + 1].isEmpty,
                       !arguments[index + 1].hasPrefix("--") else { throw VivoOmicsError.invalid("unknown, duplicate or incomplete option") }
                 options[key] = arguments[index + 1]; index += 2
             }
             guard (command == "singlecell-analyze") == (options["--plan"] != nil) else {
                 throw VivoOmicsError.invalid("--plan is required only for singlecell-analyze")
+            }
+            guard options["--metal-nb-profile-output"] == nil || command == "singlecell-analyze" else {
+                throw VivoOmicsError.invalid("--metal-nb-profile-output is available only for singlecell-analyze")
             }
             guard let storePath = options["--store"], storePath != "-" else { throw VivoOmicsError.invalid("--store <directory> is required") }
             let storeURL = URL(fileURLWithPath: storePath).standardizedFileURL
@@ -691,9 +694,22 @@ struct VivoSingleCellCLICommands {
                 }
                 outputURL = url
             }
+            var metalNBProfileURL: URL?
+            if let profileOutput = options["--metal-nb-profile-output"] {
+                let url = try canonicalURL(URL(fileURLWithPath: profileOutput)), root = try canonicalURL(storeURL).path
+                var inputs = [inputURL]
+                if let plan = options["--plan"] { inputs.append(URL(fileURLWithPath: plan)) }
+                guard !inputs.contains(where: { $0.resolvingSymlinksInPath().standardizedFileURL == url }),
+                      url.path != root, !url.path.hasPrefix(root == "/" ? "/" : root + "/"),
+                      url != outputURL, !FileManager.default.fileExists(atPath: url.path) else {
+                    throw VivoOmicsError.invalid("Metal NB profile output must be new, outside the artifact store, and distinct from inputs/output")
+                }
+                metalNBProfileURL = url
+            }
             let implementation = try VivoWorkflowCLIImplementation.fingerprint()
             let store = try VivoArtifactStore(rootURL: storeURL, createIfNeeded: command == "singlecell-run")
             let output: Data
+            var metalNBProfileOutput: (url: URL, bytes: Data)?
             switch command {
             case "singlecell-run":
                 let input = try VivoSingleCellCampaignIO.snapshot(manifestURL: inputURL)
@@ -701,7 +717,16 @@ struct VivoSingleCellCLICommands {
             case "singlecell-analyze":
                 let receipt = try load(VivoSingleCellRunReceipt.self, inputURL)
                 let plan = try VivoSingleCellCampaignIO.readDocument(URL(fileURLWithPath: options["--plan"]!), maximumBytes: 2 * 1_024 * 1_024)
-                output = try await VivoCanonicalJSON.encode(VivoSingleCellAnalysisArtifacts.publish(counts: receipt, planBytes: plan, implementation: implementation, store: store))
+                let publication = try await VivoSingleCellAnalysisArtifacts.publish(counts: receipt, planBytes: plan, implementation: implementation, store: store)
+                if let metalNBProfileURL {
+                    guard !publication.metalNBExecutionProfiles.isEmpty else {
+                        throw VivoOmicsError.invalid("no opt-in Metal NB execution profile was produced")
+                    }
+                    let profile = VivoSingleCellMetalNBExecutionProfileArtifact(analysisReceipt: publication.receipt,
+                        profiles: publication.metalNBExecutionProfiles)
+                    metalNBProfileOutput = (metalNBProfileURL, try VivoCanonicalJSON.encode(profile))
+                }
+                output = try await VivoCanonicalJSON.encode(publication.receipt)
             case "singlecell-verify", "singlecell-export", "singlecell-mex":
                 let receipt = try load(VivoSingleCellRunReceipt.self, inputURL)
                 let report = try await VivoSingleCellArtifacts.verify(receipt: receipt, implementation: implementation, store: store)
@@ -748,6 +773,9 @@ struct VivoSingleCellCLICommands {
             try Task.checkCancellation()
             if let url = outputURL { try VivoKineticsDocumentIO.write(output, to: url, overwrite: false) }
             else { FileHandle.standardOutput.write(output); FileHandle.standardOutput.write(Data("\n".utf8)) }
+            if let metalNBProfileOutput {
+                try VivoKineticsDocumentIO.write(metalNBProfileOutput.bytes, to: metalNBProfileOutput.url, overwrite: false)
+            }
             return 0
         } catch is CancellationError {
             FileHandle.standardError.write(Data("numivivo singlecell: cancelled; no success receipt published\n".utf8)); return 130
@@ -837,7 +865,7 @@ struct VivoSingleCellCLICommands {
       singlecell-verify <receipt.json> --store <directory>
       singlecell-export <receipt.json> --store <directory> [--output <new-report.json|->]
       singlecell-mex <receipt.json> --store <directory> --output <new-MEX-directory>
-      singlecell-analyze <receipt.json> --plan <analysis.json> --store <directory> [--output <new-analysis-receipt.json|->]
+      singlecell-analyze <receipt.json> --plan <analysis.json> --store <directory> [--output <new-analysis-receipt.json|->] [--metal-nb-profile-output <new-profile.json>]
       singlecell-analysis-verify <analysis-receipt.json> --store <directory>
       singlecell-analysis-export <analysis-receipt.json> --store <directory> [--output <new-report.json|->]
       singlecell-analysis-mex <analysis-receipt.json> --store <directory> --output <new-MEX-directory>

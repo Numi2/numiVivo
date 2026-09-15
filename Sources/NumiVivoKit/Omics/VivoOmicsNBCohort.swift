@@ -118,6 +118,55 @@ public struct VivoOmicsNBCohortDiagnostics: Codable, Sendable, Equatable {
     public var effectPriorEstimate: VivoOmicsNBEffectPriorEstimate? = nil
     public var effectPriorEstimationError: String? = nil
     public var quasiLikelihood: VivoOmicsNBQLCohortDiagnostics? = nil
+    /// Process-local timing observations for the opt-in Metal path. They are
+    /// intentionally excluded from persisted analytical results: wall-clock
+    /// measurements cannot be reproduced by a source reconstruction.
+    public var metalExecution: VivoMetalNBExecutionProfile? = nil
+
+    public init(trend: VivoOmicsNBTrend, features: [VivoOmicsNBFeatureDiagnostics], qualification: String,
+                effectShrinkage: VivoOmicsNBEffectShrinkageSummary? = nil,
+                effectPriorEstimate: VivoOmicsNBEffectPriorEstimate? = nil,
+                effectPriorEstimationError: String? = nil,
+                quasiLikelihood: VivoOmicsNBQLCohortDiagnostics? = nil,
+                metalExecution: VivoMetalNBExecutionProfile? = nil) {
+        self.trend = trend; self.features = features; self.qualification = qualification
+        self.effectShrinkage = effectShrinkage; self.effectPriorEstimate = effectPriorEstimate
+        self.effectPriorEstimationError = effectPriorEstimationError; self.quasiLikelihood = quasiLikelihood
+        self.metalExecution = metalExecution
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case trend, features, qualification, effectShrinkage, effectPriorEstimate, effectPriorEstimationError, quasiLikelihood
+    }
+
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        trend = try values.decode(VivoOmicsNBTrend.self, forKey: .trend)
+        features = try values.decode([VivoOmicsNBFeatureDiagnostics].self, forKey: .features)
+        qualification = try values.decode(String.self, forKey: .qualification)
+        effectShrinkage = try values.decodeIfPresent(VivoOmicsNBEffectShrinkageSummary.self, forKey: .effectShrinkage)
+        effectPriorEstimate = try values.decodeIfPresent(VivoOmicsNBEffectPriorEstimate.self, forKey: .effectPriorEstimate)
+        effectPriorEstimationError = try values.decodeIfPresent(String.self, forKey: .effectPriorEstimationError)
+        quasiLikelihood = try values.decodeIfPresent(VivoOmicsNBQLCohortDiagnostics.self, forKey: .quasiLikelihood)
+        metalExecution = nil
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        try values.encode(trend, forKey: .trend)
+        try values.encode(features, forKey: .features)
+        try values.encode(qualification, forKey: .qualification)
+        try values.encodeIfPresent(effectShrinkage, forKey: .effectShrinkage)
+        try values.encodeIfPresent(effectPriorEstimate, forKey: .effectPriorEstimate)
+        try values.encodeIfPresent(effectPriorEstimationError, forKey: .effectPriorEstimationError)
+        try values.encodeIfPresent(quasiLikelihood, forKey: .quasiLikelihood)
+    }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.trend == rhs.trend && lhs.features == rhs.features && lhs.qualification == rhs.qualification &&
+        lhs.effectShrinkage == rhs.effectShrinkage && lhs.effectPriorEstimate == rhs.effectPriorEstimate &&
+        lhs.effectPriorEstimationError == rhs.effectPriorEstimationError && lhs.quasiLikelihood == rhs.quasiLikelihood
+    }
 }
 
 public enum VivoOmicsNBCohort {
@@ -287,6 +336,24 @@ public enum VivoOmicsNBCohort {
     }
     static func evaluate(metadata: VivoSingleCellCountMetadata, entries: [[(row: Int,count: UInt64)]],
                          design: VivoOmicsDesignMatrix, request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
+        // Metal is explicitly opt-in. When selected, retain timing and call
+        // attribution alongside the normal cohort diagnostics rather than
+        // creating an independent benchmark report.
+        guard request.negativeBinomialOptions?.backend == .metalFP32 else {
+            return try evaluateCore(metadata: metadata, entries: entries, design: design, request: request)
+        }
+        let collector = VivoMetalNBExecutionProfileCollector()
+        let started = vivoMetalNBClock()
+        var result = try VivoMetalNBExecutionProfileContext.$collector.withValue(collector) {
+            try evaluateCore(metadata: metadata, entries: entries, design: design, request: request)
+        }
+        collector.recordCohortEvaluation(elapsedNanoseconds: vivoMetalNBClock() - started)
+        result.negativeBinomial?.metalExecution = collector.snapshot()
+        return result
+    }
+
+    private static func evaluateCore(metadata: VivoSingleCellCountMetadata, entries: [[(row: Int,count: UInt64)]],
+                                     design: VivoOmicsDesignMatrix, request: VivoOmicsExpressionContrast) throws -> VivoOmicsExpressionResult {
         let options = request.negativeBinomialOptions ?? .init()
         try options.validate()
         guard options.zeroTotalDonorPolicy == nil || request.design == .pairedDonors else {

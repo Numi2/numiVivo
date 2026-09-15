@@ -226,6 +226,19 @@ public enum VivoOmicsNegativeBinomial {
     public static func fit(counts: [UInt64], design: [[Double]], offsets: [Double],
                            contrast: [Double], dispersion: Double, maximumIterations: Int = 100,
                            backend: VivoOmicsNBBackend? = nil) throws -> VivoOmicsNBFit {
+        // The scoped collector is installed only by a Metal-backed cohort
+        // evaluation. It observes the retained FP64 likelihood calls as well
+        // as the experimental objective, without changing either authority.
+        let execution = backend == .metalFP32 ? VivoMetalNBExecutionProfileContext.collector : nil
+        let fitStarted = execution == nil ? nil : vivoMetalNBClock()
+        execution?.recordFitStarted()
+        var completedFit = false
+        defer {
+            if let execution, let fitStarted {
+                execution.recordFitFinished(completed: completedFit,
+                    elapsedNanoseconds: vivoMetalNBClock() - fitStarted)
+            }
+        }
         let base = try VivoOmicsQR(design: design)
         let n = base.observationCount, p = base.coefficientCount
         guard counts.count == n, offsets.count == n, contrast.count == p,
@@ -244,7 +257,15 @@ public enum VivoOmicsNegativeBinomial {
             return eta.map(exp)
         }
         guard var mu = means(beta) else { throw VivoOmicsStatisticsError.invalid("NB initialization overflows") }
-        func likelihood(_ m: [Double]) -> Double { (0..<n).reduce(0) { $0 + mass(y[$1],m[$1],dispersion) } }
+        func likelihood(_ m: [Double]) -> Double {
+            let started = execution == nil ? nil : vivoMetalNBClock()
+            let value = (0..<n).reduce(0) { $0 + mass(y[$1],m[$1],dispersion) }
+            if let execution, let started {
+                execution.recordCPUExactLikelihood(observations: n,
+                    elapsedNanoseconds: vivoMetalNBClock() - started)
+            }
+            return value
+        }
         let metalObjective: VivoMetalNegativeBinomialLikelihood?
         switch backend {
         case .metalFP32:
@@ -315,12 +336,14 @@ public enum VivoOmicsNegativeBinomial {
         guard covariance.isFinite, scaledScore.isFinite else {
             throw VivoOmicsStatisticsError.invalid("nonfinite NB information or influence diagnostics")
         }
-        return .init(coefficients: beta, means: mu, effect: deficient ? nil : zip(beta,contrast).reduce(0) { $0+$1.0*$1.1 },
+        let result = VivoOmicsNBFit(coefficients: beta, means: mu, effect: deficient ? nil : zip(beta,contrast).reduce(0) { $0+$1.0*$1.1 },
             standardError: deficient ? nil : sqrt(covariance), logLikelihood: ll,
             coxReidLogLikelihood: deficient ? nil : ll-0.5*qr.logInformationDeterminant,
             positiveCountDesignRankDeficient: deficient, dispersion: dispersion,
             iterations: iterations, converged: converged, maximumScaledScore: scaledScore,
             pearsonResiduals: residuals, leverage: h, cooksDistances: cooks, backend: backend)
+        completedFit = true
+        return result
     }
     /// Shrinks the requested contrast while jointly refitting nuisance coefficients.
     /// A prior never rescues rank-deficient support or an unconverged initial MLE.
