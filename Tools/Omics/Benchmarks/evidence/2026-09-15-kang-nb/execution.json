@@ -1,0 +1,71 @@
+{
+  "schema": "numivivo.org/benchmark-evidence/v1",
+  "date": "2026-09-15",
+  "repositoryRevision": "2adf7bb5c45cf993838507bc9aebde5e4de684cc",
+  "benchmark": "kang2018-bcells",
+  "status": "completed-real-data-comparison",
+  "sourceURL": "https://ndownloader.figshare.com/files/34464122",
+  "sourceSHA256": "e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830",
+  "cells": 2651,
+  "genes": 15706,
+  "nonzeros": 1479543,
+  "donors": 8,
+  "pseudobulks": 16,
+  "nativeModel": "experimental NB2 adjusted-profile dispersion with log-prior shrinkage and Wald inference",
+  "referenceModel": "PyDESeq2 negative binomial",
+  "eligibleGenes": 8894,
+  "nativeTested": 5400,
+  "rankDeficientSupport": 3494,
+  "effectSpearman": 0.9990671843911166,
+  "effectSignAgreement": 0.99,
+  "top50BHOverlap": 43,
+  "expectedBiology": {
+    "status": "passed",
+    "positiveInBoth": 5,
+    "required": 4
+  },
+  "integrity": {
+    "exactImportedCounts": true,
+    "exactPseudobulkCounts": true,
+    "exactScanpyQC": true,
+    "maxLogNormalizationError": 8.881784197001252e-16
+  },
+  "versions": {
+    "scanpy": "1.12.4",
+    "anndata": "0.13.3.post0",
+    "pydeseq2": "0.5.4",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5",
+    "h5py": "3.16.0"
+  },
+  "nativeHDF5": "2.2.0",
+  "binarySHA256": "691b6f9800bde71c7856babec1eecba384e8396c8669590ab67cc2fe782c0149",
+  "nativeCommands": [
+    {
+      "label": "native-import",
+      "returncode": 0,
+      "elapsedSeconds": 1.8453398747369647,
+      "peakResidentBytes": 335151104
+    },
+    {
+      "label": "native-counts",
+      "returncode": 0,
+      "elapsedSeconds": 2.423123791348189,
+      "peakResidentBytes": 353370112
+    },
+    {
+      "label": "native-analysis",
+      "returncode": 0,
+      "elapsedSeconds": 30.601640374865383,
+      "peakResidentBytes": 686866432
+    },
+    {
+      "label": "native-replay-export",
+      "returncode": 0,
+      "elapsedSeconds": 31.830614416860044,
+      "peakResidentBytes": 723763200
+    }
+  ],
+  "sourceSetSHA256": "de1b2d0cba7e354880aabf730d6ea59ff973630cd8cee60083c15d940c17d972"
+}

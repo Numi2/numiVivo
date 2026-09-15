@@ -33,6 +33,16 @@ log-normalization error is 8.88e-16. PBMC3K has one library and no donor
 replication, so this qualifies real AnnData/count/QC exchange rather than
 biological prediction or donor-level DE.
 
+The fresh [Kang paired-donor NB2 run](evidence/2026-09-15-kang-nb/README.md)
+executes the same current CLI on eight donors and 16 donor-condition
+pseudobulks, with PyDESeq2 receiving the identical filtered counts and design.
+Native NB2 tests 5,400 of 8,894 eligible genes and retains 3,494 explicit
+rank-deficient support rejections. Common-set effect Spearman correlation is
+0.999067, sign agreement is 99%, top-50 BH overlap is 43, and all five
+predeclared IFNB genes are positive in both models. This is one descriptive
+paired-donor contrast; the retained support gap, reference trend warning and
+uncalibrated significance prevent a production or general-outcome claim.
+
 The [complete HIRISA source benchmark](HIRISA/README.md) adds all 131 deposited
 libraries: 1,612,594 cells and 3.846 billion count entries, with exact source and
 backed AnnData checks. Native release ingestion/reconstruction and independent
@@ -81,6 +91,13 @@ feature filter, with design `~ donor + condition`. The native method is the
 existing median-ratio, moderated log-linear baseline. The reference is PyDESeq2
 0.5.4 with a negative-binomial likelihood; it is not R DESeq2, edgeR or limma.
 Batch metadata is unreported, so no batch adjustment is asserted.
+
+The current [NB2 comparison receipt](evidence/2026-09-15-kang-nb/README.md)
+adds the experimental native adjusted-profile-dispersion model on this same
+source. It tests 5,400/8,894 eligible genes, reaches 0.999067 effect Spearman
+correlation and 99% common-set sign agreement with PyDESeq2, and has 43/50
+top-BH overlap. All five expected IFNB genes are positive in both models. The
+3,494 support-rank rejections and PyDESeq2 mean-trend fallback remain explicit.
 
 The declared expected direction check passed all five genes (ISG15, IFIT1,
 IFIT3, MX1, OAS1), against a requirement of at least four positive effects in

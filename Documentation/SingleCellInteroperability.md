@@ -505,6 +505,12 @@ The complete development objective remains open:
    diagnostics. The full Kang NB comparison and independent numerical checks
    pass; [evidence and limitations](../Tools/Omics/NegativeBinomial/README.md)
    remain distinct from multi-study calibration and production qualification.
+   The current [Kang NB2 receipt](../Tools/Omics/Benchmarks/evidence/2026-09-15-kang-nb/README.md)
+   tests 5,400 of 8,894 eligible genes against PyDESeq2 on identical
+   donor-condition pseudobulks, with 0.999067 effect Spearman correlation,
+   99% sign agreement and all five predeclared IFNB genes positive in both
+   models. The 3,494 support-rank rejections and PyDESeq2 trend fallback stay
+   visible; this is one descriptive contrast, not calibrated production DE.
    Old plans retain the log-linear baseline. Optional
    [count-likelihood contrast shrinkage](../Tools/Omics/NegativeBinomial/EffectShrinkage/README.md)
    now jointly refits nuisance coefficients under an explicit fixed normal prior,

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA256": "e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830",
+  "publication": "https://doi.org/10.1038/nbt.4042",
+  "cellType": "B cells",
+  "donors": 8,
+  "design": "~ donor + condition",
+  "batchAdjustment": false,
+  "batchMetadata": "not provided in input",
+  "cellsPerSample": {
+    "patient_101__ctrl": 106,
+    "patient_101__stim": 141,
+    "patient_1015__ctrl": 459,
+    "patient_1015__stim": 366,
+    "patient_1016__ctrl": 125,
+    "patient_1016__stim": 123,
+    "patient_1039__ctrl": 26,
+    "patient_1039__stim": 41,
+    "patient_107__ctrl": 44,
+    "patient_107__stim": 60,
+    "patient_1244__ctrl": 118,
+    "patient_1244__stim": 96,
+    "patient_1256__ctrl": 218,
+    "patient_1256__stim": 219,
+    "patient_1488__ctrl": 220,
+    "patient_1488__stim": 289
+  },
+  "expectedPositiveGenes": [
+    "ISG15",
+    "IFIT1",
+    "IFIT3",
+    "MX1",
+    "OAS1"
+  ],
+  "expectedDirectionRequirement": "at least 4 of 5 genes have positive log2 effect in both models",
+  "comparisonThreshold": "No parity/competitiveness threshold; different count models are compared descriptively",
+  "referencePolicy": {
+    "refitCooks": false,
+    "cooksFilter": false,
+    "independentFiltering": false,
+    "reason": "Controlled same-count, same-filter comparison; robust-reference sensitivity is not qualified by this run"
+  },
+  "nativeModel": {
+    "model": "negativeBinomial",
+    "options": {
+      "trend": "parametric"
+    },
+    "qualification": "experimental NB cohort; asymptotic Wald inference, no multi-study calibration"
+  }
+}

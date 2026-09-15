@@ -1,0 +1,64 @@
+[
+  {
+    "label": "native-import",
+    "command": [
+      "/private/tmp/numivivo-kang-build/numivivo-omics",
+      "singlecell-h5ad-import",
+      "/tmp/numivivo-kang-run/prepared.h5ad",
+      "--plan",
+      "/tmp/numivivo-kang-run/mapping.json",
+      "--output",
+      "/tmp/numivivo-kang-run/imported"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 1.8453398747369647,
+    "peakResidentBytes": 335151104
+  },
+  {
+    "label": "native-counts",
+    "command": [
+      "/private/tmp/numivivo-kang-build/numivivo-omics",
+      "singlecell-run",
+      "/tmp/numivivo-kang-run/imported/manifest.json",
+      "--store",
+      "/tmp/numivivo-kang-run/store",
+      "--output",
+      "/tmp/numivivo-kang-run/count-receipt.json"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 2.423123791348189,
+    "peakResidentBytes": 353370112
+  },
+  {
+    "label": "native-analysis",
+    "command": [
+      "/private/tmp/numivivo-kang-build/numivivo-omics",
+      "singlecell-analyze",
+      "/tmp/numivivo-kang-run/count-receipt.json",
+      "--plan",
+      "/tmp/numivivo-kang-run/analysis.json",
+      "--store",
+      "/tmp/numivivo-kang-run/store",
+      "--output",
+      "/tmp/numivivo-kang-run/analysis-receipt.json"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 30.601640374865383,
+    "peakResidentBytes": 686866432
+  },
+  {
+    "label": "native-replay-export",
+    "command": [
+      "/private/tmp/numivivo-kang-build/numivivo-omics",
+      "singlecell-analysis-export",
+      "/tmp/numivivo-kang-run/analysis-receipt.json",
+      "--store",
+      "/tmp/numivivo-kang-run/store",
+      "--output",
+      "/tmp/numivivo-kang-run/native-report.json"
+    ],
+    "returncode": 0,
+    "elapsedSeconds": 31.830614416860044,
+    "peakResidentBytes": 723763200
+  }
+]
