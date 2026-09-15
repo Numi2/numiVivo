@@ -48,3 +48,18 @@ normalized margin difference under the current objective tolerances. It is not
 evidence that FP32 line-search decisions explain every current failure, and it
 does not replace a profiler or a complete same-domain CPU coverage/performance
 comparison.
+
+## CPU pre-trend scheduling
+
+`VivoOmicsNBCohortOptions.cpuWorkers` is a separate, bounded CPU-only option
+for independent gene-wise dispersion profiles before the cohort trend is fit.
+Its default is the historical serial execution; completed results are applied
+in feature order after each bounded worker batch joins. The final
+fixed-dispersion fits and effect shrinkage remain serial.
+
+Metal accepts only the default or an explicit single CPU worker. A multi-worker
+Metal request is rejected instead of overlapping the synchronous Metal
+objective submissions. This scheduling option is a deterministic execution
+capability, not evidence of an end-to-end speedup, improved Metal coverage, or
+statistical promotion. It requires a declared-domain benchmark before any
+performance claim.

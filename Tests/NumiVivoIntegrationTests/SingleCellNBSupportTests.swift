@@ -74,6 +74,11 @@ import Testing
         let request=Self.request();var baseline=request;baseline.negativeBinomialOptions!.zeroTotalDonorPolicy=nil
         let old=try VivoPseudobulkDifferentialExpression.run(data,contrast: baseline)
         let new=try VivoPseudobulkDifferentialExpression.run(data,contrast: request)
+        var parallelRequest = request
+        parallelRequest.negativeBinomialOptions!.cpuWorkers = 2
+        let parallel = try VivoPseudobulkDifferentialExpression.run(data, contrast: parallelRequest)
+        #expect(parallel.features == new.features)
+        #expect(parallel.negativeBinomial == new.negativeBinomial)
         #expect(old.features[90].status == .rankDeficientSupport)
         #expect(new.negativeBinomial!.features[90].supportResolution?.outcome == .ready)
         #expect(new.negativeBinomial!.features[90].finalFit != nil)

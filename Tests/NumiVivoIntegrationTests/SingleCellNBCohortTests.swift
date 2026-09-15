@@ -145,6 +145,44 @@ import Testing
         contrast.design = .independentReplicates
         #expect(throws: (any Error).self) { try VivoPseudobulkDifferentialExpression.run(data,contrast: contrast) }
     }
+    @Test func boundedCPUWorkersPreserveSerialPreTrendResultsAndRejectMetalContention() throws {
+        let data = try Self.fixture()
+        var contrast = VivoOmicsExpressionContrast(id: "cpu-workers", controlCondition: "ctrl",
+            treatmentCondition: "stim", design: .pairedDonors)
+        contrast.model = .negativeBinomial
+        contrast.minimumCellsPerPseudobulk = 1
+        var serialOptions = VivoOmicsNBCohortOptions()
+        serialOptions.trend = .mean
+        contrast.negativeBinomialOptions = serialOptions
+        let serial = try VivoPseudobulkDifferentialExpression.run(data, contrast: contrast)
+        #expect(!(String(decoding: try JSONEncoder().encode(serialOptions), as: UTF8.self)
+            .contains("cpuWorkers")))
+
+        var parallelOptions = serialOptions
+        parallelOptions.cpuWorkers = 2
+        contrast.negativeBinomialOptions = parallelOptions
+        let parallel = try VivoPseudobulkDifferentialExpression.run(data, contrast: contrast)
+        #expect(parallel.features == serial.features)
+        #expect(parallel.negativeBinomial == serial.negativeBinomial)
+        #expect(parallel.testedFeatures == serial.testedFeatures)
+        #expect(String(decoding: try JSONEncoder().encode(parallelOptions), as: UTF8.self)
+            .contains("cpuWorkers"))
+        #expect(try JSONDecoder().decode(VivoOmicsNBCohortOptions.self,
+            from: JSONEncoder().encode(parallelOptions)) == parallelOptions)
+
+        var invalidMetal = parallelOptions
+        invalidMetal.backend = .metalFP32
+        #expect(throws: (any Error).self) { try invalidMetal.validate() }
+        var singleWorkerMetal = serialOptions
+        singleWorkerMetal.backend = .metalFP32
+        singleWorkerMetal.cpuWorkers = 1
+        try singleWorkerMetal.validate()
+        for workers in [0, 17] {
+            var invalid = serialOptions
+            invalid.cpuWorkers = workers
+            #expect(throws: (any Error).self) { try invalid.validate() }
+        }
+    }
     @Test func optionsCannotBeSilentlyAppliedToWrongModel() throws {
         var contrast = SingleCellCohortTests.contrast()
         contrast.negativeBinomialOptions = .init()

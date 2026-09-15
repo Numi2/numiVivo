@@ -1,4 +1,5 @@
 import Foundation
+import Dispatch
 
 public enum VivoOmicsNBZeroDonorPolicy: String, Codable, Sendable { case activeDonorProfile }
 public enum VivoOmicsNBTrendMethod: String, Codable, Sendable { case parametric, mean, gammaParametric }
@@ -13,6 +14,11 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     /// Adjusted QL does not accept this profile until its global-fit owner is
     /// covered by the same Metal contract.
     public var backend: VivoOmicsNBBackend?
+    /// Bounded CPU-only scheduling for independent, pre-trend gene-wise
+    /// dispersion profiles. Nil preserves the historical serial execution.
+    /// Metal remains single-worker because its synchronous objective does not
+    /// yet have a measured cohort batching scheduler.
+    public var cpuWorkers: Int?
     public var zeroTotalDonorPolicy: VivoOmicsNBZeroDonorPolicy?
     public var trend: VivoOmicsNBTrendMethod = .parametric
     public var minimumTrendGenes: Int = 20
@@ -27,13 +33,14 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
     public var effectPriorEstimation: VivoOmicsNBEffectPriorEstimation?
     public init() {}
     private enum CodingKeys: String, CodingKey {
-        case testMethod, backend, zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance, effectPriorStandardDeviationLog2, effectPriorEstimation
+        case testMethod, backend, cpuWorkers, zeroTotalDonorPolicy, trend, minimumTrendGenes, minimumPriorVariance, outlierStandardDeviations, maximumCooksDistance, effectPriorStandardDeviationLog2, effectPriorEstimation
     }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["testMethod", "backend", "zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance", "effectPriorStandardDeviationLog2", "effectPriorEstimation"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["testMethod", "backend", "cpuWorkers", "zeroTotalDonorPolicy","trend", "minimumTrendGenes", "minimumPriorVariance", "outlierStandardDeviations", "maximumCooksDistance", "effectPriorStandardDeviationLog2", "effectPriorEstimation"])
         let c = try decoder.container(keyedBy: CodingKeys.self)
         testMethod = try c.decodeIfPresent(VivoOmicsNBTestMethod.self,forKey: .testMethod)
         backend = try c.decodeIfPresent(VivoOmicsNBBackend.self, forKey: .backend)
+        cpuWorkers = try c.decodeIfPresent(Int.self, forKey: .cpuWorkers)
         zeroTotalDonorPolicy = try c.decodeIfPresent(VivoOmicsNBZeroDonorPolicy.self,forKey: .zeroTotalDonorPolicy)
         trend = try c.decodeIfPresent(VivoOmicsNBTrendMethod.self, forKey: .trend) ?? .parametric
         minimumTrendGenes = try c.decodeIfPresent(Int.self, forKey: .minimumTrendGenes) ?? 20
@@ -44,6 +51,10 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
         effectPriorEstimation = try c.decodeIfPresent(VivoOmicsNBEffectPriorEstimation.self, forKey: .effectPriorEstimation)
     }
     public func validate() throws {
+        guard cpuWorkers.map({ (1...16).contains($0) }) ?? true,
+              backend == nil || (cpuWorkers ?? 1) == 1 else {
+            throw VivoOmicsError.invalid("NB CPU worker count or Metal scheduling contract")
+        }
         if testMethod == .quasiLikelihoodAdjusted {
             guard backend == nil, zeroTotalDonorPolicy == nil, effectPriorStandardDeviationLog2 == nil, effectPriorEstimation == nil else {
                 throw VivoOmicsError.invalid("Adjusted QL does not yet support the Metal backend, active-donor borrowing or effect-prior options")
@@ -56,6 +67,132 @@ public struct VivoOmicsNBCohortOptions: Codable, Sendable, Equatable {
               effectPriorStandardDeviationLog2.map({ $0.isFinite && (0.01...100).contains($0) }) ?? true,
               effectPriorEstimation == nil || effectPriorStandardDeviationLog2 == nil else {
             throw VivoOmicsError.invalid("NB trend, prior or influence options")
+        }
+    }
+}
+
+private struct VivoOmicsNBPreTrendGeneResult {
+    let total: UInt64
+    let mean: Double
+    let profile: VivoOmicsNBDispersionFit?
+    let diagnostics: VivoOmicsNBFeatureDiagnostics
+    let status: VivoOmicsExpressionStatus
+}
+
+/// The slots are written by independent CPU workers and read only after the
+/// bounded dispatch joins. Numerical state remains entirely per-gene; no
+/// likelihood accumulator, model state, or result ordering is shared.
+private final class VivoOmicsNBPreTrendResults: @unchecked Sendable {
+    private let lock = NSLock()
+    private var values: [Result<VivoOmicsNBPreTrendGeneResult, Error>?]
+
+    init(_ count: Int) {
+        values = Array(repeating: nil, count: count)
+    }
+
+    func set(_ value: Result<VivoOmicsNBPreTrendGeneResult, Error>, at index: Int) {
+        lock.lock()
+        defer { lock.unlock() }
+        values[index] = value
+    }
+
+    func get(_ index: Int) throws -> VivoOmicsNBPreTrendGeneResult {
+        lock.lock()
+        defer { lock.unlock() }
+        guard let value = values[index] else {
+            throw VivoOmicsError.invalid("NB CPU worker did not complete a gene profile")
+        }
+        return try value.get()
+    }
+}
+
+/// Inputs are immutable after the cohort design is compiled. The unchecked
+/// Sendable boundary is limited to independent gene evaluation; publication
+/// remains on the caller after every bounded dispatch joins.
+private final class VivoOmicsNBPreTrendEvaluator: @unchecked Sendable {
+    private let entries: [[(row: Int, count: UInt64)]]
+    private let design: VivoOmicsDesignMatrix
+    private let request: VivoOmicsExpressionContrast
+    private let options: VivoOmicsNBCohortOptions
+    private let offsets: [Double]
+
+    init(entries: [[(row: Int, count: UInt64)]], design: VivoOmicsDesignMatrix,
+         request: VivoOmicsExpressionContrast, options: VivoOmicsNBCohortOptions,
+         offsets: [Double]) {
+        self.entries = entries
+        self.design = design
+        self.request = request
+        self.options = options
+        self.offsets = offsets
+    }
+
+    func evaluate(_ gene: Int) throws -> VivoOmicsNBPreTrendGeneResult {
+        let n = design.rows.count
+        var total: UInt64 = 0
+        var mean = 0.0
+        var diagnostic = VivoOmicsNBFeatureDiagnostics(featureIndex: gene)
+        var status: VivoOmicsExpressionStatus = .filteredLowExpression
+        for entry in entries[gene] {
+            total = try vivoOmicsSum(total, entry.count)
+            mean += Double(entry.count) / design.sizeFactorValues[entry.row] / Double(n)
+        }
+        if total < request.minimumFeatureCounts ||
+            entries[gene].count < request.minimumExpressingPseudobulks {
+            return .init(total: total, mean: mean, profile: nil,
+                diagnostics: diagnostic, status: status)
+        }
+        var y = [UInt64](repeating: 0, count: n)
+        for entry in entries[gene] { y[entry.row] = entry.count }
+        do {
+            if options.zeroTotalDonorPolicy != nil {
+                diagnostic.supportResolution = try VivoOmicsNBSupport.resolve(
+                    counts: y, design: design, request: request
+                )
+                if let resolution = diagnostic.supportResolution,
+                    resolution.outcome != .ready {
+                    status = resolution.outcome == .insufficientReplication
+                        ? .insufficientActiveDonors : .rankDeficientSupport
+                    diagnostic.error = "Active-donor profile unavailable: " + resolution.outcome.rawValue
+                    return .init(total: total, mean: mean, profile: nil,
+                        diagnostics: diagnostic, status: status)
+                }
+            }
+            let resolution = diagnostic.supportResolution
+            let rows = resolution?.retainedObservationIndices ?? Array(0..<n)
+            let matrix = resolution?.rows ?? design.rows
+            let contrast = resolution?.contrast ?? design.contrast
+            let counts = rows.map { y[$0] }
+            let localOffsets = rows.map { offsets[$0] }
+            if VivoOmicsNegativeBinomial.positiveSupportIsRankDeficient(
+                counts: counts, design: matrix
+            ) {
+                status = .rankDeficientSupport
+                diagnostic.error = "Positive-count support is rank deficient; no inferential fit"
+                return .init(total: total, mean: mean, profile: nil,
+                    diagnostics: diagnostic, status: status)
+            }
+            // Gene-wise dispersion profiles probe the near-Poisson boundary
+            // down to 1e-8, where FP32 cannot resolve the mean-dependent
+            // objective. Keep this nuisance profile on the exact CPU owner;
+            // the explicit backend is reserved for fixed-dispersion fits
+            // after the cohort trend has been established.
+            let profile = try VivoOmicsNegativeBinomial.estimateDispersion(
+                counts: counts, design: matrix, offsets: localOffsets,
+                contrast: contrast, backend: nil
+            )
+            diagnostic.geneWiseDispersion = profile.fit.dispersion
+            diagnostic.geneWiseLowerBoundary = profile.lowerBoundary
+            diagnostic.geneWiseUpperBoundary = profile.upperBoundary
+            status = .tested
+            return .init(total: total, mean: mean, profile: profile,
+                diagnostics: diagnostic, status: status)
+        } catch is CancellationError {
+            throw CancellationError()
+        } catch {
+            status = .numericalFailure
+            diagnostic.error = error.localizedDescription
+            return .init(total: total, mean: mean, profile: nil,
+                diagnostics: diagnostic, status: status)
         }
     }
 }
@@ -370,45 +507,45 @@ public enum VivoOmicsNBCohort {
             for entry in entries[gene] { y[entry.row] = entry.count }
             return y
         }
-        for gene in entries.indices {
-            try Task.checkCancellation()
-            for entry in entries[gene] {
-                totals[gene] = try vivoOmicsSum(totals[gene],entry.count)
-                means[gene] += Double(entry.count)/design.sizeFactorValues[entry.row]/Double(n)
+        let preTrendEvaluator = VivoOmicsNBPreTrendEvaluator(
+            entries: entries, design: design, request: request, options: options,
+            offsets: offsets
+        )
+        let cpuWorkers = options.cpuWorkers ?? 1
+        if cpuWorkers == 1 {
+            for gene in entries.indices {
+                try Task.checkCancellation()
+                let result = try preTrendEvaluator.evaluate(gene)
+                totals[gene] = result.total
+                means[gene] = result.mean
+                profiles[gene] = result.profile
+                diagnostics[gene] = result.diagnostics
+                statuses[gene] = result.status
             }
-            if totals[gene] < request.minimumFeatureCounts || entries[gene].count < request.minimumExpressingPseudobulks { continue }
-            let y = response(gene)
-            do {
-                if options.zeroTotalDonorPolicy != nil {
-                    diagnostics[gene].supportResolution = try VivoOmicsNBSupport.resolve(counts: y,design: design,request: request)
-                    if let resolution=diagnostics[gene].supportResolution,resolution.outcome != .ready {
-                        statuses[gene] = resolution.outcome == .insufficientReplication ? .insufficientActiveDonors : .rankDeficientSupport
-                        diagnostics[gene].error = "Active-donor profile unavailable: " + resolution.outcome.rawValue
-                        continue
+        } else {
+            // Worker execution is intentionally bounded and independent. The
+            // caller checks cancellation before every small batch; the joined
+            // slots are then applied serially in feature order.
+            let slots = VivoOmicsNBPreTrendResults(count)
+            let batch = cpuWorkers * 8
+            for first in stride(from: 0, to: count, by: batch) {
+                try Task.checkCancellation()
+                let upper = min(count, first + batch)
+                let active = min(cpuWorkers, upper - first)
+                DispatchQueue.concurrentPerform(iterations: active) { worker in
+                    for gene in stride(from: first + worker, to: upper, by: active) {
+                        slots.set(Result { try preTrendEvaluator.evaluate(gene) }, at: gene)
                     }
                 }
-                let resolution=diagnostics[gene].supportResolution
-                let rows=resolution?.retainedObservationIndices ?? Array(0..<n)
-                let matrix=resolution?.rows ?? design.rows, contrast=resolution?.contrast ?? design.contrast
-                let counts=rows.map { y[$0] }, localOffsets=rows.map { offsets[$0] }
-                if VivoOmicsNegativeBinomial.positiveSupportIsRankDeficient(counts: counts,design: matrix) {
-                    statuses[gene] = .rankDeficientSupport
-                    diagnostics[gene].error = "Positive-count support is rank deficient; no inferential fit"
-                    continue
-                }
-                // Gene-wise dispersion profiles probe the near-Poisson boundary
-                // down to 1e-8, where FP32 cannot resolve the mean-dependent
-                // objective. Keep this nuisance profile on the exact CPU owner;
-                // the explicit backend is reserved for fixed-dispersion fits
-                // after the cohort trend has been established.
-                let profile = try VivoOmicsNegativeBinomial.estimateDispersion(counts: counts,design: matrix,offsets: localOffsets,contrast: contrast,backend: nil)
-                profiles[gene] = profile
-                diagnostics[gene].geneWiseDispersion = profile.fit.dispersion
-                diagnostics[gene].geneWiseLowerBoundary = profile.lowerBoundary
-                diagnostics[gene].geneWiseUpperBoundary = profile.upperBoundary
-                statuses[gene] = .tested
-            } catch is CancellationError { throw CancellationError() }
-            catch { statuses[gene] = .numericalFailure; diagnostics[gene].error = error.localizedDescription }
+            }
+            for gene in entries.indices {
+                let result = try slots.get(gene)
+                totals[gene] = result.total
+                means[gene] = result.mean
+                profiles[gene] = result.profile
+                diagnostics[gene] = result.diagnostics
+                statuses[gene] = result.status
+            }
         }
         // Keep the original full-design reference cohort and its sampling variance.
         // Gene-specific profiles borrow this prior; they do not mix residual DFs
