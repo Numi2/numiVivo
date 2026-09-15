@@ -3,7 +3,7 @@
 This is a source-backed map of the implementation, not a feature certification. The public package combines mature contracts, new numerical source and experimental methods. A successful import, a function named after a method, or a committed example does not establish numerical agreement or biological applicability.
 
 The navigation and implementation references below describe the reviewed source at
-`36e6dd25f39c257db5ad399a84241c5370014730` on 2026-09-15 for the current
+`80cc1249731f8231279977322e0e35df442e29cb` on 2026-09-15 for the current
 single-cell evidence, including native gzip H5AD import, scan, axis-projection,
 annotation, quantitative H5MU bundle commands and cross-scale CLI qualification
 receipts. Historical receipts retain their named runtime identities. Consult the
@@ -13,12 +13,12 @@ unmeasured speedup or maximum biological scale.
 ## Single-cell analysis and biological prediction
 
 The single-cell entries were reviewed against published evidence available at
-`b976d7a296107362133cb44bd58a24c553ded723` on 2026-09-14. Historical receipts retain their named runtime identities.
+`80cc1249731f8231279977322e0e35df442e29cb` on 2026-09-15. Historical receipts retain their named runtime identities.
 
 | Capability | Implemented and measured scope | Remaining boundary |
 | --- | --- | --- |
 | H5AD and multi-assay interchange | Native count import/export, explicit metadata mapping and source preservation; separate RNA/protein/ATAC spaces and H5MU routes. Continuous-valued proteomics, metabolomics and spatial-imaging assays have a separate native H5MU CSR/dense/CSC route. | Supported encodings and bounds are explicit; interchange does not validate experimental labels, assay transforms or joint biological inference. |
-| Count inference | Native negative-binomial fitting, dispersion/shrinkage, offsets and paired/batch designs; real-data numerical and R-reference comparisons. | Null-benchmark failures, varying support and broader FDR/interval calibration remain. Method concordance is not ground truth. |
+| Count inference | Native negative-binomial fitting, dispersion/shrinkage, offsets and paired/batch designs; real-data numerical and R-reference comparisons. An explicit `backend: .metalFP32` profile can carry the mean-dependent objective through cohort Wald/LRT fits on a physical Apple GPU. | Gene-wise dispersion profiles, trend fitting and MAP shrinkage remain CPU FP64; adjusted QL rejects the Metal profile. Null-benchmark failures, varying support and broader FDR/interval calibration remain. Method concordance is not ground truth. |
 | Reduction and integration | Sparse HVG/PCA, neighbors, Louvain, UMAP-compatible optimization and donor correction. Full HIRISA PCA/graph and seed-7 integration have numerical/replay evidence. | Full HIRISA clustering publication/replay and independent partition checks pass; cluster annotation remains unqualified. Coarse margins pass. [Original program failures](../Tools/Omics/Benchmarks/HIRISA/INTEGRATION_PROGRAMS.md) are decoder-dependent: [within-library development fitting](../Tools/Omics/Benchmarks/HIRISA/PROGRAM_CALIBRATION.md) meets loss margins with 28/32 sensitive controls, four insufficient. This is not independent biological qualification. Rare-cell and native multi-seed preservation remain open. |
 | Known-treatment donor prediction | Native control-context ridge plus three simple baselines. All 79 HIRISA folds complete; ridge beats no-change in 14/16 contrasts and mean response in 4/16. | Requires the new donor's control profile and matching context. Two contrasts fail against no-change; no calibrated intervals or general phenotype claim. |
 | Target/composition prediction | Native composition models reproduce all 131 Norman held-out pairs; native GO kernel evaluates 105 held-target folds, with 101 supported descriptors. | GO gain over mean is only 0.58% on reused data, with 29/101 worse than no-change. Reliable independent-study, unseen-context and mechanistic prediction remain unqualified. |
@@ -31,6 +31,16 @@ owner-specific limits. Count/latent storage is bounded or streamed in specific
 stages; cell-scale metadata and several model arrays still reside in memory.
 No general Metal speedup for this pipeline is established.
 
+The production cohort analysis now accepts `VivoOmicsNBCohortOptions.backend =
+.metalFP32` for the fixed-dispersion NB2 fit and LRT null fit. The cached Metal
+kernel uses a stable Poisson-limit series for its bounded FP32 objective; count-only
+terms, coefficient updates, diagnostics, published log likelihood, gene-wise
+dispersion profiles, trend fitting and MAP shrinkage remain owned by the exact
+FP64 CPU path. Adjusted QL rejects this backend instead of falling back silently.
+The focused regression exercises both cohort Wald and LRT reports on a physical
+Apple GPU, but does not establish a full GPU fitter, speedup, million-cell scale,
+FDR/interval calibration or biological outcome prediction.
+
 The current roadmap also has bounded evidence for the final three single-cell
 requirements: [Metal sparse normalization and graph timing](../Tools/Omics/CountStore/Metal/README.md),
 a fresh [physical PCA-neighbor regression](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-pca-neighbor-regression/),
@@ -39,7 +49,7 @@ and an opt-in [sparse PCA-operator qualification](../Tools/Omics/Reduction/Metal
 plus an opt-in [batched NB objective qualification](../Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-nb-objective/)
 qualify selected Apple-GPU arithmetic, one cohort-scale distance path and a
 bounded CPU-oracle dispatch check, sparse FP32 moments, sparse PCA operators and
-a bounded FP32 NB objective; the
+a bounded FP32 NB objective with a current end-to-end cohort regression; the
 [SEQC other-omics benchmark](../Tools/Omics/Benchmarks/SEQC/README.md) is a
 technical reference-RNA comparison; and the [AlphaGenome Atlas assessment](AlphaGenomeAtlas.md)
 now has a native VCF import/projection boundary plus an offline adapter contract.

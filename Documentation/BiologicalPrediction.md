@@ -38,6 +38,12 @@ and conditional molecular-response evidence. No real-cohort qualification of an
 unseen perturbation, causal mechanism, calibrated uncertainty or phenotype
 outcome follows from the new mode.
 
+The cohort analysis plan also accepts an explicit `backend: .metalFP32` profile
+for bounded fixed-dispersion NB2 Wald/LRT fits on a physical Apple GPU. Its
+gene-wise dispersion profiles, trend, diagnostics, log likelihood and MAP
+shrinkage retain the FP64 CPU owner; adjusted QL rejects the profile. This
+changes execution placement only and adds no biological-outcome evidence.
+
 The complete [GSE181897 NB2 run](../Tools/Omics/PerturbationPrediction/GSE181897/NB_RESPONSE.md)
 executes and verifies 124 donor predictions. Its all-panel RMSE improves over
 no-change by 0.35% from Kang training and 2.72% from HIRISA training, below the

@@ -493,15 +493,18 @@ and the integrated reduction path at its declared FP32 residual tolerance. CPU
 remains the default; no broad speedup, million-cell scaling or biological
 qualification follows.
 
-An opt-in `backend: .metalFP32` negative-binomial fit now batches the
-mean-dependent NB2 line-search objective on the physical Apple GPU. Count-only
-log-gamma terms, coefficient updates, diagnostics and the published
-`logLikelihood` remain on the exact FP64 CPU owner. The [native NB objective
+An opt-in `backend: .metalFP32` negative-binomial profile now carries the
+mean-dependent NB2 line-search objective through cohort Wald and LRT fits on a
+physical Apple GPU. A cached kernel uses a stable Poisson-limit series;
+count-only log-gamma terms, coefficient updates, diagnostics and the published
+`logLikelihood` remain on the exact FP64 CPU owner. Gene-wise dispersion
+profiles, trend fitting and MAP shrinkage remain CPU, and adjusted QL rejects
+this backend rather than falling back. The [native NB objective
 receipt](Tools/Omics/Reduction/MetalDistanceBlocks/NativeOwner/evidence/2026-09-14-nb-objective/)
-passes the focused CPU-oracle and fit-contract tests, including the explicit
-FP32 count/mean bounds. This is a bounded objective component, not full GPU
-model fitting, a speedup claim, FDR/interval calibration or biological outcome
-validation.
+and current cohort regression pass the CPU-oracle, fit-contract and explicit
+FP32 count/mean-bound checks. This is a bounded objective component, not full
+GPU model fitting, a speedup claim, FDR/interval calibration or biological
+outcome validation.
 
 ## One scientific question, several scales
 
