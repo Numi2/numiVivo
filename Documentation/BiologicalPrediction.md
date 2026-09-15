@@ -51,6 +51,15 @@ failures. Common tested effects have matching signs, but this is a bounded
 same-count execution comparison and supplies no new phenotype, tissue or
 treatment-outcome validation.
 
+The fresh [Kang paired-donor NB2 benchmark](../Tools/Omics/Benchmarks/evidence/2026-09-15-kang-nb/README.md)
+compares the current native count model with PyDESeq2 on identical
+donor-condition pseudobulks. It tests 5,400 of 8,894 eligible genes, reaches
+0.999067 common-set effect Spearman correlation and 99% sign agreement, and
+has all five predeclared IFNB genes positive in both models. The 3,494
+support-rank rejections and reference trend fallback remain visible; this is
+one descriptive molecular-response contrast, not general biological-outcome
+validation.
+
 The complete [GSE181897 NB2 run](../Tools/Omics/PerturbationPrediction/GSE181897/NB_RESPONSE.md)
 executes and verifies 124 donor predictions. Its all-panel RMSE improves over
 no-change by 0.35% from Kang training and 2.72% from HIRISA training, below the

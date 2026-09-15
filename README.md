@@ -118,6 +118,14 @@ with no claim of unseen-target, causal, mechanistic, uncertainty-calibrated or
 phenotype prediction. The legacy log-linear path and serialized plans remain
 unchanged by default.
 
+The fresh [Kang paired-donor NB2 benchmark](Tools/Omics/Benchmarks/evidence/2026-09-15-kang-nb/README.md)
+compares the current native count model with PyDESeq2 on identical pseudobulks:
+5,400 of 8,894 eligible genes are tested, common-set effect Spearman
+correlation is 0.999067, sign agreement is 99%, and all five predeclared IFNB
+genes are positive in both models. The 3,494 support-rank rejections and
+reference trend warning remain explicit; this is one descriptive contrast,
+not general outcome validation.
+
 The complete [GSE181897 NB2 run](Tools/Omics/PerturbationPrediction/GSE181897/NB_RESPONSE.md)
 verifies all 124 held-out donor predictions. Its all-panel gain over no-change
 is 0.35% from Kang training and 2.72% from HIRISA training, below the frozen 5%
