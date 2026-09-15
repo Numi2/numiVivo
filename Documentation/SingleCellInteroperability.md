@@ -42,6 +42,14 @@ controls and the original failures as development evidence. Full-cohort [native 
 checks](../Tools/Omics/Benchmarks/HIRISA/FULL_CLUSTERING_RESULTS.md) now pass;
 broader biological preservation remains open.
 
+A focused native-plan regression now executes negative-binomial cohort DE,
+sparse HVG/PCA, integrated-neighbor construction, clustering and a
+UMAP-compatible embedding from one `VivoSingleCellAnalysisPlan`. The regression
+checks cell-order/cardinality contracts, integrated-neighbor selection,
+integration residuals and deterministic replay on a synthetic paired-donor
+cohort. It demonstrates software composition only; it is not a real-data
+benchmark, cluster-identity result or biological-preservation qualification.
+
 ## Remote count records
 
 The [native count-stream reader](../Tools/Omics/CountStore/Stream/README.md) accepts

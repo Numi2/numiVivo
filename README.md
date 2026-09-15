@@ -12,6 +12,12 @@ The ambition is to follow a molecular change across scales: how a structure move
 
 The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md) now carries all 1,612,594 native graph-community labels into a backed AnnData-readable H5AD, with complete cell-identity and metadata checks. This is interoperability evidence, not biological annotation validation.
 
+A focused native analysis-plan regression now runs negative-binomial cohort DE,
+sparse PCA, integrated neighbors, clustering and a UMAP-compatible embedding as
+one deterministic report, with explicit cell-order and integration-residual
+checks. This is a synthetic software-composition result; real-data biological
+preservation and outcome validation remain separate evidence gates.
+
 The [integration design guard](Tools/Omics/Reduction/INTEGRATION.md#optional-protected-sample-groups) can reject correction designs confounded with explicitly protected sample groups. Admission does not establish preservation of biological signals.
 
 The same integration owner now exposes an opt-in additive donor+batch correction
