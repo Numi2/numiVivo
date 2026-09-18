@@ -1,0 +1,34 @@
+{
+  "assays": [
+    "adaptyv",
+    "twist"
+  ],
+  "baselineFeature": "ipsae_min_boltz2",
+  "evidenceStatus": "fixed-retrospective-development; not prospective validation",
+  "holdout": "one complete target at a time; exact-sequence overlap purged",
+  "modelFeatures": [
+    "ipsae_min_boltz2",
+    "ipsae_min_ptxv2",
+    "ipsae_min_ef2full"
+  ],
+  "planSHA256": {
+    "adaptyv-BBF-14.json": "7bd2f99d7b2621d3a61da4c55a51b2b2c66cab3416b25e27b57d97141808720e",
+    "adaptyv-EGFR.json": "ff9d120802979ded1056c492c96d26fb8e4e7710522e94235a893077fefe0f0b",
+    "adaptyv-MBP.json": "d61ebc48cbddfdce7f94fb80710ee5d88274672c692bfc6c4611f003ce7d4778",
+    "twist-BBF-14.json": "7bd2f99d7b2621d3a61da4c55a51b2b2c66cab3416b25e27b57d97141808720e",
+    "twist-EGFR.json": "ff9d120802979ded1056c492c96d26fb8e4e7710522e94235a893077fefe0f0b",
+    "twist-MBP.json": "d61ebc48cbddfdce7f94fb80710ee5d88274672c692bfc6c4611f003ce7d4778"
+  },
+  "ridgePenalty": 0.1,
+  "schemaVersion": 1,
+  "sourceGitBlobSHA1": "d1573ba03e8322c70ccb3a40e46418e86b40e2dc",
+  "sourceRevision": "9e1b81696da46835e9e9cde9a3da976e0abc92ab",
+  "sourceSHA256": "a96dc3a4fcc293dd393a8c56fa367dadcac4db326c30f1c3ea3d8c2b9f72367a",
+  "sourceURL": "https://huggingface.co/datasets/Anthropic/claude-protein-binder-design/resolve/9e1b81696da46835e9e9cde9a3da976e0abc92ab/data/tables/design_summary.csv",
+  "targets": [
+    "BBF-14",
+    "MBP",
+    "EGFR"
+  ],
+  "topK": 10
+}

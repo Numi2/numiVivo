@@ -1,46 +1,43 @@
 # Binder selection: native retrospective benchmark
 
 `VivoBinderBenchmark` in `NumiVivoKit/Binder` owns binary-outcome candidate evaluation.
-It is not a molecular simulator, affinity predictor or validated binder-selection product.
+It is not an affinity predictor or a validated binder-selection product.
+
+**Current execution:** the pinned published table has been downloaded and the fixed
+six-fold score-only campaign completed, with independent numerical checks and a
+separate local rebuild reproducing every complete evaluation report. The three-score
+ensemble ties the fixed Boltz-2 ranking in four top-10 comparisons and loses in two;
+it improves none. This is a negative development result, not evidence of Numi
+physical-analysis improvement. See the [published record](evidence/2026-09-18-published/README.md).
+
+**Current implementation:** published-table import, native CLI, source-replayable
+score evaluation, and [structure-derived geometry with matched score-only controls](STRUCTURAL_ANALYSIS.md).
+The structural route has synthetic execution evidence; the published structural
+panel, preparation/MD route and full Apple/Metal application remain unqualified.
+
+## Evaluation contract
 
 A dataset names one assay endpoint, exact source SHA-256, grouping method and each
 candidate's target, group, raw outcome, preserved source fields and available numeric
-features. Unknown/untested/inconclusive/expression-failure outcomes remain nonbinary.
-The caller must preserve and verify the source bytes; a supplied digest is not proof
-that the data was faithfully imported.
+features. Unknown, untested, inconclusive and expression-failure outcomes remain
+nonbinary. A supplied digest alone does not authenticate a local dataset's origin.
 
 An explicit plan separates whole training targets from whole test targets. Training
 candidates whose declared sequence groups occur anywhere in the test set are purged.
-Only training rows determine feature scaling and the ridge-logistic model. Model and
-baseline use the same complete-case candidates; every exclusion remains in the report.
-The fixed baseline feature is a higher-is-better score, not a probability.
+Only training rows determine scaling and the ridge-logistic model. Methods use the
+same complete-case candidates; exclusions remain in reports. The fixed baseline
+feature is a higher-is-better score, not a probability.
 
-Reports include fitted parameters/convergence, exact candidate IDs, held-out predictions,
+Reports retain fitted parameters/convergence, exact candidate IDs, held-out predictions,
 AUROC, threshold-block average precision, Brier score where meaningful and expected
-hits/precision at K. Ties receive fractional selection credit, independent of row order.
-Single-class AUROC remains unavailable. Reports do not pool targets into a potentially
-misleading aggregate or grant a qualification based on a positive-looking result.
+hits/precision at K. Ties receive fractional selection credit independent of row order.
+Single-class AUROC stays unavailable. No favorable metric automatically grants
+qualification, and target/assay endpoints are not pooled into an apparent replication.
 
-Freeze the plan before inspecting test outcomes. A code path cannot establish that
-historical fact. Exact-sequence grouping does not establish homology independence;
-related targets/designs are not independent experimental replicates. Start with a
-score-only baseline/ensemble before testing any additional structural/MD feature.
-
-Portable regression (Swift 6, Python 3.10+ standard library; OpenSSL development library on Linux):
-
-```sh
-python3 Tools/BinderBenchmark/check_native.py
-python3 Tools/BinderBenchmark/test_tools.py -v
-```
-
-This compiles the exact owner and its XCTest source in a temporary package; it does
-not build or qualify the full Apple/Metal product. On macOS the same tests are part
-of `swift test --filter VivoBinder`.
-
-Current: published-table import, native CLI and source-replayable score evaluation.
-Next: structure-derived observations, then independently qualified preparation/MD.
-No NVIDIA or paid service is required
-for this first retrospective scoring step.
+Freeze plans before evaluation. Code can bind a plan to results but cannot prove that
+nobody previously inspected outcomes. Exact-sequence grouping does not establish
+homology independence. The already examined published targets are development data
+for subsequent feature work, not a fresh external test.
 
 ## Published-source workflow
 
@@ -49,55 +46,88 @@ revision `9e1b81696da46835e9e9cde9a3da976e0abc92ab`,
 `data/tables/design_summary.csv`, Git blob `d1573ba03e8322c70ccb3a40e46418e86b40e2dc`.
 Source: https://huggingface.co/datasets/Anthropic/claude-protein-binder-design
 
-The downloader checks that upstream blob identity before publishing. The importer
-itself verifies input consistency and fingerprints; it does not authenticate an
-arbitrary local CSV's upstream origin. Preserve the downloader's `SOURCE.json`.
-Initial scope is BBF-14, MBP and EGFR, explicitly selected rather than all targets.
-Each vendor is a separate benchmark. Only exact `binder` and `non_binder` source
-classes become binary; other classifications remain unavailable with raw text.
-No combined `binder_final`, affinity, expression or assay-derived field enters the
-predictors. All source fields remain available for review.
+The downloader checks the pinned Git-blob identity before publishing. The importer
+checks consistency and fingerprints, not upstream authenticity of arbitrary local
+CSV bytes. Preserve the downloader's `SOURCE.json` and original source.
+
+The fixed campaign explicitly selects BBF-14, MBP and EGFR: 270 designs from the
+1,440-row source. Each vendor remains a separate benchmark. Only exact `binder`
+and `non_binder` classifications become binary. Other text remains preserved and
+excluded; neither combined `binder_final`, measured affinity, expression nor other
+assay-derived columns are admitted as predictors.
+
+Full fixed campaign using the normal Apple executable:
 
 ```sh
 python3 Tools/BinderBenchmark/fetch_source.py /tmp/numi-binder-source
 swift build -c release
-BIN=.build/release/numivivo
-$BIN binder-import /tmp/numi-binder-source/source.csv \
-  /tmp/numi-binder-source/import-adaptyv.json /tmp/numi-binder-input
-python3 Tools/BinderBenchmark/make_plan.py /tmp/numi-binder-input \
-  --test-target BBF-14 --output /tmp/numi-binder-plan.json
-$BIN binder-evaluate /tmp/numi-binder-input /tmp/numi-binder-plan.json /tmp/numi-binder-result
-$BIN binder-verify /tmp/numi-binder-result
+python3 Tools/BinderBenchmark/run_published.py /tmp/numi-binder-source \
+  .build/release/numivivo /tmp/numi-binder-campaign
 ```
 
-The example compares a preselected Boltz-2 ipSAE ranking with a training-only
-three-score ensemble and training-prevalence baseline. This is not Numi physics
-improving binding prediction. It establishes the benchmark against which added
-physical observations must later be tested. Do not tune the plan on the test result.
+All output directories must be new. The campaign writes all six plans before
+import/evaluation, then checks source identity, reconstructed import, training
+population/scaling/fit gradients, held-out predictions and metrics independently
+in Python. It preserves the original CSV, executable, plans, bundles, logs and hashes.
 
-Bundles retain original CSV/config bytes, deterministic imported records, a plan
-and complete report where applicable. SHA-256 binds every file and the producing
-executable. Verification reconstructs the import and repeats evaluation; modified
-records cannot pass merely by updating a file checksum. Rebuilt executables have a
-new identity and require a fresh run, not relabeling old evidence. Outputs must be
-new directories; incomplete runs do not publish and existing data is never replaced.
+Individual native commands:
 
-The portable checker uses the existing `Tools/Posterior/PortableSupport.swift`
-OpenSSL/canonical-JSON facade. It tests the exact binder source and CLI, not the
-full production artifact store, Apple package integration or Metal execution.
+```text
+numivivo binder-import SOURCE.csv IMPORT.json NEW_BUNDLE
+numivivo binder-evaluate IMPORT_BUNDLE PLAN.json NEW_RESULT
+numivivo binder-evaluate-structures IMPORT_BUNDLE PLAN.json STRUCTURES.json NEW_RESULT
+numivivo binder-verify BUNDLE
+```
 
-## Executed evidence and next boundary
+Use `make_plan.py IMPORT_BUNDLE --test-target TARGET --output NEW_PLAN.json` for a
+score-only plan. Structural evaluation requires explicitly adding selected geometry
+features to a separately frozen plan; see [the structural contract](STRUCTURAL_ANALYSIS.md).
 
-The [2026-09-18 portable record](evidence/2026-09-18-portable/README.md) records
-35 passing Swift tests, seven passing offline tool tests and a 90-candidate synthetic
-CLI campaign with independent Python checks. This is implementation evidence only.
-The full published CSV was not downloaded/scored in that environment, and the
-complete macOS/Metal application was not built. The actual source-file downloader
-was exercised with mocked bytes, not the remote endpoint.
+## Reproducibility and tests
 
-This increment establishes a score-only comparison, not the previously proposed
-AI-structure-to-MD pipeline. It does not yet provide structure repair, protonation,
-parameter assignment, solvent setup, physical interface descriptors, inference from
-Boltz-2 weights or improved selection on measured outcomes. These should be added
-through the existing molecular owners and measured against the fixed baseline,
-not reimplemented as another simulation subsystem.
+Bundles retain source/configuration bytes, deterministic imports and complete reports.
+SHA-256 binds files and the producing executable. Verification reconstructs import,
+geometry where applicable, fitting and evaluation. Replacing an artifact and merely
+updating its recorded checksum cannot make inconsistent results pass. Rebuilt
+executables have new identities and need fresh runs, not relabeled old evidence.
+Existing outputs are not overwritten and incomplete runs do not publish bundles.
+
+```sh
+python3 Tools/BinderBenchmark/check_native.py
+python3 Tools/BinderBenchmark/test_tools.py -v
+```
+
+Requirements: Swift 6, Python 3.10+ standard library and, on Linux, the OpenSSL
+development library. `native_package.py` compiles the exact binder, molecular
+structure, validator, interface and artifact-primitive sources with the native CLI.
+Only canonical JSON and hashing use `PortableJSON.swift`, a harness-only
+Foundation/CryptoKit-or-OpenSSL implementation. This is not the full production
+artifact store or Apple package. On macOS the native tests are also included in
+`swift test --filter VivoBinder`.
+
+A retained portable executable can run the same published campaign:
+
+```sh
+python3 Tools/BinderBenchmark/native_package.py /tmp/numi-binder-native --test
+python3 Tools/BinderBenchmark/run_published.py /tmp/numi-binder-source \
+  /tmp/numi-binder-native/.build/debug/BinderCLI /tmp/numi-binder-portable-campaign
+```
+
+The focused Binder benchmark CI at `cbcf613b5a283f2a45b28ef010006195f5b0e984`
+passed 50 Swift tests, seven Python tests, both synthetic CLI campaigns and the real
+six-fold campaign. This does not assert success of unrelated repository workflows.
+The [earlier portable record](evidence/2026-09-18-portable/README.md) remains a
+historical account of the preceding 35-test, synthetic-only implementation.
+
+## Remaining scientific and engineering work
+
+The next measured increment is source-bound import of actual predicted structures
+and a fixed geometry-versus-score comparison on matched candidates. Model origin
+and target identity need stronger binding than the current caller-supplied labels.
+The archive is bounded; a complete realistic panel may require streaming or a
+separate feature-artifact workflow rather than increasing memory/work caps blindly.
+
+Structure repair, protonation, parameter assignment, solvent setup, qualified
+molecular sampling, model-weight inference and measured Apple acceleration are not
+provided by this increment. Integrate those through existing molecular owners;
+do not introduce another simulation subsystem or treat static geometry as an energy.

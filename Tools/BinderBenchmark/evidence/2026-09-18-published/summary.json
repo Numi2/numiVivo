@@ -1,0 +1,223 @@
+{
+  "completedAt": "2026-09-18T22:20:29.797442+00:00",
+  "folds": [
+    {
+      "assay": "adaptyv",
+      "baseline": {
+        "auroc": 0.09090909090909091,
+        "averagePrecision": 0.014084507042253521,
+        "count": 78,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0,
+        "positives": 1,
+        "precisionAtK": 0
+      },
+      "excludedCount": 14,
+      "scoreEnsemble": {
+        "auroc": 0.15584415584415584,
+        "averagePrecision": 0.015151515151515152,
+        "brier": 0.015061854158664977,
+        "count": 78,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0,
+        "positives": 1,
+        "precisionAtK": 0
+      },
+      "target": "BBF-14",
+      "trainingCount": 178,
+      "trainingPrevalence": {
+        "auroc": 0.5,
+        "averagePrecision": 0.01282051282051282,
+        "brier": 0.01453617291264056,
+        "count": 78,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0.1282051282051282,
+        "positives": 1,
+        "precisionAtK": 0.01282051282051282
+      }
+    },
+    {
+      "assay": "adaptyv",
+      "baseline": {
+        "count": 88,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0,
+        "positives": 0,
+        "precisionAtK": 0
+      },
+      "excludedCount": 14,
+      "scoreEnsemble": {
+        "brier": 0.004751539324190521,
+        "count": 88,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0,
+        "positives": 0,
+        "precisionAtK": 0
+      },
+      "target": "MBP",
+      "trainingCount": 168,
+      "trainingPrevalence": {
+        "brier": 0.004287131519274383,
+        "count": 88,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0,
+        "positives": 0,
+        "precisionAtK": 0
+      }
+    },
+    {
+      "assay": "adaptyv",
+      "baseline": {
+        "auroc": 0.585,
+        "averagePrecision": 0.26982713763142757,
+        "count": 90,
+        "effectiveK": 10,
+        "expectedHitsAtK": 2,
+        "positives": 10,
+        "precisionAtK": 0.2
+      },
+      "excludedCount": 14,
+      "scoreEnsemble": {
+        "auroc": 0.32,
+        "averagePrecision": 0.08623810247309627,
+        "brier": 0.1098957390544011,
+        "count": 90,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0,
+        "positives": 10,
+        "precisionAtK": 0
+      },
+      "target": "EGFR",
+      "trainingCount": 166,
+      "trainingPrevalence": {
+        "auroc": 0.5,
+        "averagePrecision": 0.1111111111111111,
+        "brier": 0.10980871276269732,
+        "count": 90,
+        "effectiveK": 10,
+        "expectedHitsAtK": 1.1111111111111112,
+        "positives": 10,
+        "precisionAtK": 0.11111111111111112
+      }
+    },
+    {
+      "assay": "twist",
+      "baseline": {
+        "auroc": 0.3992248062015504,
+        "averagePrecision": 0.13207816288689203,
+        "count": 89,
+        "effectiveK": 10,
+        "expectedHitsAtK": 1,
+        "positives": 3,
+        "precisionAtK": 0.1
+      },
+      "excludedCount": 3,
+      "scoreEnsemble": {
+        "auroc": 0.4418604651162791,
+        "averagePrecision": 0.04821428571428571,
+        "brier": 0.03389356629062788,
+        "count": 89,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0,
+        "positives": 3,
+        "precisionAtK": 0
+      },
+      "target": "BBF-14",
+      "trainingCount": 178,
+      "trainingPrevalence": {
+        "auroc": 0.5,
+        "averagePrecision": 0.033707865168539325,
+        "brier": 0.03336068678197197,
+        "count": 89,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0.33707865168539325,
+        "positives": 3,
+        "precisionAtK": 0.033707865168539325
+      }
+    },
+    {
+      "assay": "twist",
+      "baseline": {
+        "auroc": 0.6551724137931034,
+        "averagePrecision": 0.03225806451612903,
+        "count": 88,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0,
+        "positives": 1,
+        "precisionAtK": 0
+      },
+      "excludedCount": 3,
+      "scoreEnsemble": {
+        "auroc": 0.7471264367816092,
+        "averagePrecision": 0.043478260869565216,
+        "brier": 0.015533854920371924,
+        "count": 88,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0,
+        "positives": 1,
+        "precisionAtK": 0
+      },
+      "target": "MBP",
+      "trainingCount": 179,
+      "trainingPrevalence": {
+        "auroc": 0.5,
+        "averagePrecision": 0.011363636363636364,
+        "brier": 0.014987544367869636,
+        "count": 88,
+        "effectiveK": 10,
+        "expectedHitsAtK": 0.11363636363636363,
+        "positives": 1,
+        "precisionAtK": 0.011363636363636364
+      }
+    },
+    {
+      "assay": "twist",
+      "baseline": {
+        "auroc": 0.595,
+        "averagePrecision": 0.2650169544396031,
+        "count": 90,
+        "effectiveK": 10,
+        "expectedHitsAtK": 2,
+        "positives": 10,
+        "precisionAtK": 0.2
+      },
+      "excludedCount": 3,
+      "scoreEnsemble": {
+        "auroc": 0.64,
+        "averagePrecision": 0.17984694958046993,
+        "brier": 0.10658824927729021,
+        "count": 90,
+        "effectiveK": 10,
+        "expectedHitsAtK": 2,
+        "positives": 10,
+        "precisionAtK": 0.2
+      },
+      "target": "EGFR",
+      "trainingCount": 177,
+      "trainingPrevalence": {
+        "auroc": 0.5,
+        "averagePrecision": 0.1111111111111111,
+        "brier": 0.10659984891527549,
+        "count": 90,
+        "effectiveK": 10,
+        "expectedHitsAtK": 1.1111111111111112,
+        "positives": 10,
+        "precisionAtK": 0.11111111111111112
+      }
+    }
+  ],
+  "implementationSHA256": "04f6b0bc9ee33dfa9a6bf66b97f3480f25b518984a25054c5bc8ce34dab746f5",
+  "independentNumericalVerification": "passed",
+  "limitations": [
+    "Score-only comparison; no Numi physical features or demonstrated physical uplift.",
+    "Retrospective development; related designs/targets are not independent replications.",
+    "Exact-sequence groups do not establish homology independence.",
+    "Assay endpoints remain separate; missing outcomes are not failures.",
+    "The supplied executable may be the portable subset, not the full Apple product."
+  ],
+  "protocolSHA256": "a8e5d433802be7a19ea8830b10a06680158f29be5e9bf4c065a916a0513d8d85",
+  "schemaVersion": 1,
+  "sourceRows": 1440,
+  "sourceSHA256": "a96dc3a4fcc293dd393a8c56fa367dadcac4db326c30f1c3ea3d8c2b9f72367a",
+  "status": "completed"
+}

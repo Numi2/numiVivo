@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "kind": "execution-record-not-signed-attestation",
+  "repository": "Numi2/numiVivo",
+  "implementationCommit": "cbcf613b5a283f2a45b28ef010006195f5b0e984",
+  "ci": {
+    "runID": 35401015828,
+    "jobID": 105780669224,
+    "conclusion": "success",
+    "swift": "6.2.1",
+    "python": "3.12.3",
+    "platform": "x86_64-unknown-linux-gnu",
+    "swiftTestsPassed": 50,
+    "swiftTestFailures": 0,
+    "offlinePythonTestsPassed": 7,
+    "syntheticScoreCandidates": 90,
+    "syntheticStructures": 17,
+    "matchedStructuralTrainingCandidates": 12,
+    "matchedStructuralTestCandidates": 5,
+    "mockedSourceCampaignFolds": 6,
+    "actualPublishedCampaignFolds": 6,
+    "implementationSHA256": "04f6b0bc9ee33dfa9a6bf66b97f3480f25b518984a25054c5bc8ce34dab746f5",
+    "completedAt": "2026-09-18T22:20:29.797442+00:00",
+    "artifactID": 10571040764,
+    "artifactZIPBytes": 4312301,
+    "artifactZIPSHA256": "fb62f26cb415f03f81a39a2e5157dd44bed7166e681dc434a5ac8d1c9ceb9a47",
+    "artifactRetentionDays": 14,
+    "artifactManifestEntriesVerified": 85,
+    "artifactManifestSHA256": "37a468d299b8d418163386ee164317b409bf65ed90fce5255241a32ceb0589ba"
+  },
+  "localRebuild": {
+    "implementationSHA256": "067dae8a818102ea47d8ff7aa630dab09a420576d59ff2ca6b301af6fa0510a6",
+    "completedAt": "2026-09-18T22:20:50.290850+00:00",
+    "actualPublishedCampaignFolds": 6,
+    "allCompleteEvaluationReportsExactlyEqualToCI": true,
+    "independentNumericalVerification": "passed"
+  },
+  "sourceRows": 1440,
+  "selectedDesigns": 270,
+  "sourceBytes": 1213035,
+  "sourceSHA256": "a96dc3a4fcc293dd393a8c56fa367dadcac4db326c30f1c3ea3d8c2b9f72367a",
+  "protocolSHA256": "a8e5d433802be7a19ea8830b10a06680158f29be5e9bf4c065a916a0513d8d85",
+  "summarySHA256": "7dc70192fee51ec30f6961e52f6497e1b1f2f0ef2eaf8bc2c33bc5d34a1238f6",
+  "notEstablished": [
+    "Structural-feature improvement on published experimental outcomes",
+    "Molecular preparation and MD qualification for this binder workflow",
+    "Full Apple/Metal application qualification",
+    "Model-weight inference or measured Apple acceleration",
+    "Homology-independent or prospective biological validation"
+  ]
+}
