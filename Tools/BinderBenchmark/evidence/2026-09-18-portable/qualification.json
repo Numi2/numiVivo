@@ -1,0 +1,64 @@
+{
+  "commands": [
+    "python3 Tools/BinderBenchmark/check_native.py",
+    "python3 Tools/BinderBenchmark/test_tools.py -v"
+  ],
+  "date": "2026-09-18",
+  "evidenceClass": "portable-software-and-numerical-checks",
+  "nativeSwiftTests": {
+    "executed": 35,
+    "failures": 0
+  },
+  "notExecuted": [
+    "live upstream source download",
+    "full published experimental-table scoring",
+    "full Apple package build",
+    "Metal execution",
+    "molecular preparation or MD",
+    "new model inference",
+    "experimental improvement or prospective validation"
+  ],
+  "offlinePythonToolTests": {
+    "executed": 7,
+    "failures": 0
+  },
+  "schemaVersion": 1,
+  "sourceSHA256": {
+    "Sources/NumiVivoCLI/VivoBinderCLICommands.swift": "8ed3cac17db531f563d27eb02ca7185d3dabfbbc3b6ca0d9b4292f817cc4b25f",
+    "Sources/NumiVivoKit/Binder/VivoBinderAnthropicImport.swift": "39bdda77a884999eae95de8f3cf7c32c73858b757f05f4dabee7e5b4a40729a7",
+    "Sources/NumiVivoKit/Binder/VivoBinderBenchmark.swift": "23c2f3a553457aabc28dcff2951491ba48a9219cc4df6dc588732d4d87cb6997",
+    "Sources/NumiVivoKit/Binder/VivoBinderBundleIO.swift": "a9979d40f1f7bd5b74ab9be63d41a5ce72a3eb3cda542ca23dd3378d80c2e07b",
+    "Tests/NumiVivoIntegrationTests/VivoBinderBenchmarkTests.swift": "46a05b4909b214425bde190adb05514a1753762bccd19f5376b8083e2a3d686a",
+    "Tests/NumiVivoIntegrationTests/VivoBinderBundleTests.swift": "98d6edb5a1c3fedbc7abd57dcee64efcd0bea6a9f2ffd50b0586a26a125f8696",
+    "Tests/NumiVivoIntegrationTests/VivoBinderImportTests.swift": "7a5855d1a74e58599bb5ebc544c8f2ddafbd5d0f53854e054a81cacdd9fd4ee8",
+    "Tools/BinderBenchmark/check_native.py": "80bfbc89b720ede505e52896d28b6634fc33c97f041f9419fbcb9076f4f57910",
+    "Tools/BinderBenchmark/fetch_source.py": "2f484cb8bc168e09471af6d87a0e5762f5bcda0dabb696f6cbccfd5576e69ffe",
+    "Tools/BinderBenchmark/make_plan.py": "0326fbf73506d6fdbe0b6c792a186f9096a8afaf592a6ef5792740b46775a6df",
+    "Tools/BinderBenchmark/test_tools.py": "21f20f904e766ffbbb06e254f7a85d78bba38f6d8ed7fc06ccb1cc7b3082e7a9",
+    "Tools/Posterior/PortableSupport.swift": "1a36f6b47b0f93b3a5f3b7be2c5d8b81a566dcbcd1d3fde5aa452eecb5cdcc26"
+  },
+  "swiftVersion": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "syntheticCLICampaign": {
+    "candidates": 90,
+    "checks": [
+      "import",
+      "whole-target evaluation",
+      "full bundle replay",
+      "source and executable SHA-256",
+      "independent training means and scales",
+      "independent fitted-model gradient",
+      "independent held-out probabilities",
+      "pairwise AUROC",
+      "threshold-block average precision",
+      "tie-invariant expected hits and precision at K",
+      "Brier score",
+      "existing-output rejection",
+      "corrupted-report rejection",
+      "usage exit code"
+    ],
+    "heldOut": 30,
+    "seed": 183,
+    "training": 60
+  },
+  "testFacade": "Existing Tools/Posterior/PortableSupport.swift provides OpenSSL SHA-256 and canonical JSON in the Linux harness; not the production artifact store."
+}
