@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoArc2026CLICommands.handles(arguments.first) {
+if VivoBinderCLICommands.handles(arguments.first) {
+    status = VivoBinderCLICommands().run(arguments: arguments)
+} else if VivoArc2026CLICommands.handles(arguments.first) {
     status = VivoArc2026CLICommands().run(arguments: arguments)
 } else if VivoCrossScaleCLICommands.handles(arguments.first) {
     status = VivoCrossScaleCLICommands().run(arguments: arguments)
@@ -55,6 +57,7 @@ if VivoArc2026CLICommands.handles(arguments.first) {
 } else {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
+        FileHandle.standardOutput.write(Data("\nBinder evaluation: binder-import, binder-evaluate, binder-verify, binder-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nGenomic evidence: genomic-vcf-plan, neoantigen-atlas-request, neoantigen-splice-job, neoantigen-evidence-import, neoantigen-evidence-verify, neoantigen-evidence-review, neoantigen-evidence-example, neoantigen-evidence-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nCross-scale evidence: cross-scale-assess, cross-scale-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nNeoantigen research review: neoantigen-example, neoantigen-import, neoantigen-verify, neoantigen-review, neoantigen-help.\n".utf8))
