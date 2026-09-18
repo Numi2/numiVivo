@@ -10,6 +10,7 @@ public enum VivoBinderBundleIO {
     }
     private static let inputNames: Set<String> = ["source.csv", "import.json", "imported.json"]
     private static let evaluationNames: Set<String> = inputNames.union(["plan.json", "report.json"])
+    private static let structuralNames: Set<String> = evaluationNames.union(["structures.json", "geometry.json", "score-only-report.json"])
 
     public static func importCSV(source: URL, configuration: URL, to output: URL,
                                  implementationSHA256: String) throws -> Receipt {
@@ -35,18 +36,32 @@ public enum VivoBinderBundleIO {
         return try publish(files, kind: "evaluation", to: output, implementationSHA256: implementationSHA256)
     }
 
+    public static func evaluateStructures(bundle: URL, plan: URL, structures: URL, to output: URL,
+                                          implementationSHA256: String) throws -> Receipt {
+        let receipt = try verify(bundle, implementationSHA256: implementationSHA256)
+        guard receipt.kind == "import" else { throw invalid("structural evaluation requires an import bundle") }
+        var files: [String: Data] = [:]
+        for name in inputNames { files[name] = try read(bundle.appendingPathComponent(name)) }
+        let imported = try VivoCanonicalJSON.decode(VivoBinderAnthropicImport.Result.self, from: files["imported.json"]!)
+        files["plan.json"] = try read(plan); files["structures.json"] = try read(structures)
+        let computed = try structuralReports(imported.dataset, plan: files["plan.json"]!, structures: files["structures.json"]!)
+        files.merge(computed) { _, new in new }
+        return try publish(files, kind: "structuralEvaluation", to: output, implementationSHA256: implementationSHA256)
+    }
+
     /// Reconstructs imported records from original bytes; evaluation bundles also recompute
     /// fitting and every held-out score. Verification requires the original executable identity.
     @discardableResult
     public static func verify(_ bundle: URL, implementationSHA256: String) throws -> Receipt {
         try checkDigest(implementationSHA256)
         let r = try VivoCanonicalJSON.decode(Receipt.self, from: read(bundle.appendingPathComponent("receipt.json")))
-        guard r.schemaVersion == 1, ["import", "evaluation"].contains(r.kind),
+        guard r.schemaVersion == 1, ["import", "evaluation", "structuralEvaluation"].contains(r.kind),
               r.implementationSHA256 == implementationSHA256 else { throw invalid("receipt schema/kind/executable mismatch") }
-        let expected = r.kind == "import" ? inputNames : evaluationNames
-        guard Set(r.files.keys) == expected else { throw invalid("unexpected receipt file set") }
+        let expected = r.kind == "import" ? inputNames : r.kind == "evaluation" ? evaluationNames : structuralNames
         let names = try FileManager.default.contentsOfDirectory(atPath: bundle.path)
-        guard Set(names) == expected.union(["receipt.json"]) else { throw invalid("unexpected/missing bundle files") }
+        guard Set(r.files.keys) == expected, Set(names) == expected.union(["receipt.json"]) else {
+            throw invalid("unexpected/missing bundle files")
+        }
         var files: [String: Data] = [:]
         for name in expected.sorted() {
             let data = try read(bundle.appendingPathComponent(name))
@@ -65,8 +80,30 @@ public enum VivoBinderBundleIO {
             guard try VivoCanonicalJSON.encode(recomputed) == files["report.json"]! else {
                 throw invalid("evaluation report does not replay")
             }
+        } else if r.kind == "structuralEvaluation" {
+            let recomputed = try structuralReports(reconstructed.dataset, plan: files["plan.json"]!, structures: files["structures.json"]!)
+            for (name, data) in recomputed where data != files[name] {
+                throw invalid("structural evaluation does not reconstruct: \(name)")
+            }
         }
         return r
+    }
+
+    private static func structuralReports(_ dataset: VivoBinderBenchmark.Dataset, plan: Data,
+                                           structures: Data) throws -> [String: Data] {
+        let request = try VivoCanonicalJSON.decode(VivoBinderBenchmark.Plan.self, from: plan)
+        let input = try VivoCanonicalJSON.decode(VivoBinderStructuralFeatures.Input.self, from: structures)
+        let geometry = try VivoBinderStructuralFeatures.augment(dataset, input: input)
+        let control = try VivoBinderStructuralFeatures.matchedScoreOnly(geometry.dataset, plan: request)
+        let enhanced = try VivoBinderBenchmark.evaluate(geometry.dataset, plan: request)
+        guard control.trainingIDs == enhanced.trainingIDs,
+              control.targets.map(\.target) == enhanced.targets.map(\.target),
+              control.targets.map(\.candidateIDs) == enhanced.targets.map(\.candidateIDs) else {
+            throw invalid("score-only and structural models have different populations")
+        }
+        return ["geometry.json": try VivoCanonicalJSON.encode(geometry),
+                "score-only-report.json": try VivoCanonicalJSON.encode(control),
+                "report.json": try VivoCanonicalJSON.encode(enhanced)]
     }
 
     private static func publish(_ files: [String: Data], kind: String, to output: URL,

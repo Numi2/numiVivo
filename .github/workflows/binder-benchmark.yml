@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - 'Sources/NumiVivoKit/Binder/**'
+      - 'Sources/NumiVivoKit/Structure/**'
+      - 'Sources/NumiVivoKit/Artifacts/VivoArtifactPrimitives.swift'
       - 'Sources/NumiVivoCLI/VivoBinderCLICommands.swift'
       - 'Tests/NumiVivoIntegrationTests/VivoBinder*'
       - 'Tools/BinderBenchmark/**'
@@ -13,6 +15,8 @@ on:
   pull_request:
     paths:
       - 'Sources/NumiVivoKit/Binder/**'
+      - 'Sources/NumiVivoKit/Structure/**'
+      - 'Sources/NumiVivoKit/Artifacts/VivoArtifactPrimitives.swift'
       - 'Sources/NumiVivoCLI/VivoBinderCLICommands.swift'
       - 'Tests/NumiVivoIntegrationTests/VivoBinder*'
       - 'Tools/BinderBenchmark/**'
@@ -32,6 +36,16 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /Sources/NumiVivoKit/Binder/
+            /Sources/NumiVivoKit/Structure/
+            /Sources/NumiVivoKit/Artifacts/VivoArtifactPrimitives.swift
+            /Sources/NumiVivoCLI/VivoBinderCLICommands.swift
+            /Tests/NumiVivoIntegrationTests/VivoBinder*Tests.swift
+            /Tools/BinderBenchmark/
       - name: Install portable check dependencies
         run: |
           apt-get update -qq
@@ -42,7 +56,7 @@ jobs:
         run: |
           python3 Tools/BinderBenchmark/check_native.py
           python3 Tools/BinderBenchmark/test_tools.py -v
-          python3 -m py_compile Tools/BinderBenchmark/native_package.py Tools/BinderBenchmark/run_published.py
+          python3 -m py_compile Tools/BinderBenchmark/native_package.py Tools/BinderBenchmark/run_published.py Tools/BinderBenchmark/check_structures.py
       - name: Build retained native subset
         run: python3 Tools/BinderBenchmark/native_package.py /tmp/binder-native
       - name: Execute fixed published-data baseline

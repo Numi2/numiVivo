@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test exact binder Swift/CLI source with the existing portable SHA/JSON facade.
+"""Test native binder/structure owners; portable JSON/OpenSSL glue is harness-only.
 No full Apple package, production artifact-store or biological qualification is implied.
 """
 from pathlib import Path
@@ -8,7 +8,6 @@ import hashlib
 import json
 import math
 import random
-import shutil
 import subprocess
 import tempfile
 
@@ -21,14 +20,18 @@ def close(a: float, b: float, tolerance: float = 1e-10) -> None:
 
 
 def metric_reference(labels: list[float], scores: list[float], result: dict, k: int) -> None:
+    if len(labels) != len(scores) or not labels or k < 1:
+        raise AssertionError("invalid reference dimensions")
     positives = [s for y, s in zip(labels, scores) if y == 1]
     negatives = [s for y, s in zip(labels, scores) if y == 0]
+    assert result["count"] == len(labels) and result["positives"] == len(positives)
     if positives and negatives:
         auc = sum(float(a > b) + 0.5 * (a == b) for a in positives for b in negatives)
         close(result["auroc"], auc / (len(positives) * len(negatives)))
     else:
         assert result.get("auroc") is None
     k = min(k, len(labels))
+    assert result["effectiveK"] == k
     cut = sorted(scores, reverse=True)[k - 1]
     above = [y for y, s in zip(labels, scores) if s > cut]
     tied = [y for y, s in zip(labels, scores) if s == cut]
@@ -42,6 +45,8 @@ def metric_reference(labels: list[float], scores: list[float], result: dict, k: 
             selected = [y for y, s in zip(labels, scores) if s >= threshold]
             ap += newly_positive / len(positives) * sum(selected) / len(selected)
         close(result["averagePrecision"], ap)
+    else:
+        assert result.get("averagePrecision") is None
     if "brier" in result:
         close(result["brier"], sum((y - s) ** 2 for y, s in zip(labels, scores)) / len(labels))
 
@@ -111,28 +116,14 @@ def cli_check(binary: Path, root: Path) -> None:
 
 
 def main() -> None:
+    from native_package import build
+    from check_structures import check as structure_check
     with tempfile.TemporaryDirectory(prefix="numivivo-binder-") as tmp:
         root = Path(tmp)
-        (root / "Sources/NumiVivoKit").mkdir(parents=True)
-        (root / "Tests/BinderTests").mkdir(parents=True)
-        (root / "Sources/BinderCLI").mkdir(parents=True)
-        shutil.copy2(ROOT / "Tools/Posterior/PortableSupport.swift", root / "Sources/NumiVivoKit")
-        shutil.copy2(ROOT / "Sources/NumiVivoCLI/VivoBinderCLICommands.swift", root / "Sources/BinderCLI")
-        (root / "Sources/BinderCLI/main.swift").write_text("import Foundation\nexit(VivoBinderCLICommands().run(arguments: Array(CommandLine.arguments.dropFirst())))\n")
-        for source in sorted((ROOT / "Sources/NumiVivoKit/Binder").glob("*.swift")):
-            shutil.copy2(source, root / "Sources/NumiVivoKit" / source.name)
-        for test in sorted((ROOT / "Tests/NumiVivoIntegrationTests").glob("VivoBinder*Tests.swift")):
-            shutil.copy2(test, root / "Tests/BinderTests" / test.name)
-        (root / "Package.swift").write_text('''// swift-tools-version: 6.0
-import PackageDescription
-let package = Package(name: "BinderCheck", targets: [
-    .target(name: "NumiVivoKit", linkerSettings: [.linkedLibrary("crypto", .when(platforms: [.linux]))]),
-    .executableTarget(name: "BinderCLI", dependencies: ["NumiVivoKit"]),
-    .testTarget(name: "BinderTests", dependencies: ["NumiVivoKit"])
-], swiftLanguageModes: [.v6])
-''')
-        subprocess.run(["swift", "test", "--package-path", str(root), "--jobs", "2"], check=True)
-        cli_check(root / ".build/debug/BinderCLI", root)
+        binary = build(root / "package", test=True)
+        cli_check(binary, root)
+        structure_check(binary, root / "structural-check")
+
 
 if __name__ == "__main__":
     main()

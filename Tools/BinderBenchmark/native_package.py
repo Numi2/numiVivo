@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the exact native binder owners in a retained, portable Swift package.
 
-The OpenSSL/canonical-JSON facade is harness-only. This does not qualify the full
+The OpenSSL/canonical-JSON facade is harness-only; artifact primitives are native. This does not qualify the full
 Apple package, production artifact store, GPU backend or biological prediction.
 """
 import argparse
@@ -21,7 +21,10 @@ def prepare(root: Path) -> None:
     tests = root / "Tests/BinderTests"
     for folder in (library, cli, tests):
         folder.mkdir(parents=True)
-    sources = [ROOT / "Tools/Posterior/PortableSupport.swift"]
+    sources = [ROOT / "Tools/BinderBenchmark/PortableJSON.swift",
+               ROOT / "Sources/NumiVivoKit/Artifacts/VivoArtifactPrimitives.swift"]
+    sources += [ROOT / "Sources/NumiVivoKit/Structure" / name for name in (
+        "VivoMolecularStructure.swift", "VivoStructureValidator.swift", "VivoMolecularInterface.swift")]
     sources += sorted((ROOT / "Sources/NumiVivoKit/Binder").glob("*.swift"))
     for source in sources:
         shutil.copy2(source, library / source.name)
