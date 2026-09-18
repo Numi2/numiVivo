@@ -1,0 +1,60 @@
+name: Binder benchmark
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/NumiVivoKit/Binder/**'
+      - 'Sources/NumiVivoCLI/VivoBinderCLICommands.swift'
+      - 'Tests/NumiVivoIntegrationTests/VivoBinder*'
+      - 'Tools/BinderBenchmark/**'
+      - '.github/workflows/binder-benchmark.yml'
+  pull_request:
+    paths:
+      - 'Sources/NumiVivoKit/Binder/**'
+      - 'Sources/NumiVivoCLI/VivoBinderCLICommands.swift'
+      - 'Tests/NumiVivoIntegrationTests/VivoBinder*'
+      - 'Tools/BinderBenchmark/**'
+      - '.github/workflows/binder-benchmark.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: binder-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  portable:
+    runs-on: ubuntu-24.04
+    container: swift:6.2.1-noble
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install portable check dependencies
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends python3 libssl-dev ca-certificates
+          swift --version
+          python3 --version
+      - name: Native and offline tool regression
+        run: |
+          python3 Tools/BinderBenchmark/check_native.py
+          python3 Tools/BinderBenchmark/test_tools.py -v
+          python3 -m py_compile Tools/BinderBenchmark/native_package.py Tools/BinderBenchmark/run_published.py
+      - name: Build retained native subset
+        run: python3 Tools/BinderBenchmark/native_package.py /tmp/binder-native
+      - name: Execute fixed published-data baseline
+        if: github.event_name != 'pull_request'
+        run: |
+          python3 Tools/BinderBenchmark/fetch_source.py /tmp/binder-source
+          python3 Tools/BinderBenchmark/run_published.py /tmp/binder-source /tmp/binder-native/.build/debug/BinderCLI /tmp/binder-campaign
+      - name: Preserve source-bound campaign
+        if: success() && github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: binder-published-${{ github.sha }}
+          path: /tmp/binder-campaign
+          retention-days: 14
+          if-no-files-found: error
