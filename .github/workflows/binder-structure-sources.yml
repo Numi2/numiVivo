@@ -1,0 +1,40 @@
+name: Binder published structure sources
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Tools/BinderBenchmark/fetch_structure_panel.py'
+      - 'Tools/BinderBenchmark/test_structure_panel.py'
+      - '.github/workflows/binder-structure-sources.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: binder-structure-sources-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  public-source-panel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /Tools/BinderBenchmark/
+      - name: Check fixed selection and source acquisition contracts
+        run: python3 Tools/BinderBenchmark/test_structure_panel.py -v
+      - name: Acquire original published development structures
+        run: python3 Tools/BinderBenchmark/fetch_structure_panel.py /tmp/binder-structure-panel
+      - name: Preserve source panel separately from qualification results
+        uses: actions/upload-artifact@v4
+        with:
+          name: binder-structure-panel-${{ github.sha }}
+          path: /tmp/binder-structure-panel
+          retention-days: 30
+          if-no-files-found: error
