@@ -14,6 +14,47 @@ public enum VivoBinderBundleIO {
 
     private static let sourceStructuralNames: Set<String> = structuralNames.union(["structure-sources.json"])
 
+    private static let rankingQueryNames: Set<String> = ["query.json"]
+    private static let rankingNames: Set<String> = ["query.json", "ranking-plan.json", "ranking.json"]
+    private static let rankingAssessmentNames: Set<String> = inputNames.union(rankingNames).union(["assessment.json"])
+
+    /// Publishes no raw CSV, assay, outcomes or source fields to the ranking process.
+    public static func rankingQuery(bundle: URL, to output: URL, implementationSHA256: String) throws -> Receipt {
+        let receipt = try verify(bundle, implementationSHA256: implementationSHA256)
+        guard receipt.kind == "import" else { throw invalid("ranking query requires an import bundle") }
+        let imported = try VivoCanonicalJSON.decode(VivoBinderAnthropicImport.Result.self,
+            from: read(bundle.appendingPathComponent("imported.json")))
+        let query = try VivoBinderRanking.query(from: imported.dataset)
+        return try publish(["query.json": VivoCanonicalJSON.encode(query)], kind: "rankingQuery",
+                           to: output, implementationSHA256: implementationSHA256)
+    }
+
+    public static func rank(bundle: URL, plan: URL, to output: URL, implementationSHA256: String) throws -> Receipt {
+        let receipt = try verify(bundle, implementationSHA256: implementationSHA256)
+        guard receipt.kind == "rankingQuery" else { throw invalid("rank requires an outcome-blind query bundle") }
+        let queryData = try read(bundle.appendingPathComponent("query.json")), planData = try read(plan)
+        let query = try VivoBinderRanking.decodeQuery(queryData), request = try VivoBinderRanking.decodePlan(planData)
+        let result = try VivoBinderRanking.rank(query, plan: request)
+        return try publish(["query.json": queryData, "ranking-plan.json": planData,
+                            "ranking.json": VivoCanonicalJSON.encode(result)], kind: "ranking",
+                           to: output, implementationSHA256: implementationSHA256)
+    }
+
+    public static func assessRanking(bundle: URL, ranking: URL, to output: URL,
+                                     implementationSHA256: String) throws -> Receipt {
+        let input = try verify(bundle, implementationSHA256: implementationSHA256)
+        let ranked = try verify(ranking, implementationSHA256: implementationSHA256)
+        guard input.kind == "import", ranked.kind == "ranking" else {
+            throw invalid("assessment requires an import bundle and a completed ranking bundle")
+        }
+        var files: [String: Data] = [:]
+        for name in inputNames { files[name] = try read(bundle.appendingPathComponent(name)) }
+        for name in rankingNames { files[name] = try read(ranking.appendingPathComponent(name)) }
+        let imported = try VivoCanonicalJSON.decode(VivoBinderAnthropicImport.Result.self, from: files["imported.json"]!)
+        files["assessment.json"] = try rankingAssessment(imported.dataset, files: files)
+        return try publish(files, kind: "rankingAssessment", to: output, implementationSHA256: implementationSHA256)
+    }
+
     public static func importCSV(source: URL, configuration: URL, to output: URL,
                                  implementationSHA256: String) throws -> Receipt {
         try checkDigest(implementationSHA256)
@@ -77,15 +118,11 @@ public enum VivoBinderBundleIO {
     public static func verify(_ bundle: URL, implementationSHA256: String) throws -> Receipt {
         try checkDigest(implementationSHA256)
         let r = try VivoCanonicalJSON.decode(Receipt.self, from: read(bundle.appendingPathComponent("receipt.json")))
-        guard r.schemaVersion == 1, ["import", "evaluation", "structuralEvaluation", "sourceStructuralEvaluation"].contains(r.kind),
+        guard r.schemaVersion == 1, ["import", "evaluation", "structuralEvaluation", "sourceStructuralEvaluation", "rankingQuery", "ranking", "rankingAssessment"].contains(r.kind),
               r.implementationSHA256 == implementationSHA256 else { throw invalid("receipt schema/kind/executable mismatch") }
-        let expected: Set<String>
-        switch r.kind {
-        case "import": expected = inputNames
-        case "evaluation": expected = evaluationNames
-        case "sourceStructuralEvaluation": expected = sourceStructuralNames
-        default: expected = structuralNames
-        }
+        let fileSets = ["import": inputNames, "evaluation": evaluationNames, "structuralEvaluation": structuralNames,
+                        "sourceStructuralEvaluation": sourceStructuralNames, "rankingQuery": rankingQueryNames, "ranking": rankingNames, "rankingAssessment": rankingAssessmentNames]
+        let expected = fileSets[r.kind]!
         let names = try FileManager.default.contentsOfDirectory(atPath: bundle.path)
         guard Set(r.files.keys) == expected, Set(names) == expected.union(["receipt.json"]) else {
             throw invalid("unexpected/missing bundle files")
@@ -96,13 +133,28 @@ public enum VivoBinderBundleIO {
             guard try digest(data) == r.files[name] else { throw invalid("source/artifact hash mismatch: \(name)") }
             files[name] = data
         }
+        if r.kind == "rankingQuery" || r.kind == "ranking" {
+            let query = try VivoBinderRanking.decodeQuery(files["query.json"]!)
+            if r.kind == "ranking" {
+                let plan = try VivoBinderRanking.decodePlan(files["ranking-plan.json"]!)
+                let result = try VivoBinderRanking.rank(query, plan: plan)
+                guard try VivoCanonicalJSON.encode(result) == files["ranking.json"]! else {
+                    throw invalid("outcome-blind ranking does not replay")
+                }
+            }
+            return r
+        }
         let config = try VivoCanonicalJSON.decode(VivoBinderAnthropicImport.Configuration.self, from: files["import.json"]!)
         let reconstructed = try VivoBinderAnthropicImport.parse(files["source.csv"]!,
             sourceSHA256: digest(files["source.csv"]!), configuration: config)
         guard try VivoCanonicalJSON.encode(reconstructed) == files["imported.json"]! else {
             throw invalid("imported records do not reconstruct from source")
         }
-        if r.kind == "evaluation" {
+        if r.kind == "rankingAssessment" {
+            guard try rankingAssessment(reconstructed.dataset, files: files) == files["assessment.json"]! else {
+                throw invalid("ranking assessment does not reconstruct")
+            }
+        } else if r.kind == "evaluation" {
             let plan = try VivoCanonicalJSON.decode(VivoBinderBenchmark.Plan.self, from: files["plan.json"]!)
             let recomputed = try VivoBinderBenchmark.evaluate(reconstructed.dataset, plan: plan)
             guard try VivoCanonicalJSON.encode(recomputed) == files["report.json"]! else {
@@ -123,6 +175,13 @@ public enum VivoBinderBundleIO {
             }
         }
         return r
+    }
+
+    private static func rankingAssessment(_ dataset: VivoBinderBenchmark.Dataset, files: [String: Data]) throws -> Data {
+        let query = try VivoBinderRanking.decodeQuery(files["query.json"]!)
+        let plan = try VivoBinderRanking.decodePlan(files["ranking-plan.json"]!)
+        let result = try VivoCanonicalJSON.decode(VivoBinderRanking.Report.self, from: files["ranking.json"]!)
+        return try VivoCanonicalJSON.encode(VivoBinderRanking.assess(dataset, query: query, plan: plan, ranking: result))
     }
 
     private static func structuralReports(_ dataset: VivoBinderBenchmark.Dataset, plan: Data,

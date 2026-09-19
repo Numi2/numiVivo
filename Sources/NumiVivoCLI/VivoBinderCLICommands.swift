@@ -10,6 +10,9 @@ struct VivoBinderCLICommands {
                 print("""
                 Retrospective binder scoring (not biological qualification):
                   binder-import SOURCE.csv IMPORT.json NEW_BUNDLE
+                  binder-ranking-query IMPORT_BUNDLE NEW_QUERY
+                  binder-rank QUERY_BUNDLE RANKING_PLAN.json NEW_RANKING
+                  binder-assess-ranking IMPORT_BUNDLE RANKING_BUNDLE NEW_ASSESSMENT
                   binder-evaluate IMPORT_BUNDLE PLAN.json NEW_RESULT
                   binder-evaluate-structures IMPORT_BUNDLE PLAN.json STRUCTURES.json NEW_RESULT
                   binder-evaluate-structure-sources IMPORT_BUNDLE PLAN.json SOURCES.json NEW_RESULT
@@ -31,6 +34,15 @@ struct VivoBinderCLICommands {
             func path(_ i: Int) -> URL { URL(fileURLWithPath: arguments[i]) }
             let receipt: VivoBinderBundleIO.Receipt
             switch command {
+            case "binder-ranking-query":
+                guard arguments.count == 3 else { return usage() }
+                receipt = try VivoBinderBundleIO.rankingQuery(bundle: path(1), to: path(2), implementationSHA256: identity)
+            case "binder-rank":
+                guard arguments.count == 4 else { return usage() }
+                receipt = try VivoBinderBundleIO.rank(bundle: path(1), plan: path(2), to: path(3), implementationSHA256: identity)
+            case "binder-assess-ranking":
+                guard arguments.count == 4 else { return usage() }
+                receipt = try VivoBinderBundleIO.assessRanking(bundle: path(1), ranking: path(2), to: path(3), implementationSHA256: identity)
             case "binder-import":
                 guard arguments.count == 4 else { return usage() }
                 receipt = try VivoBinderBundleIO.importCSV(source: path(1), configuration: path(2),

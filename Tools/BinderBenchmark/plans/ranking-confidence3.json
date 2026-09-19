@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "method": "targetStandardizedMean",
+  "components": [
+    {"feature": "ipsae_min_ef2fast", "weight": 1},
+    {"feature": "ipsae_min_ef2full", "weight": 1},
+    {"feature": "ipsae_min_ptxv2", "weight": 1}
+  ],
+  "topK": 10
+}
