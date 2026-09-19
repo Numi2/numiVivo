@@ -24,7 +24,8 @@ def prepare(root: Path) -> None:
     sources = [ROOT / "Tools/BinderBenchmark/PortableJSON.swift",
                ROOT / "Sources/NumiVivoKit/Artifacts/VivoArtifactPrimitives.swift"]
     sources += [ROOT / "Sources/NumiVivoKit/Structure" / name for name in (
-        "VivoMolecularStructure.swift", "VivoStructureValidator.swift", "VivoMolecularInterface.swift")]
+        "VivoMolecularStructure.swift", "VivoStructureValidator.swift", "VivoMolecularInterface.swift",
+        "VivoStructureAssemblyBuilder.swift", "Formats/VivoPDB.swift", "Formats/VivoMMCIF.swift")]
     sources += sorted((ROOT / "Sources/NumiVivoKit/Binder").glob("*.swift"))
     for source in sources:
         shutil.copy2(source, library / source.name)

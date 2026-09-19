@@ -125,7 +125,7 @@ public enum VivoBinderStructuralFeatures {
                 modelFeatures: scoreFeatures, topK: plan.topK, ridgePenalty: plan.ridgePenalty))
     }
 
-    private static func proteinSequence(_ structure: VivoMolecularStructure, chain: String) throws -> String {
+    static func proteinSequence(_ structure: VivoMolecularStructure, chain: String) throws -> String {
         guard let chain = structure.chains.first(where: { $0.identifier == chain }), !chain.residueIndices.isEmpty else {
             throw invalid("empty/missing protein chain")
         }
