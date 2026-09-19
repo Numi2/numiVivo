@@ -25,6 +25,7 @@ def prepare(root: Path) -> None:
                ROOT / "Sources/NumiVivoKit/Artifacts/VivoArtifactPrimitives.swift"]
     sources += [ROOT / "Sources/NumiVivoKit/Structure" / name for name in (
         "VivoMolecularStructure.swift", "VivoStructureValidator.swift", "VivoMolecularInterface.swift",
+        "VivoMolecularInterfaceSurface.swift",
         "VivoStructureAssemblyBuilder.swift", "Formats/VivoPDB.swift", "Formats/VivoMMCIF.swift")]
     sources += sorted((ROOT / "Sources/NumiVivoKit/Binder").glob("*.swift"))
     for source in sources:
