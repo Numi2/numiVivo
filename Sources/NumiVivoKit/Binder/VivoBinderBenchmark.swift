@@ -119,7 +119,15 @@ public enum VivoBinderBenchmark {
         }
     }
 
-    public static func evaluate(_ dataset: Dataset, plan: Plan) throws -> Report {
+    /// Shared candidate admission for the legacy evaluator and opt-in support gate.
+    /// This is not a new statistical sample or a serialized artifact.
+    struct Cohort {
+        let training: [Record]
+        let test: [Record]
+        let excluded: [String: String]
+    }
+
+    static func partition(_ dataset: Dataset, plan: Plan) throws -> Cohort {
         try validate(dataset)
         try require(plan.schemaVersion == 1 && plan.sourceSHA256 == dataset.sourceSHA256, "plan/source mismatch")
         let trainTargets = Set(plan.trainingTargets), testTargets = Set(plan.testTargets)
@@ -151,6 +159,13 @@ public enum VivoBinderBenchmark {
             guard missing.isEmpty else { excluded[row.id] = "missing features:\(missing.joined(separator: ","))"; continue }
             if trainTargets.contains(row.target) { train.append(row) } else { test.append(row) }
         }
+        return Cohort(training: train, test: test, excluded: excluded)
+    }
+
+    public static func evaluate(_ dataset: Dataset, plan: Plan) throws -> Report {
+        let cohort = try partition(dataset, plan: plan)
+        let train = cohort.training, test = cohort.test, excluded = cohort.excluded
+        let testTargets = Set(plan.testTargets)
         try require(train.count >= 4, "fewer than four eligible training candidates")
         let positives = train.reduce(0.0) { $0 + ($1.outcome.binary ?? 0) }
         try require(positives > 0 && positives < Double(train.count), "training requires both outcome classes")
