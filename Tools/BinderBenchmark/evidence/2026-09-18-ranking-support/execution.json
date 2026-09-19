@@ -1,0 +1,67 @@
+{
+  "schemaVersion":1,
+  "revisionContext":"1c24261e8e74c07b19f79d5f8079c7b99058caa1",
+  "scope":"Portable exact-source binder subset; harness-only canonical JSON/OpenSSL; not complete Apple product or production artifact store",
+  "executedUTCDate":"2026-09-19",
+  "localDateAmericaLosAngeles":"2026-09-18",
+  "swift":"Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "python":"3.13.5",
+  "platform":"Linux-6.18.44-x86_64-with-glibc2.41",
+  "checks":{
+    "swiftTests":90,"swiftFailures":0,"offlinePythonTests":17,"offlinePythonFailures":0,
+    "syntheticCLI":"passed","syntheticEmbeddedAndRawStructureCLI":"passed","syntheticOutcomeBlindRankingCLI":"passed",
+    "realLegacyFolds":6,"realRankingAssessments":12,"realSupportDecisions":6,
+    "independentNumericalChecks":"passed","originalSixLegacyReports":"byte-identical to cbcf613b CI artifact"
+  },
+  "executableSHA256":"c62488282b873ddf48a886a6b01f6b620877f91afe9f2589a6a4a33d67834c8e",
+  "checkedSourceSHA256":{
+    "Sources/NumiVivoCLI/VivoBinderCLICommands.swift":"5864296c371cf1d1421929caefef6a4ea9c330d897636912b7b1d0ba18967ac2",
+    "Sources/NumiVivoKit/Artifacts/VivoArtifactPrimitives.swift":"6205cf663b7732cbfc53d76aad7b2a3f55f511cf1350a0f94e52cb5ee0676477",
+    "Sources/NumiVivoKit/Binder/VivoBinderAnthropicImport.swift":"39bdda77a884999eae95de8f3cf7c32c73858b757f05f4dabee7e5b4a40729a7",
+    "Sources/NumiVivoKit/Binder/VivoBinderBenchmark.swift":"657c0301d874dcd959939d1086cfbe3bc7d77b80238c5c36ea1028f8654d7d6d",
+    "Sources/NumiVivoKit/Binder/VivoBinderBundleIO.swift":"c6c6a0ca00a1179fe89d56824bdb339ef1d672b158072ab4c569d2c09ffc1179",
+    "Sources/NumiVivoKit/Binder/VivoBinderRanking.swift":"65f1a5546f3b52af7c9e89452bac10ec01c6eb93f9e7991b51937c65f99a502f",
+    "Sources/NumiVivoKit/Binder/VivoBinderStructuralFeatures.swift":"c90760dff94128c2d71fb6dd46b7320a78944ab1bc184bdfe3a6173864060996",
+    "Sources/NumiVivoKit/Binder/VivoBinderStructureSources.swift":"b3bb794d802d64e3a53da8f838bab3c901ce04f6900a5a64eb41ff1d4cffb23d",
+    "Sources/NumiVivoKit/Binder/VivoBinderTrainingSupport.swift":"84c41e094388fc4aef9092582e46a94853f7bbf5b090739a68b4b11e2642b1eb",
+    "Sources/NumiVivoKit/Structure/Formats/VivoMMCIF.swift":"de515743775b360b0ef9ed6e1919dbeb0df1d3e3e333de3955719997e17aa4bc",
+    "Sources/NumiVivoKit/Structure/Formats/VivoPDB.swift":"6e2ca5a868dcf2200070bae955d6227fc522b85f9d1afb311c5da25a2f61bd5c",
+    "Sources/NumiVivoKit/Structure/VivoMolecularInterface.swift":"b518044217fc22451b4c674a770aa94b8d26b226fc05f5daf595878270406f5b",
+    "Sources/NumiVivoKit/Structure/VivoMolecularStructure.swift":"05178670d80ff9080f77bb46278b79eb7343e314c8cb875788cb3da11d1ff8bb",
+    "Sources/NumiVivoKit/Structure/VivoStructureAssemblyBuilder.swift":"cbf42c8b265102db2719714b5102587ccd281e929a3ef75c735d444f3eac6a22",
+    "Sources/NumiVivoKit/Structure/VivoStructureValidator.swift":"8060ee5c404e4f0785475837bebffab6e29cb3fe82c07042ab17f63e92635548",
+    "Tests/NumiVivoIntegrationTests/VivoBinderBenchmarkTests.swift":"46a05b4909b214425bde190adb05514a1753762bccd19f5376b8083e2a3d686a",
+    "Tests/NumiVivoIntegrationTests/VivoBinderBundleTests.swift":"98d6edb5a1c3fedbc7abd57dcee64efcd0bea6a9f2ffd50b0586a26a125f8696",
+    "Tests/NumiVivoIntegrationTests/VivoBinderImportTests.swift":"7a5855d1a74e58599bb5ebc544c8f2ddafbd5d0f53854e054a81cacdd9fd4ee8",
+    "Tests/NumiVivoIntegrationTests/VivoBinderInterfaceTests.swift":"4fd1227120f63e43e02705a73b56c71ac0922a53b2085a6f41d004b0c46f1d56",
+    "Tests/NumiVivoIntegrationTests/VivoBinderRankingBundleTests.swift":"45066c0675f79f9f026434d404cffdd872628c4f29fe54cec11da93d37dd7af9",
+    "Tests/NumiVivoIntegrationTests/VivoBinderRankingTests.swift":"536047484f480c49c7ee8334ab0a936001809489224a906c079c7aef0257001f",
+    "Tests/NumiVivoIntegrationTests/VivoBinderStructureSourceTests.swift":"975f3b4cb9aebc63b10bc411f0e4f694c5c4bb4755fdc49ea8996152d8a607c4",
+    "Tests/NumiVivoIntegrationTests/VivoBinderSupportBundleTests.swift":"a51d9132ca344ef8963a17b86c3d2f7f3253a1c8620c1a1dcfa4583f18a95045",
+    "Tests/NumiVivoIntegrationTests/VivoBinderTrainingSupportTests.swift":"31fec5ecf085af923ca527951658a88c8a50e49168b2da732e1a4b8772c98044",
+    "Tools/BinderBenchmark/PortableJSON.swift":"fb9eb246e52c90974d8da8828f0bde495ce1552a2190a4dffec7ee0dcbf3d1c6"
+  },
+  "campaignSummariesSHA256":{
+    "legacy":"fd0fc5dc76c10e70c4e940c4ceeaf81605ed47a6fea8692c0ac23a20d16c766c",
+    "rankings":"aa3afc5bec053a7557bf52ac2a1279399f68b682b9e02431ab6008178b4ace6c",
+    "support":"362ec42819965a12c6c2c88a1e4b7fa8e262b954d25e7f50108ae72351ee8d69"
+  },
+  "priorFocusedCI":{
+    "commit":"a9584261d1d0220f1552977bec3d0c05a4f0531a","runID":35415244187,
+    "conclusion":"success","scope":"ranking and raw-source stage before support CLI"
+  },
+  "latestOwnCI":{
+    "commit":"2a0e954b65658138ff79549be11b1f02df2ae545","runID":35415908432,
+    "conclusion":"cancelled; no execution success inferred"
+  },
+  "replayArchive":{
+    "filename":"numivivo-ranking-support-replay.zip","bytes":11450129,
+    "sha256":"52938b4435533bfc46127fa6d409d3e0216c07c9e7be28032dd341489cb2af1e"
+  },
+  "limitations":[
+    "No independent biological validation or improved top-ten selection.",
+    "Example support policy is not statistically calibrated.",
+    "No model-weight inference, physical trajectory or full Apple/Metal package was executed in this qualification.",
+    "Source/raw-structure work committed concurrently was preserved, not attributed to this ranking increment."
+  ]
+}

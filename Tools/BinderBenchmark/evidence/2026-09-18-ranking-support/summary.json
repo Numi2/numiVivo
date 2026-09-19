@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "evidenceStatus": "reused-retrospective-development; no improved selection established",
+  "sourceRevision": "9e1b81696da46835e9e9cde9a3da976e0abc92ab",
+  "sourceSHA256": "a96dc3a4fcc293dd393a8c56fa367dadcac4db326c30f1c3ea3d8c2b9f72367a",
+  "sourceRows": 1440,
+  "candidateCount": 270,
+  "targetCount": 3,
+  "laboratoryEndpoints": ["adaptyv", "twist"],
+  "implementationSHA256": "c62488282b873ddf48a886a6b01f6b620877f91afe9f2589a6a4a33d67834c8e",
+  "rankingProtocolSHA256": "88459b64f05e27c83c452643f848f379ae86272686350b550f95ef1f58200236",
+  "labIndependentRankingBytes": "identical",
+  "fixedRankings": [
+    {"assay":"adaptyv","target":"BBF-14","method":"boltz2","rankedCount":90,"binaryOutcomeCount":78,"measuredBinderHits":0,"selectedNonbinaryWeight":4},
+    {"assay":"adaptyv","target":"EGFR","method":"boltz2","rankedCount":90,"binaryOutcomeCount":90,"measuredBinderHits":2,"selectedNonbinaryWeight":0},
+    {"assay":"adaptyv","target":"MBP","method":"boltz2","rankedCount":90,"binaryOutcomeCount":88,"measuredBinderHits":0,"selectedNonbinaryWeight":0},
+    {"assay":"adaptyv","target":"BBF-14","method":"confidence3","rankedCount":90,"binaryOutcomeCount":78,"measuredBinderHits":0,"selectedNonbinaryWeight":0},
+    {"assay":"adaptyv","target":"EGFR","method":"confidence3","rankedCount":90,"binaryOutcomeCount":90,"measuredBinderHits":2,"selectedNonbinaryWeight":0},
+    {"assay":"adaptyv","target":"MBP","method":"confidence3","rankedCount":90,"binaryOutcomeCount":88,"measuredBinderHits":0,"selectedNonbinaryWeight":0},
+    {"assay":"twist","target":"BBF-14","method":"boltz2","rankedCount":90,"binaryOutcomeCount":89,"measuredBinderHits":1,"selectedNonbinaryWeight":0},
+    {"assay":"twist","target":"EGFR","method":"boltz2","rankedCount":90,"binaryOutcomeCount":90,"measuredBinderHits":2,"selectedNonbinaryWeight":0},
+    {"assay":"twist","target":"MBP","method":"boltz2","rankedCount":90,"binaryOutcomeCount":88,"measuredBinderHits":0,"selectedNonbinaryWeight":0},
+    {"assay":"twist","target":"BBF-14","method":"confidence3","rankedCount":90,"binaryOutcomeCount":89,"measuredBinderHits":0,"selectedNonbinaryWeight":0},
+    {"assay":"twist","target":"EGFR","method":"confidence3","rankedCount":90,"binaryOutcomeCount":90,"measuredBinderHits":2,"selectedNonbinaryWeight":0},
+    {"assay":"twist","target":"MBP","method":"confidence3","rankedCount":90,"binaryOutcomeCount":88,"measuredBinderHits":0,"selectedNonbinaryWeight":0}
+  ],
+  "supportExamplePolicy": {
+    "schemaVersion":1,
+    "identifier":"example-training-coverage-v1",
+    "rationale":"Illustrative development coverage policy: at least two positive and two negative declared groups, represented across two training targets with both classes. These are not calibrated accuracy or power thresholds. Freeze a justified policy for each independent experiment.",
+    "minimumPositiveGroups":2,
+    "minimumNegativeGroups":2,
+    "minimumTrainingTargets":2,
+    "minimumTargetsWithBothClasses":2,
+    "maximumFeatures":3
+  },
+  "supportDecisions": [
+    {"fold":"adaptyv-BBF-14","eligibleForExperimentalFit":false,"counts":{"candidates":178,"positiveRows":10,"negativeRows":168,"positiveGroups":10,"negativeGroups":168,"mixedGroups":0},"unmetRequirements":["insufficient training targets containing both group classes"]},
+    {"fold":"adaptyv-EGFR","eligibleForExperimentalFit":false,"counts":{"candidates":166,"positiveRows":1,"negativeRows":165,"positiveGroups":1,"negativeGroups":165,"mixedGroups":0},"unmetRequirements":["insufficient exclusively positive training groups","insufficient training targets containing both group classes"]},
+    {"fold":"adaptyv-MBP","eligibleForExperimentalFit":true,"counts":{"candidates":168,"positiveRows":11,"negativeRows":157,"positiveGroups":11,"negativeGroups":157,"mixedGroups":0},"unmetRequirements":[]},
+    {"fold":"twist-BBF-14","eligibleForExperimentalFit":true,"counts":{"candidates":178,"positiveRows":11,"negativeRows":167,"positiveGroups":11,"negativeGroups":167,"mixedGroups":0},"unmetRequirements":[]},
+    {"fold":"twist-EGFR","eligibleForExperimentalFit":true,"counts":{"candidates":177,"positiveRows":4,"negativeRows":173,"positiveGroups":4,"negativeGroups":173,"mixedGroups":0},"unmetRequirements":[]},
+    {"fold":"twist-MBP","eligibleForExperimentalFit":true,"counts":{"candidates":179,"positiveRows":13,"negativeRows":166,"positiveGroups":13,"negativeGroups":166,"mixedGroups":0},"unmetRequirements":[]}
+  ],
+  "legacyReportComparison":"all six complete reports byte-identical to cbcf613b CI artifact",
+  "limitations":[
+    "All ten selections are made before outcome joins; no refill of nonbinary outcomes.",
+    "Confidence3 uses target-standardized seed-best ESMFold2-fast/full and Protenix confidence only, not new inference or optional self-consistency terms.",
+    "No new structural or MD features enter these rankings.",
+    "Example support thresholds are uncalibrated development settings, not evidence of reliable prediction.",
+    "The same designs measured by two laboratories are not independent biological designs."
+  ]
+}
