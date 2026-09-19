@@ -12,6 +12,8 @@ public enum VivoBinderBundleIO {
     private static let evaluationNames: Set<String> = inputNames.union(["plan.json", "report.json"])
     private static let structuralNames: Set<String> = evaluationNames.union(["structures.json", "geometry.json", "score-only-report.json"])
 
+    private static let sourceStructuralNames: Set<String> = structuralNames.union(["structure-sources.json"])
+
     public static func importCSV(source: URL, configuration: URL, to output: URL,
                                  implementationSHA256: String) throws -> Receipt {
         try checkDigest(implementationSHA256)
@@ -49,15 +51,41 @@ public enum VivoBinderBundleIO {
         return try publish(files, kind: "structuralEvaluation", to: output, implementationSHA256: implementationSHA256)
     }
 
+    /// Parses original retained PDB/mmCIF bytes through the shared molecular owners.
+    /// Raw source text, chain references, parsed structures and both matched fits replay.
+    public static func evaluateStructureSources(bundle: URL, plan: URL, sources: URL, to output: URL,
+                                                implementationSHA256: String) throws -> Receipt {
+        let receipt = try verify(bundle, implementationSHA256: implementationSHA256)
+        guard receipt.kind == "import" else { throw invalid("source structural evaluation requires an import bundle") }
+        var files: [String: Data] = [:]
+        for name in inputNames { files[name] = try read(bundle.appendingPathComponent(name)) }
+        let imported = try VivoCanonicalJSON.decode(VivoBinderAnthropicImport.Result.self, from: files["imported.json"]!)
+        files["plan.json"] = try read(plan)
+        files["structure-sources.json"] = try read(sources)
+        let sourceInput = try VivoCanonicalJSON.decode(VivoBinderStructureSources.Input.self,
+                                                       from: files["structure-sources.json"]!)
+        files["structures.json"] = try VivoCanonicalJSON.encode(VivoBinderStructureSources.reconstruct(sourceInput))
+        files.merge(try structuralReports(imported.dataset, plan: files["plan.json"]!,
+                                          structures: files["structures.json"]!)) { _, new in new }
+        return try publish(files, kind: "sourceStructuralEvaluation", to: output,
+                           implementationSHA256: implementationSHA256)
+    }
+
     /// Reconstructs imported records from original bytes; evaluation bundles also recompute
     /// fitting and every held-out score. Verification requires the original executable identity.
     @discardableResult
     public static func verify(_ bundle: URL, implementationSHA256: String) throws -> Receipt {
         try checkDigest(implementationSHA256)
         let r = try VivoCanonicalJSON.decode(Receipt.self, from: read(bundle.appendingPathComponent("receipt.json")))
-        guard r.schemaVersion == 1, ["import", "evaluation", "structuralEvaluation"].contains(r.kind),
+        guard r.schemaVersion == 1, ["import", "evaluation", "structuralEvaluation", "sourceStructuralEvaluation"].contains(r.kind),
               r.implementationSHA256 == implementationSHA256 else { throw invalid("receipt schema/kind/executable mismatch") }
-        let expected = r.kind == "import" ? inputNames : r.kind == "evaluation" ? evaluationNames : structuralNames
+        let expected: Set<String>
+        switch r.kind {
+        case "import": expected = inputNames
+        case "evaluation": expected = evaluationNames
+        case "sourceStructuralEvaluation": expected = sourceStructuralNames
+        default: expected = structuralNames
+        }
         let names = try FileManager.default.contentsOfDirectory(atPath: bundle.path)
         guard Set(r.files.keys) == expected, Set(names) == expected.union(["receipt.json"]) else {
             throw invalid("unexpected/missing bundle files")
@@ -80,7 +108,15 @@ public enum VivoBinderBundleIO {
             guard try VivoCanonicalJSON.encode(recomputed) == files["report.json"]! else {
                 throw invalid("evaluation report does not replay")
             }
-        } else if r.kind == "structuralEvaluation" {
+        } else if r.kind == "structuralEvaluation" || r.kind == "sourceStructuralEvaluation" {
+            if r.kind == "sourceStructuralEvaluation" {
+                let sourceInput = try VivoCanonicalJSON.decode(VivoBinderStructureSources.Input.self,
+                                                               from: files["structure-sources.json"]!)
+                let parsed = try VivoBinderStructureSources.reconstruct(sourceInput)
+                guard try VivoCanonicalJSON.encode(parsed) == files["structures.json"]! else {
+                    throw invalid("structures do not reconstruct from original PDB/mmCIF sources")
+                }
+            }
             let recomputed = try structuralReports(reconstructed.dataset, plan: files["plan.json"]!, structures: files["structures.json"]!)
             for (name, data) in recomputed where data != files[name] {
                 throw invalid("structural evaluation does not reconstruct: \(name)")

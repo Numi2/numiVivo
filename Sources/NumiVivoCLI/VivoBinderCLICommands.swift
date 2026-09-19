@@ -12,10 +12,12 @@ struct VivoBinderCLICommands {
                   binder-import SOURCE.csv IMPORT.json NEW_BUNDLE
                   binder-evaluate IMPORT_BUNDLE PLAN.json NEW_RESULT
                   binder-evaluate-structures IMPORT_BUNDLE PLAN.json STRUCTURES.json NEW_RESULT
+                  binder-evaluate-structure-sources IMPORT_BUNDLE PLAN.json SOURCES.json NEW_RESULT
                   binder-verify BUNDLE
                 Structural evaluation derives heavy-atom geometry and compares with a score-only
                 ensemble on identical candidates. No structure repair, MD, affinity or inference.
-                Source and configuration are retained unchanged; bundles never overwrite.
+                Raw-source evaluation reparses retained PDB/mmCIF text and checks declared target
+                chain sequences. Source and configuration are retained unchanged; bundles never overwrite.
                 Verification reimports source and, for results, repeats the complete fit/evaluation.
                 Use the same executable to create/verify a bundle. No network, GPU or paid API.
                 Examples and source retrieval: Tools/BinderBenchmark/README.md
@@ -40,6 +42,10 @@ struct VivoBinderCLICommands {
             case "binder-evaluate-structures":
                 guard arguments.count == 5 else { return usage() }
                 receipt = try VivoBinderBundleIO.evaluateStructures(bundle: path(1), plan: path(2), structures: path(3),
+                    to: path(4), implementationSHA256: identity)
+            case "binder-evaluate-structure-sources":
+                guard arguments.count == 5 else { return usage() }
+                receipt = try VivoBinderBundleIO.evaluateStructureSources(bundle: path(1), plan: path(2), sources: path(3),
                     to: path(4), implementationSHA256: identity)
             case "binder-verify":
                 guard arguments.count == 2 else { return usage() }

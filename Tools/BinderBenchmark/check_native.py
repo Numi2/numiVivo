@@ -116,6 +116,7 @@ def cli_check(binary: Path, root: Path) -> None:
 
 
 def main() -> None:
+    subprocess.run(["python3", str(ROOT / "Tools/BinderBenchmark/test_structure_sources.py"), "-v"], check=True)
     from native_package import build
     from check_structures import check as structure_check
     with tempfile.TemporaryDirectory(prefix="numivivo-binder-") as tmp:

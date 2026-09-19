@@ -115,6 +115,76 @@ def check(binary: Path, root: Path) -> None:
     assert receipt["implementationSHA256"] == hashlib.sha256(binary.read_bytes()).hexdigest()
     for name, digest in receipt["files"].items():
         assert hashlib.sha256((output / name).read_bytes()).hexdigest() == digest
+    # Exercise actual UTF-8 source ingestion, alternating PDB/mmCIF fixtures.
+    # The Python writer is fixture-only; production parsing remains in Swift.
+    source_rows = []
+    for i, observation in enumerate(observations):
+        structure = observation["structure"]
+        rows = []
+        for atom in structure["atoms"]:
+            residue = structure["residues"][atom["residueIndex"]]
+            chain = structure["chains"][residue["chainIndex"]]["identifier"]
+            point = structure["conformers"][0]["positionsNM"][atom["index"]]
+            x, y, z = (point[a] * 10 for a in ("x", "y", "z"))
+            if i % 2 == 0:
+                rows.append(f"ATOM  {atom['index'] + 1:5d} {atom['name']:<4s} GLY {chain}{residue['sequenceNumber']:4d}    "
+                            f"{x:8.3f}{y:8.3f}{z:8.3f}{1.0:6.2f}{0.0:6.2f}          {atom['element']['symbol']:>2s}  ")
+            else:
+                rows.append(f"ATOM {atom['index'] + 1} {atom['element']['symbol']} {atom['name']} GLY {chain} "
+                            f"{residue['sequenceNumber']} {x:.8f} {y:.8f} {z:.8f} 1")
+        format_name = "pdb" if i % 2 == 0 else "mmcif"
+        header = "" if format_name == "pdb" else "data_fixture\nloop_\n" + "\n".join(
+            "_atom_site." + c for c in ("group_PDB", "id", "type_symbol", "label_atom_id", "label_comp_id",
+                "label_asym_id", "label_seq_id", "Cartn_x", "Cartn_y", "Cartn_z", "occupancy")) + "\n"
+        contents = header + "\n".join(rows) + ("\nEND\n" if format_name == "pdb" else "\n#\n")
+        source_file = root / f"source-{i}.{format_name}"
+        source_file.write_bytes(contents.encode("utf-8"))
+        interface_plan = {**observation["interfacePlan"], "conformerID": "model-1"}
+        source_rows.append({"candidateID": observation["candidateID"], "target": observation["target"],
+            "sourceLabel": "synthetic raw-source fixture", "format": format_name,
+            "sourcePath": source_file.name, "sha256": hashlib.sha256(source_file.read_bytes()).hexdigest(),
+            "targetChainSequences": {"T": "G"}, "interfacePlan": interface_plan})
+    manifest = dump("source-manifest.json", {"schemaVersion": 1, "sources": source_rows})
+    raw_input = root / "raw-sources.json"
+    subprocess.run(["python3", str(Path(__file__).with_name("prepare_structure_sources.py")),
+                    str(manifest), str(root), str(raw_input)], check=True)
+    raw_output = root / "source-result"
+    run("binder-evaluate-structure-sources", original, request, raw_input, raw_output)
+    run("binder-verify", raw_output)
+    run("binder-evaluate-structure-sources", expected=64)
+    raw_geometry = json.loads((raw_output / "geometry.json").read_text())
+    parsed = json.loads((raw_output / "structures.json").read_text())
+    assert raw_geometry["unavailableCandidateIDs"] == ["s17"]
+    for observation in parsed["observations"]:
+        geometry_reference(observation, raw_geometry["interfaces"][observation["candidateID"]])
+    raw_report = json.loads((raw_output / "report.json").read_text())
+    verify_report(raw_geometry, raw_report)
+    raw_control = json.loads((raw_output / "score-only-report.json").read_text())
+    raw_matched = copy.deepcopy(raw_geometry)
+    for row in raw_matched["dataset"]["records"]:
+        if not set(plan["modelFeatures"]) <= row["features"].keys():
+            row["features"] = {}
+    verify_report(raw_matched, raw_control)
+    assert raw_report["trainingIDs"] == control["trainingIDs"]
+    assert raw_report["targets"][0]["candidateIDs"] == control["targets"][0]["candidateIDs"]
+    assert (raw_output / "structure-sources.json").read_bytes() == raw_input.read_bytes()
+    # Changing raw coordinates and both recorded hashes still cannot authenticate
+    # stale parsed structures and fit reports.
+    altered = json.loads((raw_output / "structure-sources.json").read_text())
+    text = altered["sources"][0]["contents"]
+    altered["sources"][0]["contents"] = text.replace("   1.000", "   2.000", 1)
+    assert altered["sources"][0]["contents"] != text
+    altered["sources"][0]["sha256"] = hashlib.sha256(altered["sources"][0]["contents"].encode()).hexdigest()
+    (raw_output / "structure-sources.json").write_text(json.dumps(altered))
+    raw_receipt = json.loads((raw_output / "receipt.json").read_text())
+    raw_receipt["files"]["structure-sources.json"] = hashlib.sha256((raw_output / "structure-sources.json").read_bytes()).hexdigest()
+    (raw_output / "receipt.json").write_text(json.dumps(raw_receipt))
+    run("binder-verify", raw_output, expected=65)
+    invalid_sources = json.loads(raw_input.read_text())
+    invalid_sources["sources"][0]["targetChainSequences"]["T"] = "A"
+    bad_sources = dump("wrong-target.json", invalid_sources)
+    run("binder-evaluate-structure-sources", original, request, bad_sources, root / "failed-sources", expected=65)
+    assert not (root / "failed-sources").exists()
     # Alter coordinates AND update their recorded hash: reconstruction still rejects.
     tampered = json.loads((output / "structures.json").read_text())
     tampered["observations"][0]["structure"]["conformers"][0]["positionsNM"][0]["z"] = 0.8
@@ -141,7 +211,7 @@ def check(binary: Path, root: Path) -> None:
     else:
         raise AssertionError("unpublished source was accepted without mocked identity")
     assert not (root / "bad-pin").exists()
-    print("PASS: 17 synthetic structures, matched 12-training/5-test candidates, independent geometry/fit checks, tamper rejection; six mocked-source campaign folds")
+    print("PASS: 17 synthetic structures via embedded and original-PDB/mmCIF routes, matched 12-training/5-test candidates, independent geometry/fit checks, tamper rejection; six mocked-source campaign folds")
 
 
 def main() -> None:
