@@ -57,10 +57,11 @@ jobs:
           python3 - <<'PY'
           import hashlib, json, pathlib, shutil, subprocess
           root = pathlib.Path.cwd()
+          git = ['git', '-c', 'safe.directory=' + str(root)]
           output = pathlib.Path('/tmp/binder-source-snapshot')
           output.mkdir()
           hashes = {}
-          tracked = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          tracked = subprocess.check_output(git + ['ls-files', '-z']).decode().split('\0')
           for name in sorted(filter(None, tracked)):
               source = root / name
               if not source.is_file() or source.is_symlink():
@@ -71,7 +72,7 @@ jobs:
               destination.parent.mkdir(parents=True, exist_ok=True)
               shutil.copyfile(source, destination)
               hashes[name] = hashlib.sha256(destination.read_bytes()).hexdigest()
-          manifest = {'schemaVersion': 1, 'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+          manifest = {'schemaVersion': 1, 'commit': subprocess.check_output(git + ['rev-parse', 'HEAD'], text=True).strip(),
                       'scope': 'Source snapshot only; inspect the workflow result for execution evidence.', 'files': hashes}
           (output / 'SOURCE-MANIFEST.json').write_text(json.dumps(manifest, sort_keys=True, indent=2) + '\n')
           PY
