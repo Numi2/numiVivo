@@ -65,6 +65,14 @@ final class VivoBinderSurfaceTests: XCTestCase {
         let bytes = try VivoCanonicalJSON.encode(a)
         XCTAssertEqual(try VivoCanonicalJSON.decode(VivoMolecularInterface.SurfaceReport.self, from: bytes), a)
     }
+    func testRotatedSpherePairHasBoundedQuadratureError() throws {
+        var s = spheres(0.3)
+        s.conformers[0].positionsNM[1] = VivoVector3D(1, 2, 3) * (0.3 / sqrt(14))
+        let r = try VivoMolecularInterface.analyzeSurface(s, interfacePlan: ip, plan: plan(4096))
+        let cap = 2 * Double.pi * 0.31 * (0.31 - 0.15)
+        XCTAssertEqual(r.binderBuriedAreaNM2, cap, accuracy: 0.003)
+        XCTAssertEqual(r.targetBuriedAreaNM2, cap, accuracy: 0.003)
+    }
     func testPolarLabelIsNotInferredFromElements() throws {
         let data = try VivoCanonicalJSON.encode(VivoMolecularInterface.analyzeSurface(spheres(0.3), interfacePlan: ip, plan: plan()))
         XCTAssertFalse(String(decoding: data, as: UTF8.self).contains("polarArea"))

@@ -75,6 +75,19 @@ final class VivoBinderPredictionTests: XCTestCase {
         try a.append(x); try a.append(y); try b.append(y); try b.append(x)
         XCTAssertEqual(try VivoCanonicalJSON.encode(a.finish()), try VivoCanonicalJSON.encode(b.finish()))
     }
+    func testCrossPredictorCandidateAndConstructIdentityStayFixed() throws {
+        var a = VivoBinderPredictionAnalysis.Accumulator(); try a.append(input())
+        let before = try VivoCanonicalJSON.encode(a.finish())
+        var object = try JSONSerialization.jsonObject(with: VivoCanonicalJSON.encode(input(predictor: "other"))) as! [String: Any]
+        var source = object["source"] as! [String: Any]; source["target"] = "different-target"; object["source"] = source
+        let changed = try VivoBinderPredictionAnalysis.decodeInput(JSONSerialization.data(withJSONObject: object))
+        XCTAssertThrowsError(try a.append(changed))
+        // A different candidate still cannot redefine the same construct identity.
+        var identity = object["identity"] as! [String: Any]; identity["candidateID"] = "candidate-2"; object["identity"] = identity
+        source["candidateID"] = "candidate-2"; object["source"] = source
+        XCTAssertThrowsError(try a.append(VivoBinderPredictionAnalysis.decodeInput(JSONSerialization.data(withJSONObject: object))))
+        XCTAssertEqual(before, try VivoCanonicalJSON.encode(a.finish()))
+    }
     func testBundleRecomputesAndRejectsTampering() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)

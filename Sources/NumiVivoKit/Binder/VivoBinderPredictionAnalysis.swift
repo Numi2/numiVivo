@@ -148,11 +148,21 @@ public enum VivoBinderPredictionAnalysis {
         }
         private var samples: [Identity: Sample] = [:]
         private var totalContacts = 0
+        private var candidateSignatures: [String: String] = [:]
+        private var constructSignatures: [String: String] = [:]
         public init() {}
         @discardableResult
         public mutating func append(_ input: Input) throws -> Report {
             guard samples.count < 10_000, samples[input.identity] == nil else { throw invalid("duplicate prediction identity or series capacity") }
             let report = try analyze(input)
+            let candidateSignature = try hash([report.binderSequenceSHA256, report.target])
+            let constructSignature = try hash([report.targetSequenceSHA256, report.target])
+            if let previous = candidateSignatures[input.identity.candidateID], previous != candidateSignature {
+                throw invalid("candidate sequence or target identity changed across predictions")
+            }
+            if let previous = constructSignatures[input.identity.targetConstructID], previous != constructSignature {
+                throw invalid("target construct sequence or identity changed across predictions")
+            }
             guard totalContacts + report.contacts.count <= 1_000_000 else { throw invalid("series contact capacity") }
             // Chain names may differ across predictors. Sequence offsets are canonical;
             // only one target and binder chain are admitted in this version.
@@ -162,6 +172,8 @@ public enum VivoBinderPredictionAnalysis {
                 identity: input.identity, binderSHA: report.binderSequenceSHA256, targetSHA: report.targetSequenceSHA256,
                 profileSHA: profileSHA, target: report.target, features: report.features, contacts: Set(report.contacts))
             totalContacts += report.contacts.count
+            candidateSignatures[input.identity.candidateID] = candidateSignature
+            constructSignatures[input.identity.targetConstructID] = constructSignature
             return report
         }
         public func finish() throws -> [Series] {
