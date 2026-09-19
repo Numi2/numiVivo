@@ -52,6 +52,36 @@ jobs:
           apt-get install -y --no-install-recommends python3 libssl-dev ca-certificates
           swift --version
           python3 --version
+      - name: Capture exact tracked source subset
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib, shutil, subprocess
+          root = pathlib.Path.cwd()
+          output = pathlib.Path('/tmp/binder-source-snapshot')
+          output.mkdir()
+          hashes = {}
+          tracked = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          for name in sorted(filter(None, tracked)):
+              source = root / name
+              if not source.is_file() or source.is_symlink():
+                  continue
+              if not name.startswith(('Sources/', 'Tests/', 'Tools/BinderBenchmark/')):
+                  continue
+              destination = output / name
+              destination.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(source, destination)
+              hashes[name] = hashlib.sha256(destination.read_bytes()).hexdigest()
+          manifest = {'schemaVersion': 1, 'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+                      'scope': 'Source snapshot only; inspect the workflow result for execution evidence.', 'files': hashes}
+          (output / 'SOURCE-MANIFEST.json').write_text(json.dumps(manifest, sort_keys=True, indent=2) + '\n')
+          PY
+      - name: Preserve exact sources separately from results
+        uses: actions/upload-artifact@v4
+        with:
+          name: binder-sources-${{ github.sha }}
+          path: /tmp/binder-source-snapshot
+          retention-days: 30
+          if-no-files-found: error
       - name: Native and offline tool regression
         run: |
           python3 Tools/BinderBenchmark/check_native.py
