@@ -10,10 +10,15 @@ ensemble ties the fixed Boltz-2 ranking in four top-10 comparisons and loses in 
 it improves none. This is a negative development result, not evidence of Numi
 physical-analysis improvement. See the [published record](evidence/2026-09-18-published/README.md).
 
-**Current implementation:** published-table import, native CLI, source-replayable
-score evaluation, and [structure-derived geometry with matched score-only controls](STRUCTURAL_ANALYSIS.md).
-The structural route has synthetic execution evidence; the published structural
-panel, preparation/MD route and full Apple/Metal application remain unqualified.
+**Current implementation:** published-table import, outcome-blind fixed rankings,
+explicit training-support checks, raw PDB/mmCIF reconstruction and
+[structure-derived geometry with matched score-only controls](STRUCTURAL_ANALYSIS.md).
+The new [per-prediction surface analysis](PREDICTION_ANALYSIS.md) computes source-bound
+burial and radius-overlap observations. Its fixed 18-structure numerical panel passed
+independent reference checks; this is not the full 270-design structural-selection
+experiment. The preparation/MD route and full Apple/Metal application remain separate.
+See [ranking/support evidence](evidence/2026-09-18-ranking-support/README.md) and
+[prediction-surface evidence](evidence/2026-09-18-prediction-surface/README.md).
 
 ## Evaluation contract
 
@@ -74,8 +79,14 @@ Individual native commands:
 
 ```text
 numivivo binder-import SOURCE.csv IMPORT.json NEW_BUNDLE
+numivivo binder-ranking-query IMPORT_BUNDLE NEW_QUERY
+numivivo binder-rank QUERY_BUNDLE RANKING_PLAN.json NEW_RANKING
+numivivo binder-assess-ranking IMPORT_BUNDLE RANKING_BUNDLE NEW_ASSESSMENT
 numivivo binder-evaluate IMPORT_BUNDLE PLAN.json NEW_RESULT
 numivivo binder-evaluate-structures IMPORT_BUNDLE PLAN.json STRUCTURES.json NEW_RESULT
+numivivo binder-evaluate-supported IMPORT_BUNDLE PLAN.json POLICY.json NEW_RESULT
+numivivo binder-evaluate-structure-sources IMPORT_BUNDLE PLAN.json SOURCES.json NEW_RESULT
+numivivo binder-analyze-prediction PREDICTION.json NEW_BUNDLE
 numivivo binder-verify BUNDLE
 ```
 
@@ -121,11 +132,12 @@ historical account of the preceding 35-test, synthetic-only implementation.
 
 ## Remaining scientific and engineering work
 
-The next measured increment is source-bound import of actual predicted structures
-and a fixed geometry-versus-score comparison on matched candidates. Model origin
-and target identity need stronger binding than the current caller-supplied labels.
-The archive is bounded; a complete realistic panel may require streaming or a
-separate feature-artifact workflow rather than increasing memory/work caps blindly.
+Source-bound per-prediction analysis is implemented and numerically checked on
+18 real structures. Next are complete cohort processing, real multi-model/seed
+confidence and pose observations, and a frozen structural-feature comparison against
+both fixed rankings. The compact SDK accumulator does not yet provide a persistent
+series CLI or independently evaluated learned structural correction. Retained source
+and sequence identity do not authenticate unknown model execution details.
 
 Structure repair, protonation, parameter assignment, solvent setup, qualified
 molecular sampling, model-weight inference and measured Apple acceleration are not

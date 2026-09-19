@@ -1,0 +1,45 @@
+{
+  "binarySHA256": "416f74342e4c3410e38ff2f210068a9849c13365e14c55c6cee25ad96158574b",
+  "checkerSHA256": "cdff4d9a6158749886f44e8795df674211d929941c290e844f8f1540999f0d14",
+  "points": 960,
+  "requested": [
+    "bbe7232e-b3c0-5cd3-a56a-bc1ac9216b93",
+    "2d311750-5f6d-5af4-a6da-120b389e1023",
+    "f7a67df3-42c7-54f7-9fd0-cd31c94ed39c",
+    "b66be2a8-cf09-55dc-a237-2445d4710fb7",
+    "6fc2e411-68d3-5b0f-b0d5-7006e0d969f6",
+    "49d82def-f751-5c08-b814-cd73d20cd192",
+    "2e6a3e55-aa7b-5c18-8309-6d34e47a9701",
+    "6c83b692-923f-58e8-846f-1d8cd5559f4b",
+    "93efce23-12c6-509e-96c5-7da71c71b3f8",
+    "e7f63768-ef80-5801-ab4f-b7b5816b9254",
+    "3e6346bf-5b41-504d-879d-987b3e223118",
+    "aa11840e-c016-5a03-bc45-8bc5770ae456",
+    "dcbc1784-5be2-5d28-8c60-8ab1e4ee82f8",
+    "fc71dee2-890e-554e-b725-2cff5b364639",
+    "3873aa17-81e5-5d5a-b7b0-8353ff94e10a",
+    "150148b0-4bd9-5c2c-9589-cd57527dabea",
+    "a1b09ea8-fe05-52ab-8f39-61b549696655",
+    "17dd78d3-fa3a-5fc8-8467-70154e8994bf"
+  ],
+  "schemaVersion": 1,
+  "scope": "source-bound numerical qualification only; no labels, training or selection improvement",
+  "selection": "numivivo-binder-source-panel-v1",
+  "sourceManifestSHA256": "fe9158af423f7a6432888c5e4080623bf9b591d81acb9ce01249aa56ba4f2afb",
+  "surfacePlan": {
+    "maximumNeighborPairs": 2000000,
+    "maximumNeighborSearchTests": 10000000,
+    "maximumPointTests": 100000000,
+    "overlapThresholdNM": 0.04,
+    "pointsPerAtom": 960,
+    "probeRadiusNM": 0.14,
+    "radiiNM": {
+      "C": 0.17,
+      "N": 0.155,
+      "O": 0.152,
+      "S": 0.18
+    },
+    "radiusProfile": "explicit-elemental-CNOS-v1",
+    "schemaVersion": 1
+  }
+}
