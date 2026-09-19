@@ -63,7 +63,7 @@ extension VivoMolecularInterface {
         try surfaceRequire(plan.schemaVersion == 1 && !plan.radiusProfile.isEmpty
             && plan.radiusProfile.utf8.count <= 1024, "invalid surface schema/radius profile")
         try surfaceRequire((32...4096).contains(plan.pointsPerAtom)
-            && plan.probeRadiusNM.isFinite && plan.probeRadiusNM > 0 && plan.probeRadiusNM <= 0.5
+            && plan.probeRadiusNM.isFinite && plan.probeRadiusNM >= 1e-6 && plan.probeRadiusNM <= 0.5
             && plan.overlapThresholdNM.isFinite && (0...0.5).contains(plan.overlapThresholdNM)
             && (1...5_000_000).contains(plan.maximumNeighborPairs)
             && (1...500_000_000).contains(plan.maximumPointTests)
@@ -71,7 +71,7 @@ extension VivoMolecularInterface {
         try surfaceRequire(!plan.radiiNM.isEmpty && plan.radiiNM.count <= 118, "invalid radius table")
         for (symbol, radius) in plan.radiiNM {
             try surfaceRequire(VivoElement.from(symbol: symbol)?.symbol == symbol
-                && radius.isFinite && radius > 0 && radius <= 0.5, "invalid element/radius: \(symbol)")
+                && radius.isFinite && radius >= 1e-6 && radius <= 0.5, "invalid element/radius: \(symbol)")
         }
         let ids = (interface.binderHeavyAtomIndices + interface.targetHeavyAtomIndices).sorted()
         let left = Set(interface.binderHeavyAtomIndices)

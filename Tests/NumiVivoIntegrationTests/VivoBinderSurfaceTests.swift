@@ -53,6 +53,11 @@ final class VivoBinderSurfaceTests: XCTestCase {
         XCTAssertThrowsError(try VivoMolecularInterface.analyzeSurface(spheres(0.3), interfacePlan: ip,
             plan: .init(radiusProfile: "bad", radiiNM: ["C": -.infinity])))
     }
+    func testSubnormalRadiiRejectBeforeGridIntegerConversion() throws {
+        XCTAssertThrowsError(try VivoMolecularInterface.analyzeSurface(spheres(0.3), interfacePlan: ip,
+            plan: .init(radiusProfile: "tiny", radiiNM: ["C": Double.leastNonzeroMagnitude],
+                probeRadiusNM: Double.leastNonzeroMagnitude)))
+    }
     func testTranslationAndReplay() throws {
         let a = try VivoMolecularInterface.analyzeSurface(spheres(0.3), interfacePlan: ip, plan: plan())
         let b = try VivoMolecularInterface.analyzeSurface(spheres(0.3, offset: .init(10, -20, 30)), interfacePlan: ip, plan: plan())

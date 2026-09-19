@@ -16,6 +16,8 @@ public enum VivoBinderBundleIO {
 
     private static let sourceStructuralNames: Set<String> = structuralNames.union(["structure-sources.json"])
 
+    private static let predictionNames: Set<String> = ["prediction.json", "analysis.json"]
+
     private static let rankingQueryNames: Set<String> = ["query.json"]
     private static let rankingNames: Set<String> = ["query.json", "ranking-plan.json", "ranking.json"]
     private static let rankingAssessmentNames: Set<String> = inputNames.union(rankingNames).union(["assessment.json"])
@@ -127,17 +129,27 @@ public enum VivoBinderBundleIO {
                            implementationSHA256: implementationSHA256)
     }
 
+    /// One prediction bundle is independent of campaign size and has no outcome input.
+    public static func analyzePrediction(input: URL, to output: URL, implementationSHA256: String) throws -> Receipt {
+        try checkDigest(implementationSHA256)
+        let data = try read(input)
+        let request = try VivoBinderPredictionAnalysis.decodeInput(data)
+        let report = try VivoBinderPredictionAnalysis.analyze(request)
+        return try publish(["prediction.json": data, "analysis.json": VivoCanonicalJSON.encode(report)],
+            kind: "predictionAnalysis", to: output, implementationSHA256: implementationSHA256)
+    }
+
     /// Reconstructs imported records from original bytes; evaluation bundles also recompute
     /// fitting and every held-out score. Verification requires the original executable identity.
     @discardableResult
     public static func verify(_ bundle: URL, implementationSHA256: String) throws -> Receipt {
         try checkDigest(implementationSHA256)
         let r = try VivoCanonicalJSON.decode(Receipt.self, from: read(bundle.appendingPathComponent("receipt.json")))
-        guard r.schemaVersion == 1, ["import", "evaluation", "structuralEvaluation", "sourceStructuralEvaluation", "rankingQuery", "ranking", "rankingAssessment", "supportedEvaluation"].contains(r.kind),
+        guard r.schemaVersion == 1, ["predictionAnalysis", "import", "evaluation", "structuralEvaluation", "sourceStructuralEvaluation", "rankingQuery", "ranking", "rankingAssessment", "supportedEvaluation"].contains(r.kind),
               r.implementationSHA256 == implementationSHA256 else { throw invalid("receipt schema/kind/executable mismatch") }
-        let fileSets = ["import": inputNames, "evaluation": evaluationNames, "structuralEvaluation": structuralNames,
+        let fileSets = ["predictionAnalysis": predictionNames, "import": inputNames, "evaluation": evaluationNames, "structuralEvaluation": structuralNames,
                         "sourceStructuralEvaluation": sourceStructuralNames, "rankingQuery": rankingQueryNames, "ranking": rankingNames, "rankingAssessment": rankingAssessmentNames, "supportedEvaluation": supportedEvaluationNames]
-        let expected = fileSets[r.kind]!
+        guard let expected = fileSets[r.kind] else { throw invalid("unsupported bundle kind") }
         let names = try FileManager.default.contentsOfDirectory(atPath: bundle.path)
         guard Set(r.files.keys) == expected, Set(names) == expected.union(["receipt.json"]) else {
             throw invalid("unexpected/missing bundle files")
@@ -147,6 +159,13 @@ public enum VivoBinderBundleIO {
             let data = try read(bundle.appendingPathComponent(name))
             guard try digest(data) == r.files[name] else { throw invalid("source/artifact hash mismatch: \(name)") }
             files[name] = data
+        }
+        if r.kind == "predictionAnalysis" {
+            let request = try VivoBinderPredictionAnalysis.decodeInput(files["prediction.json"]!)
+            guard try VivoCanonicalJSON.encode(VivoBinderPredictionAnalysis.analyze(request)) == files["analysis.json"]! else {
+                throw invalid("prediction analysis does not reconstruct from source")
+            }
+            return r
         }
         if r.kind == "rankingQuery" || r.kind == "ranking" {
             let query = try VivoBinderRanking.decodeQuery(files["query.json"]!)

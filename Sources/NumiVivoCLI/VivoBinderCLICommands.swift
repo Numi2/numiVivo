@@ -17,6 +17,7 @@ struct VivoBinderCLICommands {
                   binder-evaluate-supported IMPORT_BUNDLE PLAN.json POLICY.json NEW_RESULT
                   binder-evaluate-structures IMPORT_BUNDLE PLAN.json STRUCTURES.json NEW_RESULT
                   binder-evaluate-structure-sources IMPORT_BUNDLE PLAN.json SOURCES.json NEW_RESULT
+                  binder-analyze-prediction PREDICTION.json NEW_BUNDLE
                   binder-verify BUNDLE
                 Structural evaluation derives heavy-atom geometry and compares with a score-only
                 ensemble on identical candidates. No structure repair, MD, affinity or inference.
@@ -36,6 +37,10 @@ struct VivoBinderCLICommands {
             var status: Int32 = 0
             let receipt: VivoBinderBundleIO.Receipt
             switch command {
+            case "binder-analyze-prediction":
+                guard arguments.count == 3 else { return usage() }
+                receipt = try VivoBinderBundleIO.analyzePrediction(input: path(1), to: path(2), implementationSHA256: identity)
+
             case "binder-ranking-query":
                 guard arguments.count == 3 else { return usage() }
                 receipt = try VivoBinderBundleIO.rankingQuery(bundle: path(1), to: path(2), implementationSHA256: identity)
