@@ -12,6 +12,8 @@ public enum VivoBinderBundleIO {
     private static let evaluationNames: Set<String> = inputNames.union(["plan.json", "report.json"])
     private static let structuralNames: Set<String> = evaluationNames.union(["structures.json", "geometry.json", "score-only-report.json"])
 
+    private static let supportedEvaluationNames: Set<String> = evaluationNames.union(["support-policy.json"])
+
     private static let sourceStructuralNames: Set<String> = structuralNames.union(["structure-sources.json"])
 
     private static let rankingQueryNames: Set<String> = ["query.json"]
@@ -79,6 +81,19 @@ public enum VivoBinderBundleIO {
         return try publish(files, kind: "evaluation", to: output, implementationSHA256: implementationSHA256)
     }
 
+    /// Opt-in support policy. An unmet policy publishes its counts/reasons but no fitted model.
+    public static func evaluateSupported(bundle: URL, plan: URL, policy: URL, to output: URL,
+                                         implementationSHA256: String) throws -> Receipt {
+        let receipt = try verify(bundle, implementationSHA256: implementationSHA256)
+        guard receipt.kind == "import" else { throw invalid("supported evaluation requires an import bundle") }
+        var files: [String: Data] = [:]
+        for name in inputNames { files[name] = try read(bundle.appendingPathComponent(name)) }
+        let imported = try VivoCanonicalJSON.decode(VivoBinderAnthropicImport.Result.self, from: files["imported.json"]!)
+        files["plan.json"] = try read(plan); files["support-policy.json"] = try read(policy)
+        files["report.json"] = try supportedReport(imported.dataset, files: files)
+        return try publish(files, kind: "supportedEvaluation", to: output, implementationSHA256: implementationSHA256)
+    }
+
     public static func evaluateStructures(bundle: URL, plan: URL, structures: URL, to output: URL,
                                           implementationSHA256: String) throws -> Receipt {
         let receipt = try verify(bundle, implementationSHA256: implementationSHA256)
@@ -118,10 +133,10 @@ public enum VivoBinderBundleIO {
     public static func verify(_ bundle: URL, implementationSHA256: String) throws -> Receipt {
         try checkDigest(implementationSHA256)
         let r = try VivoCanonicalJSON.decode(Receipt.self, from: read(bundle.appendingPathComponent("receipt.json")))
-        guard r.schemaVersion == 1, ["import", "evaluation", "structuralEvaluation", "sourceStructuralEvaluation", "rankingQuery", "ranking", "rankingAssessment"].contains(r.kind),
+        guard r.schemaVersion == 1, ["import", "evaluation", "structuralEvaluation", "sourceStructuralEvaluation", "rankingQuery", "ranking", "rankingAssessment", "supportedEvaluation"].contains(r.kind),
               r.implementationSHA256 == implementationSHA256 else { throw invalid("receipt schema/kind/executable mismatch") }
         let fileSets = ["import": inputNames, "evaluation": evaluationNames, "structuralEvaluation": structuralNames,
-                        "sourceStructuralEvaluation": sourceStructuralNames, "rankingQuery": rankingQueryNames, "ranking": rankingNames, "rankingAssessment": rankingAssessmentNames]
+                        "sourceStructuralEvaluation": sourceStructuralNames, "rankingQuery": rankingQueryNames, "ranking": rankingNames, "rankingAssessment": rankingAssessmentNames, "supportedEvaluation": supportedEvaluationNames]
         let expected = fileSets[r.kind]!
         let names = try FileManager.default.contentsOfDirectory(atPath: bundle.path)
         guard Set(r.files.keys) == expected, Set(names) == expected.union(["receipt.json"]) else {
@@ -150,7 +165,11 @@ public enum VivoBinderBundleIO {
         guard try VivoCanonicalJSON.encode(reconstructed) == files["imported.json"]! else {
             throw invalid("imported records do not reconstruct from source")
         }
-        if r.kind == "rankingAssessment" {
+        if r.kind == "supportedEvaluation" {
+            guard try supportedReport(reconstructed.dataset, files: files) == files["report.json"]! else {
+                throw invalid("supported evaluation does not reconstruct")
+            }
+        } else if r.kind == "rankingAssessment" {
             guard try rankingAssessment(reconstructed.dataset, files: files) == files["assessment.json"]! else {
                 throw invalid("ranking assessment does not reconstruct")
             }
@@ -175,6 +194,12 @@ public enum VivoBinderBundleIO {
             }
         }
         return r
+    }
+
+    private static func supportedReport(_ dataset: VivoBinderBenchmark.Dataset, files: [String: Data]) throws -> Data {
+        let plan = try VivoCanonicalJSON.decode(VivoBinderBenchmark.Plan.self, from: files["plan.json"]!)
+        let policy = try VivoBinderTrainingSupport.decodePolicy(files["support-policy.json"]!)
+        return try VivoCanonicalJSON.encode(VivoBinderTrainingSupport.evaluate(dataset, plan: plan, policy: policy))
     }
 
     private static func rankingAssessment(_ dataset: VivoBinderBenchmark.Dataset, files: [String: Data]) throws -> Data {

@@ -14,6 +14,7 @@ struct VivoBinderCLICommands {
                   binder-rank QUERY_BUNDLE RANKING_PLAN.json NEW_RANKING
                   binder-assess-ranking IMPORT_BUNDLE RANKING_BUNDLE NEW_ASSESSMENT
                   binder-evaluate IMPORT_BUNDLE PLAN.json NEW_RESULT
+                  binder-evaluate-supported IMPORT_BUNDLE PLAN.json POLICY.json NEW_RESULT
                   binder-evaluate-structures IMPORT_BUNDLE PLAN.json STRUCTURES.json NEW_RESULT
                   binder-evaluate-structure-sources IMPORT_BUNDLE PLAN.json SOURCES.json NEW_RESULT
                   binder-verify BUNDLE
@@ -32,6 +33,7 @@ struct VivoBinderCLICommands {
             }
             let identity = try VivoCanonicalJSON.fingerprint(Data(contentsOf: executable)).hex
             func path(_ i: Int) -> URL { URL(fileURLWithPath: arguments[i]) }
+            var status: Int32 = 0
             let receipt: VivoBinderBundleIO.Receipt
             switch command {
             case "binder-ranking-query":
@@ -51,6 +53,13 @@ struct VivoBinderCLICommands {
                 guard arguments.count == 4 else { return usage() }
                 receipt = try VivoBinderBundleIO.evaluate(bundle: path(1), plan: path(2),
                     to: path(3), implementationSHA256: identity)
+            case "binder-evaluate-supported":
+                guard arguments.count == 5 else { return usage() }
+                receipt = try VivoBinderBundleIO.evaluateSupported(bundle: path(1), plan: path(2), policy: path(3),
+                    to: path(4), implementationSHA256: identity)
+                let report = try VivoCanonicalJSON.decode(VivoBinderTrainingSupport.Evaluation.self,
+                    from: Data(contentsOf: path(4).appendingPathComponent("report.json")))
+                if !report.support.eligibleForExperimentalFit { status = 2 }
             case "binder-evaluate-structures":
                 guard arguments.count == 5 else { return usage() }
                 receipt = try VivoBinderBundleIO.evaluateStructures(bundle: path(1), plan: path(2), structures: path(3),
@@ -66,7 +75,7 @@ struct VivoBinderCLICommands {
             }
             FileHandle.standardOutput.write(try VivoCanonicalJSON.encode(receipt))
             FileHandle.standardOutput.write(Data("\n".utf8))
-            return 0
+            return status
         } catch {
             FileHandle.standardError.write(Data("Binder workflow rejected: \(error)\n".utf8)); return 65
         }

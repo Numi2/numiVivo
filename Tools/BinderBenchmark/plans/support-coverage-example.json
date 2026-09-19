@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "identifier": "example-training-coverage-v1",
+  "rationale": "Illustrative development coverage policy: at least two positive and two negative declared groups, represented across two training targets with both classes. These are not calibrated accuracy or power thresholds. Freeze a justified policy for each independent experiment.",
+  "minimumPositiveGroups": 2,
+  "minimumNegativeGroups": 2,
+  "minimumTrainingTargets": 2,
+  "minimumTargetsWithBothClasses": 2,
+  "maximumFeatures": 3
+}
