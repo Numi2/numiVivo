@@ -25,10 +25,11 @@ public enum VivoMMCIF {
     public static func read(_ text: String, identifier: String = "mmcif") throws -> VivoMolecularStructure {
         let tokens = try tokenize(text)
         let parsed = try parse(tokens)
-        guard let atomLoop = parsed.loops.first(where: { $0.headers.contains(where: { $0.hasPrefix("_atom_site.") }) }) else {
-            throw VivoArtifactValidationError.invalid("mmCIF contains no _atom_site loop")
+        let atomLoops = parsed.loops.filter { $0.headers.contains(where: { $0.hasPrefix("_atom_site.") }) }
+        guard atomLoops.count == 1 else {
+            throw VivoArtifactValidationError.invalid("mmCIF requires exactly one _atom_site loop")
         }
-        let atoms = try atomRows(atomLoop)
+        let atoms = try atomRows(atomLoops[0])
         guard !atoms.isEmpty else { throw VivoArtifactValidationError.invalid("mmCIF _atom_site loop is empty") }
         let grouped = Dictionary(grouping: atoms, by: \.model)
         let modelIDs = grouped.keys.sorted()
@@ -135,6 +136,9 @@ public enum VivoMMCIF {
                 var headers: [String] = []
                 while i < tokens.count, tokens[i].hasPrefix("_") { headers.append(tokens[i]); i += 1 }
                 guard !headers.isEmpty else { throw VivoArtifactValidationError.invalid("mmCIF loop has no headers") }
+                guard Set(headers.map { $0.lowercased() }).count == headers.count else {
+                    throw VivoArtifactValidationError.invalid("mmCIF loop contains duplicate headers")
+                }
                 var flat: [String] = []
                 while i < tokens.count {
                     let next = tokens[i]

@@ -73,6 +73,13 @@ final class VivoBinderStructureSourceTests: XCTestCase {
         XCTAssertEqual(result.interfaces["candidate"]?.minimumDistanceNM ?? -1, 0.4, accuracy: 1e-14)
         XCTAssertEqual(result.interfaces["candidate"]?.contactAtomPairs, 14)
     }
+    func testDuplicateCIFHeadersRejectInsteadOfTrapping() throws {
+        let duplicate = cif().replacingOccurrences(of: "_atom_site.Cartn_y", with: "_atom_site.Cartn_x")
+        XCTAssertThrowsError(try VivoBinderStructureSources.reconstruct(input(duplicate, format: .mmcif)))
+    }
+    func testMultipleCIFAtomLoopsAreNotSilentlyDiscarded() throws {
+        XCTAssertThrowsError(try VivoBinderStructureSources.reconstruct(input(cif() + cif(), format: .mmcif)))
+    }
     func testSourceHashMismatchRejected() throws {
         XCTAssertThrowsError(try VivoBinderStructureSources.reconstruct(input(pdb(), digest: String(repeating: "0", count: 64))))
     }
