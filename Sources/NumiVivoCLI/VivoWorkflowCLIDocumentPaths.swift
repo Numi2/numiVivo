@@ -25,7 +25,8 @@ enum VivoWorkflowCLIDocumentPaths {
         }
         var result = ancestor.resolvingSymlinksInPath().standardizedFileURL
         if !suffix.isEmpty {
-            guard try result.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else {
+            var isDirectory = ObjCBool(false)
+            guard manager.fileExists(atPath: result.path, isDirectory: &isDirectory), isDirectory.boolValue else {
                 throw VivoChemistryError.invalid("workflow document path parent is not a directory")
             }
         }

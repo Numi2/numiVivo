@@ -8,6 +8,9 @@ let package = Package(
         .library(name: "NumiVivoKit", targets: ["NumiVivoKit"]),
         .executable(name: "numivivo", targets: ["NumiVivoCLI"])
     ],
+    dependencies: [
+        .package(url: "https://github.com/ml-explore/mlx-swift", exact: "0.31.6")
+    ],
     targets: [
         .systemLibrary(name: "CNumiVivoZlib", path: "Sources/CNumiVivoZlib"),
         .target(name: "NumiVivoCore", path: "Sources/NumiVivoCore", publicHeadersPath: "include",
@@ -40,9 +43,19 @@ let package = Package(
         ]),
         .target(name: "NumiVivoKit", dependencies: ["NumiVivoCore", "NumiVivoShaders", "CNumiVivoZlib"],
                 path: "Sources/NumiVivoKit", linkerSettings: [.linkedFramework("Metal"), .linkedFramework("Accelerate")]),
-        .executableTarget(name: "NumiVivoCLI", dependencies: ["NumiVivoKit"], path: "Sources/NumiVivoCLI"),
+        .target(name: "NumiVivoLearning", dependencies: [
+            "NumiVivoKit",
+            .product(name: "MLX", package: "mlx-swift"),
+            .product(name: "MLXNN", package: "mlx-swift"),
+            .product(name: "MLXOptimizers", package: "mlx-swift")
+        ], path: "Sources/NumiVivoLearning"),
+        .executableTarget(name: "NumiVivoCLI", dependencies: ["NumiVivoKit", "NumiVivoLearning"], path: "Sources/NumiVivoCLI"),
         .testTarget(name: "NumiVivoIntegrationTests", dependencies: ["NumiVivoKit", "NumiVivoShaders"],
-                    path: "Tests/NumiVivoIntegrationTests")
+                    path: "Tests/NumiVivoIntegrationTests"),
+        .testTarget(name: "NumiVivoLearningTests", dependencies: [
+            "NumiVivoLearning", "NumiVivoKit",
+            .product(name: "MLX", package: "mlx-swift")
+        ], path: "Tests/NumiVivoLearningTests")
     ],
     swiftLanguageModes: [.v6],
     // SwiftPM's manifest API calls its C++23 compiler mode cxx2b.

@@ -1,5 +1,16 @@
 import Foundation
 
+/// Binds a projected H5AD to the source selection and the explicit mapping
+/// that may be used to make a count store from its projected matrix.
+public struct VivoH5ADProjectionCellSelectionSource: Codable, Sendable, Equatable {
+    public let selectionPlan: VivoFingerprint
+    public let countStorePlan: VivoFingerprint
+    public init(selectionPlan: VivoFingerprint, countStorePlan: VivoFingerprint) {
+        self.selectionPlan = selectionPlan
+        self.countStorePlan = countStorePlan
+    }
+}
+
 public struct VivoH5ADProjectionPlan: Codable, Sendable, Equatable {
     public let schemaVersion: Int
     public let source: VivoFingerprint
@@ -11,14 +22,17 @@ public struct VivoH5ADProjectionPlan: Codable, Sendable, Equatable {
     public let maximumElementVisits: Int
     /// nil preserves the historical 1 GiB output limit and encoded plan.
     public let maximumOutputBytes: Int?
-    public init(source: VivoFingerprint,provenance: String,observationIndices: [Int]? = nil,featureIndices: [Int]? = nil,maximumElementVisits: Int = 500_000_000, maximumOutputBytes: Int? = nil) {
+    /// Present only when the projection was made from a source-bound cell
+    /// selection and carries its exact count-store mapping as companions.
+    public let sourceSelection: VivoH5ADProjectionCellSelectionSource?
+    public init(source: VivoFingerprint,provenance: String,observationIndices: [Int]? = nil,featureIndices: [Int]? = nil,maximumElementVisits: Int = 500_000_000, maximumOutputBytes: Int? = nil, sourceSelection: VivoH5ADProjectionCellSelectionSource? = nil) {
         self.maximumOutputBytes=maximumOutputBytes
         schemaVersion=1;self.source=source;self.provenance=provenance;self.observationIndices=observationIndices
-        self.featureIndices=featureIndices;self.maximumElementVisits=maximumElementVisits
+        self.featureIndices=featureIndices;self.maximumElementVisits=maximumElementVisits;self.sourceSelection=sourceSelection
     }
-    private enum CodingKeys: String,CodingKey { case schemaVersion,source,provenance,observationIndices,featureIndices,maximumElementVisits,maximumOutputBytes }
+    private enum CodingKeys: String,CodingKey { case schemaVersion,source,provenance,observationIndices,featureIndices,maximumElementVisits,maximumOutputBytes,sourceSelection }
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","source","provenance","observationIndices","featureIndices","maximumElementVisits","maximumOutputBytes"])
+        try vivoOmicsRejectUnknownKeys(decoder,allowed: ["schemaVersion","source","provenance","observationIndices","featureIndices","maximumElementVisits","maximumOutputBytes","sourceSelection"])
         let c=try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion=try c.decode(Int.self,forKey: .schemaVersion);source=try c.decode(VivoFingerprint.self,forKey: .source)
         provenance=try c.decode(String.self,forKey: .provenance)
@@ -26,6 +40,7 @@ public struct VivoH5ADProjectionPlan: Codable, Sendable, Equatable {
         featureIndices=try c.decodeIfPresent([Int].self,forKey: .featureIndices)
         maximumOutputBytes=try c.decodeIfPresent(Int.self,forKey: .maximumOutputBytes)
         maximumElementVisits=try c.decodeIfPresent(Int.self,forKey: .maximumElementVisits) ?? 500_000_000
+        sourceSelection=try c.decodeIfPresent(VivoH5ADProjectionCellSelectionSource.self,forKey: .sourceSelection)
     }
     func validate() throws {
         guard schemaVersion==1,!provenance.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,provenance.utf8.count<=16_384,
@@ -38,8 +53,54 @@ public struct VivoH5ADProjectionPlan: Codable, Sendable, Equatable {
                 throw VivoOmicsError.invalid("projection indices must be nonnegative and bounded")
             }
         }
+        if sourceSelection != nil {
+            guard let observationIndices, !observationIndices.isEmpty else {
+                throw VivoOmicsError.invalid("source selection projection requires selected observations")
+            }
+        }
     }
 }
+
+/// Exact plan bytes carried by a source-selection projection. They are written
+/// atomically with the H5AD and checked during replay.
+public struct VivoH5ADProjectionCellSelectionArtifacts: Sendable {
+    public let selectionPlan: Data
+    public let countStorePlan: Data
+    public init(selectionPlan: Data, countStorePlan: Data) throws {
+        guard (1...4*1_024*1_024).contains(selectionPlan.count),
+              (1...2*1_024*1_024).contains(countStorePlan.count) else {
+            throw VivoOmicsError.limit("source selection projection companion plan bytes")
+        }
+        self.selectionPlan = selectionPlan
+        self.countStorePlan = countStorePlan
+    }
+}
+
+public extension VivoH5ADProjectionPlan {
+    /// Makes a file-projection plan from a cell selection whose indices are
+    /// already bound to the full source H5AD. Companion plan fingerprints are
+    /// embedded structurally and verified with the projected H5AD.
+    init(
+        selectedCells selection: VivoH5ADCellSelection,
+        selectionPlanFingerprint: VivoFingerprint,
+        countStorePlanFingerprint: VivoFingerprint,
+        maximumElementVisits: Int = 500_000_000,
+        maximumOutputBytes: Int? = nil
+    ) throws {
+        try selection.validate()
+        self.init(
+            source: selection.source,
+            provenance: selection.provenance,
+            observationIndices: selection.observationIndices,
+            featureIndices: nil,
+            maximumElementVisits: maximumElementVisits,
+            maximumOutputBytes: maximumOutputBytes,
+            sourceSelection: .init(selectionPlan: selectionPlanFingerprint, countStorePlan: countStorePlanFingerprint)
+        )
+        try validate()
+    }
+}
+
 public struct VivoH5ADProjectedField: Codable,Sendable,Equatable {
     public let path: String
     public let encoding: String
@@ -416,6 +477,44 @@ private final class VivoH5ADProjector {
 }
 
 public enum VivoH5ADProjection {
+    private static let selectionPlanName = "selection-plan.json"
+    private static let countStorePlanName = "count-store-plan.json"
+
+    private static func validateSelectionArtifacts(
+        _ plan: VivoH5ADProjectionPlan,
+        _ artifacts: VivoH5ADProjectionCellSelectionArtifacts?
+    ) throws -> VivoH5ADProjectionCellSelectionArtifacts? {
+        guard let sourceSelection=plan.sourceSelection else {
+            guard artifacts == nil else { throw VivoOmicsError.invalid("projection has unexpected source-selection companions") }
+            return nil
+        }
+        guard let artifacts else { throw VivoOmicsError.invalid("projection is missing source-selection companions") }
+        guard try VivoCanonicalJSON.fingerprint(artifacts.selectionPlan)==sourceSelection.selectionPlan,
+              try VivoCanonicalJSON.fingerprint(artifacts.countStorePlan)==sourceSelection.countStorePlan else {
+            throw VivoOmicsError.invalid("source-selection companion fingerprint mismatch")
+        }
+        let selectionPlan=try VivoCanonicalJSON.decode(VivoH5ADPseudobulkPlan.self,from: artifacts.selectionPlan)
+        try selectionPlan.validate()
+        guard try VivoCanonicalJSON.encode(selectionPlan)==artifacts.selectionPlan else {
+            throw VivoOmicsError.invalid("source-selection companion plan is not canonical")
+        }
+        guard let selection=selectionPlan.cellSelection,
+              selection.source==plan.source,
+              selection.observationIndices==plan.observationIndices,
+              selection.provenance==plan.provenance else {
+            throw VivoOmicsError.invalid("source-selection companion does not match projection plan")
+        }
+        let countStorePlan=try VivoCanonicalJSON.decode(VivoH5ADImportPlan.self,from: artifacts.countStorePlan)
+        try countStorePlan.validate()
+        guard try VivoCanonicalJSON.encode(countStorePlan)==artifacts.countStorePlan else {
+            throw VivoOmicsError.invalid("source-selection count-store plan is not canonical")
+        }
+        guard countStorePlan==selectionPlan.mapping else {
+            throw VivoOmicsError.invalid("source-selection count-store plan differs from selected mapping")
+        }
+        return artifacts
+    }
+
     static func evaluate(_ source: URL,plan: VivoH5ADProjectionPlan,to output: URL) throws -> VivoH5ADProjectionReport {
         try plan.validate()
         return try VivoSingleCellH5AD.withReadableSnapshot(source, limits: VivoH5ADPseudobulk.sourceLimits) {
@@ -481,7 +580,10 @@ public enum VivoH5ADProjection {
         }
     }
     public static func publish(source: URL,plan: VivoH5ADProjectionPlan,implementation: VivoFingerprint,to destination: URL) throws -> VivoH5ADProjectionReceipt {
-        try plan.validate();let bytes=try VivoCanonicalJSON.encode(plan)
+        try publish(source: source,plan: plan,selectionArtifacts: nil,implementation: implementation,to: destination)
+    }
+    public static func publish(source: URL,plan: VivoH5ADProjectionPlan,selectionArtifacts: VivoH5ADProjectionCellSelectionArtifacts?,implementation: VivoFingerprint,to destination: URL) throws -> VivoH5ADProjectionReceipt {
+        try plan.validate();let companions=try validateSelectionArtifacts(plan,selectionArtifacts),bytes=try VivoCanonicalJSON.encode(plan)
         guard bytes.count<=64*1_024*1_024 else { throw VivoOmicsError.limit("projection plan bytes") }
         guard !FileManager.default.fileExists(atPath: destination.path) else { throw VivoOmicsError.invalid("projection output exists") }
         let staging=destination.deletingLastPathComponent().appendingPathComponent(".numivivo-project-"+UUID().uuidString)
@@ -494,6 +596,10 @@ public enum VivoH5ADProjection {
         let receipt=try VivoH5ADProjectionReceipt(schemaVersion: 1,source: plan.source,plan: VivoCanonicalJSON.fingerprint(bytes),output: VivoH5ADPseudobulk.fingerprint(output),
             report: VivoCanonicalJSON.fingerprint(reportBytes),implementation: implementation)
         try bytes.write(to: staging.appendingPathComponent("plan.json"),options: .withoutOverwriting)
+        if let companions {
+            try companions.selectionPlan.write(to: staging.appendingPathComponent(selectionPlanName),options: .withoutOverwriting)
+            try companions.countStorePlan.write(to: staging.appendingPathComponent(countStorePlanName),options: .withoutOverwriting)
+        }
         try reportBytes.write(to: staging.appendingPathComponent("report.json"),options: .withoutOverwriting)
         try VivoCanonicalJSON.encode(receipt).write(to: staging.appendingPathComponent("receipt.json"),options: .withoutOverwriting)
         try Task.checkCancellation();try FileManager.default.moveItem(at: staging,to: destination);return receipt
@@ -511,7 +617,15 @@ public enum VivoH5ADProjection {
         let snapshot=temporary.appendingPathComponent("original.h5ad"),output=temporary.appendingPathComponent("projected.h5ad")
         guard try VivoH5ADPseudobulk.fingerprint(directory.appendingPathComponent("original.h5ad"),copyTo: snapshot)==receipt.source else { throw VivoOmicsError.invalid("projection original changed") }
         let plan=try VivoCanonicalJSON.decode(VivoH5ADProjectionPlan.self,from: bytes)
+        guard try VivoCanonicalJSON.encode(plan)==bytes else { throw VivoOmicsError.invalid("projection plan is not canonical") }
         guard plan.source==receipt.source else { throw VivoOmicsError.invalid("projection plan source differs") }
+        if plan.sourceSelection != nil {
+            let companions=try VivoH5ADProjectionCellSelectionArtifacts(
+                selectionPlan: VivoSingleCellCampaignIO.readDocument(directory.appendingPathComponent(selectionPlanName),maximumBytes: 4*1_024*1_024),
+                countStorePlan: VivoSingleCellCampaignIO.readDocument(directory.appendingPathComponent(countStorePlanName),maximumBytes: 2*1_024*1_024)
+            )
+            _=try validateSelectionArtifacts(plan,companions)
+        }
         let report=try evaluate(snapshot,plan: plan,to: output)
         guard try VivoCanonicalJSON.encode(report)==reportBytes,try VivoH5ADPseudobulk.fingerprint(output)==receipt.output else { throw VivoOmicsError.invalid("projection does not reconstruct") }
         return report

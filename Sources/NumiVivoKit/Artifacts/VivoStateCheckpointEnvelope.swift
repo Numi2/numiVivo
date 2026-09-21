@@ -8,6 +8,9 @@ public enum VivoCheckpointRuntimeKind: String, Codable, CaseIterable, Sendable {
     case physiologicalFlow
     case physiologicalPartition
     case coupledNumiLab
+    /// MLX weights plus deterministic sampler state for a source-bound
+    /// single-cell perturbation-response learner.
+    case cellResponseMLX
 }
 
 public enum VivoCheckpointSectionEncoding: String, Codable, CaseIterable, Sendable {
@@ -508,7 +511,8 @@ public enum VivoCheckpointCodec {
         } catch {
             throw VivoCheckpointError.decoding(error.localizedDescription)
         }
-        guard manifest.schemaVersion == 1,
+        guard try canonicalEncoder.encode(manifest) == manifestData,
+              manifest.schemaVersion == 1,
               manifest.sections.count == Int(sectionCount),
               manifest.metadata.count <= Int(limits.maximumMetadataEntries),
               manifest.logicalTime.isFinite else {

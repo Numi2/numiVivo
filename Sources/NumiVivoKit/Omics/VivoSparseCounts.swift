@@ -17,7 +17,9 @@ struct VivoOmicsJSONKey: CodingKey {
     init?(stringValue: String) { self.stringValue = stringValue }
     init?(intValue: Int) { return nil }
 }
-func vivoOmicsRejectUnknownKeys(_ decoder: Decoder, allowed: Set<String>) throws {
+/// Reject misspelled or undeclared fields at a persisted omics boundary.
+/// Learning plans use the same strict contract as native import plans.
+public func vivoOmicsRejectUnknownKeys(_ decoder: Decoder, allowed: Set<String>) throws {
     let fields = try decoder.container(keyedBy: VivoOmicsJSONKey.self)
     let unknown = Set(fields.allKeys.map(\.stringValue)).subtracting(allowed)
     guard unknown.isEmpty else {
@@ -53,7 +55,7 @@ public struct VivoOmicsLimits: Codable, Sendable, Equatable {
     }
 }
 
-func vivoOmicsID(_ value: String) -> Bool {
+public func vivoOmicsID(_ value: String) -> Bool {
     !value.isEmpty && value.utf8.count <= 1_024 &&
     value == value.trimmingCharacters(in: .whitespacesAndNewlines) &&
     !value.unicodeScalars.contains(where: { CharacterSet.controlCharacters.contains($0) })

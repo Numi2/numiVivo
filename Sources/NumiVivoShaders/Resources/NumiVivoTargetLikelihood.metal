@@ -51,7 +51,7 @@ kernel void nvivo_target_likelihood_observe(
         default: predicted = f.w / total; break;
     }
     const float4 model = noise[lane];
-    const float sd = hypot(cmd.data.y * model.x, model.y);
+    const float sd = length(float2(cmd.data.y * model.x, model.y));
     if (!all(isfinite(model)) || model.x <= 0.0f || model.y < 0.0f ||
         !isfinite(sd) || sd < 1.1754943508222875e-38f) {
         failures[lane] |= 2u;

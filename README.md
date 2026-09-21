@@ -12,6 +12,18 @@ The real-data benchmark registry now records source identity, replicate semantic
 
 > **Research software, under active development.** The capabilities below describe source implementations and their intended workflows—not a fully qualified release. Apple package integration, GPU numerical behavior and performance require qualification. The [capability map](Documentation/CAPABILITIES.md) separates implemented methods, current restrictions and planned work.
 
+## MLX cell-response CLI
+
+The source-bound `cell-response-train`, `cell-response-resume`,
+`cell-response-evaluate`, and `cell-response-predict` commands use the pinned
+MLX Metal runtime. Run them through
+[`Tools/run-numivivo-mlx.sh`](Tools/run-numivivo-mlx.sh), which builds the
+package with Xcode, checks for MLX's generated Metal bundle, and executes the
+paired CLI product. A plain SwiftPM build does not produce that MLX runtime
+bundle. The helper keeps the caller's working directory and environment, so
+existing absolute or relative artifact paths and `NUMIVIVO_HDF5_LIBRARY` work
+unchanged.
+
 The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md) now carries all 1,612,594 native graph-community labels into a backed AnnData-readable H5AD, with complete cell-identity and metadata checks. This is interoperability evidence, not biological annotation validation.
 
 The current native [AnnData interoperability receipt](Tools/Omics/H5AD/evidence/2026-09-15-interop/README.md) passes 27 CSR/CSC/dense round-trip and rejection checks against the pinned scverse file-format stack. It binds exact counts, raw-axis identity, metadata semantics and native reimport to the current executable; it remains software exchange evidence rather than biological qualification.

@@ -12,6 +12,8 @@ if VivoBinderCLICommands.handles(arguments.first) {
     status = await VivoGenomicEvidenceCLICommands().run(arguments: arguments)
 } else if VivoNeoantigenCLICommands.handles(arguments.first) {
     status = await VivoNeoantigenCLICommands().run(arguments: arguments)
+} else if VivoCellResponseCLICommands.handles(arguments.first) {
+    status = await VivoCellResponseCLICommands().run(arguments: arguments)
 } else if VivoSingleCellCLICommands.handles(arguments.first) {
     status = await VivoSingleCellCLICommands().run(arguments: arguments)
 } else if VivoWorkflowCLICommands.handles(arguments.first) {
@@ -62,6 +64,7 @@ if VivoBinderCLICommands.handles(arguments.first) {
         FileHandle.standardOutput.write(Data("\nCross-scale evidence: cross-scale-assess, cross-scale-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nNeoantigen research review: neoantigen-example, neoantigen-import, neoantigen-verify, neoantigen-review, neoantigen-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nArc VCC 2026: arc2026-prepare, arc2026-pack, arc2026-verify-query, arc2026-verify, arc2026-help.\n".utf8))
+        FileHandle.standardOutput.write(Data("\nCell-response learning: cell-response-prepare, cell-response-train, cell-response-resume, cell-response-evaluate, cell-response-predict, cell-response-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nSingle-cell counts: singlecell-run, singlecell-verify, singlecell-export, singlecell-help.\n".utf8))
         FileHandle.standardOutput.write(Data("Quantitative assays: quantitative-h5mu-import, quantitative-h5mu-verify, quantitative-assay-summary, quantitative-association.\n".utf8))
         FileHandle.standardOutput.write(Data("\nGeneral workflows: workflow-catalog, workflow-template, workflow-plan, workflow-run, workflow-import, workflow-export, workflow-verify, workflow-help.\n".utf8))

@@ -173,6 +173,35 @@ final class VivoWindowedCountRecords {
     }
 }
 
+/// A private, verified copy of the count-store authority. The lease pins the
+/// exact `counts.bin` bytes used by a long-running learner, so later writes or
+/// replacement of the user-visible store cannot change an in-flight run.
+public final class VivoH5ADCountStoreSnapshot {
+    public let receipt: VivoH5ADCountStoreReceipt
+    public let plan: VivoH5ADImportPlan
+    public let metadata: VivoSingleCellCountMetadata
+    public let quality: VivoCountStoreQuality
+    let metadataBytes: Data
+    let qualityBytes: Data
+    let records: VivoWindowedCountRecords
+    private let root: URL
+
+    init(root: URL, receipt: VivoH5ADCountStoreReceipt, plan: VivoH5ADImportPlan,
+         metadata: VivoSingleCellCountMetadata, quality: VivoCountStoreQuality,
+         metadataBytes: Data, qualityBytes: Data) throws {
+        self.root = root
+        self.receipt = receipt
+        self.plan = plan
+        self.metadata = metadata
+        self.quality = quality
+        self.metadataBytes = metadataBytes
+        self.qualityBytes = qualityBytes
+        records = try VivoWindowedCountRecords(root.appendingPathComponent("counts.bin"), entries: receipt.entries)
+    }
+
+    deinit { try? FileManager.default.removeItem(at: root) }
+}
+
 public enum VivoH5ADCountStore {
     static let maximumEntries = 2_000_000_000
     static let maximumFileBytes = 64 * 1_024 * 1_024 * 1_024
@@ -210,6 +239,83 @@ public enum VivoH5ADCountStore {
         })
         guard let metadata else { throw VivoOmicsError.invalid("missing count metadata") }
         return (metadata, quality, writer.entries, try writer.finish())
+    }
+
+    /// Snapshot and reconstruct a source count store before opening any mapped
+    /// rows. The returned lease owns the copied count records until its last
+    /// consumer releases it; callers must not reopen mutable paths for row
+    /// reads. The potentially larger source H5AD is cloned and reconstructed
+    /// first, then removed before cloning counts, which keeps peak temporary
+    /// storage bounded by the larger of the two source artifacts.
+    public static func openSnapshot(_ directory: URL, implementation: VivoFingerprint) throws -> VivoH5ADCountStoreSnapshot {
+        let root = try staging(FileManager.default.temporaryDirectory)
+        var accepted = false
+        defer { if !accepted { try? FileManager.default.removeItem(at: root) } }
+
+        func copy(_ name: String, maximum: Int) throws -> Data {
+            let destination = root.appendingPathComponent(name)
+            _ = try VivoOmicsFileSnapshot.fingerprint(directory.appendingPathComponent(name), copyTo: destination, maximumBytes: maximum)
+            return try Data(contentsOf: destination, options: .mappedIfSafe)
+        }
+
+        let receiptBytes = try copy("receipt.json", maximum: 65_536)
+        let receipt = try VivoCanonicalJSON.decode(VivoH5ADCountStoreReceipt.self, from: receiptBytes)
+        guard receipt.schemaVersion == 1, receipt.format == format,
+              receipt.entries >= 0, receipt.entries <= maximumEntries,
+              receipt.implementation == implementation,
+              try VivoCanonicalJSON.encode(receipt) == receiptBytes else {
+            throw VivoOmicsError.invalid("count store receipt")
+        }
+        let planBytes = try copy("plan.json", maximum: 2_097_152)
+        let metadataBytes = try copy("metadata.json", maximum: 536_870_912)
+        let qualityBytes = try copy("quality.json", maximum: 268_435_456)
+        let countByteProduct = receipt.entries.multipliedReportingOverflow(by: 16)
+        guard !countByteProduct.overflow, countByteProduct.partialValue >= 0,
+              countByteProduct.partialValue <= maximumFileBytes else {
+            throw VivoOmicsError.limit("count snapshot byte bound")
+        }
+        let countBytes = countByteProduct.partialValue
+        guard try VivoCanonicalJSON.fingerprint(planBytes) == receipt.plan,
+              try VivoCanonicalJSON.fingerprint(metadataBytes) == receipt.metadata,
+              try VivoCanonicalJSON.fingerprint(qualityBytes) == receipt.quality else {
+            throw VivoOmicsError.invalid("count store artifact fingerprint")
+        }
+        let plan = try VivoCanonicalJSON.decode(VivoH5ADImportPlan.self, from: planBytes)
+        guard try VivoCanonicalJSON.encode(plan) == planBytes else {
+            throw VivoOmicsError.invalid("count snapshot plan is not canonical")
+        }
+        let metadata = try VivoCanonicalJSON.decode(VivoSingleCellCountMetadata.self, from: metadataBytes)
+        let quality = try VivoCanonicalJSON.decode(VivoCountStoreQuality.self, from: qualityBytes)
+        try metadata.validate(limits: limits)
+        guard quality.rowTotals.count == metadata.cells.count,
+              quality.rowNonzeros.count == metadata.cells.count,
+              quality.featureTotals.count == metadata.features.count,
+              quality.featureNonzeros.count == metadata.features.count else {
+            throw VivoOmicsError.invalid("count snapshot quality shape")
+        }
+        let original = root.appendingPathComponent("original.h5ad")
+        guard try VivoOmicsFileSnapshot.fingerprint(directory.appendingPathComponent("original.h5ad"),
+                                                     copyTo: original,
+                                                     maximumBytes: maximumFileBytes) == receipt.source else {
+            throw VivoOmicsError.invalid("count store source fingerprint")
+        }
+        let (rebuilt, reconstructedQuality, count, hash) = try build(original, plan: plan, output: nil)
+        guard count == receipt.entries, hash == receipt.counts,
+              try VivoCanonicalJSON.encode(rebuilt) == metadataBytes,
+              try VivoCanonicalJSON.encode(reconstructedQuality) == qualityBytes else {
+            throw VivoOmicsError.invalid("count store source reconstruction differs")
+        }
+        try FileManager.default.removeItem(at: original)
+        guard try VivoOmicsFileSnapshot.fingerprint(directory.appendingPathComponent("counts.bin"),
+                                                     copyTo: root.appendingPathComponent("counts.bin"),
+                                                     maximumBytes: max(countBytes, 1)) == receipt.counts else {
+            throw VivoOmicsError.invalid("count store count fingerprint")
+        }
+        let snapshot = try VivoH5ADCountStoreSnapshot(root: root, receipt: receipt, plan: plan,
+                                                       metadata: metadata, quality: quality,
+                                                       metadataBytes: metadataBytes, qualityBytes: qualityBytes)
+        accepted = true
+        return snapshot
     }
     public static func publish(source: URL, plan: VivoH5ADImportPlan, implementation: VivoFingerprint, to destination: URL) throws -> VivoH5ADCountStoreReceipt {
         try plan.validate()

@@ -6,10 +6,15 @@ final class VivoBinderBenchmarkTests: XCTestCase {
     typealias B = VivoBinderBenchmark
     let sha = String(repeating: "a", count: 64)
     func fixture() -> B.Dataset {
-        let rows = (0..<12).map { i in
-            B.Record(id: "c\(i)", target: i < 8 ? "train" : "test", leakageGroup: "g\(i)",
-                outcome: i % 2 == 0 ? .nonBinder : .binder, rawOutcome: i % 2 == 0 ? "non_binder" : "binder",
-                features: ["score": i % 2 == 0 ? 0.1 : 0.9, "extra": Double(i % 3)])
+        let rows: [B.Record] = (0..<12).map { i in
+            let nonBinder = i.isMultiple(of: 2)
+            let target = i < 8 ? "train" : "test"
+            let outcome: B.Outcome = nonBinder ? .nonBinder : .binder
+            let rawOutcome = nonBinder ? "non_binder" : "binder"
+            let score = nonBinder ? 0.1 : 0.9
+            let features: [String: Double] = ["score": score, "extra": Double(i % 3)]
+            return B.Record(id: "c\(i)", target: target, leakageGroup: "g\(i)", outcome: outcome,
+                            rawOutcome: rawOutcome, features: features)
         }
         return B.Dataset(sourceSHA256: sha, assay: "one-vendor:binding", groupingMethod: "synthetic-groups", records: rows)
     }

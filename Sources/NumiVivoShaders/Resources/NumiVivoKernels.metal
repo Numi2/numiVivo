@@ -304,7 +304,7 @@ inline ExpressionResult evaluate_expression(constant NVivoProgramArguments& prog
 
         if (depth < 2u) return {0.0f, true};
         const float right = stack[--depth];
-        float& left = stack[depth - 1u];
+        thread float& left = stack[depth - 1u];
         switch (opcode) {
             case 4u: left = (left > kBooleanThreshold && right > kBooleanThreshold) ? 1.0f : 0.0f; break;
             case 5u: left = (left > kBooleanThreshold || right > kBooleanThreshold) ? 1.0f : 0.0f; break;
@@ -337,7 +337,7 @@ inline ExpressionResult evaluate_expression(constant NVivoProgramArguments& prog
 
 inline float parameter_value(constant NVivoProgramArguments& program,
                              constant NVivoStepUniforms& uniforms,
-                             const NVivoReactionRecord& reaction,
+                             NVivoReactionRecord reaction,
                              uint position,
                              thread bool& fault) {
     if (position >= reaction.parameterCount) {
@@ -392,7 +392,7 @@ inline float mass_action_product(constant NVivoProgramArguments& program,
 
 inline float reaction_rate(constant NVivoProgramArguments& program,
                            constant NVivoStepUniforms& uniforms,
-                           const NVivoReactionRecord& reaction,
+                           NVivoReactionRecord reaction,
                            uint reactionIndexValue,
                            uint cell,
                            thread bool& fault) {
@@ -517,7 +517,7 @@ inline float reaction_rate(constant NVivoProgramArguments& program,
 
 inline float cap_extent(constant NVivoProgramArguments& program,
                         constant NVivoStepUniforms& uniforms,
-                        const NVivoReactionRecord& reaction,
+                        NVivoReactionRecord reaction,
                         uint cell,
                         float extent,
                         thread bool& truncated) {
@@ -540,7 +540,7 @@ inline float cap_extent(constant NVivoProgramArguments& program,
 
 inline void schedule_delay(constant NVivoProgramArguments& program,
                            constant NVivoStepUniforms& uniforms,
-                           const NVivoReactionRecord& reaction,
+                           NVivoReactionRecord reaction,
                            uint reactionIndexValue,
                            uint cell,
                            thread float& extent,
@@ -813,7 +813,7 @@ inline void emit_event(constant NVivoProgramArguments& program,
 
 inline float action_value(constant NVivoProgramArguments& program,
                           constant NVivoStepUniforms& uniforms,
-                          const NVivoActionRecord& action,
+                          NVivoActionRecord action,
                           uint cell,
                           uint subject,
                           thread bool& fault) {
@@ -965,7 +965,11 @@ inline float action_value(constant NVivoProgramArguments& program,
     }
 }
 
-[[host_name("nvivo_evaluate_monitors")]] kernel void nvivo_evaluate_monitors(
+// Program-pack execution owns the stable `nvivo_evaluate_monitors` entry
+// point.  This historical argument-buffer kernel remains independently
+// compilable through `completeMetalSource()`, but must keep a distinct export
+// when Xcode links every packaged .metal source into one default library.
+[[host_name("nvivo_legacy_evaluate_monitors")]] kernel void nvivo_evaluate_monitors(
     constant NVivoProgramArguments& program [[buffer(0)]],
     constant NVivoStepUniforms& uniforms [[buffer(1)]],
     uint cell [[thread_position_in_grid]]) {

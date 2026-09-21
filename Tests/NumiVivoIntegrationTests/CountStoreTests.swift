@@ -42,4 +42,41 @@ import Testing
         #expect(throws: (any Error).self) { try VivoWindowedCountRecords(link, entries: 0) }
         #expect(throws: (any Error).self) { try VivoH5ADCountStore.fingerprint(link) }
     }
+
+    @Test func countStoreSnapshotPinsCountsAfterLiveMutation() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("count-store-snapshot-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = try VivoSingleCellExamples.pairedCounts()
+        let h5ad = root.appendingPathComponent("source.h5ad")
+        let store = root.appendingPathComponent("store")
+        let implementation = try VivoFingerprint(bytes: Array(repeating: 13, count: 32))
+        let mapping = VivoH5ADImportPlan(
+            id: "count-store-snapshot-fixture", evidence: .synthetic,
+            sourceDescription: "Synthetic count-store snapshot fixture", countUnit: .umiCount,
+            matrixPath: "X", samples: source.samples, sampleColumn: "sample",
+            barcodeColumn: "barcode", groupColumn: "group", featureNameColumn: "name",
+            mitochondrialFeatureIDs: ["g31"])
+        try VivoSingleCellH5AD.write(source, to: h5ad)
+        _ = try VivoH5ADCountStore.publish(source: h5ad, plan: mapping, implementation: implementation, to: store)
+
+        let snapshot = try VivoH5ADCountStore.openSnapshot(store, implementation: implementation)
+        let original = try snapshot.records.record(0)
+        var changed = (original.bits + 1).littleEndian
+        let live = try FileHandle(forWritingTo: store.appendingPathComponent("counts.bin"))
+        try live.seek(toOffset: 8)
+        try withUnsafeBytes(of: &changed) { bytes in
+            try live.write(contentsOf: Data(bytes))
+        }
+        try live.synchronize()
+        try live.close()
+
+        let retained = try snapshot.records.record(0)
+        #expect(retained.row == original.row)
+        #expect(retained.feature == original.feature)
+        #expect(retained.bits == original.bits)
+        #expect(throws: (any Error).self) {
+            _ = try VivoH5ADCountStore.openSnapshot(store, implementation: implementation)
+        }
+    }
 }

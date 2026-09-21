@@ -156,6 +156,26 @@ public enum VivoSingleCellAnalysisTables {
     }
 }
 
+/// Pins a local directory descriptor while reading a related set of immutable
+/// artifact documents. Each leaf is opened below that same root with
+/// `O_NOFOLLOW`, so a rename or symlink swap cannot mix receipt and payload
+/// files from different artifact directories.
+public final class VivoRootedDocumentStore: @unchecked Sendable {
+    private let files: VivoRootedFileStore
+
+    public init(rootURL: URL) throws {
+        guard rootURL.isFileURL, rootURL.path.utf8.count <= 8_192,
+              !rootURL.path.contains("\0") else {
+            throw VivoOmicsError.invalid("document root is invalid")
+        }
+        files = try VivoRootedFileStore(rootURL: rootURL, createIfNeeded: false, preResolved: true)
+    }
+
+    public func readDocument(_ fileName: String, maximumBytes: Int) throws -> Data {
+        try files.readFile(fileName, maximumBytes: maximumBytes)
+    }
+}
+
 extension VivoSingleCellCampaignIO {
     public static func readDocument(_ url: URL, maximumBytes: Int) throws -> Data {
         guard url.isFileURL else { throw VivoOmicsError.invalid("document must be a local file") }
