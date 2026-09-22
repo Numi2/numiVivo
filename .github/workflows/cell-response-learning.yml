@@ -1,0 +1,80 @@
+name: Cell-response learning regressions
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/**'
+      - 'Tests/NumiVivoLearningTests/**'
+      - 'Package.swift'
+      - 'Package.resolved'
+      - '.github/workflows/cell-response-learning.yml'
+  pull_request:
+    paths:
+      - 'Sources/**'
+      - 'Tests/NumiVivoLearningTests/**'
+      - 'Package.swift'
+      - 'Package.resolved'
+      - '.github/workflows/cell-response-learning.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cell-response-learning-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  learning:
+    runs-on: macos-26
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Verify compiler and resolve the pinned MLX dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/cell-response-learning"
+          swift --version | tee "$RUNNER_TEMP/cell-response-learning/compiler.txt"
+          xcodebuild -version | tee "$RUNNER_TEMP/cell-response-learning/xcode.txt"
+          git rev-parse HEAD > "$RUNNER_TEMP/cell-response-learning/source-commit.txt"
+          swift package resolve 2>&1 | tee "$RUNNER_TEMP/cell-response-learning/resolve.log"
+      - name: Build the complete product and test targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing \
+            2>&1 | tee "$RUNNER_TEMP/cell-response-learning/build.log"
+      - name: Execute cell-response learning tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test -c release --skip-build --filter VivoCellResponseLearningTests \
+            2>&1 | tee "$RUNNER_TEMP/cell-response-learning/tests.log"
+          # A successful empty filter is not an executed learning regression.
+          grep -Eq 'Suite ("Cell response learning"|VivoCellResponseLearningTests) passed' \
+            "$RUNNER_TEMP/cell-response-learning/tests.log"
+      - name: Preserve source and dependency identities without bundling datasets
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/cell-response-learning"
+          mkdir -p "$OUT"
+          git ls-tree -r --full-tree HEAD > "$OUT/source-tree.txt"
+          git archive --format=tar.gz HEAD Package.swift Sources Tests Tools .github \
+            > "$OUT/implementation-and-tests.tar.gz"
+          if test -f Package.resolved; then cp Package.resolved "$OUT/Package.resolved"; fi
+          git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: cell-response-learning-${{ github.sha }}
+          path: ${{ runner.temp }}/cell-response-learning/
+          if-no-files-found: error
+          retention-days: 14
