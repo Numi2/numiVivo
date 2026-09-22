@@ -109,6 +109,10 @@ public struct VivoProteinStressCompilation: Sendable {
               entries * UInt64(max(1, request.hydrogenBonds.count)) <= 5_000_000 else {
             throw VivoProteinStressError.invalid("declared steps, checkpoint storage, or analysis budget exceeded")
         }
+        let finalTime = request.sourceCheckpoint.timePS + Double(steps) * request.sourceConfiguration.timeStepPS
+        guard finalTime.isFinite, request.sourceCheckpoint.timePS + request.sourceConfiguration.timeStepPS > request.sourceCheckpoint.timePS else {
+            throw VivoProteinStressError.invalid("stress clock would overflow or fail to advance")
+        }
         let masses = request.system.particles.map(\.massDa)
         try request.pull?.validate(massesDa: masses)
         let selected = request.selection + (request.pull?.reference.particles ?? []) + (request.pull?.moving.particles ?? [])
@@ -161,10 +165,11 @@ public struct VivoProteinStressCompilation: Sendable {
             let pull: VivoProteinPullDefinition
             let referenceNM: Double
             let layout: VivoProteinWholeMoleculeLayout
+            let fixedPeriodicCell: VivoPeriodicCell?
         }
         let systemID = try request.system.fingerprint()
         let identity = Identity(method: "numivivo.org/whole-molecule-harmonic-restraint/v1", system: systemID,
-                                pull: pull, referenceNM: reference, layout: layout)
+                                pull: pull, referenceNM: reference, layout: layout, fixedPeriodicCell: request.sourceCheckpoint.periodicCell)
         let fingerprint = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(identity))
         return try .init(fingerprint: fingerprint, retainedSystemFingerprint: systemID,
             boundary: request.sourceCheckpoint.periodicCell == nil ? .finiteCluster : .periodicElectrostatic,
@@ -183,6 +188,7 @@ public struct VivoProteinStressCompilation: Sendable {
         try VivoMDCandidateForceProvider.executionFingerprint(configuration: request.configuration(for: stage), provider: forceProvider(stage: stage))
     }
     public func frame(checkpoint: VivoMDCheckpoint, stage: Int?) throws -> VivoProteinStressFrame {
+        if let stage, !request.stages.indices.contains(stage) { throw VivoProteinStressError.invalid("frame stage index") }
         let geometry = try VivoMDCandidateGeometry(particlePositionsNM: checkpoint.positionsNM, periodicCell: checkpoint.periodicCell)
         let whole = try wholePositions(geometry)
         let pullEvaluation: VivoProteinPullEvaluation?

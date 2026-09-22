@@ -1,0 +1,16 @@
+{
+  "schema": "numivivo.org/protein-stress-portable-evidence/v1",
+  "date": "2026-09-22",
+  "compiler": "Swift version 6.2.1 (swift-6.2.1-RELEASE)\nTarget: x86_64-unknown-linux-gnu",
+  "executedTests": 15,
+  "failures": 0,
+  "scope": "actual numerical Swift source and existing vector declaration; standalone Linux package, not the complete Apple product",
+  "appleRuntimeQualification": "not-executed-locally",
+  "sourceSHA256": {
+    "Sources/NumiVivoKit/ProteinMaterials/VivoProteinStressObservables.swift": "282aa3e84bc16cb9857059f2f91d578edfb1e1c9c64cdf2541f36e8bbed1b4ff",
+    "Sources/NumiVivoKit/ProteinMaterials/VivoProteinWholeMolecule.swift": "b07fc8025ed5a3ad47128d65aab202c85a2b9f9b5f90500b01bba01605a37b1a",
+    "Tests/NumiVivoIntegrationTests/ProteinStressObservableTests.swift": "ebdbb9b1b223b663b0b3fd79ab5e166eb954f3449d3e64e94ee93c78badf1eb8",
+    "Tests/NumiVivoIntegrationTests/ProteinWholeMoleculeTests.swift": "717d55f7e386c86f37a3ec2f9d4481f4257bd4247c57ee66b0fc02792784cd27",
+    "Tools/ProteinMaterials/run-portable-tests.sh": "a5708f2126aca47ea0a2d8b9e1759d94d9b44fa25e09d44569968e1e89d5745f"
+  }
+}

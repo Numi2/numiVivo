@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoBinderCLICommands.handles(arguments.first) {
+if VivoProteinStressCLICommands.handles(arguments.first) {
+    status = await VivoProteinStressCLICommands().run(arguments: arguments)
+} else if VivoBinderCLICommands.handles(arguments.first) {
     status = VivoBinderCLICommands().run(arguments: arguments)
 } else if VivoArc2026CLICommands.handles(arguments.first) {
     status = VivoArc2026CLICommands().run(arguments: arguments)
@@ -59,6 +61,7 @@ if VivoBinderCLICommands.handles(arguments.first) {
 } else {
     status = VivoCLICommandRouter().run(arguments: arguments)
     if arguments.isEmpty || ["help", "--help", "-h"].contains(arguments.first ?? "") {
+        FileHandle.standardOutput.write(Data("\nProtein materials: protein-stress-example, protein-stress-validate, protein-stress-run, protein-stress-verify, protein-stress-campaign, protein-stress-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nBinder evaluation: binder-import, binder-evaluate, binder-verify, binder-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nGenomic evidence: genomic-vcf-plan, neoantigen-atlas-request, neoantigen-splice-job, neoantigen-evidence-import, neoantigen-evidence-verify, neoantigen-evidence-review, neoantigen-evidence-example, neoantigen-evidence-help.\n".utf8))
         FileHandle.standardOutput.write(Data("\nCross-scale evidence: cross-scale-assess, cross-scale-help.\n".utf8))

@@ -19,5 +19,7 @@ PACKAGE
     sed -n '/^public struct VivoVector3D:/,/^}/p' "$ROOT/Sources/NumiVivoKit/Structure/VivoMolecularStructure.swift"
 } > "$TMP/Sources/NumiVivoKit/VivoVector3D.swift"
 cp "$ROOT/Sources/NumiVivoKit/ProteinMaterials/VivoProteinStressObservables.swift" "$TMP/Sources/NumiVivoKit/"
+cp "$ROOT/Sources/NumiVivoKit/ProteinMaterials/VivoProteinWholeMolecule.swift" "$TMP/Sources/NumiVivoKit/"
+cp "$ROOT/Tests/NumiVivoIntegrationTests/ProteinWholeMoleculeTests.swift" "$TMP/Tests/NumiVivoIntegrationTests/"
 cp "$ROOT/Tests/NumiVivoIntegrationTests/ProteinStressObservableTests.swift" "$TMP/Tests/NumiVivoIntegrationTests/"
 swift test --package-path "$TMP" -c release

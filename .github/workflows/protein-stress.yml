@@ -1,0 +1,84 @@
+name: Protein stress qualification
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/NumiVivoKit/ProteinMaterials/**'
+      - 'Sources/NumiVivoKit/MD/**'
+      - 'Sources/NumiVivoCLI/VivoProteinStressCLICommands.swift'
+      - 'Sources/NumiVivoCLI/main.swift'
+      - 'Tests/NumiVivoIntegrationTests/Protein*Tests.swift'
+      - 'Tools/ProteinMaterials/**'
+      - '.github/workflows/protein-stress.yml'
+  pull_request:
+    paths:
+      - 'Sources/NumiVivoKit/ProteinMaterials/**'
+      - 'Tests/NumiVivoIntegrationTests/Protein*Tests.swift'
+      - 'Tools/ProteinMaterials/**'
+      - '.github/workflows/protein-stress.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: protein-stress-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native:
+    runs-on: macos-26
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Verify Apple toolchain and run portable numerical tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/protein-stress"
+          python3 Tools/CI/verify_apple_toolchain.py --output "$RUNNER_TEMP/protein-stress/toolchain.json"
+          git rev-parse HEAD > "$RUNNER_TEMP/protein-stress/source-commit.txt"
+          swift --version > "$RUNNER_TEMP/protein-stress/compiler.txt"
+          Tools/ProteinMaterials/run-portable-tests.sh 2>&1 | tee "$RUNNER_TEMP/protein-stress/portable.log"
+      - name: Build actual package and test targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift build -c release --build-tests --jobs 3 -Xswiftc -enable-testing \
+            2>&1 | tee "$RUNNER_TEMP/protein-stress/build.log"
+      - name: Execute native integration and require a nonempty suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift test -c release --skip-build --filter 'ProteinStressNativeTests|ProteinStressObservableTests|ProteinWholeMoleculeTests' \
+            2>&1 | tee "$RUNNER_TEMP/protein-stress/tests.log"
+          python3 Tools/CI/verify_swift_suite_log.py "$RUNNER_TEMP/protein-stress/tests.log" \
+            --suite "Protein stress native integration"
+      - name: Exercise public CLI on the synthetic fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/protein-stress"
+          .build/release/numivivo protein-stress-example --output "$OUT/fixture.json"
+          .build/release/numivivo protein-stress-validate "$OUT/fixture.json" --output "$OUT/validation.json"
+          .build/release/numivivo protein-stress-run "$OUT/fixture.json" --store "$OUT/artifacts" --output "$OUT/receipt.json"
+      - name: Retain exact source identities
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/protein-stress"
+          git ls-tree -r --full-tree HEAD > "$RUNNER_TEMP/protein-stress/source-tree.txt"
+          if test -f Package.resolved; then cp Package.resolved "$RUNNER_TEMP/protein-stress/Package.resolved"; fi
+          git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: protein-stress-${{ github.sha }}
+          path: ${{ runner.temp }}/protein-stress/
+          if-no-files-found: error
+          retention-days: 14
