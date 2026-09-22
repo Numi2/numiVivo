@@ -26,7 +26,8 @@ for diagnostics. The helper keeps the caller's working directory and
 environment, so existing absolute or relative artifact paths and
 `NUMIVIVO_HDF5_LIBRARY` work unchanged.
 
-Before training, create and replay-verify a canonical cohort admission:
+Before training, create and replay-verify a source-qualified cohort admission.
+The established one-source commands remain available:
 
 ```sh
 Tools/run-numivivo-mlx.sh cell-response-cohort-admit <corpus> --store <count-store> --output <new-admission.json>
@@ -34,27 +35,57 @@ Tools/run-numivivo-mlx.sh cell-response-cohort-verify <new-admission.json> --cor
 Tools/run-numivivo-mlx.sh cell-response-train <corpus> --store <count-store> --plan <training-plan.json> --cohort <new-admission.json> --output <new-model>
 ```
 
-The admission pins every treated and control sample to the verified corpus
-receipt and rejects a biological unit that crosses train, validation, or test.
-The current learner accepts one receipt-bound corpus per model; multi-corpus
-fitting awaits a composite reader that preserves row identity and sampling
-weights across sources. A smaller cohort can support source-bound development, while
+For a shared response model across independently prepared studies, pass a
+bounded source manifest instead of one corpus/store pair:
+
+```json
+{
+  "schemaVersion": 1,
+  "format": "numivivo-cell-response-cli-sources/v1",
+  "sources": [
+    {"corpus": "/absolute/path/study-a-corpus", "store": "/absolute/path/study-a-count-store"},
+    {"corpus": "/absolute/path/study-b-corpus", "store": "/absolute/path/study-b-count-store"}
+  ]
+}
+```
+
+```sh
+Tools/run-numivivo-mlx.sh cell-response-sources-verify <corpus-sources.json>
+Tools/run-numivivo-mlx.sh cell-response-cohort-admit --sources <corpus-sources.json> --output <new-admission.json>
+Tools/run-numivivo-mlx.sh cell-response-cohort-verify <new-admission.json> --sources <corpus-sources.json>
+Tools/run-numivivo-mlx.sh cell-response-train --sources <corpus-sources.json> --plan <training-plan.json> --cohort <new-admission.json> --output <new-model>
+```
+
+The composite reader receipt-sorts the verified member corpora, assigns each a
+disjoint global row and stratum range, and binds that layout into the v7 model
+receipt. It rejects duplicate corpus receipts and mismatched feature axes,
+target descriptors, or target vocabularies. The admission pins every treated
+and control sample to its verified corpus receipt and rejects a biological unit
+that crosses train, validation, or test. A smaller cohort can support
+source-bound development, while
 `cell-response-evaluation-qualify` requires at least 8/2/2 independent
-biological units per target in train/validation/test and an exhaustive test
-stratum selection.
+biological units per target in train/validation/test, at least two held-out
+test units for every target observed in each raw source, and an exhaustive test
+stratum selection with at least one held-out treated stratum from every receipt-bound source.
 
 The response learner records the matched-control RMSE alongside every held-out
 evaluation. `cell-response-evaluation-qualify` replay-verifies the exact
-model and corpus, then rejects any tie or loss against that paired baseline.
+model and source composite, then rejects any tie or loss against that paired
+baseline for the aggregate and for every source.
 `cell-response-evaluate` still preserves raw losing evaluations for diagnosis.
 Its stateless SGD route scales only the full-axis mean decoder by the number
 of measured features; shared and variance parameters keep the declared base
 rate, so transcriptome width does not dilute response learning or break exact
 checkpoint resume.
 Known perturbations start from a frozen, balanced mean response computed only
-from training target×context strata; the neural decoder begins at zero and can
-learn only a residual correction. Training visits every declared stratum before
-cycling and resamples its declared control cells deterministically. This is a
+from training source×target×context strata; the neural decoder begins at zero
+and can learn only a residual correction. It balances sources before cycling
+their response strata, averages each scheduled source lane over only its
+observed genes before batching, applies each source's feature mask before the
+shared cell encoder and likelihood, and resamples declared control cells
+deterministically. A multi-source prediction plan must declare `contextCorpus`
+using one corpus fingerprint printed by `cell-response-sources-verify`; equal
+sample labels from two studies are never silently combined. This is a
 same-guide technical-context transfer method: it does not establish unseen-guide
 or biological generalization.
 

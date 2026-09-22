@@ -156,7 +156,7 @@ public struct VivoCellResponseTrainingPlan: Codable, Sendable, Equatable {
         try architecture.validate(featureCount: 1, targetCount: 1, descriptorCount: 1)
     }
 
-    func validate(for corpus: VivoCellResponseCorpusReader) throws {
+    func validate(for corpus: VivoCellResponseCompositeCorpusReader) throws {
         try validateStatic()
         try architecture.validate(featureCount: corpus.featureCount, targetCount: corpus.targetCount,
                                   descriptorCount: corpus.descriptorCount)
@@ -165,12 +165,55 @@ public struct VivoCellResponseTrainingPlan: Codable, Sendable, Equatable {
             throw VivoCellResponseLearningError.limit("dense context batch exceeds 512 MiB")
         }
         let trainingExamples = try corpus.examples(in: .training)
-        let trainingStrata = Set(trainingExamples.map(\.stratumIndex)).count
+        let grouped = Dictionary(grouping: trainingExamples, by: \.stratumIndex)
+        let strata = try grouped.keys.sorted().map { index -> [VivoCellResponseTrainingExample] in
+            guard let rows = grouped[index], !rows.isEmpty else {
+                throw VivoCellResponseLearningError.invalid("empty response stratum")
+            }
+            return rows.sorted { $0.targetRow < $1.targetRow }
+        }
+        let sourceStrata = try vivoCellResponseSourceStratumIndices(corpus: corpus, strata: strata)
+        guard let largestSourceStrata = sourceStrata.map(\.count).max() else {
+            throw VivoCellResponseLearningError.invalid("training response strata")
+        }
+        let coverageSlots = largestSourceStrata.multipliedReportingOverflow(by: sourceStrata.count)
+        guard !coverageSlots.overflow else {
+            throw VivoCellResponseLearningError.limit("training source schedule")
+        }
         let scheduled = steps.multipliedReportingOverflow(by: batchSize)
-        guard !scheduled.overflow, scheduled.partialValue >= trainingStrata else {
-            throw VivoCellResponseLearningError.invalid("training plan cannot cover every response stratum")
+        guard !scheduled.overflow, scheduled.partialValue >= coverageSlots.partialValue else {
+            throw VivoCellResponseLearningError.invalid("training plan cannot cover every source response stratum")
+        }
+        // A training-only development corpus has no validation partition. The
+        // run loop already treats that as an intentional absence; only impose
+        // per-source validation coverage when a declared treated validation
+        // sample exists. Once it does, propagate reader errors rather than
+        // mistaking a malformed held-out partition for an intentional absence.
+        let hasValidationTreatment = corpus.sourceReaders.contains { reader in
+            reader.plan.assignments.contains {
+                $0.role == .perturbed && $0.partition == .validation
+            }
+        }
+        if hasValidationTreatment {
+            let validationRows = try corpus.examples(in: .validation)
+            let validationGroups = Dictionary(grouping: validationRows, by: \.stratumIndex)
+            let validationStrata = try validationGroups.keys.sorted().map { index -> [VivoCellResponseTrainingExample] in
+                guard let rows = validationGroups[index], !rows.isEmpty else {
+                    throw VivoCellResponseLearningError.invalid("empty validation response stratum")
+                }
+                return rows.sorted { $0.targetRow < $1.targetRow }
+            }
+            _ = try vivoCellResponseSourceStratumIndices(corpus: corpus, strata: validationStrata)
+            guard validationExamples >= corpus.sourceCount else {
+                throw VivoCellResponseLearningError.invalid(
+                    "training validation example budget cannot represent every source")
+            }
         }
         _ = try corpus.trainingTargetBindings()
+    }
+
+    func validate(for corpus: VivoCellResponseCorpusReader) throws {
+        try validate(for: VivoCellResponseCompositeCorpusReader(readers: [corpus]))
     }
 }
 
@@ -213,32 +256,53 @@ public struct VivoCellResponsePredictionPlan: Codable, Sendable, Equatable {
     public let id: String
     public let target: VivoCellResponseTarget
     public let contextSampleIDs: [String]
+    /// Required for a multi-source composite so equal sample labels in two
+    /// original studies cannot be silently combined into one query context.
+    public let contextCorpus: VivoFingerprint?
     public let useTrainedTargetEmbedding: Bool
 
     public init(id: String, target: VivoCellResponseTarget, contextSampleIDs: [String],
+                contextCorpus: VivoFingerprint? = nil,
                 useTrainedTargetEmbedding: Bool = false) {
-        schemaVersion = 1
+        schemaVersion = contextCorpus == nil ? 1 : 2
         self.id = id
         self.target = target
         self.contextSampleIDs = contextSampleIDs
+        self.contextCorpus = contextCorpus
         self.useTrainedTargetEmbedding = useTrainedTargetEmbedding
     }
 
-    private enum CodingKeys: String, CodingKey { case schemaVersion, id, target, contextSampleIDs, useTrainedTargetEmbedding }
+    private enum CodingKeys: String, CodingKey { case schemaVersion, id, target, contextSampleIDs, contextCorpus, useTrainedTargetEmbedding }
 
     public init(from decoder: Decoder) throws {
-        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "target", "contextSampleIDs", "useTrainedTargetEmbedding"])
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "id", "target", "contextSampleIDs", "contextCorpus", "useTrainedTargetEmbedding"])
         let values = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try values.decode(Int.self, forKey: .schemaVersion)
         id = try values.decode(String.self, forKey: .id)
         target = try values.decode(VivoCellResponseTarget.self, forKey: .target)
         contextSampleIDs = try values.decode([String].self, forKey: .contextSampleIDs)
+        contextCorpus = try values.decodeIfPresent(VivoFingerprint.self, forKey: .contextCorpus)
         useTrainedTargetEmbedding = try values.decode(Bool.self, forKey: .useTrainedTargetEmbedding)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        try values.encode(schemaVersion, forKey: .schemaVersion)
+        try values.encode(id, forKey: .id)
+        try values.encode(target, forKey: .target)
+        try values.encode(contextSampleIDs, forKey: .contextSampleIDs)
+        if let contextCorpus {
+            try values.encode(contextCorpus, forKey: .contextCorpus)
+        }
+        try values.encode(useTrainedTargetEmbedding, forKey: .useTrainedTargetEmbedding)
     }
 
     public func validate(expectedDescriptorCount: Int? = nil) throws {
         try target.validate(expectedDescriptorCount: expectedDescriptorCount)
-        guard schemaVersion == 1, vivoOmicsID(id), !contextSampleIDs.isEmpty,
+        guard (schemaVersion == 1 && contextCorpus == nil) || (schemaVersion == 2 && contextCorpus != nil) else {
+            throw VivoCellResponseLearningError.invalid("prediction query")
+        }
+        guard vivoOmicsID(id), !contextSampleIDs.isEmpty,
               contextSampleIDs.count <= 4_096, Set(contextSampleIDs).count == contextSampleIDs.count,
               contextSampleIDs.allSatisfy(vivoOmicsID), target.descriptors.allSatisfy({ Float($0).isFinite }) else {
             throw VivoCellResponseLearningError.invalid("prediction query")
@@ -454,6 +518,28 @@ public struct VivoCellResponseEvaluationExample: Codable, Sendable, Equatable {
     public let contextRows: [Int]
 }
 
+/// A source-specific held-out score. Current composite evaluations macro-average
+/// these values so a high-cell-count or wider-panel source cannot hide a weak
+/// response fit in another bound study.
+public struct VivoCellResponseSourceEvaluation: Codable, Sendable, Equatable {
+    public let corpus: VivoFingerprint
+    public let examples: Int
+    public let observedFeatures: Int
+    public let negativeLogLikelihood: Double
+    public let rmse: Double
+    public let matchedControlRMSE: Double
+
+    public init(corpus: VivoFingerprint, examples: Int, observedFeatures: Int,
+                negativeLogLikelihood: Double, rmse: Double, matchedControlRMSE: Double) {
+        self.corpus = corpus
+        self.examples = examples
+        self.observedFeatures = observedFeatures
+        self.negativeLogLikelihood = negativeLogLikelihood
+        self.rmse = rmse
+        self.matchedControlRMSE = matchedControlRMSE
+    }
+}
+
 /// A bounded, replayable software evaluation. It records the chosen rows so
 /// reported metrics cannot drift with source ordering or a later sampler.
 public struct VivoCellResponseEvaluation: Codable, Sendable, Equatable {
@@ -471,6 +557,74 @@ public struct VivoCellResponseEvaluation: Codable, Sendable, Equatable {
     /// baseline, scored on exactly the rows and features in `selection`.
     public let matchedControlRMSE: Double
     public let selection: [VivoCellResponseEvaluationExample]
+    /// One entry for every source in the bound composite, receipt-sorted.
+    /// Aggregate metrics are the unweighted mean of these source scores.
+    public let sourceMetrics: [VivoCellResponseSourceEvaluation]
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion, format, partition, maximumExamples, samplerVersion, seed, examples,
+             observedFeatures, negativeLogLikelihood, rmse, matchedControlRMSE, selection, sourceMetrics
+    }
+
+    public init(schemaVersion: Int, format: String, partition: VivoCellResponsePartition,
+                maximumExamples: Int, samplerVersion: UInt32, seed: UInt64, examples: Int,
+                observedFeatures: Int, negativeLogLikelihood: Double, rmse: Double,
+                matchedControlRMSE: Double, selection: [VivoCellResponseEvaluationExample],
+                sourceMetrics: [VivoCellResponseSourceEvaluation] = []) {
+        self.schemaVersion = schemaVersion
+        self.format = format
+        self.partition = partition
+        self.maximumExamples = maximumExamples
+        self.samplerVersion = samplerVersion
+        self.seed = seed
+        self.examples = examples
+        self.observedFeatures = observedFeatures
+        self.negativeLogLikelihood = negativeLogLikelihood
+        self.rmse = rmse
+        self.matchedControlRMSE = matchedControlRMSE
+        self.selection = selection
+        self.sourceMetrics = sourceMetrics
+    }
+
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: [
+            "schemaVersion", "format", "partition", "maximumExamples", "samplerVersion", "seed", "examples",
+            "observedFeatures", "negativeLogLikelihood", "rmse", "matchedControlRMSE", "selection", "sourceMetrics"
+        ])
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try values.decode(Int.self, forKey: .schemaVersion)
+        format = try values.decode(String.self, forKey: .format)
+        partition = try values.decode(VivoCellResponsePartition.self, forKey: .partition)
+        maximumExamples = try values.decode(Int.self, forKey: .maximumExamples)
+        samplerVersion = try values.decode(UInt32.self, forKey: .samplerVersion)
+        seed = try values.decode(UInt64.self, forKey: .seed)
+        examples = try values.decode(Int.self, forKey: .examples)
+        observedFeatures = try values.decode(Int.self, forKey: .observedFeatures)
+        negativeLogLikelihood = try values.decode(Double.self, forKey: .negativeLogLikelihood)
+        rmse = try values.decode(Double.self, forKey: .rmse)
+        matchedControlRMSE = try values.decode(Double.self, forKey: .matchedControlRMSE)
+        selection = try values.decode([VivoCellResponseEvaluationExample].self, forKey: .selection)
+        sourceMetrics = try values.decodeIfPresent([VivoCellResponseSourceEvaluation].self, forKey: .sourceMetrics) ?? []
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        try values.encode(schemaVersion, forKey: .schemaVersion)
+        try values.encode(format, forKey: .format)
+        try values.encode(partition, forKey: .partition)
+        try values.encode(maximumExamples, forKey: .maximumExamples)
+        try values.encode(samplerVersion, forKey: .samplerVersion)
+        try values.encode(seed, forKey: .seed)
+        try values.encode(examples, forKey: .examples)
+        try values.encode(observedFeatures, forKey: .observedFeatures)
+        try values.encode(negativeLogLikelihood, forKey: .negativeLogLikelihood)
+        try values.encode(rmse, forKey: .rmse)
+        try values.encode(matchedControlRMSE, forKey: .matchedControlRMSE)
+        try values.encode(selection, forKey: .selection)
+        if schemaVersion == 4 {
+            try values.encode(sourceMetrics, forKey: .sourceMetrics)
+        }
+    }
 }
 
 public struct VivoCellResponseEvaluationReceipt: Codable, Sendable, Equatable {
@@ -523,15 +677,21 @@ final class VivoCellResponseMLXModel: Module {
         varianceHead = Linear(architecture.hiddenWidth, featureCount)
     }
 
-    func outputs(context: MLXArray, targetIDs: MLXArray, knownTargetMask: MLXArray,
+    func outputs(context: MLXArray, contextFeatureMask: MLXArray? = nil,
+                 targetIDs: MLXArray, knownTargetMask: MLXArray,
                  descriptors: MLXArray) -> (mean: MLXArray, variance: MLXArray,
                                             baseline: MLXArray, delta: MLXArray) {
         let batch = context.shape[0]
         let contexts = context.shape[1]
-        let projected = relu(cellProjection(context.reshaped([batch * contexts, featureCount])))
+        // A missing source-axis gene is structural absence, not a large
+        // negative expression value. Mask before the shared cell encoder as
+        // well as at the target likelihood, so heterogeneous source panels
+        // cannot teach the context branch a missingness signature.
+        let observedContext = contextFeatureMask.map { context * $0 } ?? context
+        let projected = relu(cellProjection(observedContext.reshaped([batch * contexts, featureCount])))
             .reshaped([batch, contexts, hiddenWidth])
         let pooled = projected.mean(axis: 1)
-        let baseline = context.mean(axis: 1)
+        let baseline = observedContext.mean(axis: 1)
         let target = targetEmbedding(targetIDs) * knownTargetMask
         let prior = targetResponsePrior(targetIDs) * knownTargetMask
         let descriptor = relu(descriptorProjection(descriptors))
@@ -547,10 +707,15 @@ public enum VivoCellResponseLearning {
     public static let format = "numivivo-cell-response-learning/v2"
     /// Read-only compatibility identifier for pre-cohort technical artifacts.
     public static let legacyModelFormat = "numivivo-cell-response-model/v5"
-    /// Current models bind a replayable biological cohort admission.
-    public static let modelFormat = "numivivo-cell-response-model/v6"
-    public static let predictionFormat = "numivivo-cell-response-prediction/v5"
-    public static let evaluationFormat = "numivivo-cell-response-evaluation/v2"
+    /// Read-only compatibility identifier for the one-corpus cohort format.
+    public static let cohortV6ModelFormat = "numivivo-cell-response-model/v6"
+    /// Current models bind a replayable, potentially multi-source cohort.
+    public static let modelFormat = "numivivo-cell-response-model/v7"
+    public static let legacyPredictionFormat = "numivivo-cell-response-prediction/v5"
+    public static let predictionFormat = "numivivo-cell-response-prediction/v6"
+    public static let legacyEvaluationFormat = "numivivo-cell-response-evaluation/v2"
+    public static let cohortV3EvaluationFormat = "numivivo-cell-response-evaluation/v3"
+    public static let evaluationFormat = "numivivo-cell-response-evaluation/v4"
     static let samplerVersion: UInt32 = 3
     static let targetResponsePriorVersion: UInt32 = 1
     static let optimizerVersion: UInt32 = 1
@@ -559,13 +724,69 @@ public enum VivoCellResponseLearning {
 
 private struct VivoCellResponseBatch {
     let context: MLXArray
+    let contextFeatureMask: MLXArray
     let targetIDs: MLXArray
     let knownTargetMask: MLXArray
     let descriptors: MLXArray
     let targets: MLXArray
-    let featureMask: MLXArray
+    let targetFeatureMask: MLXArray
     let targetValues: [Float]
     let contextRows: [Int]
+}
+
+private struct VivoCellResponseEvaluationTotals {
+    let corpus: VivoFingerprint
+    var examples = 0
+    var observedFeatures = 0
+    var negativeLogLikelihood = 0.0
+    var squaredError = 0.0
+    var baselineSquaredError = 0.0
+}
+
+/// A source-qualified target vocabulary entry used only while assembling
+/// training statistics. Global row offsets make the source component stable
+/// across caller input order, while retaining each source's own biological
+/// contexts and panel mask.
+private struct VivoCellResponseSourceTargetKey: Hashable {
+    let source: Int
+    let target: Int
+}
+
+/// Partition response strata by their composite source. A matched-control
+/// response must never cross source boundaries: otherwise an identical local
+/// sample ID or a panel-specific missing feature could be mistaken for a
+/// shared biological context.
+private func vivoCellResponseSourceStratumIndices(
+    corpus: VivoCellResponseCompositeCorpusReader,
+    strata: [[VivoCellResponseTrainingExample]],
+    requireEverySource: Bool = true
+) throws -> [[Int]] {
+    guard !strata.isEmpty else {
+        throw VivoCellResponseLearningError.invalid("empty source response strata")
+    }
+    var result = Array(repeating: [Int](), count: corpus.sourceCount)
+    for (stratumIndex, candidates) in strata.enumerated() {
+        guard let first = candidates.first, !first.contextRows.isEmpty else {
+            throw VivoCellResponseLearningError.invalid("source response stratum")
+        }
+        let source = try corpus.sourceIndex(forGlobalRow: first.targetRow)
+        for candidate in candidates {
+            guard try corpus.sourceIndex(forGlobalRow: candidate.targetRow) == source,
+                  !candidate.contextRows.isEmpty else {
+                throw VivoCellResponseLearningError.invalid("source response target row")
+            }
+            for contextRow in candidate.contextRows {
+                guard try corpus.sourceIndex(forGlobalRow: contextRow) == source else {
+                    throw VivoCellResponseLearningError.invalid("source response control row")
+                }
+            }
+        }
+        result[source].append(stratumIndex)
+    }
+    if requireEverySource, !result.allSatisfy({ !$0.isEmpty }) {
+        throw VivoCellResponseLearningError.invalid("every bound source needs a response stratum")
+    }
+    return result
 }
 
 /// Ephemeral, corpus-scoped normalized control rows used only while fitting.
@@ -577,7 +798,7 @@ private struct VivoCellResponseTrainingControlCache {
     let offsets: [Int: Int]
     let rankedContexts: [[Int]]
 
-    init(corpus: VivoCellResponseCorpusReader, rows: [Int], rankedContexts: [[Int]]) throws {
+    init(corpus: VivoCellResponseCompositeCorpusReader, rows: [Int], rankedContexts: [[Int]]) throws {
         featureCount = corpus.featureCount
         self.rankedContexts = rankedContexts
         guard !rows.isEmpty else {
@@ -681,8 +902,8 @@ private enum VivoCellResponseArtifactIO {
         try data.write(to: root.appendingPathComponent(name), options: .withoutOverwriting)
     }
 
-    static func corpusFingerprint(_ corpus: VivoCellResponseCorpusReader) throws -> VivoFingerprint {
-        try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(corpus.receipt))
+    static func corpusFingerprint(_ corpus: VivoCellResponseCompositeCorpusReader) throws -> VivoFingerprint {
+        corpus.fingerprint
     }
 
     static func modelFingerprint(_ receipt: VivoCellResponseModelReceipt) throws -> VivoFingerprint {
@@ -690,7 +911,8 @@ private enum VivoCellResponseArtifactIO {
     }
 
     static func format(for state: VivoCellResponseModelState) -> String {
-        state.cohort == nil ? VivoCellResponseLearning.legacyModelFormat : VivoCellResponseLearning.modelFormat
+        guard state.cohort != nil else { return VivoCellResponseLearning.legacyModelFormat }
+        return state.schemaVersion == 6 ? VivoCellResponseLearning.modelFormat : VivoCellResponseLearning.cohortV6ModelFormat
     }
 
     static func checkpoint(model: VivoCellResponseMLXModel, state: VivoCellResponseModelState,
@@ -732,7 +954,7 @@ private enum VivoCellResponseArtifactIO {
     static func validateState(_ state: VivoCellResponseModelState,
                               trainingPlan: VivoCellResponseTrainingPlan) throws {
         let qualified = state.cohort != nil
-        guard state.schemaVersion == (qualified ? 5 : 4),
+        guard (qualified ? (state.schemaVersion == 5 || state.schemaVersion == 6) : state.schemaVersion == 4),
               state.samplerVersion == VivoCellResponseLearning.samplerVersion,
               state.targetResponsePriorVersion == VivoCellResponseLearning.targetResponsePriorVersion,
               state.optimizerVersion == VivoCellResponseLearning.optimizerVersion,
@@ -772,8 +994,10 @@ private enum VivoCellResponseArtifactIO {
         }
         let receiptBytes = try read(root, receiptName, maximumBytes: 1_048_576)
         let receipt = try VivoCanonicalJSON.decode(VivoCellResponseModelReceipt.self, from: receiptBytes)
-        let qualified = receipt.format == VivoCellResponseLearning.modelFormat
-        guard ((qualified && receipt.schemaVersion == 2 && receipt.cohort != nil) ||
+        let qualified = receipt.format == VivoCellResponseLearning.modelFormat ||
+            receipt.format == VivoCellResponseLearning.cohortV6ModelFormat
+        guard ((receipt.format == VivoCellResponseLearning.modelFormat && receipt.schemaVersion == 3 && receipt.cohort != nil) ||
+               (receipt.format == VivoCellResponseLearning.cohortV6ModelFormat && receipt.schemaVersion == 2 && receipt.cohort != nil) ||
                (!qualified && receipt.schemaVersion == 1 &&
                 receipt.format == VivoCellResponseLearning.legacyModelFormat && receipt.cohort == nil)),
               receipt.implementation == implementation,
@@ -838,6 +1062,7 @@ private enum VivoCellResponseArtifactIO {
         guard try VivoCanonicalJSON.encode(state) == stateBytes,
               state.corpus == receipt.corpus, state.trainingPlan == receipt.trainingPlan,
               state.cohort == receipt.cohort,
+              format(for: state) == receipt.format,
               state.step == decoded.manifest.stepIndex else {
             throw VivoCellResponseLearningError.invalid("cell-response checkpoint state binding")
         }
@@ -894,7 +1119,7 @@ private enum VivoCellResponseArtifactIO {
         defer { try? FileManager.default.removeItem(at: temporary) }
         let checkpoint = try checkpoint(model: model, state: state, parentCheckpoint: parentCheckpoint)
         let receipt = try VivoCellResponseModelReceipt(
-            schemaVersion: qualified ? 2 : 1, format: format(for: state),
+            schemaVersion: qualified ? (state.schemaVersion == 6 ? 3 : 2) : 1, format: format(for: state),
             checkpoint: VivoCanonicalJSON.fingerprint(checkpoint),
             trainingPlan: VivoCanonicalJSON.fingerprint(trainingPlanBytes), corpus: state.corpus,
             cohort: state.cohort,
@@ -1006,7 +1231,7 @@ extension VivoCellResponseLearning {
         return (0..<count).map { candidates[(start + $0) % candidates.count] }
     }
 
-    private static func trainingControlCache(corpus: VivoCellResponseCorpusReader,
+    private static func trainingControlCache(corpus: VivoCellResponseCompositeCorpusReader,
                                              strata: [[VivoCellResponseTrainingExample]]) throws -> VivoCellResponseTrainingControlCache {
         let maximumContextReferences = 1_048_576
         guard !strata.isEmpty, strata.count <= maximumContextReferences else {
@@ -1034,17 +1259,19 @@ extension VivoCellResponseLearning {
     }
 
     /// The empirical perturbation response used to initialize known targets.
-    /// For every training target×context stratum, it computes the difference
-    /// between the mean treated log-CPM vector and the mean of its declared
-    /// matched controls, then gives each context equal weight. Validation and
-    /// test rows are never opened here.
-    private static func trainingOnlyTargetResponsePrior(corpus: VivoCellResponseCorpusReader,
+    /// For every training source×target×context stratum, it computes the
+    /// difference between the mean treated log-CPM vector and the mean of its
+    /// declared matched controls. Contexts receive equal weight within a
+    /// source, then sources receive equal weight for each observed feature.
+    /// Validation and test rows are never opened here.
+    private static func trainingOnlyTargetResponsePrior(corpus: VivoCellResponseCompositeCorpusReader,
                                                         trainedTargetIndices: Set<Int>) throws -> MLXArray {
         let strata = try stratifiedExamples(try corpus.examples(in: .training))
         let features = corpus.featureCount
         var prior = [Double](repeating: 0, count: corpus.targetCount * features)
-        var targetContexts = [Int](repeating: 0, count: corpus.targetCount)
+        var sourceObservations = [UInt32](repeating: 0, count: corpus.targetCount * features)
         var controlMeans: [String: [Double]] = [:]
+        var grouped: [VivoCellResponseSourceTargetKey: [[VivoCellResponseTrainingExample]]] = [:]
 
         func mean(_ rows: [Int]) throws -> [Double] {
             guard !rows.isEmpty else { throw VivoCellResponseLearningError.invalid("empty response-prior rows") }
@@ -1053,7 +1280,7 @@ extension VivoCellResponseLearning {
                 if rowOffset % 32 == 0 { try Task.checkCancellation() }
                 let values = try corpus.normalizedRow(row)
                 guard values.count == features else { throw VivoCellResponseLearningError.invalid("response-prior row width") }
-                for feature in 0..<features where corpus.featureMask[feature] > 0 {
+                for feature in 0..<features {
                     result[feature] += Double(values[feature])
                 }
             }
@@ -1068,47 +1295,91 @@ extension VivoCellResponseLearning {
                   candidates.allSatisfy({ $0.targetIndex == first.targetIndex && $0.contextRows == first.contextRows }) else {
                 throw VivoCellResponseLearningError.invalid("response-prior stratum")
             }
-            let contextKey = first.contextRows.map(String.init).joined(separator: ",")
-            let controlMean: [Double]
-            if let existing = controlMeans[contextKey] {
-                controlMean = existing
-            } else {
-                let computed = try mean(first.contextRows)
-                controlMeans[contextKey] = computed
-                controlMean = computed
+            let source = try corpus.sourceIndex(forGlobalRow: first.targetRow)
+            let targetMask = try corpus.featureMask(forGlobalRow: first.targetRow)
+            guard targetMask.count == features, targetMask.contains(where: { $0 > 0 }) else {
+                throw VivoCellResponseLearningError.invalid("response-prior target feature mask")
             }
-            let treatedMean = try mean(candidates.map(\.targetRow))
-            let offset = first.targetIndex * features
-            for feature in 0..<features where corpus.featureMask[feature] > 0 {
-                prior[offset + feature] += treatedMean[feature] - controlMean[feature]
+            for candidate in candidates {
+                guard try corpus.sourceIndex(forGlobalRow: candidate.targetRow) == source,
+                      try corpus.featureMask(forGlobalRow: candidate.targetRow) == targetMask else {
+                    throw VivoCellResponseLearningError.invalid("response-prior target source or feature mask")
+                }
             }
-            targetContexts[first.targetIndex] += 1
+            for row in first.contextRows {
+                guard try corpus.sourceIndex(forGlobalRow: row) == source,
+                      try corpus.featureMask(forGlobalRow: row) == targetMask else {
+                    throw VivoCellResponseLearningError.invalid("response-prior control source or feature mask")
+                }
+            }
+            grouped[.init(source: source, target: first.targetIndex), default: []].append(candidates)
+        }
+
+        for key in grouped.keys.sorted(by: { left, right in
+            left.source == right.source ? left.target < right.target : left.source < right.source
+        }) {
+            try Task.checkCancellation()
+            guard let sourceStrata = grouped[key], !sourceStrata.isEmpty else {
+                throw VivoCellResponseLearningError.invalid("response-prior source target")
+            }
+            var sourceSum = [Double](repeating: 0, count: features)
+            var sourceContexts = [UInt32](repeating: 0, count: features)
+            for candidates in sourceStrata {
+                guard let first = candidates.first else {
+                    throw VivoCellResponseLearningError.invalid("response-prior source stratum")
+                }
+                let targetMask = try corpus.featureMask(forGlobalRow: first.targetRow)
+                let contextKey = first.contextRows.map(String.init).joined(separator: ",")
+                let controlMean: [Double]
+                if let existing = controlMeans[contextKey] {
+                    controlMean = existing
+                } else {
+                    let computed = try mean(first.contextRows)
+                    controlMeans[contextKey] = computed
+                    controlMean = computed
+                }
+                let treatedMean = try mean(candidates.map(\.targetRow))
+                for feature in 0..<features where targetMask[feature] > 0 {
+                    guard sourceContexts[feature] < UInt32.max else {
+                        throw VivoCellResponseLearningError.limit("response-prior source contexts")
+                    }
+                    sourceSum[feature] += treatedMean[feature] - controlMean[feature]
+                    sourceContexts[feature] += 1
+                }
+            }
+            let offset = key.target * features
+            for feature in 0..<features where sourceContexts[feature] > 0 {
+                guard sourceObservations[offset + feature] < UInt32.max else {
+                    throw VivoCellResponseLearningError.limit("response-prior source observations")
+                }
+                prior[offset + feature] += sourceSum[feature] / Double(sourceContexts[feature])
+                sourceObservations[offset + feature] += 1
+            }
         }
         for target in trainedTargetIndices {
-            guard targetContexts[target] > 0 else {
+            let offset = target * features
+            guard sourceObservations[offset..<(offset + features)].contains(where: { $0 > 0 }) else {
                 throw VivoCellResponseLearningError.invalid("response prior has an unobserved target")
             }
-            let divisor = Double(targetContexts[target])
-            let offset = target * features
-            for feature in 0..<features where corpus.featureMask[feature] > 0 {
-                prior[offset + feature] /= divisor
+            for feature in 0..<features where sourceObservations[offset + feature] > 0 {
+                prior[offset + feature] /= Double(sourceObservations[offset + feature])
             }
         }
         guard prior.allSatisfy(\.isFinite) else { throw VivoCellResponseLearningError.invalid("nonfinite response prior") }
         return MLXArray(prior.map(Float.init), [corpus.targetCount, features])
     }
 
-    private static func trainedTargetIndices(corpus: VivoCellResponseCorpusReader,
+    private static func trainedTargetIndices(corpus: VivoCellResponseCompositeCorpusReader,
                                              bindings: [VivoCellResponseTrainedTargetBinding]) throws -> Set<Int> {
         guard !bindings.isEmpty, bindings.count <= corpus.targetCount,
               Set(bindings.map(\.id)).count == bindings.count else {
             throw VivoCellResponseLearningError.incompatible("trained target bindings")
         }
-        let vocabulary = Dictionary(uniqueKeysWithValues: corpus.plan.targets.enumerated().map { ($0.element.id, $0.offset) })
+        let vocabulary = Dictionary(uniqueKeysWithValues: corpus.targets.enumerated().map { ($0.element.id, $0.offset) })
         var indices = Set<Int>()
         for binding in bindings {
             guard let index = vocabulary[binding.id],
-                  try corpus.plan.targets[index].fingerprint() == binding.descriptorFingerprint else {
+                  try corpus.targets[index].fingerprint() == binding.descriptorFingerprint else {
                 throw VivoCellResponseLearningError.incompatible("trained target binding differs from corpus")
             }
             indices.insert(index)
@@ -1117,9 +1388,9 @@ extension VivoCellResponseLearning {
     }
 
     private static func validateCheckpointCorpus(_ state: VivoCellResponseModelState,
-                                                 corpus: VivoCellResponseCorpusReader) throws -> Set<Int> {
-        guard state.featureAxis == corpus.plan.featureAxis,
-              state.targetIDs == corpus.plan.targets.map(\.id),
+                                                 corpus: VivoCellResponseCompositeCorpusReader) throws -> Set<Int> {
+        guard state.featureAxis == corpus.featureAxis,
+              state.targetIDs == corpus.targets.map(\.id),
               state.descriptorCount == corpus.descriptorCount else {
             throw VivoCellResponseLearningError.incompatible("checkpoint corpus schema differs")
         }
@@ -1130,10 +1401,12 @@ extension VivoCellResponseLearning {
         return try trainedTargetIndices(corpus: corpus, bindings: state.trainedTargetBindings)
     }
 
-    private static func loss(model: VivoCellResponseMLXModel, context: MLXArray, targetIDs: MLXArray,
+    private static func loss(model: VivoCellResponseMLXModel, context: MLXArray,
+                             contextFeatureMask: MLXArray, targetIDs: MLXArray,
                              knownTargetMask: MLXArray, descriptors: MLXArray, targets: MLXArray,
-                             featureMask: MLXArray) -> MLXArray {
-        let output = model.outputs(context: context, targetIDs: targetIDs, knownTargetMask: knownTargetMask,
+                             targetFeatureMask: MLXArray) -> MLXArray {
+        let output = model.outputs(context: context, contextFeatureMask: contextFeatureMask,
+                                   targetIDs: targetIDs, knownTargetMask: knownTargetMask,
                                    descriptors: descriptors)
         // Learn the perturbation response after subtracting the explicit
         // matched-control baseline. Algebraically this preserves the absolute
@@ -1142,38 +1415,58 @@ extension VivoCellResponseLearning {
         let residual = output.delta - response
         let gaussianConstant = Float(log(2.0 * Double.pi))
         let terms = (residual * residual / output.variance + log(output.variance) + gaussianConstant) * 0.5
-        return sum(terms * featureMask) / (sum(featureMask) * Float(context.shape[0]))
+        return sourceBalancedMaskedMean(terms, mask: targetFeatureMask)
     }
 
-    private static func trainingBatch(corpus: VivoCellResponseCorpusReader,
+    /// Give every scheduled source lane equal likelihood weight even when its
+    /// source panel has fewer observed genes. `trainingBatch` rejects an empty
+    /// feature mask for every lane, so a zero denominator is never admitted.
+    static func sourceBalancedMaskedMean(_ terms: MLXArray, mask: MLXArray) -> MLXArray {
+        let perLaneTerms = (terms * mask).sum(axis: 1)
+        let observedPerLane = mask.sum(axis: 1)
+        return (perLaneTerms / observedPerLane).mean()
+    }
+
+    private static func trainingBatch(corpus: VivoCellResponseCompositeCorpusReader,
                                       strata: [[VivoCellResponseTrainingExample]],
+                                      sourceStrata: [[Int]],
                                       plan: VivoCellResponseTrainingPlan, trainedTargetIndices: Set<Int>,
                                       step: UInt64,
                                       controlCache: VivoCellResponseTrainingControlCache?) throws -> VivoCellResponseBatch {
         let features = corpus.featureCount
         let contexts = plan.architecture.contextCells
         let batches = plan.batchSize
-        guard corpus.featureMask.count == features, corpus.featureMask.contains(where: { $0 > 0 }) else {
+        guard sourceStrata.count == corpus.sourceCount,
+              sourceStrata.allSatisfy({ !$0.isEmpty }),
+              corpus.featureMask.count == features, corpus.featureMask.contains(where: { $0 > 0 }) else {
             throw VivoCellResponseLearningError.invalid("corpus has no measured prediction features")
         }
         var contextValues: [Float] = []
+        var contextMasks: [Float] = []
         var targetValues: [Float] = []
+        var targetMasks: [Float] = []
         var targetIDs: [Int32] = []
         var known: [Float] = []
         var descriptors: [Float] = []
         contextValues.reserveCapacity(batches * contexts * features)
+        contextMasks.reserveCapacity(batches * contexts * features)
         targetValues.reserveCapacity(batches * features)
+        targetMasks.reserveCapacity(batches * features)
         targetIDs.reserveCapacity(batches); known.reserveCapacity(batches); descriptors.reserveCapacity(batches * corpus.descriptorCount)
         for lane in 0..<batches {
-            // This enumeration covers every response stratum before cycling;
-            // cell selection within a stratum remains deterministic but varied.
+            // Cycle sources before response strata. Each source therefore gets
+            // equal optimizer exposure even when one study contributes many
+            // more guide/context strata than another.
             let completed = step.subtractingReportingOverflow(1)
             let scaled = completed.partialValue.multipliedReportingOverflow(by: UInt64(batches))
             let scheduled = scaled.partialValue.addingReportingOverflow(UInt64(lane))
             guard !completed.overflow, !scaled.overflow, !scheduled.overflow else {
                 throw VivoCellResponseLearningError.limit("training schedule")
             }
-            let stratumIndex = Int(scheduled.partialValue % UInt64(strata.count))
+            let sourceIndex = Int(scheduled.partialValue % UInt64(sourceStrata.count))
+            let sourceSchedule = scheduled.partialValue / UInt64(sourceStrata.count)
+            let sourceCandidates = sourceStrata[sourceIndex]
+            let stratumIndex = sourceCandidates[Int(sourceSchedule % UInt64(sourceCandidates.count))]
             let candidates = strata[stratumIndex]
             let exampleIndex = try sampledIndex(count: candidates.count, seed: plan.seed, step: step,
                                                 lane: UInt64(lane), salt: 0x4c7912ae)
@@ -1181,6 +1474,10 @@ extension VivoCellResponseLearning {
             guard trainedTargetIndices.contains(example.targetIndex),
                   let targetID = Int32(exactly: example.targetIndex), example.contextRows.count > 0 else {
                 throw VivoCellResponseLearningError.invalid("training target or context rows")
+            }
+            let targetMask = try corpus.featureMask(forGlobalRow: example.targetRow)
+            guard targetMask.count == features, targetMask.contains(where: { $0 > 0 }) else {
+                throw VivoCellResponseLearningError.invalid("training target feature mask")
             }
             let contextRows: [Int]
             if let controlCache {
@@ -1191,52 +1488,68 @@ extension VivoCellResponseLearning {
                                                        step: step, lane: UInt64(lane), stratum: stratumIndex)
             }
             for row in contextRows {
+                guard try corpus.featureMask(forGlobalRow: row) == targetMask else {
+                    throw VivoCellResponseLearningError.invalid("training context source feature mask")
+                }
                 if let controlCache {
                     try controlCache.appendNormalizedRow(row, to: &contextValues)
                 } else {
                     contextValues.append(contentsOf: try corpus.normalizedRow(row))
                 }
+                contextMasks.append(contentsOf: targetMask)
             }
             targetValues.append(contentsOf: try corpus.normalizedRow(example.targetRow))
+            targetMasks.append(contentsOf: targetMask)
             targetIDs.append(targetID); known.append(1)
-            descriptors.append(contentsOf: corpus.plan.targets[example.targetIndex].descriptors.map(Float.init))
+            descriptors.append(contentsOf: corpus.targets[example.targetIndex].descriptors.map(Float.init))
         }
         return .init(
             context: MLXArray(contextValues, [batches, contexts, features]),
+            contextFeatureMask: MLXArray(contextMasks, [batches, contexts, features]),
             targetIDs: MLXArray(targetIDs, [batches]),
             knownTargetMask: MLXArray(known, [batches, 1]),
             descriptors: MLXArray(descriptors, [batches, corpus.descriptorCount]),
             targets: MLXArray(targetValues, [batches, features]),
-            featureMask: MLXArray(corpus.featureMask, [1, features]),
+            targetFeatureMask: MLXArray(targetMasks, [batches, features]),
             targetValues: targetValues, contextRows: [])
     }
 
     /// Test-only equivalence probe for the ephemeral training-control cache.
     /// It compares the exact dense MLX batch built from the source store with
     /// the batch assembled from cached, source-derived control rows.
-    static func trainingControlCacheMatchesUncachedBatchForTesting(corpus: VivoCellResponseCorpusReader,
+    static func trainingControlCacheMatchesUncachedBatchForTesting(corpus: VivoCellResponseCompositeCorpusReader,
                                                                     plan: VivoCellResponseTrainingPlan,
                                                                     step: UInt64) throws -> Bool {
         try plan.validate(for: corpus)
         let strata = try stratifiedExamples(try corpus.examples(in: .training))
+        let sourceStrata = try vivoCellResponseSourceStratumIndices(corpus: corpus, strata: strata)
         let bindings = try corpus.trainingTargetBindings()
         let targetIndices = try trainedTargetIndices(corpus: corpus, bindings: bindings)
-        let uncached = try trainingBatch(corpus: corpus, strata: strata, plan: plan,
+        let uncached = try trainingBatch(corpus: corpus, strata: strata, sourceStrata: sourceStrata, plan: plan,
                                          trainedTargetIndices: targetIndices, step: step, controlCache: nil)
         let cache = try trainingControlCache(corpus: corpus, strata: strata)
-        let cached = try trainingBatch(corpus: corpus, strata: strata, plan: plan,
+        let cached = try trainingBatch(corpus: corpus, strata: strata, sourceStrata: sourceStrata, plan: plan,
                                        trainedTargetIndices: targetIndices, step: step, controlCache: cache)
         return uncached.context.shape == cached.context.shape &&
             uncached.context.asArray(Float.self) == cached.context.asArray(Float.self) &&
+            uncached.contextFeatureMask.asArray(Float.self) == cached.contextFeatureMask.asArray(Float.self) &&
             uncached.targets.asArray(Float.self) == cached.targets.asArray(Float.self) &&
+            uncached.targetFeatureMask.asArray(Float.self) == cached.targetFeatureMask.asArray(Float.self) &&
             uncached.targetIDs.asArray(Int32.self) == cached.targetIDs.asArray(Int32.self) &&
             uncached.descriptors.asArray(Float.self) == cached.descriptors.asArray(Float.self)
+    }
+
+    static func trainingControlCacheMatchesUncachedBatchForTesting(corpus: VivoCellResponseCorpusReader,
+                                                                    plan: VivoCellResponseTrainingPlan,
+                                                                    step: UInt64) throws -> Bool {
+        try trainingControlCacheMatchesUncachedBatchForTesting(
+            corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]), plan: plan, step: step)
     }
 
     /// Test-only in-memory comparison between the production full-axis decoder
     /// route and the former unscaled SGD route. Neither model is serialized,
     /// so no test optimizer can acquire production artifact provenance.
-    static func outputAxisRouteDifferenceForTesting(corpus: VivoCellResponseCorpusReader,
+    static func outputAxisRouteDifferenceForTesting(corpus: VivoCellResponseCompositeCorpusReader,
                                                      plan: VivoCellResponseTrainingPlan) throws -> Float {
         try withGPUExecution {
             try plan.validate(for: corpus)
@@ -1258,13 +1571,16 @@ extension VivoCellResponseLearning {
                              additionalSteps: plan.steps, trainedTargetIndices: targetIndices,
                              meanHeadScaleOverrideForTesting: 1)
             let strata = try stratifiedExamples(try corpus.examples(in: .training))
+            let sourceStrata = try vivoCellResponseSourceStratumIndices(corpus: corpus, strata: strata)
             let cache = try trainingControlCache(corpus: corpus, strata: strata)
-            let batch = try trainingBatch(corpus: corpus, strata: strata, plan: plan,
+            let batch = try trainingBatch(corpus: corpus, strata: strata, sourceStrata: sourceStrata, plan: plan,
                                           trainedTargetIndices: targetIndices, step: 1, controlCache: cache)
-            let scaledDelta = scaled.outputs(context: batch.context, targetIDs: batch.targetIDs,
+            let scaledDelta = scaled.outputs(context: batch.context, contextFeatureMask: batch.contextFeatureMask,
+                                              targetIDs: batch.targetIDs,
                                               knownTargetMask: batch.knownTargetMask,
                                               descriptors: batch.descriptors).delta.asArray(Float.self)
-            let unscaledDelta = unscaled.outputs(context: batch.context, targetIDs: batch.targetIDs,
+            let unscaledDelta = unscaled.outputs(context: batch.context, contextFeatureMask: batch.contextFeatureMask,
+                                                  targetIDs: batch.targetIDs,
                                                   knownTargetMask: batch.knownTargetMask,
                                                   descriptors: batch.descriptors).delta.asArray(Float.self)
             guard scaledDelta.count == unscaledDelta.count, !scaledDelta.isEmpty else {
@@ -1278,7 +1594,13 @@ extension VivoCellResponseLearning {
         }
     }
 
-    private static func evaluationBatch(corpus: VivoCellResponseCorpusReader,
+    static func outputAxisRouteDifferenceForTesting(corpus: VivoCellResponseCorpusReader,
+                                                     plan: VivoCellResponseTrainingPlan) throws -> Float {
+        try outputAxisRouteDifferenceForTesting(
+            corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]), plan: plan)
+    }
+
+    private static func evaluationBatch(corpus: VivoCellResponseCompositeCorpusReader,
                                         example: VivoCellResponseTrainingExample,
                                         architecture: VivoCellResponseArchitecture,
                                         trainedTargetIndices: Set<Int>) throws -> VivoCellResponseBatch {
@@ -1296,38 +1618,91 @@ extension VivoCellResponseLearning {
             targetID = 0
         }
         let selectedRows = try deterministicContextRows(example.contextRows, count: architecture.contextCells)
+        let targetMask = try corpus.featureMask(forGlobalRow: example.targetRow)
+        guard targetMask.count == corpus.featureCount, targetMask.contains(where: { $0 > 0 }) else {
+            throw VivoCellResponseLearningError.invalid("evaluation target feature mask")
+        }
         var contextValues: [Float] = []
+        var contextMasks: [Float] = []
         for row in selectedRows {
+            guard try corpus.featureMask(forGlobalRow: row) == targetMask else {
+                throw VivoCellResponseLearningError.invalid("evaluation context source feature mask")
+            }
             contextValues.append(contentsOf: try corpus.normalizedRow(row))
+            contextMasks.append(contentsOf: targetMask)
         }
         let targetValues = try corpus.normalizedRow(example.targetRow)
         return .init(
             context: MLXArray(contextValues, [1, architecture.contextCells, corpus.featureCount]),
+            contextFeatureMask: MLXArray(contextMasks, [1, architecture.contextCells, corpus.featureCount]),
             targetIDs: MLXArray([targetID], [1]), knownTargetMask: MLXArray([known ? Float(1) : Float(0)], [1, 1]),
-            descriptors: MLXArray(corpus.plan.targets[example.targetIndex].descriptors.map(Float.init), [1, corpus.descriptorCount]),
+            descriptors: MLXArray(corpus.targets[example.targetIndex].descriptors.map(Float.init), [1, corpus.descriptorCount]),
             targets: MLXArray(targetValues, [1, corpus.featureCount]),
-            featureMask: MLXArray(corpus.featureMask, [1, corpus.featureCount]), targetValues: targetValues,
+            targetFeatureMask: MLXArray(targetMask, [1, corpus.featureCount]), targetValues: targetValues,
             contextRows: selectedRows)
     }
 
-    private static func evaluate(model: VivoCellResponseMLXModel, corpus: VivoCellResponseCorpusReader,
+    private static func evaluate(model: VivoCellResponseMLXModel, corpus: VivoCellResponseCompositeCorpusReader,
                                  examples: [VivoCellResponseTrainingExample], architecture: VivoCellResponseArchitecture,
                                  trainedTargetIndices: Set<Int>, maximumExamples: Int, seed: UInt64,
-                                 salt: UInt64) throws -> (Double, Double, Double, Int, [VivoCellResponseEvaluationExample]) {
+                                 salt: UInt64) throws -> (Double, Double, Double, Int,
+                                                           [VivoCellResponseEvaluationExample],
+                                                           [VivoCellResponseSourceEvaluation]) {
         guard (1...4_096).contains(maximumExamples) else { throw VivoCellResponseLearningError.invalid("evaluation example count") }
         let strata = try stratifiedExamples(examples)
+        let sourceStrata = try vivoCellResponseSourceStratumIndices(corpus: corpus, strata: strata)
         let take = min(maximumExamples, strata.count)
-        guard take > 0 else { throw VivoCellResponseLearningError.invalid("evaluation partition") }
-        var nll = 0.0, squaredError = 0.0, baselineSquaredError = 0.0, observed = 0
+        guard take >= sourceStrata.count else {
+            throw VivoCellResponseLearningError.invalid("evaluation maximum must represent every source")
+        }
+        var allocations = Array(repeating: 1, count: sourceStrata.count)
+        var remaining = take - sourceStrata.count
+        var cursor = 0
+        while remaining > 0 {
+            let source = cursor % sourceStrata.count
+            if allocations[source] < sourceStrata[source].count {
+                allocations[source] += 1
+                remaining -= 1
+            }
+            cursor += 1
+            guard cursor <= strata.count * max(1, sourceStrata.count) else {
+                throw VivoCellResponseLearningError.invalid("evaluation source allocation")
+            }
+        }
+        var selectedStrata: [(source: Int, index: Int)] = []
+        selectedStrata.reserveCapacity(take)
+        for source in sourceStrata.indices {
+            let local = try sampledIndicesWithoutReplacement(
+                count: sourceStrata[source].count, take: allocations[source], seed: seed,
+                salt: salt ^ (UInt64(source) &* 0x9e3779b97f4a7c15))
+            selectedStrata.append(contentsOf: local.map { (source, sourceStrata[source][$0]) })
+        }
+        guard selectedStrata.count == take else {
+            throw VivoCellResponseLearningError.invalid("evaluation source selection")
+        }
         var selection: [VivoCellResponseEvaluationExample] = []
-        for index in try sampledIndicesWithoutReplacement(count: strata.count, take: take, seed: seed, salt: salt) {
-            let candidates = strata[index]
-            let row = try sampledIndex(count: candidates.count, seed: seed, step: UInt64(index), lane: 0, salt: salt ^ 0x38b64ea1)
+        selection.reserveCapacity(take)
+        var totals: [Int: VivoCellResponseEvaluationTotals] = [:]
+        for selected in selectedStrata {
+            let candidates = strata[selected.index]
+            let row = try sampledIndex(count: candidates.count, seed: seed, step: UInt64(selected.index),
+                                       lane: UInt64(selected.source), salt: salt ^ 0x38b64ea1)
             let example = candidates[row]
+            let source = try corpus.sourceIndex(forGlobalRow: example.targetRow)
+            guard source == selected.source else {
+                throw VivoCellResponseLearningError.invalid("evaluation source selection binding")
+            }
+            let sourceCorpus = try corpus.sourceCorpus(forGlobalRow: example.targetRow)
+            var total = totals[source] ?? .init(corpus: sourceCorpus)
+            guard total.corpus == sourceCorpus else {
+                throw VivoCellResponseLearningError.invalid("evaluation source receipt")
+            }
+            total.examples += 1
             let batch = try evaluationBatch(corpus: corpus, example: example, architecture: architecture,
                                             trainedTargetIndices: trainedTargetIndices)
             selection.append(.init(targetRow: example.targetRow, contextRows: batch.contextRows))
-            let output = model.outputs(context: batch.context, targetIDs: batch.targetIDs,
+            let output = model.outputs(context: batch.context, contextFeatureMask: batch.contextFeatureMask,
+                                       targetIDs: batch.targetIDs,
                                        knownTargetMask: batch.knownTargetMask, descriptors: batch.descriptors)
             let means = output.mean.asArray(Float.self), variances = output.variance.asArray(Float.self),
                 baselines = output.baseline.asArray(Float.self)
@@ -1335,32 +1710,54 @@ extension VivoCellResponseLearning {
                   baselines.count == corpus.featureCount else {
                 throw VivoCellResponseLearningError.invalid("evaluation output shape")
             }
-            for feature in 0..<corpus.featureCount where corpus.featureMask[feature] > 0 {
+            let targetMask = batch.targetFeatureMask.asArray(Float.self)
+            guard targetMask.count == corpus.featureCount else {
+                throw VivoCellResponseLearningError.invalid("evaluation target mask shape")
+            }
+            for feature in 0..<corpus.featureCount where targetMask[feature] > 0 {
                 let mean = Double(means[feature]), variance = Double(variances[feature]),
                     baseline = Double(baselines[feature]), target = Double(batch.targetValues[feature])
                 guard mean.isFinite, variance.isFinite, variance > 0, baseline.isFinite, target.isFinite else {
                     throw VivoCellResponseLearningError.invalid("nonfinite evaluation output")
                 }
                 let residual = mean - target
-                nll += 0.5 * (residual * residual / variance + log(variance) + log(2.0 * Double.pi))
-                squaredError += residual * residual
+                total.negativeLogLikelihood += 0.5 * (residual * residual / variance + log(variance) + log(2.0 * Double.pi))
+                total.squaredError += residual * residual
                 let baselineResidual = baseline - target
-                baselineSquaredError += baselineResidual * baselineResidual
-                observed += 1
+                total.baselineSquaredError += baselineResidual * baselineResidual
+                total.observedFeatures += 1
             }
+            totals[source] = total
         }
+        let sourceMetrics = try totals.keys.sorted().map { source -> VivoCellResponseSourceEvaluation in
+            guard let total = totals[source], total.examples > 0, total.observedFeatures > 0 else {
+                throw VivoCellResponseLearningError.invalid("evaluation source has no measured features")
+            }
+            return .init(corpus: total.corpus, examples: total.examples, observedFeatures: total.observedFeatures,
+                         negativeLogLikelihood: total.negativeLogLikelihood / Double(total.observedFeatures),
+                         rmse: sqrt(total.squaredError / Double(total.observedFeatures)),
+                         matchedControlRMSE: sqrt(total.baselineSquaredError / Double(total.observedFeatures)))
+        }
+        guard sourceMetrics.count == corpus.sourceCount else {
+            throw VivoCellResponseLearningError.invalid("evaluation does not cover every source")
+        }
+        let observed = sourceMetrics.reduce(0) { $0 + $1.observedFeatures }
         guard observed > 0 else { throw VivoCellResponseLearningError.invalid("evaluation has no measured features") }
-        return (nll / Double(observed), sqrt(squaredError / Double(observed)),
-                sqrt(baselineSquaredError / Double(observed)), observed, selection)
+        let divisor = Double(sourceMetrics.count)
+        return (sourceMetrics.reduce(0) { $0 + $1.negativeLogLikelihood } / divisor,
+                sourceMetrics.reduce(0) { $0 + $1.rmse } / divisor,
+                sourceMetrics.reduce(0) { $0 + $1.matchedControlRMSE } / divisor,
+                observed, selection, sourceMetrics)
     }
 
-    private static func runSteps(model: VivoCellResponseMLXModel, corpus: VivoCellResponseCorpusReader,
+    private static func runSteps(model: VivoCellResponseMLXModel, corpus: VivoCellResponseCompositeCorpusReader,
                                  plan: VivoCellResponseTrainingPlan, startingStep: UInt64,
                                  additionalSteps: Int,
                                  trainedTargetIndices: Set<Int>,
                                  meanHeadScaleOverrideForTesting: Float? = nil) throws -> VivoCellResponseTrainingMetrics {
         let examples = try corpus.examples(in: .training)
         let strata = try stratifiedExamples(examples)
+        let sourceStrata = try vivoCellResponseSourceStratumIndices(corpus: corpus, strata: strata)
         let validation = (try? corpus.examples(in: .validation)) ?? []
         let controlCache = try trainingControlCache(corpus: corpus, strata: strata)
         let observedFeatureCount = corpus.featureMask.reduce(into: 0) { total, value in
@@ -1389,8 +1786,9 @@ extension VivoCellResponseLearning {
             ],
             filters: [{ key, _ in key == "meanHead.weight" || key == "meanHead.bias" }])
         let lossAndGrad = valueAndGrad(model: model) { model, arrays in
-            [loss(model: model, context: arrays[0], targetIDs: arrays[1], knownTargetMask: arrays[2],
-                  descriptors: arrays[3], targets: arrays[4], featureMask: arrays[5])]
+            [loss(model: model, context: arrays[0], contextFeatureMask: arrays[1], targetIDs: arrays[2],
+                  knownTargetMask: arrays[3], descriptors: arrays[4], targets: arrays[5],
+                  targetFeatureMask: arrays[6])]
         }
         var latest: VivoCellResponseTrainingMetrics?
         for offset in 0..<additionalSteps {
@@ -1399,11 +1797,12 @@ extension VivoCellResponseLearning {
             let stepResult = startingStep.addingReportingOverflow(increment)
             guard !stepResult.overflow else { throw VivoCellResponseLearningError.limit("checkpoint step") }
             let step = stepResult.partialValue
-            let batch = try trainingBatch(corpus: corpus, strata: strata, plan: plan,
+            let batch = try trainingBatch(corpus: corpus, strata: strata, sourceStrata: sourceStrata, plan: plan,
                                           trainedTargetIndices: trainedTargetIndices, step: step,
                                           controlCache: controlCache)
-            let (values, gradients) = lossAndGrad(model, [batch.context, batch.targetIDs, batch.knownTargetMask,
-                                                           batch.descriptors, batch.targets, batch.featureMask])
+            let (values, gradients) = lossAndGrad(model, [batch.context, batch.contextFeatureMask,
+                                                           batch.targetIDs, batch.knownTargetMask,
+                                                           batch.descriptors, batch.targets, batch.targetFeatureMask])
             optimizer.update(model: model, gradients: gradients)
             eval(model, optimizer)
             guard let scalar = values[0].asArray(Float.self).first, scalar.isFinite else {
@@ -1424,21 +1823,29 @@ extension VivoCellResponseLearning {
         return latest
     }
 
-    private static func inferenceBatch(corpus: VivoCellResponseCorpusReader, state: VivoCellResponseModelState,
+    private static func inferenceBatch(corpus: VivoCellResponseCompositeCorpusReader, state: VivoCellResponseModelState,
                                        plan: VivoCellResponsePredictionPlan) throws -> VivoCellResponseBatch {
         try plan.validate(expectedDescriptorCount: state.descriptorCount)
-        guard corpus.plan.featureAxis == state.featureAxis,
-              corpus.featureMask.count == state.featureAxis.featureIDs.count,
-              corpus.featureMask.contains(where: { $0 > 0 }) else {
+        guard corpus.featureAxis == state.featureAxis,
+              corpus.featureCount == state.featureAxis.featureIDs.count else {
             throw VivoCellResponseLearningError.invalid("prediction query")
+        }
+        let contextCorpus: VivoFingerprint
+        if corpus.sourceCount == 1 {
+            contextCorpus = plan.contextCorpus ?? corpus.identity.sources[0].corpus
+        } else {
+            guard let declared = plan.contextCorpus else {
+                throw VivoCellResponseLearningError.invalid("multi-source prediction requires a context corpus")
+            }
+            contextCorpus = declared
         }
         var rows: [Int] = []
         for sampleID in plan.contextSampleIDs.sorted() {
-            let assignment = try corpus.assignment(forSampleID: sampleID)
+            let assignment = try corpus.assignment(forSampleID: sampleID, corpus: contextCorpus)
             guard assignment.role == .control else {
                 throw VivoCellResponseLearningError.invalid("prediction context sample is not a declared control")
             }
-            rows.append(contentsOf: try corpus.rows(forSampleID: sampleID))
+            rows.append(contentsOf: try corpus.rows(forSampleID: sampleID, corpus: contextCorpus))
         }
         guard !rows.isEmpty else { throw VivoCellResponseLearningError.invalid("prediction context has no cells") }
         let targetIndex: Int32
@@ -1454,31 +1861,42 @@ extension VivoCellResponseLearning {
             targetIndex = 0; knownTarget = 0
         }
         let selectedRows = try deterministicContextRows(rows, count: state.architecture.contextCells)
+        guard let firstRow = selectedRows.first else { throw VivoCellResponseLearningError.invalid("prediction context") }
+        let featureMask = try corpus.featureMask(forGlobalRow: firstRow)
+        guard featureMask.count == corpus.featureCount, featureMask.contains(where: { $0 > 0 }) else {
+            throw VivoCellResponseLearningError.invalid("prediction feature mask")
+        }
         var contexts: [Float] = []
+        var contextMasks: [Float] = []
         contexts.reserveCapacity(state.architecture.contextCells * corpus.featureCount)
         for row in selectedRows {
+            guard try corpus.featureMask(forGlobalRow: row) == featureMask else {
+                throw VivoCellResponseLearningError.invalid("prediction context feature mask")
+            }
             contexts.append(contentsOf: try corpus.normalizedRow(row))
+            contextMasks.append(contentsOf: featureMask)
         }
         let descriptors = plan.target.descriptors.map(Float.init)
         return .init(
             context: MLXArray(contexts, [1, state.architecture.contextCells, corpus.featureCount]),
+            contextFeatureMask: MLXArray(contextMasks, [1, state.architecture.contextCells, corpus.featureCount]),
             targetIDs: MLXArray([targetIndex], [1]), knownTargetMask: MLXArray([knownTarget], [1, 1]),
             descriptors: MLXArray(descriptors, [1, state.descriptorCount]),
             targets: MLXArray([Float](repeating: 0, count: corpus.featureCount), [1, corpus.featureCount]),
-            featureMask: MLXArray(corpus.featureMask, [1, corpus.featureCount]), targetValues: [],
+            targetFeatureMask: MLXArray(featureMask, [1, corpus.featureCount]), targetValues: [],
             contextRows: selectedRows)
     }
 
     private static func publishPrediction(_ prediction: VivoCellResponsePrediction,
                                           query: VivoCellResponsePredictionPlan,
                                           modelReceipt: VivoCellResponseModelReceipt,
-                                          corpus: VivoCellResponseCorpusReader,
+                                          corpus: VivoCellResponseCompositeCorpusReader,
                                           implementation: VivoFingerprint, to destination: URL) throws -> VivoCellResponsePredictionReceipt {
         try VivoCellResponseArtifactIO.requireNew(destination)
         let queryBytes = try VivoCanonicalJSON.encode(query)
         let predictionBytes = try VivoCanonicalJSON.encode(prediction)
         let receipt = try VivoCellResponsePredictionReceipt(
-            schemaVersion: 1, format: predictionFormat,
+            schemaVersion: 2, format: predictionFormat,
             model: VivoCellResponseArtifactIO.modelFingerprint(modelReceipt),
             corpus: VivoCellResponseArtifactIO.corpusFingerprint(corpus),
             query: VivoCanonicalJSON.fingerprint(queryBytes), prediction: VivoCanonicalJSON.fingerprint(predictionBytes),
@@ -1495,13 +1913,13 @@ extension VivoCellResponseLearning {
 
     private static func publishEvaluation(_ evaluation: VivoCellResponseEvaluation,
                                           modelReceipt: VivoCellResponseModelReceipt,
-                                          corpus: VivoCellResponseCorpusReader,
+                                          corpus: VivoCellResponseCompositeCorpusReader,
                                           implementation: VivoFingerprint, to destination: URL) throws -> VivoCellResponseEvaluationReceipt {
         try validateEvaluation(evaluation)
         try VivoCellResponseArtifactIO.requireNew(destination)
         let evaluationBytes = try VivoCanonicalJSON.encode(evaluation)
         let receipt = VivoCellResponseEvaluationReceipt(
-            schemaVersion: 1, format: evaluationFormat,
+            schemaVersion: 3, format: evaluationFormat,
             model: try VivoCellResponseArtifactIO.modelFingerprint(modelReceipt),
             corpus: try VivoCellResponseArtifactIO.corpusFingerprint(corpus),
             evaluation: try VivoCanonicalJSON.fingerprint(evaluationBytes), implementation: implementation)
@@ -1515,7 +1933,13 @@ extension VivoCellResponseLearning {
     }
 
     private static func validateEvaluation(_ evaluation: VivoCellResponseEvaluation) throws {
-        guard evaluation.schemaVersion == 2, evaluation.format == evaluationFormat,
+        let current = evaluation.schemaVersion == 4 && evaluation.format == evaluationFormat
+        let previousCohort = evaluation.schemaVersion == 3 && evaluation.format == cohortV3EvaluationFormat
+        let legacy = evaluation.schemaVersion == 2 && evaluation.format == legacyEvaluationFormat
+        guard current || previousCohort || legacy else {
+            throw VivoCellResponseLearningError.invalid("evaluation artifact")
+        }
+        guard
               (1...4_096).contains(evaluation.maximumExamples),
               evaluation.samplerVersion == samplerVersion,
               evaluation.examples == evaluation.selection.count, !evaluation.selection.isEmpty,
@@ -1525,6 +1949,35 @@ extension VivoCellResponseLearning {
               Set(evaluation.selection.map(\.targetRow)).count == evaluation.selection.count,
               evaluation.selection.allSatisfy({ $0.targetRow >= 0 && (1...512).contains($0.contextRows.count) && $0.contextRows.allSatisfy({ $0 >= 0 }) }) else {
             throw VivoCellResponseLearningError.invalid("evaluation artifact")
+        }
+        guard current || evaluation.sourceMetrics.isEmpty else {
+            throw VivoCellResponseLearningError.invalid("historical evaluation source metrics")
+        }
+        guard !current ||
+                ((1...64).contains(evaluation.sourceMetrics.count) &&
+                 evaluation.sourceMetrics.map(\.corpus.hex) == evaluation.sourceMetrics.map(\.corpus.hex).sorted() &&
+                 Set(evaluation.sourceMetrics.map(\.corpus.hex)).count == evaluation.sourceMetrics.count &&
+                 evaluation.sourceMetrics.allSatisfy { metric in
+                     metric.examples > 0 && metric.observedFeatures > 0 && metric.negativeLogLikelihood.isFinite &&
+                     metric.rmse.isFinite && metric.rmse >= 0 && metric.matchedControlRMSE.isFinite &&
+                     metric.matchedControlRMSE >= 0
+                 } &&
+                 evaluation.sourceMetrics.reduce(0, { $0 + $1.examples }) == evaluation.examples &&
+                 evaluation.sourceMetrics.reduce(0, { $0 + $1.observedFeatures }) == evaluation.observedFeatures) else {
+            throw VivoCellResponseLearningError.invalid("evaluation source metrics")
+        }
+        if current {
+            let divisor = Double(evaluation.sourceMetrics.count)
+            let sourceNLL = evaluation.sourceMetrics.reduce(0) { $0 + $1.negativeLogLikelihood } / divisor
+            let sourceRMSE = evaluation.sourceMetrics.reduce(0) { $0 + $1.rmse } / divisor
+            let sourceBaseline = evaluation.sourceMetrics.reduce(0) { $0 + $1.matchedControlRMSE } / divisor
+            func agrees(_ actual: Double, _ expected: Double) -> Bool {
+                abs(actual - expected) <= 1e-10 * max(1, abs(expected))
+            }
+            guard agrees(evaluation.negativeLogLikelihood, sourceNLL), agrees(evaluation.rmse, sourceRMSE),
+                  agrees(evaluation.matchedControlRMSE, sourceBaseline) else {
+                throw VivoCellResponseLearningError.invalid("evaluation aggregate source metrics")
+            }
         }
     }
 
@@ -1537,11 +1990,21 @@ extension VivoCellResponseLearning {
             throw VivoCellResponseLearningError.invalid(
                 "evaluation does not improve the exact matched-control baseline")
         }
+        guard evaluation.schemaVersion != 4 || evaluation.sourceMetrics.allSatisfy({
+            $0.rmse < $0.matchedControlRMSE
+        }) else {
+            throw VivoCellResponseLearningError.invalid(
+                "evaluation does not improve the exact matched-control baseline for every source")
+        }
     }
 
     private static func validatePrediction(_ prediction: VivoCellResponsePrediction) throws {
         try prediction.featureAxis.validate()
-        guard prediction.schemaVersion == 1, prediction.format == predictionFormat, vivoOmicsID(prediction.id),
+        guard (prediction.schemaVersion == 2 && prediction.format == predictionFormat) ||
+              (prediction.schemaVersion == 1 && prediction.format == legacyPredictionFormat) else {
+            throw VivoCellResponseLearningError.invalid("prediction output")
+        }
+        guard vivoOmicsID(prediction.id),
               prediction.featureAxis.featureIDs.count == prediction.featureMask.count,
               prediction.featureMask.count == prediction.meanLogCPM.count,
               prediction.featureMask.count == prediction.contextBaselineLogCPM.count,
@@ -1574,18 +2037,31 @@ extension VivoCellResponseLearning {
         }
     }
 
+    private static func approximatelyEqual(_ expected: [VivoCellResponseSourceEvaluation],
+                                           _ actual: [VivoCellResponseSourceEvaluation]) -> Bool {
+        guard expected.count == actual.count else { return false }
+        return zip(expected, actual).allSatisfy { values in
+            let left = values.0, right = values.1
+            guard left.corpus == right.corpus, left.examples == right.examples,
+                  left.observedFeatures == right.observedFeatures else {
+                return false
+            }
+            func matches(_ expected: Double, _ actual: Double) -> Bool {
+                abs(expected - actual) <= 1e-8 * max(1, abs(expected))
+            }
+            return matches(left.negativeLogLikelihood, right.negativeLogLikelihood) &&
+                matches(left.rmse, right.rmse) && matches(left.matchedControlRMSE, right.matchedControlRMSE)
+        }
+    }
+
     /// Fit a model only after replaying a source-bound biological cohort
     /// admission against the exact verified reader. Smaller development
     /// cohorts remain source-bound but cannot later qualify an evaluation.
-    public static func train(corpus: VivoCellResponseCorpusReader, plan: VivoCellResponseTrainingPlan,
+    public static func train(corpus: VivoCellResponseCompositeCorpusReader, plan: VivoCellResponseTrainingPlan,
                              cohort: VivoCellResponseCohortAdmission,
                              implementation: VivoFingerprint, to destination: URL) throws -> VivoCellResponseModelReceipt {
         try plan.validate(for: corpus)
-        guard cohort.sources.count == 1 else {
-            throw VivoCellResponseLearningError.incompatible(
-                "current cell-response learner requires one receipt-bound corpus")
-        }
-        try VivoCellResponseCohort.verify(cohort, readers: [corpus])
+        try VivoCellResponseCohort.verify(cohort, readers: corpus.sourceReaders)
         let cohortBytes = try VivoCanonicalJSON.encode(cohort)
         let cohortFingerprint = try VivoCanonicalJSON.fingerprint(cohortBytes)
         try VivoCellResponseArtifactIO.requireNew(destination)
@@ -1603,8 +2079,8 @@ extension VivoCellResponseLearning {
             let metrics = try runSteps(model: model, corpus: corpus, plan: plan, startingStep: 0,
                                        additionalSteps: plan.steps, trainedTargetIndices: trainedTargetIndices)
             let state = VivoCellResponseModelState(
-                schemaVersion: 5, architecture: plan.architecture, featureAxis: corpus.plan.featureAxis,
-                targetIDs: corpus.plan.targets.map(\.id), trainedTargetBindings: trainedTargetBindings,
+                schemaVersion: 6, architecture: plan.architecture, featureAxis: corpus.featureAxis,
+                targetIDs: corpus.targets.map(\.id), trainedTargetBindings: trainedTargetBindings,
                 descriptorCount: corpus.descriptorCount,
                 corpus: corpusFingerprint, trainingPlan: try VivoCanonicalJSON.fingerprint(planBytes),
                 cohort: cohortFingerprint,
@@ -1621,7 +2097,7 @@ extension VivoCellResponseLearning {
 
     /// Continue a checkpoint without changing model shape, optimizer semantics,
     /// source corpus identity, or deterministic batch sampler.
-    public static func resume(model directory: URL, corpus: VivoCellResponseCorpusReader,
+    public static func resume(model directory: URL, corpus: VivoCellResponseCompositeCorpusReader,
                               plan: VivoCellResponseResumePlan, implementation: VivoFingerprint,
                               to destination: URL) throws -> VivoCellResponseModelReceipt {
         return try withGPUExecution {
@@ -1632,22 +2108,21 @@ extension VivoCellResponseLearning {
                   loaded.state.cohort == loaded.receipt.cohort else {
                 throw VivoCellResponseLearningError.incompatible("resume requires a cohort-bound model")
             }
-            guard cohort.sources.count == 1 else {
-                throw VivoCellResponseLearningError.incompatible(
-                    "current cell-response learner requires one receipt-bound corpus")
+            guard loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
+                throw VivoCellResponseLearningError.incompatible("resume requires a v7 cohort-bound model")
             }
             let corpusFingerprint = try VivoCellResponseArtifactIO.corpusFingerprint(corpus)
             guard loaded.state.corpus == corpusFingerprint else {
                 throw VivoCellResponseLearningError.incompatible("resume corpus differs from checkpoint")
             }
-            try VivoCellResponseCohort.verify(cohort, readers: [corpus])
+            try VivoCellResponseCohort.verify(cohort, readers: corpus.sourceReaders)
             let trainedTargetIndices = try validateCheckpointCorpus(loaded.state, corpus: corpus)
             try loaded.trainingPlan.validate(for: corpus)
             let metrics = try runSteps(model: loaded.model, corpus: corpus, plan: loaded.trainingPlan,
                                        startingStep: loaded.state.step, additionalSteps: plan.additionalSteps,
                                        trainedTargetIndices: trainedTargetIndices)
             let state = VivoCellResponseModelState(
-                schemaVersion: 5, architecture: loaded.state.architecture, featureAxis: loaded.state.featureAxis,
+                schemaVersion: 6, architecture: loaded.state.architecture, featureAxis: loaded.state.featureAxis,
                 targetIDs: loaded.state.targetIDs, trainedTargetBindings: loaded.state.trainedTargetBindings,
                 descriptorCount: loaded.state.descriptorCount,
                 corpus: loaded.state.corpus, trainingPlan: loaded.state.trainingPlan, cohort: loaded.state.cohort,
@@ -1672,11 +2147,14 @@ extension VivoCellResponseLearning {
 
     /// Score measured perturbed rows from a held partition. This is a software
     /// evaluation result; it is not a biological validation claim.
-    public static func evaluate(model directory: URL, corpus: VivoCellResponseCorpusReader,
+    public static func evaluate(model directory: URL, corpus: VivoCellResponseCompositeCorpusReader,
                                 partition: VivoCellResponsePartition, maximumExamples: Int,
                                 implementation: VivoFingerprint) throws -> VivoCellResponseEvaluation {
         return try withGPUExecution {
             let loaded = try VivoCellResponseArtifactIO.load(directory, implementation: implementation)
+            guard loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
+                throw VivoCellResponseLearningError.incompatible("evaluation requires a v7 cohort-bound model")
+            }
             let corpusFingerprint = try VivoCellResponseArtifactIO.corpusFingerprint(corpus)
             guard loaded.state.corpus == corpusFingerprint else {
                 throw VivoCellResponseLearningError.incompatible("evaluation corpus differs from checkpoint")
@@ -1688,11 +2166,11 @@ extension VivoCellResponseLearning {
                                       maximumExamples: maximumExamples, seed: loaded.state.seed,
                                       salt: 0x4d8b9173)
             let evaluation = VivoCellResponseEvaluation(
-                schemaVersion: 2, format: evaluationFormat, partition: partition,
+                schemaVersion: 4, format: evaluationFormat, partition: partition,
                 maximumExamples: maximumExamples, samplerVersion: samplerVersion, seed: loaded.state.seed,
                 examples: result.4.count, observedFeatures: result.3,
                 negativeLogLikelihood: result.0, rmse: result.1, matchedControlRMSE: result.2,
-                selection: result.4)
+                selection: result.4, sourceMetrics: result.5)
             try validateEvaluation(evaluation)
             return evaluation
         }
@@ -1700,7 +2178,7 @@ extension VivoCellResponseLearning {
 
     /// Publish an immutable evaluation receipt after scoring a verified model
     /// and corpus. The stored selection makes later review and replay exact.
-    public static func evaluate(model directory: URL, corpus: VivoCellResponseCorpusReader,
+    public static func evaluate(model directory: URL, corpus: VivoCellResponseCompositeCorpusReader,
                                 partition: VivoCellResponsePartition, maximumExamples: Int,
                                 implementation: VivoFingerprint, to destination: URL) throws -> VivoCellResponseEvaluationReceipt {
         let evaluation = try evaluate(model: directory, corpus: corpus, partition: partition,
@@ -1712,18 +2190,22 @@ extension VivoCellResponseLearning {
 
     /// Predict a distribution from declared control samples. The output is a
     /// compact response vector artifact, never an H5AD count matrix.
-    public static func predict(model directory: URL, corpus: VivoCellResponseCorpusReader,
+    public static func predict(model directory: URL, corpus: VivoCellResponseCompositeCorpusReader,
                                plan: VivoCellResponsePredictionPlan, implementation: VivoFingerprint,
                                to destination: URL) throws -> VivoCellResponsePredictionReceipt {
         return try withGPUExecution {
             let loaded = try VivoCellResponseArtifactIO.load(directory, implementation: implementation)
+            guard loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
+                throw VivoCellResponseLearningError.incompatible("prediction requires a v7 cohort-bound model")
+            }
             let corpusFingerprint = try VivoCellResponseArtifactIO.corpusFingerprint(corpus)
             guard loaded.state.corpus == corpusFingerprint else {
                 throw VivoCellResponseLearningError.incompatible("prediction corpus differs from checkpoint")
             }
             _ = try validateCheckpointCorpus(loaded.state, corpus: corpus)
             let batch = try inferenceBatch(corpus: corpus, state: loaded.state, plan: plan)
-            let output = loaded.model.outputs(context: batch.context, targetIDs: batch.targetIDs,
+            let output = loaded.model.outputs(context: batch.context, contextFeatureMask: batch.contextFeatureMask,
+                                              targetIDs: batch.targetIDs,
                                               knownTargetMask: batch.knownTargetMask, descriptors: batch.descriptors)
             let means = output.mean.asArray(Float.self), variances = output.variance.asArray(Float.self),
                 baselines = output.baseline.asArray(Float.self), deltas = output.delta.asArray(Float.self)
@@ -1733,8 +2215,9 @@ extension VivoCellResponseLearning {
                   variances.allSatisfy({ $0.isFinite && $0 > 0 }) else {
                 throw VivoCellResponseLearningError.invalid("prediction output")
             }
-            let prediction = VivoCellResponsePrediction(schemaVersion: 1, format: predictionFormat, id: plan.id,
-                                                        featureAxis: corpus.plan.featureAxis, featureMask: corpus.featureMask,
+            let featureMask = batch.targetFeatureMask.asArray(Float.self)
+            let prediction = VivoCellResponsePrediction(schemaVersion: 2, format: predictionFormat, id: plan.id,
+                                                        featureAxis: corpus.featureAxis, featureMask: featureMask,
                                                         contextBaselineLogCPM: baselines, meanDeltaLogCPM: deltas,
                                                         contextSourceRows: batch.contextRows,
                                                         meanLogCPM: means, varianceLogCPM: variances)
@@ -1757,7 +2240,9 @@ extension VivoCellResponseLearning {
         let receipt = try VivoCanonicalJSON.decode(VivoCellResponsePredictionReceipt.self, from: receiptBytes)
         let query = try VivoCanonicalJSON.decode(VivoCellResponsePredictionPlan.self, from: queryBytes)
         let prediction = try VivoCanonicalJSON.decode(VivoCellResponsePrediction.self, from: predictionBytes)
-        guard receipt.schemaVersion == 1, receipt.format == predictionFormat, receipt.implementation == implementation,
+        guard ((receipt.schemaVersion == 2 && receipt.format == predictionFormat) ||
+               (receipt.schemaVersion == 1 && receipt.format == legacyPredictionFormat)),
+              receipt.implementation == implementation,
               try VivoCanonicalJSON.encode(receipt) == receiptBytes,
               try VivoCanonicalJSON.fingerprint(queryBytes) == receipt.query,
               try VivoCanonicalJSON.fingerprint(predictionBytes) == receipt.prediction,
@@ -1781,17 +2266,19 @@ extension VivoCellResponseLearning {
     /// Verify a prediction against the exact model receipt and source-bound
     /// corpus used to create it. This is the production verification route.
     public static func verifyPrediction(_ directory: URL, model modelDirectory: URL,
-                                        corpus: VivoCellResponseCorpusReader,
+                                        corpus: VivoCellResponseCompositeCorpusReader,
                                         implementation: VivoFingerprint) throws -> VivoCellResponsePrediction {
         return try withGPUExecution {
             let artifact = try loadVerifiedPrediction(directory, implementation: implementation)
             let loaded = try VivoCellResponseArtifactIO.load(modelDirectory, implementation: implementation)
+            guard loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
+                throw VivoCellResponseLearningError.incompatible("bound prediction verification requires a v7 cohort-bound model")
+            }
             let modelFingerprint = try VivoCellResponseArtifactIO.modelFingerprint(loaded.receipt)
             let corpusFingerprint = try VivoCellResponseArtifactIO.corpusFingerprint(corpus)
             guard artifact.0.model == modelFingerprint,
                   artifact.0.corpus == corpusFingerprint,
-                  artifact.2.featureAxis == corpus.plan.featureAxis,
-                  artifact.2.featureMask == corpus.featureMask else {
+                  artifact.2.featureAxis == corpus.featureAxis else {
                 throw VivoCellResponseLearningError.incompatible("prediction model or corpus provenance differs")
             }
             // Receipt hashes prove stored bytes. Rebuild the exact input and
@@ -1799,9 +2286,11 @@ extension VivoCellResponseLearning {
             // impossible query nor substituted response values can pass.
             _ = try validateCheckpointCorpus(loaded.state, corpus: corpus)
             let batch = try inferenceBatch(corpus: corpus, state: loaded.state, plan: artifact.1)
-            let output = loaded.model.outputs(context: batch.context, targetIDs: batch.targetIDs,
+            let output = loaded.model.outputs(context: batch.context, contextFeatureMask: batch.contextFeatureMask,
+                                              targetIDs: batch.targetIDs,
                                               knownTargetMask: batch.knownTargetMask, descriptors: batch.descriptors)
             guard artifact.2.contextSourceRows == batch.contextRows,
+                  artifact.2.featureMask == batch.targetFeatureMask.asArray(Float.self),
                   approximatelyEqual(artifact.2.contextBaselineLogCPM, output.baseline.asArray(Float.self)),
                   approximatelyEqual(artifact.2.meanDeltaLogCPM, output.delta.asArray(Float.self)),
                   approximatelyEqual(artifact.2.meanLogCPM, output.mean.asArray(Float.self)),
@@ -1824,7 +2313,15 @@ extension VivoCellResponseLearning {
         let evaluationBytes = try VivoCellResponseArtifactIO.read(root, "evaluation.json", maximumBytes: 134_217_728)
         let receipt = try VivoCanonicalJSON.decode(VivoCellResponseEvaluationReceipt.self, from: receiptBytes)
         let evaluation = try VivoCanonicalJSON.decode(VivoCellResponseEvaluation.self, from: evaluationBytes)
-        guard receipt.schemaVersion == 1, receipt.format == evaluationFormat, receipt.implementation == implementation,
+        let pairedFormat =
+            (receipt.schemaVersion == 3 && receipt.format == evaluationFormat &&
+             evaluation.schemaVersion == 4 && evaluation.format == evaluationFormat) ||
+            (receipt.schemaVersion == 2 && receipt.format == cohortV3EvaluationFormat &&
+             evaluation.schemaVersion == 3 && evaluation.format == cohortV3EvaluationFormat) ||
+            (receipt.schemaVersion == 1 && receipt.format == legacyEvaluationFormat &&
+             evaluation.schemaVersion == 2 && evaluation.format == legacyEvaluationFormat)
+        guard pairedFormat,
+              receipt.implementation == implementation,
               try VivoCanonicalJSON.encode(receipt) == receiptBytes,
               try VivoCanonicalJSON.encode(evaluation) == evaluationBytes,
               try VivoCanonicalJSON.fingerprint(evaluationBytes) == receipt.evaluation else {
@@ -1843,11 +2340,18 @@ extension VivoCellResponseLearning {
     /// Recompute a published evaluation under the exact model and corpus. This
     /// verifies both its frozen target/control selection and reported metrics.
     public static func verifyEvaluation(_ directory: URL, model modelDirectory: URL,
-                                        corpus: VivoCellResponseCorpusReader,
+                                        corpus: VivoCellResponseCompositeCorpusReader,
                                         implementation: VivoFingerprint) throws -> VivoCellResponseEvaluation {
         return try withGPUExecution {
             let artifact = try loadVerifiedEvaluation(directory, implementation: implementation)
             let loaded = try VivoCellResponseArtifactIO.load(modelDirectory, implementation: implementation)
+            guard loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
+                throw VivoCellResponseLearningError.incompatible("bound evaluation verification requires a v7 cohort-bound model")
+            }
+            guard artifact.0.schemaVersion == 3, artifact.0.format == evaluationFormat,
+                  artifact.1.schemaVersion == 4, artifact.1.format == evaluationFormat else {
+                throw VivoCellResponseLearningError.incompatible("bound evaluation verification requires a v4 evaluation")
+            }
             let modelFingerprint = try VivoCellResponseArtifactIO.modelFingerprint(loaded.receipt)
             let corpusFingerprint = try VivoCellResponseArtifactIO.corpusFingerprint(corpus)
             guard artifact.0.model == modelFingerprint, artifact.0.corpus == corpusFingerprint,
@@ -1862,6 +2366,7 @@ extension VivoCellResponseLearning {
                                       salt: 0x4d8b9173)
             guard artifact.1.examples == result.4.count, artifact.1.observedFeatures == result.3,
                   artifact.1.selection == result.4,
+                  approximatelyEqual(artifact.1.sourceMetrics, result.5),
                   abs(artifact.1.negativeLogLikelihood - result.0) <= 1e-8 * max(1, abs(result.0)),
                   abs(artifact.1.rmse - result.1) <= 1e-8 * max(1, abs(result.1)),
                   abs(artifact.1.matchedControlRMSE - result.2) <= 1e-8 * max(1, abs(result.2)) else {
@@ -1877,9 +2382,11 @@ extension VivoCellResponseLearning {
     /// the companion guarantee that each selected target and control row was
     /// recomputed from the bound model and corpus.
     static func requireQualificationEvaluationCoverage(_ evaluation: VivoCellResponseEvaluation,
-                                                       corpus: VivoCellResponseCorpusReader) throws {
+                                                       corpus: VivoCellResponseCompositeCorpusReader) throws {
         try validateEvaluation(evaluation)
-        guard evaluation.partition == .test else {
+        guard evaluation.schemaVersion == 4, evaluation.format == evaluationFormat,
+              evaluation.sourceMetrics.map(\.corpus) == corpus.identity.sources.map(\.corpus),
+              evaluation.partition == .test else {
             throw VivoCellResponseLearningError.invalid("qualification requires a held-out test evaluation")
         }
         let examples = try corpus.examples(in: .test)
@@ -1912,22 +2419,90 @@ extension VivoCellResponseLearning {
     /// strict improvement over the recorded exact matched-control baseline.
     /// A failed qualification never changes the raw evaluation artifact.
     public static func qualifyEvaluation(_ directory: URL, model modelDirectory: URL,
-                                         corpus: VivoCellResponseCorpusReader,
+                                         corpus: VivoCellResponseCompositeCorpusReader,
                                          implementation: VivoFingerprint) throws -> VivoCellResponseEvaluation {
         let loaded = try VivoCellResponseArtifactIO.load(modelDirectory, implementation: implementation)
         guard let cohort = loaded.cohortAdmission, loaded.state.cohort == loaded.receipt.cohort else {
             throw VivoCellResponseLearningError.incompatible("qualification requires a cohort-bound model")
         }
-        guard cohort.sources.count == 1 else {
-            throw VivoCellResponseLearningError.incompatible(
-                "current cell-response learner requires one receipt-bound corpus")
+        guard loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
+            throw VivoCellResponseLearningError.incompatible("qualification requires a v7 cohort-bound model")
         }
-        try VivoCellResponseCohort.verify(cohort, readers: [corpus])
+        try VivoCellResponseCohort.verify(cohort, readers: corpus.sourceReaders)
         try VivoCellResponseCohort.requireQualificationCoverage(cohort)
         let evaluation = try verifyEvaluation(directory, model: modelDirectory, corpus: corpus,
                                               implementation: implementation)
         try requireQualificationEvaluationCoverage(evaluation, corpus: corpus)
         try requireMatchedControlImprovement(evaluation)
         return evaluation
+    }
+
+    // Keep the established one-source Swift surface while routing all current
+    // execution through the same canonical composite namespace. This avoids a
+    // compatibility fork between single-study and cross-study prediction.
+    public static func train(corpus: VivoCellResponseCorpusReader, plan: VivoCellResponseTrainingPlan,
+                             cohort: VivoCellResponseCohortAdmission,
+                             implementation: VivoFingerprint, to destination: URL) throws -> VivoCellResponseModelReceipt {
+        try train(corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]), plan: plan, cohort: cohort,
+                  implementation: implementation, to: destination)
+    }
+
+    public static func resume(model directory: URL, corpus: VivoCellResponseCorpusReader,
+                              plan: VivoCellResponseResumePlan, implementation: VivoFingerprint,
+                              to destination: URL) throws -> VivoCellResponseModelReceipt {
+        try resume(model: directory, corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]), plan: plan,
+                   implementation: implementation, to: destination)
+    }
+
+    public static func evaluate(model directory: URL, corpus: VivoCellResponseCorpusReader,
+                                partition: VivoCellResponsePartition, maximumExamples: Int,
+                                implementation: VivoFingerprint) throws -> VivoCellResponseEvaluation {
+        try evaluate(model: directory, corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]),
+                     partition: partition, maximumExamples: maximumExamples, implementation: implementation)
+    }
+
+    public static func evaluate(model directory: URL, corpus: VivoCellResponseCorpusReader,
+                                partition: VivoCellResponsePartition, maximumExamples: Int,
+                                implementation: VivoFingerprint, to destination: URL) throws -> VivoCellResponseEvaluationReceipt {
+        try evaluate(model: directory, corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]),
+                     partition: partition, maximumExamples: maximumExamples, implementation: implementation,
+                     to: destination)
+    }
+
+    public static func predict(model directory: URL, corpus: VivoCellResponseCorpusReader,
+                               plan: VivoCellResponsePredictionPlan, implementation: VivoFingerprint,
+                               to destination: URL) throws -> VivoCellResponsePredictionReceipt {
+        try predict(model: directory, corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]), plan: plan,
+                    implementation: implementation, to: destination)
+    }
+
+    public static func verifyPrediction(_ directory: URL, model modelDirectory: URL,
+                                        corpus: VivoCellResponseCorpusReader,
+                                        implementation: VivoFingerprint) throws -> VivoCellResponsePrediction {
+        try verifyPrediction(directory, model: modelDirectory,
+                             corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]),
+                             implementation: implementation)
+    }
+
+    public static func verifyEvaluation(_ directory: URL, model modelDirectory: URL,
+                                        corpus: VivoCellResponseCorpusReader,
+                                        implementation: VivoFingerprint) throws -> VivoCellResponseEvaluation {
+        try verifyEvaluation(directory, model: modelDirectory,
+                             corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]),
+                             implementation: implementation)
+    }
+
+    static func requireQualificationEvaluationCoverage(_ evaluation: VivoCellResponseEvaluation,
+                                                       corpus: VivoCellResponseCorpusReader) throws {
+        try requireQualificationEvaluationCoverage(evaluation,
+                                                   corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]))
+    }
+
+    public static func qualifyEvaluation(_ directory: URL, model modelDirectory: URL,
+                                         corpus: VivoCellResponseCorpusReader,
+                                         implementation: VivoFingerprint) throws -> VivoCellResponseEvaluation {
+        try qualifyEvaluation(directory, model: modelDirectory,
+                              corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]),
+                              implementation: implementation)
     }
 }

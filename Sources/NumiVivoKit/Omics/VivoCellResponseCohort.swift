@@ -241,11 +241,9 @@ public struct VivoCellResponseCohortAdmission: Codable, Sendable, Equatable {
 /// biological independence from counts; qualification applies a fixed
 /// coverage floor separately from caller-selected development thresholds.
 public enum VivoCellResponseCohort {
-    /// A model currently carries one corpus receipt. Multi-source fitting must
-    /// wait for a composite reader that preserves source row identity and
-    /// sampling weights, rather than emitting an admission no learner can
-    /// replay.
-    private static let maximumReaders = 1
+    /// A composite reader preserves source row identity and canonical ordering
+    /// across these independently receipt-verified corpus views.
+    private static let maximumReaders = 64
     private static let maximumAssignments = 2_000_000
     private static let maximumContexts = 2_000_000
     private static let maximumSamplesPerContext = 1_048_576
@@ -285,6 +283,15 @@ public enum VivoCellResponseCohort {
         let biologicalReplicateID: String
     }
 
+    /// Qualification must retain held-out evidence for each target in every
+    /// raw source where that target was observed. Corpus receipts may be
+    /// separate preparations of one raw source, so this key deliberately uses
+    /// the source fingerprint rather than a prepared-corpus fingerprint.
+    private struct SourceTargetKey: Hashable {
+        let source: String
+        let targetID: String
+    }
+
     private struct CollectedContext {
         let corpus: VivoFingerprint
         let studyID: String
@@ -308,9 +315,13 @@ public enum VivoCellResponseCohort {
     }
 
     private static func boundReaders(_ readers: [VivoCellResponseCorpusReader]) throws -> [BoundReader] {
-        guard readers.count == 1 else {
+        guard (1...maximumReaders).contains(readers.count) else {
             throw VivoOmicsError.invalid("cell-response cohort readers")
         }
+        // Build the executable view up front. Admission must not accept a
+        // source set whose axes/targets cannot later be replayed by the
+        // learner's canonical global-row namespace.
+        _ = try VivoCellResponseCompositeCorpusReader(readers: readers)
         let result = try readers.map { reader in
             try reader.plan.validate()
             return BoundReader(reader: reader, source: .init(corpus: try corpusFingerprint(reader),
@@ -403,6 +414,34 @@ public enum VivoCellResponseCohort {
             guard entry.biologicalUnits >= minimum else {
                 throw VivoOmicsError.invalid("cell-response cohort target biological coverage")
             }
+        }
+    }
+
+    private static func qualificationSourceTargetTestCoverage(
+        sourcesByCorpus: [String: VivoCellResponseCohortSource],
+        contexts: [VivoCellResponseCohortContext]
+    ) throws {
+        var eligible: Set<SourceTargetKey> = []
+        var heldOutUnits: [SourceTargetKey: Set<BiologicalKey>] = [:]
+        for context in contexts {
+            guard let source = sourcesByCorpus[context.corpus.hex] else {
+                throw VivoOmicsError.invalid("cell-response cohort source membership")
+            }
+            let unit = biologicalKey(source: source.source,
+                                     biologicalReplicateID: context.biologicalReplicateID,
+                                     donorID: context.donorID)
+            for targetID in context.treatedSamples.map(\.targetID) {
+                let key = SourceTargetKey(source: source.source.hex, targetID: targetID)
+                eligible.insert(key)
+                if context.partition == .test {
+                    heldOutUnits[key, default: []].insert(unit)
+                }
+            }
+        }
+        guard eligible.allSatisfy({
+            (heldOutUnits[$0]?.count ?? 0) >= qualificationRequirements.minimumTestBiologicalUnitsPerTarget
+        }) else {
+            throw VivoOmicsError.invalid("cell-response qualification lacks held-out source target coverage")
         }
     }
 
@@ -571,6 +610,18 @@ public enum VivoCellResponseCohort {
         let sourceMap = Dictionary(uniqueKeysWithValues: admission.sources.map { ($0.corpus.hex, $0) })
         try requirementsSatisfied(qualificationRequirements, coverage: admission.coverage,
                                   sourcesByCorpus: sourceMap, contexts: admission.contexts)
+        try qualificationSourceTargetTestCoverage(sourcesByCorpus: sourceMap, contexts: admission.contexts)
+        // Aggregate target coverage is insufficient for a composite model:
+        // one study could supply all reported held-out strata while another
+        // source has none. A qualified evaluation needs at least one replayable
+        // treated test stratum from every receipt-bound source.
+        let sourcesWithHeldOutTreatment = Set(admission.contexts.compactMap { context -> String? in
+            guard context.partition == .test, !context.treatedSamples.isEmpty else { return nil }
+            return context.corpus.hex
+        })
+        guard sourcesWithHeldOutTreatment == Set(admission.sources.map(\.corpus.hex)) else {
+            throw VivoOmicsError.invalid("cell-response qualification lacks held-out source coverage")
+        }
     }
 
     /// Recreate the admission from verified readers and require canonical exact

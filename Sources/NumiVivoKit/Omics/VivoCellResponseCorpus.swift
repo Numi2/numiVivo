@@ -352,6 +352,60 @@ public struct VivoCellResponseTrainingExample: Sendable, Equatable {
     public let partition: VivoCellResponsePartition
 }
 
+/// One member of a canonical response-learning composite. `rows` is retained
+/// in the identity because global row references are prefix offsets over this
+/// exact receipt ordering, never local rows from a mutable path.
+public struct VivoCellResponseCompositeCorpusSource: Codable, Sendable, Equatable {
+    public let corpus: VivoFingerprint
+    public let rows: Int
+
+    private enum CodingKeys: String, CodingKey { case corpus, rows }
+
+    public init(corpus: VivoFingerprint, rows: Int) {
+        self.corpus = corpus
+        self.rows = rows
+    }
+
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["corpus", "rows"])
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        corpus = try values.decode(VivoFingerprint.self, forKey: .corpus)
+        rows = try values.decode(Int.self, forKey: .rows)
+    }
+}
+
+/// Canonical identity for an in-memory composition of receipt-verified corpus
+/// readers. It deliberately records no paths: all replay authority remains in
+/// the member receipts and their count-store leases.
+public struct VivoCellResponseCompositeCorpusIdentity: Codable, Sendable, Equatable {
+    public let schemaVersion: Int
+    public let format: String
+    public let sources: [VivoCellResponseCompositeCorpusSource]
+
+    private enum CodingKeys: String, CodingKey { case schemaVersion, format, sources }
+
+    public init(sources: [VivoCellResponseCompositeCorpusSource]) {
+        schemaVersion = 1
+        format = "numivivo-cell-response-composite/v1"
+        self.sources = sources
+    }
+
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: ["schemaVersion", "format", "sources"])
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try values.decode(Int.self, forKey: .schemaVersion)
+        format = try values.decode(String.self, forKey: .format)
+        sources = try values.decode([VivoCellResponseCompositeCorpusSource].self, forKey: .sources)
+        guard schemaVersion == 1, format == "numivivo-cell-response-composite/v1",
+              !sources.isEmpty, sources.count <= 64,
+              sources.map(\.corpus.hex) == sources.map(\.corpus.hex).sorted(),
+              Set(sources.map(\.corpus.hex)).count == sources.count,
+              sources.allSatisfy({ $0.rows > 0 }) else {
+            throw VivoOmicsError.invalid("cell-response composite identity")
+        }
+    }
+}
+
 public final class VivoCellResponseCorpusReader {
     public let plan: VivoCellResponseCorpusPlan
     public let receipt: VivoCellResponseCorpusReceipt
@@ -506,6 +560,181 @@ public final class VivoCellResponseCorpusReader {
         }
         guard !output.isEmpty else { throw VivoOmicsError.invalid("cell-response partition has no treated rows") }
         return output
+    }
+}
+
+/// A canonical, source-qualified view over one or more verified corpus
+/// readers. It never merges count stores. Instead it maps a stable global row
+/// number to exactly one receipt-bound source reader, so local row zero from
+/// two sources cannot collide in batching, caches, evaluations, or outputs.
+public final class VivoCellResponseCompositeCorpusReader {
+    private struct Source {
+        let reader: VivoCellResponseCorpusReader
+        let corpus: VivoFingerprint
+        let rowBase: Int
+        let rowLimit: Int
+        let stratumBase: Int
+    }
+
+    public let identity: VivoCellResponseCompositeCorpusIdentity
+    public let fingerprint: VivoFingerprint
+    public let sourceReaders: [VivoCellResponseCorpusReader]
+    public let featureAxis: VivoCellResponseFeatureAxis
+    public let descriptorSource: VivoFingerprint
+    public let targets: [VivoCellResponseTarget]
+    /// Features observed by at least one bound source. Per-row masks remain
+    /// available through `featureMask(for:)` and are used by the learner to
+    /// avoid treating a structurally absent gene as an observed zero.
+    public let featureMask: [Float]
+    public let rowCount: Int
+
+    private let sources: [Source]
+
+    public init(readers: [VivoCellResponseCorpusReader]) throws {
+        guard (1...64).contains(readers.count) else {
+            throw VivoOmicsError.invalid("cell-response composite readers")
+        }
+        let ordered = try readers.map { reader -> (VivoCellResponseCorpusReader, VivoFingerprint) in
+            try reader.plan.validate()
+            return (reader, try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(reader.receipt)))
+        }.sorted { $0.1.hex < $1.1.hex }
+        guard Set(ordered.map({ $0.1.hex })).count == ordered.count,
+              let first = ordered.first else {
+            throw VivoOmicsError.invalid("cell-response composite duplicate corpus receipt")
+        }
+        let axis = first.0.plan.featureAxis
+        let descriptors = first.0.plan.descriptorSource
+        let targetVocabulary = first.0.plan.targets
+        guard targetVocabulary.map(\.id) == targetVocabulary.map(\.id).sorted() else {
+            throw VivoOmicsError.invalid("cell-response composite target order")
+        }
+        var nextRow = 0
+        var nextStratum = 0
+        var built: [Source] = []
+        var identitySources: [VivoCellResponseCompositeCorpusSource] = []
+        built.reserveCapacity(ordered.count)
+        identitySources.reserveCapacity(ordered.count)
+        for (reader, corpus) in ordered {
+            guard reader.plan.featureAxis == axis,
+                  reader.plan.descriptorSource == descriptors,
+                  reader.plan.targets == targetVocabulary,
+                  reader.featureMask.count == axis.featureIDs.count else {
+                throw VivoOmicsError.invalid("cell-response composite axes or descriptors differ")
+            }
+            let rows = reader.metadata.cells.count
+            let assignments = reader.plan.assignments.count
+            let rowLimit = nextRow.addingReportingOverflow(rows)
+            let stratumLimit = nextStratum.addingReportingOverflow(assignments)
+            guard rows > 0, assignments > 0, !rowLimit.overflow, !stratumLimit.overflow else {
+                throw VivoOmicsError.limit("cell-response composite row or stratum range")
+            }
+            built.append(.init(reader: reader, corpus: corpus, rowBase: nextRow,
+                               rowLimit: rowLimit.partialValue, stratumBase: nextStratum))
+            identitySources.append(.init(corpus: corpus, rows: rows))
+            nextRow = rowLimit.partialValue
+            nextStratum = stratumLimit.partialValue
+        }
+        identity = .init(sources: identitySources)
+        fingerprint = try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(identity))
+        sourceReaders = built.map(\.reader)
+        featureAxis = axis
+        descriptorSource = descriptors
+        targets = targetVocabulary
+        featureMask = axis.featureIDs.indices.map { feature in
+            built.contains(where: { $0.reader.featureMask[feature] > 0 }) ? 1 : 0
+        }
+        rowCount = nextRow
+        sources = built
+    }
+
+    public var sourceCount: Int { sources.count }
+    public var featureCount: Int { featureAxis.featureIDs.count }
+    public var targetCount: Int { targets.count }
+    public var descriptorCount: Int { targets[0].descriptors.count }
+
+    private func source(forGlobalRow row: Int) throws -> (index: Int, source: Source, localRow: Int) {
+        guard row >= 0, row < rowCount else { throw VivoOmicsError.invalid("cell-response composite row") }
+        var lower = 0
+        var upper = sources.count
+        while lower + 1 < upper {
+            let middle = lower + (upper - lower) / 2
+            if sources[middle].rowBase <= row { lower = middle } else { upper = middle }
+        }
+        let source = sources[lower]
+        guard row < source.rowLimit else { throw VivoOmicsError.invalid("cell-response composite row range") }
+        return (lower, source, row - source.rowBase)
+    }
+
+    public func sourceIndex(forGlobalRow row: Int) throws -> Int {
+        try source(forGlobalRow: row).index
+    }
+
+    public func sourceCorpus(forGlobalRow row: Int) throws -> VivoFingerprint {
+        try source(forGlobalRow: row).source.corpus
+    }
+
+    public func featureMask(forGlobalRow row: Int) throws -> [Float] {
+        try source(forGlobalRow: row).source.reader.featureMask
+    }
+
+    public func normalizedRow(_ row: Int) throws -> [Float] {
+        let location = try source(forGlobalRow: row)
+        return try location.source.reader.normalizedRow(location.localRow)
+    }
+
+    private func sourceIndex(corpus: VivoFingerprint) throws -> Int {
+        guard let index = sources.firstIndex(where: { $0.corpus == corpus }) else {
+            throw VivoOmicsError.invalid("cell-response composite source corpus")
+        }
+        return index
+    }
+
+    /// Resolve a query sample only in its explicitly declared source corpus.
+    /// This prevents equal sample IDs from separately prepared studies from
+    /// being silently treated as one control population.
+    public func rows(forSampleID sampleID: String, corpus: VivoFingerprint) throws -> [Int] {
+        let index = try sourceIndex(corpus: corpus)
+        return try sources[index].reader.rows(forSampleID: sampleID).map { local in
+            let result = sources[index].rowBase.addingReportingOverflow(local)
+            guard !result.overflow else { throw VivoOmicsError.limit("cell-response composite row") }
+            return result.partialValue
+        }
+    }
+
+    public func assignment(forSampleID sampleID: String, corpus: VivoFingerprint) throws -> VivoCellResponseAssignment {
+        try sources[try sourceIndex(corpus: corpus)].reader.assignment(forSampleID: sampleID)
+    }
+
+    public func examples(in partition: VivoCellResponsePartition) throws -> [VivoCellResponseTrainingExample] {
+        var result: [VivoCellResponseTrainingExample] = []
+        for source in sources {
+            for example in try source.reader.examples(in: partition) {
+                let target = source.rowBase.addingReportingOverflow(example.targetRow)
+                let stratum = source.stratumBase.addingReportingOverflow(example.stratumIndex)
+                guard !target.overflow, !stratum.overflow else {
+                    throw VivoOmicsError.limit("cell-response composite example")
+                }
+                let context = try example.contextRows.map { local -> Int in
+                    let value = source.rowBase.addingReportingOverflow(local)
+                    guard !value.overflow else { throw VivoOmicsError.limit("cell-response composite context row") }
+                    return value.partialValue
+                }
+                result.append(.init(targetRow: target.partialValue, contextRows: context,
+                                    targetIndex: example.targetIndex, stratumIndex: stratum.partialValue,
+                                    partition: example.partition))
+            }
+        }
+        guard !result.isEmpty else { throw VivoOmicsError.invalid("cell-response composite partition has no treated rows") }
+        return result
+    }
+
+    public func trainingTargetBindings() throws -> [VivoCellResponseTrainedTargetBinding] {
+        let indices = Set(try examples(in: .training).map(\.targetIndex))
+        guard !indices.isEmpty else { throw VivoOmicsError.invalid("cell-response composite has no training targets") }
+        return try targets.enumerated().compactMap { index, target in
+            guard indices.contains(index) else { return nil }
+            return .init(id: target.id, descriptorFingerprint: try target.fingerprint())
+        }
     }
 }
 
