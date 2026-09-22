@@ -46,7 +46,7 @@ jobs:
           retention-days: 14
   apple:
     needs: oracle
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -96,7 +96,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
   address_sanitizer:
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
