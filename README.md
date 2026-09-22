@@ -26,6 +26,23 @@ for diagnostics. The helper keeps the caller's working directory and
 environment, so existing absolute or relative artifact paths and
 `NUMIVIVO_HDF5_LIBRARY` work unchanged.
 
+Before training, create and replay-verify a canonical cohort admission:
+
+```sh
+Tools/run-numivivo-mlx.sh cell-response-cohort-admit <corpus> --store <count-store> --output <new-admission.json>
+Tools/run-numivivo-mlx.sh cell-response-cohort-verify <new-admission.json> --corpus <corpus> --store <count-store>
+Tools/run-numivivo-mlx.sh cell-response-train <corpus> --store <count-store> --plan <training-plan.json> --cohort <new-admission.json> --output <new-model>
+```
+
+The admission pins every treated and control sample to the verified corpus
+receipt and rejects a biological unit that crosses train, validation, or test.
+The current learner accepts one receipt-bound corpus per model; multi-corpus
+fitting awaits a composite reader that preserves row identity and sampling
+weights across sources. A smaller cohort can support source-bound development, while
+`cell-response-evaluation-qualify` requires at least 8/2/2 independent
+biological units per target in train/validation/test and an exhaustive test
+stratum selection.
+
 The response learner records the matched-control RMSE alongside every held-out
 evaluation. `cell-response-evaluation-qualify` replay-verifies the exact
 model and corpus, then rejects any tie or loss against that paired baseline.

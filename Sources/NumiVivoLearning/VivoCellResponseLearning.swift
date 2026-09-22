@@ -267,6 +267,9 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
     public let descriptorCount: Int
     public let corpus: VivoFingerprint
     public let trainingPlan: VivoFingerprint
+    /// Canonical source-replayable cohort contract carried by current models.
+    /// Legacy v5 artifacts omit it and remain inspectable only.
+    public let cohort: VivoFingerprint?
     public let step: UInt64
     public let seed: UInt64
     public let samplerVersion: UInt32
@@ -281,7 +284,8 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
     public init(schemaVersion: Int, architecture: VivoCellResponseArchitecture,
                 featureAxis: VivoCellResponseFeatureAxis, targetIDs: [String],
                 trainedTargetBindings: [VivoCellResponseTrainedTargetBinding], descriptorCount: Int,
-                corpus: VivoFingerprint, trainingPlan: VivoFingerprint, step: UInt64, seed: UInt64,
+                corpus: VivoFingerprint, trainingPlan: VivoFingerprint, cohort: VivoFingerprint? = nil,
+                step: UInt64, seed: UInt64,
                 samplerVersion: UInt32, targetResponsePriorVersion: UInt32,
                 optimizerVersion: UInt32,
                 learningRate: Double, weightDecay: Double,
@@ -294,6 +298,7 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
         self.descriptorCount = descriptorCount
         self.corpus = corpus
         self.trainingPlan = trainingPlan
+        self.cohort = cohort
         self.step = step
         self.seed = seed
         self.samplerVersion = samplerVersion
@@ -306,7 +311,7 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
 
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, architecture, featureAxis, targetIDs, trainedTargetBindings, descriptorCount,
-             corpus, trainingPlan, step, seed, samplerVersion, targetResponsePriorVersion,
+             corpus, trainingPlan, cohort, step, seed, samplerVersion, targetResponsePriorVersion,
              optimizerVersion,
              learningRate, weightDecay, latestMetrics
     }
@@ -314,7 +319,7 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
     public init(from decoder: Decoder) throws {
         try vivoOmicsRejectUnknownKeys(decoder, allowed: [
             "schemaVersion", "architecture", "featureAxis", "targetIDs", "trainedTargetBindings", "descriptorCount",
-            "corpus", "trainingPlan", "step", "seed", "samplerVersion", "targetResponsePriorVersion",
+            "corpus", "trainingPlan", "cohort", "step", "seed", "samplerVersion", "targetResponsePriorVersion",
             "optimizerVersion",
             "learningRate", "weightDecay", "latestMetrics"
         ])
@@ -327,6 +332,7 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
         descriptorCount = try values.decode(Int.self, forKey: .descriptorCount)
         corpus = try values.decode(VivoFingerprint.self, forKey: .corpus)
         trainingPlan = try values.decode(VivoFingerprint.self, forKey: .trainingPlan)
+        cohort = try values.decodeIfPresent(VivoFingerprint.self, forKey: .cohort)
         step = try values.decode(UInt64.self, forKey: .step)
         seed = try values.decode(UInt64.self, forKey: .seed)
         samplerVersion = try values.decode(UInt32.self, forKey: .samplerVersion)
@@ -336,6 +342,27 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
         weightDecay = try values.decode(Double.self, forKey: .weightDecay)
         latestMetrics = try values.decode(VivoCellResponseTrainingMetrics.self, forKey: .latestMetrics)
     }
+
+    public func encode(to encoder: Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        try values.encode(schemaVersion, forKey: .schemaVersion)
+        try values.encode(architecture, forKey: .architecture)
+        try values.encode(featureAxis, forKey: .featureAxis)
+        try values.encode(targetIDs, forKey: .targetIDs)
+        try values.encode(trainedTargetBindings, forKey: .trainedTargetBindings)
+        try values.encode(descriptorCount, forKey: .descriptorCount)
+        try values.encode(corpus, forKey: .corpus)
+        try values.encode(trainingPlan, forKey: .trainingPlan)
+        try values.encodeIfPresent(cohort, forKey: .cohort)
+        try values.encode(step, forKey: .step)
+        try values.encode(seed, forKey: .seed)
+        try values.encode(samplerVersion, forKey: .samplerVersion)
+        try values.encode(targetResponsePriorVersion, forKey: .targetResponsePriorVersion)
+        try values.encode(optimizerVersion, forKey: .optimizerVersion)
+        try values.encode(learningRate, forKey: .learningRate)
+        try values.encode(weightDecay, forKey: .weightDecay)
+        try values.encode(latestMetrics, forKey: .latestMetrics)
+    }
 }
 
 public struct VivoCellResponseModelReceipt: Codable, Sendable, Equatable {
@@ -344,7 +371,50 @@ public struct VivoCellResponseModelReceipt: Codable, Sendable, Equatable {
     public let checkpoint: VivoFingerprint
     public let trainingPlan: VivoFingerprint
     public let corpus: VivoFingerprint
+    /// Present only for v6 cohort-bound models.
+    public let cohort: VivoFingerprint?
     public let implementation: VivoFingerprint
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion, format, checkpoint, trainingPlan, corpus, cohort, implementation
+    }
+
+    public init(schemaVersion: Int, format: String, checkpoint: VivoFingerprint,
+                trainingPlan: VivoFingerprint, corpus: VivoFingerprint, cohort: VivoFingerprint? = nil,
+                implementation: VivoFingerprint) {
+        self.schemaVersion = schemaVersion
+        self.format = format
+        self.checkpoint = checkpoint
+        self.trainingPlan = trainingPlan
+        self.corpus = corpus
+        self.cohort = cohort
+        self.implementation = implementation
+    }
+
+    public init(from decoder: Decoder) throws {
+        try vivoOmicsRejectUnknownKeys(decoder, allowed: [
+            "schemaVersion", "format", "checkpoint", "trainingPlan", "corpus", "cohort", "implementation"
+        ])
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try values.decode(Int.self, forKey: .schemaVersion)
+        format = try values.decode(String.self, forKey: .format)
+        checkpoint = try values.decode(VivoFingerprint.self, forKey: .checkpoint)
+        trainingPlan = try values.decode(VivoFingerprint.self, forKey: .trainingPlan)
+        corpus = try values.decode(VivoFingerprint.self, forKey: .corpus)
+        cohort = try values.decodeIfPresent(VivoFingerprint.self, forKey: .cohort)
+        implementation = try values.decode(VivoFingerprint.self, forKey: .implementation)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        try values.encode(schemaVersion, forKey: .schemaVersion)
+        try values.encode(format, forKey: .format)
+        try values.encode(checkpoint, forKey: .checkpoint)
+        try values.encode(trainingPlan, forKey: .trainingPlan)
+        try values.encode(corpus, forKey: .corpus)
+        try values.encodeIfPresent(cohort, forKey: .cohort)
+        try values.encode(implementation, forKey: .implementation)
+    }
 }
 
 /// Distributional prediction on the corpus feature axis. `featureMask` marks
@@ -475,7 +545,10 @@ final class VivoCellResponseMLXModel: Module {
 /// the corpus receipt and use the shared native checkpoint codec for weights.
 public enum VivoCellResponseLearning {
     public static let format = "numivivo-cell-response-learning/v2"
-    public static let modelFormat = "numivivo-cell-response-model/v5"
+    /// Read-only compatibility identifier for pre-cohort technical artifacts.
+    public static let legacyModelFormat = "numivivo-cell-response-model/v5"
+    /// Current models bind a replayable biological cohort admission.
+    public static let modelFormat = "numivivo-cell-response-model/v6"
     public static let predictionFormat = "numivivo-cell-response-prediction/v5"
     public static let evaluationFormat = "numivivo-cell-response-evaluation/v2"
     static let samplerVersion: UInt32 = 3
@@ -563,11 +636,14 @@ private struct VivoCellResponseLoadedArtifact {
     let receipt: VivoCellResponseModelReceipt
     let trainingPlan: VivoCellResponseTrainingPlan
     let trainingPlanBytes: Data
+    let cohortAdmission: VivoCellResponseCohortAdmission?
+    let cohortAdmissionBytes: Data?
 }
 
 private enum VivoCellResponseArtifactIO {
     static let checkpointName = "checkpoint.nvckpt"
     static let planName = "training-plan.json"
+    static let cohortAdmissionName = "cohort-admission.json"
     static let receiptName = "receipt.json"
     static let weightsSection = "weights.safetensors"
     static let stateSection = "state.json"
@@ -613,11 +689,16 @@ private enum VivoCellResponseArtifactIO {
         try VivoCanonicalJSON.fingerprint(VivoCanonicalJSON.encode(receipt))
     }
 
+    static func format(for state: VivoCellResponseModelState) -> String {
+        state.cohort == nil ? VivoCellResponseLearning.legacyModelFormat : VivoCellResponseLearning.modelFormat
+    }
+
     static func checkpoint(model: VivoCellResponseMLXModel, state: VivoCellResponseModelState,
                            parentCheckpoint: VivoFingerprint?) throws -> Data {
+        let format = format(for: state)
         let arrays = Dictionary(uniqueKeysWithValues: model.parameters().flattened())
         let metadata = [
-            "format": VivoCellResponseLearning.modelFormat,
+            "format": format,
             "optimizer": VivoCellResponseLearning.optimizerFormat,
             "sampler": "splitmix64-v1",
             "targetResponsePrior": "balanced-training-mean-v1",
@@ -640,7 +721,7 @@ private enum VivoCellResponseArtifactIO {
                 try .canonicalJSON(id: stateSection, value: state)
             ],
             metadata: [
-                "format": VivoCellResponseLearning.modelFormat,
+                "format": format,
                 "optimizer": VivoCellResponseLearning.optimizerFormat,
                 "sampler": "splitmix64-v1",
                 "targetResponsePrior": "balanced-training-mean-v1"
@@ -650,7 +731,9 @@ private enum VivoCellResponseArtifactIO {
 
     static func validateState(_ state: VivoCellResponseModelState,
                               trainingPlan: VivoCellResponseTrainingPlan) throws {
-        guard state.schemaVersion == 4, state.samplerVersion == VivoCellResponseLearning.samplerVersion,
+        let qualified = state.cohort != nil
+        guard state.schemaVersion == (qualified ? 5 : 4),
+              state.samplerVersion == VivoCellResponseLearning.samplerVersion,
               state.targetResponsePriorVersion == VivoCellResponseLearning.targetResponsePriorVersion,
               state.optimizerVersion == VivoCellResponseLearning.optimizerVersion,
               state.featureAxis.featureIDs.count > 0, state.featureAxis.featureIDs.count <= 200_000,
@@ -689,7 +772,10 @@ private enum VivoCellResponseArtifactIO {
         }
         let receiptBytes = try read(root, receiptName, maximumBytes: 1_048_576)
         let receipt = try VivoCanonicalJSON.decode(VivoCellResponseModelReceipt.self, from: receiptBytes)
-        guard receipt.schemaVersion == 1, receipt.format == VivoCellResponseLearning.modelFormat,
+        let qualified = receipt.format == VivoCellResponseLearning.modelFormat
+        guard ((qualified && receipt.schemaVersion == 2 && receipt.cohort != nil) ||
+               (!qualified && receipt.schemaVersion == 1 &&
+                receipt.format == VivoCellResponseLearning.legacyModelFormat && receipt.cohort == nil)),
               receipt.implementation == implementation,
               try VivoCanonicalJSON.encode(receipt) == receiptBytes else {
             throw VivoCellResponseLearningError.invalid("model receipt")
@@ -700,6 +786,22 @@ private enum VivoCellResponseArtifactIO {
             throw VivoCellResponseLearningError.invalid("noncanonical training plan")
         }
         try trainingPlan.validateStatic()
+        var cohortAdmission: VivoCellResponseCohortAdmission?
+        var cohortAdmissionBytes: Data?
+        if qualified {
+            guard let cohortFingerprint = receipt.cohort else {
+            throw VivoCellResponseLearningError.invalid("cohort-bound model receipt")
+            }
+            let bytes = try read(root, cohortAdmissionName, maximumBytes: 268_435_456)
+            let admission = try VivoCanonicalJSON.decode(VivoCellResponseCohortAdmission.self, from: bytes)
+            guard try VivoCanonicalJSON.encode(admission) == bytes,
+                  try VivoCanonicalJSON.fingerprint(bytes) == cohortFingerprint else {
+            throw VivoCellResponseLearningError.invalid("cohort-bound model artifact")
+            }
+            try VivoCellResponseCohort.validate(admission)
+            cohortAdmission = admission
+            cohortAdmissionBytes = bytes
+        }
         let checkpointBytes = try read(root, checkpointName, maximumBytes: 1_073_741_824)
         guard try VivoCanonicalJSON.fingerprint(trainingPlanBytes) == receipt.trainingPlan,
               try VivoCanonicalJSON.fingerprint(checkpointBytes) == receipt.checkpoint else {
@@ -726,7 +828,7 @@ private enum VivoCellResponseArtifactIO {
               stateInfo.length == UInt64(stateBytes.count), stateInfo.elementCount == 1,
               stateInfo.elementStride == UInt32(clamping: stateBytes.count),
               decoded.manifest.metadata == [
-                "format": VivoCellResponseLearning.modelFormat,
+                "format": receipt.format,
                 "optimizer": VivoCellResponseLearning.optimizerFormat,
                 "sampler": "splitmix64-v1",
                 "targetResponsePrior": "balanced-training-mean-v1"
@@ -735,12 +837,13 @@ private enum VivoCellResponseArtifactIO {
         }
         guard try VivoCanonicalJSON.encode(state) == stateBytes,
               state.corpus == receipt.corpus, state.trainingPlan == receipt.trainingPlan,
+              state.cohort == receipt.cohort,
               state.step == decoded.manifest.stepIndex else {
             throw VivoCellResponseLearningError.invalid("cell-response checkpoint state binding")
         }
         try validateState(state, trainingPlan: trainingPlan)
         let (arrays, metadata) = try MLX.loadArraysAndMetadata(data: weightsBytes)
-        guard metadata["format"] == VivoCellResponseLearning.modelFormat,
+        guard metadata["format"] == receipt.format,
               metadata["optimizer"] == VivoCellResponseLearning.optimizerFormat,
               metadata["sampler"] == "splitmix64-v1",
               metadata["targetResponsePrior"] == "balanced-training-mean-v1",
@@ -760,27 +863,46 @@ private enum VivoCellResponseArtifactIO {
             }
         }
         return .init(model: model, state: state, receipt: receipt, trainingPlan: trainingPlan,
-                     trainingPlanBytes: trainingPlanBytes)
+                     trainingPlanBytes: trainingPlanBytes, cohortAdmission: cohortAdmission,
+                     cohortAdmissionBytes: cohortAdmissionBytes)
     }
 
     static func publish(model: VivoCellResponseMLXModel, state: VivoCellResponseModelState,
                         trainingPlanBytes: Data, implementation: VivoFingerprint,
-                        parentCheckpoint: VivoFingerprint?, to destination: URL) throws -> VivoCellResponseModelReceipt {
+                        parentCheckpoint: VivoFingerprint?,
+                        cohortAdmission: VivoCellResponseCohortAdmission?,
+                        cohortAdmissionBytes: Data?,
+                        to destination: URL) throws -> VivoCellResponseModelReceipt {
         try requireNew(destination)
         let trainingPlan = try VivoCanonicalJSON.decode(VivoCellResponseTrainingPlan.self, from: trainingPlanBytes)
         guard try VivoCanonicalJSON.encode(trainingPlan) == trainingPlanBytes else {
             throw VivoCellResponseLearningError.invalid("noncanonical training plan")
         }
         try trainingPlan.validateStatic()
+        let qualified = state.cohort != nil
+        guard qualified == (cohortAdmission != nil), qualified == (cohortAdmissionBytes != nil) else {
+            throw VivoCellResponseLearningError.invalid("model cohort publication binding")
+        }
+        if let cohortAdmission, let cohortAdmissionBytes, let cohort = state.cohort {
+            try VivoCellResponseCohort.validate(cohortAdmission)
+            guard try VivoCanonicalJSON.encode(cohortAdmission) == cohortAdmissionBytes,
+                  try VivoCanonicalJSON.fingerprint(cohortAdmissionBytes) == cohort else {
+                throw VivoCellResponseLearningError.invalid("model cohort publication artifact")
+            }
+        }
         let temporary = try staging(destination.deletingLastPathComponent(), prefix: "numivivo-cell-response-model")
         defer { try? FileManager.default.removeItem(at: temporary) }
         let checkpoint = try checkpoint(model: model, state: state, parentCheckpoint: parentCheckpoint)
         let receipt = try VivoCellResponseModelReceipt(
-            schemaVersion: 1, format: VivoCellResponseLearning.modelFormat,
+            schemaVersion: qualified ? 2 : 1, format: format(for: state),
             checkpoint: VivoCanonicalJSON.fingerprint(checkpoint),
             trainingPlan: VivoCanonicalJSON.fingerprint(trainingPlanBytes), corpus: state.corpus,
+            cohort: state.cohort,
             implementation: implementation)
         try write(trainingPlanBytes, to: temporary, name: planName, maximumBytes: 4_194_304)
+        if let cohortAdmissionBytes {
+            try write(cohortAdmissionBytes, to: temporary, name: cohortAdmissionName, maximumBytes: 268_435_456)
+        }
         try write(checkpoint, to: temporary, name: checkpointName, maximumBytes: 1_073_741_824)
         try write(VivoCanonicalJSON.encode(receipt), to: temporary, name: receiptName, maximumBytes: 1_048_576)
         try Task.checkCancellation()
@@ -1452,13 +1574,22 @@ extension VivoCellResponseLearning {
         }
     }
 
-    /// Fit a model only from a verified corpus reader. The caller must open the
-    /// corpus against its exact source count store before this function runs.
+    /// Fit a model only after replaying a source-bound biological cohort
+    /// admission against the exact verified reader. Smaller development
+    /// cohorts remain source-bound but cannot later qualify an evaluation.
     public static func train(corpus: VivoCellResponseCorpusReader, plan: VivoCellResponseTrainingPlan,
+                             cohort: VivoCellResponseCohortAdmission,
                              implementation: VivoFingerprint, to destination: URL) throws -> VivoCellResponseModelReceipt {
+        try plan.validate(for: corpus)
+        guard cohort.sources.count == 1 else {
+            throw VivoCellResponseLearningError.incompatible(
+                "current cell-response learner requires one receipt-bound corpus")
+        }
+        try VivoCellResponseCohort.verify(cohort, readers: [corpus])
+        let cohortBytes = try VivoCanonicalJSON.encode(cohort)
+        let cohortFingerprint = try VivoCanonicalJSON.fingerprint(cohortBytes)
+        try VivoCellResponseArtifactIO.requireNew(destination)
         return try withGPUExecution {
-            try plan.validate(for: corpus)
-            try VivoCellResponseArtifactIO.requireNew(destination)
             let planBytes = try VivoCanonicalJSON.encode(plan)
             let corpusFingerprint = try VivoCellResponseArtifactIO.corpusFingerprint(corpus)
             let trainedTargetBindings = try corpus.trainingTargetBindings()
@@ -1472,16 +1603,19 @@ extension VivoCellResponseLearning {
             let metrics = try runSteps(model: model, corpus: corpus, plan: plan, startingStep: 0,
                                        additionalSteps: plan.steps, trainedTargetIndices: trainedTargetIndices)
             let state = VivoCellResponseModelState(
-                schemaVersion: 4, architecture: plan.architecture, featureAxis: corpus.plan.featureAxis,
+                schemaVersion: 5, architecture: plan.architecture, featureAxis: corpus.plan.featureAxis,
                 targetIDs: corpus.plan.targets.map(\.id), trainedTargetBindings: trainedTargetBindings,
                 descriptorCount: corpus.descriptorCount,
                 corpus: corpusFingerprint, trainingPlan: try VivoCanonicalJSON.fingerprint(planBytes),
+                cohort: cohortFingerprint,
                 step: metrics.step, seed: plan.seed, samplerVersion: samplerVersion,
                 targetResponsePriorVersion: targetResponsePriorVersion,
                 optimizerVersion: optimizerVersion,
                 learningRate: plan.learningRate, weightDecay: plan.weightDecay, latestMetrics: metrics)
             return try VivoCellResponseArtifactIO.publish(model: model, state: state, trainingPlanBytes: planBytes,
-                                                           implementation: implementation, parentCheckpoint: nil, to: destination)
+                                                           implementation: implementation, parentCheckpoint: nil,
+                                                           cohortAdmission: cohort, cohortAdmissionBytes: cohortBytes,
+                                                           to: destination)
         }
     }
 
@@ -1494,20 +1628,29 @@ extension VivoCellResponseLearning {
             try plan.validate()
             try VivoCellResponseArtifactIO.requireNew(destination)
             let loaded = try VivoCellResponseArtifactIO.load(directory, implementation: implementation)
+            guard let cohort = loaded.cohortAdmission, let cohortBytes = loaded.cohortAdmissionBytes,
+                  loaded.state.cohort == loaded.receipt.cohort else {
+                throw VivoCellResponseLearningError.incompatible("resume requires a cohort-bound model")
+            }
+            guard cohort.sources.count == 1 else {
+                throw VivoCellResponseLearningError.incompatible(
+                    "current cell-response learner requires one receipt-bound corpus")
+            }
             let corpusFingerprint = try VivoCellResponseArtifactIO.corpusFingerprint(corpus)
             guard loaded.state.corpus == corpusFingerprint else {
                 throw VivoCellResponseLearningError.incompatible("resume corpus differs from checkpoint")
             }
+            try VivoCellResponseCohort.verify(cohort, readers: [corpus])
             let trainedTargetIndices = try validateCheckpointCorpus(loaded.state, corpus: corpus)
             try loaded.trainingPlan.validate(for: corpus)
             let metrics = try runSteps(model: loaded.model, corpus: corpus, plan: loaded.trainingPlan,
                                        startingStep: loaded.state.step, additionalSteps: plan.additionalSteps,
                                        trainedTargetIndices: trainedTargetIndices)
             let state = VivoCellResponseModelState(
-                schemaVersion: 4, architecture: loaded.state.architecture, featureAxis: loaded.state.featureAxis,
+                schemaVersion: 5, architecture: loaded.state.architecture, featureAxis: loaded.state.featureAxis,
                 targetIDs: loaded.state.targetIDs, trainedTargetBindings: loaded.state.trainedTargetBindings,
                 descriptorCount: loaded.state.descriptorCount,
-                corpus: loaded.state.corpus, trainingPlan: loaded.state.trainingPlan,
+                corpus: loaded.state.corpus, trainingPlan: loaded.state.trainingPlan, cohort: loaded.state.cohort,
                 step: metrics.step, seed: loaded.state.seed, samplerVersion: loaded.state.samplerVersion,
                 targetResponsePriorVersion: loaded.state.targetResponsePriorVersion,
                 optimizerVersion: loaded.state.optimizerVersion,
@@ -1515,7 +1658,9 @@ extension VivoCellResponseLearning {
             return try VivoCellResponseArtifactIO.publish(model: loaded.model, state: state,
                                                            trainingPlanBytes: loaded.trainingPlanBytes,
                                                            implementation: implementation,
-                                                           parentCheckpoint: loaded.receipt.checkpoint, to: destination)
+                                                           parentCheckpoint: loaded.receipt.checkpoint,
+                                                           cohortAdmission: cohort, cohortAdmissionBytes: cohortBytes,
+                                                           to: destination)
         }
     }
 
@@ -1726,14 +1871,62 @@ extension VivoCellResponseLearning {
         }
     }
 
+    /// Qualification is a held-out result, not an arbitrary evaluation
+    /// sample. Every declared test target/sample stratum must appear exactly
+    /// once in the frozen evaluation selection. `verifyEvaluation` supplies
+    /// the companion guarantee that each selected target and control row was
+    /// recomputed from the bound model and corpus.
+    static func requireQualificationEvaluationCoverage(_ evaluation: VivoCellResponseEvaluation,
+                                                       corpus: VivoCellResponseCorpusReader) throws {
+        try validateEvaluation(evaluation)
+        guard evaluation.partition == .test else {
+            throw VivoCellResponseLearningError.invalid("qualification requires a held-out test evaluation")
+        }
+        let examples = try corpus.examples(in: .test)
+        let expectedStrata = Set(examples.map(\.stratumIndex))
+        guard !expectedStrata.isEmpty else {
+            throw VivoCellResponseLearningError.invalid("qualification has no held-out test strata")
+        }
+        var stratumByTargetRow: [Int: Int] = [:]
+        for example in examples {
+            guard stratumByTargetRow.updateValue(example.stratumIndex, forKey: example.targetRow) == nil else {
+                throw VivoCellResponseLearningError.invalid("qualification test target rows overlap")
+            }
+        }
+        let selectedStrata = try evaluation.selection.map { example -> Int in
+            guard let stratum = stratumByTargetRow[example.targetRow] else {
+                throw VivoCellResponseLearningError.invalid("qualification selection is outside the held-out test")
+            }
+            return stratum
+        }
+        guard evaluation.maximumExamples >= expectedStrata.count,
+              evaluation.examples == expectedStrata.count,
+              selectedStrata.count == expectedStrata.count,
+              Set(selectedStrata) == expectedStrata else {
+            throw VivoCellResponseLearningError.invalid(
+                "qualification requires exhaustive held-out test-stratum coverage")
+        }
+    }
+
     /// Replay an evaluation under its bound model and corpus, then require a
     /// strict improvement over the recorded exact matched-control baseline.
     /// A failed qualification never changes the raw evaluation artifact.
     public static func qualifyEvaluation(_ directory: URL, model modelDirectory: URL,
                                          corpus: VivoCellResponseCorpusReader,
                                          implementation: VivoFingerprint) throws -> VivoCellResponseEvaluation {
+        let loaded = try VivoCellResponseArtifactIO.load(modelDirectory, implementation: implementation)
+        guard let cohort = loaded.cohortAdmission, loaded.state.cohort == loaded.receipt.cohort else {
+            throw VivoCellResponseLearningError.incompatible("qualification requires a cohort-bound model")
+        }
+        guard cohort.sources.count == 1 else {
+            throw VivoCellResponseLearningError.incompatible(
+                "current cell-response learner requires one receipt-bound corpus")
+        }
+        try VivoCellResponseCohort.verify(cohort, readers: [corpus])
+        try VivoCellResponseCohort.requireQualificationCoverage(cohort)
         let evaluation = try verifyEvaluation(directory, model: modelDirectory, corpus: corpus,
                                               implementation: implementation)
+        try requireQualificationEvaluationCoverage(evaluation, corpus: corpus)
         try requireMatchedControlImprovement(evaluation)
         return evaluation
     }
