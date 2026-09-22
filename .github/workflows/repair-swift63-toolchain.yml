@@ -1,0 +1,93 @@
+name: Prepare Swift 6.3 runner repair
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/repair-swift63-toolchain.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    if: github.repository == 'Numi2/numiVivo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Prepare runner-only changes and verify preserved test definitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'PyYAML>=6,<7'
+          python - <<'PYREPAIR'
+          import copy
+          import json
+          from pathlib import Path
+          import yaml
+
+          package = Path('Package.swift')
+          source = package.read_text()
+          assert source.startswith('// swift-tools-version: 6.0\n')
+          assert 'exact: "0.31.6"' in source
+          changes = []
+          for path in sorted(Path('.github/workflows').glob('*.yml')):
+              original = path.read_text()
+              before = yaml.load(original, Loader=yaml.BaseLoader)
+              jobs = before.get('jobs', {})
+              selected = [name for name, job in jobs.items()
+                          if job.get('runs-on') == 'macos-15']
+              if not selected:
+                  continue
+              replacement = original.replace('runs-on: macos-15\n', 'runs-on: macos-26\n')
+              after = yaml.load(replacement, Loader=yaml.BaseLoader)
+              expected = copy.deepcopy(before)
+              for name in selected:
+                  expected['jobs'][name]['runs-on'] = 'macos-26'
+              assert after == expected, f'Non-runner workflow change: {path}'
+              assert replacement != original
+              path.write_text(replacement)
+              changes.append({'path': str(path), 'jobs': selected})
+          assert changes, 'No incompatible Apple runners were found'
+          package.write_text(source.replace('// swift-tools-version: 6.0\n',
+                                            '// swift-tools-version: 6.3\n', 1))
+          Path('.github/workflows/repair-swift63-toolchain.yml').unlink()
+          report = {'changed_workflows': changes,
+                    'test_steps_and_thresholds_preserved': True,
+                    'mlx_version': '0.31.6',
+                    'minimum_swift_tools': '6.3',
+                    'deployment_targets_unchanged': True,
+                    'physical_or_predictive_qualification_claimed': False}
+          Path('toolchain-migration.json').write_text(json.dumps(report, indent=2) + '\n')
+          print(json.dumps(report, indent=2))
+          PYREPAIR
+          git diff --check
+      - name: Publish repair branch without modifying main
+        shell: bash
+        run: |
+          set -euo pipefail
+          BRANCH="codex/swift63-toolchain-${GITHUB_RUN_ID}"
+          git switch -c "$BRANCH"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Package.swift .github/workflows
+          git commit -m 'ci: align all Apple runners with required Swift 6.3'
+          git diff --binary HEAD^ HEAD > toolchain-migration.patch
+          git push origin "HEAD:refs/heads/$BRANCH"
+          printf 'Repair branch: %s\nCommit: %s\n' "$BRANCH" "$(git rev-parse HEAD)" | tee toolchain-migration-commit.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: swift63-toolchain-migration-${{ github.run_id }}
+          path: |
+            toolchain-migration.json
+            toolchain-migration.patch
+            toolchain-migration-commit.txt
+          if-no-files-found: error
+          retention-days: 7
