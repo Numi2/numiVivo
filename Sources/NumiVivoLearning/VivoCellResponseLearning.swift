@@ -495,6 +495,68 @@ private struct VivoCellResponseBatch {
     let contextRows: [Int]
 }
 
+/// Ephemeral, corpus-scoped normalized control rows used only while fitting.
+/// It is rebuilt from the verified source store for each train/resume call and
+/// is never published as model state or evidence.
+private struct VivoCellResponseTrainingControlCache {
+    let featureCount: Int
+    let values: [Float]
+    let offsets: [Int: Int]
+    let rankedContexts: [[Int]]
+
+    init(corpus: VivoCellResponseCorpusReader, rows: [Int], rankedContexts: [[Int]]) throws {
+        featureCount = corpus.featureCount
+        self.rankedContexts = rankedContexts
+        guard !rows.isEmpty else {
+            throw VivoCellResponseLearningError.invalid("training control cache is empty")
+        }
+        let valueCount = rows.count.multipliedReportingOverflow(by: featureCount)
+        guard !valueCount.overflow, valueCount.partialValue <= 268_435_456 else {
+            throw VivoCellResponseLearningError.limit("training control cache exceeds 1 GiB")
+        }
+        var storage: [Float] = []
+        storage.reserveCapacity(valueCount.partialValue)
+        var rowOffsets: [Int: Int] = [:]
+        rowOffsets.reserveCapacity(rows.count)
+        for (offset, row) in rows.enumerated() {
+            if offset % 8 == 0 { try Task.checkCancellation() }
+            let normalized = try corpus.normalizedRow(row)
+            guard normalized.count == featureCount else {
+                throw VivoCellResponseLearningError.invalid("training control cache row width")
+            }
+            rowOffsets[row] = storage.count
+            storage.append(contentsOf: normalized)
+        }
+        guard storage.count == valueCount.partialValue else {
+            throw VivoCellResponseLearningError.invalid("training control cache size")
+        }
+        values = storage
+        offsets = rowOffsets
+    }
+
+    func rows(count: Int, seed: UInt64, step: UInt64, lane: UInt64, stratum: Int) throws -> [Int] {
+        guard rankedContexts.indices.contains(stratum) else {
+            throw VivoCellResponseLearningError.invalid("training control cache stratum")
+        }
+        let candidates = rankedContexts[stratum]
+        guard count > 0, !candidates.isEmpty else {
+            throw VivoCellResponseLearningError.invalid("training control cache context")
+        }
+        let start = try VivoCellResponseLearning.sampledIndex(
+            count: candidates.count, seed: seed, step: step, lane: lane,
+            salt: 0x721a5be9 ^ UInt64(stratum))
+        return (0..<count).map { candidates[(start + $0) % candidates.count] }
+    }
+
+    func appendNormalizedRow(_ row: Int, to destination: inout [Float]) throws {
+        guard let offset = offsets[row], offset >= 0,
+              offset <= values.count - featureCount else {
+            throw VivoCellResponseLearningError.invalid("training control cache row")
+        }
+        destination.append(contentsOf: values[offset..<(offset + featureCount)])
+    }
+}
+
 private struct VivoCellResponseLoadedArtifact {
     let model: VivoCellResponseMLXModel
     let state: VivoCellResponseModelState
@@ -745,7 +807,7 @@ extension VivoCellResponseLearning {
         return value ^ (value >> 31)
     }
 
-    private static func sampledIndex(count: Int, seed: UInt64, step: UInt64, lane: UInt64, salt: UInt64) throws -> Int {
+    fileprivate static func sampledIndex(count: Int, seed: UInt64, step: UInt64, lane: UInt64, salt: UInt64) throws -> Int {
         guard count > 0 else { throw VivoCellResponseLearningError.invalid("empty sample population") }
         return Int(mix(seed: seed, step: step, lane: lane, salt: salt) % UInt64(count))
     }
@@ -788,13 +850,20 @@ extension VivoCellResponseLearning {
     /// evaluation, and inference. A fixed hash ranks the immutable row IDs;
     /// each row is consumed once before cycling only when the model width
     /// exceeds the declared control population.
-    private static func deterministicContextRows(_ rows: [Int], count: Int) throws -> [Int] {
-        let candidates = rows.sorted { left, right in
+    private static func rankedContextRows(_ rows: [Int]) throws -> [Int] {
+        guard !rows.isEmpty else {
+            throw VivoCellResponseLearningError.invalid("empty deterministic control context")
+        }
+        return rows.sorted { left, right in
             let leftRank = mix(seed: 0x0d4e3c2b1a987654, step: UInt64(left), lane: 0, salt: 0x6841f29d)
             let rightRank = mix(seed: 0x0d4e3c2b1a987654, step: UInt64(right), lane: 0, salt: 0x6841f29d)
             return leftRank == rightRank ? left < right : leftRank < rightRank
         }
-        guard count > 0, !candidates.isEmpty else {
+    }
+
+    private static func deterministicContextRows(_ rows: [Int], count: Int) throws -> [Int] {
+        let candidates = try rankedContextRows(rows)
+        guard count > 0 else {
             throw VivoCellResponseLearningError.invalid("empty deterministic control context")
         }
         return (0..<count).map { candidates[$0 % candidates.count] }
@@ -806,17 +875,40 @@ extension VivoCellResponseLearning {
     /// population instead of repeatedly fitting one fixed subset.
     private static func trainingContextRows(_ rows: [Int], count: Int, seed: UInt64,
                                             step: UInt64, lane: UInt64, stratum: Int) throws -> [Int] {
-        let candidates = rows.sorted { left, right in
-            let leftRank = mix(seed: 0x0d4e3c2b1a987654, step: UInt64(left), lane: 0, salt: 0x6841f29d)
-            let rightRank = mix(seed: 0x0d4e3c2b1a987654, step: UInt64(right), lane: 0, salt: 0x6841f29d)
-            return leftRank == rightRank ? left < right : leftRank < rightRank
-        }
-        guard count > 0, !candidates.isEmpty, stratum >= 0 else {
+        let candidates = try rankedContextRows(rows)
+        guard count > 0, stratum >= 0 else {
             throw VivoCellResponseLearningError.invalid("empty training control context")
         }
         let start = try sampledIndex(count: candidates.count, seed: seed, step: step, lane: lane,
                                      salt: 0x721a5be9 ^ UInt64(stratum))
         return (0..<count).map { candidates[(start + $0) % candidates.count] }
+    }
+
+    private static func trainingControlCache(corpus: VivoCellResponseCorpusReader,
+                                             strata: [[VivoCellResponseTrainingExample]]) throws -> VivoCellResponseTrainingControlCache {
+        let maximumContextReferences = 1_048_576
+        guard !strata.isEmpty, strata.count <= maximumContextReferences else {
+            throw VivoCellResponseLearningError.limit("training control cache strata")
+        }
+        var rankedContexts: [[Int]] = []
+        rankedContexts.reserveCapacity(strata.count)
+        var totalContextReferences = 0
+        var uniqueRows = Set<Int>()
+        for candidates in strata {
+            guard let first = candidates.first,
+                  candidates.allSatisfy({ $0.contextRows == first.contextRows }) else {
+                throw VivoCellResponseLearningError.invalid("training control cache strata")
+            }
+            let nextCount = totalContextReferences.addingReportingOverflow(first.contextRows.count)
+            guard !nextCount.overflow, nextCount.partialValue <= maximumContextReferences else {
+                throw VivoCellResponseLearningError.limit("training control cache context references")
+            }
+            totalContextReferences = nextCount.partialValue
+            let ranked = try rankedContextRows(first.contextRows)
+            rankedContexts.append(ranked)
+            uniqueRows.formUnion(ranked)
+        }
+        return try .init(corpus: corpus, rows: uniqueRows.sorted(), rankedContexts: rankedContexts)
     }
 
     /// The empirical perturbation response used to initialize known targets.
@@ -934,7 +1026,8 @@ extension VivoCellResponseLearning {
     private static func trainingBatch(corpus: VivoCellResponseCorpusReader,
                                       strata: [[VivoCellResponseTrainingExample]],
                                       plan: VivoCellResponseTrainingPlan, trainedTargetIndices: Set<Int>,
-                                      step: UInt64) throws -> VivoCellResponseBatch {
+                                      step: UInt64,
+                                      controlCache: VivoCellResponseTrainingControlCache?) throws -> VivoCellResponseBatch {
         let features = corpus.featureCount
         let contexts = plan.architecture.contextCells
         let batches = plan.batchSize
@@ -967,9 +1060,20 @@ extension VivoCellResponseLearning {
                   let targetID = Int32(exactly: example.targetIndex), example.contextRows.count > 0 else {
                 throw VivoCellResponseLearningError.invalid("training target or context rows")
             }
-            for row in try trainingContextRows(example.contextRows, count: contexts, seed: plan.seed,
-                                               step: step, lane: UInt64(lane), stratum: stratumIndex) {
-                contextValues.append(contentsOf: try corpus.normalizedRow(row))
+            let contextRows: [Int]
+            if let controlCache {
+                contextRows = try controlCache.rows(count: contexts, seed: plan.seed, step: step,
+                                                     lane: UInt64(lane), stratum: stratumIndex)
+            } else {
+                contextRows = try trainingContextRows(example.contextRows, count: contexts, seed: plan.seed,
+                                                       step: step, lane: UInt64(lane), stratum: stratumIndex)
+            }
+            for row in contextRows {
+                if let controlCache {
+                    try controlCache.appendNormalizedRow(row, to: &contextValues)
+                } else {
+                    contextValues.append(contentsOf: try corpus.normalizedRow(row))
+                }
             }
             targetValues.append(contentsOf: try corpus.normalizedRow(example.targetRow))
             targetIDs.append(targetID); known.append(1)
@@ -983,6 +1087,73 @@ extension VivoCellResponseLearning {
             targets: MLXArray(targetValues, [batches, features]),
             featureMask: MLXArray(corpus.featureMask, [1, features]),
             targetValues: targetValues, contextRows: [])
+    }
+
+    /// Test-only equivalence probe for the ephemeral training-control cache.
+    /// It compares the exact dense MLX batch built from the source store with
+    /// the batch assembled from cached, source-derived control rows.
+    static func trainingControlCacheMatchesUncachedBatchForTesting(corpus: VivoCellResponseCorpusReader,
+                                                                    plan: VivoCellResponseTrainingPlan,
+                                                                    step: UInt64) throws -> Bool {
+        try plan.validate(for: corpus)
+        let strata = try stratifiedExamples(try corpus.examples(in: .training))
+        let bindings = try corpus.trainingTargetBindings()
+        let targetIndices = try trainedTargetIndices(corpus: corpus, bindings: bindings)
+        let uncached = try trainingBatch(corpus: corpus, strata: strata, plan: plan,
+                                         trainedTargetIndices: targetIndices, step: step, controlCache: nil)
+        let cache = try trainingControlCache(corpus: corpus, strata: strata)
+        let cached = try trainingBatch(corpus: corpus, strata: strata, plan: plan,
+                                       trainedTargetIndices: targetIndices, step: step, controlCache: cache)
+        return uncached.context.shape == cached.context.shape &&
+            uncached.context.asArray(Float.self) == cached.context.asArray(Float.self) &&
+            uncached.targets.asArray(Float.self) == cached.targets.asArray(Float.self) &&
+            uncached.targetIDs.asArray(Int32.self) == cached.targetIDs.asArray(Int32.self) &&
+            uncached.descriptors.asArray(Float.self) == cached.descriptors.asArray(Float.self)
+    }
+
+    /// Test-only in-memory comparison between the production full-axis decoder
+    /// route and the former unscaled SGD route. Neither model is serialized,
+    /// so no test optimizer can acquire production artifact provenance.
+    static func outputAxisRouteDifferenceForTesting(corpus: VivoCellResponseCorpusReader,
+                                                     plan: VivoCellResponseTrainingPlan) throws -> Float {
+        try withGPUExecution {
+            try plan.validate(for: corpus)
+            let bindings = try corpus.trainingTargetBindings()
+            let targetIndices = try trainedTargetIndices(corpus: corpus, bindings: bindings)
+            let responsePrior = try trainingOnlyTargetResponsePrior(corpus: corpus,
+                                                                     trainedTargetIndices: targetIndices)
+            MLXRandom.seed(plan.seed)
+            let scaled = VivoCellResponseMLXModel(featureCount: corpus.featureCount, targetCount: corpus.targetCount,
+                                                   descriptorCount: corpus.descriptorCount, architecture: plan.architecture,
+                                                   targetResponsePriorValues: responsePrior)
+            _ = try runSteps(model: scaled, corpus: corpus, plan: plan, startingStep: 0,
+                             additionalSteps: plan.steps, trainedTargetIndices: targetIndices)
+            MLXRandom.seed(plan.seed)
+            let unscaled = VivoCellResponseMLXModel(featureCount: corpus.featureCount, targetCount: corpus.targetCount,
+                                                     descriptorCount: corpus.descriptorCount, architecture: plan.architecture,
+                                                     targetResponsePriorValues: responsePrior)
+            _ = try runSteps(model: unscaled, corpus: corpus, plan: plan, startingStep: 0,
+                             additionalSteps: plan.steps, trainedTargetIndices: targetIndices,
+                             meanHeadScaleOverrideForTesting: 1)
+            let strata = try stratifiedExamples(try corpus.examples(in: .training))
+            let cache = try trainingControlCache(corpus: corpus, strata: strata)
+            let batch = try trainingBatch(corpus: corpus, strata: strata, plan: plan,
+                                          trainedTargetIndices: targetIndices, step: 1, controlCache: cache)
+            let scaledDelta = scaled.outputs(context: batch.context, targetIDs: batch.targetIDs,
+                                              knownTargetMask: batch.knownTargetMask,
+                                              descriptors: batch.descriptors).delta.asArray(Float.self)
+            let unscaledDelta = unscaled.outputs(context: batch.context, targetIDs: batch.targetIDs,
+                                                  knownTargetMask: batch.knownTargetMask,
+                                                  descriptors: batch.descriptors).delta.asArray(Float.self)
+            guard scaledDelta.count == unscaledDelta.count, !scaledDelta.isEmpty else {
+                throw VivoCellResponseLearningError.invalid("output-axis test output shape")
+            }
+            let difference = zip(scaledDelta, unscaledDelta).map { abs($0.0 - $0.1) }.max() ?? 0
+            guard difference.isFinite else {
+                throw VivoCellResponseLearningError.invalid("output-axis test difference")
+            }
+            return difference
+        }
     }
 
     private static func evaluationBatch(corpus: VivoCellResponseCorpusReader,
@@ -1064,17 +1235,19 @@ extension VivoCellResponseLearning {
     private static func runSteps(model: VivoCellResponseMLXModel, corpus: VivoCellResponseCorpusReader,
                                  plan: VivoCellResponseTrainingPlan, startingStep: UInt64,
                                  additionalSteps: Int,
-                                 trainedTargetIndices: Set<Int>) throws -> VivoCellResponseTrainingMetrics {
+                                 trainedTargetIndices: Set<Int>,
+                                 meanHeadScaleOverrideForTesting: Float? = nil) throws -> VivoCellResponseTrainingMetrics {
         let examples = try corpus.examples(in: .training)
         let strata = try stratifiedExamples(examples)
         let validation = (try? corpus.examples(in: .validation)) ?? []
+        let controlCache = try trainingControlCache(corpus: corpus, strata: strata)
         let observedFeatureCount = corpus.featureMask.reduce(into: 0) { total, value in
             if value > 0 { total += 1 }
         }
         guard observedFeatureCount > 0 else {
             throw VivoCellResponseLearningError.invalid("training corpus has no measured features")
         }
-        let outputAxisScale = Float(observedFeatureCount)
+        let outputAxisScale = meanHeadScaleOverrideForTesting ?? Float(observedFeatureCount)
         let baseLearningRate = Float(plan.learningRate)
         let meanHeadLearningRate = baseLearningRate * outputAxisScale
         let meanHeadWeightDecay = Float(plan.weightDecay) / outputAxisScale
@@ -1105,7 +1278,8 @@ extension VivoCellResponseLearning {
             guard !stepResult.overflow else { throw VivoCellResponseLearningError.limit("checkpoint step") }
             let step = stepResult.partialValue
             let batch = try trainingBatch(corpus: corpus, strata: strata, plan: plan,
-                                          trainedTargetIndices: trainedTargetIndices, step: step)
+                                          trainedTargetIndices: trainedTargetIndices, step: step,
+                                          controlCache: controlCache)
             let (values, gradients) = lossAndGrad(model, [batch.context, batch.targetIDs, batch.knownTargetMask,
                                                            batch.descriptors, batch.targets, batch.featureMask])
             optimizer.update(model: model, gradients: gradients)

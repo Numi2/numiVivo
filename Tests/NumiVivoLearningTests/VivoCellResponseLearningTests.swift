@@ -84,7 +84,8 @@ struct VivoCellResponseLearningTests {
     private static let descriptorSourceBytes = try! VivoCanonicalJSON.encode(descriptorSource)
     private static let descriptorSourceFingerprint = try! VivoCanonicalJSON.fingerprint(descriptorSourceBytes)
 
-    private static func corpusPlan(featureIDs: [String] = ["gene-a", "gene-b", "gene-absent"]) -> VivoCellResponseCorpusPlan {
+    private static func corpusPlan(featureIDs: [String] = ["gene-a", "gene-b", "gene-absent"],
+                                   allStrataTraining: Bool = false) -> VivoCellResponseCorpusPlan {
         let base: (String, VivoCellResponseRole, VivoCellResponsePartition, String, String, String?) -> VivoCellResponseAssignment = {
             sample, role, partition, context, pair, targetID in
             let guideID = role == .perturbed ? targetID! : sample
@@ -100,9 +101,11 @@ struct VivoCellResponseLearningTests {
                      assignments: [
                         base("control-training", .control, .training, "context-training", "pair-training", nil),
                         base("target-training", .perturbed, .training, "context-training", "pair-training", "target-a"),
-                        base("control-validation", .control, .validation, "context-validation", "pair-validation", nil),
-                        base("target-validation", .perturbed, .validation, "context-validation", "pair-validation", "target-b")
-                     ], heldOutTargetIDs: ["target-b"])
+                        base("control-validation", .control, allStrataTraining ? .training : .validation,
+                             "context-validation", "pair-validation", nil),
+                        base("target-validation", .perturbed, allStrataTraining ? .training : .validation,
+                             "context-validation", "pair-validation", "target-b")
+                     ], heldOutTargetIDs: allStrataTraining ? [] : ["target-b"])
     }
 
     @Test("source-bound corpus trains, resumes, predicts, and rejects tampering")
@@ -141,6 +144,8 @@ struct VivoCellResponseLearningTests {
                                                  architecture: .init(hiddenWidth: 16, contextCells: 2, maximumParameters: 100_000),
                                                  steps: 12, batchSize: 1, learningRate: 0.01, weightDecay: 0,
                                                  seed: 17, validationEvery: 4, validationExamples: 2)
+        #expect(try VivoCellResponseLearning.trainingControlCacheMatchesUncachedBatchForTesting(
+            corpus: reader, plan: plan, step: 1))
         let receipt = try VivoCellResponseLearning.train(corpus: reader, plan: plan, implementation: Self.implementation, to: model)
         #expect(receipt.format == VivoCellResponseLearning.modelFormat)
         _ = try VivoCellResponseLearning.verifyModel(model, implementation: Self.implementation)
@@ -286,6 +291,30 @@ struct VivoCellResponseLearningTests {
         #expect(throws: (any Error).self) { try plan.validate() }
     }
 
+    @Test("training-control cache replays source batches across strata and wraparound")
+    func trainingControlCacheReplaysAcrossStrata() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-cell-response-cache-test-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let h5ad = root.appendingPathComponent("synthetic.h5ad")
+        let store = root.appendingPathComponent("count-store")
+        let corpusDirectory = root.appendingPathComponent("corpus")
+        try VivoSingleCellH5AD.write(Self.dataset(), to: h5ad)
+        _ = try VivoH5ADCountStore.publish(source: h5ad, plan: Self.importPlan(), implementation: Self.implementation, to: store)
+        _ = try VivoCellResponseCorpus.prepare(sourceStore: store, plan: Self.corpusPlan(allStrataTraining: true),
+                                                descriptorSourceBytes: Self.descriptorSourceBytes,
+                                                implementation: Self.implementation, to: corpusDirectory)
+        let reader = try VivoCellResponseCorpus.open(corpusDirectory, sourceStore: store, implementation: Self.implementation)
+        let plan = VivoCellResponseTrainingPlan(id: "cache-equivalence",
+                                                 architecture: .init(hiddenWidth: 16, contextCells: 3, maximumParameters: 100_000),
+                                                 steps: 1, batchSize: 2, learningRate: 0.01, weightDecay: 0,
+                                                 seed: 31, validationEvery: 1, validationExamples: 1)
+        #expect(try VivoCellResponseLearning.trainingControlCacheMatchesUncachedBatchForTesting(
+            corpus: reader, plan: plan, step: 1))
+        #expect(try VivoCellResponseLearning.trainingControlCacheMatchesUncachedBatchForTesting(
+            corpus: reader, plan: plan, step: 2))
+    }
+
     @Test("output-axis optimizer trains a wide synthetic response residual")
     func outputAxisOptimizerTrainsWideResidual() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-cell-response-wide-test-" + UUID().uuidString)
@@ -295,10 +324,6 @@ struct VivoCellResponseLearningTests {
         let h5ad = root.appendingPathComponent("wide-synthetic.h5ad")
         let store = root.appendingPathComponent("count-store")
         let corpusDirectory = root.appendingPathComponent("corpus")
-        let frozenModel = root.appendingPathComponent("frozen-model")
-        let learnedModel = root.appendingPathComponent("learned-model")
-        let frozenPrediction = root.appendingPathComponent("frozen-prediction")
-        let learnedPrediction = root.appendingPathComponent("learned-prediction")
         try VivoSingleCellH5AD.write(dataset, to: h5ad)
         _ = try VivoH5ADCountStore.publish(source: h5ad, plan: Self.importPlan(), implementation: Self.implementation, to: store)
         _ = try VivoCellResponseCorpus.prepare(sourceStore: store,
@@ -310,28 +335,12 @@ struct VivoCellResponseLearningTests {
         // shrink an independent decoder-row update below the assertion while
         // the output-axis optimizer retains the calibrated update scale.
         let architecture = VivoCellResponseArchitecture(hiddenWidth: 16, contextCells: 2, maximumParameters: 250_000)
-        let frozenPlan = VivoCellResponseTrainingPlan(id: "wide-frozen", architecture: architecture,
-                                                       steps: 1, batchSize: 1, learningRate: 1e-8, weightDecay: 0,
-                                                       seed: 23, validationEvery: 1, validationExamples: 1)
-        let learnedPlan = VivoCellResponseTrainingPlan(id: "wide-learned", architecture: architecture,
-                                                        steps: 8, batchSize: 1, learningRate: 0.01, weightDecay: 0,
-                                                        seed: 23, validationEvery: 8, validationExamples: 1)
-        _ = try VivoCellResponseLearning.train(corpus: reader, plan: frozenPlan,
-                                                implementation: Self.implementation, to: frozenModel)
-        _ = try VivoCellResponseLearning.train(corpus: reader, plan: learnedPlan,
-                                                implementation: Self.implementation, to: learnedModel)
-        let knownTarget = VivoCellResponsePredictionPlan(
-            id: "wide-known-target", target: .init(id: "target-a", descriptors: [0.25, -0.5]),
-            contextSampleIDs: ["control-training"], useTrainedTargetEmbedding: true)
-        _ = try VivoCellResponseLearning.predict(model: frozenModel, corpus: reader, plan: knownTarget,
-                                                  implementation: Self.implementation, to: frozenPrediction)
-        _ = try VivoCellResponseLearning.predict(model: learnedModel, corpus: reader, plan: knownTarget,
-                                                  implementation: Self.implementation, to: learnedPrediction)
-        let frozen = try VivoCellResponseLearning.verifyPrediction(frozenPrediction, implementation: Self.implementation)
-        let learned = try VivoCellResponseLearning.verifyPrediction(learnedPrediction, implementation: Self.implementation)
-        let maximumDeltaChange = zip(frozen.meanDeltaLogCPM, learned.meanDeltaLogCPM)
-            .map { abs($0.0 - $0.1) }.max() ?? 0
-        #expect(maximumDeltaChange > 1e-4)
+        let plan = VivoCellResponseTrainingPlan(id: "wide-output-axis", architecture: architecture,
+                                                 steps: 8, batchSize: 1, learningRate: 0.01, weightDecay: 0,
+                                                 seed: 23, validationEvery: 8, validationExamples: 1)
+        let maximumDeltaDifference = try VivoCellResponseLearning.outputAxisRouteDifferenceForTesting(
+            corpus: reader, plan: plan)
+        #expect(maximumDeltaDifference > 1e-4)
     }
 
     @Test("qualification requires a strict matched-control improvement")

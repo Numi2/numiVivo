@@ -19,11 +19,12 @@ The source-bound `cell-response-train`, `cell-response-resume`,
 `cell-response-predict` commands use the pinned
 MLX Metal runtime. Run them through
 [`Tools/run-numivivo-mlx.sh`](Tools/run-numivivo-mlx.sh), which builds the
-package with Xcode, checks for MLX's generated Metal bundle, and executes the
-paired CLI product. A plain SwiftPM build does not produce that MLX runtime
-bundle. The helper keeps the caller's working directory and environment, so
-existing absolute or relative artifact paths and `NUMIVIVO_HDF5_LIBRARY` work
-unchanged.
+package in Release configuration with Xcode, checks for MLX's generated Metal
+bundle, and executes the paired CLI product. A plain SwiftPM build does not
+produce that MLX runtime bundle. Set `NUMIVIVO_XCODE_CONFIGURATION=Debug` only
+for diagnostics. The helper keeps the caller's working directory and
+environment, so existing absolute or relative artifact paths and
+`NUMIVIVO_HDF5_LIBRARY` work unchanged.
 
 The response learner records the matched-control RMSE alongside every held-out
 evaluation. `cell-response-evaluation-qualify` replay-verifies the exact
