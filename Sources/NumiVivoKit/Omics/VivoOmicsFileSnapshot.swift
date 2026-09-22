@@ -10,7 +10,8 @@ import Glibc
 /// its own admission bound; a fixed 1 MiB buffer hashes the exact copied bytes.
 enum VivoOmicsFileSnapshot {
     /// Bounded snapshot copying, using descriptors to reject non-regular files.
-    static func fingerprint(_ source: URL, copyTo destination: URL? = nil, maximumBytes: Int) throws -> VivoFingerprint {
+    static func fingerprint(_ source: URL, copyTo destination: URL? = nil, maximumBytes: Int,
+                            requireClone: Bool = false) throws -> VivoFingerprint {
         guard maximumBytes >= 0, maximumBytes <= 64 * 1_024 * 1_024 * 1_024 else { throw VivoOmicsError.limit("snapshot byte bound") }
         let fd = open(source.path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK)
         guard fd >= 0 else { throw VivoOmicsError.invalid("cannot open omics input") }
@@ -44,6 +45,7 @@ enum VivoOmicsFileSnapshot {
             }
             #endif
             if cloned < 0 {
+                guard !requireClone else { throw VivoOmicsError.invalid("copy-on-write omics snapshot unavailable") }
                 output = open(destination.path, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW, 0o600)
                 guard output >= 0 else { throw VivoOmicsError.invalid("cannot create omics snapshot") }
             }

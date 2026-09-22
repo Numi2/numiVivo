@@ -80,13 +80,108 @@ public struct VivoH5ADDocument: Sendable {
     }
 }
 
+/// A source-bound, read-only count-matrix admission result.  It validates every
+/// stored count before a count store copies the source or writes any records;
+/// it does not infer a sample, guide, context, donor, or biological replicate.
+public struct VivoH5ADCountMatrixPreflight: Codable, Sendable, Equatable {
+    public let schemaVersion: Int
+    public let format: String
+    public let source: VivoFingerprint
+    public let hdf5Version: String
+    public let matrixPath: String
+    public let rows: Int
+    public let features: Int
+    public let nonzeros: Int
+    public let sourceBytes: Int
+    public let countRecordBytes: Int
+    /// Exact bytes for the retained source and source-major count records only.
+    /// This preflight does not measure or enforce metadata, receipts,
+    /// filesystem allocation, or free-space capacity; callers must budget those
+    /// separately before they publish a count store.
+    public let retainedSourceAndCountBytes: Int
+}
+
 public enum VivoSingleCellH5AD {
+    /// Admit the old dataframe dialect only as a whole-file representation.
+    /// In particular, a partially tagged modern file cannot fall back to loose
+    /// legacy parsing simply because one field is inconvenient to decode.
+    private static func dialect(_ h: VivoHDF5, file: Int64) throws -> VivoH5ADDialect {
+        let hasType = try h.legacyHasAttribute(file, "encoding-type")
+        let hasVersion = try h.legacyHasAttribute(file, "encoding-version")
+        guard hasType == hasVersion else { throw VivoOmicsError.invalid("partial AnnData root encoding") }
+        if !hasType { return .legacyDataframe010 }
+        guard try h.text(file, "encoding-type") == "anndata", try h.text(file, "encoding-version") == "0.1.0" else {
+            throw VivoOmicsError.invalid("unsupported AnnData root encoding")
+        }
+        return .encodedAnnData010
+    }
     static func publish(_ bytes: Data, to destination: URL) throws {
         guard destination.isFileURL else { throw VivoOmicsError.invalid("local H5AD output required") }
         let files = try VivoRootedFileStore(rootURL: destination.deletingLastPathComponent(), createIfNeeded: false)
         guard try files.writeFile(bytes, relative: destination.lastPathComponent, immutable: true) else {
             throw VivoOmicsError.invalid("H5AD output already exists")
         }
+    }
+    private static func countPreflightLimits() -> VivoOmicsLimits {
+        var limits = VivoOmicsLimits()
+        limits.maximumCells = 2_000_000
+        limits.maximumFeatures = 200_000
+        limits.maximumNonzeros = 2_000_000_000
+        limits.maximumInputBytes = 64 * 1_024 * 1_024 * 1_024
+        return limits
+    }
+    private static func sourceFingerprintAndBytes(_ source: URL, snapshot: URL, maximumBytes: Int) throws -> (VivoFingerprint, Int) {
+        let fingerprint = try VivoOmicsFileSnapshot.fingerprint(source, copyTo: snapshot, maximumBytes: maximumBytes, requireClone: true)
+        let attributes = try FileManager.default.attributesOfItem(atPath: snapshot.path)
+        guard let number = attributes[.size] as? NSNumber,
+              let bytes = Int(exactly: number.int64Value), bytes >= 0, bytes <= maximumBytes else {
+            throw VivoOmicsError.limit("H5AD preflight source bytes")
+        }
+        return (fingerprint, bytes)
+    }
+    private static func scanCountMatrixPreflight(_ source: URL, limits: VivoOmicsLimits) throws -> (String, Int, Int, Int) {
+        try withReadableSnapshot(source, limits: limits) { readable in
+            try VivoHDF5.lock.withLock {
+                let h = try VivoHDF5(), file = try h.file(readable.path)
+                defer { h.close(file, "H5Fclose") }
+                let dialect = try dialect(h, file: file)
+                let reader = VivoH5ADFrameReader(h: h, file: file, dialect: dialect)
+                try reader.requireFrame("obs")
+                try reader.requireFrame("var")
+                let rows = try reader.indexLength("obs", maximum: limits.maximumCells)
+                let features = try reader.indexLength("var", maximum: limits.maximumFeatures)
+                var nonzeros = 0
+                try VivoH5ADCountReader.scan(h, file: file, path: "X", rows: rows, features: features,
+                                             limits: limits, dialect: dialect) { _, _, _ in
+                    guard nonzeros < limits.maximumNonzeros else { throw VivoOmicsError.limit("count preflight nonzeros") }
+                    nonzeros += 1
+                }
+                return (try h.version(), rows, features, nonzeros)
+            }
+        }
+    }
+    /// Stream `X` through the same exact integer gate used by the count store,
+    /// without constructing a dataset or retaining a persistent source copy.
+    /// A private copy-on-write snapshot is hashed and scanned, so the report
+    /// remains bound to immutable source bytes even if the original pathname is
+    /// replaced while the scan is in flight.
+    public static func preflightCountMatrix(_ source: URL) throws -> VivoH5ADCountMatrixPreflight {
+        let limits = countPreflightLimits()
+        try limits.validate()
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-preflight-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false, attributes: [.posixPermissions: 0o700])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let snapshot = directory.appendingPathComponent("source.h5ad")
+        let before = try sourceFingerprintAndBytes(source, snapshot: snapshot, maximumBytes: limits.maximumInputBytes)
+        let scanned = try scanCountMatrixPreflight(snapshot, limits: limits)
+        let product = scanned.3.multipliedReportingOverflow(by: 16)
+        guard !product.overflow else { throw VivoOmicsError.limit("count preflight record bytes") }
+        let retained = before.1.addingReportingOverflow(product.partialValue)
+        guard !retained.overflow else { throw VivoOmicsError.limit("count preflight retained bytes") }
+        return .init(schemaVersion: 1, format: "numivivo.org/h5ad-count-matrix-preflight/v1", source: before.0,
+                     hdf5Version: scanned.0, matrixPath: "X", rows: scanned.1, features: scanned.2,
+                     nonzeros: scanned.3, sourceBytes: before.1, countRecordBytes: product.partialValue,
+                     retainedSourceAndCountBytes: retained.partialValue)
     }
     /// Run an HDF5 consumer against an immutable, uncompressed view of an
     /// H5AD source. External gzip is detected from the bytes, never a filename;
@@ -164,21 +259,24 @@ public enum VivoSingleCellH5AD {
         return try VivoHDF5.lock.withLock {
             let h = try VivoHDF5(), file = try h.file(url.path)
             defer { h.close(file, "H5Fclose") }
-            guard try h.text(file, "encoding-type") == "anndata", try h.text(file, "encoding-version") == "0.1.0" else {
-                throw VivoOmicsError.invalid("unsupported AnnData root encoding")
-            }
-            let reader = VivoH5ADFrameReader(h: h, file: file)
+            let dialect = try dialect(h, file: file)
+            let reader = VivoH5ADFrameReader(h: h, file: file, dialect: dialect)
             func component(_ name: String) throws -> String { try reader.component(name) }
             func column(_ frame: String, _ name: String, maximum: Int) throws -> [String?] { try reader.column(frame, name, maximum: maximum) }
             func required(_ values: [String?]) throws -> [String] { try reader.required(values) }
             func index(_ frame: String, maximum: Int) throws -> [String] { try reader.index(frame, maximum: maximum) }
             let featureFrame = plan.matrixPath == "raw/X" ? "raw/var" : "var"
+            if dialect == .legacyDataframe010, plan.matrixPath != "X" {
+                throw VivoOmicsError.invalid("legacy AnnData count import supports X only")
+            }
             if plan.matrixPath == "raw/X" {
                 let raw = try h.object(file, "raw"); defer { h.close(raw, "H5Oclose") }
                 guard try h.text(raw, "encoding-type") == "raw", try h.text(raw, "encoding-version") == "0.1.0" else {
                     throw VivoOmicsError.invalid("unsupported AnnData raw encoding")
                 }
             }
+            try reader.requireFrame("obs")
+            try reader.requireFrame(featureFrame)
             let observationCount = try reader.indexLength("obs", maximum: limits.maximumCells)
             let featureCount = try reader.indexLength(featureFrame, maximum: limits.maximumFeatures)
             let features = try plan.featureIDColumn.map { try required(column(featureFrame, $0, maximum: limits.maximumFeatures)) } ?? index(featureFrame, maximum: limits.maximumFeatures)
@@ -200,7 +298,8 @@ public enum VivoSingleCellH5AD {
                 cells: (0..<observationCount).map { .init(barcode: barcodes[$0],sampleID: sampleIDs[$0],group: groups?[$0]) })
             try metadata.validate(limits: limits)
             try onMetadata(metadata)
-            try VivoH5ADCountReader.scan(h, file: file, path: plan.matrixPath, rows: observationCount, features: features.count, limits: limits, onEntry: onEntry)
+            try VivoH5ADCountReader.scan(h, file: file, path: plan.matrixPath, rows: observationCount, features: features.count,
+                                         limits: limits, dialect: dialect, onEntry: onEntry)
             return try h.version()
         }
     }

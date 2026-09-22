@@ -118,17 +118,22 @@ final class VivoHDF5 {
     func dataset(_ file: ID, _ path: String) throws -> ID {
         let fn: @convention(c) (ID, UnsafePointer<CChar>, ID) -> ID = try symbol("H5Dopen2")
         let value = try id(fn(file, path, 0), "open dataset \(path)")
-        do {
-            try sameFile(file, value)
-            let get: @convention(c) (ID) -> ID = try symbol("H5Dget_create_plist")
-            let properties = try id(get(value), "dataset properties"); defer { close(properties, "H5Pclose") }
-            let external: @convention(c) (ID) -> Int32 = try symbol("H5Pget_external_count")
-            let layout: @convention(c) (ID) -> Int32 = try symbol("H5Pget_layout")
-            guard external(properties) == 0, (0...2).contains(layout(properties)) else {
-                throw VivoOmicsError.invalid("external or virtual datasets are not self-contained H5AD inputs")
-            }
-            return value
-        } catch { close(value, "H5Dclose"); throw error }
+        do { try admitDataset(file, value); return value }
+        catch { close(value, "H5Dclose"); throw error }
+    }
+    /// Apply the same self-contained-storage admission to a dataset obtained by
+    /// an HDF5 object reference as to a path-opened dataset.  References are
+    /// not permitted to escape the fingerprinted source through an external or
+    /// virtual storage layout.
+    func admitDataset(_ file: ID, _ value: ID) throws {
+        try sameFile(file, value)
+        let get: @convention(c) (ID) -> ID = try symbol("H5Dget_create_plist")
+        let properties = try id(get(value), "dataset properties"); defer { close(properties, "H5Pclose") }
+        let external: @convention(c) (ID) -> Int32 = try symbol("H5Pget_external_count")
+        let layout: @convention(c) (ID) -> Int32 = try symbol("H5Pget_layout")
+        guard external(properties) == 0, (0...2).contains(layout(properties)) else {
+            throw VivoOmicsError.invalid("external or virtual datasets are not self-contained H5AD inputs")
+        }
     }
     func sameFile(_ first: ID, _ second: ID) throws {
         let name: @convention(c) (ID, UnsafeMutablePointer<CChar>?, Int) -> Int = try symbol("H5Fget_name")
@@ -251,6 +256,20 @@ final class VivoHDF5 {
         let size: @convention(c) (ID) -> Int = try symbol("H5Tget_size")
         if kind(t) == 1 && allowFloat {
             guard size(t) <= 8 else { throw VivoOmicsError.invalid("unsupported floating count precision") }
+            // Count matrices written as Float32 are common in older AnnData
+            // releases. Keep their stored precision through the admission
+            // gate instead of widening every row to Double during a full
+            // source preflight. `UInt64(exactly:)` still rejects values that
+            // cannot be represented as an exact integer count.
+            if size(t) == 4 {
+                var values = [Float](repeating: 0, count: n)
+                try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_FLOAT"), attribute: attribute, into: $0.baseAddress, row: row, range: range) }
+                return try values.map {
+                    guard $0.isFinite, $0 >= 0, $0.rounded(.towardZero) == $0, $0 <= 9_007_199_254_740_992,
+                          let count = UInt64(exactly: $0) else { throw VivoOmicsError.invalid("selected count matrix contains fractional, negative, nonfinite or inexact floating counts") }
+                    return count
+                }
+            }
             var values = [Double](repeating: 0, count: n)
             try values.withUnsafeMutableBytes { try read(value, type: native("NATIVE_DOUBLE"), attribute: attribute, into: $0.baseAddress, row: row, range: range) }
             return try values.map {

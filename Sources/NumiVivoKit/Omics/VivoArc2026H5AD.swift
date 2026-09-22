@@ -41,7 +41,7 @@ public enum VivoArc2026H5AD {
             guard try h.text(file, "encoding-type") == "anndata", try h.text(file, "encoding-version") == "0.1.0" else {
                 throw VivoOmicsError.invalid("Arc input requires supported AnnData encoding")
             }
-            let reader = VivoH5ADFrameReader(h: h, file: file)
+            let reader = VivoH5ADFrameReader(h: h, file: file, dialect: .encodedAnnData010)
             let genes = try reader.index("var", maximum: limits.maximumFeatures)
             try VivoArc2026.labels(genes, count: VivoArc2026.featureCount)
             if let expectedGenes, genes != expectedGenes { throw VivoOmicsError.invalid("Arc gene axis/order mismatch; no intersection or reordering is permitted") }

@@ -10,6 +10,48 @@ extension VivoHDF5 {
         let fn: @convention(c) (ID,UnsafePointer<CChar>) -> Int32 = try symbol("H5Aexists")
         let value=fn(object,name);try check(value,"legacy attribute presence");return value>0
     }
+    /// Resolve AnnData 0.7-era categorical labels through the HDF5 object
+    /// reference stored on the integer-code dataset.  The reference is never
+    /// interpreted as an address: HDF5 resolves it and we retain the same-file
+    /// check that protects every other imported object.
+    func legacyObjectReference(_ object: ID,_ name: String) throws -> ID {
+        let attribute=try self.attribute(object,name);defer { close(attribute,"H5Aclose") }
+        guard try shape(attribute,attribute: true).isEmpty else {
+            throw VivoOmicsError.invalid("legacy object reference must be scalar")
+        }
+        let referenceType=try type(attribute,attribute: true);defer { close(referenceType,"H5Tclose") }
+        let expectedType=try native("STD_REF_OBJ")
+        let equal: @convention(c) (ID,ID) -> Int32 = try symbol("H5Tequal")
+        let matches=equal(referenceType,expectedType);try check(matches,"compare legacy object reference type")
+        guard try legacyTypeKind(referenceType)==7,matches>0 else {
+            throw VivoOmicsError.invalid("legacy categorical categories must be an object reference")
+        }
+        let size: @convention(c) (ID) -> Int = try symbol("H5Tget_size")
+        let width=size(referenceType),expectedWidth=size(expectedType)
+        guard width>0,width==expectedWidth else { throw VivoOmicsError.invalid("legacy object reference width") }
+        var bytes=[UInt8](repeating: 0,count: width)
+        try bytes.withUnsafeMutableBytes { try read(attribute,type: referenceType,attribute: true,into: $0.baseAddress) }
+        let dereference: @convention(c) (ID,Int32,UnsafeRawPointer?) -> ID = try symbol("H5Rdereference1")
+        let target=try bytes.withUnsafeBytes { try id(dereference(object,0,$0.baseAddress),"dereference legacy categorical categories") }
+        do { try admitDataset(object,target);return target }
+        catch { close(target,"H5Oclose");throw error }
+    }
+    /// Kept internal for a byte-level regression fixture. Production import
+    /// only consumes legacy references through `legacyObjectReference`.
+    func legacyWriteObjectReference(_ object: ID,_ name: String,file: ID,path: String) throws {
+        let referenceType=try native("STD_REF_OBJ")
+        let size: @convention(c) (ID) -> Int = try symbol("H5Tget_size")
+        let width=size(referenceType)
+        guard width>0,width<=64 else { throw VivoOmicsError.invalid("legacy object reference width") }
+        var bytes=[UInt8](repeating: 0,count: width)
+        let create: @convention(c) (UnsafeMutableRawPointer?,ID,UnsafePointer<CChar>,Int32,ID) -> Int32 = try symbol("H5Rcreate")
+        try bytes.withUnsafeMutableBytes {
+            try check(create($0.baseAddress,file,path,0,-1),"create legacy object reference")
+        }
+        try bytes.withUnsafeBytes {
+            try write(object,name,type: referenceType,dimensions: [],attribute: true,buffer: $0.baseAddress)
+        }
+    }
     func legacyObjectKind(_ object: ID) throws -> Int32 {
         let fn: @convention(c) (ID) -> Int32 = try symbol("H5Iget_type");return fn(object)
     }

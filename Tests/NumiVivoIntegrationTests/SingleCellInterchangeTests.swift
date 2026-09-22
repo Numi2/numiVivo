@@ -86,6 +86,93 @@ import Testing
         #expect(throws: (any Error).self) { try VivoOmicsDirectoryExport.write(files, to: destination) }
         #expect(try VivoSingleCellCampaignIO.snapshot(manifestURL: destination.appendingPathComponent("manifest.json")) == input)
     }
+    private func legacySamples() -> [VivoOmicsSample] {
+        [.init(id: "guide-a", biologicalReplicateID: "replicate-a", condition: "treated", batchID: "batch-a", organism: "human"),
+         .init(id: "guide-b", biologicalReplicateID: "replicate-b", condition: "control", batchID: "batch-b", organism: "human")]
+    }
+    private func legacyMapping() -> VivoH5ADImportPlan {
+        .init(id: "legacy-h5ad-fixture", evidence: .synthetic, sourceDescription: "Legacy H5AD interoperability fixture",
+              countUnit: .umiCount, matrixPath: "X", samples: legacySamples(), sampleColumn: "sample")
+    }
+    /// Write the AnnData 0.7 dataframe dialect directly: an untagged root,
+    /// direct string indexes, an object-reference categorical column, and an
+    /// untagged Float32 dense X.  The fixture is deliberately unlike the
+    /// project's current writer so it exercises the compatibility reader.
+    private func writeLegacyH5AD(_ url: URL, values: [Float], codes: [Int16] = [0, 1],
+                                 labels: [String] = ["guide-a", "guide-b"], rootEncoding: Bool = false,
+                                 invalidCategoryReferenceType: Bool = false) throws {
+        guard values.count == 4, codes.count == 2 else { throw VivoOmicsError.invalid("legacy H5AD fixture shape") }
+        try VivoHDF5.lock.withLock {
+            let h = try VivoHDF5(), file = try h.file(url.path, create: true)
+            defer { h.close(file, "H5Fclose") }
+            if rootEncoding { try h.encoding(file, "anndata", "0.1.0") }
+            let obs = try h.group(file, "obs"); defer { h.close(obs, "H5Gclose") }
+            try h.encoding(obs, "dataframe", "0.1.0")
+            try h.writeStrings(obs, "_index", ["cell_barcode"], attribute: true, scalar: true)
+            try h.writeStrings(obs, "column-order", ["sample"], attribute: true)
+            try h.writeStrings(obs, "cell_barcode", ["cell-a", "cell-b"])
+            try codes.withUnsafeBytes {
+                try h.write(obs, "sample", type: h.native("NATIVE_SHORT"), dimensions: [2], attribute: false, buffer: $0.baseAddress)
+            }
+            let categories = try h.group(file, "uns"); defer { h.close(categories, "H5Gclose") }
+            try h.writeStrings(categories, "sample_categories", labels)
+            let sample = try h.dataset(obs, "sample"); defer { h.close(sample, "H5Dclose") }
+            if invalidCategoryReferenceType {
+                var invalid: UInt64 = 0
+                try withUnsafeBytes(of: &invalid) {
+                    try h.write(sample, "categories", type: h.native("NATIVE_ULLONG"), dimensions: [], attribute: true, buffer: $0.baseAddress)
+                }
+            } else {
+                try h.legacyWriteObjectReference(sample, "categories", file: file, path: "uns/sample_categories")
+            }
+            let variable = try h.group(file, "var"); defer { h.close(variable, "H5Gclose") }
+            try h.encoding(variable, "dataframe", "0.1.0")
+            try h.writeStrings(variable, "_index", ["gene_id"], attribute: true, scalar: true)
+            try h.writeStrings(variable, "column-order", [], attribute: true)
+            try h.writeStrings(variable, "gene_id", ["gene-a", "gene-b"])
+            try values.withUnsafeBytes {
+                try h.write(file, "X", type: h.native("NATIVE_FLOAT"), dimensions: [2, 2], attribute: false, buffer: $0.baseAddress)
+            }
+        }
+    }
+    @Test func legacyDataframeH5ADStreamsExactCountsAndPreflightsWithoutAStore() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-legacy-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = root.appendingPathComponent("legacy.h5ad")
+        try writeLegacyH5AD(source, values: [1, 0, 0, 2])
+        let preflight = try VivoSingleCellH5AD.preflightCountMatrix(source)
+        #expect(preflight.format == "numivivo.org/h5ad-count-matrix-preflight/v1")
+        #expect(preflight.matrixPath == "X" && preflight.rows == 2 && preflight.features == 2)
+        #expect(preflight.nonzeros == 2 && preflight.countRecordBytes == 32)
+        #expect(preflight.retainedSourceAndCountBytes == preflight.sourceBytes + preflight.countRecordBytes)
+        let document = try VivoSingleCellH5AD.read(source, plan: legacyMapping())
+        #expect(document.dataset.matrix.counts == [1, 2])
+        let store = root.appendingPathComponent("store")
+        let implementation = try VivoFingerprint(bytes: Array(repeating: 9, count: 32))
+        let receipt = try VivoH5ADCountStore.publish(source: source, plan: legacyMapping(), implementation: implementation, to: store)
+        #expect(receipt.entries == 2)
+        #expect(try VivoH5ADCountStore.verify(store, implementation: implementation) == receipt)
+    }
+    @Test func legacyDataframeH5ADRejectsInvalidFloatCountsAndCategoryMappings() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-legacy-invalid-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)
+        defer { try? FileManager.default.removeItem(at: root) }
+        for (name, values) in [("fractional", [Float(1.5), 0, 0, 2]), ("negative", [Float(-1), 0, 0, 2]), ("nan", [Float.nan, 0, 0, 2]), ("above-exact-count-limit", [Float(18_014_398_509_481_984), 0, 0, 2])] {
+            let source = root.appendingPathComponent(name + ".h5ad")
+            try writeLegacyH5AD(source, values: values)
+            #expect(throws: (any Error).self) { try VivoSingleCellH5AD.preflightCountMatrix(source) }
+        }
+        let badCode = root.appendingPathComponent("bad-code.h5ad")
+        try writeLegacyH5AD(badCode, values: [1, 0, 0, 2], codes: [0, 2])
+        #expect(throws: (any Error).self) { try VivoSingleCellH5AD.read(badCode, plan: legacyMapping()) }
+        let badReference = root.appendingPathComponent("bad-reference.h5ad")
+        try writeLegacyH5AD(badReference, values: [1, 0, 0, 2], invalidCategoryReferenceType: true)
+        #expect(throws: (any Error).self) { try VivoSingleCellH5AD.read(badReference, plan: legacyMapping()) }
+        let mixed = root.appendingPathComponent("mixed-root.h5ad")
+        try writeLegacyH5AD(mixed, values: [1, 0, 0, 2], rootEncoding: true)
+        #expect(throws: (any Error).self) { try VivoSingleCellH5AD.preflightCountMatrix(mixed) }
+    }
     @Test func nativeH5ADWriterRoundTripsThroughCountReaderAndPreservesSourceBytes() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("numivivo-h5ad-roundtrip-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: false)

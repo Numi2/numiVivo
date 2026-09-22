@@ -473,6 +473,32 @@ The approximate matcher remains experimental; production retains exact matching.
 
 ## Input preservation and execution evidence
 
+### H5AD count-matrix preflight
+
+Before creating a native count store from an H5AD source, run:
+
+```sh
+numivivo singlecell-h5ad-preflight <source.h5ad>
+```
+
+This read-only command takes a private APFS copy-on-write snapshot,
+fingerprints it, and validates every `X` value with the exact finite,
+nonnegative-integer gate used for count-store publication. It admits either an
+`anndata` `0.1.0` root with `dataframe` `0.2.0` `obs`/`var` frames, or a wholly
+untagged legacy document with `dataframe` `0.1.0` frames; mixed tagged/legacy
+files are rejected. Legacy axis indexes must be direct strings. A later import
+mapping must still explicitly validate any selected legacy string or
+object-reference categorical column.
+
+The JSON report gives the `X` dimensions, nonzero count, source bytes, and
+exact source-plus-source-major-count-record bytes. It does not budget metadata,
+receipts, filesystem allocation, or free space; check those before
+`singlecell-h5ad-store`.
+
+Preflight is count-format and storage-planning evidence only. It does not infer
+samples, guides, contexts, donors, biological replicates, or guide-to-target
+mappings, and it cannot qualify biological response prediction.
+
 Native [H5AD axis projection](Tools/Omics/H5AD/Projection/README.md) now reads the
 original legacy Kang file directly: all 24,673 cells × 15,706 genes, annotations,
 category definitions and PCA/UMAP values agree with AnnData. Full and repeated
