@@ -272,6 +272,8 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
     public let samplerVersion: UInt32
     /// Algorithm used to compute the frozen training-only response prior.
     public let targetResponsePriorVersion: UInt32
+    /// Deterministic optimizer routing used for the learned response decoder.
+    public let optimizerVersion: UInt32
     public let learningRate: Double
     public let weightDecay: Double
     public let latestMetrics: VivoCellResponseTrainingMetrics
@@ -281,6 +283,7 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
                 trainedTargetBindings: [VivoCellResponseTrainedTargetBinding], descriptorCount: Int,
                 corpus: VivoFingerprint, trainingPlan: VivoFingerprint, step: UInt64, seed: UInt64,
                 samplerVersion: UInt32, targetResponsePriorVersion: UInt32,
+                optimizerVersion: UInt32,
                 learningRate: Double, weightDecay: Double,
                 latestMetrics: VivoCellResponseTrainingMetrics) {
         self.schemaVersion = schemaVersion
@@ -295,6 +298,7 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
         self.seed = seed
         self.samplerVersion = samplerVersion
         self.targetResponsePriorVersion = targetResponsePriorVersion
+        self.optimizerVersion = optimizerVersion
         self.learningRate = learningRate
         self.weightDecay = weightDecay
         self.latestMetrics = latestMetrics
@@ -303,6 +307,7 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, architecture, featureAxis, targetIDs, trainedTargetBindings, descriptorCount,
              corpus, trainingPlan, step, seed, samplerVersion, targetResponsePriorVersion,
+             optimizerVersion,
              learningRate, weightDecay, latestMetrics
     }
 
@@ -310,6 +315,7 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
         try vivoOmicsRejectUnknownKeys(decoder, allowed: [
             "schemaVersion", "architecture", "featureAxis", "targetIDs", "trainedTargetBindings", "descriptorCount",
             "corpus", "trainingPlan", "step", "seed", "samplerVersion", "targetResponsePriorVersion",
+            "optimizerVersion",
             "learningRate", "weightDecay", "latestMetrics"
         ])
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -325,6 +331,7 @@ public struct VivoCellResponseModelState: Codable, Sendable, Equatable {
         seed = try values.decode(UInt64.self, forKey: .seed)
         samplerVersion = try values.decode(UInt32.self, forKey: .samplerVersion)
         targetResponsePriorVersion = try values.decode(UInt32.self, forKey: .targetResponsePriorVersion)
+        optimizerVersion = try values.decode(UInt32.self, forKey: .optimizerVersion)
         learningRate = try values.decode(Double.self, forKey: .learningRate)
         weightDecay = try values.decode(Double.self, forKey: .weightDecay)
         latestMetrics = try values.decode(VivoCellResponseTrainingMetrics.self, forKey: .latestMetrics)
@@ -467,12 +474,14 @@ final class VivoCellResponseMLXModel: Module {
 /// Versioned MLX response-learning surface. Artifacts remain source-bound by
 /// the corpus receipt and use the shared native checkpoint codec for weights.
 public enum VivoCellResponseLearning {
-    public static let format = "numivivo-cell-response-learning/v1"
-    public static let modelFormat = "numivivo-cell-response-model/v4"
-    public static let predictionFormat = "numivivo-cell-response-prediction/v4"
+    public static let format = "numivivo-cell-response-learning/v2"
+    public static let modelFormat = "numivivo-cell-response-model/v5"
+    public static let predictionFormat = "numivivo-cell-response-prediction/v5"
     public static let evaluationFormat = "numivivo-cell-response-evaluation/v2"
     static let samplerVersion: UInt32 = 3
     static let targetResponsePriorVersion: UInt32 = 1
+    static let optimizerVersion: UInt32 = 1
+    static let optimizerFormat = "sgd-momentum-0-mean-head-output-axis-v1"
 }
 
 private struct VivoCellResponseBatch {
@@ -547,7 +556,7 @@ private enum VivoCellResponseArtifactIO {
         let arrays = Dictionary(uniqueKeysWithValues: model.parameters().flattened())
         let metadata = [
             "format": VivoCellResponseLearning.modelFormat,
-            "optimizer": "sgd-momentum-0",
+            "optimizer": VivoCellResponseLearning.optimizerFormat,
             "sampler": "splitmix64-v1",
             "targetResponsePrior": "balanced-training-mean-v1",
             "featureCount": String(state.featureAxis.featureIDs.count),
@@ -570,7 +579,7 @@ private enum VivoCellResponseArtifactIO {
             ],
             metadata: [
                 "format": VivoCellResponseLearning.modelFormat,
-                "optimizer": "sgd-momentum-0",
+                "optimizer": VivoCellResponseLearning.optimizerFormat,
                 "sampler": "splitmix64-v1",
                 "targetResponsePrior": "balanced-training-mean-v1"
             ])
@@ -579,8 +588,9 @@ private enum VivoCellResponseArtifactIO {
 
     static func validateState(_ state: VivoCellResponseModelState,
                               trainingPlan: VivoCellResponseTrainingPlan) throws {
-        guard state.schemaVersion == 3, state.samplerVersion == VivoCellResponseLearning.samplerVersion,
+        guard state.schemaVersion == 4, state.samplerVersion == VivoCellResponseLearning.samplerVersion,
               state.targetResponsePriorVersion == VivoCellResponseLearning.targetResponsePriorVersion,
+              state.optimizerVersion == VivoCellResponseLearning.optimizerVersion,
               state.featureAxis.featureIDs.count > 0, state.featureAxis.featureIDs.count <= 200_000,
               state.targetIDs.count > 0, Set(state.targetIDs).count == state.targetIDs.count,
               state.targetIDs.allSatisfy(vivoOmicsID), !state.trainedTargetBindings.isEmpty,
@@ -655,7 +665,7 @@ private enum VivoCellResponseArtifactIO {
               stateInfo.elementStride == UInt32(clamping: stateBytes.count),
               decoded.manifest.metadata == [
                 "format": VivoCellResponseLearning.modelFormat,
-                "optimizer": "sgd-momentum-0",
+                "optimizer": VivoCellResponseLearning.optimizerFormat,
                 "sampler": "splitmix64-v1",
                 "targetResponsePrior": "balanced-training-mean-v1"
               ] else {
@@ -669,7 +679,7 @@ private enum VivoCellResponseArtifactIO {
         try validateState(state, trainingPlan: trainingPlan)
         let (arrays, metadata) = try MLX.loadArraysAndMetadata(data: weightsBytes)
         guard metadata["format"] == VivoCellResponseLearning.modelFormat,
-              metadata["optimizer"] == "sgd-momentum-0",
+              metadata["optimizer"] == VivoCellResponseLearning.optimizerFormat,
               metadata["sampler"] == "splitmix64-v1",
               metadata["targetResponsePrior"] == "balanced-training-mean-v1",
               metadata["featureCount"] == String(state.featureAxis.featureIDs.count),
@@ -1058,7 +1068,31 @@ extension VivoCellResponseLearning {
         let examples = try corpus.examples(in: .training)
         let strata = try stratifiedExamples(examples)
         let validation = (try? corpus.examples(in: .validation)) ?? []
-        let optimizer = SGD(learningRate: Float(plan.learningRate), momentum: 0, weightDecay: Float(plan.weightDecay))
+        let observedFeatureCount = corpus.featureMask.reduce(into: 0) { total, value in
+            if value > 0 { total += 1 }
+        }
+        guard observedFeatureCount > 0 else {
+            throw VivoCellResponseLearningError.invalid("training corpus has no measured features")
+        }
+        let outputAxisScale = Float(observedFeatureCount)
+        let baseLearningRate = Float(plan.learningRate)
+        let meanHeadLearningRate = baseLearningRate * outputAxisScale
+        let meanHeadWeightDecay = Float(plan.weightDecay) / outputAxisScale
+        guard outputAxisScale.isFinite, baseLearningRate.isFinite,
+              meanHeadLearningRate.isFinite, meanHeadLearningRate > 0,
+              meanHeadWeightDecay.isFinite, meanHeadWeightDecay >= 0 else {
+            throw VivoCellResponseLearningError.limit("mean-head optimizer scale")
+        }
+        // The likelihood remains averaged over measured genes. Scale only the
+        // independent full-axis mean decoder back to a per-feature update;
+        // scaling shared or variance parameters would multiply their update by
+        // the whole transcriptome width.
+        let optimizer = MultiOptimizer(
+            optimizers: [
+                SGD(learningRate: meanHeadLearningRate, momentum: 0, weightDecay: meanHeadWeightDecay),
+                SGD(learningRate: baseLearningRate, momentum: 0, weightDecay: Float(plan.weightDecay))
+            ],
+            filters: [{ key, _ in key == "meanHead.weight" || key == "meanHead.bias" }])
         let lossAndGrad = valueAndGrad(model: model) { model, arrays in
             [loss(model: model, context: arrays[0], targetIDs: arrays[1], knownTargetMask: arrays[2],
                   descriptors: arrays[3], targets: arrays[4], featureMask: arrays[5])]
@@ -1264,12 +1298,13 @@ extension VivoCellResponseLearning {
             let metrics = try runSteps(model: model, corpus: corpus, plan: plan, startingStep: 0,
                                        additionalSteps: plan.steps, trainedTargetIndices: trainedTargetIndices)
             let state = VivoCellResponseModelState(
-                schemaVersion: 3, architecture: plan.architecture, featureAxis: corpus.plan.featureAxis,
+                schemaVersion: 4, architecture: plan.architecture, featureAxis: corpus.plan.featureAxis,
                 targetIDs: corpus.plan.targets.map(\.id), trainedTargetBindings: trainedTargetBindings,
                 descriptorCount: corpus.descriptorCount,
                 corpus: corpusFingerprint, trainingPlan: try VivoCanonicalJSON.fingerprint(planBytes),
                 step: metrics.step, seed: plan.seed, samplerVersion: samplerVersion,
                 targetResponsePriorVersion: targetResponsePriorVersion,
+                optimizerVersion: optimizerVersion,
                 learningRate: plan.learningRate, weightDecay: plan.weightDecay, latestMetrics: metrics)
             return try VivoCellResponseArtifactIO.publish(model: model, state: state, trainingPlanBytes: planBytes,
                                                            implementation: implementation, parentCheckpoint: nil, to: destination)
@@ -1295,12 +1330,13 @@ extension VivoCellResponseLearning {
                                        startingStep: loaded.state.step, additionalSteps: plan.additionalSteps,
                                        trainedTargetIndices: trainedTargetIndices)
             let state = VivoCellResponseModelState(
-                schemaVersion: 3, architecture: loaded.state.architecture, featureAxis: loaded.state.featureAxis,
+                schemaVersion: 4, architecture: loaded.state.architecture, featureAxis: loaded.state.featureAxis,
                 targetIDs: loaded.state.targetIDs, trainedTargetBindings: loaded.state.trainedTargetBindings,
                 descriptorCount: loaded.state.descriptorCount,
                 corpus: loaded.state.corpus, trainingPlan: loaded.state.trainingPlan,
                 step: metrics.step, seed: loaded.state.seed, samplerVersion: loaded.state.samplerVersion,
                 targetResponsePriorVersion: loaded.state.targetResponsePriorVersion,
+                optimizerVersion: loaded.state.optimizerVersion,
                 learningRate: loaded.state.learningRate, weightDecay: loaded.state.weightDecay, latestMetrics: metrics)
             return try VivoCellResponseArtifactIO.publish(model: loaded.model, state: state,
                                                            trainingPlanBytes: loaded.trainingPlanBytes,

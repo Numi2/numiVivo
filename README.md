@@ -29,6 +29,10 @@ The response learner records the matched-control RMSE alongside every held-out
 evaluation. `cell-response-evaluation-qualify` replay-verifies the exact
 model and corpus, then rejects any tie or loss against that paired baseline.
 `cell-response-evaluate` still preserves raw losing evaluations for diagnosis.
+Its stateless SGD route scales only the full-axis mean decoder by the number
+of measured features; shared and variance parameters keep the declared base
+rate, so transcriptome width does not dilute response learning or break exact
+checkpoint resume.
 Known perturbations start from a frozen, balanced mean response computed only
 from training target×context strata; the neural decoder begins at zero and can
 learn only a residual correction. Training visits every declared stratum before
