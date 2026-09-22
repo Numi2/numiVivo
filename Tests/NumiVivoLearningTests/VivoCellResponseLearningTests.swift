@@ -104,6 +104,8 @@ struct VivoCellResponseLearningTests {
         let prediction = root.appendingPathComponent("prediction")
         let renamedPrediction = root.appendingPathComponent("renamed-prediction")
         let straightPrediction = root.appendingPathComponent("straight-prediction")
+        let knownPrediction = root.appendingPathComponent("known-prediction")
+        let straightKnownPrediction = root.appendingPathComponent("straight-known-prediction")
         let persistedEvaluation = root.appendingPathComponent("persisted-evaluation")
         let foreignCorpusDirectory = root.appendingPathComponent("foreign-corpus")
         let foreignPrediction = root.appendingPathComponent("foreign-prediction")
@@ -135,6 +137,7 @@ struct VivoCellResponseLearningTests {
         #expect(evaluation.observedFeatures == 2)
         #expect(evaluation.negativeLogLikelihood.isFinite)
         #expect(evaluation.rmse.isFinite)
+        #expect(evaluation.matchedControlRMSE.isFinite)
         #expect(evaluation.selection.count == evaluation.examples)
         let evaluationReceipt = try VivoCellResponseLearning.evaluate(model: model, corpus: reader, partition: .validation,
                                                                        maximumExamples: 2, implementation: Self.implementation,
@@ -151,6 +154,9 @@ struct VivoCellResponseLearningTests {
         let predictionPlan = VivoCellResponsePredictionPlan(
             id: "novel-target", target: .init(id: "novel-target", descriptors: [0.1, 0.2]),
             contextSampleIDs: ["control-validation"], useTrainedTargetEmbedding: false)
+        let knownTargetPlan = VivoCellResponsePredictionPlan(
+            id: "known-target", target: .init(id: "target-a", descriptors: [0.25, -0.5]),
+            contextSampleIDs: ["control-training"], useTrainedTargetEmbedding: true)
 
         let originalCorpusPlan = Self.corpusPlan()
         let foreignPlan = VivoCellResponseCorpusPlan(
@@ -195,6 +201,8 @@ struct VivoCellResponseLearningTests {
 
         _ = try VivoCellResponseLearning.predict(model: resumed, corpus: reader, plan: predictionPlan,
                                                   implementation: Self.implementation, to: prediction)
+        _ = try VivoCellResponseLearning.predict(model: resumed, corpus: reader, plan: knownTargetPlan,
+                                                  implementation: Self.implementation, to: knownPrediction)
         let renamedPlan = VivoCellResponsePredictionPlan(id: "novel-target-renamed", target: predictionPlan.target,
                                                           contextSampleIDs: predictionPlan.contextSampleIDs)
         _ = try VivoCellResponseLearning.predict(model: resumed, corpus: reader, plan: renamedPlan,
@@ -225,9 +233,20 @@ struct VivoCellResponseLearningTests {
                                                 implementation: Self.implementation, to: straightThrough)
         _ = try VivoCellResponseLearning.predict(model: straightThrough, corpus: reader, plan: predictionPlan,
                                                   implementation: Self.implementation, to: straightPrediction)
+        _ = try VivoCellResponseLearning.predict(model: straightThrough, corpus: reader, plan: knownTargetPlan,
+                                                  implementation: Self.implementation, to: straightKnownPrediction)
         let straightResult = try VivoCellResponseLearning.verifyPrediction(straightPrediction, implementation: Self.implementation)
+        let knownResult = try VivoCellResponseLearning.verifyPrediction(knownPrediction, implementation: Self.implementation)
+        let straightKnownResult = try VivoCellResponseLearning.verifyPrediction(straightKnownPrediction,
+                                                                                  implementation: Self.implementation)
         #expect(zip(result.meanLogCPM, straightResult.meanLogCPM).allSatisfy { abs($0.0 - $0.1) <= 1e-6 })
         #expect(zip(result.varianceLogCPM, straightResult.varianceLogCPM).allSatisfy { abs($0.0 - $0.1) <= 1e-6 })
+        // This path exercises the frozen training-only target response prior.
+        // Equality after a checkpoint/resume proves its values were serialized
+        // and restored rather than silently replaced with zeros.
+        #expect(zip(knownResult.meanLogCPM, straightKnownResult.meanLogCPM).allSatisfy { abs($0.0 - $0.1) <= 1e-6 })
+        #expect(zip(knownResult.meanDeltaLogCPM, straightKnownResult.meanDeltaLogCPM).allSatisfy { abs($0.0 - $0.1) <= 1e-6 })
+        #expect(zip(knownResult.varianceLogCPM, straightKnownResult.varianceLogCPM).allSatisfy { abs($0.0 - $0.1) <= 1e-6 })
 
         var checkpoint = try Data(contentsOf: resumed.appendingPathComponent("checkpoint.nvckpt"))
         checkpoint[0] ^= 0x01
@@ -250,5 +269,25 @@ struct VivoCellResponseLearningTests {
                                                     VivoCellResponseDescriptorSource(sourceDescription: "Synthetic split descriptor", targets: [target], sourceArtifacts: [Self.implementation]))),
                                                assignments: assignments)
         #expect(throws: (any Error).self) { try plan.validate() }
+    }
+
+    @Test("qualification requires a strict matched-control improvement")
+    func qualificationGateRejectsTiesAndLosses() throws {
+        func evaluation(rmse: Double, baseline: Double) -> VivoCellResponseEvaluation {
+            .init(schemaVersion: 2, format: VivoCellResponseLearning.evaluationFormat,
+                  partition: .validation, maximumExamples: 1,
+                  samplerVersion: VivoCellResponseLearning.samplerVersion, seed: 0,
+                  examples: 1, observedFeatures: 1, negativeLogLikelihood: 0,
+                  rmse: rmse, matchedControlRMSE: baseline,
+                  selection: [.init(targetRow: 0, contextRows: [1])])
+        }
+
+        try VivoCellResponseLearning.requireMatchedControlImprovement(evaluation(rmse: 0.9, baseline: 1))
+        #expect(throws: (any Error).self) {
+            try VivoCellResponseLearning.requireMatchedControlImprovement(evaluation(rmse: 1, baseline: 1))
+        }
+        #expect(throws: (any Error).self) {
+            try VivoCellResponseLearning.requireMatchedControlImprovement(evaluation(rmse: 1.1, baseline: 1))
+        }
     }
 }

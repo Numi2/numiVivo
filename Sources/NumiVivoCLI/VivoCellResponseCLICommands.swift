@@ -10,7 +10,8 @@ struct VivoCellResponseCLICommands {
         [
             "cell-response-help", "cell-response-prepare", "cell-response-verify",
             "cell-response-train", "cell-response-model-verify", "cell-response-resume",
-            "cell-response-evaluate", "cell-response-evaluation-verify", "cell-response-predict", "cell-response-prediction-verify",
+            "cell-response-evaluate", "cell-response-evaluation-verify", "cell-response-evaluation-qualify",
+            "cell-response-predict", "cell-response-prediction-verify",
             "cell-response-prediction-verify-bound"
         ].contains(name ?? "")
     }
@@ -23,6 +24,7 @@ struct VivoCellResponseCLICommands {
     cell-response-resume <model> --corpus <corpus> --store <count-store> --plan <resume-plan.json> --output <new-model>
     cell-response-evaluate <model> --corpus <corpus> --store <count-store> --partition training|validation|test --max-examples <1...4096> --output <new-evaluation>
     cell-response-evaluation-verify <evaluation> --model <model> --corpus <corpus> --store <count-store>
+    cell-response-evaluation-qualify <evaluation> --model <model> --corpus <corpus> --store <count-store>
     cell-response-predict <model> --corpus <corpus> --store <count-store> --plan <prediction-plan.json> --output <new-prediction>
     cell-response-prediction-verify <prediction>
     cell-response-prediction-verify-bound <prediction> --model <model> --corpus <corpus> --store <count-store>
@@ -113,6 +115,14 @@ struct VivoCellResponseCLICommands {
                 try printJSON(VivoCellResponseLearning.verifyEvaluation(try canonicalURL(arguments[1]),
                                                                          model: try canonicalURL(arguments[3]), corpus: reader,
                                                                          implementation: implementation))
+                return 0
+            case "cell-response-evaluation-qualify":
+                guard arguments.count == 8, arguments[2] == "--model", arguments[4] == "--corpus",
+                      arguments[6] == "--store" else { throw VivoOmicsError.invalid(Self.help) }
+                let reader = try corpus(arguments[5], store: arguments[7], implementation: implementation)
+                try printJSON(VivoCellResponseLearning.qualifyEvaluation(try canonicalURL(arguments[1]),
+                                                                          model: try canonicalURL(arguments[3]), corpus: reader,
+                                                                          implementation: implementation))
                 return 0
             case "cell-response-predict":
                 guard arguments.count == 10, arguments[2] == "--corpus", arguments[4] == "--store",

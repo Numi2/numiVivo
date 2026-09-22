@@ -15,7 +15,8 @@ The real-data benchmark registry now records source identity, replicate semantic
 ## MLX cell-response CLI
 
 The source-bound `cell-response-train`, `cell-response-resume`,
-`cell-response-evaluate`, and `cell-response-predict` commands use the pinned
+`cell-response-evaluate`, `cell-response-evaluation-qualify`, and
+`cell-response-predict` commands use the pinned
 MLX Metal runtime. Run them through
 [`Tools/run-numivivo-mlx.sh`](Tools/run-numivivo-mlx.sh), which builds the
 package with Xcode, checks for MLX's generated Metal bundle, and executes the
@@ -23,6 +24,17 @@ paired CLI product. A plain SwiftPM build does not produce that MLX runtime
 bundle. The helper keeps the caller's working directory and environment, so
 existing absolute or relative artifact paths and `NUMIVIVO_HDF5_LIBRARY` work
 unchanged.
+
+The response learner records the matched-control RMSE alongside every held-out
+evaluation. `cell-response-evaluation-qualify` replay-verifies the exact
+model and corpus, then rejects any tie or loss against that paired baseline.
+`cell-response-evaluate` still preserves raw losing evaluations for diagnosis.
+Known perturbations start from a frozen, balanced mean response computed only
+from training target×context strata; the neural decoder begins at zero and can
+learn only a residual correction. Training visits every declared stratum before
+cycling and resamples its declared control cells deterministically. This is a
+same-guide technical-context transfer method: it does not establish unseen-guide
+or biological generalization.
 
 The [source-bound atlas export](Tools/Omics/H5AD/Annotation/Atlas/Clustering/README.md) now carries all 1,612,594 native graph-community labels into a backed AnnData-readable H5AD, with complete cell-identity and metadata checks. This is interoperability evidence, not biological annotation validation.
 
