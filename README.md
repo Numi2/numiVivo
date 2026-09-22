@@ -71,7 +71,10 @@ stratum selection with at least one held-out treated stratum from every receipt-
 The response learner records the matched-control RMSE alongside every held-out
 evaluation. `cell-response-evaluation-qualify` replay-verifies the exact
 model and source composite, then rejects any tie or loss against that paired
-baseline for the aggregate and for every source.
+baseline for the aggregate, every receipt-bound source, and every observed
+raw-source × target pair. Evaluation v5 retains those pair metrics explicitly;
+multiple prepared corpus receipts from one raw source are grouped under that
+source's immutable input fingerprint.
 `cell-response-evaluate` still preserves raw losing evaluations for diagnosis.
 Its stateless SGD route scales only the full-axis mean decoder by the number
 of measured features; shared and variance parameters keep the declared base

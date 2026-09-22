@@ -540,6 +540,32 @@ public struct VivoCellResponseSourceEvaluation: Codable, Sendable, Equatable {
     }
 }
 
+/// A raw-source and perturbation-specific held-out score. Prepared corpus
+/// receipts can be separate views of one raw source, so `source` deliberately
+/// names the immutable raw count source rather than a receipt-bound corpus.
+/// Qualification requires every such observed held-out pair to beat its own
+/// exact matched-control baseline.
+public struct VivoCellResponseSourceTargetEvaluation: Codable, Sendable, Equatable {
+    public let source: VivoFingerprint
+    public let targetID: String
+    public let examples: Int
+    public let observedFeatures: Int
+    public let negativeLogLikelihood: Double
+    public let rmse: Double
+    public let matchedControlRMSE: Double
+
+    public init(source: VivoFingerprint, targetID: String, examples: Int, observedFeatures: Int,
+                negativeLogLikelihood: Double, rmse: Double, matchedControlRMSE: Double) {
+        self.source = source
+        self.targetID = targetID
+        self.examples = examples
+        self.observedFeatures = observedFeatures
+        self.negativeLogLikelihood = negativeLogLikelihood
+        self.rmse = rmse
+        self.matchedControlRMSE = matchedControlRMSE
+    }
+}
+
 /// A bounded, replayable software evaluation. It records the chosen rows so
 /// reported metrics cannot drift with source ordering or a later sampler.
 public struct VivoCellResponseEvaluation: Codable, Sendable, Equatable {
@@ -560,17 +586,24 @@ public struct VivoCellResponseEvaluation: Codable, Sendable, Equatable {
     /// One entry for every source in the bound composite, receipt-sorted.
     /// Aggregate metrics are the unweighted mean of these source scores.
     public let sourceMetrics: [VivoCellResponseSourceEvaluation]
+    /// One entry for every raw-source and target pair selected for this
+    /// evaluation. The entries are source then target sorted. Unlike
+    /// `sourceMetrics`, these retain target-level regressions that a source
+    /// aggregate could conceal.
+    public let sourceTargetMetrics: [VivoCellResponseSourceTargetEvaluation]
 
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, format, partition, maximumExamples, samplerVersion, seed, examples,
-             observedFeatures, negativeLogLikelihood, rmse, matchedControlRMSE, selection, sourceMetrics
+             observedFeatures, negativeLogLikelihood, rmse, matchedControlRMSE, selection, sourceMetrics,
+             sourceTargetMetrics
     }
 
     public init(schemaVersion: Int, format: String, partition: VivoCellResponsePartition,
                 maximumExamples: Int, samplerVersion: UInt32, seed: UInt64, examples: Int,
                 observedFeatures: Int, negativeLogLikelihood: Double, rmse: Double,
                 matchedControlRMSE: Double, selection: [VivoCellResponseEvaluationExample],
-                sourceMetrics: [VivoCellResponseSourceEvaluation] = []) {
+                sourceMetrics: [VivoCellResponseSourceEvaluation] = [],
+                sourceTargetMetrics: [VivoCellResponseSourceTargetEvaluation] = []) {
         self.schemaVersion = schemaVersion
         self.format = format
         self.partition = partition
@@ -584,12 +617,14 @@ public struct VivoCellResponseEvaluation: Codable, Sendable, Equatable {
         self.matchedControlRMSE = matchedControlRMSE
         self.selection = selection
         self.sourceMetrics = sourceMetrics
+        self.sourceTargetMetrics = sourceTargetMetrics
     }
 
     public init(from decoder: Decoder) throws {
         try vivoOmicsRejectUnknownKeys(decoder, allowed: [
             "schemaVersion", "format", "partition", "maximumExamples", "samplerVersion", "seed", "examples",
-            "observedFeatures", "negativeLogLikelihood", "rmse", "matchedControlRMSE", "selection", "sourceMetrics"
+            "observedFeatures", "negativeLogLikelihood", "rmse", "matchedControlRMSE", "selection", "sourceMetrics",
+            "sourceTargetMetrics"
         ])
         let values = try decoder.container(keyedBy: CodingKeys.self)
         schemaVersion = try values.decode(Int.self, forKey: .schemaVersion)
@@ -605,6 +640,8 @@ public struct VivoCellResponseEvaluation: Codable, Sendable, Equatable {
         matchedControlRMSE = try values.decode(Double.self, forKey: .matchedControlRMSE)
         selection = try values.decode([VivoCellResponseEvaluationExample].self, forKey: .selection)
         sourceMetrics = try values.decodeIfPresent([VivoCellResponseSourceEvaluation].self, forKey: .sourceMetrics) ?? []
+        sourceTargetMetrics = try values.decodeIfPresent([VivoCellResponseSourceTargetEvaluation].self,
+                                                          forKey: .sourceTargetMetrics) ?? []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -621,8 +658,11 @@ public struct VivoCellResponseEvaluation: Codable, Sendable, Equatable {
         try values.encode(rmse, forKey: .rmse)
         try values.encode(matchedControlRMSE, forKey: .matchedControlRMSE)
         try values.encode(selection, forKey: .selection)
-        if schemaVersion == 4 {
+        if schemaVersion == 4 || schemaVersion == 5 {
             try values.encode(sourceMetrics, forKey: .sourceMetrics)
+        }
+        if schemaVersion == 5 {
+            try values.encode(sourceTargetMetrics, forKey: .sourceTargetMetrics)
         }
     }
 }
@@ -715,7 +755,10 @@ public enum VivoCellResponseLearning {
     public static let predictionFormat = "numivivo-cell-response-prediction/v6"
     public static let legacyEvaluationFormat = "numivivo-cell-response-evaluation/v2"
     public static let cohortV3EvaluationFormat = "numivivo-cell-response-evaluation/v3"
-    public static let evaluationFormat = "numivivo-cell-response-evaluation/v4"
+    /// Read-only compatibility identifier for receipt-source macro metrics.
+    public static let cohortV4EvaluationFormat = "numivivo-cell-response-evaluation/v4"
+    /// Current evaluations retain raw-source and target-level held-out scores.
+    public static let evaluationFormat = "numivivo-cell-response-evaluation/v5"
     static let samplerVersion: UInt32 = 3
     static let targetResponsePriorVersion: UInt32 = 1
     static let optimizerVersion: UInt32 = 1
@@ -741,6 +784,40 @@ private struct VivoCellResponseEvaluationTotals {
     var negativeLogLikelihood = 0.0
     var squaredError = 0.0
     var baselineSquaredError = 0.0
+}
+
+private struct VivoCellResponseSourceTargetEvaluationTotals {
+    let source: VivoFingerprint
+    let targetID: String
+    var examples = 0
+    var observedFeatures = 0
+    var negativeLogLikelihood = 0.0
+    var squaredError = 0.0
+    var baselineSquaredError = 0.0
+}
+
+private struct VivoCellResponseRawSourceTargetKey: Hashable {
+    let source: String
+    let targetID: String
+}
+
+/// Bind every receipt-qualified composite member to the raw source identity
+/// retained by its cohort admission. A raw source can legitimately have more
+/// than one prepared corpus, so callers must not use a corpus receipt as a
+/// source-target qualification key.
+private func vivoCellResponseRawSourceByCorpus(
+    cohort: VivoCellResponseCohortAdmission,
+    corpus: VivoCellResponseCompositeCorpusReader
+) throws -> [String: VivoFingerprint] {
+    let corpusReceipts = corpus.identity.sources.map(\.corpus.hex)
+    guard cohort.sources.map(\.corpus.hex) == corpusReceipts else {
+        throw VivoCellResponseLearningError.incompatible("evaluation cohort sources differ from corpus")
+    }
+    let mapping = Dictionary(uniqueKeysWithValues: cohort.sources.map { ($0.corpus.hex, $0.source) })
+    guard mapping.count == corpus.sourceCount else {
+        throw VivoCellResponseLearningError.invalid("evaluation raw source mapping")
+    }
+    return mapping
 }
 
 /// A source-qualified target vocabulary entry used only while assembling
@@ -1645,10 +1722,17 @@ extension VivoCellResponseLearning {
     private static func evaluate(model: VivoCellResponseMLXModel, corpus: VivoCellResponseCompositeCorpusReader,
                                  examples: [VivoCellResponseTrainingExample], architecture: VivoCellResponseArchitecture,
                                  trainedTargetIndices: Set<Int>, maximumExamples: Int, seed: UInt64,
-                                 salt: UInt64) throws -> (Double, Double, Double, Int,
-                                                           [VivoCellResponseEvaluationExample],
-                                                           [VivoCellResponseSourceEvaluation]) {
+                                 salt: UInt64,
+                                 rawSourceByCorpus: [String: VivoFingerprint]? = nil) throws -> (Double, Double, Double, Int,
+                                                                                                     [VivoCellResponseEvaluationExample],
+                                                                                                     [VivoCellResponseSourceEvaluation],
+                                                                                                     [VivoCellResponseSourceTargetEvaluation]) {
         guard (1...4_096).contains(maximumExamples) else { throw VivoCellResponseLearningError.invalid("evaluation example count") }
+        if let rawSourceByCorpus {
+            guard Set(rawSourceByCorpus.keys) == Set(corpus.identity.sources.map(\.corpus.hex)) else {
+                throw VivoCellResponseLearningError.invalid("evaluation raw source mapping")
+            }
+        }
         let strata = try stratifiedExamples(examples)
         let sourceStrata = try vivoCellResponseSourceStratumIndices(corpus: corpus, strata: strata)
         let take = min(maximumExamples, strata.count)
@@ -1683,6 +1767,7 @@ extension VivoCellResponseLearning {
         var selection: [VivoCellResponseEvaluationExample] = []
         selection.reserveCapacity(take)
         var totals: [Int: VivoCellResponseEvaluationTotals] = [:]
+        var sourceTargetTotals: [VivoCellResponseRawSourceTargetKey: VivoCellResponseSourceTargetEvaluationTotals] = [:]
         for selected in selectedStrata {
             let candidates = strata[selected.index]
             let row = try sampledIndex(count: candidates.count, seed: seed, step: UInt64(selected.index),
@@ -1698,6 +1783,23 @@ extension VivoCellResponseLearning {
                 throw VivoCellResponseLearningError.invalid("evaluation source receipt")
             }
             total.examples += 1
+            let sourceTargetKey: VivoCellResponseRawSourceTargetKey?
+            if let rawSourceByCorpus {
+                guard let rawSource = rawSourceByCorpus[sourceCorpus.hex] else {
+                    throw VivoCellResponseLearningError.invalid("evaluation raw source")
+                }
+                let targetID = corpus.targets[example.targetIndex].id
+                let key = VivoCellResponseRawSourceTargetKey(source: rawSource.hex, targetID: targetID)
+                var sourceTargetTotal = sourceTargetTotals[key] ?? .init(source: rawSource, targetID: targetID)
+                guard sourceTargetTotal.source == rawSource, sourceTargetTotal.targetID == targetID else {
+                    throw VivoCellResponseLearningError.invalid("evaluation raw source target")
+                }
+                sourceTargetTotal.examples += 1
+                sourceTargetTotals[key] = sourceTargetTotal
+                sourceTargetKey = key
+            } else {
+                sourceTargetKey = nil
+            }
             let batch = try evaluationBatch(corpus: corpus, example: example, architecture: architecture,
                                             trainedTargetIndices: trainedTargetIndices)
             selection.append(.init(targetRow: example.targetRow, contextRows: batch.contextRows))
@@ -1726,6 +1828,17 @@ extension VivoCellResponseLearning {
                 let baselineResidual = baseline - target
                 total.baselineSquaredError += baselineResidual * baselineResidual
                 total.observedFeatures += 1
+                if let sourceTargetKey {
+                    guard var sourceTargetTotal = sourceTargetTotals[sourceTargetKey] else {
+                        throw VivoCellResponseLearningError.invalid("evaluation raw source target")
+                    }
+                    sourceTargetTotal.negativeLogLikelihood +=
+                        0.5 * (residual * residual / variance + log(variance) + log(2.0 * Double.pi))
+                    sourceTargetTotal.squaredError += residual * residual
+                    sourceTargetTotal.baselineSquaredError += baselineResidual * baselineResidual
+                    sourceTargetTotal.observedFeatures += 1
+                    sourceTargetTotals[sourceTargetKey] = sourceTargetTotal
+                }
             }
             totals[source] = total
         }
@@ -1741,13 +1854,33 @@ extension VivoCellResponseLearning {
         guard sourceMetrics.count == corpus.sourceCount else {
             throw VivoCellResponseLearningError.invalid("evaluation does not cover every source")
         }
+        let sourceTargetMetrics: [VivoCellResponseSourceTargetEvaluation]
+        if rawSourceByCorpus != nil {
+            sourceTargetMetrics = try sourceTargetTotals.values.sorted { left, right in
+                left.source.hex == right.source.hex ? left.targetID < right.targetID : left.source.hex < right.source.hex
+            }.map { total in
+                guard total.examples > 0, total.observedFeatures > 0 else {
+                    throw VivoCellResponseLearningError.invalid("evaluation source target has no measured features")
+                }
+                return .init(source: total.source, targetID: total.targetID,
+                             examples: total.examples, observedFeatures: total.observedFeatures,
+                             negativeLogLikelihood: total.negativeLogLikelihood / Double(total.observedFeatures),
+                             rmse: sqrt(total.squaredError / Double(total.observedFeatures)),
+                             matchedControlRMSE: sqrt(total.baselineSquaredError / Double(total.observedFeatures)))
+            }
+            guard !sourceTargetMetrics.isEmpty else {
+                throw VivoCellResponseLearningError.invalid("evaluation source target metrics")
+            }
+        } else {
+            sourceTargetMetrics = []
+        }
         let observed = sourceMetrics.reduce(0) { $0 + $1.observedFeatures }
         guard observed > 0 else { throw VivoCellResponseLearningError.invalid("evaluation has no measured features") }
         let divisor = Double(sourceMetrics.count)
         return (sourceMetrics.reduce(0) { $0 + $1.negativeLogLikelihood } / divisor,
                 sourceMetrics.reduce(0) { $0 + $1.rmse } / divisor,
                 sourceMetrics.reduce(0) { $0 + $1.matchedControlRMSE } / divisor,
-                observed, selection, sourceMetrics)
+                observed, selection, sourceMetrics, sourceTargetMetrics)
     }
 
     private static func runSteps(model: VivoCellResponseMLXModel, corpus: VivoCellResponseCompositeCorpusReader,
@@ -1919,7 +2052,7 @@ extension VivoCellResponseLearning {
         try VivoCellResponseArtifactIO.requireNew(destination)
         let evaluationBytes = try VivoCanonicalJSON.encode(evaluation)
         let receipt = VivoCellResponseEvaluationReceipt(
-            schemaVersion: 3, format: evaluationFormat,
+            schemaVersion: 4, format: evaluationFormat,
             model: try VivoCellResponseArtifactIO.modelFingerprint(modelReceipt),
             corpus: try VivoCellResponseArtifactIO.corpusFingerprint(corpus),
             evaluation: try VivoCanonicalJSON.fingerprint(evaluationBytes), implementation: implementation)
@@ -1933,10 +2066,12 @@ extension VivoCellResponseLearning {
     }
 
     private static func validateEvaluation(_ evaluation: VivoCellResponseEvaluation) throws {
-        let current = evaluation.schemaVersion == 4 && evaluation.format == evaluationFormat
+        let current = evaluation.schemaVersion == 5 && evaluation.format == evaluationFormat
+        let previousSourceMetrics = evaluation.schemaVersion == 4 && evaluation.format == cohortV4EvaluationFormat
         let previousCohort = evaluation.schemaVersion == 3 && evaluation.format == cohortV3EvaluationFormat
         let legacy = evaluation.schemaVersion == 2 && evaluation.format == legacyEvaluationFormat
-        guard current || previousCohort || legacy else {
+        let hasSourceMetrics = current || previousSourceMetrics
+        guard hasSourceMetrics || previousCohort || legacy else {
             throw VivoCellResponseLearningError.invalid("evaluation artifact")
         }
         guard
@@ -1950,10 +2085,10 @@ extension VivoCellResponseLearning {
               evaluation.selection.allSatisfy({ $0.targetRow >= 0 && (1...512).contains($0.contextRows.count) && $0.contextRows.allSatisfy({ $0 >= 0 }) }) else {
             throw VivoCellResponseLearningError.invalid("evaluation artifact")
         }
-        guard current || evaluation.sourceMetrics.isEmpty else {
+        guard hasSourceMetrics || evaluation.sourceMetrics.isEmpty else {
             throw VivoCellResponseLearningError.invalid("historical evaluation source metrics")
         }
-        guard !current ||
+        guard !hasSourceMetrics ||
                 ((1...64).contains(evaluation.sourceMetrics.count) &&
                  evaluation.sourceMetrics.map(\.corpus.hex) == evaluation.sourceMetrics.map(\.corpus.hex).sorted() &&
                  Set(evaluation.sourceMetrics.map(\.corpus.hex)).count == evaluation.sourceMetrics.count &&
@@ -1966,7 +2101,31 @@ extension VivoCellResponseLearning {
                  evaluation.sourceMetrics.reduce(0, { $0 + $1.observedFeatures }) == evaluation.observedFeatures) else {
             throw VivoCellResponseLearningError.invalid("evaluation source metrics")
         }
-        if current {
+        guard current || evaluation.sourceTargetMetrics.isEmpty else {
+            throw VivoCellResponseLearningError.invalid("historical evaluation source target metrics")
+        }
+        guard !current ||
+                ((1...evaluation.examples).contains(evaluation.sourceTargetMetrics.count) &&
+                 evaluation.sourceTargetMetrics.allSatisfy { metric in
+                     vivoOmicsID(metric.targetID) && metric.examples > 0 && metric.observedFeatures > 0 &&
+                         metric.negativeLogLikelihood.isFinite && metric.rmse.isFinite && metric.rmse >= 0 &&
+                         metric.matchedControlRMSE.isFinite && metric.matchedControlRMSE >= 0
+                 } &&
+                 evaluation.sourceTargetMetrics.indices.dropFirst().allSatisfy { index in
+                     let previous = evaluation.sourceTargetMetrics[index - 1]
+                     let current = evaluation.sourceTargetMetrics[index]
+                     return previous.source.hex < current.source.hex ||
+                         (previous.source == current.source && previous.targetID < current.targetID)
+                 } &&
+                 Set(evaluation.sourceTargetMetrics.map {
+                     VivoCellResponseRawSourceTargetKey(source: $0.source.hex, targetID: $0.targetID)
+                 }).count ==
+                    evaluation.sourceTargetMetrics.count &&
+                 evaluation.sourceTargetMetrics.reduce(0, { $0 + $1.examples }) == evaluation.examples &&
+                 evaluation.sourceTargetMetrics.reduce(0, { $0 + $1.observedFeatures }) == evaluation.observedFeatures) else {
+            throw VivoCellResponseLearningError.invalid("evaluation source target metrics")
+        }
+        if hasSourceMetrics {
             let divisor = Double(evaluation.sourceMetrics.count)
             let sourceNLL = evaluation.sourceMetrics.reduce(0) { $0 + $1.negativeLogLikelihood } / divisor
             let sourceRMSE = evaluation.sourceMetrics.reduce(0) { $0 + $1.rmse } / divisor
@@ -1990,11 +2149,17 @@ extension VivoCellResponseLearning {
             throw VivoCellResponseLearningError.invalid(
                 "evaluation does not improve the exact matched-control baseline")
         }
-        guard evaluation.schemaVersion != 4 || evaluation.sourceMetrics.allSatisfy({
+        guard (evaluation.schemaVersion != 4 && evaluation.schemaVersion != 5) || evaluation.sourceMetrics.allSatisfy({
             $0.rmse < $0.matchedControlRMSE
         }) else {
             throw VivoCellResponseLearningError.invalid(
                 "evaluation does not improve the exact matched-control baseline for every source")
+        }
+        guard evaluation.schemaVersion != 5 || evaluation.sourceTargetMetrics.allSatisfy({
+            $0.rmse < $0.matchedControlRMSE
+        }) else {
+            throw VivoCellResponseLearningError.invalid(
+                "evaluation does not improve the exact matched-control baseline for every raw source target")
         }
     }
 
@@ -2044,6 +2209,23 @@ extension VivoCellResponseLearning {
             let left = values.0, right = values.1
             guard left.corpus == right.corpus, left.examples == right.examples,
                   left.observedFeatures == right.observedFeatures else {
+                return false
+            }
+            func matches(_ expected: Double, _ actual: Double) -> Bool {
+                abs(expected - actual) <= 1e-8 * max(1, abs(expected))
+            }
+            return matches(left.negativeLogLikelihood, right.negativeLogLikelihood) &&
+                matches(left.rmse, right.rmse) && matches(left.matchedControlRMSE, right.matchedControlRMSE)
+        }
+    }
+
+    private static func approximatelyEqual(_ expected: [VivoCellResponseSourceTargetEvaluation],
+                                           _ actual: [VivoCellResponseSourceTargetEvaluation]) -> Bool {
+        guard expected.count == actual.count else { return false }
+        return zip(expected, actual).allSatisfy { values in
+            let left = values.0, right = values.1
+            guard left.source == right.source, left.targetID == right.targetID,
+                  left.examples == right.examples, left.observedFeatures == right.observedFeatures else {
                 return false
             }
             func matches(_ expected: Double, _ actual: Double) -> Bool {
@@ -2152,7 +2334,8 @@ extension VivoCellResponseLearning {
                                 implementation: VivoFingerprint) throws -> VivoCellResponseEvaluation {
         return try withGPUExecution {
             let loaded = try VivoCellResponseArtifactIO.load(directory, implementation: implementation)
-            guard loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
+            guard let cohort = loaded.cohortAdmission, loaded.state.cohort == loaded.receipt.cohort,
+                  loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
                 throw VivoCellResponseLearningError.incompatible("evaluation requires a v7 cohort-bound model")
             }
             let corpusFingerprint = try VivoCellResponseArtifactIO.corpusFingerprint(corpus)
@@ -2160,17 +2343,18 @@ extension VivoCellResponseLearning {
                 throw VivoCellResponseLearningError.incompatible("evaluation corpus differs from checkpoint")
             }
             let trainedTargetIndices = try validateCheckpointCorpus(loaded.state, corpus: corpus)
+            let rawSourceByCorpus = try vivoCellResponseRawSourceByCorpus(cohort: cohort, corpus: corpus)
             let examples = try corpus.examples(in: partition)
             let result = try evaluate(model: loaded.model, corpus: corpus, examples: examples,
                                       architecture: loaded.state.architecture, trainedTargetIndices: trainedTargetIndices,
                                       maximumExamples: maximumExamples, seed: loaded.state.seed,
-                                      salt: 0x4d8b9173)
+                                      salt: 0x4d8b9173, rawSourceByCorpus: rawSourceByCorpus)
             let evaluation = VivoCellResponseEvaluation(
-                schemaVersion: 4, format: evaluationFormat, partition: partition,
+                schemaVersion: 5, format: evaluationFormat, partition: partition,
                 maximumExamples: maximumExamples, samplerVersion: samplerVersion, seed: loaded.state.seed,
                 examples: result.4.count, observedFeatures: result.3,
                 negativeLogLikelihood: result.0, rmse: result.1, matchedControlRMSE: result.2,
-                selection: result.4, sourceMetrics: result.5)
+                selection: result.4, sourceMetrics: result.5, sourceTargetMetrics: result.6)
             try validateEvaluation(evaluation)
             return evaluation
         }
@@ -2314,8 +2498,10 @@ extension VivoCellResponseLearning {
         let receipt = try VivoCanonicalJSON.decode(VivoCellResponseEvaluationReceipt.self, from: receiptBytes)
         let evaluation = try VivoCanonicalJSON.decode(VivoCellResponseEvaluation.self, from: evaluationBytes)
         let pairedFormat =
-            (receipt.schemaVersion == 3 && receipt.format == evaluationFormat &&
-             evaluation.schemaVersion == 4 && evaluation.format == evaluationFormat) ||
+            (receipt.schemaVersion == 4 && receipt.format == evaluationFormat &&
+             evaluation.schemaVersion == 5 && evaluation.format == evaluationFormat) ||
+            (receipt.schemaVersion == 3 && receipt.format == cohortV4EvaluationFormat &&
+             evaluation.schemaVersion == 4 && evaluation.format == cohortV4EvaluationFormat) ||
             (receipt.schemaVersion == 2 && receipt.format == cohortV3EvaluationFormat &&
              evaluation.schemaVersion == 3 && evaluation.format == cohortV3EvaluationFormat) ||
             (receipt.schemaVersion == 1 && receipt.format == legacyEvaluationFormat &&
@@ -2345,12 +2531,13 @@ extension VivoCellResponseLearning {
         return try withGPUExecution {
             let artifact = try loadVerifiedEvaluation(directory, implementation: implementation)
             let loaded = try VivoCellResponseArtifactIO.load(modelDirectory, implementation: implementation)
-            guard loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
+            guard let cohort = loaded.cohortAdmission, loaded.state.cohort == loaded.receipt.cohort,
+                  loaded.receipt.format == modelFormat, loaded.state.schemaVersion == 6 else {
                 throw VivoCellResponseLearningError.incompatible("bound evaluation verification requires a v7 cohort-bound model")
             }
-            guard artifact.0.schemaVersion == 3, artifact.0.format == evaluationFormat,
-                  artifact.1.schemaVersion == 4, artifact.1.format == evaluationFormat else {
-                throw VivoCellResponseLearningError.incompatible("bound evaluation verification requires a v4 evaluation")
+            guard artifact.0.schemaVersion == 4, artifact.0.format == evaluationFormat,
+                  artifact.1.schemaVersion == 5, artifact.1.format == evaluationFormat else {
+                throw VivoCellResponseLearningError.incompatible("bound evaluation verification requires a v5 evaluation")
             }
             let modelFingerprint = try VivoCellResponseArtifactIO.modelFingerprint(loaded.receipt)
             let corpusFingerprint = try VivoCellResponseArtifactIO.corpusFingerprint(corpus)
@@ -2359,14 +2546,16 @@ extension VivoCellResponseLearning {
                 throw VivoCellResponseLearningError.incompatible("evaluation model or corpus provenance differs")
             }
             let trainedTargetIndices = try validateCheckpointCorpus(loaded.state, corpus: corpus)
+            let rawSourceByCorpus = try vivoCellResponseRawSourceByCorpus(cohort: cohort, corpus: corpus)
             let examples = try corpus.examples(in: artifact.1.partition)
             let result = try evaluate(model: loaded.model, corpus: corpus, examples: examples,
                                       architecture: loaded.state.architecture, trainedTargetIndices: trainedTargetIndices,
                                       maximumExamples: artifact.1.maximumExamples, seed: artifact.1.seed,
-                                      salt: 0x4d8b9173)
+                                      salt: 0x4d8b9173, rawSourceByCorpus: rawSourceByCorpus)
             guard artifact.1.examples == result.4.count, artifact.1.observedFeatures == result.3,
                   artifact.1.selection == result.4,
                   approximatelyEqual(artifact.1.sourceMetrics, result.5),
+                  approximatelyEqual(artifact.1.sourceTargetMetrics, result.6),
                   abs(artifact.1.negativeLogLikelihood - result.0) <= 1e-8 * max(1, abs(result.0)),
                   abs(artifact.1.rmse - result.1) <= 1e-8 * max(1, abs(result.1)),
                   abs(artifact.1.matchedControlRMSE - result.2) <= 1e-8 * max(1, abs(result.2)) else {
@@ -2382,13 +2571,15 @@ extension VivoCellResponseLearning {
     /// the companion guarantee that each selected target and control row was
     /// recomputed from the bound model and corpus.
     static func requireQualificationEvaluationCoverage(_ evaluation: VivoCellResponseEvaluation,
-                                                       corpus: VivoCellResponseCompositeCorpusReader) throws {
+                                                       corpus: VivoCellResponseCompositeCorpusReader,
+                                                       cohort: VivoCellResponseCohortAdmission) throws {
         try validateEvaluation(evaluation)
-        guard evaluation.schemaVersion == 4, evaluation.format == evaluationFormat,
+        guard evaluation.schemaVersion == 5, evaluation.format == evaluationFormat,
               evaluation.sourceMetrics.map(\.corpus) == corpus.identity.sources.map(\.corpus),
               evaluation.partition == .test else {
             throw VivoCellResponseLearningError.invalid("qualification requires a held-out test evaluation")
         }
+        let rawSourceByCorpus = try vivoCellResponseRawSourceByCorpus(cohort: cohort, corpus: corpus)
         let examples = try corpus.examples(in: .test)
         let expectedStrata = Set(examples.map(\.stratumIndex))
         guard !expectedStrata.isEmpty else {
@@ -2413,6 +2604,22 @@ extension VivoCellResponseLearning {
             throw VivoCellResponseLearningError.invalid(
                 "qualification requires exhaustive held-out test-stratum coverage")
         }
+        var expectedSourceTargetKeys: Set<VivoCellResponseRawSourceTargetKey> = []
+        for example in examples {
+            guard let rawSource = rawSourceByCorpus[try corpus.sourceCorpus(forGlobalRow: example.targetRow).hex],
+                  corpus.targets.indices.contains(example.targetIndex) else {
+                throw VivoCellResponseLearningError.invalid("qualification source target binding")
+            }
+            expectedSourceTargetKeys.insert(.init(source: rawSource.hex,
+                                                  targetID: corpus.targets[example.targetIndex].id))
+        }
+        let reportedSourceTargetKeys = Set(evaluation.sourceTargetMetrics.map {
+            VivoCellResponseRawSourceTargetKey(source: $0.source.hex, targetID: $0.targetID)
+        })
+        guard reportedSourceTargetKeys == expectedSourceTargetKeys else {
+            throw VivoCellResponseLearningError.invalid(
+                "qualification requires exhaustive held-out raw source target coverage")
+        }
     }
 
     /// Replay an evaluation under its bound model and corpus, then require a
@@ -2432,7 +2639,7 @@ extension VivoCellResponseLearning {
         try VivoCellResponseCohort.requireQualificationCoverage(cohort)
         let evaluation = try verifyEvaluation(directory, model: modelDirectory, corpus: corpus,
                                               implementation: implementation)
-        try requireQualificationEvaluationCoverage(evaluation, corpus: corpus)
+        try requireQualificationEvaluationCoverage(evaluation, corpus: corpus, cohort: cohort)
         try requireMatchedControlImprovement(evaluation)
         return evaluation
     }
@@ -2493,9 +2700,11 @@ extension VivoCellResponseLearning {
     }
 
     static func requireQualificationEvaluationCoverage(_ evaluation: VivoCellResponseEvaluation,
-                                                       corpus: VivoCellResponseCorpusReader) throws {
+                                                       corpus: VivoCellResponseCorpusReader,
+                                                       cohort: VivoCellResponseCohortAdmission) throws {
         try requireQualificationEvaluationCoverage(evaluation,
-                                                   corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]))
+                                                   corpus: VivoCellResponseCompositeCorpusReader(readers: [corpus]),
+                                                   cohort: cohort)
     }
 
     public static func qualifyEvaluation(_ directory: URL, model modelDirectory: URL,

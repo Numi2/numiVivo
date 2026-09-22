@@ -323,18 +323,39 @@ struct VivoCellResponseLearningTests {
         #expect(evaluation.matchedControlRMSE.isFinite)
         #expect(evaluation.selection.count == evaluation.examples)
         #expect(throws: (any Error).self) {
-            try VivoCellResponseLearning.requireQualificationEvaluationCoverage(evaluation, corpus: reader)
+            try VivoCellResponseLearning.requireQualificationEvaluationCoverage(evaluation, corpus: reader, cohort: cohort)
         }
         let incompleteTestEvaluation = try VivoCellResponseLearning.evaluate(
             model: model, corpus: reader, partition: .test, maximumExamples: 1,
             implementation: Self.implementation)
         #expect(throws: (any Error).self) {
-            try VivoCellResponseLearning.requireQualificationEvaluationCoverage(incompleteTestEvaluation, corpus: reader)
+            try VivoCellResponseLearning.requireQualificationEvaluationCoverage(incompleteTestEvaluation, corpus: reader, cohort: cohort)
         }
         let exhaustiveTestEvaluation = try VivoCellResponseLearning.evaluate(
             model: model, corpus: reader, partition: .test, maximumExamples: 4,
             implementation: Self.implementation)
-        try VivoCellResponseLearning.requireQualificationEvaluationCoverage(exhaustiveTestEvaluation, corpus: reader)
+        try VivoCellResponseLearning.requireQualificationEvaluationCoverage(exhaustiveTestEvaluation, corpus: reader, cohort: cohort)
+        #expect(exhaustiveTestEvaluation.sourceTargetMetrics.count == 2)
+        let mismatchedSourceTargetMetrics = exhaustiveTestEvaluation.sourceTargetMetrics.enumerated().map { index, metric in
+            guard index == exhaustiveTestEvaluation.sourceTargetMetrics.count - 1 else { return metric }
+            return VivoCellResponseSourceTargetEvaluation(
+                source: metric.source, targetID: "target-z", examples: metric.examples,
+                observedFeatures: metric.observedFeatures, negativeLogLikelihood: metric.negativeLogLikelihood,
+                rmse: metric.rmse, matchedControlRMSE: metric.matchedControlRMSE)
+        }
+        let mismatchedSourceTargetCoverage = VivoCellResponseEvaluation(
+            schemaVersion: exhaustiveTestEvaluation.schemaVersion, format: exhaustiveTestEvaluation.format,
+            partition: exhaustiveTestEvaluation.partition, maximumExamples: exhaustiveTestEvaluation.maximumExamples,
+            samplerVersion: exhaustiveTestEvaluation.samplerVersion, seed: exhaustiveTestEvaluation.seed,
+            examples: exhaustiveTestEvaluation.examples, observedFeatures: exhaustiveTestEvaluation.observedFeatures,
+            negativeLogLikelihood: exhaustiveTestEvaluation.negativeLogLikelihood, rmse: exhaustiveTestEvaluation.rmse,
+            matchedControlRMSE: exhaustiveTestEvaluation.matchedControlRMSE,
+            selection: exhaustiveTestEvaluation.selection, sourceMetrics: exhaustiveTestEvaluation.sourceMetrics,
+            sourceTargetMetrics: mismatchedSourceTargetMetrics)
+        #expect(throws: (any Error).self) {
+            try VivoCellResponseLearning.requireQualificationEvaluationCoverage(
+                mismatchedSourceTargetCoverage, corpus: reader, cohort: cohort)
+        }
         let evaluationReceipt = try VivoCellResponseLearning.evaluate(model: model, corpus: reader, partition: .validation,
                                                                        maximumExamples: 2, implementation: Self.implementation,
                                                                        to: persistedEvaluation)
@@ -1002,14 +1023,18 @@ struct VivoCellResponseLearningTests {
     @Test("qualification requires a strict matched-control improvement")
     func qualificationGateRejectsTiesAndLosses() throws {
         func evaluation(rmse: Double, baseline: Double) -> VivoCellResponseEvaluation {
-            .init(schemaVersion: 4, format: VivoCellResponseLearning.evaluationFormat,
+            .init(schemaVersion: 5, format: VivoCellResponseLearning.evaluationFormat,
                   partition: .validation, maximumExamples: 1,
                   samplerVersion: VivoCellResponseLearning.samplerVersion, seed: 0,
                   examples: 1, observedFeatures: 1, negativeLogLikelihood: 0,
                   rmse: rmse, matchedControlRMSE: baseline,
                   selection: [.init(targetRow: 0, contextRows: [1])],
                   sourceMetrics: [.init(corpus: Self.implementation, examples: 1, observedFeatures: 1,
-                                        negativeLogLikelihood: 0, rmse: rmse, matchedControlRMSE: baseline)])
+                                        negativeLogLikelihood: 0, rmse: rmse, matchedControlRMSE: baseline)],
+                  sourceTargetMetrics: [.init(source: Self.implementation, targetID: "target-a",
+                                               examples: 1, observedFeatures: 1,
+                                               negativeLogLikelihood: 0, rmse: rmse,
+                                               matchedControlRMSE: baseline)])
         }
 
         try VivoCellResponseLearning.requireMatchedControlImprovement(evaluation(rmse: 0.9, baseline: 1))
@@ -1027,15 +1052,51 @@ struct VivoCellResponseLearningTests {
                                               negativeLogLikelihood: 0, rmse: 1.3, matchedControlRMSE: 1)
         ]
         let hiddenSourceRegression = VivoCellResponseEvaluation(
-            schemaVersion: 4, format: VivoCellResponseLearning.evaluationFormat,
+            schemaVersion: 5, format: VivoCellResponseLearning.evaluationFormat,
             partition: .validation, maximumExamples: 2,
             samplerVersion: VivoCellResponseLearning.samplerVersion, seed: 0,
             examples: 2, observedFeatures: 2, negativeLogLikelihood: 0,
             rmse: 0.9, matchedControlRMSE: 1,
             selection: [.init(targetRow: 0, contextRows: [1]), .init(targetRow: 2, contextRows: [3])],
-            sourceMetrics: sourceMetrics)
+            sourceMetrics: sourceMetrics,
+            sourceTargetMetrics: [
+                .init(source: Self.implementation, targetID: "target-a", examples: 1, observedFeatures: 1,
+                      negativeLogLikelihood: 0, rmse: 0.5, matchedControlRMSE: 1),
+                .init(source: secondSource, targetID: "target-b", examples: 1, observedFeatures: 1,
+                      negativeLogLikelihood: 0, rmse: 1.3, matchedControlRMSE: 1)
+            ])
         #expect(throws: (any Error).self) {
             try VivoCellResponseLearning.requireMatchedControlImprovement(hiddenSourceRegression)
         }
+
+        let hiddenTargetRegression = VivoCellResponseEvaluation(
+            schemaVersion: 5, format: VivoCellResponseLearning.evaluationFormat,
+            partition: .validation, maximumExamples: 2,
+            samplerVersion: VivoCellResponseLearning.samplerVersion, seed: 0,
+            examples: 2, observedFeatures: 2, negativeLogLikelihood: 0,
+            rmse: 0.9, matchedControlRMSE: 1,
+            selection: [.init(targetRow: 0, contextRows: [1]), .init(targetRow: 2, contextRows: [3])],
+            sourceMetrics: [.init(corpus: Self.implementation, examples: 2, observedFeatures: 2,
+                                  negativeLogLikelihood: 0, rmse: 0.9, matchedControlRMSE: 1)],
+            sourceTargetMetrics: [
+                .init(source: Self.implementation, targetID: "target-a", examples: 1, observedFeatures: 1,
+                      negativeLogLikelihood: 0, rmse: 0.5, matchedControlRMSE: 1),
+                .init(source: Self.implementation, targetID: "target-b", examples: 1, observedFeatures: 1,
+                      negativeLogLikelihood: 0, rmse: 1.3, matchedControlRMSE: 1)
+            ])
+        #expect(throws: (any Error).self) {
+            try VivoCellResponseLearning.requireMatchedControlImprovement(hiddenTargetRegression)
+        }
+
+        let v4ReadCompatibility = VivoCellResponseEvaluation(
+            schemaVersion: 4, format: VivoCellResponseLearning.cohortV4EvaluationFormat,
+            partition: .validation, maximumExamples: 1,
+            samplerVersion: VivoCellResponseLearning.samplerVersion, seed: 0,
+            examples: 1, observedFeatures: 1, negativeLogLikelihood: 0,
+            rmse: 0.9, matchedControlRMSE: 1,
+            selection: [.init(targetRow: 0, contextRows: [1])],
+            sourceMetrics: [.init(corpus: Self.implementation, examples: 1, observedFeatures: 1,
+                                  negativeLogLikelihood: 0, rmse: 0.9, matchedControlRMSE: 1)])
+        try VivoCellResponseLearning.requireMatchedControlImprovement(v4ReadCompatibility)
     }
 }
