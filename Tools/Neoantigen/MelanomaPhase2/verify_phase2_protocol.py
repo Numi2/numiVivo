@@ -11,6 +11,7 @@ import argparse
 import collections
 import csv
 import hashlib
+import itertools
 import json
 import stat
 from pathlib import Path
@@ -29,6 +30,9 @@ EXPECTED = {
     "trc_faa": "521d95a14c49fd625b33c704452430d6fdd89dca2a97a8c66a57897ee3dadbe9",
 }
 COMET_TEMPLATE_SHA256 = "810d1563226721f427d55261f46920ceced308b06d2b5f9b9efc5f50af6ac2fd"
+SAGE_TEMPLATE_SHA256 = "73ceb13f07926c2ced63eda02f14464b87c5741f46bc3f25df552aab5a854c29"
+CODONS = dict(zip(("".join(bases) for bases in itertools.product("TCAG", repeat=3)),
+                  "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"))
 
 
 def require(condition, message):
@@ -84,6 +88,15 @@ def main():
         require(actual == EXPECTED[name], f"frozen {name} SHA-256 mismatch: {actual}")
     require(file_sha(HERE / "comet_txt_only.params.template") == COMET_TEMPLATE_SHA256,
             "frozen Comet template changed")
+    sage_path = HERE / "sage_production.json.template"
+    require(file_sha(sage_path) == SAGE_TEMPLATE_SHA256, "frozen Sage template changed")
+    sage = json.loads(sage_path.read_text())
+    require(sage["database"]["fasta"] == "__CATALOG_FASTA__" and
+            sage["output_directory"] == "__OUTPUT_DIRECTORY__" and
+            sage["mzml_paths"] == ["__MZML_PATH__"] and
+            sage["database"]["generate_decoys"] is True and
+            sage["database"]["decoy_tag"] == "rev_" and sage["write_pin"] is False,
+            "Sage template must render only the frozen catalog, output, and one mzML")
 
     pxd = tsv(paths["pxd_inventory"])
     donors = tsv(paths["pxd_donors"])
@@ -154,11 +167,18 @@ def main():
                 len(blocks) == int(fields[9]) and sum(blocks) == len(fna[key]) and
                 int(fields[2]) > int(fields[1]) and fields[5] in ("+", "-"),
                 f"TRC spliced frame/BED length mismatch: {key}")
+        translated = "".join(CODONS.get(fna[key][offset:offset + 3], "?")
+                             for offset in range(0, len(fna[key]), 3))
+        require(protein.startswith("M") and translated[1:-1] == protein[1:] and
+                translated[-1] == "*" and "*" not in translated[:-1] and "?" not in translated,
+                f"TRC FNA/FAA translation mismatch: {key}")
     print(json.dumps({"status": "frozen_input_preflight_pass", "pxd_raws": len(pxd),
                       "pxd_donors": len(by_donor), "heldout_runs": len(msv),
                       "heldout_donors": dict(heldout), "catalog_proteins": len(catalog),
                       "catalog_source_mappings": len(provenance), "trc_primary_orfs": len(faa),
-                      "trc_selected_orfs": len(trc_selected), "sha256": hashes}, sort_keys=True))
+                      "trc_selected_orfs": len(trc_selected), "sha256": hashes,
+                      "comet_template_sha256": COMET_TEMPLATE_SHA256,
+                      "sage_template_sha256": SAGE_TEMPLATE_SHA256}, sort_keys=True))
 
 
 if __name__ == "__main__":

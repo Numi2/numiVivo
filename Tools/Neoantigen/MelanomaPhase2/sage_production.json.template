@@ -1,0 +1,42 @@
+{
+  "database": {
+    "bucket_size": 8192,
+    "fragment_min_mz": 150.0,
+    "fragment_max_mz": 2000.0,
+    "enzyme": {
+      "missed_cleavages": 0,
+      "min_len": 8,
+      "max_len": 15,
+      "cleave_at": "",
+      "c_terminal": true,
+      "semi_enzymatic": false
+    },
+    "peptide_min_mass": 600.0,
+    "peptide_max_mass": 4000.0,
+    "ion_kinds": ["b", "y"],
+    "min_ion_index": 1,
+    "static_mods": {"C": 119.004099},
+    "variable_mods": {"M": [15.994915], "^Q": [-17.026549], "C": [-61.982635]},
+    "max_variable_mods": 2,
+    "decoy_tag": "rev_",
+    "generate_decoys": true,
+    "fasta": "__CATALOG_FASTA__"
+  },
+  "precursor_tol": {"ppm": [-10.0, 10.0]},
+  "fragment_tol": {"ppm": [-10.0, 10.0]},
+  "precursor_charge": [1, 4],
+  "isotope_errors": [0, 0],
+  "deisotope": true,
+  "chimera": false,
+  "wide_window": false,
+  "min_peaks": 5,
+  "max_peaks": 250,
+  "min_matched_peaks": 5,
+  "max_fragment_charge": 2,
+  "report_psms": 1,
+  "predict_rt": true,
+  "annotate_matches": true,
+  "write_pin": false,
+  "output_directory": "__OUTPUT_DIRECTORY__",
+  "mzml_paths": ["__MZML_PATH__"]
+}

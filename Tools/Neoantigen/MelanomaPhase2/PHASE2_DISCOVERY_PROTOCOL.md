@@ -30,6 +30,7 @@ never among the 88 production discovery inputs.
 | TransCODE Phase-2 Primary spliced FNA | `558ee88208b60353312f23f6f3459f1ac3352d13de54353b8bcc86b5c34d0d7c` |
 | TransCODE Phase-2 Primary FAA source | `521d95a14c49fd625b33c704452430d6fdd89dca2a97a8c66a57897ee3dadbe9` |
 | TXT-only Comet parameter template | `810d1563226721f427d55261f46920ceced308b06d2b5f9b9efc5f50af6ac2fd` |
+| Independent Sage production JSON template | `73ceb13f07926c2ced63eda02f14464b87c5741f46bc3f25df552aab5a854c29` |
 
 PXD004894 contributes exactly 88 HLA-I RAW files from 25 donors; its 52 HLA-II
 files and submitted `Search.zip` are excluded. MSV000084787 contributes exactly
@@ -58,22 +59,37 @@ least 8 aa entered the search catalog. The external catalog sources are
    download to the pinned byte count; atomically rename only after SHA-1 and
    byte verification, and retain SHA-256. Validate converted mzML XML, nonzero
    MS2, and SHA-256. Keep all failed/unverified files.
-2. Search every mzML against **the same** combined FASTA with Comet 2026.02
+2. Before the first production RAW, verify the pinned Sage binary SHA-256
+   `7e457a288124a25da216e90ae0b9c301a4ed8774536d031ca72ce964520903ea`
+   (asset v0.14.7, runtime v0.14.6), and run a bounded resource preflight
+   against the **published catalog**. An earlier Sage probe against a different
+   140,319-protein catalog terminated abnormally at 18.18 GB maximum RSS; it
+   does not prove this 27,596-protein catalog is executable. No production RAW
+   begins if the exact-catalog preflight fails or lacks room for both engines.
+   Search every mzML against **the same** combined FASTA with Comet 2026.02
    rev. 2 (`1b93ed1cf690026a75d80e1e0ce3ed57394bcd47ba5c8587441668c006e32f0e`)
    and the pinned TXT-only template, rendering only `database_name` to the
    verified catalog path. The target-only FASTA uses Comet `decoy_search=1`,
    giving concatenated target/decoy competition with `DECOY_`. No PIN, pepXML,
    SQT, or mzIdentML output. No-enzyme 8–15 aa, 600–4000 Da, ±10 ppm precursor,
    HCD b/y fragment settings and the frozen modification set are in the template.
-3. Validate exact Comet TXT schema and terminal completion, gzip at level 6,
-   verify compressed and decompressed SHA-256, and durably seal the transaction
-   receipt, version/command/input hashes, logs, and resource metrics. A
-   production receipt must say `analysis_kind=production_88_run`, carry the
-   inventory row identity and all source/config/output hashes, and be distinct
-   from the exploratory pilot schema. Only then remove that transaction's
-   verified public RAW, mzML, and losslessly compressed plain TXT.
+   In **the same RAW transaction**, search the same mzML with Sage using
+   `sage_production.json.template`. Render only the catalog, per-RAW output
+   directory, and mzML placeholders; hash the rendered config. Its no-enzyme
+   chemistry, generated decoys, and all search bounds are fixed in the JSON.
+3. Validate exact Comet TXT and Sage result schemas and terminal completion.
+   Gzip each peptide-bearing output at level 6; verify compressed and
+   decompressed SHA-256. Durably seal **both engines'** complete result sets,
+   the transaction receipt, version/command/input/config/output hashes, logs,
+   and resource metrics. A production receipt must say
+   `analysis_kind=production_88_run`, carry the inventory row identity and
+   both engines' output hashes, and be distinct from the exploratory pilot
+   schema. Only then remove that transaction's verified public RAW, mzML,
+   and losslessly compressed plain outputs. The Comet-only first-RAW pilot
+   remains exploratory and cannot substitute for a production receipt.
 4. Require at least **7 GiB actual free** before each file; abort if free falls
-   below 2 GiB, the one-file working set exceeds 5,210,336,441 bytes, or
+   below 2 GiB, the combined one-file working set of both engines exceeds
+   5,210,336,441 bytes, or
    retained phase-2 output exceeds 4 GiB. Before continuing at a stop gate,
    copy sealed evidence to a separately verified archive and reopen/hash it
    there. The compression estimate is planning only. No partial 88-run set can
@@ -81,9 +97,9 @@ least 8 aa entered the search catalog. The external catalog sources are
 
 The [Comet decoy parameter](https://comet-ms.sourceforge.net/parameters/parameters_201801/decoy_search.php)
 defines the 1:1 target/decoy competition used here. No peptide-bearing TXT is
-read for nomination until all 88 production receipts and compressed TXT files
-pass hash/schema/completion checks. Search logs and metadata may be checked
-before then without selecting peptides.
+read for nomination until all 88 production receipts and both engines'
+compressed outputs pass hash/schema/completion checks. Search logs and
+metadata may be checked before then without selecting peptides.
 
 ## Locked adjudication
 
@@ -120,17 +136,20 @@ not evidence of HLA restriction.
 Rank eligible sequences by (1) PXD donor count descending, (2) worst donor's
 best qualifying `delta_cn` descending, (3) TRC ORF accession ascending, then
 (4) exact peptide sequence ascending. No expression score from Mel02/Mel11
-enters ranking. Run independent Sage on all 88 PXD mzMLs against the complete
-unchanged catalog, with generated reverse decoys, before lead adjudication.
-Pin its binary SHA-256 `7e457a288124a25da216e90ae0b9c301a4ed8774536d031ca72ce964520903ea`
-(asset v0.14.7, runtime v0.14.6): no enzyme, 8–15 aa, 600–4000 Da,
-precursor/fragment ±10 ppm, charge 1–4, isotope error zero, b/y ions, fixed
-C+119.004099, variable M+15.994915, N-terminal Q−17.026549 and
-C−61.982635 with at most two variable modifications; require at least five
-matched peaks. Search all spectra rather than a candidate-selected subset.
+enters ranking. Independently adjudicate the sealed Sage results from **all
+88 PXD runs**, generated from all spectra before any peptide nomination, not
+a candidate-selected subset. The frozen Sage template specifies no enzyme,
+8–15 aa, 600–4000 Da, precursor/fragment ±10 ppm, charge 1–4, isotope error
+zero, b/y ions, fixed C+119.004099, variable M+15.994915, N-terminal
+Q−17.026549 and C−61.982635 with at most two variable modifications, and
+at least five matched peaks.
 The first Comet-ranked lead must also have matching Sage direct spectra in
-each counted PXD donor with Sage spectrum and peptide q ≤0.01 and posterior
-error ≤0.01. Audit open modifications and alternative canonical, variant,
+each counted PXD donor. Recompute Sage spectrum and exact-peptide q-values
+from the sealed target/decoy rank-1 hyperscores pooled across all 88 runs,
+using the same `+1`, score-tie, and monotone-tail rules; retain target/decoy
+identity collisions as decoys. Require both pooled Sage q-values ≤0.01 and
+the reported posterior error ≤0.01 for each counted match. Audit open
+modifications and alternative canonical, variant,
 isotope, and chimeric fragments for every counted scan before freezing one
 sequence, source ORF, supporting scans, and all hashes. If the lead fails,
 report `lead_failed_audit_no_replacement`; do not try the next ranked peptide.
@@ -142,7 +161,9 @@ Only after the one-candidate receipt is read-only and hashed, search **all 16**
 pinned MSV mzML runs against the same full catalog with the same Comet chemistry
 and independently with Sage; no candidate-selected run subset, transfer, or
 reuse of phase-1 accepted PSMs. Recompute global and pooled TRC target-decoy
-q-values within these 16 runs, separate from PXD. Count only direct MS2 matches
+Comet q-values and pooled Sage spectrum/exact-peptide q-values within these
+16 runs, separate from PXD, using the same methods as discovery. Count only
+direct MS2 matches
 to the frozen exact unmodified sequence that pass both engines, all eight
 Comet q-values ≤0.01, Sage spectrum/peptide q ≤0.01 and posterior error ≤0.01,
 and candidate-specific alternative fragment review. Require at least one
