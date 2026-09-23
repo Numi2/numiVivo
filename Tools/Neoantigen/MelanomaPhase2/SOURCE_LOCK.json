@@ -1,0 +1,58 @@
+{
+  "schema": "numivivo.melanoma.phase2.candidate_blind_catalog_source_lock.v1",
+  "purpose": "PXD004894 discovery search catalog; no candidate or peptide result",
+  "source_order": ["CON", "UPR", "TRC"],
+  "sources": {
+    "CON": {
+      "input": "inputs/UniProtContams_264_20171227.fasta",
+      "origin": "/Users/n/numivivo-melanoma-data-20260922/catalog/original_u0_components/UniProtContams_264_20171227.fasta",
+      "bytes": 114701,
+      "sha256": "be8cdd4ede58ec7fea2454e2e54fbb3172dba7a786aad1853237e9c9851c08bb",
+      "selection": "all FASTA records",
+      "minimum_length_aa": 1,
+      "expected_raw_records": 264,
+      "expected_selected_records": 264
+    },
+    "UPR": {
+      "input": "inputs/UP000005640_9606.fasta.gz",
+      "origin": "/Users/n/numivivo-melanoma-data-20260922/catalog/UP000005640_9606.fasta.gz",
+      "bytes": 7728297,
+      "sha256": "64299d01e8f41fb6ef03cdf7ec051d3d4e5f041003b6b0fa75b09d439af79dce",
+      "selection": "all FASTA records",
+      "minimum_length_aa": 1,
+      "expected_raw_records": 20652,
+      "expected_selected_records": 20652
+    },
+    "TRC": {
+      "input": "inputs/Ribo-seq_ORFs.primary.faa",
+      "origin": "/Users/n/numivivo-melanoma-data-20260922/catalog/transcode_phase2/Ribo-seq_ORFs.primary.faa",
+      "bytes": 788003,
+      "sha256": "521d95a14c49fd625b33c704452430d6fdd89dca2a97a8c66a57897ee3dadbe9",
+      "selection": "GENCODE TransCODE Phase-2 Primary amino acid sequence length at least 8",
+      "minimum_length_aa": 8,
+      "expected_raw_records": 10127,
+      "expected_selected_records": 6771
+    }
+  },
+  "normalization": {
+    "sequence": "concatenate FASTA sequence lines after removing whitespace, then uppercase",
+    "accession": "first header token; for sp| or tr| headers use second pipe-delimited field",
+    "allowed_amino_acids": "ACDEFGHIKLMNPQRSTVWYBXZJUO"
+  },
+  "deduplication": {
+    "key": "exact normalized full protein sequence",
+    "representative_precedence": ["CON", "UPR", "TRC"],
+    "representative_tiebreak": ["source_accession", "original_header"],
+    "output_order": ["source_rank", "source_accession", "sequence_sha256"],
+    "retain_all_source_mappings": true
+  },
+  "search_contract": {
+    "catalog_contains_targets_only": true,
+    "decoys_generated_by": "Comet 2026.02 rev. 2 at search time",
+    "decoy_search": 1,
+    "decoy_prefix": "DECOY_",
+    "peptide_length_range_for_occurrence_bound": [8, 15]
+  },
+  "excluded_sources": ["NUO", "SMO"],
+  "candidate_peptides_enumerated": false
+}
