@@ -1,0 +1,72 @@
+# Exploratory first PXD004894 RAW pilot; candidate nomination requires frozen 88-run protocol.
+# comet_version 2026.02 rev. 2 (6edec91)
+database_name = __CATALOG_FASTA__
+decoy_search = 1
+num_threads = 0
+
+peptide_mass_tolerance_lower = -10.0
+peptide_mass_tolerance_upper = 10.0
+peptide_mass_units = 2
+mass_type_parent = 1
+mass_type_fragment = 1
+precursor_tolerance_type = 0
+isotope_error = 0
+
+search_enzyme_number = 0
+search_enzyme2_number = 0
+sample_enzyme_number = 0
+num_enzyme_termini = 2
+allowed_missed_cleavage = 0
+
+variable_mod01 = 15.994915 M 0 1 -1 0 0 0.0
+variable_mod02 = -17.026549 Q 0 1 0 2 0 0.0
+variable_mod03 = -61.982635 C 0 2 -1 0 0 0.0
+max_variable_mods_in_peptide = 2
+require_variable_mod = 0
+
+fragment_bin_tol = 0.02
+fragment_bin_offset = 0.0
+theoretical_fragment_ions = 0
+use_A_ions = 0
+use_B_ions = 1
+use_C_ions = 0
+use_X_ions = 0
+use_Y_ions = 1
+use_Z_ions = 0
+use_Z1_ions = 0
+use_NL_ions = 0
+max_fragment_charge = 2
+
+output_txtfile = 1
+output_pepxmlfile = 0
+output_percolatorfile = 0
+output_mzidentmlfile = 0
+output_sqtfile = 0
+num_output_lines = 5
+print_expect_score = 1
+
+precursor_charge = 1 4
+override_charge = 2
+min_precursor_charge = 1
+max_precursor_charge = 4
+ms_level = 2
+activation_method = HCD
+
+digest_mass_range = 600.0 4000.0
+peptide_length_range = 8 15
+equal_I_and_L = 1
+clip_nterm_methionine = 0
+max_duplicate_proteins = -1
+decoy_prefix = DECOY_
+
+minimum_peaks = 5
+minimum_intensity = 0
+percentage_base_peak = 0.0
+remove_precursor_peak = 0
+spectrum_batch_size = 5000
+
+add_C_cysteine = 119.004099
+
+[COMET_ENZYME_INFO]
+0.  Cut_everywhere         0      -           -
+1.  Trypsin                1      KR          P

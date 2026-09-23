@@ -1,0 +1,40 @@
+{
+  "schema": "numivivo.melanoma.phase2.first_raw_exploratory_pilot.v1",
+  "scientific_status": "exploratory_only_no_candidate_nomination",
+  "inventory": {
+    "sha256": "686dbc1bcd43bf5046c57afb3627670c3b79bbc3f7b2e311ac346af2d5af4661",
+    "rows": 88,
+    "first_row_tsv_sha256": "a0778f84b68d86de1a55b59bcd8a1e97d2072f18a8e6d454c5eca1f2fd65fe37"
+  },
+  "first_raw": {
+    "dataset_accession": "PXD004894",
+    "donor": "Mel-3",
+    "raw_file": "20140304_EXQ6_MiBa_SA_MM3-HLAp-1.raw",
+    "pride_file_accession": "c452476b01b0a5884a9d5c2533352344223e6b8c44bf6b4f8689440fa62a1080",
+    "raw_bytes": 786204921,
+    "sha1": "5f8b654ec284ce21bb5dffc500355e03921bda74",
+    "pride_record_url": "https://www.ebi.ac.uk/pride/ws/archive/v2/files/c452476b01b0a5884a9d5c2533352344223e6b8c44bf6b4f8689440fa62a1080",
+    "https_download_url": "https://ftp.pride.ebi.ac.uk/pride/data/archive/2017/04/PXD004894/20140304_EXQ6_MiBa_SA_MM3-HLAp-1.raw"
+  },
+  "catalog_fasta_sha256": "a73ea6ab3e8c28262d5effec3a0baf5d98bab25153cf6da5d3b68a435db5193d",
+  "comet_params_template_sha256": "810d1563226721f427d55261f46920ceced308b06d2b5f9b9efc5f50af6ac2fd",
+  "minimum_free_bytes": 7516192768,
+  "minimum_remaining_free_bytes": 2147483648,
+  "maximum_modeled_working_bytes": 5210336441,
+  "maximum_persistent_output_bytes": 4294967296,
+  "tools": {
+    "comet": {
+      "path": "/Users/n/numivivo-melanoma-tools-20260922/bin/comet",
+      "sha256": "1b93ed1cf690026a75d80e1e0ce3ed57394bcd47ba5c8587441668c006e32f0e",
+      "cdhash": "c88f69a287c4d8e42e16853a94009d940766e298",
+      "version": "Comet version 2026.02 rev. 2 (6edec91)"
+    },
+    "thermorawfileparser": {
+      "path": "/Users/n/numivivo-melanoma-tools-20260922/releases/thermorawfileparser-v.2.0.0-dev-osx-arm64-adhoc-signed/ThermoRawFileParser",
+      "sha256": "ea18e64d531f9e9876702555516bcffd2ee18e5c4389e3d038641f9f8f460c30",
+      "cdhash": "0bc64091d570a8b57de58e7999fac8e02f94fcf9",
+      "dll_sha256": "dd98ffc7a7761a7d8f5e869df48112698ef3a5d4aa89ce90dd1025bb1e2baadd",
+      "version": "2.0.0.0"
+    }
+  }
+}
