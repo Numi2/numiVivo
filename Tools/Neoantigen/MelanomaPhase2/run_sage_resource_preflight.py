@@ -150,8 +150,10 @@ def execute(paths, lock, mzml, mzml_hash, dataset, work_root):
                           "run_dir": str(run_dir), "peak_rss_bytes": run["maximum_resident_set_size_bytes"]},
                          sort_keys=True))
     except Exception as error:
-        core.write_json(run_dir / "STATUS.failed.json", {"state": "failed_preserved",
-                                                        "utc": core.utc_now(), "error": str(error)})
+        failure = {"state": "failed_preserved", "utc": core.utc_now(), "error": str(error)}
+        if isinstance(error, production.SageBoundedFailure):
+            failure["sage_monitor"] = error.observation
+        core.write_json(run_dir / "STATUS.failed.json", failure)
         raise
 
 

@@ -310,47 +310,90 @@ def process_group_rss_bytes(pgid):
     return total_kib * 1024
 
 
+class SageBoundedFailure(core.PilotError):
+    def __init__(self, error, observation):
+        super().__init__(str(error))
+        self.observation = observation
+
+
 def run_sage_bounded(command, cwd, stdout_path, stderr_path, work_root, lock):
     started = time.monotonic()
     sampled_peak = 0
-    with stdout_path.open("xb") as stdout, stderr_path.open("xb") as stderr:
-        process = subprocess.Popen(["/usr/bin/time", "-l"] + command, cwd=cwd,
-                                   stdout=stdout, stderr=stderr, start_new_session=True)
-        try:
+    last_sample = 0
+    process = None
+    phase = "open_sage_logs"
+    try:
+        with stdout_path.open("xb") as stdout, stderr_path.open("xb") as stderr:
+            phase = "start_sage"
+            process = subprocess.Popen(["/usr/bin/time", "-l"] + command, cwd=cwd,
+                                       stdout=stdout, stderr=stderr, start_new_session=True)
             while True:
+                phase = "monitor_sage_process"
                 try:
                     code = process.wait(timeout=2)
                 except subprocess.TimeoutExpired:
                     code = None
-                sampled_peak = max(sampled_peak, process_group_rss_bytes(process.pid))
+                phase = "sample_sage_rss"
+                last_sample = process_group_rss_bytes(process.pid)
+                sampled_peak = max(sampled_peak, last_sample)
+                phase = "sage_rss_stop_gate"
                 require(sampled_peak <= lock["sage_maximum_rss_bytes"], "Sage exceeded 12 GiB RSS stop gate")
+                phase = "sage_working_bytes_stop_gate"
                 require(core.working_bytes(cwd.parent) <= lock["maximum_modeled_working_bytes"],
                         "combined RAW/mzML/Comet/Sage working bytes exceeded frozen peak")
+                phase = "sage_free_space_stop_gate"
                 require(shutil.disk_usage(work_root).free >= lock["minimum_remaining_free_bytes"],
                         "free space fell below 2 GiB during Sage")
                 if code is not None:
                     break
-        except BaseException:
-            if process.poll() is None:
-                os.killpg(process.pid, signal.SIGTERM)
+            stdout.flush(); os.fsync(stdout.fileno())
+            stderr.flush(); os.fsync(stderr.fileno())
+        phase = "sage_terminal_report"
+        require(code == 0, f"Sage exited {code}; outputs retained")
+        log = stderr_path.read_text(errors="replace")
+        match = re.search(r"^\s*(\d+)\s+maximum resident set size\s*$", log, re.M)
+        require(match is not None, "Sage maximum RSS unavailable in terminal time report")
+        reported_peak = int(match.group(1))
+        require(reported_peak <= lock["sage_maximum_rss_bytes"] and "finished in" in log,
+                "Sage terminal completion or 12 GiB RSS gate failed")
+        return {"command": command, "exit_code": code, "elapsed_seconds": round(time.monotonic() - started, 3),
+                "sampled_peak_rss_bytes": sampled_peak, "maximum_resident_set_size_bytes": reported_peak,
+                "stdout_sha256": core.sha256(stdout_path), "stderr_time_sha256": core.sha256(stderr_path)}
+    except BaseException as error:
+        try:
+            free_bytes = shutil.disk_usage(work_root).free
+        except OSError:
+            free_bytes = None
+        observation = {"runner_phase": phase, "elapsed_seconds": round(time.monotonic() - started, 3),
+                       "sampled_peak_rss_bytes": sampled_peak, "last_sampled_rss_bytes": last_sample,
+                       "rss_stop_gate_bytes": lock["sage_maximum_rss_bytes"],
+                       "free_bytes": free_bytes,
+                       "process_returncode_before_stop": process.poll() if process is not None else None,
+                       "error": str(error)}
+        monitor_error = None
+        try:
+            core.write_json(stdout_path.parent / "sage-monitor.failed.json", observation)
+        except Exception as receipt_error:
+            monitor_error = receipt_error
+        finally:
+            if process is not None and process.poll() is None:
+                try:
+                    os.killpg(process.pid, signal.SIGTERM)
+                except ProcessLookupError:
+                    pass
                 try:
                     process.wait(timeout=10)
                 except subprocess.TimeoutExpired:
-                    os.killpg(process.pid, signal.SIGKILL)
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
                     process.wait()
-            raise
-        stdout.flush(); os.fsync(stdout.fileno())
-        stderr.flush(); os.fsync(stderr.fileno())
-    require(code == 0, f"Sage exited {code}; outputs retained")
-    log = stderr_path.read_text(errors="replace")
-    match = re.search(r"^\s*(\d+)\s+maximum resident set size\s*$", log, re.M)
-    require(match is not None, "Sage maximum RSS unavailable in terminal time report")
-    reported_peak = int(match.group(1))
-    require(reported_peak <= lock["sage_maximum_rss_bytes"] and "finished in" in log,
-            "Sage terminal completion or 12 GiB RSS gate failed")
-    return {"command": command, "exit_code": code, "elapsed_seconds": round(time.monotonic() - started, 3),
-            "sampled_peak_rss_bytes": sampled_peak, "maximum_resident_set_size_bytes": reported_peak,
-            "stdout_sha256": core.sha256(stdout_path), "stderr_time_sha256": core.sha256(stderr_path)}
+        if isinstance(error, Exception):
+            if monitor_error is not None:
+                observation["monitor_sidecar_error"] = str(monitor_error)
+            raise SageBoundedFailure(error, observation) from error
+        raise
 
 
 def validate_comet(path, stem, catalog, stdout_path):
@@ -593,8 +636,11 @@ def execute(input_root, paths, rows, row, index, work_root, previous_dir, prefli
         print(json.dumps({"status": "complete_production", "run_index": index,
                           "run_dir": str(run_dir), "receipt_sha256": receipt_hash}, sort_keys=True))
     except Exception as error:
-        core.write_json(run_dir / "STATUS.failed.json", {"state": "failed_preserved", "utc": core.utc_now(),
-                                                        "run_index": index, "error": str(error)})
+        failure = {"state": "failed_preserved", "utc": core.utc_now(),
+                   "run_index": index, "error": str(error)}
+        if isinstance(error, SageBoundedFailure):
+            failure["sage_monitor"] = error.observation
+        core.write_json(run_dir / "STATUS.failed.json", failure)
         raise
 
 
