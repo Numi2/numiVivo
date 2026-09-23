@@ -66,6 +66,10 @@ least 8 aa entered the search catalog. The external catalog sources are
    140,319-protein catalog terminated abnormally at 18.18 GB maximum RSS; it
    does not prove this 27,596-protein catalog is executable. No production RAW
    begins if the exact-catalog preflight fails or lacks room for both engines.
+   The resource preflight must use one pinned, provenance-verified real HLA-I
+   mzML outside PXD004894 and MSV000084787, at least 1 GiB with 20,000 MS2
+   markers; synthetic spectra can check tooling but cannot qualify capacity.
+   Until that exact input is pinned and passes, production remains blocked.
    Search every mzML against **the same** combined FASTA with Comet 2026.02
    rev. 2 (`1b93ed1cf690026a75d80e1e0ce3ed57394bcd47ba5c8587441668c006e32f0e`)
    and the pinned TXT-only template, rendering only `database_name` to the

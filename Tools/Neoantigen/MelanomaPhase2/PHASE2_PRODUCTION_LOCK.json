@@ -1,0 +1,37 @@
+{
+  "schema": "numivivo.melanoma.phase2.dual_engine_production.v1",
+  "analysis_kind": "production_88_run",
+  "inventory_sha256": "686dbc1bcd43bf5046c57afb3627670c3b79bbc3f7b2e311ac346af2d5af4661",
+  "catalog_fasta_sha256": "a73ea6ab3e8c28262d5effec3a0baf5d98bab25153cf6da5d3b68a435db5193d",
+  "catalog_manifest_sha256": "444a4b589f1e317a5d97a07c25b64bc639200ed891c5c3cbb6d5f6f48ad8b9b9",
+  "protocol_sha256": "846dd743c792c1543673a4b8e62a301c8730d8e915e11a12a01e95d9e129b34c",
+  "comet_template_sha256": "810d1563226721f427d55261f46920ceced308b06d2b5f9b9efc5f50af6ac2fd",
+  "sage_template_sha256": "73ceb13f07926c2ced63eda02f14464b87c5741f46bc3f25df552aab5a854c29",
+  "minimum_free_bytes": 7516192768,
+  "minimum_remaining_free_bytes": 2147483648,
+  "maximum_modeled_working_bytes": 5210336441,
+  "maximum_persistent_output_bytes": 4294967296,
+  "sage_maximum_rss_bytes": 12884901888,
+  "real_noncohort_sage_resource_input": null,
+  "tools": {
+    "comet": {
+      "path": "/Users/n/numivivo-melanoma-tools-20260922/bin/comet",
+      "sha256": "1b93ed1cf690026a75d80e1e0ce3ed57394bcd47ba5c8587441668c006e32f0e",
+      "cdhash": "c88f69a287c4d8e42e16853a94009d940766e298",
+      "version": "Comet version 2026.02 rev. 2 (6edec91)"
+    },
+    "thermorawfileparser": {
+      "path": "/Users/n/numivivo-melanoma-tools-20260922/releases/thermorawfileparser-v.2.0.0-dev-osx-arm64-adhoc-signed/ThermoRawFileParser",
+      "sha256": "ea18e64d531f9e9876702555516bcffd2ee18e5c4389e3d038641f9f8f460c30",
+      "cdhash": "0bc64091d570a8b57de58e7999fac8e02f94fcf9",
+      "dll_sha256": "dd98ffc7a7761a7d8f5e869df48112698ef3a5d4aa89ce90dd1025bb1e2baadd",
+      "version": "2.0.0.0"
+    },
+    "sage": {
+      "path": "/Users/n/numivivo-melanoma-tools-20260922/releases/sage-v0.14.7-aarch64-apple-darwin/sage",
+      "sha256": "7e457a288124a25da216e90ae0b9c301a4ed8774536d031ca72ce964520903ea",
+      "cdhash": "3d0b39abeb280f120021e30672738dc2d7aaacf3",
+      "version": "sage 0.14.6"
+    }
+  }
+}
