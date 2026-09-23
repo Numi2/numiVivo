@@ -320,6 +320,7 @@ def run_sage_bounded(command, cwd, stdout_path, stderr_path, work_root, lock):
     started = time.monotonic()
     sampled_peak = 0
     last_sample = 0
+    reported_peak = None
     process = None
     phase = "open_sage_logs"
     try:
@@ -366,6 +367,7 @@ def run_sage_bounded(command, cwd, stdout_path, stderr_path, work_root, lock):
             free_bytes = None
         observation = {"runner_phase": phase, "elapsed_seconds": round(time.monotonic() - started, 3),
                        "sampled_peak_rss_bytes": sampled_peak, "last_sampled_rss_bytes": last_sample,
+                       "maximum_resident_set_size_bytes": reported_peak,
                        "rss_stop_gate_bytes": lock["sage_maximum_rss_bytes"],
                        "free_bytes": free_bytes,
                        "process_returncode_before_stop": process.poll() if process is not None else None,
