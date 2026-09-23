@@ -372,9 +372,24 @@ def check_work_root(work_root, lock):
     return work_root, free, persistent
 
 
+def verify_source_checkout():
+    command = ["git", "rev-parse", "--show-toplevel", "HEAD"]
+    result = subprocess.run(command, cwd=HERE, capture_output=True, text=True)
+    lines = result.stdout.splitlines()
+    if result.returncode or len(lines) != 2 or Path(lines[0]).resolve() != REPO_ROOT:
+        raise PilotError("runner must execute from its exact Git checkout")
+    scope = "Tools/Neoantigen/MelanomaPhase2"
+    status = subprocess.run(["git", "status", "--porcelain", "--", scope], cwd=REPO_ROOT,
+                            capture_output=True, text=True)
+    if status.returncode or status.stdout.strip():
+        raise PilotError("phase-2 runner source has uncommitted changes")
+    return lines[1]
+
+
 def execute(inventory, catalog, work_root, lock, row, template):
     if sys.platform != "darwin" or platform.machine() != "arm64":
         raise PilotError("execution requires macOS arm64")
+    source_commit = verify_source_checkout()
     comet = Path(lock["tools"]["comet"]["path"])
     parser = Path(lock["tools"]["thermorawfileparser"]["path"])
     tool_evidence = {
@@ -440,6 +455,8 @@ def execute(inventory, catalog, work_root, lock, row, template):
             raise PilotError("compressed TXT content hash changed")
         if sha256(LOCK_PATH) != lock_hash_at_start:
             raise PilotError("pilot lock changed during transaction")
+        if verify_source_checkout() != source_commit:
+            raise PilotError("runner Git commit changed during transaction")
         verify_sha(PARAMS_PATH, lock["comet_params_template_sha256"], "parameter template after search")
         fsync_directory(evidence)
         fsync_directory(output)
@@ -447,7 +464,7 @@ def execute(inventory, catalog, work_root, lock, row, template):
             "schema": "numivivo.melanoma.phase2.first_raw_transaction.v1",
             "scientific_status": lock["scientific_status"],
             "sealed_utc": utc_now(),
-            "source_git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=HERE, text=True).strip(),
+            "source_git_commit": source_commit,
             "input_hashes": {"inventory_sha256": sha256(inventory), "first_row_tsv_sha256": lock["inventory"]["first_row_tsv_sha256"],
                              "catalog_fasta_sha256": sha256(catalog), "pilot_lock_sha256": sha256(LOCK_PATH),
                              "params_template_sha256": sha256(PARAMS_PATH), "rendered_params_sha256": sha256(params),
