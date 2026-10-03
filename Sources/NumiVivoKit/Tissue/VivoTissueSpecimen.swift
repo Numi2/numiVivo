@@ -11,6 +11,15 @@ public enum VivoEvidenceState: String, Codable, Sendable {
     case unavailable = "UNAVAILABLE"
 }
 public struct VivoTissueEvidence: Codable, Sendable {
+    public init(state: VivoEvidenceState, sourceID: String, modelID: String?, assumptions: [String], validationDomain: String?, uncertainty: String, heldOut: Bool) {
+        self.state = state
+        self.sourceID = sourceID
+        self.modelID = modelID
+        self.assumptions = assumptions
+        self.validationDomain = validationDomain
+        self.uncertainty = uncertainty
+        self.heldOut = heldOut
+    }
     public let state: VivoEvidenceState
     public let sourceID: String
     public let modelID: String?
@@ -20,9 +29,25 @@ public struct VivoTissueEvidence: Codable, Sendable {
     public let heldOut: Bool
 }
 public struct VivoTissueSource: Codable, Sendable {
+    public init(id: String, uri: String, sha256: String, description: String) {
+        self.id = id
+        self.uri = uri
+        self.sha256 = sha256
+        self.description = description
+    }
     public let id: String, uri: String, sha256: String, description: String
 }
 public struct VivoTissueEntity: Codable, Sendable {
+    public init(id: String, level: String, parentID: String?, memberIDs: [String], position: [Double]?, biologicalUnitID: String, annotations: [String:String], evidence: VivoTissueEvidence) {
+        self.id = id
+        self.level = level
+        self.parentID = parentID
+        self.memberIDs = memberIDs
+        self.position = position
+        self.biologicalUnitID = biologicalUnitID
+        self.annotations = annotations
+        self.evidence = evidence
+    }
     public let id: String, level: String
     public let parentID: String?
     public let memberIDs: [String]
@@ -32,6 +57,19 @@ public struct VivoTissueEntity: Codable, Sendable {
     public let evidence: VivoTissueEvidence
 }
 public struct VivoTissueMeasurement: Codable, Sendable {
+    public init(id: String, modality: String, unit: String, timepoint: String, entityIDs: [String], featureIDs: [String], rowOffsets: [Int], featureIndices: [Int], values: [Double], absentValue: String, evidence: VivoTissueEvidence) {
+        self.id = id
+        self.modality = modality
+        self.unit = unit
+        self.timepoint = timepoint
+        self.entityIDs = entityIDs
+        self.featureIDs = featureIDs
+        self.rowOffsets = rowOffsets
+        self.featureIndices = featureIndices
+        self.values = values
+        self.absentValue = absentValue
+        self.evidence = evidence
+    }
     public let id: String, modality: String, unit: String, timepoint: String
     public let entityIDs: [String], featureIDs: [String]
     /// Sparse values: absence is missing unless explicitly declared as zero.
@@ -40,10 +78,28 @@ public struct VivoTissueMeasurement: Codable, Sendable {
     public let evidence: VivoTissueEvidence
 }
 public struct VivoTissueCoordinateSystem: Codable, Sendable {
+    public init(id: String, unit: String, axes: [String], description: String, micrometresPerUnit: Double?) {
+        self.id = id
+        self.unit = unit
+        self.axes = axes
+        self.description = description
+        self.micrometresPerUnit = micrometresPerUnit
+    }
     public let id: String, unit: String, axes: [String], description: String
     public let micrometresPerUnit: Double?
 }
 public struct VivoTissueSpecimen: Codable, Sendable {
+    public init(format: String, id: String, title: String, organism: String, coordinateSystem: VivoTissueCoordinateSystem, sources: [VivoTissueSource], entities: [VivoTissueEntity], measurements: [VivoTissueMeasurement], limitations: [String]) {
+        self.format = format
+        self.id = id
+        self.title = title
+        self.organism = organism
+        self.coordinateSystem = coordinateSystem
+        self.sources = sources
+        self.entities = entities
+        self.measurements = measurements
+        self.limitations = limitations
+    }
     public let format: String, id: String, title: String, organism: String
     public let coordinateSystem: VivoTissueCoordinateSystem
     public let sources: [VivoTissueSource]
