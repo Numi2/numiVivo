@@ -20,11 +20,12 @@ def execute(root,binary,variants):
    subprocess.run([str(binary),'spatial-response','predict',str(folder/'plan.json'),str(folder/'chip3.safetensors'),str(out),str(weights)],check=True)
    pred=load_file(str(out/'prediction.safetensors'))['mean'];by=[]
    for target in sorted(set(m['target'] for m in rows)):
+    if variant=='unseen-Cfap410' and target=='Cfap410':continue  # never select on the withheld perturbation
     idx=[i for i,m in enumerate(rows) if m['target']==target];mask=validation['mask'][idx];err=(pred[idx]-validation['observed'][idx])**2
     by.append({'target':target,'rmse':float(np.sqrt((err*mask).sum()/mask.sum()))})
    results.append({'step':step,'equalTargetRMSE':float(np.mean([x['rmse'] for x in by])),'byTarget':by,'weightsSHA256':sha(weights)})
   chosen=min(results,key=lambda x:(x['equalTargetRMSE'],x['step']))
-  write(folder/'selection.json',{'format':'numivivo-spatial-model-selection/v1','selection':'validation only, fixed three-checkpoint budget','candidates':results,'selected':chosen,'seconds':time.monotonic()-start,'biologicalPromotion':False,'testOutcomesRead':False})
+  write(folder/'selection.json',{'format':'numivivo-spatial-model-selection/v1','selection':'validation only, fixed three-checkpoint budget','candidates':results,'selected':chosen,'seconds':time.monotonic()-start,'biologicalPromotion':False,'testOutcomesRead':False,'withheldPerturbationExcludedFromSelection':variant=='unseen-Cfap410'})
   out=folder/'test-prediction';weights=training/('weights-'+str(chosen['step'])+'.safetensors')
   subprocess.run([str(binary),'spatial-response','predict',str(folder/'plan.json'),str(folder/'chip1.safetensors'),str(out),str(weights)],check=True)
   write(folder/'prediction-seal.json',{'format':'numivivo-spatial-prediction-seal/v1','createdAt':timestamp(),'binarySHA256':sha(binary),'weights':str(weights),'weightsSHA256':sha(weights),'inputsSHA256':sha(folder/'chip1.safetensors'),'predictionSHA256':sha(out/'prediction.safetensors'),'selectionSHA256':sha(folder/'selection.json'),'observationPolicy':'held-out outputs not supplied to native prediction','testOutcomesRead':False})

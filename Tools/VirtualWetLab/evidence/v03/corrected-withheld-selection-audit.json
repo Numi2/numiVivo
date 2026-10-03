@@ -1,0 +1,27 @@
+{
+  "allCorrectedCandidates": [
+    {
+      "rmseExcludingCfap410": 0.6806041697661082,
+      "step": 240
+    },
+    {
+      "rmseExcludingCfap410": 0.6814414958159128,
+      "step": 720
+    },
+    {
+      "rmseExcludingCfap410": 0.6848766307036082,
+      "step": 1440
+    }
+  ],
+  "correctedSelection": {
+    "rmseExcludingCfap410": 0.6806041697661082,
+    "step": 240
+  },
+  "futureDriver": "withheld Cfap410 excluded from validation selection",
+  "newIndependentValidation": false,
+  "originalSelectedStep": 240,
+  "originalSelectionSHA256": "0a5c42dddbb7921761182131461986b73d086c295c80f019a2996061d55dde75",
+  "sameSelectedWeights": true,
+  "status": "retrospective selection audit; original exposed-target result remains retained",
+  "targetRepresentation": "unknown-target mask; no target-specific zero-shot mechanism"
+}
