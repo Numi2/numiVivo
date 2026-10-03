@@ -1,21 +1,5 @@
 name: Adaptive chemistry campaign conformance
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'Sources/NumiVivoKit/AdaptiveChemistry/**'
-      - 'Sources/NumiVivoKit/Platform/*Adaptive*'
-      - 'Sources/NumiVivoKit/Platform/VivoPlatformOperations.swift'
-      - 'Sources/NumiVivoKit/Chemistry/VivoMultistateMBAR.swift'
-      - 'Sources/NumiVivoKit/Chemistry/*Exchange*'
-      - 'Sources/NumiVivoKit/Chemistry/VivoQMMMVariantSensitivity.swift'
-      - 'Sources/NumiVivoCLI/VivoWorkflowCLI*.swift'
-      - 'Tests/NumiVivoIntegrationTests/AdaptiveRefinementWorkflowTests.swift'
-      - 'Tests/NumiVivoIntegrationTests/QMMMChemicalQualificationTests.swift'
-      - 'Tools/NativeChemistry/*Adaptive*'
-      - 'Tools/NativeChemistry/check_adaptive*'
-      - 'Tools/check_adaptive_chemistry.sh'
-      - '.github/workflows/adaptive-refinement.yml'
   workflow_dispatch:
 permissions:
   contents: read

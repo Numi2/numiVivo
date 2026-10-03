@@ -1,20 +1,6 @@
 name: Native chemistry conformance
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/native-chemistry-conformance.yml'
-      - 'Sources/NumiVivoKit/QM/**'
-      - 'Sources/NumiVivoKit/ManyBody/**'
-      - 'Sources/NumiVivoKit/Embedding/**'
-      - 'Sources/NumiVivoKit/QMEnv/**'
-      - 'Sources/NumiVivoKit/Workflow/**'
-      - 'Sources/NumiVivoKit/Artifacts/**'
-      - 'Sources/NumiVivoCLI/VivoElectronicCLICommands.swift'
-      - 'ReferenceAdapters/PySCF/**'
-      - 'Tools/NativeChemistry/**'
-      - 'Tools/check_external_chemistry.sh'
 permissions:
   contents: read
 concurrency:

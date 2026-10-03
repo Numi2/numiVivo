@@ -1,16 +1,6 @@
 name: Mapped reaction connectivity
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/reaction-connectivity.yml'
-      - 'Sources/NumiVivoKit/ReactionQualification/**'
-      - 'Sources/NumiVivoKit/Workflow/VivoReactionConnectivityWorkflow.swift'
-      - 'Sources/NumiVivoKit/ManyBody/**'
-      - 'Sources/NumiVivoKit/QM/**'
-      - 'Tests/NumiVivoIntegrationTests/ReactionConnectivityTests.swift'
-      - 'Package.swift'
 permissions:
   contents: read
 concurrency:

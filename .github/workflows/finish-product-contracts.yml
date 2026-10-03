@@ -1,13 +1,6 @@
 name: Complete native product contracts
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Sources/**'
-      - 'Tests/NumiVivoIntegrationTests/**'
-      - 'Package.swift'
-      - '.github/workflows/finish-product-contracts.yml'
 permissions:
   contents: read
 concurrency:

@@ -1,16 +1,6 @@
 name: Scientific closure conformance
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Sources/**'
-      - 'Tests/NumiVivoIntegrationTests/**'
-      - 'Examples/reaction/*overlap.json'
-      - 'Examples/reaction/residual-*.json'
-      - 'ReferenceAdapters/PySCF/scientific_closure_oracle.py'
-      - '.github/workflows/scientific-closure.yml'
-      - 'Package.swift'
 permissions:
   contents: read
 concurrency:

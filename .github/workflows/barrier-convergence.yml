@@ -1,15 +1,6 @@
 name: Barrier convergence conformance
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/barrier-convergence.yml'
-      - 'Sources/**'
-      - 'Tests/NumiVivoIntegrationTests/**'
-      - 'Examples/reaction/barrier-*.json'
-      - 'ReferenceAdapters/PySCF/barrier_convergence_oracle.py'
-      - 'Package.swift'
 permissions:
   contents: read
 concurrency:

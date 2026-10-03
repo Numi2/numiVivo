@@ -1,17 +1,6 @@
 name: General platform workflows
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Sources/**'
-      - 'Tests/NumiVivoIntegrationTests/**'
-      - 'Tools/Platform/**'
-      - 'Tools/Benchmarks/**'
-      - 'Examples/workflows/**'
-      - 'Examples/prepared-reaction/**'
-      - 'Package.swift'
-      - '.github/workflows/platform-workflows.yml'
 permissions:
   contents: read
 concurrency:

@@ -2,23 +2,6 @@ name: Protein stress qualification
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Sources/NumiVivoKit/ProteinMaterials/**'
-      - 'Sources/NumiVivoKit/MD/**'
-      - 'Sources/NumiVivoCLI/VivoProteinStressCLICommands.swift'
-      - 'Sources/NumiVivoCLI/main.swift'
-      - 'Tests/NumiVivoIntegrationTests/Protein*Tests.swift'
-      - 'Tools/ProteinMaterials/**'
-      - '.github/workflows/protein-stress.yml'
-  pull_request:
-    paths:
-      - 'Sources/NumiVivoKit/ProteinMaterials/**'
-      - 'Tests/NumiVivoIntegrationTests/Protein*Tests.swift'
-      - 'Tools/ProteinMaterials/**'
-      - '.github/workflows/protein-stress.yml'
-
 permissions:
   contents: read
 

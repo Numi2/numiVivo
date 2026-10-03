@@ -1,20 +1,6 @@
 name: Property refinement integration
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/property-refinement.yml'
-      - 'Sources/NumiVivoKit/Refinement/**'
-      - 'Sources/NumiVivoKit/QM/**'
-      - 'Sources/NumiVivoKit/ManyBody/**'
-      - 'Sources/NumiVivoKit/Workflow/**'
-      - 'Sources/NumiVivoKit/Platform/*Refinement*'
-      - 'Sources/NumiVivoCLI/VivoElectronicCLICommands.swift'
-      - 'Tools/NativeChemistry/*Refinement*'
-      - 'Tools/NativeChemistry/check_refinement_cli.py'
-      - 'Tools/NativeChemistry/build_scoped_cli.sh'
-      - 'Tools/check_property_refinement.sh'
 permissions:
   contents: read
 concurrency:

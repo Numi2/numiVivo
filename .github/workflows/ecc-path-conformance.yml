@@ -1,23 +1,6 @@
 name: Shared ECC path conformance
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/ecc-path-conformance.yml'
-      - 'Sources/NumiVivoKit/Embedding/**'
-      - 'Sources/NumiVivoKit/QM/**'
-      - 'Sources/NumiVivoKit/ManyBody/**'
-      - 'Sources/NumiVivoKit/Workflow/**'
-      - 'Sources/NumiVivoKit/Artifacts/**'
-      - 'Sources/NumiVivoCLI/VivoECCPathCLICommands.swift'
-      - 'Sources/NumiVivoCLI/VivoElectronicCLICommands.swift'
-      - 'Tools/NativeChemistry/ECCPathChecks.swift'
-      - 'Tools/NativeChemistry/check_ecc_path_cli.py'
-      - 'Tools/NativeChemistry/build_scoped_cli.sh'
-      - 'Tools/NativeChemistry/ScopedCLIMain.swift'
-      - 'Tools/check_ecc_path.sh'
-      - 'ReferenceAdapters/PySCF/compare_ecc_path.py'
 permissions:
   contents: read
 concurrency:

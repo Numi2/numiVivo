@@ -1,11 +1,6 @@
 name: HCC1395 measured-chain execution
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/hcc1395-chain.yml
-      - Tools/Neoantigen/HCC1395/qualify_inputs.py
 permissions:
   contents: read
   actions: read

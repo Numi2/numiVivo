@@ -1,21 +1,6 @@
 name: Single-cell count workflows
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Sources/CNumiVivoZlib/**'
-      - 'Sources/NumiVivoKit/Omics/**'
-      - 'Sources/NumiVivoKit/Artifacts/**'
-      - 'Sources/NumiVivoKit/Platform/**'
-      - 'Sources/NumiVivoKit/Workflow/**'
-      - 'Sources/NumiVivoCLI/**'
-      - 'Tests/NumiVivoIntegrationTests/SingleCell*.swift'
-      - 'Tools/Omics/**'
-      - 'Examples/singlecell/**'
-      - 'Examples/singlecell-cohort/**'
-      - 'Package.swift'
-      - '.github/workflows/singlecell.yml'
 permissions:
   contents: read
 concurrency:

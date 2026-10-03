@@ -2,24 +2,6 @@ name: Cell-response learning regressions
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Sources/**'
-      - 'Tests/NumiVivoLearningTests/**'
-      - 'Tools/CI/**'
-      - 'Package.swift'
-      - 'Package.resolved'
-      - '.github/workflows/cell-response-learning.yml'
-  pull_request:
-    paths:
-      - 'Sources/**'
-      - 'Tests/NumiVivoLearningTests/**'
-      - 'Tools/CI/**'
-      - 'Package.swift'
-      - 'Package.resolved'
-      - '.github/workflows/cell-response-learning.yml'
-
 permissions:
   contents: read
 

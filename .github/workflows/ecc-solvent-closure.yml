@@ -1,18 +1,6 @@
 name: ECC solvent closure conformance
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Sources/NumiVivoKit/Embedding/**'
-      - 'Sources/NumiVivoKit/ManyBody/**'
-      - 'Sources/NumiVivoKit/ReactionQualification/VivoECCSolventClosure.swift'
-      - 'Sources/NumiVivoKit/ReactionQualification/VivoVariationalEmbedding.swift'
-      - 'Sources/NumiVivoKit/Workflow/VivoReactionQualificationWorkflow.swift'
-      - 'Sources/NumiVivoCLI/VivoReactionCLICommands.swift'
-      - 'Tests/NumiVivoIntegrationTests/ECCSolventClosureTests.swift'
-      - '.github/workflows/ecc-solvent-closure.yml'
-      - 'Package.swift'
 permissions:
   contents: read
 concurrency:

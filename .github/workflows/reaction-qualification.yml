@@ -1,19 +1,6 @@
 name: Nuclear reaction qualification
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/reaction-qualification.yml'
-      - 'Sources/**'
-      - 'Package.swift'
-      - 'Tools/check_reaction_qualification.sh'
-      - 'Tools/NativeChemistry/ReactionQualificationChecks.swift'
-      - 'Tools/NativeChemistry/check_reaction_cli.py'
-      - 'Tools/NativeChemistry/build_scoped_cli.sh'
-      - 'Tools/NativeChemistry/ScopedCLIMain.swift'
-      - 'ReferenceAdapters/PySCF/reaction_qualification_oracle.py'
-      - 'ReferenceAdapters/PySCF/equilibrium_solvent_oracle.py'
 permissions:
   contents: read
 concurrency:

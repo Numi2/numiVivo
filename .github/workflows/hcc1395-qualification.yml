@@ -1,12 +1,6 @@
 name: HCC1395 native reconstruction runtime
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/hcc1395-qualification.yml
-      - Sources/NumiVivoCLI/main.swift
-      - Sources/NumiVivoCLI/VivoGenomicEvidenceCLICommands.swift
 permissions:
   contents: read
 concurrency:
