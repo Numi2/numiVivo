@@ -1,0 +1,768 @@
+{
+  "arms" : [
+    {
+      "acceptedSteps" : 64,
+      "maximumRelativeMassError" : 0,
+      "name" : "control",
+      "samples" : [
+        {
+          "amountMol" : 0,
+          "concentrationsMolPerM3" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "cumulativeInjectedMol" : 0,
+          "timeSeconds" : 0
+        },
+        {
+          "amountMol" : 0,
+          "concentrationsMolPerM3" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "cumulativeInjectedMol" : 0,
+          "timeSeconds" : 1
+        },
+        {
+          "amountMol" : 0,
+          "concentrationsMolPerM3" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "cumulativeInjectedMol" : 0,
+          "timeSeconds" : 2
+        },
+        {
+          "amountMol" : 0,
+          "concentrationsMolPerM3" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "cumulativeInjectedMol" : 0,
+          "timeSeconds" : 4
+        },
+        {
+          "amountMol" : 0,
+          "concentrationsMolPerM3" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "cumulativeInjectedMol" : 0,
+          "timeSeconds" : 8
+        }
+      ]
+    },
+    {
+      "acceptedSteps" : 64,
+      "maximumRelativeMassError" : 1.1805048263116824e-07,
+      "name" : "intervention",
+      "samples" : [
+        {
+          "amountMol" : 3.322999930777115e-10,
+          "concentrationsMolPerM3" : [
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "cumulativeInjectedMol" : 3.322999930777115e-10,
+          "timeSeconds" : 0
+        },
+        {
+          "amountMol" : 3.323000017886544e-10,
+          "concentrationsMolPerM3" : [
+            0.98350537,
+            0.98350537,
+            0.011639181,
+            6.975468e-05,
+            0.011639181,
+            6.975468e-05,
+            1.0979234e-07,
+            1.0979233e-07,
+            2.797026e-05,
+            0.0047062216,
+            2.797026e-05,
+            0.0047062216,
+            0.046814412,
+            0.046814412,
+            0.00027893792,
+            1.0992176e-06,
+            0.00027893792,
+            1.0992176e-06,
+            1.2655414e-09,
+            1.2655412e-09,
+            4.409453e-07,
+            0.000112648,
+            4.409453e-07,
+            0.000112648
+          ],
+          "cumulativeInjectedMol" : 3.322999930777115e-10,
+          "timeSeconds" : 1
+        },
+        {
+          "amountMol" : 4.984499669161987e-10,
+          "concentrationsMolPerM3" : [
+            1.4674407,
+            1.4674407,
+            0.022814501,
+            0.00027416178,
+            0.022814501,
+            0.00027416178,
+            8.733267e-07,
+            8.733266e-07,
+            0.000109763634,
+            0.009258076,
+            0.000109763634,
+            0.009258076,
+            0.09065037,
+            0.09065037,
+            0.0010830666,
+            8.673404e-06,
+            0.0010830666,
+            8.673404e-06,
+            2.0638677e-08,
+            2.0638675e-08,
+            3.4751743e-06,
+            0.00043845753,
+            3.4751743e-06,
+            0.00043845753
+          ],
+          "cumulativeInjectedMol" : 4.984499896165673e-10,
+          "timeSeconds" : 2
+        },
+        {
+          "amountMol" : 4.98449950880034e-10,
+          "concentrationsMolPerM3" : [
+            1.4202698,
+            1.4202698,
+            0.05525,
+            0.0011962806,
+            0.05525,
+            0.0011962806,
+            7.206373e-06,
+            7.206372e-06,
+            0.00047766813,
+            0.022548249,
+            0.00047766813,
+            0.022548249,
+            0.2153463,
+            0.2153463,
+            0.004626327,
+            7.051457e-05,
+            0.004626327,
+            7.051457e-05,
+            3.2888005e-07,
+            3.2888002e-07,
+            2.8192e-05,
+            0.0018809367,
+            2.8192e-05,
+            0.0018809367
+          ],
+          "cumulativeInjectedMol" : 4.984499896165673e-10,
+          "timeSeconds" : 4
+        },
+        {
+          "amountMol" : 4.984499307743054e-10,
+          "concentrationsMolPerM3" : [
+            1.3329883,
+            1.3329883,
+            0.11266763,
+            0.0051067164,
+            0.11266763,
+            0.0051067164,
+            6.167569e-05,
+            6.167568e-05,
+            0.0020279526,
+            0.04661632,
+            0.0020279526,
+            0.04661632,
+            0.41921124,
+            0.41921124,
+            0.018880663,
+            0.0005860109,
+            0.018880663,
+            0.0005860109,
+            5.429468e-06,
+            5.4294674e-06,
+            0.00023330256,
+            0.007747688,
+            0.00023330256,
+            0.007747688
+          ],
+          "cumulativeInjectedMol" : 4.984499896165673e-10,
+          "timeSeconds" : 8
+        }
+      ]
+    }
+  ],
+  "backend" : "NumiVivo Metal reversible partition RK2",
+  "compartments" : [
+    {
+      "id" : "ecs-0",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0007552705646958202,
+        0.0004987058319443349,
+        0.00025084399356956055
+      ],
+      "tetrahedron" : 0,
+      "volumeCubicMetres" : 1.6614999350193175e-10
+    },
+    {
+      "id" : "ecs-1",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0007552705646958202,
+        0.00025084399356956055,
+        0.0004987058318306481
+      ],
+      "tetrahedron" : 1,
+      "volumeCubicMetres" : 1.661499936542716e-10
+    },
+    {
+      "id" : "ecs-2",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0005023785925004631,
+        0.0007481567736249417,
+        0.00025029492348949134
+      ],
+      "tetrahedron" : 2,
+      "volumeCubicMetres" : 1.664756549312728e-10
+    },
+    {
+      "id" : "ecs-3",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0002504501899238676,
+        0.0007490455755032599,
+        0.0004990455636288971
+      ],
+      "tetrahedron" : 3,
+      "volumeCubicMetres" : 1.66965809143573e-10
+    },
+    {
+      "id" : "ecs-4",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0005023785925004631,
+        0.0002502949233758045,
+        0.0007481567736249417
+      ],
+      "tetrahedron" : 4,
+      "volumeCubicMetres" : 1.664756550072005e-10
+    },
+    {
+      "id" : "ecs-5",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0002504501899238676,
+        0.0004990455636288971,
+        0.0007490455755032599
+      ],
+      "tetrahedron" : 5,
+      "volumeCubicMetres" : 1.66965809143573e-10
+    },
+    {
+      "id" : "ecs-6",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0017670755041763186,
+        0.000500645973374958,
+        0.0002517983839425142
+      ],
+      "tetrahedron" : 6,
+      "volumeCubicMetres" : 1.6658837295236482e-10
+    },
+    {
+      "id" : "ecs-7",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0017670755041763186,
+        0.0002517983890584219,
+        0.0005006459650758188
+      ],
+      "tetrahedron" : 7,
+      "volumeCubicMetres" : 1.6658838054376376e-10
+    },
+    {
+      "id" : "ecs-8",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0015143975615501404,
+        0.0007493493295100961,
+        0.00025263991000201713
+      ],
+      "tetrahedron" : 8,
+      "volumeCubicMetres" : 1.6665796717314443e-10
+    },
+    {
+      "id" : "ecs-9",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.001260110322618857,
+        0.000748445044393975,
+        0.0005005832060192006
+      ],
+      "tetrahedron" : 9,
+      "volumeCubicMetres" : 1.6713483212268463e-10
+    },
+    {
+      "id" : "ecs-10",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.0015143975615501404,
+        0.0002526399068187857,
+        0.0007493493293964093
+      ],
+      "tetrahedron" : 10,
+      "volumeCubicMetres" : 1.6665796938375013e-10
+    },
+    {
+      "id" : "ecs-11",
+      "kind" : "extracellular",
+      "positionMetres" : [
+        0.001260110322618857,
+        0.0005005832060192006,
+        0.0007484450442802881
+      ],
+      "tetrahedron" : 11,
+      "volumeCubicMetres" : 1.6713483227576921e-10
+    },
+    {
+      "id" : "cell-0",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0007552705646958202,
+        0.0004987058319443349,
+        0.00025084399356956055
+      ],
+      "tetrahedron" : 0,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-1",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0007552705646958202,
+        0.00025084399356956055,
+        0.0004987058318306481
+      ],
+      "tetrahedron" : 1,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-2",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0005023785925004631,
+        0.0007481567736249417,
+        0.00025029492348949134
+      ],
+      "tetrahedron" : 2,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-3",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0002504501899238676,
+        0.0007490455755032599,
+        0.0004990455636288971
+      ],
+      "tetrahedron" : 3,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-4",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0005023785925004631,
+        0.0002502949233758045,
+        0.0007481567736249417
+      ],
+      "tetrahedron" : 4,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-5",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0002504501899238676,
+        0.0004990455636288971,
+        0.0007490455755032599
+      ],
+      "tetrahedron" : 5,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-6",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0017670755041763186,
+        0.000500645973374958,
+        0.0002517983839425142
+      ],
+      "tetrahedron" : 6,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-7",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0017670755041763186,
+        0.0002517983890584219,
+        0.0005006459650758188
+      ],
+      "tetrahedron" : 7,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-8",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0015143975615501404,
+        0.0007493493295100961,
+        0.00025263991000201713
+      ],
+      "tetrahedron" : 8,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-9",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.001260110322618857,
+        0.000748445044393975,
+        0.0005005832060192006
+      ],
+      "tetrahedron" : 9,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-10",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.0015143975615501404,
+        0.0002526399068187857,
+        0.0007493493293964093
+      ],
+      "tetrahedron" : 10,
+      "volumeCubicMetres" : 1e-15
+    },
+    {
+      "id" : "cell-11",
+      "kind" : "cell",
+      "positionMetres" : [
+        0.001260110322618857,
+        0.0005005832060192006,
+        0.0007484450442802881
+      ],
+      "tetrahedron" : 11,
+      "volumeCubicMetres" : 1e-15
+    }
+  ],
+  "device" : "Apple M4",
+  "edges" : [
+    {
+      "clearanceCubicMetresPerSecond" : 2.0283592329047116e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 0,
+      "target" : 1
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 1.995234724981532e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 2,
+      "target" : 3
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 1.977255536156867e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 0,
+      "target" : 2
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 1.9952347245313796e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 4,
+      "target" : 5
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 1.977255536615807e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 1,
+      "target" : 4
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 2.003601519390941e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 3,
+      "target" : 5
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 2.040382071089796e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 9,
+      "target" : 11
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 2.0176308695899224e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 6,
+      "target" : 7
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 7.997722169257908e-13,
+      "kind" : "extracellular-diffusion",
+      "source" : 0,
+      "target" : 9
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 1.9851508336320234e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 8,
+      "target" : 9
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 1.9885170804822708e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 6,
+      "target" : 8
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 7.997722176583218e-13,
+      "kind" : "extracellular-diffusion",
+      "source" : 1,
+      "target" : 11
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 1.9851508225609384e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 10,
+      "target" : 11
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 1.98851707428977e-12,
+      "kind" : "extracellular-diffusion",
+      "source" : 7,
+      "target" : 10
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 0,
+      "target" : 12
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 1,
+      "target" : 13
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 2,
+      "target" : 14
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 3,
+      "target" : 15
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 4,
+      "target" : 16
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 5,
+      "target" : 17
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 6,
+      "target" : 18
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 7,
+      "target" : 19
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 8,
+      "target" : 20
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 9,
+      "target" : 21
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 10,
+      "target" : 22
+    },
+    {
+      "clearanceCubicMetresPerSecond" : 4.835975862049416e-17,
+      "kind" : "membrane-exchange",
+      "source" : 11,
+      "target" : 23
+    }
+  ],
+  "evidence" : {
+    "biologicalValidation" : "not-established",
+    "cellResponse" : "hypothetical-passive-membrane-exchange",
+    "continuumDiffusion" : "nonorthogonal-mesh-accuracy-unqualified",
+    "feedbackToMechanics" : "not-implemented",
+    "geometryToTransport" : "one-way-geometric-transfer",
+    "mechanics" : "accepted-numerical-state",
+    "transport" : "conservative-discrete-graph"
+  },
+  "format" : "numivivo-spatial-result/v1",
+  "geometrySHA256" : "b19d02566c7ec8fea094f09f2bb9ea61fd6e6571d25ba721868c8e8830b4df09",
+  "modelFingerprint" : "a2ac1e12269a704354df0971aa2c858ae3783fca2b4fa80ba46ed9e1631d9d72",
+  "planSHA256" : "fdeca737527ecb4a0255e53b98ca907e9bb0ff59f9fdd3ac1d9a2d2e56b42c9a",
+  "specimenID" : "two-block-scaffold"
+}

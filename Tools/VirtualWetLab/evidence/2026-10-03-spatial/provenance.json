@@ -1,0 +1,24 @@
+{
+  "scope": "native numerical integration only",
+  "labBase": "33b79c466d1f0f06daf26640080687670f745606",
+  "vivoBase": "a18808ec6ac4f13b61269250dfe75c9f1e325105",
+  "matterSources": {
+    "matter/tools/wet_lab_geometry.mm": "09a65d316c93174633b8bb4daef5a0072e65b8f52f46582a51caf9d5fed0bff1",
+    "matter/CMakeLists.txt": "23bb6960d3e227545cd316e3463a53390e427f33cb49dcf18bf5706821fb2093",
+    "matter/materials/silicone.nmatter": "d3094476cefa1a28ca8b5f35b28e2586d5a44ce63f268e57e96812de32de4a5f"
+  },
+  "runtime": {
+    "matterBinary": "503c0f857e3c3998554997e5a3d333e192c49beabc8aef850b7d8537bbeb40e9",
+    "matterShader": "7ae53da935501a399f08bebc16577db3e15351fc1be257bde83e388ebc7de01f",
+    "partitionShader": "602d246323da7d2c299f8b3e798fd78a2e714252e1a810fc6841af45a08068d1",
+    "spatialBinary": "23dd2a0ae74569901b2e2d0735c1ea6e924347e2ed286bb2816f1700f950529f"
+  },
+  "retainedEvidenceRoot": "/Users/home/virtual-wet-lab-spatial-20261003",
+  "failedDevelopmentAttempts": [
+    "vivo-build: @main in main.swift scoped package naming conflict",
+    "vivo-build-v2: partition shader pipeline lookup used namespace despite explicit host_name; owning runtime corrected",
+    "acceptance-v1: exclusive journal write failed after half-step; partial verdict superseded by complete acceptance-v2"
+  ],
+  "biologicalValidation": "not-established",
+  "fullSuiteBuild": "not-run; exact partition owner build and dedicated Matter exporter target built"
+}

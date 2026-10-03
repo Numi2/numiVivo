@@ -1,6 +1,11 @@
-# Virtual Wet Lab: measured cell-response assay
+# Virtual Wet Lab adapters
 
-This is the NumiVivo owner adapter for the Virtual Wet Lab workspace in NumiLab.
+NumiVivo owns the Virtual Wet Lab assay adapters exposed inside NumiLab.
+The `WetLabExperimentAdapter` boundary provides catalog, predict, reveal, inspect
+and replay operations. RNA response and [spatial tissue transport](SPATIAL.md)
+retain separate native owners, units and evidence statuses.
+
+The RNA adapter below is unchanged.
 It composes the existing native `singlecell-perturbation-batch` predictor and
 its raw-count replay verifier. Python handles experiment authoring and held-out
 scoring; it implements no alternative prediction model.
@@ -85,9 +90,10 @@ The acceptance reuses the existing predictor; no model parameters were tuned
 using these scores. See [BiologicalPrediction.md](../../Documentation/BiologicalPrediction.md)
 for the broader suite's failures and evidence limits.
 
-## New assay families
+## Other assay families
 
-The v1 adapter explicitly admits only `family: cell-response`. Add molecular or
-spatial-tissue adapters when their native owners provide supported conditions,
-controls, measured endpoint, unit-aware scoring and replay. Do not route them
-through this RNA scorer. NumiLab's `docs/VIRTUAL_WET_LAB.md` specifies that boundary.
+[Spatial tissue v1](SPATIAL.md) runs accepted NumiLab Matter geometry through
+NumiVivo's native extracellular diffusion and passive cell-exchange owner. It
+supports timed pulses, spatial sampling, matched controls, numerical-reference
+comparison and exact native replay. Its tissue model is synthetic and uncalibrated.
+Molecular perturbation remains a future adapter with its own measured endpoint.

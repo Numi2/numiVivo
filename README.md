@@ -19,8 +19,11 @@ native donor-response predictor: choose a measured B-cell donor, freeze a
 prediction, reveal held-out RNA measurements, compare baselines and replay the
 experiment record. The first supported assay uses the public Kang IFN-beta
 cohort. It is a development-data RNA assay; general biological-outcome
-prediction remains unestablished. Molecular and spatial assay adapters remain
-future work with their own measured readouts and qualification.
+prediction remains unestablished. A second [spatial adapter](Tools/VirtualWetLab/SPATIAL.md)
+connects accepted NumiLab Matter geometry to native extracellular diffusion and
+passive cell exchange, timed interventions and spatial readouts. Its synthetic
+scaffold is numerically checked, not biologically validated; coupling is one-way.
+Molecular perturbation remains a future adapter with its own measured endpoint.
 
 ## MLX cell-response CLI
 

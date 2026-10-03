@@ -1,0 +1,19 @@
+{
+  "purpose": "numerical instrument qualification, not a biological study",
+  "cases": [
+    "baseline",
+    "half-step",
+    "no diffusion",
+    "no membrane",
+    "invalid geometry",
+    "exact replay",
+    "reference reveal",
+    "changed artifact rejection",
+    "RNA backward compatibility"
+  ],
+  "stoppingRule": "one run per declared case; retain failures",
+  "reference": "independent FP64 matrix exponential on the admitted graph",
+  "concentrationTolerance": 0.0002,
+  "massRelativeTolerance": 2e-05,
+  "scientificScope": "synthetic scaffold, hypothetical passive tracer; no biological predictive claim"
+}

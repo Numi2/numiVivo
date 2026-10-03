@@ -1,0 +1,22 @@
+{
+  "testedURL": "http://127.0.0.1:8769",
+  "checks": {
+    "assaySelection": true,
+    "spatialPredictSeal": true,
+    "numericalObservationReveal": true,
+    "bothOwnersReplay": true,
+    "sampleTimeZeroAndEight": true,
+    "rnaHistoryRestoresGeneReadout": true,
+    "spatial320pxNoDocumentOverflow": true,
+    "rna320pxNoDocumentOverflow": true
+  },
+  "screenshots": {
+    "desktop": "/Users/home/virtual-wet-lab-spatial-20261003/spatial-desktop.png",
+    "mobile": "/Users/home/virtual-wet-lab-spatial-20261003/spatial-mobile.png"
+  },
+  "sourceSHA256": {
+    "python/metalrobo/virtual_wet_lab.py": "6fe7926b07dc1ba1a8cffd5e1749c6b203ac52a69313be38c82ecf0ed62501e4",
+    "python/metalrobo/wet_lab/index.html": "dac7242d4a1f2a1d59e0a2f60f8c61f16eaff40dbf64a9d7eeb9a7ca37f39ea1"
+  },
+  "limitation": "Local single-user browser workflow; no general biological or full-suite qualification"
+}

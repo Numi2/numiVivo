@@ -1,0 +1,82 @@
+{
+  "acceptance": {
+    "cases": [
+      "baseline",
+      "half-step",
+      "no diffusion",
+      "no membrane",
+      "invalid geometry",
+      "exact replay",
+      "reference reveal",
+      "changed artifact rejection",
+      "RNA backward compatibility"
+    ],
+    "concentrationTolerance": 0.0002,
+    "massRelativeTolerance": 2e-05,
+    "purpose": "numerical instrument qualification, not a biological study",
+    "reference": "independent FP64 matrix exponential on the admitted graph",
+    "stoppingRule": "one execution per declared case; retain failures"
+  },
+  "allPassed": true,
+  "results": {
+    "RNA backward compatibility": {
+      "passed": true,
+      "revealed": true,
+      "run": "731fe27c3a7d4b07a93f9e5defba1760",
+      "status": "verified"
+    },
+    "baseline": {
+      "maximumAbsoluteErrorMolPerM3": 3.4153664766889413e-06,
+      "maximumRelativeMassError": 1.1805048263116824e-07,
+      "passed": true,
+      "predictionSHA256": "fb6549223adaa324f9fd96adf77f72ba47952705bff0ac3634352ad610cfec38"
+    },
+    "changed artifact rejection": {
+      "passed": true,
+      "rejected": [
+        "prediction.json",
+        "geometry.json",
+        "plan.json",
+        "observations.json",
+        "comparison.json",
+        "units",
+        "evidenceClass",
+        "geometrySHA256",
+        "time"
+      ]
+    },
+    "exact replay": {
+      "adapterID": "spatial-tissue/v1",
+      "passed": true,
+      "run": "c6d7185b18054638a5c0311531c15cfc",
+      "status": "verified"
+    },
+    "half-step": {
+      "maximumAbsoluteErrorMolPerM3": 7.953664766802149e-07,
+      "maximumRelativeMassError": 9.279711784791367e-08,
+      "passed": true,
+      "predictionSHA256": "2d5de40949b03bd8c535368113bc2baaf181ed3c80a6852f76022f90cea35142"
+    },
+    "invalid geometry": {
+      "passed": true,
+      "rejection": "spatial-tissue: inverted/degenerate accepted tetrahedron"
+    },
+    "no diffusion": {
+      "maximumAbsoluteErrorMolPerM3": 2.114349190673881e-06,
+      "maximumRelativeMassError": 1.156778338152418e-06,
+      "passed": true,
+      "predictionSHA256": "3a443cea553e1aadc51a1670bec4aec786cbf6434b674e2a17ea09487b742071"
+    },
+    "no membrane": {
+      "maximumAbsoluteErrorMolPerM3": 4.0431601527890493e-07,
+      "maximumRelativeMassError": 1.052637713250701e-07,
+      "passed": true,
+      "predictionSHA256": "6dc88df8d857868b05a2aa79f66a302a8eac26f6c6626d8218d21aa490aa06d1"
+    },
+    "reference reveal": {
+      "biologicalValidation": "not-established",
+      "maximumAbsoluteErrorMolPerM3": 3.4153664766889413e-06,
+      "passed": true
+    }
+  }
+}

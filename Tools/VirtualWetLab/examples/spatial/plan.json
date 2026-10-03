@@ -1,0 +1,133 @@
+{
+  "format": "numivivo-spatial-assay/v1",
+  "specimenID": "two-block-scaffold",
+  "diffusionSquareMetresPerSecond": 1e-09,
+  "timeStepSeconds": 0.125,
+  "extracellularInitialMolPerM3": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "intracellularInitialMolPerM3": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "cells": [
+    {
+      "id": "cell-0",
+      "tetrahedron": 0,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-1",
+      "tetrahedron": 1,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-2",
+      "tetrahedron": 2,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-3",
+      "tetrahedron": 3,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-4",
+      "tetrahedron": 4,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-5",
+      "tetrahedron": 5,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-6",
+      "tetrahedron": 6,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-7",
+      "tetrahedron": 7,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-8",
+      "tetrahedron": 8,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-9",
+      "tetrahedron": 9,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-10",
+      "tetrahedron": 10,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    },
+    {
+      "id": "cell-11",
+      "tetrahedron": 11,
+      "volumeCubicMetres": 1e-15,
+      "membranePermeabilityMetresPerSecond": 1e-07
+    }
+  ],
+  "pulses": [
+    {
+      "timeSeconds": 0,
+      "extracellularIndices": [
+        0,
+        1
+      ],
+      "concentrationIncrementMolPerM3": 1
+    },
+    {
+      "timeSeconds": 2,
+      "extracellularIndices": [
+        0,
+        1
+      ],
+      "concentrationIncrementMolPerM3": 0.5
+    }
+  ],
+  "sampleTimesSeconds": [
+    0,
+    1,
+    2,
+    4,
+    8
+  ]
+}
