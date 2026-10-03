@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "exact GEF projection",
+    "native aggregate oracle",
+    "independent ridge and all baselines",
+    "pre-reveal isolation",
+    "held-out RMSE",
+    "exact native replay",
+    "unsupported requests",
+    "tamper rejection"
+  ],
+  "purpose": "software plus retrospective development evidence; no biological qualification",
+  "stoppingRule": "one complete check; preserve failures",
+  "tolerance": 1e-09
+}

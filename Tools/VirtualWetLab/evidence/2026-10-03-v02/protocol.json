@@ -1,0 +1,25 @@
+{
+  "barcodeRule": "exactly one positive gRNA species; count > 0",
+  "control": "sgrna_msafe",
+  "featureRule": "intersection of nonempty measured gene IDs; exclude unnamed features and gRNA barcodes; no expression-based selection",
+  "heldOutUnit": "GSM9659884",
+  "id": "spatial-clu-heldout-mouse3-v1",
+  "limits": [
+    "No same-cell pretreatment measurements",
+    "Mixed cell composition and sparse safe-harbour controls confound effects",
+    "Barcode assignment is inferred from measured barcode RNA; functional knockout per cell unverified",
+    "Known intervention transfer; not unseen-context or unseen-perturbation qualification"
+  ],
+  "minimumCellsPerArm": 3,
+  "primaryMetric": "equal-region all-common-gene log1p(CPM) response RMSE",
+  "primaryModel": "contextRidge",
+  "purpose": "retrospective development benchmark; three mice, cells and regions are subsamples",
+  "regionRule": "2 by 2 grid on full held-out specimen coordinate bounds; no anatomical alignment",
+  "stoppingRule": "one frozen run; retain failures; no tuning after held-out reveal",
+  "successCriterion": "primary RMSE strictly lower than both noChange and meanResponse, for every admitted region",
+  "target": "sgrna_clu",
+  "trainingUnits": [
+    "GSM8449354",
+    "GSM9659883"
+  ]
+}

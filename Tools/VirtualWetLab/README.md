@@ -5,6 +5,10 @@ The `WetLabExperimentAdapter` boundary provides catalog, predict, reveal, inspec
 and replay operations. RNA response and [spatial tissue transport](SPATIAL.md)
 retain separate native owners, units and evidence statuses.
 
+[Virtual Wet Lab v0.2](V02.md) adds a real spatial gene-perturbation adapter,
+shared tissue representation and campaign contract. The failed held-out
+comparison remains a first-class result.
+
 The RNA adapter below is unchanged.
 It composes the existing native `singlecell-perturbation-batch` predictor and
 its raw-count replay verifier. Python handles experiment authoring and held-out
@@ -96,4 +100,5 @@ for the broader suite's failures and evidence limits.
 NumiVivo's native extracellular diffusion and passive cell-exchange owner. It
 supports timed pulses, spatial sampling, matched controls, numerical-reference
 comparison and exact native replay. Its tissue model is synthetic and uncalibrated.
-Molecular perturbation remains a future adapter with its own measured endpoint.
+The [molecular perturbation adapter](V02.md) now uses a real Clu RNA endpoint;
+binding mechanisms and compound dosing remain unsupported.

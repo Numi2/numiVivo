@@ -23,7 +23,11 @@ prediction remains unestablished. A second [spatial adapter](Tools/VirtualWetLab
 connects accepted NumiLab Matter geometry to native extracellular diffusion and
 passive cell exchange, timed interventions and spatial readouts. Its synthetic
 scaffold is numerically checked, not biologically validated; coupling is one-way.
-Molecular perturbation remains a future adapter with its own measured endpoint.
+[Virtual Wet Lab v0.2](Tools/VirtualWetLab/V02.md) adds real spatial Clu perturbation,
+a shared native tissue contract, campaigns and evidence-aware interaction. Its
+held-out regional RNA prediction failed the no-change baseline; the failed
+comparison and exact replay are retained. Mechanistic binding, calibrated
+phenotypes, official Arc zero-shot scores and bidirectional coupling remain open.
 
 ## MLX cell-response CLI
 

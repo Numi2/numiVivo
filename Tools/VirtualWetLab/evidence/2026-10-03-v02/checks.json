@@ -1,0 +1,181 @@
+{
+  "admittedRegions": 1,
+  "beforeRevealNoTargetValues": true,
+  "cells": 620,
+  "exactReplay": true,
+  "excludedRegions": 3,
+  "features": 22314,
+  "heldOutBiologicalUnits": 1,
+  "passed": true,
+  "rejections": [
+    "target",
+    "timepoint",
+    "regionIDs",
+    "dose",
+    "prediction/folds/000/prediction.json",
+    "specimen.json",
+    "comparison.json"
+  ],
+  "result": {
+    "biologicalReplicates": 1,
+    "biologicalUnit": "GSM9659884",
+    "calibration": {
+      "reason": "Point predictor has no calibrated predictive distribution",
+      "status": "UNAVAILABLE"
+    },
+    "failureClusters": [
+      {
+        "reason": "does not improve over both baselines",
+        "regionID": "region-1-0"
+      }
+    ],
+    "format": "numivivo-molecular-spatial-assay/v1",
+    "largestGeneErrors": [
+      {
+        "gene": "Gm42067",
+        "rmse": 10.331874700389115
+      },
+      {
+        "gene": "Mien1",
+        "rmse": 9.858844369733267
+      },
+      {
+        "gene": "Cat",
+        "rmse": 9.601601466484063
+      },
+      {
+        "gene": "Lrrc4",
+        "rmse": 9.599635527151833
+      },
+      {
+        "gene": "Chchd1",
+        "rmse": 9.520796993141612
+      },
+      {
+        "gene": "Ift140",
+        "rmse": 9.392829855048026
+      },
+      {
+        "gene": "Aak1",
+        "rmse": 9.282742637187656
+      },
+      {
+        "gene": "Zfp273",
+        "rmse": 9.234902972918091
+      },
+      {
+        "gene": "Pak3",
+        "rmse": 9.232285745267928
+      },
+      {
+        "gene": "Pfdn2",
+        "rmse": 9.162290306872091
+      },
+      {
+        "gene": "Pigyl",
+        "rmse": 9.071884935722727
+      },
+      {
+        "gene": "Mtmr1",
+        "rmse": 9.035614052020271
+      },
+      {
+        "gene": "Coro1c",
+        "rmse": 8.95447237458655
+      },
+      {
+        "gene": "Glrx2",
+        "rmse": 8.862239168856899
+      },
+      {
+        "gene": "Arcn1",
+        "rmse": 8.848030750613164
+      },
+      {
+        "gene": "Ssb",
+        "rmse": 8.783597068365832
+      },
+      {
+        "gene": "Cdipt",
+        "rmse": 8.769114974135682
+      },
+      {
+        "gene": "Mmd",
+        "rmse": 8.757234998806371
+      },
+      {
+        "gene": "Synpo",
+        "rmse": 8.755430743124462
+      },
+      {
+        "gene": "Sh3gl2",
+        "rmse": 8.743189978953632
+      },
+      {
+        "gene": "Iftap",
+        "rmse": 8.700802079580981
+      },
+      {
+        "gene": "Lgi3",
+        "rmse": 8.699943182570824
+      },
+      {
+        "gene": "Gon4l",
+        "rmse": 8.668685781666364
+      },
+      {
+        "gene": "Cacna1e",
+        "rmse": 8.661987381403236
+      },
+      {
+        "gene": "Slc25a28",
+        "rmse": 8.65737858659676
+      },
+      {
+        "gene": "1700037H04Rik",
+        "rmse": 8.634699638759713
+      },
+      {
+        "gene": "Chmp2b",
+        "rmse": 8.632365468728235
+      },
+      {
+        "gene": "Vamp1",
+        "rmse": 8.60299313795722
+      },
+      {
+        "gene": "Rpl7a",
+        "rmse": 8.578238463932095
+      },
+      {
+        "gene": "Fads2",
+        "rmse": 8.57493815677103
+      }
+    ],
+    "metrics": [
+      {
+        "model": "contextRidge",
+        "rmse": 1.8776936838672345
+      },
+      {
+        "model": "noChange",
+        "rmse": 1.8483054581598883
+      },
+      {
+        "model": "meanResponse",
+        "rmse": 1.9396783198541783
+      },
+      {
+        "model": "medianResponse",
+        "rmse": 1.9396783198541783
+      }
+    ],
+    "predictionSealSHA256": "56b39a9d72843a518478e5780db8bc1fb51082b0280aee8722f5c812a20e7a57",
+    "qualification": "retrospective held-out mouse, known perturbation; no zero-shot/causal/biological qualification",
+    "regionsAreReplicates": false,
+    "units": "log1p(CPM over common gene universe)",
+    "verdict": "criterion-contradicted"
+  },
+  "ridgeAndBaselinesMatch": true,
+  "sourceCountsExact": true
+}
