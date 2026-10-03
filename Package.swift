@@ -7,7 +7,8 @@ let package = Package(
     products: [
         .library(name: "NumiVivoKit", targets: ["NumiVivoKit"]),
         .executable(name: "numivivo", targets: ["NumiVivoCLI"]),
-        .executable(name: "numivivo-spatial", targets: ["NumiVivoSpatialCLI"])
+        .executable(name: "numivivo-spatial", targets: ["NumiVivoSpatialCLI"]),
+        .executable(name: "numivivo-tissue", targets: ["NumiVivoTissueCLI"])
     ],
     dependencies: [
         .package(url: "https://github.com/ml-explore/mlx-swift", exact: "0.31.6")
@@ -50,6 +51,7 @@ let package = Package(
             .product(name: "MLXNN", package: "mlx-swift"),
             .product(name: "MLXOptimizers", package: "mlx-swift")
         ], path: "Sources/NumiVivoLearning"),
+        .executableTarget(name: "NumiVivoTissueCLI", dependencies: ["NumiVivoKit"], path: "Sources/NumiVivoTissueCLI"),
         .executableTarget(name: "NumiVivoSpatialCLI", dependencies: ["NumiVivoKit"], path: "Sources/NumiVivoSpatialCLI"),
         .executableTarget(name: "NumiVivoCLI", dependencies: ["NumiVivoKit", "NumiVivoLearning"], path: "Sources/NumiVivoCLI"),
         .testTarget(name: "NumiVivoIntegrationTests", dependencies: ["NumiVivoKit", "NumiVivoShaders"],
