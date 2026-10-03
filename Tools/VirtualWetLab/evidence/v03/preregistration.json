@@ -1,0 +1,164 @@
+{
+  "clarifications": [
+    "same existing MLX architecture across ablations; Gaussian marginal variance not calibrated confidence",
+    "all cell, reference and neighborhood inputs use admitted reference RNA only",
+    "source presence mask applies to likelihood and metrics; no missing-as-zero evaluation",
+    "training targets are anchor-level endpoint distributions; overlapping neighbors do not create independent replicates",
+    "PCA uses training reference cells only; shared target embedding and role descriptor",
+    "primary grouped evaluation uses unique outcome cell IDs within each target/type/neighborhood/role",
+    "reference coverage is reported, not outcome-selected; inadequately covered populations cannot qualify",
+    "cell-type-matched baseline backs off to role/target mean if training type absent",
+    "external comparator is pinned State perturbation-mean; species-agnostic refit on this mouse axis, no transferred human weights"
+  ],
+  "cohortSHA256": "78d1e306dad4a6b4877a2dcd29de8434fe1295984964f3f5c52e55fc65f8057a",
+  "distributions": "diagonal Gaussian in log1p(CPM), marginal samples do not imply joint gene or cell trajectories",
+  "instrumentRevision": "99ba963ec783bd70a5ee6b6a762ddb08124f77b09df6076aa0eff16c15d4d9a1",
+  "primarySelection": "equal-target validation mean whole-gene RMSE; three fixed checkpoints per variant",
+  "protocol": {
+    "annotation": {
+      "input": "reference controls only; projected onto query cells using geometry",
+      "markers": {
+        "astrocyte": [
+          "Gfap",
+          "Aqp4",
+          "Slc1a3"
+        ],
+        "choroid-plexus": [
+          "Ttr",
+          "Klotho"
+        ],
+        "endothelial": [
+          "Flt1",
+          "Kdr",
+          "Cldn5"
+        ],
+        "erythroid": [
+          "Hba-a1",
+          "Hbb-bs"
+        ],
+        "microglia": [
+          "C1qa",
+          "C1qb",
+          "P2ry12"
+        ],
+        "neuron": [
+          "Snap25",
+          "Syt1",
+          "Rbfox3"
+        ],
+        "oligodendrocyte": [
+          "Mbp",
+          "Plp1",
+          "Mog"
+        ]
+      },
+      "uncertainty": "reference-label probabilities; uncalibrated; not measured cell types"
+    },
+    "controls": "mSafe positive only for direct reference; barcode-negative neighbors of mSafe are separately labelled control-associated, not proven untreated; exclude ALL reference cells including mSafe within 15-neighbor sets of non-mSafe or ambiguous guide anchors",
+    "eligibility": {
+      "canonicalTargetRequired": true,
+      "excludedPriorRevealedTarget": "Clu remains development/regression only",
+      "minControlCells": 5,
+      "minControlCellsAppliesTo": "isolated mSafe controls; insufficient controls forbid biological qualification, not exploratory execution",
+      "minimumUniqueGuideCells": {
+        "test": 5,
+        "training": 10,
+        "validation": 5
+      }
+    },
+    "features": "union of named non-guide RNA; source presence mask; missing is not zero; all measured RNA retained",
+    "format": "numivivo-spatial-response-study/v1",
+    "geometry": "fixed endpoint GEF coordinates; no anatomical or per-animal section assignment inferred",
+    "identities": {
+      "GSM8449354": {
+        "animals": [
+          "paper-mouse1"
+        ],
+        "chip": "chip1",
+        "expectedCells": 39862,
+        "sectionAssignment": "unresolved per cell; same animal",
+        "sections": 2,
+        "split": "test"
+      },
+      "GSM9659883": {
+        "animals": [
+          "paper-mouse2",
+          "paper-mouse3"
+        ],
+        "chip": "chip2",
+        "expectedCells": 123921,
+        "sectionAssignment": "pooled; Data 3 says two, Fig S7 says three; do not split",
+        "sections": null,
+        "split": "training"
+      },
+      "GSM9659884": {
+        "animals": [
+          "paper-mouse4"
+        ],
+        "chip": "chip3",
+        "expectedCells": 65992,
+        "sectionAssignment": "unresolved per cell; same animal",
+        "sections": 2,
+        "split": "validation"
+      }
+    },
+    "learning": {
+      "batchSize": 16,
+      "checkpointSteps": [
+        240,
+        720,
+        1440
+      ],
+      "hiddenWidth": 64,
+      "learningRate": 0.001,
+      "loss": "Gaussian population negative log likelihood in log1p(CPM); uncertainty not calibrated",
+      "seed": 314159,
+      "selection": "validation equal-target mean response RMSE; no test model selection",
+      "weightDecay": 0.0001
+    },
+    "metrics": [
+      "whole-gene response RMSE",
+      "response MAE",
+      "direction agreement outside absolute 0.1 log1p(CPM) deadband",
+      "effect-size bias",
+      "Gaussian NLL",
+      "1D Wasserstein on training-selected 64-gene panel"
+    ],
+    "models": [
+      "native-ridge-v02",
+      "no-change",
+      "training-mean",
+      "cell-type-matched",
+      "learned-no-neighborhood",
+      "learned-neighborhood",
+      "learned-shuffled-neighborhood",
+      "learned-frozen-Nicheformer"
+    ],
+    "neighbors": 15,
+    "performanceTargets": {
+      "panFrameP95Ms": 33.4,
+      "pickP95Ms": 20,
+      "specimenCells": 123921,
+      "warmFeatureSwitchP95Ms": 100
+    },
+    "preprocessing": "log1p(CPM), training-only variance-ranked 256-gene encoder panel, training-reference PCA16; whole-gene masked decoder and scores",
+    "promotion": "not established with this small pooled cohort; spatial benefit requires improvement over no-neighborhood and shuffle for each eligible held-out target, role and adequately supported population; no genes/cells used as independent animals",
+    "referenceAnchors": 3,
+    "referenceCoverage": "nearest admitted control within ten times the chip median 15-neighbor radius; otherwise annotation uncertain",
+    "reportAxes": [
+      "target",
+      "projected cell type",
+      "reference neighborhood",
+      "role direct/neighbor",
+      "chip/animal pool"
+    ],
+    "source": "GSE274447",
+    "sourceIdentityEvidence": "Supplementary Data 3 cell totals and section/animal row; Fig S7; GEO titles retained as conflicting labels",
+    "splitPolicy": "pooled chip2 training; chip3 validation; chip1 locked test; no animal crosses splits; no within-chip independence claim",
+    "stoppingRule": "one frozen campaign; any code/instrument failure retained; no outcome-driven eligibility or test tuning",
+    "unseenPerturbations": "separate leave-one-target-out run for first eligible non-Clu target in lexicographic order; no identity-specific response prior or embedding at inference"
+  },
+  "testUse": "test observation extraction forbidden until prediction-seal.json exists",
+  "unseenTarget": "Cfap410; separate native run masks target identity and removes its training rows",
+  "variantDescriptor": "reference cell PCA16 + reference neighborhood PCA16 + reference type probabilities7 + role1; frozen representation reduced to16 on training references when admitted"
+}

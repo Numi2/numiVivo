@@ -1,0 +1,12 @@
+{
+  "status": "invalid-reference-contamination",
+  "testOutcomesRevealed": false,
+  "reason": "mSafe controls adjacent to noncontrol guide anchors enter reference set",
+  "counts": {
+    "chip1": 3,
+    "chip2": 75,
+    "chip3": 3
+  },
+  "retained": true,
+  "nextAttempt": "exclude all such references before retraining; preserve fixed budget"
+}

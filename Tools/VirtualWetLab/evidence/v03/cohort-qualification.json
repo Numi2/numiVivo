@@ -1,0 +1,37 @@
+{
+  "animalOverlap": false,
+  "biologicalValidation": false,
+  "checks": [
+    {
+      "allNeighborRowsChecked": 39862,
+      "cells": 39862,
+      "chip": "chip1",
+      "passed": true,
+      "queriesChecked": 218,
+      "referenceCoverage": 6885,
+      "sourceRNARowsCompared": 64
+    },
+    {
+      "allNeighborRowsChecked": 123921,
+      "cells": 123921,
+      "chip": "chip2",
+      "passed": true,
+      "queriesChecked": 3668,
+      "referenceCoverage": 36112,
+      "sourceRNARowsCompared": 64
+    },
+    {
+      "allNeighborRowsChecked": 65992,
+      "cells": 65992,
+      "chip": "chip3",
+      "passed": true,
+      "queriesChecked": 320,
+      "referenceCoverage": 9018,
+      "sourceRNARowsCompared": 64
+    }
+  ],
+  "cohortSHA256": "78d1e306dad4a6b4877a2dcd29de8434fe1295984964f3f5c52e55fc65f8057a",
+  "format": "numivivo-spatial-cohort-qualification/v1",
+  "inputsSHA256": "ce49326fe8e21759db2ed2c1714795ae0d3082f084c77a34b380c6bf7095a160",
+  "softwareQualified": true
+}

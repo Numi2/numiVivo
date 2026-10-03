@@ -2,7 +2,9 @@ import Foundation
 
 let arguments = Array(CommandLine.arguments.dropFirst())
 let status: Int32
-if VivoProteinStressCLICommands.handles(arguments.first) {
+if arguments.first == "spatial-response" {
+    status = VivoSpatialResponseCLICommands().run(arguments: arguments)
+} else if VivoProteinStressCLICommands.handles(arguments.first) {
     status = await VivoProteinStressCLICommands().run(arguments: arguments)
 } else if VivoBinderCLICommands.handles(arguments.first) {
     status = VivoBinderCLICommands().run(arguments: arguments)

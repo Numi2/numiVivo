@@ -1,0 +1,392 @@
+{
+  "biologicalUnits": 4,
+  "builderSHA256": "8cfccf15a56af5baf603e77e87c623345994f86da7dca4efcff61e358c40eae0",
+  "featureCount": 28990,
+  "files": {
+    "chip1.h5ad": "20f9f1e5ce3939299eff4ae26dc6ccda03753069e9180e94333644fa2241b3e2",
+    "chip2.h5ad": "cd6c9d3c84b4c8fed3f0fdd40dbaf4a806e0b2b371074f7875342461a89019be",
+    "chip3.h5ad": "379813c1010c8ed1cdd46210fbccc9dca7cf0ae9d268e3efc87fe8bca8de9304"
+  },
+  "format": "numivivo-spatial-cohort/v1",
+  "independentSplitBlocks": 3,
+  "limitations": [
+    "chip2 animals remain pooled",
+    "section boundaries unresolved; neighbors are fixed chip-coordinate KNN, not validated section assignments",
+    "controls are sparse",
+    "query types and reference neighborhoods are inferred solely from control-associated RNA; not measured pre-intervention state"
+  ],
+  "protocolSHA256": "ad2c64afc19d80ad76ce73e1e816c1d2bb39900330670cc92ec92cc7e42bd3bf",
+  "sources": [
+    {
+      "accession": "GSM8449354",
+      "ambiguous": 11,
+      "animals": [
+        "paper-mouse1"
+      ],
+      "barcodeNegative": 39686,
+      "barcodes": {
+        "sgrna_C9orf72": 3,
+        "sgrna_Cfap410": 8,
+        "sgrna_clu": 29,
+        "sgrna_dpp5": 2,
+        "sgrna_fasn": 24,
+        "sgrna_flcn": 4,
+        "sgrna_gfap": 9,
+        "sgrna_lrrk2": 4,
+        "sgrna_msafe": 7,
+        "sgrna_ndufaf": 4,
+        "sgrna_oligo2": 19,
+        "sgrna_rbfox": 4,
+        "sgrna_rraga": 9,
+        "sgrna_sh3gl2": 4,
+        "sgrna_srf": 2,
+        "sgrna_stk39": 22,
+        "sgrna_tbk1": 3,
+        "sgrna_trem2": 8
+      },
+      "cells": 39862,
+      "chip": "chip1",
+      "expectedCells": 39862,
+      "isolatedSafeControls": 4,
+      "measuredGenes": 26262,
+      "projectedTypes": {
+        "astrocyte": 4,
+        "choroid-plexus": 48,
+        "endothelial": 1,
+        "erythroid": 207,
+        "neuron": 2296,
+        "oligodendrocyte": 2112,
+        "uncertain": 35194
+      },
+      "referenceCells": 66,
+      "sectionAssignment": "unresolved per cell; same animal",
+      "sections": 2,
+      "sourceSHA256": "82bf60acfc4068f33f0c4b3557e3022aada6d914c06e4213b80a64948131cc31",
+      "split": "test"
+    },
+    {
+      "accession": "GSM9659883",
+      "ambiguous": 1054,
+      "animals": [
+        "paper-mouse2",
+        "paper-mouse3"
+      ],
+      "barcodeNegative": 119664,
+      "barcodes": {
+        "sgrna_C9orf72": 51,
+        "sgrna_Cfap410": 118,
+        "sgrna_clu": 419,
+        "sgrna_dpp5": 74,
+        "sgrna_fasn": 413,
+        "sgrna_flcn": 178,
+        "sgrna_gfap": 161,
+        "sgrna_lrrk2": 43,
+        "sgrna_msafe": 96,
+        "sgrna_ndufaf": 116,
+        "sgrna_oligo2": 357,
+        "sgrna_rbfox": 100,
+        "sgrna_rraga": 147,
+        "sgrna_sh3gl2": 197,
+        "sgrna_srf": 72,
+        "sgrna_stk39": 351,
+        "sgrna_tbk1": 82,
+        "sgrna_trem2": 228
+      },
+      "cells": 123921,
+      "chip": "chip2",
+      "expectedCells": 123921,
+      "isolatedSafeControls": 21,
+      "measuredGenes": 28443,
+      "projectedTypes": {
+        "astrocyte": 5,
+        "choroid-plexus": 10912,
+        "endothelial": 3,
+        "microglia": 5,
+        "neuron": 6443,
+        "oligodendrocyte": 10698,
+        "uncertain": 95855
+      },
+      "referenceCells": 330,
+      "sectionAssignment": "pooled; Data 3 says two, Fig S7 says three; do not split",
+      "sections": null,
+      "sourceSHA256": "06635972f0a2054951ad9ef220f921a2c0e0b06f319efc2fdfcc2bc5beef5fcc",
+      "split": "training"
+    },
+    {
+      "accession": "GSM9659884",
+      "ambiguous": 21,
+      "animals": [
+        "paper-mouse4"
+      ],
+      "barcodeNegative": 65670,
+      "barcodes": {
+        "sgrna_C9orf72": 6,
+        "sgrna_Cfap410": 13,
+        "sgrna_clu": 60,
+        "sgrna_dpp5": 12,
+        "sgrna_fasn": 19,
+        "sgrna_flcn": 12,
+        "sgrna_gfap": 15,
+        "sgrna_lrrk2": 6,
+        "sgrna_msafe": 9,
+        "sgrna_ndufaf": 9,
+        "sgrna_oligo2": 28,
+        "sgrna_rbfox": 7,
+        "sgrna_rraga": 9,
+        "sgrna_sh3gl2": 27,
+        "sgrna_srf": 9,
+        "sgrna_stk39": 27,
+        "sgrna_tbk1": 16,
+        "sgrna_trem2": 17
+      },
+      "cells": 65992,
+      "chip": "chip3",
+      "expectedCells": 65992,
+      "isolatedSafeControls": 6,
+      "measuredGenes": 22847,
+      "projectedTypes": {
+        "astrocyte": 1,
+        "choroid-plexus": 2147,
+        "erythroid": 212,
+        "microglia": 5,
+        "neuron": 1132,
+        "oligodendrocyte": 774,
+        "uncertain": 61721
+      },
+      "referenceCells": 99,
+      "sectionAssignment": "unresolved per cell; same animal",
+      "sections": 2,
+      "sourceSHA256": "360b37588ad4f0ddb8c70154830b74e14bad76c3fdc34057a888af81af7e6d65",
+      "split": "validation"
+    }
+  ],
+  "targets": [
+    {
+      "counts": {
+        "test": 3,
+        "training": 51,
+        "validation": 6
+      },
+      "eligible": false,
+      "exclusions": [
+        "test below guide support minimum"
+      ],
+      "guideID": "sgrna_C9orf72",
+      "previouslyExposed": false,
+      "target": "C9orf72"
+    },
+    {
+      "counts": {
+        "test": 8,
+        "training": 118,
+        "validation": 13
+      },
+      "eligible": true,
+      "exclusions": [],
+      "guideID": "sgrna_Cfap410",
+      "previouslyExposed": false,
+      "target": "Cfap410"
+    },
+    {
+      "counts": {
+        "test": 29,
+        "training": 419,
+        "validation": 60
+      },
+      "eligible": true,
+      "exclusions": [],
+      "guideID": "sgrna_clu",
+      "previouslyExposed": true,
+      "target": "Clu"
+    },
+    {
+      "counts": {
+        "test": 2,
+        "training": 74,
+        "validation": 12
+      },
+      "eligible": false,
+      "exclusions": [
+        "canonical target alias unresolved in deposit",
+        "test below guide support minimum"
+      ],
+      "guideID": "sgrna_dpp5",
+      "previouslyExposed": false,
+      "target": null
+    },
+    {
+      "counts": {
+        "test": 24,
+        "training": 413,
+        "validation": 19
+      },
+      "eligible": true,
+      "exclusions": [],
+      "guideID": "sgrna_fasn",
+      "previouslyExposed": false,
+      "target": "Fasn"
+    },
+    {
+      "counts": {
+        "test": 4,
+        "training": 178,
+        "validation": 12
+      },
+      "eligible": false,
+      "exclusions": [
+        "test below guide support minimum"
+      ],
+      "guideID": "sgrna_flcn",
+      "previouslyExposed": false,
+      "target": "Flcn"
+    },
+    {
+      "counts": {
+        "test": 9,
+        "training": 161,
+        "validation": 15
+      },
+      "eligible": true,
+      "exclusions": [],
+      "guideID": "sgrna_gfap",
+      "previouslyExposed": false,
+      "target": "Gfap"
+    },
+    {
+      "counts": {
+        "test": 4,
+        "training": 43,
+        "validation": 6
+      },
+      "eligible": false,
+      "exclusions": [
+        "test below guide support minimum"
+      ],
+      "guideID": "sgrna_lrrk2",
+      "previouslyExposed": false,
+      "target": "Lrrk2"
+    },
+    {
+      "counts": {
+        "test": 4,
+        "training": 116,
+        "validation": 9
+      },
+      "eligible": false,
+      "exclusions": [
+        "canonical target alias unresolved in deposit",
+        "test below guide support minimum"
+      ],
+      "guideID": "sgrna_ndufaf",
+      "previouslyExposed": false,
+      "target": null
+    },
+    {
+      "counts": {
+        "test": 19,
+        "training": 357,
+        "validation": 28
+      },
+      "eligible": false,
+      "exclusions": [
+        "canonical target alias unresolved in deposit"
+      ],
+      "guideID": "sgrna_oligo2",
+      "previouslyExposed": false,
+      "target": null
+    },
+    {
+      "counts": {
+        "test": 4,
+        "training": 100,
+        "validation": 7
+      },
+      "eligible": false,
+      "exclusions": [
+        "canonical target alias unresolved in deposit",
+        "test below guide support minimum"
+      ],
+      "guideID": "sgrna_rbfox",
+      "previouslyExposed": false,
+      "target": null
+    },
+    {
+      "counts": {
+        "test": 9,
+        "training": 147,
+        "validation": 9
+      },
+      "eligible": true,
+      "exclusions": [],
+      "guideID": "sgrna_rraga",
+      "previouslyExposed": false,
+      "target": "Rraga"
+    },
+    {
+      "counts": {
+        "test": 4,
+        "training": 197,
+        "validation": 27
+      },
+      "eligible": false,
+      "exclusions": [
+        "test below guide support minimum"
+      ],
+      "guideID": "sgrna_sh3gl2",
+      "previouslyExposed": false,
+      "target": "Sh3gl2"
+    },
+    {
+      "counts": {
+        "test": 2,
+        "training": 72,
+        "validation": 9
+      },
+      "eligible": false,
+      "exclusions": [
+        "test below guide support minimum"
+      ],
+      "guideID": "sgrna_srf",
+      "previouslyExposed": false,
+      "target": "Srf"
+    },
+    {
+      "counts": {
+        "test": 22,
+        "training": 351,
+        "validation": 27
+      },
+      "eligible": true,
+      "exclusions": [],
+      "guideID": "sgrna_stk39",
+      "previouslyExposed": false,
+      "target": "Stk39"
+    },
+    {
+      "counts": {
+        "test": 3,
+        "training": 82,
+        "validation": 16
+      },
+      "eligible": false,
+      "exclusions": [
+        "test below guide support minimum"
+      ],
+      "guideID": "sgrna_tbk1",
+      "previouslyExposed": false,
+      "target": "Tbk1"
+    },
+    {
+      "counts": {
+        "test": 8,
+        "training": 228,
+        "validation": 17
+      },
+      "eligible": true,
+      "exclusions": [],
+      "guideID": "sgrna_trem2",
+      "previouslyExposed": false,
+      "target": "Trem2"
+    }
+  ]
+}
