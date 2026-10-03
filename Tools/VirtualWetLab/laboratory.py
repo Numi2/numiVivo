@@ -5,6 +5,9 @@ import wetlab as rna
 from pathlib import Path
 
 def adapter_for_family(family):
+    if family=='learned-spatial-response':
+        from learned_spatial import LearnedSpatialResponseAdapter
+        return LearnedSpatialResponseAdapter()
     if family=='molecular-perturbation':
         from molecular_adapter import MolecularPerturbationAdapter
         return MolecularPerturbationAdapter()

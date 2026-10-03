@@ -40,7 +40,8 @@ def extract(root,research):
  from nicheformer.configuration_nicheformer import NicheformerConfig
  from nicheformer.modeling_nicheformer import NicheformerForMaskedLM
  import torch
- torch.set_num_threads(4);device='mps' if torch.backends.mps.is_available() else 'cpu'
+ torch.set_num_threads(4);device='cpu'  # bounded offline embedding; MPS masked attention stalled on this Mac
+ torch.backends.mha.set_fastpath_enabled(False)
  model=NicheformerForMaskedLM.from_pretrained(str(package),local_files_only=True).to(device).eval()
  embedding={};columns=np.array([i for i,g in mapped]);tokens=np.array([vocab[g] for i,g in mapped])
  for chip in ('chip2','chip3','chip1'):
@@ -51,6 +52,7 @@ def extract(root,research):
   with torch.inference_mode():
    for start in range(0,len(seq),4):
     batch=torch.from_numpy(seq[start:start+4]).to(device);chunks.append(model.nicheformer.get_embeddings(batch,batch!=0,layer=-1,with_context=False).cpu().numpy())
+    if start%40==0: print(chip,start,'/',len(seq),device,flush=True)
   embedding[chip]=np.concatenate(chunks);require(np.isfinite(embedding[chip]).all(),'Nonfinite frozen representation');np.save(out/(chip+'-reference-embeddings.npy'),embedding[chip]);print(chip,len(seq),'frozen reference embeddings',flush=True)
  pca=PCA(n_components=16,svd_solver='full').fit(embedding['chip2']);scale=np.maximum(np.sqrt(pca.explained_variance_),.1)
  np.savez(out/'frozen-pca.npz',mean=pca.mean_,components=pca.components_,scale=scale)

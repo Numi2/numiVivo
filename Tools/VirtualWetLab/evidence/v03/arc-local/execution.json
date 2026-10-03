@@ -1,0 +1,27 @@
+{
+  "challengeDataAccess": "not_logged_in",
+  "dataset": "GSE146194/GSM4367979 human K562 CRISPRi",
+  "hardware": "macOS-26.6-arm64-arm-64bit",
+  "localEvaluation": true,
+  "metrics": {
+    "de_wilcoxon_direction_fidelity_yield_raw": 0.0,
+    "de_wilcoxon_direction_reach_raw": 0.0018785687137402394,
+    "de_wilcoxon_lfc_nmae": 1.0124121191807096,
+    "de_wilcoxon_sig_jaccard": 0.125,
+    "expr_mse_unbiased_capped_norm": 1.3244504330457134,
+    "pds_cosine": 0.4821428571428571
+  },
+  "notes": [
+    "two target fold-change metrics omitted by official real-side gate; retained in log",
+    "control cells appended only for local evaluator matching; prediction artifact remains control-free",
+    "same K562 context; no unseen-context biological qualification"
+  ],
+  "predictionSHA256": "9d2997e58b4d2d581e509c26d273e3d90d65474f889bfe5ed5a0c29e9f367d94",
+  "preset": "vcc2026",
+  "returnedChallengeScore": null,
+  "scorerRevision": "0ce25cf4c495e76e60dfca4ddc8f822507aa0e18",
+  "spatialQualification": false,
+  "status": "executed",
+  "submissionConformance": false,
+  "targets": 8
+}
