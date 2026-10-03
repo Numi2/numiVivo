@@ -1,0 +1,228 @@
+{
+  "donors": 8,
+  "genesPerDonor": 15706,
+  "independentNumPyOracle": true,
+  "nativeReplay": true,
+  "passed": true,
+  "results": [
+    {
+      "donor": "patient_101",
+      "metrics": [
+        {
+          "mae": 0.689365871165658,
+          "model": "noChange",
+          "rmse": 1.1853736716559353
+        },
+        {
+          "mae": 0.682290855699468,
+          "model": "meanResponse",
+          "rmse": 1.1061207010633762
+        },
+        {
+          "mae": 0.647354804802785,
+          "model": "medianResponse",
+          "rmse": 1.1099742160390553
+        },
+        {
+          "mae": 0.6634073187815561,
+          "model": "contextRidge",
+          "rmse": 1.085450286857948
+        }
+      ],
+      "run": "7db3e154c98148a1bb1adb7f67578768",
+      "verdict": "beats-both-baselines"
+    },
+    {
+      "donor": "patient_1015",
+      "metrics": [
+        {
+          "mae": 0.49546671904438055,
+          "model": "noChange",
+          "rmse": 0.7681731796701979
+        },
+        {
+          "mae": 0.5170583893554116,
+          "model": "meanResponse",
+          "rmse": 0.7590459590806109
+        },
+        {
+          "mae": 0.48326179831858485,
+          "model": "medianResponse",
+          "rmse": 0.7501982634419674
+        },
+        {
+          "mae": 0.4881827653856794,
+          "model": "contextRidge",
+          "rmse": 0.7281908665107849
+        }
+      ],
+      "run": "e4d5ac499b3b4bdabd2df46b415dd5d5",
+      "verdict": "beats-both-baselines"
+    },
+    {
+      "donor": "patient_1016",
+      "metrics": [
+        {
+          "mae": 0.6805568912618986,
+          "model": "noChange",
+          "rmse": 1.170158917031957
+        },
+        {
+          "mae": 0.69553155398783,
+          "model": "meanResponse",
+          "rmse": 1.1187184188358577
+        },
+        {
+          "mae": 0.6517477344578653,
+          "model": "medianResponse",
+          "rmse": 1.11561388373977
+        },
+        {
+          "mae": 0.6736535419494921,
+          "model": "contextRidge",
+          "rmse": 1.0937131829157372
+        }
+      ],
+      "run": "9c2cfae25ab547a18fd33efe67823a44",
+      "verdict": "beats-both-baselines"
+    },
+    {
+      "donor": "patient_1039",
+      "metrics": [
+        {
+          "mae": 0.8844366685941895,
+          "model": "noChange",
+          "rmse": 1.636075078674488
+        },
+        {
+          "mae": 0.8843284608391562,
+          "model": "meanResponse",
+          "rmse": 1.5343645326164779
+        },
+        {
+          "mae": 0.8509190181245118,
+          "model": "medianResponse",
+          "rmse": 1.5463217297677574
+        },
+        {
+          "mae": 0.8850390878390882,
+          "model": "contextRidge",
+          "rmse": 1.5332234956509467
+        }
+      ],
+      "run": "20a94fa215404ff5a0c6b2674eddae0b",
+      "verdict": "beats-both-baselines"
+    },
+    {
+      "donor": "patient_107",
+      "metrics": [
+        {
+          "mae": 0.8086950580173572,
+          "model": "noChange",
+          "rmse": 1.491855310624414
+        },
+        {
+          "mae": 0.8024577772971977,
+          "model": "meanResponse",
+          "rmse": 1.3852438686160689
+        },
+        {
+          "mae": 0.767814805462571,
+          "model": "medianResponse",
+          "rmse": 1.3981835917210228
+        },
+        {
+          "mae": 0.7992416569554234,
+          "model": "contextRidge",
+          "rmse": 1.3821602927310486
+        }
+      ],
+      "run": "89829eec0d5648e4b4ad685eec5e6e26",
+      "verdict": "beats-both-baselines"
+    },
+    {
+      "donor": "patient_1244",
+      "metrics": [
+        {
+          "mae": 0.6705004941822774,
+          "model": "noChange",
+          "rmse": 1.1671631166381318
+        },
+        {
+          "mae": 0.6885501437540319,
+          "model": "meanResponse",
+          "rmse": 1.1147092793788216
+        },
+        {
+          "mae": 0.6483189895587349,
+          "model": "medianResponse",
+          "rmse": 1.1115329230539839
+        },
+        {
+          "mae": 0.674408826107648,
+          "model": "contextRidge",
+          "rmse": 1.0972653987445875
+        }
+      ],
+      "run": "0344dd8a3a8341588733d5feb5135596",
+      "verdict": "beats-both-baselines"
+    },
+    {
+      "donor": "patient_1256",
+      "metrics": [
+        {
+          "mae": 0.5796781329324784,
+          "model": "noChange",
+          "rmse": 0.9529365540842695
+        },
+        {
+          "mae": 0.604537201238256,
+          "model": "meanResponse",
+          "rmse": 0.9283548818558545
+        },
+        {
+          "mae": 0.5647477826792332,
+          "model": "medianResponse",
+          "rmse": 0.9224385504420002
+        },
+        {
+          "mae": 0.5758099852405801,
+          "model": "contextRidge",
+          "rmse": 0.8949824461284567
+        }
+      ],
+      "run": "aac7f5512c164119ad110ec1b8ea959b",
+      "verdict": "beats-both-baselines"
+    },
+    {
+      "donor": "patient_1488",
+      "metrics": [
+        {
+          "mae": 0.5619413719531094,
+          "model": "noChange",
+          "rmse": 0.8965535844124697
+        },
+        {
+          "mae": 0.571070819271122,
+          "model": "meanResponse",
+          "rmse": 0.8601137042948196
+        },
+        {
+          "mae": 0.5419789348598169,
+          "model": "medianResponse",
+          "rmse": 0.8616453529654898
+        },
+        {
+          "mae": 0.5427186972508282,
+          "model": "contextRidge",
+          "rmse": 0.830025562309596
+        }
+      ],
+      "run": "78a635a24d554d80a2b875f97c3cc843",
+      "verdict": "beats-both-baselines"
+    }
+  ],
+  "sourceCountsExact": true,
+  "tamperedPredictionRejected": true,
+  "unsupportedInputsRejected": true
+}

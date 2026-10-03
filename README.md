@@ -12,6 +12,16 @@ The real-data benchmark registry now records source identity, replicate semantic
 
 > **Research software, under active development.** The capabilities below describe source implementations and their intended workflows—not a fully qualified release. Apple package integration, GPU numerical behavior and performance require qualification. The [capability map](Documentation/CAPABILITIES.md) separates implemented methods, current restrictions and planned work.
 
+## Virtual Wet Lab workspace
+
+NumiLab now exposes a [Virtual Wet Lab](Tools/VirtualWetLab/README.md) over the
+native donor-response predictor: choose a measured B-cell donor, freeze a
+prediction, reveal held-out RNA measurements, compare baselines and replay the
+experiment record. The first supported assay uses the public Kang IFN-beta
+cohort. It is a development-data RNA assay; general biological-outcome
+prediction remains unestablished. Molecular and spatial assay adapters remain
+future work with their own measured readouts and qualification.
+
 ## MLX cell-response CLI
 
 The source-bound `cell-response-train`, `cell-response-resume`,

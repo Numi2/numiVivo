@@ -1,0 +1,26 @@
+{
+  "biologicalSuccessThreshold": "No biological qualification claimed; retain all gains and losses",
+  "checks": [
+    "exact aggregation from original measured counts",
+    "independent ridge solve",
+    "all baseline predictions",
+    "pre-reveal visibility",
+    "RMSE oracle",
+    "native replay",
+    "unsupported inputs",
+    "tamper rejection"
+  ],
+  "numericalTolerance": "absolute 1e-9, relative 1e-9",
+  "scope": "workflow acceptance on previously inspected Kang data",
+  "specimens": [
+    "patient_101",
+    "patient_1015",
+    "patient_1016",
+    "patient_1039",
+    "patient_107",
+    "patient_1244",
+    "patient_1256",
+    "patient_1488"
+  ],
+  "stoppingRule": "All eight donors, once each; no tuning"
+}

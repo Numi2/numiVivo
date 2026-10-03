@@ -1,0 +1,27 @@
+{
+  "nativeRuntime": {
+    "adapterSHA256": "5fdb971da90236dfccff229ff327ae9cfcce94cad954a694cc13e2525305fc34",
+    "backend": "native Swift CPU, log1p-CPM donor aggregates",
+    "binarySHA256": "9fd1a3934ccfb921a47b08bf8728683641abe03ae8f012af968794e75a3381cc",
+    "hdf5SHA256": "b96f5a824802e985198fb58fc336da80fc6a4990249f4038656b433231c7da51"
+  },
+  "sourceReportSHA256": "8bce1fa4423ec0e54c94baa41d11614d32c9385b433e4bad77498fef9f8bf69b",
+  "originalSourceSHA256": "e6a5adac64dcdeb36eaba27db49b63e0c64bb0ed4a64c6705971506b41c39830",
+  "vivoBaseRevision": "540ea892",
+  "labBaseRevision": "e317e9f3",
+  "acceptanceArtifactDirectory": "/Users/home/virtual-wet-lab-evidence-20261003/acceptance",
+  "command": "NUMIVIVO_HDF5_LIBRARY=/opt/homebrew/lib/libhdf5.dylib python Tools/VirtualWetLab/check_real.py --assay /Users/home/virtual-wet-lab-evidence-20261003/kang-v1/assay.json --binary /Users/home/virtual-wet-lab-evidence-20261003/runtime/numivivo --output /Users/home/virtual-wet-lab-evidence-20261003/acceptance",
+  "files": {
+    "Tools/VirtualWetLab/check_real.py": "10b87e5f026e23b684d8ebd86b67608415d8c97414fd3f56f22da1d1c2b8de9e",
+    "Tools/VirtualWetLab/test_wetlab.py": "62473f300abb645808500a186589369d8253820429e6f78e313e034e735971e0",
+    "Tools/VirtualWetLab/prepare_kang.py": "a03736fb154bb98ab8b3ec713b18ab267b5415134bd6d7f024fcaf8c9a52f2cb",
+    "Tools/VirtualWetLab/wetlab.py": "5fdb971da90236dfccff229ff327ae9cfcce94cad954a694cc13e2525305fc34"
+  },
+  "nativeCLIScope": "Retained native Omics CLI, SHA-bound; no new native model implementation or whole-suite rebuild.",
+  "softwareEvidence": [
+    "5 unit checks passed",
+    "8 donor native runs and replays passed",
+    "independent original-count aggregation, NumPy predictions and RMSE passed",
+    "browser predict/reveal/replay passed"
+  ]
+}
