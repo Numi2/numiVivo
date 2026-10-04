@@ -1,0 +1,49 @@
+{
+  "biologicalPromotion": false,
+  "checks": [
+    {
+      "absentFeatureMask": true,
+      "boundedRead": true,
+      "guideIdentityRetained": true,
+      "predictionBlocked": true,
+      "reservedRowsProtected": 2563,
+      "separateTargetContextSplits": true,
+      "source": "nadig-hepg2",
+      "unknownConditionRejected": true
+    },
+    {
+      "absentFeatureMask": true,
+      "boundedRead": true,
+      "guideIdentityRetained": true,
+      "predictionBlocked": true,
+      "reservedRowsProtected": 2479,
+      "separateTargetContextSplits": true,
+      "source": "nadig-jurkat",
+      "unknownConditionRejected": true
+    },
+    {
+      "absentFeatureMask": true,
+      "boundedRead": true,
+      "guideIdentityRetained": true,
+      "predictionBlocked": true,
+      "reservedRowsProtected": 2132,
+      "separateTargetContextSplits": true,
+      "source": "replogle-k562",
+      "unknownConditionRejected": true
+    },
+    {
+      "absentFeatureMask": true,
+      "boundedRead": true,
+      "guideIdentityRetained": true,
+      "predictionBlocked": true,
+      "reservedRowsProtected": 7328,
+      "separateTargetContextSplits": true,
+      "source": "replogle-rpe1",
+      "unknownConditionRejected": true
+    }
+  ],
+  "scope": "Data fidelity, partitions, capability and bounded observation access; not biological or interaction qualification",
+  "seconds": 15.268834291957319,
+  "status": "passed",
+  "trainingExecuted": false
+}

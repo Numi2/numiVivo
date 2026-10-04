@@ -106,3 +106,9 @@ Download the snapshot from the
 [cellular laboratory release](https://github.com/Numi2/numiVivo/releases/tag/virtual-wet-lab-cellular-20261004).
 Legacy dependencies listed in the manifest remain required; biological promotion
 and researcher usability remain unearned.
+
+The next delivered slice is [measured cellular cohort onboarding](CELLULAR_COHORT.md):
+30,144 cells across HepG2, Jurkat, K562 and RPE1, with a 256-target engineering
+vocabulary and source-specific feature masks. It is available for bounded
+measured exploration through the same laboratory. It has no registered trained
+model yet and cannot substitute this frozen model or imply biological promotion.

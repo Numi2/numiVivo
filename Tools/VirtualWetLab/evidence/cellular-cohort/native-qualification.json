@@ -1,0 +1,48 @@
+{
+  "biologicalPromotion": false,
+  "nativeCompositeVerified": [
+    "known-target",
+    "held-target",
+    "held-context"
+  ],
+  "sampledSourceRowsExactlyReconstructed": 64,
+  "sourceIdentitiesResolvedTo": "original study + cell context + recorded capture; independent biological units unknown",
+  "sources": [
+    {
+      "cells": 6944,
+      "controls": 512,
+      "features": 9624,
+      "source": "nadig-hepg2",
+      "targets": 201
+    },
+    {
+      "cells": 8128,
+      "controls": 512,
+      "features": 8882,
+      "source": "nadig-jurkat",
+      "targets": 238
+    },
+    {
+      "cells": 7232,
+      "controls": 512,
+      "features": 8563,
+      "source": "replogle-k562",
+      "targets": 210
+    },
+    {
+      "cells": 7840,
+      "controls": 512,
+      "features": 8749,
+      "source": "replogle-rpe1",
+      "targets": 229
+    }
+  ],
+  "structurallyMissingFeatures": {
+    "nadig-hepg2": 2283,
+    "nadig-jurkat": 3025,
+    "replogle-k562": 3344,
+    "replogle-rpe1": 3158
+  },
+  "trainingExecuted": false,
+  "unionFeatures": 11907
+}

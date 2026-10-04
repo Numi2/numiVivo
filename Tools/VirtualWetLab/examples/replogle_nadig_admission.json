@@ -1,0 +1,89 @@
+{
+  "format": "numivivo-cellular-admission-manifest/v1",
+  "seed": "cellular-onboarding-20261004-v1",
+  "support": {
+    "targetLimit": 256,
+    "minimumCells": 32,
+    "minimumControls": 512,
+    "minimumContexts": 2,
+    "cellsPerTarget": 32,
+    "controlCellLimit": 512
+  },
+  "heldContexts": [
+    "replogle-rpe1"
+  ],
+  "sources": [
+    {
+      "id": "nadig-hepg2",
+      "context": "HepG2",
+      "study": "GSE264667",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE264nnn/GSE264667/suppl/GSE264667_hepg2_raw_singlecell_01.h5ad",
+      "sha256": "e1ad7c3c5a201c861a207a858aa7e59f5e6ac1955674c415f7de0d1dadadb52e",
+      "matrixPath": "X",
+      "controlLabel": "non-targeting",
+      "species": "Homo sapiens",
+      "interventionType": "CRISPRi",
+      "conditionID": "HepG2-day7",
+      "daysPostTransduction": 7,
+      "biologicalUnitStatus": "unresolved",
+      "captureColumn": "gem_group",
+      "guideColumn": "sgID_AB",
+      "downloadURL": "https://huggingface.co/datasets/arcinstitute/Replogle-Nadig-Preprint/resolve/d18098fc1c516fb6492dea1a3c81264e23dc2816/GSE264667_hepg2_raw_singlecell_01.h5ad"
+    },
+    {
+      "id": "nadig-jurkat",
+      "context": "Jurkat",
+      "study": "GSE264667",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE264nnn/GSE264667/suppl/GSE264667_jurkat_raw_singlecell_01.h5ad",
+      "sha256": "ffbe15f2c8f7ffcfd7b0ba9e6937d4ebc2d03b0179fa8234648a59bcb82c04a3",
+      "matrixPath": "X",
+      "controlLabel": "non-targeting",
+      "species": "Homo sapiens",
+      "interventionType": "CRISPRi",
+      "conditionID": "Jurkat-day7",
+      "daysPostTransduction": 7,
+      "biologicalUnitStatus": "unresolved",
+      "captureColumn": "gem_group",
+      "guideColumn": "sgID_AB",
+      "downloadURL": "https://huggingface.co/datasets/arcinstitute/Replogle-Nadig-Preprint/resolve/d18098fc1c516fb6492dea1a3c81264e23dc2816/GSE264667_jurkat_raw_singlecell_01.h5ad"
+    },
+    {
+      "id": "replogle-k562",
+      "context": "K562",
+      "study": "figshare:20029387",
+      "url": "https://ndownloader.figshare.com/files/35773219",
+      "md5": "4f1122ce1c7f13299a68df6459a266d3",
+      "matrixPath": "X",
+      "controlLabel": "non-targeting",
+      "species": "Homo sapiens",
+      "interventionType": "CRISPRi",
+      "conditionID": "K562-day6",
+      "daysPostTransduction": 6,
+      "biologicalUnitStatus": "unresolved",
+      "captureColumn": "gem_group",
+      "guideColumn": "sgID_AB",
+      "downloadURL": "https://huggingface.co/datasets/arcinstitute/Replogle-Nadig-Preprint/resolve/d18098fc1c516fb6492dea1a3c81264e23dc2816/K562_essential_normalized_singlecell_01.h5ad",
+      "mirrorNote": "Mirror filename says normalized; accept only when full bytes match original raw-file MD5 and every admitted value is an integer count."
+    },
+    {
+      "id": "replogle-rpe1",
+      "context": "RPE1",
+      "study": "figshare:20029387",
+      "url": "https://ndownloader.figshare.com/files/35775606",
+      "sha256": "9b05ef1f81526216fa008d677e9e0d03dce9a2f7a95499a4fb81e505e9d88ef1",
+      "matrixPath": "X",
+      "controlLabel": "non-targeting",
+      "species": "Homo sapiens",
+      "interventionType": "CRISPRi",
+      "conditionID": "RPE1-day7",
+      "daysPostTransduction": 7,
+      "biologicalUnitStatus": "unresolved",
+      "captureColumn": "gem_group",
+      "guideColumn": "sgID_AB",
+      "downloadURL": "https://huggingface.co/datasets/arcinstitute/Replogle-Nadig-Preprint/resolve/d18098fc1c516fb6492dea1a3c81264e23dc2816/rpe1_normalized_singlecell_01.h5ad",
+      "md5": "6a2a9d0d2bf4ec147f4d1104043b268c",
+      "mirrorNote": "Mirror filename says normalized; verify original raw-file supplied MD5 and exact count semantics."
+    }
+  ],
+  "observationPolicy": "Only intersection of training assignments is open for measured exploration; controls are explicitly accessible references. All excluded outcomes stay reserved-development in every UI read."
+}

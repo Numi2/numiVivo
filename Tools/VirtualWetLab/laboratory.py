@@ -5,6 +5,9 @@ import wetlab as rna
 from pathlib import Path
 
 def adapter_for_family(family):
+    if family=='measured-cellular-cohort':
+        from measured_cellular_cohort import MeasuredCellularCohort
+        return MeasuredCellularCohort()
     if family=='learned-cellular-response':
         from cellular_response_adapter import CellularResponseAdapter
         return CellularResponseAdapter()
