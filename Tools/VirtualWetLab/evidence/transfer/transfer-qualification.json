@@ -1,0 +1,126 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "fold": "held-target-0",
+      "representation": "coarse",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "852fdf9e36c69681533226735f4cb676faf2491b55ca20ee40131ae508f13e0c",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-target-0",
+      "representation": "ESM2",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "a67fab7f9b12c6a236cc591b1dbfaafcc947fee027c1c1201d99cdc6e71ffc6f",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-target-0",
+      "representation": "target-ID",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "b4e48b8b3b51da2238aaa8f534673ffe32c632f5a8313ca1a866a700fa9e150b",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-target-1",
+      "representation": "coarse",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "37d3a9ab84afdecbc0f423e9044a136eeb319f3ad7280befd65a19f5bcf75506",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-target-1",
+      "representation": "ESM2",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "0ce8b90b860da116c78c9c72b2874d8afd118b3e1a5ba9acbc7e23152a5d40f4",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-target-1",
+      "representation": "target-ID",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "6375994b05810687884c25fe7debe3c8f6ad0d1071b9b708ee7e55008ccf2639",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-target-2",
+      "representation": "coarse",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "a8dcf611f8b48db32f22cb2767f64209ea205bfcfed422559f8314be7fc0a509",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-target-2",
+      "representation": "ESM2",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "66f6b8074d58a631a7e5b91b6b613f485d700cac731199e81cfbcb97bace7213",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-target-2",
+      "representation": "target-ID",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "c6ef49461c3701ff753a713cf0e5b73e5f609bedfac649b169416b91f1d86e7d",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-context-stimulated",
+      "representation": "coarse",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "7ff71805e807d1e63447037e3dfceab379f8538ef0492d7e40148d98a8b754d0",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-context-stimulated",
+      "representation": "ESM2",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "bca9e083d52662b6bcd995de40dcac005a4e34e9f7f0a91283fac953b50fc7ae",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-context-stimulated",
+      "representation": "target-ID",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "c1abd41769fa89a83a1a7e02c2edc7c374ac3ed344a816f2922a6571ef7e0421",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-context-unstimulated",
+      "representation": "coarse",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "f47bc1f63166c731b03432c2f418d4c83ff04ecd09759a29dfd25d6b3e06ce8d",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-context-unstimulated",
+      "representation": "ESM2",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "055820663f1b089bbdf546faabe80f34e93874c63859913b5c565559f012b695",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    },
+    {
+      "fold": "held-context-unstimulated",
+      "representation": "target-ID",
+      "nativeReplay": "named tensors byte-exact; safetensors payload ordering can differ",
+      "predictionSHA256": "b624ad649c833ea1b11850e6be26b01b1b5c9b422f16b021d3a789c9f557efb7",
+      "seal": "verified",
+      "grouping": "complete target or context; disjoint source rows and all their bags"
+    }
+  ],
+  "scope": "numerical replay and development split qualification only; technical contexts are not independent animals"
+}

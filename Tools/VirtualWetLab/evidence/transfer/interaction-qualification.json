@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-04",
+  "method": "Codex in-app browser via cua_repl; pointer/keyboard browser interaction, not uncoached human usability",
+  "hardware": {
+    "machine": "arm64",
+    "macOS": "26.6",
+    "model": "Mac16,12"
+  },
+  "specimenCells": 39862,
+  "checks": {
+    "singleLargeSpecimenDefault": true,
+    "humanObjectiveVisibleToOwnerCLI": [
+      "Clu",
+      "NOT_MEASURED"
+    ],
+    "unsupportedIntentRetainedAndExplicitlyCorrected": true,
+    "candidatePointerDrag": {
+      "initialHTMLDrag": "did not add candidate; retained as failed engineering attempt",
+      "correction": "pointer-capture based drag into persistent comparison",
+      "finalCard": "512d7c4f40074334ac50fa32c111dcfd",
+      "finalTargets": [
+        "Fasn",
+        "Gfap"
+      ],
+      "sharedRevision": 52
+    },
+    "keyboardPanZoom": true,
+    "pointerPan": true,
+    "modelSwitchPreserved": {
+      "camera": {
+        "scale": 1.15,
+        "x": 24,
+        "y": 0
+      },
+      "target": "Clu",
+      "comparisonScale": {
+        "min": 0,
+        "max": 6.623154854573861,
+        "residual": 4.664933776654855
+      }
+    },
+    "failedObjectiveToGeneEvidence": {
+      "gene": "Clu",
+      "target": "Fasn",
+      "outcomeCells": 3,
+      "predictedResidual": -2.8156900678240087,
+      "matchedResidual": -2.5517952714525487
+    },
+    "oneCellObservedArmNotRecommendation": true,
+    "originalSealedComparisonStillClosed": true,
+    "draftSurvivesReload": true,
+    "newRevealActions": 0
+  },
+  "automatedTests": {
+    "sharedContract": 13,
+    "canvasHandler": "pointer, pinch, cancellation, keyboard/reset synthetic unit test; not physical touch evidence",
+    "ownerEvidenceChecks": 6
+  },
+  "pending": {
+    "researcherUsability": "explicitly pending by user instruction",
+    "physicalTouch": "no touch device session; unit handlers only",
+    "Safari": "blocked: native computer-use service startup failed; browser inventory exposed only Codex in-app browser",
+    "spatialPreservation": "disabled; sections and receiving controls unresolved"
+  },
+  "biologicalPromotion": false
+}

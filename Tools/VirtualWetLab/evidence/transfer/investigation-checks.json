@@ -1,0 +1,610 @@
+{
+  "passed": true,
+  "checks": [
+    "selected-population counts and missing marker",
+    "one-cell observed ordering not recommendation",
+    "sealed inspection cannot reveal",
+    "signed gene and baseline residuals",
+    "gene contributions sum to model utility differences",
+    "historical sealed files byte-identical"
+  ],
+  "support": {
+    "modelID": "spatial-response-v04-corrected",
+    "modelVersion": "v04-cohort-adam",
+    "specimen": "chip1",
+    "population": "neuron|0",
+    "populationAnchors": 25,
+    "reference": {
+      "referenceCells": 18,
+      "safeHarbourCells": 0,
+      "barcodeNegativeCells": 18,
+      "sameProjectedTypeCells": 11
+    },
+    "genes": [
+      {
+        "gene": "Clu",
+        "measured": true,
+        "modeled": true,
+        "referenceCells": 18,
+        "detectedReferenceCells": 8,
+        "units": "raw UMI detection in selected population reference",
+        "scope": "selected population reference rows, not specimen totals",
+        "status": "MEASURED",
+        "predictionStatus": "MODEL INFERENCE"
+      },
+      {
+        "gene": "NOT_MEASURED",
+        "measured": false,
+        "modeled": false,
+        "referenceCells": 0,
+        "detectedReferenceCells": 0,
+        "units": "raw UMI detection in selected population reference",
+        "scope": "selected population reference rows, not specimen totals",
+        "status": "UNAVAILABLE",
+        "predictionStatus": "UNAVAILABLE"
+      }
+    ],
+    "availableMarkers": [
+      {
+        "gene": "Rn18s-rs5",
+        "detectedReferenceCells": 18,
+        "referenceCells": 18
+      },
+      {
+        "gene": "Tmsb4x",
+        "detectedReferenceCells": 18,
+        "referenceCells": 18
+      },
+      {
+        "gene": "Atp5md",
+        "detectedReferenceCells": 16,
+        "referenceCells": 18
+      },
+      {
+        "gene": "Calm1",
+        "detectedReferenceCells": 16,
+        "referenceCells": 18
+      },
+      {
+        "gene": "Cox6c",
+        "detectedReferenceCells": 16,
+        "referenceCells": 18
+      },
+      {
+        "gene": "Cox7a2",
+        "detectedReferenceCells": 16,
+        "referenceCells": 18
+      }
+    ],
+    "markerMeaning": "Measured marker suggestions only; researcher defines the objective",
+    "candidates": [
+      {
+        "target": "Cfap410",
+        "role": "direct",
+        "population": "neuron|0",
+        "outcomeCells": 2,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 6,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 6,
+          "sameProjectedTypeCells": 5
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 5,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five outcome cells in this target / population",
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Cfap410",
+        "role": "neighbor",
+        "population": "neuron|0",
+        "outcomeCells": 27,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 6,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 6,
+          "sameProjectedTypeCells": 5
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 5,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Clu",
+        "role": "direct",
+        "population": "neuron|0",
+        "outcomeCells": 10,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 14,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 14,
+          "sameProjectedTypeCells": 9
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 8,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Clu",
+        "role": "neighbor",
+        "population": "neuron|0",
+        "outcomeCells": 130,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 14,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 14,
+          "sameProjectedTypeCells": 9
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 8,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Fasn",
+        "role": "direct",
+        "population": "neuron|0",
+        "outcomeCells": 3,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 6,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 6,
+          "sameProjectedTypeCells": 4
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 17,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five outcome cells in this target / population",
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Fasn",
+        "role": "neighbor",
+        "population": "neuron|0",
+        "outcomeCells": 39,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 6,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 6,
+          "sameProjectedTypeCells": 4
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 17,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Gfap",
+        "role": "direct",
+        "population": "neuron|0",
+        "outcomeCells": 1,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 3,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 3,
+          "sameProjectedTypeCells": 3
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 4,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five outcome cells in this target / population",
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Gfap",
+        "role": "neighbor",
+        "population": "neuron|0",
+        "outcomeCells": 11,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 3,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 3,
+          "sameProjectedTypeCells": 3
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 4,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Rraga",
+        "role": "direct",
+        "population": "neuron|0",
+        "outcomeCells": 1,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 3,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 3,
+          "sameProjectedTypeCells": 2
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 2,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five outcome cells in this target / population",
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Rraga",
+        "role": "neighbor",
+        "population": "neuron|0",
+        "outcomeCells": 15,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 3,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 3,
+          "sameProjectedTypeCells": 2
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 2,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Stk39",
+        "role": "direct",
+        "population": "neuron|0",
+        "outcomeCells": 7,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 11,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 11,
+          "sameProjectedTypeCells": 8
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 11,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Stk39",
+        "role": "neighbor",
+        "population": "neuron|0",
+        "outcomeCells": 93,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 11,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 11,
+          "sameProjectedTypeCells": 8
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 11,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Trem2",
+        "role": "direct",
+        "population": "neuron|0",
+        "outcomeCells": 1,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 3,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 3,
+          "sameProjectedTypeCells": 2
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 8,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five outcome cells in this target / population",
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      },
+      {
+        "target": "Trem2",
+        "role": "neighbor",
+        "population": "neuron|0",
+        "outcomeCells": 14,
+        "outcomeQuantity": "metadata count only; RNA remains sealed until authorized",
+        "reference": {
+          "referenceCells": 3,
+          "safeHarbourCells": 0,
+          "barcodeNegativeCells": 3,
+          "sameProjectedTypeCells": 2
+        },
+        "trainingTargetSeen": true,
+        "trainingPopulationGroups": 8,
+        "trainingContext": "chip2 pooled mice 2 + 3; projected cell identity",
+        "specimenSeenInTraining": false,
+        "canExecute": true,
+        "recommendationSupported": false,
+        "reasons": [
+          "Fewer than five verified safe-harbour reference cells in this population",
+          "Barcode-negative reference exposure is unknown",
+          "Transfer uncertainty is uncalibrated; numerical ordering is not a recommendation"
+        ],
+        "annotation": "control-projected identity, uncertain",
+        "biologicalUnits": [
+          "paper-mouse1"
+        ],
+        "preservationSupported": false
+      }
+    ],
+    "recommendationSupported": false,
+    "reason": "Insufficient verified controls and unqualified model transfer",
+    "trainingRankingComparator": "UNAVAILABLE for this spatial experiment; no-change is not a fitted training ranking",
+    "sourceSHA256": "20f9f1e5ce3939299eff4ae26dc6ccda03753069e9180e94333644fa2241b3e2",
+    "trainingMetadataSHA256": "cc58b8670958b43a4171869380d7705b828115b28acc32e558d61e5f8c4cf193"
+  },
+  "geneEvidence": {
+    "gene": "Clu",
+    "target": "Fasn",
+    "role": "direct",
+    "population": "neuron|0",
+    "record": "b5a48f052e4946df94f84b7463f48005",
+    "units": "log1p(CPM)",
+    "control": 2.2224602699279785,
+    "predicted": 1.8967030048370361,
+    "observed": 4.712393072661045,
+    "predictedResidual": -2.8156900678240087,
+    "matchedBaseline": 2.160597801208496,
+    "matchedResidual": -2.5517952714525487,
+    "noChangeResidual": -2.4899328027330663,
+    "outcomeCells": 3,
+    "stage": "REVEALED OBSERVATION",
+    "mechanism": "UNAVAILABLE; numerical attribution only"
+  },
+  "modelDifference": {
+    "available": true,
+    "comparisons": [
+      {
+        "leftModel": "spatial-response-v04-corrected",
+        "rightModel": "spatial-response-v03",
+        "leftCondition": "measured-endpoint",
+        "rightCondition": "measured-endpoint",
+        "candidates": [
+          {
+            "target": "Clu",
+            "leftRank": 4,
+            "rightRank": 5,
+            "leftUtility": 0.06510162353515625,
+            "rightUtility": -0.04821038246154785,
+            "utilityDifference": -0.1133120059967041,
+            "genes": [
+              {
+                "gene": "Clu",
+                "leftChange": -0.06510162353515625,
+                "rightChange": 0.04821038246154785,
+                "utilityDifference": -0.1133120059967041,
+                "population": "neuron|0"
+              }
+            ]
+          },
+          {
+            "target": "Fasn",
+            "leftRank": 1,
+            "rightRank": 1,
+            "leftUtility": 0.3257572650909424,
+            "rightUtility": 0.17363452911376953,
+            "utilityDifference": -0.15212273597717285,
+            "genes": [
+              {
+                "gene": "Clu",
+                "leftChange": -0.3257572650909424,
+                "rightChange": -0.17363452911376953,
+                "utilityDifference": -0.15212273597717285,
+                "population": "neuron|0"
+              }
+            ]
+          },
+          {
+            "target": "Gfap",
+            "leftRank": 3,
+            "rightRank": 3,
+            "leftUtility": 0.16802597045898438,
+            "rightUtility": 0.04360365867614746,
+            "utilityDifference": -0.12442231178283691,
+            "genes": [
+              {
+                "gene": "Clu",
+                "leftChange": -0.16802597045898438,
+                "rightChange": -0.04360365867614746,
+                "utilityDifference": -0.12442231178283691,
+                "population": "neuron|0"
+              }
+            ]
+          },
+          {
+            "target": "Trem2",
+            "leftRank": 2,
+            "rightRank": 2,
+            "leftUtility": 0.26423919200897217,
+            "rightUtility": 0.14623379707336426,
+            "utilityDifference": -0.11800539493560791,
+            "genes": [
+              {
+                "gene": "Clu",
+                "leftChange": -0.26423919200897217,
+                "rightChange": -0.14623379707336426,
+                "utilityDifference": -0.11800539493560791,
+                "population": "neuron|0"
+              }
+            ]
+          },
+          {
+            "target": "no-intervention",
+            "leftRank": 5,
+            "rightRank": 4,
+            "leftUtility": 0.0,
+            "rightUtility": 0.0,
+            "utilityDifference": 0.0,
+            "genes": []
+          }
+        ],
+        "rankingsChanged": true,
+        "meaning": "Numerical differences only; agreement is not calibrated confidence"
+      }
+    ],
+    "recommendationSupported": false
+  }
+}
