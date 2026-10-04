@@ -78,7 +78,7 @@ def load_source(s):
 
 
 def contexts(s,a):
-    if s['study']=='GSE92872':return a.obs.perturbation_2.astype(str).to_numpy()
+    if s['study']=='GSE92872':return a.obs.perturbation_2.astype(str).fillna('unassigned').to_numpy(dtype=str)
     return np.asarray([s['context']]*a.n_obs)
 
 
@@ -94,25 +94,26 @@ def normalized(a,rows,cols):
 
 def fetch_descriptors(targets,output):
     output.mkdir(exist_ok=True);records={};aa='ACDEFGHIKLMNPQRSTVWY'
-    for start in range(0,len(targets),15):
-        genes=targets[start:start+15];query='(organism_id:9606) AND (reviewed:true) AND ('+' OR '.join('gene_exact:'+g for g in genes)+')'
-        path=output/f'uniprot-{start:03d}.json'
+    # EBI serves the same UniProt records; its API is usable when the primary
+    # endpoint returns 503. MGI supplies pinned primary accession identities.
+    from concurrent.futures import ThreadPoolExecutor
+    mgi=pd.read_csv(V03/'research/MGI-HOM_MouseHumanSequence.rpt',sep='\t')
+    accession={str(r.Symbol):str(r['SWISS_PROT IDs']).split(',')[0] for _,r in mgi[mgi['NCBI Taxon ID']==9606].iterrows() if pd.notna(r['SWISS_PROT IDs'])}
+    def fetch(gene):
+        if gene not in accession:return gene,None
+        acc=accession[gene];path=output/(acc+'.json')
         if not path.exists():
-            r=requests.get('https://rest.uniprot.org/uniprotkb/search',params={'query':query,'format':'json','size':500,'fields':'accession,gene_names,sequence,go_id'},timeout=90);r.raise_for_status();path.write_text(r.text)
-        data=read(path)
-        for entry in data['results']:
-            symbols=[g['geneName']['value'] for g in entry.get('genes',[]) if 'geneName' in g]
-            for gene in symbols:
-                if gene not in genes:continue
-                seq=entry.get('sequence',{}).get('value','');go=sorted(x['id'] for x in entry.get('uniProtKBCrossReferences',[]) if x['database']=='GO')
-                if not seq:continue
-                # Deterministic primary accession selection; multiple isoforms
-                # remain recorded, not chosen by downstream response quality.
-                candidate={'accession':entry['primaryAccession'],'sequenceSHA256':hashlib.sha256(seq.encode()).hexdigest(),'go':go,'sourceSHA256':sha(path)}
-                vec=np.zeros(149,np.float32);vec[:20]=[seq.count(c)/len(seq)*10 for c in aa];vec[20]=np.log1p(len(seq))/10
-                for term in go:vec[21+int(hashlib.sha256(term.encode()).hexdigest()[:8],16)%128]+=1
-                vec[21:]/=max(1,np.linalg.norm(vec[21:]));candidate['descriptor']=vec.tolist()
-                if gene not in records or candidate['accession']<records[gene]['accession']:records[gene]=candidate
+            r=requests.get('https://www.ebi.ac.uk/proteins/api/proteins/'+acc,headers={'Accept':'application/json'},timeout=60);r.raise_for_status();path.write_text(r.text)
+        return gene,path
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        for gene,path in pool.map(fetch,targets):
+            if path is None:continue
+            entry=read(path);require(entry['organism']['taxonomy']==9606,'Target species mismatch')
+            seq=entry['sequence']['sequence'];go=sorted(x['id'] for x in entry.get('dbReferences',[]) if x['type']=='GO')
+            candidate={'accession':entry['accession'],'sequenceSHA256':hashlib.sha256(seq.encode()).hexdigest(),'go':go,'sourceSHA256':sha(path),'sourceURL':'https://www.ebi.ac.uk/proteins/api/proteins/'+entry['accession'],'recordVersion':entry['info'],'annotationEvidence':'GO evidence retained in source JSON; not a causal response mechanism'}
+            vec=np.zeros(149,np.float32);vec[:20]=[seq.count(c)/len(seq)*10 for c in aa];vec[20]=np.log1p(len(seq))/10
+            for term in go:vec[21+int(hashlib.sha256(term.encode()).hexdigest()[:8],16)%128]+=1
+            vec[21:]/=max(1,np.linalg.norm(vec[21:]));candidate['descriptor']=vec.tolist();records[gene]=candidate
     write(output/'targets.json',records);return records
 
 
@@ -130,7 +131,7 @@ def prepare(root,out):
         'protocolSHA256':sha(out/'protocol.json'),'testOutcomeUse':'not read by preparation; counts/guide labels only for admission'})
     axes=[];targetset=set();groups=[];exclusions=[];varsum={};all_fingerprints={};duplicate_rows=[]
     for s in specs:
-        a=load_source(s);ax=axis(a,mapping,s['species']);axes.append(set(ax));labels=a.obs.target.astype(str).to_numpy();ctx=contexts(s,a)
+        a=load_source(s);ax=axis(a,mapping,s['species']);axes.append(set(ax));labels=a.obs.target.astype(str).fillna('unassigned').to_numpy(dtype=str);ctx=contexts(s,a)
         s['cells']=a.n_obs;s['featureCount']=a.n_vars
         for context in sorted(set(ctx)):
             controls=np.flatnonzero((ctx==context)&(labels=='control'))
