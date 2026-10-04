@@ -70,6 +70,12 @@ public enum VivoSpatialResponseLearning {
         if mode == "train" {
             guard let prior = a["prior"], prior.shape == [p.targetCount, p.featureCount],
                   prior.asArray(Float.self).allSatisfy(\.isFinite) else { throw NSError(domain: "invalid prior", code: 1) }
+            // Explicit warm start for cross-study -> tissue adaptation. Optimizer
+            // and sampler restart from the declared seed; this is not a resume.
+            if arguments.count == 5 {
+                try model.update(parameters: ModuleParameters.unflattened(try read(URL(fileURLWithPath: arguments[4]))), verify: .all)
+                print("warm-start weights; optimizer and sampler reset")
+            }
             let opt = MultiOptimizer(optimizers: [
                 SGD(learningRate: p.learningRate * Float(p.featureCount), momentum: 0, weightDecay: p.weightDecay / Float(p.featureCount)),
                 SGD(learningRate: p.learningRate, momentum: 0, weightDecay: p.weightDecay)
