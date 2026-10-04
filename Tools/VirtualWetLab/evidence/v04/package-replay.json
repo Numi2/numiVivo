@@ -1,0 +1,16 @@
+{
+  "status": "verified",
+  "models": {
+    "campaign-v1/target-descriptor": "bit-exact mean and variance",
+    "campaign-v1/target-ID": "bit-exact mean and variance",
+    "campaign-v1/shuffled-target-descriptor": "bit-exact mean and variance",
+    "followup/campaign/target-descriptor": "bit-exact mean and variance",
+    "followup/campaign/target-ID": "bit-exact mean and variance",
+    "followup/campaign/shuffled-target-descriptor": "bit-exact mean and variance",
+    "receivers-v3/receiver-pretrained": "bit-exact mean and variance",
+    "receivers-v3/anchor-reference-pretrained": "bit-exact mean and variance",
+    "receivers-v3/receiver-spatial-only": "bit-exact mean and variance"
+  },
+  "biologicalPromotion": false,
+  "scope": "same-host portable native replay; not biological or Safari qualification"
+}
