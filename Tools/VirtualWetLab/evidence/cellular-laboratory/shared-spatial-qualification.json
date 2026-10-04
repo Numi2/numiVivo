@@ -1,0 +1,105 @@
+{
+  "card": "e5fea77f13154fd5a894f0efe860b813",
+  "record": "3a276c666e2c46719f8993867547e573",
+  "unauthorizedRevealRejected": true,
+  "verification": {
+    "status": "verified",
+    "run": "3a276c666e2c46719f8993867547e573",
+    "nativeReplay": {
+      "neighborhood": "bit-exact mean and variance tensors",
+      "no-neighborhood": "bit-exact mean and variance tensors",
+      "shuffled-neighborhood": "bit-exact mean and variance tensors"
+    },
+    "biologicalPromotion": false
+  },
+  "objectiveEvaluation": {
+    "objectiveGenes": [
+      "Clu"
+    ],
+    "arms": [
+      {
+        "target": "Fasn",
+        "role": "direct",
+        "population": "neuron|0",
+        "predictedUtility": 0.3257572650909424,
+        "observedUtility": -2.4899328027330663,
+        "genes": [
+          {
+            "gene": "Clu",
+            "control": 2.2224602699279785,
+            "predicted": 1.8967030048370361,
+            "observed": 4.712393072661045,
+            "residual": -2.8156900678240087
+          }
+        ]
+      },
+      {
+        "target": "Fasn",
+        "role": "neighbor",
+        "population": "neuron|0",
+        "predictedUtility": 0.32096171379089355,
+        "observedUtility": -0.7342928131983544,
+        "genes": [
+          {
+            "gene": "Clu",
+            "control": 2.2224602699279785,
+            "predicted": 1.901498556137085,
+            "observed": 2.956753083126333,
+            "residual": -1.055254526989248
+          }
+        ]
+      },
+      {
+        "target": "Gfap",
+        "role": "direct",
+        "population": "neuron|0",
+        "predictedUtility": 0.16802597045898438,
+        "observedUtility": 2.2224602699279785,
+        "genes": [
+          {
+            "gene": "Clu",
+            "control": 2.2224602699279785,
+            "predicted": 2.054434299468994,
+            "observed": 0.0,
+            "residual": 2.054434299468994
+          }
+        ]
+      },
+      {
+        "target": "Gfap",
+        "role": "neighbor",
+        "population": "neuron|0",
+        "predictedUtility": 0.15861296653747559,
+        "observedUtility": -0.37066082330402184,
+        "genes": [
+          {
+            "gene": "Clu",
+            "control": 2.2224602699279785,
+            "predicted": 2.063847303390503,
+            "observed": 2.5931210932320004,
+            "residual": -0.5292737898414974
+          }
+        ]
+      }
+    ],
+    "numericalChoice": "Fasn",
+    "scores": {
+      "selected": "Fasn",
+      "selectedObservedUtility": -2.4899328027330663,
+      "bestObservedEligible": "Gfap",
+      "regret": 4.712393072661045,
+      "randomExpectedUtility": -0.08915751093502926,
+      "gainOverRandom": -2.400775291798037,
+      "trainingMeanSelected": "Fasn",
+      "gainOverNoIntervention": -2.4899328027330663,
+      "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+      "reliableWinner": false,
+      "trainingMeanRanking": "UNAVAILABLE in this spatial card; zero-change ranking is not a fitted training baseline"
+    },
+    "reliableWinner": false,
+    "scope": "Exposed spatial development; one mouse and inadequate isolated controls; no independent biological confidence",
+    "preservation": "UNAVAILABLE"
+  },
+  "sameSharedState": true,
+  "biologicalPromotion": false
+}

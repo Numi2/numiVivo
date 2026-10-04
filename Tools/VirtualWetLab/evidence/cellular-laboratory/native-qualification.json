@@ -1,0 +1,100 @@
+{
+  "artifactSHA256": "791f7ca17bd3e9c9b59c6b6cb6b65dd65f9bcf1e33b31d126989f5459d39f75b",
+  "authorizedRevealAndEvaluation": true,
+  "biologicalPromotion": false,
+  "exactNativeReplay": {
+    "biologicalPromotion": false,
+    "exactPredictionReplay": true,
+    "observationComparisonVerified": true,
+    "status": "passed"
+  },
+  "inspectionDoesNotReveal": true,
+  "objectiveEvaluation": {
+    "arms": [
+      {
+        "baselineScope": "training modality mean; target unavailable",
+        "controlCells": 1769,
+        "genes": [
+          {
+            "control": 0.021631995216012,
+            "gene": "FOS",
+            "observed": 2.597569227218628,
+            "predicted": 0.015605449676513672,
+            "residual": -2.5819637775421143,
+            "trainingMeanDelta": 0.0057276650331914425
+          },
+          {
+            "control": 0.3902038633823395,
+            "gene": "JUN",
+            "observed": 2.610163927078247,
+            "predicted": 0.44044798612594604,
+            "residual": -2.1697158813476562,
+            "trainingMeanDelta": -0.004420628305524588
+          }
+        ],
+        "observedUtility": -2.397948741912842,
+        "outcomeCells": 553,
+        "population": "GSE90546|K562",
+        "predictedUtility": -0.022108789533376694,
+        "role": "direct",
+        "target": "BHLHE40",
+        "trainingMeanUtility": -0.0006535183638334274
+      },
+      {
+        "baselineScope": "training modality mean; target unavailable",
+        "controlCells": 1769,
+        "genes": [
+          {
+            "control": 0.021631995216012,
+            "gene": "FOS",
+            "observed": 2.9709904193878174,
+            "predicted": 0.012422505766153336,
+            "residual": -2.9585678577423096,
+            "trainingMeanDelta": 0.0057276650331914425
+          },
+          {
+            "control": 0.3902038633823395,
+            "gene": "JUN",
+            "observed": 3.184436559677124,
+            "predicted": 0.4221934676170349,
+            "residual": -2.7622430324554443,
+            "trainingMeanDelta": -0.004420628305524588
+          }
+        ],
+        "observedUtility": -2.871795654296875,
+        "outcomeCells": 477,
+        "population": "GSE90546|K562",
+        "predictedUtility": -0.011390057392418385,
+        "role": "direct",
+        "target": "DDIT3",
+        "trainingMeanUtility": -0.0006535183638334274
+      }
+    ],
+    "numericalChoice": "no-intervention",
+    "objectiveGenes": [
+      "FOS",
+      "JUN"
+    ],
+    "preservation": "UNAVAILABLE",
+    "reliableWinner": false,
+    "scope": "Previously exposed technical development data; independent biological validation and population-mean uncertainty remain unqualified",
+    "scores": {
+      "bestObservedEligible": "no-intervention",
+      "gainOverNoIntervention": 0.0,
+      "gainOverRandom": 1.756581465403239,
+      "gainOverTrainingMean": 0.0,
+      "randomExpectedUtility": -1.756581465403239,
+      "regret": 0.0,
+      "reliableWinner": false,
+      "selected": "no-intervention",
+      "selectedObservedUtility": 0.0,
+      "trainingMeanSelected": "no-intervention",
+      "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+    }
+  },
+  "relocationWithoutOriginal": true,
+  "selectedQueryMatchesFrozenPrediction": true,
+  "softwareQualification": true,
+  "tamperRejected": true,
+  "unsupportedInputsRejected": 3
+}

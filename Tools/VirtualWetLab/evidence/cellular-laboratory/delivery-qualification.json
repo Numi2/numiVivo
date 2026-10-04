@@ -1,0 +1,374 @@
+{
+  "softwareMilestone": "first cellular end-to-end delivery",
+  "status": "qualified",
+  "biologicalPromotion": false,
+  "nativeModel": "v04-transfer-held-target0-coarse-step240",
+  "nativeAssay": "cellular-coarse-target0-v04",
+  "freshSessions": {
+    "proposalAndSharedEdit": "01a107fd-1b77-7281-a2f0-272ce5ae19d7",
+    "archiveRestoration": "01a10809-3219-72f3-a56e-c4aa20cd8288",
+    "finalBackgroundLauncher": "see retained transcript"
+  },
+  "nativeRecord": "35a22351d1e748748ca9ec16cb4f0475",
+  "objectiveGenes": [
+    "FOS",
+    "JUNB"
+  ],
+  "targets": [
+    "DDIT3",
+    "SPI1"
+  ],
+  "objectiveEvaluation": {
+    "objectiveGenes": [
+      "FOS",
+      "JUNB"
+    ],
+    "arms": [
+      {
+        "target": "DDIT3",
+        "role": "direct",
+        "population": "GSE90546|K562",
+        "predictedUtility": -0.004032743163406849,
+        "observedUtility": -2.1186482906341553,
+        "trainingMeanUtility": 0.036308858543634415,
+        "baselineScope": "training modality mean; target unavailable",
+        "controlCells": 1769,
+        "outcomeCells": 477,
+        "genes": [
+          {
+            "gene": "FOS",
+            "control": 0.021631995216012,
+            "predicted": 0.012422505766153336,
+            "observed": 2.9709904193878174,
+            "residual": -2.9585678577423096,
+            "trainingMeanDelta": 0.0057276650331914425
+          },
+          {
+            "gene": "JUNB",
+            "control": 1.1632484197616577,
+            "predicted": 1.18052339553833,
+            "observed": 2.451186418533325,
+            "residual": -1.2706630229949951,
+            "trainingMeanDelta": -0.07834538072347641
+          }
+        ]
+      },
+      {
+        "target": "SPI1",
+        "role": "direct",
+        "population": "GSE90546|K562",
+        "predictedUtility": -0.0034749722108244896,
+        "observedUtility": -2.0971243381500244,
+        "trainingMeanUtility": 0.036308858543634415,
+        "baselineScope": "training modality mean; target unavailable",
+        "controlCells": 1769,
+        "outcomeCells": 696,
+        "genes": [
+          {
+            "gene": "FOS",
+            "control": 0.021631995216012,
+            "predicted": 0.016765914857387543,
+            "observed": 2.2764339447021484,
+            "residual": -2.2596681118011475,
+            "trainingMeanDelta": 0.0057276650331914425
+          },
+          {
+            "gene": "JUNB",
+            "control": 1.1632484197616577,
+            "predicted": 1.1750644445419312,
+            "observed": 3.1026952266693115,
+            "residual": -1.9276307821273804,
+            "trainingMeanDelta": -0.07834538072347641
+          }
+        ]
+      }
+    ],
+    "numericalChoice": "no-intervention",
+    "scores": {
+      "selected": "no-intervention",
+      "selectedObservedUtility": 0.0,
+      "bestObservedEligible": "no-intervention",
+      "regret": 0.0,
+      "randomExpectedUtility": -1.4052575429280598,
+      "gainOverRandom": 1.4052575429280598,
+      "trainingMeanSelected": "DDIT3",
+      "gainOverTrainingMean": 2.1186482906341553,
+      "gainOverNoIntervention": 0.0,
+      "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+      "reliableWinner": false
+    },
+    "reliableWinner": false,
+    "scope": "Previously exposed technical development data; independent biological validation and population-mean uncertainty remain unqualified",
+    "preservation": "UNAVAILABLE"
+  },
+  "finalSnapshot": {
+    "id": "32eaf6a6745244d5bfa98619b9e4fc08",
+    "revision": 51,
+    "manifestSHA256": "560e6d3a6754456beb301b0d01961cfba76fd713994cb9454945b74041c55a31",
+    "dependencies": {
+      "/Users/home/virtual-wet-lab-v03-20261003/cohort-v3/chip1.h5ad": "20f9f1e5ce3939299eff4ae26dc6ccda03753069e9180e94333644fa2241b3e2",
+      "/Users/home/virtual-wet-lab-v03-20261003/cohort-v3/chip2.h5ad": "cd6c9d3c84b4c8fed3f0fdd40dbaf4a806e0b2b371074f7875342461a89019be",
+      "/Users/home/virtual-wet-lab-v04-cohort-20261004/runtime/numivivo": "bca3896e2145deee72db2ad83981eddf81e0c369a68aff2073628437e60375de",
+      "/Users/home/virtual-wet-lab-v04-cohort-20261004/runtime/mlx-swift_Cmlx.bundle/Contents/Info.plist": "08c64cb8478ca53e8aec38007d15ac75d0804dbb75f63986dcedbb5a4ad05dd9",
+      "/Users/home/virtual-wet-lab-v04-cohort-20261004/runtime/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib": "71f2ad788d86f29486315b55835ce6ed17ceb9b0302f6b80429306340dca28d1"
+    },
+    "status": "snapshot-complete",
+    "export": {
+      "id": "32eaf6a6745244d5bfa98619b9e4fc08",
+      "archive": "/Users/home/.numi/laboratories/exports/32eaf6a6745244d5bfa98619b9e4fc08.tar.gz",
+      "sha256": "8a88cb011907c03480383abe56a42656ab0486513305d927e94d1ede155eca40"
+    }
+  },
+  "service": {
+    "url": "http://127.0.0.1:8774",
+    "revision": 55,
+    "persistsAfterFreshSessionExit": true
+  },
+  "recoveredRecord": "3c17bc2511a94c539558b9278c7a6eb5",
+  "recoveryObservationsClosed": true,
+  "tests": {
+    "numiVivoExistingLaboratory": 15,
+    "numiLabSharedAndRestoration": 17,
+    "native": {
+      "artifactSHA256": "791f7ca17bd3e9c9b59c6b6cb6b65dd65f9bcf1e33b31d126989f5459d39f75b",
+      "authorizedRevealAndEvaluation": true,
+      "biologicalPromotion": false,
+      "exactNativeReplay": {
+        "biologicalPromotion": false,
+        "exactPredictionReplay": true,
+        "observationComparisonVerified": true,
+        "status": "passed"
+      },
+      "inspectionDoesNotReveal": true,
+      "objectiveEvaluation": {
+        "arms": [
+          {
+            "baselineScope": "training modality mean; target unavailable",
+            "controlCells": 1769,
+            "genes": [
+              {
+                "control": 0.021631995216012,
+                "gene": "FOS",
+                "observed": 2.597569227218628,
+                "predicted": 0.015605449676513672,
+                "residual": -2.5819637775421143,
+                "trainingMeanDelta": 0.0057276650331914425
+              },
+              {
+                "control": 0.3902038633823395,
+                "gene": "JUN",
+                "observed": 2.610163927078247,
+                "predicted": 0.44044798612594604,
+                "residual": -2.1697158813476562,
+                "trainingMeanDelta": -0.004420628305524588
+              }
+            ],
+            "observedUtility": -2.397948741912842,
+            "outcomeCells": 553,
+            "population": "GSE90546|K562",
+            "predictedUtility": -0.022108789533376694,
+            "role": "direct",
+            "target": "BHLHE40",
+            "trainingMeanUtility": -0.0006535183638334274
+          },
+          {
+            "baselineScope": "training modality mean; target unavailable",
+            "controlCells": 1769,
+            "genes": [
+              {
+                "control": 0.021631995216012,
+                "gene": "FOS",
+                "observed": 2.9709904193878174,
+                "predicted": 0.012422505766153336,
+                "residual": -2.9585678577423096,
+                "trainingMeanDelta": 0.0057276650331914425
+              },
+              {
+                "control": 0.3902038633823395,
+                "gene": "JUN",
+                "observed": 3.184436559677124,
+                "predicted": 0.4221934676170349,
+                "residual": -2.7622430324554443,
+                "trainingMeanDelta": -0.004420628305524588
+              }
+            ],
+            "observedUtility": -2.871795654296875,
+            "outcomeCells": 477,
+            "population": "GSE90546|K562",
+            "predictedUtility": -0.011390057392418385,
+            "role": "direct",
+            "target": "DDIT3",
+            "trainingMeanUtility": -0.0006535183638334274
+          }
+        ],
+        "numericalChoice": "no-intervention",
+        "objectiveGenes": [
+          "FOS",
+          "JUN"
+        ],
+        "preservation": "UNAVAILABLE",
+        "reliableWinner": false,
+        "scope": "Previously exposed technical development data; independent biological validation and population-mean uncertainty remain unqualified",
+        "scores": {
+          "bestObservedEligible": "no-intervention",
+          "gainOverNoIntervention": 0.0,
+          "gainOverRandom": 1.756581465403239,
+          "gainOverTrainingMean": 0.0,
+          "randomExpectedUtility": -1.756581465403239,
+          "regret": 0.0,
+          "reliableWinner": false,
+          "selected": "no-intervention",
+          "selectedObservedUtility": 0.0,
+          "trainingMeanSelected": "no-intervention",
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+        }
+      },
+      "relocationWithoutOriginal": true,
+      "selectedQueryMatchesFrozenPrediction": true,
+      "softwareQualification": true,
+      "tamperRejected": true,
+      "unsupportedInputsRejected": 3
+    },
+    "restoration": {
+      "snapshotID": "b51046f0f87e4de1b5987ac23d1874c7",
+      "snapshotRevision": 42,
+      "restoredRevision": 50,
+      "originalWorkspaceUnavailable": true,
+      "restoredFromExportWithoutOriginalSnapshotDirectory": true,
+      "sealedFilesByteIdentical": {
+        "35a22351d1e748748ca9ec16cb4f0475": 28,
+        "3a276c666e2c46719f8993867547e573": 35
+      },
+      "replay": {
+        "35a22351d1e748748ca9ec16cb4f0475": {
+          "status": "passed",
+          "exactPredictionReplay": true,
+          "observationComparisonVerified": true,
+          "biologicalPromotion": false
+        },
+        "3a276c666e2c46719f8993867547e573": {
+          "status": "verified",
+          "run": "3a276c666e2c46719f8993867547e573",
+          "nativeReplay": {
+            "neighborhood": "bit-exact mean and variance tensors",
+            "no-neighborhood": "bit-exact mean and variance tensors",
+            "shuffled-neighborhood": "bit-exact mean and variance tensors"
+          },
+          "biologicalPromotion": false
+        },
+        "3c17bc2511a94c539558b9278c7a6eb5": {
+          "status": "passed",
+          "exactPredictionReplay": true,
+          "observationComparisonVerified": false,
+          "biologicalPromotion": false
+        }
+      },
+      "freshCredentials": true,
+      "recoveredCard": "b607378421af4745a1ea8de638ec0048",
+      "recoveredRecord": "3c17bc2511a94c539558b9278c7a6eb5",
+      "recoveryStatus": "sealed; observations closed",
+      "observationAccessCheck": "{\"error\": \"Measured endpoints remain closed for this experiment; authorize reveal explicitly\"}",
+      "historicalCancellationRetained": true,
+      "biologicalPromotion": false,
+      "legacyDependencies": {
+        "/Users/home/virtual-wet-lab-v03-20261003/cohort-v3/chip1.h5ad": "20f9f1e5ce3939299eff4ae26dc6ccda03753069e9180e94333644fa2241b3e2",
+        "/Users/home/virtual-wet-lab-v03-20261003/cohort-v3/chip2.h5ad": "cd6c9d3c84b4c8fed3f0fdd40dbaf4a806e0b2b371074f7875342461a89019be",
+        "/Users/home/virtual-wet-lab-v04-cohort-20261004/runtime/numivivo": "bca3896e2145deee72db2ad83981eddf81e0c369a68aff2073628437e60375de",
+        "/Users/home/virtual-wet-lab-v04-cohort-20261004/runtime/mlx-swift_Cmlx.bundle/Contents/Info.plist": "08c64cb8478ca53e8aec38007d15ac75d0804dbb75f63986dcedbb5a4ad05dd9",
+        "/Users/home/virtual-wet-lab-v04-cohort-20261004/runtime/mlx-swift_Cmlx.bundle/Contents/Resources/default.metallib": "71f2ad788d86f29486315b55835ce6ed17ceb9b0302f6b80429306340dca28d1"
+      },
+      "scope": "Same Apple hardware and verified Python environment; legacy source/runtime dependencies remain explicit"
+    },
+    "browser": {
+      "format": "numilab-restored-visual-qualification/v1",
+      "date": "2026-10-04",
+      "url": "http://127.0.0.1:8772",
+      "session": "Fresh browser reload acquired restored service credentials",
+      "browser": "Playwright-controlled Chromium on local Mac; not uncoached human usability",
+      "finalWorkspaceRevision": 51,
+      "originalRevealedRecord": {
+        "id": "35a22351d1e748748ca9ec16cb4f0475",
+        "visibleStage": "REVEALED OBSERVATION",
+        "model": "cellular-coarse-target0-v04",
+        "population": "GSE90546|K562",
+        "gene": "FOS",
+        "targets": [
+          "DDIT3",
+          "SPI1"
+        ],
+        "observed": [
+          2.9709904193878174,
+          2.2764339447021484
+        ],
+        "residual": [
+          -2.958567913621664,
+          -2.259668029844761
+        ],
+        "matchedBaselineVisible": true
+      },
+      "recoveryRecord": {
+        "id": "3c17bc2511a94c539558b9278c7a6eb5",
+        "draftID": "b607378421af4745a1ea8de638ec0048",
+        "visibleStage": "SEALED PREDICTION",
+        "status": "sealed",
+        "revealed": false,
+        "targets": [
+          "DDIT3",
+          "SPI1"
+        ],
+        "observed": [
+          null,
+          null
+        ],
+        "residual": [
+          null,
+          null
+        ],
+        "revealInvoked": false
+      },
+      "actions": [
+        "Reload restored URL",
+        "Inspect recovered sealed prediction",
+        "Open synchronized values",
+        "Open original revealed card",
+        "Inspect failed objective gene evidence"
+      ],
+      "mutations": "Inspection selection only; no draft edits, model edits, seal or reveal",
+      "sourceChanges": false,
+      "screenshots": [
+        "restored-recovery-sealed.png",
+        "restored-visual-qualification.png"
+      ],
+      "snapshots": [
+        "restored-initial.yml",
+        "restored-recovery-prediction.yml",
+        "restored-revealed-card.yml",
+        "restored-visual-qualification.yml"
+      ],
+      "Safari": "not qualified",
+      "physicalTouch": "not qualified",
+      "researcherUsability": "explicitly pending"
+    }
+  },
+  "retainedFailures": [
+    "Initial native packaging omitted required Metal bundle; corrected and native qualification repeated",
+    "Initial fresh CLI context failed due to urllib local binding; fixed and session resumed",
+    "Foreground restored service ended with fresh session; background launcher fixed and final fresh-session persistence verified"
+  ],
+  "unqualified": [
+    "Independent biological transfer",
+    "Population-input benefit",
+    "Scalable Replogle\u2013Nadig ingestion",
+    "Learned State Transition comparator",
+    "Safari",
+    "Physical touch",
+    "Uncoached researcher usability"
+  ],
+  "transcriptSHA256": {
+    "fresh-session-propose-recovery.jsonl": "b751ac173306261dde4376c42a0c1b3cb43bcfd0d1e9c0a6a7ae63b8d5a488d0",
+    "fresh-session-restore.jsonl": "1254ed64a11909f44028abdd843385f0638c38e1f134b15350da9e1bb6c4ff4d",
+    "fresh-session-execute.jsonl": "a3571853f2611314e833d6252abcca8a81789d7f65ce68e9e13412e7bef21ed4",
+    "fresh-session-final-launch.jsonl": "9711944664cc8d01c54b2090dd56bf9a205c5423fb546ccb4e06445b3eb8a5a6",
+    "fresh-session-propose.jsonl": "73dd6036396632769aee4f1523af232262ed007a69b8ebe99b211b13a4e61766"
+  }
+}
