@@ -6,6 +6,13 @@ import MLXOptimizers
 /// Spatial conditioning of the existing cell-response network. This is an
 /// experimental endpoint-distribution learner, not a cell trajectory model.
 public enum VivoSpatialResponseLearning {
+    static func validSchedule(_ steps: [Int], budget: Int?) -> Bool {
+        guard let budget else { return steps == [240, 720, 1440] }
+        return (1...100_000).contains(budget) && !steps.isEmpty && steps.count <= 32
+            && steps.allSatisfy { $0 > 0 && $0 <= budget }
+            && zip(steps, steps.dropFirst()).allSatisfy { $0 < $1 }
+            && steps.last == budget
+    }
     struct Plan: Codable {
         let featureCount: Int
         let targetCount: Int
@@ -19,6 +26,9 @@ public enum VivoSpatialResponseLearning {
         let objective: String?
         let optimizer: String?
         let diagnostics: Bool?
+        // Absent fields retain the historical schedule and sampler exactly.
+        let trainingBudget: Int?
+        let sampling: String?
     }
     static func read(_ url: URL) throws -> [String: MLXArray] {
         try MLX.loadArraysAndMetadata(data: Data(contentsOf: url)).0
@@ -66,9 +76,10 @@ public enum VivoSpatialResponseLearning {
         let p = try JSONDecoder().decode(Plan.self, from: Data(contentsOf: planURL))
         guard p.featureCount > 0, p.featureCount <= 50000, p.targetCount > 0, p.descriptorCount > 0,
               p.descriptorCount <= 2048, p.hiddenWidth == 64, p.batchSize > 0, p.batchSize <= 64,
-              p.steps == [240,720,1440], p.learningRate > 0, p.learningRate.isFinite,
+              validSchedule(p.steps, budget: p.trainingBudget), p.learningRate > 0, p.learningRate.isFinite,
               p.weightDecay >= 0, p.weightDecay.isFinite,
-              [nil, "distribution", "mean"].contains(p.objective), [nil, "sgd", "adam"].contains(p.optimizer) else { throw NSError(domain: "invalid spatial learning plan", code: 1) }
+              [nil, "distribution", "mean"].contains(p.objective), [nil, "sgd", "adam"].contains(p.optimizer),
+              [nil, "group", "source"].contains(p.sampling) else { throw NSError(domain: "invalid spatial learning plan", code: 1) }
         let a = try read(URL(fileURLWithPath: arguments[2]))
         try validate(a, p, observations: mode == "train")
         let root = URL(fileURLWithPath: arguments[3], isDirectory: true)
@@ -111,8 +122,19 @@ public enum VivoSpatialResponseLearning {
             // Balance target and response role strata, not the number of cells.
             let strata = a["stratum"]!.asArray(Int32.self)
             let groups = Dictionary(grouping: strata.indices, by: { strata[$0] }).sorted { $0.key < $1.key }.map(\.value)
+            var sourceGroups: [[[Int]]] = []
+            if p.sampling == "source" {
+                guard let source = a["source"], source.shape == [strata.count] else { throw NSError(domain: "source sampling requires source identity for every row", code: 1) }
+                let sources = source.asArray(Int32.self)
+                guard groups.allSatisfy({ Set($0.map { sources[$0] }).count == 1 }) else { throw NSError(domain: "stratum crosses source identities", code: 1) }
+                sourceGroups = Dictionary(grouping: groups, by: { sources[$0[0]] }).sorted { $0.key < $1.key }.map(\.value)
+            }
             for step in 1...p.steps.last! {
-                let indices = (0..<p.batchSize).map { _ -> Int32 in let g = groups[Int(next() % UInt64(groups.count))]; return Int32(g[Int(next() % UInt64(g.count))]) }
+                let indices = (0..<p.batchSize).map { _ -> Int32 in
+                    let available = sourceGroups.isEmpty ? groups : sourceGroups[Int(next() % UInt64(sourceGroups.count))]
+                    let g = available[Int(next() % UInt64(available.count))]
+                    return Int32(g[Int(next() % UInt64(g.count))])
+                }
                 let idx = MLXArray(indices)
                 let (loss, grads) = grad(model, [idx])
                 let probe = p.diagnostics == true && [1, 2, 10, p.steps.last!].contains(step)

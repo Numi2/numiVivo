@@ -1,0 +1,139 @@
+{
+  "architecture": "unchanged width 64 cell/descriptor/target fusion",
+  "arms": [
+    {
+      "condition": "metadata",
+      "id": "GSE90063-mean",
+      "learningRate": 0.001,
+      "objective": "mean",
+      "sampling": "group",
+      "source": "GSE90063"
+    },
+    {
+      "condition": "metadata",
+      "id": "GSE90063-distribution",
+      "learningRate": 0.001,
+      "objective": "distribution",
+      "sampling": "group",
+      "source": "GSE90063"
+    },
+    {
+      "condition": "metadata",
+      "id": "GSE90546-mean",
+      "learningRate": 0.001,
+      "objective": "mean",
+      "sampling": "group",
+      "source": "GSE90546"
+    },
+    {
+      "condition": "metadata",
+      "id": "GSE90546-distribution",
+      "learningRate": 0.001,
+      "objective": "distribution",
+      "sampling": "group",
+      "source": "GSE90546"
+    },
+    {
+      "condition": "metadata",
+      "id": "GSE92872-mean",
+      "learningRate": 0.001,
+      "objective": "mean",
+      "sampling": "group",
+      "source": "GSE92872"
+    },
+    {
+      "condition": "metadata",
+      "id": "GSE92872-distribution",
+      "learningRate": 0.001,
+      "objective": "distribution",
+      "sampling": "group",
+      "source": "GSE92872"
+    },
+    {
+      "condition": "metadata",
+      "id": "all-mean-group",
+      "learningRate": 0.001,
+      "objective": "mean",
+      "sampling": "group",
+      "source": null
+    },
+    {
+      "condition": "metadata",
+      "id": "all-mean-source",
+      "learningRate": 0.001,
+      "objective": "mean",
+      "sampling": "source",
+      "source": null
+    },
+    {
+      "condition": "metadata",
+      "id": "all-distribution-group",
+      "learningRate": 0.001,
+      "objective": "distribution",
+      "sampling": "group",
+      "source": null
+    },
+    {
+      "condition": "metadata",
+      "id": "all-distribution-source",
+      "learningRate": 0.001,
+      "objective": "distribution",
+      "sampling": "source",
+      "source": null
+    },
+    {
+      "condition": "metadata",
+      "id": "all-mean-source-low-lr",
+      "learningRate": 0.0003,
+      "objective": "mean",
+      "sampling": "source",
+      "source": null
+    },
+    {
+      "condition": "RNA-only",
+      "id": "all-mean-source-RNA-only",
+      "learningRate": 0.001,
+      "objective": "mean",
+      "sampling": "source",
+      "source": null
+    },
+    {
+      "condition": "shuffled-metadata",
+      "id": "all-mean-source-shuffled-metadata",
+      "learningRate": 0.001,
+      "objective": "mean",
+      "sampling": "source",
+      "source": null
+    }
+  ],
+  "binary": "/Users/home/virtual-wet-lab-v04-cohort-20261004/runtime/numivivo",
+  "binarySHA256": "bca3896e2145deee72db2ad83981eddf81e0c369a68aff2073628437e60375de",
+  "conditionProbes": "Development GSE92872 stimulated/unstimulated paired targets. Swap control RNA only, metadata only, and both; correct paired condition outcomes are already exposed development. No GSM2406677 use.",
+  "createdAt": "2026-10-04T03:24:01.666389+00:00",
+  "directionThreshold": 0.1,
+  "fitCriteria": "Lower group response RMSE than no change; target identity and direction reported jointly. Response variation is diagnostic only, never a selection criterion.",
+  "groups": 81,
+  "inputs": "/Users/home/virtual-wet-lab-v04-recovery-20261004/multistudy-inputs-v2",
+  "inputsSHA256": {
+    "plan.json": "736bb6bed77fd27af8f4dd1e76a0d11c518f013a7b4fcce8274ff05fb297cce9",
+    "training-rows.json": "336d2eee7d0c141ddddef80506e45293b646a517b0186a56e04dabecd012927e",
+    "training.safetensors": "82261706bcbf414e863ea9b26f0b2e2b8fe55be7b8db1139a735e4883a65d483",
+    "validation-rows.json": "05c5263c9306ad2a67d12ca9ec916b9acf2603f460c83824be689f360724bf1a",
+    "validation.safetensors": "7e6b82d89f8644d610ce03549f3b73f4db40e6307083f4850af5c81e3b68a0e2"
+  },
+  "ownerSHA256": "ea7edcd2cdff57bafb44e105ef947a778c8783b962794a270c894db7562503b8",
+  "priorQualification": "v04-recovery diagnosis-v2: qualified three-target Adam training, not biological validation",
+  "scope": "exposed development only; no independent validation or new reservation",
+  "selection": "all-source metadata arms only: minimum technical-validation equal-source RMSE, ties earlier checkpoint then arm ID; report training fit at selected and final checkpoints",
+  "steps": [
+    240,
+    720,
+    1440,
+    2880,
+    5760
+  ],
+  "stopping": "Exactly 13 arms, 5760 updates each, no architecture or feature changes; retain failed arms",
+  "trainingBudget": 5760,
+  "uncertainty": "Descriptive group summaries only; bags/genes are not biological replicates",
+  "validationLimit": "Only GSE92872 stimulated technical capture6; no validation available for GSE90546 or GSE90063, not independent animals"
+}

@@ -1,0 +1,72 @@
+{
+  "binarySHA256": "bca3896e2145deee72db2ad83981eddf81e0c369a68aff2073628437e60375de",
+  "cases": [
+    {
+      "admittedBeforeInputRead": true,
+      "exit": 1,
+      "expected": true,
+      "name": "legacy"
+    },
+    {
+      "admittedBeforeInputRead": false,
+      "exit": 1,
+      "expected": false,
+      "name": "unregistered"
+    },
+    {
+      "admittedBeforeInputRead": true,
+      "exit": 1,
+      "expected": true,
+      "name": "registered"
+    },
+    {
+      "admittedBeforeInputRead": false,
+      "exit": 1,
+      "expected": false,
+      "name": "duplicate"
+    },
+    {
+      "admittedBeforeInputRead": false,
+      "exit": 1,
+      "expected": false,
+      "name": "descending"
+    },
+    {
+      "admittedBeforeInputRead": false,
+      "exit": 1,
+      "expected": false,
+      "name": "zero"
+    },
+    {
+      "admittedBeforeInputRead": false,
+      "exit": 1,
+      "expected": false,
+      "name": "over-budget"
+    },
+    {
+      "admittedBeforeInputRead": false,
+      "exit": 1,
+      "expected": false,
+      "name": "unused-budget"
+    },
+    {
+      "admittedBeforeInputRead": false,
+      "exit": 1,
+      "expected": false,
+      "name": "unbounded"
+    },
+    {
+      "admittedBeforeInputRead": false,
+      "exit": 1,
+      "expected": false,
+      "name": "empty"
+    },
+    {
+      "admittedBeforeInputRead": false,
+      "exit": 1,
+      "expected": false,
+      "name": "too-many"
+    }
+  ],
+  "legacyNumerics": "separate exact replay required; admission alone is not replay"
+}
