@@ -1,0 +1,87 @@
+{
+  "architecture": "unchanged width64 VivoCellResponseMLXModel; no new layers",
+  "arms": [
+    [
+      "legacy",
+      "distribution",
+      "sgd",
+      0.0001,
+      false,
+      false
+    ],
+    [
+      "mean-sgd-regularized",
+      "mean",
+      "sgd",
+      0.0001,
+      false,
+      false
+    ],
+    [
+      "mean-sgd",
+      "mean",
+      "sgd",
+      0.0,
+      false,
+      false
+    ],
+    [
+      "mean-adam",
+      "mean",
+      "adam",
+      0.0,
+      false,
+      false
+    ],
+    [
+      "mean-adam-scaled",
+      "mean",
+      "adam",
+      0.0,
+      true,
+      false
+    ],
+    [
+      "mean-adam-ID",
+      "mean",
+      "adam",
+      0.0,
+      false,
+      true
+    ],
+    [
+      "mean-adam-regularized",
+      "mean",
+      "adam",
+      0.0001,
+      false,
+      false
+    ],
+    [
+      "distribution-adam",
+      "distribution",
+      "adam",
+      0.0001,
+      false,
+      false
+    ]
+  ],
+  "budget": "one seed271828; eight arms; checkpoints240,720,1440; no retries or size search",
+  "createdAt": "2026-10-04T01:57:54.465037+00:00",
+  "fitGate": "training RMSE <=20% of no-change AND correct nearest response identity for all three groups AND swapped target inputs reproduce corresponding predictions to maxAbs<=1e-5",
+  "generalization": "only after fit: exposed capture6 reports target-mean and no-change comparison; no biological validation claim",
+  "gradientQualification": "finite differences on maximal decoder bias coordinate, masked observation corruption invariant, per-layer gradient/update norms at steps1,2,10,1440",
+  "groups": "three largest source-target groups with >=100 assigned cells and >=100 explicit controls in GSE92872 stimulated training captures; targets selected by counts, not effects",
+  "oldFailuresPreserved": true,
+  "preparedSHA256": "c782a2d3f9463af62c978b821e94bd4fdf06456c68d58bec8e3f9d227ab3444a",
+  "regressionComparator": "descriptor-conditioned ridge alpha1e-6 on identical three groups; engineering comparator, not native biological promotion",
+  "reservation": "no new evaluation cohort reserved or opened until diagnosis resolved",
+  "scaling": "per-feature training response SD, floor0.1; never validation statistics",
+  "scope": "development-only engineering qualification; all observations previously exposed",
+  "sourceInputs": "/Users/home/virtual-wet-lab-v04-20261004/followup/learning-v2",
+  "targets": [
+    "NFKB1",
+    "NFATC1",
+    "EGR1"
+  ]
+}

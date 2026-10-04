@@ -1,0 +1,23 @@
+{
+  "createdAt": "2026-10-04T02:02:13.460234+00:00",
+  "diagnosisResolved": "../diagnosis-v2/results.json",
+  "candidateSource": "GSE90546/GSM2406677 epistasis experiment",
+  "unit": "one independently named pooled experimental preparation; GEM groups are technical captures, not biological units",
+  "role": "new experiment within exposed study; not independent study or animal replication",
+  "sourceEvidence": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE90546",
+  "admission": "single targets only; >=100 assigned treated cells and >=100 explicit controls; preserve every exclusion; no treated RNA inspection before prediction seal",
+  "objective": {
+    "id": "UPR-HSPA5-v2",
+    "genes": [
+      "HSPA5"
+    ],
+    "direction": "reduce HSPA5 mean log1p(CPM)",
+    "replacement": "Explicit new single-gene research objective. Prior HSPA5/XBP1-v1 rejected before outcome access; prior immediate-early failure unchanged.",
+    "coverageGate": "HSPA5 fixed training feature and detected in >=20% of reserved controls"
+  },
+  "models": "fixed diagnosed distribution AdamW width64, lr0.001 wd0.0001; same three checkpoints, validation only; descriptor/ID/shuffled/ridge; training data unchanged",
+  "evaluation": "all eligible targets; no-intervention, training-mean and random selection; regret and gene residuals; one experimental unit means biological confidence unavailable",
+  "biologicalPromotion": false,
+  "spatialPreservation": "disabled; no spatial measurements",
+  "budget": "one preparation, one model campaign, no objective substitution after outcomes"
+}

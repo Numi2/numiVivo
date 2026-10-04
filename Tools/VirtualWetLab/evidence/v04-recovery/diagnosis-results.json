@@ -1,0 +1,268 @@
+{
+  "binarySHA256": "0d479feac0bcf3bb46d4cbbfdf130e66e36e4a0223d6ca37b5a78eca872e4e43",
+  "biologicalPromotion": false,
+  "ownerSHA256": "3d596f21ccaee74f0ad5097d3a63f49da4a29ec8a9d86cb73969782ec4b23ef2",
+  "results": {
+    "descriptor-regression": {
+      "scope": "same-input regularized linear engineering comparator",
+      "trainingRMSE": 2.3554277106541122e-07
+    },
+    "distribution-adam": {
+      "checkpoints": [
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.005370780825614929,
+          "step": 240,
+          "trainingRMSE": 0.23357389867305756
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19386042654514313,
+          "step": 720,
+          "trainingRMSE": 0.003304532263427973
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19453901052474976,
+          "step": 1440,
+          "trainingRMSE": 0.000315323646645993
+        }
+      ],
+      "developmentGeneralization": {
+        "RMSE": 0.6147546172142029,
+        "matchedTargetMean": 0.6089560985565186,
+        "noChange": 0.5521860718727112,
+        "scope": "exposed technical capture6, not biological validation"
+      },
+      "fitGate": true,
+      "noChangeTrainingRMSE": 0.2877731919288635,
+      "observedResponseSD": 0.19438102841377258,
+      "targetSwapMaxAbs": 0.0
+    },
+    "legacy": {
+      "checkpoints": [
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.0006557178567163646,
+          "step": 240,
+          "trainingRMSE": 0.22139477729797363
+        },
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.0004929762799292803,
+          "step": 720,
+          "trainingRMSE": 0.22119881212711334
+        },
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.0004819452587980777,
+          "step": 1440,
+          "trainingRMSE": 0.23329798877239227
+        }
+      ],
+      "developmentGeneralization": {
+        "RMSE": 0.5797819495201111,
+        "matchedTargetMean": 0.6089560985565186,
+        "noChange": 0.5521860718727112,
+        "scope": "exposed technical capture6, not biological validation"
+      },
+      "fitGate": false,
+      "noChangeTrainingRMSE": 0.2877731919288635,
+      "observedResponseSD": 0.19438102841377258,
+      "targetSwapMaxAbs": 0.0
+    },
+    "mean-adam": {
+      "checkpoints": [
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.1943815052509308,
+          "step": 240,
+          "trainingRMSE": 4.048099981446285e-06
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19438102841377258,
+          "step": 720,
+          "trainingRMSE": 0.0
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19438102841377258,
+          "step": 1440,
+          "trainingRMSE": 4.406907464726828e-05
+        }
+      ],
+      "developmentGeneralization": {
+        "RMSE": 0.6109583377838135,
+        "matchedTargetMean": 0.6089560985565186,
+        "noChange": 0.5521860718727112,
+        "scope": "exposed technical capture6, not biological validation"
+      },
+      "fitGate": true,
+      "noChangeTrainingRMSE": 0.2877731919288635,
+      "observedResponseSD": 0.19438102841377258,
+      "targetSwapMaxAbs": 0.0
+    },
+    "mean-adam-ID": {
+      "checkpoints": [
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19438092410564423,
+          "step": 240,
+          "trainingRMSE": 8.022790325412643e-07
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19438102841377258,
+          "step": 720,
+          "trainingRMSE": 0.0
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19438102841377258,
+          "step": 1440,
+          "trainingRMSE": 4.406907464726828e-05
+        }
+      ],
+      "developmentGeneralization": {
+        "RMSE": 0.6091046929359436,
+        "matchedTargetMean": 0.6089560985565186,
+        "noChange": 0.5521860718727112,
+        "scope": "exposed technical capture6, not biological validation"
+      },
+      "fitGate": true,
+      "noChangeTrainingRMSE": 0.2877731919288635,
+      "observedResponseSD": 0.19438102841377258,
+      "targetSwapMaxAbs": 0.0
+    },
+    "mean-adam-regularized": {
+      "checkpoints": [
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.1943814903497696,
+          "step": 240,
+          "trainingRMSE": 4.0603131310490426e-06
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19438102841377258,
+          "step": 720,
+          "trainingRMSE": 7.922049150010935e-08
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.1943809986114502,
+          "step": 1440,
+          "trainingRMSE": 4.406214429764077e-05
+        }
+      ],
+      "developmentGeneralization": {
+        "RMSE": 0.610960841178894,
+        "matchedTargetMean": 0.6089560985565186,
+        "noChange": 0.5521860718727112,
+        "scope": "exposed technical capture6, not biological validation"
+      },
+      "fitGate": true,
+      "noChangeTrainingRMSE": 0.2877731919288635,
+      "observedResponseSD": 0.19438102841377258,
+      "targetSwapMaxAbs": 0.0
+    },
+    "mean-adam-scaled": {
+      "checkpoints": [
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19437691569328308,
+          "step": 240,
+          "trainingRMSE": 9.069769475900102e-06
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19438102841377258,
+          "step": 720,
+          "trainingRMSE": 0.0
+        },
+        {
+          "identityAccuracy": 1.0,
+          "responseSD": 0.19438102841377258,
+          "step": 1440,
+          "trainingRMSE": 4.406207153806463e-05
+        }
+      ],
+      "developmentGeneralization": {
+        "RMSE": 0.6104864478111267,
+        "matchedTargetMean": 0.6089560985565186,
+        "noChange": 0.5521860718727112,
+        "scope": "exposed technical capture6, not biological validation"
+      },
+      "fitGate": true,
+      "noChangeTrainingRMSE": 0.2877731919288635,
+      "observedResponseSD": 0.19438102841377258,
+      "targetSwapMaxAbs": 0.0
+    },
+    "mean-sgd": {
+      "checkpoints": [
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.0002565671456977725,
+          "step": 240,
+          "trainingRMSE": 0.2253606915473938
+        },
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.0003977908054366708,
+          "step": 720,
+          "trainingRMSE": 0.22109834849834442
+        },
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.0005706192459911108,
+          "step": 1440,
+          "trainingRMSE": 0.22087672352790833
+        }
+      ],
+      "developmentGeneralization": {
+        "RMSE": 0.5732541680335999,
+        "matchedTargetMean": 0.6089560985565186,
+        "noChange": 0.5521860718727112,
+        "scope": "exposed technical capture6, not biological validation"
+      },
+      "fitGate": false,
+      "noChangeTrainingRMSE": 0.2877731919288635,
+      "observedResponseSD": 0.19438102841377258,
+      "targetSwapMaxAbs": 0.0
+    },
+    "mean-sgd-regularized": {
+      "checkpoints": [
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.00025654505589045584,
+          "step": 240,
+          "trainingRMSE": 0.22536174952983856
+        },
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.0003977287851739675,
+          "step": 720,
+          "trainingRMSE": 0.2210984081029892
+        },
+        {
+          "identityAccuracy": 0.3333333333333333,
+          "responseSD": 0.0005704082432202995,
+          "step": 1440,
+          "trainingRMSE": 0.22087694704532623
+        }
+      ],
+      "developmentGeneralization": {
+        "RMSE": 0.5732525587081909,
+        "matchedTargetMean": 0.6089560985565186,
+        "noChange": 0.5521860718727112,
+        "scope": "exposed technical capture6, not biological validation"
+      },
+      "fitGate": false,
+      "noChangeTrainingRMSE": 0.2877731919288635,
+      "observedResponseSD": 0.19438102841377258,
+      "targetSwapMaxAbs": 0.0
+    }
+  },
+  "trainingFitOnly": true
+}

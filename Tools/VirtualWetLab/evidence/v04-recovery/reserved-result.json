@@ -1,0 +1,462 @@
+{
+  "biologicalPromotion": false,
+  "objective": "UPR-HSPA5-v2",
+  "openedAt": "2026-10-04T02:10:16.997671+00:00",
+  "predictionSealSHA256": "51f1acc927eefe13e9960c46969860c3b70f85aabbda335dd8e2b42e3f1e4d9b",
+  "scope": "One reserved experimental preparation; captures are not biological replicates. GEM conditions resolved by author notebook: 1 tunicamycin, 2 thapsigargin, 3 DMSO; query uses condition-matched control RNA, no dose claim. No spatial validation.",
+  "scores": {
+    "1": {
+      "candidates": [
+        "ATF6",
+        "EIF2AK3",
+        "ERN1",
+        "no-intervention"
+      ],
+      "models": {
+        "no-change": {
+          "endpointRMSE": 0.1971627026796341,
+          "objectiveResidual": [
+            1.1548223495483398,
+            0.682429313659668,
+            0.006376743316650391
+          ],
+          "predictedUtility": [
+            -0.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 1.1548223495483398,
+            "gainOverRandom": 0.6939152479171753,
+            "gainOverTrainingMean": 1.1548223495483398,
+            "randomExpectedUtility": 0.46090710163116455,
+            "regret": 0.0,
+            "reliableWinner": false,
+            "selected": "ATF6",
+            "selectedObservedUtility": 1.1548223495483398,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "shuffled-target-descriptor": {
+          "endpointRMSE": 0.24985890090465546,
+          "objectiveResidual": [
+            0.8292431831359863,
+            0.35767459869384766,
+            -0.3199348449707031
+          ],
+          "predictedUtility": [
+            0.3255791664123535,
+            0.3247547149658203,
+            0.3263115882873535,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.006376743316650391,
+            "gainOverRandom": -0.45453035831451416,
+            "gainOverTrainingMean": 0.006376743316650391,
+            "randomExpectedUtility": 0.46090710163116455,
+            "regret": 1.1484456062316895,
+            "reliableWinner": false,
+            "selected": "ERN1",
+            "selectedObservedUtility": 0.006376743316650391,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "target-ID": {
+          "endpointRMSE": 0.24752157926559448,
+          "objectiveResidual": [
+            0.8093090057373047,
+            0.3369159698486328,
+            -0.33913660049438477
+          ],
+          "predictedUtility": [
+            0.34551334381103516,
+            0.34551334381103516,
+            0.34551334381103516,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 1.1548223495483398,
+            "gainOverRandom": 0.6939152479171753,
+            "gainOverTrainingMean": 1.1548223495483398,
+            "randomExpectedUtility": 0.46090710163116455,
+            "regret": 0.0,
+            "reliableWinner": false,
+            "selected": "ATF6",
+            "selectedObservedUtility": 1.1548223495483398,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "target-descriptor": {
+          "endpointRMSE": 0.22896823287010193,
+          "objectiveResidual": [
+            1.1058197021484375,
+            0.6203694343566895,
+            -0.052071571350097656
+          ],
+          "predictedUtility": [
+            0.049002647399902344,
+            0.062059879302978516,
+            0.05844831466674805,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.682429313659668,
+            "gainOverRandom": 0.22152221202850342,
+            "gainOverTrainingMean": 0.682429313659668,
+            "randomExpectedUtility": 0.46090710163116455,
+            "regret": 0.4723930358886719,
+            "reliableWinner": false,
+            "selected": "EIF2AK3",
+            "selectedObservedUtility": 0.682429313659668,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "training-mean": {
+          "endpointRMSE": 0.21722614765167236,
+          "objectiveResidual": [
+            1.1776461601257324,
+            0.7052531242370605,
+            0.02920055389404297
+          ],
+          "predictedUtility": [
+            -0.022823810577392578,
+            -0.022823810577392578,
+            -0.022823810577392578,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.0,
+            "gainOverRandom": -0.46090710163116455,
+            "gainOverTrainingMean": 0.0,
+            "randomExpectedUtility": 0.46090710163116455,
+            "regret": 1.1548223495483398,
+            "reliableWinner": false,
+            "selected": "no-intervention",
+            "selectedObservedUtility": 0.0,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        }
+      },
+      "observedUtility": [
+        1.1548223495483398,
+        0.682429313659668,
+        0.006376743316650391,
+        0.0
+      ]
+    },
+    "2": {
+      "candidates": [
+        "ATF6",
+        "EIF2AK3",
+        "ERN1",
+        "no-intervention"
+      ],
+      "models": {
+        "no-change": {
+          "endpointRMSE": 0.23091399669647217,
+          "objectiveResidual": [
+            1.2091999053955078,
+            0.7110748291015625,
+            0.09870624542236328
+          ],
+          "predictedUtility": [
+            -0.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 1.2091999053955078,
+            "gainOverRandom": 0.7044546604156494,
+            "gainOverTrainingMean": 1.2091999053955078,
+            "randomExpectedUtility": 0.5047452449798584,
+            "regret": 0.0,
+            "reliableWinner": false,
+            "selected": "ATF6",
+            "selectedObservedUtility": 1.2091999053955078,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "shuffled-target-descriptor": {
+          "endpointRMSE": 0.28251370787620544,
+          "objectiveResidual": [
+            0.8661184310913086,
+            0.3688178062438965,
+            -0.24510765075683594
+          ],
+          "predictedUtility": [
+            0.3430814743041992,
+            0.342257022857666,
+            0.3438138961791992,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.09870624542236328,
+            "gainOverRandom": -0.4060389995574951,
+            "gainOverTrainingMean": 0.09870624542236328,
+            "randomExpectedUtility": 0.5047452449798584,
+            "regret": 1.1104936599731445,
+            "reliableWinner": false,
+            "selected": "ERN1",
+            "selectedObservedUtility": 0.09870624542236328,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "target-ID": {
+          "endpointRMSE": 0.27931472659111023,
+          "objectiveResidual": [
+            0.8458781242370605,
+            0.34775304794311523,
+            -0.264615535736084
+          ],
+          "predictedUtility": [
+            0.36332178115844727,
+            0.36332178115844727,
+            0.36332178115844727,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 1.2091999053955078,
+            "gainOverRandom": 0.7044546604156494,
+            "gainOverTrainingMean": 1.2091999053955078,
+            "randomExpectedUtility": 0.5047452449798584,
+            "regret": 0.0,
+            "reliableWinner": false,
+            "selected": "ATF6",
+            "selectedObservedUtility": 1.2091999053955078,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "target-descriptor": {
+          "endpointRMSE": 0.26533904671669006,
+          "objectiveResidual": [
+            1.1594820022583008,
+            0.6482996940612793,
+            0.03954267501831055
+          ],
+          "predictedUtility": [
+            0.04971790313720703,
+            0.0627751350402832,
+            0.059163570404052734,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.7110748291015625,
+            "gainOverRandom": 0.2063295841217041,
+            "gainOverTrainingMean": 0.7110748291015625,
+            "randomExpectedUtility": 0.5047452449798584,
+            "regret": 0.4981250762939453,
+            "reliableWinner": false,
+            "selected": "EIF2AK3",
+            "selectedObservedUtility": 0.7110748291015625,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "training-mean": {
+          "endpointRMSE": 0.2484656274318695,
+          "objectiveResidual": [
+            1.2320237159729004,
+            0.7338986396789551,
+            0.12153005599975586
+          ],
+          "predictedUtility": [
+            -0.022823810577392578,
+            -0.022823810577392578,
+            -0.022823810577392578,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.0,
+            "gainOverRandom": -0.5047452449798584,
+            "gainOverTrainingMean": 0.0,
+            "randomExpectedUtility": 0.5047452449798584,
+            "regret": 1.2091999053955078,
+            "reliableWinner": false,
+            "selected": "no-intervention",
+            "selectedObservedUtility": 0.0,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        }
+      },
+      "observedUtility": [
+        1.2091999053955078,
+        0.7110748291015625,
+        0.09870624542236328,
+        0.0
+      ]
+    },
+    "3": {
+      "candidates": [
+        "ATF6",
+        "EIF2AK3",
+        "ERN1",
+        "no-intervention"
+      ],
+      "models": {
+        "no-change": {
+          "endpointRMSE": 0.09880292415618896,
+          "objectiveResidual": [
+            0.4283256530761719,
+            0.0534825325012207,
+            0.21761512756347656
+          ],
+          "predictedUtility": [
+            -0.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.4283256530761719,
+            "gainOverRandom": 0.2534698247909546,
+            "gainOverTrainingMean": 0.4283256530761719,
+            "randomExpectedUtility": 0.17485582828521729,
+            "regret": 0.0,
+            "reliableWinner": false,
+            "selected": "ATF6",
+            "selectedObservedUtility": 0.4283256530761719,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "shuffled-target-descriptor": {
+          "endpointRMSE": 0.1767445206642151,
+          "objectiveResidual": [
+            0.09283971786499023,
+            -0.28117847442626953,
+            -0.11860275268554688
+          ],
+          "predictedUtility": [
+            0.33548593521118164,
+            0.33466100692749023,
+            0.33621788024902344,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.21761512756347656,
+            "gainOverRandom": 0.04275929927825928,
+            "gainOverTrainingMean": 0.21761512756347656,
+            "randomExpectedUtility": 0.17485582828521729,
+            "regret": 0.2107105255126953,
+            "reliableWinner": false,
+            "selected": "ERN1",
+            "selectedObservedUtility": 0.21761512756347656,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "target-ID": {
+          "endpointRMSE": 0.17348308861255646,
+          "objectiveResidual": [
+            0.07068109512329102,
+            -0.30416202545166016,
+            -0.1400294303894043
+          ],
+          "predictedUtility": [
+            0.35764455795288086,
+            0.35764455795288086,
+            0.35764455795288086,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.4283256530761719,
+            "gainOverRandom": 0.2534698247909546,
+            "gainOverTrainingMean": 0.4283256530761719,
+            "randomExpectedUtility": 0.17485582828521729,
+            "regret": 0.0,
+            "reliableWinner": false,
+            "selected": "ATF6",
+            "selectedObservedUtility": 0.4283256530761719,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "target-descriptor": {
+          "endpointRMSE": 0.1627233326435089,
+          "objectiveResidual": [
+            0.38481855392456055,
+            -0.003081798553466797,
+            0.16466236114501953
+          ],
+          "predictedUtility": [
+            0.04350709915161133,
+            0.0565643310546875,
+            0.05295276641845703,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.0534825325012207,
+            "gainOverRandom": -0.12137329578399658,
+            "gainOverTrainingMean": 0.0534825325012207,
+            "randomExpectedUtility": 0.17485582828521729,
+            "regret": 0.37484312057495117,
+            "reliableWinner": false,
+            "selected": "EIF2AK3",
+            "selectedObservedUtility": 0.0534825325012207,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        },
+        "training-mean": {
+          "endpointRMSE": 0.13427843153476715,
+          "objectiveResidual": [
+            0.45114946365356445,
+            0.07630634307861328,
+            0.24043893814086914
+          ],
+          "predictedUtility": [
+            -0.022823810577392578,
+            -0.022823810577392578,
+            -0.022823810577392578,
+            0.0
+          ],
+          "selection": {
+            "bestObservedEligible": "ATF6",
+            "gainOverNoIntervention": 0.0,
+            "gainOverRandom": -0.17485582828521729,
+            "gainOverTrainingMean": 0.0,
+            "randomExpectedUtility": 0.17485582828521729,
+            "regret": 0.4283256530761719,
+            "reliableWinner": false,
+            "selected": "no-intervention",
+            "selectedObservedUtility": 0.0,
+            "trainingMeanSelected": "no-intervention",
+            "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval"
+          }
+        }
+      },
+      "observedUtility": [
+        0.4283256530761719,
+        0.0534825325012207,
+        0.21761512756347656,
+        0.0
+      ]
+    }
+  }
+}

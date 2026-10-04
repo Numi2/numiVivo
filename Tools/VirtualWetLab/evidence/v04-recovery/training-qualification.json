@@ -1,0 +1,58 @@
+{
+  "architectureChanged": false,
+  "biologicalPromotion": false,
+  "checks": {
+    "distribution-adam": {
+      "finiteDifferenceMaxAbsError": 0.0001355340937152505,
+      "fitGate": true,
+      "frozenPriorUnchanged": true,
+      "maskedOutcomesInvariant": true
+    },
+    "legacy": {
+      "finiteDifferenceMaxAbsError": 0.0001362645998597145,
+      "fitGate": false,
+      "frozenPriorUnchanged": true,
+      "maskedOutcomesInvariant": true
+    },
+    "mean-adam": {
+      "finiteDifferenceMaxAbsError": 2.835760824382305e-06,
+      "fitGate": true,
+      "frozenPriorUnchanged": true,
+      "maskedOutcomesInvariant": true
+    },
+    "mean-adam-ID": {
+      "finiteDifferenceMaxAbsError": 2.957182005047798e-06,
+      "fitGate": true,
+      "frozenPriorUnchanged": true,
+      "maskedOutcomesInvariant": true
+    },
+    "mean-adam-regularized": {
+      "finiteDifferenceMaxAbsError": 2.835760824382305e-06,
+      "fitGate": true,
+      "frozenPriorUnchanged": true,
+      "maskedOutcomesInvariant": true
+    },
+    "mean-adam-scaled": {
+      "finiteDifferenceMaxAbsError": 3.635883331298828e-06,
+      "fitGate": true,
+      "frozenPriorUnchanged": true,
+      "maskedOutcomesInvariant": true
+    },
+    "mean-sgd": {
+      "finiteDifferenceMaxAbsError": 2.835760824382305e-06,
+      "fitGate": false,
+      "frozenPriorUnchanged": true,
+      "maskedOutcomesInvariant": true
+    },
+    "mean-sgd-regularized": {
+      "finiteDifferenceMaxAbsError": 2.835760824382305e-06,
+      "fitGate": false,
+      "frozenPriorUnchanged": true,
+      "maskedOutcomesInvariant": true
+    }
+  },
+  "diagnosisSHA256": "b38d592c578fb0776ce8ba7280f422dea0910671b0dfa5250eea8fec923f3521",
+  "engineeringFitQualified": true,
+  "exactReplay": true,
+  "finding": "AdamW recovers target-specific fit at fixed architecture, data and budget. Removing variance or decay alone does not; response scaling is unnecessary. Does not identify a unique optimal optimizer or establish biological transfer."
+}
