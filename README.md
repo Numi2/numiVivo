@@ -14,6 +14,12 @@ The real-data benchmark registry now records source identity, replicate semantic
 
 ## Virtual Wet Lab workspace
 
+[The v0.4 development increment](Tools/VirtualWetLab/V04.md) evaluates which
+intervention to test, using trained target descriptors, multi-study campaigns
+and sealed molecular objectives. The native model has not demonstrated useful
+selection advantage; verified spatial preservation and Safari qualification
+remain open. Software checks do not promote the biological model.
+
 NumiLab now exposes a [Virtual Wet Lab](Tools/VirtualWetLab/README.md) over the
 native donor-response predictor: choose a measured B-cell donor, freeze a
 prediction, reveal held-out RNA measurements, compare baselines and replay the

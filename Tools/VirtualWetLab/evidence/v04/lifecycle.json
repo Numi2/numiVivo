@@ -1,0 +1,26 @@
+{
+  "checks": [
+    "no-intervention candidate",
+    "unqualified ranking remains explicit",
+    "unsupported preservation rejected",
+    "no observation before seal",
+    "changed objective rejected",
+    "interrupted reveal retains source snapshot",
+    "recovery does not re-extract or refit",
+    "all three native models replay bit-exactly",
+    "selection metrics reconstruct"
+  ],
+  "record": "campaign-85cea59bd95a42b3a892b83e35dc5894",
+  "replay": {
+    "biologicalPromotion": false,
+    "id": "campaign-85cea59bd95a42b3a892b83e35dc5894",
+    "nativeReplay": {
+      "shuffled-target-descriptor": "bit-exact mean and variance",
+      "target-ID": "bit-exact mean and variance",
+      "target-descriptor": "bit-exact mean and variance"
+    },
+    "status": "verified"
+  },
+  "scope": "software qualification on already exposed evaluation cohort",
+  "status": "passed"
+}

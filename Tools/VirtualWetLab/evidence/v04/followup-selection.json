@@ -1,0 +1,924 @@
+[
+  {
+    "context": "GSE168620|stimulated",
+    "id": "campaign-5345430d1456455c87fba71c2b34eda6",
+    "objective": "shared-three-gene-program",
+    "result": {
+      "format": "numivivo-campaign-comparison/v1",
+      "observedUtilities": {
+        "DOK2": 0.004705806728452444,
+        "EGR1": -0.003139417851343751,
+        "EGR2": 0.022430649027228355,
+        "EGR3": 0.009152418933808804,
+        "EGR4": -0.02518191933631897,
+        "FOS": 0.0028391126543283463,
+        "JUN": 0.012112751603126526,
+        "JUND": -0.014834083616733551,
+        "LAT": 0.010005291551351547,
+        "LCK": 0.013228190131485462,
+        "NFAT5": 0.000802094757091254,
+        "NFATC1": -0.025479892268776894,
+        "NFKB1": -0.011052326299250126,
+        "NFKB2": 0.0028175844345241785,
+        "NR4A1": 0.00044500609510578215,
+        "PTPN11": -0.014995355159044266,
+        "PTPN6": 0.01633947715163231,
+        "RELA": 0.01063578948378563,
+        "RUNX2": 0.021932406350970268,
+        "ZAP70": 0.019909508526325226,
+        "no-intervention": 0.0
+      },
+      "selectionResults": {
+        "GO-neighbor-transfer": {
+          "selected": "ZAP70",
+          "selectedObservedUtility": 0.019909508526325226,
+          "bestObservedEligible": "EGR2",
+          "regret": 0.0025211405009031296,
+          "randomExpectedUtility": 0.0025082425189404084,
+          "gainOverRandom": 0.017401266007384817,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": 0.0,
+          "gainOverNoIntervention": 0.019909508526325226,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "no-change": {
+          "selected": "DOK2",
+          "selectedObservedUtility": 0.004705806728452444,
+          "bestObservedEligible": "EGR2",
+          "regret": 0.01772484229877591,
+          "randomExpectedUtility": 0.0025082425189404084,
+          "gainOverRandom": 0.0021975642095120357,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": -0.015203701797872782,
+          "gainOverNoIntervention": 0.004705806728452444,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "regularized-descriptor-ridge": {
+          "selected": "ZAP70",
+          "selectedObservedUtility": 0.019909508526325226,
+          "bestObservedEligible": "EGR2",
+          "regret": 0.0025211405009031296,
+          "randomExpectedUtility": 0.0025082425189404084,
+          "gainOverRandom": 0.017401266007384817,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": 0.0,
+          "gainOverNoIntervention": 0.019909508526325226,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "shuffled-target-descriptor": {
+          "selected": "EGR3",
+          "selectedObservedUtility": 0.009152418933808804,
+          "bestObservedEligible": "EGR2",
+          "regret": 0.013278230093419552,
+          "randomExpectedUtility": 0.0025082425189404084,
+          "gainOverRandom": 0.006644176414868395,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": -0.010757089592516422,
+          "gainOverNoIntervention": 0.009152418933808804,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "target-ID": {
+          "selected": "LAT",
+          "selectedObservedUtility": 0.010005291551351547,
+          "bestObservedEligible": "EGR2",
+          "regret": 0.012425357475876808,
+          "randomExpectedUtility": 0.0025082425189404084,
+          "gainOverRandom": 0.007497049032411138,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": -0.009904216974973679,
+          "gainOverNoIntervention": 0.010005291551351547,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "target-descriptor": {
+          "selected": "EGR1",
+          "selectedObservedUtility": -0.003139417851343751,
+          "bestObservedEligible": "EGR2",
+          "regret": 0.025570066878572106,
+          "randomExpectedUtility": 0.0025082425189404084,
+          "gainOverRandom": -0.00564766037028416,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": -0.023048926377668977,
+          "gainOverNoIntervention": -0.003139417851343751,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "training-mean": {
+          "selected": "ZAP70",
+          "selectedObservedUtility": 0.019909508526325226,
+          "bestObservedEligible": "EGR2",
+          "regret": 0.0025211405009031296,
+          "randomExpectedUtility": 0.0025082425189404084,
+          "gainOverRandom": 0.017401266007384817,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": 0.0,
+          "gainOverNoIntervention": 0.019909508526325226,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        }
+      },
+      "metrics": {
+        "GO-neighbor-transfer": {
+          "endpointRMSE": 0.23422366380691528,
+          "responseRMSE": 0.23422366380691528,
+          "responseDirection": 0.48496880317640384,
+          "magnitudeMAE": 0.13877764344215393
+        },
+        "no-change": {
+          "endpointRMSE": 0.08988327533006668,
+          "responseRMSE": 0.08988327533006668,
+          "responseDirection": 0.0,
+          "magnitudeMAE": 0.05795427784323692
+        },
+        "regularized-descriptor-ridge": {
+          "endpointRMSE": 0.47078415751457214,
+          "responseRMSE": 0.47078415751457214,
+          "responseDirection": 0.4968803176403857,
+          "magnitudeMAE": 0.3243703842163086
+        },
+        "shuffled-target-descriptor": {
+          "endpointRMSE": 0.09170924872159958,
+          "responseRMSE": 0.09170924872159958,
+          "responseDirection": 0.5104934770277936,
+          "magnitudeMAE": 0.04864594340324402
+        },
+        "target-ID": {
+          "endpointRMSE": 0.09171677380800247,
+          "responseRMSE": 0.09171677380800247,
+          "responseDirection": 0.5082246171298922,
+          "magnitudeMAE": 0.04864998534321785
+        },
+        "target-descriptor": {
+          "endpointRMSE": 0.09173981100320816,
+          "responseRMSE": 0.09173981100320816,
+          "responseDirection": 0.5093590470788428,
+          "magnitudeMAE": 0.04861095920205116
+        },
+        "training-mean": {
+          "endpointRMSE": 0.4353157579898834,
+          "responseRMSE": 0.4353157579898834,
+          "responseDirection": 0.49971639251276234,
+          "magnitudeMAE": 0.2931070327758789
+        }
+      },
+      "distributions": {
+        "DOK2": {
+          "mean": [
+            0.0,
+            0.009813454002141953,
+            0.058528199791908264
+          ],
+          "cellVariance": [
+            0.0,
+            0.08706071227788925,
+            0.4462553560733795
+          ],
+          "count": 905
+        },
+        "EGR1": {
+          "mean": [
+            0.0,
+            0.01984758861362934,
+            0.07202973961830139
+          ],
+          "cellVariance": [
+            0.0,
+            0.14938446879386902,
+            0.5517436265945435
+          ],
+          "count": 740
+        },
+        "EGR2": {
+          "mean": [
+            0.0,
+            0.0,
+            0.015167122706770897
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.14515601098537445
+          ],
+          "count": 632
+        },
+        "EGR3": {
+          "mean": [
+            0.006680281832814217,
+            0.006501475349068642,
+            0.04182006046175957
+          ],
+          "cellVariance": [
+            0.05270373076200485,
+            0.04991962015628815,
+            0.30144575238227844
+          ],
+          "count": 1182
+        },
+        "EGR4": {
+          "mean": [
+            0.011627094820141792,
+            0.04151429980993271,
+            0.10486344248056412
+          ],
+          "cellVariance": [
+            0.08562842011451721,
+            0.3173174560070038,
+            0.7341405749320984
+          ],
+          "count": 1247
+        },
+        "FOS": {
+          "mean": [
+            0.006351883988827467,
+            0.007644872181117535,
+            0.05994497984647751
+          ],
+          "cellVariance": [
+            0.042000848799943924,
+            0.06083960086107254,
+            0.42937618494033813
+          ],
+          "count": 1042
+        },
+        "JUN": {
+          "mean": [
+            0.00854236539453268,
+            0.011074149049818516,
+            0.026504306122660637
+          ],
+          "cellVariance": [
+            0.059472013264894485,
+            0.09994863718748093,
+            0.19478952884674072
+          ],
+          "count": 816
+        },
+        "JUND": {
+          "mean": [
+            0.014143413864076138,
+            0.020787306129932404,
+            0.0920306071639061
+          ],
+          "cellVariance": [
+            0.11903282254934311,
+            0.17518964409828186,
+            0.6748319268226624
+          ],
+          "count": 1188
+        },
+        "LAT": {
+          "mean": [
+            0.0,
+            0.007398025132715702,
+            0.04504517465829849
+          ],
+          "cellVariance": [
+            0.0,
+            0.06518328189849854,
+            0.35069823265075684
+          ],
+          "count": 1192
+        },
+        "LCK": {
+          "mean": [
+            0.0,
+            0.006139677949249744,
+            0.03663482517004013
+          ],
+          "cellVariance": [
+            0.0,
+            0.04798664152622223,
+            0.2912086844444275
+          ],
+          "count": 1274
+        },
+        "NFAT5": {
+          "mean": [
+            0.0,
+            0.009048989042639732,
+            0.07100380212068558
+          ],
+          "cellVariance": [
+            0.0,
+            0.07918398827314377,
+            0.49203595519065857
+          ],
+          "count": 968
+        },
+        "NFATC1": {
+          "mean": [
+            0.010761632584035397,
+            0.04337378218770027,
+            0.10476333647966385
+          ],
+          "cellVariance": [
+            0.06610950082540512,
+            0.36001095175743103,
+            0.713347315788269
+          ],
+          "count": 1141
+        },
+        "NFKB1": {
+          "mean": [
+            0.010563066229224205,
+            0.03493185713887215,
+            0.07012113183736801
+          ],
+          "cellVariance": [
+            0.08960016071796417,
+            0.2531309425830841,
+            0.5056371688842773
+          ],
+          "count": 804
+        },
+        "NFKB2": {
+          "mean": [
+            0.012181416153907776,
+            0.02022573910653591,
+            0.04159916564822197
+          ],
+          "cellVariance": [
+            0.10460945963859558,
+            0.14406654238700867,
+            0.3114221394062042
+          ],
+          "count": 706
+        },
+        "NR4A1": {
+          "mean": [
+            0.0,
+            0.018892638385295868,
+            0.06223141774535179
+          ],
+          "cellVariance": [
+            0.0,
+            0.21522758901119232,
+            0.40429097414016724
+          ],
+          "count": 604
+        },
+        "PTPN11": {
+          "mean": [
+            0.0,
+            0.04660188406705856,
+            0.0808432549238205
+          ],
+          "cellVariance": [
+            0.0,
+            0.33991238474845886,
+            0.600868284702301
+          ],
+          "count": 1087
+        },
+        "PTPN6": {
+          "mean": [
+            0.0,
+            0.008061937987804413,
+            0.02537870593369007
+          ],
+          "cellVariance": [
+            0.0,
+            0.06876775622367859,
+            0.17333728075027466
+          ],
+          "count": 1059
+        },
+        "RELA": {
+          "mean": [
+            0.014810904860496521,
+            0.024186665192246437,
+            0.01155413594096899
+          ],
+          "cellVariance": [
+            0.13337431848049164,
+            0.17795640230178833,
+            0.0811668112874031
+          ],
+          "count": 609
+        },
+        "RUNX2": {
+          "mean": [
+            0.016661858186125755,
+            0.0,
+            0.0
+          ],
+          "cellVariance": [
+            0.10688351094722748,
+            0.0,
+            0.0
+          ],
+          "count": 386
+        },
+        "ZAP70": {
+          "mean": [
+            0.0,
+            0.006421620957553387,
+            0.01630892977118492
+          ],
+          "cellVariance": [
+            0.0,
+            0.037031304091215134,
+            0.12276069074869156
+          ],
+          "count": 899
+        }
+      },
+      "acquisition": {
+        "budget": 3,
+        "policies": {
+          "disagreement": {
+            "selectedIndices": [
+              8,
+              13,
+              4
+            ],
+            "regret": 0.012425357475876808
+          },
+          "coverage": {
+            "selectedIndices": [
+              18,
+              14,
+              17
+            ],
+            "regret": 0.0004982426762580872
+          }
+        },
+        "randomMeanRegret": 0.007805425281520001,
+        "randomMonteCarloSD": 0.007145344661225637,
+        "activeLearningBenefitEstablished": false,
+        "scope": "retrospective measurement prioritization; no model refitting, no calibrated information gain"
+      },
+      "biologicalPromotion": false,
+      "reliableWinner": false,
+      "verdict": "experimental-selection-evaluated; biological promotion unavailable",
+      "uncertainty": "One batch/study; cell spread and technical captures cannot qualify transfer confidence",
+      "predictionSealSHA256": "1a65bf1c6dd16093f073f3ba7d33cbc580ce526a6615888477fe282eeb0620e9",
+      "observationSHA256": "e40031fcd204314b7df05dec64fdba38c313e4a6bf334cec2e41985b21209987"
+    }
+  },
+  {
+    "context": "GSE168620|unstimulated",
+    "id": "campaign-539e3c17030b4dd6bd29ea59b9192659",
+    "objective": "shared-three-gene-program",
+    "result": {
+      "format": "numivivo-campaign-comparison/v1",
+      "observedUtilities": {
+        "DOK2": -0.0024552459362894297,
+        "EGR1": -0.006433133035898209,
+        "EGR2": -0.0074988133274018764,
+        "EGR3": -0.011640789918601513,
+        "EGR4": 0.000467891019070521,
+        "FOS": -0.0025621361564844847,
+        "JUN": -0.005662559065967798,
+        "JUND": -0.006364570930600166,
+        "LAT": 0.0010908511467278004,
+        "LCK": 0.0024689824786037207,
+        "NFAT5": -0.001121167209930718,
+        "NFATC1": 0.004239235073328018,
+        "NFKB1": -0.009233071468770504,
+        "NFKB2": 0.004239235073328018,
+        "NR4A1": -0.006995163857936859,
+        "PTPN11": 0.004239235073328018,
+        "PTPN6": -0.0005404942785389721,
+        "RELA": 0.004239235073328018,
+        "RUNX2": -0.02352919615805149,
+        "ZAP70": 0.004239235073328018,
+        "no-intervention": 0.0
+      },
+      "selectionResults": {
+        "GO-neighbor-transfer": {
+          "selected": "ZAP70",
+          "selectedObservedUtility": 0.004239235073328018,
+          "bestObservedEligible": "NFATC1",
+          "regret": 0.0,
+          "randomExpectedUtility": -0.0028005924444490424,
+          "gainOverRandom": 0.007039827517777061,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": 0.0,
+          "gainOverNoIntervention": 0.004239235073328018,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "no-change": {
+          "selected": "DOK2",
+          "selectedObservedUtility": -0.0024552459362894297,
+          "bestObservedEligible": "NFATC1",
+          "regret": 0.006694481009617448,
+          "randomExpectedUtility": -0.0028005924444490424,
+          "gainOverRandom": 0.00034534650815961276,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": -0.006694481009617448,
+          "gainOverNoIntervention": -0.0024552459362894297,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "regularized-descriptor-ridge": {
+          "selected": "ZAP70",
+          "selectedObservedUtility": 0.004239235073328018,
+          "bestObservedEligible": "NFATC1",
+          "regret": 0.0,
+          "randomExpectedUtility": -0.0028005924444490424,
+          "gainOverRandom": 0.007039827517777061,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": 0.0,
+          "gainOverNoIntervention": 0.004239235073328018,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "shuffled-target-descriptor": {
+          "selected": "EGR3",
+          "selectedObservedUtility": -0.011640789918601513,
+          "bestObservedEligible": "NFATC1",
+          "regret": 0.01588002499192953,
+          "randomExpectedUtility": -0.0028005924444490424,
+          "gainOverRandom": -0.00884019747415247,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": -0.01588002499192953,
+          "gainOverNoIntervention": -0.011640789918601513,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "target-ID": {
+          "selected": "LAT",
+          "selectedObservedUtility": 0.0010908511467278004,
+          "bestObservedEligible": "NFATC1",
+          "regret": 0.003148383926600218,
+          "randomExpectedUtility": -0.0028005924444490424,
+          "gainOverRandom": 0.003891443591176843,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": -0.003148383926600218,
+          "gainOverNoIntervention": 0.0010908511467278004,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "target-descriptor": {
+          "selected": "EGR1",
+          "selectedObservedUtility": -0.006433133035898209,
+          "bestObservedEligible": "NFATC1",
+          "regret": 0.010672368109226227,
+          "randomExpectedUtility": -0.0028005924444490424,
+          "gainOverRandom": -0.003632540591449166,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": -0.010672368109226227,
+          "gainOverNoIntervention": -0.006433133035898209,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        },
+        "training-mean": {
+          "selected": "ZAP70",
+          "selectedObservedUtility": 0.004239235073328018,
+          "bestObservedEligible": "NFATC1",
+          "regret": 0.0,
+          "randomExpectedUtility": -0.0028005924444490424,
+          "gainOverRandom": 0.007039827517777061,
+          "trainingMeanSelected": "ZAP70",
+          "gainOverTrainingMean": 0.0,
+          "gainOverNoIntervention": 0.004239235073328018,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false
+        }
+      },
+      "metrics": {
+        "GO-neighbor-transfer": {
+          "endpointRMSE": 0.23441371321678162,
+          "responseRMSE": 0.23441371321678162,
+          "responseDirection": 0.5194744251525105,
+          "magnitudeMAE": 0.13942639529705048
+        },
+        "no-change": {
+          "endpointRMSE": 0.09837739914655685,
+          "responseRMSE": 0.09837739914655685,
+          "responseDirection": 0.0,
+          "magnitudeMAE": 0.06305757910013199
+        },
+        "regularized-descriptor-ridge": {
+          "endpointRMSE": 0.4117325246334076,
+          "responseRMSE": 0.4117325246334076,
+          "responseDirection": 0.45987799155326137,
+          "magnitudeMAE": 0.2694441080093384
+        },
+        "shuffled-target-descriptor": {
+          "endpointRMSE": 0.09951844066381454,
+          "responseRMSE": 0.09951844066381454,
+          "responseDirection": 0.5401220084467386,
+          "magnitudeMAE": 0.05426980182528496
+        },
+        "target-ID": {
+          "endpointRMSE": 0.09944558888673782,
+          "responseRMSE": 0.09944558888673782,
+          "responseDirection": 0.5405912717034256,
+          "magnitudeMAE": 0.054388705641031265
+        },
+        "target-descriptor": {
+          "endpointRMSE": 0.09954974055290222,
+          "responseRMSE": 0.09954974055290222,
+          "responseDirection": 0.5424683247301736,
+          "magnitudeMAE": 0.05425058305263519
+        },
+        "training-mean": {
+          "endpointRMSE": 0.38629594445228577,
+          "responseRMSE": 0.38629594445228577,
+          "responseDirection": 0.5021116846550915,
+          "magnitudeMAE": 0.25159087777137756
+        }
+      },
+      "distributions": {
+        "DOK2": {
+          "mean": [
+            0.0,
+            0.006043202709406614,
+            0.014040240086615086
+          ],
+          "cellVariance": [
+            0.0,
+            0.0340733677148819,
+            0.09186577051877975
+          ],
+          "count": 934
+        },
+        "EGR1": {
+          "mean": [
+            0.0,
+            0.009231718257069588,
+            0.022785386070609093
+          ],
+          "cellVariance": [
+            0.0,
+            0.07363372296094894,
+            0.15039323270320892
+          ],
+          "count": 865
+        },
+        "EGR2": {
+          "mean": [
+            0.008160000666975975,
+            0.010581938549876213,
+            0.01647220551967621
+          ],
+          "cellVariance": [
+            0.06019175425171852,
+            0.10122833400964737,
+            0.12255701422691345
+          ],
+          "count": 905
+        },
+        "EGR3": {
+          "mean": [
+            0.0,
+            0.0251833014190197,
+            0.02245677262544632
+          ],
+          "cellVariance": [
+            0.0,
+            0.20574891567230225,
+            0.16119402647018433
+          ],
+          "count": 946
+        },
+        "EGR4": {
+          "mean": [
+            0.0,
+            0.0,
+            0.011314031668007374
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.07142951339483261
+          ],
+          "count": 559
+        },
+        "FOS": {
+          "mean": [
+            0.008071615360677242,
+            0.0,
+            0.012332498095929623
+          ],
+          "cellVariance": [
+            0.07179883867502213,
+            0.0,
+            0.08493410050868988
+          ],
+          "count": 1103
+        },
+        "JUN": {
+          "mean": [
+            0.0,
+            0.012651557102799416,
+            0.01705382578074932
+          ],
+          "cellVariance": [
+            0.0,
+            0.11284375935792923,
+            0.10260417312383652
+          ],
+          "count": 706
+        },
+        "JUND": {
+          "mean": [
+            0.005284273996949196,
+            0.005562126636505127,
+            0.02096501737833023
+          ],
+          "cellVariance": [
+            0.03163641318678856,
+            0.03505151346325874,
+            0.16798290610313416
+          ],
+          "count": 1134
+        },
+        "LAT": {
+          "mean": [
+            0.0049302722327411175,
+            0.004514879081398249,
+            0.0
+          ],
+          "cellVariance": [
+            0.0403255820274353,
+            0.03381716087460518,
+            0.0
+          ],
+          "count": 1660
+        },
+        "LCK": {
+          "mean": [
+            0.0,
+            0.0,
+            0.005310757085680962
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.032659344375133514
+          ],
+          "count": 1159
+        },
+        "NFAT5": {
+          "mean": [
+            0.0,
+            0.0,
+            0.016081206500530243
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.11663113534450531
+          ],
+          "count": 452
+        },
+        "NFATC1": {
+          "mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "count": 260
+        },
+        "NFKB1": {
+          "mean": [
+            0.01119881123304367,
+            0.0,
+            0.02921810746192932
+          ],
+          "cellVariance": [
+            0.07073332369327545,
+            0.0,
+            0.2426271140575409
+          ],
+          "count": 565
+        },
+        "NFKB2": {
+          "mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "count": 512
+        },
+        "NR4A1": {
+          "mean": [
+            0.0,
+            0.0,
+            0.03370319679379463
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.26510560512542725
+          ],
+          "count": 462
+        },
+        "PTPN11": {
+          "mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "count": 1296
+        },
+        "PTPN6": {
+          "mean": [
+            0.0,
+            0.014339187182486057,
+            0.0
+          ],
+          "cellVariance": [
+            0.0,
+            0.15174223482608795,
+            0.0
+          ],
+          "count": 739
+        },
+        "RELA": {
+          "mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "count": 414
+        },
+        "RUNX2": {
+          "mean": [
+            0.0,
+            0.051151569932699203,
+            0.03215372562408447
+          ],
+          "cellVariance": [
+            0.0,
+            0.4126186668872833,
+            0.24378371238708496
+          ],
+          "count": 469
+        },
+        "ZAP70": {
+          "mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cellVariance": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "count": 1076
+        }
+      },
+      "acquisition": {
+        "budget": 3,
+        "policies": {
+          "disagreement": {
+            "selectedIndices": [
+              13,
+              1,
+              8
+            ],
+            "regret": 0.0
+          },
+          "coverage": {
+            "selectedIndices": [
+              11,
+              17,
+              10
+            ],
+            "regret": 0.0
+          }
+        },
+        "randomMeanRegret": 0.0019376691584766378,
+        "randomMonteCarloSD": 0.00297504039473018,
+        "activeLearningBenefitEstablished": false,
+        "scope": "retrospective measurement prioritization; no model refitting, no calibrated information gain"
+      },
+      "biologicalPromotion": false,
+      "reliableWinner": false,
+      "verdict": "experimental-selection-evaluated; biological promotion unavailable",
+      "uncertainty": "One batch/study; cell spread and technical captures cannot qualify transfer confidence",
+      "predictionSealSHA256": "43b9f7d07c0ab166aec590607a6060ca7e81de96bb771487552b26b0491fe39f",
+      "observationSHA256": "c257d7f4acb96b60e1c25e2a981faa8600acb5b59bc600048670f1acff6f7818"
+    }
+  }
+]

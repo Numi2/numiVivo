@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "softwareOnly": true,
+  "checks": [
+    "separate receiver identity",
+    "own reference population",
+    "common measured feature axis",
+    "unknown marker rejected",
+    "no verified edge claim"
+  ],
+  "nativeReplay": {
+    "receiver-pretrained": "bit-exact mean and variance",
+    "anchor-reference-pretrained": "bit-exact mean and variance",
+    "receiver-spatial-only": "bit-exact mean and variance"
+  },
+  "biologicalPromotion": false
+}

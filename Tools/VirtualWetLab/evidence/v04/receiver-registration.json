@@ -1,0 +1,22 @@
+{
+  "createdAt": "2026-10-04T00:39:12.214732+00:00",
+  "hypothesis": "Receiver-specific control state improves matched population endpoints versus the original sender control state",
+  "outcomeAssociations": "Original v0.3 15-nearest chip-coordinate membership is retained for development comparison only. No physical-distance or propagation claim.",
+  "ownerSHA256": "af3ab254996f1cbcdfc8341946fe6bc3eec2c340aa3da10f9f95982a2335e43f",
+  "pretrainedWeights": "/Users/home/virtual-wet-lab-v04-20261004/campaign-v1/target-descriptor",
+  "protocolSHA256": "d0d72e95aee63ab652a85a59e3aeaa324cd1834a257ae6109976cdff5c286177",
+  "receivers": "Separate each reference-projected cell type; barcode-negative cells are not assumed unperturbed; remove detected coexposure to another noncontrol target",
+  "relationshipGate": {
+    "edgeModel": "UNAVAILABLE",
+    "edgeShuffle": "UNAVAILABLE",
+    "reason": "Source does not bind individual cells to sections. Do not invent biological edges across unresolved boundaries.",
+    "verifiedSectionIdentity": false
+  },
+  "scope": "EXPOSED SPATIAL DEVELOPMENT; no new generalization evidence",
+  "selection": "validation chip3 equal-target RMSE, fixed three checkpoints",
+  "variants": [
+    "receiver-pretrained",
+    "anchor-reference-pretrained",
+    "receiver-spatial-only"
+  ]
+}

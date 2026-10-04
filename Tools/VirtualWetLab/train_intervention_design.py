@@ -41,6 +41,12 @@ def train(inputs,binary,out):
     # lookup receives the identical native network and no empirical prior.
     baseline_query=np.asarray([delta[np.asarray([r['modality']==q['modality'] for r in meta['training']])].mean(0) for q in meta['reserved']],np.float32)
     predictions={'no-change':raw['reserved']['context'].copy(),'training-mean':raw['reserved']['context']+baseline_query}
+    if read(inputs/'protocol.json').get('targetMatchedBaseline'):
+        matched=[]
+        for q,fallback in zip(meta['reserved'],baseline_query):
+            selected=np.asarray([r['target']==q['target'] and r['modality']==q['modality'] and r['context']==q['context'] for r in meta['training']])
+            matched.append(delta[selected].mean(0) if selected.any() else fallback)
+        predictions['training-mean']=raw['reserved']['context']+np.asarray(matched,np.float32)
     selections={}
     for variant in VARIANTS:
         folder=out/variant;folder.mkdir();write(folder/'plan.json',plan)

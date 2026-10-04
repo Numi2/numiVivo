@@ -1,0 +1,83 @@
+{
+  "format": "numivivo-intervention-design-preregistration/v1",
+  "seed": 271828,
+  "question": "Does adding relevant exposed Jurkat responses improve cross-assay molecular selection on a separately reserved 2021 scifi experiment?",
+  "sources": {
+    "GSE90546": "training",
+    "GSE90063": "training",
+    "GSE92872": "training captures1-5; development checkpoint selection capture6; these are not independent biological replicates",
+    "GSE168620/GSM5151370": "all responses reserved; cross-platform same cell line, not unseen cellular context"
+  },
+  "eligibility": "Single unambiguous guide target; >=5 assigned cells per response group and >=5 explicit control cells per context. Keep every eligible target and every exclusion, independent of response. Barcode-negative is not control. Guide detection is not functional knockout verification.",
+  "identityAudit": "Resolve original GEO accession, batch, intervention, controls; animals count only if source-identified. Assay-level pooling conflicts block animal-level promotion. Xenium requires accessible counts, guide assignments and resolved animal overlap before admission.",
+  "representation": "No pretrained cell representation. Target representation: pinned UniProt reviewed protein sequence amino-acid frequencies, log length, hashed GO terms. No perturbation expression used in target descriptors. Mouse mapping uses source MGI one-to-one human orthology only. Target descriptor absence is an exclusion, never an unknown-gene biological prediction.",
+  "features": "512 highest variance training-control genes common to admitted expression axes, plus predefined objective genes when common. log1p(CPM) uses total endogenous source RNA before feature restriction. No test effect gene selection.",
+  "objectives": [
+    {
+      "id": "immediate-early",
+      "genes": [
+        "FOS",
+        "JUN",
+        "JUNB",
+        "EGR1"
+      ],
+      "preserveGenes": [],
+      "penalty": 0
+    }
+  ],
+  "nativeModel": "Existing VivoCellResponseMLXModel, hidden64, marginal Gaussian response. Receiver control expression plus separate target descriptors, CRISPR modality, species/context and fixed-geometry relationship. No increase in width.",
+  "budget": {
+    "steps": [
+      240,
+      720,
+      1440
+    ],
+    "selection": "equal-source equal-target validation response RMSE; no reserved target outcomes",
+    "learningRate": 0.001,
+    "batchSize": 16,
+    "weightDecay": 0.0001,
+    "restarts": 0
+  },
+  "ablations": [
+    "target-descriptor",
+    "target-ID",
+    "shuffled-target-descriptor",
+    "regularized-descriptor-ridge",
+    "GO-neighbor-transfer",
+    "receiver-no-edges",
+    "receiver-edges",
+    "receiver-shuffled-edges",
+    "spatial-only"
+  ],
+  "spatialBoundaries": "Receiving populations use their own admitted control-reference RNA and uncertain projected types. Geometry-only edges require same verified section; unknown section prohibits biological spatial edges. Chip coordinates are not physical microns. If section membership cannot be verified, edge ablation is unavailable, not replaced by invented tissue adjacency.",
+  "metrics": [
+    "endpoint RMSE",
+    "response RMSE",
+    "response direction deadband0.1",
+    "effect magnitude MAE",
+    "marginal Gaussian NLL",
+    "selection gain over uniform random",
+    "selection gain over training-mean ranking",
+    "selection gain over no intervention",
+    "best observed eligible regret"
+  ],
+  "selection": "Include no intervention with zero change. Lexical tie break. Utility=-mean(objective delta)-penalty*mean(abs(preserved receiver delta)). Seal candidates, objective, rankings and all model predictions before reveal. Missing receiving support prohibits a preservation objective.",
+  "uncertainty": "Cell variability, mean sampling variability and transfer uncertainty distinct. Split-cell agreement only within-study sampling diagnostic. No biological intervals unless at least three independent resolved evaluation units; no confident winner without qualified transfer uncertainty.",
+  "promotion": "Original thresholds unchanged; one new source experiment cannot provide three independent evaluation units. Preserve point successes/failures separately.",
+  "acquisition": "Budget3; rank by model disagreement, compare least-covered and uniform random (1000 fixed seed draws); measure best observed eligible regret. No active-learning claim from disagreement alone.",
+  "calibration": "Development-only oracle identity, wrong identity, twice magnitude, opposite response, average and zero predictions; retain sensitivity failures; never revise v0.3 verdict.",
+  "stopping": "One three-checkpoint campaign and two predeclared stimulation contexts; no further changes after reveal.",
+  "revision": "bounded cross-assay follow-up; before GSE168620 outcome access",
+  "createdAt": "2026-10-04T00:34:37.052563+00:00",
+  "parentEvaluationSHA256": "80f46de09fa4021345e83eb94e4ad188672ec893fed017dcf4d89e2ee6ad4bed",
+  "targetMatchedBaseline": true,
+  "priorExposures": [
+    "GSE274447",
+    "GSE146194",
+    "GSE90546",
+    "GSE90063",
+    "GSE92872",
+    "GSE274058"
+  ],
+  "baselineClarification": "Target/context-matched training-mean response when available; otherwise modality mean. Original v1 target-agnostic mean retained unchanged."
+}

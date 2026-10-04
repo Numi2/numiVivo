@@ -1,0 +1,28 @@
+{
+  "biologicalPromotion": false,
+  "checks": [
+    "unsupported intervention rejected",
+    "observations unavailable before reveal",
+    "unmodeled marker remains unavailable",
+    "three interventions and two response roles share one control reference",
+    "changed sealed query rejected",
+    "measured outcomes and correctly signed residuals revealed",
+    "changed evaluation verdict rejected",
+    "native mean and variance bit-exact replay; evaluation reconstructs",
+    "insufficient controls block biological promotion"
+  ],
+  "configSHA256": "8772099b89943d010ab286dc8ad992944357ef0de9dfc6309edb8fa079a26626",
+  "replay": {
+    "biologicalPromotion": false,
+    "nativeReplay": {
+      "neighborhood": "bit-exact mean and variance tensors",
+      "no-neighborhood": "bit-exact mean and variance tensors",
+      "shuffled-neighborhood": "bit-exact mean and variance tensors"
+    },
+    "run": "958d0446aee5489690b45235009cd9af",
+    "status": "verified"
+  },
+  "run": "/Users/home/virtual-wet-lab-v04-20261004/v03-regression/958d0446aee5489690b45235009cd9af",
+  "softwareReleaseQualified": true,
+  "status": "passed"
+}

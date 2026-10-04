@@ -1,0 +1,43 @@
+{
+  "changesV03Verdict": false,
+  "controls": {
+    "generic-average": {
+      "directionAgreement": 0.648995297135528,
+      "meanAbsoluteMagnitudeError": 0.10380724232795956,
+      "meanProgramRegret": 0.3183456210451836,
+      "responseRMSE": 0.16128709777242484
+    },
+    "identity-positive": {
+      "directionAgreement": 1.0,
+      "meanAbsoluteMagnitudeError": 0.0,
+      "meanProgramRegret": 0.0,
+      "responseRMSE": 0.0
+    },
+    "opposite-response": {
+      "directionAgreement": 0.0,
+      "meanAbsoluteMagnitudeError": 0.0,
+      "meanProgramRegret": 0.5995639647009041,
+      "responseRMSE": 0.33918218713521536
+    },
+    "uninformative-zero": {
+      "directionAgreement": 0.0,
+      "meanAbsoluteMagnitudeError": 0.13174709889777156,
+      "meanProgramRegret": 0.3183456210451836,
+      "responseRMSE": 0.16959109356760768
+    },
+    "wrong-identity": {
+      "directionAgreement": 0.5290722530996153,
+      "meanAbsoluteMagnitudeError": 0.1096417997753353,
+      "meanProgramRegret": 0.3147902325125903,
+      "responseRMSE": 0.23064961020456856
+    },
+    "wrong-magnitude": {
+      "directionAgreement": 1.0,
+      "meanAbsoluteMagnitudeError": 0.13174709889777156,
+      "meanProgramRegret": 0.0,
+      "responseRMSE": 0.16959109356760768
+    }
+  },
+  "scope": "Metric sensitivity on exposed development responses; identity-positive is an oracle diagnostic, not a learned prediction",
+  "status": "passed"
+}

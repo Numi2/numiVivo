@@ -44,6 +44,7 @@ def mouse(path):
 
 
 def source_metadata(root):
+    if (root/'sources-manifest.json').exists():return read(root/'sources-manifest.json')
     specs=[]
     for path in sorted((root/'sources').glob('GSM844277*.tar.gz')):
         tag=path.name.split('_filtered')[0];batch=re.search(r'B([123])_',tag)[1]
@@ -71,14 +72,19 @@ def load_source(s):
         a.obs['target']=a.obs.target.astype(str)
         a.obs.loc[a.obs.target.str.startswith('INTERGENIC') & ~a.obs.target.str.contains(' + ',regex=False),'target']='control'
         a.obs.loc[(a.obs.nperts!=1)|a.obs.target.str.contains(' + ',regex=False),'target']='multiple-guides'
+    elif s['study']=='GSE168620':
+        a.obs['target']=a.obs.perturbation.astype(str).str.split('_').str[0]
     else:
         a.obs['target']=a.obs.target.astype(str)
         a.obs.loc[a.obs.perturbation.astype(str)=='control','target']='control'
+    if s.get('captureFilter'):
+        capture=s['captureFilter'];mask=a.obs.replicate.astype(str).eq(str(capture['replicate']))
+        a=a[mask if capture['include'] else ~mask].copy()
     return a
 
 
 def contexts(s,a):
-    if s['study']=='GSE92872':return a.obs.perturbation_2.astype(str).fillna('unassigned').to_numpy(dtype=str)
+    if s['study'] in ('GSE92872','GSE168620'):return a.obs.perturbation_2.astype(str).fillna('unassigned').to_numpy(dtype=str)
     return np.asarray([s['context']]*a.n_obs)
 
 
@@ -114,20 +120,29 @@ def fetch_descriptors(targets,output):
             vec=np.zeros(149,np.float32);vec[:20]=[seq.count(c)/len(seq)*10 for c in aa];vec[20]=np.log1p(len(seq))/10
             for term in go:vec[21+int(hashlib.sha256(term.encode()).hexdigest()[:8],16)%128]+=1
             vec[21:]/=max(1,np.linalg.norm(vec[21:]));candidate['descriptor']=vec.tolist();records[gene]=candidate
-    write(output/'targets.json',records);return records
+    manifest=output/('targets-'+hashlib.sha256('\n'.join(targets).encode()).hexdigest()[:16]+'.json')
+    if manifest.exists():require(read(manifest)==records,'Changed cached target records')
+    else:write(manifest,records)
+    return records
 
 
 def prepare(root,out):
     require(not out.exists(),'Preparation already exists');out.mkdir()
     protocol=read(root/'preregistration.json');write(out/'protocol.json',protocol)
     mapping=orthology(V03/'research/MGI-HOM_MouseHumanSequence.rpt');specs=source_metadata(root)
-    require(len(specs)==8,'All five mouse samples and three human studies required')
-    hashes=[sha(s['path']) for s in specs];require(len(hashes)==len(set(hashes)),'Duplicate source content')
+    require(len(specs)==8 or (root/'sources-manifest.json').exists(),'All five mouse samples and three human studies required')
+    hashes=[sha(s['path']) for s in specs]
+    for digest in set(hashes):
+        matches=[s for s,h in zip(specs,hashes) if h==digest]
+        if len(matches)>1:
+            require(len(matches)==2 and all(s.get('captureFilter') for s in matches),'Duplicate source content')
+            a,b=[s['captureFilter'] for s in matches]
+            require(a['replicate']==b['replicate'] and a['include']!=b['include'],'Overlapping source row filters')
     for s,h in zip(specs,hashes):s['sha256']=h
     write(out/'reservation.json',{'createdAt':timestamp(),'sources':specs,'pretrainedExpressionSources':[],
         'orthologySHA256':sha(V03/'research/MGI-HOM_MouseHumanSequence.rpt'),
-        'priorExposures':['GSE274447 all spatial outcomes','GSE146194 v0.3 Arc local assay'],
-        'reserved':['GSE92872 all treated cells','GSM8442775 all noncontrol RNA'],
+        'priorExposures':protocol.get('priorExposures',['GSE274447 all spatial outcomes','GSE146194 v0.3 Arc local assay']),
+        'reserved':[s['id']+' all treated RNA' for s in specs if s['split']=='reserved'],
         'protocolSHA256':sha(out/'protocol.json'),'testOutcomeUse':'not read by preparation; counts/guide labels only for admission'})
     axes=[];targetset=set();groups=[];exclusions=[];varsum={};all_fingerprints={};duplicate_rows=[]
     for s in specs:

@@ -1,0 +1,17 @@
+{
+  "createdAt": "2026-10-04T00:39:56.521010+00:00",
+  "originalObjective": "FOS,JUN,JUNB,EGR1",
+  "originalStatus": "UNAVAILABLE: JUNB absent from source feature axis",
+  "promotionThresholdsChanged": false,
+  "reason": "Assay feature metadata only; no effect-based gene choice; not numerically comparable to original four-gene objective",
+  "supportedObjective": {
+    "genes": [
+      "FOS",
+      "JUN",
+      "EGR1"
+    ],
+    "penalty": 0,
+    "preserveGenes": []
+  },
+  "testOutcomesOpened": false
+}

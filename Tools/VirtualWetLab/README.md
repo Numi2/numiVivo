@@ -9,6 +9,11 @@ retain separate native owners, units and evidence statuses.
 shared tissue representation and campaign contract. The failed held-out
 comparison remains a first-class result.
 
+[Intervention design development](V04.md) adds executed multi-study target-aware
+campaigns, sealed molecular objectives, choice evaluation and explicit receiving-
+population inspection. The full v0.4 milestone and biological promotion remain
+unearned; the failed comparisons and missing spatial/Safari gates are retained.
+
 The RNA adapter below is unchanged.
 It composes the existing native `singlecell-perturbation-batch` predictor and
 its raw-count replay verifier. Python handles experiment authoring and held-out

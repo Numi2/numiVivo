@@ -1,0 +1,31 @@
+{
+  "format": "numivivo-intervention-design-preregistration/v1",
+  "seed": 271828,
+  "question": "Do target descriptors improve held-out molecular intervention selection, and do receiver-specific references or spatial relationships explain development errors?",
+  "sources": {
+    "GSE90546/GSM2406675": "K562 CRISPRi training; one experimental sample, not independent cells",
+    "GSE90063": "K562 CRISPR knockout training; exclude multi-target assignments; retain source time/context identities",
+    "GSE92872": "Entire Jurkat study reserved for cellular-context transfer; stimulated and unstimulated scored separately; capture runs not biological replicates",
+    "GSE274058": "Batch 1 training, batch 2 validation, batch 3 reserved mouse evaluation; pooling retained at batch level; no Stereo-seq response training before these predictions are sealed",
+    "GSE274447": "All chips permanently exposed spatial development/regression, never new validation"
+  },
+  "eligibility": "Single unambiguous guide target; >=5 assigned cells per response group and >=5 explicit control cells per context. Keep every eligible target and every exclusion, independent of response. Barcode-negative is not control. Guide detection is not functional knockout verification.",
+  "identityAudit": "Resolve original GEO accession, batch, intervention, controls; animals count only if source-identified. Assay-level pooling conflicts block animal-level promotion. Xenium requires accessible counts, guide assignments and resolved animal overlap before admission.",
+  "representation": "No pretrained cell representation. Target representation: pinned UniProt reviewed protein sequence amino-acid frequencies, log length, hashed GO terms. No perturbation expression used in target descriptors. Mouse mapping uses source MGI one-to-one human orthology only. Target descriptor absence is an exclusion, never an unknown-gene biological prediction.",
+  "features": "512 highest variance training-control genes common to admitted expression axes, plus predefined objective genes when common. log1p(CPM) uses total endogenous source RNA before feature restriction. No test effect gene selection.",
+  "objectives": [
+    {"id":"immediate-early", "genes":["FOS","JUN","JUNB","EGR1"], "preserveGenes":[], "penalty":0},
+    {"id":"myelin", "genes":["MBP","PLP1","MOG","MAG"], "preserveGenes":[], "penalty":0}
+  ],
+  "nativeModel": "Existing VivoCellResponseMLXModel, hidden64, marginal Gaussian response. Receiver control expression plus separate target descriptors, CRISPR modality, species/context and fixed-geometry relationship. No increase in width.",
+  "budget": {"steps":[240,720,1440], "selection":"equal-source equal-target validation response RMSE; no reserved target outcomes", "learningRate":0.001, "batchSize":16, "weightDecay":0.0001, "restarts":0},
+  "ablations": ["target-descriptor", "target-ID", "shuffled-target-descriptor", "regularized-descriptor-ridge", "GO-neighbor-transfer", "receiver-no-edges", "receiver-edges", "receiver-shuffled-edges", "spatial-only"],
+  "spatialBoundaries": "Receiving populations use their own admitted control-reference RNA and uncertain projected types. Geometry-only edges require same verified section; unknown section prohibits biological spatial edges. Chip coordinates are not physical microns. If section membership cannot be verified, edge ablation is unavailable, not replaced by invented tissue adjacency.",
+  "metrics": ["endpoint RMSE", "response RMSE", "response direction deadband0.1", "effect magnitude MAE", "marginal Gaussian NLL", "selection gain over uniform random", "selection gain over training-mean ranking", "selection gain over no intervention", "best observed eligible regret"],
+  "selection": "Include no intervention with zero change. Lexical tie break. Utility=-mean(objective delta)-penalty*mean(abs(preserved receiver delta)). Seal candidates, objective, rankings and all model predictions before reveal. Missing receiving support prohibits a preservation objective.",
+  "uncertainty": "Cell variability, mean sampling variability and transfer uncertainty distinct. Split-cell agreement only within-study sampling diagnostic. No biological intervals unless at least three independent resolved evaluation units; no confident winner without qualified transfer uncertainty.",
+  "promotion": "Require positive selection gains versus all three baselines on every preregistered objective and task, lower response RMSE than no change, support/identity gates, >=3 independent resolved evaluation units and consistent positive independent-unit intervals. Failure remains failure. Spatial development cannot promote generalization.",
+  "acquisition": "Budget3; rank by model disagreement, compare least-covered and uniform random (1000 fixed seed draws); measure best observed eligible regret. No active-learning claim from disagreement alone.",
+  "calibration": "Development-only oracle identity, wrong identity, twice magnitude, opposite response, average and zero predictions; retain sensitivity failures; never revise v0.3 verdict.",
+  "stopping": "Execute fixed budget once, retain failures; reserve outcomes used once after seal. No threshold changes or tuning after reveal. Any follow-up uses unused studies or prospective measurements."
+}
