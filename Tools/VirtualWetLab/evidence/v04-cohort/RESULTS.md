@@ -71,3 +71,58 @@ The exact corrected spatial artifact is `spatial-response-v04-corrected`, runtim
 SHA-256 `bca3896e2145deee72db2ad83981eddf81e0c369a68aff2073628437e60375de`.
 It remains MODEL INFERENCE. Its three native weight artifacts and plan are bound
 on each new shared comparison card; v0.3 remains separately selectable.
+
+
+## Exact-artifact Codex and visual qualification
+
+Fresh Codex session `01a10516-1692-76d3-85a5-54a90311c3b5` used the installed
+NumiLab plugin `0.1.1+codex.20261004053942`, without hand-entered input paths or
+JSON. It discovered chip1 / neuron|0 and authored one Clu-reduction objective
+across the corrected v0.4 and retained v0.3 models. An unsupported tunicamycin
+proposal was corrected to the explicitly supported measured endpoint without
+changing the objective. A visual drag added Trem2 to Clu/Fasn/Gfap; a stale
+Codex write was rejected, and Codex reread that edit before sealing.
+
+The original comparison remains sealed. A new revision exercised visual
+cancellation, actual service restart, fresh-session recovery, explicit reveal,
+and replay before and after reveal. Both versions reproduced bit-exact mean and
+variance tensors for all three spatial variants. The failed cancellation attempt
+that completed too quickly and the successful cancelled attempt are both retained.
+No sealed record was edited to simulate interruption or reveal.
+
+The exact corrected artifact selected Fasn, as did v0.3. Its predicted Clu
+reduction was 0.325757 log1p(CPM), but the measured change was an increase of
+2.489933. Its selected-arm gene error was -2.815690 (prediction minus observation),
+versus -2.489933 for no change. Gain over random selection was -1.735603;
+regret was 4.712393. Gfap was the descriptive best observed arm but had only one
+outcome cell. These quantities are uncalibrated exposed-development diagnostics,
+not useful biological selection. A fitted training-mean intervention ranking
+is explicitly unavailable; the inherited placeholder label is not such a baseline.
+
+Browser checks retained the gene, Fasn selection, non-default camera, and shared
+value/residual scales while switching exact model records. The camera was
+exercised through the real handler with a synthetic DOM wheel event; physical
+wheel delivery was not qualified. An already-revealed server record correctly
+refreshed a deliberately stale browser display flag without another reveal.
+The source-bound model/runtime/specimen evidence inspector and signed residual
+views were inspected. Fresh Chromium context imported 39,862 real cells in
+1.631 seconds and reached ready in 1.959 seconds on this Mac (warm OS source
+cache, not cold boot or general hardware qualification).
+
+Only one spatial condition is currently supported. The condition-comparison
+contract and blocked correction are qualified, not a multi-condition tissue
+experiment. Safari and receiving-population preservation remain unqualified.
+The corrected receiver models are separately available in the existing receiver
+inspector and retain their failed development results; the shared spatial
+candidate does not silently claim receiver-specific or validated effects.
+
+See [the executable workflow receipt](complete-workflow-qualification.json),
+[revealed comparison](corrected-model-revealed.png), and
+[exact artifact inspector](exact-model-evidence.png). The release archive retains
+all current experiment records, shared edit/operation history, training checkpoints,
+registrations, weights, native runtimes, and fresh-session transcripts.
+
+A concurrent external cleanup removed historical source directories and old live
+shared state. Cohort/input/runtime restoration matched original hashes. This
+new demonstration uses its own workspace; it does not claim recovery of the lost
+older live history. The new demonstration's cancellation/restart history is intact.

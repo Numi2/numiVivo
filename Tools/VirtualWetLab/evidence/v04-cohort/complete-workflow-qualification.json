@@ -1,0 +1,586 @@
+{
+  "format": "numi-wet-lab-qualified-comparison/v1",
+  "scope": "software release and exposed spatial development only",
+  "freshCodexSession": "01a10516-1692-76d3-85a5-54a90311c3b5",
+  "pluginVersion": "0.1.1+codex.20261004053942",
+  "newModel": "spatial-response-v04-corrected",
+  "runtimeSHA256": "bca3896e2145deee72db2ad83981eddf81e0c369a68aff2073628437e60375de",
+  "specimen": "chip1",
+  "population": "neuron|0",
+  "objective": {
+    "genes": [
+      "Clu"
+    ],
+    "direction": "reduce mean log1p(CPM)"
+  },
+  "targets": [
+    "Clu",
+    "Fasn",
+    "Gfap",
+    "Trem2"
+  ],
+  "conditionIDs": [
+    "measured-endpoint"
+  ],
+  "cardID": "05e454c9f12647c4855bc8c4495ceb68",
+  "originalCard": {
+    "id": "4344c67e2395439e8108c7e85a634ae9",
+    "status": "sealed",
+    "revealed": false
+  },
+  "operations": [
+    {
+      "id": "8aadad92de5e4e8f9fc2c81083c80772",
+      "action": "seal",
+      "draftID": "4344c67e2395439e8108c7e85a634ae9",
+      "status": "completed",
+      "startedAt": 1791086941.5816782,
+      "progress": "seal completed",
+      "pid": 60474,
+      "finishedAt": 1791086944.889104
+    },
+    {
+      "id": "26fa7ecbd3c14453b02d7dd30bbabb8f",
+      "action": "seal",
+      "draftID": "05e454c9f12647c4855bc8c4495ceb68",
+      "status": "cancelled",
+      "startedAt": 1791087075.769804,
+      "progress": "Cancelled; partial artifacts retained. Recovery starts a new operation after process exit.",
+      "pid": 63927
+    },
+    {
+      "id": "3d7b2fa58ea64789a2483494d1bf764c",
+      "action": "seal",
+      "draftID": "05e454c9f12647c4855bc8c4495ceb68",
+      "status": "completed",
+      "startedAt": 1791087243.30438,
+      "progress": "seal completed",
+      "pid": 73359,
+      "finishedAt": 1791087245.554442
+    },
+    {
+      "id": "3838661e9e7841a284ffd8132de7dfe2",
+      "action": "replay",
+      "draftID": "05e454c9f12647c4855bc8c4495ceb68",
+      "status": "completed",
+      "startedAt": 1791087263.225067,
+      "progress": "replay completed",
+      "pid": 74154,
+      "finishedAt": 1791087265.3083498
+    },
+    {
+      "id": "f3e210b1b5c4417c8d2ce736454e7be5",
+      "action": "reveal",
+      "draftID": "05e454c9f12647c4855bc8c4495ceb68",
+      "status": "completed",
+      "startedAt": 1791087665.150039,
+      "progress": "reveal completed",
+      "pid": 95122,
+      "finishedAt": 1791087667.5929768
+    },
+    {
+      "id": "9dd97f5f90624fd3adddfb22e329cfae",
+      "action": "replay",
+      "draftID": "05e454c9f12647c4855bc8c4495ceb68",
+      "status": "completed",
+      "startedAt": 1791087799.379183,
+      "progress": "replay completed",
+      "pid": 99603,
+      "finishedAt": 1791087802.39287
+    }
+  ],
+  "axes": [
+    {
+      "modelID": "spatial-response-v04-corrected",
+      "conditionID": "measured-endpoint",
+      "record": "b5a48f052e4946df94f84b7463f48005",
+      "verification": {
+        "status": "verified",
+        "run": "b5a48f052e4946df94f84b7463f48005",
+        "nativeReplay": {
+          "neighborhood": "bit-exact mean and variance tensors",
+          "no-neighborhood": "bit-exact mean and variance tensors",
+          "shuffled-neighborhood": "bit-exact mean and variance tensors"
+        },
+        "biologicalPromotion": false
+      },
+      "objectiveEvaluation": {
+        "objectiveGenes": [
+          "Clu"
+        ],
+        "arms": [
+          {
+            "target": "Clu",
+            "role": "direct",
+            "population": "neuron|0",
+            "predictedUtility": 0.06510162353515625,
+            "observedUtility": 0.896516674106882,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.1573586463928223,
+                "observed": 1.3259435958210966,
+                "residual": 0.8314150505717257
+              }
+            ]
+          },
+          {
+            "target": "Clu",
+            "role": "neighbor",
+            "population": "neuron|0",
+            "predictedUtility": 0.05568838119506836,
+            "observedUtility": 0.1498008445779968,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.16677188873291,
+                "observed": 2.0726594253499817,
+                "residual": 0.09411246338292845
+              }
+            ]
+          },
+          {
+            "target": "Fasn",
+            "role": "direct",
+            "population": "neuron|0",
+            "predictedUtility": 0.3257572650909424,
+            "observedUtility": -2.4899328027330663,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 1.8967030048370361,
+                "observed": 4.712393072661045,
+                "residual": -2.8156900678240087
+              }
+            ]
+          },
+          {
+            "target": "Fasn",
+            "role": "neighbor",
+            "population": "neuron|0",
+            "predictedUtility": 0.32096171379089355,
+            "observedUtility": -0.7342928131983544,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 1.901498556137085,
+                "observed": 2.956753083126333,
+                "residual": -1.055254526989248
+              }
+            ]
+          },
+          {
+            "target": "Gfap",
+            "role": "direct",
+            "population": "neuron|0",
+            "predictedUtility": 0.16802597045898438,
+            "observedUtility": 2.2224602699279785,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.054434299468994,
+                "observed": 0.0,
+                "residual": 2.054434299468994
+              }
+            ]
+          },
+          {
+            "target": "Gfap",
+            "role": "neighbor",
+            "population": "neuron|0",
+            "predictedUtility": 0.15861296653747559,
+            "observedUtility": -0.37066082330402184,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.063847303390503,
+                "observed": 2.5931210932320004,
+                "residual": -0.5292737898414974
+              }
+            ]
+          },
+          {
+            "target": "Trem2",
+            "role": "direct",
+            "population": "neuron|0",
+            "predictedUtility": 0.26423919200897217,
+            "observedUtility": -4.4006945846458825,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 1.9582210779190063,
+                "observed": 6.623154854573861,
+                "residual": -4.664933776654855
+              }
+            ]
+          },
+          {
+            "target": "Trem2",
+            "role": "neighbor",
+            "population": "neuron|0",
+            "predictedUtility": 0.2548164129257202,
+            "observedUtility": 1.2729765569891336,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 1.9676438570022583,
+                "observed": 0.9494837129388449,
+                "residual": 1.0181601440634134
+              }
+            ]
+          }
+        ],
+        "numericalChoice": "Fasn",
+        "scores": {
+          "selected": "Fasn",
+          "selectedObservedUtility": -2.4899328027330663,
+          "bestObservedEligible": "Gfap",
+          "regret": 4.712393072661045,
+          "randomExpectedUtility": -0.7543300886688177,
+          "gainOverRandom": -1.7356027140642487,
+          "trainingMeanSelected": "Clu",
+          "gainOverNoIntervention": -2.4899328027330663,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false,
+          "trainingMeanRanking": "UNAVAILABLE in this spatial card; zero-change ranking is not a fitted training baseline"
+        },
+        "reliableWinner": false,
+        "scope": "Exposed spatial development; one mouse and inadequate isolated controls; no independent biological confidence",
+        "preservation": "UNAVAILABLE"
+      }
+    },
+    {
+      "modelID": "spatial-response-v03",
+      "conditionID": "measured-endpoint",
+      "record": "6a031a4f29634455be4e4064e952c69a",
+      "verification": {
+        "status": "verified",
+        "run": "6a031a4f29634455be4e4064e952c69a",
+        "nativeReplay": {
+          "neighborhood": "bit-exact mean and variance tensors",
+          "no-neighborhood": "bit-exact mean and variance tensors",
+          "shuffled-neighborhood": "bit-exact mean and variance tensors"
+        },
+        "biologicalPromotion": false
+      },
+      "objectiveEvaluation": {
+        "objectiveGenes": [
+          "Clu"
+        ],
+        "arms": [
+          {
+            "target": "Clu",
+            "role": "direct",
+            "population": "neuron|0",
+            "predictedUtility": -0.04821038246154785,
+            "observedUtility": 0.896516674106882,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.2706706523895264,
+                "observed": 1.3259435958210966,
+                "residual": 0.9447270565684298
+              }
+            ]
+          },
+          {
+            "target": "Clu",
+            "role": "neighbor",
+            "population": "neuron|0",
+            "predictedUtility": -0.04531073570251465,
+            "observedUtility": 0.1498008445779968,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.267771005630493,
+                "observed": 2.0726594253499817,
+                "residual": 0.19511158028051145
+              }
+            ]
+          },
+          {
+            "target": "Fasn",
+            "role": "direct",
+            "population": "neuron|0",
+            "predictedUtility": 0.17363452911376953,
+            "observedUtility": -2.4899328027330663,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.048825740814209,
+                "observed": 4.712393072661045,
+                "residual": -2.663567331846836
+              }
+            ]
+          },
+          {
+            "target": "Fasn",
+            "role": "neighbor",
+            "population": "neuron|0",
+            "predictedUtility": 0.17529964447021484,
+            "observedUtility": -0.7342928131983544,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.0471606254577637,
+                "observed": 2.956753083126333,
+                "residual": -0.9095924576685692
+              }
+            ]
+          },
+          {
+            "target": "Gfap",
+            "role": "direct",
+            "population": "neuron|0",
+            "predictedUtility": 0.04360365867614746,
+            "observedUtility": 2.2224602699279785,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.178856611251831,
+                "observed": 0.0,
+                "residual": 2.178856611251831
+              }
+            ]
+          },
+          {
+            "target": "Gfap",
+            "role": "neighbor",
+            "population": "neuron|0",
+            "predictedUtility": 0.04587054252624512,
+            "observedUtility": -0.37066082330402184,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.1765897274017334,
+                "observed": 2.5931210932320004,
+                "residual": -0.41653136583026695
+              }
+            ]
+          },
+          {
+            "target": "Trem2",
+            "role": "direct",
+            "population": "neuron|0",
+            "predictedUtility": 0.14623379707336426,
+            "observedUtility": -4.4006945846458825,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.0762264728546143,
+                "observed": 6.623154854573861,
+                "residual": -4.546928381719247
+              }
+            ]
+          },
+          {
+            "target": "Trem2",
+            "role": "neighbor",
+            "population": "neuron|0",
+            "predictedUtility": 0.14951872825622559,
+            "observedUtility": 1.2729765569891336,
+            "genes": [
+              {
+                "gene": "Clu",
+                "control": 2.2224602699279785,
+                "predicted": 2.072941541671753,
+                "observed": 0.9494837129388449,
+                "residual": 1.123457828732908
+              }
+            ]
+          }
+        ],
+        "numericalChoice": "Fasn",
+        "scores": {
+          "selected": "Fasn",
+          "selectedObservedUtility": -2.4899328027330663,
+          "bestObservedEligible": "Gfap",
+          "regret": 4.712393072661045,
+          "randomExpectedUtility": -0.7543300886688177,
+          "gainOverRandom": -1.7356027140642487,
+          "trainingMeanSelected": "Clu",
+          "gainOverNoIntervention": -2.4899328027330663,
+          "uncertainty": "UNQUALIFIED: descriptive cohort result; no independent-unit interval",
+          "reliableWinner": false,
+          "trainingMeanRanking": "UNAVAILABLE in this spatial card; zero-change ranking is not a fitted training baseline"
+        },
+        "reliableWinner": false,
+        "scope": "Exposed spatial development; one mouse and inadequate isolated controls; no independent biological confidence",
+        "preservation": "UNAVAILABLE"
+      }
+    }
+  ],
+  "sharedEdits": {
+    "humanDraggedCandidate": "Trem2",
+    "staleRevisionRejected": true,
+    "codexRereadBeforeSeal": true,
+    "unsupportedCondition": "tunicamycin",
+    "supportedCorrection": "measured-endpoint",
+    "objectiveUnchanged": true
+  },
+  "browser": {
+    "softwareOnly": true,
+    "before": {
+      "camera": {
+        "scale": 1.4918246976412703,
+        "x": 0,
+        "y": 0
+      },
+      "gene": "Clu",
+      "label": "REVEALED OBSERVATION \u00b7 spatial-response-v04-corrected / measured-endpoint \u00b7 b5a48f052e4946df94f84b7463f48005",
+      "model": "spatial-response-v04-corrected",
+      "record": "b5a48f052e4946df94f84b7463f48005",
+      "revealed": true,
+      "scale": {
+        "max": 6.623154854573861,
+        "min": 0,
+        "residual": 4.664933776654855
+      },
+      "target": "Fasn"
+    },
+    "afterModelSwitch": {
+      "camera": {
+        "scale": 1.4918246976412703,
+        "x": 0,
+        "y": 0
+      },
+      "gene": "Clu",
+      "label": "REVEALED OBSERVATION \u00b7 spatial-response-v03 / measured-endpoint \u00b7 6a031a4f29634455be4e4064e952c69a",
+      "model": "spatial-response-v03",
+      "record": "6a031a4f29634455be4e4064e952c69a",
+      "revealed": true,
+      "scale": {
+        "max": 6.623154854573861,
+        "min": 0,
+        "residual": 4.664933776654855
+      },
+      "target": "Fasn"
+    },
+    "cameraInput": "Synthetic DOM WheelEvent exercises actual canvas handler; physical wheel dispatch was not qualified",
+    "staleBrowserRefresh": {
+      "scope": "local browser flag only; already-authorized revealed server record; no second reveal",
+      "after": {
+        "camera": {
+          "scale": 1.4918246976412703,
+          "x": 0,
+          "y": 0
+        },
+        "gene": "Clu",
+        "label": "REVEALED OBSERVATION \u00b7 spatial-response-v04-corrected / measured-endpoint \u00b7 b5a48f052e4946df94f84b7463f48005",
+        "model": "spatial-response-v04-corrected",
+        "record": "b5a48f052e4946df94f84b7463f48005",
+        "revealed": true,
+        "scale": {
+          "max": 6.623154854573861,
+          "min": 0,
+          "residual": 4.664933776654855
+        },
+        "target": "Fasn"
+      }
+    },
+    "modelEvidenceBindingVisible": true,
+    "originalCardStillSealed": true,
+    "performance": {
+      "specimenCells": 39862,
+      "timings": {
+        "draw": [
+          1,
+          0.19999980926513672,
+          0.3000001907348633,
+          0.39999961853027344,
+          0.19999980926513672,
+          0.8000001907348633,
+          0.19999980926513672,
+          0.09999942779541016,
+          0.6999998092651367,
+          0,
+          0.5,
+          0.6999998092651367,
+          0.19999980926513672,
+          0.8000001907348633,
+          0.09999942779541016,
+          0.5,
+          0.09999942779541016,
+          0.6000003814697266
+        ],
+        "feature": [
+          50.69999980926514,
+          85.89999961853027,
+          1.2999992370605469,
+          80.30000019073486,
+          1.6000003814697266,
+          0.9000005722045898
+        ],
+        "import": [
+          {
+            "cells": 39862,
+            "ms": 1702.2999992370603
+          }
+        ],
+        "pick": []
+      }
+    }
+  },
+  "freshContext": {
+    "performance": {
+      "specimenCells": 39862,
+      "timings": {
+        "draw": [
+          6,
+          0.3000001907348633,
+          0.19999980926513672,
+          0.3000001907348633,
+          0.39999961853027344,
+          0.09999942779541016
+        ],
+        "feature": [
+          51.5
+        ],
+        "import": [
+          {
+            "cells": 39862,
+            "ms": 1630.8000001907349
+          }
+        ],
+        "pick": []
+      }
+    },
+    "ready": [
+      1959.3000001907349
+    ],
+    "scope": "fresh Chromium context; warm OS source cache; not a cold boot",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36"
+  },
+  "checks": {
+    "sharedContractTests": 11,
+    "javascriptSyntax": "passed",
+    "legacyTrainingReplay": "bit-exact 240/720/1440 tensors",
+    "nativeScheduleAdmission": 11,
+    "chunkInference": "648 rows bit-exact"
+  },
+  "limits": [
+    "Only measured-endpoint is a supported tissue condition; multi-condition execution unavailable",
+    "Safari not qualified; prior authorized-local configuration gate unresolved",
+    "Physical wheel dispatch not qualified; DOM wheel handler and camera preservation qualified",
+    "Spatial preservation disabled: verified sections and receiving controls unavailable",
+    "Exposed development outcomes; no new independent biological evaluation",
+    "Training-mean intervention ranking unavailable; no synthetic replacement baseline",
+    "One mouse, four isolated mSafe controls, uncertain projected identities; no calibrated winner"
+  ],
+  "biologicalPromotion": false
+}
