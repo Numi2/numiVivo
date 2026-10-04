@@ -126,3 +126,5 @@ A concurrent external cleanup removed historical source directories and old live
 shared state. Cohort/input/runtime restoration matched original hashes. This
 new demonstration uses its own workspace; it does not claim recovery of the lost
 older live history. The new demonstration's cancellation/restart history is intact.
+
+[Download the qualified native/evidence bundle](https://github.com/Numi2/numiVivo/releases/tag/virtual-wet-lab-v0.4-cohort). The extracted archive verified all 921 file hashes and replayed both models, three variants each, bit-exactly from relocated paths. [Archive receipt](release-artifact.json).

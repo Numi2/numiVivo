@@ -1,0 +1,66 @@
+{
+  "archive": "virtual-wet-lab-v04-cohort.tar.gz",
+  "sha256": "82cb5a96f055472d566ad925a1d854d9764c43cbc0437b74db7cc2941ed88526",
+  "bytes": 1174584438,
+  "files": 921,
+  "uniquePayloads": 614,
+  "uncompressedBytes": 13014197889,
+  "vivoCommit": "7d9779105c6b3a3b182269e59bb691af8b65a2df",
+  "labCommit": "01c2d98158b1a7e0690cf14d6594ea24bf22cc35",
+  "privateTokenAbsent": true,
+  "sealedArtifactsVerified": [
+    {
+      "path": "/Users/home/virtual-wet-lab-v04-cohort-20261004/experiments/cae185b2d4e34f9ab27b4461e7d45e98/seal.json",
+      "files": 22,
+      "verified": true
+    },
+    {
+      "path": "/Users/home/virtual-wet-lab-v04-cohort-20261004/experiments/6a031a4f29634455be4e4064e952c69a/seal.json",
+      "files": 22,
+      "verified": true
+    },
+    {
+      "path": "/Users/home/virtual-wet-lab-v04-cohort-20261004/experiments/b5a48f052e4946df94f84b7463f48005/seal.json",
+      "files": 22,
+      "verified": true
+    },
+    {
+      "path": "/Users/home/virtual-wet-lab-v04-cohort-20261004/experiments/5c341913571f4d2680e2b1a5968f9642/seal.json",
+      "files": 22,
+      "verified": true
+    },
+    {
+      "path": "/Users/home/virtual-wet-lab-v04-cohort-20261004/spatial/artifact-seal.json",
+      "files": 70,
+      "verified": true
+    },
+    {
+      "path": "/Users/home/virtual-wet-lab-v04-cohort-20261004/receivers/artifact-seal.json",
+      "files": 53,
+      "verified": true
+    }
+  ],
+  "qualification": {
+    "archiveSHA256": "82cb5a96f055472d566ad925a1d854d9764c43cbc0437b74db7cc2941ed88526",
+    "manifestFilesVerified": 921,
+    "relocatedNativeReplay": {
+      "numericalReplay": {
+        "b5a48f052e4946df94f84b7463f48005": {
+          "neighborhood": "bit-exact mean and variance",
+          "no-neighborhood": "bit-exact mean and variance",
+          "shuffled-neighborhood": "bit-exact mean and variance"
+        },
+        "6a031a4f29634455be4e4064e952c69a": {
+          "neighborhood": "bit-exact mean and variance",
+          "no-neighborhood": "bit-exact mean and variance",
+          "shuffled-neighborhood": "bit-exact mean and variance"
+        }
+      },
+      "observationsRevealedByThisCommand": false,
+      "biologicalPromotion": false
+    },
+    "seconds": 9.714595332741737,
+    "biologicalPromotion": false
+  },
+  "url": "https://github.com/Numi2/numiVivo/releases/tag/virtual-wet-lab-v0.4-cohort"
+}
