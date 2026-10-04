@@ -1,0 +1,9 @@
+{
+  "sameHistoricalPlanAndInputs": true,
+  "bitExactWeightsAtEveryCheckpoint": {
+    "240": true,
+    "720": true,
+    "1440": true
+  },
+  "optimizer": "Adam legacy plan; unchanged group RNG branch"
+}

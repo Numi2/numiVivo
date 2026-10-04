@@ -1,0 +1,1135 @@
+{
+  "scope": "exposed development; no independent biological evaluation",
+  "checkpoints": {
+    "all-distribution-group": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.38881774173106676,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.546654412607035,
+        "validationEqualSourceRMSE": 0.7187828027432964,
+        "byStudy": {
+          "GSE90063": 0.17942130863666533,
+          "GSE90546": 0.22687508591583797,
+          "GSE92872": 0.43924841238185763
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.36919008949656545,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 5,
+        "groups": 81,
+        "directionAccuracy": 0.5904887260646767,
+        "validationEqualSourceRMSE": 0.7150317603541959,
+        "byStudy": {
+          "GSE90063": 0.16933254450559615,
+          "GSE90546": 0.20761623339993612,
+          "GSE92872": 0.41808997141197324
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.35032352142863804,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 5,
+        "groups": 81,
+        "directionAccuracy": 0.6485109858118343,
+        "validationEqualSourceRMSE": 0.7231817418529142,
+        "byStudy": {
+          "GSE90063": 0.16242171078920364,
+          "GSE90546": 0.19576236392770494,
+          "GSE92872": 0.3965883059427142
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.34143954552250144,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 6,
+        "groups": 81,
+        "directionAccuracy": 0.6704862140563622,
+        "validationEqualSourceRMSE": 0.7280767040867959,
+        "byStudy": {
+          "GSE90063": 0.15586117804050445,
+          "GSE90546": 0.19066592625209264,
+          "GSE92872": 0.38692703004926443
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.32166229703544097,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 12,
+        "groups": 81,
+        "directionAccuracy": 0.7084627668976278,
+        "validationEqualSourceRMSE": 0.7384216660453428,
+        "byStudy": {
+          "GSE90063": 0.14683128893375397,
+          "GSE90546": 0.18032608500548772,
+          "GSE92872": 0.3644382902421057
+        }
+      }
+    ],
+    "all-mean-group": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.34132906628979576,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.6555240731107892,
+        "validationEqualSourceRMSE": 0.7293854692289906,
+        "byStudy": {
+          "GSE90063": 0.1566584512591362,
+          "GSE90546": 0.19674390980175563,
+          "GSE92872": 0.3859978513792157
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.3155161918681345,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 13,
+        "groups": 81,
+        "directionAccuracy": 0.6990776236436254,
+        "validationEqualSourceRMSE": 0.7462537836643958,
+        "byStudy": {
+          "GSE90063": 0.15709399580955505,
+          "GSE90546": 0.19511378237179347,
+          "GSE92872": 0.3534386735409498
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.2995213777930648,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 18,
+        "groups": 81,
+        "directionAccuracy": 0.7151205455801937,
+        "validationEqualSourceRMSE": 0.7441359075807756,
+        "byStudy": {
+          "GSE90063": 0.15681847035884858,
+          "GSE90546": 0.19354993956429617,
+          "GSE92872": 0.3334093331359327
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.2897892596177113,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 21,
+        "groups": 81,
+        "directionAccuracy": 0.7227439534725286,
+        "validationEqualSourceRMSE": 0.7576726463533217,
+        "byStudy": {
+          "GSE90063": 0.1570550799369812,
+          "GSE90546": 0.19422020018100739,
+          "GSE92872": 0.32098184106871486
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.28031797642693107,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 24,
+        "groups": 81,
+        "directionAccuracy": 0.7297894538117421,
+        "validationEqualSourceRMSE": 0.7606375832711497,
+        "byStudy": {
+          "GSE90063": 0.15456956773996353,
+          "GSE90546": 0.19620934128761292,
+          "GSE92872": 0.3091655472526327
+        }
+      }
+    ],
+    "all-distribution-source": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.38651181959811554,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.5456395604474583,
+        "validationEqualSourceRMSE": 0.7156012981168686,
+        "byStudy": {
+          "GSE90063": 0.1590436339378357,
+          "GSE90546": 0.19466302224567958,
+          "GSE92872": 0.4430371858179569
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.3747348193033242,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.5916496457786691,
+        "validationEqualSourceRMSE": 0.7151646719824883,
+        "byStudy": {
+          "GSE90063": 0.15418766885995866,
+          "GSE90546": 0.18852665381772177,
+          "GSE92872": 0.4295618296600878
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.36369877299408854,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 8,
+        "groups": 81,
+        "directionAccuracy": 0.6280474510837156,
+        "validationEqualSourceRMSE": 0.72171766815647,
+        "byStudy": {
+          "GSE90063": 0.15221960246562957,
+          "GSE90546": 0.18012493635926927,
+          "GSE92872": 0.4168207817710936
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.3479412591751711,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 14,
+        "groups": 81,
+        "directionAccuracy": 0.6746899238021742,
+        "validationEqualSourceRMSE": 0.7186319481941962,
+        "byStudy": {
+          "GSE90063": 0.1411890432238579,
+          "GSE90546": 0.16863869556358882,
+          "GSE92872": 0.3998575108125806
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.33433893516107843,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 15,
+        "groups": 81,
+        "directionAccuracy": 0.7039060883133547,
+        "validationEqualSourceRMSE": 0.7375077220701403,
+        "byStudy": {
+          "GSE90063": 0.13927037864923478,
+          "GSE90546": 0.12233277836016246,
+          "GSE92872": 0.38800657051615417
+        }
+      }
+    ],
+    "all-mean-source-shuffled-metadata": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.3660401920845479,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.5936056951828094,
+        "validationEqualSourceRMSE": 0.7061824779356679,
+        "byStudy": {
+          "GSE90063": 0.153989976644516,
+          "GSE90546": 0.18816260141985758,
+          "GSE92872": 0.4186283997260034
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.35641865579434384,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 6,
+        "groups": 81,
+        "directionAccuracy": 0.6223131885632904,
+        "validationEqualSourceRMSE": 0.7135969554224322,
+        "byStudy": {
+          "GSE90063": 0.15793748050928116,
+          "GSE90546": 0.18124112061091832,
+          "GSE92872": 0.40659138234332204
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.35099516054730356,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 6,
+        "groups": 81,
+        "directionAccuracy": 0.6323490737920646,
+        "validationEqualSourceRMSE": 0.7138205334063499,
+        "byStudy": {
+          "GSE90063": 0.1570600986480713,
+          "GSE90546": 0.181272668497903,
+          "GSE92872": 0.3998609115369618
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.3396162041175513,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 8,
+        "groups": 81,
+        "directionAccuracy": 0.6718092652223304,
+        "validationEqualSourceRMSE": 0.7182629262247393,
+        "byStudy": {
+          "GSE90063": 0.14263631999492646,
+          "GSE90546": 0.17579644918441772,
+          "GSE92872": 0.38831209670752287
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.3340531979446058,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 11,
+        "groups": 81,
+        "directionAccuracy": 0.6839326378145522,
+        "validationEqualSourceRMSE": 0.7272931971857625,
+        "byStudy": {
+          "GSE90063": 0.14003612697124482,
+          "GSE90546": 0.17213732217039382,
+          "GSE92872": 0.3820779141969979
+        }
+      }
+    ],
+    "GSE90546-distribution": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.19190542187009538,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 1,
+        "groups": 7,
+        "directionAccuracy": 0.6723368870629429,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.19190542187009538
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.17074063420295715,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 5,
+        "groups": 7,
+        "directionAccuracy": 0.7715099087162891,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.17074063420295715
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.10514804933752332,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 7,
+        "groups": 7,
+        "directionAccuracy": 0.9284331351551873,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.10514804933752332
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.045586525329521725,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 7,
+        "groups": 7,
+        "directionAccuracy": 0.9986186061736292,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.045586525329521725
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.036104119781936915,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 7,
+        "groups": 7,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.036104119781936915
+        }
+      }
+    ],
+    "all-mean-source-RNA-only": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.36742697840119587,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.5843539443456246,
+        "validationEqualSourceRMSE": 0.7074567906318172,
+        "byStudy": {
+          "GSE90063": 0.152958844602108,
+          "GSE90546": 0.1891634166240692,
+          "GSE92872": 0.42043520137667656
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.3583010451661216,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 6,
+        "groups": 81,
+        "directionAccuracy": 0.6187341897268847,
+        "validationEqualSourceRMSE": 0.7125126930975145,
+        "byStudy": {
+          "GSE90063": 0.1495422527194023,
+          "GSE90546": 0.18299354825701034,
+          "GSE92872": 0.4100938639603555
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.35488636828499076,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 6,
+        "groups": 81,
+        "directionAccuracy": 0.6267446755178918,
+        "validationEqualSourceRMSE": 0.7114566612628198,
+        "byStudy": {
+          "GSE90063": 0.1461250975728035,
+          "GSE90546": 0.18271694438798086,
+          "GSE92872": 0.4063363475725055
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.3512841558750765,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 8,
+        "groups": 81,
+        "directionAccuracy": 0.6451722345383641,
+        "validationEqualSourceRMSE": 0.7156832631557218,
+        "byStudy": {
+          "GSE90063": 0.14269845932722092,
+          "GSE90546": 0.18428328846182143,
+          "GSE92872": 0.4021413908340037
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.3440200978959048,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 11,
+        "groups": 81,
+        "directionAccuracy": 0.6661083187125559,
+        "validationEqualSourceRMSE": 0.7263958021517722,
+        "byStudy": {
+          "GSE90063": 0.14385295212268828,
+          "GSE90546": 0.1709096963916506,
+          "GSE92872": 0.3942301645874977
+        }
+      }
+    ],
+    "all-mean-source": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.3593067117495301,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 6,
+        "groups": 81,
+        "directionAccuracy": 0.6394889876827099,
+        "validationEqualSourceRMSE": 0.7057588004296825,
+        "byStudy": {
+          "GSE90063": 0.13760183081030847,
+          "GSE90546": 0.17438075797898428,
+          "GSE92872": 0.41417437558993697
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.3447698133043301,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 11,
+        "groups": 81,
+        "directionAccuracy": 0.6785244115673889,
+        "validationEqualSourceRMSE": 0.7186169057123123,
+        "byStudy": {
+          "GSE90063": 0.12591579630970956,
+          "GSE90546": 0.16591003962925502,
+          "GSE92872": 0.3985285412054509
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.3350592953739343,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 11,
+        "groups": 81,
+        "directionAccuracy": 0.6895447410150398,
+        "validationEqualSourceRMSE": 0.7188070954815033,
+        "byStudy": {
+          "GSE90063": 0.12173918187618256,
+          "GSE90546": 0.15820707700082234,
+          "GSE92872": 0.3877337744925171
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.3255985978944802,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 17,
+        "groups": 81,
+        "directionAccuracy": 0.7076134838532556,
+        "validationEqualSourceRMSE": 0.7233925980906333,
+        "byStudy": {
+          "GSE90063": 0.12060949057340623,
+          "GSE90546": 0.15972935940538133,
+          "GSE92872": 0.3757700938731432
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.3173018719679044,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 19,
+        "groups": 81,
+        "directionAccuracy": 0.7190197050531872,
+        "validationEqualSourceRMSE": 0.7294234498854606,
+        "byStudy": {
+          "GSE90063": 0.11913365349173546,
+          "GSE90546": 0.16822304683072226,
+          "GSE92872": 0.36457115260418504
+        }
+      }
+    ],
+    "GSE90063-mean": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.053455809317529204,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 10,
+        "groups": 10,
+        "directionAccuracy": 0.9861378305626116,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.053455809317529204
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.022193025797605515,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 10,
+        "groups": 10,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.022193025797605515
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.018320228904485703,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 10,
+        "groups": 10,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.018320228904485703
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.020812719501554965,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 10,
+        "groups": 10,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.020812719501554965
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.015044857002794742,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 10,
+        "groups": 10,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.015044857002794742
+        }
+      }
+    ],
+    "GSE92872-distribution": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.43546236818656325,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 2,
+        "groups": 64,
+        "directionAccuracy": 0.5593695686296876,
+        "validationEqualSourceRMSE": 0.706307650573792,
+        "byStudy": {
+          "GSE92872": 0.43546236818656325
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.41736922413110733,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 2,
+        "groups": 64,
+        "directionAccuracy": 0.6142832996738673,
+        "validationEqualSourceRMSE": 0.7122811348207535,
+        "byStudy": {
+          "GSE92872": 0.41736922413110733
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.3917363816872239,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 3,
+        "groups": 64,
+        "directionAccuracy": 0.6799041025950229,
+        "validationEqualSourceRMSE": 0.7336484789848328,
+        "byStudy": {
+          "GSE92872": 0.3917363816872239
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.3628403537441045,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 10,
+        "groups": 64,
+        "directionAccuracy": 0.7187946386706925,
+        "validationEqualSourceRMSE": 0.7472697140709046,
+        "byStudy": {
+          "GSE92872": 0.3628403537441045
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.3269757255911827,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 21,
+        "groups": 64,
+        "directionAccuracy": 0.7544197238402734,
+        "validationEqualSourceRMSE": 0.7599512223274477,
+        "byStudy": {
+          "GSE92872": 0.3269757255911827
+        }
+      }
+    ],
+    "GSE90063-distribution": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.15683427304029465,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 1,
+        "groups": 10,
+        "directionAccuracy": 0.6322317934648235,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.15683427304029465
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.15015791058540345,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 1,
+        "groups": 10,
+        "directionAccuracy": 0.6557795707316668,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.15015791058540345
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.14054903239011765,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 4,
+        "groups": 10,
+        "directionAccuracy": 0.7065399715464539,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.14054903239011765
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.10891135856509208,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 9,
+        "groups": 10,
+        "directionAccuracy": 0.8584311420254016,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.10891135856509208
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.057302753999829294,
+        "trainingNoChangeEqualGroupRMSE": 0.15145280808210373,
+        "identityCorrect": 10,
+        "groups": 10,
+        "directionAccuracy": 0.9890966499895845,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90063": 0.057302753999829294
+        }
+      }
+    ],
+    "GSE92872-mean": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.37138239573687315,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 7,
+        "groups": 64,
+        "directionAccuracy": 0.7014668205653654,
+        "validationEqualSourceRMSE": 0.7336710037723664,
+        "byStudy": {
+          "GSE92872": 0.37138239573687315
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.32242763659451157,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 19,
+        "groups": 64,
+        "directionAccuracy": 0.7589722554343579,
+        "validationEqualSourceRMSE": 0.7493908011144207,
+        "byStudy": {
+          "GSE92872": 0.32242763659451157
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.29770563932834193,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 24,
+        "groups": 64,
+        "directionAccuracy": 0.7763471424378465,
+        "validationEqualSourceRMSE": 0.763935124681842,
+        "byStudy": {
+          "GSE92872": 0.29770563932834193
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.2777162790298462,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 25,
+        "groups": 64,
+        "directionAccuracy": 0.7912034267196882,
+        "validationEqualSourceRMSE": 0.7772593046388319,
+        "byStudy": {
+          "GSE92872": 0.2777162790298462
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.2671269957209006,
+        "trainingNoChangeEqualGroupRMSE": 0.43402007315307856,
+        "identityCorrect": 28,
+        "groups": 64,
+        "directionAccuracy": 0.7979929242384076,
+        "validationEqualSourceRMSE": 0.77457836943288,
+        "byStudy": {
+          "GSE92872": 0.2671269957209006
+        }
+      }
+    ],
+    "GSE90546-mean": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.028814978365387236,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 7,
+        "groups": 7,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.028814978365387236
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.02166062965989113,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 7,
+        "groups": 7,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.02166062965989113
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.018707700871995518,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 7,
+        "groups": 7,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.018707700871995518
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.017978814696627005,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 7,
+        "groups": 7,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.017978814696627005
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.015781145808952197,
+        "trainingNoChangeEqualGroupRMSE": 0.20124393275805882,
+        "identityCorrect": 7,
+        "groups": 7,
+        "directionAccuracy": 1.0,
+        "validationEqualSourceRMSE": null,
+        "byStudy": {
+          "GSE90546": 0.015781145808952197
+        }
+      }
+    ],
+    "all-mean-source-low-lr": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.35740961134433746,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 9,
+        "groups": 81,
+        "directionAccuracy": 0.6476045588051915,
+        "validationEqualSourceRMSE": 0.7057477735703991,
+        "byStudy": {
+          "GSE90063": 0.1407698690891266,
+          "GSE90546": 0.1665475560086114,
+          "GSE92872": 0.4121351083740592
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.3344626341153074,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 12,
+        "groups": 81,
+        "directionAccuracy": 0.705207081153036,
+        "validationEqualSourceRMSE": 0.721684193418872,
+        "byStudy": {
+          "GSE90063": 0.13618602007627487,
+          "GSE90546": 0.12775969611746923,
+          "GSE92872": 0.3880514889024198
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.31692258089228914,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 17,
+        "groups": 81,
+        "directionAccuracy": 0.7358655370525201,
+        "validationEqualSourceRMSE": 0.7352778911590576,
+        "byStudy": {
+          "GSE90063": 0.1254744790494442,
+          "GSE90546": 0.08619467541575432,
+          "GSE92872": 0.37207221146672964
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.2967366195847223,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 22,
+        "groups": 81,
+        "directionAccuracy": 0.7667265439502285,
+        "validationEqualSourceRMSE": 0.7480733336940888,
+        "byStudy": {
+          "GSE90063": 0.11589103080332279,
+          "GSE90546": 0.045572674700192044,
+          "GSE92872": 0.35246479930356145
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.2648365648670329,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 36,
+        "groups": 81,
+        "directionAccuracy": 0.8016489649162534,
+        "validationEqualSourceRMSE": 0.7624912444622286,
+        "byStudy": {
+          "GSE90063": 0.09429404847323894,
+          "GSE90546": 0.030221484335405484,
+          "GSE92872": 0.31714485748670995
+        }
+      }
+    ],
+    "target-ID": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.25129455861486033,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 52,
+        "groups": 81,
+        "directionAccuracy": 0.784652948564111,
+        "validationEqualSourceRMSE": 0.7812410948737976,
+        "byStudy": {
+          "GSE90063": 0.15390415340662003,
+          "GSE90546": 0.18741240245955332,
+          "GSE92872": 0.2734989202581346
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.17865166555584214,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 71,
+        "groups": 81,
+        "directionAccuracy": 0.8513730469762798,
+        "validationEqualSourceRMSE": 0.8109930176888743,
+        "byStudy": {
+          "GSE90063": 0.1473522290587425,
+          "GSE90546": 0.18250038581235067,
+          "GSE92872": 0.18312124873045832
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.1454735289293307,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 69,
+        "groups": 81,
+        "directionAccuracy": 0.8754814763352663,
+        "validationEqualSourceRMSE": 0.8129202156297622,
+        "byStudy": {
+          "GSE90063": 0.1423377886414528,
+          "GSE90546": 0.18290291726589203,
+          "GSE92872": 0.1418696490000002
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.12771329437784942,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 70,
+        "groups": 81,
+        "directionAccuracy": 0.8878662629066656,
+        "validationEqualSourceRMSE": 0.8234079605148684,
+        "byStudy": {
+          "GSE90063": 0.14206435307860374,
+          "GSE90546": 0.1823820812361581,
+          "GSE92872": 0.11949154289322905
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.11742276351117058,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 69,
+        "groups": 81,
+        "directionAccuracy": 0.8966842194993737,
+        "validationEqualSourceRMSE": 0.8260952791860027,
+        "byStudy": {
+          "GSE90063": 0.14393542036414148,
+          "GSE90546": 0.1831954334463392,
+          "GSE92872": 0.1060862751037348
+        }
+      }
+    ],
+    "group-mean-descriptor": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.33084628574642133,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 9,
+        "groups": 81,
+        "directionAccuracy": 0.6800277477741128,
+        "validationEqualSourceRMSE": 0.7395795016519485,
+        "byStudy": {
+          "GSE90063": 0.15627121180295944,
+          "GSE90546": 0.181391926748412,
+          "GSE92872": 0.37447021156549454
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.28558810193229606,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 24,
+        "groups": 81,
+        "directionAccuracy": 0.7409625325688408,
+        "validationEqualSourceRMSE": 0.754051681487791,
+        "byStudy": {
+          "GSE90063": 0.14715398401021956,
+          "GSE90546": 0.17339110374450684,
+          "GSE92872": 0.31948997953440994
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.26222434566344743,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 31,
+        "groups": 81,
+        "directionAccuracy": 0.7660463959567333,
+        "validationEqualSourceRMSE": 0.7652137596761027,
+        "byStudy": {
+          "GSE90063": 0.14780081659555436,
+          "GSE90546": 0.17312954579080855,
+          "GSE92872": 0.2898477658163756
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.24964324343535635,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 39,
+        "groups": 81,
+        "directionAccuracy": 0.7722879981213832,
+        "validationEqualSourceRMSE": 0.7709449856512008,
+        "byStudy": {
+          "GSE90063": 0.14602680802345275,
+          "GSE90546": 0.180472303714071,
+          "GSE92872": 0.2733988830004819
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.24227991810551397,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 38,
+        "groups": 81,
+        "directionAccuracy": 0.7673388533556557,
+        "validationEqualSourceRMSE": 0.7773753904527233,
+        "byStudy": {
+          "GSE90063": 0.14996321350336075,
+          "GSE90546": 0.19068703481129237,
+          "GSE92872": 0.2623473748099059
+        }
+      }
+    ],
+    "descriptor-high-lr": [
+      {
+        "step": 240,
+        "trainingEqualGroupResponseRMSE": 0.3746984052805253,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.570241164558888,
+        "validationEqualSourceRMSE": 0.701629800181235,
+        "byStudy": {
+          "GSE90063": 0.16667467653751372,
+          "GSE90546": 0.20944062301090785,
+          "GSE92872": 0.42527718283236027
+        }
+      },
+      {
+        "step": 720,
+        "trainingEqualGroupResponseRMSE": 0.3747475780086753,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.5709210229355454,
+        "validationEqualSourceRMSE": 0.7015028240219239,
+        "byStudy": {
+          "GSE90063": 0.16807026267051697,
+          "GSE90546": 0.210175844175475,
+          "GSE92872": 0.4250409419182688
+        }
+      },
+      {
+        "step": 1440,
+        "trainingEqualGroupResponseRMSE": 0.3745075799064872,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.5706040341747957,
+        "validationEqualSourceRMSE": 0.7024963228933273,
+        "byStudy": {
+          "GSE90063": 0.1635462000966072,
+          "GSE90546": 0.2091305617775236,
+          "GSE92872": 0.4255584068596363
+        }
+      },
+      {
+        "step": 2880,
+        "trainingEqualGroupResponseRMSE": 0.37478582009121225,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.5703777745762217,
+        "validationEqualSourceRMSE": 0.7017199031768306,
+        "byStudy": {
+          "GSE90063": 0.1678778573870659,
+          "GSE90546": 0.21042177506855556,
+          "GSE92872": 0.4250925066880882
+        }
+      },
+      {
+        "step": 5760,
+        "trainingEqualGroupResponseRMSE": 0.37476523919605914,
+        "trainingNoChangeEqualGroupRMSE": 0.37901876903610465,
+        "identityCorrect": 4,
+        "groups": 81,
+        "directionAccuracy": 0.5708193025564727,
+        "validationEqualSourceRMSE": 0.7014656326463146,
+        "byStudy": {
+          "GSE90063": 0.16797927320003508,
+          "GSE90546": 0.21054765794958388,
+          "GSE92872": 0.42503684433177114
+        }
+      }
+    ]
+  },
+  "conditionProbes": {
+    "all-mean-source": {
+      "pairedCompleteSwapMaxAbs": 0.0,
+      "meanMovement": {
+        "control-swap": 0.005006009586030924,
+        "descriptor-swap": 0.20541524616419338,
+        "both-swap": 0.2057346202805581
+      },
+      "originalResponseRMSE": 0.36457115202210844
+    },
+    "all-mean-source-RNA-only": {
+      "pairedCompleteSwapMaxAbs": 0.0,
+      "meanMovement": {
+        "control-swap": 6.952870046372794e-08,
+        "descriptor-swap": 0.0,
+        "both-swap": 6.952870046372794e-08
+      },
+      "originalResponseRMSE": 0.39423016645014286
+    },
+    "all-mean-source-shuffled-metadata": {
+      "pairedCompleteSwapMaxAbs": 0.0,
+      "meanMovement": {
+        "control-swap": 7.088619757844583e-08,
+        "descriptor-swap": 0.05862824014911894,
+        "both-swap": 0.058628240978578106
+      },
+      "originalResponseRMSE": 0.3797344067133963
+    }
+  },
+  "selected": {
+    "arm": "all-mean-source-low-lr",
+    "biologicalPromotion": false,
+    "modelSelectionFrozenAt": "2026-10-04T03:36:12.011019+00:00",
+    "step": 240,
+    "validationRMSE": 0.7057477735703991,
+    "validationScope": "Only GSE92872 stimulated technical capture6; no validation available for GSE90546 or GSE90063, not independent animals"
+  },
+  "biologicalPromotion": false
+}

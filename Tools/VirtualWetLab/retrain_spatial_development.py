@@ -5,28 +5,39 @@ from pathlib import Path
 from safetensors.numpy import load_file
 from wetlab import read,write,sha,require,timestamp
 from train_intervention_design import native
-from train_cohort_recovery import measure,predict
+from train_cohort_recovery import measure
+from bounded_spatial_prediction import predict
 
 def clone(a,b):subprocess.run(['cp','-c',str(a),str(b)],check=True)
-def run(source,binary,out,kind):
-    require(not out.exists(),'Retain previous attempt');out.mkdir()
+def run(source,binary,out,kind,resume=False):
+    if resume:
+        require(out.exists(),'No retained attempt');registered=read(out/'development-registration.json');require(registered['binarySHA256']==sha(binary),'Runtime changed')
+        for f,h in registered['inputsSHA256'].items():require(sha(source/f)==h,'Input changed')
+        write(out/('scoring-recovery-'+str(len(list(out.glob('scoring-recovery*.json')))+1)+'.json'),{'createdAt':timestamp(),'previousOwnerSHA256':registered['ownerSHA256'],'ownerSHA256':sha(__file__),'scoringOwnerSHA256':sha(Path(__file__).with_name('bounded_spatial_prediction.py')),'reason':'Resume stopped scoring/input interruption; retain completed weights and selections, use batch-aligned scoring. See source-restoration and original failure records.','retainedWeights':{str(p.relative_to(out)):sha(p) for p in out.glob('*/training/weights-*.safetensors')},'trainingBudgetUnchanged':True,'predictionHashFormat':'sha256 sorted tensor names then concatenated float32 bytes'})
+    else:
+        require(not out.exists(),'Retain previous attempt');out.mkdir()
     variants=['neighborhood','no-neighborhood','shuffled-neighborhood'] if kind=='spatial' else ['receiver-pretrained','anchor-reference-pretrained','receiver-spatial-only']
     steps=[240,1440,4320]
-    write(out/'development-registration.json',{'createdAt':timestamp(),'source':str(source),'sourceRegistrationSHA256':sha(source/('preregistration.json' if kind=='spatial' else 'registration.json')),'binarySHA256':sha(binary),'ownerSHA256':sha(__file__),'inputsSHA256':{str(Path(v)/f):sha(source/v/f) for v in variants for f in ['plan.json','chip1.safetensors','chip2.safetensors','chip3.safetensors']},'scope':'permanently exposed spatial development, not new validation','variants':variants,'steps':steps,'optimizer':'adam','objective':'distribution','architecture':'unchanged','selection':'minimum chip3 equal-target RMSE; earlier step for ties','edges':'unverified sections; spatial descriptors remain hypotheses, preservation blocked','stopping':'three variants, 4320 updates each'})
+    if not resume:write(out/'development-registration.json',{'createdAt':timestamp(),'source':str(source),'sourceRegistrationSHA256':sha(source/('preregistration.json' if kind=='spatial' else 'registration.json')),'binarySHA256':sha(binary),'ownerSHA256':sha(__file__),'inputsSHA256':{str(Path(v)/f):sha(source/v/f) for v in variants for f in ['plan.json','chip1.safetensors','chip2.safetensors','chip3.safetensors']},'scope':'permanently exposed spatial development, not new validation','variants':variants,'steps':steps,'optimizer':'adam','objective':'distribution','architecture':'unchanged','selection':'minimum chip3 equal-target RMSE; earlier step for ties','edges':'unverified sections; spatial descriptors remain hypotheses, preservation blocked','stopping':'three variants, 4320 updates each'})
     if kind=='spatial':
         for name in ['prepared.json','preregistration.json','features.json','chip1-rows.json','chip2-rows.json','chip3-rows.json','baselines.safetensors','baseline-types.json']:
-            clone(source/name,out/name)
+            if not (out/name).exists():clone(source/name,out/name)
     else:
         for name in ['chip1-rows.json','chip2-rows.json','chip3-rows.json','warm-start.safetensors']:
-            clone(source/name,out/name)
+            if not (out/name).exists():clone(source/name,out/name)
     results={}
     for variant in variants:
-        folder=out/variant;folder.mkdir();old=source/variant
+        completed=out/variant
+        if resume and (completed/'selection.json').exists() and (completed/('test-prediction' if kind=='spatial' else 'development-prediction')/'prediction.safetensors').exists():
+            results[variant]=read(completed/'selection.json')['selected'];continue
+        folder=out/variant;folder.mkdir(exist_ok=resume);old=source/variant
         plan=read(old/'plan.json');plan.update(steps=steps,trainingBudget=steps[-1],optimizer='adam',objective='distribution',diagnostics=False)
-        write(folder/'plan.json',plan)
-        for chip in ('chip1','chip2','chip3'):clone(old/(chip+'.safetensors'),folder/(chip+'.safetensors'))
+        if not (folder/'plan.json').exists():write(folder/'plan.json',plan)
+        else:require(read(folder/'plan.json')==plan,'Plan changed during recovery')
+        for chip in ('chip1','chip2','chip3'):
+            if not (folder/(chip+'.safetensors')).exists():clone(old/(chip+'.safetensors'),folder/(chip+'.safetensors'))
         warm=out/'warm-start.safetensors' if kind=='receiver' and variant!='receiver-spatial-only' else None
-        native(binary,'train',folder/'plan.json',folder/'chip2.safetensors',folder/'training',warm)
+        if not (folder/'training'/f'weights-{steps[-1]}.safetensors').exists():native(binary,'train',folder/'plan.json',folder/'chip2.safetensors',folder/'training',warm)
         checkpoints=[]
         for step in steps:
             result={'step':step,'weightsSHA256':sha(folder/'training'/f'weights-{step}.safetensors')}
@@ -55,4 +66,4 @@ def run(source,binary,out,kind):
         config.write_text(__import__('json').dumps(a,indent=2))
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--binary',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--kind',choices=['spatial','receiver'],required=True);a=p.parse_args();run(a.source,a.binary,a.output,a.kind)
+    p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--binary',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--kind',choices=['spatial','receiver'],required=True);p.add_argument('--resume',action='store_true');a=p.parse_args();run(a.source,a.binary,a.output,a.kind,a.resume)

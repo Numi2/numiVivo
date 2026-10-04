@@ -1,0 +1,4461 @@
+{
+  "aggregate": {
+    "cell-type-matched": {
+      "byTarget": {
+        "Cfap410": 0.8509162329137325,
+        "Clu": 0.7794021844863892,
+        "Fasn": 0.7172884047031403,
+        "Gfap": 0.8054142743349075,
+        "Rraga": 0.8907719999551773,
+        "Stk39": 0.7582038104534149,
+        "Trem2": 0.8533811569213867
+      },
+      "equalTargetRMSE": 0.8079111519668782
+    },
+    "neighborhood": {
+      "byTarget": {
+        "Cfap410": 0.7996743954718113,
+        "Clu": 0.7454653352499008,
+        "Fasn": 0.7019325271248817,
+        "Gfap": 0.7401610314846039,
+        "Rraga": 0.8010374307632446,
+        "Stk39": 0.7242078870534897,
+        "Trem2": 0.8268096446990967
+      },
+      "equalTargetRMSE": 0.7627554645495757
+    },
+    "no-change": {
+      "byTarget": {
+        "Cfap410": 0.7718477658927441,
+        "Clu": 0.7168146878480911,
+        "Fasn": 0.6788627207279205,
+        "Gfap": 0.7140000090003014,
+        "Rraga": 0.7791886975367864,
+        "Stk39": 0.7007611811161041,
+        "Trem2": 0.791053544729948
+      },
+      "equalTargetRMSE": 0.7360755152645566
+    },
+    "no-neighborhood": {
+      "byTarget": {
+        "Cfap410": 0.802043654024601,
+        "Clu": 0.7450079917907715,
+        "Fasn": 0.7066522277891636,
+        "Gfap": 0.7428546026349068,
+        "Rraga": 0.8031087021032969,
+        "Stk39": 0.7231136739253998,
+        "Trem2": 0.8251054733991623
+      },
+      "equalTargetRMSE": 0.7639837608096146
+    },
+    "shuffled-neighborhood": {
+      "byTarget": {
+        "Cfap410": 0.7982624396681786,
+        "Clu": 0.7428793460130692,
+        "Fasn": 0.7019524835050106,
+        "Gfap": 0.7401456832885742,
+        "Rraga": 0.8005507985750834,
+        "Stk39": 0.7217907011508942,
+        "Trem2": 0.8242733404040337
+      },
+      "equalTargetRMSE": 0.7614078275149776
+    },
+    "training-mean": {
+      "byTarget": {
+        "Cfap410": 0.7986783012747765,
+        "Clu": 0.7441148728132247,
+        "Fasn": 0.7017087489366531,
+        "Gfap": 0.7389550060033798,
+        "Rraga": 0.8014662812153498,
+        "Stk39": 0.7224918752908707,
+        "Trem2": 0.8243442177772522
+      },
+      "equalTargetRMSE": 0.7616799004730724
+    }
+  },
+  "biologicalPromotion": false,
+  "groups": [
+    {
+      "cellType": "neuron",
+      "cells": 2,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.47368421052631576,
+          "directionGenes": 3154,
+          "effectSizeBias": -0.019798509776592255,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.4201454818248749,
+          "marginal95Coverage": null,
+          "rmse": 0.9898726344108582,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.665267989039421
+        },
+        "neighborhood": {
+          "directionAgreement": 0.3849080532656944,
+          "directionGenes": 3154,
+          "effectSizeBias": 0.09444502741098404,
+          "gaussianNLL": 0.30588749051094055,
+          "genes": 25828,
+          "mae": 0.3185431957244873,
+          "marginal95Coverage": 0.9841257549945795,
+          "rmse": 0.8350372910499573,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.3418959348685338
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 3154,
+          "effectSizeBias": 0.04306969419121742,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.23661868274211884,
+          "marginal95Coverage": null,
+          "rmse": 0.7893886566162109,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3022116888314486
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.3842739378566899,
+          "directionGenes": 3154,
+          "effectSizeBias": 0.10260509699583054,
+          "gaussianNLL": 0.2870868742465973,
+          "genes": 25828,
+          "mae": 0.3282795548439026,
+          "marginal95Coverage": 0.9851517732693201,
+          "rmse": 0.8412573933601379,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.3880776425879446
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.38807863031071654,
+          "directionGenes": 3154,
+          "effectSizeBias": 0.0946071594953537,
+          "gaussianNLL": 0.3560597002506256,
+          "genes": 25828,
+          "mae": 0.31910189986228943,
+          "marginal95Coverage": 0.9834481957565433,
+          "rmse": 0.8341640830039978,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.315909793937691
+        },
+        "training-mean": {
+          "directionAgreement": 0.3842739378566899,
+          "directionGenes": 3154,
+          "effectSizeBias": 0.09016940742731094,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3152649998664856,
+          "marginal95Coverage": null,
+          "rmse": 0.832448422908783,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3738511125557125
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Cfap410"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 27,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.4802562761506276,
+          "directionGenes": 7648,
+          "effectSizeBias": -0.07483188807964325,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.29685652256011963,
+          "marginal95Coverage": null,
+          "rmse": 0.6198344826698303,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1382115626604192
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5729602510460251,
+          "directionGenes": 7648,
+          "effectSizeBias": 0.031871456652879715,
+          "gaussianNLL": 0.881422758102417,
+          "genes": 25828,
+          "mae": 0.23213990032672882,
+          "marginal95Coverage": 0.9778190766265724,
+          "rmse": 0.5135076642036438,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.052030566692535
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 7648,
+          "effectSizeBias": -0.019331395626068115,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.19556303322315216,
+          "marginal95Coverage": null,
+          "rmse": 0.46892407536506653,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.924919744953513
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5835512552301255,
+          "directionGenes": 7648,
+          "effectSizeBias": 0.04030883312225342,
+          "gaussianNLL": 1.0311485528945923,
+          "genes": 25828,
+          "mae": 0.23703506588935852,
+          "marginal95Coverage": 0.9791727611148395,
+          "rmse": 0.5206062197685242,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.0597259499679224
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5753138075313807,
+          "directionGenes": 7648,
+          "effectSizeBias": 0.03208364546298981,
+          "gaussianNLL": 0.9527567028999329,
+          "genes": 25828,
+          "mae": 0.2324851006269455,
+          "marginal95Coverage": 0.976994533638486,
+          "rmse": 0.5123783946037292,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.0465356294272423
+        },
+        "training-mean": {
+          "directionAgreement": 0.5721757322175732,
+          "directionGenes": 7648,
+          "effectSizeBias": 0.027768323197960854,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.22979554533958435,
+          "marginal95Coverage": null,
+          "rmse": 0.5115824341773987,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9364835219975145
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Cfap410"
+    },
+    {
+      "cellType": "oligodendrocyte",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5660725261216963,
+          "directionGenes": 1627,
+          "effectSizeBias": -0.0982108861207962,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.45771417021751404,
+          "marginal95Coverage": null,
+          "rmse": 1.3070266246795654,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3505421688314527
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5998770743700061,
+          "directionGenes": 1627,
+          "effectSizeBias": -0.12837418913841248,
+          "gaussianNLL": 0.609674334526062,
+          "genes": 25828,
+          "mae": 0.4005275070667267,
+          "marginal95Coverage": 0.9592302927055908,
+          "rmse": 1.2817870378494263,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.90789182197899
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 1627,
+          "effectSizeBias": -0.18535207211971283,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.30485790967941284,
+          "marginal95Coverage": null,
+          "rmse": 1.3054553270339966,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.8430194444954395
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.617701290719115,
+          "directionGenes": 1627,
+          "effectSizeBias": -0.12141995877027512,
+          "gaussianNLL": 0.5643945336341858,
+          "genes": 25828,
+          "mae": 0.40000155568122864,
+          "marginal95Coverage": 0.9584172216199474,
+          "rmse": 1.2768001556396484,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.8428970396688853
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.6158574062692072,
+          "directionGenes": 1627,
+          "effectSizeBias": -0.1200331524014473,
+          "gaussianNLL": 0.48414748907089233,
+          "genes": 25828,
+          "mae": 0.39434105157852173,
+          "marginal95Coverage": 0.9585333746321821,
+          "rmse": 1.2745945453643799,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.839825948902257
+        },
+        "training-mean": {
+          "directionAgreement": 0.6047940995697603,
+          "directionGenes": 1627,
+          "effectSizeBias": -0.1382523626089096,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3830714523792267,
+          "marginal95Coverage": null,
+          "rmse": 1.2794172763824463,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.4747476470365655
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Cfap410"
+    },
+    {
+      "cellType": "oligodendrocyte",
+      "cells": 15,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5965639810426541,
+          "directionGenes": 3376,
+          "effectSizeBias": 0.01893393136560917,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.23717699944972992,
+          "marginal95Coverage": null,
+          "rmse": 0.5888507962226868,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9778367616740677
+        },
+        "neighborhood": {
+          "directionAgreement": 0.6475118483412322,
+          "directionGenes": 3376,
+          "effectSizeBias": 0.042147908359766006,
+          "gaussianNLL": 0.2430863231420517,
+          "genes": 25828,
+          "mae": 0.2108401507139206,
+          "marginal95Coverage": 0.9815549016571163,
+          "rmse": 0.5364707112312317,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.455963686118617
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 3376,
+          "effectSizeBias": -0.015223998576402664,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.13889630138874054,
+          "marginal95Coverage": null,
+          "rmse": 0.4985361695289612,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.652639673401912
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.6540284360189573,
+          "directionGenes": 3376,
+          "effectSizeBias": 0.048714835196733475,
+          "gaussianNLL": 0.35388681292533875,
+          "genes": 25828,
+          "mae": 0.20939235389232635,
+          "marginal95Coverage": 0.9806514893397347,
+          "rmse": 0.5347124934196472,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.434817064574456
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.6575829383886256,
+          "directionGenes": 3376,
+          "effectSizeBias": 0.04476930573582649,
+          "gaussianNLL": 0.33307787775993347,
+          "genes": 25828,
+          "mae": 0.19897514581680298,
+          "marginal95Coverage": 0.9800165195395178,
+          "rmse": 0.5233379602432251,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.416331891627458
+        },
+        "training-mean": {
+          "directionAgreement": 0.6386255924170616,
+          "directionGenes": 3376,
+          "effectSizeBias": 0.031875722110271454,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.19432416558265686,
+          "marginal95Coverage": null,
+          "rmse": 0.5217859148979187,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9902287772449196
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Cfap410"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 4,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.519676248953391,
+          "directionGenes": 3583,
+          "effectSizeBias": 0.0332859568297863,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.30347558856010437,
+          "marginal95Coverage": null,
+          "rmse": 0.7103890180587769,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2690685861743987
+        },
+        "neighborhood": {
+          "directionAgreement": 0.532235556795981,
+          "directionGenes": 3583,
+          "effectSizeBias": 0.02253117971122265,
+          "gaussianNLL": 0.7585458755493164,
+          "genes": 25828,
+          "mae": 0.2826237678527832,
+          "marginal95Coverage": 0.9795861080997367,
+          "rmse": 0.6853218078613281,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.62232777920386
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 3583,
+          "effectSizeBias": -0.026550281792879105,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.22000907361507416,
+          "marginal95Coverage": null,
+          "rmse": 0.6697478890419006,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.259999810718
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5283282165782863,
+          "directionGenes": 3583,
+          "effectSizeBias": 0.027727322652935982,
+          "gaussianNLL": 0.4173490107059479,
+          "genes": 25828,
+          "mae": 0.288960725069046,
+          "marginal95Coverage": 0.9806218057921635,
+          "rmse": 0.688785970211029,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.633316125483402
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5302818866871337,
+          "directionGenes": 3583,
+          "effectSizeBias": 0.026073236018419266,
+          "gaussianNLL": 0.5431195497512817,
+          "genes": 25828,
+          "mae": 0.28556838631629944,
+          "marginal95Coverage": 0.9789085488617005,
+          "rmse": 0.686700165271759,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.612081831601058
+        },
+        "training-mean": {
+          "directionAgreement": 0.5308400781468043,
+          "directionGenes": 3583,
+          "effectSizeBias": 0.020549440756440163,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2822151780128479,
+          "marginal95Coverage": null,
+          "rmse": 0.6873883008956909,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.237377935787663
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Cfap410"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 44,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.6116200578592093,
+          "directionGenes": 8296,
+          "effectSizeBias": 0.02130570262670517,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.21861307322978973,
+          "marginal95Coverage": null,
+          "rmse": 0.4984342157840729,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2432251916563306
+        },
+        "neighborhood": {
+          "directionAgreement": 0.609450337512054,
+          "directionGenes": 8296,
+          "effectSizeBias": 0.02349814772605896,
+          "gaussianNLL": 0.8623031973838806,
+          "genes": 25828,
+          "mae": 0.21309790015220642,
+          "marginal95Coverage": 0.9800322412603658,
+          "rmse": 0.48547467589378357,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.1502424610906212
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 8296,
+          "effectSizeBias": -0.02542094700038433,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.1873386800289154,
+          "marginal95Coverage": null,
+          "rmse": 0.4653605818748474,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3117429753765464
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.6176470588235294,
+          "directionGenes": 8296,
+          "effectSizeBias": 0.029767287895083427,
+          "gaussianNLL": 0.6933790445327759,
+          "genes": 25828,
+          "mae": 0.2172522395849228,
+          "marginal95Coverage": 0.9808884297520661,
+          "rmse": 0.49131709337234497,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.1539820147372346
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.617526518804243,
+          "directionGenes": 8296,
+          "effectSizeBias": 0.026866625994443893,
+          "gaussianNLL": 0.6678403615951538,
+          "genes": 25828,
+          "mae": 0.21460357308387756,
+          "marginal95Coverage": 0.979396919481324,
+          "rmse": 0.4873749613761902,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.151578694257085
+        },
+        "training-mean": {
+          "directionAgreement": 0.615115718418515,
+          "directionGenes": 8296,
+          "effectSizeBias": 0.021678771823644638,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.21247172355651855,
+          "marginal95Coverage": null,
+          "rmse": 0.4885256886482239,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2395747430114583
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Cfap410"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.3922310072189756,
+          "directionGenes": 2909,
+          "effectSizeBias": 0.12428686022758484,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.46347737312316895,
+          "marginal95Coverage": null,
+          "rmse": 1.2859281301498413,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9908297980437055
+        },
+        "neighborhood": {
+          "directionAgreement": 0.39669989687177726,
+          "directionGenes": 2909,
+          "effectSizeBias": 0.10877729952335358,
+          "gaussianNLL": 0.6031989455223083,
+          "genes": 25828,
+          "mae": 0.43554121255874634,
+          "marginal95Coverage": 0.9593851633885705,
+          "rmse": 1.2650779485702515,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.495953534197467
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2909,
+          "effectSizeBias": 0.06445062905550003,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.36080724000930786,
+          "marginal95Coverage": null,
+          "rmse": 1.2391736507415771,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.623626336455345
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.4035751117222413,
+          "directionGenes": 2909,
+          "effectSizeBias": 0.10548222064971924,
+          "gaussianNLL": 0.46330928802490234,
+          "genes": 25828,
+          "mae": 0.44290781021118164,
+          "marginal95Coverage": 0.9661607557689329,
+          "rmse": 1.266151785850525,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.6142117872809423
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.3956686146442076,
+          "directionGenes": 2909,
+          "effectSizeBias": 0.10857692360877991,
+          "gaussianNLL": 0.4509570300579071,
+          "genes": 25828,
+          "mae": 0.44415369629859924,
+          "marginal95Coverage": 0.9593464457178256,
+          "rmse": 1.2681031227111816,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.4741357532154646
+        },
+        "training-mean": {
+          "directionAgreement": 0.3850120316259883,
+          "directionGenes": 2909,
+          "effectSizeBias": 0.11155034601688385,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.43950092792510986,
+          "marginal95Coverage": null,
+          "rmse": 1.268295168876648,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.960212256788509
+        }
+      },
+      "neighborhood": 1,
+      "role": "direct",
+      "target": "Cfap410"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 14,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5202170488359881,
+          "directionGenes": 5713,
+          "effectSizeBias": 0.12303607910871506,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.33255860209465027,
+          "marginal95Coverage": null,
+          "rmse": 0.8069939613342285,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3388670137833936
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5140906704008402,
+          "directionGenes": 5713,
+          "effectSizeBias": 0.12024865299463272,
+          "gaussianNLL": 1.0101816654205322,
+          "genes": 25828,
+          "mae": 0.3241414725780487,
+          "marginal95Coverage": 0.9594487709905086,
+          "rmse": 0.7947180271148682,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.8981818089908424
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5713,
+          "effectSizeBias": 0.07630942761898041,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.27389878034591675,
+          "marginal95Coverage": null,
+          "rmse": 0.7381957769393921,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0568219189132964
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5070890950463854,
+          "directionGenes": 5713,
+          "effectSizeBias": 0.11765316128730774,
+          "gaussianNLL": 0.6277589201927185,
+          "genes": 25828,
+          "mae": 0.33081477880477905,
+          "marginal95Coverage": 0.9653559813270205,
+          "rmse": 0.7967181205749512,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.9073516076437276
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5172413793103449,
+          "directionGenes": 5713,
+          "effectSizeBias": 0.12104017287492752,
+          "gaussianNLL": 0.6031812429428101,
+          "genes": 25828,
+          "mae": 0.3310103416442871,
+          "marginal95Coverage": 0.9605328657713667,
+          "rmse": 0.7994462847709656,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.894407223632426
+        },
+        "training-mean": {
+          "directionAgreement": 0.5175914580780676,
+          "directionGenes": 5713,
+          "effectSizeBias": 0.12340913712978363,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3259393870830536,
+          "marginal95Coverage": null,
+          "rmse": 0.7999832034111023,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3775591664140974
+        }
+      },
+      "neighborhood": 1,
+      "role": "neighbor",
+      "target": "Cfap410"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 10,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.3968102073365231,
+          "directionGenes": 6270,
+          "effectSizeBias": 0.009269412606954575,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.32462644577026367,
+          "marginal95Coverage": null,
+          "rmse": 0.6889539957046509,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1677827527862976
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5349282296650718,
+          "directionGenes": 6270,
+          "effectSizeBias": 0.01541402842849493,
+          "gaussianNLL": 0.9641016125679016,
+          "genes": 25828,
+          "mae": 0.2376636415719986,
+          "marginal95Coverage": 0.9761925042589438,
+          "rmse": 0.5289146900177002,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.1341271875207584
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 6270,
+          "effectSizeBias": -0.04061252996325493,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.19815151393413544,
+          "marginal95Coverage": null,
+          "rmse": 0.5064143538475037,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.971500559523702
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5365231259968102,
+          "directionGenes": 6270,
+          "effectSizeBias": 0.017340753227472305,
+          "gaussianNLL": 2.1608543395996094,
+          "genes": 25828,
+          "mae": 0.24015913903713226,
+          "marginal95Coverage": 0.9784187703267772,
+          "rmse": 0.5302438139915466,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.133136474495554
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5328548644338118,
+          "directionGenes": 6270,
+          "effectSizeBias": 0.011886470019817352,
+          "gaussianNLL": 1.0641217231750488,
+          "genes": 25828,
+          "mae": 0.23783962428569794,
+          "marginal95Coverage": 0.9761382995199008,
+          "rmse": 0.5282048583030701,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.1303612030482126
+        },
+        "training-mean": {
+          "directionAgreement": 0.5341307814992026,
+          "directionGenes": 6270,
+          "effectSizeBias": 0.011905137449502945,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2352914661169052,
+          "marginal95Coverage": null,
+          "rmse": 0.5276327133178711,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.000551384082064
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Clu"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 130,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5331607495069034,
+          "directionGenes": 8112,
+          "effectSizeBias": 0.009611577726900578,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.21817758679389954,
+          "marginal95Coverage": null,
+          "rmse": 0.4745387136936188,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1053736825495992
+        },
+        "neighborhood": {
+          "directionAgreement": 0.6037968441814595,
+          "directionGenes": 8112,
+          "effectSizeBias": 0.03402966260910034,
+          "gaussianNLL": 0.6971212029457092,
+          "genes": 25828,
+          "mae": 0.17870856821537018,
+          "marginal95Coverage": 0.9782227993471605,
+          "rmse": 0.4226748049259186,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.981717994621821
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 8112,
+          "effectSizeBias": -0.021938934922218323,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.16015520691871643,
+          "marginal95Coverage": null,
+          "rmse": 0.3816828429698944,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.949284396825645
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.6072485207100592,
+          "directionGenes": 8112,
+          "effectSizeBias": 0.03639184683561325,
+          "gaussianNLL": 0.8185750246047974,
+          "genes": 25828,
+          "mae": 0.18085753917694092,
+          "marginal95Coverage": 0.9801059672865465,
+          "rmse": 0.42507848143577576,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9673663165770936
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5947978303747534,
+          "directionGenes": 8112,
+          "effectSizeBias": 0.030239563435316086,
+          "gaussianNLL": 0.6926502585411072,
+          "genes": 25828,
+          "mae": 0.1795821636915207,
+          "marginal95Coverage": 0.9782924911545013,
+          "rmse": 0.42129549384117126,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9781433007326699
+        },
+        "training-mean": {
+          "directionAgreement": 0.5973865877712031,
+          "directionGenes": 8112,
+          "effectSizeBias": 0.03057873621582985,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.17642542719841003,
+          "marginal95Coverage": null,
+          "rmse": 0.42025431990623474,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9926480907122963
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Clu"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.42935528120713307,
+          "directionGenes": 2187,
+          "effectSizeBias": 0.11402711272239685,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.4822482168674469,
+          "marginal95Coverage": null,
+          "rmse": 1.3032190799713135,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1155038443394005
+        },
+        "neighborhood": {
+          "directionAgreement": 0.39551897576588935,
+          "directionGenes": 2187,
+          "effectSizeBias": 0.11618977040052414,
+          "gaussianNLL": 1.0119823217391968,
+          "genes": 25828,
+          "mae": 0.3860127925872803,
+          "marginal95Coverage": 0.9506736874709617,
+          "rmse": 1.2323400974273682,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.5156011038236628
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2187,
+          "effectSizeBias": 0.06414515525102615,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3081812262535095,
+          "marginal95Coverage": null,
+          "rmse": 1.2014496326446533,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3389831758104265
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.4092363968907179,
+          "directionGenes": 2187,
+          "effectSizeBias": 0.11281397193670273,
+          "gaussianNLL": 0.9969398379325867,
+          "genes": 25828,
+          "mae": 0.3904655873775482,
+          "marginal95Coverage": 0.9667415208301069,
+          "rmse": 1.2321884632110596,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.6930364959868265
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.4069501600365798,
+          "directionGenes": 2187,
+          "effectSizeBias": 0.1122472882270813,
+          "gaussianNLL": 0.7500856518745422,
+          "genes": 25828,
+          "mae": 0.39093321561813354,
+          "marginal95Coverage": 0.9583010686077126,
+          "rmse": 1.232366919517517,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.5841464211228793
+        },
+        "training-mean": {
+          "directionAgreement": 0.40009144947416553,
+          "directionGenes": 2187,
+          "effectSizeBias": 0.11666283011436462,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.38619598746299744,
+          "marginal95Coverage": null,
+          "rmse": 1.2327829599380493,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.129527732846327
+        }
+      },
+      "neighborhood": 1,
+      "role": "direct",
+      "target": "Clu"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 14,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5199283475145544,
+          "directionGenes": 4466,
+          "effectSizeBias": 0.11992456018924713,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.33166101574897766,
+          "marginal95Coverage": null,
+          "rmse": 0.8408059477806091,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.6355416165731316
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5378414688759516,
+          "directionGenes": 4466,
+          "effectSizeBias": 0.1403147131204605,
+          "gaussianNLL": 0.6659850478172302,
+          "genes": 25828,
+          "mae": 0.2982385754585266,
+          "marginal95Coverage": 0.9505768932940994,
+          "rmse": 0.8334689736366272,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.0366137845872863
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 4466,
+          "effectSizeBias": 0.0883740484714508,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.24515998363494873,
+          "marginal95Coverage": null,
+          "rmse": 0.7720672488212585,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2993910803592628
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5349305866547246,
+          "directionGenes": 4466,
+          "effectSizeBias": 0.13773348927497864,
+          "gaussianNLL": 0.4654926359653473,
+          "genes": 25828,
+          "mae": 0.30256253480911255,
+          "marginal95Coverage": 0.9675490608199296,
+          "rmse": 0.8330432176589966,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.0051395228677373
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.535602328705777,
+          "directionGenes": 4466,
+          "effectSizeBias": 0.13476915657520294,
+          "gaussianNLL": 0.586495041847229,
+          "genes": 25828,
+          "mae": 0.30314451456069946,
+          "marginal95Coverage": 0.9568629836943295,
+          "rmse": 0.8316605091094971,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.005815726576513
+        },
+        "training-mean": {
+          "directionAgreement": 0.5443349753694581,
+          "directionGenes": 4466,
+          "effectSizeBias": 0.14089170098304749,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2974248230457306,
+          "marginal95Coverage": null,
+          "rmse": 0.8334444761276245,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.542720795326334
+        }
+      },
+      "neighborhood": 1,
+      "role": "neighbor",
+      "target": "Clu"
+    },
+    {
+      "cellType": "oligodendrocyte",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5738515901060071,
+          "directionGenes": 1415,
+          "effectSizeBias": -0.061157114803791046,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3788006007671356,
+          "marginal95Coverage": null,
+          "rmse": 1.2037957906723022,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3050444405525923
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5703180212014134,
+          "directionGenes": 1415,
+          "effectSizeBias": -0.061510540544986725,
+          "gaussianNLL": 4.938357353210449,
+          "genes": 25828,
+          "mae": 0.3546457588672638,
+          "marginal95Coverage": 0.9643023075731764,
+          "rmse": 1.1985639333724976,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.874783767002659
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 1415,
+          "effectSizeBias": -0.12426617741584778,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.26289692521095276,
+          "marginal95Coverage": null,
+          "rmse": 1.2238582372665405,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.736465748399496
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5710247349823322,
+          "directionGenes": 1415,
+          "effectSizeBias": -0.05647633597254753,
+          "gaussianNLL": 4.098765850067139,
+          "genes": 25828,
+          "mae": 0.35520029067993164,
+          "marginal95Coverage": 0.9644184605854111,
+          "rmse": 1.1961296796798706,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.85911189677201
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5752650176678445,
+          "directionGenes": 1415,
+          "effectSizeBias": -0.06186579167842865,
+          "gaussianNLL": 3.1101245880126953,
+          "genes": 25828,
+          "mae": 0.3451060354709625,
+          "marginal95Coverage": 0.9629084714263589,
+          "rmse": 1.1945793628692627,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.797688138505724
+        },
+        "training-mean": {
+          "directionAgreement": 0.5745583038869257,
+          "directionGenes": 1415,
+          "effectSizeBias": -0.07174850255250931,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3375605344772339,
+          "marginal95Coverage": null,
+          "rmse": 1.1961824893951416,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.4892847745795734
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Clu"
+    },
+    {
+      "cellType": "oligodendrocyte",
+      "cells": 15,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.6326908821349148,
+          "directionGenes": 5396,
+          "effectSizeBias": -0.09715312719345093,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.26702043414115906,
+          "marginal95Coverage": null,
+          "rmse": 0.6553877592086792,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3470673737623047
+        },
+        "neighborhood": {
+          "directionAgreement": 0.7216456634544107,
+          "directionGenes": 5396,
+          "effectSizeBias": -0.06307455152273178,
+          "gaussianNLL": 0.9541674256324768,
+          "genes": 25828,
+          "mae": 0.2527441084384918,
+          "marginal95Coverage": 0.9644571782561561,
+          "rmse": 0.6378054022789001,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.760738416280632
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5396,
+          "effectSizeBias": -0.12623001635074615,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.23338550329208374,
+          "marginal95Coverage": null,
+          "rmse": 0.6901119351387024,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.6087315392990904
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.7288732394366197,
+          "directionGenes": 5396,
+          "effectSizeBias": -0.058429233729839325,
+          "gaussianNLL": 0.8772784471511841,
+          "genes": 25828,
+          "mae": 0.2505105435848236,
+          "marginal95Coverage": 0.9644933147488514,
+          "rmse": 0.6318029165267944,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.7385010164564187
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.7266493699036323,
+          "directionGenes": 5396,
+          "effectSizeBias": -0.06636258959770203,
+          "gaussianNLL": 0.7419688701629639,
+          "genes": 25828,
+          "mae": 0.24496103823184967,
+          "marginal95Coverage": 0.9618424448918487,
+          "rmse": 0.6284823417663574,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.768442067199143
+        },
+        "training-mean": {
+          "directionAgreement": 0.7107116382505559,
+          "directionGenes": 5396,
+          "effectSizeBias": -0.07371236383914948,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.24373731017112732,
+          "marginal95Coverage": null,
+          "rmse": 0.6329756379127502,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.438683245171948
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Clu"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 15,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5652363003769209,
+          "directionGenes": 6898,
+          "effectSizeBias": 0.018984384834766388,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.19918321073055267,
+          "marginal95Coverage": null,
+          "rmse": 0.41553303599357605,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.26289542086112
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5691504783995361,
+          "directionGenes": 6898,
+          "effectSizeBias": 0.00340164708904922,
+          "gaussianNLL": 0.552749752998352,
+          "genes": 25828,
+          "mae": 0.1954520046710968,
+          "marginal95Coverage": 0.9778560735119508,
+          "rmse": 0.40744027495384216,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.0312543587375815
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 6898,
+          "effectSizeBias": -0.05345756933093071,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.16485825181007385,
+          "marginal95Coverage": null,
+          "rmse": 0.3981238007545471,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.21764468010515
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5692954479559292,
+          "directionGenes": 6898,
+          "effectSizeBias": 0.006700322963297367,
+          "gaussianNLL": 0.4585634469985962,
+          "genes": 25828,
+          "mae": 0.19887496531009674,
+          "marginal95Coverage": 0.9795106086417841,
+          "rmse": 0.40900570154190063,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.030973443149668
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.567265874166425,
+          "directionGenes": 6898,
+          "effectSizeBias": 0.0006438565324060619,
+          "gaussianNLL": 0.5550530552864075,
+          "genes": 25828,
+          "mae": 0.19568738341331482,
+          "marginal95Coverage": 0.977595374528935,
+          "rmse": 0.4059637188911438,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.024318730189972
+        },
+        "training-mean": {
+          "directionAgreement": 0.570890113076254,
+          "directionGenes": 6898,
+          "effectSizeBias": -0.000939900754019618,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.19283051788806915,
+          "marginal95Coverage": null,
+          "rmse": 0.4056674838066101,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2366644635330886
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Clu"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 177,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5799290686982792,
+          "directionGenes": 7613,
+          "effectSizeBias": 0.029344936832785606,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.14577169716358185,
+          "marginal95Coverage": null,
+          "rmse": 0.3194339871406555,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1703361511719805
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5892552213319322,
+          "directionGenes": 7613,
+          "effectSizeBias": 0.0403420627117157,
+          "gaussianNLL": 0.6045576930046082,
+          "genes": 25828,
+          "mae": 0.1479029804468155,
+          "marginal95Coverage": 0.9823981156525262,
+          "rmse": 0.3218439519405365,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9480884227755293
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 7613,
+          "effectSizeBias": -0.016338789835572243,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.12423604726791382,
+          "marginal95Coverage": null,
+          "rmse": 0.2761726379394531,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.165120419056949
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5928017864179692,
+          "directionGenes": 7613,
+          "effectSizeBias": 0.0443328358232975,
+          "gaussianNLL": 0.6861319541931152,
+          "genes": 25828,
+          "mae": 0.1517789363861084,
+          "marginal95Coverage": 0.9836427684578293,
+          "rmse": 0.3258208930492401,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9490547810941807
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5868908446079075,
+          "directionGenes": 7613,
+          "effectSizeBias": 0.03782234713435173,
+          "gaussianNLL": 0.6054689884185791,
+          "genes": 25828,
+          "mae": 0.14808091521263123,
+          "marginal95Coverage": 0.9822154644939273,
+          "rmse": 0.31919950246810913,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9385466525299493
+        },
+        "training-mean": {
+          "directionAgreement": 0.5850518849336661,
+          "directionGenes": 7613,
+          "effectSizeBias": 0.03617888316512108,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.14474590122699738,
+          "marginal95Coverage": null,
+          "rmse": 0.318085253238678,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.189522666034504
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Clu"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 2,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.305959805959806,
+          "directionGenes": 2886,
+          "effectSizeBias": 0.22943243384361267,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.388448029756546,
+          "marginal95Coverage": null,
+          "rmse": 1.0612932443618774,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 4.134388031437993
+        },
+        "neighborhood": {
+          "directionAgreement": 0.32744282744282743,
+          "directionGenes": 2886,
+          "effectSizeBias": 0.2084016054868698,
+          "gaussianNLL": 0.5618817806243896,
+          "genes": 25828,
+          "mae": 0.37196022272109985,
+          "marginal95Coverage": 0.9602175933095864,
+          "rmse": 1.0352438688278198,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.9958624967691887
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2886,
+          "effectSizeBias": 0.15699045360088348,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2917453348636627,
+          "marginal95Coverage": null,
+          "rmse": 0.9638877511024475,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.4774436578154564
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.33957033957033955,
+          "directionGenes": 2886,
+          "effectSizeBias": 0.20163974165916443,
+          "gaussianNLL": 0.3690494894981384,
+          "genes": 25828,
+          "mae": 0.37657520174980164,
+          "marginal95Coverage": 0.9687161220380982,
+          "rmse": 1.0329035520553589,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 4.041723744406656
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.34615384615384615,
+          "directionGenes": 2886,
+          "effectSizeBias": 0.20282655954360962,
+          "gaussianNLL": 0.4949650764465332,
+          "genes": 25828,
+          "mae": 0.3767675459384918,
+          "marginal95Coverage": 0.9612823292550721,
+          "rmse": 1.0332136154174805,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.9763227044555
+        },
+        "training-mean": {
+          "directionAgreement": 0.32155232155232155,
+          "directionGenes": 2886,
+          "effectSizeBias": 0.20950812101364136,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.37246400117874146,
+          "marginal95Coverage": null,
+          "rmse": 1.0364412069320679,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 4.013283480482642
+        }
+      },
+      "neighborhood": 1,
+      "role": "direct",
+      "target": "Clu"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 29,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5389516362583261,
+          "directionGenes": 6906,
+          "effectSizeBias": 0.17334139347076416,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.31484153866767883,
+          "marginal95Coverage": null,
+          "rmse": 0.8310602903366089,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.897682510039384
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5388068346365479,
+          "directionGenes": 6906,
+          "effectSizeBias": 0.17863835394382477,
+          "gaussianNLL": 0.6991574764251709,
+          "genes": 25828,
+          "mae": 0.3163129985332489,
+          "marginal95Coverage": 0.9571542244984059,
+          "rmse": 0.8363573551177979,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.4428472609090344
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 6906,
+          "effectSizeBias": 0.1276576668024063,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2712077796459198,
+          "marginal95Coverage": null,
+          "rmse": 0.7543784379959106,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.528006957522754
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5205618302924993,
+          "directionGenes": 6906,
+          "effectSizeBias": 0.1726233959197998,
+          "gaussianNLL": 0.7688655853271484,
+          "genes": 25828,
+          "mae": 0.3216298222541809,
+          "marginal95Coverage": 0.9651474208690916,
+          "rmse": 0.8338631987571716,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.4219386840228463
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5270779032725167,
+          "directionGenes": 6906,
+          "effectSizeBias": 0.17269572615623474,
+          "gaussianNLL": 0.6282128095626831,
+          "genes": 25828,
+          "mae": 0.32168281078338623,
+          "marginal95Coverage": 0.957915226992358,
+          "rmse": 0.8338271379470825,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.415034721534267
+        },
+        "training-mean": {
+          "directionAgreement": 0.5437300897770055,
+          "directionGenes": 6906,
+          "effectSizeBias": 0.18017533421516418,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3155222237110138,
+          "marginal95Coverage": null,
+          "rmse": 0.8376821875572205,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.9516598529057934
+        }
+      },
+      "neighborhood": 1,
+      "role": "neighbor",
+      "target": "Clu"
+    },
+    {
+      "cellType": "erythroid",
+      "cells": 2,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.57574568288854,
+          "directionGenes": 2548,
+          "effectSizeBias": -0.07335083186626434,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3137457072734833,
+          "marginal95Coverage": null,
+          "rmse": 0.8957744836807251,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.5490428110351786
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5816326530612245,
+          "directionGenes": 2548,
+          "effectSizeBias": -0.06879021227359772,
+          "gaussianNLL": 0.5618652105331421,
+          "genes": 25828,
+          "mae": 0.31830719113349915,
+          "marginal95Coverage": 0.9655219142016417,
+          "rmse": 0.895812451839447,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.119921018922094
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2548,
+          "effectSizeBias": -0.11759046465158463,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.25611990690231323,
+          "marginal95Coverage": null,
+          "rmse": 0.9017370939254761,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2504535727202892
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5804552590266876,
+          "directionGenes": 2548,
+          "effectSizeBias": -0.055131107568740845,
+          "gaussianNLL": 0.503135621547699,
+          "genes": 25828,
+          "mae": 0.3340511620044708,
+          "marginal95Coverage": 0.9678449744463373,
+          "rmse": 0.8978562951087952,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.152000604411361
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5781004709576139,
+          "directionGenes": 2548,
+          "effectSizeBias": -0.06909714639186859,
+          "gaussianNLL": 0.6963866353034973,
+          "genes": 25828,
+          "mae": 0.316948801279068,
+          "marginal95Coverage": 0.9616695059625213,
+          "rmse": 0.8950110673904419,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.107359902542297
+        },
+        "training-mean": {
+          "directionAgreement": 0.57574568288854,
+          "directionGenes": 2548,
+          "effectSizeBias": -0.07335083186626434,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3137457072734833,
+          "marginal95Coverage": null,
+          "rmse": 0.8957744836807251,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.5490428110351786
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Fasn"
+    },
+    {
+      "cellType": "erythroid",
+      "cells": 29,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.6445965303199108,
+          "directionGenes": 6283,
+          "effectSizeBias": 0.005924662575125694,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.192135289311409,
+          "marginal95Coverage": null,
+          "rmse": 0.5007951855659485,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0735387580152116
+        },
+        "neighborhood": {
+          "directionAgreement": 0.6547827470953366,
+          "directionGenes": 6283,
+          "effectSizeBias": 0.010493653826415539,
+          "gaussianNLL": 0.5409613847732544,
+          "genes": 25828,
+          "mae": 0.19498218595981598,
+          "marginal95Coverage": 0.9772233288652251,
+          "rmse": 0.5025155544281006,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.348684381368759
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 6283,
+          "effectSizeBias": -0.03831496462225914,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.1686161309480667,
+          "marginal95Coverage": null,
+          "rmse": 0.48739105463027954,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.8680123839013536
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.6689479547986631,
+          "directionGenes": 6283,
+          "effectSizeBias": 0.02406814694404602,
+          "gaussianNLL": 0.43483248353004456,
+          "genes": 25828,
+          "mae": 0.2043413370847702,
+          "marginal95Coverage": 0.9790310435613848,
+          "rmse": 0.5125301480293274,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.349593175851264
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.6485755212478116,
+          "directionGenes": 6283,
+          "effectSizeBias": 0.008688865229487419,
+          "gaussianNLL": 0.6209653615951538,
+          "genes": 25828,
+          "mae": 0.19400370121002197,
+          "marginal95Coverage": 0.9731833401868061,
+          "rmse": 0.5011060833930969,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.3645119540498225
+        },
+        "training-mean": {
+          "directionAgreement": 0.6445965303199108,
+          "directionGenes": 6283,
+          "effectSizeBias": 0.005924662575125694,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.192135289311409,
+          "marginal95Coverage": null,
+          "rmse": 0.5007951855659485,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0735387580152116
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Fasn"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 3,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.4269739071501186,
+          "directionGenes": 2951,
+          "effectSizeBias": 0.064142607152462,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3439362943172455,
+          "marginal95Coverage": null,
+          "rmse": 0.8071762919425964,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.155152818517915
+        },
+        "neighborhood": {
+          "directionAgreement": 0.4398508980006777,
+          "directionGenes": 2951,
+          "effectSizeBias": 0.05447355657815933,
+          "gaussianNLL": 0.9806395769119263,
+          "genes": 25828,
+          "mae": 0.2754509449005127,
+          "marginal95Coverage": 0.9816349181766558,
+          "rmse": 0.727652370929718,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.6194251303968255
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2951,
+          "effectSizeBias": 0.008320591412484646,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2085108906030655,
+          "marginal95Coverage": null,
+          "rmse": 0.69669508934021,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.7786542139947414
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.42527956624872926,
+          "directionGenes": 2951,
+          "effectSizeBias": 0.06253456324338913,
+          "gaussianNLL": 0.5320907235145569,
+          "genes": 25828,
+          "mae": 0.2833724319934845,
+          "marginal95Coverage": 0.9830029425429766,
+          "rmse": 0.7324160933494568,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.651469151261084
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.4351067434767875,
+          "directionGenes": 2951,
+          "effectSizeBias": 0.052370768040418625,
+          "gaussianNLL": 0.6111871004104614,
+          "genes": 25828,
+          "mae": 0.2749291956424713,
+          "marginal95Coverage": 0.980473388054308,
+          "rmse": 0.7264501452445984,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.596207643630017
+        },
+        "training-mean": {
+          "directionAgreement": 0.43341240257539815,
+          "directionGenes": 2951,
+          "effectSizeBias": 0.052560221403837204,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.27255088090896606,
+          "marginal95Coverage": null,
+          "rmse": 0.7258844971656799,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.968855309241917
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Fasn"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 39,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.54190984726189,
+          "directionGenes": 8053,
+          "effectSizeBias": -0.020538579672574997,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.23767201602458954,
+          "marginal95Coverage": null,
+          "rmse": 0.5300784111022949,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1535546623636037
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5982863529119583,
+          "directionGenes": 8053,
+          "effectSizeBias": 0.01983015239238739,
+          "gaussianNLL": 0.6969218254089355,
+          "genes": 25828,
+          "mae": 0.20954324305057526,
+          "marginal95Coverage": 0.9778663982241494,
+          "rmse": 0.49496474862098694,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.1752117331349092
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 8053,
+          "effectSizeBias": -0.026361029595136642,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.184967041015625,
+          "marginal95Coverage": null,
+          "rmse": 0.46362563967704773,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.969653959792012
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.6139326958897305,
+          "directionGenes": 8053,
+          "effectSizeBias": 0.02798410877585411,
+          "gaussianNLL": 0.8466293215751648,
+          "genes": 25828,
+          "mae": 0.2123115211725235,
+          "marginal95Coverage": 0.9794667286149399,
+          "rmse": 0.5001760721206665,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.1656659185536062
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5924500186265987,
+          "directionGenes": 8053,
+          "effectSizeBias": 0.017286179587244987,
+          "gaussianNLL": 0.6834754943847656,
+          "genes": 25828,
+          "mae": 0.21007049083709717,
+          "marginal95Coverage": 0.9765887150895669,
+          "rmse": 0.4942842125892639,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.1946612105373484
+        },
+        "training-mean": {
+          "directionAgreement": 0.6003973674407054,
+          "directionGenes": 8053,
+          "effectSizeBias": 0.017878595739603043,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2070855051279068,
+          "marginal95Coverage": null,
+          "rmse": 0.4934411942958832,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0554715991303776
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Fasn"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 18,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5419574996122227,
+          "directionGenes": 6447,
+          "effectSizeBias": 0.042924024164676666,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2001909613609314,
+          "marginal95Coverage": null,
+          "rmse": 0.4442261755466461,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.194462333899638
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5543663719559485,
+          "directionGenes": 6447,
+          "effectSizeBias": 0.03245196118950844,
+          "gaussianNLL": 0.5825308561325073,
+          "genes": 25828,
+          "mae": 0.19320780038833618,
+          "marginal95Coverage": 0.9823834598110578,
+          "rmse": 0.42949825525283813,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.021792922574714
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 6447,
+          "effectSizeBias": -0.01323330495506525,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.1582007110118866,
+          "marginal95Coverage": null,
+          "rmse": 0.40260499715805054,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1705593741240183
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5551419264774313,
+          "directionGenes": 6447,
+          "effectSizeBias": 0.0389108769595623,
+          "gaussianNLL": 0.5836244225502014,
+          "genes": 25828,
+          "mae": 0.19950416684150696,
+          "marginal95Coverage": 0.9835664997504862,
+          "rmse": 0.4353896379470825,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.027071740993346
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5554521482860245,
+          "directionGenes": 6447,
+          "effectSizeBias": 0.031387560069561005,
+          "gaussianNLL": 0.5692892074584961,
+          "genes": 25828,
+          "mae": 0.19537825882434845,
+          "marginal95Coverage": 0.9817919398413436,
+          "rmse": 0.43064025044441223,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.0276905196384782
+        },
+        "training-mean": {
+          "directionAgreement": 0.5562277028075073,
+          "directionGenes": 6447,
+          "effectSizeBias": 0.03100632317364216,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.19211025536060333,
+          "marginal95Coverage": null,
+          "rmse": 0.4297676086425781,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.167049027255012
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Fasn"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 259,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5694027815653122,
+          "directionGenes": 7334,
+          "effectSizeBias": 0.03130974620580673,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.16009512543678284,
+          "marginal95Coverage": null,
+          "rmse": 0.37630710005760193,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2004116773996394
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5899918189255522,
+          "directionGenes": 7334,
+          "effectSizeBias": 0.04698510840535164,
+          "gaussianNLL": 0.5991843938827515,
+          "genes": 25828,
+          "mae": 0.15925532579421997,
+          "marginal95Coverage": 0.9837101753626456,
+          "rmse": 0.37694206833839417,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.044774293501266
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 7334,
+          "effectSizeBias": 0.001402545371092856,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.13876840472221375,
+          "marginal95Coverage": null,
+          "rmse": 0.33387693762779236,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1808633839947076
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5958549222797928,
+          "directionGenes": 7334,
+          "effectSizeBias": 0.05426408350467682,
+          "gaussianNLL": 0.7272908687591553,
+          "genes": 25828,
+          "mae": 0.16551807522773743,
+          "marginal95Coverage": 0.9848271577402753,
+          "rmse": 0.3851681649684906,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.049819883179521
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5882192527952005,
+          "directionGenes": 7334,
+          "effectSizeBias": 0.04593891277909279,
+          "gaussianNLL": 0.5988969206809998,
+          "genes": 25828,
+          "mae": 0.16134700179100037,
+          "marginal95Coverage": 0.9832113303152485,
+          "rmse": 0.37718701362609863,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.0481535714845576
+        },
+        "training-mean": {
+          "directionAgreement": 0.5856285792200709,
+          "directionGenes": 7334,
+          "effectSizeBias": 0.045642174780368805,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.15788006782531738,
+          "marginal95Coverage": null,
+          "rmse": 0.37641313672065735,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2308529228957292
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Fasn"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.4683882457702582,
+          "directionGenes": 3369,
+          "effectSizeBias": -0.04032670706510544,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.5129629969596863,
+          "marginal95Coverage": null,
+          "rmse": 1.404632329940796,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.49950697645545
+        },
+        "neighborhood": {
+          "directionAgreement": 0.47996438112199463,
+          "directionGenes": 3369,
+          "effectSizeBias": -0.05502929538488388,
+          "gaussianNLL": 0.7602187991142273,
+          "genes": 25828,
+          "mae": 0.5038924813270569,
+          "marginal95Coverage": 0.9394068452841877,
+          "rmse": 1.4017245769500732,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.0102284275797517
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 3369,
+          "effectSizeBias": -0.09648403525352478,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.44887107610702515,
+          "marginal95Coverage": null,
+          "rmse": 1.4051026105880737,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.3540675826370716
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.4826357969723954,
+          "directionGenes": 3369,
+          "effectSizeBias": -0.05828952416777611,
+          "gaussianNLL": 0.6578361988067627,
+          "genes": 25828,
+          "mae": 0.5094001293182373,
+          "marginal95Coverage": 0.9497444633730835,
+          "rmse": 1.4030704498291016,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.208715301527091
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.4802612051053725,
+          "directionGenes": 3369,
+          "effectSizeBias": -0.06007842347025871,
+          "gaussianNLL": 0.7539832592010498,
+          "genes": 25828,
+          "mae": 0.5097506642341614,
+          "marginal95Coverage": 0.9396778689794022,
+          "rmse": 1.404653787612915,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.9992570046460285
+        },
+        "training-mean": {
+          "directionAgreement": 0.4755120213713268,
+          "directionGenes": 3369,
+          "effectSizeBias": -0.052244409918785095,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.5037789344787598,
+          "marginal95Coverage": null,
+          "rmse": 1.4028146266937256,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.498944359831512
+        }
+      },
+      "neighborhood": 1,
+      "role": "direct",
+      "target": "Fasn"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 14,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5273008241758241,
+          "directionGenes": 5824,
+          "effectSizeBias": 0.10033655166625977,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3177223205566406,
+          "marginal95Coverage": null,
+          "rmse": 0.7793172597885132,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.213133502540586
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5257554945054945,
+          "directionGenes": 5824,
+          "effectSizeBias": 0.11145664006471634,
+          "gaussianNLL": 0.8562809824943542,
+          "genes": 25828,
+          "mae": 0.319330632686615,
+          "marginal95Coverage": 0.9539978760592048,
+          "rmse": 0.7863501906394958,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.781763056317387
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5824,
+          "effectSizeBias": 0.07042935490608215,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2766711115837097,
+          "marginal95Coverage": null,
+          "rmse": 0.7398683428764343,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.023446234209197
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.520260989010989,
+          "directionGenes": 5824,
+          "effectSizeBias": 0.10893630981445312,
+          "gaussianNLL": 1.1766196489334106,
+          "genes": 25828,
+          "mae": 0.32449305057525635,
+          "marginal95Coverage": 0.9629831412199384,
+          "rmse": 0.7866109609603882,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.778631441719458
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5176854395604396,
+          "directionGenes": 5824,
+          "effectSizeBias": 0.10646717995405197,
+          "gaussianNLL": 0.7886046767234802,
+          "genes": 25828,
+          "mae": 0.32489386200904846,
+          "marginal95Coverage": 0.9534364698334034,
+          "rmse": 0.7862873077392578,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.768912205178259
+        },
+        "training-mean": {
+          "directionAgreement": 0.5300480769230769,
+          "directionGenes": 5824,
+          "effectSizeBias": 0.11466898024082184,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.31862109899520874,
+          "marginal95Coverage": null,
+          "rmse": 0.7887792587280273,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.263325573610408
+        }
+      },
+      "neighborhood": 1,
+      "role": "neighbor",
+      "target": "Fasn"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.412287793047696,
+          "directionGenes": 2474,
+          "effectSizeBias": -0.09792875498533249,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.5976321697235107,
+          "marginal95Coverage": null,
+          "rmse": 1.5134469270706177,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9951919307932258
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5303152789005658,
+          "directionGenes": 2474,
+          "effectSizeBias": -0.12174482643604279,
+          "gaussianNLL": 0.6935033798217773,
+          "genes": 25828,
+          "mae": 0.46103399991989136,
+          "marginal95Coverage": 0.9440529657735791,
+          "rmse": 1.3749183416366577,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.352519876838649
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2474,
+          "effectSizeBias": -0.17249596118927002,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.39138007164001465,
+          "marginal95Coverage": null,
+          "rmse": 1.3884525299072266,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.197819948196411
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.534357316087308,
+          "directionGenes": 2474,
+          "effectSizeBias": -0.12157506495714188,
+          "gaussianNLL": 0.6029078364372253,
+          "genes": 25828,
+          "mae": 0.4642181396484375,
+          "marginal95Coverage": 0.9490862629704196,
+          "rmse": 1.3756238222122192,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.4553057861196477
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5291026677445433,
+          "directionGenes": 2474,
+          "effectSizeBias": -0.12273447960615158,
+          "gaussianNLL": 0.626966118812561,
+          "genes": 25828,
+          "mae": 0.46071842312812805,
+          "marginal95Coverage": 0.9460662846523153,
+          "rmse": 1.3756009340286255,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.3895185169876934
+        },
+        "training-mean": {
+          "directionAgreement": 0.5185933710590137,
+          "directionGenes": 2474,
+          "effectSizeBias": -0.12689341604709625,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.4567644000053406,
+          "marginal95Coverage": null,
+          "rmse": 1.3764265775680542,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.010590622900054
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Gfap"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 11,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.45938628158844763,
+          "directionGenes": 5540,
+          "effectSizeBias": -0.100125752389431,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.35433176159858704,
+          "marginal95Coverage": null,
+          "rmse": 0.7940700054168701,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2093592237003827
+        },
+        "neighborhood": {
+          "directionAgreement": 0.6054151624548737,
+          "directionGenes": 5540,
+          "effectSizeBias": -0.02169022336602211,
+          "gaussianNLL": 1.1828590631484985,
+          "genes": 25828,
+          "mae": 0.29511305689811707,
+          "marginal95Coverage": 0.9564039027412111,
+          "rmse": 0.701849639415741,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.3631631042050176
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5540,
+          "effectSizeBias": -0.07244949042797089,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.258697509765625,
+          "marginal95Coverage": null,
+          "rmse": 0.6896350979804993,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9994305135174235
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.6028880866425993,
+          "directionGenes": 5540,
+          "effectSizeBias": -0.021448688581585884,
+          "gaussianNLL": 2.2961530685424805,
+          "genes": 25828,
+          "mae": 0.2973887026309967,
+          "marginal95Coverage": 0.9603284666394469,
+          "rmse": 0.7025998830795288,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.3447357719073327
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5989169675090252,
+          "directionGenes": 5540,
+          "effectSizeBias": -0.025196215137839317,
+          "gaussianNLL": 1.3118200302124023,
+          "genes": 25828,
+          "mae": 0.2953062653541565,
+          "marginal95Coverage": 0.9564179818942092,
+          "rmse": 0.701836884021759,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.381135757665334
+        },
+        "training-mean": {
+          "directionAgreement": 0.5974729241877257,
+          "directionGenes": 5540,
+          "effectSizeBias": -0.02684694342315197,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2922251224517822,
+          "marginal95Coverage": null,
+          "rmse": 0.7009307146072388,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0960904967928813
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Gfap"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 8,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5012115563839702,
+          "directionGenes": 5365,
+          "effectSizeBias": 0.055871523916721344,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.24244287610054016,
+          "marginal95Coverage": null,
+          "rmse": 0.5254287123680115,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.284834551741369
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5068033550792171,
+          "directionGenes": 5365,
+          "effectSizeBias": 0.039588674902915955,
+          "gaussianNLL": 0.5035062432289124,
+          "genes": 25828,
+          "mae": 0.23123517632484436,
+          "marginal95Coverage": 0.9811783723091219,
+          "rmse": 0.5043400526046753,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.237478849818031
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5365,
+          "effectSizeBias": -0.010061715729534626,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.17832261323928833,
+          "marginal95Coverage": null,
+          "rmse": 0.4604295790195465,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.149636718444526
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5049394221808015,
+          "directionGenes": 5365,
+          "effectSizeBias": 0.0423959344625473,
+          "gaussianNLL": 0.3862367868423462,
+          "genes": 25828,
+          "mae": 0.23665760457515717,
+          "marginal95Coverage": 0.982644804088586,
+          "rmse": 0.5079653859138489,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.2519923094768877
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5103448275862069,
+          "directionGenes": 5365,
+          "effectSizeBias": 0.038818445056676865,
+          "gaussianNLL": 0.4469359517097473,
+          "genes": 25828,
+          "mae": 0.23213592171669006,
+          "marginal95Coverage": 0.9813187238655723,
+          "rmse": 0.5038340091705322,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.2306861999918617
+        },
+        "training-mean": {
+          "directionAgreement": 0.5027027027027027,
+          "directionGenes": 5365,
+          "effectSizeBias": 0.035540830343961716,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.22813552618026733,
+          "marginal95Coverage": null,
+          "rmse": 0.5020186901092529,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2448062119074166
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Gfap"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 102,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5611702127659575,
+          "directionGenes": 7896,
+          "effectSizeBias": 0.03862028568983078,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.1743244230747223,
+          "marginal95Coverage": null,
+          "rmse": 0.38871145248413086,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.229634393033955
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5662360688956434,
+          "directionGenes": 7896,
+          "effectSizeBias": 0.0415823869407177,
+          "gaussianNLL": 0.5657257437705994,
+          "genes": 25828,
+          "mae": 0.17348641157150269,
+          "marginal95Coverage": 0.9815772212555457,
+          "rmse": 0.37953609228134155,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.029778795699716
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 7896,
+          "effectSizeBias": -0.00791255384683609,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.14211226999759674,
+          "marginal95Coverage": null,
+          "rmse": 0.3174828290939331,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.188439675296346
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5691489361702128,
+          "directionGenes": 7896,
+          "effectSizeBias": 0.045276932418346405,
+          "gaussianNLL": 0.5855122208595276,
+          "genes": 25828,
+          "mae": 0.17855331301689148,
+          "marginal95Coverage": 0.9830519090089187,
+          "rmse": 0.38522931933403015,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.0317312813598702
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5669959473150963,
+          "directionGenes": 7896,
+          "effectSizeBias": 0.04066874831914902,
+          "gaussianNLL": 0.5459491610527039,
+          "genes": 25828,
+          "mae": 0.17437832057476044,
+          "marginal95Coverage": 0.9816079676411373,
+          "rmse": 0.3793109059333801,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.0238997477939513
+        },
+        "training-mean": {
+          "directionAgreement": 0.5630699088145896,
+          "directionGenes": 7896,
+          "effectSizeBias": 0.037689995020627975,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.17032869160175323,
+          "marginal95Coverage": null,
+          "rmse": 0.3764440417289734,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2355003246042293
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Gfap"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.2962962962962963,
+          "directionGenes": 1647,
+          "effectSizeBias": 0.08463247865438461,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.5480411648750305,
+          "marginal95Coverage": null,
+          "rmse": 1.500994086265564,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.641370140016079
+        },
+        "neighborhood": {
+          "directionAgreement": 0.4820886460230723,
+          "directionGenes": 1647,
+          "effectSizeBias": -0.006743182428181171,
+          "gaussianNLL": 0.5454170107841492,
+          "genes": 25828,
+          "mae": 0.3406899571418762,
+          "marginal95Coverage": 0.9663156264519126,
+          "rmse": 1.1565738916397095,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.3233270743274774
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 1647,
+          "effectSizeBias": -0.05344753339886665,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.25958964228630066,
+          "marginal95Coverage": null,
+          "rmse": 1.1522105932235718,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.70618212223053
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.47540983606557374,
+          "directionGenes": 1647,
+          "effectSizeBias": 0.004601993132382631,
+          "gaussianNLL": 0.42438769340515137,
+          "genes": 25828,
+          "mae": 0.3529379665851593,
+          "marginal95Coverage": 0.9696066284652315,
+          "rmse": 1.1589487791061401,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.4358109715156093
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.48148148148148145,
+          "directionGenes": 1647,
+          "effectSizeBias": -0.006725265644490719,
+          "gaussianNLL": 0.5902694463729858,
+          "genes": 25828,
+          "mae": 0.33978644013404846,
+          "marginal95Coverage": 0.9649217903050953,
+          "rmse": 1.1553782224655151,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.26853065328645
+        },
+        "training-mean": {
+          "directionAgreement": 0.46690953248330297,
+          "directionGenes": 1647,
+          "effectSizeBias": -0.008656634017825127,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.33630865812301636,
+          "marginal95Coverage": null,
+          "rmse": 1.1552255153656006,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.843844496179372
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Rraga"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 15,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.4980694980694981,
+          "directionGenes": 5439,
+          "effectSizeBias": -0.044854432344436646,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3402419686317444,
+          "marginal95Coverage": null,
+          "rmse": 0.8044111132621765,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.6590748305122056
+        },
+        "neighborhood": {
+          "directionAgreement": 0.6422136422136422,
+          "directionGenes": 5439,
+          "effectSizeBias": -0.03368966653943062,
+          "gaussianNLL": 0.6586162447929382,
+          "genes": 25828,
+          "mae": 0.25656482577323914,
+          "marginal95Coverage": 0.9636208765680657,
+          "rmse": 0.6343501806259155,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.6216523387218613
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5439,
+          "effectSizeBias": -0.08009886741638184,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.22914153337478638,
+          "marginal95Coverage": null,
+          "rmse": 0.6465545296669006,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1951865022381147
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.6668505239933812,
+          "directionGenes": 5439,
+          "effectSizeBias": -0.021584391593933105,
+          "gaussianNLL": 0.777424156665802,
+          "genes": 25828,
+          "mae": 0.26137903332710266,
+          "marginal95Coverage": 0.9665066336275876,
+          "rmse": 0.636883556842804,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.6050110961774204
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.6503033645890789,
+          "directionGenes": 5439,
+          "effectSizeBias": -0.032314483076334,
+          "gaussianNLL": 0.6768483519554138,
+          "genes": 25828,
+          "mae": 0.25603801012039185,
+          "marginal95Coverage": 0.9632053069020701,
+          "rmse": 0.6326943635940552,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.6156118433957434
+        },
+        "training-mean": {
+          "directionAgreement": 0.6457069314212172,
+          "directionGenes": 5439,
+          "effectSizeBias": -0.03530796989798546,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.25352218747138977,
+          "marginal95Coverage": null,
+          "rmse": 0.6341128945350647,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1522840421336396
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Rraga"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 7,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5175332527206772,
+          "directionGenes": 5789,
+          "effectSizeBias": -0.004658771678805351,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.26491379737854004,
+          "marginal95Coverage": null,
+          "rmse": 0.5693355202674866,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0090971930351644
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5408533425462083,
+          "directionGenes": 5789,
+          "effectSizeBias": -0.01653486117720604,
+          "gaussianNLL": 0.6528075933456421,
+          "genes": 25828,
+          "mae": 0.2553803324699402,
+          "marginal95Coverage": 0.9737770747140424,
+          "rmse": 0.5554947853088379,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.150115607924777
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5789,
+          "effectSizeBias": -0.0606672428548336,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.21749655902385712,
+          "marginal95Coverage": null,
+          "rmse": 0.5505203008651733,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0902910509945025
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.547244774572465,
+          "directionGenes": 5789,
+          "effectSizeBias": -0.011050032451748848,
+          "gaussianNLL": 0.492929071187973,
+          "genes": 25828,
+          "mae": 0.2601092457771301,
+          "marginal95Coverage": 0.9763600964623111,
+          "rmse": 0.5572010278701782,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.186218131172937
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5410260839523233,
+          "directionGenes": 5789,
+          "effectSizeBias": -0.01750701293349266,
+          "gaussianNLL": 0.5800909996032715,
+          "genes": 25828,
+          "mae": 0.2568555176258087,
+          "marginal95Coverage": 0.9735281754021107,
+          "rmse": 0.5562758445739746,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.148972944191634
+        },
+        "training-mean": {
+          "directionAgreement": 0.5391259284850579,
+          "directionGenes": 5789,
+          "effectSizeBias": -0.015876341611146927,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.25346624851226807,
+          "marginal95Coverage": null,
+          "rmse": 0.5555563569068909,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.950948365564857
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Rraga"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 97,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5683264694870835,
+          "directionGenes": 8013,
+          "effectSizeBias": 0.024210156872868538,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.17772901058197021,
+          "marginal95Coverage": null,
+          "rmse": 0.39212921261787415,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1202052996830894
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5660801198053164,
+          "directionGenes": 8013,
+          "effectSizeBias": 0.034306079149246216,
+          "gaussianNLL": 0.5847265124320984,
+          "genes": 25828,
+          "mae": 0.17934294044971466,
+          "marginal95Coverage": 0.9796859956987461,
+          "rmse": 0.39078235626220703,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9837229761208912
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 8013,
+          "effectSizeBias": -0.009628644213080406,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.15447448194026947,
+          "marginal95Coverage": null,
+          "rmse": 0.3463585078716278,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.137681161509539
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5728191688506178,
+          "directionGenes": 8013,
+          "effectSizeBias": 0.04075540602207184,
+          "gaussianNLL": 0.6160230040550232,
+          "genes": 25828,
+          "mae": 0.18330325186252594,
+          "marginal95Coverage": 0.9816709748391022,
+          "rmse": 0.3965182304382324,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9921509809794973
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.560963434419069,
+          "directionGenes": 8013,
+          "effectSizeBias": 0.03352474048733711,
+          "gaussianNLL": 0.5782586336135864,
+          "genes": 25828,
+          "mae": 0.18066807091236115,
+          "marginal95Coverage": 0.9796125518697043,
+          "rmse": 0.39148688316345215,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.98220060168775
+        },
+        "training-mean": {
+          "directionAgreement": 0.566828903032572,
+          "directionGenes": 8013,
+          "effectSizeBias": 0.03516225889325142,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.1767779290676117,
+          "marginal95Coverage": null,
+          "rmse": 0.3907424509525299,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1434271600212638
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Rraga"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.37702656088306313,
+          "directionGenes": 2899,
+          "effectSizeBias": 0.12836837768554688,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.44900596141815186,
+          "marginal95Coverage": null,
+          "rmse": 1.282546877861023,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.336236682429444
+        },
+        "neighborhood": {
+          "directionAgreement": 0.39082442221455677,
+          "directionGenes": 2899,
+          "effectSizeBias": 0.11357535421848297,
+          "gaussianNLL": 2.772902011871338,
+          "genes": 25828,
+          "mae": 0.4335799813270569,
+          "marginal95Coverage": 0.9550487842651386,
+          "rmse": 1.2696778774261475,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.7569231066547566
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2899,
+          "effectSizeBias": 0.07235989719629288,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3603307604789734,
+          "marginal95Coverage": null,
+          "rmse": 1.2397903203964233,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.970492634922266
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.39289410141428077,
+          "directionGenes": 2899,
+          "effectSizeBias": 0.11039824783802032,
+          "gaussianNLL": 8.22938060760498,
+          "genes": 25828,
+          "mae": 0.4382859170436859,
+          "marginal95Coverage": 0.965579990707759,
+          "rmse": 1.2699716091156006,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.9048949699923012
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.39427388754743015,
+          "directionGenes": 2899,
+          "effectSizeBias": 0.109673872590065,
+          "gaussianNLL": 3.504998207092285,
+          "genes": 25828,
+          "mae": 0.43695470690727234,
+          "marginal95Coverage": 0.9559392906922719,
+          "rmse": 1.2696031332015991,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.7182761628565375
+        },
+        "training-mean": {
+          "directionAgreement": 0.3628837530182822,
+          "directionGenes": 2899,
+          "effectSizeBias": 0.11715078353881836,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.4323948621749878,
+          "marginal95Coverage": null,
+          "rmse": 1.2711750268936157,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.288862314191647
+        }
+      },
+      "neighborhood": 1,
+      "role": "direct",
+      "target": "Rraga"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 15,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.513801987486198,
+          "directionGenes": 5434,
+          "effectSizeBias": 0.13655313849449158,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3148408532142639,
+          "marginal95Coverage": null,
+          "rmse": 0.7952151894569397,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.6244727880402934
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5145380934854619,
+          "directionGenes": 5434,
+          "effectSizeBias": 0.14350222051143646,
+          "gaussianNLL": 0.9123901724815369,
+          "genes": 25828,
+          "mae": 0.31776079535484314,
+          "marginal95Coverage": 0.9575086469464663,
+          "rmse": 0.7993454933166504,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.1226635207105433
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5434,
+          "effectSizeBias": 0.10271434485912323,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2667247951030731,
+          "marginal95Coverage": null,
+          "rmse": 0.7396979331970215,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.329592649638653
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5038645564961355,
+          "directionGenes": 5434,
+          "effectSizeBias": 0.14107383787631989,
+          "gaussianNLL": 1.1168018579483032,
+          "genes": 25828,
+          "mae": 0.322442889213562,
+          "marginal95Coverage": 0.9667389396520571,
+          "rmse": 0.7991290092468262,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.1014184589831757
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5040485829959515,
+          "directionGenes": 5434,
+          "effectSizeBias": 0.1395729035139084,
+          "gaussianNLL": 0.7263674736022949,
+          "genes": 25828,
+          "mae": 0.32120129466056824,
+          "marginal95Coverage": 0.9577306282587373,
+          "rmse": 0.7978663444519043,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.0908004963420295
+        },
+        "training-mean": {
+          "directionAgreement": 0.5057048214942952,
+          "directionGenes": 5434,
+          "effectSizeBias": 0.1475052535533905,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3158102333545685,
+          "marginal95Coverage": null,
+          "rmse": 0.8019854426383972,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.6672861940305057
+        }
+      },
+      "neighborhood": 1,
+      "role": "neighbor",
+      "target": "Rraga"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 7,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.444243955250812,
+          "directionGenes": 5542,
+          "effectSizeBias": 0.059992507100105286,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.32099831104278564,
+          "marginal95Coverage": null,
+          "rmse": 0.6845099329948425,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3418542624318177
+        },
+        "neighborhood": {
+          "directionAgreement": 0.49945867917719233,
+          "directionGenes": 5542,
+          "effectSizeBias": 0.03490222990512848,
+          "gaussianNLL": 0.5136321783065796,
+          "genes": 25828,
+          "mae": 0.250654011964798,
+          "marginal95Coverage": 0.9779364587712117,
+          "rmse": 0.5586100220680237,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.2283522275194727
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5542,
+          "effectSizeBias": -0.01933417282998562,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.20195943117141724,
+          "marginal95Coverage": null,
+          "rmse": 0.5257567167282104,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9732440369137163
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.4998195597257308,
+          "directionGenes": 5542,
+          "effectSizeBias": 0.03609492629766464,
+          "gaussianNLL": 0.4268173277378082,
+          "genes": 25828,
+          "mae": 0.254252165555954,
+          "marginal95Coverage": 0.9801433660036727,
+          "rmse": 0.5597922801971436,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.2417017956561893
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.4978347167087694,
+          "directionGenes": 5542,
+          "effectSizeBias": 0.03122008591890335,
+          "gaussianNLL": 0.556344211101532,
+          "genes": 25828,
+          "mae": 0.250826895236969,
+          "marginal95Coverage": 0.97729485165601,
+          "rmse": 0.5570971369743347,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.21157667870482
+        },
+        "training-mean": {
+          "directionAgreement": 0.49639119451461566,
+          "directionGenes": 5542,
+          "effectSizeBias": 0.031262870877981186,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.24718455970287323,
+          "marginal95Coverage": null,
+          "rmse": 0.5558602213859558,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.986423441876208
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 93,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5069761376972226,
+          "directionGenes": 7669,
+          "effectSizeBias": 0.02131495624780655,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.20812290906906128,
+          "marginal95Coverage": null,
+          "rmse": 0.450293630361557,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.052202235624102
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5539183726691876,
+          "directionGenes": 7669,
+          "effectSizeBias": 0.05874504894018173,
+          "gaussianNLL": 0.6471638083457947,
+          "genes": 25828,
+          "mae": 0.18545958399772644,
+          "marginal95Coverage": 0.9806003653615898,
+          "rmse": 0.4251156151294708,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.0278549498302674
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 7669,
+          "effectSizeBias": 0.004648798145353794,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.15499570965766907,
+          "marginal95Coverage": null,
+          "rmse": 0.3633453845977783,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9765974297538724
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5554831138349198,
+          "directionGenes": 7669,
+          "effectSizeBias": 0.06037205085158348,
+          "gaussianNLL": 0.8844456076622009,
+          "genes": 25828,
+          "mae": 0.18886137008666992,
+          "marginal95Coverage": 0.9825433263225207,
+          "rmse": 0.427457720041275,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.026012509321151
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5494849393662798,
+          "directionGenes": 7669,
+          "effectSizeBias": 0.05449651926755905,
+          "gaussianNLL": 0.6386350989341736,
+          "genes": 25828,
+          "mae": 0.18596184253692627,
+          "marginal95Coverage": 0.9798168529278053,
+          "rmse": 0.4220840036869049,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.018926073114113
+        },
+        "training-mean": {
+          "directionAgreement": 0.5501369148520016,
+          "directionGenes": 7669,
+          "effectSizeBias": 0.05524584278464317,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.18225862085819244,
+          "marginal95Coverage": null,
+          "rmse": 0.42059606313705444,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.998841784097553
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 3,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.43173285911875126,
+          "directionGenes": 5061,
+          "effectSizeBias": 0.08139409124851227,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.4100228250026703,
+          "marginal95Coverage": null,
+          "rmse": 0.8856709599494934,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9677782129341117
+        },
+        "neighborhood": {
+          "directionAgreement": 0.46591582691167754,
+          "directionGenes": 5061,
+          "effectSizeBias": 0.05235392972826958,
+          "gaussianNLL": 0.5851189494132996,
+          "genes": 25828,
+          "mae": 0.3447577953338623,
+          "marginal95Coverage": 0.9734783955397244,
+          "rmse": 0.8000912070274353,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.522275457701916
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5061,
+          "effectSizeBias": 0.002067417837679386,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.29289939999580383,
+          "marginal95Coverage": null,
+          "rmse": 0.7742438316345215,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.728909180577223
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.46947243627741553,
+          "directionGenes": 5061,
+          "effectSizeBias": 0.044730592519044876,
+          "gaussianNLL": 0.6533149480819702,
+          "genes": 25828,
+          "mae": 0.34949731826782227,
+          "marginal95Coverage": 0.9780599865778742,
+          "rmse": 0.8001111149787903,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.6185065647755197
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.4663110057300929,
+          "directionGenes": 5061,
+          "effectSizeBias": 0.04578354209661484,
+          "gaussianNLL": 0.618070125579834,
+          "genes": 25828,
+          "mae": 0.34905046224594116,
+          "marginal95Coverage": 0.9723039595271282,
+          "rmse": 0.8016808032989502,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.5068829228991683
+        },
+        "training-mean": {
+          "directionAgreement": 0.4532701047223869,
+          "directionGenes": 5061,
+          "effectSizeBias": 0.052664462476968765,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3442509174346924,
+          "marginal95Coverage": null,
+          "rmse": 0.8015119433403015,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.723965528673337
+        }
+      },
+      "neighborhood": 1,
+      "role": "direct",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 44,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.4943820224719101,
+          "directionGenes": 8811,
+          "effectSizeBias": 0.08119238913059235,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.25792866945266724,
+          "marginal95Coverage": null,
+          "rmse": 0.5553221106529236,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0145494840531186
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5309272500283736,
+          "directionGenes": 8811,
+          "effectSizeBias": 0.11448820680379868,
+          "gaussianNLL": 0.5855305194854736,
+          "genes": 25828,
+          "mae": 0.24559801816940308,
+          "marginal95Coverage": 0.9784052191420164,
+          "rmse": 0.5545719265937805,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.212363274258615
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 8811,
+          "effectSizeBias": 0.06452623754739761,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.20537856221199036,
+          "marginal95Coverage": null,
+          "rmse": 0.4823993742465973,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.923272869861896
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.512200658268074,
+          "directionGenes": 8811,
+          "effectSizeBias": 0.10741543769836426,
+          "gaussianNLL": 0.5113154053688049,
+          "genes": 25828,
+          "mae": 0.25065913796424866,
+          "marginal95Coverage": 0.981809734326383,
+          "rmse": 0.5517908334732056,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.2225876131595834
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5235501078197707,
+          "directionGenes": 8811,
+          "effectSizeBias": 0.1084102913737297,
+          "gaussianNLL": 0.5574060678482056,
+          "genes": 25828,
+          "mae": 0.2494388222694397,
+          "marginal95Coverage": 0.9778130147690315,
+          "rmse": 0.5534289479255676,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.190533165184668
+        },
+        "training-mean": {
+          "directionAgreement": 0.5379639087504257,
+          "directionGenes": 8811,
+          "effectSizeBias": 0.11512327939271927,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.24393285810947418,
+          "marginal95Coverage": null,
+          "rmse": 0.5552648305892944,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9540935556605374
+        }
+      },
+      "neighborhood": 1,
+      "role": "neighbor",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "oligodendrocyte",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.6102794411177644,
+          "directionGenes": 2004,
+          "effectSizeBias": -0.2261350154876709,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.47852522134780884,
+          "marginal95Coverage": null,
+          "rmse": 1.4224032163619995,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.427382121095434
+        },
+        "neighborhood": {
+          "directionAgreement": 0.659181636726547,
+          "directionGenes": 2004,
+          "effectSizeBias": -0.20679116249084473,
+          "gaussianNLL": 0.5968278050422668,
+          "genes": 25828,
+          "mae": 0.4570980966091156,
+          "marginal95Coverage": 0.9437045067368747,
+          "rmse": 1.4075318574905396,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.7807446898222157
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2004,
+          "effectSizeBias": -0.2675831615924835,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.38382095098495483,
+          "marginal95Coverage": null,
+          "rmse": 1.45940363407135,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.836455825716257
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.6586826347305389,
+          "directionGenes": 2004,
+          "effectSizeBias": -0.20161788165569305,
+          "gaussianNLL": 0.6736356616020203,
+          "genes": 25828,
+          "mae": 0.4573478698730469,
+          "marginal95Coverage": 0.943549636053895,
+          "rmse": 1.4030954837799072,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.765187477295469
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.6686626746506986,
+          "directionGenes": 2004,
+          "effectSizeBias": -0.20858876407146454,
+          "gaussianNLL": 0.7759637236595154,
+          "genes": 25828,
+          "mae": 0.4466521143913269,
+          "marginal95Coverage": 0.9392906922719529,
+          "rmse": 1.403835415840149,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.6874159839706646
+        },
+        "training-mean": {
+          "directionAgreement": 0.657185628742515,
+          "directionGenes": 2004,
+          "effectSizeBias": -0.21698611974716187,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.44117364287376404,
+          "marginal95Coverage": null,
+          "rmse": 1.4087679386138916,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.45432217605412
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "oligodendrocyte",
+      "cells": 14,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.6166454197778183,
+          "directionGenes": 5491,
+          "effectSizeBias": -0.12131452560424805,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2830953001976013,
+          "marginal95Coverage": null,
+          "rmse": 0.6903759241104126,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.566149650889981
+        },
+        "neighborhood": {
+          "directionAgreement": 0.7195410672008742,
+          "directionGenes": 5491,
+          "effectSizeBias": -0.07524924725294113,
+          "gaussianNLL": 0.7560001015663147,
+          "genes": 25828,
+          "mae": 0.26027384400367737,
+          "marginal95Coverage": 0.963168432929932,
+          "rmse": 0.6468750238418579,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.84682411219093
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5491,
+          "effectSizeBias": -0.13640490174293518,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.24033907055854797,
+          "marginal95Coverage": null,
+          "rmse": 0.6991714239120483,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.7360900145556246
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.7244582043343654,
+          "directionGenes": 5491,
+          "effectSizeBias": -0.0704260841012001,
+          "gaussianNLL": 0.7418906092643738,
+          "genes": 25828,
+          "mae": 0.25848206877708435,
+          "marginal95Coverage": 0.9632486338193322,
+          "rmse": 0.6423218250274658,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.8268479822468926
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.7259151338553997,
+          "directionGenes": 5491,
+          "effectSizeBias": -0.07834567129611969,
+          "gaussianNLL": 0.7300403714179993,
+          "genes": 25828,
+          "mae": 0.25263506174087524,
+          "marginal95Coverage": 0.9588652403814244,
+          "rmse": 0.638785183429718,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.876267817642237
+        },
+        "training-mean": {
+          "directionAgreement": 0.7109816062647969,
+          "directionGenes": 5491,
+          "effectSizeBias": -0.08580785989761353,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2511724829673767,
+          "marginal95Coverage": null,
+          "rmse": 0.6435467004776001,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.5530863656562617
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 10,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5156695156695157,
+          "directionGenes": 6318,
+          "effectSizeBias": 0.03714148700237274,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.21376313269138336,
+          "marginal95Coverage": null,
+          "rmse": 0.4419066905975342,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2567493174225093
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5183602405824628,
+          "directionGenes": 6318,
+          "effectSizeBias": 0.01390658039599657,
+          "gaussianNLL": 0.772366464138031,
+          "genes": 25828,
+          "mae": 0.20480166375637054,
+          "marginal95Coverage": 0.9805637292860462,
+          "rmse": 0.4226894676685333,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.067696549963896
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 6318,
+          "effectSizeBias": -0.04218383505940437,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.16231849789619446,
+          "marginal95Coverage": null,
+          "rmse": 0.4025959074497223,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1566923618316647
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.52105096549541,
+          "directionGenes": 6318,
+          "effectSizeBias": 0.015223796479403973,
+          "gaussianNLL": 0.7466428875923157,
+          "genes": 25828,
+          "mae": 0.2072625756263733,
+          "marginal95Coverage": 0.9816168499303082,
+          "rmse": 0.4226053059101105,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.069766126767704
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5186767964545742,
+          "directionGenes": 6318,
+          "effectSizeBias": 0.012073197402060032,
+          "gaussianNLL": 0.6404914259910583,
+          "genes": 25828,
+          "mae": 0.20400874316692352,
+          "marginal95Coverage": 0.9799132724175313,
+          "rmse": 0.41944795846939087,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.0595641005259573
+        },
+        "training-mean": {
+          "directionAgreement": 0.5183602405824628,
+          "directionGenes": 6318,
+          "effectSizeBias": 0.008413209579885006,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.19988800585269928,
+          "marginal95Coverage": null,
+          "rmse": 0.4179343581199646,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.202557110320776
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 141,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5672064777327935,
+          "directionGenes": 7410,
+          "effectSizeBias": 0.029803387820720673,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.1453823745250702,
+          "marginal95Coverage": null,
+          "rmse": 0.31790927052497864,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1898708112078804
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5695006747638327,
+          "directionGenes": 7410,
+          "effectSizeBias": 0.04071967676281929,
+          "gaussianNLL": 0.6093350052833557,
+          "genes": 25828,
+          "mae": 0.14529329538345337,
+          "marginal95Coverage": 0.9834933663724124,
+          "rmse": 0.3111889660358429,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9416401980449542
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 7410,
+          "effectSizeBias": -0.015208465978503227,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.11369682103395462,
+          "marginal95Coverage": null,
+          "rmse": 0.25445812940597534,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1442847771616322
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5677462887989204,
+          "directionGenes": 7410,
+          "effectSizeBias": 0.042812034487724304,
+          "gaussianNLL": 0.7365550398826599,
+          "genes": 25828,
+          "mae": 0.1484881490468979,
+          "marginal95Coverage": 0.9843616307333731,
+          "rmse": 0.31337565183639526,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9353434039701831
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5618083670715249,
+          "directionGenes": 7410,
+          "effectSizeBias": 0.03894125297665596,
+          "gaussianNLL": 0.602679431438446,
+          "genes": 25828,
+          "mae": 0.14451700448989868,
+          "marginal95Coverage": 0.9830114549386723,
+          "rmse": 0.3064611256122589,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 1.9404594896422114
+        },
+        "training-mean": {
+          "directionAgreement": 0.559919028340081,
+          "directionGenes": 7410,
+          "effectSizeBias": 0.035388581454753876,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.14056958258152008,
+          "marginal95Coverage": null,
+          "rmse": 0.3037591278553009,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.214010558616211
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.39422761561167596,
+          "directionGenes": 3049,
+          "effectSizeBias": 0.08696801960468292,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.48101624846458435,
+          "marginal95Coverage": null,
+          "rmse": 1.3374475240707397,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.106084918777924
+        },
+        "neighborhood": {
+          "directionAgreement": 0.417185962610692,
+          "directionGenes": 3049,
+          "effectSizeBias": 0.058201879262924194,
+          "gaussianNLL": 0.6787782907485962,
+          "genes": 25828,
+          "mae": 0.46113085746765137,
+          "marginal95Coverage": 0.9497831810438284,
+          "rmse": 1.322531819343567,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.5036822095218683
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 3049,
+          "effectSizeBias": 0.007642698008567095,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.39362335205078125,
+          "marginal95Coverage": null,
+          "rmse": 1.3100347518920898,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.912111971527338
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.43194489996720237,
+          "directionGenes": 3049,
+          "effectSizeBias": 0.04824206233024597,
+          "gaussianNLL": 0.5623785853385925,
+          "genes": 25828,
+          "mae": 0.46483319997787476,
+          "marginal95Coverage": 0.9597723400960199,
+          "rmse": 1.3216261863708496,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.667841675026186
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.4250573958674975,
+          "directionGenes": 3049,
+          "effectSizeBias": 0.0506572499871254,
+          "gaussianNLL": 0.6786205172538757,
+          "genes": 25828,
+          "mae": 0.46600914001464844,
+          "marginal95Coverage": 0.9483119095555211,
+          "rmse": 1.3240684270858765,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.4562209842558236
+        },
+        "training-mean": {
+          "directionAgreement": 0.40865857658248605,
+          "directionGenes": 3049,
+          "effectSizeBias": 0.05823974311351776,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.4605872929096222,
+          "marginal95Coverage": null,
+          "rmse": 1.3238319158554077,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0545440147980116
+        }
+      },
+      "neighborhood": 1,
+      "role": "direct",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 13,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5166428060128847,
+          "directionGenes": 5588,
+          "effectSizeBias": 0.1248464360833168,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.32379573583602905,
+          "marginal95Coverage": null,
+          "rmse": 0.796198844909668,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2878500941576645
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5112741589119542,
+          "directionGenes": 5588,
+          "effectSizeBias": 0.1299646943807602,
+          "gaussianNLL": 0.7313143610954285,
+          "genes": 25828,
+          "mae": 0.32227158546447754,
+          "marginal95Coverage": 0.9553317210898131,
+          "rmse": 0.792872965335846,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.8512519703513535
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5588,
+          "effectSizeBias": 0.07983458042144775,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2744055986404419,
+          "marginal95Coverage": null,
+          "rmse": 0.7362026572227478,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0091254332890873
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5016105941302792,
+          "directionGenes": 5588,
+          "effectSizeBias": 0.12075217068195343,
+          "gaussianNLL": 1.063134789466858,
+          "genes": 25828,
+          "mae": 0.32702699303627014,
+          "marginal95Coverage": 0.9638347172418723,
+          "rmse": 0.788960337638855,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.8450221946161536
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.49892627057981387,
+          "directionGenes": 5588,
+          "effectSizeBias": 0.12267062813043594,
+          "gaussianNLL": 0.7023142576217651,
+          "genes": 25828,
+          "mae": 0.32715126872062683,
+          "marginal95Coverage": 0.9540957339083403,
+          "rmse": 0.791018009185791,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.8252242438977784
+        },
+        "training-mean": {
+          "directionAgreement": 0.5057265569076592,
+          "directionGenes": 5588,
+          "effectSizeBias": 0.1304316222667694,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.32157397270202637,
+          "marginal95Coverage": null,
+          "rmse": 0.7938456535339355,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.2859135642961173
+        }
+      },
+      "neighborhood": 1,
+      "role": "neighbor",
+      "target": "Stk39"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.471671388101983,
+          "directionGenes": 2118,
+          "effectSizeBias": 0.0033843701239675283,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.4362492859363556,
+          "marginal95Coverage": null,
+          "rmse": 1.23710298538208,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.7927820682525635
+        },
+        "neighborhood": {
+          "directionAgreement": 0.3951841359773371,
+          "directionGenes": 2118,
+          "effectSizeBias": 0.07631717622280121,
+          "gaussianNLL": 0.3936249315738678,
+          "genes": 25828,
+          "mae": 0.3718453347682953,
+          "marginal95Coverage": 0.9681353569769243,
+          "rmse": 1.1701288223266602,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 4.006626623614736
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2118,
+          "effectSizeBias": 0.026297014206647873,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.28777265548706055,
+          "marginal95Coverage": null,
+          "rmse": 1.1435190439224243,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.327402263879776
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.39848914069877245,
+          "directionGenes": 2118,
+          "effectSizeBias": 0.07701221853494644,
+          "gaussianNLL": 0.3276212513446808,
+          "genes": 25828,
+          "mae": 0.3752516508102417,
+          "marginal95Coverage": 0.9722781477466316,
+          "rmse": 1.1709177494049072,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 4.106438740560536
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.3970727101038716,
+          "directionGenes": 2118,
+          "effectSizeBias": 0.07089424878358841,
+          "gaussianNLL": 0.49542224407196045,
+          "genes": 25828,
+          "mae": 0.36767441034317017,
+          "marginal95Coverage": 0.9659671674152083,
+          "rmse": 1.1682946681976318,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.9257665059974554
+        },
+        "training-mean": {
+          "directionAgreement": 0.39990557129367327,
+          "directionGenes": 2118,
+          "effectSizeBias": 0.0693596750497818,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.36498358845710754,
+          "marginal95Coverage": null,
+          "rmse": 1.167303204536438,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.6205611320910975
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Trem2"
+    },
+    {
+      "cellType": "neuron",
+      "cells": 14,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.4992690058479532,
+          "directionGenes": 5472,
+          "effectSizeBias": -0.009349526837468147,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3120715022087097,
+          "marginal95Coverage": null,
+          "rmse": 0.7263385057449341,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0722926639552632
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5791301169590644,
+          "directionGenes": 5472,
+          "effectSizeBias": 0.046647075563669205,
+          "gaussianNLL": 1.2753996849060059,
+          "genes": 25828,
+          "mae": 0.2847687005996704,
+          "marginal95Coverage": 0.9640561738091551,
+          "rmse": 0.7023366093635559,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.3248197265418593
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5472,
+          "effectSizeBias": -0.0030013048090040684,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.24265123903751373,
+          "marginal95Coverage": null,
+          "rmse": 0.669265627861023,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.8525771519967487
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5831505847953217,
+          "directionGenes": 5472,
+          "effectSizeBias": 0.04789251089096069,
+          "gaussianNLL": 2.287250280380249,
+          "genes": 25828,
+          "mae": 0.28716251254081726,
+          "marginal95Coverage": 0.9682846965640832,
+          "rmse": 0.7036411166191101,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.3465001005862014
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5729166666666666,
+          "directionGenes": 5472,
+          "effectSizeBias": 0.04125667363405228,
+          "gaussianNLL": 0.9760183095932007,
+          "genes": 25828,
+          "mae": 0.28329694271087646,
+          "marginal95Coverage": 0.9617054580853559,
+          "rmse": 0.6998522877693176,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.3185817084031863
+        },
+        "training-mean": {
+          "directionAgreement": 0.5762061403508771,
+          "directionGenes": 5472,
+          "effectSizeBias": 0.040061354637145996,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2803245484828949,
+          "marginal95Coverage": null,
+          "rmse": 0.6982738971710205,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.8972567169028998
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Trem2"
+    },
+    {
+      "cellType": "oligodendrocyte",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.48175865294667913,
+          "directionGenes": 1069,
+          "effectSizeBias": -0.0024705438409000635,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.33393916487693787,
+          "marginal95Coverage": null,
+          "rmse": 1.0483225584030151,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1957080867141485
+        },
+        "neighborhood": {
+          "directionAgreement": 0.47708138447146864,
+          "directionGenes": 1069,
+          "effectSizeBias": 0.01641015149652958,
+          "gaussianNLL": 0.8661638498306274,
+          "genes": 25828,
+          "mae": 0.28179579973220825,
+          "marginal95Coverage": 0.9780083630168809,
+          "rmse": 1.0140973329544067,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.654785857918437
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 1069,
+          "effectSizeBias": -0.03667456656694412,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.18197797238826752,
+          "marginal95Coverage": null,
+          "rmse": 1.0082029104232788,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.767744652926922
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.4593077642656688,
+          "directionGenes": 1069,
+          "effectSizeBias": 0.023075930774211884,
+          "gaussianNLL": 0.9725447297096252,
+          "genes": 25828,
+          "mae": 0.2840957045555115,
+          "marginal95Coverage": 0.9782793867120954,
+          "rmse": 1.0138049125671387,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.6675859647803284
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.47801683816651075,
+          "directionGenes": 1069,
+          "effectSizeBias": 0.015669146552681923,
+          "gaussianNLL": 0.6874445676803589,
+          "genes": 25828,
+          "mae": 0.27187100052833557,
+          "marginal95Coverage": 0.9764596561870837,
+          "rmse": 1.010372519493103,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 3.556680382016415
+        },
+        "training-mean": {
+          "directionAgreement": 0.47427502338634236,
+          "directionGenes": 1069,
+          "effectSizeBias": 0.006388092413544655,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.26689043641090393,
+          "marginal95Coverage": null,
+          "rmse": 1.010993242263794,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.140645650215447
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Trem2"
+    },
+    {
+      "cellType": "oligodendrocyte",
+      "cells": 15,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5891029500301024,
+          "directionGenes": 3322,
+          "effectSizeBias": 0.0019744466990232468,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2360391765832901,
+          "marginal95Coverage": null,
+          "rmse": 0.5771986246109009,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0038255846205475
+        },
+        "neighborhood": {
+          "directionAgreement": 0.6496086694762191,
+          "directionGenes": 3322,
+          "effectSizeBias": 0.03792736679315567,
+          "gaussianNLL": 1.061771273612976,
+          "genes": 25828,
+          "mae": 0.2034081667661667,
+          "marginal95Coverage": 0.9807882917763667,
+          "rmse": 0.5415771007537842,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.526761490334019
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 3322,
+          "effectSizeBias": -0.015184673480689526,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.1404484063386917,
+          "marginal95Coverage": null,
+          "rmse": 0.5137224793434143,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.621843403577804
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.6538229981938591,
+          "directionGenes": 3322,
+          "effectSizeBias": 0.04438311234116554,
+          "gaussianNLL": 0.9595962166786194,
+          "genes": 25828,
+          "mae": 0.20283152163028717,
+          "marginal95Coverage": 0.9809818801300914,
+          "rmse": 0.541803777217865,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.519578229484827
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.6553281155930163,
+          "directionGenes": 3322,
+          "effectSizeBias": 0.041145239025354385,
+          "gaussianNLL": 0.7806079983711243,
+          "genes": 25828,
+          "mae": 0.19630160927772522,
+          "marginal95Coverage": 0.9799339218419286,
+          "rmse": 0.5351352095603943,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.5045354868891607
+        },
+        "training-mean": {
+          "directionAgreement": 0.6378687537627935,
+          "directionGenes": 3322,
+          "effectSizeBias": 0.027877984568476677,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.19159084558486938,
+          "marginal95Coverage": null,
+          "rmse": 0.5326055288314819,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 2.9731239256138604
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Trem2"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 5,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5132743362831859,
+          "directionGenes": 4068,
+          "effectSizeBias": 0.05239954590797424,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2889428436756134,
+          "marginal95Coverage": null,
+          "rmse": 0.6759803295135498,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.099547690199688
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5181907571288102,
+          "directionGenes": 4068,
+          "effectSizeBias": 0.033242117613554,
+          "gaussianNLL": 0.6460033059120178,
+          "genes": 25828,
+          "mae": 0.2768620550632477,
+          "marginal95Coverage": 0.9785194362707139,
+          "rmse": 0.6579952836036682,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.4311838612478605
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 4068,
+          "effectSizeBias": -0.012844577431678772,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.22114349901676178,
+          "marginal95Coverage": null,
+          "rmse": 0.6347990036010742,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.210497207660228
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5208947885939036,
+          "directionGenes": 4068,
+          "effectSizeBias": 0.024925272911787033,
+          "gaussianNLL": 0.4337730407714844,
+          "genes": 25828,
+          "mae": 0.27896982431411743,
+          "marginal95Coverage": 0.9798513241443395,
+          "rmse": 0.6571860313415527,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.4418109581904304
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.5226155358898722,
+          "directionGenes": 4068,
+          "effectSizeBias": 0.03069274127483368,
+          "gaussianNLL": 0.4721812903881073,
+          "genes": 25828,
+          "mae": 0.2778034806251526,
+          "marginal95Coverage": 0.977946414743689,
+          "rmse": 0.658002495765686,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.42647146900249
+        },
+        "training-mean": {
+          "directionAgreement": 0.5199115044247787,
+          "directionGenes": 4068,
+          "effectSizeBias": 0.030218081548810005,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.27522456645965576,
+          "marginal95Coverage": null,
+          "rmse": 0.657394528388977,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0553304581611886
+        }
+      },
+      "neighborhood": 0,
+      "role": "direct",
+      "target": "Trem2"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 68,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5855430902600713,
+          "directionGenes": 7844,
+          "effectSizeBias": 0.0588969886302948,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.20904222130775452,
+          "marginal95Coverage": null,
+          "rmse": 0.5061700940132141,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.148349761086352
+        },
+        "neighborhood": {
+          "directionAgreement": 0.5893676695563488,
+          "directionGenes": 7844,
+          "effectSizeBias": 0.0666409507393837,
+          "gaussianNLL": 0.6702365279197693,
+          "genes": 25828,
+          "mae": 0.2080715298652649,
+          "marginal95Coverage": 0.9822644599112682,
+          "rmse": 0.5032592415809631,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.136919101585722
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 7844,
+          "effectSizeBias": 0.020626390352845192,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.18010537326335907,
+          "marginal95Coverage": null,
+          "rmse": 0.4580601751804352,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.171178742804948
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.5749617542070372,
+          "directionGenes": 7844,
+          "effectSizeBias": 0.05959181860089302,
+          "gaussianNLL": 0.8081881403923035,
+          "genes": 25828,
+          "mae": 0.2115289717912674,
+          "marginal95Coverage": 0.9834282675436599,
+          "rmse": 0.5011577010154724,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.1223246364030586
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.585033146353901,
+          "directionGenes": 7844,
+          "effectSizeBias": 0.06322547793388367,
+          "gaussianNLL": 0.6414456367492676,
+          "genes": 25828,
+          "mae": 0.2092931717634201,
+          "marginal95Coverage": 0.9816649053922328,
+          "rmse": 0.5024664998054504,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.1284371271577007
+        },
+        "training-mean": {
+          "directionAgreement": 0.5888577256501785,
+          "directionGenes": 7844,
+          "effectSizeBias": 0.06368905305862427,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.20643740892410278,
+          "marginal95Coverage": null,
+          "rmse": 0.5020846724510193,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.1321804660889456
+        }
+      },
+      "neighborhood": 0,
+      "role": "neighbor",
+      "target": "Trem2"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 1,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.2799406748238784,
+          "directionGenes": 2697,
+          "effectSizeBias": 0.25225594639778137,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.4264644384384155,
+          "marginal95Coverage": null,
+          "rmse": 1.2476660013198853,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.9218618725717533
+        },
+        "neighborhood": {
+          "directionAgreement": 0.3110863922877271,
+          "directionGenes": 2697,
+          "effectSizeBias": 0.22968977689743042,
+          "gaussianNLL": 3.813957929611206,
+          "genes": 25828,
+          "mae": 0.40482383966445923,
+          "marginal95Coverage": 0.9635666718290228,
+          "rmse": 1.2169665098190308,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 4.231345598356936
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 2697,
+          "effectSizeBias": 0.18701180815696716,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.3209441900253296,
+          "marginal95Coverage": null,
+          "rmse": 1.153205394744873,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.383300766348839
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.3600296625880608,
+          "directionGenes": 2697,
+          "effectSizeBias": 0.21366387605667114,
+          "gaussianNLL": 1.5708327293395996,
+          "genes": 25828,
+          "mae": 0.4104628264904022,
+          "marginal95Coverage": 0.9706907232460895,
+          "rmse": 1.2091679573059082,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 4.292845200434941
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.3362995921394142,
+          "directionGenes": 2697,
+          "effectSizeBias": 0.22351494431495667,
+          "gaussianNLL": 0.7855597734451294,
+          "genes": 25828,
+          "mae": 0.4078349173069,
+          "marginal95Coverage": 0.9629859067678489,
+          "rmse": 1.213096261024475,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 4.172720148098334
+        },
+        "training-mean": {
+          "directionAgreement": 0.3133110863922877,
+          "directionGenes": 2697,
+          "effectSizeBias": 0.2300744652748108,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.4037252366542816,
+          "marginal95Coverage": null,
+          "rmse": 1.216570258140564,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.7871193087194115
+        }
+      },
+      "neighborhood": 1,
+      "role": "direct",
+      "target": "Trem2"
+    },
+    {
+      "cellType": "uncertain",
+      "cells": 13,
+      "metrics": {
+        "cell-type-matched": {
+          "directionAgreement": 0.5113594040968342,
+          "directionGenes": 5370,
+          "effectSizeBias": 0.13233061134815216,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.32444697618484497,
+          "marginal95Coverage": null,
+          "rmse": 0.8082701563835144,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.3959797771038636
+        },
+        "neighborhood": {
+          "directionAgreement": 0.4998137802607076,
+          "directionGenes": 5370,
+          "effectSizeBias": 0.13630926609039307,
+          "gaussianNLL": 0.9335529208183289,
+          "genes": 25828,
+          "mae": 0.3245313763618469,
+          "marginal95Coverage": 0.9583814822315674,
+          "rmse": 0.8081162571907043,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.9407707196190898
+        },
+        "no-change": {
+          "directionAgreement": 0.0,
+          "directionGenes": 5370,
+          "effectSizeBias": 0.094060018658638,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.2731280028820038,
+          "marginal95Coverage": null,
+          "rmse": 0.7476537227630615,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.0679041852171602
+        },
+        "no-neighborhood": {
+          "directionAgreement": 0.4949720670391061,
+          "directionGenes": 5370,
+          "effectSizeBias": 0.12103109806776047,
+          "gaussianNLL": 1.5717538595199585,
+          "genes": 25828,
+          "mae": 0.3325422406196594,
+          "marginal95Coverage": 0.9649485948463802,
+          "rmse": 0.803164541721344,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.917631978277073
+        },
+        "shuffled-neighborhood": {
+          "directionAgreement": 0.4960893854748603,
+          "directionGenes": 5370,
+          "effectSizeBias": 0.1301768571138382,
+          "gaussianNLL": 0.8433758020401001,
+          "genes": 25828,
+          "mae": 0.32826709747314453,
+          "marginal95Coverage": 0.9570233854731299,
+          "rmse": 0.8069667816162109,
+          "uncertaintyStatus": "uncalibrated marginal distribution; not animal-level confidence",
+          "wassersteinPanelMean": 2.912680395992597
+        },
+        "training-mean": {
+          "directionAgreement": 0.4994413407821229,
+          "directionGenes": 5370,
+          "effectSizeBias": 0.13712266087532043,
+          "gaussianNLL": null,
+          "genes": 25828,
+          "mae": 0.32342830300331116,
+          "marginal95Coverage": null,
+          "rmse": 0.8095284104347229,
+          "uncertaintyStatus": "point baseline; no predictive variance",
+          "wassersteinPanelMean": 3.404723998571101
+        }
+      },
+      "neighborhood": 1,
+      "role": "neighbor",
+      "target": "Trem2"
+    }
+  ],
+  "limits": [
+    "One exposed mouse; four isolated controls",
+    "Unverified section identities; neighborhood context is a hypothesis",
+    "Fixed endpoint; no cell-specific trajectories or propagation"
+  ],
+  "modelSelectionSHA256": "1ba0ffd1a2ed84cc08bf7739f476475390a3fb7a60a976f9dec136b9cb6613e1",
+  "scope": "exposed corrected-optimizer spatial development",
+  "spatialBenefitEstablished": false
+}
