@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "fixture": "synthetic software check only",
+  "binarySHA256": "26f6c5c018a9e7b0bacc290bb65733b4bdc35492fe119c83e1132d1d978a5fe8",
+  "typedQueriesContainNoOutcomeFields": true,
+  "twoAssaysAndTwoRankingsByteIdenticalOnReplay": true,
+  "existingOutputRejectedAndUnchanged": true,
+  "outputFiles": {
+    "prediction-twist.json": "02954b92e6ca89d418eb64ee1bbf17d5c3f6a5c1f91822175287db3b6d9fdbb9",
+    "ranking-confidence3.json": "6feff376a886714f8913cb26b2cf646940402dba612786ece2dba2330ee9c533",
+    "prediction-adaptyv.json": "02954b92e6ca89d418eb64ee1bbf17d5c3f6a5c1f91822175287db3b6d9fdbb9",
+    "ranking-boltz2.json": "a8635272fd8934b3fce223d5170f278d71341e8abebf43ff4fcea7f2a2126e45"
+  }
+}
