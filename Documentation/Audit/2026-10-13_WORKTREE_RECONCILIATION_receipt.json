@@ -1,0 +1,72 @@
+{
+  "numerical_source_commit": "bafff6dd164c449eb6cae4b92f0131dfa438c539",
+  "cli_change": "Restore globally discoverable molecule-sampling-export-verify help entry; no numerical owner changes.",
+  "native_test_binary_sha256": "88ac8be7e2409d35de227613ac885e360b5f37d5dd796f228aadea782c6f81f1",
+  "repaired_cli_binary_sha256": "64e41cd4a3b9854f79259f82675f70119bfb0eefcdd182b0821bfe61be8c306e",
+  "receipts": [
+    {
+      "file": "vivo-prepared-route-validation.log",
+      "sha256": "0b67ab21ef659278c1882fab8b4cfcdeddf82e8211b545fc617b3774a5c25fd4",
+      "result": [
+        "\u2714 Test run with 11 tests in 2 suites passed after 2481.140 seconds."
+      ]
+    },
+    {
+      "file": "vivo-storage-export-host-validation.log",
+      "sha256": "f33995cc15620be874fd55a617b34a4d45d2ec72cf8ac34f28c9c01a41b56655",
+      "result": [
+        "\u2714 Test run with 41 tests in 3 suites passed after 1.451 seconds."
+      ]
+    },
+    {
+      "file": "vivo-native-ClassicalPMEConformanceTests.log",
+      "sha256": "6ee2424025f4cefff5d2684f3636114d859b27017874e9c7df1acbcde3ce00f4",
+      "result": [
+        "\u2714 Test run with 2 tests in 1 suite passed after 0.650 seconds."
+      ]
+    },
+    {
+      "file": "vivo-native-MultipolePMETests.log",
+      "sha256": "e8bb73552a76a698b069398341de4cac63c0e104e8888c26c9a19905ac574d10",
+      "result": [
+        "\u2714 Test run with 3 tests in 1 suite passed after 0.073 seconds."
+      ]
+    },
+    {
+      "file": "vivo-native-ClassicalNPTTransitionTests.log",
+      "sha256": "b78a87ecedcb30957cdd91abcd1269dd8b791f90b82ddbfb00f56bf0b56c2eef",
+      "result": [
+        "\u2714 Test run with 1 test in 1 suite passed after 0.582 seconds."
+      ]
+    },
+    {
+      "file": "vivo-native-ClassicalThermalConformanceTests.log",
+      "sha256": "e0f957e704bfc33be70145905f60ce463d0731f0b5b674ff6ec8e280c03f3b6c",
+      "result": [
+        "\u2714 Test run with 2 tests in 1 suite passed after 0.577 seconds."
+      ]
+    },
+    {
+      "file": "vivo-sampling-native-prefix-validation.log",
+      "sha256": "ca3e196f79588ac83205c33d0f84b6a620f822f90aa070dd2857872cef14dd28",
+      "result": [
+        "\u2714 Test run with 1 test in 1 suite passed after 0.265 seconds."
+      ]
+    },
+    {
+      "file": "vivo-sampling-export-cli-repaired-validation.log",
+      "sha256": "779c5ec94294b6c95326811efbea9acb0f892a5261e17366ad8b8a214c057fde",
+      "result": [
+        "PASS 87 real sampling export/verify and connected workflow checks; evidence in /Users/home/Documents/Codex/2026-10-13/plea/outputs/vivo-sampling-export-cli-repaired-validation"
+      ]
+    },
+    {
+      "file": "vivo-workflow-cli-repaired-validation.log",
+      "sha256": "3f11ef0c515534e9fe9a7386bdd7183ebaa7178eeb12f852c3cd2e5f663dd0b5",
+      "result": [
+        "PASS 61 real CLI, planner, cache, export and failure-preservation checks"
+      ]
+    }
+  ],
+  "scope": "Finite native computational route and stated force/transition/statistical fixtures; not biological accuracy, interacting NPT equilibrium, converged sampling ensemble, throughput or hardware performance qualification."
+}
