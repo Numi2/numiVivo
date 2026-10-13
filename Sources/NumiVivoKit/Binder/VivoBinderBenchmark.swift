@@ -103,6 +103,76 @@ public enum VivoBinderBenchmark {
         public let limitations: [String]
     }
 
+    /// Query inputs contain no experimental outcome or retained assay fields.
+    public struct QueryCandidate: Codable, Sendable {
+        public let id: String
+        public let target: String
+        public let leakageGroup: String
+        public let features: [String: Double]
+        public init(id: String, target: String, leakageGroup: String, features: [String: Double]) {
+            self.id = id; self.target = target; self.leakageGroup = leakageGroup; self.features = features
+        }
+    }
+    public struct UnassayedPrediction: Codable, Sendable {
+        public let id: String
+        public let target: String
+        /// An uncalibrated logistic score, not a validated binding probability.
+        public let score: Double
+    }
+    public struct PredictionReport: Codable, Sendable {
+        public let schemaVersion: Int
+        public let evidenceStatus: String
+        public let trainingSHA256: String
+        public let querySHA256: String
+        public let planSHA256: String
+        public let sourceSHA256: String
+        public let assay: String
+        public let plan: Plan
+        public let trainingIDs: [String]
+        public let excluded: [String: String]
+        public let model: Model
+        public let predictions: [UnassayedPrediction]
+    }
+
+    /// Reuses the retrospective owner's training admission and fitter, but predicts
+    /// every supported query before its assay status is available. No test metrics
+    /// or outcome-conditioned query admission occurs here.
+    public static func predict(training: Dataset, query: [QueryCandidate], plan: Plan) throws -> PredictionReport {
+        try require((1...100_000).contains(query.count), "query count outside 1...100000")
+        try validate(training)
+        try require(training.records.allSatisfy { plan.trainingTargets.contains($0.target) },
+                    "training input contains a target outside the training split")
+        try require(query.allSatisfy { plan.testTargets.contains($0.target) },
+                    "query contains a target outside the test split")
+        let queryRecords = query.map { Record(id: $0.id, target: $0.target, leakageGroup: $0.leakageGroup,
+            outcome: .notTested, rawOutcome: "unassayed query", features: $0.features) }
+        let combined = Dataset(sourceSHA256: training.sourceSHA256, assay: training.assay,
+            groupingMethod: training.groupingMethod, records: training.records + queryRecords)
+        let cohort = try partition(combined, plan: plan)
+        let train = cohort.training
+        try require(train.count >= 4, "fewer than four eligible training candidates")
+        let positives = train.reduce(0.0) { $0 + ($1.outcome.binary ?? 0) }
+        try require(positives > 0 && positives < Double(train.count), "training requires both outcome classes")
+        let model = try fit(train, features: plan.modelFeatures, penalty: plan.ridgePenalty)
+        let queryIDs = Set(query.map(\.id))
+        var excluded = cohort.excluded.filter { !queryIDs.contains($0.key) }
+        let required = Set(plan.modelFeatures + [plan.baselineFeature])
+        var predictions: [UnassayedPrediction] = []
+        for row in query.sorted(by: { $0.id < $1.id }) {
+            let missing = required.subtracting(row.features.keys).sorted()
+            guard missing.isEmpty else { excluded[row.id] = "missing features:\(missing.joined(separator: ","))"; continue }
+            let score = sigmoid(model.featureNames.indices.reduce(model.intercept) { sum, j in
+                sum + model.coefficients[j] * (row.features[model.featureNames[j]]! - model.means[j]) / model.scales[j]
+            })
+            predictions.append(.init(id: row.id, target: row.target, score: score))
+        }
+        return PredictionReport(schemaVersion: 1, evidenceStatus: "unassayed-query-development-only",
+            trainingSHA256: try VivoBinderRanking.fingerprint(training),
+            querySHA256: try VivoBinderRanking.fingerprint(query.sorted { $0.id < $1.id }),
+            planSHA256: try VivoBinderRanking.fingerprint(plan), sourceSHA256: training.sourceSHA256, assay: training.assay, plan: plan,
+            trainingIDs: train.map(\.id), excluded: excluded, model: model, predictions: predictions)
+    }
+
     public static func validate(_ dataset: Dataset) throws {
         try require(dataset.schemaVersion == 1, "unsupported dataset schema")
         try require(isSHA256(dataset.sourceSHA256), "sourceSHA256 must be lowercase SHA-256")

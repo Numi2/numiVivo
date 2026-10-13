@@ -271,10 +271,13 @@ public enum VivoBinderBundleIO {
         return receipt
     }
     private static func read(_ url: URL) throws -> Data {
-        let info = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
+        // A reused URL may retain metadata from a previous policy revision.
+        var freshURL = URL(fileURLWithPath: url.path)
+        freshURL.removeAllCachedResourceValues()
+        let info = try freshURL.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
         guard info.isRegularFile == true, info.isSymbolicLink != true,
               let size = info.fileSize, size <= 128 * 1024 * 1024 else { throw invalid("unsupported file or size: \(url.lastPathComponent)") }
-        let data = try Data(contentsOf: url)
+        let data = try Data(contentsOf: freshURL)
         guard data.count == size else { throw invalid("file changed while reading") }
         return data
     }

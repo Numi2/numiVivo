@@ -13,7 +13,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def prepare(root: Path) -> None:
+def prepare(root: Path, heldout: bool = False) -> None:
     if root.exists():
         raise FileExistsError(root)
     library = root / "Sources/NumiVivoKit"
@@ -34,11 +34,13 @@ def prepare(root: Path) -> None:
     (cli / "main.swift").write_text(
         'import Foundation\nexit(VivoBinderCLICommands().run(arguments: Array(CommandLine.arguments.dropFirst())))\n'
     )
+    if heldout:
+        shutil.copy2(ROOT / "Tools/BinderBenchmark/HeldOut/main.swift", cli / "main.swift")
     for source in sorted((ROOT / "Tests/NumiVivoIntegrationTests").glob("VivoBinder*Tests.swift")):
         shutil.copy2(source, tests / source.name)
     (root / "Package.swift").write_text('''// swift-tools-version: 6.0
 import PackageDescription
-let package = Package(name: "BinderCheck", targets: [
+let package = Package(name: "BinderCheck", platforms: [.macOS(.v13)], targets: [
     .target(name: "NumiVivoKit", linkerSettings: [.linkedLibrary("crypto", .when(platforms: [.linux]))]),
     .executableTarget(name: "BinderCLI", dependencies: ["NumiVivoKit"]),
     .testTarget(name: "BinderTests", dependencies: ["NumiVivoKit"])
@@ -46,8 +48,8 @@ let package = Package(name: "BinderCheck", targets: [
 ''')
 
 
-def build(root: Path, test: bool = False) -> Path:
-    prepare(root)
+def build(root: Path, test: bool = False, heldout: bool = False) -> Path:
+    prepare(root, heldout)
     subprocess.run(["swift", "build", "--package-path", str(root), "--jobs", "2"], check=True)
     if test:
         subprocess.run(["swift", "test", "--package-path", str(root), "--jobs", "2"], check=True)
@@ -64,8 +66,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("package", type=Path, help="new retained package directory")
     parser.add_argument("--test", action="store_true")
+    parser.add_argument("--heldout-runner", action="store_true", help="build the typed outcome-free prediction and ranking runner")
     args = parser.parse_args()
-    binary = build(args.package.absolute(), args.test)
+    binary = build(args.package.absolute(), args.test, args.heldout_runner)
     print(json.dumps({"binary": str(binary), "scope": "portable exact-source binder subset"}))
 
 
