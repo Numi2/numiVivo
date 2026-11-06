@@ -1,0 +1,50 @@
+{
+  "url": "https://github.com/Numi2/numiVivo/releases/download/ssh-macmini-checkpoints-20261106/numiVivo-ssh-macmini-20261106-index.tar.zst",
+  "sha256": "7f4e08008ae685609eaec74b8f83ab482c7c56589f340dca56bb329d0b0726a5",
+  "bytes": 31726,
+  "manifest_url": "https://github.com/Numi2/numiVivo/releases/download/ssh-macmini-checkpoints-20261106/numiVivo-ssh-macmini-20261106-index.json",
+  "verification_url": "https://github.com/Numi2/numiVivo/releases/download/ssh-macmini-checkpoints-20261106/numiVivo-ssh-macmini-20261106-index-verification.json",
+  "inventory_member": "Users/n/checkout-closure-20261106/owners/numiVivo/checkpoint-inventory.json",
+  "inventory_sha256": "1f9ee2c77c9df5ef7df05b165636881f187d51c539b1ec4225e73fbfd598832e",
+  "statistics": {
+    "physical_registered_locations": 3,
+    "dirty_existing_checkouts": 1,
+    "missing_registered_locations": 0,
+    "changed_and_untracked_file_paths": 36,
+    "hosted_human_artifact_paths": 0,
+    "checkpoint_metadata_files": 39
+  },
+  "payload_archives": [
+    {
+      "owner": "Numi2/numiVivo",
+      "asset": "numiVivo-ssh-macmini-20261106-01.tar.zst",
+      "sha256": "2d84d0305b626d4c6120093919355e148df07957d74701f03d301a8e5bacae4d",
+      "bytes": 755248,
+      "url": "https://github.com/Numi2/numiVivo/releases/download/ssh-macmini-checkpoints-20261106/numiVivo-ssh-macmini-20261106-01.tar.zst",
+      "manifest_url": "https://github.com/Numi2/numiVivo/releases/download/ssh-macmini-checkpoints-20261106/numiVivo-ssh-macmini-20261106-01.json",
+      "verification_url": "https://github.com/Numi2/numiVivo/releases/download/ssh-macmini-checkpoints-20261106/numiVivo-ssh-macmini-20261106-01-verification.json",
+      "files": 62,
+      "raw_bytes": 1346496
+    }
+  ],
+  "bundle_status": "PASS_GIT_BUNDLE_VERIFY",
+  "verified_main_before_closure": "befe90288329506b02f2011900b28e6919c0583a",
+  "owner": "Numi2/numiVivo",
+  "release": "https://github.com/Numi2/numiVivo/releases/tag/ssh-macmini-checkpoints-20261106",
+  "status": "ARCHIVE_ONLY_UNVALIDATED_CHANGES_NOT_MERGED",
+  "source_freeze_verification": {
+    "status": "PASS_UNCHANGED_SOURCE_HEADS_INDEX_STATUS_REFS_FILES_SYMLINKS",
+    "utc": "2026-11-06T21:22:07.770577+00:00",
+    "physical_registered_locations": 123,
+    "file_paths_checked": 648,
+    "same_hash_with_changed_stat": 0,
+    "symlink_paths_checked": 0,
+    "originals_retained": true
+  },
+  "originals_retained": true,
+  "publication_parent": "befe90288329506b02f2011900b28e6919c0583a",
+  "documentation_paths": [
+    "Docs/SSH_MACMINI_CHECKOUT_CLOSURE_20261106.md",
+    "Docs/SSH_MACMINI_CHECKOUT_CLOSURE_20261106.json"
+  ]
+}
